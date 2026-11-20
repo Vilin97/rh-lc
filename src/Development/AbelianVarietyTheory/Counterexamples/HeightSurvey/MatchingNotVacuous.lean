@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.ThetaFramePf
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.CubePullbacks.CubePull
@@ -35,16 +36,16 @@ variable {Xo}
 
 theorem matching_not_vacuous {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (t' : SAB H (Sp S))
     (m1 : SABMap t' Xo.univ.t x) :
-    (∃! g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ ∧
-      g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom) ∧
-    ∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
+    (∃! g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ ∧
+      g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom) ∧
+    ∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
       ∀ j, (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit) := by
   refine ⟨?_, fun g hg j y hy => ?_⟩
   · let a0 : Over.mk (t'.G.hom ≫ x) ⟶ Over.mk x := Over.homMk t'.G.hom rfl
     let b0 : Over.mk (t'.G.hom ≫ x) ⟶ Xo.univ.t.G := Over.homMk m1.φ m1.cart.1.w
-    have f0 : (lift a0 b0).left ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom :=
+    have f0 : (lift a0 b0).left ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom :=
       congrArg (fun q => q.left) (lift_fst a0 b0)
-    have s0 : (lift a0 b0).left ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ :=
+    have s0 : (lift a0 b0).left ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ :=
       congrArg (fun q => q.left) (lift_snd a0 b0)
     refine ⟨(lift a0 b0).left, ⟨s0, f0⟩, fun g hg => ?_⟩
     apply pullback.hom_ext

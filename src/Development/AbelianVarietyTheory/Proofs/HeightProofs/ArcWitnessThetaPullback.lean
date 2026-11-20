@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsFramedPointChangedByLetters
 import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.ArcFramePointTruncation
@@ -50,8 +51,8 @@ variable {V : Type} [CommRing V] {x : Sp V ⟶ Xo.X} {G : SAB H (Sp V)} {B : Sch
 theorem tie_iff : (∃ (w1 : LB.Iso G.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (w2 : LB.Iso G.PP.L (t.PP.L.pull m2.φ))
       (σ' : LB.Sec G.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (t.PP.L.pull m2.φ)),
       RigIso m1 w1 ∧ RigIso m2 w2 ∧ IsoMaps w1 σ' s1 ∧ IsoMaps w2 σ' θ2 ∧ PullSec m2.φ θ θ2 ∧
-      ∀ g : G.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
-        g ≫ (fst (Over.mk x) Xo.univ.t.G).left = G.G.hom →
+      ∀ g : G.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
+        g ≫ (Formalism.L2.PjFree.gxSnd (x)) = G.G.hom →
         ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
           s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ↔ Comparison₂ m1 m2 θ s := by
   constructor
@@ -210,7 +211,7 @@ theorem gs_onOpens {g₁ : Gx x ⟶ t₁.G.left} {g₂ : Gx x ⟶ t.G.left}
       ((gs_appLE g₂ _ _ h₃ r z hz _).trans (gs_h0Sec hσ (r ≫ g₂) z k (h₂ hz).2)))⟩
 
 theorem onOpens_iff_thru (e₁ : m1.φ = m.φ ≫ n0.φ) (e₂ : m.φ ≫ n1.φ = m2.φ ≫ n2.φ) {h : Gx x ⟶ G.G.left}
-    (hφ : h ≫ m1.φ = (snd (Over.mk x) Xo.univ.t.G).left) (hg : toGx m1 ≫ h = 𝟙 _) (hg' : h ≫ toGx m1 = 𝟙 _)
+    (hφ : h ≫ m1.φ = (Formalism.L2.PjFree.gxFst (x))) (hg : toGx m1 ≫ h = 𝟙 _) (hg' : h ≫ toGx m1 = 𝟙 _)
     {w₀ : LB.Iso t₁.PP.L (Xo.univ.t.PP.L.pull n0.φ)} {w₁ : LB.Iso t₁.PP.L (T.PP.L.pull n1.φ)}
     {w₂ : LB.Iso t.PP.L (T.PP.L.pull n2.φ)} {σ : Out.H0 t.PP.L 1} {θ : LB.Sec t.PP.L} (hσ : SectionOfLineBundleOne σ θ)
     (s : LB.Sec (PPx x)) :
@@ -262,18 +263,18 @@ theorem tie_iff_onOpens (hG : Out.GlobalFnsSt) (hx : x = u ≫ p) (hu : u ≫ q 
     (∃ θ : LB.Sec t.PP.L, (∃ (σ : Out.H0 L.L 1) (θ' : LB.Sec L.L), Q σ ∧ SectionOfLineBundleOne σ θ' ∧ HEq θ θ') ∧ Comparison₂ m1 m2 θ s) ↔
       ∃ (σ : Out.H0 L.L 1) (g₁ : Gx x ⟶ t₁.G.left) (g₂ : Gx x ⟶ t.G.left) (w₂ : LB.Iso L.L (T.PP.L.pull n2.φ))
         (w₁ : LB.Iso t₁.PP.L (T.PP.L.pull n1.φ)) (w₀ : LB.Iso t₁.PP.L (Xo.univ.t.PP.L.pull n0.φ)),
-        Q σ ∧ g₁ ≫ n0.φ = (snd (Over.mk x) Xo.univ.t.G).left ∧
-        g₁ ≫ t₁.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ u ∧
-        g₂ ≫ n2.φ = g₁ ≫ n1.φ ∧ g₂ ≫ t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ f ∧
+        Q σ ∧ g₁ ≫ n0.φ = (Formalism.L2.PjFree.gxFst (x)) ∧
+        g₁ ≫ t₁.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ u ∧
+        g₂ ≫ n2.φ = g₁ ≫ n1.φ ∧ g₂ ≫ t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ f ∧
         IsRigIso n2.cm L T.PP w₂ ∧ IsRigIso n1.cm t₁.PP T.PP w₁ ∧ IsRigIso n0.cm t₁.PP Xo.univ.t.PP w₀ ∧
         OnOpens n0 n1 n2 L g₁ g₂ w₀ w₁ w₂ σ s := by
   subst hL
   obtain ⟨h, hφ, hh, hg, hg'⟩ := exists_inv m1
-  have a₁ : (h ≫ m.φ) ≫ n0.φ = (snd (Over.mk x) Xo.univ.t.G).left := by rw [Category.assoc, ← e₁, hφ]
-  have a₂ : (h ≫ m.φ) ≫ t₁.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ u := by
+  have a₁ : (h ≫ m.φ) ≫ n0.φ = (Formalism.L2.PjFree.gxFst (x)) := by rw [Category.assoc, ← e₁, hφ]
+  have a₂ : (h ≫ m.φ) ≫ t₁.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ u := by
     rw [Category.assoc, m.cart.1.w, ← Category.assoc, hh]
   have a₃ : (h ≫ m2.φ) ≫ n2.φ = (h ≫ m.φ) ≫ n1.φ := by rw [Category.assoc, Category.assoc, e₂]
-  have a₄ : (h ≫ m2.φ) ≫ t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ f := by
+  have a₄ : (h ≫ m2.φ) ≫ t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ f := by
     rw [Category.assoc, m2.cart.1.w, ← Category.assoc, hh]
   constructor
   · rintro ⟨θ, ⟨σ, θ', hQ, hσ, he⟩, hT⟩
@@ -300,7 +301,7 @@ namespace GlobalTheory.ArcQ
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NumberField CartesianMonoidalCategory
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.ArcQ
 
-theorem thetaClause_iff_thetaAlong : Out.GlobalFnsSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (th : a.D₀.P.L.Sec) (S : Type) [CommRing S] (ι : PowerSeries A →+* S) (x : Sp S ⟶ Xo.X) (z : Sp S ⟶ Xo.XF c) (t' : SAB H (Sp S)) (m1 : SABMap t' Xo.univ.t x) (m2 : SABMap t' W.t (spMap ι)) (φ : t'.G.left ⟶ Y.oF.t.G.left) (s : LB.Sec (PPx x)), z ≫ Y.j = spMap ι ≫ χ → z ≫ pullback.fst _ _ = x → φ ≫ Y.oF.t.G.hom = t'.G.hom ≫ z → φ ≫ Y.m0.toSABMap.φ = m1.φ → φ ≫ Y.m.φ = m2.φ ≫ W.m.φ → ((∃ (θ : LB.Sec W.t.PP.L) (w1 : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (w2 : LB.Iso t'.PP.L (W.t.PP.L.pull m2.φ)) (σ' : LB.Sec t'.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (W.t.PP.L.pull m2.φ)), ThetaOf W th θ ∧ RigIso m1 w1 ∧ RigIso m2 w2 ∧ IsoMaps w1 σ' s1 ∧ IsoMaps w2 σ' θ2 ∧ PullSec m2.φ θ θ2 ∧ ∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ → g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom → ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)), s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ↔ GlobalTheory.IndefiniteRowSideFullHecke.SectionsThroughEpsilonPoints.ThetaAlong W ι z th s) := by
+theorem thetaClause_iff_thetaAlong : Out.GlobalFnsSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (th : a.D₀.P.L.Sec) (S : Type) [CommRing S] (ι : PowerSeries A →+* S) (x : Sp S ⟶ Xo.X) (z : Sp S ⟶ Xo.XF c) (t' : SAB H (Sp S)) (m1 : SABMap t' Xo.univ.t x) (m2 : SABMap t' W.t (spMap ι)) (φ : t'.G.left ⟶ Y.oF.t.G.left) (s : LB.Sec (PPx x)), z ≫ Y.j = spMap ι ≫ χ → z ≫ pullback.fst _ _ = x → φ ≫ Y.oF.t.G.hom = t'.G.hom ≫ z → φ ≫ Y.m0.toSABMap.φ = m1.φ → φ ≫ Y.m.φ = m2.φ ≫ W.m.φ → ((∃ (θ : LB.Sec W.t.PP.L) (w1 : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (w2 : LB.Iso t'.PP.L (W.t.PP.L.pull m2.φ)) (σ' : LB.Sec t'.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (W.t.PP.L.pull m2.φ)), ThetaOf W th θ ∧ RigIso m1 w1 ∧ RigIso m2 w2 ∧ IsoMaps w1 σ' s1 ∧ IsoMaps w2 σ' θ2 ∧ PullSec m2.φ θ θ2 ∧ ∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ → g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom → ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)), s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ↔ GlobalTheory.IndefiniteRowSideFullHecke.SectionsThroughEpsilonPoints.ThetaAlong W ι z th s) := by
   intro hG E _ _ _ H Dw l Xo c O _ β Y A _ _ b a χ W th S _ ι x z t' m1 m2 φ s hj hx φb φ1 φ2
   subst hx
   obtain ⟨m, e₁⟩ := sabCancel pullCubCancel E H _ _ _ _ _ _ _ z Y.m0.toSABMap m1

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
@@ -34,19 +35,19 @@ theorem exists_mem_basicOpen_iff_of_isPullback {P X Y Z : Scheme.{0}} {pm : P �
 theorem secBC_nonvanishing_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (S T : Type) [CommRing S] [CommRing T] (φ : S →+* T) (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X), x' = spMap φ ≫ x → ∀ s s', SecBC φ 1 x x' s s' → ∀ p' : Sp T, (∃ (q : Gx x') (i : (PPx x').ι), Formalism.L2.PjFree.gxSnd x' q = p' ∧ q ∈ (Gx x').basicOpen (s'.f i)) ↔ ∃ (q : Gx x) (i : (PPx x).ι), Formalism.L2.PjFree.gxSnd x q = spMap φ p' ∧ q ∈ (Gx x).basicOpen (s.f i) := by
   intro E _ _ _ H Dw l Xo S T _ _ φ x x' hx s s' hbc p'
   obtain ⟨pm, h1, h2, h3⟩ := hbc
-  have hA : IsPullback (snd (Over.mk x) Xo.univ.t.G).left (fst (Over.mk x) Xo.univ.t.G).left
+  have hA : IsPullback (Formalism.L2.PjFree.gxFst (x)) (Formalism.L2.PjFree.gxSnd (x))
       Xo.univ.t.G.hom x := (IsPullback.of_hasPullback x Xo.univ.t.G.hom).flip
-  have hB : IsPullback (snd (Over.mk x') Xo.univ.t.G).left (fst (Over.mk x') Xo.univ.t.G).left
+  have hB : IsPullback (Formalism.L2.PjFree.gxFst (x')) (Formalism.L2.PjFree.gxSnd (x'))
       Xo.univ.t.G.hom x' := (IsPullback.of_hasPullback x' Xo.univ.t.G.hom).flip
-  have hP : IsPullback pm (fst (Over.mk x') Xo.univ.t.G).left (fst (Over.mk x) Xo.univ.t.G).left (spMap φ) := by
+  have hP : IsPullback pm (Formalism.L2.PjFree.gxSnd (x')) (Formalism.L2.PjFree.gxSnd (x)) (spMap φ) := by
     refine IsPullback.of_right ?_ h2 hA
     rw [h1]
     exact hx ▸ hB
   have hU : ∀ i : Fin 1 → Xo.univ.t.PP.L.ι, (PPx x').U i = pm ⁻¹ᵁ (PPx x).U i := by
     intro i
     ext y
-    change y ∈ ⋂ k : Fin 1, (snd (Over.mk x') Xo.univ.t.G).left ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) ↔
-      pm y ∈ ⋂ k : Fin 1, (snd (Over.mk x) Xo.univ.t.G).left ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
+    change y ∈ ⋂ k : Fin 1, (Formalism.L2.PjFree.gxFst (x')) ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) ↔
+      pm y ∈ ⋂ k : Fin 1, (Formalism.L2.PjFree.gxFst (x)) ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
     rw [← h1]
     simp only [Set.mem_iInter, Set.mem_preimage, Scheme.Hom.comp_apply]
   have h1' : ∀ i, scal x 1 i = 1 := fun i => by

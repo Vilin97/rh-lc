@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsCan
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.HomExtOfGeometricPoints
 import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsReducedAlgebraOfSmoothOfIsNoetherianRing
@@ -18,34 +19,34 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem mem_transKer_of_geometric
     (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l)
     (T : Type) [CommRing T] [IsReduced T] (x x' : Sp T ⟶ Xo.X) (Ψ : Gx x ⟶ Gx x') (a : Over.mk x ⟶ Xo.univ.t.G)
-    (hΨ : Ψ ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (hΨ : Ψ ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
     (hk : ∀ (Ω : Type) [Field Ω] [IsAlgClosed Ω] (χ : T →+* Ω) (x₁ x₁' : Sp Ω ⟶ Xo.X) (Ψ₁ : Gx x₁ ⟶ Gx x₁'),
       IsFib χ Ψ Ψ₁ → ∃ b ∈ transKer Xo.univ.t.G Ψ₁, b.left = spMap χ ≫ a.left) :
     a ∈ transKer Xo.univ.t.G Ψ := by
   have := Xo.univ.t.semi.smooth
   have := Xo.univ.t.semi.separated
-  have : Smooth (fst (Over.mk x) Xo.univ.t.G).left := by
+  have : Smooth (Formalism.L2.PjFree.gxSnd (x)) := by
     show Smooth (pullback.fst x Xo.univ.t.G.hom)
     infer_instance
-  have : IsSeparated (fst (Over.mk x') Xo.univ.t.G).left := by
+  have : IsSeparated (Formalism.L2.PjFree.gxSnd (x')) := by
     show IsSeparated (pullback.fst x' Xo.univ.t.G.hom)
     infer_instance
   have : IsReduced (Over.mk x).left := (affine_isReduced_iff _).2 ‹IsReduced T›
-  have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (fst (Over.mk x) Xo.univ.t.G).left
+  have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (Formalism.L2.PjFree.gxSnd (x))
   have hT : ∀ {Y : Scheme.{0}} (y : Y ⟶ Xo.X) (c : Over.mk y ⟶ Xo.univ.t.G),
-      (translT Xo.univ.t.G c).left ≫ (fst (Over.mk y) Xo.univ.t.G).left = (fst (Over.mk y) Xo.univ.t.G).left :=
+      (translT Xo.univ.t.G c).left ≫ (Formalism.L2.PjFree.gxSnd (y)) = (Formalism.L2.PjFree.gxSnd (y)) :=
     fun y c => by rw [← Over.comp_left, translT, lift_fst]
   rw [mem_transKer]
-  refine hom_ext_of_geometric_points (Gx x) (Gx x') (Sp T) (fst (Over.mk x') Xo.univ.t.G).left _ _
+  refine hom_ext_of_geometric_points (Gx x) (Gx x') (Sp T) (Formalism.L2.PjFree.gxSnd (x')) _ _
     (by rw [Category.assoc, hΨ, hT]) fun Ω _ _ q => ?_
-  let φ : CommRingCat.of T ⟶ CommRingCat.of Ω := Spec.preimage (q ≫ (fst (Over.mk x) Xo.univ.t.G).left)
+  let φ : CommRingCat.of T ⟶ CommRingCat.of Ω := Spec.preimage (q ≫ (Formalism.L2.PjFree.gxSnd (x)))
   let χ : T →+* Ω := φ.hom
-  have hχ : spMap χ = q ≫ (fst (Over.mk x) Xo.univ.t.G).left := Spec.map_preimage _
+  have hχ : spMap χ = q ≫ (Formalism.L2.PjFree.gxSnd (x)) := Spec.map_preimage _
   obtain ⟨Ψ₁, pm, pm', hp, hp', hc, h1⟩ :=
     exists_isFib χ (x₁ := spMap χ ≫ x) (x₁' := spMap χ ≫ x') rfl rfl Ψ hΨ
   obtain ⟨b, hb, hba⟩ := hk Ω χ _ _ Ψ₁ ⟨pm, pm', hp, hp', hc, h1⟩
   let q₁ : Sp Ω ⟶ Gx (spMap χ ≫ x) := ReciprocityTheory.ChartRestriction.G.PullbackSections.gxLift (spMap χ ≫ x) (𝟙 _)
-    (q ≫ (snd (Over.mk x) Xo.univ.t.G).left)
+    (q ≫ (Formalism.L2.PjFree.gxFst (x)))
     (by rw [Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.gx_w x, ← Category.assoc, ← hχ, Category.id_comp])
   have hq₁ : q₁ ≫ pm = q := by
     refine ReciprocityTheory.ChartRestriction.G.PullbackSections.gx_ext x _ _ ?_ ?_

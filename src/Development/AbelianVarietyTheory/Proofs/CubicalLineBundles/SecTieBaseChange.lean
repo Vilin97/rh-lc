@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.CMLattices.IntegralOf
 import Development.AbelianVarietyTheory.Statements.PrincipalLattices.ExistsPrincipalLattice
@@ -42,13 +43,13 @@ theorem isoMaps_iff {X X' : Scheme.{0}} {L : LB X} {L' : LB X'} {F : X' ⟶ X} (
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {t : SAB H (Sp S)} (m : SABMap t Xo.univ.t x)
 
-theorem exists_canon : ∃ g : t.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ ∧
-    g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t.G.hom := by
+theorem exists_canon : ∃ g : t.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ ∧
+    g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t.G.hom := by
   let a₀ : Over.mk (t.G.hom ≫ x) ⟶ Over.mk x := Over.homMk t.G.hom rfl
   let b₀ : Over.mk (t.G.hom ≫ x) ⟶ Xo.univ.t.G := Over.homMk m.φ m.cart.1.w
   exact ⟨(lift a₀ b₀).left, congrArg (fun q => q.left) (lift_snd a₀ b₀), congrArg (fun q => q.left) (lift_fst a₀ b₀)⟩
 
-theorem canon_mem {g : t.G.left ⟶ Gx x} (hg : g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ)
+theorem canon_mem {g : t.G.left ⟶ Gx x} (hg : g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ)
     (j : Xo.univ.t.PP.L.ι) (y : t.G.left) (hy : m.φ y ∈ Xo.univ.t.PP.L.U j) : g y ∈ (PPx x).U (fun _ => j) :=
   Set.mem_iInter.2 fun _ => (congrArg (fun q => q y ∈ Xo.univ.t.PP.L.U j) hg).mpr hy
 
@@ -61,7 +62,7 @@ theorem rigIso_unique {w w' : LB.Iso t.PP.L (Xo.univ.t.PP.L.pull m.φ)} (h : Rig
     t.G.hom (eSec t.G) (Over.w η[t.G]) (GlobalTheory.globalFns_holds _ _ hab).2 h.1 h'.1 h.2 h'.2
 
 theorem secTie_iff {w : LB.Iso t.PP.L (Xo.univ.t.PP.L.pull m.φ)} (hw : RigIso m w) {g : t.G.left ⟶ Gx x}
-    (hs : g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ) (hf : g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t.G.hom)
+    (hs : g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ) (hf : g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t.G.hom)
     (th : LB.Sec t.PP.L) (s : LB.Sec (PPx x)) :
     SecTie m th s ↔ ∀ (Z : Scheme.{0}) (r : Z ⟶ t.G.left) (z : Z) (j : Xo.univ.t.PP.L.ι) (k : t.PP.L.ι),
       m.φ (r z) ∈ Xo.univ.t.PP.L.U j → r z ∈ t.PP.L.U k →
@@ -97,7 +98,7 @@ theorem secTie_scale {th th' : LB.Sec t.PP.L} {s s' : LB.Sec (PPx x)} (h : SecTi
     have a₁ : (r ≫ g) z ∈ (PPx x).U (fun _ => j) := canon_mem m hs j _ hj
     rw [gs_mul _ z _ hk, gs_constFn _ _ _ z hk, mul_left_comm]
     refine (congrArg (gs _ z _) (hs' _)).trans ((gs_mul _ z _ a₁ _ _).trans (congrArg₂ (· * ·) ?_ (h Z r z j k hj hk)))
-    exact (gs_constFn (fst (Over.mk x) Xo.univ.t.G).left _ _ z a₁ a).trans (by rw [Category.assoc, hf])
+    exact (gs_constFn (Formalism.L2.PjFree.gxSnd (x)) _ _ z a₁ a).trans (by rw [Category.assoc, hf])
   constructor
   · intro h' k
     refine fn_ext fun y hy => ?_

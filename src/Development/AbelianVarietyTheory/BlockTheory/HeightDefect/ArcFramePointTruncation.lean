@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
 import Formalism.LocalToGlobal.ProjectiveLattices.VAtVNeBot
@@ -180,9 +181,9 @@ def ThetaAlong (W : Wit Y a χ) (ρ : PowerSeries A →+* S) {x : Sp S ⟶ Xo.X}
     (w₂ : LB.Iso W.P.U.LG.L (Y.t.PP.L.pull W.m.φ)) (w₁ : LB.Iso Y.oF.t.PP.L (Y.t.PP.L.pull Y.m.φ))
     (w₀ : LB.Iso Y.oF.t.PP.L (Xo.univ.t.PP.L.pull Y.m0.toSABMap.φ)),
     ThetaId W th σ ∧
-    g₁ ≫ Y.m0.toSABMap.φ = (snd (Over.mk x) Xo.univ.t.G).left ∧
-    g₁ ≫ Y.oF.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ yF ∧
-    g₂ ≫ W.m.φ = g₁ ≫ Y.m.φ ∧ g₂ ≫ W.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ spMap ρ ∧
+    g₁ ≫ Y.m0.toSABMap.φ = (Formalism.L2.PjFree.gxFst (x)) ∧
+    g₁ ≫ Y.oF.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ yF ∧
+    g₂ ≫ W.m.φ = g₁ ≫ Y.m.φ ∧ g₂ ≫ W.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ spMap ρ ∧
     IsRigIso W.m.cm W.P.U.LG Y.t.PP w₂ ∧ IsRigIso Y.m.cm Y.oF.t.PP Y.t.PP w₁ ∧
     IsRigIso Y.m0.toSABMap.cm Y.oF.t.PP Xo.univ.t.PP w₀ ∧
     ∀ (j : Y.t.PP.L.ι) (k : W.P.U.LG.L.ι) (k₁ : Y.oF.t.PP.L.ι) (j₀ : Xo.univ.t.PP.L.ι) (V : (Gx x).Opens)

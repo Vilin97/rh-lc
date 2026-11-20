@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.HeckeFr
 import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.FibrePushforward
@@ -167,7 +168,7 @@ theorem exists_pointHom (h : IsLinHom ψ) :
       ∀ r a, ψp (a ≫ Xo.univ.t.act.act r) = ψp a ≫ Xo.univ.t.act.act r := by
   obtain ⟨h0, hm, ha⟩ := h
   let f : (Over.mk x ⟶ Xo.univ.t.G) → (Over.mk x' ⟶ Xo.univ.t.G) := fun a =>
-    Over.homMk ((lift (𝟙 (Over.mk x)) a).left ≫ ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left) (by
+    Over.homMk ((lift (𝟙 (Over.mk x)) a).left ≫ ψ ≫ (Formalism.L2.PjFree.gxFst (x'))) (by
       simp only [Category.assoc]
       rw [snd_hom, reassoc_of% h0, lift_l_fst_assoc]
       exact Category.id_comp _)
@@ -193,7 +194,7 @@ section Geom
 variable {Ω : Type} [Field Ω] [IsAlgClosed Ω] {x x' : Sp Ω ⟶ Xo.X} {ψ : Gx x ⟶ Gx x'}
 
 theorem isLinHom_of_pointHom
-    (h0 : ψ ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (h0 : ψ ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
     (ψp : (Over.mk x ⟶ Xo.univ.t.G) →* (Over.mk x' ⟶ Xo.univ.t.G)) (hf : ∀ a, Sends ψ a (ψp a))
     (ha : ∀ r a, ψp (a ≫ Xo.univ.t.act.act r) = ψp a ≫ Xo.univ.t.act.act r) : IsLinHom ψ := by
   have := Xo.univ.t.semi.smooth
@@ -231,19 +232,19 @@ theorem isLinHom_of_pointHom
       Over.OverMorphism.ext (h₂.trans (by rw [e₂, push_res]; rfl))
     rw [e₁, e₂, f₁, f₂, ← MonObj.comp_mul, ← MonObj.comp_mul, push_res, ← key]
     rfl
-  · have : Smooth (fst (Over.mk x) Xo.univ.t.G).left := by
+  · have : Smooth (Formalism.L2.PjFree.gxSnd (x)) := by
       show Smooth (pullback.fst x Xo.univ.t.G.hom)
       infer_instance
-    have : IsSeparated (fst (Over.mk x') Xo.univ.t.G).left := by
+    have : IsSeparated (Formalism.L2.PjFree.gxSnd (x')) := by
       show IsSeparated (pullback.fst x' Xo.univ.t.G.hom)
       infer_instance
     have : IsReduced (Over.mk x).left := inferInstanceAs (IsReduced (Sp Ω))
-    have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (fst (Over.mk x) Xo.univ.t.G).left
-    have hw : ∀ z : Sp Ω ⟶ Xo.X, (Over.mk z ◁ Xo.univ.t.act.act r).left ≫ (fst (Over.mk z) Xo.univ.t.G).left =
-        (fst (Over.mk z) Xo.univ.t.G).left := fun z => by rw [← Over.comp_left, whiskerLeft_fst]
-    refine ext_of_points (fst (Over.mk x) Xo.univ.t.G).left (fst (Over.mk x') Xo.univ.t.G).left
+    have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (Formalism.L2.PjFree.gxSnd (x))
+    have hw : ∀ z : Sp Ω ⟶ Xo.X, (Over.mk z ◁ Xo.univ.t.act.act r).left ≫ (Formalism.L2.PjFree.gxSnd (z)) =
+        (Formalism.L2.PjFree.gxSnd (z)) := fun z => by rw [← Over.comp_left, whiskerLeft_fst]
+    refine ext_of_points (Formalism.L2.PjFree.gxSnd (x)) (Formalism.L2.PjFree.gxSnd (x'))
       (by rw [Category.assoc, Category.assoc, h0, hw, hw, h0]) fun q hq => ?_
-    let a : Over.mk x ⟶ Xo.univ.t.G := Over.homMk (q ≫ (snd (Over.mk x) Xo.univ.t.G).left) (by
+    let a : Over.mk x ⟶ Xo.univ.t.G := Over.homMk (q ≫ (Formalism.L2.PjFree.gxFst (x))) (by
       rw [Category.assoc, snd_hom, reassoc_of% hq]; rfl)
     have e : q = (lift (𝟙 (Over.mk x)) a).left := by
       refine gx_ext ?_ ?_

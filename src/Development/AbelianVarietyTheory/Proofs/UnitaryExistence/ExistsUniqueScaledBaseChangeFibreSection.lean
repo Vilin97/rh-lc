@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
@@ -29,15 +30,15 @@ variable {Xo : Moduli Dw l}
 
 theorem ppx_chart_le {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (pm : Gx x' ⟶ Gx x)
-    (hs : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
+    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
     (i : Fin 1 → Xo.univ.t.PP.L.ι) : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i := by
   intro p hp
-  have hp' : ∀ k, p ∈ (snd (Over.mk x') Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) :=
+  have hp' : ∀ k, p ∈ (Formalism.L2.PjFree.gxFst (x')).base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) :=
     Set.mem_iInter.1 hp
   have e := congrArg (fun f : Gx x' ⟶ Xo.univ.t.G.left => f.base p) hs
-  show pm.base p ∈ ⋂ k, (snd (Over.mk x) Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
+  show pm.base p ∈ ⋂ k, (Formalism.L2.PjFree.gxFst (x)).base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
   refine Set.mem_iInter.2 fun k => ?_
-  show (pm ≫ (snd (Over.mk x) Xo.univ.t.G).left).base p ∈ (Xo.univ.t.PP.L.U (i k) : Set _)
+  show (pm ≫ (Formalism.L2.PjFree.gxFst (x))).base p ∈ (Xo.univ.t.PP.L.U (i k) : Set _)
   rw [e]
   exact hp' k
 
@@ -60,20 +61,20 @@ def gxMap {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ 
 
 theorem gxMap_snd {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X)
     (h : spMap ψ ≫ x = x') :
-    gxMap ψ x x' h ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left := by
+    gxMap ψ x x' h ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')) := by
   unfold gxMap
   rw [← Over.comp_left, whiskerRight_snd]
 
 theorem gxMap_fst {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X)
     (h : spMap ψ ≫ x = x') :
-    gxMap ψ x x' h ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap ψ := by
+    gxMap ψ x x' h ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap ψ := by
   unfold gxMap
   rw [← Over.comp_left, whiskerRight_fst, Over.comp_left]
   rfl
 
 theorem gx_hom_ext {S : Type} [CommRing S] {W : Scheme.{0}} {x : Sp S ⟶ Xo.X} (f₁ f₂ : W ⟶ Gx x)
-    (h₁ : f₁ ≫ (fst (Over.mk x) Xo.univ.t.G).left = f₂ ≫ (fst (Over.mk x) Xo.univ.t.G).left)
-    (h₂ : f₁ ≫ (snd (Over.mk x) Xo.univ.t.G).left = f₂ ≫ (snd (Over.mk x) Xo.univ.t.G).left) : f₁ = f₂ :=
+    (h₁ : f₁ ≫ (Formalism.L2.PjFree.gxSnd (x)) = f₂ ≫ (Formalism.L2.PjFree.gxSnd (x)))
+    (h₂ : f₁ ≫ (Formalism.L2.PjFree.gxFst (x)) = f₂ ≫ (Formalism.L2.PjFree.gxFst (x))) : f₁ = f₂ :=
   Over.tensorObj_ext f₁ f₂ h₁ h₂
 
 def scalSec {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a : S) (s : LB.Sec (PPx x)) : LB.Sec (PPx x) where
@@ -87,7 +88,7 @@ theorem existsUnique_secBC : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   have hs := gxMap_snd φ x x' hx.symm
   have hf := gxMap_fst φ x x' hx.symm
   obtain ⟨s', hs'⟩ := exists_pull_linComb Xo.univ.t.PP.L (K := Fin 1)
-    (fun _ => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => (snd (Over.mk x') Xo.univ.t.G).left) _
+    (fun _ => (Formalism.L2.PjFree.gxFst (x))) (fun _ => (Formalism.L2.PjFree.gxFst (x'))) _
     (gxMap φ x x' hx.symm) (funext fun _ => hs) (scalSec x a s)
   refine ⟨s', ⟨_, hs, hf, hs'⟩, ?_⟩
   rintro t ⟨pm, ps, pf, ht⟩

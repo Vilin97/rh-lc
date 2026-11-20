@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Formalism.LocalToGlobal.ProjectiveLattices.VAtVNeBot
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabComp
@@ -64,8 +65,8 @@ def ThetaFrameSt : Prop :=
           (σ : LB.Sec t'.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (G.PP.L.pull m2.φ)),
           RigIso m1 w1 ∧ RigIso m2 w2 ∧ IsoMaps w1 σ s1 ∧ IsoMaps w2 σ θ2 ∧ PullSec m2.φ θ θ2 ∧
           ∀ g : t'.G.left ⟶ Gx (z ≫ pullback.fst _ _),
-            g ≫ (snd (Over.mk (z ≫ pullback.fst _ _)) Xo.univ.t.G).left = m1.φ →
-            g ≫ (fst (Over.mk (z ≫ pullback.fst _ _)) Xo.univ.t.G).left = t'.G.hom →
+            g ≫ (Formalism.L2.PjFree.gxFst ((z ≫ pullback.fst _ _))) = m1.φ →
+            g ≫ (Formalism.L2.PjFree.gxSnd ((z ≫ pullback.fst _ _))) = t'.G.hom →
             ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx (z ≫ pullback.fst _ _)).U (fun _ => j PUnit.unit)),
               s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ∧
         (∀ s' : LB.Sec (PPx (z ≫ pullback.fst _ _)), ∃! a : T.Fr, ∀ i,

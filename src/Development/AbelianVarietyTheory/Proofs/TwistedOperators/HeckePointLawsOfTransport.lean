@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsHkIsogEtaleUnique
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedPointBaseChangeUniqueReflIff
@@ -136,8 +137,8 @@ theorem existsUnique_tanMap (h : IsLinHom Ψ) [Etale Ψ] {w : tEps x' ⟶ Xo.uni
       · rw [tanMap_left, push, reassoc_of% e, toFib_snd]
   obtain ⟨v, ⟨h₁, h₂⟩, hu⟩ := LieEtale.existsUnique_dual_lift Ψ (toFib x' (epsBase Ω) w)
     (lift (𝟙 (Over.mk x)) (1 : Over.mk x ⟶ Xo.univ.t.G)).left ((sends_one h).trans ((e₀ x' w).1 hw).symm)
-  have hv : v ≫ (fst (Over.mk x) Xo.univ.t.G).left = epsBase Ω := by rw [← h.1, reassoc_of% h₂, toFib_fst]
-  let a : tEps x ⟶ Xo.univ.t.G := Over.homMk (v ≫ (snd (Over.mk x) Xo.univ.t.G).left) (by
+  have hv : v ≫ (Formalism.L2.PjFree.gxSnd (x)) = epsBase Ω := by rw [← h.1, reassoc_of% h₂, toFib_fst]
+  let a : tEps x ⟶ Xo.univ.t.G := Over.homMk (v ≫ (Formalism.L2.PjFree.gxFst (x))) (by
     rw [Category.assoc, snd_hom, reassoc_of% hv]; rfl)
   have ha : toFib x (epsBase Ω) a = v := gx_ext (by rw [toFib_fst, hv]) (by rw [toFib_snd]; rfl)
   refine ⟨a, ⟨(e₀ x a).2 (by rw [ha, h₁]), (e₁ a).2 (by rw [ha, h₂])⟩, fun b hb => Over.OverMorphism.ext ?_⟩

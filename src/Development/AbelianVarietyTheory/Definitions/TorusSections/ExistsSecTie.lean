@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ThetaValues.IsNullVal
 import Development.AbelianVarietyTheory.Definitions.Uniformization.AllDV
@@ -36,8 +37,8 @@ structure IntSec (Xo : Moduli Dw l) (V : Type) [CommRing V] [IsDomain V] (x : Sp
   maps1 : IsoMaps w1 σ s1
   maps2 : IsoMaps w2 σ θ2
   pull : PullSec m2.φ θ θ2
-  gen1 : ∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
-    g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom →
+  gen1 : ∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
+    g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom →
     ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
       s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))
 
@@ -113,11 +114,11 @@ variable {Xo : Moduli Dw l} {R : Type} [CommRing R] [IsDomain R] {x : Sp (Fracti
 def Fib.SecTie (Φ : Fib Xo x A) (xF : Sp F ⟶ Xo.X) (s : LB.Sec (PPx xF)) (th : GlobalTheory.UT.SecA A F 1) : Prop :=
   xF = jFK (R := R) F ≫ x ∧
   ∀ (Z : Scheme.{0}) (r : Z ⟶ (TFK (R := R) F ⊗ A.A).left) (r' : Z ⟶ Gx xF),
-    r' ≫ (snd (Over.mk xF) Xo.univ.t.G).left = r ≫ (snd (TFK (R := R) F) A.A).left ≫ Φ.φ →
-    r' ≫ (fst (Over.mk xF) Xo.univ.t.G).left = r ≫ (fst (TFK (R := R) F) A.A).left →
+    r' ≫ (Formalism.L2.PjFree.gxFst (xF)) = r ≫ (snd (TFK (R := R) F) A.A).left ≫ Φ.φ →
+    r' ≫ (Formalism.L2.PjFree.gxSnd (xF)) = r ≫ (fst (TFK (R := R) F) A.A).left →
     ∀ (z : Z) (JA) (J), Good A.L z JA → Good Xo.univ.t.PP.L z J →
-      sval (L := Xo.univ.t.PP.L) (φ := fun _ : Fin 1 => (snd (Over.mk xF) Xo.univ.t.G).left) (ε := fun _ => 1) s r' z J =
-        (gw Φ.ω (r ≫ (snd (TFK (R := R) F) A.A).left) z (J (r' ≫ (snd (Over.mk xF) Xo.univ.t.G).left))
+      sval (L := Xo.univ.t.PP.L) (φ := fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (xF))) (ε := fun _ => 1) s r' z J =
+        (gw Φ.ω (r ≫ (snd (TFK (R := R) F) A.A).left) z (J (r' ≫ (Formalism.L2.PjFree.gxFst (xF))))
           (JA (r ≫ (snd (TFK (R := R) F) A.A).left))).val * GlobalTheory.UT.sA th r z JA
 
 theorem Fib.SecTie.pt_eq {Φ : Fib Xo x A} {xF : Sp F ⟶ Xo.X} {s : LB.Sec (PPx xF)} {th : GlobalTheory.UT.SecA A F 1}
@@ -134,12 +135,12 @@ theorem Fib.SecTie.unique {Φ : Fib Xo x A} {xF : Sp F ⟶ Xo.X} {s s' : LB.Sec 
     (by rw [← pullback.condition, Category.assoc])
   let r : (Over.mk (jFK (R := R) F ≫ x) ⊗ Xo.univ.t.G).left ⟶ (TFK (R := R) F ⊗ A.A).left :=
     pullback.lift (pullback.fst (jFK (R := R) F ≫ x) Xo.univ.t.G.hom) a (Φ.cart.1.lift_snd _ _ _).symm
-  have e1 : 𝟙 _ ≫ (snd (Over.mk (jFK (R := R) F ≫ x)) Xo.univ.t.G).left =
+  have e1 : 𝟙 _ ≫ (Formalism.L2.PjFree.gxFst ((jFK (R := R) F ≫ x))) =
       r ≫ (snd (TFK (R := R) F) A.A).left ≫ Φ.φ := by
     change 𝟙 _ ≫ pullback.snd _ _ = r ≫ pullback.snd _ _ ≫ Φ.φ
     rw [Category.id_comp, ← Category.assoc, pullback.lift_snd, IsPullback.lift_fst]
     rfl
-  have e2 : 𝟙 _ ≫ (fst (Over.mk (jFK (R := R) F ≫ x)) Xo.univ.t.G).left = r ≫ (fst (TFK (R := R) F) A.A).left := by
+  have e2 : 𝟙 _ ≫ (Formalism.L2.PjFree.gxSnd ((jFK (R := R) F ≫ x))) = r ≫ (fst (TFK (R := R) F) A.A).left := by
     change 𝟙 _ ≫ pullback.fst _ _ = r ≫ pullback.fst _ _
     rw [Category.id_comp, pullback.lift_fst]
     rfl
@@ -157,16 +158,16 @@ theorem Fib.exists_secTie (Φ : Fib Xo x A) {xF : Sp F ⟶ Xo.X} (hx : xF = jFK 
     pullback.lift (pullback.fst (TFK (R := R) F).hom A.A.hom) (pullback.snd (TFK (R := R) F).hom A.A.hom ≫ Φ.φ)
       (by simp only [Category.assoc, Φ.cart.1.w]; exact pullback.condition_assoc x)
   have hψ : ∀ _k : Fin 1, (snd (TFK (R := R) F) A.A).left ≫ Φ.φ =
-      hm ≫ (snd (Over.mk (jFK (R := R) F ≫ x)) Xo.univ.t.G).left := fun _ => (pullback.lift_snd _ _ _).symm
+      hm ≫ (Formalism.L2.PjFree.gxFst ((jFK (R := R) F ≫ x))) := fun _ => (pullback.lift_snd _ _ _).symm
   obtain ⟨th, hth⟩ := GlobalTheory.ConstFam.exists_secThrough (w := Φ.ω) (ε := fun _ => 1) Φ.ωgen Xo.univ.t.PP.isLB A.isLB hψ s
   refine ⟨th, rfl, ?_⟩
   intro Z r r' h1 h2 z JA J hJA hJ
   have hr : r' = r ≫ hm := by
     refine pullback.hom_ext ?_ ?_
-    · change r' ≫ (fst (Over.mk (jFK (R := R) F ≫ x)) Xo.univ.t.G).left = _
+    · change r' ≫ (Formalism.L2.PjFree.gxSnd ((jFK (R := R) F ≫ x))) = _
       rw [h2, Category.assoc]
       exact (congrArg (r ≫ ·) (pullback.lift_fst _ _ _)).symm
-    · change r' ≫ (snd (Over.mk (jFK (R := R) F ≫ x)) Xo.univ.t.G).left = _
+    · change r' ≫ (Formalism.L2.PjFree.gxFst ((jFK (R := R) F ≫ x))) = _
       rw [h1, Category.assoc]
       exact (congrArg (r ≫ ·) (pullback.lift_snd _ _ _)).symm
   subst hr

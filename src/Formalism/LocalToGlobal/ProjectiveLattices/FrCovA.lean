@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
 import Formalism.LocalToGlobal.ProjectiveLattices.LocFrLoc
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.GenBCFrameR
@@ -123,17 +124,17 @@ def Rl (y : FrPt Xo c R) (a : R →ₐ[c.F] T) (M : Mx Dw T) (t : T) (z : FrPt X
 variable {y : FrPt Xo c R} {a : R →ₐ[c.F] T} {M M' N : Mx Dw T} {t t' r : T} {z z' : FrPt Xo c T} {w : FrPt Xo c T'}
 
 theorem pm_ext {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {Z : Scheme.{0}} {p q : Z ⟶ Gx x}
-    (h₁ : p ≫ (fst (Over.mk x) Xo.univ.t.G).left = q ≫ (fst (Over.mk x) Xo.univ.t.G).left)
-    (h₂ : p ≫ (snd (Over.mk x) Xo.univ.t.G).left = q ≫ (snd (Over.mk x) Xo.univ.t.G).left) : p = q := by
+    (h₁ : p ≫ (Formalism.L2.PjFree.gxSnd (x)) = q ≫ (Formalism.L2.PjFree.gxSnd (x)))
+    (h₂ : p ≫ (Formalism.L2.PjFree.gxFst (x)) = q ≫ (Formalism.L2.PjFree.gxFst (x))) : p = q := by
   apply pullback.hom_ext
   · first | exact h₁ | simpa using h₁
   · first | exact h₂ | simpa using h₂
 
 theorem exists_pm {S S' : Type} [CommRing S] [CommRing S'] {x : Sp S ⟶ Xo.X} {x' : Sp S' ⟶ Xo.X} (g : Sp S' ⟶ Sp S)
-    (h : x' = g ≫ x) : ∃ pm : Gx x' ⟶ Gx x, pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left ∧
-      pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ g := by
+    (h : x' = g ≫ x) : ∃ pm : Gx x' ⟶ Gx x, pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')) ∧
+      pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ g := by
   subst h
-  refine ⟨pullback.lift ((fst (Over.mk (g ≫ x)) Xo.univ.t.G).left ≫ g) (snd (Over.mk (g ≫ x)) Xo.univ.t.G).left ?_, ?_, ?_⟩
+  refine ⟨pullback.lift ((Formalism.L2.PjFree.gxSnd ((g ≫ x))) ≫ g) (Formalism.L2.PjFree.gxFst ((g ≫ x))) ?_, ?_, ?_⟩
   · rw [Category.assoc]
     exact pullback.condition
   · exact pullback.lift_snd _ _ _

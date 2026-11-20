@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsFramedPointChangedByLetters
 import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
@@ -203,20 +204,20 @@ variable {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {S : Type} [CommRing S]
 
 theorem exists_comparison (m : SABMap t' Xo.univ.t x) {w : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m.φ)}
     {σ : LB.Sec t'.PP.L} {s1 : LB.Sec (Xo.univ.t.PP.L.pull m.φ)} {s : LB.Sec (PPx x)} (hI : IsoMaps w σ s1)
-    (hs : ∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ →
-      g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom →
+    (hs : ∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ →
+      g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom →
       ∀ j (h : (Xo.univ.t.PP.L.pull m.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
         s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) :
-    ∃ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ ∧
-      g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom ∧
+    ∃ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ ∧
+      g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom ∧
       ∀ (Z : Scheme.{0}) (r : Z ⟶ t'.G.left) (z : Z) (j : Xo.univ.t.PP.L.ι) (k : t'.PP.L.ι),
         m.φ (r z) ∈ Xo.univ.t.PP.L.U j → r z ∈ t'.PP.L.U k →
         gs (r ≫ g) z ((PPx x).U (fun _ => j)) (s.f (fun _ => j)) = (gw w r z j k).val * gs r z _ (σ.f k) := by
   let a0 : Over.mk (t'.G.hom ≫ x) ⟶ Over.mk x := Over.homMk t'.G.hom rfl
   let b0 : Over.mk (t'.G.hom ≫ x) ⟶ Xo.univ.t.G := Over.homMk m.φ m.cart.1.w
   let g0 : t'.G.left ⟶ Gx x := (lift a0 b0).left
-  have g0f : g0 ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom := congrArg (fun q => q.left) (lift_fst a0 b0)
-  have g0s : g0 ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ := congrArg (fun q => q.left) (lift_snd a0 b0)
+  have g0f : g0 ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom := congrArg (fun q => q.left) (lift_fst a0 b0)
+  have g0s : g0 ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ := congrArg (fun q => q.left) (lift_snd a0 b0)
   refine ⟨g0, g0s, g0f, fun Z r z j k hj hk => ?_⟩
   have le : (Xo.univ.t.PP.L.pull m.φ).U (fun _ => j) ≤ g0 ⁻¹ᵁ (PPx x).U (fun _ => j) := fun y hy =>
     Set.mem_iInter.2 fun _ => (congrArg (fun q => q y ∈ Xo.univ.t.PP.L.U j) g0s).mpr (mem_pull.1 hy)
@@ -228,7 +229,7 @@ theorem exists_comparison (m : SABMap t' Xo.univ.t x) {w : LB.Iso t'.PP.L (Xo.un
 
 theorem gen_of_secGen (m : SABMap t' Xo.univ.t x) {w : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m.φ)} (hw : PGen w)
     {σ : LB.Sec t'.PP.L} {s : LB.Sec (PPx x)} (hgen : SecGen x s) {g : t'.G.left ⟶ Gx x}
-    (gs' : g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ) (gf : g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom)
+    (gs' : g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ) (gf : g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom)
     (K : ∀ (Z : Scheme.{0}) (r : Z ⟶ t'.G.left) (z : Z) (j : Xo.univ.t.PP.L.ι) (k : t'.PP.L.ι),
         m.φ (r z) ∈ Xo.univ.t.PP.L.U j → r z ∈ t'.PP.L.U k →
         gs (r ≫ g) z ((PPx x).U (fun _ => j)) (s.f (fun _ => j)) = (gw w r z j k).val * gs r z _ (σ.f k))

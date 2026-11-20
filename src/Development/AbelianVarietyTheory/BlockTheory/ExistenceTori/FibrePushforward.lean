@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
 import Formalism.LocalToGlobal.ProjectiveLattices.HeckeStabSet
@@ -28,14 +29,14 @@ def toFib (x : Sp Ω ⟶ Xo.X) {T : Scheme.{0}} (t : T ⟶ Sp Ω) (a : Over.mk (
 
 def push {x x' : Sp Ω ⟶ Xo.X} (ψ : Gx x ⟶ Gx x') {T : Scheme.{0}} (t : T ⟶ Sp Ω)
     (a : Over.mk (t ≫ x) ⟶ Xo.univ.t.G) : T ⟶ Xo.univ.t.G.left :=
-  toFib x t a ≫ ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left
+  toFib x t a ≫ ψ ≫ (Formalism.L2.PjFree.gxFst (x'))
 
 def Sends {x x' : Sp Ω ⟶ Xo.X} (ψ : Gx x ⟶ Gx x') (a : Over.mk x ⟶ Xo.univ.t.G) (b : Over.mk x' ⟶ Xo.univ.t.G) :
     Prop :=
   (lift (𝟙 (Over.mk x)) a).left ≫ ψ = (lift (𝟙 (Over.mk x')) b).left
 
 def IsLinHom {x x' : Sp Ω ⟶ Xo.X} (ψ : Gx x ⟶ Gx x') : Prop :=
-  ψ ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left ∧
+  ψ ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)) ∧
   (∀ (T : Scheme.{0}) (t : T ⟶ Sp Ω) (a₁ a₂ : Over.mk (t ≫ x) ⟶ Xo.univ.t.G)
       (b₁ b₂ : Over.mk (t ≫ x') ⟶ Xo.univ.t.G),
     b₁.left = push ψ t a₁ → b₂.left = push ψ t a₂ → (b₁ * b₂).left = push ψ t (a₁ * a₂)) ∧

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
@@ -24,52 +25,52 @@ theorem spMap_id' (A : Type) [CommRing A] : spMap (RingHom.id A) = 𝟙 _ := by
 theorem scal_mul' {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a b : S) (i : (PPx x).ι) :
     scal x (a * b) i = scal x a i * scal x b i := by
   show ((Gx x).presheaf.map (homOfLE le_top).op).hom
-      ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S (a * b))) = _
+      ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom (toΓ S (a * b))) = _
   rw [map_mul, map_mul, map_mul]
   rfl
 
 theorem scal_add' {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a b : S) (i : (PPx x).ι) :
     scal x (a + b) i = scal x a i + scal x b i := by
   show ((Gx x).presheaf.map (homOfLE le_top).op).hom
-      ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S (a + b))) = _
+      ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom (toΓ S (a + b))) = _
   rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   rfl
 
 theorem scal_one' {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (i : (PPx x).ι) :
     scal x 1 i = 1 := by
   show ((Gx x).presheaf.map (homOfLE le_top).op).hom
-      ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S 1)) = _
+      ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom (toΓ S 1)) = _
   rw [map_one, map_one, map_one]
 
 theorem ppx_le {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (pm : Gx x' ⟶ Gx x)
-    (hs : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
+    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
     (i : Fin 1 → Xo.univ.t.PP.L.ι) : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i := by
   intro p hp
-  have hp' : ∀ k, p ∈ (snd (Over.mk x') Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) :=
+  have hp' : ∀ k, p ∈ (Formalism.L2.PjFree.gxFst (x')).base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) :=
     Set.mem_iInter.1 hp
   have e := congrArg (fun f : Gx x' ⟶ Xo.univ.t.G.left => f.base p) hs
-  show pm.base p ∈ ⋂ k, (snd (Over.mk x) Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
+  show pm.base p ∈ ⋂ k, (Formalism.L2.PjFree.gxFst (x)).base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
   refine Set.mem_iInter.2 fun k => ?_
-  show (pm ≫ (snd (Over.mk x) Xo.univ.t.G).left).base p ∈ (Xo.univ.t.PP.L.U (i k) : Set _)
+  show (pm ≫ (Formalism.L2.PjFree.gxFst (x))).base p ∈ (Xo.univ.t.PP.L.U (i k) : Set _)
   rw [e]
   exact hp' k
 
 theorem scal_pull' {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (pm : Gx x' ⟶ Gx x)
-    (hf : pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap φ)
+    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap φ)
     (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i) (a : S) :
     (pm.appLE _ _ h).hom (scal x a i) = scal x' (φ a) i := by
-  have key : ∀ (q : Gx x' ⟶ Sp S), q = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap φ →
+  have key : ∀ (q : Gx x' ⟶ Sp S), q = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap φ →
       ∀ e : (PPx x').U i ≤ q ⁻¹ᵁ ⊤,
-      q.appLE ⊤ ((PPx x').U i) e = (spMap φ).appTop ≫ (fst (Over.mk x') Xo.univ.t.G).left.appLE ⊤ _ (le_top) := by
+      q.appLE ⊤ ((PPx x').U i) e = (spMap φ).appTop ≫ (Formalism.L2.PjFree.gxSnd (x')).appLE ⊤ _ (le_top) := by
     rintro q rfl e
     exact Scheme.Hom.comp_appLE _ _ _ _ _
-  have M : (fst (Over.mk x) Xo.univ.t.G).left.appTop ≫ (Gx x).presheaf.map (homOfLE le_top).op ≫ pm.appLE _ _ h =
-      (spMap φ).appTop ≫ (fst (Over.mk x') Xo.univ.t.G).left.appTop ≫ (Gx x').presheaf.map (homOfLE le_top).op := by
+  have M : (Formalism.L2.PjFree.gxSnd (x)).appTop ≫ (Gx x).presheaf.map (homOfLE le_top).op ≫ pm.appLE _ _ h =
+      (spMap φ).appTop ≫ (Formalism.L2.PjFree.gxSnd (x')).appTop ≫ (Gx x').presheaf.map (homOfLE le_top).op := by
     rw [Scheme.Hom.map_appLE]
-    have e1 : (fst (Over.mk x) Xo.univ.t.G).left.appTop =
-        (fst (Over.mk x) Xo.univ.t.G).left.appLE ⊤ ⊤ le_top := (Scheme.Hom.appLE_eq_app _).symm
+    have e1 : (Formalism.L2.PjFree.gxSnd (x)).appTop =
+        (Formalism.L2.PjFree.gxSnd (x)).appLE ⊤ ⊤ le_top := (Scheme.Hom.appLE_eq_app _).symm
     rw [e1]
     exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).trans ((key _ hf _).trans rfl)
   have M' := congrArg (fun f => f.hom (toΓ S a)) M
@@ -77,21 +78,21 @@ theorem scal_pull' {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x : 
   have N := congrArg (fun f => f.hom a) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom φ))
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at N
   show (pm.appLE _ _ h).hom (((Gx x).presheaf.map (homOfLE le_top).op).hom
-      ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S a))) =
-    ((Gx x').presheaf.map (homOfLE le_top).op).hom ((fst (Over.mk x') Xo.univ.t.G).left.appTop.hom (toΓ T (φ a)))
+      ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom (toΓ S a))) =
+    ((Gx x').presheaf.map (homOfLE le_top).op).hom ((Formalism.L2.PjFree.gxSnd (x')).appTop.hom (toΓ T (φ a)))
   rw [M']
   congr 2
   exact N.symm
 
 theorem pm_ext {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {Y : Scheme.{0}} (p q : Y ⟶ Gx x)
-    (hs : p ≫ (snd (Over.mk x) Xo.univ.t.G).left = q ≫ (snd (Over.mk x) Xo.univ.t.G).left)
-    (hf : p ≫ (fst (Over.mk x) Xo.univ.t.G).left = q ≫ (fst (Over.mk x) Xo.univ.t.G).left) : p = q :=
+    (hs : p ≫ (Formalism.L2.PjFree.gxFst (x)) = q ≫ (Formalism.L2.PjFree.gxFst (x)))
+    (hf : p ≫ (Formalism.L2.PjFree.gxSnd (x)) = q ≫ (Formalism.L2.PjFree.gxSnd (x))) : p = q :=
   pullback.hom_ext (f := (Over.mk x).hom) (g := Xo.univ.t.G.hom) hf hs
 
 theorem pm_exists {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (hx : x' = spMap φ ≫ x) : ∃ pm : Gx x' ⟶ Gx x,
-      pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left ∧
-      pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap φ :=
+      pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')) ∧
+      pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap φ :=
   ⟨pullback.lift (pullback.fst (Over.mk x').hom Xo.univ.t.G.hom ≫ spMap φ)
       (pullback.snd (Over.mk x').hom Xo.univ.t.G.hom)
       (by
@@ -102,8 +103,8 @@ theorem pm_exists {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x : S
 
 theorem secBC_iff {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) (a : S) {x : Sp S ⟶ Xo.X}
     {x' : Sp T ⟶ Xo.X} (pm : Gx x' ⟶ Gx x)
-    (hs : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
-    (hf : pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap φ)
+    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
+    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap φ)
     (s : LB.Sec (PPx x)) (s' : LB.Sec (PPx x')) :
     SecBC φ a x x' s s' ↔ ∀ i : Fin 1 → Xo.univ.t.PP.L.ι,
       s'.f i = scal x' (φ a) i * (pm.appLE _ _ (ppx_le pm hs i)).hom (s.f i) := by
@@ -121,10 +122,10 @@ theorem sec_calc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
   obtain ⟨q, qs, qf⟩ := pm_exists ψ hx'
   refine ⟨fun a s s' s'' h => ?_, fun a s t => ?_, fun a s s' t' h => ?_,
     fun a b i => ⟨scal_mul' x a b i, scal_add' x a b i, scal_one' x i⟩⟩
-  · have rs : (q ≫ p) ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x'') Xo.univ.t.G).left := by
+  · have rs : (q ≫ p) ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x'')) := by
       rw [Category.assoc, ps, qs]
-    have rf : (q ≫ p) ≫ (fst (Over.mk x) Xo.univ.t.G).left =
-        (fst (Over.mk x'') Xo.univ.t.G).left ≫ spMap (ψ.comp φ) := by
+    have rf : (q ≫ p) ≫ (Formalism.L2.PjFree.gxSnd (x)) =
+        (Formalism.L2.PjFree.gxSnd (x'')) ≫ spMap (ψ.comp φ) := by
       rw [Category.assoc, pf, ← Category.assoc, qf, Category.assoc, spMap_comp']
     rw [secBC_iff φ a p ps pf] at h
     rw [secBC_iff ψ 1 q qs qf, secBC_iff (ψ.comp φ) a (q ≫ p) rs rf]

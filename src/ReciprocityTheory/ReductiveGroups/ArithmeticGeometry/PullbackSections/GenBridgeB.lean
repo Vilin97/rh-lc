@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.GenBridge
 
 noncomputable section
@@ -11,12 +12,12 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   {Xo : Moduli Dw l} {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X)
 
 def cpθ : ChartPull (Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)) (PPx x) (gxU x) :=
-  (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (snd (Over.mk x) Xo.univ.t.G).left).cp
+  (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (Formalism.L2.PjFree.gxFst (x))).cp
     (PullOf.lin (K := PUnit) Xo.univ.t.PP.L (pullback.fst Xo.univ.t.G.hom x)) (gxU x) (gxU_snd x)
 
 def cpV : ChartPull (PPx x) (Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)) (gxV x) :=
   (PullOf.lin (K := PUnit) Xo.univ.t.PP.L (pullback.fst Xo.univ.t.G.hom x)).cp
-    (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (snd (Over.mk x) Xo.univ.t.G).left) (gxV x) (gxV_fst x)
+    (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (Formalism.L2.PjFree.gxFst (x))) (gxV x) (gxV_fst x)
 
 def cpσ : ChartPull ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)).pull
       (pullback.fst (pullback.snd Xo.univ.t.G.hom x) (spMap ψ)))
@@ -25,18 +26,18 @@ def cpσ : ChartPull ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)).pul
 
 def cpU' : ChartPull ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)).pull
       (pullback.fst (pullback.snd Xo.univ.t.G.hom x) (spMap ψ))) (PPx (spMap ψ ≫ x)) (bcU ψ x) :=
-  (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (snd (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left).cp
+  (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (Formalism.L2.PjFree.gxFst ((spMap ψ ≫ x)))).cp
     ((PullOf.lin (K := PUnit) Xo.univ.t.PP.L (pullback.fst Xo.univ.t.G.hom x)).pull _) (bcU ψ x) (bcU_snd ψ x)
 
 def cpV' : ChartPull (PPx (spMap ψ ≫ x)) ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom x)).pull
       (pullback.fst (pullback.snd Xo.univ.t.G.hom x) (spMap ψ))) (bcV ψ x) :=
   ((PullOf.lin (K := PUnit) Xo.univ.t.PP.L (pullback.fst Xo.univ.t.G.hom x)).pull _).cp
-    (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (snd (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left) (bcV ψ x)
+    (PullOf.lin (K := Fin 1) Xo.univ.t.PP.L (Formalism.L2.PjFree.gxFst ((spMap ψ ≫ x)))) (bcV ψ x)
     (bcV_snd' ψ x)
 
 def cpS : ChartPull (PPx (spMap ψ ≫ x)) (PPx x) (bcPm ψ x) :=
-  cpSame Xo.univ.t.PP.L (fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left)
-    (fun _ => (snd (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left) (fun _ => 1) (bcPm ψ x) (fun _ => bcPm_snd ψ x)
+  cpSame Xo.univ.t.PP.L (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x)))
+    (fun _ => (Formalism.L2.PjFree.gxFst ((spMap ψ ≫ x)))) (fun _ => 1) (bcPm ψ x) (fun _ => bcPm_snd ψ x)
 
 def tA : SAB H (Sp S) := sabT ReciprocityTheory.ChartRestriction.G.Out.proved_CubePullSt x Xo.univ.t
 def mA : SABMap (tA x) Xo.univ.t x := sabM ReciprocityTheory.ChartRestriction.G.Out.proved_CubePullSt x Xo.univ.t

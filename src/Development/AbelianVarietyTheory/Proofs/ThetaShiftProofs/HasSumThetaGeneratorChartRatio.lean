@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsThetaL2NormSquared
 import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
@@ -53,25 +54,25 @@ theorem rigIso_eq (hG : Out.GlobalFnsSt) {V : Type} [CommRing V] {x : Sp V ⟶ X
 
 theorem gs_scal' {T : Type} [CommRing T] (x : Sp T ⟶ Xo.X) (a : T) (i : (PPx x).ι) {Z : Scheme.{0}} (g : Z ⟶ Gx x)
     (p : Z) (hp : g p ∈ (PPx x).U i) :
-    gs g p _ (scal x a i) = Geo.Tor.cst (g ≫ (fst (Over.mk x) Xo.univ.t.G).left) p a :=
-  gs_constFn (fst (Over.mk x) Xo.univ.t.G).left _ g p hp a
+    gs g p _ (scal x a i) = Geo.Tor.cst (g ≫ (Formalism.L2.PjFree.gxSnd (x))) p a :=
+  gs_constFn (Formalism.L2.PjFree.gxSnd (x)) _ g p hp a
 
 variable (Y : Model Xo c β) (V : Y.X.Opens) (s₀ : ∀ j, Γ(Y.t.G.left, Y.t.G.hom ⁻¹ᵁ V ⊓ Y.t.PP.L.U j))
   (w₀ : LB.Iso Y.oF.t.PP.L (Xo.univ.t.PP.L.pull Y.m0.toSABMap.φ)) (w₁ : LB.Iso Y.oF.t.PP.L (Y.t.PP.L.pull Y.m.φ))
 
 def Cut {T : Type} [CommRing T] (z : Sp T ⟶ Xo.XF c) (x : Sp T ⟶ Xo.X) (a : T) (s : LB.Sec (PPx x)) : Prop :=
   ∀ (Z : Scheme.{0}) (g : Z ⟶ Gx x) (f : Z ⟶ Y.oF.t.G.left) (p : Z) (j : Y.t.PP.L.ι) (k : Y.oF.t.PP.L.ι)
-    (j₀ : Xo.univ.t.PP.L.ι), f ≫ Y.m0.toSABMap.φ = g ≫ (snd (Over.mk x) Xo.univ.t.G).left →
-    f ≫ Y.oF.t.G.hom = g ≫ (fst (Over.mk x) Xo.univ.t.G).left ≫ z →
+    (j₀ : Xo.univ.t.PP.L.ι), f ≫ Y.m0.toSABMap.φ = g ≫ (Formalism.L2.PjFree.gxFst (x)) →
+    f ≫ Y.oF.t.G.hom = g ≫ (Formalism.L2.PjFree.gxSnd (x)) ≫ z →
     Y.m.φ (f p) ∈ Y.t.G.hom ⁻¹ᵁ V ⊓ Y.t.PP.L.U j → f p ∈ Y.oF.t.PP.L.U k →
     Y.m0.toSABMap.φ (f p) ∈ Xo.univ.t.PP.L.U j₀ →
     (gw w₀ f p j₀ k).val * gs (f ≫ Y.m.φ) p _ (s₀ j) =
-      (gw w₁ f p j k).val * (Geo.Tor.cst (g ≫ (fst (Over.mk x) Xo.univ.t.G).left) p a * gs g p _ (s.f (fun _ => j₀)))
+      (gw w₁ f p j k).val * (Geo.Tor.cst (g ≫ (Formalism.L2.PjFree.gxSnd (x))) p a * gs g p _ (s.f (fun _ => j₀)))
 
 variable {Y V s₀ w₀ w₁}
 
 theorem mem_chart {T : Type} [CommRing T] {x : Sp T ⟶ Xo.X} {Z : Scheme.{0}} {g : Z ⟶ Gx x} {f : Z ⟶ Y.oF.t.G.left}
-    (e : f ≫ Y.m0.toSABMap.φ = g ≫ (snd (Over.mk x) Xo.univ.t.G).left) (p : Z) (j₀ : Xo.univ.t.PP.L.ι) :
+    (e : f ≫ Y.m0.toSABMap.φ = g ≫ (Formalism.L2.PjFree.gxFst (x))) (p : Z) (j₀ : Xo.univ.t.PP.L.ι) :
     g p ∈ (PPx x).U (fun _ => j₀) ↔ Y.m0.toSABMap.φ (f p) ∈ Xo.univ.t.PP.L.U j₀ :=
   ⟨fun h => (congrArg (fun q => q p ∈ Xo.univ.t.PP.L.U j₀) e).mpr (Set.mem_iInter.1 h 0),
     fun h => Set.mem_iInter.2 fun _ => (congrArg (fun q => q p ∈ Xo.univ.t.PP.L.U j₀) e).mp h⟩
@@ -107,12 +108,12 @@ theorem Cut.chg {T : Type} [CommRing T] {z : Sp T ⟶ Xo.XF c} {x x' : Sp T ⟶ 
 
 theorem exists_lift' {T : Type} [CommRing T] (z : Sp T ⟶ Xo.XF c) {x : Sp T ⟶ Xo.X} (hx : z ≫ pullback.fst _ _ = x)
     {Z : Scheme.{0}} (g : Z ⟶ Gx x) : ∃ f : Z ⟶ Y.oF.t.G.left,
-      f ≫ Y.m0.toSABMap.φ = g ≫ (snd (Over.mk x) Xo.univ.t.G).left ∧
-      f ≫ Y.oF.t.G.hom = g ≫ (fst (Over.mk x) Xo.univ.t.G).left ≫ z := by
-  have cond : (snd (Over.mk x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ x :=
+      f ≫ Y.m0.toSABMap.φ = g ≫ (Formalism.L2.PjFree.gxFst (x)) ∧
+      f ≫ Y.oF.t.G.hom = g ≫ (Formalism.L2.PjFree.gxSnd (x)) ≫ z := by
+  have cond : (Formalism.L2.PjFree.gxFst (x)) ≫ Xo.univ.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ x :=
     (Over.w (snd (Over.mk x) Xo.univ.t.G)).trans (Over.w (fst (Over.mk x) Xo.univ.t.G)).symm
-  have cond' : (g ≫ (snd (Over.mk x) Xo.univ.t.G).left) ≫ Xo.univ.t.G.hom =
-      (g ≫ (fst (Over.mk x) Xo.univ.t.G).left ≫ z) ≫ pullback.fst _ _ := by
+  have cond' : (g ≫ (Formalism.L2.PjFree.gxFst (x))) ≫ Xo.univ.t.G.hom =
+      (g ≫ (Formalism.L2.PjFree.gxSnd (x)) ≫ z) ≫ pullback.fst _ _ := by
     rw [Category.assoc, cond, Category.assoc, Category.assoc, hx]
   exact ⟨Y.m0.toSABMap.cart.1.lift _ _ cond', Y.m0.toSABMap.cart.1.lift_fst _ _ cond',
     Y.m0.toSABMap.cart.1.lift_snd _ _ cond'⟩
@@ -227,8 +228,8 @@ theorem cut_arc (hG : Out.GlobalFnsSt) (h₀ : RigIso Y.m0.toSABMap w₀) (h₁ 
     (w2 : LB.Iso t'.PP.L (t.PP.L.pull m2.φ)) (σ' : LB.Sec t'.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ))
     (θ2 : LB.Sec (t.PP.L.pull m2.φ)) (r1 : RigIso m1 w1) (r2 : RigIso m2 w2) (i1 : IsoMaps w1 σ' s1)
     (i2 : IsoMaps w2 σ' θ2) (ps : PullSec m2.φ θ θ2)
-    (hc : ∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
-        g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom →
+    (hc : ∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
+        g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom →
         ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
           s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) :
     Cut Y V s₀ w₀ w₁ z x (io r) s := by
@@ -275,12 +276,12 @@ theorem cut_arc (hG : Out.GlobalFnsSt) (h₀ : RigIso Y.m0.toSABMap w₀) (h₁ 
   have u₃ := hθ Z ((g ≫ h) ≫ m2.φ) p j i c₂ hi
   have u₄ := congrArg Units.val ((TN Z (g ≫ h) p j i k' c₂.2 hi hk').symm.trans (TN' Z (g ≫ h) p j k k' c₃ b₂ hk'))
   have eg : ((g ≫ h) ≫ n.φ) ≫ Y.m.φ = ((g ≫ h) ≫ m2.φ) ≫ m.φ := by rw [Category.assoc, φ2, Category.assoc _ m2.φ]
-  have ec : ((g ≫ h) ≫ m2.φ) ≫ t.G.hom = (g ≫ (fst (Over.mk (z ≫ pullback.fst _ _)) Xo.univ.t.G).left) ≫ spMap io := by
+  have ec : ((g ≫ h) ≫ m2.φ) ≫ t.G.hom = (g ≫ (Formalism.L2.PjFree.gxSnd ((z ≫ pullback.fst _ _)))) ≫ spMap io := by
     rw [Category.assoc, m2.cart.1.w, Category.assoc, reassoc_of% hh, Category.assoc]
   rw [ec, cst_comp, u₂] at u₃
   rw [Units.val_mul, Units.val_mul] at u₄
   rw [eg, u₃, u₁, Units.val_mul]
-  linear_combination ((gw w₀ ((g ≫ h) ≫ n.φ) p j₀ k).val * Geo.Tor.cst (g ≫ (fst (Over.mk (z ≫ pullback.fst _ _)) Xo.univ.t.G).left) p (io r) * gs (g ≫ h) p _ (σ'.f k')) * u₄
+  linear_combination ((gw w₀ ((g ≫ h) ≫ n.φ) p j₀ k).val * Geo.Tor.cst (g ≫ (Formalism.L2.PjFree.gxSnd ((z ≫ pullback.fst _ _)))) p (io r) * gs (g ≫ h) p _ (σ'.f k')) * u₄
 
 theorem cut_complex (hT : Out.SecTwistSt) {z : Sp ℂ ⟶ Xo.XF c} {x : Sp ℂ ⟶ Xo.X} (hx : z ≫ pullback.fst _ _ = x)
     (hV : ⊤ ≤ (z ≫ Y.j) ⁻¹ᵁ V) {s : LB.Sec (PPx x)} (hg : SecGen x s) {a : ℂ} (hc : Cut Y V s₀ w₀ w₁ z x a s) (b : ℂ)
@@ -294,7 +295,7 @@ theorem cut_complex (hT : Out.SecTwistSt) {z : Sp ℂ ⟶ Xo.XF c} {x : Sp ℂ �
   obtain ⟨i, pt, hpt, hne⟩ := (GlobalTheory.sec_values_complex_fibre hT E H Dw l Xo x s).2.1.1 hg
   obtain ⟨j₀, rfl⟩ : ∃ j₀ : Xo.univ.t.PP.L.ι, i = fun _ => j₀ :=
     ⟨i 0, funext fun k => congrArg i (Subsingleton.elim k 0)⟩
-  have hpt' : pt ≫ (fst (Over.mk x) Xo.univ.t.G).left = 𝟙 _ := hpt
+  have hpt' : pt ≫ (Formalism.L2.PjFree.gxSnd (x)) = 𝟙 _ := hpt
   have hU : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U (fun _ => j₀) := by
     by_contra h
     exact hne (dif_neg h)

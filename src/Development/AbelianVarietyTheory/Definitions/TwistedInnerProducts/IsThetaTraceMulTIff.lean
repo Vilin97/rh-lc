@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsPointedOfIsHkIsog
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.EmbeddingSectionsSpanGeometricFibre
@@ -46,12 +47,12 @@ theorem isThetaTrace_mulT_iff {p : ℕ} (hp : 1 ≤ p) {Ω : Type} [Field Ω] (x
   constructor
   · intro h
     have := Xo.univ.t.semi.smooth
-    have : Smooth (fst (Over.mk x) Xo.univ.t.G).left := by
+    have : Smooth (Formalism.L2.PjFree.gxSnd (x)) := by
       show Smooth (pullback.fst x Xo.univ.t.G.hom)
       infer_instance
     have : IsReduced (Over.mk x).left := inferInstanceAs (IsReduced (Sp Ω))
     have : IsReduced (Over.mk x ⊗ Xo.univ.t.G).left :=
-      GlobalTheory.isReduced_of_smooth_of_isReduced (fst (Over.mk x) Xo.univ.t.G).left
+      GlobalTheory.isReduced_of_smooth_of_isReduced (Formalism.L2.PjFree.gxSnd (x))
     have : Surjective (mulT Xo.univ.t.G (Over.mk x) p).left :=
       (GlobalTheory.EmbSpan.pt_pow_and_surjective hL (UnivPol.pol Xo) x p hp).2
     refine sec_eq_of_surjective (L := Xo.univ.t.PP) (mulT Xo.univ.t.G (Over.mk x) p).left fun w J hJ => ?_

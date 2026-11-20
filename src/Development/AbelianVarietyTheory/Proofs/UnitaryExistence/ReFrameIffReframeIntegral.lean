@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProofFree
 import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
@@ -113,8 +114,8 @@ theorem id_appLE_apply (X : Scheme.{0}) (U : X.Opens) (h : U ≤ (𝟙 X : X ⟶
 
 theorem same_point_of_sClause {a : S} {y y' : FrPt Xo c S} (h : SClause a y y') : y'.x = y.x := by
   obtain ⟨pm, h1, h2, -⟩ := h
-  have w : ∀ x : Sp S ⟶ Xo.X, (fst (Over.mk x) Xo.univ.t.G).left ≫ x =
-      (snd (Over.mk x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom := fun x =>
+  have w : ∀ x : Sp S ⟶ Xo.X, (Formalism.L2.PjFree.gxSnd (x)) ≫ x =
+      (Formalism.L2.PjFree.gxFst (x)) ≫ Xo.univ.t.G.hom := fun x =>
     (Over.w (fst (Over.mk x) Xo.univ.t.G)).trans (Over.w (snd (Over.mk x) Xo.univ.t.G)).symm
   have e : (fst (Over.mk y'.x) Xo.univ.t.G).left ≫ y'.x = (fst (Over.mk y'.x) Xo.univ.t.G).left ≫ y.x := by
     rw [w y'.x, ← h1, ← h2, Category.assoc, Category.assoc, w y.x]

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.LevelIndexFourierCharacter
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsHolPeriods
@@ -171,8 +172,8 @@ def incl : c.F →+* C.c₂.F := (IntermediateField.inclusion C.field_eq.le).toR
 
 def IsGroupMap {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S') (x₂ : Sp S' ⟶ C.Xo₂.X) (x : Sp S ⟶ Xo.X)
     (pm : Gx x₂ ⟶ Gx x) : Prop :=
-  pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ C.m.φ ∧
-    pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ spMap φ
+  pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (snd (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ C.m.φ ∧
+    pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (fst (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ spMap φ
 
 def SecOver {S S' : Type} [CommRing S] [CommRing S'] {x₂ : Sp S' ⟶ C.Xo₂.X} {x : Sp S ⟶ Xo.X} (pm : Gx x₂ ⟶ Gx x)
     (k : ℤ) (F₂ : LB.Sec (Out.LPow C.Xo₂.univ.t.G C.Xo₂.univ.t.PP.L k (Over.mk x₂)))
@@ -390,8 +391,8 @@ theorem Cover.triv_nabOver (Xo : Moduli D l) (c : Coeff l) (nab : NabV Xo c) :
     funext J
     obtain ⟨i, rfl⟩ : ∃ i, J = fun _ => i := ⟨J 0, funext fun a => congrArg J (Subsingleton.elim _ _)⟩
     have hle : (Out.LPow Xo.univ.t.G Xo.univ.t.PP.L k (Over.mk x)).U (fun _ => i) ≤
-        (snd (Over.mk x) Xo.univ.t.G).left ⁻¹ᵁ Xo.univ.t.PP.L.U i :=
-      LB.wchart_le Xo.univ.t.PP.L (fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => i) 0
+        (Formalism.L2.PjFree.gxFst (x)) ⁻¹ᵁ Xo.univ.t.PP.L.U i :=
+      LB.wchart_le Xo.univ.t.PP.L (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x))) (fun _ => i) 0
     have H := hF i i _ le_rfl le_rfl (fun z hz => ⟨mem_pull.2 (hle hz), hle hz⟩)
     have hw : (Cover.triv Xo c).w.s (fun _ => i, i) = 1 := by
       have h0 := congrArg (res (inf_le_right : (Xo.univ.t.PP.L.pull (𝟙 _)).U (fun _ => i) ⊓ Xo.univ.t.PP.L.U i ≤

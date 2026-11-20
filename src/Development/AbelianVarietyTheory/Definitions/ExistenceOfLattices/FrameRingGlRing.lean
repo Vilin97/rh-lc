@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 
@@ -207,14 +208,14 @@ theorem spMap_id (S : Type) [CommRing S] : spMap (RingHom.id S) = 𝟙 (Sp S) :=
 theorem secGen_frPt {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) : SecGen y.x y.s := y.gen
 
 theorem chart_le {S T : Type} [CommRing S] [CommRing T] (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X) (pm : Gx x' ⟶ Gx x)
-    (h : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
+    (h : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
     (i : Fin 1 → Xo.univ.t.PP.L.ι) : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i := by
   intro p hp
-  have hp' : p ∈ ⋂ k, ⇑(snd (Over.mk x') Xo.univ.t.G).left ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) := hp
-  have e : ∀ q, (snd (Over.mk x) Xo.univ.t.G).left (pm q) = (snd (Over.mk x') Xo.univ.t.G).left q := fun q => by
+  have hp' : p ∈ ⋂ k, ⇑(Formalism.L2.PjFree.gxFst (x')) ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) := hp
+  have e : ∀ q, (Formalism.L2.PjFree.gxFst (x)) (pm q) = (Formalism.L2.PjFree.gxFst (x')) q := fun q => by
     rw [← h]
     rfl
-  show pm p ∈ ⋂ k, ⇑(snd (Over.mk x) Xo.univ.t.G).left ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
+  show pm p ∈ ⋂ k, ⇑(Formalism.L2.PjFree.gxFst (x)) ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
   refine Set.mem_iInter.2 fun k => ?_
   rw [Set.mem_preimage, e]
   exact Set.mem_iInter.1 hp' k
@@ -253,12 +254,12 @@ theorem appLE_id_apply (X : Scheme.{0}) (U : X.Opens) (h : U ≤ 𝟙 X ⁻¹ᵁ
 
 theorem secBC_id_iff {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a : S) (s s' : LB.Sec (PPx x)) :
     SecBC (RingHom.id S) a x x s s' ↔ ∀ i, s'.f i = scal x a i * s.f i := by
-  have hid : (fst (Over.mk x) Xo.univ.t.G).left ≫ spMap (RingHom.id S) = (fst (Over.mk x) Xo.univ.t.G).left := by
+  have hid : (Formalism.L2.PjFree.gxSnd (x)) ≫ spMap (RingHom.id S) = (Formalism.L2.PjFree.gxSnd (x)) := by
     rw [spMap_id]
     exact Category.comp_id _
 
-  have hpm : ∀ pm : Gx x ⟶ Gx x, pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left →
-      pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left ≫ spMap (RingHom.id S) →
+  have hpm : ∀ pm : Gx x ⟶ Gx x, pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x)) →
+      pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x)) ≫ spMap (RingHom.id S) →
       pm = 𝟙 _ := by
     intro pm h₁ h₂
     rw [hid] at h₂

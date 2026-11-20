@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.SplitOffDetection
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HeckePrimeDetection
@@ -24,13 +25,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 
 def IsCan {T Ω : Type} [CommRing T] [CommRing Ω] (χ : T →+* Ω) {x : Sp T ⟶ Xo.X} {x₁ : Sp Ω ⟶ Xo.X}
     (pm : Gx x₁ ⟶ Gx x) : Prop :=
-  x₁ = spMap χ ≫ x ∧ pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x₁) Xo.univ.t.G).left ∧
-    pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x₁) Xo.univ.t.G).left ≫ spMap χ
+  x₁ = spMap χ ≫ x ∧ pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x₁)) ∧
+    pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x₁)) ≫ spMap χ
 
 def IsFib {T Ω : Type} [CommRing T] [CommRing Ω] (χ : T →+* Ω) {x x' : Sp T ⟶ Xo.X} {x₁ x₁' : Sp Ω ⟶ Xo.X}
     (Ψ : Gx x ⟶ Gx x') (Ψ₁ : Gx x₁ ⟶ Gx x₁') : Prop :=
   ∃ (pm : Gx x₁ ⟶ Gx x) (pm' : Gx x₁' ⟶ Gx x'), IsCan χ pm ∧ IsCan χ pm' ∧ Ψ₁ ≫ pm' = pm ≫ Ψ ∧
-    Ψ₁ ≫ (fst (Over.mk x₁') Xo.univ.t.G).left = (fst (Over.mk x₁) Xo.univ.t.G).left
+    Ψ₁ ≫ (Formalism.L2.PjFree.gxSnd (x₁')) = (Formalism.L2.PjFree.gxSnd (x₁))
 
 def IsHeckeFam (P : Ideal (𝓞 E)) (p i : ℕ) {T : Type} [CommRing T] {x x' : Sp T ⟶ Xo.X} (Ψ : Gx x ⟶ Gx x') : Prop :=
   IsLinHom Ψ ∧ Etale Ψ ∧ Surjective Ψ ∧ (∃ β, IsRigIso Xo.univ.t.G Xo.univ.t.PP Ψ ((p : ℤ) ^ 2) β) ∧
@@ -55,17 +56,17 @@ theorem exists_isCan {T Ω : Type} [CommRing T] [CommRing Ω] (χ : T →+* Ω) 
 
 theorem exists_isFib {T Ω : Type} [CommRing T] [CommRing Ω] (χ : T →+* Ω) {x x' : Sp T ⟶ Xo.X}
     {x₁ x₁' : Sp Ω ⟶ Xo.X} (hx : x₁ = spMap χ ≫ x) (hx' : x₁' = spMap χ ≫ x') (Ψ : Gx x ⟶ Gx x')
-    (hΨ : Ψ ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left) :
+    (hΨ : Ψ ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x))) :
     ∃ Ψ₁ : Gx x₁ ⟶ Gx x₁', IsFib χ Ψ Ψ₁ := by
   obtain ⟨pm, hp⟩ := exists_isCan χ hx
   obtain ⟨pm', hp'⟩ := exists_isCan χ hx'
   let Ψ₁ : Gx x₁ ⟶ Gx x₁' := pullback.lift (f := (Over.mk x₁').hom) (g := Xo.univ.t.G.hom)
-    (fst (Over.mk x₁) Xo.univ.t.G).left (pm ≫ Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left) (by
+    (Formalism.L2.PjFree.gxSnd (x₁)) (pm ≫ Ψ ≫ (Formalism.L2.PjFree.gxFst (x'))) (by
       simp only [Category.assoc]
       rw [GlobalTheory.HeckeFrCompare.snd_hom, reassoc_of% hΨ, reassoc_of% hp.2.2, ← hx']
       rfl)
-  have a : Ψ₁ ≫ (fst (Over.mk x₁') Xo.univ.t.G).left = (fst (Over.mk x₁) Xo.univ.t.G).left := pullback.lift_fst _ _ _
-  have b : Ψ₁ ≫ (snd (Over.mk x₁') Xo.univ.t.G).left = pm ≫ Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left :=
+  have a : Ψ₁ ≫ (Formalism.L2.PjFree.gxSnd (x₁')) = (Formalism.L2.PjFree.gxSnd (x₁)) := pullback.lift_fst _ _ _
+  have b : Ψ₁ ≫ (Formalism.L2.PjFree.gxFst (x₁')) = pm ≫ Ψ ≫ (Formalism.L2.PjFree.gxFst (x')) :=
     pullback.lift_snd _ _ _
   refine ⟨Ψ₁, pm, pm', hp, hp', GlobalTheory.HeckeFrCompare.gx_ext ?_ ?_, a⟩
   · rw [Category.assoc, Category.assoc, hp'.2.2, hΨ, hp.2.2, reassoc_of% a]

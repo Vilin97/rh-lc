@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.BcField
 import Formalism.LocalToGlobal.ProjectiveLattices.FrameProofs
 
@@ -255,25 +256,25 @@ def wtfA_bcPmE {T : Type} [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) (x' 
 
 theorem wtfA_bcPmE_snd {T : Type} [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X)
     (h : spMap ψ ≫ x = x') :
-    wtfA_bcPmE ψ x x' h ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left := by
+    wtfA_bcPmE ψ x x' h ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')) := by
   unfold wtfA_bcPmE
   rw [← Over.comp_left, whiskerRight_snd]
 
 theorem wtfA_bcPmE_fst {T : Type} [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X)
     (h : spMap ψ ≫ x = x') :
-    wtfA_bcPmE ψ x x' h ≫ (fst (Over.mk x) Xo.univ.t.G).left =
-      (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap ψ := by
+    wtfA_bcPmE ψ x x' h ≫ (Formalism.L2.PjFree.gxSnd (x)) =
+      (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap ψ := by
   unfold wtfA_bcPmE
   rw [← Over.comp_left, whiskerRight_fst, Over.comp_left]
   try rfl
 
 theorem wtfA_gx_ext {W : Scheme.{0}} {x : Sp S ⟶ Xo.X} (f₁ f₂ : W ⟶ Gx x)
-    (h₁ : f₁ ≫ (fst (Over.mk x) Xo.univ.t.G).left = f₂ ≫ (fst (Over.mk x) Xo.univ.t.G).left)
-    (h₂ : f₁ ≫ (snd (Over.mk x) Xo.univ.t.G).left = f₂ ≫ (snd (Over.mk x) Xo.univ.t.G).left) : f₁ = f₂ := pullback.hom_ext h₁ h₂
+    (h₁ : f₁ ≫ (Formalism.L2.PjFree.gxSnd (x)) = f₂ ≫ (Formalism.L2.PjFree.gxSnd (x)))
+    (h₂ : f₁ ≫ (Formalism.L2.PjFree.gxFst (x)) = f₂ ≫ (Formalism.L2.PjFree.gxFst (x))) : f₁ = f₂ := pullback.hom_ext h₁ h₂
 
 theorem wtfA_scal_pull {T : Type} [CommRing T] (ψ : S →+* T) {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (pm : Gx x' ⟶ Gx x)
-    (hf : pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ spMap ψ)
+    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ spMap ψ)
     (a : S) (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i) :
     (pm.appLE _ _ h).hom (scal x a i) = scal x' (ψ a) i := by
   unfold scal ReciprocityTheory.ChartRestriction.G.Out.liftFun toΓ
@@ -282,14 +283,14 @@ theorem wtfA_scal_pull {T : Type} [CommRing T] (ψ : S →+* T) {x : Sp S ⟶ Xo
     congrArg (fun f => f.hom a) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom ψ))
   rw [hT]
   generalize (Scheme.ΓSpecIso (CommRingCat.of S)).inv.hom a = r
-  have h2 : (fst (Over.mk x') Xo.univ.t.G).left.appTop.hom ((spMap ψ).appTop.hom r) =
-      pm.appTop.hom ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom r) := by
+  have h2 : (Formalism.L2.PjFree.gxSnd (x')).appTop.hom ((spMap ψ).appTop.hom r) =
+      pm.appTop.hom ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom r) := by
     have h3 := congrArg (fun f => f.appTop.hom r) hf
     first
     | exact h3.symm
     | simpa [Scheme.comp_appTop] using h3.symm
   rw [h2]
-  generalize (fst (Over.mk x) Xo.univ.t.G).left.appTop.hom r = s
+  generalize (Formalism.L2.PjFree.gxSnd (x)).appTop.hom r = s
   rw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply, Scheme.Hom.map_appLE]
   rfl
 

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsTranslSum
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ValVEqOneIntegralGenerators
@@ -317,15 +318,15 @@ theorem exists_units_quot {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuat
 variable {Xo : Moduli Dw l} {c : Coeff l} {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io}
 
 theorem exists_toFibre {K : Type} [CommRing K] {x : Sp K ⟶ Xo.X} {t : SAB H (Sp K)} (m : SABMap t Xo.univ.t x) :
-    ∃ g : t.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ ∧
-      g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t.G.hom :=
+    ∃ g : t.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ ∧
+      g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t.G.hom :=
   let a0 : Over.mk (t.G.hom ≫ x) ⟶ Over.mk x := Over.homMk t.G.hom rfl
   let b0 : Over.mk (t.G.hom ≫ x) ⟶ Xo.univ.t.G := Over.homMk m.φ m.cart.1.w
   ⟨(lift a0 b0).left, congrArg (fun q => q.left) (lift_snd a0 b0), congrArg (fun q => q.left) (lift_fst a0 b0)⟩
 
 theorem theta_pt (I : IntData Xo c T io y.1) {g : I.t'.G.left ⟶ Gx (xOf y)}
-    (g₁ : g ≫ (snd (Over.mk (xOf y)) Xo.univ.t.G).left = I.m1.φ)
-    (g₂ : g ≫ (fst (Over.mk (xOf y)) Xo.univ.t.G).left = I.t'.G.hom) {Z : Scheme.{0}} (r : Z ⟶ I.t'.G.left) (z : Z)
+    (g₁ : g ≫ (Formalism.L2.PjFree.gxFst ((xOf y))) = I.m1.φ)
+    (g₂ : g ≫ (Formalism.L2.PjFree.gxSnd ((xOf y))) = I.t'.G.hom) {Z : Scheme.{0}} (r : Z ⟶ I.t'.G.left) (z : Z)
     (j : Xo.univ.t.PP.L.ι) (ν : I.G.PP.L.ι) (κ : I.t'.PP.L.ι) (hj : I.m1.φ (r z) ∈ Xo.univ.t.PP.L.U j)
     (hν : I.m2.φ (r z) ∈ I.G.PP.L.U ν) (hκ : r z ∈ I.t'.PP.L.U κ) :
     letI := io.toAlgebra
@@ -345,8 +346,8 @@ theorem sv_zCast {S : Scheme.{0}} (A : Over S) [GrpObj A] (L : RigLB A) {T : Ove
   subst h; rfl
 
 theorem tie_pt (I : IntData Xo c T io y.1) {g : I.t'.G.left ⟶ Gx (xOf y)}
-    (g₁ : g ≫ (snd (Over.mk (xOf y)) Xo.univ.t.G).left = I.m1.φ)
-    (g₂ : g ≫ (fst (Over.mk (xOf y)) Xo.univ.t.G).left = I.t'.G.hom) {M : ℕ}
+    (g₁ : g ≫ (Formalism.L2.PjFree.gxFst ((xOf y))) = I.m1.φ)
+    (g₂ : g ≫ (Formalism.L2.PjFree.gxSnd ((xOf y))) = I.t'.G.hom) {M : ℕ}
     {t : LB.Sec (LPow Xo.univ.t.G Xo.univ.t.PP.L ((M : ℤ) ^ 2) (Over.mk (xOf y)))} {σ}
     (h : PullbackSections.SecTie I (M ^ 2) (PullbackSections.zCast Xo.univ.t.G (PullbackSections.natCast_sq M) t) σ)
     {Z : Scheme.{0}} (r : Z ⟶ I.t'.G.left) (z : Z) {J} (hJ : Good Xo.univ.t.PP.L z J)
@@ -466,13 +467,13 @@ theorem mem_range_of_reg : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     obtain ⟨τ', u₁, u₂⟩ := theta_pt I' g₁' g₂' (𝟙 _ ≫ ψ.left) z _ ν' κ' (hJ ((𝟙 _ ≫ ψ.left) ≫ I'.m1.φ))
       ((congrArg (fun q => q z ∈ I'.G.PP.L.U ν') hψ₂).mpr hz.1) hκ'
     have c₁ : (𝟙 _ ≫ g) ≫ Ψ = (𝟙 _ ≫ ψ.left) ≫ g' := by rw [Category.assoc, hg, Category.assoc]
-    have c₂ : ((𝟙 _ ≫ ψ.left) ≫ g') ≫ (snd (Over.mk (xOf y')) Xo.univ.t.G).left = (𝟙 _ ≫ ψ.left) ≫ I'.m1.φ := by
+    have c₂ : ((𝟙 _ ≫ ψ.left) ≫ g') ≫ (Formalism.L2.PjFree.gxFst ((xOf y'))) = (𝟙 _ ≫ ψ.left) ≫ I'.m1.φ := by
       rw [Category.assoc, g₁']
-    have c₃ : ((𝟙 _ ≫ ψ.left) ≫ g') ≫ (fst (Over.mk (xOf y')) Xo.univ.t.G).left = I.t'.G.hom := by
+    have c₃ : ((𝟙 _ ≫ ψ.left) ≫ g') ≫ (Formalism.L2.PjFree.gxSnd ((xOf y'))) = I.t'.G.hom := by
       rw [Category.assoc, g₂', Category.id_comp, Over.w]
     have e₂ := hcar.val (𝟙 _ ≫ g) z hJ
     have e₃ := sv_smul (T := Over.mk (xOf y')) (a := toΓ _ a) hs'' ((𝟙 _ ≫ ψ.left) ≫ g') z hJ
-    have e₄ := (sval_of (φ := fun _ : Fin 1 => (snd (Over.mk (xOf y')) Xo.univ.t.G).left) (ε := fun _ => 1) y'.1.s
+    have e₄ := (sval_of (φ := fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst ((xOf y')))) (ε := fun _ => 1) y'.1.s
       ((𝟙 _ ≫ ψ.left) ≫ g') z J _ (fun _ => congrArg J c₂)).trans u₁
     rw [c₃] at e₃
     replace e₃ := e₃.trans (congrArg₂ (· * ·) (rfl : _ = cst I.t'.G.hom z a) e₄)

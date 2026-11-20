@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
@@ -102,33 +103,33 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 variable {Xo : Moduli Dw l}
 
 theorem isPullback_gx {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) :
-    IsPullback (snd (Over.mk x) Xo.univ.t.G).left (fst (Over.mk x) Xo.univ.t.G).left Xo.univ.t.G.hom x :=
+    IsPullback (Formalism.L2.PjFree.gxFst (x)) (Formalism.L2.PjFree.gxSnd (x)) Xo.univ.t.G.hom x :=
   (IsPullback.of_hasPullback x Xo.univ.t.G.hom).flip
 
 theorem isPullback_gxMap {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) (x : Sp S ⟶ Xo.X) :
-    IsPullback (SecPull.gxMap φ x _ rfl) (fst (Over.mk (spMap φ ≫ x)) Xo.univ.t.G).left
-      (fst (Over.mk x) Xo.univ.t.G).left (spMap φ) :=
+    IsPullback (SecPull.gxMap φ x _ rfl) (Formalism.L2.PjFree.gxSnd ((spMap φ ≫ x)))
+      (Formalism.L2.PjFree.gxSnd (x)) (spMap φ) :=
   IsPullback.of_right (by rw [SecPull.gxMap_snd]; exact isPullback_gx _) (SecPull.gxMap_fst φ x _ rfl)
     (isPullback_gx x)
 
 theorem exists_secBC_pow_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (S : Type) [CommRing S] (x : Sp S ⟶ Xo.X) (g : S) (s' : LB.Sec (PPx (spMap (algebraMap S (Localization.Away g)) ≫ x))), ∃ (N : ℕ) (s : LB.Sec (PPx x)) (s₁ : LB.Sec (PPx (spMap (algebraMap S (Localization.Away g)) ≫ x))), SecBC (algebraMap S (Localization.Away g)) 1 x _ s s₁ ∧ ∀ i, s₁.f i = scal _ ((algebraMap S (Localization.Away g)) g ^ N) i * s'.f i := by
   intro E _ _ _ H Dw l Xo S _ x g s'
   have hP := isPullback_gxMap (algebraMap S (Localization.Away g)) x
-  have hpr : IsProper (fst (Over.mk x) Xo.univ.t.G).left :=
+  have hpr : IsProper (Formalism.L2.PjFree.gxSnd (x)) :=
     MorphismProperty.of_isPullback (P := @IsProper) (isPullback_gx x) Xo.univ.proper
   have : CompactSpace (Over.mk x).left := inferInstanceAs (CompactSpace (Sp S))
   have : QuasiSeparatedSpace (Over.mk x).left := inferInstanceAs (QuasiSeparatedSpace (Sp S))
   have : CompactSpace (Gx x) :=
-    QuasiCompact.compactSpace_of_compactSpace (fst (Over.mk x) Xo.univ.t.G).left
+    QuasiCompact.compactSpace_of_compactSpace (Formalism.L2.PjFree.gxSnd (x))
   have : QuasiSeparatedSpace (Gx x) :=
-    quasiSeparatedSpace_of_quasiSeparated (fst (Over.mk x) Xo.univ.t.G).left
+    quasiSeparatedSpace_of_quasiSeparated (Formalism.L2.PjFree.gxSnd (x))
   have hoi : IsOpenImmersion (spMap (algebraMap S (Localization.Away g))) :=
     IsOpenImmersion.of_isLocalization g
   have : IsOpenImmersion (SecPull.gxMap (algebraMap S (Localization.Away g)) x _ rfl) :=
     MorphismProperty.of_isPullback (P := @IsOpenImmersion) hP.flip hoi
   obtain ⟨N, s, hs⟩ := exists_pow_mul_eq_linComb _ _ (opensRange_of_isPullback g hP) Xo.univ.t.PP.isLB
-    (K := Fin 1) (fun _ => (snd (Over.mk x) Xo.univ.t.G).left)
-    (fun _ => (snd (Over.mk (spMap (algebraMap S (Localization.Away g)) ≫ x)) Xo.univ.t.G).left) (fun _ => 1)
+    (K := Fin 1) (fun _ => (Formalism.L2.PjFree.gxFst (x)))
+    (fun _ => (Formalism.L2.PjFree.gxFst ((spMap (algebraMap S (Localization.Away g)) ≫ x)))) (fun _ => 1)
     (funext fun _ => SecPull.gxMap_snd _ x _ rfl) s'
   refine ⟨N, s, SecPull.scalSec _ (algebraMap S (Localization.Away g) g ^ N) s',
     ⟨_, SecPull.gxMap_snd _ x _ rfl, SecPull.gxMap_fst _ x _ rfl, fun i h => ?_⟩, fun _ => rfl⟩

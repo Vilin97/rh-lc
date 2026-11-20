@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.RegularCharts.MatrixTwoByTwoCongr
 import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
@@ -135,7 +136,7 @@ open LiftBaseChange
 
 set_option maxHeartbeats 1000000 in
 
-theorem lift_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (M : MChart Y), ∀ (R : Type) [CommRing R] [Algebra c.F R] (f : Γ(Y.X, M.U) →+* R) (x : Sp R ⟶ Xo.X) (Λ : M.Lift f x), ∀ (S : Type) [CommRing S] [Algebra c.F S] (ψ : R →ₐ[c.F] S), ∃ Λ' : M.Lift (ψ.toRingHom.comp f) (spMap ψ.toRingHom ≫ x), (∀ cv w, Λ.Vec cv w → Λ'.Vec (fun j => ψ (cv j)) (spMap (dualMap ψ.toRingHom) ≫ w)) ∧ ∀ (s : LB.Sec (PPx x)) (s' : LB.Sec (PPx (spMap ψ.toRingHom ≫ x))) (pm : Gx (spMap ψ.toRingHom ≫ x) ⟶ Gx x), pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk (spMap ψ.toRingHom ≫ x)) Xo.univ.t.G).left → pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk (spMap ψ.toRingHom ≫ x)) Xo.univ.t.G).left ≫ spMap ψ.toRingHom → (∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx (spMap ψ.toRingHom ≫ x)).U i ≤ pm ⁻¹ᵁ (PPx x).U i), (pm.appLE _ _ h).hom (s.f i) = s'.f i) → Λ.ThTie s → Λ'.ThTie s' := by
+theorem lift_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (M : MChart Y), ∀ (R : Type) [CommRing R] [Algebra c.F R] (f : Γ(Y.X, M.U) →+* R) (x : Sp R ⟶ Xo.X) (Λ : M.Lift f x), ∀ (S : Type) [CommRing S] [Algebra c.F S] (ψ : R →ₐ[c.F] S), ∃ Λ' : M.Lift (ψ.toRingHom.comp f) (spMap ψ.toRingHom ≫ x), (∀ cv w, Λ.Vec cv w → Λ'.Vec (fun j => ψ (cv j)) (spMap (dualMap ψ.toRingHom) ≫ w)) ∧ ∀ (s : LB.Sec (PPx x)) (s' : LB.Sec (PPx (spMap ψ.toRingHom ≫ x))) (pm : Gx (spMap ψ.toRingHom ≫ x) ⟶ Gx x), pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst ((spMap ψ.toRingHom ≫ x))) → pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd ((spMap ψ.toRingHom ≫ x))) ≫ spMap ψ.toRingHom → (∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx (spMap ψ.toRingHom ≫ x)).U i ≤ pm ⁻¹ᵁ (PPx x).U i), (pm.appLE _ _ h).hom (s.f i) = s'.f i) → Λ.ThTie s → Λ'.ThTie s' := by
   intro E _ _ _ H Dw l Xo c O _ β Y M R _ _ f x Λ S _ _ ψ
   obtain ⟨t'', p⟩ : ∃ t'' : SAB H (Sp S), Nonempty (SABMap t'' Λ.t' (spMap ψ.toRingHom)) := by
     obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap ψ.toRingHom) Λ.t'
@@ -169,8 +170,8 @@ theorem lift_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     obtain ⟨s1', hI', hs1'⟩ := isoMaps_comp Xo.univ.t.PP.isLB Λ.t'.PP.isLB t''.PP.isLB hn1 T1 r1'.1 σ σ' hσ' s1 hI
     refine ⟨w1', w2', σ', s1', r1', r2', hI', tie_comp Λ.t'.PP.isLB hn2 T2 _ M.θ σ σ' hσ' hθ, ?_⟩
     intro g' e₁ e₂ (j : PUnit → Xo.univ.t.PP.L.ι) hj
-    have e₁' : g' ≫ (snd (Over.mk (spMap ψ.toRingHom ≫ x)) Xo.univ.t.G).left = n1.φ := e₁
-    have e₂' : g' ≫ (fst (Over.mk (spMap ψ.toRingHom ≫ x)) Xo.univ.t.G).left = t''.G.hom := e₂
+    have e₁' : g' ≫ (Formalism.L2.PjFree.gxFst ((spMap ψ.toRingHom ≫ x))) = n1.φ := e₁
+    have e₂' : g' ≫ (Formalism.L2.PjFree.gxSnd ((spMap ψ.toRingHom ≫ x))) = t''.G.hom := e₂
     let A := Xo.univ.t.G
     let a0 : Over.mk (Λ.t'.G.hom ≫ x) ⟶ Over.mk x := Over.homMk Λ.t'.G.hom rfl
     let b0 : Over.mk (Λ.t'.G.hom ≫ x) ⟶ A := Over.homMk Λ.m1.φ Λ.m1.cart.1.w

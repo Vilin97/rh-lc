@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.CongModRefl
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.WeightFunctionOnFrames
@@ -48,7 +49,7 @@ theorem exists_frOver_below (hc : ∀ a : c.F, algebraMap d.c₂.F S (d.eF a) = 
     refine (existsUnique_congr fun a => ?_).1 (y₂.gen s₂')
     exact (scal_iff (fst (Over.mk y₂.x) d.Xo₂.univ.t.G).left (toΓ S a) y₂.s s₂').trans
       ((rel_scal_iff hL hL₂ p₁ hk p₂ (toΓ S a) hs hs').trans
-        (scal_iff (fst (Over.mk (y₂.x ≫ d.r)) Xo.univ.t.G).left (toΓ S a) s s').symm)
+        (scal_iff (Formalism.L2.PjFree.gxSnd ((y₂.x ≫ d.r))) (toΓ S a) s s').symm)
 
 theorem frBor_down (hG : GlobalFnsSt) {t : Ix Dw → Sˣ} {y y' : FrPt Xo c S} {y₂ y₂' : FrPt d.Xo₂ d.c₂ S}
     (h : FrOver d y₂ y) (h' : FrOver d y₂' y') (hb : FrBor t y₂ y₂') : FrBor t y y' := by
@@ -107,7 +108,7 @@ theorem frOver_unique (hG : GlobalFnsSt) {y y' : FrPt Xo c S} {y₂ : FrPt d.Xo�
     rw [gs_eq r z ⊤ (by trivial), map_one, map_one]
   have H := (rel_scal_iff Xo.univ.t.PP.isLB d.Xo₂.univ.t.PP.isLB p₁ hn p₂ (1 : Γ(Sp S, ⊤)) R R').1 (fun Z r z j _ => by
     rw [one, _root_.one_mul])
-  have H₂ := (scal_iff (fst (Over.mk (y₂.x ≫ d.r)) Xo.univ.t.G).left (1 : Γ(Sp S, ⊤)) s s').2 H
+  have H₂ := (scal_iff (Formalism.L2.PjFree.gxSnd ((y₂.x ≫ d.r))) (1 : Γ(Sp S, ⊤)) s s').2 H
   obtain rfl : s = s' := by
     cases s
     cases s'

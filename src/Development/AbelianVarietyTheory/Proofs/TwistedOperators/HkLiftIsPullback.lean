@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsCan
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEquivHeckeKernelSchemePointsHeckeKernels
@@ -25,39 +26,39 @@ section Map
 variable (Z : Corr Xo P p i) {T : Type} [CommRing T] (h : Sp T ⟶ Z.Hk)
 
 def hkLift {x : Sp T ⟶ Xo.X} (hx : x = h ≫ Z.π₁) : Gx x ⟶ Z.o₁.t.G.left :=
-  Z.m₁.cart.1.lift (snd (Over.mk x) Xo.univ.t.G).left ((fst (Over.mk x) Xo.univ.t.G).left ≫ h)
+  Z.m₁.cart.1.lift (Formalism.L2.PjFree.gxFst (x)) ((Formalism.L2.PjFree.gxSnd (x)) ≫ h)
     (by rw [GlobalTheory.HeckeFrCompare.snd_hom, Category.assoc, ← hx])
 
 def hkLift₂ {x' : Sp T ⟶ Xo.X} (hx' : x' = h ≫ Z.π₂) : Gx x' ⟶ Z.o₂.t.G.left :=
-  Z.m₂.cart.1.lift (snd (Over.mk x') Xo.univ.t.G).left ((fst (Over.mk x') Xo.univ.t.G).left ≫ h)
+  Z.m₂.cart.1.lift (Formalism.L2.PjFree.gxFst (x')) ((Formalism.L2.PjFree.gxSnd (x')) ≫ h)
     (by rw [GlobalTheory.HeckeFrCompare.snd_hom, Category.assoc, ← hx'])
 
 variable {h} {x x' : Sp T ⟶ Xo.X} (hx : x = h ≫ Z.π₁) (hx' : x' = h ≫ Z.π₂)
 
-@[reassoc] theorem hkLift_φ : hkLift Z h hx ≫ Z.m₁.cm.F = (snd (Over.mk x) Xo.univ.t.G).left :=
+@[reassoc] theorem hkLift_φ : hkLift Z h hx ≫ Z.m₁.cm.F = (Formalism.L2.PjFree.gxFst (x)) :=
   Z.m₁.cart.1.lift_fst _ _ _
 
-@[reassoc] theorem hkLift_hom : hkLift Z h hx ≫ Z.o₁.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ h :=
+@[reassoc] theorem hkLift_hom : hkLift Z h hx ≫ Z.o₁.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ h :=
   Z.m₁.cart.1.lift_snd _ _ _
 
-@[reassoc] theorem hkLift₂_φ : hkLift₂ Z h hx' ≫ Z.m₂.cm.F = (snd (Over.mk x') Xo.univ.t.G).left :=
+@[reassoc] theorem hkLift₂_φ : hkLift₂ Z h hx' ≫ Z.m₂.cm.F = (Formalism.L2.PjFree.gxFst (x')) :=
   Z.m₂.cart.1.lift_fst _ _ _
 
-@[reassoc] theorem hkLift₂_hom : hkLift₂ Z h hx' ≫ Z.o₂.t.G.hom = (fst (Over.mk x') Xo.univ.t.G).left ≫ h :=
+@[reassoc] theorem hkLift₂_hom : hkLift₂ Z h hx' ≫ Z.o₂.t.G.hom = (Formalism.L2.PjFree.gxSnd (x')) ≫ h :=
   Z.m₂.cart.1.lift_snd _ _ _
 
 def hkMap : Gx x ⟶ Gx x' :=
-  pullback.lift (f := (Over.mk x').hom) (g := Xo.univ.t.G.hom) (fst (Over.mk x) Xo.univ.t.G).left
+  pullback.lift (f := (Over.mk x').hom) (g := Xo.univ.t.G.hom) (Formalism.L2.PjFree.gxSnd (x))
     (hkLift Z h hx ≫ Z.ψ.left ≫ Z.m₂.cm.F) (by
       simp only [Category.assoc]
       rw [Z.m₂.cart.1.w, Over.w_assoc Z.ψ, hkLift_hom_assoc, ← hx']; rfl)
 
 @[reassoc] theorem hkMap_fst :
-    hkMap Z hx hx' ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left :=
+    hkMap Z hx hx' ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)) :=
   pullback.lift_fst _ _ _
 
 @[reassoc] theorem hkMap_snd :
-    hkMap Z hx hx' ≫ (snd (Over.mk x') Xo.univ.t.G).left = hkLift Z h hx ≫ Z.ψ.left ≫ Z.m₂.cm.F :=
+    hkMap Z hx hx' ≫ (Formalism.L2.PjFree.gxFst (x')) = hkLift Z h hx ≫ Z.ψ.left ≫ Z.m₂.cm.F :=
   pullback.lift_snd _ _ _
 
 @[reassoc] theorem hkMap_hkLift₂ : hkMap Z hx hx' ≫ hkLift₂ Z h hx' = hkLift Z h hx ≫ Z.ψ.left :=
@@ -71,14 +72,14 @@ section Square
 variable (Z : Corr Xo P p i) {T : Type} [CommRing T] {h : Sp T ⟶ Z.Hk} {x x' : Sp T ⟶ Xo.X}
 
 theorem hkLift_isPullback (hx : x = h ≫ Z.π₁) :
-    IsPullback (hkLift Z h hx) (fst (Over.mk x) Xo.univ.t.G).left Z.o₁.t.G.hom h := by
+    IsPullback (hkLift Z h hx) (Formalism.L2.PjFree.gxSnd (x)) Z.o₁.t.G.hom h := by
   refine IsPullback.of_right (h₁₂ := Z.m₁.cm.F) (v₁₃ := Xo.univ.t.G.hom) (h₂₂ := Z.π₁) ?_ (hkLift_hom Z hx)
     Z.m₁.cart.1
   rw [hkLift_φ, ← hx]
   exact (IsPullback.of_hasPullback (Over.mk x).hom Xo.univ.t.G.hom).flip
 
 theorem hkLift₂_isPullback (hx' : x' = h ≫ Z.π₂) :
-    IsPullback (hkLift₂ Z h hx') (fst (Over.mk x') Xo.univ.t.G).left Z.o₂.t.G.hom h := by
+    IsPullback (hkLift₂ Z h hx') (Formalism.L2.PjFree.gxSnd (x')) Z.o₂.t.G.hom h := by
   refine IsPullback.of_right (h₁₂ := Z.m₂.cm.F) (v₁₃ := Xo.univ.t.G.hom) (h₂₂ := Z.π₂) ?_ (hkLift₂_hom Z hx')
     Z.m₂.cart.1
   rw [hkLift₂_φ, ← hx']

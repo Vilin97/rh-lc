@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.GenBridgeB
 
 noncomputable section
@@ -28,7 +29,7 @@ theorem key_fwd (s0 : LB.Sec (PPx x)) (s'' : LB.Sec (PPx (spMap ψ ≫ x))) (a :
       gs (bcPm ψ x) yy ((PPx x).U (fun _ => J 0)) (s0.f (fun _ => J 0)) :=
     (gs_secCP (cpσ ψ x) (θA x s0) (bcV ψ x) yy _ hp).trans
       ((gs_secCP (cpθ x) s0 _ yy _ hp2).trans (by rw [Category.assoc, bcV_gxU]; rfl))
-  have A3 : bcV ψ x ≫ (tB ψ x).G.hom = (fst (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left := bcV_snd ψ x
+  have A3 : bcV ψ x ≫ (tB ψ x).G.hom = (Formalism.L2.PjFree.gxSnd ((spMap ψ ≫ x))) := bcV_snd ψ x
   rw [A1, A2, A3] at h1
   have hJ : (fun _ : Fin 1 => J 0) = J := funext fun k => by rw [Subsingleton.elim k 0]
   rw [hJ] at h1

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Formalism.LocalToGlobal.ProjectiveLattices.GenSpecSep
 import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
 
@@ -26,17 +27,17 @@ def pmOfGS {S : Type} [CommRing S] {x x' : Sp S ⟶ Xo.X} (hx : x' = x) : Gx x' 
       exact pullback.condition)
 
 theorem pmOf_snd {S : Type} [CommRing S] {x x' : Sp S ⟶ Xo.X} (hx : x' = x) :
-    pmOfGS hx ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left :=
+    pmOfGS hx ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')) :=
   pullback.lift_snd _ _ _
 
 theorem pmOf_fst {S : Type} [CommRing S] {x x' : Sp S ⟶ Xo.X} (hx : x' = x) :
-    pmOfGS hx ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left :=
+    pmOfGS hx ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) :=
   pullback.lift_fst _ _ _
 
 theorem srel_iff {S : Type} [CommRing S] {x x' : Sp S ⟶ Xo.X} (hx : x' = x) (s : LB.Sec (PPx x))
     (s' : LB.Sec (PPx x')) (pm : Gx x' ⟶ Gx x)
-    (h1 : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
-    (h2 : pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left) (a : S) :
+    (h1 : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
+    (h2 : pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x'))) (a : S) :
     (∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i),
         (pm.appLE _ _ h).hom (scal x a i * s.f i) = s'.f i) ↔
       ∀ i, (hx ▸ s').f i = scal x a i * s.f i := by

@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Jets.EmbShortThLeThetaPlain
 import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.ThetaLeMsupOfSetC
@@ -53,8 +54,8 @@ theorem isVtOver_move (hLaw : Laws) {E : Type} [Field E] [NumberField E] [IsCMFi
     {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X}
     {ν : SABMap Xo.univ.t Xo.univ.t ρ} {x x' : Sp S ⟶ Xo.X} {pm : Gx x ⟶ Gx x'}
     {w : LB.Iso Xo.univ.t.PP.L (Xo.univ.t.PP.L.pull ν.cm.F)}
-    (h₁ : pm ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
-    (h₂ : pm ≫ (snd (Over.mk x') Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left ≫ ν.φ) (hw : CubIso ν w)
+    (h₁ : pm ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
+    (h₂ : pm ≫ (Formalism.L2.PjFree.gxFst (x')) = (Formalism.L2.PjFree.gxFst (x)) ≫ ν.φ) (hw : CubIso ν w)
     {s : LB.Sec (PPx x)} {s' : LB.Sec (PPx x')} (hs : SecRel (T := Over.mk x) (T₀ := Over.mk x') w pm s' s) (N : ℕ)
     {ok' : (ptO Xo x' ⟶ Xo.univ.t.G) → Prop} {ok : (ptO Xo x ⟶ Xo.univ.t.G) → Prop}
     {t' : ptO Xo x' ⟶ Xo.univ.t.G} {t : ptO Xo x ⟶ Xo.univ.t.G}

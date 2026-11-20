@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
 import Formalism.LocalToGlobal.ProjectiveLattices.RhoWApply
@@ -29,15 +30,15 @@ def CarriesSec {Xo : Moduli Dw l} {S : Type} [CommRing S] (φ : Xo.univ.t.G.left
     (w : LB.Iso Xo.univ.t.PP.L (Xo.univ.t.PP.L.pull φ)) {x x' : Sp S ⟶ Xo.X}
     (s : LB.Sec (PPx x)) (s' : LB.Sec (PPx x')) : Prop :=
   ∃ pm : Gx x ⟶ Gx x',
-    pm ≫ (snd (Over.mk x') Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left ≫ φ ∧
-    pm ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left ∧
+    pm ≫ (Formalism.L2.PjFree.gxFst (x')) = (Formalism.L2.PjFree.gxFst (x)) ≫ φ ∧
+    pm ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)) ∧
     ∀ (i j : Xo.univ.t.PP.L.ι) (W : (Gx x).Opens)
       (hi : W ≤ (PPx x).U (fun _ => i))
       (hj : W ≤ pm ⁻¹ᵁ (PPx x').U (fun _ => j))
-      (hw : W ≤ (snd (Over.mk x) Xo.univ.t.G).left ⁻¹ᵁ
+      (hw : W ≤ (Formalism.L2.PjFree.gxFst (x)) ⁻¹ᵁ
         (LB.div (Xo.univ.t.PP.L.pull φ) Xo.univ.t.PP.L).U (fun _ => j, i)),
       (pm.appLE _ W hj).hom (s'.f (fun _ => j)) =
-        ((snd (Over.mk x) Xo.univ.t.G).left.appLE _ W hw).hom (w.s (fun _ => j, i)).val *
+        ((Formalism.L2.PjFree.gxFst (x)).appLE _ W hw).hom (w.s (fun _ => j, i)).val *
           ((Gx x).presheaf.map (homOfLE hi).op).hom (s.f (fun _ => i))
 
 variable {Xo : Moduli Dw l} {c : Coeff l}

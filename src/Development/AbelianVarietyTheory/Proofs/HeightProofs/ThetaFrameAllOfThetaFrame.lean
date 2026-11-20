@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
 import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfS
@@ -61,7 +62,7 @@ theorem scal_one {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (i : (PPx x).ι) : 
   simp only [scal, ReciprocityTheory.ChartRestriction.G.Out.liftFun, map_one]
 
 def scalSec {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a : S) (s : LB.Sec (PPx x)) : LB.Sec (PPx x) :=
-  mulSec ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S a)) s
+  mulSec ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom (toΓ S a)) s
 
 theorem scalSec_f {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a : S) (s : LB.Sec (PPx x)) (i : (PPx x).ι) :
     (scalSec x a s).f i = scal x a i * s.f i := rfl
@@ -108,7 +109,7 @@ theorem genMatch_scal {t' : SAB H (Sp T.Fr)} {m₁ : SABMap t' Xo.univ.t x}
       rw [appTop_appTop, m₂.cart.1.w, ← appTop_appTop, spMap_appTop_toΓ]
     rw [ha, map_mul, appLE_resG_top, e, ← hp j hj]
     rfl
-  · have e : g.appTop.hom ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom
+  · have e : g.appTop.hom ((Formalism.L2.PjFree.gxSnd (x)).appTop.hom
         (toΓ T.Fr (algebraMap T.V T.Fr a))) = b := by
       rw [appTop_appTop, e₂]
     show resG _ le_top b * s₁.f j = (g.appLE _ _ hj).hom (resG _ le_top _ * s.f _)

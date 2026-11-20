@@ -1,3 +1,4 @@
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.NormsFree
 import Formalism.LocalToGlobal.ProjectiveLattices.RegPFree
@@ -274,8 +275,8 @@ theorem exists_unique_frMove : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     have cond : (fst (Over.mk y.x) Xo.univ.t.G).left ≫ y.x =
         (snd (Over.mk y.x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom := pullback.condition
     obtain ⟨q, q₁, q₂⟩ : ∃ q : Gx y.x ⟶ Gx (y.x ≫ ρ),
-        q ≫ (fst (Over.mk (y.x ≫ ρ)) Xo.univ.t.G).left = (fst (Over.mk y.x) Xo.univ.t.G).left ∧
-        q ≫ (snd (Over.mk (y.x ≫ ρ)) Xo.univ.t.G).left = (snd (Over.mk y.x) Xo.univ.t.G).left ≫ ν.φ :=
+        q ≫ (Formalism.L2.PjFree.gxSnd ((y.x ≫ ρ))) = (fst (Over.mk y.x) Xo.univ.t.G).left ∧
+        q ≫ (Formalism.L2.PjFree.gxFst ((y.x ≫ ρ))) = (snd (Over.mk y.x) Xo.univ.t.G).left ≫ ν.φ :=
       ⟨pullback.lift (fst (Over.mk y.x) Xo.univ.t.G).left ((snd (Over.mk y.x) Xo.univ.t.G).left ≫ ν.φ) (by
         show _ ≫ y.x ≫ ρ = _
         rw [← Category.assoc, cond, Category.assoc, Category.assoc, ν.cart.1.w]),
