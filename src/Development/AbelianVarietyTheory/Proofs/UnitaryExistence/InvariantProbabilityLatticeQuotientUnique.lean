@@ -34,7 +34,7 @@ theorem measurable_fibreMeasure [MeasurableMul G] [Countable Γ] : Measurable (f
       fun g : G => ∑' γ : Γ, A.indicator (1 : G → ℝ≥0∞) ((γ : G) * g) := by
     ext g; exact fibreMeasure_apply Γ g hA
   rw [this]
-  exact Measurable.ennreal_tsum fun γ =>
+  exact Measurable.tsum fun γ =>
     (measurable_one.indicator hA).comp (measurable_const_mul _)
 
 theorem fibreMeasure_of_injOn {A : Set G} (hA : MeasurableSet A)

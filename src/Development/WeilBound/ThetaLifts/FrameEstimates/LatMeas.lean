@@ -125,7 +125,7 @@ theorem latMeas : LatMeas := by
   haveI : Countable (Matrix (Fin n) (Fin d) E) := show Countable (Fin n → Fin d → E) from inferInstance
   haveI : BorelSpace (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA σ J) := ⟨rfl⟩
   delta latSum
-  refine Measurable.ennreal_tsum fun x => ENNReal.measurable_ofReal.comp ?_
+  refine Measurable.tsum fun x => ENNReal.measurable_ofReal.comp ?_
   exact measurable_maj τ hC N ((continuous_mat_inv.matrix_mul continuous_const).matrix_mul continuous_const)
 
 theorem latMeas_of : GrpTop → LatMeas := by

@@ -195,12 +195,12 @@ theorem meanP : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
         (Fin 1 → Fin n → AF F ⊗[F] E) dA (ratA (F := F) (E := E) n) D hD hD1 (ll Y) (hlc Y) (hladd Y)
         (hlsurj Y) (fun γ hγ => hlrat Y γ (Subgroup.mem_subgroupOf.1 hγ)) _ (hslice _)
     · intro Y
-      refine Measurable.aemeasurable (Measurable.ennreal_tsum fun a => ?_)
+      refine Measurable.aemeasurable (Measurable.tsum fun a => ?_)
       refine (hslice _).comp ?_
       exact (measurable_const.add ((hlc Y).measurable.comp measurable_inv))
   have hfm : Measurable fun p : stabilizer₂ (AF F) σ J =>
       phiA σ J n Φ ((p : HA (AF F) σ (hypOne J)) * g) := by
-    refine Measurable.ennreal_tsum fun X => hΦ.comp ?_
+    refine Measurable.tsum fun X => hΦ.comp ?_
     have : Continuous fun p : stabilizer₂ (AF F) σ J =>
         actW (AF F) σ (hypOne J) ((p : HA (AF F) σ (hypOne J)) * g)⁻¹ (ratTup (AF F) X.1) :=
       (act (n + 1)).1.comp (((continuous_subtype_val.mul continuous_const).inv).prodMk continuous_const)
@@ -259,7 +259,7 @@ theorem unfold_frames : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   choose rr hrr using hW
   let r := fun q => ratH (AF F) σ (hypOne J) (rr q)
   have hφ : Measurable (phiA σ J n Φ) := by
-    refine Measurable.ennreal_tsum fun X => hΦ.comp ?_
+    refine Measurable.tsum fun X => hΦ.comp ?_
     have : Continuous fun g : HA (AF F) σ (hypOne J) =>
         actW (AF F) σ (hypOne J) g⁻¹ (ratTup (AF F) X.1) :=
       (act (n + 1)).1.comp (continuous_inv.prodMk continuous_const)

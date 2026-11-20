@@ -47,7 +47,7 @@ theorem UpperTheory.V.Af.Rs.zInt :
   refine IntegrableOn.congr_fun ?_ hEq hF.1
   refine Measure.integrableOn_of_bounded (M := 8 * C0 * W) hF.2.ne ?_ ?_
   · exact ((hGc v).measurable.mul (Complex.measurable_ofReal.comp
-      (Measurable.ennreal_toReal (Measurable.ennreal_tsum fun x => (hgm x).ennreal_ofReal)))).aestronglyMeasurable
+      (Measurable.ennreal_toReal (Measurable.tsum fun x => (hgm x).ennreal_ofReal)))).aestronglyMeasurable
   · refine ae_restrict_of_forall_mem hF.1 fun z hz => ?_
     have him0 : 0 < z.im := z.im_pos
     have him : 1 / 2 ≤ z.im := by

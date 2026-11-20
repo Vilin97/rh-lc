@@ -75,7 +75,7 @@ theorem sum_integral_indicator_eq_setIntegral_count :
         · refine tsum_congr fun γ => ?_
           rw [lintegral_tsum]
           exact fun ν => (hmeas γ ν).aemeasurable
-        · exact fun γ => (Measurable.ennreal_tsum fun ν => hmeas γ ν).aemeasurable
+        · exact fun γ => (Measurable.tsum fun ν => hmeas γ ν).aemeasurable
     _ = ∫⁻ n in 𝓕, ∑' p : Γ × Q.subgroupOf N,
           D.indicator (1 : G → ENNReal) ((e p).1 * (n.1 * h)) ∂μN := by
         refine lintegral_congr fun n => ?_

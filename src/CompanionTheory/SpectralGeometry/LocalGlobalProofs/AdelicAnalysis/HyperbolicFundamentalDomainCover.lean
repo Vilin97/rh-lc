@@ -132,7 +132,7 @@ theorem integral_isotropic_lines_le_flow_sum : ∀ (F E : Type) [Field F] [Numbe
     have hgm : ∀ j, Measurable ((S j).indicator fun _ => g j) := fun j => measurable_const.indicator (hSm j)
     refine h1.trans ((hcover (Γ ⊓ P) inf_le_right 𝓕' h𝓕' (⋃ j, S j) (MeasurableSet.iUnion hSm)
       (hScov.mono fun p ⟨x, hx, hx', j, hj⟩ => ⟨x, ⟨hx', hx⟩, Set.mem_iUnion.2 ⟨j, hj⟩⟩) f
-      (fun p => ∑' j, (S j).indicator (fun _ => g j) p) hfm (Measurable.ennreal_tsum hgm) hfi
+      (fun p => ∑' j, (S j).indicator (fun _ => g j) p) hfm (Measurable.tsum hgm) hfi
       (fun x _ => ?_) fun p hp c hc => ?_).trans ?_)
     · obtain ⟨c, hc, a, ha⟩ := hiwa x
       exact ⟨x * c⁻¹, (hP _).2 ⟨a, ha⟩, c, hc, by rw [inv_mul_cancel_right]⟩

@@ -751,7 +751,7 @@ theorem lside : Equi → CoCpt → LSide := by
         Phi θ ε φ A (actW (AF F) σ J h⁻¹ (ratTup (AF F) X.1)) with hf
   have : Countable E := Countable.of_equiv _ (Module.finBasis ℚ E).equivFun.symm.toEquiv
   have hfm : ∀ ε, Measurable (f ε) := fun ε => by
-    refine Measurable.const_mul (Measurable.ennreal_tsum fun X => (hΦm ε).comp ?_) _
+    refine Measurable.const_mul (Measurable.tsum fun X => (hΦm ε).comp ?_) _
     exact (ac.comp (continuous_inv.prodMk continuous_const)).measurable
   obtain ⟨Bd, hBd⟩ := domination hEq F E σ hcm J hJ d b li lam hli hlam θ hθ S φ A hT C⁻¹ hC.inv
   have hbd : ∀ᶠ ε in 𝓝[>] (0 : ℝ), ∀ h, f ε h ≤ Bd := hBd.mono fun ε hε h => by
@@ -790,7 +790,7 @@ theorem lside : Equi → CoCpt → LSide := by
   simp only [hf]
   have hgm : Measurable fun h : HA (AF F) σ J => ∑' X : ({X : Fin 1 → Fin 2 → E | X ≠ 0} : Set _),
       Phi θ ε φ A (actW (AF F) σ J h⁻¹ (ratTup (AF F) X.1)) :=
-    Measurable.ennreal_tsum fun X => (hΦm ε).comp (ac.comp (continuous_inv.prodMk continuous_const)).measurable
+    Measurable.tsum fun X => (hΦm ε).comp (ac.comp (continuous_inv.prodMk continuous_const)).measurable
   rw [lintegral_const_mul (c ε) hgm]
   simp only [hc]
   ring

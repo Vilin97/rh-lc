@@ -46,7 +46,7 @@ theorem cntI_union_le [Countable E] {S S' : Set (Fin n → Fin M → E)}
       Measurable fun g : HA (AF F) σ J => Φ (actW (AF F) σ J g⁻¹ (ratTup (AF F) X))) :
     cntI σ J μ 𝓕 (S ∪ S') Φ ≤ cntI σ J μ 𝓕 S Φ + cntI σ J μ 𝓕 S' Φ := by
   unfold cntI
-  rw [← lintegral_add_left (Measurable.ennreal_tsum fun X : S => hm X)]
+  rw [← lintegral_add_left (Measurable.tsum fun X : S => hm X)]
   exact lintegral_mono fun g => ENNReal.tsum_union_le
     (fun X => Φ (actW (AF F) σ J g⁻¹ (ratTup (AF F) X))) S S'
 

@@ -140,7 +140,7 @@ theorem fub {N H Y : Type} [MeasurableSpace N] [MeasurableSpace H] [Countable Y]
   have hGm : ∀ y, Measurable (G y) := fun y => (hT y).mul (hF.comp measurable_snd)
   have hGe : ∀ y, Measurable fun p => ‖G y p‖ₑ := fun y => (hGm y).enorm
   have hlin : ∫⁻ p, ∑' y, ‖G y p‖ₑ ∂P ≠ ⊤ := by
-    rw [hP, lintegral_prod _ (Measurable.ennreal_tsum hGe).aemeasurable]
+    rw [hP, lintegral_prod _ (Measurable.tsum hGe).aemeasurable]
     convert hb using 6 with n _ h
     simp only [G, enorm_mul]
     rw [ENNReal.tsum_mul_right]

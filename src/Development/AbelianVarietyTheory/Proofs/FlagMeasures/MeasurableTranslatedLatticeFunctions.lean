@@ -218,13 +218,13 @@ theorem measurable_latFun : ∀ (E : Type) [Field E] [NumberField E], IsTotallyC
   · refine measurable_indicator_of_eqOn
       (f' := fun g => ∑' x : {x : VecInf E j // x ∈ latAt E j Λ (oneInf E j) ∧ x ≠ 0},
         Φ (act (fun w => (Matrix.of (g w))⁻¹) x.1))
-      (Measurable.ennreal_tsum fun x => hΦ.comp (measurable_act_inv x.1)) fun g hg => ?_
+      (Measurable.tsum fun x => hΦ.comp (measurable_act_inv x.1)) fun g hg => ?_
     try dsimp only
     rw [latAt_eq Λ g, tsum_map _ (hinv g hg) Φ]
   · refine measurable_indicator_of_eqOn
       (f' := fun g => ∑' x : {x : VecInf E j // x ∈ dualAt E j (latAt E j Λ (oneInf E j)) ∧ x ≠ 0},
         Φ (act (fun w => (Matrix.of (g w))ᵀ) x.1))
-      (Measurable.ennreal_tsum fun x => hΦ.comp (measurable_act_transpose x.1)) fun g hg => ?_
+      (Measurable.tsum fun x => hΦ.comp (measurable_act_transpose x.1)) fun g hg => ?_
     try dsimp only
     rw [latAt_eq Λ g, dualAt_map _ (hinv g hg), tsum_map _ (htr g hg) Φ]
 

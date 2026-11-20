@@ -145,7 +145,7 @@ theorem measurable_countBelow {K L : Type} [Field K] [Field L] [NumberField K] [
     rw [countBelow, ← ENNReal.tsum_set_one, tsum_subtype _ (fun _ => (1 : ℝ≥0∞))]
     rfl
   rw [e]
-  refine Measurable.ennreal_tsum fun x => ?_
+  refine Measurable.tsum fun x => ?_
   by_cases hx : x ∈ VV
   · have e2 : (fun a => ({y ∈ VV | M.len (invApply a (vecAt v y)) < t}).indicator (1 : W → ℝ≥0∞) x) =
         ({a | M.len (invApply a (vecAt v x)) < t}).indicator (1 : archUnitary h v → ℝ≥0∞) := by

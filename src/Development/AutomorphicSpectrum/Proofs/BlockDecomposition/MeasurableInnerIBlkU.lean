@@ -228,7 +228,7 @@ theorem main (m d : ℕ) (hm : m = k - (d + 1)) (hd : d + 1 ≤ k) (sf : SFinite
         innerI d F (ratGL E k γ.1) (blkU (-x + fun t => algebraMap E (Ad E) (c t))) := fun γ c =>
     (measurable_innerI_blkU m d hF _).comp (measurable_neg.add_const _)
   rw [left_side m d hm hd sf dt1 mod hF, lintegral_congr (right_inner m d hm hd hF),
-    lintegral_tsum fun γ => (Measurable.ennreal_tsum fun c => hmeas γ c).aemeasurable]
+    lintegral_tsum fun γ => (Measurable.tsum fun c => hmeas γ c).aemeasurable]
   refine tsum_congr fun γ => ?_
   rw [lintegral_tsum fun c => (hmeas γ c).aemeasurable]
   exact unfold_vec _ _

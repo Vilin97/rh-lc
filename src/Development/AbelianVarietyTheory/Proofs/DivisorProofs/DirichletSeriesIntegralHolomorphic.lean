@@ -77,7 +77,7 @@ theorem tsum_cpow_integrable_and_differentiableOn :
     simp only [hall, lintegral_const, ENNReal.top_mul (Measure.measure_univ_ne_zero.mpr hμ)] at h
     exact lt_irrefl _ h
   have hEm : ∀ t : ℝ, Measurable (fun x => ∑' i, ENNReal.ofReal (φ i x ^ t)) := fun t =>
-    Measurable.ennreal_tsum (fun i => ((hφm i).pow_const t).ennreal_ofReal)
+    Measurable.tsum (fun i => ((hφm i).pow_const t).ennreal_ofReal)
   have htoReal : ∀ (t : ℝ) (x : α),
       (fun i => (ENNReal.ofReal (φ i x ^ t)).toReal) = fun i => φ i x ^ t := fun t x =>
     funext fun i => ENNReal.toReal_ofReal (Real.rpow_nonneg (hφp i x).le t)

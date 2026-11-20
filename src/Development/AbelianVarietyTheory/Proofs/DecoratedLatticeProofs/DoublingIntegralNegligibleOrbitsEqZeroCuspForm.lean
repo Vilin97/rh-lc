@@ -181,8 +181,8 @@ theorem integral_neg_eq_zero : ∀ (D : D7) (V : HSp D) (a : GL (Fin V.rank) (AE
   have hGm : ∀ q, Measurable (G q) := fun q => (hcont q).measurable.enorm
   have hfin := (GlobalTheory.Core.Rk.AbsConv.absConv_unfolded D V a ha μ hμ s hs φ hφ hgrow m hm f₁ f₂ h₁ h₂).1 𝓕 h𝓕
   rw [← Measure.prod_restrict, ← lintegral_tsum fun q => (hGm q).aemeasurable,
-    lintegral_prod_symm _ (Measurable.ennreal_tsum hGm).aemeasurable] at hfin
-  have hae := ae_lt_top (Measurable.ennreal_tsum hGm).lintegral_prod_left' hfin
+    lintegral_prod_symm _ (Measurable.tsum hGm).aemeasurable] at hfin
+  have hae := ae_lt_top (Measurable.tsum hGm).lintegral_prod_left' hfin
   refine integral_eq_zero_of_ae ?_
   filter_upwards [hae] with g₂ hg₂
   set Φ : NegCosets V → GA D V → ℂ := fun y h =>

@@ -104,7 +104,7 @@ theorem lintegral_log_tail_shells_le {X : Type} [MeasurableSpace X] (μ : Measur
         lintegral_mono_ae ((ae_restrict_iff' hS).2 (Filter.Eventually.of_forall hpt))
     _ = ENNReal.ofReal (Real.log R) * μ S + ENNReal.ofReal (Real.log 2) * ∑' j : ℕ, ∫⁻ y in S, ind j y ∂μ := by
         rw [lintegral_add_left measurable_const, lintegral_const, Measure.restrict_apply MeasurableSet.univ,
-          Set.univ_inter, lintegral_const_mul _ (Measurable.ennreal_tsum fun j =>
+          Set.univ_inter, lintegral_const_mul _ (Measurable.tsum fun j =>
             (measurable_const.indicator (hmeas _))), lintegral_tsum fun j =>
             (measurable_const.indicator (hmeas _)).aemeasurable]
     _ ≤ ENNReal.ofReal (Real.log R) * ENNReal.ofReal (K * Real.log R / R) +

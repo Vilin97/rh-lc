@@ -118,8 +118,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.coordUnf :
   set S : Gam K 2 → Gam K 2 → Par K → ℝ≥0∞ := fun a b p => ∑' ξ : unipLattice K (2 + 2) 2,
     E.indicator Ψ ((nn ξ.1 * lv a b 0)⁻¹ * pt p) with hS
   have hSm : ∀ a b, Measurable (S a b) := fun a b =>
-    Measurable.ennreal_tsum fun ξ => hΦ.comp (pt_meas.const_mul _)
-  have hTm : ∀ a, Measurable fun p => ∑' b, S a b p := fun a => Measurable.ennreal_tsum (hSm a)
+    Measurable.tsum fun ξ => hΦ.comp (pt_meas.const_mul _)
+  have hTm : ∀ a, Measurable fun p => ∑' b, S a b p := fun a => Measurable.tsum (hSm a)
   have hR : ∀ p, Ψ (pt p) = ∑' a, ∑' b, S a b p := fun p => (sum_one E hE Ψ hΨ _).symm
   simp only [hR]
   rw [lintegral_tsum fun a => (hTm a).aemeasurable,

@@ -252,7 +252,7 @@ theorem orbitSum_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
   have hφB : ∀ y ∈ X.dom, ∀ b ∈ Bor X.Ψ r, φ (rmul y b) = φ y := fun y _ b hb => by
     simp only [hφdef, GlobalTheory.Up.rhX_rmul x y hb]
   set G : Frame X.Ψ r → ℝ≥0∞ := fun y => ∑' δ : X.Γ, φ (lact δ.1 y) with hGdef
-  have hGm : Measurable G := Measurable.ennreal_tsum fun δ =>
+  have hGm : Measurable G := Measurable.tsum fun δ =>
     hφm.comp (GlobalTheory.Unfold.continuous_lact X δ.1).measurable
   have hGB : ∀ b ∈ Bor X.Ψ r, ∀ y ∈ X.dom, G (rmul y b) = G y := fun b hb y _ => by
     simp only [hGdef, hφdef, FundSetPf.lact_rmul, GlobalTheory.Up.rhX_rmul x _ hb]

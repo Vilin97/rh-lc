@@ -74,7 +74,7 @@ theorem unf (R : RD d) {f : d.G → ℂ} {s₁ : ℂ} (hf : IsSec d.K d.χ s₁ 
   have fin2 : ∫⁻ p, ∑' y, ‖G y p‖ₑ ∂μN < ⊤ := by
     have hE := coordsE (R := R) h hc hU hc' hT h𝓐 hP hPc
       (fun g => ∑' q : {q : Cs d // ¬ LagrangianCondition L (rep q)}, ‖phz d f s₁ z (rep q.1 * g)‖ₑ)
-      (Measurable.ennreal_tsum fun q => (hΦc.comp (continuous_const.mul continuous_id)).enorm.measurable)
+      (Measurable.tsum fun q => (hΦc.comp (continuous_const.mul continuous_id)).enorm.measurable)
       (fun r hr hx g => eisenstein_norm_sum_rational_invariant hf z hr hx g) x
     have l1 : ∫⁻ p, (∑' q : {q : Cs d // ¬ LagrangianCondition L (rep q)}, ‖phz d f s₁ z (rep q.1 * (nb p.2 * (uM p.1 * x)))‖ₑ) *
         ‖th T p.2‖ₑ ∂μO < ⊤ := by
@@ -132,7 +132,7 @@ theorem unf (R : RD d) {f : d.G → ℂ} {s₁ : ℂ} (hf : IsSec d.K d.χ s₁ 
     refine integral_congr_ae ?_
 
     have hmq : Measurable fun p : nA σ L.Y L.b × ((Fin L.n → AE F E) × ((Fin L.n → AE F E) × AF F)) =>
-        ∑' c₀ : Crat L, ‖G ⟨q', c₀⟩ p‖ₑ := Measurable.ennreal_tsum fun c₀ => (hGc _).enorm.measurable
+        ∑' c₀ : Crat L, ‖G ⟨q', c₀⟩ p‖ₑ := Measurable.tsum fun c₀ => (hGc _).enorm.measurable
     have hfinq : ∫⁻ p, ∑' c₀ : Crat L, ‖G ⟨q', c₀⟩ p‖ₑ ∂μN < ⊤ := by
       refine lt_of_le_of_lt (lintegral_mono fun p => ?_) fin2
       exact (ENNReal.le_tsum (f := fun q'' => ∑' c₀ : Crat L, ‖G ⟨q'', c₀⟩ p‖ₑ) q').trans

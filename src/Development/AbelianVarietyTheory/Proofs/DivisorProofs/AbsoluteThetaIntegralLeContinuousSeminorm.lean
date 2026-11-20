@@ -36,7 +36,7 @@ theorem measurable_absTheta (B : HSp D) {a : ℕ} {φ : Mx D B.rank a → ℂ} (
     Measurable (absTheta B φ) := by
   haveI := GlobalTheory.ThetaTransformMeas.countable_field D.host.E
   haveI : Countable (Matrix (Fin B.rank) (Fin a) D.host.E) := inferInstanceAs (Countable (Fin B.rank → Fin a → D.host.E))
-  exact Measurable.ennreal_tsum fun ξ => (hφ.comp (continuous_invPt B ξ)).enorm.measurable
+  exact Measurable.tsum fun ξ => (hφ.comp (continuous_invPt B ξ)).enorm.measurable
 
 theorem measurable_descend_absTheta (B : HSp D) {a : ℕ} {φ : Mx D B.rank a → ℂ} (hφ : Continuous φ) :
     Measurable (descend (GQ B) (absTheta B φ)) :=

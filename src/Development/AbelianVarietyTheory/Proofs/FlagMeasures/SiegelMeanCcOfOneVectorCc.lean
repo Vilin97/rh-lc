@@ -327,7 +327,7 @@ theorem siegelMeanCc_of_oneVectorCc : OneVectorCc → SiegelMeanCc := by
   have hG : Measurable fun h : HA (AF I.F) I.cm.sig I.J =>
       ∑' X : {X : Fin 1 → Fin I.n → I.E | hE I.cm.sig I.J (X 0) (X 0) = sgn I.E s},
         ENNReal.ofReal (term I φ (T h) (X.1 0)) :=
-    Measurable.ennreal_tsum fun X => (measurable_term I φ hc _).comp hTm
+    Measurable.tsum fun X => (measurable_term I φ hc _).comp hTm
   have hM : meanC μ S (fun h => ((∑' X : {X : Fin 1 → Fin I.n → I.E | hE I.cm.sig I.J (X 0) (X 0) = sgn I.E s},
       ENNReal.ofReal (term I φ (T h) (X.1 0))).toReal : ℂ)) =
       ((meanConst I.E I.n * ∏ v, D v (sgn ℝ s) : ℝ) : ℂ) := by

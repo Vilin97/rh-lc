@@ -97,7 +97,7 @@ theorem integral_unfold {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   have hr : ∀ i, (r i • 𝓕 : Set G) = e (1, i) • 𝓕 := fun i => by
     rw [Subgroup.smul_def, he]; simp
   refine ⟨?_, ⟨AEStronglyMeasurable.tsum hmi, ?_⟩, hI, ?_⟩
-  · filter_upwards [ae_lt_top' (AEMeasurable.ennreal_tsum fun i => (hmi i).enorm) hfin] with g hg
+  · filter_upwards [ae_lt_top' (AEMeasurable.tsum fun i => (hmi i).enorm) hfin] with g hg
     have := ENNReal.summable_toReal hg.ne
     simpa using this
   · exact lt_of_le_of_lt (lintegral_mono fun x => enorm_tsum_le_tsum_enorm) hfin.lt_top

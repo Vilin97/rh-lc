@@ -92,7 +92,7 @@ theorem sq_lintegral_le (μ : Measure G) [μ.IsMulLeftInvariant] (Γ : Subgroup 
     · rfl
     · intro γ
       exact ((htr γ).pow_const 2).aemeasurable
-  have hK : Measurable fun w => ∑' γ : Γ, a ((γ : G) * w) := Measurable.ennreal_tsum htr
+  have hK : Measurable fun w => ∑' γ : Γ, a ((γ : G) * w) := Measurable.tsum htr
   rw [e1, e2, ← lintegral_const_mul' _ _ (ENNReal.natCast_ne_top k)]
   refine (sq_lintegral_mul_le _ hK.aemeasurable hψm.aemeasurable).trans ?_
   rw [hn, mul_one]

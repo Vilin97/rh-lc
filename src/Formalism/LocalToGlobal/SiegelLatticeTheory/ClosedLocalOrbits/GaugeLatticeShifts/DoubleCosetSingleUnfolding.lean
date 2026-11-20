@@ -68,7 +68,7 @@ theorem dcSingleE (Γ S S' : Subgroup G) [Countable Γ] (hS : S ≤ Γ) (hS' : S
     _ = ∑' r : R, ∫⁻ x in F, ∑' t : E (r : G), f ((t : G) * x) * h ((r : G)⁻¹ * ((t : G) * x)) ∂μ := by
         refine lintegral_tsum fun r => ?_
         have := hEc (r : G)
-        exact (Measurable.ennreal_tsum fun t => (hφm (r : G)).comp (measurable_const_mul _)).aemeasurable
+        exact (Measurable.tsum fun t => (hφm (r : G)).comp (measurable_const_mul _)).aemeasurable
     _ = ∑' r : R, ∫⁻ x in Fs r, f x * h ((r : G)⁻¹ * x) ∂μ := by
         refine tsum_congr fun r => ?_
         exact lintegralTransversalSum G μ S (stab S S' r) inf_le_left (Fs r) (hFs r r.2) F hF (E r) (hE r) _
@@ -112,7 +112,7 @@ theorem double_coset_single_unfolding : Formalism.L2.SG.TermOp.KExpCut.DCSingle 
     ne_top_of_le_ne_top (hgs x) (hWle k x)
   have hD'c : Countable D' := countable_of_sub Γ D' hD'.1
   have hWm : ∀ k, Measurable fun x => ∑' δ : D', w k ((δ : G) * x) :=
-    fun k => Measurable.ennreal_tsum fun δ => (hwm k).comp (measurable_const_mul _)
+    fun k => Measurable.tsum fun δ => (hwm k).comp (measurable_const_mul _)
   have hsf : ∀ x, f x = ∑ k, cf k * ((u k x).toReal : ℂ) := fun x => by rw [hu]; exact split (f x)
   have hsψ : ∀ x, ψ x = ∑ k, cf k * ((w k x).toReal : ℂ) := fun x => by rw [hw]; exact split (ψ x)
   have hprod : ∀ x, f x * poinc D' ψ x = ∑ k, ∑ l, cf k * cf l *
@@ -665,7 +665,7 @@ theorem Slab.ooLintSum_of {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting 
     have hinv : ∀ s ∈ Srat X u, ∀ y, Ph X u Y.hK (T i) (s * y) = Ph X u Y.hK (T i) y := hFD.2.1
     have hinv' : ∀ s ∈ Srat X u', ∀ y, Ph X u' Y.hK (T' j) (s * y) = Ph X u' Y.hK (T' j) y := hFD'.2.1
     have hGm : Measurable G :=
-      hPhm.enorm.mul (Measurable.ennreal_tsum fun δ => (hPhm'.comp (measurable_const_mul _)).enorm)
+      hPhm.enorm.mul (Measurable.tsum fun δ => (hPhm'.comp (measurable_const_mul _)).enorm)
     have hGi : ∀ s ∈ Srat X u, ∀ y, G (s * y) = G y := by
       intro s hs y
       simp only [hG]
@@ -931,7 +931,7 @@ theorem termsLEC_of (hMaj : MajPtC) (hInv : RInvC) (hCnt : CountC) : TermsLEC :=
             have h := (hEt t.1 t.2).1
             exact Function.Injective.countable (f := fun s : E t.1 => (⟨(s : X.B.I.Ginf), h s.2⟩ : NOlam X u Λ))
               (by intro p q hpq; apply Subtype.ext; have := congrArg Subtype.val hpq; exact this)
-          exact (Measurable.ennreal_tsum fun m => (hFm i j t.1).comp (measurable_const_mul _)).aemeasurable
+          exact (Measurable.tsum fun m => (hFm i j t.1).comp (measurable_const_mul _)).aemeasurable
       _ ≤ ∫⁻ x in Ωs b, M * (‖Ph X u Y.hK (T i) (x, a)‖ₑ *
             ∑' δ : Y.Dt u', ‖Ph X u' Y.hK (T' j) ((δ : X.B.I.GA) * (x, a))‖ₑ) ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) :=
           lintegral_mono fun x => hcnt (T i) (T' j) Λ hΛ E hEt x

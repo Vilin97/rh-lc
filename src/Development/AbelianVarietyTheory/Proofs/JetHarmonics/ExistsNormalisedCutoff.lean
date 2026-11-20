@@ -122,7 +122,7 @@ lemma exists_precutoff {m : ℕ} {G S : Set (Matrix (Fin m) (Fin m) ℂ)} {μ : 
     rw [← lintegral_indicator_const ((continuous_mulM_left x).measurable (hP j))]
     rfl
   refine ⟨fun y => ∑' j, (piece G j).indicator (fun _ => w j) y,
-    Measurable.ennreal_tsum hmeas, fun x hx => ?_⟩
+    Measurable.tsum hmeas, fun x hx => ?_⟩
   rw [hI x]
   constructor
   · obtain ⟨j, hj⟩ := exists_pos hG hS hSG hμ x hx

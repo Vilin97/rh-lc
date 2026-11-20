@@ -119,7 +119,7 @@ theorem mult_smul (γ₀ : Γ) (z : ℍ) : mult Γ ((γ₀ : SL(2, ℤ)) • z) 
   simp [mul_smul]
 
 theorem measurable_mult [Γ.FiniteIndex] : Measurable (mult Γ) := by
-  refine Measurable.ennreal_tsum fun γ => ?_
+  refine Measurable.tsum fun γ => ?_
   exact (measurable_const.indicator isClosed_tile.measurableSet).comp
     (continuous_smul_const _).measurable
 

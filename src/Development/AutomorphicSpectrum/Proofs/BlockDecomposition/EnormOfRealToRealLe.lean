@@ -89,7 +89,7 @@ theorem exists_normaliser (T : Subgroup G) (hT : IsClosed (T : Set G)) (μT : Me
     by_cases h : g ∈ B i
     · simp only [c, indicator_of_mem h, indicator_of_mem ((hBinv i s g).2 h), hinv]
     · simp only [c, indicator_of_notMem h, indicator_of_notMem (fun h' => h ((hBinv i s g).1 h'))]
-  refine ⟨fun g => ∑' i, c i g * f i g, Measurable.ennreal_tsum fun i => (hc i).mul (hf i),
+  refine ⟨fun g => ∑' i, c i g * f i g, Measurable.tsum fun i => (hc i).mul (hf i),
     fun g => ?_⟩
   have e1 : ∫⁻ t : T, ∑' i, c i ((t : G) * g) * f i ((t : G) * g) ∂μT = ∑' i, c i g * m i g := by
     have hmt : ∀ i, AEMeasurable (fun t : T => c i ((t : G) * g) * f i ((t : G) * g)) μT := fun i =>

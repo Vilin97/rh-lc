@@ -11,7 +11,7 @@ theorem tsum_setIntegral_prod_eq_zero_of_inner :
   have hHm : ∀ x, AEStronglyMeasurable (H x) (μ.prod μ) := fun x => by
     rw [← hprod]; exact (hH x).restrict
   have hFm : AEMeasurable (fun p => ∑' x, ‖H x p‖ₑ) (μ.prod μ) :=
-    AEMeasurable.ennreal_tsum fun x => (hHm x).enorm
+    AEMeasurable.tsum fun x => (hHm x).enorm
   have hFint : ∫⁻ p, ∑' x, ‖H x p‖ₑ ∂(μ.prod μ) ≠ ⊤ := by
     rw [lintegral_prod _ hFm]; exact hfin
   have hsum : ∑' x, ∫⁻ p, ‖H x p‖ₑ ∂(μ.prod μ) = ∫⁻ p, ∑' x, ‖H x p‖ₑ ∂(μ.prod μ) :=
@@ -27,7 +27,7 @@ theorem tsum_setIntegral_prod_eq_zero_of_inner :
     ((hHm x).enorm.prod_swap).lintegral_prod_right'
   have hG2 : ∀ᵐ g₂ ∂μ, ∑' x, ∫⁻ g₁, ‖H x (g₁, g₂)‖ₑ ∂μ ≠ ⊤ := by
     have hm : AEMeasurable (fun g₂ => ∑' x, ∫⁻ g₁, ‖H x (g₁, g₂)‖ₑ ∂μ) μ :=
-      AEMeasurable.ennreal_tsum hLm
+      AEMeasurable.tsum hLm
     have hi : ∫⁻ g₂, ∑' x, ∫⁻ g₁, ‖H x (g₁, g₂)‖ₑ ∂μ ∂μ ≠ ⊤ := by
       rw [lintegral_tsum hLm, tsum_congr hswap, hsum]; exact hFint
     filter_upwards [ae_lt_top' hm hi] with g₂ h using h.ne

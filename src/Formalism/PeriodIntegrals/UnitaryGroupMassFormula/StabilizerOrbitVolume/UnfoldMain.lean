@@ -115,7 +115,7 @@ theorem unfold_of (hW : Witt) (hFT : FinTheta) (hI : InvInv) (hMO : MeasOrb) (hM
     exact Complex.ofReal_ne_zero.2 hX.ne'
   have hθm : Measurable fun h : HA (AF F) σ J => ∑' x : orbS (GamA σ J)
         (ratTup (F := F) (AF F) X0), ENNReal.ofReal (φ (h⁻¹ • (x : Fin a → Fin M → AF F ⊗[F] E))) := by
-    refine Measurable.ennreal_tsum fun x => ?_
+    refine Measurable.tsum fun x => ?_
     have hx : (fun h : HA (AF F) σ J => ENNReal.ofReal (φ (h⁻¹ • (x : Fin a → Fin M → AF F ⊗[F] E)))) =
         fun h => ENNReal.ofReal (φ ((h⁻¹ * repO _ _ x) • ratTup (F := F) (AF F) X0)) := by
       funext h

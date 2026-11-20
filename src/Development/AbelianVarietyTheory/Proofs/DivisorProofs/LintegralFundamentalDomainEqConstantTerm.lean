@@ -126,7 +126,7 @@ theorem tsum_setLIntegral_inv_mul {G : Type} [Group G] [MeasurableSpace G] [Meas
     _ = ∫⁻ u in 𝓕, ∑' q : Γ ⧸ K, ∑' k : K, β (((q.out : Γ) : G) * ((k : Γ) : G) * u * g) ∂ν := by
         rw [lintegral_tsum]
         intro q
-        refine (Measurable.ennreal_tsum fun k => ?_).aemeasurable
+        refine (Measurable.tsum fun k => ?_).aemeasurable
         exact hβ.comp ((measurable_subtype_coe.const_mul _).mul_const _)
     _ = ∫⁻ u in 𝓕, ∑' γ : Γ, β ((γ : G) * u * g) ∂ν := by
         refine lintegral_congr fun u => ?_

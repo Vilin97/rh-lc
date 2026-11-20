@@ -29,7 +29,7 @@ theorem tendsto_lintegral_tsum {α ι : Type*} [MeasurableSpace α] [Countable �
     funext x
     exact (tsum_subtype {y | p y x} fun y => f k y x).trans (tsum_congr fun y => rfl)
   rw [e]
-  exact Measurable.ennreal_tsum fun y => (hf k y).indicator (hp y)
+  exact Measurable.tsum fun y => (hf k y).indicator (hp y)
 
 theorem measurable_coord (I : AutInst) (v : InfinitePlace I.F) (w : Fin I.n → ℂ) :
     Measurable fun x : I.GA => ((uMat (x.1 v))⁻¹ * (I.P v)⁻¹) *ᵥ w := by

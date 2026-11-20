@@ -28,7 +28,7 @@ theorem exists_cut (hm : ∀ g : G, Measurable fun y : Y => g • y) (u : Y → 
     exact tsum_nonneg fun g => h0 _
   have hsm : Measurable fun y => ∑' g : G, u (g • y) := by
     rw [hsE]
-    exact (Measurable.ennreal_tsum fun g => (hu.comp (hm g)).ennreal_ofReal).ennreal_toReal
+    exact (Measurable.tsum fun g => (hu.comp (hm g)).ennreal_ofReal).ennreal_toReal
   have hspos : ∀ y, 0 < ∑' g : G, u (g • y) := by
     intro y
     obtain ⟨g, hg⟩ := hpos y

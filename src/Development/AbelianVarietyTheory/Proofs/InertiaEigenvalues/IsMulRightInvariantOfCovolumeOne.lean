@@ -214,9 +214,9 @@ theorem setLIntegral_average (ι : U →* G) (hι : Function.Injective ι) (hιm
     change β (w⁻¹ * (γ * g)) * F (w * (w⁻¹ * (γ * g))) = _
     rw [mul_inv_cancel_left, hinv _ γ.2, mul_comm, mul_assoc]
   have hm1 : Measurable fun p : G × U => ∑' γ : Γ, β ((ι p.2)⁻¹ * γ * p.1) :=
-    Measurable.ennreal_tsum fun γ => hβm.comp (((hιm.comp measurable_snd).inv.mul_const _).mul measurable_fst)
+    Measurable.tsum fun γ => hβm.comp (((hιm.comp measurable_snd).inv.mul_const _).mul measurable_fst)
   have hm2 : Measurable fun p : G × U => ∑' γ : Γ, β (γ * ι p.2 * p.1) :=
-    Measurable.ennreal_tsum fun γ => hβm.comp (((hιm.comp measurable_snd).const_mul _).mul measurable_fst)
+    Measurable.tsum fun γ => hβm.comp (((hιm.comp measurable_snd).const_mul _).mul measurable_fst)
   symm
   calc ∫⁻ g in 𝓕, ∫⁻ u in D, F (ι u * g) ∂ν ∂μ = ∫⁻ u in D, ∫⁻ g in 𝓕, F (ι u * g) ∂μ ∂ν :=
         lintegral_lintegral_swap (hF.comp ((hιm.comp measurable_snd).mul measurable_fst)).aemeasurable

@@ -84,7 +84,7 @@ theorem quot_unique (Γ : Subgroup H) [Countable Γ]
       ← hlin (fun m => ∑' γ : Γ, A.indicator (1 : H → ENNReal) (γ * m)) _ _ g]
     · refine lintegral_congr fun m => tsum_congr fun γ => ?_
       rw [← mul_assoc]; rfl
-    · exact Measurable.ennreal_tsum fun γ => (measurable_one.indicator hA).comp (measurable_const_mul (γ : H))
+    · exact Measurable.tsum fun γ => (measurable_one.indicator hA).comp (measurable_const_mul (γ : H))
     · intro δ hδ y
       rw [← (Equiv.mulRight (⟨δ, hδ⟩ : Γ)).tsum_eq fun γ : Γ => A.indicator (1 : H → ENNReal) (γ * y)]
       exact tsum_congr fun γ => by rw [← mul_assoc]; rfl⟩

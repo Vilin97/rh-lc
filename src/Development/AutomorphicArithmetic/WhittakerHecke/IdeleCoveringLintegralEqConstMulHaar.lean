@@ -21,7 +21,7 @@ private theorem gen {G Q : Type} [CommGroup G] [TopologicalSpace G] [IsTopologic
   have key : ∀ h : G → ℝ≥0∞, Measurable h → ∫⁻ y, h y ∂m = ∫⁻ t : ℝ, ∫⁻ u, ∑' α : Q, h (c t u α) ∂υ := fun h hh => by
     have hα : ∀ α, Measurable fun p : ℝ × G => h (c p.1 p.2 α) := fun α => hh.comp (hc α).measurable
     rw [hm, lintegral_sum_measure, tsum_congr fun α => lintegral_map hh (hc α).measurable,
-      ← lintegral_tsum fun α => (hα α).aemeasurable, hν, lintegral_prod _ (Measurable.ennreal_tsum hα).aemeasurable]
+      ← lintegral_tsum fun α => (hα α).aemeasurable, hν, lintegral_prod _ (Measurable.tsum hα).aemeasurable]
   have inv : m.IsMulLeftInvariant := ⟨fun x => by
     obtain ⟨τ, w, β, hw, rfl⟩ := hcov x
     have hp : MeasurePreserving (fun p : ℝ × G => (τ + p.1, w * p.2)) ν ν := by

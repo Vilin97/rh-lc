@@ -195,7 +195,7 @@ lemma ae_summable {β : ℍ → ℝ} (hβ : IsWt L β) {h : ℍ → ℂ} (hm : M
   have hfin : ∫⁻ w, ∑' γ : Gamma0 L, ENNReal.ofReal (β w) * ‖h ((γ : SL(2, ℤ)) • w)‖ₑ ≠ ∞ := by
     rw [hA]
     exact ENNReal.mul_ne_top (by simp) hi.2.ne
-  have hae := ae_lt_top' (AEMeasurable.ennreal_tsum hmeas) hfin
+  have hae := ae_lt_top' (AEMeasurable.tsum hmeas) hfin
   filter_upwards [hae] with w hw
   have := ENNReal.summable_toReal hw.ne
   refine this.congr fun γ => ?_

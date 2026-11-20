@@ -539,7 +539,7 @@ theorem growth_main (hS : SizeBasic) (a b : ℕ) (D : Dom E a b) (ι : Type) [Fi
     set Lx := logSize x.1 + logSize x.2
     have hLx : 0 ≤ Lx := by positivity
     set P : H E a b → ℝ≥0∞ := fun y => ∑' γ : ratH E a b, S.indicator 1 (x⁻¹ * ((γ : H E a b) * y))
-    have hPm : Measurable P := Measurable.ennreal_tsum fun γ => (hmi x).comp (measurable_const_mul _)
+    have hPm : Measurable P := Measurable.tsum fun γ => (hmi x).comp (measurable_const_mul _)
     have s1 : ∫⁻ y, ENNReal.ofReal ‖Φ i j y * f j (x * y)‖ ∂D.μ ≤
         ENNReal.ofReal B0 * ∫⁻ y, S.indicator 1 (x⁻¹ * y) * ‖f j y‖ₑ ∂D.μ := by
       rw [← lintegral_mul_left_eq_self (fun y => S.indicator (1 : H E a b → ℝ≥0∞) (x⁻¹ * y) * ‖f j y‖ₑ) x,

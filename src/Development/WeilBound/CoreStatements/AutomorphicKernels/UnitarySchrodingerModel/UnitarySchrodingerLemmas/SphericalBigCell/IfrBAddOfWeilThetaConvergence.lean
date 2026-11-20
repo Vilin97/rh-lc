@@ -38,7 +38,7 @@ theorem integrable_descend_tsum (a : G → X → ℂ) (ha : ∀ x, Measurable fu
     Integrable (descend Γ fun g => ∑' x, a g x) (GlobalTheory.AutomorphicL2Unitary.quotMeasure Γ μ) ∧
       ∀ᵐ q ∂GlobalTheory.AutomorphicL2Unitary.quotMeasure Γ μ, Summable (a q.out) := by
   set A : G → ℝ≥0∞ := fun g => ∑' x, ‖a g x‖ₑ with hAdef
-  have hAm : Measurable A := Measurable.ennreal_tsum fun x => (ha x).enorm
+  have hAm : Measurable A := Measurable.tsum fun x => (ha x).enorm
   have hAq : Measurable (descend Γ A) := measurable_from_quotient.2 (by
     rw [show descend Γ A ∘ Quotient.mk'' = A from hA.lift_descend]
     exact hAm)

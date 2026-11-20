@@ -194,7 +194,7 @@ theorem theta_stage_frames : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     ∑' X : framesE σ J T,
       Φ (actW (AF F) σ _ g⁻¹ (consTup (ratTup (AF F) X.1)))
   have hφ : Measurable φ := by
-    refine Measurable.ennreal_tsum fun X => hΦ.comp ?_
+    refine Measurable.tsum fun X => hΦ.comp ?_
     have : Continuous fun g : HA (AF F) σ (blockOne (algebraMap F E t) J) =>
         actW (AF F) σ _ g⁻¹ (consTup (ratTup (AF F) X.1)) :=
       (act (n + 1)).1.comp (continuous_inv.prodMk continuous_const)

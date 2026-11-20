@@ -77,7 +77,7 @@ theorem exists_weight_nt (T N : Subgroup H) (hT : IsClosed (T : Set H)) (hN : Is
     by_contra hne
     exact Set.disjoint_left.1 (disjoint_disjointed U hne) h h'
   let h : H → ℝ≥0∞ := fun x => ∑' k, (P k).indicator ((W k).indicator 1) x
-  have hh : Measurable h := Measurable.ennreal_tsum fun k =>
+  have hh : Measurable h := Measurable.tsum fun k =>
     (measurable_one.indicator (hWo k).measurableSet).indicator (hPm k)
   have hval : ∀ k x, x ∈ P k → ∀ q, h (j q * x) = (W k).indicator 1 (j q * x) := by
     intro k x hx q

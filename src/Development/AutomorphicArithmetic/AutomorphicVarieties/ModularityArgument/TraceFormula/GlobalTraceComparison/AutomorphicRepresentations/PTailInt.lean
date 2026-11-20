@@ -37,7 +37,7 @@ private theorem measurable_cnt {Ω : Set (H E n 0)} (hΩ : IsCompact Ω) :
   haveI := borelSpace_H (E := E) (n := n)
   haveI : Countable (ratH E n 0) := DiscreteGroups.T1.G.Dcy.countable_ratH'
   have hm : MeasurableSet Ω := hΩ.measurableSet
-  refine Measurable.ennreal_tsum fun γ => ?_
+  refine Measurable.tsum fun γ => ?_
   have hc : Continuous fun x : H E n 0 => x⁻¹ * (γ : H E n 0) * x :=
     (continuous_inv.mul continuous_const).mul continuous_id
   exact (measurable_one.indicator hm).comp hc.measurable

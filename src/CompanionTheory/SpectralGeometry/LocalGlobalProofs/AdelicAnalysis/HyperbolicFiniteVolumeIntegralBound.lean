@@ -67,7 +67,7 @@ theorem mean_isotropic_count_le : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     simp only [hΦ, ← ENNReal.tsum_prod]
     refine le_trans (le_of_eq (tsum_congr fun X => ?_)) (ENNReal.tsum_comp_le_tsum_of_injective hpi _)
     rw [← actW_smul _ _ _ _ (inclR _ _), ← hsm, hp]
-  have hm : Measurable Φ := Measurable.ennreal_tsum fun l =>
+  have hm : Measurable Φ := Measurable.tsum fun l =>
     (measurable_const.indicator hΩ.measurableSet).comp ((continuous_const_smul _).const_smul t).measurable
   refine h1.trans ((hmain Φ hm (fun l y hl => ?_) (fun j => if (j : ℝ) + Real.log r < x₀ then 0 else
     ENNReal.ofReal (C * Real.exp (2 * Module.finrank ℚ F * ((j : ℝ) + Real.log r)))) (fun j p hp => ?_) L

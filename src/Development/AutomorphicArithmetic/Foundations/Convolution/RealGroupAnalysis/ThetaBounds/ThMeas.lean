@@ -12,7 +12,7 @@ private theorem measurable_tsum_complex {ι X : Type} [Countable ι] [Measurable
     (hf : ∀ i, Measurable (f i)) : Measurable fun x => ∑' i, f i x := by
   have hS : MeasurableSet {x | Summable fun i => f i x} := by
     have hm : Measurable fun x => ∑' i, (‖f i x‖₊ : ENNReal) :=
-      Measurable.ennreal_tsum fun i => (hf i).nnnorm.coe_nnreal_ennreal
+      Measurable.tsum fun i => (hf i).nnnorm.coe_nnreal_ennreal
     have : {x | Summable fun i => f i x} = (fun x => ∑' i, (‖f i x‖₊ : ENNReal)) ⁻¹' Set.Iio ⊤ := by
       ext x
       simp only [Set.mem_setOf_eq, Set.mem_preimage, Set.mem_Iio, lt_top_iff_ne_top]

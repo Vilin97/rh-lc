@@ -41,13 +41,13 @@ theorem UpperTheory.ConvolutionTheory.R2.G.unfoldSum :
     _root_.UpperTheory.ConvolutionTheory.R2.M.unfL F M σ (fun g => ‖u i g‖ₑ) hσ (hu i).1.enorm
       (fun ξ g => by simp only [(hu i).2 ξ g])
   have hTm : ∀ i, Measurable fun g : G1 F => ∑' r, ‖u i (ratS F (σ r) * g)‖ₑ := fun i =>
-    Measurable.ennreal_tsum fun r => ((hu i).1.comp (measurable_const_mul _)).enorm
+    Measurable.tsum fun r => ((hu i).1.comp (measurable_const_mul _)).enorm
   have hTT : ∫⁻ g in M.D, ∑' i, ∑' r, ‖u i (ratS F (σ r) * g)‖ₑ ∂M.μ = ∑' i, abelian₂ M (u i) := by
     rw [lintegral_tsum fun i => (hTm i).aemeasurable]
     exact tsum_congr hTL
   have hfin : ∀ᵐ g ∂(M.μ.restrict M.D), ∑' i, ∑' r, ‖u i (ratS F (σ r) * g)‖ₑ ≠ ⊤ := by
     have hm : AEMeasurable (fun g : G1 F => ∑' i, ∑' r, ‖u i (ratS F (σ r) * g)‖ₑ) (M.μ.restrict M.D) :=
-      (Measurable.ennreal_tsum hTm).aemeasurable
+      (Measurable.tsum hTm).aemeasurable
     filter_upwards [ae_lt_top' hm (by rw [hTT]; exact hL)] with g hg using hg.ne
   have hST : ∀ i g, ‖∑' r, u i (ratS F (σ r) * g)‖ₑ ≤ ∑' r, ‖u i (ratS F (σ r) * g)‖ₑ := fun i g =>
     enorm_tsum_le' _

@@ -56,7 +56,7 @@ theorem wtB (hN3 : N3) (hN4b : OneMoreAdelicColumn) {m : ℕ} (hmk : m < k) {β 
 theorem wtA (hN0 : N0) (hN3 : N3) (hN4a : CosetIntegralParabolic) (hN4b : OneMoreAdelicColumn) {m : ℕ} (hm1 : 1 ≤ m) (hmk : m < k)
     {β : GA E k → ℝ≥0∞} (hβ : IsWt (nuP E k m) β) : IsWt (nuP E k (m - 1)) (bA m β) := by
   haveI : Countable (RowT E k m) := (hN0 E k m hm1 hmk.le).2.2.2.2.2.2.1
-  refine ⟨Measurable.ennreal_tsum fun ξ => hβ.1.comp (measurable_const_mul _), fun g => ?_⟩
+  refine ⟨Measurable.tsum fun ξ => hβ.1.comp (measurable_const_mul _), fun g => ?_⟩
   have := hN4a E k m hm1 hmk.le (fun h => β (h * g)) (hβ.1.comp (measurable_mul_const g))
   rw [wtB hN3 hN4b hmk hβ g] at this
   rw [this]

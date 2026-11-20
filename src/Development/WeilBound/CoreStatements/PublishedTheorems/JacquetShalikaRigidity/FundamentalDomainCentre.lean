@@ -164,10 +164,10 @@ theorem fundamental_domain_of : Q1 → D0 → N3 → W0 := by
   have hβ₁ : Measurable ((FundamentalDomainCentre.fdL E k).indicator (1 : GA E k → ℝ≥0∞)) := by
     first | exact measurable_one.indicator hF | exact measurable_const.indicator hF
   refine ⟨⟨fun g => ∑' n : ℤ, (FundamentalDomainCentre.fdL E k).indicator (1 : GA E k → ℝ≥0∞) (splitCentre E k 1 ^ n * g),
-    Measurable.ennreal_tsum fun n => hβ₁.comp (measurable_const_mul _), fun g => ?_⟩, fun β hβ => ?_⟩
+    Measurable.tsum fun n => hβ₁.comp (measurable_const_mul _), fun g => ?_⟩, fun β hβ => ?_⟩
   · have hm : Measurable fun h : GA E k =>
         ∑' n : ℤ, (FundamentalDomainCentre.fdL E k).indicator (1 : GA E k → ℝ≥0∞) (splitCentre E k 1 ^ n * (h * g)) :=
-      Measurable.ennreal_tsum fun n => hβ₁.comp ((measurable_const_mul _).comp (measurable_mul_const g))
+      Measurable.tsum fun n => hβ₁.comp ((measurable_const_mul _).comp (measurable_mul_const g))
     refine (hlint _ hm).trans ?_
     refine Eq.trans ?_ (FundamentalDomainCentre.fundamental_domain_tsum hD hk g)
     rw [ENNReal.tsum_prod']

@@ -65,7 +65,7 @@ theorem unipotent_integral_of : Q1 → Q2 → N0 → N3 → CosetIntegralParabol
     exact hβ.2 g
   set β' : GA E k → ℝ≥0∞ := fun g => ∑' ξ : RowT E k k, β ((ratGL E k (gam ξ))⁻¹ * g) with hβ'
   have hwt : IsWt (nuP E k (k - 1)) β' := by
-    refine ⟨Measurable.ennreal_tsum fun ξ => hβ.1.comp (measurable_const_mul _), fun g => ?_⟩
+    refine ⟨Measurable.tsum fun ξ => hβ.1.comp (measurable_const_mul _), fun g => ?_⟩
     simp only [hβ']
     rw [lintegral_tsum (f := fun ξ h => β ((ratGL E k (gam ξ))⁻¹ * (h * g)))
       fun ξ => (hβ.1.comp ((measurable_const_mul _).comp (measurable_mul_const g))).aemeasurable]

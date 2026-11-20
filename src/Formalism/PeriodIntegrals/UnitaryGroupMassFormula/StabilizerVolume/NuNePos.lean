@@ -44,7 +44,7 @@ theorem thetaPos_of (hFin : ThetaFin) (hW : Witt) (hI : InvInv) (hMO : MeasOrb) 
     rw [← e.tsum_eq (fun x => ENNReal.ofReal (φ (h⁻¹ • (x : Fin a → Fin M → AF F ⊗[F] E))))]
     exact tsum_congr fun X => by rw [he X]
   have hθm : Measurable θp := by
-    refine Measurable.ennreal_tsum fun x => ?_
+    refine Measurable.tsum fun x => ?_
     have hx : (fun h : HA (AF F) σ J => ENNReal.ofReal (φ (h⁻¹ • (x : Fin a → Fin M → AF F ⊗[F] E)))) =
         fun h => ENNReal.ofReal (φ ((h⁻¹ * repO _ _ x) • ratTup (F := F) (AF F) X0)) := by
       funext h

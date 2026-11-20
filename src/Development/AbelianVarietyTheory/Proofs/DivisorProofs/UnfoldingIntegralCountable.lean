@@ -104,7 +104,7 @@ theorem lintegral_fundamentalDomain_eq : ∀ {G G₁ L Kt : Type} [Group G] [Mea
   let χ : G → ENNReal := fun y => ∑' q : Q, 𝓓₀.indicator (1 : G → ENNReal) ((q : G) * y)
   have hχae : ∀ᵐ y ∂μG, χ y = 1 := GlobalTheory.T.fundamental_domain_indicator_tsum_one μG Q 𝓓 𝓓₀ hQc hLG hμG h𝓓 h₀ hsub hnull
   have hχm : Measurable χ :=
-    Measurable.ennreal_tsum fun q => (measurable_one.indicator h₀).comp (hLG q.1)
+    Measurable.tsum fun q => (measurable_one.indicator h₀).comp (hLG q.1)
   let B : Set G := χ ⁻¹' {1}ᶜ
   have hBm : MeasurableSet B := hχm (measurableSet_singleton 1).compl
   have hB0 : μG B = 0 := ae_iff.1 hχae

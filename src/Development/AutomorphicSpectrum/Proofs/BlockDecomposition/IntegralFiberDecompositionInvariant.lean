@@ -26,7 +26,7 @@ theorem exists_normaliser {H X : Type} [MeasurableSpace H] [MeasurableSpace X] (
     (hD i).diff (MeasurableSet.iUnion fun j => hZ j)
   set b : X → ℝ≥0∞ := fun x => ∑' i, (E i).indicator (1 : X → ℝ≥0∞) x with hb
   have hbm : Measurable b :=
-    Measurable.ennreal_tsum fun i => measurable_one.indicator (hEm i)
+    Measurable.tsum fun i => measurable_one.indicator (hEm i)
   set B : X → ℝ≥0∞ := fun x => ∫⁻ h, b (act h x) ∂ν with hB
   have hBm : Measurable B :=
     Measurable.lintegral_prod_left' (μ := ν) (f := fun p : H × X => b (act p.1 p.2)) (hbm.comp hact)

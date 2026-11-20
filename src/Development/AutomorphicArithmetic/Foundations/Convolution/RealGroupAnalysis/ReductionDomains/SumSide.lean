@@ -21,7 +21,7 @@ theorem UpperTheory.ConvolutionTheory.R2.M.sumSide :
     rw [← hL _ hum]
     exact hint.2
   have hmeas : Measurable fun x => ∑' i, ‖u (e i x)‖ₑ :=
-    Measurable.ennreal_tsum fun i => hum.comp (he i)
+    Measurable.tsum fun i => hum.comp (he i)
   have hsum : ∀ᵐ x ∂m, Summable fun i => ‖u (e i x)‖ := by
     filter_upwards [ae_lt_top hmeas hfin.ne] with x hx
     have h1 : ∑' i, ((‖u (e i x)‖₊ : ℝ≥0) : ℝ≥0∞) ≠ ⊤ := hx.ne

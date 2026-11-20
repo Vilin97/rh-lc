@@ -90,7 +90,7 @@ theorem rho_of_notMem {H U : Subgroup G} {μH : Measure H} {Rp : Set G} {x : G}
 
 theorem measurable_rho {H U : Subgroup G} {μH : Measure H} {Rp : Set G} [Countable Rp]
     (hU : IsOpen (U : Set G)) : Measurable (rho μH U Rp) := by
-  refine Measurable.ennreal_tsum fun r => ?_
+  refine Measurable.tsum fun r => ?_
   exact measurable_const.indicator (isOpen_coset hU (r : G)).measurableSet
 
 theorem rho_isQuotNormaliser [SecondCountableTopology G] {H U : Subgroup G} {μH : Measure H}

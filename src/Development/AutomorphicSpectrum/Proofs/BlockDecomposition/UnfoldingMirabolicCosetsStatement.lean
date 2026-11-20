@@ -328,11 +328,11 @@ theorem cut {𝓓 : Set Jd} (hD : MeasurableSet 𝓓) (hu : ∀ a : Jd, ∃! α 
         F (dia2 (pp α b) * pt x a z κ.1) * wt a ∂adeleMeasure ℚ := by
     intro a
     simp only [← ENNReal.tsum_mul_right]
-    rw [lintegral_tsum fun α => (Measurable.ennreal_tsum fun b => hYx α b a).aemeasurable]
+    rw [lintegral_tsum fun α => (Measurable.tsum fun b => hYx α b a).aemeasurable]
     refine tsum_congr fun α => ?_
     rw [lintegral_tsum fun b => (hYx α b a).aemeasurable]
   simp only [h2]
-  rw [lintegral_tsum fun α => (Measurable.ennreal_tsum fun b => hYa α b).aemeasurable]
+  rw [lintegral_tsum fun α => (Measurable.tsum fun b => hYa α b).aemeasurable]
 
 theorem null_pull {μ : Measure G2} {mK : Measure KA} {C : NNReal} [SFinite mK] (hC : Coord μ mK C)
     {N : Set G2} (hN : MeasurableSet N) (h0 : μ N = 0) :
@@ -458,7 +458,7 @@ theorem unfolding_mirabolic_cosets : Ad3.R.G2b := by
   have hmf : Measurable f := hH.mul (hΦ.comp (continuous_row e0).measurable)
   have hmul : ∀ h : G2, Measurable fun g : G2 => h * g := fun h => measurable_const_mul h
   have hmind : Measurable ind := measurable_one.indicator h0.meas
-  have hmbet : Measurable bet := Measurable.ennreal_tsum fun ξ => hmind.comp (hmul _)
+  have hmbet : Measurable bet := Measurable.tsum fun ξ => hmind.comp (hmul _)
 
   have hB : ∀ᵐ g ∂μ, ∑' α : ℚˣ, ∑' b : ℚ, bet (dia2 (pp α b) * g) = 1 := by
     filter_upwards [ae_unique h0.fd] with g hg
@@ -469,7 +469,7 @@ theorem unfolding_mirabolic_cosets : Ad3.R.G2b := by
   set N : Set G2 := {g | ∑' α : ℚˣ, ∑' b : ℚ, bet (dia2 (pp α b) * g) ≠ 1} with hN
   have hmN : MeasurableSet N := by
     have : Measurable fun g : G2 => ∑' α : ℚˣ, ∑' b : ℚ, bet (dia2 (pp α b) * g) :=
-      Measurable.ennreal_tsum fun α => Measurable.ennreal_tsum fun b => hmbet.comp (hmul _)
+      Measurable.tsum fun α => Measurable.tsum fun b => hmbet.comp (hmul _)
     exact (this (measurableSet_singleton 1)).compl
   have hN0 : μ N = 0 := hB
   rw [unfold_step h0.meas hH hL hΦ γs hγ]

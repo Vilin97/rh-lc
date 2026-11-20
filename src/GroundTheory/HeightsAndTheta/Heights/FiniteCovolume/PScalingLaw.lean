@@ -210,7 +210,7 @@ theorem ScalingLaw.proof (h : HermitianForm F E W) (v : Basis ι E W) [FiniteDim
     intro t ht
     rw [massBelow, lintegral_congr fun g => hcount g t, lintegral_finset_sum]
     · exact Finset.sum_congr rfl fun o ho => hCeq (Y o) (hSV (hYS o ho)) t ht
-    · exact fun o _ => @Measurable.ennreal_tsum _ _ _ (hQc _) _ fun q =>
+    · exact fun o _ => @Measurable.tsum _ _ _ (hQc _) _ fun q =>
         (measurable_belowIndicator M _ t).comp (measurable_const_mul _)
   refine ⟨FD, hFD, fun t ht => ⟨?_, fun θ hθ => ?_⟩⟩
   · rw [hm t ht]

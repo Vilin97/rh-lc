@@ -90,14 +90,14 @@ theorem cont_wc (c : Qc X I) : Continuous (wc X I P.q c) := by
 
 theorem meas_PhiE : Measurable (PhiE hI hP β) := by
   unfold PhiE
-  refine Measurable.ennreal_tsum fun c => ?_
+  refine Measurable.tsum fun c => ?_
   refine Continuous.measurable ?_ |>.ennreal_ofReal
   exact (cont_wc c).mul ((continuous_pointNormSq_quotient hI hP hβ).comp
     ((wmap (IR I)).continuous.comp (continuous_id.sub continuous_const)))
 
 omit hβ in
 theorem meas_AE : Measurable (AE X I P.q) :=
-  Measurable.ennreal_tsum fun c => (cont_wc c).measurable.ennreal_ofReal
+  Measurable.tsum fun c => (cont_wc c).measurable.ennreal_ofReal
 
 omit hβ in
 theorem wc_nonneg (c : Qc X I) (v : Vsp X.dim) : 0 ≤ wc X I P.q c v := (Real.exp_pos _).le

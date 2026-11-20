@@ -64,7 +64,7 @@ theorem mean_eq_lint : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     refine lintegral_congr fun X => ?_
     simp only [hΦd, Psi, Set.indicator, Set.mem_setOf_eq]
   · simp only [hterm]
-    exact Measurable.ennreal_tsum fun X => hΦ.comp (ac.comp (continuous_inv.prodMk continuous_const)).measurable
+    exact Measurable.tsum fun X => hΦ.comp (ac.comp (continuous_inv.prodMk continuous_const)).measurable
 
 end GlobalTheory.CompanionTheory.SW.RankOneSiegelWeil
 

@@ -183,7 +183,7 @@ theorem local_stages : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     (P k).indicator fun y => Lc k (actW R σ (hypOne J) (gk k)⁻¹ y)
   have hHm : ∀ k, Measurable (H k) := fun k =>
     ((hLc k).comp (hact1 _).measurable).indicator (hPm k)
-  refine ⟨fun y => ∑' k, H k y, Measurable.ennreal_tsum hHm, ?_, ?_⟩
+  refine ⟨fun y => ∑' k, H k y, Measurable.tsum hHm, ?_, ?_⟩
   · intro g
     obtain ⟨k₀, hk₀⟩ := Set.mem_iUnion.1 (hOrb g)
     have hs : (∑' k, H k (actW R σ (hypOne J) g (e0 _ M))) = H k₀ (actW R σ (hypOne J) g (e0 _ M)) :=

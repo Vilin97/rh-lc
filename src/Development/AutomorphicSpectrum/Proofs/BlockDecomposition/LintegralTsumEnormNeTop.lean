@@ -244,7 +244,7 @@ theorem quotIntegral_unfold (hle : Γ₀ ≤ Γ) (hFd : IsFundamentalDomain Γ F
   rw [key]
   refine integral_congr_ae ?_
   have hmq : Measurable fun x => ∑' q : Γ ⧸ Γ₀.subgroupOf Γ, ‖F (((q.out : Γ) : G)⁻¹ * x)‖ₑ :=
-    Measurable.ennreal_tsum fun q => (hF.comp (measurable_const_mul _)).enorm
+    Measurable.tsum fun q => (hF.comp (measurable_const_mul _)).enorm
   filter_upwards [ae_lt_top hmq hint] with x hx
   refine tsum_complex_eq hle hD F hFH x ?_
   have h2 : ∑' γ : Γ, ‖D.indicator F ((γ : G) * x)‖ₑ ≠ ∞ := by

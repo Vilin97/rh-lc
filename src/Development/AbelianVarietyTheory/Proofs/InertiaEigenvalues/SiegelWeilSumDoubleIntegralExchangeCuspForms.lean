@@ -42,7 +42,7 @@ theorem exch_general {X ι : Type*} [MeasurableSpace X] [Countable ι] (ν : Mea
     rw [hρ, lintegral_prod _ ?_]
     · exact hfin
     · rw [← hρ]
-      exact AEMeasurable.ennreal_tsum fun Y => by
+      exact AEMeasurable.tsum fun Y => by
         simpa [hnorm] using (hF Y).enorm
   have hint : ∀ Y, Integrable (F Y) ρ := fun Y =>
     ⟨hF Y, lt_of_le_of_lt (ENNReal.le_tsum Y) (lt_top_iff_ne_top.2 hsum)⟩

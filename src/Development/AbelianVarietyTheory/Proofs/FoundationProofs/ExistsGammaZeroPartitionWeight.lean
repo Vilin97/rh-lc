@@ -56,7 +56,7 @@ theorem wt_exists : ∀ L : ℕ, 0 < L → ∃ ρ, Wt L ρ := by
     exact ⟨⟨γ, hγ⟩, s, hs, by rwa [mul_smul] at hg⟩
   let N : ℍ → ENNReal := fun τ => ∑' γ : Gamma0 L, K.indicator (1 : ℍ → ENNReal) ((γ : SL(2, ℤ)) • τ)
   have hNm : Measurable N := by
-    refine Measurable.ennreal_tsum fun γ => ?_
+    refine Measurable.tsum fun γ => ?_
     exact (measurable_one.indicator hKm).comp (wt_cont (γ : SL(2, ℤ))).measurable
   have hNcard : ∀ τ, N τ = ((hKfin τ).toFinset.card : ENNReal) := by
     intro τ

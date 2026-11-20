@@ -107,7 +107,7 @@ theorem packing_count : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopolog
         rw [lintegral_tsum]
         exact fun γ => ((measurable_one.indicator (hmeasA γ t))).aemeasurable
       · intro t _
-        exact (Measurable.ennreal_tsum fun γ => measurable_one.indicator (hmeasA γ t)).aemeasurable
+        exact (Measurable.tsum fun γ => measurable_one.indicator (hmeasA γ t)).aemeasurable
     _ ≤ ∫⁻ _x, (hfin.toFinset.card : ℝ≥0∞) ∂ν := lintegral_mono hpt
     _ = (hfin.toFinset.card : ℝ≥0∞) * μ (S ∩ D) := by
       rw [lintegral_const, hν, Measure.restrict_apply_univ]
