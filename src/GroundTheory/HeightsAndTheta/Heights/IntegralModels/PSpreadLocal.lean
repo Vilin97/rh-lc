@@ -20,7 +20,7 @@ theorem isVectorBundle_freeModule (h : FreeSheafBasis.Statement.{u}) (Y : Scheme
   exact ⟨V, hV, hyV, n, _, (h Y n).restrict le_top⟩
 
 theorem isPreimmersion_baseChangeMap {X : Scheme.{0}} (f : X ⟶ SpecZ) (p : Nat.Primes) :
-    IsPreimmersion (baseChangeMap f (ZLoc p)) := by
+    IsPreimmersion (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) := by
   have : IsPreimmersion (Spec.map (CommRingCat.ofHom (Int.castRingHom (ZLoc p)))) := by
     have h := IsPreimmersion.of_isLocalization (R := ℤ) (S := ZLoc p)
       (Ideal.span {((p : ℕ) : ℤ)}).primeCompl
@@ -33,16 +33,16 @@ theorem SpreadLocal.proof (h₁ : FreeSheafBasis.Statement.{0}) (h₂ : BasisIso
   intro X f p E hE x
   obtain ⟨U, -, hxU, n, s, hs⟩ := hE x
   have := isPreimmersion_baseChangeMap f p
-  obtain ⟨W, hWo, hW⟩ := (baseChangeMap f (ZLoc p)).isEmbedding.isInducing.isOpen_iff.mp U.2
+  obtain ⟨W, hWo, hW⟩ := (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).isEmbedding.isInducing.isOpen_iff.mp U.2
   let W' : X.Opens := ⟨W, hWo⟩
-  have hWU : baseChangeMap f (ZLoc p) ⁻¹ᵁ W' = U := Opens.ext hW
+  have hWU : baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W' = U := Opens.ext hW
   refine ⟨W', hWU ▸ hxU, ?_⟩
-  let V := baseChangeMap f (ZLoc p) ⁻¹ᵁ W'
+  let V := baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W'
   have hle : V.ι ''ᵁ ⊤ ≤ U := by simp [V, hWU]
   obtain ⟨eF⟩ := h₂ _ (E.restrict V.ι) n _ ((hs.restrict hle).restrictImage V.ι)
-  let φ := (baseChangeMap f (ZLoc p) ∣_ W').toRingCatSheafHom
+  let φ := (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ W').toRingCatSheafHom
   have : (SheafOfModules.pushforward φ).IsRightAdjoint :=
-    (Scheme.Modules.pullbackPushforwardAdjunction (baseChangeMap f (ZLoc p) ∣_ W')).isRightAdjoint
+    (Scheme.Modules.pullbackPushforwardAdjunction (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ W')).isRightAdjoint
   exact ⟨_, isVectorBundle_freeModule h₁ _ n,
     ⟨SheafOfModules.pullbackObjFreeIso φ (ULift.{0} (Fin n)) ≪≫ eF.symm ≪≫
       (Scheme.Modules.restrictFunctorIsoPullback V.ι).app E⟩⟩

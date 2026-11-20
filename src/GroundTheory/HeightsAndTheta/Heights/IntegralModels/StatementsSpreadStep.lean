@@ -10,10 +10,10 @@ noncomputable section
 
 def SpreadStep.Statement : Prop :=
   ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) [LocallyOfFiniteType f] [QuasiCompact f] (p : Nat.Primes)
-    (E : (baseChange f (ZLoc p)).Modules) (W₁ W₂ : X.Opens),
-    SpreadsOn f (ZLoc p) E W₁ → SpreadsOn f (ZLoc p) E W₂ →
-    ∃ W : X.Opens, baseChangeMap f (ZLoc p) ⁻¹ᵁ W₁ ⊔ baseChangeMap f (ZLoc p) ⁻¹ᵁ W₂ ≤
-        baseChangeMap f (ZLoc p) ⁻¹ᵁ W ∧ SpreadsOn f (ZLoc p) E W
+    (E : (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).Modules) (W₁ W₂ : X.Opens),
+    SpreadsOn f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) E W₁ → SpreadsOn f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) E W₂ →
+    ∃ W : X.Opens, baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W₁ ⊔ baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W₂ ≤
+        baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W ∧ SpreadsOn f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) E W
 
 end
 

@@ -22,10 +22,10 @@ lemma toOpen_ι (f : X ⟶ SpecZ) (R : Type) [CommRing R] (W : X.Opens)
 
 def SpreadBundleNbhd.Statement : Prop :=
   ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) [LocallyOfFiniteType f] [QuasiCompact f] (p : Nat.Primes)
-    (E : (baseChange f (ZLoc p)).Modules), IsVectorBundle E →
-    ∃ (W : X.Opens) (hW : Set.range (baseChangeMap f (ZLoc p)) ⊆ Set.range W.ι)
+    (E : (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).Modules), IsVectorBundle E →
+    ∃ (W : X.Opens) (hW : Set.range (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) ⊆ Set.range W.ι)
       (E' : (W : Scheme.{0}).Modules), IsVectorBundle E' ∧
-        Nonempty ((Scheme.Modules.pullback (toOpen f (ZLoc p) W hW)).obj E' ≅ E)
+        Nonempty ((Scheme.Modules.pullback (toOpen f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) W hW)).obj E' ≅ E)
 
 end
 

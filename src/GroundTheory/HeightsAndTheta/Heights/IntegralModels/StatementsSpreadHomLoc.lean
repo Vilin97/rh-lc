@@ -12,14 +12,14 @@ noncomputable section
 def SpreadHomLoc.Statement : Prop :=
   ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) [LocallyOfFiniteType f] [QuasiCompact f] (p : Nat.Primes)
     (U : X.Opens) (F G : (U : Scheme.{0}).Modules), IsVectorBundle F → IsVectorBundle G →
-    ∀ φ : (Scheme.Modules.pullback (baseChangeMap f (ZLoc p) ∣_ U)).obj F ⟶
-      (Scheme.Modules.pullback (baseChangeMap f (ZLoc p) ∣_ U)).obj G,
+    ∀ φ : (Scheme.Modules.pullback (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ U)).obj F ⟶
+      (Scheme.Modules.pullback (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ U)).obj G,
     ∃ m : ℕ, 0 < m ∧ ¬ (p : ℕ) ∣ m ∧ ∀ n : ℕ, 0 < n → m ∣ n → ¬ (p : ℕ) ∣ n →
       ∃ ψ : (Scheme.Modules.pullback (X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U))).obj F ⟶
           (Scheme.Modules.pullback (X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U))).obj G,
-        pullbackHomAlong (rfl : (baseChangeMap f (ZLoc p) ∣_ (U ⊓ invOpen f n)) ≫
+        pullbackHomAlong (rfl : (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ (U ⊓ invOpen f n)) ≫
             X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U) = _) ψ =
-          pullbackHomAlong (morphismRestrict_homOfLE (baseChangeMap f (ZLoc p)) (U ⊓ invOpen f n) U
+          pullbackHomAlong (morphismRestrict_homOfLE (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) (U ⊓ invOpen f n) U
             inf_le_left).symm φ
 
 end

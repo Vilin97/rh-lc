@@ -19,8 +19,8 @@ theorem PullInjLoc.proof (h₁ : LocSectionsInj.Statement) : PullInjLoc.Statemen
   intro W hW
   rw [morphismRestrict_app]
   refine (ConcreteCategory.bijective_of_isIso
-    ((baseChange f (ZLoc p)).presheaf.map
-      (eqToHom (image_morphismRestrict_preimage (baseChangeMap f (ZLoc p)) U W)).op)).1.comp
+    ((baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).presheaf.map
+      (eqToHom (image_morphismRestrict_preimage (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) U W)).op)).1.comp
     (H n (fun h => hpn (Int.natCast_dvd_natCast.mp h)) (Int.natCast_dvd_natCast.mpr hmn) _ ?_)
   rintro _ ⟨x, hxW, rfl⟩
   exact hV (hW hxW)

@@ -13,7 +13,7 @@ namespace InvOpenInside
 
 lemma mem_range_baseChangeMap {X : Scheme.{0}} (f : X ⟶ SpecZ) (p : Nat.Primes) (x : X)
     (hx : Disjoint ((Ideal.span {((p : ℕ) : ℤ)}).primeCompl : Set ℤ) (f.base x).asIdeal) :
-    x ∈ Set.range (baseChangeMap f (ZLoc p)) := by
+    x ∈ Set.range (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) := by
   have hr := PrimeSpectrum.localization_comap_range (ZLoc p)
     (Ideal.span {((p : ℕ) : ℤ)}).primeCompl
   obtain ⟨y, hy⟩ : f.base x ∈ Set.range (PrimeSpectrum.comap (algebraMap ℤ (ZLoc p))) := by
@@ -26,7 +26,7 @@ lemma mem_range_baseChangeMap {X : Scheme.{0}} (f : X ⟶ SpecZ) (p : Nat.Primes
   exact ⟨z, hz⟩
 
 lemma exists_of_isAffineOpen {X : Scheme.{0}} (f : X ⟶ SpecZ) (p : Nat.Primes) (W : X.Opens)
-    (hW : Set.range (baseChangeMap f (ZLoc p)) ⊆ Set.range W.ι) {U : X.Opens}
+    (hW : Set.range (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) ⊆ Set.range W.ι) {U : X.Opens}
     (hU : IsAffineOpen U) :
     ∃ s ∈ (Ideal.span {((p : ℕ) : ℤ)}).primeCompl,
       ∀ x ∈ U, x ∉ W → s ∈ (f.base x).asIdeal := by

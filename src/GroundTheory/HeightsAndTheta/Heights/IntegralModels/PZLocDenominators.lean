@@ -12,13 +12,13 @@ namespace ZLocDenominators
 
 theorem proof : ZLocDenominators.Statement := by
   intro X f p U hU
-  have : IsAffineHom (baseChangeMap f (ZLoc p)) := by
+  have : IsAffineHom (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) := by
     set_option backward.isDefEq.respectTransparency.types false in
     exact MorphismProperty.pullback_fst _ _ inferInstance
-  set g := baseChangeMap f (ZLoc p) with hg
+  set g := baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) with hg
   have hV : IsAffineOpen (g ⁻¹ᵁ U) := hU.preimage g
   intro b
-  let φ : Γ(X, U) ⟶ Γ(baseChange f (ZLoc p), g ⁻¹ᵁ U) := g.appLE U (g ⁻¹ᵁ U) le_rfl
+  let φ : Γ(X, U) ⟶ Γ(baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})), g ⁻¹ᵁ U) := g.appLE U (g ⁻¹ᵁ U) le_rfl
   have hφ : g.app U = φ := Scheme.Hom.app_eq_appLE _
   let ιA : CommRingCat.of ℤ ⟶ Γ(X, U) := CommRingCat.ofHom (Int.castRingHom Γ(X, U))
   let h : CommRingCat.of ℤ ⟶ CommRingCat.of (ZLoc p) :=
@@ -69,7 +69,7 @@ theorem proof : ZLocDenominators.Statement := by
   obtain ⟨n, hn, hnm⟩ := Submonoid.mem_map.mp m.2
   have hpn : ¬ ((p : ℕ) : ℤ) ∣ n := fun hd => hn (Ideal.mem_span_singleton.mpr hd)
   have hn0 : n ≠ 0 := by rintro rfl; exact hpn (dvd_zero _)
-  have hb : b * (n : Γ(baseChange f (ZLoc p), g ⁻¹ᵁ U)) = φ a := by
+  have hb : b * (n : Γ(baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})), g ⁻¹ᵁ U)) = φ a := by
     have := congrArg ψ ham
     rw [map_mul, hψa, ← hφa, ← hφa, ← hnm] at this
     simpa using this

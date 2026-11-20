@@ -51,18 +51,18 @@ theorem SpreadBundleNbhd.proof (h₁ : SpreadLocal.Statement) (h₂ : SpreadStep
     SpreadBundleNbhd.Statement := by
   intro X f _ _ p E hE
   classical
-  rcases isEmpty_or_nonempty (baseChange f (ZLoc p)) with hX | hne
+  rcases isEmpty_or_nonempty (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) with hX | hne
   · exact spreadNbhd_of_isEmpty f (ZLoc p) E
   obtain ⟨x₀⟩ := hne
   choose Wx hxW hWx using h₁ X f p E hE
-  have hcov : Set.univ ⊆ ⋃ x, ((baseChangeMap f (ZLoc p) ⁻¹ᵁ Wx x :
-      (baseChange f (ZLoc p)).Opens) : Set (baseChange f (ZLoc p))) :=
+  have hcov : Set.univ ⊆ ⋃ x, ((baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ Wx x :
+      (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).Opens) : Set (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})))) :=
     fun x _ => Set.mem_iUnion.2 ⟨x, hxW x⟩
-  have hc : IsCompact (Set.univ : Set (baseChange f (ZLoc p))) := isCompact_univ
-  obtain ⟨t, ht⟩ := hc.elim_finite_subcover _ (fun x => (baseChangeMap f (ZLoc p) ⁻¹ᵁ Wx x).isOpen) hcov
-  have key : ∀ s : Finset (baseChange f (ZLoc p)), ∃ W : X.Opens,
-      (∀ x ∈ s, baseChangeMap f (ZLoc p) ⁻¹ᵁ Wx x ≤ baseChangeMap f (ZLoc p) ⁻¹ᵁ W) ∧
-        SpreadsOn f (ZLoc p) E W := by
+  have hc : IsCompact (Set.univ : Set (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})))) := isCompact_univ
+  obtain ⟨t, ht⟩ := hc.elim_finite_subcover _ (fun x => (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ Wx x).isOpen) hcov
+  have key : ∀ s : Finset (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))), ∃ W : X.Opens,
+      (∀ x ∈ s, baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ Wx x ≤ baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W) ∧
+        SpreadsOn f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) E W := by
     intro s
     induction s using Finset.induction_on with
     | empty => exact ⟨Wx x₀, fun x hx => absurd hx (Finset.notMem_empty x), hWx x₀⟩

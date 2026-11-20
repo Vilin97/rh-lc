@@ -15,9 +15,9 @@ def SpreadHomInjLoc.Statement : Prop :=
     ∃ m : ℕ, 0 < m ∧ ¬ (p : ℕ) ∣ m ∧ ∀ n : ℕ, 0 < n → m ∣ n → ¬ (p : ℕ) ∣ n →
       ∀ ψ₁ ψ₂ : (Scheme.Modules.pullback (X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U))).obj F ⟶
           (Scheme.Modules.pullback (X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U))).obj G,
-        pullbackHomAlong (rfl : (baseChangeMap f (ZLoc p) ∣_ (U ⊓ invOpen f n)) ≫
+        pullbackHomAlong (rfl : (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ (U ⊓ invOpen f n)) ≫
             X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U) = _) ψ₁ =
-          pullbackHomAlong (rfl : (baseChangeMap f (ZLoc p) ∣_ (U ⊓ invOpen f n)) ≫
+          pullbackHomAlong (rfl : (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ (U ⊓ invOpen f n)) ≫
             X.homOfLE (inf_le_left : U ⊓ invOpen f n ≤ U) = _) ψ₂ →
         ψ₁ = ψ₂
 

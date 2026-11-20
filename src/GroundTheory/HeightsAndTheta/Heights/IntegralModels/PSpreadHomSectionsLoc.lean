@@ -22,16 +22,16 @@ lemma map_eqToHom_symm (Z : Scheme.{0}) {A B : Z.Opens} (h : A = B) (x : Γ(Z, A
 
 lemma exists_app_restrict_eq_nsmul (h₁ : ZLocDenominators.Statement) {X : Scheme.{0}}
     (f : X ⟶ SpecZ) (p : Nat.Primes) (U : X.Opens) (V : (U : Scheme.{0}).Opens) (hV : IsAffineOpen V)
-    (b : Γ((baseChangeMap f (ZLoc p) ⁻¹ᵁ U : Scheme.{0}), (baseChangeMap f (ZLoc p) ∣_ U) ⁻¹ᵁ V)) :
+    (b : Γ((baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ U : Scheme.{0}), (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ U) ⁻¹ᵁ V)) :
     ∃ N : ℕ, 0 < N ∧ ¬ (p : ℕ) ∣ N ∧ ∃ c : Γ((U : Scheme.{0}), V),
-      (baseChangeMap f (ZLoc p) ∣_ U).app V c = N • b := by
-  have e := image_morphismRestrict_preimage (baseChangeMap f (ZLoc p)) U V
+      (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ U).app V c = N • b := by
+  have e := image_morphismRestrict_preimage (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) U V
   obtain ⟨N, hN, hpN, c, hc⟩ := h₁ X f p (U.ι ''ᵁ V) (hV.image_of_isOpenImmersion U.ι)
-    (((baseChange f (ZLoc p)).presheaf.map (eqToHom e.symm).op).hom b)
+    (((baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).presheaf.map (eqToHom e.symm).op).hom b)
   refine ⟨N, hN, hpN, c, ?_⟩
   rw [morphismRestrict_app]
-  change ((baseChange f (ZLoc p)).presheaf.map (eqToHom e).op).hom
-    ((baseChangeMap f (ZLoc p)).app _ c) = N • b
+  change ((baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).presheaf.map (eqToHom e).op).hom
+    ((baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).app _ c) = N • b
   rw [hc, map_nsmul]
   congr 1
   exact map_eqToHom_symm _ e b

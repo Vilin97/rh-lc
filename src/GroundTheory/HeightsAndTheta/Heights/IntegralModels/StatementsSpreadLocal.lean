@@ -17,9 +17,9 @@ def SpreadsOn (f : X ⟶ SpecZ) (R : Type) [CommRing R] (E : (baseChange f R).Mo
       (Scheme.Modules.pullback (baseChangeMap f R ⁻¹ᵁ W).ι).obj E)
 
 def SpreadLocal.Statement : Prop :=
-  ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) (p : Nat.Primes) (E : (baseChange f (ZLoc p)).Modules),
-    IsVectorBundle E → ∀ x : baseChange f (ZLoc p),
-      ∃ W : X.Opens, x ∈ baseChangeMap f (ZLoc p) ⁻¹ᵁ W ∧ SpreadsOn f (ZLoc p) E W
+  ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) (p : Nat.Primes) (E : (baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).Modules),
+    IsVectorBundle E → ∀ x : baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})),
+      ∃ W : X.Opens, x ∈ baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ W ∧ SpreadsOn f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) E W
 
 def specZLocToBaseChange :
     Spec (CommRingCat.of (ZLoc ⟨2, Nat.prime_two⟩)) ⟶ baseChange (𝟙 SpecZ) (ZLoc ⟨2, Nat.prime_two⟩) :=

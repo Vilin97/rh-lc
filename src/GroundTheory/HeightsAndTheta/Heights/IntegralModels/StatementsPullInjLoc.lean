@@ -14,7 +14,7 @@ def PullInjLoc.Statement : Prop :=
     (U : X.Opens) (G : (U : Scheme.{0}).Modules), IsVectorBundle G →
     ∃ m : ℕ, 0 < m ∧ ¬ (p : ℕ) ∣ m ∧ ∀ n : ℕ, 0 < n → m ∣ n → ¬ (p : ℕ) ∣ n →
       ∀ V : (U : Scheme.{0}).Opens, V ≤ invOpen (U.ι ≫ f) n →
-        Function.Injective (pullSectionOn (baseChangeMap f (ZLoc p) ∣_ U) G V)
+        Function.Injective (pullSectionOn (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ U) G V)
 
 end
 

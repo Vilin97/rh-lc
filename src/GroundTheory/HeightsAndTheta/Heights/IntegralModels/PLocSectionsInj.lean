@@ -58,7 +58,7 @@ lemma exists_mul_eq_zero_of_pushout_inl {R A T : CommRingCat.{0}} (f : R ⟶ A) 
   exact ⟨m, m.2, hm⟩
 
 lemma exists_coprime_mul_eq_zero {X : Scheme.{0}} (f : X ⟶ SpecZ) (p : Nat.Primes) {V : X.Opens}
-    (hV : IsAffineOpen V) (s : Γ(X, V)) (hs : (baseChangeMap f (ZLoc p)).app V s = 0) :
+    (hV : IsAffineOpen V) (s : Γ(X, V)) (hs : (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).app V s = 0) :
     ∃ u : ℤ, ¬ ((p : ℕ) : ℤ) ∣ u ∧ (u : Γ(X, V)) * s = 0 := by
   set φ : Spec (CommRingCat.of (ZLoc p)) ⟶ SpecZ := Spec.map (CommRingCat.ofHom (Int.castRingHom _))
   have H : IsPullback (pullback.fst f φ) (pullback.snd f φ) f φ := IsPullback.of_hasPullback f φ
@@ -120,7 +120,7 @@ theorem LocSectionsInj.proof : LocSectionsInj.Statement := by
     have hd : ordCompl[(p : ℕ)] (N U) ∣ ordCompl[(p : ℕ)] (∏ U ∈ t, N U) :=
       Nat.ordCompl_dvd_ordCompl_of_dvd (Finset.dvd_prod_of_mem N hUt) _
     exact ⟨U, N U, hxU, dvd_trans (Int.natCast_dvd_natCast.mpr hd) hmk, hN U⟩
-  rw [injective_iff_map_eq_zero ((baseChangeMap f (ZLoc p)).app W).hom]
+  rw [injective_iff_map_eq_zero ((baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).app W).hom]
   intro s hs
   refine X.IsSheaf.section_ext fun x hx => ?_
   obtain ⟨_, ⟨V, hV, rfl⟩, hxV, hVW⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx W.isOpen

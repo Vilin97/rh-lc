@@ -10,8 +10,8 @@ noncomputable section
 
 def ZLocDenominators.Statement : Prop :=
   ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) (p : Nat.Primes) (U : X.Opens), IsAffineOpen U →
-    ∀ b : Γ(baseChange f (ZLoc p), baseChangeMap f (ZLoc p) ⁻¹ᵁ U),
-      ∃ N : ℕ, 0 < N ∧ ¬ (p : ℕ) ∣ N ∧ ∃ c : Γ(X, U), (baseChangeMap f (ZLoc p)).app U c = N • b
+    ∀ b : Γ(baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})), baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ⁻¹ᵁ U),
+      ∃ N : ℕ, 0 < N ∧ ¬ (p : ℕ) ∣ N ∧ ∃ c : Γ(X, U), (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).app U c = N • b
 
 end
 

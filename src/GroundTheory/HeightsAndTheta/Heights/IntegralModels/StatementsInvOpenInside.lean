@@ -10,7 +10,7 @@ noncomputable section
 
 def InvOpenInside.Statement : Prop :=
   ∀ (X : Scheme.{0}) (f : X ⟶ SpecZ) [QuasiCompact f] (p : Nat.Primes) (W : X.Opens),
-    Set.range (baseChangeMap f (ZLoc p)) ⊆ Set.range W.ι →
+    Set.range (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) ⊆ Set.range W.ι →
     ∃ m : ℕ, 0 < m ∧ ¬ (p : ℕ) ∣ m ∧ invOpen f m ≤ W
 
 end

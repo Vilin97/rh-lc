@@ -15,12 +15,12 @@ theorem SpreadHomInjLoc.proof (h₁ : LocSectionsInj.Statement) : SpreadHomInjLo
   refine ⟨m, hm, hpm, fun n hn hmn hpn ψ₁ ψ₂ e => ?_⟩
   set V : X.Opens := U ⊓ invOpen f n
   have hinj : ∀ W : (V : Scheme.{0}).Opens,
-      Function.Injective ((baseChangeMap f (ZLoc p) ∣_ V).app W) := by
+      Function.Injective ((baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)})) ∣_ V).app W) := by
     intro W
     rw [morphismRestrict_app]
     refine (ConcreteCategory.bijective_of_isIso
-      ((baseChange f (ZLoc p)).presheaf.map
-        (eqToHom (image_morphismRestrict_preimage (baseChangeMap f (ZLoc p)) V W)).op)).1.comp
+      ((baseChange f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))).presheaf.map
+        (eqToHom (image_morphismRestrict_preimage (baseChangeMap f (Localization.AtPrime (Ideal.span {((p : ℕ) : ℤ)}))) V W)).op)).1.comp
       (H n (fun h => hpn (Int.natCast_dvd_natCast.mp h)) (Int.natCast_dvd_natCast.mpr hmn) _ ?_)
     exact (V.ι_image_le W).trans inf_le_right
   have hG' : IsVectorBundle
