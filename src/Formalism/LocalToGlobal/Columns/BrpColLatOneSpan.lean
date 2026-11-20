@@ -174,10 +174,7 @@ theorem brp_alg (I F0 F1 F k D n : ℝ) (hD : 0 < D) (hn : 0 < n) (h : n * F1 = 
 theorem brp_span_lattice {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] {j : ℕ}
     (e : Fin j → V) (hsp : Submodule.span K (Set.range e) = ⊤) :
     Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range e)) := by
-  refine ⟨Submodule.fg_span (Set.finite_range e), ?_⟩
-  rw [Submodule.span_span_of_tower]
-  exact hsp
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
 theorem brp_colLat_one_span (n : ℕ) :
     colLat (1 : GL (Fin n) K) = Submodule.span (𝓞 K) (Set.range fun i : Fin n => (Pi.single i 1 : Fin n → K)) := by
   unfold colLat

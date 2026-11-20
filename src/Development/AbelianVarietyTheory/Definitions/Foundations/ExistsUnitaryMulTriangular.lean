@@ -742,13 +742,7 @@ theorem mem_colLat_iff (B : GL (Fin N) K) (x : Fin N → K) :
   simp [Matrix.mulVec, dotProduct, Algebra.smul_def, mul_comm]
 
 theorem isLattice_colLat (B : GL (Fin N) K) : Submodule.IsLattice K (colLat B) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  unfold colLat
-  rw [Submodule.span_span_of_tower]
-  have h : LinearIndependent K (B : Matrix (Fin N) (Fin N) K).col :=
-    Matrix.linearIndependent_cols_iff_isUnit.mpr B.isUnit
-  exact h.span_eq_top_of_card_eq_finrank' (by simp)
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 variable [StarRing K]
 
 def baseHLat (X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ) (L : Submodule (𝓞 K) (Fin N → K)) : Formalism.BasicNotions.HLat K where

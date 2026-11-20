@@ -130,9 +130,7 @@ theorem exists_basis {M : Submodule O V} (h : IsLat O K M) :
 
 theorem isLat_span_basis {d : ℕ} (b : Basis (Fin d) K V) :
     IsLat O K (Submodule.span O (Set.range b)) := by
-  refine ⟨Submodule.fg_span (Set.finite_range b), ?_⟩
-  rw [Submodule.span_span_of_tower, b.span_eq]
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range b))
 theorem relLen_span_of_le {d : ℕ} (b : Basis (Fin d) K V) (w : Fin d → V)
     (hw : Submodule.span O (Set.range w) ≤ Submodule.span O (Set.range b))
     (hdet : b.det w ≠ 0) :

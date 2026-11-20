@@ -121,10 +121,7 @@ theorem imageLcv_std_li (d : ℕ) : LinearIndependent K (fun i => (Pi.single i 1
 theorem imageLcv_std_lat (d : ℕ) :
     Submodule.IsLattice K
       (Submodule.span (𝓞 K) (Set.range (fun i => (Pi.single i 1 : Fin d → K)))) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  rw [Submodule.span_span_of_tower, imageLcv_std_eq]
-  exact (Pi.basisFun K (Fin d)).span_eq
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 theorem imageLcv_gram_ne [IsTotallyComplex K] {d : ℕ}
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det)
     (e : Fin d → Fin d → K) (he : LinearIndependent K e) (v : InfinitePlace K) :

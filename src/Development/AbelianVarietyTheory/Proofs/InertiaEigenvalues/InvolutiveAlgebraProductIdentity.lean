@@ -527,7 +527,7 @@ private theorem dual_dual_eq_and_isLat_dual (hB : (Algebra.traceForm K.E C).Nond
   refine ⟨LinearMap.BilinForm.dualSubmodule_dualSubmodule_of_basis _ hB (Algebra.traceForm_isSymm K.E) b, ?_⟩
   show IsLat K.O K.E ((Algebra.traceForm K.E C).dualSubmodule _)
   rw [LinearMap.BilinForm.dualSubmodule_span_of_basis _ hB b]
-  exact ⟨Submodule.fg_span (Set.finite_range _), by rw [Submodule.span_span_of_tower, Module.Basis.span_eq]⟩
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 
 private theorem mem_adjoin_of_mul_eq_one_of_isIntegral {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {v w : S}
     (hvw : v * w = 1) (hv : IsIntegral R v) : v ∈ Algebra.adjoin R ({w} : Set S) := by

@@ -89,9 +89,7 @@ theorem finrank_of_ortho {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞
 theorem isLattice_of_ortho {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V} {n : ℕ}
     (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) : Submodule.IsLattice K L := by
   obtain ⟨e, hli, hsp, rfl, -⟩ := hL
-  refine ⟨Submodule.fg_span (Set.finite_range e), ?_⟩
-  rw [Submodule.span_span_of_tower, hsp]
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
 theorem isTotPosDef_of_ortho (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h : V →ₗ⋆[K] V →ₗ[K] K}
     (hs : h.IsSymm) {L : Submodule (𝓞 K) V} {n : ℕ} (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) :
     IsTotPosDef h := by

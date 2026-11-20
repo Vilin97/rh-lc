@@ -216,9 +216,7 @@ theorem duStarOf_nat : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (hc :
     rw [hStd_apply] at this
     exact this
   have hL : Submodule.IsLattice H.E (StandardLattice.stdLat H.E R.k) := by
-    refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-    rw [StandardLattice.stdLat, Submodule.span_span_of_tower, ← (Pi.basisFun H.E (Fin R.k)).span_eq]
-    congr 2
+    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
   obtain ⟨n₁, p₁, e₁⟩ := mass_mul_idx _ hsym hpos _ hL v.asIdeal hg hv hn
     (by rw [Module.finrank_fin_fun, hdeg']; have := hbig 0; omega)
   rw [Module.finrank_fin_fun] at e₁

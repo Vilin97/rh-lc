@@ -66,7 +66,7 @@ theorem exists_semilinear {L V O K U : Type} [Field L] [AddCommGroup V] [Module 
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let A : Submodule O (Fin (Module.finrank L V) → K) := Submodule.span O (f₀ '' S)
   haveI : A.IsLattice K :=
-    ⟨Submodule.fg_span (hS.image _), by rw [Submodule.span_span_of_tower, hf₀ S hspan]⟩
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span (hS.image _))
   obtain ⟨g, hg⟩ := exists_equiv_map_lattice (K := K) A B (by rw [← h]; simp)
   refine ⟨g.toLinearMap.comp f₀, fun ι b => ?_, ?_⟩
   · haveI : Finite ι := Module.Finite.finite_basis b

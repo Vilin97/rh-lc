@@ -174,7 +174,7 @@ theorem covStd_index [IsTotallyComplex E] {ι : Type} [Fintype ι] {n : ℕ} {φ
     simp only [detNorm, h1]; simp
   have hlat : ∀ g : Fin j → Fin j → E, Submodule.span E (Set.range g) = ⊤ →
       Submodule.IsLattice E (Submodule.span (𝓞 E) (Set.range g)) := fun g hsp =>
-    ⟨Submodule.fg_span (Set.finite_range g), by rw [Submodule.span_span_of_tower, hsp]⟩
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range g))
   obtain ⟨κ, -, hκ⟩ := hall Λ hΛ
   obtain ⟨⟨i1, i2⟩, -⟩ := hκ _ (hd1 ▸ one_pos)
   obtain ⟨κ', -, hκ'⟩ := hall _ (hlat g hsp)

@@ -33,8 +33,7 @@ theorem UpperTheory.V.AlgebraTools.dual_lattice :
       Submodule.range_subtype]
   refine ⟨?_, ?_, ?_⟩
   · rw [← hb, LinearMap.BilinForm.dualSubmodule_span_of_basis Bf hn b]
-    refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-    rw [Submodule.span_span_of_tower, Module.Basis.span_eq]
+    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
   · rw [← hb]
     exact LinearMap.BilinForm.dualSubmodule_dualSubmodule_of_basis Bf hn hs b
   · intro Z hZ

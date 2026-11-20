@@ -285,7 +285,7 @@ theorem short_vector_every_place (K : Type) [Field K] [NumberField K] [StarRing 
   have hpos : ∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x) := fun x hx => trace_inner_pos_of_orthonormal_pair hK h e hli hsp he x hx
   obtain ⟨N, ι, hι, -, hlat⟩ := Formalism.HermitianLatticesTheory.final_traceReal K V h hsymm hpos
   have hLlat : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range e)) :=
-    ⟨Submodule.fg_span (Set.finite_range e), by rw [Submodule.span_span_of_tower]; exact hsp⟩
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
   obtain ⟨iL1, iL2⟩ := hlat _ hLlat
   obtain ⟨familyMassRatio, familyMassSecondLine⟩ := hlat M hM.1
   have hcov := Formalism.HermitianLatticesTheory.final_genusCovol K V h hsymm hpos N ι hι _ M hLlat hM

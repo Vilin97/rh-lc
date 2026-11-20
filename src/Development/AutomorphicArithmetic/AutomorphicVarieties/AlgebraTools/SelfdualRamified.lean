@@ -58,8 +58,7 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_basis {A : Type} [C
     rw [← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
       Matrix.mulVec_mulVec, hr, Matrix.smul_mulVec, dotProduct_smul, smul_eq_mul]
   have hY₀ : Submodule.IsLattice F (Submodule.span A (Set.range (Pi.basisFun F (Fin n)))) := by
-    refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-    rw [Submodule.span_span_of_tower, Module.Basis.span_eq]
+    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
   have hst : ∀ g, ∀ y ∈ Submodule.span A (Set.range (Pi.basisFun F (Fin n))),
       ρ g y ∈ Submodule.span A (Set.range (Pi.basisFun F (Fin n))) := by
     intro g y hy

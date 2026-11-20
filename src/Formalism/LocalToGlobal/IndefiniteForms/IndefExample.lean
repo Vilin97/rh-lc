@@ -24,15 +24,7 @@ def sl (D : ℕ) : Submodule (𝓞 K) (Fin D → K) := Submodule.span (𝓞 K) (
 def fr (D : ℕ) : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ := fun _ => 1
 
 theorem sl_lattice (D : ℕ) : Submodule.IsLattice K (sl K D) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  unfold sl
-  rw [Submodule.span_span_of_tower]
-  have h : sb K D = ⇑(Pi.basisFun K (Fin D)) := by
-    ext i j
-    simp [sb, Pi.basisFun_apply]
-  rw [h]
-  exact (Pi.basisFun K (Fin D)).span_eq
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 theorem std_ratHerm (K0 : Subfield K) (n : ℕ) :
     IsRatHerm K0 (1 : Matrix (Fin n) (Fin n) K) (fr K n) := by
   refine ⟨fun i j => ?_, fun v => ⟨by simp [fr], ?_⟩⟩
@@ -730,9 +722,7 @@ theorem two.Iw_true {K : Type} [Field K] [NumberField K] [StarRing K] (v0 : Infi
     exact ha (by simpa [sb] using congrFun h0 0)
   have hlat : Submodule.IsLattice K (matLat (a • (1 : Matrix (Fin 1) (Fin 1) K)) (sl K 1)) := by
     rw [hmat]
-    refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-    rw [Submodule.span_span_of_tower]
-    exact hlin.span_eq_top_of_card_eq_finrank (by simp)
+    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
   have hidx := (index_change_formula K 1 _ hlat (sb K 1) (locB K 1 w).1 w (a • 1)
     ⟨hf ▸ hlin, by rw [hf, hmat]⟩).1
   have h2 : (two.dat K v0 S a kap l).Iw () true w =

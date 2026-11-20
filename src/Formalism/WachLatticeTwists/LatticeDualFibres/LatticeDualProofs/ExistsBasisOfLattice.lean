@@ -41,9 +41,7 @@ theorem exists_basis_of_lattice {T : Submodule O V} (hT : IsLatticeIn T) :
 
 theorem isLatticeIn_span_basis {n : ℕ} (e : Basis (Fin n) (FractionRing O) V) :
     IsLatticeIn (Submodule.span O (Set.range e)) := by
-  refine ⟨Submodule.fg_span (Set.finite_range e), ?_⟩
-  rw [Submodule.span_span_of_tower, e.span_eq]
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
 theorem finrank_span_basis {n : ℕ} (e : Basis (Fin n) (FractionRing O) V) :
     finrank O (Submodule.span O (Set.range e)) = n := by
   have h : LinearIndependent O e :=

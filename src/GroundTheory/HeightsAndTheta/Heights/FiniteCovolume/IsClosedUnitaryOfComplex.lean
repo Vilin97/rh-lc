@@ -426,12 +426,7 @@ theorem stdLattice_le_intCoords : stdLattice E N ≤ intCoords E N := by
   · simpa [Pi.single_apply, h] using (isIntegral_zero : IsIntegral ℤ (0 : E))
 
 theorem isLattice_stdLattice : IsLattice (stdLattice E N) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  rw [stdLattice, Submodule.span_span_of_tower]
-  rw [show (Set.range fun i : Fin N => (Pi.single i 1 : Fin N → E)) =
-      Set.range (Pi.basisFun E (Fin N)) by ext; simp [Pi.basisFun_apply]]
-  exact (Pi.basisFun E (Fin N)).span_eq
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 theorem isIntegral_h_of_coords (V : HermSpace E N) (hJ : ∀ i j, IsIntegral ℤ (V.J i j))
     {x y : Fin N → E} (hx : ∀ i, IsIntegral ℤ (x i)) (hy : ∀ i, IsIntegral ℤ (y i)) :
     IsIntegral ℤ (V.h x y) := by

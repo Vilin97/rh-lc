@@ -214,7 +214,7 @@ theorem idx_smLat {D : ℕ} (w : HeightOneSpectrum (𝓞 K)) (A : Submodule (�
   have hspK : Submodule.span K (Set.range f) = ⊤ :=
     hf.1.span_eq_top_of_card_eq_finrank' (by simp)
   have hspan_f : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range f)) :=
-    ⟨Submodule.fg_span (Set.finite_range f), by rw [Submodule.span_span_of_tower, hspK]⟩
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range f))
   have hone_f : (fun i => ∑ k, (1 : Matrix (Fin D) (Fin D) K) k i • f k) = f := by
     funext i
     simp [Matrix.one_apply]

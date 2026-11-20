@@ -55,7 +55,7 @@ theorem jwGramW_of (hIC : IdxChange) : JwGramW := by
   have hspK : Submodule.span K (Set.range f) = ⊤ :=
     hf.1.span_eq_top_of_card_eq_finrank' (by simp)
   have hspan_f : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range f)) :=
-    ⟨Submodule.fg_span (Set.finite_range f), by rw [Submodule.span_span_of_tower, hspK]⟩
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range f))
   have hone : ∀ c : K, c ∈ (1 : Submodule (𝓞 K) K) → ∀ r : 𝓞 K,
       star (algebraMap (𝓞 K) K r) * c ∈ (1 : Submodule (𝓞 K) K) := by
     intro c hc r

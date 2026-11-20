@@ -71,8 +71,7 @@ theorem isLattice_dualSubmodule (B : LinearMap.BilinForm ℚ V) (hB : B.Nondegen
     (L : Submodule ℤ V) [L.IsLattice ℚ] : (B.dualSubmodule L).IsLattice ℚ := by
   obtain ⟨b, rfl⟩ := exists_basis_span_eq_of_isLattice L
   rw [B.dualSubmodule_span_of_basis hB]
-  exact ⟨Submodule.fg_span (Set.finite_range _), by
-    rw [Submodule.span_span_of_tower, Basis.span_eq]⟩
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 
 omit [FiniteDimensional ℚ V] in
 

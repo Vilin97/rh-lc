@@ -83,19 +83,7 @@ theorem colSpan_mul_eq {k : ℕ} (g : Matrix (Fin k) (Fin k) K) (u : Matrix (Fin
 
 theorem isLattice_colSpan {A E : Type} [CommRing A] [Field E] [Algebra A E] {k : ℕ} (B : Matrix (Fin k) (Fin k) E)
     (hB : IsUnit B.det) : Submodule.IsLattice E (colSpan A B) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  rw [colSpan, Submodule.span_span_of_tower, eq_top_iff]
-  intro w _
-  have : w = ∑ j, (B⁻¹.mulVec w) j • fun i => B i j := by
-    funext i
-    have h : B.mulVec (B⁻¹.mulVec w) = w := by
-      rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hB, Matrix.one_mulVec]
-    conv_lhs => rw [← h]
-    generalize B⁻¹.mulVec w = y
-    simp [Matrix.mulVec, dotProduct, mul_comm]
-  rw [this]
-  exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
-
+  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 theorem span_image {A E R K : Type} [CommRing A] [Field E] [Algebra A E] [CommRing R] [Field K] [Algebra R K]
     (f : E →+* K) (hf : ∀ r : A, f (algebraMap A E r) ∈ Set.range (algebraMap R K)) {k : ℕ}
     (B : Matrix (Fin k) (Fin k) E) :
