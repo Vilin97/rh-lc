@@ -279,7 +279,7 @@ theorem pow_smul_conv (f : G ⟶ H) (n : ℕ) : Hom.conv ((p : ℤ_[p]) ^ n • 
 
 theorem Action.eq_padicAction (ρ : Action ℤ_[p] G) : ρ = G.padicAction := by
   have key : ∀ (ψ : Action ℤ_[p] G) (a : ℤ_[p]) (n : ℕ),
-      Hom.conv (ψ a : G ⟶ G) n = Hom.conv (show G ⟶ G from (digit n a : End G)) n := by
+      Hom.conv (ψ a).asHom n = Hom.conv (digit n a : End G).asHom n := by
     intro ψ a n
     obtain ⟨c, hc⟩ := pow_dvd_sub_digit n a
     have h := congrArg ψ (sub_eq_iff_eq_add.1 hc)
@@ -287,8 +287,9 @@ theorem Action.eq_padicAction (ρ : Action ℤ_[p] G) : ρ = G.padicAction := by
       rw [Algebra.smul_def, map_pow, map_natCast]
     rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, h2] at h
     rw [h]
-    exact (add_conv _ _ n).trans (by rw [pow_smul_conv, one_mul])
-  exact RingHom.ext fun a => hom_ext_conv fun n => (key ρ a n).trans (key _ a n).symm
+    change Hom.conv ((p : ℤ_[p]) ^ n • (ψ c).asHom + (digit n a : End G).asHom) n = _
+    rw [add_conv, pow_smul_conv, one_mul]
+  exact RingHom.ext fun a => End.ext <| hom_ext_conv fun n => (key ρ a n).trans (key _ a n).symm
 
 theorem Action.map_algebraMap {Λ : Type*} [Semiring Λ] [Algebra ℤ_[p] Λ] (ρ : Action Λ G)
     (a : ℤ_[p]) : ρ (algebraMap ℤ_[p] Λ a) = algebraMap ℤ_[p] (End G) a :=
@@ -484,9 +485,9 @@ def tateCongr (e : G ≅ H) : G.TateOver B ≃ₗ[ℤ_[p]] H.TateOver B :=
 variable (G B) in
 
 def tateEnd : End G →ₐ[ℤ_[p]] Module.End ℤ_[p] (G.TateOver B) :=
-  AlgHom.ofLinearMap (tateMap G G B) rfl fun _ _ => rfl
+  AlgHom.ofLinearMap ((tateMap G G B).comp End.linearEquiv.toLinearMap) rfl fun _ _ => rfl
 
-@[simp] theorem tateEnd_apply (f : End G) : tateEnd G B f = tateMap G G B f := rfl
+@[simp] theorem tateEnd_apply (f : End G) : tateEnd G B f = tateMap G G B f.asHom := rfl
 
 variable (G) in
 
@@ -600,11 +601,13 @@ theorem lieMap_smul (φ : ℤ_[p] →+* O) (a : ℤ_[p]) (f : G ⟶ H) :
 variable (G) in
 
 def lieEnd : End G →+* Module.End O G.Lie where
-  __ := lieMap G G
+  toFun f := lieMap G G f.asHom
   map_one' := lieMap_id
-  map_mul' f g := lieMap_comp g f
+  map_mul' f g := lieMap_comp g.asHom f.asHom
+  map_zero' := map_zero (lieMap G G)
+  map_add' f g := map_add (lieMap G G) f.asHom g.asHom
 
-@[simp] theorem lieEnd_apply (f : End G) : lieEnd G f = lieMap G G f := rfl
+@[simp] theorem lieEnd_apply (f : End G) : lieEnd G f = lieMap G G f.asHom := rfl
 
 variable (G H) in
 
@@ -623,11 +626,13 @@ theorem omegaDualMap_comp (f : G ⟶ H) (g : H ⟶ K) :
 variable (G) in
 
 def omegaDualEnd : End G →+* Module.End O G.dual.omega where
-  __ := omegaDualMap G G
+  toFun f := omegaDualMap G G f.asHom
   map_one' := omegaDualMap_id
-  map_mul' f g := omegaDualMap_comp g f
+  map_mul' f g := omegaDualMap_comp g.asHom f.asHom
+  map_zero' := map_zero (omegaDualMap G G)
+  map_add' f g := map_add (omegaDualMap G G) f.asHom g.asHom
 
-@[simp] theorem omegaDualEnd_apply (f : End G) : omegaDualEnd G f = omegaDualMap G G f := rfl
+@[simp] theorem omegaDualEnd_apply (f : End G) : omegaDualEnd G f = omegaDualMap G G f.asHom := rfl
 
 namespace Action
 
@@ -640,25 +645,37 @@ def onTateAlg [Algebra ℤ_[p] Λ] (B : Type) [CommRing B] [Algebra O B] :
     Λ →ₐ[ℤ_[p]] Module.End ℤ_[p] (G.TateOver B) := (tateEnd G B).comp ρ.toAlgHom
 
 @[simp] theorem onTate_apply (B : Type) [CommRing B] [Algebra O B] (a : Λ) :
-    ρ.onTate B a = tateMap G G B (ρ a) := rfl
+    ρ.onTate B a = tateMap G G B (ρ a).asHom := rfl
 
 @[simp] theorem onTateAlg_apply [Algebra ℤ_[p] Λ] (B : Type) [CommRing B] [Algebra O B] (a : Λ) :
-    ρ.onTateAlg B a = tateMap G G B (ρ a) := rfl
+    ρ.onTateAlg B a = tateMap G G B (ρ a).asHom := rfl
 
 def onLie : Λ →+* Module.End O G.Lie := (lieEnd G).comp ρ
 
 def onOmegaDual : Λ →+* Module.End O G.dual.omega := (omegaDualEnd G).comp ρ
 
-@[simp] theorem onLie_apply (a : Λ) : ρ.onLie a = lieMap G G (ρ a) := rfl
+@[simp] theorem onLie_apply (a : Λ) : ρ.onLie a = lieMap G G (ρ a).asHom := rfl
 
-@[simp] theorem onOmegaDual_apply (a : Λ) : ρ.onOmegaDual a = omegaDualMap G G (ρ a) := rfl
+@[simp] theorem onOmegaDual_apply (a : Λ) : ρ.onOmegaDual a = omegaDualMap G G (ρ a).asHom := rfl
 
 def dual {Λ : Type*} [CommSemiring Λ] (ρ : Action Λ G) : Action Λ G.dual where
-  toFun a := dualHom G G (ρ a)
-  map_one' := by rw [map_one]; rfl
-  map_mul' a b := by rw [mul_comm, map_mul]; rfl
-  map_zero' := by rw [map_zero]; exact map_zero _
-  map_add' a b := by rw [map_add (f := _)]; exact map_add _ _ _
+  toFun a := End.of (dualHom G G (ρ a).asHom)
+  map_one' := End.ext (by
+    change dualHom G G (ρ 1).asHom = 𝟙 G.dual
+    rw [map_one, End.one_asHom, dualHom_id])
+  map_mul' a b := End.ext (by
+    change dualHom G G (ρ (a * b)).asHom =
+      dualHom G G (ρ b).asHom ≫ dualHom G G (ρ a).asHom
+    rw [mul_comm a b, map_mul, End.mul_asHom, dualHom_comp])
+  map_zero' := End.ext (by
+    change dualHom G G (ρ 0).asHom = 0
+    rw [map_zero]
+    exact map_zero _)
+  map_add' a b := End.ext (by
+    change dualHom G G (ρ (a + b)).asHom =
+      dualHom G G (ρ a).asHom + dualHom G G (ρ b).asHom
+    rw [map_add (f := ρ)]
+    exact map_add _ _ _)
 
 end Action
 
@@ -1267,8 +1284,8 @@ example (t : (mu p O).Tate) : pairing (mu p O) O t (constGen p O) = t := by
 example (a : ℤ_[p]) (x : (mu p ℤ_[p]).Lie) :
     (padicAction (mu p ℤ_[p])).onLie a x = a • x ∧ dlogT p ℤ_[p] ≠ 0 := by
   refine ⟨?_, dlogT_ne_zero p ℤ_[p] PadicInt.prime_p.not_isUnit⟩
-  change lieMap _ _ (algebraMap ℤ_[p] (End (mu p ℤ_[p])) a) x = _
-  rw [Algebra.algebraMap_eq_smul_one]
+  change lieMap _ _ (algebraMap ℤ_[p] (End (mu p ℤ_[p])) a).asHom x = _
+  rw [Algebra.algebraMap_eq_smul_one, End.smul_asHom, End.one_asHom]
   exact (LinearMap.congr_fun (lieMap_smul (RingHom.id _) a (𝟙 _)) x).trans (by simp)
 
 end Values
