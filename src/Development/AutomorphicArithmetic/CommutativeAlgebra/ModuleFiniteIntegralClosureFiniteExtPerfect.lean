@@ -126,7 +126,7 @@ theorem UpperTheory.module_finite_integralClosure_finiteExt_perfect :
       (RingEquiv.refl F) ?_
     apply IsLocalization.ringHom_ext (nonZeroDivisors A)
     ext a
-    simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, AlgEquiv.toRingEquiv_eq_coe,
+    simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, AlgEquiv.coe_toRingEquiv,
       AlgEquiv.coe_ringEquiv, AlgEquiv.commutes, RingEquiv.refl_apply]
     rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   haveI : IsScalarTower (FractionRing (MvPolynomial (Fin s) k)) (FractionRing A) F := by
