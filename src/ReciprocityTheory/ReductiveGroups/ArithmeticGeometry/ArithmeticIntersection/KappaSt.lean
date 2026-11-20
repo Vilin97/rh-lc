@@ -6,7 +6,7 @@ open MeasureTheory
 
 abbrev E3 := EuclideanSpace ℝ (Fin 3)
 
-abbrev S2 := Metric.sphere (0 : E3) 1
+noncomputable abbrev S2 := Metric.sphere (0 : E3) 1
 
 noncomputable def sphereMeasure : Measure S2 :=
   ((volume : Measure E3).toSphere Set.univ)⁻¹ • (volume : Measure E3).toSphere
