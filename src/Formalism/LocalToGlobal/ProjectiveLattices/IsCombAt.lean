@@ -97,6 +97,10 @@ variable (Xo c)
 
 abbrev Rul : Type := Rules (K := c.F) (fun S _ _ => FrPt Xo c S)
 
+set_option maxSynthPendingDepth 1 in
+instance (priority := high) rulModule : Module c.F (Rul Xo c) :=
+  inferInstance
+
 def sec (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : Submodule c.F (Rul Xo c) :=
   secW (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) (fun t y y' => FrBor t y y') (ex Dw a n)
 
