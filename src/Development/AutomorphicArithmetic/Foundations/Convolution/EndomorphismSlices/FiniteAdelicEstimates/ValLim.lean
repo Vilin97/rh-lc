@@ -57,7 +57,7 @@ private theorem qV_cPl {E : Type} [Field E] [NumberField E] [IsCMField E] (w : P
 theorem valLim : ValLim := by
   intro E _ _ _ a b T e₁ e₂ B₁ B₂ C₁ C₂ h
   unfold UpperTheory.V.Z.Tf.GlobalTraceComparison.val
-  refine tendsto_finset_prod _ fun w hw => Tendsto.mul ?_ ?_
+  refine tendsto_finsetProd _ fun w hw => Tendsto.mul ?_ ?_
   · obtain ⟨-, -, -, h₁, h₂⟩ := h w (Or.inl hw)
     exact ev_tendsto _ fun p => (h₁ p.1).mul (h₂ p.2)
   · have hcc : cPl (cPl w) = w := ((UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.places E).2.1 w).1

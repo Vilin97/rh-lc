@@ -106,7 +106,7 @@ theorem val_ratioPoly {w : (Σ k, J k) → ℂ} {c : (k : K) → J k} (hz : genP
 
 theorem continuousAt_ratioAt {w₀ : (Σ k, J k) → ℂ} {c : (k : K) → J k} (hc : ∀ k, w₀ ⟨k, c k⟩ ≠ 0)
     (c' : (k : K) → J k) : ContinuousAt (fun w => ratioAt c w c') w₀ :=
-  tendsto_finset_prod _ fun k _ =>
+  tendsto_finsetProd _ fun k _ =>
     ((continuous_apply _).continuousAt).div ((continuous_apply _).continuousAt) (hc k)
 
 theorem continuousAt_ratioPoly {w₀ : (Σ k, J k) → ℂ} {c : (k : K) → J k} (hc : ∀ k, w₀ ⟨k, c k⟩ ≠ 0)

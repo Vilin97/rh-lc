@@ -61,11 +61,11 @@ theorem siegelMean_of_cc : SiegelMeanCc → SiegelMean := by
       (h1 v k).1.continuous.measurable.comp (measurable_coord I v _)))
     (fun y x a b hab => ENNReal.ofReal_le_ofReal
       (Finset.prod_le_prod₀ (fun v _ => (h1 v a).2.2.1 _) fun v _ => (h2 v _).1 hab))
-    (fun y x => ENNReal.tendsto_ofReal (tendsto_finset_prod _ fun v _ => (h2 v _).2))
+    (fun y x => ENNReal.tendsto_ofReal (tendsto_finsetProd _ fun v _ => (h2 v _).2))
   have hR : Tendsto (fun k => I.muA μf fund * ENNReal.ofReal (meanConst I.E I.n * ∏ v, D v k (sgn ℝ s))) atTop
       (𝓝 (I.muA μf fund * ENNReal.ofReal (meanConst I.E I.n * ∏ v, gaussDens (I.ε v) (sgn ℝ s)))) :=
     ENNReal.Tendsto.const_mul
-      (ENNReal.tendsto_ofReal ((tendsto_finset_prod _ fun v _ => h3 v _ hs).const_mul _)) (Or.inr hfin.ne)
+      (ENNReal.tendsto_ofReal ((tendsto_finsetProd _ fun v _ => h3 v _ hs).const_mul _)) (Or.inr hfin.ne)
   exact tendsto_nhds_unique hL (hR.congr fun k => (hH (fun v => φ v k) (fun v => D v k) fun v => h1 v k).symm)
 
 end GlobalTheory.GaussMean.Limit

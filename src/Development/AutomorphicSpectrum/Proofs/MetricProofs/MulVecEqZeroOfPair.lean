@@ -150,7 +150,7 @@ theorem limit_period : ∀ (n a g : ℕ) (ha : a ≤ n) (U : Set (Fin n → ℂ)
       simp only [mulVec, dotProduct]; fun_prop
     have t3 : Tendsto (fun m => ∏ j, (p (φ m)).1 (Fin.castLE ha j) ^ (v0 ⬝ᵥ (B j *ᵥ v0))) atTop
         (𝓝 (∏ j, z (Fin.castLE ha j) ^ (v0 ⬝ᵥ (B j *ᵥ v0)))) := by
-      refine tendsto_finset_prod _ fun j _ => ?_
+      refine tendsto_finsetProd _ fun j _ => ?_
       obtain ⟨b, hb⟩ := Int.eq_ofNat_of_zero_le (pair_nonneg (hB j) v0)
       simp only [hb, zpow_natCast]
       exact (hzj j).pow b
@@ -179,7 +179,7 @@ theorem limit_period : ∀ (n a g : ℕ) (ha : a ≤ n) (U : Set (Fin n → ℂ)
       simp only [mulVec, dotProduct]; fun_prop
     have t3 : Tendsto (fun m => ∏ j, (p (φ m)).1 (Fin.castLE ha j) ^ ((B j *ᵥ v0) k)) atTop
         (𝓝 (∏ j, Complex.exp (l j) ^ ((B j *ᵥ v0) k))) := by
-      refine tendsto_finset_prod _ fun j _ => ?_
+      refine tendsto_finsetProd _ fun j _ => ?_
       by_cases hj : z (Fin.castLE ha j) = 0
       · simp [hker j hj]
       · rw [hl j hj]

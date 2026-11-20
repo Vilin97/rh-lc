@@ -1326,7 +1326,7 @@ theorem fw_tendsto {d : ℕ} (n : Fin d → ℤ) : Tendsto (fun N : ℕ => fw N 
     have h0 : Tendsto (fun N : ℕ => |((n j : ℤ) : ℝ)| / ((N : ℝ) + 1)) atTop (𝓝 0) :=
       tendsto_const_nhds.div_atTop (tendsto_atTop_add_const_right _ 1 tendsto_natCast_atTop_atTop)
     simpa using (tendsto_const_nhds (x := (1 : ℝ))).sub h0
-  have h := tendsto_finset_prod Finset.univ (fun j _ => hj j)
+  have h := tendsto_finsetProd Finset.univ (fun j _ => hj j)
   simpa using h
 
 theorem eventually_mem_box {d : ℕ} (n : Fin d → ℤ) : ∀ᶠ N : ℕ in atTop, n ∈ box d N := by

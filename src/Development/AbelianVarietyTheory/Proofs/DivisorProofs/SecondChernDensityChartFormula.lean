@@ -268,7 +268,7 @@ theorem continuousOn_ch2Dens (H : h.IsCInf) (hφ : φ.IsCInf) (c : AlgChart p σ
     refine (Complex.continuous_re.continuousAt.comp ?_).neg.div_const _
     refine tendsto_finsetSum _ fun s _ => tendsto_finsetSum _ fun t _ => ?_
     exact continuousAt_const.mul ((continuousAt_chTwo hK (h.posDef _ _ ha).det_pos.ne'.isUnit _ _ _ _).mul
-      (tendsto_finset_prod _ fun i _ => continuousAt_pi.1 (continuousAt_pi.1 hA _) _))
+      (tendsto_finsetProd _ fun i _ => continuousAt_pi.1 (continuousAt_pi.1 hA _) _))
   refine (hc.congr ?_).continuousWithinAt
   filter_upwards [hm] with w hw
   rw [ch2Dens_eq H c _ (c.e.map_target hw.1) hw.2, c.e.right_inv hw.1]

@@ -41,7 +41,7 @@ theorem dens_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : �
   intro E _ _ _ r X x hx
   refine ⟨?_, ?_, det_ne_zero_of_orth X hx⟩
   · rw [densF_orth X hx]
-    refine tendsto_finset_prod _ fun τ _ => tendsto_finset_prod _ fun i _ => ?_
+    refine tendsto_finsetProd _ fun τ _ => tendsto_finsetProd _ fun i _ => ?_
     refine ((cont_lminor X τ i.castSucc).norm.continuousAt).zpow₀ _ (Or.inl ?_)
     simp [norm_lminor_zero]
   · rw [densF_orth X hx]

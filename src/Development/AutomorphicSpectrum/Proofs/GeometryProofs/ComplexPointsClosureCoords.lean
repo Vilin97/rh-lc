@@ -164,7 +164,7 @@ theorem relation_limit (hall : ∀ q : X, genPt ξ ⤳ q) (hξ : IsCptGen ξ) (c
     MvPolynomial.aeval (fun c' => segreRatio c c' w) P = 0 := by
   by_contra hne
   have hρ : ∀ c', ContinuousAt (fun v : (Σ k, J k) → ℂ => segreRatio c c' v) w := fun c' =>
-    tendsto_finset_prod _ fun k _ =>
+    tendsto_finsetProd _ fun k _ =>
       ContinuousAt.div (continuous_apply _).continuousAt (continuous_apply _).continuousAt (hc k)
   have hcont : ContinuousAt (fun v : (Σ k, J k) → ℂ => MvPolynomial.aeval (fun c' => segreRatio c c' v) P) w := by
     have e : (fun v : (Σ k, J k) → ℂ => MvPolynomial.aeval (fun c' => segreRatio c c' v) P) =

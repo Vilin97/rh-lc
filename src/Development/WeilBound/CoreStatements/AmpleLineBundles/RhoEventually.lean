@@ -21,7 +21,7 @@ omit [∀ k, Fintype (J k)] in
 theorem evp_cont (c : (k : K) → J k) (P : MvPolynomial ((k : K) → J k) ℤ) {w : (Σ k, J k) → ℂ}
     (hc : ∀ k, w ⟨k, c k⟩ ≠ 0) : ContinuousAt (evp c P) w := by
   have hρ : ∀ c', ContinuousAt (fun v : (Σ k, J k) → ℂ => segreRatio c c' v) w := fun c' =>
-    tendsto_finset_prod _ fun k _ =>
+    tendsto_finsetProd _ fun k _ =>
       ContinuousAt.div (continuous_apply _).continuousAt (continuous_apply _).continuousAt (hc k)
   have e : evp c P =
       fun v => MvPolynomial.eval (fun c' => segreRatio c c' v) (MvPolynomial.map (algebraMap ℤ ℂ) P) := by
@@ -53,7 +53,7 @@ def chi (c : (k : K) → J k) (w : (Σ k, J k) → ℂ) : ℝ := ∏ k, ‖w ⟨
 
 theorem chi_cont (c : (k : K) → J k) {w : (Σ k, J k) → ℂ} (hw : ∀ k, ∃ i, w ⟨k, i⟩ ≠ 0) :
     ContinuousAt (chi c) w := by
-  refine tendsto_finset_prod _ fun k _ => ContinuousAt.div (continuous_apply _).norm.continuousAt
+  refine tendsto_finsetProd _ fun k _ => ContinuousAt.div (continuous_apply _).norm.continuousAt
     (continuous_pi fun i => continuous_apply _).norm.continuousAt ?_
   obtain ⟨i, hi⟩ := hw k
   exact norm_ne_zero_iff.2 fun h => hi (congrFun h i)

@@ -214,7 +214,7 @@ theorem tendsto_cutExp (r : ℝ) : Filter.Tendsto (fun k => cutExp k r) Filter.a
 
 theorem tendsto_prodFun {n : ℕ} (y : Fin n → ℂ) : Filter.Tendsto (fun k => prodFun (cutExp k) y) Filter.atTop
     (nhds (prodFun (fun r => Real.exp (-r)) y)) :=
-  tendsto_finset_prod _ fun _ _ => tendsto_cutExp _
+  tendsto_finsetProd _ fun _ _ => tendsto_cutExp _
 
 theorem hasCompactSupport_prodFun (k n : ℕ) : HasCompactSupport (prodFun (cutExp k) : (Fin n → ℂ) → ℝ) := by
   refine HasCompactSupport.intro (isCompact_closedBall (0 : Fin n → ℂ) (k + 1)) fun y hy => ?_

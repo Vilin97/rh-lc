@@ -160,7 +160,7 @@ theorem coeff_eq_zero : ∀ (N : ℕ) (Ξ : Type) (lam : Ξ → Fin N → ℝ) (
   have hlim : Tendsto (fun R : ℝ => ∑ ξ ∈ F, c ξ * ∏ j, avg R ((lam ξ - lam ξ₀) j)) atTop
       (𝓝 (c ξ₀)) := by
     have := tendsto_finsetSum F fun ξ _ =>
-      (tendsto_finset_prod Finset.univ fun j _ => tendsto_avg ((lam ξ - lam ξ₀) j)).const_mul (c ξ)
+      (tendsto_finsetProd Finset.univ fun j _ => tendsto_avg ((lam ξ - lam ξ₀) j)).const_mul (c ξ)
     convert this using 2
     simp_rw [prod_indicator_zero_eq_ite]
     rw [Finset.sum_eq_single ξ₀]

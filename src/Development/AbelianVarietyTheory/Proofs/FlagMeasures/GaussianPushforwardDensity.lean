@@ -103,7 +103,7 @@ theorem density_eq_prod (ι : Type) [Fintype ι] (n : ℕ) (ε : ι → Fin n �
     (b : ι → ℝ) (hb : ∀ v, b v ≠ 0) : G b = ((∏ v, gaussDens (ε v) (b v) : ℝ) : ℂ) := by
   have h1 : Tendsto (fun r : ℝ => ∏ v, r⁻¹ • (cdf (ε v) (b v + r) - cdf (ε v) (b v))) (𝓝[>] 0)
       (𝓝 (∏ v, gaussDens (ε v) (b v))) :=
-    tendsto_finset_prod _ fun v _ =>
+    tendsto_finsetProd _ fun v _ =>
       (differentiableAt_cdf (ε v) (hb v)).hasDerivAt.tendsto_slope_zero_right
   have h2 := (Complex.continuous_ofReal.tendsto _).comp h1
   refine tendsto_nhds_unique (tendsto_mean_cube hG b) (h2.congr' ?_)

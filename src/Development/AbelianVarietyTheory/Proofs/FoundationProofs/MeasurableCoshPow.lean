@@ -114,7 +114,7 @@ theorem tendsto_det_coshSum (B : Matrix (Fin p) (Fin q) ℂ) :
     Tendsto (fun n => (coshSum n B).det.re) atTop
       (𝓝 (∏ i ∈ Finset.range (min p q), Real.cosh (singVal B i))) := by
   simp only [det_coshSum, ← prod_cosh_sPad]
-  exact tendsto_finset_prod _ fun j _ => (Real.hasSum_cosh (sPad B j)).tendsto_sum_nat
+  exact tendsto_finsetProd _ fun j _ => (Real.hasSum_cosh (sPad B j)).tendsto_sum_nat
 
 theorem measurable_coshPow : ∀ (p q : ℕ) (c : ℝ), Measurable (coshPow c : UpqT p q → ℝ) := by
   intro p q c

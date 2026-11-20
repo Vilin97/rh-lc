@@ -69,7 +69,7 @@ theorem tendsto_norm {E K : Type} [Field E] [NumberField E] [Field K] [NumberFie
   simp_rw [hn]
   have hlim : Tendsto (fun x => ∏ σ : K →ₐ[E] ℂ, σ x) l
       (𝓝 (∏ σ : K →ₐ[E] ℂ, if (σ : K →+* ℂ) = j then (-1 : ℂ) else 1)) :=
-    tendsto_finset_prod _ fun σ _ => hσ (σ : K →+* ℂ)
+    tendsto_finsetProd _ fun σ _ => hσ (σ : K →+* ℂ)
   convert hlim using 2
   by_cases hu : u = InfinitePlace.mk (j.comp (algebraMap E K))
   · have he : u.embedding = j.comp (algebraMap E K) := by

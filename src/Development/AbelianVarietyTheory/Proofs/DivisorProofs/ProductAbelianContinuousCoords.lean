@@ -111,7 +111,7 @@ def sqFr (ε : Fin 4 → ℤ) (j : Fin 4 → L.ι) (q : (Fin g → ℂ) × (Fin 
 
 theorem continuousAt_sqFr (ε : Fin 4 → ℤ) (j : Fin 4 → L.ι) (q : (Fin g → ℂ) × (Fin g → ℂ))
     (h : ⊤ ≤ sqEx u q ⁻¹ᵁ (LB.LinComb L (sqMaps B) ε).U j) : ContinuousAt (sqFr u ε j) q := by
-  refine tendsto_finset_prod _ fun k _ => ?_
+  refine tendsto_finsetProd _ fun k _ => ?_
   have hk := (le_sq_iff u ε j q).1 h k
   have hp : Continuous fun q : (Fin g → ℂ) × (Fin g → ℂ) => sqPts q k := by
     fin_cases k

@@ -218,7 +218,7 @@ theorem coefS_pure (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M : ℕ} (J : Ma
         ((div_le_one (norm_pos_iff.2 (hck k))).2 (hbd k bb))
     · refine Filter.Eventually.of_forall fun bb => ?_
       exact (hlim bb).mul_const _
-  have lim2 := hInf.2.mul (tendsto_finset_prod S fun v _ =>
+  have lim2 := hInf.2.mul (tendsto_finsetProd S fun v _ =>
     (Complex.continuous_ofReal.tendsto _).comp (hV v).2)
   exact tendsto_nhds_unique lim1 (lim2.congr fun k => by simpa using (key k).symm)
 

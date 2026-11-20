@@ -50,7 +50,7 @@ theorem phiG_tendsto (Y : Finset H) (κ : H → H → ℂ) (K : Fin f → H × �
   · unfold phi Hh
     refine tendsto_finsetSum _ (fun h hh => tendsto_finsetSum _ (fun h' hh' => ?_))
     refine Tendsto.const_mul _ ?_
-    refine tendsto_finset_prod _ (fun v _ => ?_)
+    refine tendsto_finsetProd _ (fun v _ => ?_)
     exact (hlim v h hh h' hh' (σ v)).comp (tendsto_coord v)
 
 theorem phiG_conj_tendsto (Y : Finset H) (κ : H → H → ℂ) (hκ : TB.PSDOn Y κ) (K : Fin f → H × ℂ → H × ℂ → ℂ)
@@ -77,7 +77,7 @@ theorem phiG_conj_tendsto (Y : Finset H) (κ : H → H → ℂ) (hκ : TB.PSDOn 
   · unfold Hh
     refine tendsto_finsetSum _ (fun h hh => tendsto_finsetSum _ (fun h' hh' => ?_))
     refine Tendsto.const_mul _ ?_
-    refine tendsto_finset_prod _ (fun v _ => ?_)
+    refine tendsto_finsetProd _ (fun v _ => ?_)
     exact (hlim v h hh h' hh' (σ v)).comp (tendsto_coord v)
 
 section mean

@@ -41,7 +41,7 @@ private theorem continuousAt_bchar_of_ne_zero (X : _root_.ReciprocityTheory.Char
     {b : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r} (hb : _root_.ReciprocityTheory.ChartRestriction.G.FD.bchar la b ≠ 0) :
     ContinuousAt (fun c : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r => _root_.ReciprocityTheory.ChartRestriction.G.FD.bchar la c) b := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.bchar at hb ⊢
-  refine tendsto_finset_prod _ fun τ _ => tendsto_finset_prod _ fun i _ => ?_
+  refine tendsto_finsetProd _ fun τ _ => tendsto_finsetProd _ fun i _ => ?_
   have hne : b τ i i ≠ 0 ∨ 0 ≤ la τ i := by
     by_cases h0 : la τ i = 0
     · exact Or.inr h0.ge

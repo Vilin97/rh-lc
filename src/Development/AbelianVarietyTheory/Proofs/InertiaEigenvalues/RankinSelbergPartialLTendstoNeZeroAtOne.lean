@@ -196,7 +196,7 @@ theorem tendsto_partialL_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [IsT
   refine ⟨(∏ w ∈ T' \ T, lfac σ σ' 1 w) * G 1,
     mul_ne_zero (Finset.prod_ne_zero_iff.2 fun w hw => (hfac w hw).2) hG1, ?_⟩
   have hprodlim : Tendsto (fun x : ℝ => ∏ w ∈ T' \ T, lfac σ σ' (x : ℂ) w) (𝓝[>] 1)
-      (𝓝 (∏ w ∈ T' \ T, lfac σ σ' 1 w)) := tendsto_finset_prod _ fun w hw => (hfac w hw).1
+      (𝓝 (∏ w ∈ T' \ T, lfac σ σ' 1 w)) := tendsto_finsetProd _ fun w hw => (hfac w hw).1
   refine (hprodlim.mul hlim).congr' (eventually_nhdsWithin_of_forall fun x hx => ?_)
   have hp := (GlobalTheory.T.localRankinSelberg_logarithm_formula.2 E a b σ σ' hσ hσ' T' hU hU' x hx).2
   have h1 := hasProd_of_subset (fun w => lfac σ σ' (x : ℂ) w) hTT' hp.multipliable.hasProd
