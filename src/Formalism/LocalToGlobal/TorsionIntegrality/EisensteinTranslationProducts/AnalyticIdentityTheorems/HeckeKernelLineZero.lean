@@ -209,7 +209,7 @@ lemma real_limit (hj : HkJRules) {y : ℝ} (hy : y ≠ 0) :
     simpa [Real.rpow_neg_one] using this
   have h4 : Tendsto (fun s : ℝ => -(1 / (s + 1))) (𝓝[>] 0) (𝓝 (-1)) := by
     have hc : ContinuousAt (fun s : ℝ => -(1 / (s + 1))) 0 :=
-      (ContinuousAt.div continuousAt_const (by fun_prop) (by norm_num)).neg
+      (ContinuousAt.div₀ continuousAt_const (by fun_prop) (by norm_num)).neg
     have := hc.tendsto.mono_left (nhdsWithin_le_nhds (s := Set.Ioi 0))
     simpa using this
   have h := h2.mul (h3.mul (h4.mul hj.2.2))

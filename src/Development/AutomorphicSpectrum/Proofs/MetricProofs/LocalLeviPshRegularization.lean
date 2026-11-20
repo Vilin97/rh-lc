@@ -104,7 +104,7 @@ lemma oc_rLoc_cont (S : Finset (Fin D)) (m : Fin D → ℕ) :
   unfold rLoc
   refine continuousOn_const.add (continuousOn_finset_sum _ fun i hi => ?_)
   refine continuousOn_const.mul (ContinuousOn.log ?_ ?_)
-  · refine continuousOn_const.div (by fun_prop) ?_
+  · refine continuousOn_const.div₀ (by fun_prop) ?_
     intro z hz
     have : z i ≠ 0 := fun h0 => hz ⟨i, hi, h0⟩
     positivity

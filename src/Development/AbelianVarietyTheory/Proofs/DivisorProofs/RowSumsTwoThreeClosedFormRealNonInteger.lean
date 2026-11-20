@@ -63,7 +63,7 @@ private lemma tsum_one_div_add_int_pow_of_real_of_continuousAt {w : ℂ} (hw : w
   have hcont : ContinuousOn (fun x : ℂ => ∑' m : ℤ, 1 / (x + (m : ℂ)) ^ k)
       (Metric.closedBall w (δ / 2)) := by
     refine continuousOn_tsum (fun m => ?_) hsum (fun m x hx => ?_)
-    · refine ContinuousOn.div continuousOn_const (by fun_prop) (fun x hx => pow_ne_zero _ ?_)
+    · refine ContinuousOn.div₀ continuousOn_const (by fun_prop) (fun x hx => pow_ne_zero _ ?_)
       have h1 := hlow m x hx
       have h2 := hδm m
       exact norm_ne_zero_iff.mp (by linarith)

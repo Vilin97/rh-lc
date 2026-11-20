@@ -77,9 +77,9 @@ theorem continuousAt_cay {F K : Type} [Field F] [Field K] [Algebra F K] [Topolog
   have hW : (1 : K) - 0 ^ 2 * n ≠ 0 := by simp
   have hden : ContinuousAt (fun e : K => 1 - e ^ 2 * n) 0 := by fun_prop
   have h1 : ContinuousAt (fun e : K => (1 + e ^ 2 * n) / (1 - e ^ 2 * n)) 0 :=
-    ContinuousAt.div (by fun_prop) hden hW
+    ContinuousAt.div₀ (by fun_prop) hden hW
   have h2 : ∀ t : K, ContinuousAt (fun e : K => 2 * e * t / (1 - e ^ 2 * n)) 0 := fun t =>
-    ContinuousAt.div (by fun_prop) hden hW
+    ContinuousAt.div₀ (by fun_prop) hden hW
   refine (qHomeo (d := d) (β := β) (R := K)).isInducing.continuousAt_iff.2 ?_
   exact h1.prodMk ((h2 p).prodMk ((h2 q).prodMk (h2 r)))
 

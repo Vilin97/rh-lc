@@ -66,7 +66,7 @@ theorem dom_int {ι : Type} [Fintype ι] (z : ℕ) : ∃ N : ℕ,
   set a := 2 * Fintype.card ι * z
   set b := Module.finrank ℝ (ι → ℂ) + 1
   have hc : Continuous fun c : ι → ℂ => (∏ w, ‖c w‖ ^ 2) ^ z / (1 + ‖c‖) ^ (a + b) :=
-    Continuous.div (by fun_prop) (by fun_prop) fun c => by positivity
+    Continuous.div₀ (by fun_prop) (by fun_prop) fun c => by positivity
   have hi : Integrable fun c : ι → ℂ => (∏ w, ‖c w‖ ^ 2) ^ z / (1 + ‖c‖) ^ (a + b) := by
     refine (integrable_one_add_norm (μ := volume) (r := b) (by simp [b])).mono' hc.aestronglyMeasurable
       (Eventually.of_forall fun c => ?_)

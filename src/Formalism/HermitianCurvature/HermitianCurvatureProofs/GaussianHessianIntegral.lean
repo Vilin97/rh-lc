@@ -408,7 +408,7 @@ theorem gaussOne_of_damped (h : GaussOneDamped) : GaussOne := by
   have hb : 0 < ‖β‖ := norm_pos_iff.2 hβ
   have hab : 0 < ‖a‖ := norm_pos_iff.2 ha
   have hc : ContinuousAt (fun δ:ℝ => ‖β‖ / Real.sqrt (4 * δ ^ 2 + ‖β‖ ^ 2 * ‖a‖ ^ 2)) 0 := by
-    apply ContinuousAt.div continuousAt_const (by fun_prop)
+    apply ContinuousAt.div₀ continuousAt_const (by fun_prop)
     have : 0 < 4 * (0:ℝ) ^ 2 + ‖β‖ ^ 2 * ‖a‖ ^ 2 := by positivity
     exact (Real.sqrt_pos.2 this).ne'
   have h2 := (Complex.continuous_ofReal.continuousAt.comp hc).tendsto.mono_left

@@ -46,7 +46,7 @@ theorem Dec.bound {a : K × (ι → ℂ) → ℂ} (ha : Dec a) (M : ℕ) : ∃ (
 
 theorem continuousOn_rationalWeight (κ : ι → ℕ) (e : ℕ) : ContinuousOn (r0 κ e) {x | ∀ w, x w ≠ 0} := by
   refine continuousOn_finsetProd _ fun w _ => ?_
-  refine ContinuousOn.mul (ContinuousOn.pow (ContinuousOn.div (by fun_prop) (by fun_prop) fun x hx => ?_) _) (by fun_prop)
+  refine ContinuousOn.mul (ContinuousOn.pow (ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun x hx => ?_) _) (by fun_prop)
   simpa using hx w
 
 theorem open_U : IsOpen {p : K × (ι → ℂ) | ∀ w, p.2 w ≠ 0} := by

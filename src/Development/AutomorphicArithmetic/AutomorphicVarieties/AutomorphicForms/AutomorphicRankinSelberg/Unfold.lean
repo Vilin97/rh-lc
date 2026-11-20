@@ -19,7 +19,7 @@ private theorem unf_meas_smul (γ : SL(2, ℤ)) : Measurable (fun z : ℍ => γ 
       ((algebraMap ℤ ℝ (γ 1 0) : ℂ) * z + (algebraMap ℤ ℝ (γ 1 1) : ℂ))) :=
     funext fun z => UpperHalfPlane.coe_specialLinearGroup_apply γ z
   rw [h]
-  refine Continuous.div (by fun_prop) (by fun_prop) fun z => ?_
+  refine Continuous.div₀ (by fun_prop) (by fun_prop) fun z => ?_
   have := UpperHalfPlane.denom_ne_zero (Matrix.SpecialLinearGroup.mapGL ℝ γ) z
   simpa [UpperHalfPlane.denom] using this
 

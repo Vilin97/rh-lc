@@ -364,8 +364,8 @@ private theorem logDerivSeries_main : Formalism.HermitianLattices.GL2a2.LogDeriv
   have hf_int : LocallyIntegrableOn (deriv (fun t : ℝ => ((t⁻¹ : ℝ) : ℂ))) (Set.Ici 1) := by
     have hc : ContinuousOn (fun t : ℝ => ((-(t ^ 2)⁻¹ : ℝ) : ℂ)) (Set.Ici 1) := by
       apply Complex.continuous_ofReal.comp_continuousOn
-      apply ContinuousOn.neg
-      apply ContinuousOn.inv₀ (by fun_prop)
+      apply ContinuousOn.fun_neg
+      apply ContinuousOn.fun_inv₀ (by fun_prop)
       intro t ht
       exact pow_ne_zero 2 (show (0 : ℝ) < t from lt_of_lt_of_le one_pos ht).ne'
     exact (hc.congr (fun t ht => hdf t (show (0 : ℝ) < t from lt_of_lt_of_le one_pos ht).ne')).locallyIntegrableOn

@@ -33,7 +33,7 @@ theorem exists_nat_posDef {n : ℕ} (E A : Matrix (Fin n) (Fin n) ℝ) (hE : E.P
   have hq : ∀ x : Fin n → ℝ, x ≠ 0 → 0 < x ⬝ᵥ E *ᵥ x := fun x hx => by
     simpa using hE.dotProduct_mulVec_pos hx
   have hc : ContinuousOn (fun x : Fin n → ℝ => (x ⬝ᵥ A *ᵥ x) / (x ⬝ᵥ E *ᵥ x)) (Metric.sphere 0 1) := by
-    refine ContinuousOn.div (by fun_prop) (by fun_prop) fun x hx => (hq x ?_).ne'
+    refine ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun x hx => (hq x ?_).ne'
     rintro rfl
     simp at hx
   obtain ⟨C, hC⟩ := (isCompact_sphere (0 : Fin n → ℝ) 1).exists_bound_of_continuousOn hc

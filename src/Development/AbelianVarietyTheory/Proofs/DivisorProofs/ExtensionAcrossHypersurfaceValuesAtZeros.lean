@@ -224,7 +224,7 @@ theorem GlobalTheory.OTY.extension_values_at_zeros : ∀ (n : ℕ) (Y : Type) [T
       (e.continuousOn_symm.mono hWt).aemeasurable hWm
     have hwTc : Continuous (wT T) := by
       unfold wT
-      exact continuous_const.div (by fun_prop) (fun x => by positivity)
+      exact continuous_const.div₀ (by fun_prop) (fun x => by positivity)
     have hcm : Measurable c := by
       have : Measurable (fun x : ℝ => Real.sqrt (wT T (δ * x) * Real.exp (-x))) :=
         (Real.continuous_sqrt.comp ((hwTc.comp (continuous_const.mul continuous_id)).mul

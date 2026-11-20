@@ -1940,8 +1940,8 @@ theorem wt_continuous (D : RealPlaceData k r Wp Wq) : Continuous (fun x : (ℝ �
     (lam_continuous k r D.z).comp (continuous_snd.comp (continuous_fst.comp continuous_snd))
   have c2 : Continuous (fun x : (ℝ × ℝ) × SS k r => lam k r D.z' (Matrix.of x.2.2.2)) :=
     (lam_continuous k r D.z').comp (continuous_snd.comp (continuous_snd.comp continuous_snd))
-  refine Continuous.mul (Continuous.inv₀ (by fun_prop) (fun x => by positivity))
-    (Continuous.inv₀ (by fun_prop) (fun x => by positivity))
+  refine Continuous.fun_mul (Continuous.fun_inv₀ (by fun_prop) (fun x => by positivity))
+    (Continuous.fun_inv₀ (by fun_prop) (fun x => by positivity))
 
 theorem phase_continuous (D : RealPlaceData k r Wp Wq) :
     Continuous (fun x : ((ℝ × ℝ) × SS k r) × (ℝ × ℝ) => phase D x.1.1 x.1.2 x.2) := by
@@ -2750,7 +2750,7 @@ theorem exists_bound_isTest_support {w : ℝ → ℝ} (h : IsTest w) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ τ, w τ ≠ 0 → 0 < τ ∧ max 1 (τ ^ 2)⁻¹ ≤ M := by
   obtain ⟨_, hc, hs⟩ := h
   have hcont : ContinuousOn (fun τ : ℝ => (τ ^ 2)⁻¹) (tsupport w) := by
-    apply ContinuousOn.inv₀ (by fun_prop)
+    apply ContinuousOn.fun_inv₀ (by fun_prop)
     intro τ hτ
     have : 0 < τ := hs hτ
     positivity

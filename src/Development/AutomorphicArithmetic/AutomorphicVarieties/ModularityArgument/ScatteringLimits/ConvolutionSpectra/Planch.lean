@@ -8,7 +8,7 @@ open scoped InnerProductSpace FourierTransform ComplexConjugate
 
 private theorem r_int : Integrable (fun y : ℝ => ((1 + |y|) ^ 2)⁻¹) ∧ ∫ y : ℝ, ((1 + |y|) ^ 2)⁻¹ = 2 := by
   constructor
-  · refine integrable_inv_one_add_sq.mono' (Continuous.aestronglyMeasurable (Continuous.inv₀ (by fun_prop) fun y => by positivity))
+  · refine integrable_inv_one_add_sq.mono' (Continuous.aestronglyMeasurable (Continuous.fun_inv₀ (by fun_prop) fun y => by positivity))
       (Eventually.of_forall fun y => ?_)
     rw [Real.norm_of_nonneg (by positivity)]
     refine inv_anti₀ (by positivity) ?_

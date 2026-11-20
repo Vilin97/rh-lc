@@ -290,7 +290,7 @@ theorem ConeToProjectiveContinuous.hypotheses_inhabited :
     · simpa using h0'.1
     · simpa using h0'.2
   refine ⟨hA, hH, hℓ, ?_, ?_⟩
-  · refine ContinuousOn.div (by fun_prop) (by fun_prop) fun x hx => hpos x hx
+  · refine ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun x hx => hpos x hx
   · intro c hc y
     by_cases hy : y = 0
     · subst hy

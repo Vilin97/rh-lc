@@ -159,7 +159,7 @@ lemma wv_decay (c : ℝ) {N j : ℕ} (hj : j + 1 ≤ 4 * N) (t y : ℝ) :
 
 lemma wv_continuous (c : ℝ) (N j : ℕ) (t : ℝ) : Continuous (wv c N j t) := by
   have hW : Continuous fun y : ℝ => cut c y * ((1 + y ^ 2) ^ N)⁻¹ := by
-    refine (cut_continuous c).mul (Continuous.inv₀ (by fun_prop) fun y => ?_)
+    refine (cut_continuous c).mul (Continuous.fun_inv₀ (by fun_prop) fun y => ?_)
     positivity
   have hs := sg_continuous
   have hH : Continuous fun y : ℝ =>

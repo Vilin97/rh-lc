@@ -12,7 +12,7 @@ theorem GlobalTheory.OTY.TwEst.lhs_transfer : ∀ (n : ℕ) (Y : Type) [Topologi
   have hm : Measurable fun y => δ * psi A L s y := hpsi.const_mul δ
   have hwc : Continuous (wT T) := by
     unfold wT
-    refine continuous_const.div (by fun_prop) fun x => ?_
+    refine continuous_const.div₀ (by fun_prop) fun x => ?_
     have : 0 ≤ min (x ^ 2) ((T + 1) ^ 2) := le_min (sq_nonneg _) (sq_nonneg _)
     linarith
   have hw0 : ∀ x, 0 ≤ wT T x := by

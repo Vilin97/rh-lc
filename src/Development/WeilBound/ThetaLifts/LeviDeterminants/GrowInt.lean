@@ -43,7 +43,7 @@ theorem exists_dom (hψ : IsStd ψ) {μ : @Measure (κ → AF F) (borel _)} (hμ
     obtain ⟨k, hk⟩ := weight_lt_top (F := F) (κ := κ)
     obtain ⟨K, hK0, hK⟩ := lineD_bound f w.1 0 (linForm w.2) (qc w) k
     have hu : Continuous fun z : V F κ => ((K * ((1 + ‖z‖) ^ k)⁻¹ : ℝ) : ℂ) :=
-      Complex.continuous_ofReal.comp (continuous_const.mul (Continuous.inv₀ (by fun_prop) fun z => by positivity))
+      Complex.continuous_ofReal.comp (continuous_const.mul (Continuous.fun_inv₀ (by fun_prop) fun z => by positivity))
     refine ⟨pureA F (fun z => ((K * ((1 + ‖z‖) ^ k)⁻¹ : ℝ) : ℂ)) g, ?_, nsq_pure_lt_top hμ hu (hk K) hg, fun t ht x => ?_⟩
     · have h := PositivityTheory.ThKF0.Split.continuous_splitE_symm F κ
       exact (hu.comp h.fst).mul (hg.1.continuous.comp h.snd)

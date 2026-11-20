@@ -326,10 +326,10 @@ theorem LocalShell.proof (hP : ShellPolar.Statement) : LocalShell.Statement := b
       · apply ContinuousAt.mul
         · apply ContinuousAt.mul
           · fun_prop
-          · exact ContinuousAt.inv₀ (by fun_prop) (pow_ne_zero _ e1)
-        · exact ContinuousAt.inv₀ (by fun_prop) e3
+          · exact ContinuousAt.fun_inv₀ (by fun_prop) (pow_ne_zero _ e1)
+        · exact ContinuousAt.fun_inv₀ (by fun_prop) e3
       · apply ContinuousAt.mul continuousAt_const
-        exact ContinuousAt.log (ContinuousAt.div (by fun_prop) (by fun_prop) e1) e4
+        exact ContinuousAt.log (ContinuousAt.div₀ (by fun_prop) (by fun_prop) e1) e4
     exact ENNReal.tendsto_ofReal (tendsto_nhdsWithin_of_tendsto_nhds hc.tendsto)
   · rw [hlim1]
     have e1 : σ z₀ - 0 ≠ 0 := by rw [sub_zero]; exact hs0.ne'
@@ -341,10 +341,10 @@ theorem LocalShell.proof (hP : ShellPolar.Statement) : LocalShell.Statement := b
       · apply ContinuousAt.mul
         · apply ContinuousAt.mul
           · fun_prop
-          · exact ContinuousAt.inv₀ (by fun_prop) (pow_ne_zero _ e1)
-        · exact ContinuousAt.inv₀ (by fun_prop) e3
+          · exact ContinuousAt.fun_inv₀ (by fun_prop) (pow_ne_zero _ e1)
+        · exact ContinuousAt.fun_inv₀ (by fun_prop) e3
       · apply ContinuousAt.mul continuousAt_const
-        exact ContinuousAt.log (ContinuousAt.div (by fun_prop) (by fun_prop) e1) e4
+        exact ContinuousAt.log (ContinuousAt.div₀ (by fun_prop) (by fun_prop) e1) e4
     exact ENNReal.tendsto_ofReal (tendsto_nhdsWithin_of_tendsto_nhds hc.tendsto)
 
   · have hm : (0 : ℝ) < min (σ z₀ / 3) J₀ := lt_min (by positivity) hJ0

@@ -107,7 +107,7 @@ theorem rectInt_inv_sub_sq {z w p : ℂ} (hp : p ∈ rectOpen z w) :
     exact hd
   · intro s hs
     have hne : s - p ≠ 0 := sub_ne_zero.2 (ne_of_mem_bdry_of_mem_open hs hp)
-    exact ContinuousAt.inv₀ (by fun_prop) (pow_ne_zero 2 hne)
+    exact ContinuousAt.fun_inv₀ (by fun_prop) (pow_ne_zero 2 hne)
 
 lemma log_sub_log_neg_of_im_pos {a : ℂ} (ha : 0 < a.im) : Complex.log a - Complex.log (-a) = π * I := by
   have h := Complex.arg_neg_eq_arg_sub_pi_of_im_pos ha
@@ -125,7 +125,7 @@ theorem rectInt_inv_sub {z w p : ℂ} (hp : p ∈ rectOpen z w) :
     rectInt (fun s => (s - p)⁻¹) z w = 2 * π * I := by
   obtain ⟨h1, h2, h3, h4⟩ := id hp
   have hcont : ∀ s ∈ rectBdry z w, ContinuousAt (fun s => (s - p)⁻¹) s := fun s hs =>
-    ContinuousAt.inv₀ (by fun_prop) (sub_ne_zero.2 (ne_of_mem_bdry_of_mem_open hs hp))
+    ContinuousAt.fun_inv₀ (by fun_prop) (sub_ne_zero.2 (ne_of_mem_bdry_of_mem_open hs hp))
   have hL : ∀ s, s - p ∈ slitPlane → HasDerivAt (fun s => Complex.log (s - p)) ((s - p)⁻¹) s := by
     intro s hs
     simpa using ((hasDerivAt_id s).sub_const p).clog hs

@@ -46,7 +46,7 @@ private theorem taylor_cont_lemma {X : Type} [TopologicalSpace X] {U : Set ℂ} 
         (by fun_prop) (fun q => ⟨trivial, hsph q.2⟩)
       exact this
     have h2 : Continuous (fun q : S × ℝ => ((circleMap z₀ (ε / 2) q.2 - q.1.1.2) ^ 2)⁻¹) := by
-      refine Continuous.inv₀ (by fun_prop) ?_
+      refine Continuous.fun_inv₀ (by fun_prop) ?_
       intro q h
       have hq : q.1.1.2 ∈ Metric.ball z₀ (ε / 2) := q.1.2.2
       have h0 : circleMap z₀ (ε / 2) q.2 = q.1.1.2 := sub_eq_zero.mp (pow_eq_zero_iff two_ne_zero |>.mp h)

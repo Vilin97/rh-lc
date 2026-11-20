@@ -97,7 +97,7 @@ theorem sb_right {m : Type} {φ : Matrix m (Fin d) k → ℂ} (hφ : φ ∈ SB _
 
 theorem cont_chE : ContinuousOn (chE (k := k) (n := n) (d := d)) {X | X 0 0 ≠ 0} := by
   have h : ∀ j : Fin d, ContinuousOn (fun X : Matrix (Fin (n + 1)) (Fin (d + 1)) k => X 0 j.succ / X 0 0) {X | X 0 0 ≠ 0} :=
-    fun j => ContinuousOn.div (by fun_prop) (by fun_prop) fun _ h => h
+    fun j => ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun _ h => h
   refine ContinuousOn.prodMk (ContinuousOn.prodMk (by fun_prop) (continuousOn_pi.2 h))
     (continuousOn_pi.2 fun i => continuousOn_pi.2 fun j => ?_)
   exact ContinuousOn.sub (by fun_prop) (ContinuousOn.mul (by fun_prop) (h j))

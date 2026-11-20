@@ -116,7 +116,7 @@ theorem _root_.GlobalTheory.exists_density_origin_of_almost_homogeneous : ∀ (V
         (𝓝 0) (𝓝 1) := by
       have hc : ContinuousAt (fun ε : ℝ =>
           ((1 + ε) ^ Module.finrank ℝ V / (1 - 2 * ε) ^ Module.finrank ℝ V)) 0 :=
-        ContinuousAt.div (by fun_prop) (by fun_prop) (by simp)
+        ContinuousAt.div₀ (by fun_prop) (by fun_prop) (by simp)
       simpa using hc.tendsto
     have hT : Tendsto (fun ε : ℝ => ENNReal.ofReal
         ((1 + ε) ^ Module.finrank ℝ V / (1 - 2 * ε) ^ Module.finrank ℝ V) * liminf ρ (𝓝[>] 0))

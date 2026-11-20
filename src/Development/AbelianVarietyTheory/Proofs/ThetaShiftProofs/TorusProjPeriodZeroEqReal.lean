@@ -54,7 +54,7 @@ theorem exists_posDef_smul_add {ι : Type} [Fintype ι] {N C : Matrix ι ι ℝ}
   have hp : ∀ x : ι → ℝ, x ≠ 0 → 0 < x ⬝ᵥ N *ᵥ x := fun x hx => by
     simpa using (posDef_iff_dotProduct_mulVec.1 hN).2 hx
   have hc : ContinuousOn (fun x : ι → ℝ => -(x ⬝ᵥ C *ᵥ x) / (x ⬝ᵥ N *ᵥ x)) (Metric.sphere 0 1) := by
-    refine ContinuousOn.div (by fun_prop) (by fun_prop) fun x hx => (hp x ?_).ne'
+    refine ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun x hx => (hp x ?_).ne'
     rintro rfl; simp at hx
   obtain ⟨T₀, hT⟩ := ((isCompact_sphere (0 : ι → ℝ) 1).image_of_continuousOn hc).bddAbove
   refine ⟨T₀, fun t ht => posDef_iff_dotProduct_mulVec.2 ⟨?_, fun x hx => ?_⟩⟩

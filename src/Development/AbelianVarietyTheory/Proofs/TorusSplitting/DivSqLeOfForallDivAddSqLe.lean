@@ -166,7 +166,7 @@ theorem _root_.GlobalTheory.greedy_splitting_thin :
         (nhds (2 * (_root_.ReciprocityTheory.ChartRestriction.G.I2.PT.f E : ℝ) / (_root_.ReciprocityTheory.ChartRestriction.G.I2.PT.rd E ^ 2 * X.la1 ^ 2))) := by
       refine Filter.Tendsto.mono_left ?_ nhdsWithin_le_nhds
       refine ContinuousAt.tendsto ?_
-      exact ContinuousAt.div continuousAt_const (by fun_prop)
+      exact ContinuousAt.div₀ continuousAt_const (by fun_prop)
         (mul_ne_zero (pow_ne_zero 2 hrd0) (pow_ne_zero 2 hla0))
     refine le_of_tendsto hlim ?_
     filter_upwards [Ioo_mem_nhdsGT hthin] with t ht

@@ -36,7 +36,7 @@ private theorem wr_bot (k r : ℕ) : wr k r =O[𝓝[>] 0] (fun y : ℝ => y ^ (-
 
 private theorem wr_cont (k r : ℕ) : ContinuousOn (wr k r) (Set.Ioi 0) := by
   unfold wr
-  refine ContinuousOn.mul (by fun_prop) (ContinuousOn.inv₀ (by fun_prop) fun y hy => ?_)
+  refine ContinuousOn.mul (by fun_prop) (ContinuousOn.fun_inv₀ (by fun_prop) fun y hy => ?_)
   have : (0 : ℝ) < y := hy
   positivity
 

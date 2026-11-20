@@ -29,7 +29,7 @@ theorem continuous_crd : Continuous crd :=
 theorem measurable_dens : Measurable dens := by
   have : Continuous dens := by
     unfold dens
-    refine continuous_const.div (by fun_prop) fun a => ?_
+    refine continuous_const.div₀ (by fun_prop) fun a => ?_
     positivity
   exact this.measurable
 

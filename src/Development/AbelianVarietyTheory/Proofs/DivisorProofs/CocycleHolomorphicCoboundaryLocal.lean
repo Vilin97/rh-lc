@@ -108,8 +108,8 @@ theorem circleIntegrable_kernel (n : ℕ) (z : ℂ) : CircleIntegrable (fun w : 
       ((2 * n + 1) * π) := by
   apply ContinuousOn.circleIntegrable (radius_pos n).le
   simp only [smul_eq_mul]
-  refine ContinuousOn.mul (ContinuousOn.div (by fun_prop) (by fun_prop)
-    fun w hw => pow_ne_zero _ (ne_zero_of_mem n hw)) (ContinuousOn.div (by fun_prop) (by fun_prop)
+  refine ContinuousOn.mul (ContinuousOn.div₀ (by fun_prop) (by fun_prop)
+    fun w hw => pow_ne_zero _ (ne_zero_of_mem n hw)) (ContinuousOn.div₀ (by fun_prop) (by fun_prop)
     fun w hw => exp_sub_one_ne n hw)
 
 theorem hurwitz_add_one (n : ℕ) (z : ℂ) :

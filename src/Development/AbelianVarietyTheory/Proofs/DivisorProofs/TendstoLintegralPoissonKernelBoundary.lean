@@ -11,7 +11,7 @@ theorem lintegral_concKernel_le_one {t : ℝ} (ht : 0 < t) :
     have := hs.2
     linarith
   have hc : ContinuousOn (fun s : ℝ => t / (1 - s + t) ^ 2) (Set.uIcc (0 : ℝ) 1) :=
-    ContinuousOn.div continuousOn_const (by fun_prop) (fun s hs => pow_ne_zero 2 (hpos s hs))
+    ContinuousOn.div₀ continuousOn_const (by fun_prop) (fun s hs => pow_ne_zero 2 (hpos s hs))
   have hint : ∫ s in (0 : ℝ)..1, t / (1 - s + t) ^ 2 = t / (1 - 1 + t) - t / (1 - 0 + t) := by
     refine intervalIntegral.integral_eq_sub_of_hasDerivAt (f := fun s => t / (1 - s + t)) ?_
       hc.intervalIntegrable

@@ -100,7 +100,7 @@ theorem conj_eq (hH : Hm.IsHermitian) (hd : Hm.det ≠ 0) (hP : P.det ≠ 0) (ha
       have := congrArg Complex.re h0
       simp at this
     let z : ℝ → ℂ := fun s => 2 * Complex.I * s / (1 - Complex.I * s * q)
-    have hz : Continuous z := Continuous.div (by fun_prop) (by fun_prop) hden
+    have hz : Continuous z := Continuous.div₀ (by fun_prop) (by fun_prop) hden
     have := conj_eq_of_path hd hP ha hS h (fun s => 1 + z s • (vecMulVec v (star v) * Hm))
       (continuous_const.add (hz.smul continuous_const)) (by simp [z]) fun s => refl_mem hH v _ (by
         have e : star (z s) = -(2 * Complex.I * s) / (1 + Complex.I * s * q) := by simp [z]

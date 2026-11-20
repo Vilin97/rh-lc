@@ -99,7 +99,7 @@ theorem bdInt_sq {a b c d : ℝ} {p : ℂ} (h1 : a < p.re) (h2 : p.re < b) (h3 :
     (h4 : p.im < d) (k : ℂ) : bdInt a b c d (fun s => k / (s - p) ^ 2) = 0 := by
   refine bdInt_eq_zero_of_primitive (sidesIn_compl h1 h2 h3 h4) (F := fun s => -k * (s - p)⁻¹)
     ?_ fun s hs => ?_
-  · exact ContinuousOn.div (by fun_prop) (by fun_prop)
+  · exact ContinuousOn.div₀ (by fun_prop) (by fun_prop)
       fun s hs => pow_ne_zero _ (sub_ne_zero.2 hs)
   · have hs' : s - p ≠ 0 := sub_ne_zero.2 hs
     have := (((hasDerivAt_id s).sub_const p).inv hs').const_mul (-k)
@@ -110,7 +110,7 @@ theorem bdInt_sq {a b c d : ℝ} {p : ℂ} (h1 : a < p.re) (h2 : p.re < b) (h3 :
 theorem bdInt_inv {a b c d : ℝ} {p : ℂ} (h1 : a < p.re) (h2 : p.re < b) (h3 : c < p.im)
     (h4 : p.im < d) (k : ℂ) : bdInt a b c d (fun s => k / (s - p)) = 2 * Real.pi * I * k := by
   have hc : ∀ B : Set ℂ, (∀ s ∈ B, s - p ≠ 0) → ContinuousOn (fun s => k / (s - p)) B :=
-    fun B hB => ContinuousOn.div (by fun_prop) (by fun_prop) hB
+    fun B hB => ContinuousOn.div₀ (by fun_prop) (by fun_prop) hB
   have hc1 := hc {s | s - p ∈ slitPlane} fun s hs => slitPlane_ne_zero hs
   have hc2 := hc {s | -(s - p) ∈ slitPlane} fun s hs => neg_ne_zero.1 (slitPlane_ne_zero hs)
   have hd1 : ∀ s ∈ {s | s - p ∈ slitPlane},
@@ -210,8 +210,8 @@ theorem residue_rectangle :
   simp only [P]
   rw [bdInt_add (sidesIn_compl h1 h2 h3 h4) (f := fun s => a p / (s - p) ^ 2)
     (g := fun s => r p / (s - p))
-    (ContinuousOn.div (by fun_prop) (by fun_prop) fun s hs => pow_ne_zero _ (sub_ne_zero.2 hs))
-    (ContinuousOn.div (by fun_prop) (by fun_prop) fun s hs => sub_ne_zero.2 hs),
+    (ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun s hs => pow_ne_zero _ (sub_ne_zero.2 hs))
+    (ContinuousOn.div₀ (by fun_prop) (by fun_prop) fun s hs => sub_ne_zero.2 hs),
     bdInt_sq h1 h2 h3 h4, bdInt_inv h1 h2 h3 h4, zero_add]
 
 end GlobalTheory.ResRect
