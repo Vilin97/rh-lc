@@ -37,7 +37,7 @@ theorem isInducing_affPtsVanIdeal : Topology.IsInducing (affPtsVanIdeal (k := k)
 theorem topologicalKrullDim_affPts_le [Fintype J] :
     topologicalKrullDim (AffPts k J) ≤ (Fintype.card J : ℕ) := by
   refine isInducing_affPtsVanIdeal.topologicalKrullDim_le.trans ?_
-  rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim, MvPolynomial.ringKrullDim_of_isNoetherianRing,
+  rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite,
     ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card]
   simp
 

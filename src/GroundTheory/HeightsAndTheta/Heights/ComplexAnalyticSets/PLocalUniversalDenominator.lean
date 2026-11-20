@@ -50,7 +50,7 @@ theorem exists_dim {n : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ)) (hI : I.IsPr
   have := hI
   have hle : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ I) ≤ (n : WithBot ℕ∞) := by
     have h := ringKrullDim_quotient_le I
-    rwa [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+    rwa [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
       Nat.card_eq_fintype_card, Fintype.card_fin, zero_add] at h
   have h0 : (0 : WithBot ℕ∞) ≤ ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ I) :=
     ringKrullDim_nonneg_of_nontrivial

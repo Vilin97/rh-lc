@@ -117,7 +117,7 @@ theorem coneMap_injective_of_frame (v : J → Ω) (e : Fin (D + 1) → J) (hf : 
 
 theorem ringKrullDim_mvPoly_fin_int :
     ringKrullDim (MvPolynomial (Fin (D + 1)) ℤ) = ((D + 2 : ℕ) : WithBot ℕ∞) := by
-  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, IsPrincipalIdealRing.ringKrullDim_eq_one ℤ Int.not_isField,
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, IsPrincipalIdealRing.ringKrullDim_eq_one ℤ Int.not_isField,
     Nat.card_eq_fintype_card, Fintype.card_fin]
   rw [show ((D + 2 : ℕ) : WithBot ℕ∞) = 1 + ((D + 1 : ℕ) : WithBot ℕ∞) by norm_cast; omega]
 

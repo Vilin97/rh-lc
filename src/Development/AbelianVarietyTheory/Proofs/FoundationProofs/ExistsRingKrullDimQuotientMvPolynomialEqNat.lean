@@ -293,7 +293,7 @@ theorem injective_of_finite_of_ringKrullDim_eq {k S : Type*} [Field k] [CommRing
     (Ideal.Quotient.mk ((⊥ : Ideal S).comap (algebraMap (MvPolynomial (Fin δ) k) S)))
     Ideal.Quotient.mk_surjective (mem_nonZeroDivisors_of_ne_zero hne)
     (Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_comap.mpr (Ideal.mem_bot.mpr hr)))
-  rw [← h1, MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+  rw [← h1, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
     zero_add, Nat.card_eq_fintype_card, Fintype.card_fin] at h2
   have h3 : δ + 1 ≤ δ := by exact_mod_cast h2
   omega

@@ -22,7 +22,7 @@ theorem gramVol_const_zero {e n : ℕ} (y : Fin e → ℂ) :
 theorem succ_le_of_ringKrullDim_quotient {n e : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ))
     (hdim : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J) = ((e + 1 : ℕ) : WithBot ℕ∞)) : e + 1 ≤ n := by
   have h := ringKrullDim_quotient_le J
-  rw [hdim, MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+  rw [hdim, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
     Nat.card_eq_fintype_card, Fintype.card_fin, zero_add] at h
   exact_mod_cast h
 

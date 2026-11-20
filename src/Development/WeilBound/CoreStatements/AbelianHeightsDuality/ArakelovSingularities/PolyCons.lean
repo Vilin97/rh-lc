@@ -33,7 +33,7 @@ theorem topologicalKrullDim_of_polyCovered' [IsDomain k] [IsNoetherianRing k] (h
     intro σ _ hσ
     change topologicalKrullDim (PrimeSpectrum (MvPolynomial σ k)) = _
     rw [PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim,
-      MvPolynomial.ringKrullDim_of_isNoetherianRing, hk, Nat.card_eq_fintype_card, hσ, add_comm]
+      MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, hk, Nat.card_eq_fintype_card, hσ, add_comm]
     norm_cast
   apply le_antisymm
   · unfold topologicalKrullDim

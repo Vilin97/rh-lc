@@ -158,7 +158,7 @@ theorem krullDim_le_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
   calc ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ I) ≤ ringKrullDim (MvPolynomial (Fin m) ℂ) :=
         GroundTheory.Arith.Toric.ringKrullDim_le_of_isIntegral
     _ = ((m : ℕ) : WithBot ℕ∞) := by
-        rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+        rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
           Nat.card_eq_fintype_card, Fintype.card_fin, zero_add]
 
 theorem proof : ConeProjHyperplaneDim.Statement := by

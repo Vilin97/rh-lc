@@ -66,7 +66,7 @@ theorem height_ker_eval_line : (RingHom.ker (eval (0 : Fin 1 → ℂ))).height =
   apply le_antisymm
   · have h := Ideal.height_le_ringKrullDim_of_ne_top
       (I := RingHom.ker (eval (0 : Fin 1 → ℂ))) (RingHom.ker_ne_top _)
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
       Nat.card_eq_fintype_card, Fintype.card_fin] at h
     exact_mod_cast h
   · rw [Order.one_le_iff_ne_zero, Ne, Ideal.height_eq_zero_iff_eq_bot]

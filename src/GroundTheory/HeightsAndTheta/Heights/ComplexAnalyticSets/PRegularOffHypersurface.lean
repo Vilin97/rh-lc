@@ -16,7 +16,7 @@ theorem exists_ringKrullDim_quotient_eq_nat {n : ℕ} (J : Ideal (MvPolynomial (
     ringKrullDim_nonneg_of_nontrivial
   have hle : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J) ≤ (n : WithBot ℕ∞) := by
     refine (ringKrullDim_quotient_le J).trans ?_
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
       Fintype.card_fin, zero_add]
   generalize ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J) = x at hge hle
   induction x using WithBot.recBotCoe with

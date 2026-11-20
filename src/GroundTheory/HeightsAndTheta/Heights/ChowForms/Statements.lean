@@ -136,7 +136,7 @@ theorem ringKrullDim_quot_bot (F : Type*) [Field F] (n : ℕ) :
     ringKrullDim (MvPolynomial (Fin n) F ⧸ (⊥ : Ideal (MvPolynomial (Fin n) F))) =
       ((n : ℕ) : WithBot ℕ∞) := by
   rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot (MvPolynomial (Fin n) F)),
-    MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+    MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
     Nat.card_eq_fintype_card, Fintype.card_fin]
 
 theorem span_X_zero_mem_relComps (F : Type*) [Field F] :

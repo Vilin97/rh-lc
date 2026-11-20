@@ -53,7 +53,7 @@ theorem proof (hO : FiniteProjectionsContainOpen.Statement) (hU : UnitaryZariski
     fun A hA => hsub (by rw [hS]; exact ⟨p, hpS, hA⟩)
   have hdn : d ≤ n := by
     have h := ringKrullDim_quotient_le J
-    rw [hd, MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+    rw [hd, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
       Nat.card_eq_fintype_card, Fintype.card_fin, zero_add] at h
     exact_mod_cast h
   refine ⟨⟨W, ⟨S, hS⟩, ⟨A₀, hA₀⟩, hsub⟩, fun D hD hcl => ?_, fun m F => ?_⟩

@@ -185,7 +185,7 @@ theorem exists_dim_of_isSubvar {pp : Ideal (Poly k N)} {e : ℕ} (hW : IsSubvar 
   have hup : ringKrullDim (Poly k N ⧸ primeOf (S := k) x) ≤ ((N + 1 : ℕ) : WithBot ℕ∞) := by
     have h1 := ringKrullDim_le_of_surjective (Ideal.Quotient.mk (primeOf (S := k) x))
       Ideal.Quotient.mk_surjective
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
       Fintype.card_fin, zero_add] at h1
     exact_mod_cast h1
   have hlo : ((e + 1 : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (Poly k N ⧸ primeOf (S := k) x) := by

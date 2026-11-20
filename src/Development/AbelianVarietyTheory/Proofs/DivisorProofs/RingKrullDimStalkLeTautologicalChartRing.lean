@@ -202,7 +202,7 @@ theorem ringKrullDim_sections_le {o : Type} [CommRing o] [Algebra.FiniteType ℤ
     ((residue _).comp (e.comp a))
   rw [← RingHom.comap_ker (residue _) (e.comp a), ker_residue, ← Ideal.comap_comap, IsLocalRing.maximalIdeal_comap, ha] at h
   refine h.trans ((ringKrullDim_quotient_le _).trans ?_)
-  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, Nat.card_eq_fintype_card, Fintype.card_fin]
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, Nat.card_eq_fintype_card, Fintype.card_fin]
 
 theorem flat_map {A B σ : Type} [CommRing A] [CommRing B] {f : A →+* B} (hf : f.Flat) :
     (MvPolynomial.map (σ := σ) f).Flat := by
@@ -269,7 +269,7 @@ theorem ringKrullDim_stalk_le_chart : ∀ g : ℕ, 1 ≤ g → ∀ φ : InvFun �
   haveI := finiteType_int_mvPolynomial (cycAway n) (Fin (C.T.r * C.h + C.h * (C.h + 1) / 2))
   haveI := finiteType_int_mvPolynomial (MvPolynomial (Fin (C.T.r * C.h + C.h * (C.h + 1) / 2)) (cycAway n)) (Fin C.m ⊕ Fin C.N)
   refine ringKrullDim_stalk_le (π ≫ z) j hD F.s _ F.smooth _ ((flat_map (hχ.comp C.u_et.1)).comp C.compl.2.2.1) ?_ _ hf
-  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, MvPolynomial.ringKrullDim_of_isNoetherianRing, Nat.card_eq_fintype_card,
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, Nat.card_eq_fintype_card,
     Nat.card_eq_fintype_card, Fintype.card_fin, card_basis C.ε, add_assoc, ← Nat.cast_add]
   congr 2
   obtain ⟨a, ha⟩ := Nat.even_mul_succ_self C.h

@@ -38,7 +38,7 @@ theorem FrameJacobianGeneric.proof (hR : JacobianRankGeneric.Statement)
     rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
   have hdn : d ≤ n := by
     have h1 := ringKrullDim_quotient_le J
-    rw [hd, MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+    rw [hd, MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
       Nat.card_eq_fintype_card, Fintype.card_fin] at h1
     exact_mod_cast h1
   obtain ⟨t, G, hG⟩ := Submodule.fg_iff_exists_fin_generating_family.mp (IsNoetherian.noetherian J)

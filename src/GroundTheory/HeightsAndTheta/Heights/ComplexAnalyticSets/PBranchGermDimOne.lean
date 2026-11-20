@@ -54,7 +54,7 @@ theorem BranchGermDimOne.proof (h₀ : LocalDimComponentBound.Statement) (h₁ :
   · obtain ⟨W, hW, hIW, hqW, hle⟩ := h₀ n I q hq
     have hup : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) ≤ (n : ℕ) := by
       refine (ringKrullDim_quotient_le W).trans (le_of_eq ?_)
-      rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+      rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
         Nat.card_eq_fintype_card, Fintype.card_fin]
     have hnn : (0 : WithBot ℕ∞) ≤ ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) := by
       have := hW

@@ -146,7 +146,7 @@ theorem ringKrullDim_coneRing_rat {κ : Type} [Fintype κ] (x : Ix κ → Ω) (D
 
 theorem ringKrullDim_mvPolynomial_rat (r : ℕ) :
     ringKrullDim (MvPolynomial (Fin r) ℚ) = (r : WithBot ℕ∞) := by
-  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
     Nat.card_eq_fintype_card, Fintype.card_fin, zero_add]
 
 theorem intOver_coneMap (x : J → Ω) {r : ℕ} (w : Fin r → Polynomial Ω)

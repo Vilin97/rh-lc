@@ -35,7 +35,7 @@ theorem SliceMassFinite.exists_projClosure {n e : ℕ} (I : Ideal (MvPolynomial 
 
   have h2 : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) ≤ (n : WithBot ℕ∞) := by
     have := ringKrullDim_quotient_le W
-    rwa [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+    rwa [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
       Nat.card_eq_fintype_card, Fintype.card_fin] at this
 
   have hdimW : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) = ((e + 1 + 1 : ℕ) : WithBot ℕ∞) := by

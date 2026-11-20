@@ -27,7 +27,7 @@ private theorem exists_ringKrullDim_le_add_of_finiteType {R A : Type*} [CommRing
   calc ringKrullDim A ≤ ringKrullDim (MvPolynomial (Fin k) R) :=
         ringKrullDim_le_of_surjective g.toRingHom hg
     _ = ringKrullDim R + k := by
-        rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, Nat.card_eq_fintype_card, Fintype.card_fin]
+        rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, Nat.card_eq_fintype_card, Fintype.card_fin]
 
 private theorem exists_open_nhd_topologicalKrullDim_MP_le {m : ℕ} {n : Fin (m + 1) → ℕ} (y : MP ℤ m n) :
     ∃ U : (MP ℤ m n).Opens, y ∈ U ∧ ∃ N : ℕ, topologicalKrullDim (U : Set (MP ℤ m n)) ≤ N := by

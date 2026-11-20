@@ -146,7 +146,7 @@ theorem proof : ConeHypersurfaceDim.Statement := by
   have : Algebra.IsIntegral (MvPolynomial (Fin (e + 1)) ℂ ⧸ Ideal.span {c})
       (MvPolynomial (Fin n) ℂ ⧸ J.radical) := Algebra.IsIntegral.of_finite _ _
   have hS : ringKrullDim (MvPolynomial (Fin (e + 1)) ℂ) = ((e + 1 : ℕ) : WithBot ℕ∞) := by
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
       Nat.card_eq_fintype_card, Fintype.card_fin, zero_add]
   have hquot := ringKrullDim_quotient_succ_le_of_nonZeroDivisor (mem_nonZeroDivisors_of_ne_zero hc)
   calc ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J.radical)

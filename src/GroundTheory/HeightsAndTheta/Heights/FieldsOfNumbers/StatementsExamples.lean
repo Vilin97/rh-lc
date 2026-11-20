@@ -16,7 +16,7 @@ theorem relDim_bot {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [�
       (((Fintype.card (Σ k, ι k) : ℤ) - Fintype.card K : ℤ) : WithTop ℤ) := by
   unfold relDim
   rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot _),
-    MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
+    MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add,
     Nat.card_eq_fintype_card]
   rfl
 

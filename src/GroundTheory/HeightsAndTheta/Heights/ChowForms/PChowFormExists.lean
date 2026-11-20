@@ -46,7 +46,7 @@ theorem ChowFormExists.proof (h₁ : IncIdealDim.Statement) (h₂ : IncIdealPrim
   have hQ : (incIdeal P k).IsPrime := h₂ F n k P hP.isPrime hP.isRelevant
   have hdimQ := h₁ F n k (k - 1) P hP (by rw [Nat.sub_add_cancel hk]; exact hdim)
   have hS : ringKrullDim (MvPolynomial (Fin k × Fin n) F) = ((k * n : ℕ) : WithBot ℕ∞) := by
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
       Nat.card_eq_fintype_card, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin, zero_add]
   have hsum := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F (incIdeal P k)
   rw [hdimQ, hS] at hsum

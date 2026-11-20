@@ -49,7 +49,7 @@ theorem NormalCodimOneCompleteIntersection.proof : NormalCodimOneCompleteInterse
   classical
   intro σ _ P Q e hP hQ hPQ hint hdP hdQ
   have hdS : ringKrullDim (MvPolynomial σ ℂ) = (Fintype.card σ : ℕ) := by
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, Nat.card_eq_fintype_card,
       zero_add]
 
   obtain ⟨hgt, hhgt⟩ : ∃ k : ℕ, Q.height = k :=

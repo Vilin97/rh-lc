@@ -38,7 +38,7 @@ theorem dimLt' : DimLtStatement := by
   have h1 := ReciprocityTheory.CA.Link.ringKrullDim_quotient_add_one_le_of_lt hVW
   have h2 : ringKrullDim (MvPolynomial σ F ⧸ W) ≤ (Fintype.card σ : ℕ) := by
     refine (ringKrullDim_quotient_le W).trans (le_of_eq ?_)
-    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field,
+    rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field,
       Nat.card_eq_fintype_card, zero_add]
   exact lt_of_add_one_le_fin _ _ _ (ringKrullDim_quotient_ne_bot W hW.ne_top) h2 h1
 
