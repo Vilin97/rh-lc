@@ -72,7 +72,7 @@ theorem upperIndex_upperField {u' w : ℝ} (hw0 : 0 ≤ w) (hw : w ≤ u') :
   rw [h1, h2, Subgroup.relIndex_sup_right]
 
 theorem ramificationIndex_upperField {u' : ℝ} (hu' : 0 ≤ u') :
-    ramificationIndex K (upperFieldFG hL u' : IntermediateField K Ω) = apfIndex K Ω L u' := by
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (upperFieldFG hL u' : IntermediateField K Ω)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = apfIndex K Ω L u' := by
   rw [← upperIndex_upperField hL hu' le_rfl, upperIndex, upperRamificationGroup_upperField_eq_bot,
     Subgroup.relIndex_bot_left, card_lowerRamificationGroup_zero]
 
@@ -339,7 +339,7 @@ theorem step (n : ℕ) {σ : Gal(Ω/K)} (hσ : σ ∈ d.T n) {x : Ω}
   refine h1.trans (mul_le_mul_of_nonneg_right ?_ (nrm_nonneg _))
 
   set r := unifNrm F
-  set e := ramificationIndex K F
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))
   have hr0 := unifNrm_pos F
   have hr1 := unifNrm_lt_one F
   have hre : r ^ e = baseUnifNrm K Ω := unifNrm_pow_ramificationIndex F
@@ -359,14 +359,14 @@ theorem value_succ (n : ℕ) :
     unifNrm (d.F (n + 1) : IntermediateField K Ω) ^ (ringChar 𝓀[K] ^ d.k n) =
       unifNrm (d.F n : IntermediateField K Ω) := by
   set F := (d.F (n + 1) : IntermediateField K Ω)
-  have he1 : ramificationIndex K F = apfIndex K Ω L (d.u (n + 1)) :=
+  have he1 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = apfIndex K Ω L (d.u (n + 1)) :=
     ramificationIndex_upperField d.apf (d.u_nonneg (n + 1))
-  have he0 : ramificationIndex K (d.F n : IntermediateField K Ω) = apfIndex K Ω L (d.u n) :=
+  have he0 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (d.F n : IntermediateField K Ω)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = apfIndex K Ω L (d.u n) :=
     ramificationIndex_upperField d.apf (d.u_nonneg n)
   have hidx : upperIndex K F (d.u n) = apfIndex K Ω L (d.u n) :=
     upperIndex_upperField d.apf (d.u_nonneg n) (d.u_mono (Nat.le_succ n))
 
-  have hmul : ramificationIndex K F = ramificationIndex K (d.F n : IntermediateField K Ω) *
+  have hmul : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (d.F n : IntermediateField K Ω)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) *
       Nat.card (d.H n) := by
     rw [he0, ← hidx, ← card_lowerRamificationGroup_zero, upperIndex]
     have hle : d.H n ≤ lowerRamificationGroup K F 0 := by
@@ -378,7 +378,7 @@ theorem value_succ (n : ℕ) :
   have h1 := unifNrm_pow_ramificationIndex F
   have h0 := unifNrm_pow_ramificationIndex (d.F n : IntermediateField K Ω)
   rw [hmul, mul_comm, pow_mul, ← h0, d.card_H] at h1
-  have hpos : ramificationIndex K (d.F n : IntermediateField K Ω) ≠ 0 :=
+  have hpos : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (d.F n : IntermediateField K Ω)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ≠ 0 :=
     (ramificationIndex_pos K _).ne'
   exact (pow_left_inj₀ (pow_nonneg (unifNrm_pos F).le _) (unifNrm_pos _).le hpos).mp h1
 

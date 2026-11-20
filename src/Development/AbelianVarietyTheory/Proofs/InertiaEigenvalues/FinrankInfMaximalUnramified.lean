@@ -32,7 +32,7 @@ theorem finrank_inf_maximalUnramified [IsSepClosed Ω] [CharZero F] (E : Interme
     obtain ⟨U, hU, hxU⟩ := mem_maximalUnramifiedExtension_iff.mp x.2.2
     have := hU.1
     have hMU : M ≤ U := hxM ▸ adjoin_simple_le_iff.mpr hxU
-    have he : ramificationIndex F M = 1 := by
+    have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
       have h := ramificationIndex_dvd_of_le hMU
       rw [hU.ramificationIndex_eq_one] at h
       exact Nat.dvd_one.mp h

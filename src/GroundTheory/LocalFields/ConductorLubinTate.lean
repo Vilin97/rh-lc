@@ -54,7 +54,7 @@ variable {π : 𝒪[K]} (hπ : Irreducible π) {f : PowerSeries 𝒪[K]}
 theorem ordRat_primitive (hf : IsLubinTateSeries π f) {n : ℕ}
     {l : IdealPoint Ω (lubinTateFormalGroup hπ hf)} (hl : l ∈ lubinTateTorsion Ω hf n)
     (hl' : l ∉ lubinTateTorsion Ω hf (n - 1)) :
-    ordRat K l.val = 1 / (ramificationIndex K (lubinTateField Ω hπ hf n) : ℚ) := by
+    ordRat K l.val = 1 / ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf n)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ) := by
   obtain ⟨y, hy⟩ := exists_integer_eq (val_mem_lubinTateField hπ hf hl) l.valuation_lt_one
   have hirr := irreducible_of_primitive hπ hf hl hl' hy
   have h := ordRat_algebraMap_of_finite (K := K) (Ω := Ω) (L := lubinTateField Ω hπ hf n) (y : _)
@@ -146,17 +146,17 @@ theorem lowerIndex_lubinTateField (hf : IsLubinTateSeries π f) {n k : ℕ} (hk 
   have h2 := ordRat_algebraMap_of_finite (K := K) (Ω := Ω) (L := lubinTateField Ω hπ hf n)
     (z : lubinTateField Ω hπ hf n)
   have h3 : ordRat K ((z : lubinTateField Ω hπ hf n) : Ω) =
-      1 / (ramificationIndex K (lubinTateField Ω hπ hf (n - k)) : ℚ) := by
+      1 / ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf (n - k))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ) := by
     rw [ordRat_congr hvz, hμdef]
     exact ordRat_primitive hπ hf hμ.1 hμ.2
-  have he : ramificationIndex K (lubinTateField Ω hπ hf n) =
-      ramificationIndex K (lubinTateField Ω hπ hf (n - k)) * Nat.card 𝓀[K] ^ k := by
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf n)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) =
+      (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf (n - k))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * Nat.card 𝓀[K] ^ k := by
     rw [ramificationIndex_lubinTateField hπ hf hn,
       ramificationIndex_lubinTateField hπ hf (by omega : 0 < n - k), finrank_lubinTateField hπ hf hn,
       finrank_lubinTateField hπ hf (by omega : 0 < n - k), mul_assoc, ← pow_add]
     congr 2
     omega
-  have heM : (0 : ℚ) < ramificationIndex K (lubinTateField Ω hπ hf (n - k)) := by
+  have heM : (0 : ℚ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf (n - k))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     exact_mod_cast ramificationIndex_pos K _
   have hq : (0 : ℚ) < (Nat.card 𝓀[K] : ℚ) ^ k := by
     have : 0 < Nat.card 𝓀[K] := Nat.card_pos

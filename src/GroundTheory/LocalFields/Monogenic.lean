@@ -24,7 +24,7 @@ theorem adjoin_eq_top_of_residue_of_addVal_eq_one {x : 𝒪[L]}
     (hπA : π ∈ Algebra.adjoin 𝒪[K] {x}) (hπ : addVal 𝒪[L] π = 1) :
     Algebra.adjoin 𝒪[K] {x} = ⊤ := by
   set A := Algebra.adjoin 𝒪[K] {x}
-  set e := ramificationIndex K L
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))
 
   have hres : ∀ w : 𝒪[L], ∃ a ∈ A, ∃ w', w = a + π * w' := by
     intro w

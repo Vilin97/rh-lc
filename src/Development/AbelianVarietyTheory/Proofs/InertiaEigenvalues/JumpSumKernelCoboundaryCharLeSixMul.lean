@@ -38,7 +38,7 @@ theorem jumpSum_kernel_le_six_mul :
     · subst h; simp at hEe; omega
     · exact h
 
-  have hdM : differentExponent F M < ramificationIndex F M * (3 * e) := by
+  have hdM : differentExponent F M < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) * (3 * e) := by
     by_contra hle
     push_neg at hle
     obtain ⟨w, hw, hwt⟩ := GlobalTheory.T.exists_trace_mem_maximalIdeal_pow_of_differentExponent F M (3 * e) hle z
@@ -46,10 +46,10 @@ theorem jumpSum_kernel_le_six_mul :
   have htow := differentExponent_tower F M L
   have hram := ramificationIndex_tower F M L
   have hjs : jumpSum (wild F L) ⊤ J + 2 * differentExponent M L ≤ 2 * differentExponent F L := GlobalTheory.T.ramificationJumpSum_add_two_mul_differentExponent_le F L J
-  have key : jumpSum (wild F L) ⊤ J ≤ 2 * (ramificationIndex M L * differentExponent F M) := by omega
-  have hML : ramificationIndex M L * differentExponent F M ≤ ramificationIndex M L * (ramificationIndex F M * (3 * e)) :=
+  have key : jumpSum (wild F L) ⊤ J ≤ 2 * ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) * differentExponent F M) := by omega
+  have hML : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) * differentExponent F M ≤ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) * ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) * (3 * e)) :=
     Nat.mul_le_mul_left _ hdM.le
-  have : ramificationIndex M L * (ramificationIndex F M * (3 * e)) * 2 = 6 * E := by
+  have : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) * ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) * (3 * e)) * 2 = 6 * E := by
     rw [hEe, hram]; ring
   nlinarith
 

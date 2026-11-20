@@ -49,7 +49,7 @@ theorem ord_unif_of_card (hd : Module.finrank F E = 2) (hres : residueCard E = r
     Nat.pow_right_injective (one_lt_residueCard (K := F)) (h.symm.trans hres)
   have he := ramificationIndex_mul_residueDegree F E
   rw [hf, hd] at he
-  have he1 : ramificationIndex F E = 1 := by omega
+  have he1 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by omega
   rw [ord_algebraMap, he1, ord_unif]
   simp
 

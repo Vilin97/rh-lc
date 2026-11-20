@@ -45,7 +45,7 @@ theorem alg_main : ∀ (F E K L : Type) [NontriviallyNormedField F] [IsUltrametr
   haveI : ValuativeExtension F K := ⟨fun a b => by
     rw [hKv, hFv, spectralNorm_extends, spectralNorm_extends]⟩
   haveI : ValuativeExtension K L := ⟨fun a b => by rw [hLv, hKv, ntow, ntow]⟩
-  have heF : ramificationIndex F E = 1 := by
+  have heF : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
     obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[E]
     obtain ⟨x, hx⟩ := hunr (ϖ : E)
     have h1 : (ϖ : E) ≤ᵥ algebraMap F E x := by rw [hEv, norm_algebraMap', hx]
@@ -56,7 +56,7 @@ theorem alg_main : ∀ (F E K L : Type) [NontriviallyNormedField F] [IsUltrametr
       simp only [ord]
       rw [(normalizedValuation_eq_iff (K := E)).2 hv]
     rw [ord_uniformizer hϖ, ord_algebraMap] at hord
-    have hd : ((ramificationIndex F E : ℕ) : ℤ) ∣ 1 := ⟨ord x, hord⟩
+    have hd : (((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) : ℕ) : ℤ) ∣ 1 := ⟨ord x, hord⟩
     exact_mod_cast Int.eq_one_of_dvd_one (by positivity) hd
   have heKL := GlobalTheory.T.ramificationIndex_eq_one_of_adjoin_range_eq_top_alt F E K L heF hgen
   obtain ⟨ϖ, hϖ0, hϖ1, hϖ1', hN, hunif, htr, hnrm⟩ := GlobalTheory.T.unramified_quadratic_norm_trace_surjective K L heKL h2

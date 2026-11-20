@@ -262,7 +262,7 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
     (hNq : n₀ + e * (k - artinLevel K η n₀) ≤ N)
     [FiniteDimensional K (charTower η (k + 1))] [IsAbelianGalois K (charTower η (k + 1))] :
     (e : ℝ) / p * ∑ i ∈ Finset.range (k - artinLevel K η n₀), (p : ℝ) ^ (-(i : ℤ)) ≤
-      herbrandPsi K (charTower η (k + 1)) N / ramificationIndex K (charTower η (k + 1)) := by
+      herbrandPsi K (charTower η (k + 1)) N / (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   have hmono := artinLevel_mono hA
   have hn'N : n' ≤ N := le_trans hn' (le_trans (Nat.le_add_right _ _) hNq)
   have hsk : artinLevel K η n' ≤ k := (hmono hn'N).trans hNk
@@ -273,7 +273,7 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
     exact upperRamificationGroup_antitone K _ (Nat.cast_nonneg n')
   obtain ⟨c, hc⟩ : ∃ c, (upperRamificationGroup K (charTower η (k + 1)) n').relIndex
       (lowerRamificationGroup K (charTower η (k + 1)) 0) = c := ⟨_, rfl⟩
-  have hE : ramificationIndex K (charTower η (k + 1)) = c * p ^ (k + 1 - artinLevel K η n') := by
+  have hE : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = c * p ^ (k + 1 - artinLevel K η n') := by
     rw [← card_lowerRamificationGroup_zero, ← Subgroup.relIndex_bot_left,
       ← Subgroup.relIndex_mul_relIndex _ _ _ bot_le hn'0, Subgroup.relIndex_bot_left,
       card_upperRamificationGroup_charTower hη hA h2 (by omega), hc, mul_comm]
@@ -317,7 +317,7 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
       _ ≤ ∑ j ∈ Finset.Ioc 0 N, (upperIndex K (charTower η (k + 1)) j : ℝ) :=
           Finset.sum_le_sum_of_subset_of_nonneg (Finset.Ioc_subset_Ioc_left (Nat.zero_le _))
             (fun _ _ _ => Nat.cast_nonneg _)
-  have hE0 : (0 : ℝ) < ramificationIndex K (charTower η (k + 1)) := by
+  have hE0 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     exact_mod_cast ramificationIndex_pos K (charTower η (k + 1))
   rw [le_div_iff₀ hE0]
   refine le_trans (le_of_eq ?_) hψlow
@@ -367,9 +367,9 @@ theorem nrm_sub_le_of_mem_unitsOneAdd (hη : Continuous η) (hA : ∀ n, artinIm
   have hX := le_herbrandPsi_div_ramificationIndex hη hA hn' h2 hper hNk hN1 hNq
   have hu0 : 0 < unifNrm (charTower η (k + 1)) := unifNrm_pos _
   have hu1 : unifNrm (charTower η (k + 1)) < 1 := unifNrm_lt_one _
-  have huE : unifNrm (charTower η (k + 1)) ^ ramificationIndex K (charTower η (k + 1)) =
+  have huE : unifNrm (charTower η (k + 1)) ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) =
       baseUnifNrm K (PadicAlgCl p) := unifNrm_pow_ramificationIndex _
-  have hE0 : (0 : ℝ) < ramificationIndex K (charTower η (k + 1)) := by
+  have hE0 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     exact_mod_cast ramificationIndex_pos K (charTower η (k + 1))
   calc unifNrm (charTower η (k + 1)) ^ i = unifNrm (charTower η (k + 1)) ^ (i : ℝ) :=
         (Real.rpow_natCast _ i).symm
@@ -380,7 +380,7 @@ theorem nrm_sub_le_of_mem_unitsOneAdd (hη : Continuous η) (hA : ∀ n, artinIm
         rw [← this]
         exact Int.le_ceil _
     _ = baseUnifNrm K (PadicAlgCl p) ^
-          (herbrandPsi K (charTower η (k + 1)) N / ramificationIndex K (charTower η (k + 1))) := by
+          (herbrandPsi K (charTower η (k + 1)) N / (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) := by
         rw [← huE, ← Real.rpow_natCast, ← Real.rpow_mul hu0.le]
         congr 1
         field_simp

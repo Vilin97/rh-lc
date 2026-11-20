@@ -42,7 +42,7 @@ theorem natCard_quotient_range_normUnits :
   rw [Nat.card_congr e.toEquiv, IsGalois.card_aut_eq_finrank]
 
 theorem ramificationIndex_eq_one_of_units_le
-    (h : unitFiltrationUnits k 0 ≤ (normUnits k M).range) : ramificationIndex k M = 1 := by
+    (h : unitFiltrationUnits k 0 ≤ (normUnits k M).range) : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) = 1 := by
   set N := (normUnits k M).range
   set f := ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[k]))
   obtain ⟨π, hπ⟩ := exists_ord_eq_one_units k
@@ -77,13 +77,13 @@ theorem ramificationIndex_eq_one_of_units_le
     refine orderOf_le_of_pow_eq_one hf0 ?_
     rw [← QuotientGroup.mk_pow, QuotientGroup.eq_one_iff]
     exact_mod_cast hπf
-  have h1 : ramificationIndex k M * f = Module.finrank k M := ramificationIndex_mul_residueDegree k M
-  have he : ramificationIndex k M ≤ 1 := by
+  have h1 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) * f = Module.finrank k M := ramificationIndex_mul_residueDegree k M
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) ≤ 1 := by
     by_contra hc
     push Not at hc
-    have : 2 * f ≤ ramificationIndex k M * f := Nat.mul_le_mul_right f hc
+    have : 2 * f ≤ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) * f := Nat.mul_le_mul_right f hc
     omega
-  have he0 : ramificationIndex k M ≠ 0 := by
+  have he0 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) ≠ 0 := by
     intro h0
     rw [h0, zero_mul] at h1
     exact (Module.finrank_pos (R := k) (M := M)).ne' h1.symm
@@ -157,7 +157,7 @@ theorem ramificationIdx_eq_one_of_units_le_ker_localSymbol
     w.asIdeal.ramificationIdx (𝓞 K) = 1 := by
   let w' : PlacesOver L v := ⟨w, inferInstance⟩
   have := isMulCommutative_gal_adicCompletion L v w'
-  have hM : ramificationIndex (v.adicCompletion K) (w.adicCompletion L) = 1 :=
+  have hM : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (w.adicCompletion L)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation (v.adicCompletion K)))) = 1 :=
     ramificationIndex_eq_one_of_units_le (by rw [← ker_localSymbol L v w']; exact h)
   exact (ramificationIdx_integer v w).symm.trans hM
 

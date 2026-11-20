@@ -11,14 +11,14 @@ open ValuativeRel
 class IsUnramified (K L : Type*) [Field K] [ValuativeRel K] [Field L] [ValuativeRel L]
     [Algebra K L] [ValuativeExtension K L] : Prop where
 
-  ramificationIndex_eq_one : ramificationIndex K L = 1
+  ramificationIndex_eq_one : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1
 
 section Algebraic
 
 variable (K L : Type*) [Field K] [ValuativeRel K] [Field L] [ValuativeRel L]
   [Algebra K L] [ValuativeExtension K L]
 
-theorem isUnramified_iff : IsUnramified K L ↔ ramificationIndex K L = 1 :=
+theorem isUnramified_iff : IsUnramified K L ↔ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 :=
   ⟨fun h ↦ h.1, fun h ↦ ⟨h⟩⟩
 
 end Algebraic
@@ -37,7 +37,7 @@ theorem isUnramified_iff_residueDegree_eq_finrank :
   · intro h1
     rw [h1, one_mul]
   · intro h1
-    have : ramificationIndex K L * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
+    have : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
       rw [one_mul]
       exact h1.symm
     exact Nat.eq_of_mul_eq_mul_right h this

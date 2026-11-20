@@ -68,13 +68,13 @@ theorem degreeOneEmbedding_ne_zero (v : Pl) (w : PlK K) [w.asIdeal.LiesOver v.as
 
 theorem ord_alg_eq (v : Pl) (w : PlK K) [w.asIdeal.LiesOver v.asIdeal]
     (h1 : Module.finrank (Qv v) (Kv K w) = 1) (ξ : K) :
-    ord (algebraMap K (Kv K w) ξ) = ramificationIndex (Qv v) (Kv K w) * ord (dg1 v w ξ) := by
+    ord (algebraMap K (Kv K w) ξ) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (Kv K w)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation (Qv v)))) * ord (dg1 v w ξ) := by
   rw [← algebraMap_degreeOneEmbedding_inverse v w h1, ord_algebraMap]
 
 theorem order_degreeOneEmbedding_eq_zero_iff (v : Pl) (w : PlK K) [w.asIdeal.LiesOver v.asIdeal]
     (h1 : Module.finrank (Qv v) (Kv K w) = 1) (ξ : K) :
     ord (dg1 v w ξ) = 0 ↔ ord (algebraMap K (Kv K w) ξ) = 0 := by
-  have he : (ramificationIndex (Qv v) (Kv K w) : ℤ) ≠ 0 := by
+  have he : ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (Kv K w)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation (Qv v)))) : ℤ) ≠ 0 := by
     exact_mod_cast (ramificationIndex_pos (Qv v) (Kv K w)).ne'
   rw [ord_alg_eq v w h1, mul_eq_zero, or_iff_right he]
 

@@ -19,7 +19,7 @@ theorem isStd_chE_of_ord_unif : ∀ (F : Type) [Field F] [ValuativeRel F] [Topol
   obtain ⟨hc, h1, h0⟩ := hχ
   haveI : FiniteDimensional F E := Module.finite_of_finrank_pos (by omega)
   haveI : Algebra.IsSeparable F E := Algebra.IsAlgebraic.isSeparable_of_perfectField
-  have he : ramificationIndex F E = 1 := by
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
     have h := ord_algebraMap (K := F) (L := E) (unifUnit F : F)
     rw [hord, ord_unifUnit] at h
     omega

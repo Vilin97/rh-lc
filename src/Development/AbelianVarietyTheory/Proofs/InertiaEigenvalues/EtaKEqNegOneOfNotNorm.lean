@@ -93,12 +93,12 @@ theorem etaK_eq_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivi
   haveI : ValuativeExtension F E := ⟨fun a b => by
     change ‖algebraMap F E a‖ ≤ ‖algebraMap F E b‖ ↔ ‖a‖ ≤ ‖b‖
     rw [norm_algebraMap', norm_algebraMap']⟩
-  have he : ramificationIndex F E = 1 := by
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
     obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[E]
     obtain ⟨x, hx⟩ := hU.unram (π : E)
     have h1 := ord_eq_of_norm_eq E (π : E) (algebraMap F E x) (by rw [norm_algebraMap', hx])
     rw [ord_uniformizer hπ, ord_algebraMap] at h1
-    have h2 : (ramificationIndex F E : ℤ) ∣ 1 := ⟨_, h1⟩
+    have h2 : ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) : ℤ) ∣ 1 := ⟨_, h1⟩
     exact Nat.dvd_one.1 (by exact_mod_cast h2)
   obtain ⟨ζ, hζ, htop⟩ := exists_isPrimitiveRoot_adjoin_eq_top_of_unramified F E he
   have hcard : Nat.card 𝓀[E] = Nat.card 𝓀[F] ^ 2 := by

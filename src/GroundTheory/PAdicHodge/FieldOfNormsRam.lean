@@ -95,7 +95,7 @@ variable (K Ω) in
 def baseUnifNrm : ℝ := nrm K (algebraMap K Ω (baseUnif K : K))
 
 theorem unifNrm_pow_ramificationIndex :
-    unifNrm F ^ ramificationIndex K F = baseUnifNrm K Ω := by
+    unifNrm F ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = baseUnifNrm K Ω := by
   have hirr := (IsDiscreteValuationRing.exists_irreducible 𝒪[K]).choose_spec
   have hK0 : (baseUnif K : K) ≠ 0 := by
     intro h; exact hirr.ne_zero (Subtype.ext h)

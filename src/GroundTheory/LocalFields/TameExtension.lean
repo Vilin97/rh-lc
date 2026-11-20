@@ -20,12 +20,12 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 def IsTameSubextension (E : IntermediateField K Ω) : Prop :=
   FiniteDimensional K E ∧
     ∀ (_ : ValuativeRel E) (_ : TopologicalSpace E) (_ : IsNonarchimedeanLocalField E)
-      (_ : ValuativeExtension K E), Nat.Coprime (ramificationIndex K E) (ringChar 𝓀[K])
+      (_ : ValuativeExtension K E), Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K])
 
 theorem isTameSubextension_iff_exists (E : IntermediateField K Ω) :
     IsTameSubextension E ↔ FiniteDimensional K E ∧
       ∃ (_ : ValuativeRel E) (_ : TopologicalSpace E) (_ : IsNonarchimedeanLocalField E)
-        (_ : ValuativeExtension K E), Nat.Coprime (ramificationIndex K E) (ringChar 𝓀[K]) := by
+        (_ : ValuativeExtension K E), Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K]) := by
   constructor
   · rintro ⟨hfin, h⟩
     exact ⟨hfin, (finiteExtensionStructure K E).rel, (finiteExtensionStructure K E).top,
@@ -41,7 +41,7 @@ theorem isTameSubextension_iff_exists (E : IntermediateField K Ω) :
 
 theorem IsTameSubextension.coprime {E : IntermediateField K Ω} (hE : IsTameSubextension E)
     [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E] [ValuativeExtension K E] :
-    Nat.Coprime (ramificationIndex K E) (ringChar 𝓀[K]) :=
+    Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K]) :=
   hE.2 inferInstance inferInstance inferInstance inferInstance
 
 theorem IsUnramifiedSubextension.isTameSubextension {E : IntermediateField K Ω}
@@ -77,12 +77,12 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
 
 theorem isTameSubextension_iff (E : IntermediateField K Ω) [FiniteDimensional K E] :
-    IsTameSubextension E ↔ Nat.Coprime (ramificationIndex K E) (ringChar 𝓀[K]) :=
+    IsTameSubextension E ↔ Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K]) :=
   ⟨fun h ↦ h.coprime, fun h ↦ (isTameSubextension_iff_exists E).2
     ⟨inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, h⟩⟩
 
 theorem isUnramifiedSubextension_iff' (E : IntermediateField K Ω) [FiniteDimensional K E] :
-    IsUnramifiedSubextension E ↔ ramificationIndex K E = 1 :=
+    IsUnramifiedSubextension E ↔ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 :=
   ⟨fun h ↦ h.ramificationIndex_eq_one, fun h ↦ (isUnramifiedSubextension_iff_exists E).2
     ⟨inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, h⟩⟩
 
@@ -103,7 +103,7 @@ theorem residueDegree_restrictScalars (T : IntermediateField K Ω) [FiniteDimens
 
 theorem ramificationIndex_restrictScalars (T : IntermediateField K Ω) [FiniteDimensional K T]
     (F : IntermediateField T Ω) [FiniteDimensional T F] :
-    ramificationIndex K (F.restrictScalars K) = ramificationIndex K T * ramificationIndex T F := by
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (F.restrictScalars K)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation T))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation T))) := by
   have : FiniteDimensional K F := Module.Finite.trans T F
   have : FiniteDimensional K (F.restrictScalars K) := this
   have hf := residueDegree_restrictScalars T F
@@ -125,7 +125,7 @@ theorem IsTameSubextension.of_le {E F : IntermediateField K Ω} (hF : IsTameSube
   have : FiniteDimensional K F' := (inferInstance : FiniteDimensional K F)
   have : FiniteDimensional E F' := Module.Finite.of_restrictScalars_finite K E F'
   rw [isTameSubextension_iff]
-  have he : ramificationIndex K F = ramificationIndex K E * ramificationIndex E F' :=
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) :=
     ramificationIndex_restrictScalars E F'
   exact Nat.Coprime.coprime_dvd_left (Dvd.intro _ he.symm) hF.coprime
 
@@ -148,7 +148,7 @@ theorem ne_zero_of_coprime_ringChar {m : ℕ} (hm : Nat.Coprime m (ringChar 𝓀
 
 theorem irreducible_algebraMap_of_ramificationIndex_eq_one {L : Type*} [Field L] [ValuativeRel L]
     [TopologicalSpace L] [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L]
-    [FiniteDimensional K L] (h : ramificationIndex K L = 1) {π : 𝒪[K]} (hπ : Irreducible π) :
+    [FiniteDimensional K L] (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1) {π : 𝒪[K]} (hπ : Irreducible π) :
     Irreducible (algebraMap 𝒪[K] 𝒪[L] π) := by
   have hu : IsUnramified K L := (isUnramified_iff K L).2 h
   have hmap := (map_maximalIdeal_eq_iff K L).2 hu
@@ -202,12 +202,12 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 theorem finiteDimensional_adjoin_pair_and_ramificationIndex {k : ℕ} (hk : k ≠ 0) {ζ : Ω}
     (hζ : IsPrimitiveRoot ζ (Nat.card 𝓀[K] ^ k - 1)) {π : 𝒪[K]} (hπ : Irreducible π) {m : ℕ}
     (hm : Nat.Coprime m (ringChar 𝓀[K])) {γ : Ω} (hγ : γ ^ m = algebraMap K Ω π) :
-    ∃ _ : FiniteDimensional K (adjoin K {ζ, γ}), ramificationIndex K (adjoin K {ζ, γ}) = m := by
+    ∃ _ : FiniteDimensional K (adjoin K {ζ, γ}), (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (adjoin K {ζ, γ})))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = m := by
   have hm0 : 0 < m := Nat.pos_of_ne_zero (ne_zero_of_coprime_ringChar hm)
   obtain ⟨hT, -⟩ := isUnramifiedSubextension_adjoin hk hζ
   set T := K⟮ζ⟯ with hT_def
   have := hT.1
-  have heT : ramificationIndex K T = 1 := hT.ramificationIndex_eq_one
+  have heT : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation T))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 := hT.ramificationIndex_eq_one
   set πT : 𝒪[T] := algebraMap 𝒪[K] 𝒪[T] π with hπT_def
   have hπT : Irreducible πT := irreducible_algebraMap_of_ramificationIndex_eq_one heT hπ
   set g : 𝒪[T][X] := X ^ m - C πT with hg_def
@@ -272,10 +272,10 @@ theorem IsTameSubextension.exists_le_adjoin_pair [IsSepClosed Ω] {E : Intermedi
       ∃ m : ℕ, Nat.Coprime m (ringChar 𝓀[K]) ∧ ∃ γ : Ω, γ ^ m = algebraMap K Ω π ∧
         E ≤ adjoin K {ζ, γ} := by
   have := hE.1
-  set e := ramificationIndex K E with he_def
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) with he_def
   have he : Nat.Coprime e (ringChar 𝓀[K]) := hE.coprime
   obtain ⟨T₀, hT₀un, -, -, -, -, π₀, hπ₀, α, -, hαpow, hαgen⟩ := exists_tame_structure K E he
-  have heT₀ : ramificationIndex K T₀ = 1 := (isUnramified_iff K T₀).1 hT₀un
+  have heT₀ : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation T₀))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 := (isUnramified_iff K T₀).1 hT₀un
   obtain ⟨ζ₀, hζ₀, hζ₀gen⟩ := exists_isPrimitiveRoot_adjoin_eq_top_of_unramified K T₀ heT₀
   have hπT₀ : Irreducible (algebraMap 𝒪[K] 𝒪[T₀] π) :=
     irreducible_algebraMap_of_ramificationIndex_eq_one heT₀ hπ

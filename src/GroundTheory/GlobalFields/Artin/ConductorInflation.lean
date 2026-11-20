@@ -31,7 +31,7 @@ theorem charArtinConductor_comp_restrictNormalHom (E : IntermediateField K L) [N
   have key : ∀ s : E ≃ₐ[K] E,
       ∑ σ ∈ Finset.univ.filter (fun σ ↦ r σ = s),
           ((lowerIndex K L σ).toNat : ℂ) * (χ 1 - χ (r σ)) =
-        (ramificationIndex E L : ℂ) * (((lowerIndex K E s).toNat : ℂ) * (χ 1 - χ s)) := by
+        ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) : ℂ) * (((lowerIndex K E s).toNat : ℂ) * (χ 1 - χ s)) := by
     intro s
     rw [Finset.sum_congr rfl (fun σ hσ ↦ by rw [(Finset.mem_filter.1 hσ).2]), ← Finset.sum_mul]
     rcases eq_or_ne s 1 with rfl | hs
@@ -41,7 +41,7 @@ theorem charArtinConductor_comp_restrictNormalHom (E : IntermediateField K L) [N
       refine lowerIndex_ne_top fun h1 ↦ hs ?_
       rw [← (Finset.mem_filter.1 hσ).2, h1, map_one]
     have h := ramificationIndex_mul_lowerIndex_eq_sum_fiber E s
-    have h2 : ramificationIndex E L * (lowerIndex K E s).toNat =
+    have h2 : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) * (lowerIndex K E s).toNat =
         ∑ σ ∈ Finset.univ.filter (fun σ ↦ r σ = s), (lowerIndex K L σ).toNat := by
       have h3 := congrArg ENat.toNat h
       rw [ENat.toNat_mul, ENat.toNat_natCast] at h3
@@ -50,7 +50,7 @@ theorem charArtinConductor_comp_restrictNormalHom (E : IntermediateField K L) [N
     push_cast
     ring
   rw [Finset.sum_congr rfl (fun s _ ↦ key s), ← Finset.mul_sum]
-  have hpos : (ramificationIndex E L : ℂ) ≠ 0 :=
+  have hpos : ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.2 (ramificationIndex_pos E L).ne'
   push_cast
   field_simp

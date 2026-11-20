@@ -19,18 +19,18 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 theorem natCast_ramificationIndex_ne_zero
-    (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
-    (ramificationIndex K L : 𝓀[L]) ≠ 0 := by
+    (he : Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K])) :
+    ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : 𝓀[L]) ≠ 0 := by
   rw [Ne, CharP.cast_eq_zero_iff 𝓀[L] (ringChar 𝓀[L]), ← Algebra.ringChar_eq 𝓀[K] 𝓀[L]]
   intro hdvd
   have h1 := Nat.Coprime.eq_one_of_dvd he.symm hdvd
   exact Nat.not_prime_one (h1 ▸ CharP.char_is_prime 𝓀[K] (ringChar 𝓀[K]))
 
 theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1)
-    (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
+    (he : Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K])) :
     ∃ π : 𝒪[K], Irreducible π ∧ ∃ α : 𝒪[L], Irreducible α ∧
-      α ^ ramificationIndex K L = algebraMap 𝒪[K] 𝒪[L] π ∧ K⟮(α : L)⟯ = ⊤ := by
-  set e := ramificationIndex K L with he_def
+      α ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = algebraMap 𝒪[K] 𝒪[L] π ∧ K⟮(α : L)⟯ = ⊤ := by
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) with he_def
   obtain ⟨ϖK, hϖK⟩ := exists_irreducible 𝒪[K]
   obtain ⟨ϖL, hϖL⟩ := exists_irreducible 𝒪[L]
 
@@ -62,7 +62,7 @@ theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : ((IsLocalRing.ma
   have hw' : w ^ e = u * cL⁻¹ := hw
   have hinv : (w⁻¹) ^ e = cL * u⁻¹ := by rw [inv_pow, hw', mul_inv_rev, inv_inv]
 
-  have htot : ramificationIndex K L = Module.finrank K L := by
+  have htot : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = Module.finrank K L := by
     have := ramificationIndex_mul_residueDegree K L
     rwa [hf, mul_one] at this
   refine ⟨ϖK * (c' : 𝒪[K]), (irreducible_mul_isUnit c'.isUnit).mpr hϖK,
@@ -80,13 +80,13 @@ theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : ((IsLocalRing.ma
 variable {K L}
 
 theorem exists_pow_eq_uniformizer_of_isUnramified (T : IntermediateField K L) [IsUnramified K T]
-    (hf : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[T])) = 1) (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
-    ramificationIndex T L = ramificationIndex K L ∧
+    (hf : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[T])) = 1) (he : Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (ringChar 𝓀[K])) :
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation T))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ∧
       ∃ π : 𝒪[T], Irreducible π ∧ ∃ α : 𝒪[L], Irreducible α ∧
-        α ^ ramificationIndex K L = algebraMap 𝒪[T] 𝒪[L] π ∧ T⟮(α : L)⟯ = ⊤ := by
-  have htow : ramificationIndex T L = ramificationIndex K L := by
+        α ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = algebraMap 𝒪[T] 𝒪[L] π ∧ T⟮(α : L)⟯ = ⊤ := by
+  have htow : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation T))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     rw [ramificationIndex_tower K T L, IsUnramified.ramificationIndex_eq_one (K := K) (L := T), one_mul]
-  have he' : Nat.Coprime (ramificationIndex T L) (ringChar 𝓀[T]) := by
+  have he' : Nat.Coprime ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation T)))) (ringChar 𝓀[T]) := by
     rw [htow, ← Algebra.ringChar_eq 𝓀[K] 𝓀[T]]
     exact he
   refine ⟨htow, ?_⟩

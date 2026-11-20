@@ -54,7 +54,7 @@ variable [ValuativeRel K'] [TopologicalSpace K'] [IsNonarchimedeanLocalField K']
 omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [FiniteDimensional K L] in
 
 theorem ramificationIndex_right_eq :
-    ramificationIndex L L' = ramificationIndex K K' := by
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation K'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   have : ValuativeExtension K L' := valuativeExtension_trans K K' L'
   have : FiniteDimensional K L' := FiniteDimensional.trans K K' L'
   have : FiniteDimensional L L' := FiniteDimensional.right K L L'
@@ -95,14 +95,14 @@ theorem galRestrict_frob : galRestrict K K' L L' (frob K' L') = frob K L ^ ((IsL
 theorem unitsResH2_comp_h2Valuation :
     unitsResH2 K K' L L' ≫ h2Valuation K' L' =
       h2Valuation K L ≫ groupCohomology.map (galRestrict K K' L L')
-        (intMulRes (galRestrict K K' L L') (ramificationIndex K K')) 2 := by
+        (intMulRes (galRestrict K K' L L') ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation K'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))))) 2 := by
   have : FiniteDimensional K L' := FiniteDimensional.trans K K' L'
   have : FiniteDimensional L L' := FiniteDimensional.right K L L'
   simp only [h2Valuation, groupCohomology.functor_map]
   rw [← groupCohomology.map_comp, ← groupCohomology.map_comp]
   refine groupCohomology.map_congr (by ext; rfl) (LinearMap.ext fun x => ?_) 2
   change ord (algebraMap L L' ((Additive.toMul x : Lˣ) : L)) =
-    (ramificationIndex K K' : ℤ) * ord ((Additive.toMul x : Lˣ) : L)
+    ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation K'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℤ) * ord ((Additive.toMul x : Lˣ) : L)
   rw [ord_algebraMap, ramificationIndex_right_eq K K' L L']
 
 theorem unramifiedInv_unitsResH2 (x : groupCohomology (galUnitsZ K L) 2) :

@@ -140,13 +140,13 @@ theorem map_normUnits_unitFiltrationUnits_zero_le :
 section Valuation
 
 theorem ord_algebraMap_uniformizer {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) :
-    ord (algebraMap K L (ϖ : K)) = ramificationIndex K L := by
+    ord (algebraMap K L (ϖ : K)) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[L]
   have h := map_maximalIdeal K L
   rw [hϖ.maximalIdeal_eq, hπ.maximalIdeal_eq, Ideal.map_span, Set.image_singleton,
     Ideal.span_singleton_pow, Ideal.span_singleton_eq_span_singleton] at h
   obtain ⟨u, hu⟩ := h.symm
-  have h2 : algebraMap K L (ϖ : K) = (π : L) ^ ramificationIndex K L * ((u : 𝒪[L]) : L) := by
+  have h2 : algebraMap K L (ϖ : K) = (π : L) ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * ((u : 𝒪[L]) : L) := by
     rw [← coe_algebraMap_integer, ← hu]
     push_cast
     rfl
@@ -154,7 +154,7 @@ theorem ord_algebraMap_uniformizer {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) :
   rw [h2, ord_mul (pow_ne_zero _ hπ0) (by simp), ord_pow hπ0, ord_uniformizer hπ, ord_unit]
   simp
 
-theorem ord_algebraMap (a : K) : ord (algebraMap K L a) = ramificationIndex K L * ord a := by
+theorem ord_algebraMap (a : K) : ord (algebraMap K L a) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * ord a := by
   rcases eq_or_ne a 0 with rfl | ha
   · simp
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -187,7 +187,7 @@ theorem ord_norm_uniformizer {π : 𝒪[L]} (hπ : Irreducible π) :
   have h := ord_norm_units (K := K) hπ (Units.mk0 _ hϖL)
   rw [Units.val_mk0, Algebra.norm_algebraMap, ord_pow hϖ0, ord_uniformizer hϖ,
     ord_algebraMap_uniformizer hϖ, ← ramificationIndex_mul_residueDegree K L] at h
-  have he : (ramificationIndex K L : ℤ) ≠ 0 := by
+  have he : ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℤ) ≠ 0 := by
     exact_mod_cast (ramificationIndex_pos K L).ne'
   push_cast at h
   exact (mul_left_cancel₀ he (by linear_combination h)).symm

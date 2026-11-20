@@ -158,7 +158,7 @@ theorem UpperTheory.Reformulated.B.RamificationLowerIndex.ramificationIndex_mul_
       [inst_3 : IsNonarchimedeanLocalField K] [inst_4 : Field L] [inst_5 : ValuativeRel L] [inst_6 : TopologicalSpace L]
       [inst_7 : IsNonarchimedeanLocalField L] [inst_8 : Algebra K L] [inst_9 : ValuativeExtension K L]
       [inst_10 : FiniteDimensional K L] (M : IntermediateField K L) [IsGalois K L] [inst_12 : Normal K ↥M] (σ : Gal(L/K)),
-      (↑(GroundTheory.LocalField.ramificationIndex (↥M) L) : ℕ∞) *
+      (↑((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation (↥M))))) : ℕ∞) *
           GroundTheory.LocalField.lowerIndex K (↥M) ((AlgEquiv.restrictNormalHom ↥M : Gal(L/K) → Gal(↥M/K)) σ) =
         ∑ τ : Gal(L/↥M), GroundTheory.LocalField.lowerIndex K L (σ * AlgEquiv.restrictScalars K τ) := by
   intro K L _ _ _ _ _ _ _ _ _ _ _ M _ _ σ

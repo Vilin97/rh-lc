@@ -155,7 +155,7 @@ end Subgroup
 variable (K L) in
 
 theorem card_lowerRamificationGroup_zero [IsGalois K L] :
-    Nat.card (lowerRamificationGroup K L 0) = ramificationIndex K L := by
+    Nat.card (lowerRamificationGroup K L 0) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   rw [lowerRamificationGroup_zero]
   exact card_inertiaSubgroup K L
 

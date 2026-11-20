@@ -40,10 +40,10 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 theorem addVal_algebraMap_integer (x : 𝒪[K]) :
-    addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] x) = ramificationIndex K L * addVal 𝒪[K] x := by
+    addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] x) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * addVal 𝒪[K] x := by
   obtain ⟨ϖ, hϖ⟩ := exists_irreducible 𝒪[K]
   obtain ⟨ϖL, hϖL⟩ := exists_irreducible 𝒪[L]
-  have key : addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] ϖ) = ramificationIndex K L := by
+  have key : addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] ϖ) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     have h := map_maximalIdeal K L
     rw [hϖ.maximalIdeal_eq, hϖL.maximalIdeal_eq, Ideal.map_span, Set.image_singleton,
       Ideal.span_singleton_pow, Ideal.span_singleton_eq_span_singleton] at h
@@ -92,9 +92,9 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K]
 theorem natDegree_mul_addVal_eq_ramificationIndex {f : 𝒪[K][X]}
     (hf : f.IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K])) (hn : 0 < f.natDegree)
     {α : 𝒪[L]} (hα : aeval α f = 0) :
-    (f.natDegree : ℕ∞) * addVal 𝒪[L] α = ramificationIndex K L := by
+    (f.natDegree : ℕ∞) * addVal 𝒪[L] α = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   set n := f.natDegree with hn_def
-  set e := ramificationIndex K L with he_def
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) with he_def
   have he : 0 < e := ramificationIndex_pos K L
   have hinj := algebraMap_integer_injective K L
   have hα0 : α ≠ 0 := by
@@ -186,7 +186,7 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 theorem residueDegree_eq_one_of_ramificationIndex_eq_finrank
-    (h : ramificationIndex K L = Module.finrank K L) : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 := by
+    (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = Module.finrank K L) : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 := by
   have h1 := ramificationIndex_mul_residueDegree K L
   have h2 := ramificationIndex_pos K L
   rw [h] at h1 h2
@@ -292,7 +292,7 @@ theorem aeval_integer_eq_zero {α : L} (h : α ∈ 𝒪[L]) (hα : aeval α f = 
 theorem isEisensteinAt_root_of_finrank_le (hf : f.IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K]))
     (hn : 0 < f.natDegree) {α : 𝒪[L]} (hα : aeval α f = 0)
     (hdeg : Module.finrank K L ≤ f.natDegree) :
-    ramificationIndex K L = f.natDegree ∧ Module.finrank K L = f.natDegree ∧ Irreducible α := by
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = f.natDegree ∧ Module.finrank K L = f.natDegree ∧ Irreducible α := by
   have key := natDegree_mul_addVal_eq_ramificationIndex hf hn hα
   have hα0 : α ≠ 0 := by
     rintro rfl
@@ -300,11 +300,11 @@ theorem isEisensteinAt_root_of_finrank_le (hf : f.IsEisensteinAt (IsLocalRing.ma
     exact ENat.top_ne_natCast _ key
   obtain ⟨m, hm⟩ := exists_addVal_eq_coe hα0
   rw [hm] at key
-  have key' : f.natDegree * m = ramificationIndex K L := by exact_mod_cast key
+  have key' : f.natDegree * m = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by exact_mod_cast key
   have hef := ramificationIndex_mul_residueDegree K L
   have hf1 := residueDegree_pos K L
   have he := ramificationIndex_pos K L
-  have hle : ramificationIndex K L ≤ Module.finrank K L := by
+  have hle : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ≤ Module.finrank K L := by
     rw [← hef]
     exact Nat.le_mul_of_pos_right _ hf1
   have hm1 : m = 1 := by
@@ -342,7 +342,7 @@ theorem finrank_eq_natDegree_of_isEisensteinAt : Module.finrank K L = f.natDegre
   (isEisensteinAt_root_of_finrank_le hf hn (aeval_integer_eq_zero
     (mem_integer_of_isEisensteinAt hf hα) hα) (finrank_le_of_isEisensteinAt hf hα hgen)).2.1
 
-theorem ramificationIndex_eq_natDegree_of_isEisensteinAt : ramificationIndex K L = f.natDegree :=
+theorem ramificationIndex_eq_natDegree_of_isEisensteinAt : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = f.natDegree :=
   (isEisensteinAt_root_of_finrank_le hf hn (aeval_integer_eq_zero
     (mem_integer_of_isEisensteinAt hf hα) hα) (finrank_le_of_isEisensteinAt hf hα hgen)).1
 
@@ -376,7 +376,7 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
-  (h : ramificationIndex K L = Module.finrank K L) {ϖ : 𝒪[L]} (hϖ : Irreducible ϖ)
+  (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = Module.finrank K L) {ϖ : 𝒪[L]} (hϖ : Irreducible ϖ)
 include h hϖ
 
 theorem addVal_term_of_totallyRamified (g : 𝒪[K][X]) (i : ℕ) :

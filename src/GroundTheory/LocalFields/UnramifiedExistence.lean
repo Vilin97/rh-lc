@@ -19,7 +19,7 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
-theorem card_residueField_of_unramified (h : ramificationIndex K L = 1) :
+theorem card_residueField_of_unramified (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1) :
     Nat.card 𝓀[L] = Nat.card 𝓀[K] ^ Module.finrank K L := by
   have := Fintype.ofFinite 𝓀[K]
   have := Fintype.ofFinite 𝓀[L]
@@ -43,12 +43,12 @@ theorem adjoin_gen_eq_top (α : Ksep) : K⟮AdjoinSimple.gen K α⟯ = ⊤ := by
 def IsUnramifiedSubextension (E : IntermediateField K Ksep) : Prop :=
   FiniteDimensional K E ∧
     ∀ (_ : ValuativeRel E) (_ : TopologicalSpace E) (_ : IsNonarchimedeanLocalField E)
-      (_ : ValuativeExtension K E), ramificationIndex K E = 1
+      (_ : ValuativeExtension K E), (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1
 
 theorem isUnramifiedSubextension_iff_exists (E : IntermediateField K Ksep) :
     IsUnramifiedSubextension E ↔ FiniteDimensional K E ∧
       ∃ (_ : ValuativeRel E) (_ : TopologicalSpace E) (_ : IsNonarchimedeanLocalField E)
-        (_ : ValuativeExtension K E), ramificationIndex K E = 1 := by
+        (_ : ValuativeExtension K E), (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 := by
   constructor
   · rintro ⟨hfin, h⟩
     exact ⟨hfin, (finiteExtensionStructure K E).rel, (finiteExtensionStructure K E).top,
@@ -66,7 +66,7 @@ omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem IsUnramifiedSubextension.ramificationIndex_eq_one {E : IntermediateField K Ksep}
     (hE : IsUnramifiedSubextension E) [ValuativeRel E] [TopologicalSpace E]
-    [IsNonarchimedeanLocalField E] [ValuativeExtension K E] : ramificationIndex K E = 1 :=
+    [IsNonarchimedeanLocalField E] [ValuativeExtension K E] : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 :=
   hE.2 inferInstance inferInstance inferInstance inferInstance
 
 theorem IsUnramifiedSubextension.isGalois {E : IntermediateField K Ksep}

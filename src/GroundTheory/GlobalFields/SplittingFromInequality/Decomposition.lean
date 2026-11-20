@@ -118,7 +118,7 @@ theorem stabilizer_eq_zpowers_arithFrobAt (v : HeightOneSpectrum (𝓞 K))
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) :
     MulAction.stabilizer Gal(L/K) w.asIdeal =
       Subgroup.zpowers (arithFrobAt (𝓞 K) Gal(L/K) w.asIdeal) := by
-  have h : GroundTheory.LocalField.ramificationIndex (v.adicCompletion K) (w.adicCompletion L) = 1 := by
+  have h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (w.adicCompletion L)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation (v.adicCompletion K)))) = 1 := by
     rw [GroundTheory.LocalField.ramificationIndex, ramificationIdx_integer v w, he]
   have hfr : decompositionToLocal v w (arithFrobAtDecomposition w) =
       GroundTheory.LocalField.frobenius _ _ h :=

@@ -154,9 +154,9 @@ instance finite_quotient_maximalIdeal : Finite (𝒪[K] ⧸ 𝓂[K]) :=
   inferInstanceAs (Finite 𝓀[K])
 
 theorem ramificationIndex_sub_one_le_differentExponent :
-    ramificationIndex K L - 1 ≤ differentExponent K L := by
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) - 1 ≤ differentExponent K L := by
   have h := pow_sub_one_dvd_differentIdeal 𝒪[K] (p := 𝓂[K]) (𝓂[L])
-    (ramificationIndex K L) (maximalIdeal_ne_bot K) (by rw [map_maximalIdeal])
+    ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) (maximalIdeal_ne_bot K) (by rw [map_maximalIdeal])
   rwa [differentIdeal_eq_maximalIdeal_pow, maximalIdeal_pow_dvd_pow_iff] at h
 
 theorem differentExponent_eq_zero_iff : differentExponent K L = 0 ↔ IsUnramified K L := by
@@ -194,7 +194,7 @@ theorem differentIdeal_tower :
   exact differentIdeal_eq_differentIdeal_mul_differentIdeal 𝒪[K] 𝒪[L] 𝒪[M]
 
 theorem differentExponent_tower :
-    differentExponent K M = ramificationIndex L M * differentExponent K L +
+    differentExponent K M = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) * differentExponent K L +
       differentExponent L M := by
   have : FiniteDimensional K M := Module.Finite.trans L M
   have : Algebra.IsSeparable K L := Algebra.isSeparable_tower_bot_of_isSeparable K L M

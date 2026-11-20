@@ -21,7 +21,7 @@ theorem ord_unifUnit_of_residueCard_eq_sq : ∀ (F : Type) [Field F] [ValuativeR
       card_residueField_eq_pow_residueDegree F E
     rw [hcard] at h
     exact (Nat.pow_right_injective hq h).symm
-  have he : ramificationIndex F E = 1 := by
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
     have h := ramificationIndex_mul_residueDegree F E
     rw [hf, hfin] at h
     omega

@@ -86,7 +86,7 @@ theorem exists_valuation_eq_algebraMap {x : Ω} (hx : x ∈ 𝔼) (hx0 : x ≠ 0
     ∃ a : K, a ≠ 0 ∧ valuation Ω x = valuation Ω (algebraMap K Ω a) := by
   obtain ⟨L, hL, hxL⟩ := mem_maximalUnramifiedExtension_iff.mp hx
   have := hL.1
-  have he : ramificationIndex K L = 1 := hL.ramificationIndex_eq_one
+  have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 := hL.ramificationIndex_eq_one
   set y : L := ⟨x, hxL⟩
   obtain ⟨a, ha, hay⟩ := exists_ord_eq K (ord y)
   refine ⟨a, ha, ?_⟩

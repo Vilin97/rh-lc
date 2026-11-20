@@ -49,11 +49,11 @@ theorem map_maximalIdeal_eq_iff :
   · intro h
     have hpos := ramificationIndex_pos K L
     by_contra hne
-    have h2 : 2 ≤ ramificationIndex K L := by omega
+    have h2 : 2 ≤ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by omega
     have hL : maximalIdeal 𝒪[L] ≠ ⊥ := maximalIdeal_ne_bot L
     have hlt := Ideal.pow_succ_lt_pow hL 1
     have hle : maximalIdeal 𝒪[L] ^ 1 ≤ maximalIdeal 𝒪[L] ^ (1 + 1) :=
-      calc maximalIdeal 𝒪[L] ^ 1 = maximalIdeal 𝒪[L] ^ ramificationIndex K L := by
+      calc maximalIdeal 𝒪[L] ^ 1 = maximalIdeal 𝒪[L] ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
             rw [pow_one, h]
         _ ≤ maximalIdeal 𝒪[L] ^ (1 + 1) := Ideal.pow_le_pow_right h2
     exact absurd hle (not_le_of_gt hlt)
@@ -181,7 +181,7 @@ theorem maximalUnramified_le_fixedField :
 variable [IsGalois K L]
 
 theorem inertiaSubgroup_counting :
-    Nat.card (inertiaSubgroup K L) = ramificationIndex K L ∧
+    Nat.card (inertiaSubgroup K L) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ∧
       Nat.card (residueAlgEquiv K L).range = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) ∧
       Module.finrank K (IntermediateField.fixedField (inertiaSubgroup K L)) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   set I := inertiaSubgroup K L
@@ -205,7 +205,7 @@ theorem inertiaSubgroup_counting :
     exact IntermediateField.finrank_le_of_le_right (maximalUnramified_le_fixedField K L)
   set a := Nat.card I
   set r := Nat.card (residueAlgEquiv K L).range
-  set e := ramificationIndex K L
+  set e := (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))
   set f := ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K]))
   set d := Module.finrank K F
   rw [hind, hG, ← hn] at hIdx
@@ -226,7 +226,7 @@ theorem inertiaSubgroup_counting :
   · rw [hae, mul_comm e f] at hFK
     exact Nat.eq_of_mul_eq_mul_right he hFK
 
-theorem card_inertiaSubgroup : Nat.card (inertiaSubgroup K L) = ramificationIndex K L :=
+theorem card_inertiaSubgroup : Nat.card (inertiaSubgroup K L) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) :=
   (inertiaSubgroup_counting K L).1
 
 end Galois

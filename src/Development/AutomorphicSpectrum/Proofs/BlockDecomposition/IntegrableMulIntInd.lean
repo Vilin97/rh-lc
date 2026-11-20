@@ -93,7 +93,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   {E : Type} [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E]
   [Algebra F E] [ValuativeExtension F E] [FiniteDimensional F E]
 
-theorem ramIdx_eq_one (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) : ramificationIndex F E = 1 := by
+theorem ramIdx_eq_one (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
   have h := ord_algebraMap (K := F) (L := E) (unifUnit F : F)
   rw [h1, ord_unif] at h
   omega

@@ -114,13 +114,13 @@ variable [Algebra.IsSeparable K L]
 
 theorem isTrivialOn_traceChar_iff (m : ℤ) :
     IsTrivialOn (traceChar L ψ) m ↔
-      (ramificationIndex K L : ℤ) * addCharConductor ψ - differentExponent K L ≤ m := by
+      ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℤ) * addCharConductor ψ - differentExponent K L ≤ m := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   have hϖ0 : (ϖ : K) ≠ 0 := fun h => hϖ.ne_zero (Subtype.ext h)
   obtain ⟨c, hcdef⟩ : ∃ c : K, c = (ϖ : K) ^ addCharConductor ψ := ⟨_, rfl⟩
   have hc0 : c ≠ 0 := hcdef ▸ zpow_ne_zero _ hϖ0
   have hcK : ord c = addCharConductor ψ := by rw [hcdef, ord_zpow hϖ0, ord_uniformizer hϖ, mul_one]
-  have hcL : ord (algebraMap K L c) = ramificationIndex K L * addCharConductor ψ := by
+  have hcL : ord (algebraMap K L c) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * addCharConductor ψ := by
     rw [ord_algebraMap, hcK]
   have step1 : IsTrivialOn (traceChar L ψ) m ↔
       ∀ x ∈ valBall L m, Algebra.trace K L x ∈ valBall K (addCharConductor ψ) := by
@@ -139,9 +139,9 @@ theorem isTrivialOn_traceChar_iff (m : ℤ) :
     obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[L]
     have hπ0 : (π : L) ≠ 0 := fun h => hπ.ne_zero (Subtype.ext h)
     obtain ⟨w, hwdef⟩ : ∃ w : L,
-        w = (π : L) ^ (m - ramificationIndex K L * addCharConductor ψ) := ⟨_, rfl⟩
+        w = (π : L) ^ (m - (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * addCharConductor ψ) := ⟨_, rfl⟩
     have hw0 : w ≠ 0 := hwdef ▸ zpow_ne_zero _ hπ0
-    have hwk : ord w = m - ramificationIndex K L * addCharConductor ψ := by
+    have hwk : ord w = m - (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * addCharConductor ψ := by
       rw [hwdef, ord_zpow hπ0, ord_uniformizer hπ, mul_one]
     have hw : w ∈ valBall L (-(differentExponent K L : ℤ)) := by
       rw [← forall_trace_mul_mem_iff K]
@@ -180,7 +180,7 @@ theorem continuous_traceChar : Continuous (traceChar L ψ) :=
 theorem traceChar_ne_one : traceChar L ψ ≠ 1 := by
   intro h
   have ht : IsTrivialOn (traceChar L ψ)
-      ((ramificationIndex K L : ℤ) * addCharConductor ψ - differentExponent K L - 1) := by
+      (((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℤ) * addCharConductor ψ - differentExponent K L - 1) := by
     rw [h]
     intro x _
     exact AddChar.one_apply x
@@ -189,7 +189,7 @@ theorem traceChar_ne_one : traceChar L ψ ≠ 1 := by
 
 theorem addCharConductor_traceChar :
     addCharConductor (traceChar L ψ) =
-      (ramificationIndex K L : ℤ) * addCharConductor ψ - differentExponent K L := by
+      ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℤ) * addCharConductor ψ - differentExponent K L := by
   have hc := continuous_traceChar (L := L) hψ hψ1
   have hne := traceChar_ne_one (L := L) hψ hψ1
   apply le_antisymm

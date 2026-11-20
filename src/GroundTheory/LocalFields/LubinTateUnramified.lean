@@ -55,7 +55,7 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
 
 theorem ramificationIndex_dvd_of_le {F E : IntermediateField K Ω} [FiniteDimensional K F]
-    [FiniteDimensional K E] (h : F ≤ E) : ramificationIndex K F ∣ ramificationIndex K E := by
+    [FiniteDimensional K E] (h : F ≤ E) : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ∣ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   let : Algebra F E := (IntermediateField.inclusion h).toRingHom.toAlgebra
   have : IsScalarTower K F E := IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
   have : ValuativeExtension F E := valuativeExtension_algHom (K := K) (IntermediateField.inclusion h)

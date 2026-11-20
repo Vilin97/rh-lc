@@ -53,14 +53,14 @@ theorem integerAlgEquiv_restrictScalars_algebraMap (τ : L ≃ₐ[M] L) (y : �
 variable [IsGalois K L]
 
 theorem ramificationIndex_mul_lowerIndex_restrictNormalHom [Normal K M] (σ : L ≃ₐ[K] L) :
-    (ramificationIndex M L : ℕ∞) * lowerIndex K M (AlgEquiv.restrictNormalHom M σ) =
+    ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) : ℕ∞) * lowerIndex K M (AlgEquiv.restrictNormalHom M σ) =
       ∑ τ : L ≃ₐ[M] L, lowerIndex K L (σ * τ.restrictScalars K) :=
   by apply _root_.UpperTheory.Reformulated.B.RamificationLowerIndex.ramificationIndex_mul_lowerIndex_restrictNormalHom <;> assumption
 
 open Classical in
 
 theorem ramificationIndex_mul_lowerIndex_eq_sum_fiber [Normal K M] (s : M ≃ₐ[K] M) :
-    (ramificationIndex M L : ℕ∞) * lowerIndex K M s =
+    ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) : ℕ∞) * lowerIndex K M s =
       ∑ σ ∈ Finset.univ.filter (fun σ : L ≃ₐ[K] L ↦ AlgEquiv.restrictNormalHom M σ = s),
         lowerIndex K L σ := by
   obtain ⟨σ, rfl⟩ := AlgEquiv.restrictNormalHom_surjective (F := K) (K₁ := M) L s
@@ -101,7 +101,7 @@ theorem exists_lowerIndex_mul_eq_min (σ : L ≃ₐ[K] L) :
 theorem exists_ramificationIndex_mul_lowerIndex_eq_sum_min [Normal K M] (σ : L ≃ₐ[K] L) :
     ∃ σ₀ : L ≃ₐ[K] L, AlgEquiv.restrictNormalHom M σ₀ = AlgEquiv.restrictNormalHom M σ ∧
       (∀ τ : L ≃ₐ[M] L, lowerIndex K L (σ * τ.restrictScalars K) ≤ lowerIndex K L σ₀) ∧
-      (ramificationIndex M L : ℕ∞) * lowerIndex K M (AlgEquiv.restrictNormalHom M σ) =
+      ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) : ℕ∞) * lowerIndex K M (AlgEquiv.restrictNormalHom M σ) =
         ∑ τ : L ≃ₐ[M] L, min (lowerIndex M L τ) (lowerIndex K L σ₀) := by
   obtain ⟨τ₀, hmax, hmin⟩ := exists_lowerIndex_mul_eq_min M σ
   have hres : AlgEquiv.restrictNormalHom M (σ * τ₀.restrictScalars K) =

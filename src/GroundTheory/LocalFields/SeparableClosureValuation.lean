@@ -75,24 +75,24 @@ variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
-private theorem ord_algebraMap_eq_ramificationIndex_mul (a : K) : ord (algebraMap K L a) = ramificationIndex K L * ord a := by
+private theorem ord_algebraMap_eq_ramificationIndex_mul (a : K) : ord (algebraMap K L a) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * ord a := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   obtain ⟨ϖL, hϖL⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[L]
   have hϖ0 : (ϖ : K) ≠ 0 := by exact_mod_cast hϖ.ne_zero
 
   have hspan : Ideal.span {algebraMap 𝒪[K] 𝒪[L] ϖ} =
-      Ideal.span {ϖL ^ ramificationIndex K L} := by
+      Ideal.span {ϖL ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))} := by
     rw [← Ideal.span_singleton_pow, ← hϖL.maximalIdeal_eq, ← map_maximalIdeal K L,
       hϖ.maximalIdeal_eq, Ideal.map_span, Set.image_singleton]
   obtain ⟨u, hu⟩ := Ideal.span_singleton_eq_span_singleton.mp hspan
-  have hu' : algebraMap K L ϖ * ((u : 𝒪[L]) : L) = (ϖL : L) ^ ramificationIndex K L := by
+  have hu' : algebraMap K L ϖ * ((u : 𝒪[L]) : L) = (ϖL : L) ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     have := congrArg (fun z : 𝒪[L] ↦ (z : L)) hu
     simpa using this
   have hιϖ : algebraMap K L ϖ ≠ 0 := (_root_.map_ne_zero _).mpr hϖ0
   have hu0 : ((u : 𝒪[L]) : L) ≠ 0 := by
     have : (u : 𝒪[L]) ≠ 0 := u.ne_zero
     exact_mod_cast this
-  have hkey : ord (algebraMap K L ϖ) = ramificationIndex K L := by
+  have hkey : ord (algebraMap K L ϖ) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
     have h := congrArg ord hu'
     rw [ord_mul hιϖ hu0, ord_unit, add_zero, ord_pow_alt, ord_uniformizer hϖL, mul_one] at h
     exact h
@@ -109,7 +109,7 @@ private theorem ord_algebraMap_eq_ramificationIndex_mul (a : K) : ord (algebraMa
 
 theorem valuation_pow_ramificationIndex_eq {y : L} {a : K} (hy : y ≠ 0) (ha : a ≠ 0)
     (h : ord a = ord y) :
-    valuation L y ^ ramificationIndex K L = valuation L (algebraMap K L a) := by
+    valuation L y ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = valuation L (algebraMap K L a) := by
   rw [← map_pow, ← ord_eq_ord_iff (pow_ne_zero _ hy) ((_root_.map_ne_zero _).mpr ha), ord_pow_alt,
     ord_algebraMap_eq_ramificationIndex_mul, h]
 
@@ -190,7 +190,7 @@ theorem ordRat_one : ordRat K (1 : Ω) = 0 := by
 theorem ordRat_algebraMap_of_finite {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
     [Algebra L Ω] [IsScalarTower K L Ω] [ValuativeExtension L Ω] (y : L) :
-    ordRat K (algebraMap L Ω y) = ord y / ramificationIndex K L := by
+    ordRat K (algebraMap L Ω y) = ord y / (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
   rcases eq_or_ne y 0 with rfl | hy
   · simp [ord_zero_alt]
   obtain ⟨a, ha, hay⟩ := exists_ord_eq K (ord y)
@@ -218,7 +218,7 @@ theorem exists_valuation_pow_eq {x : Ω} (hx : x ≠ 0) :
   have h := valuation_pow_ramificationIndex_eq K hy ha hay
   rw [← map_pow, ← valuation_algebraMap_eq_iff (G := Ω), map_pow, map_pow,
     ← IsScalarTower.algebraMap_apply, hyx] at h
-  exact ⟨ramificationIndex K L, a, ramificationIndex_pos K L, ha, h⟩
+  exact ⟨(_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))), a, ramificationIndex_pos K L, ha, h⟩
 
 theorem ordRat_mul {x y : Ω} (hx : x ≠ 0) (hy : y ≠ 0) :
     ordRat K (x * y) = ordRat K x + ordRat K y := by
@@ -330,7 +330,7 @@ variable (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
 variable (K Ω) in
 
 theorem valueGroupRat_eq :
-    valueGroupRat K Ω L = AddSubgroup.zmultiples ((ramificationIndex K L : ℚ)⁻¹) := by
+    valueGroupRat K Ω L = AddSubgroup.zmultiples (((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ)⁻¹) := by
   ext q
   rw [mem_valueGroupRat, AddSubgroup.mem_zmultiples_iff]
   constructor
@@ -352,13 +352,13 @@ theorem valueGroupRat_base_le : valueGroupRat K Ω K ≤ valueGroupRat K Ω L :=
 variable (K Ω) in
 
 theorem relIndex_valueGroupRat :
-    (valueGroupRat K Ω K).relIndex (valueGroupRat K Ω L) = ramificationIndex K L := by
-  have he : (ramificationIndex K L : ℚ) ≠ 0 := by exact_mod_cast (ramificationIndex_pos K L).ne'
-  set f : ℤ →+ ℚ := zmultiplesHom ℚ (ramificationIndex K L : ℚ)⁻¹
+    (valueGroupRat K Ω K).relIndex (valueGroupRat K Ω L) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
+  have he : ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ) ≠ 0 := by exact_mod_cast (ramificationIndex_pos K L).ne'
+  set f : ℤ →+ ℚ := zmultiplesHom ℚ ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ)⁻¹
   have hrange : (⊤ : AddSubgroup ℤ).map f = valueGroupRat K Ω L := by
     rw [← AddMonoidHom.range_eq_map, AddSubgroup.range_zmultiplesHom, valueGroupRat_eq]
   have hcomap : (valueGroupRat K Ω K).comap f =
-      AddSubgroup.zmultiples ((ramificationIndex K L : ℕ) : ℤ) := by
+      AddSubgroup.zmultiples (((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℕ) : ℤ) := by
     ext n
     rw [AddSubgroup.mem_comap, valueGroupRat_base, AddSubgroup.mem_zmultiples_iff,
       AddSubgroup.mem_zmultiples_iff]
@@ -366,7 +366,7 @@ theorem relIndex_valueGroupRat :
     constructor
     · rintro ⟨k, hk⟩
       refine ⟨k, ?_⟩
-      have : (k : ℚ) * ramificationIndex K L = n := by
+      have : (k : ℚ) * (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = n := by
         rw [hk]
         field_simp
       exact_mod_cast this
@@ -385,7 +385,7 @@ variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   (L : IntermediateField K (SeparableClosure K)) [FiniteDimensional K L]
 
 example : (valueGroupRat K (SeparableClosure K) K).relIndex (valueGroupRat K (SeparableClosure K) L) =
-    ramificationIndex K L :=
+    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) :=
   relIndex_valueGroupRat K (SeparableClosure K) L
 
 example : valueGroupRat K (SeparableClosure K) K = AddSubgroup.zmultiples 1 :=

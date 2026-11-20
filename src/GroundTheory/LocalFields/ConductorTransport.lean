@@ -99,7 +99,7 @@ theorem map_upperRamificationGroup_autCongr (e : L₁ ≃ₐ[K] L₂) (v : ℝ) 
     map_lowerRamificationGroupReal_autCongr]
 
 theorem upperRamificationGroup_eq_bot_of_ramificationIndex_eq_one [IsGalois K L₁]
-    (he : ramificationIndex K L₁ = 1) {v : ℝ} (hv : -1 < v) : upperRamificationGroup K L₁ v = ⊥ := by
+    (he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L₁))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1) {v : ℝ} (hv : -1 < v) : upperRamificationGroup K L₁ v = ⊥ := by
   have h0 : lowerRamificationGroup K L₁ 0 = ⊥ :=
     Subgroup.eq_bot_of_card_eq _ (by rw [card_lowerRamificationGroup_zero, he])
   rw [eq_bot_iff, ← h0, upperRamificationGroup, lowerRamificationGroupReal]
