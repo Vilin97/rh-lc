@@ -95,6 +95,8 @@ def SL.rep (S : SL actO r) : Representation ℤ_[ℓ] G (Fin r → OC) where
         intro v w
         rw [← Matrix.add_vecMul]
         congr 1
+        funext k
+        exact map_add (actO g) (v k) (w k)
       map_smul' := by
         intro t v
         rw [RingHom.id_apply, ← Matrix.smul_vecMul]

@@ -22,10 +22,10 @@ theorem exists_smul_eq_zero_of_crossed {G : Type} [Group G] [Finite G] {R : Type
       · subst hi; simp [RingHom.mem_ker, hρ]
       · simp [hi]
     · rw [Fintype.linearCombination_apply_single, sub_smul, one_smul]; abel
-  let ψ' : Additive (Abelianization G) →ₗ[ℤ] X ⧸ J :=
+  let ψ' : Additive (Group.Abelianization G) →ₗ[ℤ] X ⧸ J :=
     (MonoidHom.toAdditiveLeft (Abelianization.lift ψ)).toIntLinearMap
   have hψ' : ∀ g, ψ' (Additive.ofMul (Abelianization.of g)) = J.mkQ (d g) := fun g => rfl
-  let L : (G → ℤ) →ₗ[ℤ] Additive (Abelianization G) :=
+  let L : (G → ℤ) →ₗ[ℤ] Additive (Group.Abelianization G) :=
     Fintype.linearCombination ℤ fun g => Additive.ofMul (Abelianization.of g)
   have hL : Function.Surjective L := fun q => by
     obtain ⟨g, hg⟩ := QuotientGroup.mk_surjective (s := commutator G) q.toMul
