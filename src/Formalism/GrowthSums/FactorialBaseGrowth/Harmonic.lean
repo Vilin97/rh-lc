@@ -62,7 +62,8 @@ theorem padicValHarmonicPowerSum : HarmonicVal := by
     have hm : (s : ℤ) * (padicValNat p y : ℤ) ≤ (s : ℤ) * (t : ℤ) :=
       mul_le_mul_of_nonneg_left (by exact_mod_cast hvy) (by positivity)
     push_cast
-    nlinarith
+    rw [padicValRat.of_nat, ← Nat.padicValNat_def]
+    linarith only [hm]
 
 theorem powerSumPolynomial : PowerSumPoly := by
   intro s

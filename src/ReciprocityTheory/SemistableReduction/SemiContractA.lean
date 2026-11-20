@@ -28,7 +28,7 @@ private theorem one_lt_re_det_one_add_and_im_eq_zero_of_posDef {m : Type*} [Fint
   rw [hdet, Complex.ofReal_re, Complex.ofReal_im]
   refine ⟨?_, rfl⟩
   calc (1 : ℝ) = ∏ _i : m, (1 : ℝ) := by simp
-    _ < ∏ i, (1 + d i) := Finset.prod_lt_prod_of_nonempty (fun _ _ => one_pos)
+    _ < ∏ i, (1 + d i) := Finset.prod_lt_prod_of_nonempty₀ (fun _ _ => one_pos)
         (fun i _ => by linarith [hdpos i]) Finset.univ_nonempty
 
 theorem sc_one_add_det {m : Type*} [Fintype m] [DecidableEq m] [Nonempty m]

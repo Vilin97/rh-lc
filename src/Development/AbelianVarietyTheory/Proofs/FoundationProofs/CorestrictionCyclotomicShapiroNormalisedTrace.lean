@@ -181,7 +181,7 @@ theorem pows_eq (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2) (L m : ℕ) (hm : 1 ≤
   have hp3 : 3 ≤ p := by have := hpp.two_le; omega
   have hord : orderOf u = p ^ (L - m) := by
     rw [← orderOf_units, hu]
-    have h := ZMod.orderOf_one_add_mul_prime_pow hpp m (by omega) (by nlinarith) 1
+    have h := ZMod.orderOf_one_add_mul_prime_pow hpp m (by nlinarith) 1
       (by exact_mod_cast hpp.not_dvd_one) (L - m)
     rw [Nat.sub_add_cancel hmL, Int.cast_one, mul_one] at h
     exact h

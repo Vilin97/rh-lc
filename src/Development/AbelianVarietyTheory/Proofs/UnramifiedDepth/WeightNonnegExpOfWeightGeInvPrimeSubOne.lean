@@ -69,7 +69,7 @@ theorem _root_.GlobalTheory.ExpWeight.weight_exp :
   rw [hy, hfact, ← WithTop.coe_add, WithTop.coe_eq_zero] at hprod
   have hle := _root_.GlobalTheory.LegendreBounds.upper l hl d
   have hyr : y = -((d.factorial.factorization l : ℕ) : ℝ) := by linarith
-  rw [Nat.factorization_def _ hl] at hyr
+  simp only [Nat.padicValNat_def, ← Nat.factorization_def _ hl] at hle
   have hdc : (d : ℝ) / ((l : ℝ) - 1) = d * c := by rw [hc]; ring
   rw [hy]
   calc (((0 : ℝ) - w α : ℝ) : WithTop ℝ) ≤ ((y + ((d : ℝ) * c - w α) : ℝ) : WithTop ℝ) :=

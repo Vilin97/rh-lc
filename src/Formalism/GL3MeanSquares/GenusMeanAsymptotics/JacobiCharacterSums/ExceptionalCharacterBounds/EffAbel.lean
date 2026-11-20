@@ -93,8 +93,7 @@ theorem abelG (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠
   have hmono : ∀ d : ℕ, 1 ≤ d → b d ≤ b (d + 1) := by
     intro d hd
     refine gExp_monotoneOn (hpos d hd) (hpos (d + 1) (by omega)) ?_
-    push_cast
-    exact div_le_div_of_nonneg_right (by linarith) hx.le
+    exact div_le_div_of_nonneg_right (Nat.cast_le.mpr (Nat.le_succ d)) hx.le
   have hle0 : ∀ d : ℕ, 1 ≤ d → b d ≤ 0 := fun d hd => gExp_nonpos (hpos d hd)
   have hhalf : -(1 / 2) ≤ b 1 := neg_half_le_gExp (hpos 1 le_rfl)
   set F : ℕ → ℂ := fun N => ∑ d ∈ Icc 1 N, χ (d : ZMod q) * ((b d : ℝ) : ℂ) with hF
