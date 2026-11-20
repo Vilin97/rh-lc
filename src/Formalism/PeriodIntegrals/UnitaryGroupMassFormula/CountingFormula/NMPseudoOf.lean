@@ -32,7 +32,7 @@ theorem nMPseudo_of (hE : JordanExists) (hD : DetLocal) (hC : CountExt) (hA : No
       rfl
     have he : P.asIdeal.ramificationIdx (𝓞 F) ≠ 0 := by
       haveI := P.isPrime
-      exact (Ideal.ramificationIdx_pos P.asIdeal (𝓞 F)).ne'
+      exact (Ideal.ramificationIdx_pos (R := 𝓞 F) P.asIdeal).ne'
     have hv : vJ h X (pbLat x 𝔞) 𝔭 = vJof 𝔭 a := by
       unfold vJ
       have hset : {v | ∃ b a, IsJordanIn h X (pbLat x 𝔞) 𝔭 b a ∧ v = vJof 𝔭 a} = {vJof 𝔭 a} := by

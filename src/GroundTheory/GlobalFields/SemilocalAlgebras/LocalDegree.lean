@@ -108,7 +108,7 @@ theorem valued_sum_eq_one (ω : ι → 𝓞 L)
   refine le_antisymm (by simpa using valued_sum_le v w ω d 1 hd) ?_
   by_contra hlt
   replace hlt := not_le.1 hlt
-  have he0 : w.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)).ne'
+  have he0 : w.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal).ne'
   choose r hr using fun j ↦ exists_int_valued_sub_lt_one v (d j) (hd j)
   have h1 : Valued.v (algebraMap (𝓞 L) (w.adicCompletion L)
       (∑ j, algebraMap (𝓞 K) (𝓞 L) (r j) * ω j)) < 1 := by
@@ -152,7 +152,7 @@ theorem valued_sum_eq [Fintype ι] (ω : ι → 𝓞 L)
     Valued.v (∑ j, algebraMap (v.adicCompletion K) (w.adicCompletion L) (c j) *
       algebraMap (𝓞 L) (w.adicCompletion L) (ω j)) =
       Valued.v (c j0) ^ w.asIdeal.ramificationIdx (𝓞 K) := by
-  have he0 : w.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)).ne'
+  have he0 : w.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal).ne'
   by_cases h0 : c j0 = 0
   · have hc : ∀ j, c j = 0 := fun j ↦ by
       have := hj0 j
@@ -202,7 +202,7 @@ theorem linearIndependent_uniformizer_pow_mul [Finite ι] (ω : ι → 𝓞 L)
   rcases isEmpty_or_nonempty ι with hι | hι
   · exact linearIndependent_empty_type
   set e := w.asIdeal.ramificationIdx (𝓞 K) with he
-  have he0 : e ≠ 0 := (Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)).ne'
+  have he0 : e ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal).ne'
   set P := algebraMap L (w.adicCompletion L) π with hP
   rw [Fintype.linearIndependent_iff]
   intro g hg

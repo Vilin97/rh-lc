@@ -751,30 +751,30 @@ lemma continuous_lift (k r' : ℕ) : Continuous (liftVec k 1 r') := by
   simp only [liftVec]
   split_ifs <;> first | exact continuous_const | exact continuous_apply _ | fun_prop
 
-lemma continuous_hb (k r' : ℕ) : Continuous fun x : HPar k r' => hb k r' x.1 x.2 := by sorry
+lemma continuous_hb (k r' : ℕ) : Continuous fun x : HPar k r' => hb k r' x.1 x.2 := by
+  have h1 : Continuous fun x : HPar k r' => herm (Hpk k r') x.1 x.1 := by
+    first
+      | exact (continuous_herm (Hpk k r')).comp (continuous_fst.prodMk continuous_fst)
+      | exact (continuous_herm (Hpk k r')).comp (continuous_fst.prod_mk continuous_fst)
+  unfold hb
+  first
+    | fun_prop
+    | exact (Complex.continuous_ofReal.comp ((Complex.continuous_re.comp h1).neg.div_const 2)).add
+        ((Complex.continuous_ofReal.comp continuous_snd).mul continuous_const)
 
-
-
-
-
-
-
-
-
-
-lemma continuous_heis0 (k r' : ℕ) : Continuous (heis0 k r') := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
+lemma continuous_heis0 (k r' : ℕ) : Continuous (heis0 k r') := by
+  have hv : Continuous fun x : HPar k r' => liftVec k 1 r' x.1 := (continuous_lift k r').comp continuous_fst
+  have hb' : Continuous fun x : HPar k r' => hb k r' x.1 x.2 := continuous_hb k r'
+  have hh : ∀ j, Continuous fun x : HPar k r' => herm (Hpk k (1 + r')) (bvec j) (liftVec k 1 r' x.1) := by
+    intro j
+    first
+      | exact (continuous_herm _).comp (continuous_const.prodMk hv)
+      | exact (continuous_herm _).comp (continuous_const.prod_mk hv)
+  refine continuous_pi fun p => continuous_pi fun q => ?_
+  simp only [heis0, heisG, Matrix.sub_apply, Matrix.add_apply, Matrix.vecMulVec_apply, Matrix.one_apply, Pi.add_apply,
+    Pi.smul_apply, smul_eq_mul]
+  have hvp : Continuous fun x : HPar k r' => liftVec k 1 r' x.1 p := (continuous_apply p).comp hv
+  fun_prop
 
 def heisF (k r' : ℕ) (x : HPar k r') : Mt k (1 + r') := heis0 k r' x
 
@@ -784,19 +784,19 @@ theorem heisF_meas : Measurable (heisF k r') := by
 
 def bcF (k r : ℕ) (c : Fin r → ℂ) : Mt k r := bigCell k r c 1
 
-theorem bcF_meas : Measurable (bcF k r) := by sorry
-
-
-
-
+theorem bcF_meas : Measurable (bcF k r) := by
+  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  show Measurable fun c : Fin r → ℂ => bigCell k r c 1 i j
+  simp only [bigCell]
+  split_ifs <;> first | exact measurable_const | exact measurable_pi_apply _ | exact (continuous_star.measurable.comp (measurable_pi_apply _)).inv | exact continuous_star.measurable.inv | exact measurable_id | fun_prop | measurability
 
 def w0F (k r' : ℕ) (c : ℂ) : Mt k (1 + r') := w0 k r' c
 
-theorem long_weyl_element_measurable : Measurable (w0F k r') := by sorry
-
-
-
-
+theorem long_weyl_element_measurable : Measurable (w0F k r') := by
+  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  show Measurable fun c : ℂ => w0 k r' c i j
+  simp only [w0]
+  split_ifs <;> first | exact measurable_const | exact measurable_pi_apply _ | exact (continuous_star.measurable.comp (measurable_pi_apply _)).inv | exact continuous_star.measurable.inv | exact measurable_id | fun_prop | measurability
 
 theorem cell_meas {α : Type*} [MeasurableSpace α] {N T M N' : α → Mt k r} (hN : Measurable N) (hT : Measurable T)
     (hM : Measurable M) (hN' : Measurable N') :

@@ -177,7 +177,7 @@ theorem splitsCompletely_iff_ncard_primesOver (v : HeightOneSpectrum (𝓞 K)) :
   have key : (v.asIdeal.primesOver (𝓞 L)).ncard = ∑ _q : v.asIdeal.primesOver (𝓞 L), 1 := by
     rw [← Nat.card_coe_set_eq, Nat.card_eq_fintype_card, Fintype.card_eq_sum_ones]
   rw [key, ← hsum, Finset.sum_eq_sum_iff_of_le (fun q _ => Nat.one_le_iff_ne_zero.mpr
-    (Nat.mul_ne_zero (Ideal.ramificationIdx_pos q.1 (𝓞 K)).ne'
+    (Nat.mul_ne_zero (Ideal.ramificationIdx_pos (R := 𝓞 K) q.1).ne'
       (Ideal.inertiaDeg_pos q.1 (𝓞 K)).ne'))]
   constructor
   · intro h q _
@@ -325,7 +325,7 @@ theorem dvd_differentIdeal_of_ramificationIdx_ne_one {w : HeightOneSpectrum (�
     (h : w.asIdeal.ramificationIdx (𝓞 K) ≠ 1) :
     w.asIdeal ∣ differentIdeal (𝓞 K) (𝓞 L) := by
   have h2 : 2 ≤ w.asIdeal.ramificationIdx (𝓞 K) := by
-    have := Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)
+    have := Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal
     omega
   set v := w.asIdeal.under (𝓞 K)
   have hv0 : v ≠ ⊥ := mt Ideal.eq_bot_of_comap_eq_bot w.ne_bot

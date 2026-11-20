@@ -267,7 +267,7 @@ private theorem ramificationIdx_mul_inertiaDeg_eq_one_of_splitsIn (hs : SplitsIn
     intro q
     haveI : q.1.IsPrime := q.2.1
     exact Nat.one_le_iff_ne_zero.2
-      (Nat.mul_ne_zero (Ideal.ramificationIdx_pos q.1 ℤ).ne' (Ideal.inertiaDeg_pos q.1 ℤ).ne')
+      (Nat.mul_ne_zero (Ideal.ramificationIdx_pos (R := ℤ) q.1).ne' (Ideal.inertiaDeg_pos q.1 ℤ).ne')
   let q0 : (Ideal.span {(l : ℤ)}).primesOver (𝓞 E) := ⟨w.asIdeal, w.isPrime, inferInstance⟩
   by_contra hne
   have hlt : ∑ _q : (Ideal.span {(l : ℤ)}).primesOver (𝓞 E), (1 : ℕ) <
@@ -300,7 +300,7 @@ theorem finrank_compl [Algebra ℚ_[l] (w.adicCompletion E)]
     IsFractionRing.finrank_eq ℤ_[l] ℚ_[l] (w.adicCompletionIntegers E) (w.adicCompletion E)
   have hpos : 0 < Module.finrank ℚ_[l] (w.adicCompletion E) := by
     rw [hK, hrank]
-    exact Nat.mul_pos (Ideal.ramificationIdx_pos w.asIdeal ℤ) (Ideal.inertiaDeg_pos w.asIdeal ℤ)
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := ℤ) w.asIdeal) (Ideal.inertiaDeg_pos w.asIdeal ℤ)
   haveI : Module.Finite ℚ_[l] (w.adicCompletion E) := Module.finite_of_finrank_pos hpos
   refine ⟨inferInstance, hK.trans hrank, fun hs => ?_⟩
   have h1 : Module.finrank ℚ_[l] (w.adicCompletion E) = 1 := by

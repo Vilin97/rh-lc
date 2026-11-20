@@ -51,7 +51,7 @@ theorem omVUnram_holds : OmVUnram X := by
   have : Fintype (v.asIdeal.primesOver (𝓞 X.B.I.E)) := Fintype.ofFinite _
   have hsum := Ideal.sum_ramification_inertia_eq_finrank v.asIdeal (𝓞 X.B.I.E)
   rw [finrank_OE X] at hsum
-  have he := Ideal.ramificationIdx_pos P (𝓞 X.B.I.F)
+  have he := Ideal.ramificationIdx_pos (R := 𝓞 X.B.I.F) P
   have hf := Ideal.inertiaDeg_pos P (𝓞 X.B.I.F)
   have hmem : P ∈ v.asIdeal.primesOver (𝓞 X.B.I.E) := ⟨hP, inferInstance⟩
   have hle := Finset.single_le_sum
@@ -82,7 +82,7 @@ theorem omVUnram_holds : OmVUnram X := by
       (f := fun q : v.asIdeal.primesOver (𝓞 X.B.I.E) => q.1.ramificationIdx (𝓞 X.B.I.F) * q.1.inertiaDeg (𝓞 X.B.I.F))
       (Finset.subset_univ {⟨P, hmem⟩, ⟨P.comap (tau X), hQmem⟩})
     rw [Finset.sum_pair hneq] at h3
-    have heQ := Ideal.ramificationIdx_pos (P.comap (tau X)) (𝓞 X.B.I.F)
+    have heQ := Ideal.ramificationIdx_pos (R := 𝓞 X.B.I.F) (P.comap (tau X))
     have hfQ := Ideal.inertiaDeg_pos (P.comap (tau X)) (𝓞 X.B.I.F)
     simp only at h3
     have h4 : 1 ≤ (P.comap (tau X)).ramificationIdx (𝓞 X.B.I.F) * (P.comap (tau X)).inertiaDeg (𝓞 X.B.I.F) :=

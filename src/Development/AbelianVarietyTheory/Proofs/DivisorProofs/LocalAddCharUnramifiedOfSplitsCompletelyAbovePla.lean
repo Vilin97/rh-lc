@@ -37,7 +37,7 @@ theorem ramificationIdx_eq_one_of_splitsFully (v : HeightOneSpectrum (𝓞 F))
   rw [RingOfIntegers.rank] at hsum
   have hpos : ∀ r ∈ (Finset.univ : Finset (P.primesOver (𝓞 E))),
       (fun _ => 1) r ≤ r.1.ramificationIdx ℤ * r.1.inertiaDeg ℤ := fun r _ =>
-    Nat.mul_pos (Ideal.ramificationIdx_pos r.1 ℤ) (Ideal.inertiaDeg_pos r.1 ℤ)
+    Nat.mul_pos (Ideal.ramificationIdx_pos (R := ℤ) r.1) (Ideal.inertiaDeg_pos r.1 ℤ)
   have hall := (Finset.sum_eq_sum_iff_of_le hpos).1 (by rw [← Fintype.card_eq_sum_ones, hcard, hsum])
   have hm := (hall ⟨q, hq⟩ (Finset.mem_univ _)).symm
   exact Nat.eq_one_of_mul_eq_one_right hm

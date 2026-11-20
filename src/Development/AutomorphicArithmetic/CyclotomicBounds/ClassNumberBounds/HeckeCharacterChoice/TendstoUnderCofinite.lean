@@ -89,7 +89,7 @@ theorem valued_complMap (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum 
   by_cases hx : x = 0
   · subst hx
     have := w.isPrime
-    rw [map_zero, map_zero, map_zero, zero_pow (Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)).ne']
+    rw [map_zero, map_zero, map_zero, zero_pow (Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal).ne']
   have hx' : complMap v w x ≠ 0 := (map_ne_zero _).2 hx
   have h1 : {y | Valued.v y = Valued.v x} ∈ nhds x :=
     Valued.locally_const ((Valuation.ne_zero_iff _).2 hx)

@@ -109,23 +109,23 @@ private lemma derivAtZero_eq_tsum_jacobiTheta₂'_term {w : ℂ} (hw : 0 < w.im)
 open Complex Filter in
 open scoped UpperHalfPlane MatrixGroups ModularForm Manifold Topology Real in
 theorem _root_.GlobalTheory.JacobiDeriv.differentiableAt_derivAtZero {τ : ℂ} (hτ : 0 < τ.im) :
-    DifferentiableAt ℂ _root_.GlobalTheory.JacobiDeriv.derivAtZero τ := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    DifferentiableAt ℂ _root_.GlobalTheory.JacobiDeriv.derivAtZero τ := by
+  have hy : 0 < τ.im / 2 := by linarith
+  have hU : IsOpen {w : ℂ | τ.im / 2 < w.im} := isOpen_lt continuous_const continuous_im
+  have hd : DifferentiableOn ℂ (fun w => ∑' n : ℤ, jacobiTheta₂'_term n ((w + 1) / 2) w)
+      {w : ℂ | τ.im / 2 < w.im} := by
+    refine differentiableOn_tsum_of_summable_norm
+      ((summable_pow_mul_jacobiTheta₂_term_bound (τ.im / 2 / 2) hy 1).mul_left (2 * π))
+      (fun n => ?_) hU (fun n w hw => norm_jacobiTheta₂'_term_half_period_le n hy.le (le_of_lt hw))
+    unfold jacobiTheta₂'_term jacobiTheta₂_term
+    fun_prop
+  have hτU : τ ∈ {w : ℂ | τ.im / 2 < w.im} := by
+    show τ.im / 2 < τ.im
+    linarith
+  refine (hd.differentiableAt (hU.mem_nhds hτU)).congr_of_eventuallyEq ?_
+  filter_upwards [(isOpen_lt continuous_const continuous_im).mem_nhds (show (0 : ℝ) < τ.im from hτ)]
+    with w hw
+  exact derivAtZero_eq_tsum_jacobiTheta₂'_term hw
 
 open Complex Filter in
 open scoped UpperHalfPlane MatrixGroups ModularForm Manifold Topology Real in

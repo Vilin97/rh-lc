@@ -63,7 +63,7 @@ theorem completionMap_algebraMap (x : K) :
 theorem valued_completionMap (x : v.adicCompletion K) :
     Valued.v (completionMap v w x) = Valued.v x ^ w.asIdeal.ramificationIdx (𝓞 K) := by
   set e := w.asIdeal.ramificationIdx (𝓞 K) with he
-  have he0 : e ≠ 0 := (Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)).ne'
+  have he0 : e ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal).ne'
   have hK : ∀ k : K, Valued.v (completionMap v w (algebraMap K _ k)) =
       Valued.v (algebraMap K (v.adicCompletion K) k) ^ e := by
     intro k

@@ -33,7 +33,7 @@ theorem isUnramifiedAt_of_isSplitAt : ∀ (L : Type) [Field L] [NumberField L] [
     haveI := hPp; haveI := hPl
     have h1 : 0 < p.ramificationIdx' P := by
       rw [Ideal.ramificationIdx'_eq_ramificationIdx p P hp0]
-      exact Ideal.ramificationIdx_pos P (𝓞 K)
+      exact Ideal.ramificationIdx_pos (R := 𝓞 K) P
     have h2 : 0 < p.inertiaDeg' P := Ideal.inertiaDeg'_pos p P
     exact Nat.one_le_iff_ne_zero.2 (Nat.mul_ne_zero h1.ne' h2.ne')
   have hpair : ({w.asIdeal, u.asIdeal} : Finset (Ideal (𝓞 L))) ⊆ IsDedekindDomain.primesOverFinset p (𝓞 L) := by

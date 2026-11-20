@@ -225,7 +225,7 @@ theorem gUnramC_holds : GUnramC := by
   have hpos : ∀ q : (Ideal.span {((D.host.g i : ℕ) : ℤ)}).primesOver (𝓞 D.host.E),
       1 ≤ q.1.ramificationIdx ℤ * q.1.inertiaDeg ℤ := by
     rintro ⟨q, h1, h2⟩
-    exact Nat.mul_pos (Ideal.ramificationIdx_pos q ℤ) (Ideal.inertiaDeg_pos q ℤ)
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := ℤ) q) (Ideal.inertiaDeg_pos q ℤ)
   have hall : ∀ q : (Ideal.span {((D.host.g i : ℕ) : ℤ)}).primesOver (𝓞 D.host.E),
       q.1.ramificationIdx ℤ * q.1.inertiaDeg ℤ = 1 := by
     intro q0

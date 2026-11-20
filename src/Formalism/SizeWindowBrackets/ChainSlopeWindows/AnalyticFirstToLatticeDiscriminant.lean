@@ -85,7 +85,7 @@ theorem analytic_first_to_lattice_discriminant : Core6aToCore2d := by
 
 theorem ramE_one_le {K : Type} [Field K] [NumberField K] (w : slopeLatticeData.FinPl K) : 1 ≤ ramE w := by
   have := w.2.isPrime
-  have h : 0 < w.1.ramificationIdx ℤ := Ideal.ramificationIdx_pos w.1 ℤ
+  have h : 0 < w.1.ramificationIdx ℤ := Ideal.ramificationIdx_pos (R := ℤ) w.1
   unfold ramE
   exact_mod_cast h
 

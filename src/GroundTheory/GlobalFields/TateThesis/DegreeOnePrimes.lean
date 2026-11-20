@@ -16,7 +16,7 @@ theorem card_primesOver_le_finrank {R S : Type*} [CommRing R] [IsDomain R] [Comm
     Fintype.card_eq_sum_ones]
   refine Finset.sum_le_sum fun q _ => ?_
   exact Nat.one_le_iff_ne_zero.mpr
-    (Nat.mul_ne_zero (Ideal.ramificationIdx_pos q.1 R).ne' (Ideal.inertiaDeg_pos q.1 R).ne')
+    (Nat.mul_ne_zero (Ideal.ramificationIdx_pos (R := R) q.1).ne' (Ideal.inertiaDeg_pos q.1 R).ne')
 
 variable {K L : Type*} [Field L] [NumberField L]
 

@@ -98,7 +98,7 @@ theorem fibreShape_of (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       1 ≤ q.1.ramificationIdx (𝓞 F) * q.1.inertiaDeg (𝓞 F) := by
     intro q
     have := q.2.1
-    exact Nat.mul_pos (Ideal.ramificationIdx_pos q.1 (𝓞 F)) (Ideal.inertiaDeg_pos q.1 (𝓞 F))
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := 𝓞 F) q.1) (Ideal.inertiaDeg_pos q.1 (𝓞 F))
   let p0 : v.primesOver (𝓞 E) := ⟨P, hPmax.isPrime, hPv⟩
   by_cases hfixP : P.map σ = P
   · left

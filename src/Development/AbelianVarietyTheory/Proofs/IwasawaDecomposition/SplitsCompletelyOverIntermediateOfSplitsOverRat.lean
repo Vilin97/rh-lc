@@ -29,7 +29,7 @@ theorem splits_completely_of_intermediate :
     · intro Q hQ
       exact (hcount ⟨Q, hQ⟩ (Finset.mem_univ _)).symm
     · rintro ⟨Q, hQ, _⟩ -
-      exact Nat.mul_pos (Ideal.ramificationIdx_pos Q _) (Ideal.inertiaDeg_pos Q _)
+      exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := _) Q) (Ideal.inertiaDeg_pos Q _)
   intro Q hQ
   obtain ⟨hQp, hQ𝔭⟩ := hQ
   haveI := 𝔭.isPrime

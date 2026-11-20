@@ -26,7 +26,7 @@ variable {K : Type} [Field K] [NumberField K]
 theorem ramE_pos (w : slopeLatticeData.FinPl K) : 0 < ramE w := by
   have := w.2.isPrime
   unfold ramE
-  exact_mod_cast Ideal.ramificationIdx_pos w.1 ℤ
+  exact_mod_cast Ideal.ramificationIdx_pos (R := ℤ) w.1
 
 theorem ell_nonneg (w : slopeLatticeData.FinPl K) : 0 ≤ slopeLatticeData.ell w := by
   unfold slopeLatticeData.ell

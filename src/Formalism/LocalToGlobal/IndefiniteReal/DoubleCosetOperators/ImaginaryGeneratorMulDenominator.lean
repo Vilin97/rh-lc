@@ -83,7 +83,7 @@ theorem card_residue_of_split (g : ℕ) (hg : g.Prime) (w : HeightOneSpectrum (�
     intro q _
     have := q.2.1
     exact Nat.one_le_iff_ne_zero.mpr
-      (Nat.mul_ne_zero (Ideal.ramificationIdx_pos q.1 ℤ).ne' (Ideal.inertiaDeg_pos q.1 ℤ).ne')
+      (Nat.mul_ne_zero (Ideal.ramificationIdx_pos (R := ℤ) q.1).ne' (Ideal.inertiaDeg_pos q.1 ℤ).ne')
   have hones : ∑ q : p.primesOver (𝓞 E), (1 : ℕ) =
       ∑ q : p.primesOver (𝓞 E), q.1.ramificationIdx ℤ * q.1.inertiaDeg ℤ := by
     rw [hsum, Finset.sum_const, smul_eq_mul, mul_one, Finset.card_univ, hcard]

@@ -157,7 +157,7 @@ theorem placesOver_finite (E : Type) [Field E] [NumberField E] {l : ℕ} (hl : l
 theorem nLam_pos (D : D7) (lam : HeightOneSpectrum (𝓞 D.host.E)) : 1 ≤ nLam D lam := by
   unfold nLam Formalism.MainNotions.N.locDeg
   have := lam.isPrime
-  have h1 := Ideal.ramificationIdx_pos lam.asIdeal ℤ
+  have h1 := Ideal.ramificationIdx_pos (R := ℤ) lam.asIdeal
   have h2 := Ideal.inertiaDeg_pos lam.asIdeal ℤ
   exact Nat.one_le_iff_ne_zero.2 (Nat.mul_ne_zero h1.ne' h2.ne')
 

@@ -29,7 +29,7 @@ private theorem pow1 {x : WithZero (Multiplicative ℤ)} {n : ℕ} (hn : n ≠ 0
   · exact absurd h (one_lt_pow' h1 hn).ne'
 
 private theorem e_ne : w.asIdeal.ramificationIdx (𝓞 F) ≠ 0 :=
-  (Ideal.ramificationIdx_pos w.asIdeal (𝓞 F)).ne'
+  (Ideal.ramificationIdx_pos (R := 𝓞 F) w.asIdeal).ne'
 
 private theorem theta_unit (hd : Valued.v (algebraMap F (Kv v) D.δ) = 1) : Valued.v θw = 1 := by
   have h := congrArg Valued.v (UpperTheory.ConvolutionTheory.R2.H.nearSquareValuations.iota_delta D v w)

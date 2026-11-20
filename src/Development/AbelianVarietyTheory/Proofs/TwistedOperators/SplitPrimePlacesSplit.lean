@@ -65,7 +65,7 @@ theorem isSplit_of_norm {F E : Type} [Field F] [NumberField F] [Field E] [Number
       apply hsq
       have hin := hmap (Ideal.mem_map_of_mem (algebraMap (𝓞 F) (𝓞 E)) hv)
       simpa using hin
-    have hpos : 0 < Q.ramificationIdx (𝓞 F) := Ideal.ramificationIdx_pos Q (𝓞 F)
+    have hpos : 0 < Q.ramificationIdx (𝓞 F) := Ideal.ramificationIdx_pos (R := 𝓞 F) Q
     show Q.ramificationIdx (𝓞 F) = 1
     omega
 

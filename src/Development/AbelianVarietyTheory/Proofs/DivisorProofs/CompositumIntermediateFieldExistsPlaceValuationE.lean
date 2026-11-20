@@ -23,7 +23,7 @@ theorem ramificationIdx_eq_one_iff_fix (k E N : Type) [Field k] [NumberField k] 
   have h2 := card_inertia E N Q
   have h3 : Q.ramificationIdx (𝓞 k) = (Q.under (𝓞 E)).ramificationIdx (𝓞 k) * Q.ramificationIdx (𝓞 E) :=
     Ideal.ramificationIdx_tower (Q.under (𝓞 E)) Q
-  have h4 : 0 < Q.ramificationIdx (𝓞 E) := Ideal.ramificationIdx_pos Q (𝓞 E)
+  have h4 : 0 < Q.ramificationIdx (𝓞 E) := Ideal.ramificationIdx_pos (R := 𝓞 E) Q
   let f : Q.inertia (N ≃ₐ[E] N) → Q.inertia (N ≃ₐ[k] N) := fun σ =>
     ⟨σ.1.restrictScalars k, AddSubgroup.mem_inertia.mpr fun x => AddSubgroup.mem_inertia.mp σ.2 x⟩
   have hf : Function.Injective f := fun σ σ' h =>

@@ -11,7 +11,7 @@ theorem ramified_dvd_differentIdeal {w : HeightOneSpectrum (𝓞 L)}
     (h : w.asIdeal.ramificationIdx (𝓞 K) ≠ 1) :
     w.asIdeal ∣ differentIdeal (𝓞 K) (𝓞 L) := by
   have h2 : 2 ≤ w.asIdeal.ramificationIdx (𝓞 K) := by
-    have := Ideal.ramificationIdx_pos w.asIdeal (𝓞 K)
+    have := Ideal.ramificationIdx_pos (R := 𝓞 K) w.asIdeal
     omega
   set v := w.asIdeal.under (𝓞 K)
   have hv0 : v ≠ ⊥ := mt Ideal.eq_bot_of_comap_eq_bot w.ne_bot

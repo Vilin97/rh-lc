@@ -34,7 +34,7 @@ theorem card_quot_of_two {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     have h1 : 0 < p.inertiaDeg' Q := Ideal.inertiaDeg'_pos p Q
     have h2 : 0 < p.ramificationIdx' Q := by
       rw [Ideal.ramificationIdx'_eq_ramificationIdx p Q hp0]
-      exact Ideal.ramificationIdx_pos Q (𝓞 F)
+      exact Ideal.ramificationIdx_pos (R := 𝓞 F) Q
     exact Nat.one_le_iff_ne_zero.2 (Nat.mul_ne_zero h2.ne' h1.ne')
   have heq := (Finset.sum_eq_sum_iff_of_le hle).1 (by rw [hsum, hr, Finset.sum_const, hcard]; rfl)
   have hPm : P.asIdeal ∈ IsDedekindDomain.primesOverFinset p (𝓞 E) :=

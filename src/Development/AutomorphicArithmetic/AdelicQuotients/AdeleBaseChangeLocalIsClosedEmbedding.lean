@@ -59,7 +59,7 @@ private theorem exists_small (v : HeightOneSpectrum (𝓞 F)) (g : (WithZero (Mu
 
 private theorem ce_compl (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum (𝓞 E)) [w.asIdeal.LiesOver v.asIdeal] :
     IsClosedEmbedding (completionMap v w) := by
-  have he0 : w.asIdeal.ramificationIdx (𝓞 F) ≠ 0 := (Ideal.ramificationIdx_pos w.asIdeal (𝓞 F)).ne'
+  have he0 : w.asIdeal.ramificationIdx (𝓞 F) ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 F) w.asIdeal).ne'
   have hind : IsInducing (completionMap v w) := by
     rw [IsTopologicalAddGroup.isInducing_iff_nhds_zero]
     refine le_antisymm ?_ ?_

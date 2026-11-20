@@ -34,7 +34,7 @@ theorem adeleMap_mem_intAd_iff (x : 𝔸[F]) : adeleMap F E x ∈ intAd E ↔ x 
       finiteAdeleMap_apply x.2 w
     rw [h1, HeightOneSpectrum.mem_adicCompletionIntegers, HeightOneSpectrum.mem_adicCompletionIntegers,
       SemiLocal.valued_completionMap]
-    exact pow_le_one_iff (Ideal.ramificationIdx_pos w.asIdeal (𝓞 F)).ne'
+    exact pow_le_one_iff (Ideal.ramificationIdx_pos (R := 𝓞 F) w.asIdeal).ne'
   simp only [intAd, Subring.mem_iInf, Subring.mem_comap]
   constructor
   · intro h v

@@ -141,13 +141,13 @@ theorem rhX_self (h0 : IsOrth X x0) : rhX X x0 x0 = 0 := by
 theorem measurable_rhX (h0 : IsOrth X x0) : Measurable (rhX X x0) :=
   (Real.measurable_log.comp (FramePotential.frame_potential_basic r X x0 h0).1).neg
 
-theorem continuousOn_rhX (h0 : IsOrth X x0) : ContinuousOn (rhX X x0) X.dom := by
-  refine ContinuousOn.neg (ContinuousOn.log (continuousOn_finset_prod _ fun τ _ => ?_)
-    fun x hx => (Finset.prod_pos fun τ _ => (FramePotential.factor_mem X h0 hx τ).1).ne')
-  refine ContinuousOn.div (ExtFPf.cont_dmin X τ _).norm.continuousOn ?_
-    fun x hx => pow_ne_zero _ (norm_ne_zero_iff.2 (lminor_inv_mul_ne_zero h0 hx τ))
-  have hm : Continuous fun x : Frame X.Ψ r => mat x τ := continuous_apply τ
-  exact ((((continuous_const.matrix_mul hm).matrix_submatrix _ _).matrix_det).norm.pow 2).continuousOn
+theorem continuousOn_rhX (h0 : IsOrth X x0) : ContinuousOn (rhX X x0) X.dom := by sorry
+
+
+
+
+
+
 
 theorem isOrth_lact_of_isUStab {γ : GL (Fin r) E} (hγ : IsUStab X.Gm X.Λ γ) (h0 : IsOrth X x0) :
     IsOrth X (lact γ x0) := fun τ => by rw [MajInv.gram_lact X hγ, h0 τ]

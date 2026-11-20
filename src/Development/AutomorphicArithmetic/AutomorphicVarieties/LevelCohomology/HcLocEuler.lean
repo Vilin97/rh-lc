@@ -13,7 +13,7 @@ private noncomputable def subquotEquiv {R R' X : Type*} [CommRing R] [CommRing R
 private theorem ef_eq_one (v : HeightOneSpectrum (𝓞 ℚ)) : v.asIdeal.ramificationIdx ℤ * v.asIdeal.inertiaDeg ℤ = 1 := by
   classical
   haveI := v.isPrime
-  have h1 := Ideal.ramificationIdx_pos v.asIdeal ℤ
+  have h1 := Ideal.ramificationIdx_pos (R := ℤ) v.asIdeal
   have h2 := Ideal.inertiaDeg_pos v.asIdeal ℤ
   have hsum := Ideal.sum_ramification_inertia_eq_finrank (v.asIdeal.under ℤ) (NumberField.RingOfIntegers ℚ)
   rw [NumberField.RingOfIntegers.rank, Module.finrank_self] at hsum

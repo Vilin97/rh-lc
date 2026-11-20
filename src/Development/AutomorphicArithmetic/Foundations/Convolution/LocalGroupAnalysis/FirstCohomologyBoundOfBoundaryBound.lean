@@ -259,7 +259,7 @@ private theorem alg_mem {v : HeightOneSpectrum (𝓞 F)}
   have hv : ∀ w : PlacesOver E v, algebraMap _ (CompletionsOver E v) c w ∈ 𝒪[w.1.adicCompletion E] ↔
       c ∈ 𝒪[v.adicCompletion F] := fun w => by
     rw [mem_O, mem_O, Pi.algebraMap_apply, algebraMap_completion_eq, valued_completionMap,
-      pow_le_one_iff (Ideal.ramificationIdx_pos w.1.asIdeal (𝓞 F)).ne']
+      pow_le_one_iff (Ideal.ramificationIdx_pos (R := 𝓞 F) w.1.asIdeal).ne']
   rw [mem_intOver]
   refine ⟨fun h => ?_, fun h w => (hv w).2 h⟩
   rcases isEmpty_or_nonempty (PlacesOver E v) with h0 | ⟨⟨w⟩⟩

@@ -112,7 +112,7 @@ theorem ine_lift {E E' Ω : Type} [Field E] [NumberField E] [Field E'] [NumberFi
       rwa [map_natCast] at this)
     have hlt := Ideal.ramificationIdx'_lt hmap
     rw [Ideal.ramificationIdx'_eq_ramificationIdx w.asIdeal w'.asIdeal w.ne_bot] at hlt
-    have hpos := Ideal.ramificationIdx_pos w'.asIdeal (𝓞 E)
+    have hpos := Ideal.ramificationIdx_pos (R := 𝓞 E) w'.asIdeal
     omega
   have hfix := fix_of_ine A w h w' h' he σ hσ
   let t : G E' Ω := { σ.toRingEquiv with commutes' := hfix }

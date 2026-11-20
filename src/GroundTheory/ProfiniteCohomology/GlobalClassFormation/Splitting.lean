@@ -27,7 +27,7 @@ theorem finiteDimensional_adicCompletion_placesOver (w : PlacesOver E.1 v) :
     FiniteDimensional (v.adicCompletion K.1) (w.1.adicCompletion E.1) :=
   Module.finite_of_finrank_pos (by
     rw [finrank_eq_ramificationIdx_mul_inertiaDeg]
-    exact Nat.mul_pos (Ideal.ramificationIdx_pos w.1.asIdeal (𝓞 K.1)) (Ideal.inertiaDeg_pos w.1.asIdeal (𝓞 K.1)))
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := 𝓞 K.1) w.1.asIdeal) (Ideal.inertiaDeg_pos w.1.asIdeal (𝓞 K.1)))
 
 theorem exists_placeOfEmbedding_eq (w : PlacesOver E.1 v) :
     ∃ ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1), placeOfEmbedding ι E = w := by

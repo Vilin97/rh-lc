@@ -133,7 +133,7 @@ private theorem val_sim {x : E} {q : ℕ} {w : Plc E} (P : Pos x q w) (hq : q.Pr
     have e2 : ((Ideal.absNorm w.asIdeal : ℕ) : u.adicCompletion E) =
         completionMap (below ℚ u) u ((Ideal.absNorm w.asIdeal : ℕ) : (below ℚ u).adicCompletion ℚ) := (map_natCast _ _).symm
     rw [e1, e2, valued_completionMap, valued_completionMap] at h
-    exact (pow_left_inj₀ zero_le' zero_le' (Ideal.ramificationIdx_pos u.asIdeal (𝓞 ℚ)).ne').1 h
+    exact (pow_left_inj₀ zero_le' zero_le' (Ideal.ramificationIdx_pos (R := 𝓞 ℚ) u.asIdeal).ne').1 h
   obtain ⟨u0, hu0⟩ := exists_over (E := E) v
   by_cases hq0 : (q : 𝓞 E) ∈ u0.asIdeal
   · obtain ⟨u, hu, hc⟩ : ∃ u : Plc E, below ℚ u = v ∧ SameK x (cj u) w :=

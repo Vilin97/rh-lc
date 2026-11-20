@@ -56,19 +56,19 @@ def uPair {D : ℕ} (j : Fin (D + 1)) (u : (Fin (D + 1) → ℂ) → ℝ) (q : �
   u (Fin.insertNth j q.1 q.2)
 
 theorem contDiff_insertNth_pair {D : ℕ} (j : Fin (D + 1)) :
-    ContDiff ℝ 2 (fun q : ℂ × (Fin D → ℂ) => (Fin.insertNth j q.1 q.2 : Fin (D + 1) → ℂ)) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
+    ContDiff ℝ 2 (fun q : ℂ × (Fin D → ℂ) => (Fin.insertNth j q.1 q.2 : Fin (D + 1) → ℂ)) := by
+  refine contDiff_pi.2 fun k => ?_
+  by_cases hk : k = j
+  · subst hk
+    have e : (fun q : ℂ × (Fin D → ℂ) => (Fin.insertNth k q.1 q.2 : Fin (D + 1) → ℂ) k) =
+        fun q => q.1 := funext fun q => Fin.insertNth_apply_same _ _ _
+    rw [e]
+    exact contDiff_fst
+  · obtain ⟨i, rfl⟩ := Fin.exists_succAbove_eq hk
+    have e : (fun q : ℂ × (Fin D → ℂ) => (Fin.insertNth j q.1 q.2 : Fin (D + 1) → ℂ) (j.succAbove i)) =
+        fun q => q.2 i := funext fun q => Fin.insertNth_apply_succAbove _ _ _ _
+    rw [e]
+    exact (contDiff_apply ℝ ℂ i).comp contDiff_snd
 
 theorem uPair_contDiff {D : ℕ} (j : Fin (D + 1)) {u : (Fin (D + 1) → ℂ) → ℝ}
     (hu : ContDiff ℝ 2 u) : ContDiff ℝ 2 (uPair j u) := by

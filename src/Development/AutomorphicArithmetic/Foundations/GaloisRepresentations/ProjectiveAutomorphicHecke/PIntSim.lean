@@ -53,4 +53,4 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pIntSim_of :
       _ = _ := mul_one _
   have h4 : Valued.v (GroundTheory.Global.SemiLocal.completionMap (below ℚ u) u (((sim k : AfQˣ) : AfQ) (below ℚ u))) = 1 := h3
   rw [GroundTheory.Global.SemiLocal.valued_completionMap] at h4
-  exact (pow_eq_one_iff.1 h4).resolve_right (Ideal.ramificationIdx_pos u.asIdeal (𝓞 ℚ)).ne'
+  exact (pow_eq_one_iff.1 h4).resolve_right (Ideal.ramificationIdx_pos (R := 𝓞 ℚ) u.asIdeal).ne'

@@ -57,7 +57,7 @@ theorem norm_mass_assembly : NormAssembly := by
   have he : ∀ P : HeightOneSpectrum (𝓞 K), P.asIdeal.ramificationIdx (𝓞 F) ≠ 0 := by
     intro P
     haveI := P.isPrime
-    exact (Ideal.ramificationIdx_pos P.asIdeal (𝓞 F)).ne'
+    exact (Ideal.ramificationIdx_pos (R := 𝓞 F) P.asIdeal).ne'
 
   have hfinJ := FractionalIdeal.finite_factors (K := K) J
   have hsupp : {v : HeightOneSpectrum (𝓞 F) | wv v ≠ 0}.Finite := by

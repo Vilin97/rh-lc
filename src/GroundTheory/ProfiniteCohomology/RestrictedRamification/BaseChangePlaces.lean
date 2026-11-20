@@ -149,7 +149,7 @@ theorem finiteDimensional_adicCompletion_of_placesOver (w : PlacesOver L v) :
     FiniteDimensional (v.adicCompletion F) (w.1.adicCompletion L) :=
   Module.finite_of_finrank_pos (by
     rw [finrank_eq_ramificationIdx_mul_inertiaDeg]
-    exact Nat.mul_pos (Ideal.ramificationIdx_pos w.1.asIdeal (𝓞 F))
+    exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := 𝓞 F) w.1.asIdeal)
       (Ideal.inertiaDeg_pos w.1.asIdeal (𝓞 F)))
 
 theorem exists_placeOfAlgHom_eq (w : PlacesOver L v) :

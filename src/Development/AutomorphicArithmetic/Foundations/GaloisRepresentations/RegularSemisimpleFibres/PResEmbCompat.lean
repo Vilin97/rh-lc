@@ -69,7 +69,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.resEmbCompat :
   obtain ⟨j, hj⟩ := exists_equiv_of_fin e e'
   have eqv : (valuation (v.adicCompletion K)).IsEquiv Valued.v := ValuativeRel.isEquiv _ _
   have eqw : (valuation (w.1.adicCompletion M)).IsEquiv Valued.v := ValuativeRel.isEquiv _ _
-  have he0 : w.1.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos w.1.asIdeal (𝓞 K)).ne'
+  have he0 : w.1.asIdeal.ramificationIdx (𝓞 K) ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 K) w.1.asIdeal).ne'
   let f : 𝒪[v.adicCompletion K] →+* 𝒪[w.1.adicCompletion M] :=
     (completionMap v w.1).comp (algebraMap 𝒪[v.adicCompletion K] (v.adicCompletion K)) |>.codRestrict
       (𝒪[w.1.adicCompletion M]) (fun x => by

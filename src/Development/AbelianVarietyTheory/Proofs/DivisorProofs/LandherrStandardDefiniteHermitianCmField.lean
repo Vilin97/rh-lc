@@ -19,7 +19,7 @@ theorem finrank_pos (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))) (u : 
     [u.asIdeal.LiesOver v.asIdeal] :
     0 < Module.finrank (v.adicCompletion (maximalRealSubfield E)) (u.adicCompletion E) := by
   rw [finrank_eq_ramificationIdx_mul_inertiaDeg E v u]
-  exact Nat.mul_pos (Ideal.ramificationIdx_pos u.asIdeal _) (Ideal.inertiaDeg_pos _ _)
+  exact Nat.mul_pos (Ideal.ramificationIdx_pos (R := _) u.asIdeal) (Ideal.inertiaDeg_pos _ _)
 
 theorem det_map' {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) R) : (M.map f).det = f M.det :=

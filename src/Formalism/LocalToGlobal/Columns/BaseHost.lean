@@ -338,7 +338,7 @@ theorem ram_conj_mem {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     exact hfin.le_multiplicity_of_pow_dvd (Ideal.dvd_iff_le.2 hP)
   have hfP : 0 < P.asIdeal.inertiaDeg (𝓞 F) := Ideal.inertiaDeg_pos P.asIdeal (𝓞 F)
   have hfQ : 0 < Q.inertiaDeg (𝓞 F) := Ideal.inertiaDeg_pos Q (𝓞 F)
-  have heQ : 0 < Q.ramificationIdx (𝓞 F) := Ideal.ramificationIdx_pos Q (𝓞 F)
+  have heQ : 0 < Q.ramificationIdx (𝓞 F) := Ideal.ramificationIdx_pos (R := 𝓞 F) Q
   let P' : p.primesOver (𝓞 E) := ⟨P.asIdeal, hPprime, hlies⟩
   let Q' : p.primesOver (𝓞 E) := ⟨Q, hQprime, hQlies⟩
 

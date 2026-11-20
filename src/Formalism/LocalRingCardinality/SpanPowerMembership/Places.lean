@@ -177,7 +177,7 @@ instance liesOver_resCharW (w : HeightOneSpectrum (𝓞 K)) :
 
 theorem eWL_pos (w : HeightOneSpectrum (𝓞 K)) : 0 < eWL K w := by
   have := w.isPrime
-  exact Ideal.ramificationIdx_pos w.asIdeal ℤ
+  exact Ideal.ramificationIdx_pos (R := ℤ) w.asIdeal
 
 theorem vAdd_resCharW (w : HeightOneSpectrum (𝓞 K)) :
     vAdd w (((resCharW w : ℕ) : K)) = (eWL K w : ℤ) := by

@@ -92,7 +92,7 @@ theorem inert_of_isUnramInv : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
       · rw [Valuation.map_neg]; exact h1
     exact absurd hx1 (ne_of_lt h3)
   have hfpos := Ideal.inertiaDeg_pos w.asIdeal (𝓞 (maximalRealSubfield L))
-  have hepos := Ideal.ramificationIdx_pos w.asIdeal (𝓞 (maximalRealSubfield L))
+  have hepos := Ideal.ramificationIdx_pos (R := 𝓞 (maximalRealSubfield L)) w.asIdeal
 
   have hG2 : Nat.card (L ≃ₐ[maximalRealSubfield L] L) = 2 := by
     rw [IsGalois.card_aut_eq_finrank, Algebra.IsQuadraticExtension.finrank_eq_two]
@@ -129,7 +129,7 @@ theorem inert_of_isUnramInv : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
       rw [← hsum', ← Finset.sum_pair hWU]
       exact Finset.sum_le_sum_of_subset (Finset.subset_univ _)
     have hu1 := Ideal.inertiaDeg_pos u.asIdeal (𝓞 (maximalRealSubfield L))
-    have hu2 := Ideal.ramificationIdx_pos u.asIdeal (𝓞 (maximalRealSubfield L))
+    have hu2 := Ideal.ramificationIdx_pos (R := 𝓞 (maximalRealSubfield L)) u.asIdeal
     have hFU : 1 ≤ F U := Nat.mul_pos hu2 hu1
     have hFW : F W = 2 := by
       show w.asIdeal.ramificationIdx (𝓞 (maximalRealSubfield L)) *
