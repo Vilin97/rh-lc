@@ -102,7 +102,7 @@ theorem phase_bound {Q : MvPolynomial (Fin N) ℂ} {d : ℕ} (hQ : Q.IsHomogeneo
 
 theorem measurable_normalize :
     Measurable fun (u : Fin 1 × Fin N → ℂ) (j : Fin N) => sphereNormalize (HermNorm.std N) 1 u (0, j) := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   exact ((Complex.measurable_ofReal.comp (LogInt.measurable_groupNorm _ 0)).inv).mul
     (measurable_pi_apply _)
 

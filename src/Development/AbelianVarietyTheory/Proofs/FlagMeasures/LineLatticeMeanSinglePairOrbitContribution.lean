@@ -108,7 +108,7 @@ theorem fixesFirst_blk {k : ℕ} (τ : VecInf E k) (β : MatInf E k) : FixesFirs
 
 theorem measurable_inv_col {k : ℕ} :
     Measurable fun (g : MatInf E (k + 1)) => (fun u a => (Matrix.of (g u))⁻¹ a 0 : VecInf E (k + 1)) :=
-  measurable_pi_lambda _ fun u => measurable_pi_lambda _ fun a => measurable_inv_entry u a 0
+  Measurable.of_eval fun u => Measurable.of_eval fun a => measurable_inv_entry u a 0
 
 theorem map_withDensity_of_invariant {X : Type} [MeasurableSpace X] (μ : Measure X) {f : X → X}
     (hf : Measurable f) (hμ : μ.map f = μ) {G : X → ENNReal} (hG : Measurable G) (hGf : ∀ x, G (f x) = G x) :

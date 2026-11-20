@@ -39,7 +39,7 @@ theorem map_vec_smul {ι : Type} [Fintype ι] (a : ι → (Ad E)ˣ) :
 theorem lintegral_vec_smul {ι : Type} [Fintype ι] (a : ι → (Ad E)ˣ) (G : (ι → Ad E) → ℝ≥0∞) (hG : Measurable G) :
     ∫⁻ x, G (fun p => a p • x p) ∂vecMeasure E ι =
       (∏ p, ENNReal.ofReal ((GroundTheory.Global.IdeleGroup.ideleModule E (a p) : ℝ))⁻¹) * ∫⁻ x, G x ∂vecMeasure E ι := by
-  have hf : Measurable (fun (x : ι → Ad E) p => a p • x p) := measurable_pi_lambda _ fun p =>
+  have hf : Measurable (fun (x : ι → Ad E) p => a p • x p) := Measurable.of_eval fun p =>
     (show Continuous fun x : Ad E => (a p : Ad E) * x from continuous_const_mul _).measurable.comp (measurable_pi_apply p)
   rw [← lintegral_map hG hf, map_vec_smul, lintegral_smul_measure]
   rfl
@@ -133,7 +133,7 @@ theorem nuD_conj (t : GA E k) (u : Fin k → (Ad E)ˣ) (ht : t.val = diagonal fu
         F (t * (blkU p.1 * p.2) * t⁻¹) := hFc.comp hM
     have hG : Measurable G := hFM.lintegral_prod_right'
     have hf : Measurable (fun (x : UnipotentBlockColumnIndex k (k - (d + 1)) (k - (d + 1)) → Ad E) p => a p • x p) :=
-      measurable_pi_lambda _ fun p =>
+      Measurable.of_eval fun p =>
         (show Continuous fun x : Ad E => (a p : Ad E) * x from continuous_const_mul _).measurable.comp (measurable_pi_apply p)
     have hR : ∫⁻ h, F h ∂nuD E k (d + 1) = ∫⁻ y, G y ∂vecMeasure E _ := by
       change ∫⁻ h, F h ∂(Measure.map _ _) = _

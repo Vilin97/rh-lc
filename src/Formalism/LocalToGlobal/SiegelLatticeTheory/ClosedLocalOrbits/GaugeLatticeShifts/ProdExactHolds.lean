@@ -118,7 +118,7 @@ theorem ProdExact_holds : Formalism.L2.SG.Pf.NcReal.ProdExact := by
     rw [PiM.pi_withDensity _ _ hwm (fun v x => ENNReal.ofReal_ne_top), ← Measure.restrict_pi_pi, good_eq]
     rfl
   set H : (Cinf X) → X.B.I.Ginf := fun c v => hs v (c v) with hHd
-  have hHm : Measurable H := measurable_pi_lambda _ fun v => (hsm v).comp (measurable_pi_apply v)
+  have hHm : Measurable H := Measurable.of_eval fun v => (hsm v).comp (measurable_pi_apply v)
   set μP := Measure.pi fun v => Formalism.L2.SG.Pf.NcReal.muSL (μH v) (μN v) with hμP
   set μP' := Measure.pi fun v => Formalism.L2.SG.Pf.NcReal.muSL (μH' v) (μN' v) with hμP'
   set Fc : Cinf X → ℝ≥0∞ := fun c => ∫⁻ s, ∫⁻ s', φ (s * H c * s'⁻¹) ∂μP' ∂μP with hFc

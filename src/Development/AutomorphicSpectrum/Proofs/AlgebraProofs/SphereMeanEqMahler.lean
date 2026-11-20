@@ -192,7 +192,7 @@ theorem sphere_mean_eq_mahler : ∀ (N k : ℕ) (h : HermNorm N) (B : Matrix (Fi
     rw [map_radial]
     rfl
   have hmeas : Measurable (fun (z : Fin k → EuclideanSpace ℂ (Fin N)) (i : Fin k) => radial p (z i)) :=
-    measurable_pi_lambda _ (fun i => (measurable_radial p).comp (measurable_pi_apply i))
+    Measurable.of_eval (fun i => (measurable_radial p).comp (measurable_pi_apply i))
   have hΦ : Continuous (fun t : Fin k → Metric.sphere (0 : EuclideanSpace ℂ (Fin N)) 1 =>
       fun q : Fin k × Fin N => (B *ᵥ fun a => (t q.1 : EuclideanSpace ℂ (Fin N)) a) q.2) := by
     refine continuous_pi (fun q => ?_)

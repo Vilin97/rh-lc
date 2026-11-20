@@ -101,7 +101,7 @@ noncomputable def shift (k r j : ℕ)
       herm (Hb k) (x.2.1 ⟨p.1.1.2, h⟩) (x.1 ⟨p.1.1.1, p.2⟩) / 2 else 0, 0)
 
 theorem meas_shift (k r j : ℕ) : Measurable (shift k r j) := by
-  refine Measurable.prodMk (measurable_pi_lambda _ fun p => ?_) measurable_const
+  refine Measurable.prodMk (Measurable.of_eval fun p => ?_) measurable_const
   simp only [Rad.herm_Hb]
   split_ifs <;> fun_prop
 

@@ -15,7 +15,7 @@ theorem lintegral_pi_fibre : ∀ (T A B C : Type) [Fintype T] [MeasureSpace A] [
   have h3 := h1.comp h2
   have hF : Measurable (fun c : T → C => φ (fun t => π (c t)) * ∏ t, D (c t)) := by
     refine Measurable.mul (hφ.comp ?_) ?_
-    · exact measurable_pi_lambda _ (fun t => hπ.comp (measurable_pi_apply t))
+    · exact Measurable.of_eval (fun t => hπ.comp (measurable_pi_apply t))
     · exact Finset.measurable_prod _ (fun t _ => hD.comp (measurable_pi_apply t))
   rw [← h3.lintegral_comp hF, Measure.volume_eq_prod]
   refine (lintegral_prod _ (hF.comp h3.measurable).aemeasurable).trans ?_

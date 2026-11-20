@@ -71,7 +71,7 @@ theorem measurable_inv {X : Type} [MeasurableSpace X] {γ : X → GL (Fin a) (Ci
   have hadj : Measurable fun x => toL (γ x : Matrix (Fin a) (Fin a) (Cinf E)).adjugate :=
     hadjc.measurable.comp hγ
   have hc : Measurable fun x => (fun w => ((γ x : Matrix (Fin a) (Fin a) (Cinf E)).det w)⁻¹ : Cinf E) :=
-    measurable_pi_lambda _ fun w => ((measurable_pi_apply w).comp hdet).inv
+    Measurable.of_eval fun w => ((measurable_pi_apply w).comp hdet).inv
   exact (continuous_smul (M := Cinf E) (X := Lie E a)).measurable.comp (hc.prodMk hadj)
 
 end GlobalTheory.MSpanDecay.RapidLie
@@ -82,7 +82,7 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 theorem measurable_mul {X : Type} [MeasurableSpace X] {A B : X → Lie E a} (hA : Measurable A) (hB : Measurable B) :
     Measurable fun x => toL (Matrix.of (A x) * Matrix.of (B x)) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => measurable_pi_lambda _ fun w => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => Measurable.of_eval fun w => ?_
   have e : (fun x => toL (Matrix.of (A x) * Matrix.of (B x)) i j w) = fun x => ∑ k, A x i k w * B x k j w := by
     funext x; simp [Matrix.mul_apply, Finset.sum_apply]
   rw [e]

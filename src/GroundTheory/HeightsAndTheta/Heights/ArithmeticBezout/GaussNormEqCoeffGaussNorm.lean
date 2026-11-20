@@ -184,7 +184,7 @@ theorem sphereMean_eq_integral (S : Matrix (Fin n) (Fin n) ℂ) (hS : IsUnit S) 
   let BA : Set (Fin k × Fin n → ℂ) := {u | ∀ i, IndefiniteRowSideFullHecke.ArithBezout.formNorm S (fun j => u (i, j)) < 1}
 
   have hNf : Measurable Nf := by
-    refine measurable_pi_lambda _ fun ij => ?_
+    refine Measurable.of_eval fun ij => ?_
     exact ((Complex.measurable_ofReal.comp ((continuous_formNorm S).comp
       (continuous_pi fun j => continuous_apply (ij.1, j))).measurable).inv).mul
       (measurable_pi_apply ij)
@@ -243,7 +243,7 @@ theorem sphereMean_eq_integral (S : Matrix (Fin n) (Fin n) ℂ) (hS : IsUnit S) 
       rw [Finset.prod_mul_distrib, ENNReal.prod_inv_distrib]
       exact fun _ _ _ _ _ => Or.inr hBctop
     have hRk : Measurable fun (v : Fin k → Fin n → ℂ) i => R (v i) :=
-      measurable_pi_lambda _ fun i => hR.comp (measurable_pi_apply i)
+      Measurable.of_eval fun i => hR.comp (measurable_pi_apply i)
     rw [IndefiniteRowSideFullHecke.ArithBezout.formSphereLaw, h2, h3, Measure.map_map hRk (MeasurableEquiv.measurable _),
       Measure.map_map hT (hRk.comp (MeasurableEquiv.measurable _))]
 
@@ -303,7 +303,7 @@ theorem sphereMean_eq_integral (S : Matrix (Fin n) (Fin n) ℂ) (hS : IsUnit S) 
       Complex.ofReal_inv]
     rfl
   have hmeas : Measurable (T ∘ (fun v i => R (v i)) ∘ MeasurableEquiv.curry (Fin k) (Fin n) ℂ) :=
-    hT.comp ((measurable_pi_lambda _ fun i => hR.comp (measurable_pi_apply i)).comp
+    hT.comp ((Measurable.of_eval fun i => hR.comp (measurable_pi_apply i)).comp
       (MeasurableEquiv.measurable _))
   calc sphereMean h k g = ∫ u, g (Nf u) ∂cond volume BA := hA
     _ = ∫ u, g (Nf u) ∂cond (volume.map F) BA := by
@@ -429,7 +429,7 @@ theorem mahler_conjugate {K : Type*} [Field K] (h h' : HermNorm n)
     ((h.norm fun j => u (ij.1, j) : ℝ) : ℂ)⁻¹ * u ij
   let G : (Fin k × Fin n → ℂ) → ℝ := fun u => Real.log ‖eval (N u) (f.map σ)‖
   have hN : Measurable N := by
-    refine measurable_pi_lambda _ fun ij => ?_
+    refine Measurable.of_eval fun ij => ?_
     exact ((Complex.measurable_ofReal.comp ((continuous_hermNorm h).comp
       (continuous_pi fun j => continuous_apply (ij.1, j))).measurable).inv).mul
       (measurable_pi_apply ij)

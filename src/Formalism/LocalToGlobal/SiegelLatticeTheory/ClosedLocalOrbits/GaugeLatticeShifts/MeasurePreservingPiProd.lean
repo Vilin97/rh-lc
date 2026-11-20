@@ -24,9 +24,9 @@ def piProdEquiv : ((i : ι) → α i × β i) ≃ᵐ ((i : ι) → α i) × ((i 
   invFun p i := (p.1 i, p.2 i)
   left_inv x := rfl
   right_inv p := rfl
-  measurable_toFun := (measurable_pi_lambda _ fun i => measurable_fst.comp (measurable_pi_apply i)).prodMk
-    (measurable_pi_lambda _ fun i => measurable_snd.comp (measurable_pi_apply i))
-  measurable_invFun := measurable_pi_lambda _ fun i =>
+  measurable_toFun := (Measurable.of_eval fun i => measurable_fst.comp (measurable_pi_apply i)).prodMk
+    (Measurable.of_eval fun i => measurable_snd.comp (measurable_pi_apply i))
+  measurable_invFun := Measurable.of_eval fun i =>
     ((measurable_pi_apply i).comp measurable_fst).prodMk ((measurable_pi_apply i).comp measurable_snd)
 
 theorem measurePreserving_piProd (μ : ∀ i, Measure (α i)) (ν : ∀ i, Measure (β i)) [∀ i, SigmaFinite (μ i)]

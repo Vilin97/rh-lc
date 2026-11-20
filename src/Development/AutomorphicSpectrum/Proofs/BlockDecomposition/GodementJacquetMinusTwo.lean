@@ -198,7 +198,7 @@ def mat4 (p : F × F × F × F) : Fin 2 × Fin 2 → F :=
   fun ij => !![p.1, p.2.1; p.2.2.1, p.2.2.2] ij.1 ij.2
 
 theorem measurable_entries_four : Measurable (mat4 (F := F)) := by
-  refine measurable_pi_lambda _ fun ij => ?_
+  refine Measurable.of_eval fun ij => ?_
   rcases ij with ⟨i, j⟩
   fin_cases i <;> fin_cases j <;> simp [mat4] <;> fun_prop
 

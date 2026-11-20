@@ -75,7 +75,7 @@ theorem covolOneC_of (hC : ChartC) (hL : LatC) : Formalism.L2.SG.Pf.VolPinAsm.Co
   have hK'm : MeasurableSet K' := by
     rw [hK'def, Set.setOf_forall]
     exact MeasurableSet.iInter fun p =>
-      (measurable_pi_lambda _ fun v => (measurable_pi_apply p).comp (measurable_pi_apply v)) (hF p)
+      (Measurable.of_eval fun v => (measurable_pi_apply p).comp (measurable_pi_apply v)) (hF p)
   have hKd := box_fundX h' BX hBd' τ hτ A F hFd
   have hone := covol_one_eq_one D.host.E (InfinitePlace X.B.I.F) (Formalism.L2.SG.Pf.VolPinAsm.phiV X) σι hφ
     (Formalism.L2.SG.RealObj.FreeE w) h' BX hBm hBd' hB0 _ hc0 I Λ hΛ k hk hk0 σ hs0 hconst τ hτ hinv K' hK'm hKd

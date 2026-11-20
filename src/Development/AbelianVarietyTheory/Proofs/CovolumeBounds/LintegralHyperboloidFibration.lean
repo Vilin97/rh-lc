@@ -95,7 +95,7 @@ theorem plane (a : ℝ) (ha : 0 ≤ a) (F : ℝ → ℝ≥0∞) (g : ℂ → ℝ
 
 theorem measurable_snoc (k : ℕ) :
     Measurable fun q : (Fin k → ℂ) × ℂ => (Fin.snoc (α := fun _ => ℂ) q.1 q.2 : Fin (k + 1) → ℂ) := by
-  refine measurable_pi_lambda _ fun i => ?_
+  refine Measurable.of_eval fun i => ?_
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simpa using measurable_snd
   · simp only [Fin.snoc_castSucc]; fun_prop
@@ -119,7 +119,7 @@ open ConePolar
 theorem lintegral_cone_polar : ∀ (k : ℕ) (ψ : (Fin (k + 1) → ℂ) → ℝ≥0∞) (F : ℝ → ℝ≥0∞), Measurable ψ → Measurable F → (∫⁻ v : Fin (k + 1) → ℂ in {v | sqLen (Fin.init v : Fin k → ℂ) < Complex.normSq (v (Fin.last k))}, F (Complex.normSq (v (Fin.last k)) - sqLen (Fin.init v : Fin k → ℂ)) * ψ v) = (1 / 2 : ℝ≥0∞) * ∫⁻ τ : ℝ in Set.Ioi 0, F τ * ∫⁻ p : (Fin k → ℂ) × ℝ in Set.univ ×ˢ Set.Ioc 0 (2 * Real.pi), ψ (Fin.snoc (α := fun _ => ℂ) p.1 (((Real.sqrt (sqLen p.1 + τ) : ℝ) : ℂ) * Complex.exp (Complex.I * p.2))) := by
   intro k ψ F hψ hF
   have hinit : Measurable fun v : Fin (k + 1) → ℂ => sqLen (Fin.init v : Fin k → ℂ) :=
-    (measurable_sqLen k).comp (measurable_pi_lambda _ fun i => measurable_pi_apply _)
+    (measurable_sqLen k).comp (Measurable.of_eval fun i => measurable_pi_apply _)
   have hlast : Measurable fun v : Fin (k + 1) → ℂ => Complex.normSq (v (Fin.last k)) :=
     Complex.continuous_normSq.measurable.comp (measurable_pi_apply _)
   have hS := measurableSet_lt hinit hlast

@@ -72,7 +72,7 @@ theorem prod_factor
           (fun x => (a₀ g.1 x.1, fun i => a i (g.2 i) (x.2 i))) = m₀.prod (Measure.pi m) := by
       intro g
       have hp : Measurable fun z : ∀ i, W i => fun i => a i (g.2 i) (z i) :=
-        measurable_pi_lambda _ fun i => (hmeas i (g.2 i)).comp (measurable_pi_apply i)
+        Measurable.of_eval fun i => (hmeas i (g.2 i)).comp (measurable_pi_apply i)
       have e := Measure.map_prod_map m₀ (Measure.pi m) (hmeas₀ g.1) hp
       have e2 : (Measure.pi m).map (fun z i => a i (g.2 i) (z i)) = Measure.pi m := by
         have : ∀ i, SigmaFinite ((m i).map (a i (g.2 i))) := fun i => by

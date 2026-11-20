@@ -76,11 +76,11 @@ theorem measurable_sum_embeddings_over_generic_point :
     exact (MvPolynomial.continuous_eval _).measurable
   have hev : ∀ f, Measurable (ev f) := fun f => (hpm _).div (hpm _)
   let cf : (σ → ℂ) → Fin pb.dim → ℂ := fun t i => ev ((minpoly F pb.gen).coeff i) t
-  have hcf : Measurable cf := measurable_pi_lambda _ fun i => hev _
+  have hcf : Measurable cf := Measurable.of_eval fun i => hev _
   let G : (σ → ℂ) → ℂ → ℝ := fun t z =>
     Nf fun i => ∑ l : Fin pb.dim, ev (pb.basis.repr (b i) l) t * z ^ (l : ℕ)
   refine ⟨fun t => ∑ k, G t (ρ (cf t) k), ?_, ?_⟩
-  · refine Finset.measurable_sum _ fun k _ => hNf.comp (measurable_pi_lambda _ fun i => ?_)
+  · refine Finset.measurable_sum _ fun k _ => hNf.comp (Measurable.of_eval fun i => ?_)
     refine Finset.measurable_sum _ fun l _ => (hev _).mul (Measurable.pow_const ?_ _)
     exact (measurable_pi_apply k).comp (hρm.comp hcf)
   · intro t ht

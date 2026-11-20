@@ -20,7 +20,7 @@ theorem measurable_modA (A : Matrix (Fin n) (Fin n) ℂ) : Measurable (modA (ε 
     unfold layerProd
     simp only [id]
     fun_prop
-  exact (h1.comp (measurable_pi_lambda _ fun i =>
+  exact (h1.comp (Measurable.of_eval fun i =>
     measurable_locSize_uMat n ε 1 (fun _ : Fin 1 => rk A) (W A) i)).ennreal_ofReal
 
 theorem detOn_pos_of_left_inv {f g : Matrix (Fin n) (Fin n) ℂ} (hgf : g * f = 1) (V : Submodule ℂ (Fin n → ℂ))

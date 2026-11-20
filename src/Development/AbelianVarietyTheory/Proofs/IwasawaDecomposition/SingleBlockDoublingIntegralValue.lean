@@ -129,10 +129,10 @@ def rowEqM (r t : ℕ) : Matrix (Fin r ⊕ Fin t) (Fin r) F ≃ᵐ Matrix (Fin (
   toEquiv := rowEq r t
   measurable_toFun := by
     change Measurable fun (x : Fin r ⊕ Fin t → Fin r → F) (i : Fin (r + t)) => x (finSumFinEquiv.symm i)
-    exact measurable_pi_lambda _ fun i => measurable_pi_apply _
+    exact Measurable.of_eval fun i => measurable_pi_apply _
   measurable_invFun := by
     change Measurable fun (x : Fin (r + t) → Fin r → F) (i : Fin r ⊕ Fin t) => x (finSumFinEquiv i)
-    refine measurable_pi_lambda _ fun i => ?_
+    refine Measurable.of_eval fun i => ?_
     exact measurable_pi_apply _
 
 omit [Field F] in
@@ -245,7 +245,7 @@ variable {F : Type} [Field F] [MeasurableSpace F]
 omit [Field F] in
 theorem measurable_fromRows' (r t : ℕ) :
     Measurable (fun p : Matrix (Fin r) (Fin r) F × Matrix (Fin t) (Fin r) F => Matrix.fromRows p.1 p.2) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   rcases i with i | i
   · exact (measurable_pi_apply j).comp ((measurable_pi_apply i).comp measurable_fst)
   · exact (measurable_pi_apply j).comp ((measurable_pi_apply i).comp measurable_snd)

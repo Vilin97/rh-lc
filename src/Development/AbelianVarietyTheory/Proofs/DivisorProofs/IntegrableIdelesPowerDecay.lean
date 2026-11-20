@@ -62,7 +62,7 @@ theorem measurable_invSqWt : Measurable (invSqWt : (ι → ℂ) → ℝ≥0∞) 
 
 omit [Fintype ι] in
 theorem measurable_toUnits : Measurable (toUnits : (ι → ℂ) → ι → ℂˣ) := by
-  refine measurable_pi_lambda _ fun i => measurable_to_units ?_
+  refine Measurable.of_eval fun i => measurable_to_units ?_
   have : (fun b : ι → ℂ => ((toUnits b i : ℂˣ) : ℂ)) = fun b => if b i = 0 then 1 else b i := by
     funext b
     by_cases h : b i = 0 <;> simp [toUnits, h]

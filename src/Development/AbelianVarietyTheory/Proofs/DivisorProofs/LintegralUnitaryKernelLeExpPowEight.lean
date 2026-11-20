@@ -167,7 +167,7 @@ theorem lintegral_x0F_le (X : Data E r) {j : ℕ} (hj : j ≤ r) (hp : X.p0 = r 
   have hDm : Measurable D := (measurable_dens _).ennreal_ofReal
   have hφm : Measurable φ := Finset.measurable_prod _ fun t _ => (measurable_wt _ _ _).comp (measurable_pi_apply t)
   have hGm : Measurable G :=
-    (hφm.comp (measurable_pi_lambda _ fun t => (measurable_base _).comp (measurable_pi_apply t))).mul
+    (hφm.comp (Measurable.of_eval fun t => (measurable_base _).comp (measurable_pi_apply t))).mul
       (Finset.measurable_prod _ fun t _ => hDm.comp (measurable_pi_apply t))
   have hco := GlobalTheory.FlagFibre.measurePreserving_coords_sorted E r X X.Ψ κ
   have hdm : Measurable fun z => ENNReal.ofReal (densF X (x0F X) z) := by

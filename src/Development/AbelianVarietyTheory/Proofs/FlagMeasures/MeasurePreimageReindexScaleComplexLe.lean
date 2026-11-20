@@ -34,7 +34,7 @@ private theorem map_pi_reindex_eq_pi_of_map_eq {ι ι' β γ : Type} [Fintype ι
     Measure.map (fun (x : ι' → β) (i : ι) => h i (x (e i))) (Measure.pi fun _ => μ) =
       Measure.pi ν := by
   have hm : Measurable (fun (x : ι' → β) (i : ι) => h i (x (e i))) :=
-    measurable_pi_lambda _ (fun i => (hh i).comp (measurable_pi_apply (e i)))
+    Measurable.of_eval (fun i => (hh i).comp (measurable_pi_apply (e i)))
   symm
   refine Measure.pi_eq (fun s hs => ?_)
   rw [Measure.map_apply hm (MeasurableSet.univ_pi hs)]
@@ -81,7 +81,7 @@ theorem measure_preimage_reindex_scale_le : ∀ (ι ι' κ κ' : Type) [Fintype 
     rfl
   have : SigmaFinite (K • (volume : Measure (κ → ℂ))) := sigmaFinite_smul _ hKt
   have hinm : Measurable (fun (y : κ' → ℂ) (q : κ) => ((ρ : ℂ) ^ d q)⁻¹ * y (f q)) :=
-    measurable_pi_lambda _ (fun q => (measurable_pi_apply (f q)).const_mul _)
+    Measurable.of_eval (fun q => (measurable_pi_apply (f q)).const_mul _)
   have hout : Measure.map (fun (x : ι' → κ' → ℂ) (i : ι) (q : κ) => ((ρ : ℂ) ^ d q)⁻¹ * x (e i) (f q))
       (MeasureTheory.Measure.pi fun _ : ι' =>
         MeasureTheory.Measure.pi fun _ : κ' => ENNReal.ofReal c • (MeasureTheory.volume : MeasureTheory.Measure ℂ)) =
@@ -94,7 +94,7 @@ theorem measure_preimage_reindex_scale_le : ∀ (ι ι' κ κ' : Type) [Fintype 
       Finset.prod_const, Finset.card_univ]
     rfl
   have hgm : Measurable (fun (x : ι' → κ' → ℂ) (i : ι) (q : κ) => ((ρ : ℂ) ^ d q)⁻¹ * x (e i) (f q)) :=
-    measurable_pi_lambda _ (fun i => hinm.comp (measurable_pi_apply (e i)))
+    Measurable.of_eval (fun i => hinm.comp (measurable_pi_apply (e i)))
   rw [← Measure.map_apply hgm hA, hout, Measure.smul_apply, smul_eq_mul, mul_comm]
   have hC1 : C ≤ 1 := ENNReal.ofReal_le_one.mpr hc
   have hK1 : K ≤ ∏ q, ENNReal.ofReal ((ρ ^ d q) ^ 2) := by

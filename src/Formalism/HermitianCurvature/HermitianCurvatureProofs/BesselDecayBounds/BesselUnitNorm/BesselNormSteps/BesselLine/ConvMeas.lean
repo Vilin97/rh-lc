@@ -36,7 +36,7 @@ variable {k r : ℕ}
 
 theorem measurable_matInv : Measurable (fun x : Mt k r => (fun i j => (Matrix.of x)⁻¹ i j : Mt k r)) := by
   have hc : Continuous (fun x : Mt k r => (Matrix.of x : Mx k r)) := continuous_id
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [Matrix.inv_def, Matrix.smul_apply, smul_eq_mul, Ring.inverse_eq_inv']
   exact hc.matrix_det.measurable.inv.mul (hc.matrix_adjugate.matrix_elem i j).measurable
 

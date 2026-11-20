@@ -112,7 +112,7 @@ theorem measurable_finAd (i : Fin a) (j : Fin M) (k : Fin d) :
       rw [finAd, dif_neg hp, map_zero]
   rw [e]
   refine Measurable.piecewise (measurableSet_good b) ?_ measurable_const
-  exact measurable_pi_lambda _ fun v => (continuous_crd b (Fv F v) k).measurable.comp
+  exact Measurable.of_eval fun v => (continuous_crd b (Fv F v) k).measurable.comp
     ((measurable_pi_apply j).comp ((measurable_pi_apply i).comp
       ((measurable_pi_apply v).comp measurable_snd)))
 
@@ -137,8 +137,8 @@ theorem measurable_glue :
   have hL : Continuous (Algebra.TensorProduct.basis (AF F) b).equivFun.symm :=
     IsModuleTopology.continuous_of_linearMap
       ((Algebra.TensorProduct.basis (AF F) b).equivFun.symm.toLinearMap)
-  exact measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j =>
-    hL.measurable.comp (measurable_pi_lambda _ fun k => measurable_crdA b i j k)
+  exact Measurable.of_eval fun i => Measurable.of_eval fun j =>
+    hL.measurable.comp (Measurable.of_eval fun k => measurable_crdA b i j k)
 
 theorem glue_spec (p : (Fin a → Fin M → Ainf F ⊗[F] E) ×
     (∀ v : HeightOneSpectrum (𝓞 F), Fin a → Fin M → Fv F v ⊗[F] E)) (hp : p ∈ good b) :

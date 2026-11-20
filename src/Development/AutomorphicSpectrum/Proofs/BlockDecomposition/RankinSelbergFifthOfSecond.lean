@@ -222,7 +222,7 @@ theorem measurable_entry (i j : Fin 2) :
   ((GLnLocal.continuous_entry F 2 i j).comp continuous_subtype_val).measurable
 
 theorem measurable_act : Measurable fun p : (Fin 2 → F) × integralGL F 2 => act p.1 p.2 := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   have h : (fun p : (Fin 2 → F) × integralGL F 2 => act p.1 p.2 j) = fun p =>
       p.1 0 * (p.2.1 : Matrix (Fin 2) (Fin 2) F) 0 j + p.1 1 * (p.2.1 : Matrix (Fin 2) (Fin 2) F) 1 j := by
     funext p
@@ -402,7 +402,7 @@ theorem sFinite_multHaar : SFinite (multHaar F) := by
   infer_instance
 
 theorem measurable_row : Measurable fun z : Fˣ => (![0, (z : F)] : Fin 2 → F) := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   fin_cases j
   · exact measurable_const
   · exact measurableEmbedding_units_val.measurable

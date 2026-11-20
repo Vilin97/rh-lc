@@ -98,7 +98,7 @@ theorem lint_fin (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {d : ℕ} (b : Modu
     Finset.measurable_prod _ fun v _ => (hφ v).comp (hpv v)
   refine ⟨hfm.indicator hAm, ?_⟩
   let ρ : (Fin n → Fin M → Af F ⊗[F] E) → ∀ v : S, (Fin n → Fin M → Fv F v.1 ⊗[F] E) := fun Y v => projV v.1 Y
-  have hρ : Measurable ρ := measurable_pi_lambda _ fun v => hpv v.1
+  have hρ : Measurable ρ := Measurable.of_eval fun v => hpv v.1
   haveI : ∀ v : S, SigmaFinite (coordW (Fv F v.1) b (lam v.1) n M) := fun v => hSFv v.1
   have hmap : ((coordW (Af F) b lf n M).restrict A).map ρ =
       Measure.pi fun v : S => coordW (Fv F v.1) b (lam v.1) n M := by

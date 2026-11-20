@@ -120,7 +120,7 @@ theorem measurePreserving_mul_left (γ : MatInf E j) (hγ : 0 < detNorm E j γ) 
 
 theorem measurable_invT : Measurable (invT E j) := by
   have h : Measurable fun (g : InfinitePlace E → Fin j → Fin j → ℂ) w a b => (Matrix.of (g w))⁻¹ b a := by
-    refine measurable_pi_lambda _ fun w => measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b => ?_
+    refine Measurable.of_eval fun w => Measurable.of_eval fun a => Measurable.of_eval fun b => ?_
     simp only [Matrix.inv_def, Ring.inverse_eq_inv', Matrix.smul_apply, smul_eq_mul]
     have hc : Continuous fun g : InfinitePlace E → Fin j → Fin j → ℂ => Matrix.of (g w) := continuous_apply w
     exact hc.matrix_det.measurable.inv.mul (hc.matrix_adjugate.matrix_elem b a).measurable

@@ -84,13 +84,13 @@ theorem height_le_htInf (y : GL (Fin a) (Cinf E)) : height y ≤ 3 * htInf y := 
 theorem IsRapidInf.of_htInf {X : Type} [MeasurableSpace X] {ν : Measure X} {k : X → ℂ} {γ : X → GL (Fin a) (Cinf E)}
     (hk : Measurable k) (hγ : ∀ i j, Measurable fun x => (γ x : Matrix (Fin a) (Fin a) (Cinf E)) i j)
     (hm : ∀ N : ℕ, Integrable (fun x => ‖k x‖ * htInf (γ x) ^ N) ν) : IsRapidInf ν k γ := by
-  refine ⟨hk, measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => hγ i j, fun N => ?_⟩
+  refine ⟨hk, Measurable.of_eval fun i => Measurable.of_eval fun j => hγ i j, fun N => ?_⟩
   refine ((hm N).const_mul (3 ^ N)).mono' ?_ (Filter.Eventually.of_forall fun x => ?_)
   · refine (hk.norm.mul ?_).aestronglyMeasurable
     have hm' : Measurable fun x => toL (γ x).val :=
-      measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => hγ i j
+      Measurable.of_eval fun i => Measurable.of_eval fun j => hγ i j
     have hi : Measurable fun x => toL ((γ x)⁻¹).val := by
-      refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => measurable_pi_lambda _ fun w => ?_
+      refine Measurable.of_eval fun i => Measurable.of_eval fun j => Measurable.of_eval fun w => ?_
       set p : GL (Fin a) (Cinf E) →* GL (Fin a) ℂ :=
         Matrix.GeneralLinearGroup.map (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w)
       have e : (fun x => toL ((γ x)⁻¹).val i j w) =

@@ -39,7 +39,7 @@ theorem differentiableOn_deepMap (P : MvPolynomial (Fin (d + 1)) ℂ) {s : (Fin 
 
 theorem measurable_deepMap (P : MvPolynomial (Fin (d + 1)) ℂ) {s : (Fin (d + 1) → ℂ) → Fin n → ℂ}
     (I : Fin d → Fin n) (hs : Measurable s) : Measurable (deepMap P s I) := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   cases j using Fin.cases with
   | zero => simpa [deepMap] using (MvPolynomial.continuous_eval P).measurable
   | succ i =>

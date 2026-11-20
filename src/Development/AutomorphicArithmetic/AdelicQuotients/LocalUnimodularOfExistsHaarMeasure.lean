@@ -34,7 +34,7 @@ theorem UpperTheory.local_unimodular_of_exists_haar_measure :
     have hf : Measurable (prS q p S) := by
       have h1 : Measurable q := hRP.cq.measurable
       have h2 : Measurable fun g : G => fun v : S => p v g :=
-        measurable_pi_lambda _ fun v => (hRP.cp v).measurable
+        Measurable.of_eval fun v => (hRP.cp v).measurable
       exact h1.prodMk h2
     have hU : MeasurableSet (US p K S : Set G) := (hRP.opnU S).measurableSet
     have h1 := inv_all ((μ.restrict (US p K S : Set G)).map (prS q p S))

@@ -64,7 +64,7 @@ theorem reim_measurable {α : Type} [MeasurableSpace α] {f : α → ℂ} (hf : 
       | (simp only [reim, if_true]; exact Complex.measurable_im.comp hf)
 
 theorem kap_measurable : Measurable (kap X u) := by
-  refine measurable_pi_lambda _ fun i => ?_
+  refine Measurable.of_eval fun i => ?_
   obtain ⟨v, c⟩ := i
   rcases c with ((⟨p, t⟩ | ⟨b, t⟩) | (⟨b, j, t⟩ | (⟨p, t⟩ | a)))
   · exact reim_measurable (xMat_entry_continuous X v p.1.1 p.1.2).measurable t

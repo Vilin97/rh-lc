@@ -144,7 +144,7 @@ variable {X : Type} [MeasurableSpace X]
 theorem meas_inv {j : ℕ} {A : X → Matrix (Fin j) (Fin j) ℂ} (hA : ∀ a b, Measurable fun p => A p a b) (a b) :
     Measurable fun p => (A p)⁻¹ a b := by
   have h0 : Measurable fun p => (fun a b => A p a b : Fin j → Fin j → ℂ) :=
-    measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b => hA a b
+    Measurable.of_eval fun a => Measurable.of_eval fun b => hA a b
   have h1 : Continuous fun x : Fin j → Fin j → ℂ => (Matrix.of x).det :=
     Continuous.matrix_det (A := fun x : Fin j → Fin j → ℂ => Matrix.of x) continuous_id
   have h2 : Continuous fun x : Fin j → Fin j → ℂ => (Matrix.of x).adjugate a b :=
@@ -171,7 +171,7 @@ theorem measurable_matrix_of_section_entries (hm : Measurable s) {v : X → Fin 
 
 theorem meas_mm (hm : Measurable s) {A : X → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ}
     (hA : ∀ a b, Measurable fun p => A p a b) (a b) : Measurable fun p => mm s (A p) a b :=
-  meas_mul hA (measurable_matrix_of_section_entries hm (measurable_pi_lambda _ fun a => meas_inv hA a 0)) a b
+  meas_mul hA (measurable_matrix_of_section_entries hm (Measurable.of_eval fun a => meas_inv hA a 0)) a b
 
 theorem meas_hL (hm : Measurable s) {A : X → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ}
     (hA : ∀ a b, Measurable fun p => A p a b) (a b) : Measurable fun p => hL s (A p) a b :=
@@ -205,11 +205,11 @@ theorem coordinates : ∀ (E : Type) [Field E] [NumberField E] (k : ℕ), 1 ≤ 
   let hh : MatInf E (k + 1) → MatInf E k := fun g w a b => hL s (Matrix.of (g w)) a b
   let TT : MatInf E (k + 1) → VecInf E k := fun g w => TL s (Matrix.of (g w))
   have mh : Measurable hh :=
-    measurable_pi_lambda (X := fun _ : InfinitePlace E => Fin k → Fin k → ℂ) _ fun w =>
-      measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b =>
+    Measurable.of_eval (X := fun _ : InfinitePlace E => Fin k → Fin k → ℂ) fun w =>
+      Measurable.of_eval fun a => Measurable.of_eval fun b =>
         meas_hL hm (A := fun g : MatInf E (k + 1) => Matrix.of (g w)) (measurable_entry w) a b
   have mT : Measurable TT :=
-    measurable_pi_lambda _ fun w => measurable_pi_lambda _ fun b =>
+    Measurable.of_eval fun w => Measurable.of_eval fun b =>
         meas_TL hm (A := fun g : MatInf E (k + 1) => Matrix.of (g w)) (measurable_entry w) b
   refine ⟨hh, TT, mh, mT, fun g hg => ?_, fun g γ hg hγ hc β hβ => ?_, fun F Q Φ hF hQ hΦ => ?_⟩
   · rw [detNorm_pos_iff] at hg
@@ -219,13 +219,13 @@ theorem coordinates : ∀ (E : Type) [Field E] [NumberField E] (k : ℕ), 1 ≤ 
     have := fun w => hL_mul hs _ _ (hg w) (hγ w) (hc w) (Matrix.of (β w)) (hβ w)
     exact ⟨matInf_ext fun w => (this w).1, fun w => (this w).2⟩
   have mx : Measurable fun g : MatInf E (k + 1) => (fun u a => (Matrix.of (g u))⁻¹ a 0 : VecInf E (k + 1)) :=
-    measurable_pi_lambda _ fun w => measurable_pi_lambda _ fun a => measurable_inv_entry w a 0
+    Measurable.of_eval fun w => Measurable.of_eval fun a => measurable_inv_entry w a 0
   have mφ : Measurable fun g : MatInf E (k + 1) =>
       F (hh g) * Q (TT g) * Φ (fun u a => (Matrix.of (g u))⁻¹ a 0) :=
     ((hF.comp mh).mul (hQ.comp mT)).mul (hΦ.comp mx)
   have key := GlobalTheory.PiCoord.piCoord (InfinitePlace E) k
     (fun x h T a b => (blk (Matrix.of h) (T ᵥ* Matrix.of h) * (Matrix.of (s x))⁻¹) a b)
-    (measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b =>
+    (Measurable.of_eval fun a => Measurable.of_eval fun b =>
       meas_mul (meas_blk (fun a b => by simp only [Matrix.of_apply]; fun_prop)
         (meas_vecMul (fun a => by fun_prop) (fun a b => by simp only [Matrix.of_apply]; fun_prop)))
         (meas_inv (measurable_matrix_of_section_entries hm measurable_fst)) a b)

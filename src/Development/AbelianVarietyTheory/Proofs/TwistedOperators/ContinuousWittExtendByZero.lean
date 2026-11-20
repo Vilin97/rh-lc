@@ -25,7 +25,7 @@ theorem integral_shear {I : Type} [Fintype I] (J : I → Prop) (S : (I → k) �
   let g : ({i // ¬ J i} → k) → ({i // ¬ ¬ J i} → k) → ({i // ¬ ¬ J i} → k) :=
     fun a b => b + fun i => S (E.symm (a, 0)) i.1
   have hgm : Measurable (Function.uncurry g) := by
-    refine measurable_snd.add (measurable_pi_lambda _ fun i => ?_)
+    refine measurable_snd.add (Measurable.of_eval fun i => ?_)
     exact (measurable_pi_apply i.1).comp (hS.measurable.comp
       (E.symm.measurable.comp (measurable_fst.prodMk measurable_const)))
   have hT := (MeasurePreserving.id (Measure.pi fun _ : {i // ¬ J i} => ν)).skew_product

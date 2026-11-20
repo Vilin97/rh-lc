@@ -148,7 +148,7 @@ def glue (q : (UT r → ℂ) × (Fin r → Fin (k + 1) → ℂ)) : Idx k r → �
 theorem glue_mp : MeasurePreserving (glue (k := k) (r := r)) volume volume ∧
     Function.Bijective (glue (k := k) (r := r)) := by
   have hm : Measurable (glue (k := k) (r := r)) := by
-    refine measurable_pi_lambda _ fun p => ?_
+    refine Measurable.of_eval fun p => ?_
     unfold glue
     rcases (idx k r).symm p with y | y <;> simp only [Sum.elim_inl, Sum.elim_inr] <;> fun_prop
   refine ⟨⟨hm, (Measure.pi_eq fun s hs => ?_).symm⟩, fun q q' h => ?_, fun y => ?_⟩

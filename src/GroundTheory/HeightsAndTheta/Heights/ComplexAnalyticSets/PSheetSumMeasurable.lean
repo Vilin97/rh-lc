@@ -34,7 +34,7 @@ theorem measurable_maDens {D : ℕ} (ψ : Fin D → (Fin D → ℂ) → ℝ) :
       (ReciprocityTheory.AnForm.mdisc fun k => M (fderiv ℝ (fderiv ℝ (ψ k)) z)).re := rfl
   rw [heq]
   exact measurable_const.mul ((hdisc.comp (continuous_pi fun k => hM.comp (continuous_apply k))).measurable.comp
-    (measurable_pi_lambda _ fun k => measurable_fderiv ℝ _))
+    (Measurable.of_eval fun k => measurable_fderiv ℝ _))
 
 theorem sheet_eventuallyEq {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin d) (Fin n) ℂ}
     {x : Fin n → ℂ} {s s' : (Fin d → ℂ) → Fin n → ℂ} (hs : IsSheetAt J A x s)

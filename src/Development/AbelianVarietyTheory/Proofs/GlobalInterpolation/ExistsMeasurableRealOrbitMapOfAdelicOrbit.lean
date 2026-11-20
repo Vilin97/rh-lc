@@ -78,7 +78,7 @@ theorem realOrbit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     haveI : SecondCountableTopology (UpqT P Q) :=
       (GlobalTheory.UpqUnimodular.modelEquiv P Q).toHomeomorph.secondCountableTopology
     rw [show pt = _ from funext hpt']
-    refine measurable_pi_lambda _ fun _ => measurable_pi_lambda _ fun i => Continuous.measurable ?_
+    refine Measurable.of_eval fun _ => Measurable.of_eval fun i => Continuous.measurable ?_
     refine Φ.symm.continuous.comp (continuous_pi fun ρ => (continuous_apply i).comp (f := fun a => N ρ *ᵥ v a ρ) ?_)
     exact continuous_const.matrix_mulVec
       ((GlobalTheory.VolPairExists.continuous_mat.comp (continuous_apply ρ).inv).matrix_mulVec continuous_const)

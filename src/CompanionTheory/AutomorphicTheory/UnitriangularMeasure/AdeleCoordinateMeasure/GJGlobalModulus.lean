@@ -257,7 +257,7 @@ theorem map_vecMul_diagonal (d : Fin n → IdeleGroup K) :
   have hsm : ∀ i, Measurable fun y : 𝔸[K] => d i • y := fun i =>
     (Homeomorph.smul (d i)).continuous.measurable
   have hmeas : Measurable fun x : Fin n → 𝔸[K] => fun i => d i • x i :=
-    measurable_pi_lambda _ fun i => (hsm i).comp (measurable_pi_apply i)
+    Measurable.of_eval fun i => (hsm i).comp (measurable_pi_apply i)
   set c : Fin n → ℝ≥0 := fun i => Real.toNNReal ((IdeleGroup.ideleModule K (d i) : ℝ))⁻¹
   have hc : ∀ i, ENNReal.ofReal ((IdeleGroup.ideleModule K (d i) : ℝ))⁻¹ = (c i : ℝ≥0∞) :=
     fun i => rfl

@@ -281,7 +281,7 @@ theorem shear_step {ι : Type} [Fintype ι] [DecidableEq ι] (ht : ι → ℕ) (
   have he : MeasurePreserving e volume volume := volume_preserving_piEquivPiSubtypeProd (fun _ : ι => ℝ) _
   let gg : ({i // ht i ≠ p} → ℝ) → ({i // ¬ ht i ≠ p} → ℝ) := fun v i => S (e.symm (v, 0)) i - e.symm (v, 0) i
   have hgg : Measurable gg := by
-    refine measurable_pi_lambda _ fun i => ?_
+    refine Measurable.of_eval fun i => ?_
     exact ((measurable_pi_apply _).comp (hS.comp (e.symm.measurable.comp (measurable_id.prodMk measurable_const)))).sub
       ((measurable_pi_apply _).comp (e.symm.measurable.comp (measurable_id.prodMk measurable_const)))
   have hF : MeasurePreserving (fun q : ({i // ht i ≠ p} → ℝ) × ({i // ¬ ht i ≠ p} → ℝ) => (id q.1, q.2 + gg q.1))
@@ -314,7 +314,7 @@ theorem shearMP : ShearMP := by
   obtain ⟨P, hP⟩ : ∃ P, ∀ i, ht i < P :=
     ⟨Finset.univ.sup ht + 1, fun i => Nat.lt_succ_of_le (Finset.le_sup (Finset.mem_univ i))⟩
   have hSpP : Sp P = id := by funext x i; simp [Sp, not_le.2 (hP i)]
-  have hmeas : ∀ p, Measurable (Sp p) := fun p => measurable_pi_lambda _ fun i => by
+  have hmeas : ∀ p, Measurable (Sp p) := fun p => Measurable.of_eval fun i => by
     by_cases h : p ≤ ht i
     · simp only [Sp, h, if_true]; exact (measurable_pi_apply i).comp hS
     · simp only [Sp, h, if_false]; exact measurable_pi_apply i

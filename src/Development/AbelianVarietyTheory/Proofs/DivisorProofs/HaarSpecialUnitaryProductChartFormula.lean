@@ -123,7 +123,7 @@ theorem lintegral_box_translate (ι κ : Type) [Fintype ι] [Fintype κ] (f : (�
     rw [h1]; push_cast; linarith
   let e : (ι → κ → ℝ) → (ι → κ → AddCircle (2 * Real.pi)) := fun θ i k => (θ i k : AddCircle (2 * Real.pi))
   let g : (ι → κ → AddCircle (2 * Real.pi)) → ℝ≥0∞ := fun u => f fun i k => R (u i k)
-  have hg : Measurable g := hf.comp (measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun k =>
+  have hg : Measurable g := hf.comp (Measurable.of_eval fun i => Measurable.of_eval fun k =>
     hR.comp ((measurable_pi_apply k).comp (measurable_pi_apply i)))
   have hge : ∀ θ, g (e θ) = f θ := fun θ => hper _ _ fun i k => hRθ (θ i k)
   have hbox : {θ : ι → κ → ℝ | ∀ i k, θ i k ∈ Set.Ioc (-Real.pi) Real.pi} =

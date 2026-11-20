@@ -3627,7 +3627,7 @@ theorem cont_low : Continuous (low w) := by
 theorem Tl_mp (L0 : Matrix (Fin m) (Fin m) ℂ) (hL : L0 ∈ C2.LTset m) :
     MeasurePreserving (Tl w L0) volume volume := by
   refine Formalism.FourierDecayAlt.P.ShearMeasurability.shear_mp (rank w) (Tl w L0) ?_ ?_
-  · refine measurable_pi_lambda _ fun q => ?_
+  · refine Measurable.of_eval fun q => ?_
     exact (((cont_low w).matrix_mul continuous_const).matrix_elem q.1.1 q.1.2).measurable
   · intro q x y hxy
     simp only [Tl, Matrix.mul_apply]
@@ -3655,7 +3655,7 @@ theorem Tl_mp (L0 : Matrix (Fin m) (Fin m) ℂ) (hL : L0 ∈ C2.LTset m) :
 theorem Tr_mp (L0 : Matrix (Fin m) (Fin m) ℂ) (hL : L0 ∈ C2.LTset m) :
     MeasurePreserving (Tr w L0) volume volume := by
   refine Formalism.FourierDecayAlt.P.ShearMeasurability.shear_mp (rank w) (Tr w L0) ?_ ?_
-  · refine measurable_pi_lambda _ fun q => ?_
+  · refine Measurable.of_eval fun q => ?_
     exact ((continuous_const.matrix_mul (cont_low w)).matrix_elem q.1.1 q.1.2).measurable
   · intro q x y hxy
     simp only [Tr, Matrix.mul_apply]
@@ -6285,10 +6285,10 @@ section meas
 
 theorem reindex_mp {ι κ X : Type} [Fintype ι] [Fintype κ] [MeasureSpace X] [SigmaFinite (volume : Measure X)]
     (e : ι ≃ κ) : MeasurePreserving (fun (y : κ → X) (i : ι) => y (e i)) volume volume := by
-  refine ⟨measurable_pi_lambda _ (fun i => measurable_pi_apply (e i)), ?_⟩
+  refine ⟨Measurable.of_eval (fun i => measurable_pi_apply (e i)), ?_⟩
   symm
   refine Measure.pi_eq fun s hs => ?_
-  rw [Measure.map_apply (measurable_pi_lambda _ (fun i => measurable_pi_apply (e i))) (MeasurableSet.univ_pi hs)]
+  rw [Measure.map_apply (Measurable.of_eval (fun i => measurable_pi_apply (e i))) (MeasurableSet.univ_pi hs)]
   have : (fun (y : κ → X) (i : ι) => y (e i)) ⁻¹' Set.univ.pi s = Set.univ.pi (fun k => s (e.symm k)) := by
     ext y; simp only [Set.mem_preimage, Set.mem_univ_pi]
     constructor
@@ -6424,8 +6424,8 @@ def reE {ι κ X : Type} [MeasurableSpace X] (e : ι ≃ κ) : (κ → X) ≃ᵐ
   invFun y k := y (e.symm k)
   left_inv y := by funext k; simp
   right_inv y := by funext i; simp
-  measurable_toFun := measurable_pi_lambda _ (fun i => measurable_pi_apply (e i))
-  measurable_invFun := measurable_pi_lambda _ (fun k => measurable_pi_apply (e.symm k))
+  measurable_toFun := Measurable.of_eval (fun i => measurable_pi_apply (e i))
+  measurable_invFun := Measurable.of_eval (fun k => measurable_pi_apply (e.symm k))
 
 end chain
 

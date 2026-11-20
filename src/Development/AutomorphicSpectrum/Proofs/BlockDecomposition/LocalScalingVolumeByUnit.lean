@@ -65,7 +65,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.coordW_dMat_scale : ∀ (F E : Type
       (fun _ => ENNReal.inv_ne_zero.2 hθt) (fun _ => ENNReal.inv_ne_top.2 hθ0) (fun _ => hmap)
     simpa using this
   have hvm : Measurable (fun (x : Fin M → Fv F v ⊗[F] E) i => g (x i)) :=
-    measurable_pi_lambda _ fun i => hgm.comp (measurable_pi_apply i)
+    Measurable.of_eval fun i => hgm.comp (measurable_pi_apply i)
   let gV : Fin n → (Fin M → Fv F v ⊗[F] E) → (Fin M → Fv F v ⊗[F] E) := fun a =>
     if a = l then (fun x i => g (x i)) else id
   let c : Fin n → ℝ≥0∞ := fun a => if a = l then (θ : ℝ≥0∞)⁻¹ ^ M else 1
@@ -88,7 +88,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.coordW_dMat_scale : ∀ (F E : Type
     · simp [gV, c, h]
   have htup := map_pi_scale (fun _ : Fin n => Measure.pi fun _ : Fin M => μ) gV hgV c hc0 hct hmapV
   have hT : Measurable (fun (x : Fin n → Fin M → Fv F v ⊗[F] E) a => gV a (x a)) :=
-    measurable_pi_lambda _ fun a => (hgV a).comp (measurable_pi_apply a)
+    Measurable.of_eval fun a => (hgV a).comp (measurable_pi_apply a)
   have hset : {X : Fin n → Fin M → Fv F v ⊗[F] E |
       GlobalTheory.CompanionTheory.SW.rmul (Fv F v) X (dMat (Fv F v) l (s : Fv F v ⊗[F] E)) ∈ D} =
       (fun (x : Fin n → Fin M → Fv F v ⊗[F] E) a => gV a (x a)) ⁻¹' D := by

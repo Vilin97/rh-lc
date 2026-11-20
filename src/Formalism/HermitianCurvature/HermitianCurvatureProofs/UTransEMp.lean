@@ -94,14 +94,14 @@ def uTransE (A : X → Matrix (Fin r) (Fin r) ℂ) (hA : ∀ x, A x ∈ C2.UTset
         Matrix.nonsing_inv_mul _ (ut_det (hA p.1)), Matrix.one_mul, StabilizerDisintegration.UC.utc_upper]
   measurable_toFun := by
     refine measurable_fst.prodMk ?_
-    refine measurable_pi_lambda _ fun q => ?_
+    refine Measurable.of_eval fun q => ?_
     simp only [StabilizerDisintegration.utc, Matrix.mul_apply]
     refine Finset.measurable_sum _ fun c _ => Measurable.mul ?_ ?_
     · exact (hAi _ _).comp measurable_fst
     · exact ((StabilizerDisintegration.UC.cont_upper.matrix_elem _ _).measurable).comp measurable_snd
   measurable_invFun := by
     refine measurable_fst.prodMk ?_
-    refine measurable_pi_lambda _ fun q => ?_
+    refine Measurable.of_eval fun q => ?_
     simp only [StabilizerDisintegration.utc, Matrix.mul_apply]
     refine Finset.measurable_sum _ fun c _ => Measurable.mul ?_ ?_
     · exact (hAc _ _).comp measurable_fst

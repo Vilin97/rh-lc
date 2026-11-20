@@ -127,7 +127,7 @@ theorem dlt_props : ∀ (n : ℕ) (ε : Fin n → Bool) (a : ℕ) (j : Fin a →
   refine ⟨?_, ?_, ?_⟩
   · unfold dlt
     exact ENNReal.measurable_ofReal.comp ((measurable_layerProd j).comp
-      (measurable_pi_lambda _ fun i => measurable_locSize_uMat n ε a j W i))
+      (Measurable.of_eval fun i => measurable_locSize_uMat n ε a j W i))
   · intro l hl m hm
     have hl2 : ∀ i, ∀ y ∈ W i, uMat l *ᵥ y ∈ W i ∧ (uMat l)ᴴ *ᵥ y ∈ W i := hl.2
     have hm2 : ∀ i, ∀ y ∈ W i, uMat m *ᵥ y ∈ W i ∧ (uMat m)ᴴ *ᵥ y ∈ W i := hm

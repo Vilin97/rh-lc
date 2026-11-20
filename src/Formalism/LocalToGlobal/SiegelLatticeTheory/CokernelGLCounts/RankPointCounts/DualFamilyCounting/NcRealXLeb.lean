@@ -444,7 +444,7 @@ theorem map_uncurry_volume {ι κ : Type*} [Fintype ι] [Fintype κ] :
     (Measure.pi fun _ : ι => (volume : Measure (κ → ℝ))).map
       (fun F : ι → κ → ℝ => fun p : ι × κ => F p.1 p.2) = volume := by
   have hm : Measurable (fun F : ι → κ → ℝ => fun p : ι × κ => F p.1 p.2) :=
-    measurable_pi_lambda _ fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
+    Measurable.of_eval fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
   show _ = Measure.pi fun _ : ι × κ => (volume : Measure ℝ)
   refine (Measure.pi_eq fun s hs => ?_).symm
   have hpre : (fun F : ι → κ → ℝ => fun p : ι × κ => F p.1 p.2) ⁻¹' Set.univ.pi s =
@@ -496,7 +496,7 @@ theorem lebHaar_holds : LsNc5.LebHaar := by
       exact congrFun (kapV_eq X u p.1 s) p.2
     have hunc : Measurable (fun F : InfinitePlace X.B.I.F → LsNc5.CIdx D.R.rS D.R.k → ℝ =>
         fun p : InfinitePlace X.B.I.F × LsNc5.CIdx D.R.rS D.R.k => F p.1 p.2) :=
-      measurable_pi_lambda _ fun p : InfinitePlace X.B.I.F × LsNc5.CIdx D.R.rS D.R.k =>
+      Measurable.of_eval fun p : InfinitePlace X.B.I.F × LsNc5.CIdx D.R.rS D.R.k =>
         (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
     haveI : ∀ v, SigmaFinite ((lam v).map
         (kapL (X.B.I.ε v) (eV X v) (ProductExactness.pV X v) (X.wfr u v) (ProductExactness.zV X u v))) := fun v => by

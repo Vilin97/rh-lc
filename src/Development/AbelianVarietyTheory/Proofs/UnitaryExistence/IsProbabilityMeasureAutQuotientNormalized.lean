@@ -200,11 +200,11 @@ theorem frameOf_injective : Function.Injective (frameOf X) := by
   exact Subtype.ext (Units.ext (hu.mul_left_cancel h1))
 
 theorem measurable_frameOf : Measurable (frameOf X) := by
-  refine measurable_pi_lambda _ fun τ => ?_
+  refine Measurable.of_eval fun τ => ?_
   have h : Continuous fun u : Upq r X.p0 =>
       mat (baseFr X) τ * ((u : GL (Fin r) ℂ) : Matrix (Fin r) (Fin r) ℂ) :=
     continuous_const.matrix_mul (Units.continuous_val.comp continuous_subtype_val)
-  exact measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b =>
+  exact Measurable.of_eval fun a => Measurable.of_eval fun b =>
     (h.matrix_elem a b).measurable.comp (measurable_pi_apply τ)
 
 theorem lact_frameOf {γ : GL (Fin r) E} {s : RealGrp X} (h : lact γ (baseFr X) = frameOf X s) (g : RealGrp X) :

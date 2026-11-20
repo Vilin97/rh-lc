@@ -128,7 +128,7 @@ theorem rspan_le_modGr (π : CuspSub E a) : rspan π ≤ modGr E a := by
       rw [e]
       have hγ : Measurable fun x => toL (γ x).val := hk.2.1
       have hm : Measurable fun p : Lie E a × X => toL (Matrix.of p.1 * (γ p.2).val) := by
-        refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+        refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
         change Measurable fun p : Lie E a × X => (Matrix.of p.1 * (γ p.2).val) i j
         simp only [Matrix.mul_apply]
         refine Finset.measurable_sum _ fun l _ => Measurable.mul ?_ ?_

@@ -15,7 +15,7 @@ theorem measurePreserving_comp_equiv {ι κ : Type} [Fintype ι] [Fintype κ] {�
     MeasurePreserving (fun x : ι → α ↦ x ∘ e) (Measure.pi fun _ ↦ μ)
       (Measure.pi fun _ ↦ μ) := by
   have hm : Measurable (fun x : ι → α ↦ x ∘ e) :=
-    measurable_pi_lambda _ fun k ↦ measurable_pi_apply (e k)
+    Measurable.of_eval fun k ↦ measurable_pi_apply (e k)
   refine ⟨hm, (Measure.pi_eq fun s hs ↦ ?_).symm⟩
   rw [Measure.map_apply hm (MeasurableSet.univ_pi hs)]
   have hpre : (fun x : ι → α ↦ x ∘ e) ⁻¹' Set.pi Set.univ s =

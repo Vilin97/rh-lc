@@ -62,7 +62,7 @@ theorem measurePreserving_uncurry {ι : Type} [Fintype ι] {κ : ι → Type} [�
 theorem measurePreserving_elim {τ : Type} [Fintype τ] :
     MeasurePreserving (fun (x : ℂ × (τ → ℂ)) (j : Option τ) => j.elim x.1 x.2) volume volume := by
   have hm : Measurable (fun (x : ℂ × (τ → ℂ)) (j : Option τ) => j.elim x.1 x.2) := by
-    refine measurable_pi_lambda _ fun j => ?_
+    refine Measurable.of_eval fun j => ?_
     cases j with
     | none => exact measurable_fst
     | some j => exact (measurable_pi_apply j).comp measurable_snd

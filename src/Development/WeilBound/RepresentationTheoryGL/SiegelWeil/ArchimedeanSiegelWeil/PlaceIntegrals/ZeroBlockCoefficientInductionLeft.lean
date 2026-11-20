@@ -230,7 +230,7 @@ theorem local_stages : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       rw [← hg]
       exact hOrb g
     have hfm : Measurable fun X : Fin (n + 1) → Fin (M + 2) → R ⊗[F] E => (fun _ : Fin 1 => X 0) :=
-      measurable_pi_lambda _ fun _ => measurable_pi_apply 0
+      Measurable.of_eval fun _ => measurable_pi_apply 0
     let B : ℕ → (Fin (n + 1) → Fin (M + 2) → R ⊗[F] E) → ℝ≥0∞ := fun k =>
       ((fun X : Fin (n + 1) → Fin (M + 2) → R ⊗[F] E => (fun _ : Fin 1 => X 0)) ⁻¹' P k).indicator φ
     have hBm : ∀ k, Measurable (B k) := fun k => hφ.indicator (hfm (hPm k))

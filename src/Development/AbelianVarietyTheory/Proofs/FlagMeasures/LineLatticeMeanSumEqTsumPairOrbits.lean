@@ -204,7 +204,7 @@ theorem tsum_latAt (L : Submodule (𝓞 E) (Fin j → E)) {g : MatInf E j} (hg :
 
 theorem measurable_vecAt (y : Fin j → E) : Measurable fun g : MatInf E j => vecAt y g := by
   change Measurable fun g : InfinitePlace E → Fin j → Fin j → ℂ => vecAt y g
-  refine measurable_pi_lambda _ fun w => measurable_pi_lambda _ fun a => ?_
+  refine Measurable.of_eval fun w => Measurable.of_eval fun a => ?_
   have hc : Continuous fun g : InfinitePlace E → Fin j → Fin j → ℂ => (Matrix.of (g w) : Matrix (Fin j) (Fin j) ℂ) :=
     continuous_apply w
   simp only [vecAt, Matrix.inv_def, Ring.inverse_eq_inv', Matrix.smul_mulVec, Pi.smul_apply, smul_eq_mul]

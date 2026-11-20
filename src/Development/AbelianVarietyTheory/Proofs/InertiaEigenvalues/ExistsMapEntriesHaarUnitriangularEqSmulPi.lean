@@ -179,7 +179,7 @@ variable {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] [Mea
   [SecondCountableTopology R] {n : ℕ} [MeasurableSpace (GL (Fin n) R)] [BorelSpace (GL (Fin n) R)]
 
 theorem measurable_rowG (x : Pos n → R) (ρ : ℕ) : Measurable (rowG x ρ) := by
-  refine measurable_pi_lambda _ fun q => ?_
+  refine Measurable.of_eval fun q => ?_
   refine Measurable.const_add (Finset.measurable_sum _ fun k _ => ?_) _
   by_cases h : q.1.1.1 < k ∧ k < q.1.1.2
   · simp only [dif_pos h]

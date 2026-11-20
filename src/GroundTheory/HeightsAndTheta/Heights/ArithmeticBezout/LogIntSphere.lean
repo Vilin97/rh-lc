@@ -84,10 +84,10 @@ def normT (h : HermNorm n) (T : Finset (Fin k)) (u : Fin k × Fin n → ℂ) : F
 
 theorem measurable_groupNorm (h : HermNorm n) (i : Fin k) :
     Measurable fun u : Fin k × Fin n → ℂ => h.norm fun j => u (i, j) :=
-  h.li_continuous_norm.measurable.comp (measurable_pi_lambda _ fun _ => measurable_pi_apply _)
+  h.li_continuous_norm.measurable.comp (Measurable.of_eval fun _ => measurable_pi_apply _)
 
 theorem measurable_normT (h : HermNorm n) (T : Finset (Fin k)) : Measurable (normT h T) := by
-  refine measurable_pi_lambda _ fun ij => ?_
+  refine Measurable.of_eval fun ij => ?_
   by_cases hT : ij.1 ∈ T
   · simp only [normT, hT, if_true]
     exact (Complex.measurable_ofReal.comp (measurable_groupNorm h ij.1)).inv.mul

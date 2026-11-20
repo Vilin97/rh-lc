@@ -77,7 +77,7 @@ theorem siegel_GAd (hS : GlobalTheory.Published.SiegelSetUnitary) (h : IsCMExt F
       ((hC₂ f (fun u => φ ((fun i => Real.log (u i)) + shf r c)) (hφ.comp ?_) fun p hp u hu b hb' k hk => ?_).trans ?_)
     · obtain ⟨γ, hγ, s, hs, rfl⟩ := hcov g
       exact ⟨γ⁻¹, inv_mem hγ, by rwa [inv_mul_cancel_left]⟩
-    · exact (measurable_pi_lambda _ fun i => (measurable_pi_apply i).log).add_const _
+    · exact (Measurable.of_eval fun i => (measurable_pi_apply i).log).add_const _
     · obtain ⟨κ, hκ, e⟩ := hdec p hp u hu b hb' k hk
       rw [e]
       exact hb _ (log_mem_Cone hc hu) κ hκ

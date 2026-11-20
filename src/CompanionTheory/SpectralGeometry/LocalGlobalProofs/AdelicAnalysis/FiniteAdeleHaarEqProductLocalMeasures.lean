@@ -46,11 +46,11 @@ def eW (hK : IsHomeomorph (cK (F := F) (E := E) R b)) (n M : ℕ) :
   right_inv Y := by
     funext p
     simp
-  measurable_toFun := measurable_pi_lambda _ fun p =>
+  measurable_toFun := Measurable.of_eval fun p =>
     (measurable_pi_apply p.2.2).comp ((eK R hK).measurable.comp
       ((measurable_pi_apply p.2.1).comp (measurable_pi_apply p.1)))
-  measurable_invFun := measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun i =>
-    (eK R hK).symm.measurable.comp (measurable_pi_lambda _ fun k => measurable_pi_apply (a, i, k))
+  measurable_invFun := Measurable.of_eval fun a => Measurable.of_eval fun i =>
+    (eK R hK).symm.measurable.comp (Measurable.of_eval fun k => measurable_pi_apply (a, i, k))
 
 theorem eW_apply (hK : IsHomeomorph (cK (F := F) (E := E) R b)) (n M : ℕ)
     (X : Fin n → Fin M → R ⊗[F] E) (p : Fin n × Fin M × Fin d) :

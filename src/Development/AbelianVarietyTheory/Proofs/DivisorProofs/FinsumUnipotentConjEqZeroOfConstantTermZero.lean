@@ -116,7 +116,7 @@ variable {K : Type} [AddCommGroup K] [TopologicalSpace K] [IsTopologicalAddGroup
 
 theorem measurable_of_continuous {W : Type} [TopologicalSpace W] [MeasurableSpace W] [BorelSpace W]
     (g : W → Fin a → Fin b → K) (hg : Continuous g) : Measurable g :=
-  measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j =>
+  Measurable.of_eval fun i => Measurable.of_eval fun j =>
     Continuous.measurable (by fun_prop)
 
 theorem exists_haar [LocallyCompactSpace K] : ∃ μ : Measure (Fin a → Fin b → K), μ.IsAddHaarMeasure := by

@@ -169,7 +169,7 @@ theorem root_push (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) (hw 
       unfold JointQuot.stCoordV hJ
       fun_prop
     have hGm : Measurable fun (y : FreeE w → ℂ) (i : ↥(rootPat (ptLoc D τ w))) => (1 : ℂ) * y (RootPatterns.idxF τ w i) :=
-      measurable_pi_lambda _ fun q => measurable_const.mul (measurable_pi_apply _)
+      Measurable.of_eval fun q => measurable_const.mul (measurable_pi_apply _)
     rw [Measure.map_map (RootPatterns.rootCoords_cont _ _ _ _).measurable hemb.measurable, hcomp,
       ← Measure.map_map hGm hst, hp]
     unfold JointQuot.muStabV

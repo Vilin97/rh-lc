@@ -278,7 +278,7 @@ theorem invM_smul : (invM : Mt k r → Mt k r) = fun x => (detF x)⁻¹ • adjF
 
 theorem invM_meas : Measurable (invM : Mt k r → Mt k r) := by
   rw [invM_smul]
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   have h1 : Measurable fun x : Mt k r => (detF x)⁻¹ := detF_cont.measurable.inv
   have h2 : Measurable fun x : Mt k r => adjF x i j :=
     ((continuous_apply j).comp ((continuous_apply i).comp adjF_cont)).measurable
@@ -358,7 +358,7 @@ theorem secF_meas {z z' : Vc k r} {μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k 
   have hs := hsec
   unfold IsSection at hs
   unfold MeasSec
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   have heq : (fun ζ => secF k r z z' μsec ζ i j) =
       (Om k r z z').piecewise (fun ζ => μsec ζ i j) (fun _ => (1 : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) i j) := by
     funext ζ
@@ -990,7 +990,7 @@ attribute [local fun_prop] mulM_meas invM_meas sgF_meas
 def bc1 (k r : ℕ) (c : Fin r → ℂ) : Mt k r := bigCell k r c 1
 
 theorem big_cell_coordinate_measurable : Measurable (bc1 k r) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [bc1, bigCell]
   split_ifs
   all_goals first

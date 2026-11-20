@@ -55,7 +55,7 @@ theorem map_scale_adele {F : Type} [Field F] [NumberField F] (hF : IsTotallyReal
     (continuous_const.mul continuous_id).measurable
   have hg : Measurable (fun (x : Unit → AF F) (i : Unit) =>
       (show AdeleRing (𝓞 F) F from (θ t, 1)) * x i) :=
-    measurable_pi_lambda _ fun i =>
+    Measurable.of_eval fun i =>
       (continuous_const.mul (continuous_apply i)).measurable
   have hc : (fun y : AF F => pairA F (θ t) 1 * y) ∘ (MeasurableEquiv.funUnique Unit (AF F)) =
       (MeasurableEquiv.funUnique Unit (AF F)) ∘ (fun (x : Unit → AF F) (i : Unit) =>

@@ -174,7 +174,7 @@ theorem isHaarOn_map : PI.BesselPeriodGGP.IsHaarOn (k := k) (r := r) (GG k r)
     ext x
     exact ⟨fun h => h x.mem, False.elim⟩
   · have hm : Measurable (Formalism.QuantumDeterminants.lmulM (k := k) (r := r) s) := by
-      refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+      refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
       show Measurable fun x : Formalism.QuantumDeterminants.Mt k r => ∑ l, s i l * x l j
       fun_prop
     rw [Measure.map_map hm hE.measurable]
@@ -192,7 +192,7 @@ theorem integrable_gN [(haar : Measure (GM k r)).IsInvInvariant] :
       left := isHaarOn_map.2.2.2
       right := fun s hs => by
         have hm : Measurable (B.rmulF s : Formalism.QuantumDeterminants.Mt k r → Formalism.QuantumDeterminants.Mt k r) := by
-          refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+          refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
           show Measurable fun x : Formalism.QuantumDeterminants.Mt k r => ∑ l, x i l * s l j
           fun_prop
         rw [Measure.map_map hm hE.measurable]

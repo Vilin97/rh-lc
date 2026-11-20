@@ -48,7 +48,7 @@ theorem measM_uMap {X : Type*} [MeasurableSpace X] (z : Fin (2 * r + k + 1) → 
 theorem meas_utc {X : Type*} [MeasurableSpace X] {m : ℕ} {A : X → Matrix (Fin m) (Fin m) ℂ} (hA : MeasM A) :
     Measurable fun x => utc (A x) := by
   rw [measM_iff] at hA
-  exact measurable_pi_lambda _ fun q => hA q.1.1 q.1.2
+  exact Measurable.of_eval fun q => hA q.1.1 q.1.2
 
 section main
 

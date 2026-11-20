@@ -29,7 +29,7 @@ theorem pi_map_smul {V : Type} [Fintype V] {X Y : V → Type} [∀ v, Measurable
   symm
   refine Measure.pi_eq fun s hs => ?_
   have hmeas : Measurable (fun x : ∀ v, X v => fun v => f v (x v)) :=
-    measurable_pi_lambda _ fun v => (hf v).comp (measurable_pi_apply v)
+    Measurable.of_eval fun v => (hf v).comp (measurable_pi_apply v)
   rw [Measure.map_apply hmeas (MeasurableSet.univ_pi hs)]
   have hpre : (fun x : ∀ v, X v => fun v => f v (x v)) ⁻¹' Set.univ.pi s =
       Set.univ.pi (fun v => f v ⁻¹' s v) := by

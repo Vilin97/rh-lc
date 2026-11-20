@@ -68,7 +68,7 @@ theorem scalar_eq_inv_det {X : Type} [MeasurableSpace X] (μ : Measure X) (T : X
     show h g < ρ
     linarith
   have hm : ∀ r : ℝ, Measurable (fun g => (fun i => t g i / r : Fin d → ℝ)) := fun r =>
-    measurable_pi_lambda _ fun i => ((measurable_pi_apply i).comp ht).div_const r
+    Measurable.of_eval fun i => ((measurable_pi_apply i).comp ht).div_const r
   have hint : ∀ r : ℝ, IntegrableOn (fun g => ψ (fun i => t g i / r)) {g | h g < ρ} μ := by
     intro r
     refine Measure.integrableOn_of_bounded (M := 1) hfin (hψc.measurable.comp (hm r)).aestronglyMeasurable ?_

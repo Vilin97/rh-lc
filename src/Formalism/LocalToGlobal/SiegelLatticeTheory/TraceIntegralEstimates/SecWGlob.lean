@@ -23,7 +23,7 @@ theorem stepSection_holds : Formalism.L2.SG.RealObj.EnergyInst.StepSection := by
   have hT : 0 < Tw (D := D) u := ProductExactness.Tw_pos u
   have hT' : 0 < Tw (D := D) u' := ProductExactness.Tw_pos u'
   refine ⟨fun c v => secV (Fw v) (Fw' v) (hdim v) hT hT' hsc i0 (c v), ?_, ?_⟩
-  · exact measurable_pi_lambda _ fun v => (measurable_secV (Fw v) (Fw' v) (hdim v) hT hT' hsc i0).comp
+  · exact Measurable.of_eval fun v => (measurable_secV (Fw v) (Fw' v) (hdim v) hT hT' hsc i0).comp
       (measurable_pi_apply v)
   · intro c hc v
     have hcv := hc v

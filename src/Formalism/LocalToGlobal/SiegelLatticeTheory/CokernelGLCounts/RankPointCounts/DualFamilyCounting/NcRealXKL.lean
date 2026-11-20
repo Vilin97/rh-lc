@@ -606,7 +606,7 @@ theorem cont_shH (a : Fin r) :
 variable {ι : Type}
 
 theorem meas_chAt (T : ℝ) (v : ι) : Measurable (fun x : (∀ q : CBlk r, CSpc ι k q) => chAt T x v) := by
-  refine Measurable.prodMk (measurable_pi_lambda _ fun c => ?_) (measurable_pi_lambda _ fun a => ?_)
+  refine Measurable.prodMk (Measurable.of_eval fun c => ?_) (Measurable.of_eval fun a => ?_)
   · rcases c with p | ⟨b, j⟩ | p
     · exact (measurable_pi_apply v).comp (measurable_pi_apply (Sum.inl (Sum.inl p) : CBlk r))
     · exact ((measurable_pi_apply j).comp ((measurable_pi_apply v).comp
@@ -666,23 +666,23 @@ theorem meas_Bk (T : ℝ) (p : CBlk r) :
         WlocSk.NB.shH (ph0 cc.1) cc.2.1 a) (f := fun z : (∀ q : CBlk r, CSpc ι k q) × (∀ q : CBlk r, CSpc ι k q) =>
         (chAt T z.1 v, chAt T z.2 v)) hc.measurable (hmc v)
   rcases p with ((p | b) | (p | a))
-  · refine measurable_pi_lambda _ fun v => ?_
+  · refine Measurable.of_eval fun v => ?_
     have h2 : Measurable fun z : (∀ q : CBlk r, CSpc ι k q) × (∀ q : CBlk r, CSpc ι k q) =>
         (z.1 (Sum.inl (Sum.inl p)) : ι → ℂ) v :=
       (measurable_pi_apply v).comp ((measurable_pi_apply (Sum.inl (Sum.inl p) : CBlk r)).comp measurable_fst)
     exact (hG _ v).sub h2
-  · refine measurable_pi_lambda _ fun v => measurable_pi_lambda _ fun j => ?_
+  · refine Measurable.of_eval fun v => Measurable.of_eval fun j => ?_
     have h2 : Measurable fun z : (∀ q : CBlk r, CSpc ι k q) × (∀ q : CBlk r, CSpc ι k q) =>
         (z.1 (Sum.inl (Sum.inr b)) : ι → Fin (k + 1) → ℂ) v j :=
       (measurable_pi_apply j).comp ((measurable_pi_apply v).comp
         ((measurable_pi_apply (Sum.inl (Sum.inr b) : CBlk r)).comp measurable_fst))
     exact (measurable_const.mul (hG _ v)).sub h2
-  · refine measurable_pi_lambda _ fun v => ?_
+  · refine Measurable.of_eval fun v => ?_
     have h2 : Measurable fun z : (∀ q : CBlk r, CSpc ι k q) × (∀ q : CBlk r, CSpc ι k q) =>
         (z.1 (Sum.inr (Sum.inl p)) : ι → ℂ) v :=
       (measurable_pi_apply v).comp ((measurable_pi_apply (Sum.inr (Sum.inl p) : CBlk r)).comp measurable_fst)
     exact (hG _ v).sub h2
-  · refine measurable_pi_lambda _ fun v => ?_
+  · refine Measurable.of_eval fun v => ?_
     have h2 : Measurable fun z : (∀ q : CBlk r, CSpc ι k q) × (∀ q : CBlk r, CSpc ι k q) =>
         (z.1 (Sum.inr (Sum.inr a)) : ι → ℝ) v :=
       (measurable_pi_apply v).comp ((measurable_pi_apply (Sum.inr (Sum.inr a) : CBlk r)).comp measurable_fst)

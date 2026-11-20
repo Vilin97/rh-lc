@@ -127,7 +127,7 @@ theorem stages_zero_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     exact hOpen0.measurableSet
   have hO : MeasurableSet {X : Fin (n + 1) → Fin (M + 2) → R ⊗[F] E | IsUnit (X 0 0)} := by
     have hp : Measurable fun (X : Fin (n + 1) → Fin (M + 2) → R ⊗[F] E) (_ : Fin 1) => X 0 :=
-      measurable_pi_lambda _ fun _ => measurable_pi_apply 0
+      Measurable.of_eval fun _ => measurable_pi_apply 0
     exact hp hOx
   have hc : Measurable fun p : (Fin 1 → Fin (M + 2) → R ⊗[F] E) × (Fin n → Fin M → R ⊗[F] E) ×
       (Fin 1 → Fin n → R ⊗[F] E) => chartS R σ J p.1 p.2.2 0 p.2.1 :=

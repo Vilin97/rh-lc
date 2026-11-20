@@ -229,7 +229,7 @@ def scT (p : (Fin e → ℝ) × (Fin e × Fin n → ℂ)) : Fin e × Fin n → �
 
 theorem measurable_scT : Measurable (scT (n := n) (e := e)) := by
   unfold scT
-  refine measurable_pi_lambda _ fun ij => ?_
+  refine Measurable.of_eval fun ij => ?_
   simp only [sc_apply]
   refine Measurable.mul ?_ ?_
   · exact Complex.continuous_ofReal.measurable.comp

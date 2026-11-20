@@ -196,7 +196,7 @@ theorem psiMeas_holds : PsiMeasU := by
   have hv : Measurable fun p => ((WithLp.equiv 2 _).symm (realifyFun ((2 : ℂ) • ((Mf p - 1) * (Mf p + 1)⁻¹))) :
       EuclideanSpace ℝ (Fin n × Fin n × Bool)) := by
     refine (PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin n × Fin n × Bool => ℝ)).symm.continuous.measurable.comp ?_
-    refine measurable_pi_lambda _ fun q => ?_
+    refine Measurable.of_eval fun q => ?_
     rcases q with ⟨i, j, b⟩
     cases b
     · exact Complex.measurable_re.comp (hX i j)

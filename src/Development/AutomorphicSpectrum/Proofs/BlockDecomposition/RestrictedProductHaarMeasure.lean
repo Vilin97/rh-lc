@@ -164,9 +164,9 @@ theorem prod_factor_open : ∀ {ι : Type} [Fintype ι]
     (P.comap E)
     (fun g₀ g => comap_invariant hE
       (a := fun x => (a₀ g₀ x.1, fun i => a i (g i) (x.2 i)))
-      ((hmeas₀ g₀).comp measurable_fst |>.prodMk (measurable_pi_lambda _ fun i =>
+      ((hmeas₀ g₀).comp measurable_fst |>.prodMk (Measurable.of_eval fun i =>
         (hmeas i (g i)).comp ((measurable_pi_apply i).comp measurable_snd)))
-      ((hmb₀ g₀).comp measurable_fst |>.prodMk (measurable_pi_lambda _ fun i =>
+      ((hmb₀ g₀).comp measurable_fst |>.prodMk (Measurable.of_eval fun i =>
         (hmb i (g i)).comp ((measurable_pi_apply i).comp measurable_snd)))
       (fun _ => rfl) hcarP (hP g₀ g))
     (by

@@ -473,7 +473,7 @@ theorem fd_cLatIm (u : D.what₂.Word) (a : Fin D.R.rS) :
   refine ⟨(fun (y : InfinitePlace X.B.I.F → ℝ) v => y v / cIm X v) ⁻¹' F₀, ?_, ?_⟩
   · refine hF₀m.preimage ?_
     first
-      | exact measurable_pi_lambda _ fun v => (measurable_pi_apply v).div_const _
+      | exact Measurable.of_eval fun v => (measurable_pi_apply v).div_const _
       | measurability
       | fun_prop
   · intro z

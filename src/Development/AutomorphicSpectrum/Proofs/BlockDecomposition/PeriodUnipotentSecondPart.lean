@@ -148,7 +148,7 @@ theorem mdom (σ : ℝ) (h0 : 0 < σ) (h1 : σ < 1) (g : ℝ → ℝ) (hgm : Mea
   simp [domF, GlobalTheory.CompanionTheory.TwoByTwoMajorant.coord_apply, Matrix.det_fin_two]
 
 theorem measurable_eta_norm : Measurable (fun h : M22 => ‖eta h‖) := by
-  refine Measurable.norm (measurable_pi_lambda _ fun j => ?_)
+  refine Measurable.norm (Measurable.of_eval fun j => ?_)
   exact GlobalTheory.CompanionTheory.GodementWeight.measurable_inv_entry 1 j
 
 theorem gint : ∀ k : ℕ, 3 ≤ k → ∀ σ : ℝ, 0 < σ → σ < 1 → ∃ N₀ : ℕ, ∀ N ≥ N₀,

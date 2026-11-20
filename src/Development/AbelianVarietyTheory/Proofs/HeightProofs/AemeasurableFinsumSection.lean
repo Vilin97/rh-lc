@@ -195,7 +195,7 @@ theorem aemeasurable_finsum_section :
     ((Fin.cons t₀ t : Fin (d.D + 1) → Metric.sphere (0 : EuclideanSpace ℂ (Fin (d.N + 1))) 1) q.1 :
       EuclideanSpace ℂ (Fin (d.N + 1))) q.2
   have hF : Measurable F := by
-    refine measurable_pi_lambda _ fun q => ?_
+    refine Measurable.of_eval fun q => ?_
     obtain ⟨i, j⟩ := q
     refine Fin.cases ?_ (fun k => ?_) i
     · simp only [F, Fin.cons_zero]

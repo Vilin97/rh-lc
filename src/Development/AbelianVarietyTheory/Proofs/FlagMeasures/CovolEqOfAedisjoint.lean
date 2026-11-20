@@ -56,8 +56,8 @@ theorem measurableSet_detNorm_pos : MeasurableSet {g : MatInf E j | 0 < detNorm 
   measurableSet_lt measurable_const measurable_detNorm
 
 theorem measurable_mul_left (γ : MatInf E j) : Measurable fun g : MatInf E j => γ * g := by
-  refine measurable_pi_lambda (X := fun _ : InfinitePlace E => Fin j → Fin j → ℂ) _ fun w =>
-    measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b => ?_
+  refine Measurable.of_eval (X := fun _ : InfinitePlace E => Fin j → Fin j → ℂ) fun w =>
+    Measurable.of_eval fun a => Measurable.of_eval fun b => ?_
   show Measurable fun g : MatInf E j => ∑ c, γ w a c * g w c b
   exact Finset.measurable_sum _ fun c _ => (measurable_entry w c b).const_mul _
 

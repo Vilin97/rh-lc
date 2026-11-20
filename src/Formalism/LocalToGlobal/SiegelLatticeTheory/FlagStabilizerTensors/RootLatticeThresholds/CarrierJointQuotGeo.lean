@@ -251,7 +251,7 @@ theorem globProd_of (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u u' : D.wh
   haveI : ∀ v, SigmaFinite (μRv v) := fun v => (hRv v).1.1
   let Φ : (InfinitePlace X.B.I.F → FreeE w → ℂ) → X.B.I.Ginf := fun c v => φ v (c v)
   have hΦm : Measurable Φ :=
-    measurable_pi_lambda _ fun v => (hφc v).measurable.comp (measurable_pi_apply v)
+    Measurable.of_eval fun v => (hφc v).measurable.comp (measurable_pi_apply v)
   have hsc := stCoord_measurable X u' w (gamW X u u' w)
   have hleft : ∀ y ∈ StInf X u u' (gamW X u u' w), Φ (stCoord X u' w (gamW X u u' w) y) = y := by
     intro y hy

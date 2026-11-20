@@ -17,7 +17,7 @@ local instance instSCMat {m n : Type*} [Fintype m] [Fintype n] : SecondCountable
   inferInstanceAs (SecondCountableTopology (m → n → ℂ))
 
 theorem meas_inv {n : Type*} [Fintype n] [DecidableEq n] : Measurable fun A : Matrix n n ℂ => A⁻¹ := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [Matrix.inv_def, Ring.inverse_eq_inv, Matrix.smul_apply, smul_eq_mul]
   exact (continuous_id.matrix_det.measurable.inv).mul
     (continuous_id.matrix_adjugate.matrix_elem i j).measurable
@@ -30,7 +30,7 @@ theorem meas_Yb {p q : ℕ} : Measurable fun M : Matrix (Fin p ⊕ Fin q) (Fin p
         continuous_id.matrix_elem (Sum.inr i) (Sum.inr j)).measurable
   have hBi := (meas_inv (n := Fin q)).comp hB
   unfold Yb
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [Matrix.mul_apply]
   refine Finset.measurable_sum _ fun k _ => ?_
   exact (continuous_id.matrix_elem (Sum.inl i) (Sum.inr k)).measurable.mul

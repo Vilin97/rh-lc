@@ -61,7 +61,7 @@ theorem isRapidInf_colU : ∀ {E : Type} [Field E] [NumberField E] [IsTotallyCom
     rw [e1, e2]
     linarith [hent 1 x n0, hent (-1) x n1]
   refine ⟨f.continuous.measurable, ?_, fun N => ?_⟩
-  · refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  · refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
     exact ((continuous_apply j).comp ((continuous_apply i).comp hc)).measurable
   · set A : ℝ := 1 + 2 * c₁
     have hA : 0 ≤ A := by positivity

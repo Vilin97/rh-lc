@@ -687,7 +687,7 @@ lemma mul_upper_sub {m : ℕ} {A : Matrix (Fin m) (Fin m) ℂ} (hA : A ∈ C2.UT
 theorem mp_UTleft {m : ℕ} {A : Matrix (Fin m) (Fin m) ℂ} (hA : A ∈ C2.UTset m) :
     MeasurePreserving (fun u : G.UT m → ℂ => StabilizerDisintegration.utc (A * G.upper u)) volume volume := by
   refine Formalism.FourierDecayAlt.P.ShearMeasurability.shear_mp (fun q : G.UT m => q.1.2.val - q.1.1.val) _ ?_ ?_
-  · refine measurable_pi_lambda _ fun q => ?_
+  · refine Measurable.of_eval fun q => ?_
     exact ((continuous_const.matrix_mul Formalism.FourierDecayAlt.P.Dx2.SL.cont_upper).matrix_elem q.1.1 q.1.2).measurable
   · intro q x y hxy
     show (A * G.upper x) q.1.1 q.1.2 - x q = (A * G.upper y) q.1.1 q.1.2 - y q

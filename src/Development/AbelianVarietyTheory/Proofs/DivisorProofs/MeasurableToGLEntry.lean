@@ -115,7 +115,7 @@ theorem measurable_comp_GL {X β : Type} [MeasurableSpace X] [TopologicalSpace �
   letI : MeasurableSpace (GL (Fin n) ℂ) := borel _
   haveI : BorelSpace (GL (Fin n) ℂ) := ⟨rfl⟩
   have h : Measurable γ := (isOpenEmbedding_valGL.measurableEmbedding.measurable_comp_iff).1
-    (measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => hγ i j)
+    (Measurable.of_eval fun i => Measurable.of_eval fun j => hγ i j)
   exact hF.measurable.comp h
 
 theorem measurable_dual {X Z : Type} [MeasurableSpace X] [NormedAddCommGroup Z] [NormedSpace ℝ Z]

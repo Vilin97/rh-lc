@@ -60,7 +60,7 @@ theorem sum_norm_le_of_le (A : Matrix (Fin n) (Fin n) (Cinf E)) {c : ℝ} (hc : 
 theorem measurable_sandCLMInf_apply {Y : Type} [MeasurableSpace Y] {A B : Y → Matrix (Fin n) (Fin n) (Cinf E)}
     (hA : ∀ i j, Measurable fun y => A y i j) (hB : ∀ i j, Measurable fun y => B y i j) (c : Fin n → Fin n → Cinf E) :
     Measurable fun y => sandCLMInf (A y) (B y) c := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [sandCLMInf_apply, Matrix.mul_apply, Matrix.of_apply]
   refine Finset.measurable_sum _ fun l _ => ?_
   refine Measurable.mul ?_ (hB l j)

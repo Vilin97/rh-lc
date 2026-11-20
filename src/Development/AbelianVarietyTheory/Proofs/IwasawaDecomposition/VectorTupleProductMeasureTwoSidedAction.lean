@@ -150,9 +150,9 @@ end
 theorem tupMeas_eq_map {S : Type} [MeasurableSpace S] (lam : Measure S) [SigmaFinite lam] (n M : ℕ) :
     tupMeas lam n M = (Measure.pi fun _ : Fin n × Fin M => lam).map Function.curry := by
   have hu : Measurable (Function.uncurry : (Fin n → Fin M → S) → Fin n × Fin M → S) :=
-    measurable_pi_lambda _ fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
+    Measurable.of_eval fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
   have hc : Measurable (Function.curry : (Fin n × Fin M → S) → Fin n → Fin M → S) :=
-    measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun i => measurable_pi_apply (a, i)
+    Measurable.of_eval fun a => Measurable.of_eval fun i => measurable_pi_apply (a, i)
   have : (Measure.pi fun _ : Fin n × Fin M => lam) = (tupMeas lam n M).map Function.uncurry := by
     refine Measure.pi_eq fun s hs => ?_
     rw [Measure.map_apply hu (MeasurableSet.univ_pi hs)]
@@ -168,7 +168,7 @@ theorem tupMeas_eq_map {S : Type} [MeasurableSpace S] (lam : Measure S) [SigmaFi
 theorem tupMeas_lrAct : ∀ (S : Type) [CommRing S] [TopologicalSpace S] [IsTopologicalRing S] [T2Space S] [LocallyCompactSpace S] [SecondCountableTopology S] [MeasurableSpace S] [BorelSpace S], IsArtinianRing S → IsReduced S → ∀ (lam : Measure S), lam.IsAddHaarMeasure → ∀ (n M : ℕ) (g : Matrix (Fin M) (Fin M) S) (γ : Matrix (Fin n) (Fin n) S), IsUnit g.det → IsUnit γ.det → tupMeas lam n M = (modu S g.det ^ n * modu S γ.det ^ M) • (tupMeas lam n M).map (lrAct g γ) := by
   intro S _ _ _ _ _ _ _ _ _ _ lam _ n M g γ hg hγ
   have hc : Measurable (Function.curry : (Fin n × Fin M → S) → Fin n → Fin M → S) :=
-    measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun i => measurable_pi_apply (a, i)
+    Measurable.of_eval fun a => Measurable.of_eval fun i => measurable_pi_apply (a, i)
   have hl : Measurable (lrAct g γ) := by
     refine Continuous.measurable (continuous_pi fun a => continuous_const.matrix_mulVec ?_)
     fun_prop

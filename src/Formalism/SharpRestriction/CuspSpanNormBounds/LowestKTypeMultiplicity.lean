@@ -2060,7 +2060,7 @@ theorem Fu_meas {z : Fin (2 * r + k + 1) → ℂ} {ψ : Mx k r → ℂ} {π : Mx
     {Φ : (Fin (r + 1) → ℝ) → ENNReal} (hΦ : Measurable Φ) : Measurable (Fu σ z B Φ u) := by
   unfold Fu
   refine Measurable.mul ?_ ?_
-  · exact hΦ.comp (measurable_pi_lambda _ fun a => Formalism.MainNotions.BesselShellMomentBounds.measurable_lA z a)
+  · exact hΦ.comp (Measurable.of_eval fun a => Formalism.MainNotions.BesselShellMomentBounds.measurable_lA z a)
   · exact ((meas_ind hσ hB hu).ennreal_ofReal).pow_const 2
 
 theorem Fu_on (z : Fin (2 * r + k + 1) → ℂ) (B : H → Wp) (Φ : (Fin (r + 1) → ℝ) → ENNReal) (u : H) (x : Mt k r)

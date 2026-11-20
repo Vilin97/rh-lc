@@ -44,7 +44,7 @@ theorem shear_mp (i : ι) (ε : ℂ) (hε : MeasurePreserving (fun x : ℂ => ε
       ((volume : Measure ({j // p j} → ℂ)).prod (volume : Measure ({j // ¬ p j} → ℂ)))
       ((volume : Measure ({j // p j} → ℂ)).prod (volume : Measure ({j // ¬ p j} → ℂ))) := by
     refine MeasurePreserving.skew_product (MeasurePreserving.id _) ?_ (ae_of_all _ fun y => ?_)
-    · exact measurable_pi_lambda _ fun j =>
+    · exact Measurable.of_eval fun j =>
         (measurable_const.mul ((measurable_pi_apply j).comp measurable_snd)).add (hh'm.comp measurable_fst)
     · exact (measurePreserving_pi (fun _ => (volume : Measure ℂ)) (fun _ => (volume : Measure ℂ))
         (fun _ => (measurePreserving_add_right volume (h' y)).comp hε)).map_eq

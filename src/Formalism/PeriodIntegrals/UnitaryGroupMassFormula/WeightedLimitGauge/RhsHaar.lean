@@ -81,7 +81,7 @@ theorem cont_emb : Continuous (embWb k r) := by
 
 theorem meas_invM : Measurable (HU.invM : Mt k r → Mt k r) := by
   rw [HU.invM_smul]
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [Pi.smul_apply, smul_eq_mul]
   exact (measurable_inv.comp HU.detF_cont.measurable).mul
     ((measurable_pi_apply j).comp ((measurable_pi_apply i).comp HU.adjF_cont.measurable))

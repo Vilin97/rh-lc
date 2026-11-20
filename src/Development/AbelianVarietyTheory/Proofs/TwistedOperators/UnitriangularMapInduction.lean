@@ -93,7 +93,7 @@ private theorem measurePreserving_transvection_mulVec (t : TransvectionStruct κ
       ((Measure.pi fun _ : α => ν).prod (Measure.pi fun _ : β => ν)) := by
     have hg : Measurable (Function.uncurry g) := by
       refine Measurable.add ?_ measurable_snd
-      exact measurable_pi_lambda _ fun _ =>
+      exact Measurable.of_eval fun _ =>
         ((measurable_pi_apply _).comp measurable_fst).const_mul _
     exact (MeasurePreserving.id _).skew_product hg
       (Filter.Eventually.of_forall fun a => map_add_left_eq_self _ _)

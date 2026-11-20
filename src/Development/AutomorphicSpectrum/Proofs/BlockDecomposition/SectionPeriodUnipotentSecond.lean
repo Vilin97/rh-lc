@@ -127,7 +127,7 @@ theorem gx_swp (σ : ℝ) (N : ℕ) (h : M22) : gx σ N (GlobalTheory.CompanionT
 
 theorem measurable_swp : Measurable GlobalTheory.CompanionTheory.MajC.swp := by
   unfold GlobalTheory.CompanionTheory.MajC.swp
-  refine measurable_pi_lambda _ fun i => ?_
+  refine Measurable.of_eval fun i => ?_
   fin_cases i
   · exact measurable_pi_apply 1
   · exact measurable_pi_apply 0

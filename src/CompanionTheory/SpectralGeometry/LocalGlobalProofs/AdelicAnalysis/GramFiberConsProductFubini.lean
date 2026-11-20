@@ -74,7 +74,7 @@ theorem isSFiniteKernel_of_locallyFinite {α β : Type} [MeasurableSpace α] [To
 theorem measurable_vec_triple {K : Type} [Zero K] [MeasurableSpace K] {M n : ℕ} :
     Measurable (fun p : K × (Fin n → K) × (Fin n → Fin M → K) =>
       (vec p.1 p.2.1 p.2.2 : Fin (n + 1) → Fin (M + 1) → K)) := by
-  refine measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun i => ?_
+  refine Measurable.of_eval fun a => Measurable.of_eval fun i => ?_
   induction a using Fin.cases with
   | zero =>
     induction i using Fin.cases with

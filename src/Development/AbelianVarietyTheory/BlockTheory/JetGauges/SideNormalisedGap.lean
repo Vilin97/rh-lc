@@ -48,7 +48,7 @@ def mulP {k r : ℕ} (p : Mt k r × Mt k r) : Mt k r := fun i j => (Matrix.of p.
 
 theorem measurable_mulP {k r : ℕ} : Measurable (mulP (k := k) (r := r)) := by
   unfold mulP
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [Matrix.mul_apply, Matrix.of_apply]
   refine Finset.measurable_sum _ fun l _ => ?_
   fun_prop

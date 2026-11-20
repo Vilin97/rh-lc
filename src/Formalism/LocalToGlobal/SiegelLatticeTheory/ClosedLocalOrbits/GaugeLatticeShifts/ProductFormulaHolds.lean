@@ -64,7 +64,7 @@ theorem product_formula_holds : P5 := by
     rw [PiM.pi_withDensity _ _ hwm (fun v x => ENNReal.ofReal_ne_top), ← Measure.restrict_pi_pi, good_eq]
     rfl
   set H : (Cinf X) → X.B.I.Ginf := fun c v => hs v (c v) with hHd
-  have hHm : Measurable H := measurable_pi_lambda _ fun v => (hsm v).comp (measurable_pi_apply v)
+  have hHm : Measurable H := Measurable.of_eval fun v => (hsm v).comp (measurable_pi_apply v)
   set Fc : Cinf X → ℝ≥0∞ := fun c => ∫⁻ s, ∫⁻ s', φ (s * H c * s'⁻¹) ∂Measure.pi (muSv X u') ∂Measure.pi (muSv X u)
     with hFc
   have hFm : Measurable Fc := by

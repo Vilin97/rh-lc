@@ -38,7 +38,7 @@ theorem LineStabHaar.measurable_invUnits : Measurable (invUnits (E := E)) := by
       by_cases hz : z = 0 <;> simp [hz]
     rw [e]
     exact (Measurable.ite (measurableSet_singleton 0) measurable_const measurable_inv).comap_le
-  exact measurable_pi_lambda _ fun w => h0.comp (measurable_pi_apply w)
+  exact Measurable.of_eval fun w => h0.comp (measurable_pi_apply w)
 
 omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] [DecidableEq ι] in
 

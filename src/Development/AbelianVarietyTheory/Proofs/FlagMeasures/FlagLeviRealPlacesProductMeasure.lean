@@ -136,7 +136,7 @@ theorem levi_product : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I.Gf)
     (fun w => ((GlobalTheory.T.riemannianHaarGauge_whole_group _ _).1 _ (hc₀ w)).1.le)
   have hRm : Measurable R := hR.measurable
   have hΘ : Measurable fun (z : (∀ i, MatInf I.E (j i)) × I₀.Ginf) v => θ v (R z v) :=
-    measurable_pi_lambda _ fun v => (hθ v).1.comp ((measurable_pi_apply v).comp hRm)
+    Measurable.of_eval fun v => (hθ v).1.comp ((measurable_pi_apply v).comp hRm)
   have hdet : ∀ z : (∀ i, MatInf I.E (j i)) × I₀.Ginf, (∀ i, 0 < detNorm I.E (j i) (z.1 i)) →
       ∀ v i, (Matrix.of ((R z v).1 i)).det ≠ 0 := fun z hz v i => (detNorm_pos_iff _).1 (hz i) (β v)
   have hM : ∀ z : (∀ i, MatInf I.E (j i)) × I₀.Ginf, (∀ i, 0 < detNorm I.E (j i) (z.1 i)) →

@@ -96,12 +96,12 @@ theorem lemmaU : LemmaUSplit := by
     exact (hOpen1.measurableSet).preimage
       ((measurable_pi_apply j).comp (measurable_pi_apply i))
   have hR1 : Measurable (fun x : Matrix (Fin a ⊕ Fin t) (Fin a) F => toRows₁ x) :=
-    measurable_pi_lambda _ fun i => measurable_pi_apply (Sum.inl i)
+    Measurable.of_eval fun i => measurable_pi_apply (Sum.inl i)
   have hR2 : Measurable (fun x : Matrix (Fin a ⊕ Fin t) (Fin a) F => toRows₂ x) :=
-    measurable_pi_lambda _ fun i => measurable_pi_apply (Sum.inr i)
+    Measurable.of_eval fun i => measurable_pi_apply (Sum.inr i)
   have hFR : Measurable (fun p : Matrix (Fin a) (Fin a) F × Matrix (Fin t) (Fin a) F =>
       Matrix.fromRows p.1 p.2) := by
-    refine measurable_pi_lambda _ fun i => ?_
+    refine Measurable.of_eval fun i => ?_
     cases i with
     | inl i => exact (measurable_pi_apply i).comp measurable_fst
     | inr i => exact (measurable_pi_apply i).comp measurable_snd

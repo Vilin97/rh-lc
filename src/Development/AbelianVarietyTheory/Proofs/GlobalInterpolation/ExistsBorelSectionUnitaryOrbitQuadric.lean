@@ -237,7 +237,7 @@ theorem _root_.GlobalTheory.QuadricSection.exists_isSection : ∀ (P Q : ℕ) (�
     haveI : BorelSpace (Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) :=
       inferInstanceAs (BorelSpace (Fin P ⊕ Fin Q → Fin P ⊕ Fin Q → ℂ))
     apply (_root_.GlobalTheory.UpqTopology.isClosedEmbedding_mat.measurableEmbedding.measurable_comp_iff).mp
-    refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+    refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
     exact _root_.GlobalTheory.QuadricSection.measurable_sectMat β x₀ i j
   · intro y hy
     exact (hspec y).2 hy

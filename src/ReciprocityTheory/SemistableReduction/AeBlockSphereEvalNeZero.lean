@@ -178,7 +178,7 @@ theorem ae_toSphere (B n : ℕ) (a : Fin B → ℕ) (F : MvPolynomial (Fin B × 
       Measure.pi fun _ : Fin B => (volume : Measure E).restrict {0}ᶜ := by
     rw [Measure.pi_map_pi (hμ := hmSF) (fun _ => measurable_subtype_coe.aemeasurable)]
     exact congrArg _ (funext hmap)
-  have hGm : Measurable G := measurable_pi_lambda _ fun b => measurable_subtype_coe.comp
+  have hGm : Measurable G := Measurable.of_eval fun b => measurable_subtype_coe.comp
     (measurable_pi_apply b)
   have hzero : (Measure.pi fun _ : Fin B =>
       (volume : Measure E).comap (Subtype.val : ({0}ᶜ : Set E) → E))

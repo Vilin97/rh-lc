@@ -36,7 +36,7 @@ theorem measurePreserving_adjoin {ι X : Type} [DecidableEq ι] [MeasurableSpace
       (ν.prod (Measure.pi fun _ : I => ν)) (Measure.pi fun _ : ↥(insert e I : Finset ι) => ν) := by
   have hm : Measurable
       (fun (p : X × (I → X)) (i : ↥(insert e I : Finset ι)) => if h : i.1 ∈ I then p.2 ⟨i.1, h⟩ else p.1) := by
-    refine measurable_pi_lambda _ fun i => ?_
+    refine Measurable.of_eval fun i => ?_
     by_cases h : i.1 ∈ I
     · simp only [dif_pos h]; fun_prop
     · simp only [dif_neg h]; fun_prop

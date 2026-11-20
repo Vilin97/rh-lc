@@ -20,7 +20,7 @@ theorem measurable_comp_GLInf {X β : Type} [MeasurableSpace X] [TopologicalSpac
   letI : MeasurableSpace (GL (Fin n) (Cinf E)) := borel _
   haveI : BorelSpace (GL (Fin n) (Cinf E)) := ⟨rfl⟩
   have h : Measurable γ := (isOpenEmbedding_entriesGLInf.measurableEmbedding.measurable_comp_iff).1
-    (measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => hγ i j)
+    (Measurable.of_eval fun i => Measurable.of_eval fun j => hγ i j)
   exact hF.measurable.comp h
 
 theorem htInf_pos' (g : GL (Fin n) (Cinf E)) : 0 < htInf g := by

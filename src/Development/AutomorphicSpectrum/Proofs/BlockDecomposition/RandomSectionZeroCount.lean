@@ -90,8 +90,8 @@ theorem measurable_kernel {X : Type} [MeasurableSpace X] (d : ℕ) (β : Type) [
       ((p.1, (fun j => g j p.2), (fun j a => F j a p.2)) :
         (Fin d → β → ℂ) × ((β → ℂ) × (β → Fin d → ℂ))) := by
     refine measurable_fst.prodMk (Measurable.prodMk ?_ ?_)
-    · exact measurable_pi_lambda _ fun j => (hg j).comp measurable_snd
-    · exact measurable_pi_lambda _ fun j => measurable_pi_lambda _ fun a =>
+    · exact Measurable.of_eval fun j => (hg j).comp measurable_snd
+    · exact Measurable.of_eval fun j => Measurable.of_eval fun a =>
         (hF j a).comp measurable_snd
   have hq := (continuous_kernel d β).measurable.comp hm
   exact ((measurable_gW d β).comp measurable_fst).mul (ENNReal.measurable_ofReal.comp hq)

@@ -208,7 +208,7 @@ theorem geoAbs : GeoAbs := by
         rw [integral_mul_const]
   · have no : ¬∃ ρ, IsNormAlong id (fun t : (Subgroup.centralizer {γ} : Subgroup G) => fun _ : Fin (m + 1) => (t : G)) ν ρ := by
       rintro ⟨ρ, hρ⟩
-      refine hex ⟨fun g => ρ fun _ => g, hρ.1.comp (measurable_pi_lambda _ fun _ => measurable_id), fun x => ?_⟩
+      refine hex ⟨fun g => ρ fun _ => g, hρ.1.comp (Measurable.of_eval fun _ => measurable_id), fun x => ?_⟩
       exact hρ.2 fun _ => x
     unfold quotInt
     rw [dif_neg no, dif_neg hex]

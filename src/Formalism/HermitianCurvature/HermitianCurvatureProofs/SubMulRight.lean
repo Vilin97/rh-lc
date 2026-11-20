@@ -94,7 +94,7 @@ theorem upper_mem {m : ℕ} (u : G.UT m → ℂ) : G.upper u ∈ C2.UTset m := b
 theorem utLeft : UTLeft := by
   intro m a ha
   refine ShearMeasurability.shear_mp (fun q : G.UT m => q.1.2.val - q.1.1.val) _ ?_ ?_
-  · refine measurable_pi_lambda _ fun q => ?_
+  · refine Measurable.of_eval fun q => ?_
     exact ((continuous_const.matrix_mul cont_upper).matrix_elem q.1.1 q.1.2).measurable
   · intro q x y hxy
     simp only [utc, Matrix.mul_apply]

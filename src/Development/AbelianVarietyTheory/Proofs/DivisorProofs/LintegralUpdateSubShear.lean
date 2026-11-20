@@ -22,7 +22,7 @@ theorem lintegral_update_sub_shear {ι : Type} [Fintype ι] [DecidableEq ι] (i 
   have hS_mp : MeasurePreserving S (volume.prod volume) (volume.prod volume) := by
     refine MeasurePreserving.skew_product (g := fun x y => y + (fun _ => - c x))
       (MeasurePreserving.id volume) ?_ ?_
-    · exact measurable_snd.add (measurable_pi_lambda _ fun _ => (hcm.comp measurable_fst).neg)
+    · exact measurable_snd.add (Measurable.of_eval fun _ => (hcm.comp measurable_fst).neg)
     · exact Filter.Eventually.of_forall fun x => map_add_right_eq_self _ _
   have hT : (fun w => Function.update w i (w i - g w)) = e.symm ∘ S ∘ e := by
     funext w

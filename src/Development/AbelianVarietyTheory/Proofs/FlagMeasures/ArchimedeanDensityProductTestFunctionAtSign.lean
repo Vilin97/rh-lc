@@ -73,7 +73,7 @@ theorem setIntegral_box {ι : Type} [Fintype ι] {X : Type} [MeasureSpace X] [Si
       ∏ v, ∫ y in q v ⁻¹' Set.Icc (a v) (c v), φ v y := by
   have hm : MeasurableSet ((fun (y : ι → X) (v : ι) => q v (y v)) ⁻¹' Set.Icc a c) :=
     measurableSet_Icc.preimage
-      (measurable_pi_lambda _ fun v => (hq v).comp (measurable_pi_apply v))
+      (Measurable.of_eval fun v => (hq v).comp (measurable_pi_apply v))
   rw [← integral_indicator hm,
     ← Finset.prod_congr rfl fun v _ => integral_indicator (measurableSet_Icc.preimage (hq v)),
     ← integral_fintype_prod_volume_eq_prod]

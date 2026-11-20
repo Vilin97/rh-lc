@@ -1035,8 +1035,8 @@ lemma tr_f_meas (A : ℝ) : Measurable fun g : Mt k r => ENNReal.ofReal (B.gN (M
   ENNReal.measurable_ofReal.comp ((P.HaarUniquenessConjugation.gN_meas k r).pow_const _)
 
 lemma tr_meas_bigCell : @Measurable (Fin r → ℂ) (Mt k r) _ _ (fun c => bigCell k r c 1) := by
-  refine measurable_pi_lambda (fun c : Fin r → ℂ => fun i j => bigCell k r c 1 i j) fun i => ?_
-  refine measurable_pi_lambda (fun c : Fin r → ℂ => fun j => bigCell k r c 1 i j) fun j => ?_
+  refine Measurable.of_eval (f := fun c : Fin r → ℂ => fun i j => bigCell k r c 1 i j) fun i => ?_
+  refine Measurable.of_eval (f := fun c : Fin r → ℂ => fun j => bigCell k r c 1 i j) fun j => ?_
   unfold bigCell
   split_ifs
   all_goals first

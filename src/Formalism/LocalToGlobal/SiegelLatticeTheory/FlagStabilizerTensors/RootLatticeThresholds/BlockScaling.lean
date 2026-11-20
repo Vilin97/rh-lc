@@ -315,7 +315,7 @@ theorem measPinAt_of (sc : ℝ) (hsc : 0 < sc) (i0 i0' : ∀ _ : InfinitePlace X
       unfold stCoordV Formalism.L2.SG.HidaSetting.hJ
       fun_prop
     have hGm : Measurable (fun (y' : Formalism.L2.SG.RealObj.FreeE w → ℂ) (q : ↥(Formalism.MainNotions.S.rootPat pN)) => sP q.1 * y' (idxE q)) :=
-      measurable_pi_lambda _ fun q => measurable_const.mul (measurable_pi_apply _)
+      Measurable.of_eval fun q => measurable_const.mul (measurable_pi_apply _)
     rw [Measure.map_map hΦ2 hΦ1]
     refine (Measure.map_map ?_ (hΦ2.comp hΦ1)).trans ?_
     · refine Continuous.measurable ((Formalism.L2.SG.RootPatterns.rootCoords_cont _ _ _ _).comp ?_)

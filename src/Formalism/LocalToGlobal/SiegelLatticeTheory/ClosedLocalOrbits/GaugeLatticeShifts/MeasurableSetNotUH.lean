@@ -354,7 +354,7 @@ private theorem measurable_invM' (k r : ℕ) : Measurable (Formalism.FourierDeca
     rw [Matrix.inv_def, Matrix.smul_apply, smul_eq_mul]
     first | rw [Ring.inverse_eq_inv'] | rw [Ring.inverse_eq_inv] | simp
   rw [e]
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   exact hinv.mul ((continuous_apply j).comp ((continuous_apply i).comp hadj)).measurable
 
 theorem inv_comap (C : Choice X θ) (τ : D.what₂.Tau) {μS : Measure (Formalism.QuantumDeterminants.Mt D.R.k D.R.rS)}

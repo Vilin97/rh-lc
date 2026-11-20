@@ -522,7 +522,7 @@ theorem invM_meas {k r : ℕ} : Measurable (invM : Mt k r → Mt k r) := by
     simp only [invM, inv_eq, Matrix.smul_apply, smul_eq_mul]
   rw [h]
   have hof : Continuous (fun x : Mt k r => (Matrix.of x : Mat k r)) := continuous_id
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   exact hof.matrix_det.measurable.inv.mul ((hof.matrix_adjugate).matrix_elem i j).measurable
 
 theorem sfin {k r : ℕ} {U : Set (Mat k r)} {μ : Measure (Mt k r)} (h : IsHaarOn U μ) : SigmaFinite μ := by

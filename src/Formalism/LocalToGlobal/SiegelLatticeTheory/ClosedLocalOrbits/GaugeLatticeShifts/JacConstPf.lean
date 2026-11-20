@@ -87,7 +87,7 @@ theorem meas_hnxhn :
 theorem meas_bigCell :
     Measurable fun p : (Fin r → ℂ) × (Fin (k + 1) → Fin (k + 1) → ℂ) =>
       (fun i j => bigCell k r p.1 (Matrix.of p.2) i j : Mt k r) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   unfold bigCell
   split_ifs <;> fun_prop
 
@@ -292,7 +292,7 @@ theorem aemeas_F {φ : Mt k r → ℝ≥0∞} (hφ : Measurable φ) (μW μW' : 
   have hUo : IsOpen U := isOpen_lt continuous_const Complex.continuous_normSq
   let sM : ℂ → (Fin (k + 1) → Fin (k + 1) → ℂ) := fun ζ i j => U.piecewise (fun ζ => μsec ζ i j) (fun _ => (1 : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) i j) ζ
   have hsM : Measurable sM := by
-    refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+    refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
     exact ContinuousOn.measurable_piecewise (hsec.1 i j).continuousOn continuousOn_const hUo.measurableSet
   have hbw : Measurable fun q : (Fin r → ℂ) × ℂ => bcWeight k r (Tz k r z) (Tz k r z') q := by
     unfold bcWeight

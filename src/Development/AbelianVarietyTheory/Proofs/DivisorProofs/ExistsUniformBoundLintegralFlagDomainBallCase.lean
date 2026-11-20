@@ -121,7 +121,7 @@ theorem lintegral_lt_top (X : Data E r) (x0 : Base X) (h1 : 0 < X.p0) (h2 : X.p0
     ∫⁻ z, ENNReal.ofReal (Real.exp (-(s * rhF X x0.1 z))) ∂muF X x0.1 < ⊤ := by
   have hm : Measurable fun z : V (nd X) => ∏ τ, hB X.p0 (zOf X z τ) := by
     refine Finset.measurable_prod _ fun τ _ => (GlobalTheory.T.measurable_cutoffGramBoundMixedBlock r X.p0).comp ?_
-    exact measurable_pi_lambda _ fun p => (EuclideanSpace.proj (𝕜 := ℂ) _).continuous.measurable
+    exact Measurable.of_eval fun p => (EuclideanSpace.proj (𝕜 := ℂ) _).continuous.measurable
   rw [GlobalTheory.T.lintegral_expRho_eq_setLIntegral_unitBallDomain E r X x0 s]
   calc ∫⁻ z in Om X, ENNReal.ofReal (density X x0 z) * ENNReal.ofReal (Real.exp (-(s * rho X z)))
       ≤ ∫⁻ z in Om X, ∏ τ, hB X.p0 (zOf X z τ) := by

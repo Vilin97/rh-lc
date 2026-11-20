@@ -79,7 +79,7 @@ theorem cov_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCom
     show (Matrix.of (m s v) * Matrix.of (m t v)) * Matrix.of (x v) = Matrix.of (m s v) * (Matrix.of (m t v) * Matrix.of (x v))
     rw [Matrix.mul_assoc]
   have hmeas : ∀ s, Measurable (mulP (k := k) (r := r) (m s)) := fun s =>
-    measurable_pi_lambda _ fun v => (continuous_lmulM _).measurable.comp (measurable_pi_apply v)
+    Measurable.of_eval fun v => (continuous_lmulM _).measurable.comp (measurable_pi_apply v)
   have hmR : ∀ s ∈ N.R, m s ∈ RP k r g := fun s hs => hsub ⟨s, hs, hm s⟩
   have hnull : Measure.pi (fun _ : ι => lebR0 k r N.j β) (RP k r g)ᶜ = 0 := by
     refine measure_mono_null (t := ⋃ v, Function.eval v ⁻¹' {x : Mt k r | Matrix.of x ∉ Rset k r (g v)}) ?_

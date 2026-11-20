@@ -158,7 +158,7 @@ theorem measurable_coords {β : Type} [MeasurableSpace β] (hB : B.IsLB) {F : Eu
   have hloc : ∀ i, Measurable fun y => F (euc h (loc p s σ i y)) := by
     intro i
     refine hm.comp ((continuous_euc h).measurable.comp ?_)
-    exact measurable_pi_lambda _ fun k => measurable_ev (B.U i) ((s k).f i)
+    exact Measurable.of_eval fun k => measurable_ev (B.U i) ((s k).f i)
   have heq : ∀ i, ∀ y ∈ ptsIn p σ (B.U i),
       F (euc h (coords p σ hB s y)) = F (euc h (loc p s σ i y)) := by
     intro i y hy
@@ -185,7 +185,7 @@ private theorem aemeasurable_ofReal_fsDens {e n : ℕ} {v : (Fin e → ℂ) → 
     AEMeasurable (fun x => ENNReal.ofReal (fsDens v x)) (volume.restrict D) := by
   have h1 : AEMeasurable v (volume.restrict D) := hv.aemeasurable hD
   have h2 : Measurable fun x => fun j : Fin e => fderiv ℂ v x (Pi.single j 1) :=
-    measurable_pi_lambda _ fun j => measurable_fderiv_apply_const ℂ v _
+    Measurable.of_eval fun j => measurable_fderiv_apply_const ℂ v _
   have hpair : AEMeasurable (fun x => (v x, fun j : Fin e => fderiv ℂ v x (Pi.single j 1)))
       (volume.restrict D) := h1.prodMk h2.aemeasurable
   have hcons : Continuous fun q : (Fin n → ℂ) × (Fin e → Fin n → ℂ) =>

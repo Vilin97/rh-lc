@@ -84,7 +84,7 @@ theorem coordinate_extension_glue (i : Fin (r + 1)) (c : Fin r → ℂ) (a : Cf 
   simp [glue, coordinateExtension]
 
 theorem coordinate_extension_measurable (i : Fin (r + 1)) (c : Fin r → ℂ) : Measurable (coordinateExtension i c) := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   by_cases h : i.val ≤ j.1.val
   · simp only [coordinateExtension, glue, dif_pos h]; exact measurable_pi_apply _
   · simp only [coordinateExtension, glue, dif_neg h]; exact measurable_const

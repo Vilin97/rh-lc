@@ -22,7 +22,7 @@ theorem map_smul_pi (n : ℕ) (a : IdeleGroup K) :
         Measure.pi fun _ : Fin n ↦ adeleMeasure K := by
   have hsm : Measurable fun y : 𝔸[K] ↦ a • y := (Homeomorph.smul a).continuous.measurable
   have hmeas : Measurable fun x : Fin n → 𝔸[K] ↦ fun i ↦ a • x i :=
-    measurable_pi_lambda _ fun i ↦ hsm.comp (measurable_pi_apply i)
+    Measurable.of_eval fun i ↦ hsm.comp (measurable_pi_apply i)
   set c : ℝ≥0 := Real.toNNReal ((IdeleGroup.ideleModule K a : ℝ))⁻¹ with hcdef
   have hmap : (adeleMeasure K).map (fun y ↦ a • y) = c • adeleMeasure K := by
     rw [map_smul_adeleMeasure]
@@ -76,7 +76,7 @@ theorem ideleModule_ideleEmbedding (x : IdeleGroup K) :
     rfl
   have hsmL : Measurable fun y : 𝔸[L] ↦ X • y := (Homeomorph.smul X).continuous.measurable
   have hsmK : Measurable fun v : Fin n → 𝔸[K] ↦ fun i ↦ x • v i :=
-    measurable_pi_lambda _ fun i ↦
+    Measurable.of_eval fun i ↦
       (Homeomorph.smul x).continuous.measurable.comp (measurable_pi_apply i)
   set c : ℝ≥0 := Real.toNNReal ((IdeleGroup.ideleModule K x : ℝ))⁻¹ with hcdef
   have h1 : ν.map (fun y ↦ X • y) = c ^ n • ν := by

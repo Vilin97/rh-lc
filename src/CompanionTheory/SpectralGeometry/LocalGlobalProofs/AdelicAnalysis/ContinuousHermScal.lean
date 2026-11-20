@@ -194,7 +194,7 @@ theorem map_hermScal {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {d : ℕ} (b : 
     rfl
   have hemb : MeasurableEmbedding e := by
     refine MeasurableEmbedding.of_measurable_inverse (g := fun y => y.1 0) ?_ ?_ ?_ ?_
-    · exact (measurable_pi_lambda _ fun _ => measurable_id).prodMk measurable_const
+    · exact (Measurable.of_eval fun _ => measurable_id).prodMk measurable_const
     · have : Set.range e = Set.univ := by
         refine Set.eq_univ_of_forall fun y => ⟨y.1 0, ?_⟩
         refine Prod.ext ?_ (Subsingleton.elim _ _)
@@ -216,7 +216,7 @@ theorem map_hermScal {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {d : ℕ} (b : 
     rw [Measure.pi_of_empty _ x₀, Measure.prod_dirac]
     have h1 : (Measure.pi fun _ : Fin 1 => lam) = lam.map (fun s _ => s) :=
       ((measurePreserving_funUnique lam (Fin 1)).symm (MeasurableEquiv.funUnique (Fin 1) R)).map_eq.symm
-    have hm1 : Measurable fun (s : R) (_ : Fin 1) => s := measurable_pi_lambda _ fun _ => measurable_id
+    have hm1 : Measurable fun (s : R) (_ : Fin 1) => s := Measurable.of_eval fun _ => measurable_id
     have hm2 : Measurable fun y : Fin 1 → R => (y, x₀) := measurable_id.prodMk measurable_const
     rw [h1, Measure.map_map hm2 hm1]
     rfl

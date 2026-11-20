@@ -82,8 +82,8 @@ def tE (h : r + s = 3) : (UPos 3 r → 𝔸[ℚ]) ≃ᵐ (UPos 3 s → 𝔸[ℚ]
   invFun := tX (by omega)
   left_inv X := tX_tX h _ X
   right_inv X := tX_tX _ h X
-  measurable_toFun := measurable_pi_lambda _ fun p => (measurable_pi_apply _).neg
-  measurable_invFun := measurable_pi_lambda _ fun p => (measurable_pi_apply _).neg
+  measurable_toFun := Measurable.of_eval fun p => (measurable_pi_apply _).neg
+  measurable_invFun := Measurable.of_eval fun p => (measurable_pi_apply _).neg
 
 theorem tE_apply (h : r + s = 3) (X : UPos 3 r → 𝔸[ℚ]) : tE h X = tX h X := rfl
 

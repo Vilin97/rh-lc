@@ -187,8 +187,8 @@ theorem map_coordHerm (hcm : IsCMExt F E σ) {d : ℕ} (b : Module.Basis (Fin d)
     fun r => (fun _ => r, fun p => hT.elim p)
   have hψ : MeasurableEmbedding ψ := by
     refine MeasurableEmbedding.of_measurable_inverse (g := fun q => q.1 0) ?_ ?_ ?_ ?_
-    · refine Measurable.prodMk (measurable_pi_lambda _ fun _ => measurable_id) ?_
-      exact measurable_pi_lambda _ fun p => hT.elim p
+    · refine Measurable.prodMk (Measurable.of_eval fun _ => measurable_id) ?_
+      exact Measurable.of_eval fun p => hT.elim p
     · have : Set.range ψ = Set.univ := by
         ext q
         simp only [Set.mem_range, Set.mem_univ, iff_true]

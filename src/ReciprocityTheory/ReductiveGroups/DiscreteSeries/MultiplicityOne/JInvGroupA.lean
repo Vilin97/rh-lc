@@ -51,7 +51,7 @@ theorem measurable_invM : Measurable (invM : Mt k r → Mt k r) := by
     funext x i j
     simp only [invM, Matrix.inv_def, Ring.inverse_eq_inv', Matrix.smul_apply, smul_eq_mul]
   rw [h]
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   exact hd.measurable.inv.mul ((continuous_apply j).comp ((continuous_apply i).comp ha)).measurable
 
 section cc

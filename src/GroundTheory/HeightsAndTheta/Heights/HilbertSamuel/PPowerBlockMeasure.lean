@@ -78,7 +78,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : 
 def oldV (p : Σ k, ι k) : Σ k, addIdx ι N k := ⟨some p.1, p.2⟩
 
 theorem measurable_oldPart : Measurable (basePart₂ : ((Σ k, addIdx ι N k) → ℂ) → (Σ k, ι k) → ℂ) :=
-  measurable_pi_lambda _ fun _ => measurable_pi_apply _
+  Measurable.of_eval fun _ => measurable_pi_apply _
 
 theorem continuous_oldPart : Continuous (basePart₂ : ((Σ k, addIdx ι N k) → ℂ) → (Σ k, ι k) → ℂ) :=
   continuous_pi fun _ => continuous_apply _

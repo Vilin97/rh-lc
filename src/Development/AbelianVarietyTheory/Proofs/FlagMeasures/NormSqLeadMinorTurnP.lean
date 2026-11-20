@@ -320,7 +320,7 @@ theorem isKFin_cj (h : Tor k r d) {H : Type*} [NormedAddCommGroup H] [InnerProdu
   exact ⟨S, h1, h2, fun g hg x hx => h3 _ ⟨cj_mem_UH h.st hg.1, cj_mem_unitary h.uni.st hg.2⟩ x hx⟩
 
 theorem measurable_lmulM (s : Mx k r) : Measurable (lmulM (k := k) (r := r) s) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   show Measurable fun x : Mt k r => (s * Matrix.of x) i j
   simp only [Matrix.mul_apply, Matrix.of_apply]
   fun_prop
@@ -609,7 +609,7 @@ theorem isRelStab_turn (L : LocBessel k r) {g : Mx k r} (hg : IsRelStab L g) :
 
 theorem measurable_flag (z : Fin (2 * r + k + 1) → ℂ) (S : Finset (Fin (r + 1) × Fin (r + 1))) :
     Measurable (fun x : Mt k r => fun q : S => flagMat k r z (Matrix.of x) q.1.1 q.1.2) := by
-  refine measurable_pi_lambda _ fun q => ?_
+  refine Measurable.of_eval fun q => ?_
   unfold flagMat
   split_ifs
   · simp only [Matrix.mulVec, dotProduct, Matrix.of_apply]

@@ -112,7 +112,7 @@ theorem map_coordW_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   have hmp := GlobalTheory.CompanionTheory.SW.WBox.map_coordW R hK lam 1 1
   have hf : Measurable (fun t : R => (n : R) * t) := (continuous_const.mul continuous_id).measurable
   have hTm : Measurable (fun (t : Fin 1 × Fin 1 × Fin 2 → R) i => (n : R) * t i) :=
-    measurable_pi_lambda _ fun i => hf.comp (measurable_pi_apply i)
+    Measurable.of_eval fun i => hf.comp (measurable_pi_apply i)
   have hT : π.map (fun t i => (n : R) * t i) = (c * c) • π := by
     have h1 := pi_map_mul (ι := Fin 1 × Fin 1 × Fin 2) lam _ hf c hc
     have e : c ^ Fintype.card (Fin 1 × Fin 1 × Fin 2) = c * c := by

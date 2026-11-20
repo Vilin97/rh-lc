@@ -17,7 +17,7 @@ theorem map_eq_smul_prod {ι Z Zi : Type} {Zv : ι → Type} [MeasurableSpace Z]
     ρ.map (fun X => (pi X, fun v : S => pv v X)) = c • mi.prod (Measure.pi fun v : S => mv v) := by
   classical
   have hT : Measurable (fun X => (pi X, fun v : S => pv v X)) :=
-    hpi.prodMk (measurable_pi_lambda _ fun v => hpv v)
+    hpi.prodMk (Measurable.of_eval fun v => hpv v)
   by_cases hc0 : c = 0
   · have := h (fun _ => 1) (fun _ _ => 1) measurable_const (fun _ => measurable_const)
     simp only [hc0, mul_zero, Finset.prod_const_one, mul_one, lintegral_const, one_mul,
@@ -80,7 +80,7 @@ theorem integral_tensor {ι Z Zi : Type} {Zv : ι → Type} [MeasurableSpace Z] 
       ∫ X, Φi (pi X) * ∏ v ∈ S, Φv v (pv v X) ∂ρ =
         (∫ Y, Φi Y ∂mi) * ((∏ v ∈ S, ∫ Y, Φv v Y ∂(mv v)) * (c.toReal : ℂ)) := by
   have hT : Measurable (fun X => (pi X, fun v : S => pv v X)) :=
-    hpi.prodMk (measurable_pi_lambda _ fun v => hpv v)
+    hpi.prodMk (Measurable.of_eval fun v => hpv v)
   have hmap := map_eq_smul_prod ρ mi mv pi pv hpi hpv S c hc h
   let G : Zi × (∀ v : S, Zv v) → ℂ := fun Y => Φi Y.1 * ∏ v : S, Φv v (Y.2 v)
   have hG : Integrable G (mi.prod (Measure.pi fun v : S => mv v)) :=

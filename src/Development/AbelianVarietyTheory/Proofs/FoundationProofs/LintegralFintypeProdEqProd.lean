@@ -98,7 +98,7 @@ theorem IsCylProd.measurePreserving_level (h : IsCylProd pa pf K μa μf μ) (ha
       ((Measure.pi μa).prod (Measure.pi fun v : S => μf v)) := by
   classical
   have hπ : Measurable fun x => (fun w => pa w x, fun v : S => pf v x) :=
-    (measurable_pi_lambda _ ha).prodMk (measurable_pi_lambda _ fun v => hf v)
+    (measurable_pi_lambda _ ha).prodMk (Measurable.of_eval fun v => hf v)
   refine ⟨hπ, (prod_eq_generateFrom generateFrom_pi generateFrom_pi isPiSystem_pi isPiSystem_pi
     (FiniteSpanningSetsIn.pi fun w => (μa w).toFiniteSpanningSetsIn)
     (FiniteSpanningSetsIn.pi fun v : S => (μf v).toFiniteSpanningSetsIn) ?_).symm⟩

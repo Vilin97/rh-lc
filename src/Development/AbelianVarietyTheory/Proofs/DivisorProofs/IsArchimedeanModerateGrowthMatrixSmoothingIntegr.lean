@@ -64,7 +64,7 @@ theorem measurable_comp_GLInf {X β : Type} [MeasurableSpace X] [TopologicalSpac
   letI : MeasurableSpace (GL (Fin n) (Cinf E)) := borel _
   haveI : BorelSpace (GL (Fin n) (Cinf E)) := ⟨rfl⟩
   have h : Measurable γ := (isOpenEmbedding_valGLInf.measurableEmbedding.measurable_comp_iff).1
-    (measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => hγ i j)
+    (Measurable.of_eval fun i => Measurable.of_eval fun j => hγ i j)
   exact hF.measurable.comp h
 
 theorem measurable_toGLInf_entry (i j : Fin n) :

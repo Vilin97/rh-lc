@@ -133,7 +133,7 @@ theorem map_restrict_intH (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {d : ℕ} 
       (mp_hermVec hCM (Fv F v) b n (lam v))
   haveI : ∀ v : S, SigmaFinite (coordHerm (Fv F v.1) σ b (lam v.1) n) := fun v => hSF v.1
   have hρ : Measurable (fun y (v : S) => hV σ v.1 y) :=
-    measurable_pi_lambda _ fun v => (continuous_hermV σ hCM n v.1).measurable
+    Measurable.of_eval fun v => (continuous_hermV σ hCM n v.1).measurable
   symm
   refine Measure.pi_eq fun s hs => ?_
   rw [Measure.map_apply hρ (MeasurableSet.univ_pi hs), Measure.restrict_apply (hρ (MeasurableSet.univ_pi hs))]

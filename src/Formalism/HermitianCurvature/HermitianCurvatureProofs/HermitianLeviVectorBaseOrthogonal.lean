@@ -372,7 +372,7 @@ lemma eta_meas : Measurable (eta k r') := by
   unfold eta
   first
     | fun_prop
-    | exact (measurable_pi_apply _).prodMk ((measurable_pi_lambda _ fun j =>
+    | exact (measurable_pi_apply _).prodMk ((Measurable.of_eval fun j =>
         ((measurable_pi_apply _).div (measurable_pi_apply _))).prodMk
         (Complex.measurable_im.comp ((measurable_pi_apply _).div (measurable_pi_apply _))))
     | measurability

@@ -49,7 +49,7 @@ theorem chart_of {D : D7} (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Wor
   refine ⟨BX, fun p => BX_measurable p, fun p x x' y y' h => BX_lower p x x' y y' h, fun p x => BX_zero p x,
     ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [Formalism.L2.SG.NGPin.stCoord_eq]
-    refine measurable_pi_lambda _ fun v => ?_
+    refine Measurable.of_eval fun v => ?_
     obtain ⟨τ, rfl⟩ := hτ v
     exact (stCoordV_meas C u' w γw τ).comp (measurable_pi_apply _)
   · rw [Formalism.L2.SG.NGPin.stInf_eq_pi]
@@ -307,7 +307,7 @@ theorem covolume_integralStabiliser_normalisedHaar_alt : ∀ (D : D7) (X : HidaS
   have hK'm : MeasurableSet K' := by
     rw [hK'def, Set.ofPred_forall]
     exact MeasurableSet.iInter fun p =>
-      (measurable_pi_lambda _ fun v => (measurable_pi_apply p).comp (measurable_pi_apply v)) (hF p)
+      (Measurable.of_eval fun v => (measurable_pi_apply p).comp (measurable_pi_apply v)) (hF p)
   have hKd := box_fundX ht BX hBd' τ hτ Aset F hFd
   have hcov := pi_measure_eq_prod_absNorm_mul_sqrt_discr D.host.E (InfinitePlace X.B.I.F) φ σι hφ (FreeE w) ht BX hBm hBd' hB0
     (D.host.ka / (X.B.g : ℝ) / Real.pi) (by

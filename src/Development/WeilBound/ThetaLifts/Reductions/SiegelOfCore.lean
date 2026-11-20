@@ -111,7 +111,7 @@ theorem lintegral_logCone (F : Type) [Field F] [NumberField F] (n r : ℕ) {c : 
     LinearMap.toContinuousLinearMap (Matrix.toLin' (Matrix.diagonal (Φ s)))
   set D := {s : Fin r → ℝ | (fun i => Real.exp (s i)) ∈ cone r c} with hD
   have hDm : MeasurableSet D :=
-    (measurableSet_cone r c).preimage (measurable_pi_lambda _ fun i => Real.measurable_exp.comp (measurable_pi_apply i))
+    (measurableSet_cone r c).preimage (Measurable.of_eval fun i => Real.measurable_exp.comp (measurable_pi_apply i))
   have hd : ∀ s ∈ D, HasFDerivWithinAt Φ (Φ' s) D s := fun s _ => by
     refine HasFDerivAt.hasFDerivWithinAt (hasFDerivAt_pi'.2 fun i => ?_)
     have := (hasFDerivAt_apply (𝕜 := ℝ) i s).exp
@@ -219,7 +219,7 @@ theorem siegel_measure (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFra
         C * ∫⁻ t in cone r c, h t * ENNReal.ofReal ((modulus F n t * ∏ i, t i)⁻¹) := by
     intro f h' hh hf
     have hh' : Measurable fun s : Fin r → ℝ => h' fun i => Real.exp (s i) :=
-      hh.comp (measurable_pi_lambda _ fun i => Real.measurable_exp.comp (measurable_pi_apply i))
+      hh.comp (Measurable.of_eval fun i => Real.measurable_exp.comp (measurable_pi_apply i))
     have e := hC _ _ (isClosed_logCone c).measurableSet hS hSΩ f (fun s => h' fun i => Real.exp (s i)) hh'
       (fun p hp s hs k hk => hf p hp _ hs (a s) (ha.tor s) k hk)
     rwa [lintegral_logCone F n r hc h' hh] at e

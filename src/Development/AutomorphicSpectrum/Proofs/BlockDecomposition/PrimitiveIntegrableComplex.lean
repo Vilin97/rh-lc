@@ -71,7 +71,7 @@ theorem measurable_row {Q : Type*} [MeasurableSpace Q] (T Y : Q → ℂ)
     (G : Q → Matrix (Fin 2) (Fin 2) ℂ) (hT : Measurable T) (hY : Measurable Y)
     (hG : ∀ i j, Measurable fun q => G q i j) :
     Measurable fun q => Matrix.vecMul ![T q, T q * Y q] (G q) := by
-  refine measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun j => ?_
   have e : ∀ q, Matrix.vecMul ![T q, T q * Y q] (G q) j =
       T q * G q 0 j + T q * Y q * G q 1 j := by
     intro q

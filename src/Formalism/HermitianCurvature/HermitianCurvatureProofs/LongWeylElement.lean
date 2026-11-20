@@ -785,7 +785,7 @@ theorem heisF_meas : Measurable (heisF k r') := by
 def bcF (k r : ℕ) (c : Fin r → ℂ) : Mt k r := bigCell k r c 1
 
 theorem bcF_meas : Measurable (bcF k r) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   show Measurable fun c : Fin r → ℂ => bigCell k r c 1 i j
   simp only [bigCell]
   split_ifs <;> first | exact measurable_const | exact measurable_pi_apply _ | exact (continuous_star.measurable.comp (measurable_pi_apply _)).inv | exact continuous_star.measurable.inv | exact measurable_id | fun_prop | measurability
@@ -793,7 +793,7 @@ theorem bcF_meas : Measurable (bcF k r) := by
 def w0F (k r' : ℕ) (c : ℂ) : Mt k (1 + r') := w0 k r' c
 
 theorem long_weyl_element_measurable : Measurable (w0F k r') := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   show Measurable fun c : ℂ => w0 k r' c i j
   simp only [w0]
   split_ifs <;> first | exact measurable_const | exact measurable_pi_apply _ | exact (continuous_star.measurable.comp (measurable_pi_apply _)).inv | exact continuous_star.measurable.inv | exact measurable_id | fun_prop | measurability

@@ -130,7 +130,7 @@ def theta0 (z : Fin (2 * r + k + 1) → ℂ) (w0 : Equiv.Perm (Fin r)) (p : B.SS
 
 theorem theta0_meas (z : Fin (2 * r + k + 1) → ℂ) (w0 : Equiv.Perm (Fin r)) : Measurable (theta0 (k := k) z w0) := by
   have hU : Measurable fun p : B.SS k r => StabilizerDisintegration.utc (blkU (C2.uMap k r z (Matrix.of p.1.2))) := by
-    refine measurable_pi_lambda _ fun q => ?_
+    refine Measurable.of_eval fun q => ?_
     have hc : Continuous fun p : B.SS k r =>
         C2.uMap k r z (Matrix.of p.1.2) q.1.1.castSucc q.1.2.castSucc := by
       simp only [C2.uMap, Formalism.QuantumDeterminants.herm, Fin.coe_castSucc, Fin.is_lt, dif_pos, dotProduct,

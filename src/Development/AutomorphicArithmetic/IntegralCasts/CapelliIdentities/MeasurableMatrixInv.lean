@@ -7,7 +7,7 @@ theorem UpperTheory.measurable_matrix_inv :
     continuous_id
   have hdet : Measurable (fun x : Fin n → Fin n → ℂ =>
       (Matrix.of x : Matrix (Fin n) (Fin n) ℂ).det) := hc.matrix_det.measurable
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   have hadj : Measurable (fun x : Fin n → Fin n → ℂ =>
       (Matrix.of x : Matrix (Fin n) (Fin n) ℂ).adjugate i j) :=
     (hc.matrix_adjugate.matrix_elem i j).measurable

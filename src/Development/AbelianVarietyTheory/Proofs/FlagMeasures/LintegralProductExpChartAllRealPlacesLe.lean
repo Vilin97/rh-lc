@@ -255,7 +255,7 @@ theorem lintegral_chart_all_le : ∀ (I : AutInst) (c : InfinitePlace I.F → �
       rw [show (volume : Measure (InfinitePlace I.F → Fin (I.n ^ 2) → ℝ)) =
         Measure.pi fun _ => (volume : Measure (Fin (I.n ^ 2) → ℝ)) from rfl, Measure.restrict_pi_pi]
     have hmapm : Measurable fun t : InfinitePlace I.F → Fin (I.n ^ 2) → ℝ => fun v => Θv v (t v) :=
-      measurable_pi_lambda _ fun v => (hmeas v).comp (measurable_pi_apply v)
+      Measurable.of_eval fun v => (hmeas v).comp (measurable_pi_apply v)
     have hmap : (Measure.pi fun _ => (volume : Measure (Fin (I.n ^ 2) → ℝ)).restrict C).map
         (fun t v => Θv v (t v)) = Measure.pi ν :=
       Measure.pi_map_pi fun v => (hmeas v).aemeasurable

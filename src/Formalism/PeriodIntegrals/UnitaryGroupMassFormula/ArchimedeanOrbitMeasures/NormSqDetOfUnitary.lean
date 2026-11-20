@@ -156,7 +156,7 @@ theorem placeJacAll_of (h : PlaceJac) : PlaceJacAll := by
     (fun v => EuclideanSpace ℝ (ιv v)) (fun v => EuclideanSpace ℝ (κv v)) (fun v => volume) (fun v => volume))
   have h123 := h3.comp h12
   have hPm : Measurable (fun x : ∀ v, EuclideanSpace ℝ (ιv v) × EuclideanSpace ℝ (κv v) => fun v => Φ v (x v)) :=
-    measurable_pi_lambda _ fun v => (Φ v).continuous_of_finiteDimensional.measurable.comp (measurable_pi_apply v)
+    Measurable.of_eval fun v => (Φ v).continuous_of_finiteDimensional.measurable.comp (measurable_pi_apply v)
   have h4 := pi_map_smul (fun v => (volume : Measure (EuclideanSpace ℝ (ιv v))).prod volume)
     (fun v => (volume : Measure (EuclideanSpace ℝ (Fin n × Fin m × Bool)))) (fun v => Φ v)
     (fun v => (Φ v).continuous_of_finiteDimensional.measurable) (fun v => (cst v).toNNReal)

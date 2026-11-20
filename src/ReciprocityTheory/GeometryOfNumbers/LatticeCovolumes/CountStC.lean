@@ -133,7 +133,7 @@ private lemma measurePreserving_pi_pi_swap {ι κ X : Type*} [Fintype ι] [Finty
   have h1 : MeasurePreserving (fun (f : ι → κ → X) (p : ι × κ) => f p.1 p.2)
       (Measure.pi fun _ => Measure.pi fun _ => μ) (Measure.pi fun _ => μ) := by
     have hm : Measurable (fun (f : ι → κ → X) (p : ι × κ) => f p.1 p.2) :=
-      measurable_pi_lambda _ fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
+      Measurable.of_eval fun p => (measurable_pi_apply p.2).comp (measurable_pi_apply p.1)
     refine ⟨hm, (Measure.pi_eq fun s hs => ?_).symm⟩
     rw [Measure.map_apply hm (MeasurableSet.univ_pi hs)]
     have he : (fun (f : ι → κ → X) (p : ι × κ) => f p.1 p.2) ⁻¹' Set.univ.pi s =
@@ -149,9 +149,9 @@ private lemma measurePreserving_pi_pi_swap {ι κ X : Type*} [Fintype ι] [Finty
       left_inv := fun g => rfl
       right_inv := fun g => rfl
       measurable_toFun :=
-        measurable_pi_lambda _ fun p => (measurable_pi_apply p.1).comp (measurable_pi_apply p.2)
+        Measurable.of_eval fun p => (measurable_pi_apply p.1).comp (measurable_pi_apply p.2)
       measurable_invFun :=
-        measurable_pi_lambda _ fun j => measurable_pi_lambda _ fun i => measurable_pi_apply (i, j) }
+        Measurable.of_eval fun j => Measurable.of_eval fun i => measurable_pi_apply (i, j) }
   have h2 : MeasurePreserving e (Measure.pi fun _ => Measure.pi fun _ => μ)
       (Measure.pi fun _ => μ) := by
     refine ⟨e.measurable, (Measure.pi_eq fun s hs => ?_).symm⟩

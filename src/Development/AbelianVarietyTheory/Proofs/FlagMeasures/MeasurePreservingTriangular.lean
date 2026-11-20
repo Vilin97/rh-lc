@@ -31,7 +31,7 @@ private lemma measurePreserving_update_add_of_indep [DecidableEq ι] (i : ι)
     measurePreserving_piEquivPiSubtypeProd (fun _ : ι => μ) p
   let c : ({j // p j} → G) → ({j // ¬ p j} → G) := fun y _ => g (e.symm (y, 0))
   have hc : Measurable c :=
-    measurable_pi_lambda _ fun _ =>
+    Measurable.of_eval fun _ =>
       hg.comp (e.symm.measurable.comp (measurable_id.prodMk measurable_const))
   have hT : MeasurePreserving
       (fun q : ({j // p j} → G) × ({j // ¬ p j} → G) => (id q.1, q.2 + c q.1))

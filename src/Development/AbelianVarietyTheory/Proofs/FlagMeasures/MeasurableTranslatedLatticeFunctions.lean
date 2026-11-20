@@ -163,14 +163,14 @@ theorem measurable_detNorm : Measurable (detNorm E j) := by
 
 theorem measurable_act_inv (x : VecInf E j) :
     Measurable fun g : MatInf E j => act (fun w => (Matrix.of (g w))⁻¹) x := by
-  refine measurable_pi_lambda _ fun w => ?_
+  refine Measurable.of_eval fun w => ?_
   simp only [act_apply]
   have hinv : ∀ M : Matrix (Fin j) (Fin j) ℂ, M⁻¹ = (M.det)⁻¹ • M.adjugate := fun M => by
     rw [Matrix.inv_def, Ring.inverse_eq_inv']
   simp only [hinv]
   have hd : Measurable fun g : MatInf E j => (Matrix.of (g w)).det :=
     measurable_of_continuous w (fun M => M.det) continuous_id.matrix_det
-  refine measurable_pi_lambda _ fun a => ?_
+  refine Measurable.of_eval fun a => ?_
   simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul]
   refine Finset.measurable_sum _ fun b _ => ?_
   exact (hd.inv.mul (measurable_of_continuous w (fun M => M.adjugate a b)
@@ -178,7 +178,7 @@ theorem measurable_act_inv (x : VecInf E j) :
 
 theorem measurable_act_transpose (x : VecInf E j) :
     Measurable fun g : MatInf E j => act (fun w => (Matrix.of (g w))ᵀ) x := by
-  refine measurable_pi_lambda _ fun w => ?_
+  refine Measurable.of_eval fun w => ?_
   simp only [act_apply]
   exact measurable_of_continuous w (fun M => Mᵀ *ᵥ x w)
     (continuous_id.matrix_transpose.matrix_mulVec continuous_const)

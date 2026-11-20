@@ -309,7 +309,7 @@ def dir (x : MatInf E j) : ℝ :=
 
 theorem measurable_dir : Measurable (dir : MatInf E j → ℝ) := by
   refine (measurable_embeddingReal (InfinitePlace E → Fin j → Fin j → ℂ)).comp ?_
-  refine measurable_pi_lambda _ fun w => measurable_pi_lambda _ fun a => measurable_pi_lambda _ fun b => ?_
+  refine Measurable.of_eval fun w => Measurable.of_eval fun a => Measurable.of_eval fun b => ?_
   have h : Measurable fun x : InfinitePlace E → Fin j → Fin j → ℂ => x w a b := by fun_prop
   exact (Complex.measurable_ofReal.comp measurable_nrm.inv).mul h
 

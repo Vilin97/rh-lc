@@ -131,7 +131,7 @@ theorem cont_uMat {n : ℕ} {ε : Fin n → Bool} : Continuous (fun γ : Formali
   Units.continuous_val.comp continuous_subtype_val
 
 theorem measurable_trI : Measurable (trI C) := by
-  refine measurable_pi_lambda _ (fun τ => ?_)
+  refine Measurable.of_eval (fun τ => ?_)
   have hc : Continuous (fun γ : Formalism.REAL.UJ (X.B.I.ε (vOf X τ)) =>
       (Matrix.of.symm (C.Qi τ * Formalism.MainNotions.S.uMat γ * C.Q τ) : Formalism.QuantumDeterminants.Mt D.R.k D.R.rS)) :=
     (continuous_const.matrix_mul cont_uMat).matrix_mul continuous_const
@@ -171,7 +171,7 @@ theorem measurable_mkUJ' {n m : ℕ} (ε : Fin n → Bool) (Q : Matrix (Fin n) (
   exact Measurable.dite hf.measurable measurable_const hSc.measurableSet
 
 theorem measurable_back : Measurable (back C) := by
-  refine measurable_pi_lambda _ (fun v => ?_)
+  refine Measurable.of_eval (fun v => ?_)
   exact (measurable_mkUJ' _ _ _).comp (measurable_pi_apply (X.pl v))
 
 theorem measEmb_trI : MeasurableEmbedding (trI C) :=

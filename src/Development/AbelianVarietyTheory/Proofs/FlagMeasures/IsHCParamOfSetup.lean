@@ -126,7 +126,7 @@ theorem measurable_lA (z : Fin (2 * r + k + 1) → ℂ) (a : Fin (r + 1)) :
   have hi : Measurable fun x : Mt k r => (fun i j => (Matrix.of x)⁻¹ i j : Mt k r) := by
     have h1 : Continuous fun x : Mt k r => (Matrix.of x).det := Continuous.matrix_det continuous_id
     have h2 : Continuous fun x : Mt k r => (Matrix.of x).adjugate := Continuous.matrix_adjugate continuous_id
-    refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+    refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
     simp only [Matrix.inv_def, Ring.inverse_eq_inv', Matrix.smul_apply, smul_eq_mul]
     exact h1.measurable.inv.mul (h2.matrix_elem i j).measurable
   convert hi ho.measurableSet using 1

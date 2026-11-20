@@ -29,7 +29,7 @@ theorem measurable_maDensity {D : ℕ} (φ : Fin D → (Fin D → ℂ) → ℝ) 
       (mixedDisc fun k => M (fderiv ℝ (fderiv ℝ (φ k)) z)).re := rfl
   rw [heq]
   exact measurable_const.mul ((hdisc.comp (continuous_pi fun k => hM.comp (continuous_apply k))).measurable.comp
-    (measurable_pi_lambda _ fun k => measurable_fderiv ℝ _))
+    (Measurable.of_eval fun k => measurable_fderiv ℝ _))
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {e : ℕ}
 

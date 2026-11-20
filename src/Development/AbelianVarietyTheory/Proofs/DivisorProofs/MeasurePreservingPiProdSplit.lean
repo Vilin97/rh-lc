@@ -15,9 +15,9 @@ variable {ι : Type*} [Fintype ι] {α β γ : ι → Type*} [∀ i, MeasurableS
 def piProdSplit (α β : ι → Type*) [∀ i, MeasurableSpace (α i)] [∀ i, MeasurableSpace (β i)] :
     (∀ i, α i × β i) ≃ᵐ (∀ i, α i) × (∀ i, β i) where
   toEquiv := Equiv.arrowProdEquivProdArrow ι α β
-  measurable_toFun := (measurable_pi_lambda _ fun i => (measurable_pi_apply i).fst).prodMk
-    (measurable_pi_lambda _ fun i => (measurable_pi_apply i).snd)
-  measurable_invFun := measurable_pi_lambda _ fun i =>
+  measurable_toFun := (Measurable.of_eval fun i => (measurable_pi_apply i).fst).prodMk
+    (Measurable.of_eval fun i => (measurable_pi_apply i).snd)
+  measurable_invFun := Measurable.of_eval fun i =>
     ((measurable_pi_apply i).comp measurable_fst).prodMk ((measurable_pi_apply i).comp measurable_snd)
 
 theorem measurePreserving_piProdSplit (μ : ∀ i, Measure (α i)) (ν : ∀ i, Measure (β i)) [∀ i, SigmaFinite (μ i)]
@@ -49,7 +49,7 @@ theorem integral_prod_mul_of_split {μ : ∀ i, Measure (α i)} {ν : ∀ i, Mea
       ∫ a, (∏ i, ∫ b, F i (g i (a i, b)) ∂(ν i)) * H a ∂(Measure.pi μ) := by
   have hI : Integrable (fun e : ∀ i, γ i => (∏ i, F i (e i)) * H fun i => p i (e i)) (Measure.pi ρ) :=
     (Integrable.fintype_prod_dep hF).mul_bdd
-      (hH.comp (measurable_pi_lambda _ fun i => (hp i).comp (measurable_pi_apply i))).aestronglyMeasurable
+      (hH.comp (Measurable.of_eval fun i => (hp i).comp (measurable_pi_apply i))).aestronglyMeasurable
       (Filter.Eventually.of_forall fun _ => hb _)
   have hΘ := (measurePreserving_pi _ _ hg).comp (measurePreserving_piProdSplit μ ν).symm
   have hJ := (hΘ.integrable_comp hI.aestronglyMeasurable).2 hI
@@ -309,7 +309,7 @@ theorem flatTensor_pureTensor [ν.IsAddHaarMeasure] (hm : 0 < G.m) (hψ : Contin
     (g := fun j : Fin (G.m - 1) => joinVars (k := k) (n := Fin (topRank G (j + 1))) (c := G.m - 2 - j)
       (n' := Fin (topRank G j)))
     (fun j => measurePreserving_elim ν (stepVarEquiv _ _ _))
-    (p := fun j => keptPart) (fun j => measurable_pi_lambda _ fun _ => measurable_pi_apply _)
+    (p := fun j => keptPart) (fun j => Measurable.of_eval fun _ => measurable_pi_apply _)
     (fun j => keptPart_joinVars)
     (fun j => by convert integrable_step hψ ν (stepDatum_mem_SB hs j (hφ j j.2)) (x j))
     (H := fun w => (ψ (-pairPhase x w) : ℂ))

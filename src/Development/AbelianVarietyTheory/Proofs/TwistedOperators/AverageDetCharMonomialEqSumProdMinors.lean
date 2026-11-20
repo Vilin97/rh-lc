@@ -56,8 +56,8 @@ theorem integrable_avg {K : Type} [Group K] [MeasurableSpace K] (ν : Measure K)
   let F : (ι → Fin a → Fin a → ℂ) → ℂ := fun G => Λ (colSub (fun τ => Matrix.of (G τ)) P)
   have hF : Continuous F := by simpa [F] using continuous_colSub_mul Λ P 1
   let e : K → (ι → Fin a → Fin a → ℂ) := fun g τ i j => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j
-  have he : Measurable e := measurable_pi_lambda _ fun τ => measurable_pi_lambda _ fun i =>
-    measurable_pi_lambda _ fun j => hmeas τ i j
+  have he : Measurable e := Measurable.of_eval fun τ => Measurable.of_eval fun i =>
+    Measurable.of_eval fun j => hmeas τ i j
   have hFe : ∀ g, Λ (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) = F (e g) := fun g => rfl
   have hdetc : ∀ τ, Continuous fun G : ι → Fin a → Fin a → ℂ => (Matrix.of (G τ)).det :=
     fun τ => Continuous.matrix_det (continuous_apply τ)

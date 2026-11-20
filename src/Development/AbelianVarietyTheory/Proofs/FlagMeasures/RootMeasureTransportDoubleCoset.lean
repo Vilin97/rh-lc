@@ -75,7 +75,7 @@ open scoped ENNReal in
 variable {k r : ℕ} in
 theorem _root_.GlobalTheory.Amp.RootMove.measurable_rootCoords (z : Fin (2 * r + k + 1) → ℂ) (p : _root_.Formalism.MainNotions.S.Point ℂ (r + 1)) :
     Measurable (_root_.Formalism.MainNotions.S.rootCoords k r z p) := by
-  refine measurable_pi_lambda _ fun q => Continuous.measurable ?_
+  refine Measurable.of_eval fun q => Continuous.measurable ?_
   by_cases hi : ((q : Fin (r + 1) × Fin (r + 1)).1 : ℕ) < r
   · simp only [_root_.Formalism.MainNotions.S.rootCoords, _root_.Formalism.MainNotions.S.flagMat, hi, dite_true, Matrix.mulVec, dotProduct, Matrix.of_apply]
     fun_prop

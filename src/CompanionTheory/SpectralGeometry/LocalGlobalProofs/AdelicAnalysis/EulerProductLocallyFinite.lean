@@ -170,7 +170,7 @@ theorem GlobalTheory.CompanionTheory.SW.EulerInt.euler_int : ∀ (F E : Type) [F
       ∀ i : S, (Fin n → Fin M → Fv F i.1 ⊗[F] E) :=
     fun X => (projInf X, fun i => projV i.1 (projFin X))
   have hP : Measurable P :=
-    hpi.measurable.prodMk (measurable_pi_lambda _ fun i => ((hpv i.1).comp hpf).measurable)
+    hpi.measurable.prodMk (Measurable.of_eval fun i => ((hpv i.1).comp hpf).measurable)
   have hbox : ∀ (A : Set (Fin n → Fin M → Ainf F ⊗[F] E))
       (B : ∀ i : S, Set (Fin n → Fin M → Fv F i.1 ⊗[F] E)), MeasurableSet A →
       (∀ i, MeasurableSet (B i)) →

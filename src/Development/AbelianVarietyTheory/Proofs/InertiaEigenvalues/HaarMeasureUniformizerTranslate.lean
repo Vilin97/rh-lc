@@ -98,7 +98,7 @@ theorem modulus_conj : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) [Measu
     GlobalTheory.T.addHaar_map_mul_finiteIdeleOfUniformizerPowers E ϖ hϖ (mm p) l.support (fun v hv => by simp [mm, Finsupp.notMem_support_iff.1 hv]) μR
   haveI : ∀ p, SigmaFinite (k p • μR) := fun p => (inferInstance : SigmaFinite ((Real.toNNReal _) • μR))
   have hSm : Measurable S := by
-    refine measurable_pi_lambda _ fun p => ?_
+    refine Measurable.of_eval fun p => ?_
     exact (measurable_const_mul (a p)).comp (measurable_pi_apply p)
   have hS : Measure.map S (Measure.pi fun _ : {p : Fin n × Fin n // p.1 < p.2} => μR) =
       (∏ p, k p) • Measure.pi fun _ : {p : Fin n × Fin n // p.1 < p.2} => μR := by

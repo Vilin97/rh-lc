@@ -17,7 +17,7 @@ theorem measurePreserving_shear {k : Type} [AddCommGroup k] [MeasurableSpace k] 
     measurePreserving_piEquivPiSubtypeProd (fun _ : J => ν) (fun j => j ∉ S)
   let G : ({j // j ∉ S} → k) → ({j // ¬ j ∉ S} → k) := fun b i => g (e.symm (b, 0)) i
   have hG : Measurable G := by
-    refine measurable_pi_lambda _ fun i => ?_
+    refine Measurable.of_eval fun i => ?_
     exact (measurable_pi_apply (i : J)).comp
       (hg.comp (e.symm.measurable.comp (measurable_id.prodMk measurable_const)))
   have hΦ : MeasurePreserving

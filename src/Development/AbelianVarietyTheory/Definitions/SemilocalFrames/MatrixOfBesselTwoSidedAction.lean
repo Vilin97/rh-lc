@@ -139,7 +139,7 @@ theorem measurable_invM : Measurable (invM : Mt k r → Mt k r) := by
     hc.matrix_det.measurable.inv
   have hadj : ∀ i j, Measurable fun x : Mt k r => (Matrix.of x : Mat k r).adjugate i j :=
     fun i j => ((continuous_apply_apply i j).comp hc.matrix_adjugate).measurable
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   have key : (fun x : Mt k r => invM x i j) =
       fun x => ((Matrix.of x : Mat k r).det)⁻¹ * (Matrix.of x : Mat k r).adjugate i j := by
     funext x

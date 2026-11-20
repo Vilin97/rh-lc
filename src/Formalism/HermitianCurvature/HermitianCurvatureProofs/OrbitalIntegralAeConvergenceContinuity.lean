@@ -34,7 +34,7 @@ theorem measurable_invM : Measurable (invM (k := k) (r := r)) := by
   have hdet : Measurable fun x : Mt k r => (Matrix.of x : Mat k r).det := hc.matrix_det.measurable
   have hadj : ∀ i j, Measurable fun x : Mt k r => (Matrix.of x : Mat k r).adjugate i j := fun i j =>
     ((continuous_apply j).comp ((continuous_apply i).comp hc.matrix_adjugate)).measurable
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
+  refine Measurable.of_eval fun i => Measurable.of_eval fun j => ?_
   simp only [invM, Matrix.inv_def, Matrix.smul_apply, Ring.inverse_eq_inv', smul_eq_mul]
   exact (measurable_inv.comp hdet).mul (hadj i j)
 
