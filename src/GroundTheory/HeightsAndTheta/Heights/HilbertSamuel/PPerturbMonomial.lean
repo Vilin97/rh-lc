@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturbMonom
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenDegAmple
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSmallGenTwist
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -75,9 +76,9 @@ open PerturbedMonomialBound in
 
 theorem PerturbMonomial.proof (hDeg : GenDegAmple.Statement) : PerturbMonomial.Statement := by
   intro K _ ι _ Ω _ y D a A P0 q _ hV _ ha hP0 hsemi hmono _
-  have hBa : (HermLine.zcomb A (fsH ι) q 1).a = fun k => (q : ℤ) * a k + 1 := by
+  have hBa : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a = fun k => (q : ℤ) * a k + 1 := by
     funext k
-    simp [HermLine.zcomb, ha, fsH_a]
+    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, ha, fsH_a]
   refine ⟨hP0, ?_, ?_, ?_⟩
   · exact PerturbSemipos.proof K ι P0 (mCoordIdeal y) A q 1 hsemi (by positivity) zero_le_one
   · rw [hBa]

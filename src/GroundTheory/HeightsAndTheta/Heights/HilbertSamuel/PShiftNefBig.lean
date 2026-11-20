@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PKodairaSection
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PNefOnGenericOfSemipos
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ZcombIsConjInvariantH
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -42,7 +43,7 @@ open ShiftedNefBig in
 theorem ShiftNefBig.proof (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGeneric.Statement)
     (hB : NefPlusAmpleDegree.Statement) : ShiftNefBig.Statement := by
   intro K _ ι _ Ω _ y D A P0 _ har _ hP0 hs hnef hc q _
-  have ha : (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a = (q : ℤ) • A.a + 1 := by
+  have ha : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a = (q : ℤ) • A.a + 1 := by
     show (q : ℤ) • A.a + (1 : ℤ) • (fsH ι).a = _
     rw [one_smul]
     rfl

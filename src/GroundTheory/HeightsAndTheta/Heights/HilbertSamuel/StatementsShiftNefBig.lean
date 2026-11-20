@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.IsSemipositiveRelTrivLine
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -15,7 +16,7 @@ def ShiftNefBig.Statement : Prop :=
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → NefOnFibres (mCoordIdeal y) A.a →
     IsConjInvariantH A →
-    ∀ q : ℕ, 1 ≤ q → IsNefBigDatum P0 y D (HermLine.zcomb A (fsH ι) (q : ℤ) 1)
+    ∀ q : ℕ, 1 ≤ q → IsNefBigDatum P0 y D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))
 
 end
 

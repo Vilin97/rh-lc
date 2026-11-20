@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsShiftIntersectionPolynomial
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PZCombLimit
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -48,7 +49,7 @@ theorem proof : ShiftIntersectionPolynomial.Statement := by
     · intro h
       exact absurd (Finset.mem_univ _) h
   · intro q
-    set Z := HermLine.zcomb A B (q : ℤ) 1 with hZ_def
+    set Z := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B 1)) with hZ_def
     have hZ : IsSmoothHerm Z := ZCombLimit.isSmoothHerm_zcomb_int hA hB _ _
     have hposition : ∀ (L : Fin n → HermLine ι) (a : Fin n), (∀ j, IsSmoothHerm (L j)) →
         II K ι P n (Function.update L a Z) =

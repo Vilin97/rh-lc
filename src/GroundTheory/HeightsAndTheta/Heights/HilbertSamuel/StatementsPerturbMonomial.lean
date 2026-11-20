@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -14,7 +15,7 @@ def PerturbMonomial.Statement : Prop :=
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y → (A.a = fun k => (a k : ℤ)) →
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → MonomialsBounded (mCoordIdeal y) A a →
     1 ≤ q →
-    IsSmallGeneratedDatum P0 y D (HermLine.zcomb A (fsH ι) q 1)
+    IsSmallGeneratedDatum P0 y D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))
 
 end
 

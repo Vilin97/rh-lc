@@ -19,6 +19,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PAvoidFormFinite
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFibreNormMax
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMetricMaxComparison
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.MoriwakiSt
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ForSecondHalf
@@ -31,8 +32,8 @@ noncomputable section
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem zcomb_fsH_a (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {a : K → ℕ} (ha : A.a = fun k => (a k : ℤ)) (q : ℕ) (k : K) :
-    (HermLine.zcomb A (fsH ι) q 1).a k = ((q * a k + 1 : ℕ) : ℤ) := by
-  simp only [HermLine.zcomb, fsH, HermLine.ofMetrics, ha, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+    ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a k = ((q * a k + 1 : ℕ) : ℤ) := by
+  simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics, ha, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
     Pi.one_apply, mul_one]
   push_cast
   ring
@@ -40,9 +41,9 @@ theorem zcomb_fsH_a (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {
 theorem heightsNonneg_shift {P : Ideal (MRing ι)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     {a : K → ℕ} (hA : IsSmoothHerm A) (ha : A.a = fun k => (a k : ℤ)) (hM : MonomialsBounded P A a) (q : ℕ)
     {η : ℝ} (hη : 0 ≤ η) (II : IntersectionSystem) (hII : IsIntersectionSystem II) :
-    HeightsNonneg II P (HermLine.constShift (HermLine.zcomb A (fsH ι) q 1) (-η)) := by
+    HeightsNonneg II P (HermLine.constShift ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) (-η)) := by
   classical
-  set B := HermLine.constShift (HermLine.zcomb A (fsH ι) q 1) (-η) with hB
+  set B := HermLine.constShift ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) (-η) with hB
   have hBa : ∀ k, B.a k = ((q * a k + 1 : ℕ) : ℤ) := fun k => by
     rw [hB, constShift_a]
     exact zcomb_fsH_a A ha q k
@@ -80,11 +81,11 @@ theorem upperNm_of_moriwaki (hM : MoriwakiHSStatement) (hPk : PackingStatement) 
     (ha : A.a = fun k => (a k : ℤ)) (hP0 : P0 ≤ mCoordIdeal y) (hsemi : IsSemipositiveRel P0 (mCoordIdeal y) A)
     (hmon : MonomialsBounded (mCoordIdeal y) A a) (hconj : IsConjInvariantH A) (hq : 1 ≤ q) (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ n : ℕ in atTop,
-      smallSectionCount (IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) q 1))
-          (chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a) n ≤
-        (II K ι (mCoordIdeal y) (D + 1) (fun _ => HermLine.zcomb A (fsH ι) q 1) + ε) *
+      smallSectionCount (IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)))
+          (chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) n ≤
+        (II K ι (mCoordIdeal y) (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))) + ε) *
           ((n : ℝ) ^ (D + 1) / ((D + 1).factorial : ℝ)) := by
-  set B := HermLine.zcomb A (fsH ι) q 1 with hBdef
+  set B := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) with hBdef
   have : CharZero Ω := UpperNormalisation.charZero_of_isArithVar har
   set F : ℝ := ((D + 1).factorial : ℝ) with hF
   have hFpos : 0 < F := by rw [hF]; exact_mod_cast Nat.factorial_pos _
@@ -225,9 +226,9 @@ theorem NefBundleMoriwaki.of_moriwaki (hM : MoriwakiHSStatement) (hPk : PackingS
   have hf0 : ∀ τ, 0 ≤ f τ := fun τ => div_nonneg (hcnt _ _ _) (div_nonneg (by positivity) hFpos.le)
 
   have key : ∀ q : ℕ, 1 ≤ q → ∀ ε : ℝ, 0 < ε → limsup f atTop ≤
-      (II K ι (mCoordIdeal y) (D + 1) (fun _ => HermLine.zcomb A (fsH ι) q 1) + ε) / (q : ℝ) ^ (D + 1) := by
+      (II K ι (mCoordIdeal y) (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))) + ε) / (q : ℝ) ^ (D + 1) := by
     intro q hq ε hε
-    set B := HermLine.zcomb A (fsH ι) q 1 with hBdef
+    set B := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) with hBdef
     set c := II K ι (mCoordIdeal y) (D + 1) (fun _ => B) + ε with hc
     obtain ⟨N, hN⟩ := eventually_atTop.mp
       (upperNm_of_moriwaki hM hPk y D a A P0 II q hD hII hY hbir ha hP0 hsemi hmon hconj hq ε hε)
@@ -274,7 +275,7 @@ theorem NefBundleMoriwaki.of_moriwaki (hM : MoriwakiHSStatement) (hPk : PackingS
     GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs 1)
   refine le_of_forall_pos_le_add fun ε hε => ?_
   have hev : ∀ᶠ q : ℕ in atTop, limsup f atTop - ε ≤
-      II K ι (mCoordIdeal y) (D + 1) (fun _ => HermLine.zcomb A (fsH ι) q 1) / (q : ℝ) ^ (D + 1) := by
+      II K ι (mCoordIdeal y) (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))) / (q : ℝ) ^ (D + 1) := by
     filter_upwards [eventually_ge_atTop 1] with q hq
     have hk := key q hq ε hε
     have hq1 : (1 : ℝ) ≤ (q : ℝ) ^ (D + 1) := one_le_pow₀ (by exact_mod_cast hq)

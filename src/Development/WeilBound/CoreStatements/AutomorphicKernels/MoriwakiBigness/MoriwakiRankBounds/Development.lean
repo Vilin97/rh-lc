@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsShiftVolumeB
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsShiftSectionSeparation
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSeparatedSmallCount
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsShiftSectionsRank
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 namespace PositivityTheory.Pf1.MbRank
 
@@ -18,8 +19,8 @@ def ShiftSectionsRankUpper.Statement : Prop :=
     IsSemipositiveRel P0 (mCoordIdeal y) A →
     ∀ q : ℕ, 1 ≤ q → ∀ ε : ℝ, 0 < ε →
       ∀ᶠ n : ℕ in atTop,
-        (Module.finrank ℤ (chartLat y (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a n) : ℝ) ≤
-          ((genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a : ℝ) + ε) *
+        (Module.finrank ℤ (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) ≤
+          ((genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ) + ε) *
             ((n : ℝ) ^ D / (D.factorial : ℝ))
 
 def ShiftSectionsRankB.Statement : Prop :=
@@ -29,9 +30,9 @@ def ShiftSectionsRankB.Statement : Prop :=
     IsSemipositiveRel P0 (mCoordIdeal y) A →
     ∀ q : ℕ, 1 ≤ q →
       Tendsto (fun n : ℕ =>
-          (Module.finrank ℤ (chartLat y (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a n) : ℝ) /
+          (Module.finrank ℤ (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) /
             ((n : ℝ) ^ D / (D.factorial : ℝ))) atTop
-        (𝓝 (genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a : ℝ))
+        (𝓝 (genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ))
 
 theorem ShiftSectionsRankUpper.of_B (h : ShiftSectionsRankB.Statement) : ShiftSectionsRankUpper.Statement := by
   intro K _ ι _ Ω _ y D A P0 hV hB hP0 hs q hq ε hε

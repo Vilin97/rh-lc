@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StatementsNefBig
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsAmpleCountAlongMultiplesAmple
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PNefCountAlongMultiples
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsNefAmpleGeneric
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets
@@ -16,11 +17,11 @@ namespace NefBigCountAlongMultiples
 
 theorem two_zcomb_sub_one {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (q k : ℕ) (hkq : k < q) :
-    ((2 : ℕ) • (HermLine.zcomb M (fsH ι) ((q : ℤ) - k * ((1 : ℕ) : ℤ)) ((1 : ℕ) : ℤ)).a - fun _ => (1 : ℤ)) =
+    ((2 : ℕ) • ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((q : ℤ) - k * ((1 : ℕ) : ℤ))).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) ((1 : ℕ) : ℤ))).a - fun _ => (1 : ℤ)) =
       ((2 * (q - k) : ℕ) : ℤ) • M.a + fun _ => ((1 : ℕ) : ℤ) := by
   funext j
   have hfs : (fsH ι).a j = 1 := rfl
-  simp only [HermLine.zcomb, Pi.sub_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, hfs]
+  simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, Pi.sub_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, hfs]
   rw [Nat.cast_mul, Nat.cast_sub hkq.le]
   push_cast
   ring
@@ -103,7 +104,7 @@ theorem proof (hG2 : G2.Statement) (hAC : AmpleCountAlongMultiples.StatementAmpl
   obtain ⟨hsp, hci, hamp, hampl, hmap⟩ := hpq 1 q one_pos hkq
   obtain ⟨htop, hdeg⟩ := hδc 1 q one_pos (by omega) hpqδ
   have hamp2 : ∃ c : ℕ, 1 ≤ c ∧ KH.AmpleV ℚ (KH.genIdeal y)
-      (c • (HermLine.zcomb A (fsH ι) ((q : ℤ) - k * ((1 : ℕ) : ℤ)) ((1 : ℕ) : ℤ)).a - fun _ => 1) := by
+      (c • ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A ((q : ℤ) - k * ((1 : ℕ) : ℤ))).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) ((1 : ℕ) : ℤ))).a - fun _ => 1) := by
     refine ⟨2, by norm_num, ?_⟩
     rw [two_zcomb_sub_one A q k (by omega)]
     exact hNA K ι Ω y D A P0 (2 * (q - k)) 1 har hA.normalForm_baseLattice_le_dualSpan_sup_line hA.semipos (by omega) le_rfl

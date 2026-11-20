@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturbSemipos
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PFsLineSmooth
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PFsLineLevi
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -47,16 +48,16 @@ theorem PerturbSemipos.proof : PerturbSemipos.Statement := by
   obtain ⟨m, rfl⟩ := Int.eq_ofNat_of_zero_le hb
   obtain ⟨n, rfl⟩ := Int.eq_ofNat_of_zero_le ha
   have hH : IsSmoothHerm (fsH ι) := FsLineSmooth.proof K ι
-  have hfun : (HermLine.zcomb M (fsH ι) m n).h = fun y => M.h y ^ m * (fsH ι).h y ^ n := by
+  have hfun : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) n)).h = fun y => M.h y ^ m * (fsH ι).h y ^ n := by
     funext y
-    simp [HermLine.zcomb]
+    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow]
   refine ⟨?_, fun z hz w hw => ?_⟩
   · have hMs : IsSmoothHerm M := hM.1
     unfold IsSmoothHerm at hMs hH ⊢
     rw [hfun]
     exact (hMs.pow m).mul (hH.pow n)
   · have hz' := hz.1
-    have hev : (fun y => Real.log ((HermLine.zcomb M (fsH ι) m n).h y)) =ᶠ[𝓝 z]
+    have hev : (fun y => Real.log (((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) n)).h y)) =ᶠ[𝓝 z]
         fun y => (m : ℝ) * Real.log (M.h y) + (n : ℝ) * Real.log ((fsH ι).h y) := by
       filter_upwards [blocks_mem_nhds hz'] with y hy
       rw [hfun, Real.log_mul (pow_ne_zero _ (M.pos y hy).ne') (pow_ne_zero _ ((fsH ι).pos y hy).ne'),

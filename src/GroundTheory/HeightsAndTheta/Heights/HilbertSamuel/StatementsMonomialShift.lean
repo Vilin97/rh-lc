@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -15,8 +16,8 @@ def MonomialShift.Statement : Prop :=
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → MonomialsBounded (mCoordIdeal y) A a →
     1 ≤ q → τ ≤ q * n →
     smallSectionCount (IsSmallH (mCoordIdeal y) y A) (chartLatNm y A.a) τ ≤
-      smallSectionCount (IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) q 1))
-        (chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a) n
+      smallSectionCount (IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)))
+        (chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) n
 
 end
 

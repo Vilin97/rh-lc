@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.IsConeAnalyticSubset
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -23,7 +24,7 @@ theorem hermLine_eq_of_a_h {A B : HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h)
   rfl
 
 theorem hpow.equiv (A B : HermLine ι) (j : ℕ) :
-    IndefiniteRowSideFullHecke.HilbertSamuel.hpow A j = HermLine.zcomb A B (j : ℤ) 0 := by
+    IndefiniteRowSideFullHecke.HilbertSamuel.hpow A j = ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (j : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B 0)) := by
   refine hermLine_eq_of_a_h ?_ ?_
   · show (j : ℤ) • A.a = (j : ℤ) • A.a + (0 : ℤ) • B.a
     simp

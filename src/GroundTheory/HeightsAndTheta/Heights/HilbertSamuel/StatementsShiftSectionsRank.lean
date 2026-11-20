@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -14,9 +15,9 @@ def ShiftSectionsRank.Statement : Prop :=
     IsArithVar (mCoordIdeal y) (D + 1) → P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A →
     ∀ q : ℕ, 1 ≤ q →
       Tendsto (fun n : ℕ =>
-          (Module.finrank ℤ (chartLat y (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a n) : ℝ) /
+          (Module.finrank ℤ (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) /
             ((n : ℝ) ^ D / (D.factorial : ℝ))) atTop
-        (𝓝 (genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a : ℝ))
+        (𝓝 (genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ))
 
 end
 

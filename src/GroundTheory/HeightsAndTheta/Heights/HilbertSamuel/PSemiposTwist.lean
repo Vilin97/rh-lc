@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturb
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PFsLineLevi
 import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PFsLineSmooth
 import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -22,8 +23,8 @@ theorem SemiposTwist.proof : SemiposTwist.Statement := by
     exact isOpen_iInter_of_finite fun k =>
       isOpen_iUnion fun i => (continuous_apply _).isOpen_preimage _ isOpen_ne
   have hH : IsSmoothHerm (fsH ι) := FsLineSmooth.proof K ι
-  have hsm : IsSmoothHerm (HermLine.zcomb L (fsH ι) q p) := by
-    have e : (HermLine.zcomb L (fsH ι) q p).h = fun z => L.h z ^ q * (fsH ι).h z ^ p := by
+  have hsm : IsSmoothHerm ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)) := by
+    have e : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).h = fun z => L.h z ^ q * (fsH ι).h z ^ p := by
       funext z
       show L.h z ^ (q : ℤ) * (fsH ι).h z ^ (p : ℤ) = _
       rw [zpow_natCast, zpow_natCast]
@@ -37,7 +38,7 @@ theorem SemiposTwist.proof : SemiposTwist.Statement := by
       (A.pos z hzU).ne'
   have h1 := hlog L hL.1
   have h2 := hlog (fsH ι) hH
-  have hev : (fun y => Real.log ((HermLine.zcomb L (fsH ι) q p).h y)) =ᶠ[𝓝 z]
+  have hev : (fun y => Real.log (((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).h y)) =ᶠ[𝓝 z]
       fun y => (0 + (q : ℝ) * Real.log (L.h y)) + (p : ℝ) * Real.log ((fsH ι).h y) := by
     filter_upwards [hUo.mem_nhds hzU] with y hy
     show Real.log (L.h y ^ (q : ℤ) * (fsH ι).h y ^ (p : ℤ)) = _

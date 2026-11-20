@@ -7,6 +7,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChartLatRank
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionLatticeFinite
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
 import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.MoriwakiRankBounds.Development
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 namespace PositivityTheory.Pf1.MbRank
 
@@ -24,7 +25,7 @@ theorem ShiftSectionsRankB.of_degreeGeneric (hDG : GroundTheory.Heights₂.Heigh
   classical
   have := BigIffGenDeg.charZero_of_isArithVar hV
   have hy := BigIffGenDeg.coord_ne_zero_of_isArithVar hV
-  set N := HermLine.zcomb A (fsH ι) (q : ℤ) 1 with hN
+  set N := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) with hN
   have hR : ChartLatRank.Statement :=
     ChartLatRank.proof (SectionLatticeFinite.proof Closed.ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cond)
   have hrk : ∀ n : ℕ, (Module.finrank ℤ (chartLat y N.a n) : ℝ) = Module.finrank ℚ (chartLatQ y N.a n) :=

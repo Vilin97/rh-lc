@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMixedKleimanLow
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -14,7 +15,7 @@ def MixedSectionStep.Statement : Prop :=
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![M]) →
     (H.a = fun _ => (1 : ℤ)) → IsSemipositiveRel P0 P H → MonomialsBounded P H (fun _ => 1) → IsConjInvariantH H →
     MixedKleiman.AtDim (d - 1) →
-    ∀ q p : ℕ, 1 ≤ p → 0 < II K ι P d (fun _ => HermLine.zcomb M H (q : ℤ) (p : ℤ)) →
-      0 ≤ II K ι P d (fun j : Fin d => if (j : ℕ) = 0 then M else HermLine.zcomb M H (q : ℤ) (p : ℤ))
+    ∀ q p : ℕ, 1 ≤ p → 0 < II K ι P d (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ)))) →
+      0 ≤ II K ι P d (fun j : Fin d => if (j : ℕ) = 0 then M else ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ))))
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsZCombExpand
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PZCombLimit
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -81,7 +82,7 @@ theorem ZCombExpand.proof : ZCombExpand.Statement := by
     fin_cases i
     · exact hM
     · exact hH
-  set Z := HermLine.zcomb M H (q : ℤ) (p : ℤ) with hZ_def
+  set Z := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ))) with hZ_def
   have hZ : IsSmoothHerm Z := ZCombLimit.isSmoothHerm_zcomb_int hM hH _ _
   refine ⟨?_, ?_⟩
   · have hposition : ∀ (L : Fin d → HermLine ι) (a : Fin d), (∀ j, IsSmoothHerm (L j)) →

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -13,13 +14,13 @@ def SmallGenTwist.Statement : Prop :=
     (y : (Σ k, ι k) → Ω) (L : HermLine ι) (p q : ℕ),
     (∃ (n : ℕ) (w : Fin n → Ω), (∀ j, w j ∈ chartLat y L.a 1) ∧ KH.GeneratesOn y L.a w ∧
       ∀ j, IsSmallH (mCoordIdeal y) y L 1 (w j)) →
-    ∃ (n : ℕ) (w : Fin n → Ω), (∀ j, w j ∈ chartLat y (HermLine.zcomb L (fsH ι) q p).a 1) ∧
-      KH.GeneratesOn y (HermLine.zcomb L (fsH ι) q p).a w ∧
-      ∀ j, IsSmallH (mCoordIdeal y) y (HermLine.zcomb L (fsH ι) q p) 1 (w j)
+    ∃ (n : ℕ) (w : Fin n → Ω), (∀ j, w j ∈ chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).a 1) ∧
+      KH.GeneratesOn y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).a w ∧
+      ∀ j, IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)) 1 (w j)
 
 def SemiposTwist.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P0 P : Ideal (MRing ι)) (L : HermLine ι)
-    (p q : ℕ), IsSemipositiveRel P0 P L → IsSemipositiveRel P0 P (HermLine.zcomb L (fsH ι) q p)
+    (p q : ℕ), IsSemipositiveRel P0 P L → IsSemipositiveRel P0 P ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p))
 
 def GenDegTwist.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]

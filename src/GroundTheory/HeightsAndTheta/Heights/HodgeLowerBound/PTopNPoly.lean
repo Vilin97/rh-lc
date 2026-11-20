@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsMuRegSmoot
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsChangeOfModel
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PZCombExpand
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -120,7 +121,7 @@ theorem TopNPoly.proof (hIso : HilbertSamuel.IsomInvariance.Statement) (hV : Ver
     by funext t; simp, fun q hq => ?_⟩
   filter_upwards [hS II Ψ K ι Ω E D O Lt X B] with t ht
   have hq0 : (q : ℝ) ≠ 0 := Nat.cast_ne_zero.2 (by omega)
-  set Z := HilbertSamuel.HermLine.zcomb (muReg X.H X.S B t) D.A' (q : ℤ) ((1 : ℕ) : ℤ) with hZdef
+  set Z := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (muReg X.H X.S B t) (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow D.A' ((1 : ℕ) : ℤ))) with hZdef
   have hZ : IsSmoothHerm Z := HilbertSamuel.ZCombLimit.isSmoothHerm_zcomb_int ht hA _ _
   have hagree : ∀ z ∈ mcPts (mCoordIdeal D.y), Z.h z = (X.NbarQ B 1 q t).h z := by
     intro z hz

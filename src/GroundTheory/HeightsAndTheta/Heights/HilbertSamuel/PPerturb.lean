@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturb
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -20,9 +21,9 @@ theorem isMultiHomogIdeal_map_coeff {R S : Type} [CommRing R] [CommRing S] (φ :
   exact ⟨a, fun m hm k => ha m (MvPolynomial.support_map_subset φ f hm) k⟩
 
 theorem zcomb_fsH_a [Fintype K] (L : HermLine ι) (q p : ℕ) :
-    (HermLine.zcomb L (fsH ι) q p).a = (q : ℤ) • L.a + fun _ => (p : ℤ) := by
+    ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).a = (q : ℤ) • L.a + fun _ => (p : ℤ) := by
   funext k
-  simp [HermLine.zcomb, fsH, HermLine.ofMetrics]
+  simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics]
 
 theorem Perturb.proof (hGen : SmallGenTwist.Statement) (hSemi : SemiposTwist.Statement)
     (hDeg : GenDegTwist.Statement) (hFib : GenOnFibres.Statement) (hAmp : AmpleOfGenTwist.Statement) :

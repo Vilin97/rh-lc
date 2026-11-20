@@ -15,7 +15,7 @@ def ShiftIntersectionPolynomial.Statement : Prop :=
     (n : ℕ) (A B : HermLine ι),
     IsIntersectionSystem II → IsArithVar P n → IsSmoothHerm A → IsSmoothHerm B →
     ∃ p : Polynomial ℝ, p.natDegree ≤ n ∧ p.coeff n = II K ι P n (fun _ => A) ∧
-      ∀ q : ℕ, II K ι P n (fun _ => HermLine.zcomb A B (q : ℤ) 1) = p.eval (q : ℝ)
+      ∀ q : ℕ, II K ι P n (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B 1))) = p.eval (q : ℝ)
 
 end
 
