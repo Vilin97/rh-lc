@@ -105,7 +105,7 @@ private theorem rc_frac (𝔪 : Ideal (𝓞 K)) (h𝔪 : 𝔪 ≠ ⊥) (x : K)
     change v.valuation K (algebraMap (𝓞 K) K d) ≤ _
     rw [← hd, map_mul]
     exact (mul_le_of_le_one_right' (v.valuation_le_one c)).trans (hx v hv)
-  · rw [multiplicity_eq_zero.2 hv, pow_zero, Ideal.one_eq_top]; trivial
+  · rw [multiplicity_eq_zero_of_not_dvd hv, pow_zero, Ideal.one_eq_top]; trivial
 
 private theorem rc_cop {𝔪 : Ideal (𝓞 K)} {a : 𝓞 K} (h : a - 1 ∈ 𝔪) : IsCoprime (Ideal.span {a}) 𝔪 := by
   rw [Ideal.isCoprime_iff_sup_eq, Ideal.eq_top_iff_one]

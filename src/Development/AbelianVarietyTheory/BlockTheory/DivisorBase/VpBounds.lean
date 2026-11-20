@@ -97,7 +97,7 @@ theorem ToricDenominatorLevel.exact (h : ToricDenominatorLevel) : ToricDenominat
 theorem expIn_le_two {𝔣 : Ideal (OF E)} (h : IsBaseCond 𝔣) (v : HeightOneSpectrum (OF E)) : expIn 𝔣 v ≤ 2 := by
   by_cases hv : v.asIdeal ∣ 𝔣
   · exact (h.2.2 v hv).2.1
-  · rw [expIn, multiplicity_eq_zero.2 hv]; omega
+  · rw [expIn, multiplicity_eq_zero_of_not_dvd hv]; omega
 
 theorem expIn_le_maxConductorExponentOverPrime {𝔣 : Ideal (OF E)} (h : IsBaseCond 𝔣) {l : ℕ} {v : HeightOneSpectrum (OF E)}
     (hv : (l : OF E) ∈ v.asIdeal) : expIn 𝔣 v ≤ a0 𝔣 l :=

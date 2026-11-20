@@ -79,7 +79,7 @@ theorem condExp_eq (v : HeightOneSpectrum (𝓞 K)) :
 
 theorem condExp_eq_zero {v : HeightOneSpectrum (𝓞 K)} (hv : ¬ v.asIdeal ∣ χ.conductor) :
     χ.condExp v = 0 := by
-  rw [condExp_eq, multiplicity_eq_zero.2 hv, Nat.cast_zero]
+  rw [condExp_eq, multiplicity_eq_zero_of_not_dvd hv, Nat.cast_zero]
 
 theorem one_le_condExp {v : HeightOneSpectrum (𝓞 K)} (hv : v.asIdeal ∣ χ.conductor) :
     1 ≤ χ.condExp v := by

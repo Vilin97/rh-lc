@@ -185,7 +185,7 @@ theorem eps_shift (c : HeckeCharacter ℚ) (v : Pl) (hψ : IsStd (localAdelicCha
   have hcond : addCharConductor (localAdelicChar ℚ v) = 0 := hψ.2.2
   by_cases h : IsUnramifiedChar (localChar c v)
   · have hf : multiplicity v.asIdeal c.conductor = 0 :=
-      multiplicity_eq_zero.2 ((c.isUnramifiedChar_localChar_iff v).1 h)
+      multiplicity_eq_zero_of_not_dvd ((c.isUnramifiedChar_localChar_iff v).1 h)
     rw [localEpsilon_of_isUnramified h, localEpsilon_of_isUnramified h, hcond, hf]
     simp
   · rw [localEpsilon_of_not_isUnramified_eq h, localEpsilon_of_not_isUnramified_eq h, hcond,
@@ -241,7 +241,7 @@ theorem prod_eps (c : HeckeCharacter ℚ) (S : Finset Pl) (hψ : ∀ v, IsStd (l
     rw [c.absNorm_conductor, Nat.cast_prod]
     refine Finset.prod_subset hsub fun v _ hv => ?_
     have : multiplicity v.asIdeal c.conductor = 0 :=
-      multiplicity_eq_zero.2 fun hd => hv (c.mem_conductorPrimes.2 hd)
+      multiplicity_eq_zero_of_not_dvd fun hd => hv (c.mem_conductorPrimes.2 hd)
     simp [this]
   rw [h1, discrNorm_eq, h2, GroundTheory.Automorphic.GodementSection.ofReal_prod_cpow _ _ (fun _ => by positivity),
     ← Finset.prod_mul_distrib]

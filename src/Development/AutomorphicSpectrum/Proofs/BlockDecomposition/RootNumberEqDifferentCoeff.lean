@@ -28,7 +28,7 @@ theorem conductor_eq_top (h : standardOpenSubgroup F ≤ χ.toIdele.ker) : χ.co
     intro v
     have hv := hx' v
     have h0 : multiplicity v.asIdeal (⊤ : Ideal (𝓞 F)) = 0 :=
-      multiplicity_eq_zero.2 fun hdv ↦ v.isPrime.ne_top (by
+      multiplicity_eq_zero_of_not_dvd fun hdv ↦ v.isPrime.ne_top (by
         rwa [Ideal.dvd_iff_le, top_le_iff] at hdv)
     rw [h0] at hv
     exact hv

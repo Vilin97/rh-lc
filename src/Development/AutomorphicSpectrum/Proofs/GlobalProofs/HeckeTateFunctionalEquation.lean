@@ -104,7 +104,7 @@ theorem L_locRam (χ : HChar E) (hu : IsUnitary χ) (v : HeightOneSpectrum (𝓞
   have hc := L_cond χ hu v m h
   have hv : v.asIdeal ∣ (toHecke χ hu).conductor := by
     by_contra hd
-    exact hm (hc ▸ multiplicity_eq_zero.2 hd)
+    exact hm (hc ▸ multiplicity_eq_zero_of_not_dvd hd)
   have hN : ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ≠ 0 := by
     rw [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff]
     exact v.ne_bot
@@ -220,7 +220,7 @@ theorem absNorm_conductor_toHecke (hu : IsUnitary χ) {a : HeightOneSpectrum (�
       exact (multiplicity_pos_of_dvd h).ne'
     · intro h
       by_contra h'
-      exact h (multiplicity_eq_zero.2 h')
+      exact h (multiplicity_eq_zero_of_not_dvd h')
   rw [HeckeCharacter.absNorm_conductor, Finsupp.prod, h]
   exact Finset.prod_congr rfl fun v _ => by rw [hm v]
 

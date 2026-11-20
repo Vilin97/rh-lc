@@ -56,7 +56,7 @@ theorem expIn_condF' (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     refine multiplicity_eq_of_dvd_of_not_dvd (dvd_mul_right _ _) fun h' => ?_
     rw [pow_succ, mul_dvd_mul_iff_left (pow_ne_zero _ v.ne_bot)] at h'
     exact key _ (Finset.notMem_erase _ _) h'
-  · exact multiplicity_eq_zero.2 (key _ h)
+  · exact multiplicity_eq_zero_of_not_dvd (key _ h)
 
 theorem isBaseCond_condF (P : Places L) (hg : ∀ i, D.host.g i % LevelStarExponents.condE D = 1)
     (hpde : ((Ideal.span {(D.host.pde : ℤ)}).primesOver (𝓞 D.host.E)).ncard = Module.finrank ℚ D.host.E ∧
@@ -117,7 +117,7 @@ theorem isBaseCond_condF (P : Places L) (hg : ∀ i, D.host.g i % LevelStarExpon
     have e1 := expIn_condF' P P.v0
     rw [if_pos h0, condExp, if_pos rfl] at e1
     have e2 : expIn (condF P) P.v0 = 0 := by
-      rw [e]; exact multiplicity_eq_zero.2 fun h => P.v0.isPrime.ne_top (top_le_iff.1 (Ideal.le_of_dvd h))
+      rw [e]; exact multiplicity_eq_zero_of_not_dvd fun h => P.v0.isPrime.ne_top (top_le_iff.1 (Ideal.le_of_dvd h))
     omega
   · have hS := hexp v hv
     have hle : expIn (condF P) v ≤ 2 := by

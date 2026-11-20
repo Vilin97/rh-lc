@@ -119,7 +119,7 @@ theorem finiteTest_add {v : HeightOneSpectrum (𝓞 K)} (x : v.adicCompletion K)
         rw [this, Valuation.map_add_eq_of_lt_left _ (by rw [Valuation.map_neg, hxh]; exact hh1),
           hxh]
       rw [χ.finiteTest_eq_zero_of_dvd hv hx, χ.finiteTest_eq_zero_of_dvd hv hxh]
-  · rw [multiplicity_eq_zero.2 hv, Nat.cast_zero, neg_zero, exp_zero] at hh
+  · rw [multiplicity_eq_zero_of_not_dvd hv, Nat.cast_zero, neg_zero, exp_zero] at hh
     have hiff : Valued.v (x + h) ≤ 1 ↔ Valued.v x ≤ 1 := by
       constructor
       · intro hxh

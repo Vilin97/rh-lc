@@ -93,7 +93,7 @@ theorem IsGalTied.isValueTied (h : IsGalTied X) : IsValueTied X := by
   obtain ⟨σ, hσ⟩ := exists_isFrob (N.plOm.2 P)
   have hu : χ.UnrAt P := by
     have e := (hD.2.2.2.2.2.2.2.2 _ P (over_below P)).2 (Finset.notMem_empty _)
-    rwa [expIn, multiplicity_eq_zero.2 fun h => hP (h𝔣 P h), expAt_zero_iff] at e
+    rwa [expIn, multiplicity_eq_zero_of_not_dvd fun h => hP (h𝔣 P h), expAt_zero_iff] at e
   have h1 := hr.frob ha (Or.inl fun h => hP (X.twistExcludedPlaces_contains_residueChar i h)) hu (N.plOm.2 P) hσ
   have h2 : ∀ b x, atSide X b (J.toRingHom.comp ι.symm.toRingHom) (GlobalTheory.GalChar.sideIso ι b x) = J x := fun b x => by
     cases b

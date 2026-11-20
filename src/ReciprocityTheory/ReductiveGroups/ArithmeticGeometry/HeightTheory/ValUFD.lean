@@ -106,7 +106,7 @@ theorem mult_prime (hgen : ∀ p : Ideal R, p.IsPrime → p.height = 1 → p = I
   · have hass : Associated (gen p) q :=
       (gen_prime hgen hp).associated_of_dvd hq ((gen_dvd_iff hgen hp hq).mpr h)
     rw [multiplicity_eq_of_associated_left hass.symm, multiplicity_self]
-  · exact multiplicity_eq_zero.mpr fun hd => h ((gen_dvd_iff hgen hp hq).mp hd)
+  · exact multiplicity_eq_zero_of_not_dvd fun hd => h ((gen_dvd_iff hgen hp hq).mp hd)
 
 theorem factor_int (hgen : ∀ p : Ideal R, p.IsPrime → p.height = 1 → p = Ideal.span {gen p})
     (r : R) (hr : r ≠ 0) :
@@ -227,7 +227,7 @@ theorem factor_of_local (gen : Ideal R → R)
       multiplicity_mul hg (hf _ (mul_ne_zero (mul_ne_zero hy0 ha0) (hpw _))),
       multiplicity_mul hg (hf _ (mul_ne_zero hy0 ha0)),
       multiplicity_pow_self_of_prime hg, multiplicity_pow_self_of_prime hg,
-      multiplicity_eq_zero.mpr hns, multiplicity_eq_zero.mpr hna] at hm
+      multiplicity_eq_zero_of_not_dvd hns, multiplicity_eq_zero_of_not_dvd hna] at hm
     omega
   obtain ⟨hfx, κx, hκx, hx⟩ := factor_int (F := F) hgen x hx0
   obtain ⟨hfy, κy, hκy, hyq⟩ := factor_int (F := F) hgen y hy0

@@ -194,7 +194,7 @@ theorem finite_mulSupport_locEps (χ : HChar E) (a : HeightOneSpectrum (𝓞 E) 
   refine ((Ideal.finite_factors (differentIdeal_ne_bot (A := ℤ) (B := 𝓞 E))).union a.support.finite_toSet).subset fun w hw => ?_
   by_contra hn
   simp only [Set.mem_union, Set.mem_setOf_eq, Finset.mem_coe, Finsupp.mem_support_iff, not_or, not_not] at hn
-  exact hw (by simp only [hn.2]; exact locEps_eq_one χ (multiplicity_eq_zero.2 hn.1) s)
+  exact hw (by simp only [hn.2]; exact locEps_eq_one χ (multiplicity_eq_zero_of_not_dvd hn.1) s)
 
 theorem archEps_two_mul {I : Type} [Fintype I] (m : I → ℤ) :
     archEps (fun i => 2 * m i) = Complex.I ^ (∑ i, (2 * m i).natAbs) := by

@@ -26,7 +26,7 @@ theorem mult_smul (s : E ≃ₐ[ℚ] E) (Q : HeightOneSpectrum (𝓞 E)) (hQ : s
   rwa [MulDistribMulAction.toMulEquiv_apply, MulDistribMulAction.toMulEquiv_apply, hQ] at this
 
 theorem mult_ne {P Q : HeightOneSpectrum (𝓞 E)} (h : Q ≠ P) : multiplicity Q.asIdeal P.asIdeal = 0 :=
-  multiplicity_eq_zero.2 fun hd => h (HeightOneSpectrum.ext
+  multiplicity_eq_zero_of_not_dvd fun hd => h (HeightOneSpectrum.ext
     (associated_iff_eq.1 ((Q.prime.irreducible.associated_of_dvd P.prime.irreducible hd))))
 
 theorem val_int (Q : HeightOneSpectrum (𝓞 E)) {r : 𝓞 E} (hr : r ≠ 0) :
@@ -65,7 +65,7 @@ theorem hom_int (s : E ≃ₐ[ℚ] E) {G : Type} [CommGroup G]
       exact k.ne_zero (by simpa using hk)
     rw [hi, hk, val_int Q hu]
   have gone : Gen ⊤ 1 := fun Q _ => by
-    rw [map_one, ← Ideal.one_eq_top, multiplicity_eq_zero.2 Q.prime.not_dvd_one]
+    rw [map_one, ← Ideal.one_eq_top, multiplicity_eq_zero_of_not_dvd Q.prime.not_dvd_one]
     simp
   have gmov : ∀ P : HeightOneSpectrum (𝓞 E), s • P.asIdeal ≠ P.asIdeal → Gen P.asIdeal 1 := fun P hP Q hQ => by
     rw [map_one, mult_ne (P := P) (Q := Q) (fun h => hP (h ▸ hQ))]

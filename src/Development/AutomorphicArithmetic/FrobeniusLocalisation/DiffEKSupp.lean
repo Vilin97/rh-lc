@@ -79,7 +79,7 @@ theorem UpperTheory.HF.diff_EK_supp :
         mul_ne_zero (by exact_mod_cast (UpperTheory.HF.Formalism.HC.HostRaw.el_pos H.toHostRaw l).ne') hv
       rw [← hm, ← mult l hl hld P] at hne
       by_contra hnd
-      exact hne (by exact_mod_cast multiplicity_eq_zero.2 hnd)
+      exact hne (by exact_mod_cast multiplicity_eq_zero_of_not_dvd hnd)
   · intro l hl hld P _ _
     rw [mult l hl hld P]
     exact (diff_mult H hl P).1

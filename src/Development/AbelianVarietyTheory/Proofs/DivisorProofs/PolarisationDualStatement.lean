@@ -132,7 +132,7 @@ theorem statement : Statement := by
       · have hz : ∀ w : HeightOneSpectrum (OF E), (l : OF E) ∈ w.asIdeal → expIn 𝔣 w ≤ 0 := by
           intro w hw
           have : ¬ w.asIdeal ∣ 𝔣 := fun h => hdiv ⟨w, h, hw⟩
-          exact le_of_eq (multiplicity_eq_zero.2 this)
+          exact le_of_eq (multiplicity_eq_zero_of_not_dvd this)
         have := condT E 𝔣 h𝔣.1 l hl 0 hz O K hlO D (dualCrit E O K hcard D hD)
         rwa [pow_zero, one_mul] at this
   · intro E _ _ _ 𝔣 h𝔣 l hl Q _ hQl O _ _ _ _ K _ _ _ hlO hcard D hD0 hD I _ φ hφ H _ _ ρ Fil B hL

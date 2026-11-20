@@ -709,7 +709,7 @@ theorem finChar_det_mul_finMod_det (χ₁ : HeckeCharacter K) (S : Finset (Heigh
       split_ifs with hv
       · exact one_mem _
       · have hndvd : ¬ v.asIdeal ∣ χ₁.conductor := fun h ↦ hv (hχ₁ v h)
-        rw [multiplicity_eq_zero.2 hndvd, unitsLevel_zero, hd, finiteComponent_det]
+        rw [multiplicity_eq_zero_of_not_dvd hndvd, unitsLevel_zero, hd, finiteComponent_det]
         exact det_mem_units_of_mem_integralGL (hg v hv)
     exact χ₁.map_idealLevel_conductor_le_ker ⟨_, hmem, rfl⟩
   have hchar : (finChar χ₁ d : ℂ) = ∏ v ∈ S, (χ₁.localComponent v (finiteComponent v d) : ℂ) := by

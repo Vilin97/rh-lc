@@ -68,7 +68,7 @@ theorem isStd_of_unramified (w : PlK K) (h : w.asIdeal.ramificationIdx (𝓞 ℚ
   refine ⟨continuous_localAdelicChar w, localAdelicChar_ne_one w, ?_⟩
   have hd : ¬ w.asIdeal ∣ differentIdeal ℤ (𝓞 K) := fun hd => (dvd_different_iff w).1 hd h
   rw [addCharConductor_localAdelicChar, differentExp,
-    count_coeIdeal_eq_multiplicity w GroundTheory.Global.differentIdeal_ne_bot, multiplicity_eq_zero.2 hd]
+    count_coeIdeal_eq_multiplicity w GroundTheory.Global.differentIdeal_ne_bot, multiplicity_eq_zero_of_not_dvd hd]
   simp
 
 def baseChange (K : Type) [Field K] [NumberField K] (D : Dat) : DatK K where

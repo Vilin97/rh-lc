@@ -59,7 +59,7 @@ theorem exists_mem_condQ {E : Type} [Field E] [NumberField E] {𝔣 : Ideal (OF 
     rintro _ ⟨w, -, rfl⟩
     by_cases hw : w.asIdeal ∣ 𝔣
     · exact (h𝔣.2.2 w hw).2.1
-    · rw [expIn, multiplicity_eq_zero.2 hw]; omega
+    · rw [expIn, multiplicity_eq_zero_of_not_dvd hw]; omega
   have hnd' : ¬ (J' * ∏ q ∈ Q, q.asIdeal) ≤ P := by
     intro h
     rcases hP.isPrime.mul_le.1 h with h | h

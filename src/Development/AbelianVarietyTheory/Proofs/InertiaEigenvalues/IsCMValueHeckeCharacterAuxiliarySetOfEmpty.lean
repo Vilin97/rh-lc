@@ -122,7 +122,7 @@ theorem isCMValueHeckeCharacter_auxiliarySet_of_empty {E : Type} [Field E] [Numb
     {Q : Finset (HeightOneSpectrum (OF E))} (hQ : IsFinSetSplitPlacesCoprimeConductor 𝔣 Q) (h : IsValChar φ s κ 𝔣 ∅ χ) : IsValChar φ s κ 𝔣 Q χ := by
   refine ⟨h.1, h.2.1, h.2.2.1, fun v P hP => ⟨fun hv => ?_, fun _ => (h.2.2.2 v P hP).2 (Finset.notMem_empty v)⟩⟩
   refine ((h.2.2.2 v P hP).2 (Finset.notMem_empty v) 1).2 ?_
-  rw [expIn, multiplicity_eq_zero.2 (hQ v hv).2]
+  rw [expIn, multiplicity_eq_zero_of_not_dvd (hQ v hv).2]
   exact zero_le_one
 
 theorem exists_classTerms (hL : ToricSumFormula) (hU : UnramFin H.E) (hD : IsHostDatum H φ s κ 𝔣 χ)

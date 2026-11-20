@@ -69,7 +69,7 @@ theorem toIdele_ofFinite_eq_finprod (b : (FiniteAdeleRing (𝓞 K) K)ˣ) :
       split_ifs with hw
       · exact one_mem _
       · obtain ⟨h1, h2⟩ := hT w hw
-        rw [multiplicity_eq_zero.2 h2, unitsLevel_zero]
+        rw [multiplicity_eq_zero_of_not_dvd h2, unitsLevel_zero]
         exact mem_units_of_isIntegralUnitAt h1
     exact χ.map_idealLevel_conductor_le_ker (Subgroup.mem_map_of_mem ofFinite hmem)
   conv_lhs => rw [← partAt_mul_awayPart T b]
@@ -90,7 +90,7 @@ theorem conductor_eq_prod :
   by_contra hvS
   apply hv
   change v.asIdeal ^ multiplicity v.asIdeal χ.conductor = 1
-  rw [multiplicity_eq_zero.2 fun h ↦ hvS (χ.mem_conductorPrimes.2 h), pow_zero]
+  rw [multiplicity_eq_zero_of_not_dvd fun h ↦ hvS (χ.mem_conductorPrimes.2 h), pow_zero]
 
 theorem absNorm_conductor :
     Ideal.absNorm χ.conductor =

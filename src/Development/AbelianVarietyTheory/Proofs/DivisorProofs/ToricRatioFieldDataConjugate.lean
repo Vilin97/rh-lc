@@ -32,7 +32,7 @@ theorem twisted_value {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Ty
     simpa using this
   have hχu : ∀ v ∈ belowSet Q, ∀ P, Over P v → χ.UnrAt P := fun v hv P hP => by
     have e := (hχ.2.2.2 v P hP).2 (Finset.notMem_empty v)
-    rwa [expIn, multiplicity_eq_zero.2 (hQ v hv).2, expAt_zero_iff] at e
+    rwa [expIn, multiplicity_eq_zero_of_not_dvd (hQ v hv).2, expAt_zero_iff] at e
   have hξu : ∀ v ∉ belowSet Q, ∀ P, Over P v → ξ.UnrAt P := fun v hv P hP =>
     (hram P).2 fun h => hv (Finset.mem_image.2 ⟨P, h, HeightOneSpectrum.ext hP⟩)
   have hv : IsValChar φ s κ 𝔣 (belowSet Q) (χ * ξ) := by

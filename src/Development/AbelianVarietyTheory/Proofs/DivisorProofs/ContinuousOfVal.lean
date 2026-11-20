@@ -552,7 +552,7 @@ theorem exists_isValChar (E : Type) [Field E] [NumberField E] [IsCMField E] {I :
           exact h'
         · have := h _ (hu1 _ hP).1 (hu1 _ hP).2
           rwa [hloc _ _ (hu1 _ hP).1, e2, map_inv, inv_eq_one, hcF w u (add_mem (one_mem _) (natCast_mem _ l))] at this
-    · have e : expIn (v.asIdeal ^ 2) q = 0 := multiplicity_eq_zero.2 fun h => hq
+    · have e : expIn (v.asIdeal ^ 2) q = 0 := multiplicity_eq_zero_of_not_dvd fun h => hq
         (HeightOneSpectrum.ext (v.isMaximal.eq_of_le q.isPrime.ne_top
           (Ideal.dvd_iff_le.1 (q.prime.dvd_of_dvd_pow h))).symm)
       have hn : ∀ Q, Over Q v → Q ≠ P := fun Q hQ h => hq (HeightOneSpectrum.ext (Eq.trans (Eq.symm hP) (h ▸ hQ)))

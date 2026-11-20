@@ -141,7 +141,7 @@ theorem mem_map_idealLevel_of_mem_primeToLevel {𝔪 : Ideal (𝓞 K)} {x : Idel
   · have hord : ord v x = 0 := by
       rw [← count_toFractionalIdeal, h1, Units.val_one, count_one]
     change finiteProj v x ∈ unitsLevel v (multiplicity v.asIdeal 𝔪)
-    rw [multiplicity_eq_zero.2 hv, unitsLevel_zero, Submonoid.mem_units_iff]
+    rw [multiplicity_eq_zero_of_not_dvd hv, unitsLevel_zero, Submonoid.mem_units_iff]
     exact (ord_eq_zero_iff v x).1 hord
 
 end IdeleGroup

@@ -190,7 +190,7 @@ theorem isValChar_mul (ha : IsGlobalArtin art) (h : Corr art (r.comp (X.art i Q)
   · rw [Formalism.L2.Host.HChar.inf_mul, inf_of_pow hl hp, mul_one]
     exact hχ.2.2.1 k
   · have e := (hχ.2.2.2 v P hP).2 (Finset.notMem_empty v)
-    rw [expIn, multiplicity_eq_zero.2 (h1 v hv).2, expAt_zero_iff] at e
+    rw [expIn, multiplicity_eq_zero_of_not_dvd (h1 v hv).2, expAt_zero_iff] at e
     have hPl : ((X.l i : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal := fun hm => h2 v hv (by
       rw [← hP, Ideal.mem_comap, map_natCast]
       exact hm)
@@ -383,7 +383,7 @@ theorem gen_relation (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hL : 
   have huξ : ξ.UnrAt P := unrAt_of_corr ha hξ' fun h => ((hmem P).1 h).2 rfl
   have huχ : χ.UnrAt P := by
     have e := (hD.2.2.2.2.2.2.2.2 _ P (over_below P)).2 (Finset.notMem_empty _)
-    rwa [expIn, multiplicity_eq_zero.2 fun h => hPS (h𝔣 P h), expAt_zero_iff] at e
+    rwa [expIn, multiplicity_eq_zero_of_not_dvd fun h => hPS (h𝔣 P h), expAt_zero_iff] at e
   have hN : Ideal.absNorm (below P).asIdeal = normV P :=
     ((normV_eq P).trans (absNorm_split (IsCMField.complexConj D.host.E) (Algebra.IsQuadraticExtension.finrank_eq_two _ _)
       (IsCMField.complexConj_ne_one _) host_unram ((conjPl_iff P Pb).2 hconj) hne)).symm

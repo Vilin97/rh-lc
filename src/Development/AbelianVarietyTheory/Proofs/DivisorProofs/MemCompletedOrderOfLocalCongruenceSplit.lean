@@ -20,7 +20,7 @@ theorem finMult {R : Type} [CommRing R] [IsDedekindDomain R] {c : Ideal R} (hc :
 
 omit [NumberField E] in
 theorem expIn_eq_zero {c : Ideal (OF E)} {v : HeightOneSpectrum (OF E)} (h : ¬ v.asIdeal ∣ c) : expIn c v = 0 :=
-  multiplicity_eq_zero.2 h
+  multiplicity_eq_zero_of_not_dvd h
 
 theorem exists_global {c : Ideal (OF E)} (hc : c ≠ ⊥) {z : Af E} (hz : ∀ v, LocIn (expIn c v) v z) :
     ∃ a : OF E, ∀ P : HeightOneSpectrum (𝓞 E),

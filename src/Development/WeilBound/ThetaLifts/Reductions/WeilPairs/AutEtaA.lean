@@ -44,7 +44,7 @@ theorem hom_fix (Fx : HeightOneSpectrum (𝓞 E) → Prop) {G : Type} [CommGroup
       exact k.ne_zero (by simpa using hk)
     rw [hi, hk, GlobalTheory.EtaProduct.val_int Q hu]
   have gone : Gen ⊤ 1 := fun Q _ => by
-    rw [map_one, ← Ideal.one_eq_top, multiplicity_eq_zero.2 Q.prime.not_dvd_one]
+    rw [map_one, ← Ideal.one_eq_top, multiplicity_eq_zero_of_not_dvd Q.prime.not_dvd_one]
     simp
   have gmov : ∀ P : HeightOneSpectrum (𝓞 E), ¬ Fx P → Gen P.asIdeal 1 := fun P hP Q hQ => by
     rw [map_one, GlobalTheory.EtaProduct.mult_ne (P := P) (Q := Q) (fun h => hP (h ▸ hQ))]
