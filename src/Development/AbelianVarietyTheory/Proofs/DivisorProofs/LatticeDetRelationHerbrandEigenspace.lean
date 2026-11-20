@@ -20,7 +20,7 @@ theorem filPre_mem : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (v : Add
     (hv : ∀ x, x ∈ Int0 v ↔ x ∈ w.valuationSubring) (S : Type) [Fintype S] [DecidableEq S]
     (a : S → w.valuationSubring) (N : ℕ) (F : Submodule w.valuationSubring (S → Fin N → C)),
     (∀ x ∈ F, unif a x ∈ F) →
-    ∀ x, x ∈ filPre (liftA hv a) F ↔ evalVec (liftA hv a) N x ∈ F :=
+    ∀ x, x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F}) ↔ evalVec (liftA hv a) N x ∈ F :=
   GlobalTheory.T.mem_filtrationPreimage_iff_eval_mem
 
 theorem evalVec_range : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (v : AddValuation C (WithTop ℝ))
@@ -57,12 +57,12 @@ theorem lie_iff : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (v : AddVal
     (τ : S), Function.Injective a → IsFiltration a F →
     Function.Injective (evalVec (liftA hv a) N) →
     (∀ y, y ∈ freeLattice a N ↔ ∃ x, evalVec (liftA hv a) N x = y) →
-    (∀ x, x ∈ filPre (liftA hv a) F ↔ evalVec (liftA hv a) N x ∈ F) →
+    (∀ x, x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F}) ↔ evalVec (liftA hv a) N x ∈ F) →
     (∀ x ∈ freeLattice a N, (∀ s, x s ∈ filSpace F s) → x ∈ F) →
     ∀ z : (Fin N → C) ⧸ filSpace F τ, z ∈ eigenSub (lie (freeLattice a N) F) τ ↔
       ∃ x : Fin N → RS (liftA hv a),
-        proj (liftA hv a) (filPre (liftA hv a) F) x ∈
-          eigSub (liftA hv a) τ ((Fin N → RS (liftA hv a)) ⧸ filPre (liftA hv a) F) ∧
+        proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) x ∈
+          eigSub (liftA hv a) τ ((Fin N → RS (liftA hv a)) ⧸ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) ∧
         quotMap (w := w) (filSpace F τ) (fun i => ((comp (liftA hv a) N τ x i : Int0 v) : C)) = z :=
   GlobalTheory.T.lieEigenSublattice_iff_eval_flat
 
@@ -161,10 +161,10 @@ theorem eigenQuot_iff {w : Valuation C ℝ≥0} {v : AddValuation C (WithTop ℝ
     (hv : ∀ x, x ∈ Int0 v ↔ x ∈ w.valuationSubring) (a : S → w.valuationSubring) (N : ℕ)
     (F : Submodule w.valuationSubring (S → Fin N → C)) (hle : F ≤ freeLattice a N)
     (hrange : ∀ y, y ∈ freeLattice a N ↔ ∃ x, evalVec (liftA hv a) N x = y)
-    (hmem : ∀ x, x ∈ filPre (liftA hv a) F ↔ evalVec (liftA hv a) N x ∈ F) (s : S)
+    (hmem : ∀ x, x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F}) ↔ evalVec (liftA hv a) N x ∈ F) (s : S)
     (y : Fin N → C) :
     y ∈ eigenQuot (W := fun _ => Fin N → C) F s ↔
-      ∃ z ∈ eigQuot (liftA hv a) (filPre (liftA hv a) F) s, (fun i => (z i : C)) = y := by
+      ∃ z ∈ eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) s, (fun i => (z i : C)) = y := by
   constructor
   · rintro ⟨x, hx, rfl⟩
     obtain ⟨z, hz⟩ := (hrange x).1 (hle hx)
@@ -177,10 +177,10 @@ theorem eigRank_eq {w : Valuation C ℝ≥0} {v : AddValuation C (WithTop ℝ)}
     (hv : ∀ x, x ∈ Int0 v ↔ x ∈ w.valuationSubring) (a : S → w.valuationSubring) (N : ℕ)
     (F : Submodule w.valuationSubring (S → Fin N → C)) (hle : F ≤ freeLattice a N)
     (hrange : ∀ y, y ∈ freeLattice a N ↔ ∃ x, evalVec (liftA hv a) N x = y)
-    (hmem : ∀ x, x ∈ filPre (liftA hv a) F ↔ evalVec (liftA hv a) N x ∈ F) (s : S) :
-    eigRank v (liftA hv a) (filPre (liftA hv a) F) s = Module.finrank C (filSpace F s) := by
+    (hmem : ∀ x, x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F}) ↔ evalVec (liftA hv a) N x ∈ F) (s : S) :
+    eigRank v (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) s = Module.finrank C (filSpace F s) := by
   have : ((fun (x : Fin N → Int0 v) (i : Fin N) => (x i : C)) ''
-      (eigQuot (liftA hv a) (filPre (liftA hv a) F) s : Set (Fin N → Int0 v))) =
+      (eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) s : Set (Fin N → Int0 v))) =
       (eigenQuot (W := fun _ => Fin N → C) F s : Set (Fin N → C)) := by
     ext y
     simp only [Set.mem_image, SetLike.mem_coe]
@@ -245,7 +245,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
   have hinj := evalVec_injective C w _ hv S a (p + q) ha
   have hcomp := mem_of_components C w S a (p + q) Fil ha hF
   have hsat : ∀ (c : Int0 (toAddVal w ℓ h0 h1)) (x : Fin (p + q) → RS (liftA hv a)), c ≠ 0 →
-      c • x ∈ filPre (liftA hv a) Fil → x ∈ filPre (liftA hv a) Fil := by
+      c • x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}) → x ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}) := by
     intro c x hc hcx
     rw [hmem] at hcx ⊢
     have hc' : (c : C) ∈ w.valuationSubring := (hv _).1 c.2
@@ -258,15 +258,15 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
       rfl
   have hrk := eigRank_eq hv a (p + q) Fil hF.le hrange hmem
   obtain ⟨⟨p', hp', ⟨h⟩, ⟨l⟩, ⟨f⟩, hDet⟩, -, -⟩ :=
-    GlobalTheory.T.herbrandQuotient_eigen_det C (toAddVal w ℓ h0 h1) S (liftA hv a) ha' (p + q) (filPre (liftA hv a) Fil) hsat τ
-  have hq' : eigRank (toAddVal w ℓ h0 h1) (liftA hv a) (filPre (liftA hv a) Fil) τ = q :=
+    GlobalTheory.T.herbrandQuotient_eigen_det C (toAddVal w ℓ h0 h1) S (liftA hv a) ha' (p + q) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) hsat τ
+  have hq' : eigRank (toAddVal w ℓ h0 h1) (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ = q :=
     (hrk τ).trans hq
   have hpp : p = p' := by omega
   subst hpp
 
-  choose x hx using fun i => Submodule.Quotient.mk_surjective (filPre (liftA hv a) Fil)
-    (l i : (Fin (p + q) → RS (liftA hv a)) ⧸ (filPre (liftA hv a) Fil))
-  let e : Fin (p + q) ≃ Fin p ⊕ Fin (eigRank (toAddVal w ℓ h0 h1) (liftA hv a) (filPre (liftA hv a) Fil) τ) :=
+  choose x hx using fun i => Submodule.Quotient.mk_surjective ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))
+    (l i : (Fin (p + q) → RS (liftA hv a)) ⧸ ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
+  let e : Fin (p + q) ≃ Fin p ⊕ Fin (eigRank (toAddVal w ℓ h0 h1) (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ) :=
     finSumFinEquiv.symm.trans (Equiv.sumCongr (Equiv.refl _) (finCongr hq'.symm))
   obtain ⟨c, hc, hne, hdet⟩ := hDet h l x hx f e
   let X : Fin (p + q) → Fin (p + q) → C := fun k i =>
@@ -287,7 +287,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
     rw [hXmat, hAmat, ← RingHom.mapMatrix_apply, ← RingHom.mapMatrix_apply, ← RingHom.map_det,
       ← RingHom.map_det]
     exact hdet
-  have hy := yExp_eq w ℓ h0 h1 hv a ha (filPre (liftA hv a) Fil) (filSpace Fil) hrk τ
+  have hy := yExp_eq w ℓ h0 h1 hv a ha ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) (filSpace Fil) hrk τ
   have hc0 : c ≠ 0 := by
     intro h0'
     rw [h0', AddValuation.map_zero, hy] at hc
@@ -323,7 +323,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
     simp only [LinearMap.id_apply]
   ·
     refine span_eq_of_basis hv (eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
-        filPre (liftA hv a) Fil)) l (proj (liftA hv a) (filPre (liftA hv a) Fil))
+        (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))) l (proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
       (fun z => quotMap (w := w) (filSpace Fil τ)
         (fun i => ((comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
       (fun z z' => by
@@ -334,15 +334,15 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
       (fun z z' hz => ?_) x hx _ (fun y => ?_)
     · show (filSpace Fil τ).mkQ _ = (filSpace Fil τ).mkQ _
       rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
-      have h2 : z - z' ∈ filPre (liftA hv a) Fil :=
-        (Submodule.Quotient.eq (filPre (liftA hv a) Fil)).1 hz
+      have h2 : z - z' ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}) :=
+        (Submodule.Quotient.eq ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))).1 hz
       rw [hmem, evalVec_sub] at h2
       refine Submodule.subset_span ⟨_, h2, ?_⟩
       funext i
       rfl
     · exact lie_iff C w _ hv S a (p + q) Fil τ ha hF hinj hrange hmem hcomp y
   ·
-    refine span_eq_of_basis hv (eigQuot (liftA hv a) (filPre (liftA hv a) Fil) τ) fb
+    refine span_eq_of_basis hv (eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ) fb
       LinearMap.id (fun z i => ((z i : Int0 (toAddVal w ℓ h0 h1)) : C))
       (fun z z' => by funext i; rfl) (fun c z => by funext i; rfl)
       (fun z z' hz => by rw [show z = z' from hz])
