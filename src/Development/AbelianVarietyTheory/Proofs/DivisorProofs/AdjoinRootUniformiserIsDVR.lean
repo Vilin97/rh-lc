@@ -11,7 +11,7 @@ theorem adjoinRoot_uniformiser_isDVR : ∀ (R : Type) [CommRing R] [IsDomain R] 
   intro R _ _ _ π e hπ he _
   set f : R[X] := X ^ e - C π with hf
   have hmon : f.Monic := monic_X_pow_sub_C π he.ne'
-  have hdeg : f.natDegree = e := natDegree_X_pow_sub_C
+  have hdeg : f.natDegree = e := natDegree_X_pow_sub_C _
   haveI : Module.Finite R (AdjoinRoot f) := (AdjoinRoot.powerBasis' hmon).finite
   haveI : Algebra.IsIntegral R (AdjoinRoot f) := Algebra.IsIntegral.of_finite R _
   haveI : IsNoetherianRing (AdjoinRoot f) := IsNoetherianRing.of_finite R _

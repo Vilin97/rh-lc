@@ -190,7 +190,7 @@ theorem PositivityTheory.QuaternionShaBounds.LayEx_holds : PositivityTheory.Quat
       refine minpoly.dvd L ζ ?_
       simp [map_pow, hi]
     have := Polynomial.natDegree_le_of_dvd hdvd hne
-    rwa [Polynomial.natDegree_X_pow_sub_C] at this
+    rwa [Polynomial.natDegree_X_pow_sub_C _] at this
   have hgen : Subgroup.zpowers γ = ⊤ := by
     refine Subgroup.eq_top_of_le_card _ ?_
     rw [Nat.card_zpowers, hord, IsGalois.card_aut_eq_finrank]

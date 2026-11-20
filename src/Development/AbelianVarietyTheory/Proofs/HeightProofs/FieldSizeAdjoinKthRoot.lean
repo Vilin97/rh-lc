@@ -186,7 +186,7 @@ theorem _root_.GlobalTheory.FieldSize.sz_sup_adjoin_root : ∀ (F : Intermediate
     have hp : (X ^ k - C y : F[X]) ≠ 0 := X_pow_sub_C_ne_zero hk y
     calc (minpoly F z').natDegree ≤ (X ^ k - C y : F[X]).natDegree :=
           natDegree_le_of_dvd (minpoly.dvd F z' (by simp [hz'])) hp
-      _ = k := natDegree_X_pow_sub_C
+      _ = k := natDegree_X_pow_sub_C _
   haveI : FiniteDimensional F E := FiniteDimensional.right ℚ F E
   have hdF : 0 < Module.finrank ℚ F := Module.finrank_pos
   have hdFE : 0 < Module.finrank F E := Module.finrank_pos

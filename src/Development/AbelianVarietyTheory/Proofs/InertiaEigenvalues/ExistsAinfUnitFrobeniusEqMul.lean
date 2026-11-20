@@ -84,7 +84,7 @@ theorem lang_unit
     rw [← hx']; ring
 
   obtain ⟨t₀, ht₀⟩ := hroot (X ^ (p - 1) - C ω₀) (monic_X_pow_sub_C _ (by omega))
-    (by rw [natDegree_X_pow_sub_C]; omega)
+    (by rw [natDegree_X_pow_sub_C _]; omega)
   have ht₀' : t₀ ^ (p - 1) = ω₀ := by simpa [sub_eq_zero] using ht₀
   have hut : IsUnit t₀ := (isUnit_pow_iff (by omega : p - 1 ≠ 0)).1 (ht₀' ▸ hu0)
   have htp : t₀ ^ p = ω₀ * t₀ := by

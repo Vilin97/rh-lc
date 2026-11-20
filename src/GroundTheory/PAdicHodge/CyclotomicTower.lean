@@ -170,7 +170,7 @@ theorem normTrace_cycl_isPrimitiveRoot {k : ℕ} (hk : 1 ≤ k) {η : PadicAlgCl
   have hc : η ^ p ∈ cycl p k := pow_eq_one_mem_cycl (by rw [← pow_mul, ← pow_succ']; exact hη.pow_eq_one)
   set f : (cycl p k)[X] := X ^ p - C ⟨η ^ p, hc⟩ with hf
   have hfm : f.Monic := monic_X_pow_sub_C _ (by omega)
-  have hfdeg : f.natDegree = p := natDegree_X_pow_sub_C
+  have hfdeg : f.natDegree = p := natDegree_X_pow_sub_C _
   have hroot : aeval η f = 0 := by simp [hf]
   have hdvd : minpoly (cycl p k) η ∣ f := minpoly.dvd _ _ hroot
   have heq : f = minpoly (cycl p k) η :=

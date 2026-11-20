@@ -183,9 +183,9 @@ theorem ev_cyc (T : GlobalTheory.K5.Tower p Ω) (L : ℕ) (ψ : O0 p →+* Ω) (
         have := Polynomial.natDegree_modByMonic_lt f hm (by
           intro h
           have := congrArg Polynomial.natDegree h
-          rw [Polynomial.natDegree_X_pow_sub_C, Polynomial.natDegree_one] at this
+          rw [Polynomial.natDegree_X_pow_sub_C _, Polynomial.natDegree_one] at this
           exact hN.ne' this)
-        rwa [Polynomial.natDegree_X_pow_sub_C] at this
+        rwa [Polynomial.natDegree_X_pow_sub_C _] at this
       refine ⟨fun m => (f %ₘ (Polynomial.X ^ (p ^ L) - Polynomial.C 1)).coeff m, ?_, fun h => absurd h hr⟩
       have e : Polynomial.aeval (T.ζ L) (f %ₘ (Polynomial.X ^ (p ^ L) - Polynomial.C 1)) = Polynomial.aeval (T.ζ L) f := by
         conv_rhs => rw [← Polynomial.modByMonic_add_div f (Polynomial.X ^ (p ^ L) - Polynomial.C 1)]

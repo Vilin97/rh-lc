@@ -82,7 +82,7 @@ lemma mqk_finrank_two (K : IntermediateField F E) (β b : E) (hb : b ∈ K) (hβ
     X_pow_sub_C_irreducible_of_prime Nat.prime_two fun z hz =>
       hns z z.2 (by simpa [b'] using congrArg Subtype.val hz)
   have hmin : minpoly K β = X ^ 2 - C b' := (minpoly.eq_of_irreducible_of_monic hirr hev hmon).symm
-  rw [IntermediateField.adjoin.finrank hint, hmin, natDegree_X_pow_sub_C]
+  rw [IntermediateField.adjoin.finrank hint, hmin, natDegree_X_pow_sub_C _]
 
 end KummerAux
 

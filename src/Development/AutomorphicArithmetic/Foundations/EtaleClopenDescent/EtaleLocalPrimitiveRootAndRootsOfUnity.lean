@@ -211,7 +211,7 @@ private theorem part_kummer (q : ℕ) [NeZero q] (U : Scheme.{0}) (hq : IsUnit (
   have hu₀ : IsUnit (j.appTop.hom (u : Γ(U, ⊤))) := u.isUnit.map _
   obtain ⟨V, g, θ, hVa, hg, hs, hθ⟩ := exists_cover V₀ (X ^ q - C (j.appTop.hom (u : Γ(U, ⊤))))
     (monic_X_pow_sub_C _ (NeZero.ne q))
-    (by rw [natDegree_X_pow_sub_C]; exact NeZero.pos q)
+    (by rw [natDegree_X_pow_sub_C _]; exact NeZero.pos q)
     (unit_deriv_kummer q hq₀ _ hu₀)
   obtain ⟨z, hz⟩ := hs y
   have h1 : θ ^ q = g.appTop.hom (j.appTop.hom (u : Γ(U, ⊤))) := by

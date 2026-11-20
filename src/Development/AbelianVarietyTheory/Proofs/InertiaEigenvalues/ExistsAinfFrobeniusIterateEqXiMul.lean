@@ -93,7 +93,7 @@ theorem exists_start (e : Per.Fl l) (he : GlobalTheory.MemLoc.IsEps e) (n : ℕ)
   have hq1 : l ^ n - 1 ≠ 0 := by omega
   have hmon : (X ^ (l ^ n - 1) - C a : (Per.Fl l)[X]).Monic := monic_X_pow_sub_C a hq1
   have hnd : (X ^ (l ^ n - 1) - C a : (Per.Fl l)[X]).natDegree ≠ 0 := by
-    rw [natDegree_X_pow_sub_C]; exact hq1
+    rw [natDegree_X_pow_sub_C _]; exact hq1
   obtain ⟨y, hy⟩ := GlobalTheory.TiltAlgClosed.exists_root_preTilt ℂ_[l] hmon hnd
   simp only [eval_sub, eval_pow, eval_X, eval_C, sub_eq_zero] at hy
   refine ⟨y, ?_, ?_⟩

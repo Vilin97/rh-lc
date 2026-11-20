@@ -74,7 +74,7 @@ theorem main : ∀ (R K L : Type) [CommRing R] [IsDomain R] [IsDiscreteValuation
   let bR := Algebra.TensorProduct.basis L (AdjoinRoot.powerBasis' hfm).basis
   let bK := Algebra.TensorProduct.basis L (AdjoinRoot.powerBasis' hgm).basis
   have hdeg : f.natDegree = g.natDegree := by
-    rw [hf, hg, natDegree_X_pow_sub_C, natDegree_X_pow_sub_C]
+    rw [hf, hg, natDegree_X_pow_sub_C _, natDegree_X_pow_sub_C _]
   have hψb : ∀ i, ψ (bR i) = bK (Fin.cast hdeg i) := by
     intro i
     have hφ : φ (AdjoinRoot.root f) = AdjoinRoot.root g := AdjoinRoot.liftAlgHom_root _ _ _ _

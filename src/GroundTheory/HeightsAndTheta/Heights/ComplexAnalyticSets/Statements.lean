@@ -139,7 +139,7 @@ theorem coneEq_irreducible : Irreducible coneEq := by
   have hm : (Polynomial.X ^ 2 - Polynomial.C (X 0 * X 1 : MvPolynomial (Fin 2) ℂ)).Monic :=
     Polynomial.monic_X_pow_sub_C _ (by norm_num)
   have hd : (Polynomial.X ^ 2 - Polynomial.C (X 0 * X 1 : MvPolynomial (Fin 2) ℂ)).natDegree = 2 :=
-    Polynomial.natDegree_X_pow_sub_C
+    Polynomial.natDegree_X_pow_sub_C _
   rw [hm.irreducible_iff_roots_eq_zero_of_degree_le_three (by rw [hd]) (by rw [hd]; norm_num),
     Multiset.eq_zero_iff_forall_notMem]
   intro r hr
@@ -276,7 +276,7 @@ theorem cone_isFiniteProjection : IsFiniteProjection coneIdeal coneProj := by
       exact hP0 (Polynomial.C_eq_zero.mp h.symm)
     have hd := congrArg Polynomial.natDegree h
     rw [Polynomial.natDegree_C, Polynomial.natDegree_mul hq0
-      (Polynomial.monic_X_pow_sub_C _ (by norm_num)).ne_zero, Polynomial.natDegree_X_pow_sub_C] at hd
+      (Polynomial.monic_X_pow_sub_C _ (by norm_num)).ne_zero, Polynomial.natDegree_X_pow_sub_C _] at hd
     omega
   · rw [RingHom.finite_iff_isIntegral_and_finiteType]
     refine ⟨?_, ?_⟩

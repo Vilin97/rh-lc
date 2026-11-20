@@ -116,9 +116,9 @@ theorem cong_on_adjoin : ∀ (W K : Type) [CommRing W] [IsDomain W] [IsDiscreteV
     have := natDegree_modByMonic_lt p₀ hq (by
       intro h1
       have := congrArg natDegree h1
-      rw [natDegree_X_pow_sub_C, natDegree_one] at this
+      rw [natDegree_X_pow_sub_C _, natDegree_one] at this
       exact hl0 this)
-    rwa [natDegree_X_pow_sub_C] at this
+    rwa [natDegree_X_pow_sub_C _] at this
   change O.valuation (aeval x p₀) ≤ 1 at hb1
   change O.valuation (g (aeval x p₀) - aeval x p₀) < 1
   rw [← hp, aeval_eq_sum_range' hdeg] at hb1 ⊢

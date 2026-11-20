@@ -488,7 +488,7 @@ def definitePairUnitaryOneTwo : DPair unitaryOneTwoGaussian where
   reg := by
     show (minpoly QI g3).natDegree = 3 ∧ (minpoly QI g3).Separable
     rw [minpoly_cubeRootMatrix]
-    exact ⟨Polynomial.natDegree_X_pow_sub_C, irreducible_cubic.separable⟩
+    exact ⟨Polynomial.natDegree_X_pow_sub_C _, irreducible_cubic.separable⟩
   trivAf := by
     obtain ⟨a, b, c, d, h⟩ := finiteAdeleRingAway_sum_four_squares_eq_neg_one 5
     obtain ⟨x, hx⟩ := diagHermitian_trivial_of_sumFourSquares (AfP 5) a b c d h

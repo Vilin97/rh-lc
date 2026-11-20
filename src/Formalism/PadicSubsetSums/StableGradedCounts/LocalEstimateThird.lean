@@ -259,7 +259,7 @@ theorem count (δ : ℕ) (c₀ : Kˣ) :
         exact (Finset.mem_filter.mp hc).2.2
     have hdeg := Polynomial.natDegree_le_of_dvd hprod hF0
     rw [Polynomial.natDegree_prod_of_monic _ _ (fun c _ => hmon c),
-      Polynomial.natDegree_X_pow_sub_C] at hdeg
+      Polynomial.natDegree_X_pow_sub_C _] at hdeg
     simp only [hdegc, Finset.sum_const, smul_eq_mul] at hdeg
     rw [mul_comm]
     exact hdeg

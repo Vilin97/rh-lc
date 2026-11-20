@@ -112,7 +112,7 @@ theorem different_quad (K : Type) [Field K] [NumberField K] (a : ℤ) (x : K)
     (minpoly.eq_of_irreducible_of_monic hirr hev hmon).symm
   have hrank : Module.finrank ℚ K = 2 := by
     have := IntermediateField.adjoin.finrank (K := ℚ) (x := x) (.of_finite ℚ x)
-    rw [hmin, natDegree_X_pow_sub_C, hadj, IntermediateField.finrank_top'] at this
+    rw [hmin, natDegree_X_pow_sub_C _, hadj, IntermediateField.finrank_top'] at this
     exact this
   obtain ⟨c, hc⟩ : ∃ c : ℤ, a = 4 * c + 1 := ⟨a / 4, by omega⟩
   have hcK : (a : K) = 4 * c + 1 := by rw [hc]; push_cast; ring

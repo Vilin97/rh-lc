@@ -162,7 +162,7 @@ theorem isEisensteinAt_X_pow_sub_C {R : Type*} [CommRing R] {P : Ideal R} (hP : 
   refine ⟨?_, fun {n} hn ↦ ?_, ?_⟩
   · rw [(monic_X_pow_sub_C a hm.ne').leadingCoeff]
     exact fun h ↦ hP ((Ideal.eq_top_iff_one _).2 h)
-  · rw [natDegree_X_pow_sub_C] at hn
+  · rw [natDegree_X_pow_sub_C _] at hn
     rw [coeff_sub, coeff_X_pow, if_neg hn.ne, coeff_C, zero_sub]
     split_ifs
     · exact P.neg_mem ha
@@ -219,7 +219,7 @@ theorem finiteDimensional_adjoin_pair_and_ramificationIndex {k : ℕ} (hk : k �
     intro hd
     have := (_root_.pow_dvd_pow_iff hπT.ne_zero hπT.not_isUnit).1 (by rwa [pow_one] : πT ^ 2 ∣ πT ^ 1)
     omega
-  have hgdeg : g.natDegree = m := natDegree_X_pow_sub_C
+  have hgdeg : g.natDegree = m := natDegree_X_pow_sub_C _
   have hπΩ : algebraMap T Ω ((πT : 𝒪[T]) : T) = algebraMap K Ω π := by
     rw [hπT_def, coe_algebraMap_integer, ← IsScalarTower.algebraMap_apply]
   have hγT : aeval γ (g.map (algebraMap 𝒪[T] T)) = 0 := by

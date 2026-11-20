@@ -58,7 +58,7 @@ theorem kf_comap_surj (q : ℕ) [NeZero q] (b : Rˣ) :
   · let pb := AdjoinRoot.powerBasis' (kf_monic q b)
     have : Module.Free R (AdjoinRoot (kf q b)) := Module.Free.of_basis pb.basis
     have hd : 0 < pb.dim := by
-      have : (kf q b).natDegree = q := natDegree_X_pow_sub_C
+      have : (kf q b).natDegree = q := natDegree_X_pow_sub_C _
       change 0 < (kf q b).natDegree
       rw [this]; exact Nat.pos_of_ne_zero (NeZero.ne q)
     have : Nontrivial (AdjoinRoot (kf q b)) := nontrivial_of_ne _ _ (pb.basis.ne_zero ⟨0, hd⟩)

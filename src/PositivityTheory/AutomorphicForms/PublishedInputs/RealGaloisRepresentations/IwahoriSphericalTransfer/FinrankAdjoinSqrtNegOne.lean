@@ -44,7 +44,7 @@ theorem QCM.finrank_adjoin_sqrt_neg_one [IsTotallyReal F] {i : Ω} (hi : i ^ 2 =
   have hirr : Irreducible (X ^ 2 - C (-1) : F[X]) :=
     X_pow_sub_C_irreducible_of_prime Nat.prime_two (QCM.sq_ne_neg_one_of_isReal (IsTotallyReal.isReal v))
   rw [IntermediateField.adjoin.finrank (QCM.isIntegral_sqrt_neg_one hi),
-    ← minpoly.eq_of_irreducible_of_monic hirr (by simp [hi]) (monic_X_pow_sub_C _ two_ne_zero), natDegree_X_pow_sub_C]
+    ← minpoly.eq_of_irreducible_of_monic hirr (by simp [hi]) (monic_X_pow_sub_C _ two_ne_zero), natDegree_X_pow_sub_C _]
 
 def QCM.gauss [IsTotallyReal F] {i : Ω} (hi : i ^ 2 = -1) : QCM F Ω :=
   haveI := IntermediateField.adjoin.finiteDimensional (QCM.isIntegral_sqrt_neg_one (F := F) hi)

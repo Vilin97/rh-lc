@@ -20,7 +20,7 @@ theorem UpperTheory.quadratic_complex_multiplication :
     have hm : (X ^ 2 - C d : F[X]).Monic := monic_X_pow_sub_C d (by norm_num)
     have h1 := minpoly.min F δ hm (by simp [hδ])
     have h2 := natDegree_le_natDegree h1
-    rwa [natDegree_X_pow_sub_C] at h2
+    rwa [natDegree_X_pow_sub_C _] at h2
   have hne : (minpoly F δ).natDegree ≠ 1 := by
     intro h
     obtain ⟨c, hc⟩ := (minpoly.natDegree_eq_one_iff).1 h

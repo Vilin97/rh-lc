@@ -113,7 +113,7 @@ theorem exists_quadAlg (k : Type) [Field k] [Finite k] (h2 : (2 : k) ≠ 0) (D :
     have : Fact (Irreducible (X ^ 2 - C D : k[X])) := ⟨hirr⟩
     have hf0 : (X ^ 2 - C D : k[X]) ≠ 0 := hirr.ne_zero
     have hfin : Module.finrank k (AdjoinRoot (X ^ 2 - C D : k[X])) = 2 := by
-      rw [(AdjoinRoot.powerBasis hf0).finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C]
+      rw [(AdjoinRoot.powerBasis hf0).finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C _]
     have : Module.Finite k (AdjoinRoot (X ^ 2 - C D : k[X])) := (AdjoinRoot.powerBasis hf0).finite
     have hr : AdjoinRoot.root (X ^ 2 - C D : k[X]) * AdjoinRoot.root (X ^ 2 - C D : k[X]) =
         algebraMap k (AdjoinRoot (X ^ 2 - C D : k[X])) D := by

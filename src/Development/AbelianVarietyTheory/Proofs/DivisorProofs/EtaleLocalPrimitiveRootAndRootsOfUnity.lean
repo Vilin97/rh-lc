@@ -210,7 +210,7 @@ theorem prim_loc : ∀ (q : ℕ) [NeZero q] (U : Scheme.{0}), (IsUnit (q : Γ(U,
       GlobalTheory.etale_adjoinRoot_X_pow_sub_C A q uA hqA uA.isUnit,
       adjoinRoot_surj _ (monic_X_pow_sub_C _ (NeZero.ne q)) ?_,
       ⟨Units.map (Scheme.ΓSpecIso (CommRingCat.of (AdjoinRoot (X ^ q - C (uA : A))))).inv.hom.toMonoidHom v, ?_⟩⟩
-    · rw [natDegree_X_pow_sub_C]
+    · rw [natDegree_X_pow_sub_C _]
       exact NeZero.ne q
     · ext
       have hu' : (uA : A) = (Scheme.ΓSpecIso A).hom.hom (f.appTop.hom (u : Γ(U, ⊤))) := by rw [huA]; rfl

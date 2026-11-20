@@ -14,7 +14,7 @@ theorem exists_isQuad : ∀ (F : Type) [Field F] [NumberField F] (δ : F), ¬ Is
   have hirr : Irreducible (Polynomial.X ^ 2 - Polynomial.C δ) :=
     X_pow_sub_C_irreducible_of_prime Nat.prime_two hroot
   have hmon : (Polynomial.X ^ 2 - Polynomial.C δ).Monic := Polynomial.monic_X_pow_sub_C δ two_ne_zero
-  have hdeg : (Polynomial.X ^ 2 - Polynomial.C δ).natDegree = 2 := Polynomial.natDegree_X_pow_sub_C
+  have hdeg : (Polynomial.X ^ 2 - Polynomial.C δ).natDegree = 2 := Polynomial.natDegree_X_pow_sub_C _
   have : Fact (Irreducible (Polynomial.X ^ 2 - Polynomial.C δ)) := ⟨hirr⟩
   set p : Polynomial F := Polynomial.X ^ 2 - Polynomial.C δ with hp
   have hsq : AdjoinRoot.root p ^ 2 = AdjoinRoot.of p δ := by

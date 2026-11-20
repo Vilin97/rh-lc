@@ -57,7 +57,7 @@ theorem henselian_isAlgClosed_pow_surj :
     rw [← hq, eval_map, eval₂_hom, hx, map_zero]
   · intro n u hn
     obtain ⟨x, hx⟩ := hroot (X ^ n - C (u : T)) (monic_X_pow_sub_C _ hn.ne')
-      (by rw [natDegree_X_pow_sub_C]; exact hn)
+      (by rw [natDegree_X_pow_sub_C _]; exact hn)
     have hxn : x ^ n = (u : T) := by
       simp only [eval_sub, eval_pow, eval_X, eval_C] at hx
       exact sub_eq_zero.1 hx

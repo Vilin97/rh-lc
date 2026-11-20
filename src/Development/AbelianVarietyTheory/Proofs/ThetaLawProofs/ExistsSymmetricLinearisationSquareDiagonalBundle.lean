@@ -47,7 +47,7 @@ theorem exists_sqrt_one (R : Type) [CommRing R] [Algebra ℚ R] (a : Rˣ) :
     exact (h2.map _).mul hru
   have hb := (AdjoinRoot.powerBasis' hf).basis
   have hd : (AdjoinRoot.powerBasis' hf).dim = 2 := by
-    rw [AdjoinRoot.powerBasis'_dim]; exact natDegree_X_pow_sub_C
+    rw [AdjoinRoot.powerBasis'_dim]; exact natDegree_X_pow_sub_C _
   have : Nonempty (Fin (AdjoinRoot.powerBasis' hf).dim) := by rw [hd]; infer_instance
   exact ⟨AdjoinRoot f, inferInstance, inferInstance, ⟨Module.Finite.of_basis hb, het,
     Module.FaithfullyFlat.of_linearEquiv R _ hb.repr⟩, _, hroot⟩

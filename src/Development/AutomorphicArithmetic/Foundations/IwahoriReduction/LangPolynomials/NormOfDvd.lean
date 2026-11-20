@@ -286,7 +286,7 @@ theorem pFrEx3 : SFrEx := by
   have hcl := h.cl_closed (residue_field_teichmuller_lift_exists l h2 Ω A hA)
   have fl : FrobLift (Cl i) l σ := ⟨inferInstance, h.cl_prime, h.cl_complete, h.cl_frob _ hφ σ c e, fun x => by
     simpa using hcl (Polynomial.X ^ l - Polynomial.C x) (Polynomial.monic_X_pow_sub_C x hl.out.ne_zero)
-      (by rw [Polynomial.natDegree_X_pow_sub_C]; exact hl.out.pos)⟩
+      (by rw [Polynomial.natDegree_X_pow_sub_C _]; exact hl.out.pos)⟩
   exact ⟨{
     R := Cl i
     σ := σ

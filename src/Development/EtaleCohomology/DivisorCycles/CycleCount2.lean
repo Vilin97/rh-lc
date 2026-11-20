@@ -98,7 +98,7 @@ theorem cyc [IsAlgClosed C] [CharZero C] {n : ℕ} (p : Fin n → Mat C N) (y : 
   · have hsep : (X ^ k - Polynomial.C β).Separable := separable_X_pow_sub_C β (by exact_mod_cast hk.ne') hβ0
     rw [Multiset.toFinset_card_of_nodup (by unfold nthRoots; exact nodup_roots hsep)]
     unfold nthRoots
-    rw [IsAlgClosed.card_roots_eq_natDegree, natDegree_X_pow_sub_C]
+    rw [IsAlgClosed.card_roots_eq_natDegree, natDegree_X_pow_sub_C _]
   · intro l hl
     rw [Multiset.mem_toFinset, mem_nthRoots hk] at hl
     have hl0 : l ≠ 0 := by rintro rfl; rw [zero_pow hk.ne'] at hl; exact hβ0 hl.symm

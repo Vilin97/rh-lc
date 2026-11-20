@@ -61,7 +61,7 @@ private theorem layerex_step (K : Type) [Field K] [NumberField K] {l m : ℕ} (h
     refine Algebra.adjoin_mono ?_ this
     rintro _ rfl
     exact hr.pow_eq_one
-  · rw [pb.finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C]
+  · rw [pb.finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C _]
 
 theorem UpperTheory.V.exists_cyclotomic_layer_of_primitiveRoot :
     ∀ (l j : ℕ), l.Prime → l ≠ 2 → ∀ (L : Type) [Field L] [NumberField L], (∃ z : L, IsPrimitiveRoot z l) →

@@ -86,7 +86,7 @@ private lemma qth_root {A D : Type} [CommRing A] [CommRing D] [IsDomain D] [Alge
     (S : Subalgebra A D) (hS : Roots S) (q : ℕ) (hq : 0 < q) (c : D) (hc : c ∈ S) :
     ∃ u ∈ S, u ^ q = c := by
   obtain ⟨a, ha⟩ := hS (Polynomial.X ^ q - Polynomial.C ⟨c, hc⟩) (Polynomial.monic_X_pow_sub_C _ hq.ne')
-    (by rw [Polynomial.natDegree_X_pow_sub_C]; exact hq)
+    (by rw [Polynomial.natDegree_X_pow_sub_C _]; exact hq)
   refine ⟨a, a.2, ?_⟩
   simp only [Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_C] at ha
   have := congrArg Subtype.val (sub_eq_zero.mp ha)

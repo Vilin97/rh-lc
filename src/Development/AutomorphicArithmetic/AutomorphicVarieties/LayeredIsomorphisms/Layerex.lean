@@ -61,7 +61,7 @@ private theorem winlx_step (K : Type) [Field K] [NumberField K] {l m : ℕ} (hl 
     refine Algebra.adjoin_mono ?_ this
     rintro _ rfl
     exact hr.pow_eq_one
-  · rw [pb.finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C]
+  · rw [pb.finrank, AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C _]
 
 theorem UpperTheory.V.Win.layerex :
     ∀ (l j : ℕ), l.Prime → ∀ (L : Type) [Field L] [NumberField L], HasMuQ l L →

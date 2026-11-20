@@ -14,7 +14,7 @@ theorem adjoinRoot_X_pow_sub_C_uniformizer_isDomain :
   have hπp : Prime π := hπ.prime
   have hP : (Ideal.span {π}).IsPrime := (Ideal.span_singleton_prime hπp.ne_zero).2 hπp
   have hmon : (X ^ e - C π : R[X]).Monic := monic_X_pow_sub_C _ he.ne'
-  have hdeg : (X ^ e - C π : R[X]).natDegree = e := natDegree_X_pow_sub_C
+  have hdeg : (X ^ e - C π : R[X]).natDegree = e := natDegree_X_pow_sub_C _
   have hirr : Irreducible (X ^ e - C π : R[X]) := by
     refine Polynomial.IsEisensteinAt.irreducible ⟨?_, ?_, ?_⟩ hP hmon.isPrimitive (by rw [hdeg]; exact he)
     · rw [hmon.leadingCoeff]

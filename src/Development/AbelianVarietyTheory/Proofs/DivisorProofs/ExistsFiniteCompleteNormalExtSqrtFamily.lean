@@ -19,7 +19,7 @@ theorem exists_sqrt_one (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (b 
       s ^ 2 = ρ b := by
   set g : R[X] := X ^ 2 - C b with hg_def
   have hg : g.Monic := monic_X_pow_sub_C b two_ne_zero
-  have hdeg : g.natDegree = 2 := natDegree_X_pow_sub_C
+  have hdeg : g.natDegree = 2 := natDegree_X_pow_sub_C _
   have hinj : Function.Injective (AdjoinRoot.of g) := by
     rw [injective_iff_map_eq_zero]
     intro r hr

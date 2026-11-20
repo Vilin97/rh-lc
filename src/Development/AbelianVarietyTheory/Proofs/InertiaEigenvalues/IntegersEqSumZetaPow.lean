@@ -143,7 +143,7 @@ theorem exists_poly (K : FinExt l) (i : ℕ) (hi : 2 ≤ i) (ζ : Om l) (hζ : I
   have hint : IsIntegral F ζ := ⟨p0, hmon, by rw [← aeval_def]; exact hroot⟩
   have hdeg : (minpoly F ζ).natDegree ≤ l := by
     have h1 := natDegree_le_natDegree (minpoly.min F ζ hmon hroot)
-    have h2 : p0.natDegree = l := natDegree_X_pow_sub_C
+    have h2 : p0.natDegree = l := natDegree_X_pow_sub_C _
     omega
   have hle : Ks K i ≤ (IntermediateField.adjoin F {ζ}).restrictScalars ℚ_[l] := by
     rw [IntermediateField.restrictScalars_adjoin_eq_sup]

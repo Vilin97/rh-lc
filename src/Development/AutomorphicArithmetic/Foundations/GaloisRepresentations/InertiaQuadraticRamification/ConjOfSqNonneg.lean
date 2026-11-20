@@ -57,7 +57,7 @@ theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.mkQ :
     · rw [h, map_neg]; congr 1; exact g.commutes b
   have hmin : minpoly Y x = X ^ 2 - C (a : Y) :=
     (minpoly.eq_of_irreducible_of_monic hirr heval (monic_X_pow_sub_C _ two_ne_zero)).symm
-  have hdeg : (minpoly Y x).natDegree = 2 := by rw [hmin, natDegree_X_pow_sub_C]
+  have hdeg : (minpoly Y x).natDegree = 2 := by rw [hmin, natDegree_X_pow_sub_C _]
   have hfin : Module.finrank Y Y⟮x⟯ = 2 := by
     rw [IntermediateField.adjoin.finrank hint, hdeg]
   haveI := IntermediateField.adjoin.finiteDimensional hint

@@ -79,7 +79,7 @@ theorem GlobalTheory.K5.span_fixed_ggeo_stab : ∀ (p : ℕ) [Fact p.Prime] (Ω 
   set Q : L[X] := X ^ (p ^ N) - C q0
   have hpN : p ^ N ≠ 0 := pow_ne_zero _ (Fact.out : p.Prime).ne_zero
   have hQm : Q.Monic := monic_X_pow_sub_C _ hpN
-  have hQd : Q.natDegree = p ^ N := natDegree_X_pow_sub_C
+  have hQd : Q.natDegree = p ^ N := natDegree_X_pow_sub_C _
   have hQ1 : Q ≠ 1 := by
     intro e; rw [e, natDegree_one] at hQd; exact hpN hQd.symm
   have hQq : aeval (T.qq N) Q = 0 := by

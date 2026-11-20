@@ -108,7 +108,7 @@ theorem exists_basis [Nontrivial R] (hf : f.Monic) (d : ℕ) (hd : f.natDegree =
     rfl
   haveI : Nontrivial (AdjoinRoot f) := nontrivial_of_ne _ _ (b₁.ne_zero ⟨0, hd0⟩)
   have hg : (topPoly f m c).Monic := monic_X_pow_sub_C _ hm
-  have hgd : (topPoly f m c).natDegree = m := natDegree_X_pow_sub_C
+  have hgd : (topPoly f m c).natDegree = m := natDegree_X_pow_sub_C _
   let b₂ : Module.Basis (Fin m) (AdjoinRoot f) (AdjoinRoot (topPoly f m c)) :=
     (AdjoinRoot.powerBasis' hg).basis.reindex (finCongr hgd)
   have hb₂ : ∀ j, b₂ j = AdjoinRoot.root (topPoly f m c) ^ (j : ℕ) := by

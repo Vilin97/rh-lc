@@ -45,7 +45,7 @@ theorem exists_quadAlg (k : Type) [Field k] [Finite k] (h2 : (2 : k) ≠ 0) (D :
           ring
   · push Not at hsq
     let f : k[X] := X ^ 2 - C D
-    have hfdeg : f.natDegree = 2 := natDegree_X_pow_sub_C
+    have hfdeg : f.natDegree = 2 := natDegree_X_pow_sub_C _
     have hnr : ∀ x, ¬ IsRoot f x := by
       intro x hx
       apply hsq x

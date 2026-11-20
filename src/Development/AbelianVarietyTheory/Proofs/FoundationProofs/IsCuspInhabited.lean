@@ -160,9 +160,9 @@ theorem fixed (h : IsClo p Ωl) (hv : ∀ x : Ωl, v x ≤ 1 ↔ IsInt p x) (h1 
   have hdeg : ((C (↑u⁻¹ : O0 p) * f) %ₘ (X ^ (p ^ n) - C (qO p))).natDegree < p ^ n := by
     have := natDegree_modByMonic_lt (C (↑u⁻¹ : O0 p) * f) hmon (fun h0 => by
       have := congrArg natDegree h0
-      rw [natDegree_X_pow_sub_C, natDegree_one] at this
+      rw [natDegree_X_pow_sub_C _, natDegree_one] at this
       omega)
-    rwa [natDegree_X_pow_sub_C] at this
+    rwa [natDegree_X_pow_sub_C _] at this
   have hev : aeval (T.qq n) ((C (↑u⁻¹ : O0 p) * f) %ₘ (X ^ (p ^ n) - C (qO p))) = j ((p : Ω) ^ m * a) := by
     rw [aeval_modByMonic_eq_self_of_root (by simp [Basic.qq_pow]), map_mul, aeval_C, ha, ← mul_assoc,
       ← map_mul, Units.inv_mul_cancel_left]

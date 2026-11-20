@@ -26,7 +26,7 @@ theorem quadDiscr_ne_one (K : Type) [Field K] [NumberField K] (a : ℤ) (x : K)
   have hint : IsIntegral ℚ x := .of_finite ℚ x
   have hrank : Module.finrank ℚ K = 2 := by
     have := IntermediateField.adjoin.finrank hint
-    rw [hmin, natDegree_X_pow_sub_C, hadj, IntermediateField.finrank_top'] at this
+    rw [hmin, natDegree_X_pow_sub_C _, hadj, IntermediateField.finrank_top'] at this
     exact this
   have htrq : ∀ q : ℚ, Algebra.trace ℚ K (algebraMap ℚ K q) = 2 * q := by
     intro q
@@ -37,7 +37,7 @@ theorem quadDiscr_ne_one (K : Type) [Field K] [NumberField K] (a : ℤ) (x : K)
     rw [← Algebra.smul_def, map_smul, smul_eq_mul]
   have htrx : Algebra.trace ℚ K x = 0 := by
     have hnc : (X ^ 2 - C (a : ℚ)).nextCoeff = 0 := by
-      rw [nextCoeff, natDegree_X_pow_sub_C, coeff_sub, coeff_X_pow, coeff_C]; norm_num
+      rw [nextCoeff, natDegree_X_pow_sub_C _, coeff_sub, coeff_X_pow, coeff_C]; norm_num
     rw [trace_eq_finrank_mul_minpoly_nextCoeff, hmin, hnc]; simp
   set ω : K := (1 + x) / 2 with hω
   have hω1 : ω = algebraMap ℚ K (1 / 2) + algebraMap ℚ K (1 / 2) * x := by

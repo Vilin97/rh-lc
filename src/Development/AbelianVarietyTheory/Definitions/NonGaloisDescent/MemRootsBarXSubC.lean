@@ -69,7 +69,7 @@ theorem gen_prim {d : ℕ} (hd : 0 < d) : IsPrimitiveRoot (red g (ez (g ^ d - 1)
   have hz := ez_prim hN
 
   have hmon : (X ^ (g ^ d - 1) - C (1 : ZC)).Monic := monic_X_pow_sub_C 1 hN.ne'
-  have hdeg : (X ^ (g ^ d - 1) - C (1 : ZC)).natDegree = g ^ d - 1 := natDegree_X_pow_sub_C
+  have hdeg : (X ^ (g ^ d - 1) - C (1 : ZC)).natDegree = g ^ d - 1 := natDegree_X_pow_sub_C _
   have hcard : Multiset.card (X ^ (g ^ d - 1) - C (1 : ZC)).roots =
       (X ^ (g ^ d - 1) - C (1 : ZC)).natDegree := by
     rw [hdeg]; exact hz.card_nthRoots_one

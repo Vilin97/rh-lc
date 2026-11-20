@@ -19,7 +19,7 @@ theorem ps_div {O : Type*} [CommRing O] [IsDomain O] (I : Ideal O) [IsAdicComple
     exact not_subsingleton O hH.subsingleton
   have H : (Polynomial.X ^ k - Polynomial.C (r ^ k) : Polynomial O).IsDistinguishedAt I := by
     refine ⟨⟨fun {i} hi => ?_⟩, Polynomial.monic_X_pow_sub_C _ hk.ne'⟩
-    rw [Polynomial.natDegree_X_pow_sub_C] at hi
+    rw [Polynomial.natDegree_X_pow_sub_C _] at hi
     rw [Polynomial.coeff_sub, Polynomial.coeff_X_pow, if_neg hi.ne, Polynomial.coeff_C]
     split_ifs
     · simpa using hr

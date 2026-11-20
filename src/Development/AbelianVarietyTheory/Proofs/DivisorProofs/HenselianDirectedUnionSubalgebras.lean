@@ -91,7 +91,7 @@ theorem tensorFractionRing_units_pow_surj : ∀ (q : ℕ) [NeZero q] (T : Type) 
       obtain ⟨n, rfl⟩ : ∃ n, q = n + 1 := ⟨q - 1, by omega⟩
       obtain ⟨r, hr⟩ := hAIC (Polynomial.X ^ (n + 1) - Polynomial.C (c * d ^ n))
         (Polynomial.monic_X_pow_sub_C _ (Nat.succ_ne_zero n))
-        (by rw [Polynomial.natDegree_X_pow_sub_C]; exact hq0)
+        (by rw [Polynomial.natDegree_X_pow_sub_C _]; exact hq0)
       have hrq : r ^ (n + 1) = c * d ^ n := by simpa [sub_eq_zero] using hr
       have hdu : IsUnit (algebraMap T L d) := by
         rw [IsScalarTower.algebraMap_apply T O L]

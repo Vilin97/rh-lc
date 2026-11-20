@@ -23,7 +23,7 @@ private lemma split_of_units {A : Type} [CommRing A] [Nontrivial A] (q : ℕ) (�
   refine eq_of_monic_of_dvd_of_natDegree_le (monic_prod_of_monic _ _ hmon) hm1 hdvd ?_
   rw [natDegree_prod_of_monic _ _ hmon]
   simp only [natDegree_X_sub_C, Finset.sum_const, Finset.card_range, smul_eq_mul, mul_one]
-  rw [← map_one C, natDegree_X_pow_sub_C]
+  rw [← map_one C, natDegree_X_pow_sub_C _]
 
 theorem UpperTheory.exists_goodRoot_of_henselian_sepClosed_residue :
     ∀ (A : Type) [CommRing A] [HenselianLocalRing A] [IsSepClosed (ResidueField A)] (q : ℕ), IsUnit (q : A) → ∃ ζ : A, GoodRoot q ζ := by

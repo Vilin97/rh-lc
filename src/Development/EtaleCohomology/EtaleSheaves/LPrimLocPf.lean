@@ -195,7 +195,7 @@ theorem c1 (hE : EtRoot) (q : ℕ) [NeZero q] (U : Scheme.{0}) (hq : IsUnit (q :
 theorem c4 (hE : EtRoot) (q : ℕ) [NeZero q] (U : Scheme.{0}) (hq : IsUnit (q : Γ(U, ⊤))) (u : (Γ(U, ⊤))ˣ) :
     Loc U fun V g => ∃ v : (Γ(V, ⊤))ˣ, v ^ q = Units.map g.appTop.hom.toMonoidHom u := by
   have hq0 : q ≠ 0 := NeZero.ne q
-  refine loc_mono' (hE U _ (Polynomial.monic_X_pow_sub_C _ hq0) (fun _ => by rw [Polynomial.natDegree_X_pow_sub_C]; omega)
+  refine loc_mono' (hE U _ (Polynomial.monic_X_pow_sub_C _ hq0) (fun _ => by rw [Polynomial.natDegree_X_pow_sub_C _]; omega)
     (Polynomial.separable_X_pow_sub_C_unit u hq)) fun V g ⟨t, ht⟩ => ?_
   have ht' : t ^ q = g.appTop.hom u := by
     simpa [Polynomial.IsRoot, sub_eq_zero] using ht

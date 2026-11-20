@@ -209,7 +209,7 @@ private theorem cm_of_sq (F M : Type) [Field F] [NumberField F] [IsTotallyReal F
       rw [pow_two, ha]
       exact sub_eq_zero.2 rfl)
     have h2 := natDegree_le_natDegree h1
-    rwa [natDegree_X_pow_sub_C] at h2
+    rwa [natDegree_X_pow_sub_C _] at h2
   have hne : (minpoly K a).natDegree ≠ 1 := fun h => by
     obtain ⟨c, hc'⟩ := minpoly.natDegree_eq_one_iff.1 h
     exact hnot (hc' ▸ c.2)

@@ -41,7 +41,7 @@ theorem finrank_K : Module.finrank ℚ H.K = 2 := by
   have hmin : minpoly ℚ x = X ^ 2 - C ((-(H.d : ℤ) : ℤ) : ℚ) :=
     (minpoly.eq_of_irreducible_of_monic hirr hev hmon).symm
   have := IntermediateField.adjoin.finrank (K := ℚ) (x := x) (.of_finite ℚ x)
-  rw [hmin, natDegree_X_pow_sub_C, hadj, IntermediateField.finrank_top'] at this
+  rw [hmin, natDegree_X_pow_sub_C _, hadj, IntermediateField.finrank_top'] at this
   exact this
 
 theorem no_real_K : IsEmpty (H.K →+* ℝ) := by

@@ -175,7 +175,7 @@ example (X : Tower Ω ε) (Γ' : Subgroup SL(2, ℤ)) :
   intro h
   have := jPoly_injective X Γ' h
   have h2 := congrArg (Polynomial.natDegree) this
-  rw [Polynomial.natDegree_X_pow_sub_C, Polynomial.natDegree_zero] at h2
+  rw [Polynomial.natDegree_X_pow_sub_C _, Polynomial.natDegree_zero] at h2
   exact absurd h2 (by norm_num)
 
 end Instances

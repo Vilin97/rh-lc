@@ -39,7 +39,7 @@ theorem finrank_le {M : ℕ} (hM : 0 < M) : Module.finrank ℚ_[l] ↥(Kc l M hM
   rw [e, IntermediateField.adjoin.finrank (Algebra.IsIntegral.isIntegral z)]
   have hne : (X ^ M - C 1 : ℚ_[l][X]) ≠ 0 := X_pow_sub_C_ne_zero hM 1
   have := natDegree_le_of_dvd (minpoly.dvd ℚ_[l] z (p := X ^ M - C 1) (by simp [hz.pow_eq_one])) hne
-  rwa [natDegree_X_pow_sub_C] at this
+  rwa [natDegree_X_pow_sub_C _] at this
 
 theorem Ks_eq {M M' s : ℕ} (hM : 0 < M) (hM' : M = l ^ s * M') (hl : ¬ l ∣ M') :
     Ks (Kc l M hM) s = (Kc l M hM).1 := by

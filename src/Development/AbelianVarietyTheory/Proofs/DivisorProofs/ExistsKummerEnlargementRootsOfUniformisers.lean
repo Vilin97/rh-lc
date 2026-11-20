@@ -86,7 +86,7 @@ theorem exists_kummer_enlargement : ∀ (T : Type) [CommRing T] [IsDomain T] [Is
   have hy : ∀ p : Ideal A, ∃ y : T, y ^ q = i (π p) := by
     intro p
     obtain ⟨y, hy⟩ := hT (X ^ q - C (i (π p))) (monic_X_pow_sub_C _ hq.ne')
-      (by rw [natDegree_X_pow_sub_C]; exact hq)
+      (by rw [natDegree_X_pow_sub_C _]; exact hq)
     refine ⟨y, ?_⟩
     simpa [sub_eq_zero] using hy
   choose y hy using hy

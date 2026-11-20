@@ -1187,7 +1187,7 @@ theorem irreducible_count_upper_unit : IrredCountUpperUnit := by
   rw [hsplit] at hdvd
   have hdvd2 := hcop.dvd_of_dvd_mul_left hdvd
   have hdeg := natDegree_le_of_dvd hdvd2 (X_pow_sub_C_ne_zero hpos 1)
-  rw [natDegree_prod_of_monic _ _ (fun c _ => monicOf_monic c), natDegree_X_pow_sub_C] at hdeg
+  rw [natDegree_prod_of_monic _ _ (fun c _ => monicOf_monic c), natDegree_X_pow_sub_C _] at hdeg
   simp only [monicOf_natDegree, Finset.sum_const, smul_eq_mul, Nat.card_eq_fintype_card] at hdeg
   rw [mul_comm]
   exact hdeg

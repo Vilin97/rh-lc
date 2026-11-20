@@ -225,7 +225,7 @@ def fY : Polynomial (O0 p) := X ^ (p ^ n) - C (qO p)
 
 theorem fY_monic : (fY p n).Monic := monic_X_pow_sub_C _ (pow_ne_zero _ hp.out.ne_zero)
 
-theorem fY_natDegree : (fY p n).natDegree = p ^ n := natDegree_X_pow_sub_C
+theorem fY_natDegree : (fY p n).natDegree = p ^ n := natDegree_X_pow_sub_C _
 
 def phiInv : AdjoinRoot (fY p n) →+* O0 p :=
   AdjoinRoot.lift (vO p n) (qO p) (by simp [fY, vO_qO])

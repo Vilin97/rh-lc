@@ -195,7 +195,7 @@ theorem main_gen {F E : Type} [Field F] [Field E] [Algebra F E] [CharZero F] [Ch
     refine (eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic hint)
       (monic_X_pow_sub_C d two_ne_zero) (minpoly.dvd F α ?_) ?_).symm
     · simp [hd, sq]
-    · rw [natDegree_X_pow_sub_C]
+    · rw [natDegree_X_pow_sub_C _]
       have h0 := minpoly.natDegree_pos hint
       have h1 : (minpoly F α).natDegree ≠ 1 := fun h => hα_nr (minpoly.natDegree_eq_one_iff.1 h)
       omega

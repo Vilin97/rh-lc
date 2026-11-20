@@ -31,7 +31,7 @@ theorem exists_basis_pow_root {L : Type} [Field L] {p : ℕ} (hp : 0 < p) (a : L
       ∀ i, b i = AdjoinRoot.root (X ^ p - C a : L[X]) ^ (i : ℕ) := by
   have hne : (X ^ p - C a : L[X]) ≠ 0 := X_pow_sub_C_ne_zero hp a
   have hd : (AdjoinRoot.powerBasis hne).dim = p := by
-    rw [AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C]
+    rw [AdjoinRoot.powerBasis_dim, natDegree_X_pow_sub_C _]
   refine ⟨(AdjoinRoot.powerBasis hne).basis.reindex (finCongr hd), fun i => ?_⟩
   rw [Module.Basis.reindex_apply, PowerBasis.basis_eq_pow, AdjoinRoot.powerBasis_gen]
   simp

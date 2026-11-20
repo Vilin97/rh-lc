@@ -101,7 +101,7 @@ theorem exists_qcm [IsTotallyReal F] [IsAlgClosure F Ω] (d : F) (δ : Ω) (hδ 
       Polynomial.monic_X_pow_sub_C d (by norm_num)
     have h1 := minpoly.min F δ hm (by simp [hδ])
     have h2 := Polynomial.natDegree_le_natDegree h1
-    rwa [Polynomial.natDegree_X_pow_sub_C] at h2
+    rwa [Polynomial.natDegree_X_pow_sub_C _] at h2
   have hne : (minpoly F δ).natDegree ≠ 1 := by
     intro h
     obtain ⟨c, hc⟩ := (minpoly.natDegree_eq_one_iff).1 h

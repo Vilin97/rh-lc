@@ -86,7 +86,7 @@ theorem kummer_valuation_unramified : ∀ (p : ℕ) (F E : Type) [Field F] [Numb
   let pb : PowerBasis F E := PowerBasis.ofAdjoinEqTop hint h.gen
   have hgen : pb.gen = θ := PowerBasis.ofAdjoinEqTop_gen hint h.gen
   have hdim : pb.dim = p := by
-    rw [← pb.natDegree_minpoly, hgen, h.minpoly_eq, natDegree_X_pow_sub_C]
+    rw [← pb.natDegree_minpoly, hgen, h.minpoly_eq, natDegree_X_pow_sub_C _]
   obtain ⟨f, hf, hyf⟩ := pb.exists_eq_aeval y
   rw [hdim] at hf
   rw [hgen, Polynomial.aeval_eq_sum_range' hf] at hyf

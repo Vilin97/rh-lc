@@ -284,7 +284,7 @@ theorem _root_.GlobalTheory.GoodCharsCompare.exists_preimage {ω : _root_.Formal
   have hA : (nthRoots (g ^ d - 1) (1 : _root_.Formalism.CyclotomicNorms.Fbar g)).toFinset.card = g ^ d - 1 := by
     unfold nthRoots
     rw [Multiset.toFinset_card_of_nodup (nodup_roots hsep), IsAlgClosed.card_roots_eq_natDegree,
-      natDegree_X_pow_sub_C]
+      natDegree_X_pow_sub_C _]
   have himage : (nthRoots (g ^ d - 1) (1 : _root_.Formalism.CyclotomicNorms.Fbar g)).toFinset.image ω ⊆
       (nthRoots (g ^ d - 1) (1 : ℂ)).toFinset := by
     intro w hw

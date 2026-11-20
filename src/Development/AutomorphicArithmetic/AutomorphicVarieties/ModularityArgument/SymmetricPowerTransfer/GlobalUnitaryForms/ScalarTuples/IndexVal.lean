@@ -49,7 +49,7 @@ private theorem index_val {K : Type} [Field K] [CharZero K] [ValuativeRel K] [To
   have hint : IsIntegral K α := Algebra.IsIntegral.isIntegral α
   set L : IntermediateField K (AlgebraicClosure K) := IntermediateField.adjoin K {α} with hL
   have hrank : Module.finrank K L = 2 := by
-    rw [hL, IntermediateField.adjoin.finrank hint, ← hmin, Polynomial.natDegree_X_pow_sub_C]
+    rw [hL, IntermediateField.adjoin.finrank hint, ← hmin, Polynomial.natDegree_X_pow_sub_C _]
   haveI : FiniteDimensional K L := Module.finite_of_finrank_eq_succ hrank
   haveI : Algebra.IsQuadraticExtension K L := ⟨hrank⟩
   haveI : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L

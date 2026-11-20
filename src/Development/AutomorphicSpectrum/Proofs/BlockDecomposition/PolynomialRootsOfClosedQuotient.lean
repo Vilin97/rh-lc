@@ -29,7 +29,7 @@ theorem root_of_dvd {S : Type} [CommRing S] {ϖ g : S} (hJ : ϖ ∈ (⊥ : Ideal
   by_cases hn : Nontrivial (S ⧸ Ideal.span {ϖ ^ 2})
   · haveI := hn
     obtain ⟨x, hx⟩ := hA (Polynomial.X ^ i - Polynomial.C (Ideal.Quotient.mk _ g))
-      (Polynomial.monic_X_pow_sub_C _ hi.ne') (by rw [Polynomial.natDegree_X_pow_sub_C]; exact hi)
+      (Polynomial.monic_X_pow_sub_C _ hi.ne') (by rw [Polynomial.natDegree_X_pow_sub_C _]; exact hi)
     obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective x
     have hx' : (Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) r) ^ i - Ideal.Quotient.mk (Ideal.span {ϖ ^ 2}) g = 0 := by
       simpa using hx
