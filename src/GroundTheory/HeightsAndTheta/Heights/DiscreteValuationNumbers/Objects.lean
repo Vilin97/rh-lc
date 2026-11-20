@@ -45,14 +45,14 @@ def multAt (J W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
 
 open Classical in
 
-def ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P : Ideal (MRing ι R)) (f : MRing ι R)) (W : Ideal (MRing ι R)) : ℤ) : ℤ :=
+def divCycle (P : Ideal (MRing ι R)) (f : MRing ι R) (W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W then
     haveI : W.IsPrime := h.1.1.1
     ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ)
   else 0
 
 def ratDiv (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : ℤ :=
-  ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)
+  divCycle P f W - divCycle P g W
 
 def cycEval (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) : ℤ :=
   ∑ᶠ W, Z W * n W
@@ -142,7 +142,7 @@ omit [DecidableEq K] in
 
 theorem divCycle_one {R : Type*} [CommRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
     divCycle P 1 W = 0 := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  unfold divCycle
   rw [dite_eq_right]
   rintro ⟨h, -⟩
   have hW : W.IsPrime := h.1.1
@@ -162,7 +162,7 @@ theorem isVerticalDivisor_uniformiser {O : Type*} [CommRing O] [IsDomain O]
     intro W hW
     unfold ratDiv at hW
     rw [divCycle_one, sub_zero] at hW
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+    unfold divCycle at hW
     split_ifs at hW with h
     · exact h.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
     · exact absurd rfl hW

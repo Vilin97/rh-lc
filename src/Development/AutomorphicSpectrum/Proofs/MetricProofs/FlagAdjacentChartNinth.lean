@@ -176,7 +176,7 @@ theorem flagZ_base (M : FlagModel y Ψ N j) (F : FrameData ι Ψ N M.Ω M.blk) (
     (H : Ψ → Matrix (Fin N) (Fin N) ℂ) (k : NonPluckerBlocks M.blk) (m : ι k.1) :
     flagZ M F zb H ⟨k.1, m⟩ = zb ⟨k, m⟩ := by
   unfold flagZ
-  rw [dif_neg fun ⟨p, hp⟩ => k.2 p hp]
+  rw [_root_.dite_eq_right fun ⟨p, hp⟩ => k.2 p hp]
 
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
@@ -189,7 +189,7 @@ theorem flagZ_diff (M : FlagModel y Ψ N j) (F : FrameData ι Ψ N M.Ω M.blk) {
   by_cases e : ∃ p, M.blk p = some q.1
   · simp only [dif_pos e]
     exact DifferentiableAt.fun_sum fun I _ => (hv q I).mul (minorIJ_diff (fun a b => hH _ a b) _ _)
-  · simp only [dif_neg e]
+  · simp only [_root_.dite_eq_right e]
     exact hz _
 
 end Flag

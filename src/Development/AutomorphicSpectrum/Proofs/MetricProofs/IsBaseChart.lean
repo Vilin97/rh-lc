@@ -81,7 +81,7 @@ def baseOf (M : FlagModel y Ψ N j) (k₀ : K) (z : (Σ o : Option K, ι (o.getD
     (Σ k, baseIdx ι M.blk k) → ℂ := basePart M.blk (fstPt k₀ z)
 
 abbrev wP (M : FlagModel y Ψ N j) (τ : Ψ) (a : Fin N) (k₀ : K) (ca cb : Fin N) :
-    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) :=
+    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRing (fun o : Option K => ι (o.getD k₀))) :=
   mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)
 
 section Param

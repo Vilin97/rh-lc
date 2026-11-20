@@ -58,6 +58,6 @@ theorem pStep_reads (Ψ : Type) (N j : ℕ) (keep : Ψ × Fin N → Prop) (q : P
       rintro ⟨i', hk', hp', hb', hx'⟩
       exact hx' (stepCols_subset_of_le hj
         (hmin i' (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hk', hp', hb'⟩)) hmb hb' hx)
-    · rw [dif_neg hc, if_neg hxb]
+    · rw [_root_.dite_eq_right hc, if_neg hxb]
 
 end GlobalTheory.CompanionTheory.Ar.PB.PFl.SmallStep

@@ -69,7 +69,7 @@ variable {Ψ : Type} {N j : ℕ}
 theorem lowMat_isBlockDiag (c : LowIdx Ψ N j → ℂ) (τ : Ψ) : IsBlockDiag j (lowMat c τ) := by
   intro x y hxy
   unfold lowMat
-  rw [dif_neg (fun e => hxy e.2), if_neg]
+  rw [_root_.dite_eq_right (fun e => hxy e.2), if_neg]
   rintro rfl
   exact hxy Iff.rfl
 
@@ -77,11 +77,11 @@ theorem lowMat_det (c : LowIdx Ψ N j → ℂ) (τ : Ψ) : (lowMat c τ).det = 1
   rw [Matrix.det_of_lowerTriangular]
   · refine Finset.prod_eq_one fun x _ => ?_
     unfold lowMat
-    rw [dif_neg (fun e => lt_irrefl _ e.1), if_pos rfl]
+    rw [_root_.dite_eq_right (fun e => lt_irrefl _ e.1), if_pos rfl]
   · intro x y hxy
     have hxy' : x < y := hxy
     unfold lowMat
-    rw [dif_neg (fun e => lt_asymm hxy' e.1), if_neg hxy'.ne]
+    rw [_root_.dite_eq_right (fun e => lt_asymm hxy' e.1), if_neg hxy'.ne]
 
 theorem analytic_wH {n e : ℕ} (h : Ψ → Matrix (Fin N) (Fin N) ℂ) (ε : Fin n ⊕ LowIdx Ψ N j ⊕ Unit ≃ Fin e) (τ' : Ψ)
     (r s : Fin N) (S : Set (Fin e → ℂ)) : AnalyticOnNhd ℂ (fun w => wH h ε τ' w r s) S := by
@@ -92,7 +92,7 @@ theorem analytic_wH {n e : ℕ} (h : Ψ → Matrix (Fin N) (Fin N) ℂ) (ε : Fi
     · simp only [dif_pos hh, wL]
       exact (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin e => ℂ)
         (ε (Sum.inr (Sum.inl ⟨(τ', x, s), hh⟩)))).analyticOnNhd _
-    · simp only [dif_neg hh]
+    · simp only [_root_.dite_eq_right hh]
       exact analyticOnNhd_const
   have : (fun w => wH h ε τ' w r s) = fun w => ∑ x, h τ' r x * lowMat (wL ε w) τ' x s := by
     funext w
@@ -110,7 +110,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Φ : 
 
 theorem flagZ_base (k : NonPluckerBlocks M.blk) (m : ι k.1) : flagZ M F zb H ⟨k.1, m⟩ = zb ⟨k, m⟩ := by
   unfold flagZ
-  rw [dif_neg (fun e => by obtain ⟨p, hp⟩ := e; exact k.2 p hp)]
+  rw [_root_.dite_eq_right (fun e => by obtain ⟨p, hp⟩ := e; exact k.2 p hp)]
 
 theorem flagZ_step {p : Ψ × Fin N} {k : K} (hp : M.blk p = some k) (m : ι k) :
     flagZ M F zb H ⟨k, m⟩ = ∑ I, valAt M.x (F.u ⟨k, m⟩ I) zb * minorIJ (H p.1) I (stepCols N j p.2) := by

@@ -123,7 +123,7 @@ theorem pH_diff (τ : Ψ) (a b : Fin N) (w : Fin e → ℂ) :
       split_ifs with hs
       · exact differentiableAt_apply _ _
       · exact differentiableAt_const _
-    · simp only [dif_neg hh]
+    · simp only [_root_.dite_eq_right hh]
       exact differentiableAt_const _
   simp only [pH, Matrix.mul_apply]
   exact DifferentiableAt.fun_sum fun x _ => (differentiableAt_const _).fun_mul (hl x)
