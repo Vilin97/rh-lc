@@ -24,7 +24,7 @@ theorem exists_eq_mul_of_norm_le (z : OC l)
   have h1 : ‖(z : PadicComplex l) / l‖ ≤ 1 := by
     rw [norm_div]; exact div_le_one_of_le₀ hz (norm_nonneg _)
   refine ⟨⟨(z : PadicComplex l) / l, ?_⟩, ?_⟩
-  · rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+  · rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict (PadicComplex.valued l).v] at h1
     refine (Valuation.mem_valuationSubring_iff _ _).2 ?_
     exact_mod_cast h1

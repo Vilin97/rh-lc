@@ -186,7 +186,7 @@ section OC
 variable {l : ℕ} [Fact l.Prime]
 
 theorem norm_eq_valuation (x : ℂ_[l]) : ‖x‖ = ((Valued.v x : NNReal) : ℝ) := by
-  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
     Valuation.embedding_restrict]
 
 theorem mem_OC_iff (x : ℂ_[l]) : x ∈ 𝓞_ℂ_[l] ↔ ‖x‖ ≤ 1 := by

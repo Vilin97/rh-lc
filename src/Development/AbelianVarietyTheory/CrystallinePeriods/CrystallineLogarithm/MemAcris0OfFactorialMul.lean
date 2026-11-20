@@ -771,7 +771,7 @@ section
 
 theorem Bridge.RingBasics.norm_eq_val : ∀ (l : ℕ) [Fact l.Prime] (x : ℂ_[l]), ‖x‖ = ((Valued.v x : NNReal) : ℝ) := by
   intro l _ x
-  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
     Valuation.embedding_restrict]
 
 end
@@ -1084,7 +1084,7 @@ namespace Bridge.RingBasics.SpanPowerIntegralLemmas
 theorem norm_eq_val (l : ℕ) [Fact l.Prime] (y : ℂ_[l]) :
     ‖y‖ = (((PadicComplex.valued l).v y : NNReal) : ℝ) := by
   rw [PadicComplex.norm_eq_norm]
-  simp only [Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding]
+  simp only [Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl)]
   rw [Valuation.embedding_restrict (PadicComplex.valued l).v y]
 
 theorem mem_iff (l : ℕ) [Fact l.Prime] (y : ℂ_[l]) : y ∈ PadicComplexInt l ↔ ‖y‖ ≤ 1 := by
@@ -1359,7 +1359,7 @@ theorem Bridge.RingBasics.mem_OC : ∀ (l : ℕ) [Fact l.Prime] (x : ℂ_[l]), x
   intro l _ x
   rw [PadicComplexInt, Valuation.mem_valuationSubring_iff, PadicComplex.norm_eq_norm,
     Valuation.norm_def, ← NNReal.coe_one, NNReal.coe_le_coe,
-    PadicComplex.RankOne.hom_eq_embedding, Valuation.embedding_restrict]
+    (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl), Valuation.embedding_restrict]
 
 end
 end IntegralComplexMem

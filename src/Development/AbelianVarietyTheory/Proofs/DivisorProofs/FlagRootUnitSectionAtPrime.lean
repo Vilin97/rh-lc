@@ -177,7 +177,7 @@ theorem exists_detConst (hP : Hypotheses2) {E : Type} [Field E] [NumberField E] 
     rw [map_inv₀, map_natCast, norm_inv] at h₃
     exact absurd h₃ (not_le.2 ((one_lt_inv₀ (norm_pos_iff.2 hp0)).2 hp1))
   have e₁ : ∀ x : ℂ_[p], ((Valued.v x : NNReal) : ℝ) = ‖x‖ := fun x => by
-    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding, Valuation.embedding_restrict]
+    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl), Valuation.embedding_restrict]
   rw [e₁, e₁] at h₀
   rw [← h₀]
   field_simp

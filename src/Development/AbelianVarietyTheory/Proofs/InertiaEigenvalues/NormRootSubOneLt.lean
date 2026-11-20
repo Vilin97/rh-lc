@@ -240,7 +240,7 @@ theorem approx_root (hn : ∀ (g : GQ l) (x : Om l), ‖g x‖ = ‖x‖) (K : F
 
 theorem mem_OC (x : PadicComplex l) : x ∈ PadicComplexInt l ↔ ‖x‖ ≤ 1 := by
   have hv : ((Valued.v x : NNReal) : ℝ) = ‖x‖ := by
-    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict]
   rw [← hv]
   change Valued.v x ≤ 1 ↔ _

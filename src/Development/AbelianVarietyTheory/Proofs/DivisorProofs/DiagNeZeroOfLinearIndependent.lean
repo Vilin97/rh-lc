@@ -89,7 +89,7 @@ theorem isHTFrameCp_indep : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   letI := H.starRing
   obtain ⟨t, ht, hv⟩ := IsHTFrame.exists_frBor h h'
   have hn : ∀ i, ‖(t i : ℂ_[p])‖ = 1 := fun i => by
-    rw [PadicComplex.norm_eq_norm, Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+    rw [PadicComplex.norm_eq_norm, Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict, hv i, NNReal.coe_one]
   refine ⟨⟨t, ht, hn⟩, fun e f hf => ?_⟩
   rw [FlagTan.evR_frBor hf ht, norm_mul, Units.coe_prod, norm_prod]

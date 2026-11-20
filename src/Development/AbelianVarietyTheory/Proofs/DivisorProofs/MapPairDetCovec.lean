@@ -394,7 +394,7 @@ theorem bot_mem [IsDomain R] (x : Sp R ⟶ X) {O : X.Opens} {z : Sp R} (h : x z 
 end BaseChange
 
 theorem coe_valued (p : ℕ) [Fact p.Prime] (x : ℂ_[p]) : ((Valued.v x : ℝ≥0) : ℝ) = ‖x‖ := by
-  rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding, Valuation.embedding_restrict]
+  rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl), Valuation.embedding_restrict]
 
 end GlobalTheory.FlatModel
 

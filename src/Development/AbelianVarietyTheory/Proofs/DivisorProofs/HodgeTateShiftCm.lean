@@ -41,7 +41,7 @@ theorem prime_unique {K : Type} [Field K] [NumberField K] {la : HeightOneSpectru
     (hab ▸ Ideal.add_mem _ (Ideal.mul_mem_left _ _ h1) (Ideal.mul_mem_left _ _ h2)))
 
 theorem norm_eq_v (p : ℕ) [Fact p.Prime] (x : ℂ_[p]) : ‖x‖ = ((Valued.v x : ℝ≥0) : ℝ) := by
-  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+  rw [PadicComplex.norm_eq_norm, Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
     Valuation.embedding_restrict]
 
 open Classical in

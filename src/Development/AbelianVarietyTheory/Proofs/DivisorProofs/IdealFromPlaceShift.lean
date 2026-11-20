@@ -172,7 +172,7 @@ theorem ideal_of_frames (hS : PlaceShiftSt) (hH : GlobalTheory.IndefiniteRowSide
   obtain ⟨κ₁, κ₂, hκ⟩ := PlaceShiftModel.pointShiftSt_of_placeShiftSt hS E H hH ℓ φ
   rw [← hn] at hR
   have hn' : ∀ x : ℂ_[ℓ], ‖x‖ = ((Valued.v x : ℝ≥0) : ℝ) := fun x => by
-    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+    rw [PadicComplex.norm_eq_norm, Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict]
   obtain ⟨d, e₁, e₂⟩ := map_eq_at (PadicComplexInt.integers ℓ) ε i hD hτ hφ hR fB fP fQ
     fun P p q a x x' g g' b c d e => by rw [← hn', ← hn']; exact hκ P p q a x x' g g' b c d e

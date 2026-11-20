@@ -19,7 +19,7 @@ theorem norm_algebraMap_lt_one_iff_valuation_lt_one : ∀ (K : Type) [Field K] [
       ∀ b : K, ‖algebraMap K ℂ_[ℓ] b‖ < 1 ↔ la.valuation K b < 1 := by
   intro K _ _ la ℓ _ _ hℓ T io e ho k hk hm b
   have hnv : ∀ x : ℂ_[ℓ], ‖x‖ = ((Valued.v x : ℝ≥0) : ℝ) := fun x => by
-    rw [PadicComplex.norm_eq_norm, Valuation.norm_def, PadicComplex.RankOne.hom_eq_embedding,
+    rw [PadicComplex.norm_eq_norm, Valuation.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict]
   by_cases hb : b = 0
   · subst hb; simp

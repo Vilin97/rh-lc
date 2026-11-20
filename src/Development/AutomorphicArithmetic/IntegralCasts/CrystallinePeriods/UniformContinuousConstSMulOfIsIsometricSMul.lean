@@ -203,7 +203,7 @@ variable (p : ℕ) [Fact p.Prime]
 instance : IsUnitBall (PadicComplexInt p) :=
   ⟨fun x => by
     rw [PadicComplexInt, Valuation.mem_valuationSubring_iff, PadicComplex.norm_eq_norm,
-      Valuation.norm_def, ← NNReal.coe_one, NNReal.coe_le_coe, PadicComplex.RankOne.hom_eq_embedding,
+      Valuation.norm_def, ← NNReal.coe_one, NNReal.coe_le_coe, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl),
       Valuation.embedding_restrict]⟩
 
 instance : Fact (‖(p : ℂ_[p])‖ < 1) :=

@@ -19,7 +19,7 @@ theorem norm_zC (x : ℤ_[l]) : ‖zC x‖ = ‖x‖ := by
 
 theorem mem_OC (y : PadicComplex l) : y ∈ PadicComplexInt l ↔ ‖y‖ ≤ 1 := by
   rw [PadicComplexInt, Valuation.mem_valuationSubring_iff, PadicComplex.norm_eq_norm]
-  simp only [Valued.v.norm_def, PadicComplex.RankOne.hom_eq_embedding]
+  simp only [Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl)]
   rw [Valuation.embedding_restrict]
   exact NNReal.coe_le_one.symm
 
