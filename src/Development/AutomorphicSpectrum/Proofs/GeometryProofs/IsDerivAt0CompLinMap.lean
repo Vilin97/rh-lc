@@ -76,9 +76,9 @@ theorem isDerivAt0_of_fibre {Q : Out.PolAV (Sp ℂ)} {X : Scheme.{0}} (ψ : Q.A.
     intro y U f
     unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt
     by_cases hy : ⊤ ≤ (TopologicalSpace.Opens.map y.base).obj (ψ ⁻¹ᵁ U)
-    · rw [dif_pos hy, dif_pos (show ⊤ ≤ (y ≫ ψ) ⁻¹ᵁ U from hy)]
+    · rw [dite_eq_left hy, dite_eq_left (show ⊤ ≤ (y ≫ ψ) ⁻¹ᵁ U from hy)]
       simp only [Scheme.Hom.comp_appLE, CommRingCat.hom_comp, RingHom.comp_apply]
-    · rw [dif_neg hy, dif_neg (show ¬ ⊤ ≤ (y ≫ ψ) ⁻¹ᵁ U from hy)]
+    · rw [dite_eq_right hy, dite_eq_right (show ¬ ⊤ ≤ (y ≫ ψ) ⁻¹ᵁ U from hy)]
   unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsDerivAt0
   refine ⟨by rw [← Category.assoc, h41], fun U h f => ?_⟩
   have h' : ⊤ ≤ (TopologicalSpace.Opens.map t.left.base).obj (ψ ⁻¹ᵁ U) := h

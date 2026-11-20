@@ -76,7 +76,7 @@ def lft (W : X.Opens) (T : Thick (LL q)) (f : Γ(X, W)) : T.B :=
 
 theorem lft_spec {W : X.Opens} (T : Thick (LL q)) (h : InU W T) (f : Γ(X, W)) :
     Ideal.Quotient.mk T.J (lft W T f) = ev T h f := by
-  rw [lft, dif_pos h]
+  rw [lft, dite_eq_left h]
   exact Function.surjInv_eq _ _
 
 def IsLift (W : X.Opens) {d : ℕ} (t : Fin d → Γ(X, W)) (u : Fin d → ∀ T : Thick (LL q), T.B) : Prop :=

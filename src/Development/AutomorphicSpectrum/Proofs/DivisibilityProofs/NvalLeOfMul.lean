@@ -99,7 +99,7 @@ theorem evR_test {g : Rul Xo c}
   have hWD := evalWD_fr hC
   have hft : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨p, χ, u, hz⟩
   unfold evR evalAt
-  rw [dif_pos hft]
+  rw [dite_eq_left hft]
   exact hWD g hg L _ p _ χ _ u z hft.choose_spec.choose_spec.choose_spec hz
 
 theorem evR_bor {e : Ix Dw → ℤ} {g : Rul Xo c} (hg : g ∈ secZ Xo c e) {L : Type} [Field L] [Algebra c.F L]

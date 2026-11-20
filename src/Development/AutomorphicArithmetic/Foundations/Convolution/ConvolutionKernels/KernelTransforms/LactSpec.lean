@@ -60,7 +60,7 @@ private theorem lact_apply {β : TI K n} (h : (fun g => β g⁻¹) ∈ (isExpLie
   have H : ∃ (h : (fun g => β g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ)) (γ : TI K n),
       ∀ g, γ g = (rUC u ⟨fun g => β g⁻¹, h⟩ : archGroup K n → ℂ) g⁻¹ :=
     ⟨h, ⟨⟨_, hc⟩, hs⟩, fun _ => rfl⟩
-  rw [lact, dif_pos H]
+  rw [lact, dite_eq_left H]
   exact H.choose_spec.choose_spec g
 
 private theorem lact_smooth {β : TI K n} (h : (fun g => β g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ))

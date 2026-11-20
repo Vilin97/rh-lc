@@ -121,14 +121,14 @@ theorem bcParam_liftPar (q : ℂˣ) (n n' : ℕ) (h : n ≤ n') (α : Fin (n / 2
       have hL : liftPar q n n' α (finCongr hD (Fin.castAdd (n / 2) i)) =
           (-1) ^ n * q ^ ((n' : ℤ) - n - 1 - 2 * ((i : ℕ) : ℤ)) := by
         unfold liftPar
-        rw [dif_pos (by simp)]
+        rw [dite_eq_left (by simp)]
         simp
       rw [hL, mul_inv, inv_mul_cancel_left, neg_one_pow_inv, ← mul_assoc, hs, one_mul, ← _root_.zpow_neg]
     · refine Fintype.sum_equiv Fin.revPerm _ _ fun j => ?_
       have hL : liftPar q n n' α (finCongr hD (Fin.natAdd (n' / 2 - n / 2) j)) =
           (-1) ^ n * (-1) ^ n' * (α (Fin.revPerm j))⁻¹ := by
         unfold liftPar
-        rw [dif_neg (by simp), pow_add]
+        rw [dite_eq_right (by simp), pow_add]
         congr 3
         ext
         simp

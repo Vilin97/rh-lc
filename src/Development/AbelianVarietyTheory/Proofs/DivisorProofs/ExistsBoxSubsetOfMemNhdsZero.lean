@@ -98,7 +98,7 @@ theorem one_add_small_near_one (k : Type) [Field k] [ValuativeRel k] [Topologica
       rw [h] at hN
       simp at hN
     unfold toGL
-    rw [dif_pos hu]
+    rw [dite_eq_left hu]
     rfl
   have hGL : Filter.Tendsto (fun N : Matrix (Fin n) (Fin n) k => toGL (1 + N)) (nhds 0) (nhds 1) := by
     rw [Units.isInducing_embedProduct.tendsto_nhds_iff]

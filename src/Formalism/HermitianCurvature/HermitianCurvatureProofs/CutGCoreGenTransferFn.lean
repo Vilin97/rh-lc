@@ -91,7 +91,7 @@ theorem trR_unit (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (e : M.Ty P �
       convert h2 using 1
       funext q
       simp [hφ q]
-    rw [dif_neg hmul, dif_neg hu, mul_zero]
+    rw [dite_eq_right hmul, dite_eq_right hu, mul_zero]
 
 theorem sec_pt (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π')
     (q : MA.Qp P.r P.TT) :

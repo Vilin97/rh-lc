@@ -35,7 +35,7 @@ lemma infR_hasFDerivAt (T : KType ε Λ) (μ : Fin n → ℤ) {x : Matrix (Fin n
       exact hx.conjTranspose_mul_mul_same hinj
     intro i
     unfold lead
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact ((hpd.submatrix (Fin.castLE_injective _)).det_pos).ne'
   exact (Ps1.hasFDerivAt_psM T μ hU).differentiableAt.hasFDerivAt
 

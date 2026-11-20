@@ -119,7 +119,7 @@ theorem exists_mem_bkOn (v : PlE D.host) (x' : H1 ((repOn ρ κ' Y).comp (DecV N
   by_cases hv : v ∈ placesOver D.host.E (X.l i)
   · have H : ∀ a : Λ', ∃ w ∈ bkOn bkP i ρ κ Y v, trL i ρ φ κ κ' hκ hY v w = a • x' := by
       unfold bkOn at hx
-      rw [dif_pos hv] at hx
+      rw [dite_eq_left hv] at hx
       induction hx using Submodule.span_induction with
       | mem x hx =>
         intro a
@@ -128,7 +128,7 @@ theorem exists_mem_bkOn (v : PlE D.host) (x' : H1 ((repOn ρ κ' Y).comp (DecV N
           (fun g m => repOn_eq_repOn φ hY ρ κ κ' hκ g.1 m) (a • z)), ?_,
           tr_back _ _ _ _ _ _⟩
         unfold bkOn
-        rw [dif_pos hv]
+        rw [dite_eq_left hv]
         refine Submodule.subset_span ⟨back ((repOn ρ κ Y).comp (DecV N v).subtype) ((repOn ρ κ' Y).comp (DecV N v).subtype)
           (fun g m => repOn_eq_repOn φ hY ρ κ κ' hκ g.1 m) (a • z), c, y, a • b, hc, hy,
             fun g e => ?_, rfl⟩
@@ -146,7 +146,7 @@ theorem exists_mem_bkOn (v : PlE D.host) (x' : H1 ((repOn ρ κ' Y).comp (DecV N
         exact ⟨w, hw, by rw [e, mul_smul]⟩
     simpa using H 1
   · unfold bkOn at hx
-    rw [dif_neg hv, Submodule.mem_bot] at hx
+    rw [dite_eq_right hv, Submodule.mem_bot] at hx
     exact ⟨0, Submodule.zero_mem _, by rw [map_zero, hx]⟩
 
 theorem trG_mem_selOn (Q : Finset (PlE D.host)) (x : H1 (repOn ρ κ Y)) (hx : x ∈ selOn bkP i ρ κ Y Q) :

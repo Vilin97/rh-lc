@@ -129,11 +129,11 @@ theorem mem_of_count {Λ Λ' : Submodule (𝓞 E) (Fin k → E)} (hfin : Module.
     obtain ⟨x, hx, H⟩ := GlobalTheory.T.exists_lattice_vector_approx_all_finitePlaces F E k Λ' hfin T hT
       (fun v => if hv : (T : 𝓞 F) ∈ v.asIdeal then (y ⟨v, hv⟩).1 else 0) (fun v => by
         by_cases hv : (T : 𝓞 F) ∈ v.asIdeal
-        · rw [dif_pos hv]; exact (y ⟨v, hv⟩).2
-        · rw [dif_neg hv]; exact zero_mem _)
+        · rw [dite_eq_left hv]; exact (y ⟨v, hv⟩).2
+        · rw [dite_eq_right hv]; exact zero_mem _)
     refine ⟨⟨x, hx⟩, funext fun p => ?_⟩
     obtain ⟨z, hz, e⟩ := H p.1
-    rw [dif_pos p.2] at e
+    rw [dite_eq_left p.2] at e
     have h0 := hker p.1 p.2 (T • ⟨z, hz⟩) (nsmul_mem_locLat p.1 h z hz)
     have e' : y p = ⟨loc p.1 x, loc_mem p.1 hx⟩ + T • ⟨z, hz⟩ := Subtype.ext e
     have e2 := (congrArg (ψ p.1 p.2) e').trans ((ψ p.1 p.2).map_add _ _)

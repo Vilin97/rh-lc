@@ -38,7 +38,7 @@ theorem GlobalTheory.realPoint_ratIsom_isMatOn : ∀ (D : D7) (X : HidaSetting D
     have e1 : s.frame = Formalism.L2.SG.TermOp.mapLF s.lin (lf D (X.Fu u')) := rfl
     rw [e1]
     unfold Formalism.L2.SG.TermOp.mapLF
-    rw [dif_pos hiso]
+    rw [dite_eq_left hiso]
     rw [GlobalTheory.ActQ.snoc_map (f := (s.lin : (VS D).V → (VS D).V)), ← X.Fu_e u', ← X.flagZVector u']
     rfl
   have hfrm : ∀ j, Formalism.L2.SG.RealObj.frm X u' 1 v j =

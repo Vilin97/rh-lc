@@ -142,7 +142,7 @@ theorem isLastRowUnit_colX {j : ℕ} (ξ : Fin j → K) :
 
 theorem blockMat_self (h : Matrix (Fin n) (Fin n) K) : blockMat (le_refl n) h = h := by
   ext a b
-  rw [blockMat_apply, dif_pos a.2, dif_pos b.2]
+  rw [blockMat_apply, dite_eq_left a.2, dite_eq_left b.2]
 
 theorem diagonal_blockGL {j : ℕ} (hj : j ≤ n) (h : GL (Fin j) K) :
     AdelicGLn.diagonal K n (blockGL hj h) =

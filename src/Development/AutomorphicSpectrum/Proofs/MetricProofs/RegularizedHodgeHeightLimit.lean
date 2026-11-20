@@ -192,7 +192,7 @@ theorem ptsIntegral_word_eq_mInt : ∀ (K : Type) [Fintype K] (J : K → Type) [
     funext j z
     simp [pot]
   unfold ptsIntegral
-  rw [dif_pos hex, ← hfun]
+  rw [dite_eq_left hex, ← hfun]
   exact h
 
 end GlobalTheory.CompanionTheory.Ar.Cusp

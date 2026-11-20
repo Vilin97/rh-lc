@@ -20,7 +20,7 @@ theorem perFr_of_mem (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : X
     perFr X x v τ.1 i =
       if hi : X.p0 + i < r then ((mat x τ)⁻¹.mulVec (Data.emb τ.1 v)) ⟨X.p0 + i, hi⟩ else 0 := by
   unfold perFr
-  rw [dif_pos τ.2]
+  rw [dite_eq_left τ.2]
 
 theorem perFr_of_conj (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) (i : ℕ) (j : Fin r)
     (hj : (j : ℕ) = X.p0 - 1 - i) :
@@ -31,7 +31,7 @@ theorem perFr_of_conj (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : 
   have h2 : conjEmb (conjEmb τ.1) ∈ X.Ψ := by rw [hcc]; exact τ.2
   have h3 : X.p0 - 1 - i < r := hj ▸ j.2
   unfold perFr
-  rw [dif_neg h1, dif_pos h2, dif_pos h3]
+  rw [dite_eq_right h1, dite_eq_left h2, dite_eq_left h3]
   have key : ∀ (σ : E →+* ℂ) (hσ : σ ∈ X.Ψ), σ = τ.1 →
       hermC σ X.Gm (FD.col (mat x ⟨σ, hσ⟩) ⟨X.p0 - 1 - i, h3⟩) (Data.emb σ v) =
         hermC τ.1 X.Gm (FD.col (mat x τ) j) (Data.emb τ.1 v) := by

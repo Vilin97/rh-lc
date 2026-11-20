@@ -166,12 +166,12 @@ theorem ComplexGramMetricChange.proof (hMC : MetricChange.Statement) (hPB : Proj
   have hC₀ : ∀ n, resCChi d n = -(1 / 2) * Real.log (Matrix.det (fun k l =>
       ∫ y, pairVal d.m n ((p n).2 k) ((p n).2 l) (resPt d y) ∂d.dV :
         Matrix (Fin (p n).1) (Fin (p n).1) ℂ)).re := fun n => by
-    rw [resCChi, dif_pos (hex n)]
+    rw [resCChi, dite_eq_left (hex n)]
     rfl
   have hC₁ : ∀ n, resCChi (d.withMetric m₁ P0₁ hs hc hle hp) n = -(1 / 2) * Real.log (Matrix.det (fun k l =>
       ∫ y, pairVal m₁ n ((p n).2 k) ((p n).2 l) (resPt d y) ∂d.dV :
         Matrix (Fin (p n).1) (Fin (p n).1) ℂ)).re := fun n => by
-    rw [resCChi, dif_pos (show ∃ q : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ),
+    rw [resCChi, dite_eq_left (show ∃ q : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ),
       IsSecBasis (d.withMetric m₁ P0₁ hs hc hle hp).x n q.2 from hex n)]
     rfl
 

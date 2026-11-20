@@ -15,11 +15,11 @@ variable {F : Type} [Field F] [NumberField F]
 private theorem div_mul (a : Ideal (𝓞 F) → ℂ) (w : Pl F) (n : Ideal (𝓞 F)) : coefDiv a w.asIdeal (w.asIdeal * n) = a n := by
   have h : ∃ 𝔫, w.asIdeal * n = w.asIdeal * 𝔫 := ⟨n, rfl⟩
   unfold coefDiv
-  rw [dif_pos h, ← mul_left_cancel₀ w.ne_bot h.choose_spec]
+  rw [dite_eq_left h, ← mul_left_cancel₀ w.ne_bot h.choose_spec]
 
 private theorem div_not (a : Ideal (𝓞 F) → ℂ) (w : Pl F) {m : Ideal (𝓞 F)} (h : ¬ w.asIdeal ∣ m) : coefDiv a w.asIdeal m = 0 := by
   unfold coefDiv
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact h
 
 private theorem not_dvd_mul {v w : Pl F} (hvw : v ≠ w) {m : Ideal (𝓞 F)} (h : ¬ v.asIdeal ∣ m) : ¬ v.asIdeal ∣ w.asIdeal * m := by

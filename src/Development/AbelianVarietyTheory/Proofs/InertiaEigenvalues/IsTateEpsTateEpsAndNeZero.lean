@@ -18,7 +18,7 @@ theorem isTateEps_tateEps_and_ne_zero : ∀ (k : Type) [Field k] [ValuativeRel k
   have hx : ∃ e, IsTateEps ψ χ e := ⟨e, he⟩
   have hs : IsTateEps ψ χ (tateEps ψ χ) := by
     unfold tateEps
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact hx.choose_spec
   exact ⟨hs, hne _ hs⟩
 

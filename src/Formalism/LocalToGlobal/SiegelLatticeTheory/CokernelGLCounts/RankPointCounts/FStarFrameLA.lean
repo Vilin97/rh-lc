@@ -62,13 +62,13 @@ theorem adj_last {r : ℕ} (A : Matrix (Fin (r + 1)) (Fin (r + 1)) E) :
     A.adjugate (Fin.last r) (Fin.last r) = leadMinorE A r := by
   rw [Matrix.adjugate_fin_succ_eq_det_submatrix, Fin.succAbove_last]
   unfold leadMinorE
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   have hc : (Fin.castLE (Nat.le_succ r) : Fin r → Fin (r + 1)) = Fin.castSucc := funext fun i => Fin.ext rfl
   rw [hc, Fin.val_last, ← two_mul, pow_mul, neg_one_sq, one_pow, one_mul]
 
 theorem leadMinorE_full {r : ℕ} (A : Matrix (Fin (r + 1)) (Fin (r + 1)) E) : leadMinorE A (r + 1) = A.det := by
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   have hc : (Fin.castLE (le_refl (r + 1)) : Fin (r + 1) → Fin (r + 1)) = id := funext fun i => Fin.ext rfl
   rw [hc, Matrix.submatrix_id_id]
 

@@ -112,12 +112,12 @@ theorem whit_side (hRc : RealConj) (hM : ConjMod) (hU : Unfold) (hK : HeightKInv
     have e1 : ∫ b, (fun B => if h : B ∈ hermA D n then W (hermTo ⟨B, h⟩) else 0) b.1 ∂lam = ∫ b, W (hermTo b) ∂lam :=
       integral_congr_ae (Filter.Eventually.of_forall fun b => by
         show (if h : b.1 ∈ hermA D n then W (hermTo ⟨b.1, h⟩) else 0) = W (hermTo b)
-        rw [dif_pos b.2])
+        rw [dite_eq_left b.2])
     have e2 : ∫ c, (fun B => if h : B ∈ hermA D n then W (hermTo ⟨B, h⟩) else 0) (a.1 * c.1 * adj a.1) ∂lam =
         ∫ c, W (hermTo (conjH a c)) ∂lam :=
       integral_congr_ae (Filter.Eventually.of_forall fun c => by
         show (if h : a.1 * c.1 * adj a.1 ∈ hermA D n then W (hermTo ⟨_, h⟩) else 0) = W (hermTo (conjH a c))
-        rw [dif_pos (show a.1 * c.1 * adj a.1 ∈ hermA D n from (conjH a c).2)]
+        rw [dite_eq_left (show a.1 * c.1 * adj a.1 ∈ hermA D n from (conjH a c).2)]
         rfl)
     rw [← e1, hc, e2]
     simp only [hpt]

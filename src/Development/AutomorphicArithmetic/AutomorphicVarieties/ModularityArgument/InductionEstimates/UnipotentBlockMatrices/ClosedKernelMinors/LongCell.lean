@@ -57,7 +57,7 @@ private theorem lc_rows {R : Type} [CommRing R] (X Y : UPos (2 + 2) 2 → R) (a 
     intro i M j
     rw [unipMatrix, add_mul, one_mul, Matrix.add_apply, Matrix.mul_apply, Finset.sum_eq_zero, add_zero]
     intro l _
-    rw [blockEntry_apply, dif_neg (by simp), zero_mul]
+    rw [blockEntry_apply, dite_eq_right (by simp), zero_mul]
   have hR : ∀ (i : Fin 2) (j : Fin (2 + 2)), (unipGL Y * blk a b * k).val (Fin.natAdd 2 i) j =
       ∑ l, b.val i l * k.val (Fin.natAdd 2 l) j := by
     intro i j
@@ -71,11 +71,11 @@ private theorem lc_rows {R : Type} [CommRing R] (X Y : UPos (2 + 2) 2 → R) (a 
   · ext i j
     rw [Matrix.mul_apply]
     refine (key i (Fin.castAdd 2 j)).trans ?_
-    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dif_neg (fun hh => absurd hh.2 (not_le.2 j.2)), add_zero]
+    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_right (fun hh => absurd hh.2 (not_le.2 j.2)), add_zero]
     simp [Matrix.one_apply, Fin.ext_iff]
   · rw [Matrix.mul_apply]
     refine Eq.trans ?_ (key i (Fin.natAdd 2 j)).symm
-    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dif_pos hp, Matrix.one_apply_ne, zero_add]
+    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_left hp, Matrix.one_apply_ne, zero_add]
     intro e
     have := congrArg Fin.val e
     simp at this

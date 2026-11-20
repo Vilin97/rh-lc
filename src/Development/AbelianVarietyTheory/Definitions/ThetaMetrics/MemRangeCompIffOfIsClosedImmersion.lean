@@ -52,7 +52,7 @@ theorem valR_comp (x : Sp C ⟶ X) (g : X ⟶ Y) (U : Y.Opens) (f : Γ(Y, U)) :
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (g ⁻¹ᵁ U)
   · rw [← valR_appLE x g le_rfl h, Scheme.Hom.appLE_eq_app]
   · have h' : ¬ ⊤ ≤ (x ≫ g) ⁻¹ᵁ U := h
-    rw [valR, valR, dif_neg h, dif_neg h']
+    rw [valR, valR, dite_eq_right h, dite_eq_right h']
 
 theorem valR_res (x : Sp C ⟶ X) {U V : X.Opens} (e : V ≤ U) (h : ⊤ ≤ x ⁻¹ᵁ V) (f : Γ(X, U)) :
     valR x V ((X.presheaf.map (homOfLE e).op).hom f) = valR x U f := by

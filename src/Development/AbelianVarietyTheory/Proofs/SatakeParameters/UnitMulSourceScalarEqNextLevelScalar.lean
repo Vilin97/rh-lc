@@ -24,12 +24,12 @@ theorem GlobalTheory.TwV.DelA.unit_mul_scal_eq_scT : AllSites (fun {D L hT Gi Gl
   have hcA := GlobalTheory.TwV.DelA.scal_inv_frame (sysS H X std) D (hT.gat_pos u w hg) ℂ_[D.what₂.places.resChar w] ι (J.rho std) hps.1 d.fd2 j La (hr.2.2.1 j) (mM d j (Nat.le_of_succ_le hj) La) hfr.1 hfr.2.1
   have key : cA (sysS H X std) ℂ_[D.what₂.places.resChar w] j (BOf d.fd2 j La) * sO d ι j La * ι (d.uS S j La) =
       ι (kS J j (Nat.le_of_succ_le hj) La.1 * cOp (sysS H X std) D (hT.gat_pos u w hg) j (t.O u μ).dgen) := by
-    rw [hcA, sO, dif_pos (Nat.le_of_succ_le hj), ← map_mul, ← map_mul, ← hsc]
+    rw [hcA, sO, dite_eq_left (Nat.le_of_succ_le hj), ← map_mul, ← map_mul, ← hsc]
     congr 1
     unfold dPow
     ring
   rw [mul_assoc (cKs S ι j hj La.1 La'.1), key]
   unfold cKs scT
-  rw [dif_pos hj, map_mul ι (kT J j hj La'.1), map_inv₀, map_mul ι (d.uT S j La')]
+  rw [dite_eq_left hj, map_mul ι (kT J j hj La'.1), map_inv₀, map_mul ι (d.uT S j La')]
   have hy : ι (kS J j (Nat.le_of_succ_le hj) La.1 * cOp (sysS H X std) D (hT.gat_pos u w hg) j (t.O u μ).dgen) ≠ 0 := hun
   field_simp

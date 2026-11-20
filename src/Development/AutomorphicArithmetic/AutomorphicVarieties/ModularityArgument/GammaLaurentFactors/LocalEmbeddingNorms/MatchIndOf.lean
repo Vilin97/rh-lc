@@ -215,7 +215,7 @@ private def pick {X : Type} (sat : X → Multiset ℂˣ → Prop) (w : X) : Mult
 private theorem pick_spec {X : Type} {sat : X → Multiset ℂˣ → Prop} {w : X} {B : Multiset ℂˣ} (h : sat w B) :
     sat w (pick sat w) := by
   have h' : ∃ B, sat w B := ⟨B, h⟩
-  rw [pick, dif_pos h']
+  rw [pick, dite_eq_left h']
   exact h'.choose_spec
 
 private theorem sat_unique {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
@@ -284,7 +284,7 @@ private theorem exists_bad (s : Multiset (IrrGL k)) :
   refine ⟨s.toFinset.image g, fun ξ hξ hy => Finset.mem_image.2 ⟨_, Multiset.mem_toFinset.2 hy, ?_⟩⟩
   have h : ∃ ξ' hξ', IrrGL.ofChar ξ hξ = IrrGL.ofChar ξ' hξ' := ⟨ξ, hξ, rfl⟩
   change (if h : ∃ ξ' hξ', IrrGL.ofChar ξ hξ = IrrGL.ofChar ξ' hξ' then h.choose else 1) = ξ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨h1, h2⟩ := h.choose_spec
   exact (IrrGL.ofChar_inj.1 h2).symm
 

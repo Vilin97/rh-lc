@@ -119,7 +119,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
       rw [hy, ← hv hc hc2]
       exact value_of_congr2 h ht f1 hc2 rfl f3 f4
     unfold unifVal
-    rw [dif_pos hex, ← (hex.choose_spec (P.under (𝓞 F)) rfl y y₀ b a1 hb hb2 a2 a3 a4)]
+    rw [dite_eq_left hex, ← (hex.choose_spec (P.under (𝓞 F)) rfl y y₀ b a1 hb hb2 a2 a3 a4)]
     exact hy
   · intro hq q hqe
     set b : 𝓞 E := ((Ideal.absNorm P.asIdeal : ℕ) : 𝓞 E) with hbdef
@@ -131,7 +131,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
       rw [hy]
       exact value_of_congr2 h ht f1 hq hqb f3 f4
     unfold qVal qValC
-    rw [dif_pos hex, ← (hex.choose_spec (P.under (𝓞 F)) rfl y y₀ a1 a2 a3 a4)]
+    rw [dite_eq_left hex, ← (hex.choose_spec (P.under (𝓞 F)) rfl y y₀ a1 a2 a3 a4)]
     exact hy
 
 end GlobalTheory.TwistVal

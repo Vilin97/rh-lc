@@ -48,7 +48,7 @@ theorem genAt_mul_chartC_unitAt : ∀ {F : Type} [Field F] [NumberField F] {Y : 
   have hdi : V.φ (d (V.π z) i) ≠ 0 := by rw [map_ne_zero]; exact Units.ne_zero _
   have hval : (chartC V H q i : V.G.functionField) = a / b * V.φ (d (V.π z) i) := by
     unfold chartC
-    rw [dif_pos, Units.val_mk0, e1, e2]
+    rw [dite_eq_left, Units.val_mk0, e1, e2]
     · field_simp [hub.ne_zero, hP0]
     · rw [e1, e2]
       exact div_ne_zero (mul_ne_zero hua.ne_zero (mul_ne_zero hP0 hdi)) (mul_ne_zero hub.ne_zero hP0)

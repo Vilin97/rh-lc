@@ -48,10 +48,10 @@ theorem geoNum_one_linear {K : Type} [Fintype K] {ι : K → Type} [∀ k, Finty
       split_ifs
       · exact Int.natCast_nonneg _
       · exact le_rfl
-    · rw [geoNum, dif_pos h]
+    · rw [geoNum, dite_eq_left h]
       rfl
   · refine ⟨0, fun _ => le_rfl, fun a => ?_⟩
-    rw [geoNum, dif_neg h]
+    rw [geoNum, dite_eq_right h]
     simp
 
 end SlopeTestRemainingChoices

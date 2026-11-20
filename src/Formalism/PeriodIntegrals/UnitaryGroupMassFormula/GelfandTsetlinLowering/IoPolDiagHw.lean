@@ -20,7 +20,7 @@ theorem io_natW_cast {k : ℕ} (mu : DomWeight k) (a : Fin k) :
   have ha := a.isLt
   have hd : mu.detShift = mu.w ⟨k - 1, by omega⟩ := by
     unfold DomWeight.detShift
-    rw [dif_pos hk]
+    rw [dite_eq_left hk]
   have hle : mu.w ⟨k - 1, by omega⟩ ≤ mu.w a := mu.anti (by
     rw [Fin.le_iff_val_le_val]
     show (a : ℕ) ≤ k - 1
@@ -52,7 +52,7 @@ theorem io_pol_diag_hw {k : ℕ} (ν : Fin k → ℕ) (hν : Antitone ν) (a : F
   have hH := Formalism.GradedWeylDivisibility.hwRowWeight ℂ k k (le_refl k) ν hν
   have hra : Formalism.GradedWeylDivisibility.rowNu (r := k) ν a = ν a := by
     unfold Formalism.GradedWeylDivisibility.rowNu
-    rw [dif_pos a.isLt]
+    rw [dite_eq_left a.isLt]
   rw [pol_apply, euler _ _ hH, hra]
 
 theorem capScalar (h3 : PI.HwIrred) {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (mu : DomWeight n)

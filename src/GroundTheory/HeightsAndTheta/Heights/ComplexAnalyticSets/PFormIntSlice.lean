@@ -61,7 +61,7 @@ theorem FormIntSlice.proof (hI : SliceIdeal.Statement) (hM : SliceFormMass.State
     (hCC : VarIntChartChange.Statement) : FormIntSlice.Statement := by
   intro n e h W F ℓ a b hW hF hℓ ha hac hb hbs
   have hex : ∃ ℓ : Fin n → ℂ, linForm ℓ ∉ W := ⟨ℓ, hℓ⟩
-  rw [formInt, dif_pos hex]
+  rw [formInt, dite_eq_left hex]
   set ℓ₁ := hex.choose
   have hℓ₁ : linForm ℓ₁ ∉ W := hex.choose_spec
   obtain ⟨hP₁, hD₁, hN₁⟩ := hI n (e + 1) W F ℓ₁ hW hF hℓ₁

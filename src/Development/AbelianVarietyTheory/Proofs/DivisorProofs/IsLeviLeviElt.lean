@@ -20,7 +20,7 @@ def leviElt {d d₁ : ℕ} (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d
 theorem isLevi_leviElt {σ : E →ₐ[F] E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁} {t : (AE F E)ˣ}
     (h : ∃ m : UA σ W.J, IsLevi (W₁ := W₁) H' t 1 m) : IsLevi (W₁ := W₁) H' t 1 (leviElt σ W W₁ H' t) := by
   classical
-  rw [leviElt, dif_pos h]
+  rw [leviElt, dite_eq_left h]
   exact h.choose_spec
 
 variable (σ : E →ₐ[F] E) in

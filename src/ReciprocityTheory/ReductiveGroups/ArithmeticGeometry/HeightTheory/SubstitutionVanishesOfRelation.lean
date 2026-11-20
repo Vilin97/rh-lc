@@ -17,7 +17,7 @@ theorem ratio_self' {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V] {f 
     ratio (Ω := Ω) f f = 1 := by
   have hex : ∃ a : Ω, f = a • f := ⟨1, (one_smul Ω f).symm⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hs := hex.choose_spec
   have h0 : (hex.choose - 1) • f = 0 := by rw [sub_smul, ← hs, one_smul, sub_self]
   rcases smul_eq_zero.mp h0 with h | h

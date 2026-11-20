@@ -235,7 +235,7 @@ theorem pref_succ (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp k 
       TL k ⟨n, hn⟩ Y a 0 ((JCx2.rma_pref L Y n 0 0).1 Φ : Fn k r (Wq →L[ℂ] Wp)) +
         TL k ⟨n, hn⟩ Y a 1 ((JCx2.rma_pref L Y n 1 0).1 Φ : Fn k r (Wq →L[ℂ] Wp)) := by
     intro a
-    rw [← JCx2.rma_T_fst X L hL, ← JCx2.rma_T_fst X L hL, JCx2.rma_pref, dif_pos hn, Matrix.mul_apply,
+    rw [← JCx2.rma_T_fst X L hL, ← JCx2.rma_T_fst X L hL, JCx2.rma_pref, dite_eq_left hn, Matrix.mul_apply,
       Fin.sum_univ_two]
     rfl
   rw [key, key]

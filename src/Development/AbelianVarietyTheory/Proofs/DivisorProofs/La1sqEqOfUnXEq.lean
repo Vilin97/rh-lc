@@ -115,9 +115,9 @@ theorem hermForm_period {U : Unf Xo c σ r} (hσ : GoodEmb c σ) (hU : IsUnf U) 
     rw [← hp0] at h
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · unfold perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · unfold perFr
-      rw [dif_neg a, dif_pos (show conjEmb (relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       exact norm_hermC_col (U.X k) x.2 hx ⟨_, hτ⟩ _ _
   have hn : ∀ j, ‖relab c σ (W.e j).1 (U.X k).ξ0‖ = ‖((W.e.trans f) j).1.1 (U.X k).ξ0‖ := fun j => by
     rcases hf (W.e j) with ⟨-, h, -⟩ | ⟨-, h, -⟩

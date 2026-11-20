@@ -29,7 +29,7 @@ theorem readOff_nu {Δ : Segment k} {δ : IrrGL k} (hc : PositivityTheory.UdReth
   have hex : ∃ p : IrrGL k × ℝ, ∃ Δ' : Segment k, PositivityTheory.UdReth2.IsCentred Δ' ∧ IsLSeg Δ' p.1.rep ∧
       Δ.nu (t : ℂ) = Δ'.nu (p.2 : ℂ) := ⟨(δ, t), Δ, hc, hL, rfl⟩
   unfold readOff
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨Δ', hc', hL', he⟩ := Classical.choose_spec hex
   obtain ⟨h1, rfl⟩ := eq_of_nu_eq hc hc' he
   have h2 := eq_of_isLSeg' hL hL'

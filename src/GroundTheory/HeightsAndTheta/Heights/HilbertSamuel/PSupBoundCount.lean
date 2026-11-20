@@ -125,7 +125,7 @@ theorem SupBoundCount.proof : SupBoundCount.Statement := by
   have hex := SupBoundCount.exists_isSecBasisM d.y d.k₀ n
   have h := SupBoundCount.main d n hc hsup hex.choose_spec
   refine ⟨h.1, ?_⟩
-  rw [blockChi, dif_pos hex]
+  rw [blockChi, dite_eq_left hex]
   exact h.2
 
 end

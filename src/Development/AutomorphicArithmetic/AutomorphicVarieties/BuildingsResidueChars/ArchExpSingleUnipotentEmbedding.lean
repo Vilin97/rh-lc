@@ -34,7 +34,7 @@ private theorem archExp_single (K : Type) [Field K] [NumberField K] (r s : ℕ) 
   · obtain ⟨rfl, rfl⟩ := hab
     have hh : ((Fin.castAdd s i : Fin (r + s)) : ℕ) < r ∧ r ≤ ((Fin.natAdd r j : Fin (r + s)) : ℕ) :=
       ⟨by simp, by simp⟩
-    rw [dif_pos hh, if_pos ⟨rfl, rfl⟩]
+    rw [dite_eq_left hh, if_pos ⟨rfl, rfl⟩]
     simp [P, e]
   · rw [if_neg hab]
     split_ifs with hh

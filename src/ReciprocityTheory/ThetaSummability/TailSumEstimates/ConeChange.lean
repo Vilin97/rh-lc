@@ -29,8 +29,8 @@ theorem gap_tailSum (y : Fin r → ℝ) : gap (tailSum y) = y := by
 theorem tailSum_gap_apply (x : Fin r → ℝ) (k : Fin r) : tailSum (gap x) k = x k := by
   rw [tailSum_eq_add]
   split_ifs with h
-  · rw [tailSum_gap_apply x ⟨k.val + 1, h⟩, gap, dif_pos h]; ring
-  · rw [gap, dif_neg h]; ring
+  · rw [tailSum_gap_apply x ⟨k.val + 1, h⟩, gap, dite_eq_left h]; ring
+  · rw [gap, dite_eq_right h]; ring
 termination_by r - k.val
 decreasing_by omega
 

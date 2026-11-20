@@ -114,7 +114,7 @@ theorem moved_datum_eq_prod : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) 
     have hQ : ∀ y : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin (Yc D (j + 1)).rank) (Fin (Yc D j).rank) (Formalism.L2.DIV.kP PP),
         omegaQ (∅ : Finset (Formalism.L2.DIV.Pl D.host.E)) (datY _ D.R.r D.R.t j (r_le_Y j) (pk W).Pg ∅ (lvP W) (pk W).chi
           (fun _ => 1) Frm.B).r (fun _ => 1) 1 y = 1 := fun y => by
-      rw [omegaQ, dif_pos (by simp)]; simp
+      rw [omegaQ, dite_eq_left (by simp)]; simp
     by_cases hI : IsIntM (frMapO (Yc D j) (Yc D (j + 1)) ((pk W).βY j) ((pk W).βY (j + 1))
       (actO _ _ (f.g.b j)⁻¹ (f.g.b (j + 1))⁻¹ x))
     · rw [if_pos ⟨hx, hI⟩, hQ, mul_one, GlobalTheory.T.local_groups_matrix_reading D L hT Gi Gl Kc Yd cX ex W u f v n G pl hGR j]

@@ -43,7 +43,7 @@ theorem fill_of : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : C
   have e : (((((Fl u v hg).w x (b + 1) s : ℤ) : ℚ)) : ℝ) = (((Fl u v hg).w x (b + 1) s : ℤ) : ℝ) := by push_cast; rfl
   rw [e, h1]
   unfold wj G.kaJ wG
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   push_cast
   ring
 

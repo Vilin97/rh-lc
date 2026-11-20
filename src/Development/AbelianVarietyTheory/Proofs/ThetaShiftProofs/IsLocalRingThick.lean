@@ -50,7 +50,7 @@ theorem gm_comp (r : Z ⟶ Y) (g : Y ⟶ X) (z : Z) (U : X.Opens) (a : Γ(X, U)�
       (congrArg (r.stalkMap z).hom (gs_unit g (r z) U h a))))
     rw [← gs_pull r g z U h, gs_stalkMap r z _ h, gs_pull (𝟙 Y) g (r z) U h, Category.id_comp]
   · have h' : (r ≫ g) z ∉ U := h
-    rw [gm, dif_neg h', gm, dif_neg h]
+    rw [gm, dite_eq_right h', gm, dite_eq_right h]
     exact (map_one _).symm
 
 end Local

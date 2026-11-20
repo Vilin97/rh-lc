@@ -29,7 +29,7 @@ theorem piE_norm_one : ForEF fun F _ _ _ _ _ _ _ E _ _ _ _ _ _ _ χ σ η =>
       rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
     linear_combination (piE E χ σ η c g Φ y) * hcu
   · show piG _ _ _ _ _ _ _ _ * _ = piG _ _ _ _ _ _ _ _
-    rw [piG, piG, dif_neg h, zero_mul, dif_neg h]
+    rw [piG, piG, dite_eq_right h, zero_mul, dite_eq_right h]
 
 theorem fL_field : ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
     ∀ (c : HeckeCharacter K) (v : Pl) (L : LM c v),

@@ -92,7 +92,7 @@ theorem evR_map {S T : Type} [CommRing S] [Algebra c.F S] [IsReduced S] [CommRin
   have h1 := frMap_trans _ _ _ _ φ _ _ _ hy.choose_spec.choose_spec.choose_spec h
   have hz : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨_, _, _, h1⟩
   unfold evR evalAt
-  rw [dif_pos hz, dif_pos hy]
+  rw [dite_eq_left hz, dite_eq_left hy]
   exact hW f hf.1 T _ _ _ _ _ _ z hz.choose_spec.choose_spec.choose_spec h1
 
 variable {σ : c.F →+* ℂ}

@@ -93,7 +93,7 @@ theorem shortValTot_of_pinned : Laws → ChartIndepSt2 → ∀ (E : Type) [Field
     refine ⟨v, hv, ?_⟩
     have hy := hAll k y
     unfold evR evalAt
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
     exact (hd _ _).exists.choose_spec k hk _ y y₂ hy.choose_spec.choose_spec.choose_spec ho v hv
 
 end GlobalTheory

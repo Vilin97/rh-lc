@@ -44,11 +44,11 @@ theorem exists_rightInverse_weierstrassExp : ∃ t : PowerSeries K, constantCoef
 
 theorem lgS_const : constantCoeff (lgS g2 g3) = 0 := by
   unfold lgS
-  rw [dif_pos (exists_rightInverse_weierstrassExp g2 g3)]
+  rw [dite_eq_left (exists_rightInverse_weierstrassExp g2 g3)]
   exact (exists_rightInverse_weierstrassExp g2 g3).choose_spec.1
 theorem uSer_subst_lgS : (uSer g2 g3).subst (lgS g2 g3) = X := by
   unfold lgS
-  rw [dif_pos (exists_rightInverse_weierstrassExp g2 g3)]
+  rw [dite_eq_left (exists_rightInverse_weierstrassExp g2 g3)]
   exact (exists_rightInverse_weierstrassExp g2 g3).choose_spec.2
 theorem lgS_coeff_one : coeff 1 (lgS g2 g3) = 1 := by
   have h := congrArg (coeff 1) (uSer_subst_lgS g2 g3)
@@ -101,7 +101,7 @@ theorem mult_unique (b : K) (e : PowerSeries K) (he : constantCoeff e = 0)
 
 theorem ltLog_const (l : ℕ) (hl : 2 ≤ l) : constantCoeff (ltLog K l) = 0 := by
   first | unfold Formalism.G.ltLog | unfold Formalism.L2.Th1.CM.ltLog
-  rw [← coeff_zero_eq_constantCoeff_apply, coeff_mk, dif_neg]
+  rw [← coeff_zero_eq_constantCoeff_apply, coeff_mk, dite_eq_right]
   rintro ⟨j, hj⟩
   have h0 : 0 < (l ^ 2) ^ j := pow_pos (pow_pos (by omega) 2) j
   rw [← hj] at h0

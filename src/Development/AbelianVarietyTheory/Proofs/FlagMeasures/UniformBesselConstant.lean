@@ -36,8 +36,8 @@ variable (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ)
 theorem mul_bigCell_low (M : B.Mat k r) (i j : Fin (2 * r + k + 1)) (hj : j.val < r) :
     (M * bigCell k r c μ) i j = M i (esI k r ⟨j.val, hj⟩) * c ⟨j.val, hj⟩ := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (esI k r ⟨j.val, hj⟩)]
-  · unfold bigCell; rw [dif_pos hj, if_pos rfl]
-  · intro l _ hl; unfold bigCell; rw [dif_pos hj, if_neg hl, mul_zero]
+  · unfold bigCell; rw [dite_eq_left hj, if_pos rfl]
+  · intro l _ hl; unfold bigCell; rw [dite_eq_left hj, if_neg hl, mul_zero]
   · simp
 
 theorem bigCell_row (i j : Fin (2 * r + k + 1)) (hi : i.val < r) (h : i.val + j.val ≠ 2 * r + k) :
@@ -56,7 +56,7 @@ theorem bigCell_row (i j : Fin (2 * r + k + 1)) (hi : i.val < r) (h : i.val + j.
 theorem bigCell_col (i j : Fin (2 * r + k + 1)) (hj : r + k < j.val) (h : i.val + j.val ≠ 2 * r + k) :
     bigCell k r c μ i j = 0 := by
   unfold bigCell
-  rw [dif_neg (by omega), dif_neg (by omega), if_neg (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_right (by omega), if_neg (by omega)]
 
 theorem rStab_bigCell (hc : ∀ a, c a ≠ 0) (hg : bigCell k r c μ ∈ UH (Hpk k r)) :
     RStab k r (bigCell k r c μ) = {1} := by
@@ -117,7 +117,7 @@ theorem rStab_bigCell (hc : ∀ a, c a ≠ 0) (hg : bigCell k r c μ ∈ UH (Hpk
       have : g i l = 0 := by
         rw [hgdef]
         unfold bigCell
-        rw [dif_pos hl', if_neg]
+        rw [dite_eq_left hl', if_neg]
         rw [Fin.ext_iff]
         simp only [esI, m] at hl ⊢
         omega

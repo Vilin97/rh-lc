@@ -136,7 +136,7 @@ theorem jsl_int_norm_self (μ : Measure (Mt k r)) (i : Fin (r + 1)) (v : RadSp k
 theorem jsl_glue_self (l : Fin r) (c : Fin r → ℂ) (t : ℂ) (c' : Cf r l.succ) :
     glue l.succ (Function.update c l t) c' l = t := by
   unfold glue
-  rw [dif_neg (by simp [Fin.val_succ])]
+  rw [dite_eq_right (by simp [Fin.val_succ])]
   simp
 
 end JSL

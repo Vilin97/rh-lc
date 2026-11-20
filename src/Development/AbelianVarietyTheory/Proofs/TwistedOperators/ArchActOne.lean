@@ -28,7 +28,7 @@ theorem acts_archOp (om : Rep σ X W) (h : UA σ W.J) (f : SInf F (Fin n × Fin 
     Acts (evI F) (om (1, h)) ⇑f ⇑(archOp om h f) := by
   classical
   unfold archOp
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact hx.choose_spec
 
 theorem archAct_one (M : Model σ X W)

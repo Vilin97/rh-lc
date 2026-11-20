@@ -45,7 +45,7 @@ theorem mass_of_subsingleton [Subsingleton V] (h : V →ₗ⋆[K] V →ₗ[K] K)
     refine ⟨⟨fun a b => Subtype.ext (LinearEquiv.ext fun x => Subsingleton.elim _ _)⟩,
       ⟨⟨1, one_mem _, hsub _ _⟩⟩⟩
   unfold Formalism.HermitianLatticesTheory.mass
-  rw [dif_pos hex, heq, Finset.sum_singleton, haut]
+  rw [dite_eq_left hex, heq, Finset.sum_singleton, haut]
   simp
 
 end Triv

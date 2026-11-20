@@ -19,7 +19,7 @@ private def valHom (x : Sp R ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) : �
 private theorem valR_eq (x : Sp R ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     valR x U f = valHom x U h f := by
   unfold valR
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 private theorem valR_res (x : Sp R ⟶ X) {U V : X.Opens} (e : V ≤ U) (h : ⊤ ≤ x ⁻¹ᵁ V) (f : Γ(X, U)) :
@@ -53,15 +53,15 @@ private theorem valR_comp (x : Sp R ⟶ Y) (g : Y ⟶ X) (U : X.Opens) (f : Γ(X
       (Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom ((g.app U ≫ x.appLE (g ⁻¹ᵁ U) ⊤ h).hom f)
     rw [Scheme.Hom.comp_appLE x g U ⊤ h]
   · unfold valR
-    rw [dif_neg h, dif_neg (show ¬ ⊤ ≤ (x ≫ g) ⁻¹ᵁ U from h)]
+    rw [dite_eq_right h, dite_eq_right (show ¬ ⊤ ≤ (x ≫ g) ⁻¹ᵁ U from h)]
 
 private theorem valAt'_eq (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : valAt' x U f = valR x U f := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
   · unfold valAt' valR
-    rw [dif_pos h, dif_pos h]
+    rw [dite_eq_left h, dite_eq_left h]
     rfl
   · unfold valAt' valR
-    rw [dif_neg h, dif_neg h]
+    rw [dite_eq_right h, dite_eq_right h]
 
 private theorem eq_spMap_fromSpec {U : X.Opens} (hU : IsAffineOpen U) (x : Sp R ⟶ X) (h : ⊤ ≤ x ⁻¹ᵁ U) :
     spMap (valHom x U h) ≫ hU.fromSpec = x := by
@@ -513,7 +513,7 @@ private theorem rigVal_spec {K : Type} [Field K] [NumberField K] {P : Out.PolAV 
   obtain ⟨_, b2⟩ := valR_spMap σ (spMap (algebraMap (𝓞 K) K)) _ hp
   have hr := hρ k (fun _ => i₀) h.choose hk (by rw [he']; exact a1)
   rw [he', ← spMap_comp_spMap] at hr
-  rw [rigVal, dif_pos h]
+  rw [rigVal, dite_eq_left h]
   refine ⟨mul_ne_zero (valR_unit_ne (R := K) _ _ h1 _) (valR_unit_ne (R := K) _ _ hp _), ?_⟩
   rw [map_mul, ← _root_.mul_assoc, ← hr]
   exact congrArg₂ (· * ·) (congrArg₂ (· * ·) (valAt'_eq _ _ _).symm ((valAt'_eq _ _ _).trans (a2 _)).symm)

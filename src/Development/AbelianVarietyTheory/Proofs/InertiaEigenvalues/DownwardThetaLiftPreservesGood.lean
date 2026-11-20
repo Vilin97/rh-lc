@@ -42,7 +42,7 @@ theorem gaL_apply_choose {D : D7} {G : Type} [Group G] [Fintype G] (V : HSp D) (
   refine Finset.sum_congr rfl fun g _ => ?_
   show c g * actG0 V β L (eG g) F h = _
   unfold actG0
-  rw [dif_pos (hk g)]
+  rw [dite_eq_left (hk g)]
 
 end GlobalTheory.GoodLift
 

@@ -141,7 +141,7 @@ theorem ph_Ifirst (i : Fin r) :
 
 theorem ph_DlO_map (j : ℤ) : MvPolynomial.map (algebraMap O (KK O)) (X.DlO j) = X.sb (Del p n' O X.Fr X.g j) := by
   unfold Ctx.DlO Del minorI Ctx.sb
-  rw [dif_pos (first_columns_card X.hH.2.2.1), AlgHom.map_det, RingHom.map_det]
+  rw [dite_eq_left (first_columns_card X.hH.2.2.1), AlgHom.map_det, RingHom.map_det]
   refine congrArg Matrix.det (Matrix.ext fun l i => ?_)
   show MvPolynomial.map (algebraMap O (KK O)) (X.DlM j l i) = subst p n' O X.S.w n' r X.g
     (twRow p n' O X.Fr X.g j l.val ((Ifirst r (r + K)).orderEmbOfFin (first_columns_card X.hH.2.2.1) i))

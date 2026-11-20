@@ -49,7 +49,7 @@ theorem ev_one (x : k) : ev (1 : kˣ →* ℂˣ) x = 1 := by
   unfold ev; split_ifs <;> simp
 
 theorem ev_unit (χ : kˣ →* ℂˣ) (d : kˣ) (hd : valuation k (d : k) = 1) : ev χ (d : k) = χ d := by
-  unfold ev; rw [dif_pos hd]; simp
+  unfold ev; rw [dite_eq_left hd]; simp
 
 def fam (n m : ℕ) (α β : kˣ →* ℂˣ) : Fin n → kˣ →* ℂˣ := fun i => if (i : ℕ) < m then α * β else β
 

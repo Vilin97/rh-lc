@@ -97,7 +97,7 @@ theorem lm_last_of_row {N : ℕ} (hN : 0 < N) (f : MvPolynomial (Fin N × Fin N)
 theorem lm_liftWt_last {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (mu : DomWeight n) (ω : Fin n → ℕ) :
     liftWt h lam mu ω ⟨N - 1, by omega⟩ = dLast lam mu := by
   unfold liftWt
-  rw [dif_neg (by simp; omega)]
+  rw [dite_eq_right (by simp; omega)]
 
 theorem lm_liftWt_inj {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (mu : DomWeight n) {ω ω' : Fin n → ℕ}
     (he : liftWt h lam mu ω = liftWt h lam mu ω') : ω = ω' := by

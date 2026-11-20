@@ -141,14 +141,14 @@ theorem exists_root_galois : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Ma
   obtain ⟨x, hx, hadd⟩ := exists_isGenLab_of h₁ h₂ l₁ l₂ hpt
   have hb : GSum.base X₁ z₁ ∈ X₁.S.supI X₁.M z₁ := by
     have hne : (X₁.S.supI X₁.M z₁).Nonempty := X₁.div z₁
-    rw [GSum.base, dif_pos hne]
+    rw [GSum.base, dite_eq_left hne]
     exact hne.some_mem
   have hb' := GlobalTheory.T.thetaSetup_dividingLabel_persists_deeperLevel g n F W Z i X₁ hg hn hodd hi hE hT hP ε₁ hε₁ D z₁ _ hb z₂ hq
   have hl : ∀ κ : X₁.S.Gam, GSum.lift D z₂ κ ∈ D.X.S.HH D.X.M z₂ ∧ ∃ κ', D.m • GSum.lift D z₂ κ = D.lab κ' := fun κ => by
     by_cases h : ∃ h' ∈ D.X.S.HH D.X.M z₂, D.m • h' = D.lab κ
-    · rw [GSum.lift, dif_pos h]
+    · rw [GSum.lift, dite_eq_left h]
       exact ⟨h.choose_spec.1, κ, h.choose_spec.2⟩
-    · rw [GSum.lift, dif_neg h]
+    · rw [GSum.lift, dite_eq_right h]
       exact ⟨zero_mem _, 0, by rw [smul_zero, map_zero]⟩
   choose U hU hσU using fun κ : X₁.S.HH X₁.M z₁ =>
     exists_root_conj hx hadd D.sq (D.X.S.HH D.X.M z₂) _ hb.1 hb'.1 (hl κ).1 (hl κ).2.choose_spec

@@ -37,7 +37,7 @@ theorem pv_eq {n d : ℕ} (Bf : fullRk k n d →ₗ[ℂ] fullRk k n d →ₗ⋆[
     (Ψ₁ Ψ₂ : fullRk k n d) (h₁ : Ψ₁.1 = B₁.indicator 1) (h₂ : Ψ₂.1 = B₂.indicator 1) : pv Bf B₁ B₂ = Bf Ψ₁ Ψ₂ := by
   have m₁ : B₁.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d := h₁ ▸ Ψ₁.2
   have m₂ : B₂.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d := h₂ ▸ Ψ₂.2
-  rw [pv, dif_pos ⟨m₁, m₂⟩]
+  rw [pv, dite_eq_left ⟨m₁, m₂⟩]
   congr 1
   · exact congrArg Bf (Subtype.ext h₁.symm)
   · exact Subtype.ext h₂.symm

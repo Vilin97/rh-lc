@@ -75,7 +75,7 @@ theorem isFunForm_map {K : Type} [Field K] (φ : K →+* ℂ) (σ : ι → DomWe
 theorem covOf_eq (σ : ι → DomWeight n) (f : VV ℂ fun τ => (σ τ).dual) : covOf σ f = (funEquiv σ).symm f := by
   have hex : ∃ φ : (VV ℂ fun τ => (σ τ).dual) →ₗ[ℂ] VV ℂ σ, ∀ f, IsFunForm σ (φ f) f :=
     ⟨(funEquiv σ).symm.toLinearMap, fun f => (isFunForm_iff_eq σ _ f).2 (by simp)⟩
-  have e : covOf σ f = hex.choose f := by rw [covOf, dif_pos hex]
+  have e : covOf σ f = hex.choose f := by rw [covOf, dite_eq_left hex]
   rw [e]
   apply (funEquiv σ).injective
   rw [LinearEquiv.apply_symm_apply]

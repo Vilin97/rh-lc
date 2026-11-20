@@ -60,7 +60,7 @@ theorem expo_root_second (a : ℕ → Bool) (R : Option ℝ) {τ : E →+* ℂ} 
 
 theorem parOf_eq {w : Sym E →₀ ℤ} {R : Option ℝ} (h0 : w ≠ 0) (h : ∀ a ∈ w.support, a.2.1 = R) : parOf w = R := by
   have hne : w.support.Nonempty := Finsupp.support_nonempty_iff.2 h0
-  rw [parOf, dif_pos hne]
+  rw [parOf, dite_eq_left hne]
   exact h _ hne.choose_spec
 
 theorem mem_letters (x : Letter Dw) : x ∈ letters Dw := by

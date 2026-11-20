@@ -130,9 +130,9 @@ theorem exists_similitude_tri_of_hkPt : ∀ (E : Type) [Field E] [NumberField E]
     refine (GlobalTheory.LevelCusp.apply_of_cols e h.toLinearMap
       (fun τ i j => (p : ℂ) * Formalism.L2.PjFree.toC (cf τ i j)) hcol (Pm v) τ ⟨m, hm⟩).trans
       (Finset.sum_congr rfl fun j _ => ?_)
-    rw [hP, Equiv.apply_symm_apply, dif_pos ⟨hm, j.2⟩, _root_.mul_assoc]
+    rw [hP, Equiv.apply_symm_apply, dite_eq_left ⟨hm, j.2⟩, _root_.mul_assoc]
   · beta_reduce
-    rw [dif_pos ⟨i.2, i.2⟩]
+    rw [dite_eq_left ⟨i.2, i.2⟩]
     exact congrArg _ (hcf1 τ i)
 
 end GlobalTheory.HeckeEx

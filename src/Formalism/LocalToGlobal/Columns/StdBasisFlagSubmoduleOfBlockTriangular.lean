@@ -113,7 +113,7 @@ theorem frameEntry_eq_scaled_coord {k₀ n c p p' : ℕ} (hk : k₀ ≤ n) (hp :
   unfold LocE.entB
   rw [basisVec_eq_single (symFIdx_lt hk hp')]
   unfold Loc.atN
-  rw [dif_pos (symFIdx_lt hk hp)]
+  rw [dite_eq_left (symFIdx_lt hk hp)]
   rfl
 
 theorem reduction_frameEntry_eq_matrix {k₀ n c p p' : ℕ} (hk : k₀ ≤ n) (hp : p < n + c) (hp' : p' < n + c) (κ : Sp E (n + c) ≃ₗ[E] Sp E (n + c)) :
@@ -650,12 +650,12 @@ theorem unitValue_mul_of_reduction_mul {K : Type} [Field K] (χ : (𝓞 E ⧸ P.
   unfold LocE.unitV
   by_cases hb : IsUnit (redP P b) <;> by_cases hd : IsUnit (redP P d)
   · have ha : IsUnit (redP P a) := by rw [h]; exact hb.mul hd
-    rw [dif_pos ha, dif_pos hb, dif_pos hd, ← Units.val_mul, ← map_mul]
+    rw [dite_eq_left ha, dite_eq_left hb, dite_eq_left hd, ← Units.val_mul, ← map_mul]
     congr 2
     exact Units.ext (by rw [IsUnit.unit_spec, Units.val_mul, IsUnit.unit_spec, IsUnit.unit_spec, h])
-  · rw [dif_neg hd, mul_zero, dif_neg (fun ha => hd (isUnit_of_mul_isUnit_right (by rw [h] at ha; exact ha)))]
-  · rw [dif_neg hb, zero_mul, dif_neg (fun ha => hb (isUnit_of_mul_isUnit_left (by rw [h] at ha; exact ha)))]
-  · rw [dif_neg hb, zero_mul, dif_neg (fun ha => hb (isUnit_of_mul_isUnit_left (by rw [h] at ha; exact ha)))]
+  · rw [dite_eq_right hd, mul_zero, dite_eq_right (fun ha => hd (isUnit_of_mul_isUnit_right (by rw [h] at ha; exact ha)))]
+  · rw [dite_eq_right hb, zero_mul, dite_eq_right (fun ha => hb (isUnit_of_mul_isUnit_left (by rw [h] at ha; exact ha)))]
+  · rw [dite_eq_right hb, zero_mul, dite_eq_right (fun ha => hb (isUnit_of_mul_isUnit_left (by rw [h] at ha; exact ha)))]
 
 theorem reduction_sum_superdiagonal {k₀ r : ℕ} (hkr : k₀ < r) (M : ℕ → ℕ → E) (hM : ∀ p, p + 1 < r → IntAt P (M p (p + 1))) :
     redP P (∑ i ∈ Finset.range (k₀ - 1), M i (i + 1) + ∑ i ∈ Finset.range (r - k₀ - 1), M (k₀ + i) (k₀ + i + 1)) =

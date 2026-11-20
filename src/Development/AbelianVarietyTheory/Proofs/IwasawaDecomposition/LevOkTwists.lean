@@ -74,7 +74,7 @@ theorem levOk_twists : ∀ (B : Base) (X : PreX B.toPre) (I : ColIn B X), I.Ok �
           exact ⟨P, hP, e⟩
       have hmem : I.sel (w.under (𝓞 B.host.F)) ∈ I.Q a := by
         unfold ColIn.Q QE
-        rw [dif_pos hfin]
+        rw [dite_eq_left hfin]
         convert Finset.mem_image_of_mem I.sel (hfin.mem_toFinset.2 ((hq _).2 ⟨w, rfl, hr⟩))
       rcases (under_eq_iff B.host _ w).1 (under_sel h _).symm with e | e
       · exact Or.inl (e ▸ hmem)

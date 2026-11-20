@@ -70,11 +70,11 @@ theorem levAt_target : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a
   have ex1 : xiPt A t.m2 hi β β' p q' w = XiCpl1 t.Ch t.sel (t.tup μ) (t.cst μ) (t.idx μ) t.m2 (A.ib t.m2 hi β) p q'
       (cosetOf A (t.m2 + 1) hi β' q') w := by
     unfold xiPt
-    rw [dif_neg (lt_irrefl _), if_pos rfl]
+    rw [dite_eq_right (lt_irrefl _), if_pos rfl]
   have ex2 : xiPt A t.m2 hi β β' p p' w = XiCpl1 t.Ch t.sel (t.tup μ) (t.cst μ) (t.idx μ) t.m2 (A.ib t.m2 hi β) p p'
       (cosetOf A (t.m2 + 1) hi β' p') w := by
     unfold xiPt
-    rw [dif_neg (lt_irrefl _), if_pos rfl]
+    rw [dite_eq_right (lt_irrefl _), if_pos rfl]
   rw [ex1, ex2, hcos, hmu, ← hχ, ← map_mul, ← map_mul, mul_comm (∏ P : SB t μ, _), law]
 
 end GlobalTheory.CplTarget

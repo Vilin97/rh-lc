@@ -125,12 +125,12 @@ theorem ht_weil_pull : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [Field
     classical
     obtain ⟨x, hx, hxe⟩ := hW.perfect (fun g => if h : g ^ n = 1 then χ ⟨g, h⟩ else 1) fun g g' hg hg' => by
       have hgg : (g * g') ^ n = 1 := by rw [mul_pow, hg, hg', _root_.one_mul]
-      rw [dif_pos hg, dif_pos hg', dif_pos hgg, ← map_mul]; rfl
+      rw [dite_eq_left hg, dite_eq_left hg', dite_eq_left hgg, ← map_mul]; rfl
     refine ⟨inc x, hpow x hx, fun g hg => ?_⟩
     obtain ⟨g, hg₀, rfl⟩ := hsurj g hg
     replace hg := hg₀
     have h1 := hxe g hg
-    rw [dif_pos hg] at h1
+    rw [dite_eq_left hg] at h1
     rw [hr, hr, ← h1]
     exact Units.ext (hχ ⟨g, hg⟩)
   · intro g hg h

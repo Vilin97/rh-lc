@@ -175,15 +175,15 @@ theorem E_eq {n j : ℕ} (g : GL (Fin n) k) :
   · have ha := a.2
     have hb := b.2
     simp only [stdSum_inl, fromBlocks_apply₁₁]
-    rw [dif_pos ⟨ha, hb⟩]
+    rw [dite_eq_left ⟨ha, hb⟩]
   · simp only [stdSum_inl, stdSum_inr, fromBlocks_apply₁₂, Matrix.zero_apply]
-    rw [dif_neg (by omega), one_std]
+    rw [dite_eq_right (by omega), one_std]
     simp
   · simp only [stdSum_inl, stdSum_inr, fromBlocks_apply₂₁, Matrix.zero_apply]
-    rw [dif_neg (by omega), one_std]
+    rw [dite_eq_right (by omega), one_std]
     simp
   · simp only [stdSum_inr, fromBlocks_apply₂₂]
-    rw [dif_neg (by omega), one_std]
+    rw [dite_eq_right (by omega), one_std]
     simp [Matrix.one_apply]
 
 section Blocks

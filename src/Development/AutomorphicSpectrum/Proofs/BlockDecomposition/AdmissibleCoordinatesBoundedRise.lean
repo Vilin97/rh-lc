@@ -35,7 +35,7 @@ theorem admissible_coordinates_bounded_rise : AdmLe := by
       have h1 := ih i ⟨i + d, by omega⟩ rfl
       have h2 := hA j
       unfold An.sr at h2
-      rw [dif_pos ⟨by omega, j.2⟩] at h2
+      rw [dite_eq_left ⟨by omega, j.2⟩] at h2
       have e : (⟨(j : ℕ) - 1, by omega⟩ : Fin n) = ⟨i + d, by omega⟩ := Fin.ext (by simp only; omega)
       rw [e] at h2
       simp only [Fin.eta] at h2

@@ -64,7 +64,7 @@ theorem scaleMap_flagMinor (τ : Ψ) (i : Fin (N - 1)) (S : PluckerBlocks N N i)
       algebraMap (MvPolynomial (Ψ × Fin N × Fin N) ℚ) (ΩFl Ψ N) M.det := rfl
   rw [flagMinor, RingHom.map_det, RingHom.mapMatrix_apply]
   rw [show Fin.castLE _ = Fin.castLE (step_le i) from rfl, hM, Matrix.det_mul_column, ← RingHom.mapMatrix_apply, ← RingHom.map_det,
-    prod_rowFac, hy, tVar, dif_pos i.2, map_mul, mul_comm]
+    prod_rowFac, hy, tVar, dite_eq_left i.2, map_mul, mul_comm]
   rfl
 
 end FlZIdealEqCoord

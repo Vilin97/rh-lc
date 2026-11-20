@@ -288,7 +288,7 @@ theorem planeCusp_Nz_pos (II : IntersectionSystem)
         Complex.ofReal_re]
       exact Complex.normSq_pos.2 hw0
   unfold CuspData.Nz
-  rw [dif_pos planeLine_family]
+  rw [dite_eq_left planeLine_family]
   exact key _ _ planeLine_family.choose_spec.choose_spec
 
 end Line

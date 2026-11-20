@@ -100,7 +100,7 @@ theorem UnitaryCovolumeLowerBound.proof (hE : UnitaryCovolume.Statement) (hM : U
       (hM D z hz (D.torLat s) (D.torLat_le s) ρ v hv)
   · have : D.nz z (D.torLat s) = 1 := by
       unfold FullerData.nz HermDatum.nz
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     rw [this, Real.log_one, neg_zero]
     exact hrhs
 

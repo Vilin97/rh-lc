@@ -56,7 +56,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.liftVal :
   haveI : FiniteDimensional F₀ F₁ := Module.Finite.of_finite
   refine ⟨fun δ γ h => ?_, fun δ x => ?_⟩
   · have hex : ∃ γ, GlobalTheory.DZA.IsFinNorm sb δ γ := ⟨γ, h⟩
-    rw [GlobalTheory.DZA.normLift, dif_pos hex]
+    rw [GlobalTheory.DZA.normLift, dite_eq_left hex]
     exact UpperTheory.Gal.InertialTypesAlt.L.fb_eq_of_isFinNorm sb fb hfb h hex.choose_spec
   · have hiff : ∀ γ, GlobalTheory.DZA.IsFinNorm sb (x⁻¹ * δ * GlobalTheory.LBC.galAct sb n x) γ ↔ GlobalTheory.DZA.IsFinNorm sb δ γ := by
       intro γ
@@ -71,8 +71,8 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.liftVal :
     · obtain ⟨γ, hγ⟩ := hex
       have h1 : ∃ γ, GlobalTheory.DZA.IsFinNorm sb δ γ := ⟨γ, hγ⟩
       have h2 : ∃ γ, GlobalTheory.DZA.IsFinNorm sb (x⁻¹ * δ * GlobalTheory.LBC.galAct sb n x) γ := ⟨γ, (hiff γ).2 hγ⟩
-      rw [GlobalTheory.DZA.normLift, GlobalTheory.DZA.normLift, dif_pos h1, dif_pos h2]
+      rw [GlobalTheory.DZA.normLift, GlobalTheory.DZA.normLift, dite_eq_left h1, dite_eq_left h2]
       exact (UpperTheory.Gal.InertialTypesAlt.L.fb_eq_of_isFinNorm sb fb hfb ((hiff _).1 h2.choose_spec) h1.choose_spec).symm
     · have h2 : ¬ ∃ γ, GlobalTheory.DZA.IsFinNorm sb (x⁻¹ * δ * GlobalTheory.LBC.galAct sb n x) γ :=
         fun ⟨γ, hγ⟩ => hex ⟨γ, (hiff γ).1 hγ⟩
-      rw [GlobalTheory.DZA.normLift, GlobalTheory.DZA.normLift, dif_neg hex, dif_neg h2]
+      rw [GlobalTheory.DZA.normLift, GlobalTheory.DZA.normLift, dite_eq_right hex, dite_eq_right h2]

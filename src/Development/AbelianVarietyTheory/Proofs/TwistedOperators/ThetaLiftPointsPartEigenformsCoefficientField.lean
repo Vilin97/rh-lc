@@ -180,7 +180,7 @@ theorem eig_of_mem (R : RealDat3 D A3 Ks) (F : Face3 D A3) (hC : R.WeakCharacter
       ⟨⟨y, hy⟩, exists_opLab R F hC i P d hgd hr⟩
     have ha : eigVal R i q P d = hex.1.choose hex.2.choose := by
       unfold eigVal
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
     have ha' : eigVal R i q P d = y hex.2.choose :=
       ha.trans (opLab_val_eq R F hC i q _ P d hex.2.choose_spec _ _ hex.1.choose_spec hy)
     have hop := opLab_ops R F hC i h hh _ P d hex.2.choose_spec

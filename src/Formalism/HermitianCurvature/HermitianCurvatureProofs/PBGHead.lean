@@ -97,7 +97,7 @@ theorem _root_.Formalism.FourierDecayAlt.P.head_algebra_relations : Formalism.Fo
             (xR k r (m + 2) hm (Fin.castSucc j))) = Z := by
           ext i j
           simp only [Matrix.of_apply]
-          rw [hxi' _ _ (by simp <;> omega), dif_pos (by simp [xR, eI] <;> omega)]
+          rw [hxi' _ _ (by simp <;> omega), dite_eq_left (by simp [xR, eI] <;> omega)]
           congr 1
         rw [h2]
         simp only [Fin.val_last]
@@ -108,14 +108,14 @@ theorem _root_.Formalism.FourierDecayAlt.P.head_algebra_relations : Formalism.Fo
         ring
     · intro a p ha hp
       by_cases ha' : a.val < m + 1
-      · rw [hxi' a p ha', dif_neg (by omega)]
+      · rw [hxi' a p ha', dite_eq_right (by omega)]
       · rw [hxl' a p (by omega), if_neg (by omega)]
   have hA1 : AAx k r E xi (m + 1) (by omega) u = Z.det • qminor E (xR k r (m + 1) (by omega)) (xR k r (m + 1) (by omega)) u := by
     rw [AAx_head k r E xi (m + 1) (by omega) Z u]
     · intro a p ha hp
-      rw [hxi' a p ha, dif_neg (by omega)]
+      rw [hxi' a p ha, dite_eq_right (by omega)]
     · intro a b
-      rw [hxi' _ _ (by simp <;> omega), dif_pos (by simp [xR, eI] <;> omega)]
+      rw [hxi' _ _ (by simp <;> omega), dite_eq_left (by simp [xR, eI] <;> omega)]
       congr 1
   have hA0 : AAx k r E xi m (by omega) u = ∑ l0 : Fin (m + 1),
       (Z.submatrix Fin.castSucc l0.succAbove).det •
@@ -126,10 +126,10 @@ theorem _root_.Formalism.FourierDecayAlt.P.head_algebra_relations : Formalism.Fo
       congr 2
       ext a l
       simp only [Matrix.of_apply, Matrix.submatrix_apply]
-      rw [hxi' _ _ (by simp <;> omega), dif_pos (by simp [xR, eI] <;> omega)]
+      rw [hxi' _ _ (by simp <;> omega), dite_eq_left (by simp [xR, eI] <;> omega)]
       congr 1
     · intro a p ha hp
-      rw [hxi' a p (by omega), dif_neg (by omega)]
+      rw [hxi' a p (by omega), dite_eq_right (by omega)]
 
   set a := xR k r (m + 2) hm with hadef
   have hav : ∀ l, (a l).val = l.val := by intro l; simp [a, xR, eI]

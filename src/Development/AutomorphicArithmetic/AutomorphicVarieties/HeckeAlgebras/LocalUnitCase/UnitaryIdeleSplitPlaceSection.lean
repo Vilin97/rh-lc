@@ -47,7 +47,7 @@ theorem l_iff (w : Plc L) : ((l : ℕ) : 𝓞 (Lp L)) ∈ (w.under (𝓞 (Lp L))
 theorem cmp_of {w : Plc L} (h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : UA L n) :
     cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold CaseU.cmp
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 variable (V : s.Lev)

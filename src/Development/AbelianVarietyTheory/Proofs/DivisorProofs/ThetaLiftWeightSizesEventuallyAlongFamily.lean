@@ -34,7 +34,7 @@ theorem weightSizes_along : ∀ (eps : ℝ) (Fm : FamP eps), ∃ x0 : ℝ, ∀ x
   have hwj : ∀ τ, wj D (j.1 + 1) τ = (((D.hc τ).e j : ℚ) : ℝ) := by
     intro τ
     unfold wj
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl
   have hwin : ∀ τ, 0 < wj D (j.1 + 1) τ ∧ wj D (j.1 + 1) τ ≤ 2 * L.sc.b := by
     intro τ

@@ -38,7 +38,7 @@ private theorem trOn_eq_of_range (M₁ M₂ : Submodule ℂ V) [FiniteDimensiona
     rw [← he v hv]
     exact h v (hle hv)
   unfold trOn
-  rw [dif_pos h₁, dif_pos h₂]
+  rw [dite_eq_left h₁, dite_eq_left h₂]
   let g : M₁ →ₗ[ℂ] M₂ := L₁.restrict h
   let i : M₂ →ₗ[ℂ] M₁ := Submodule.inclusion hle
   have e₁ : L₁.restrict h₁ = i ∘ₗ g := by

@@ -207,7 +207,7 @@ open scoped Classical in
 def mk' (f : β → ℂ) : X hI := if hf : f ∈ 𝓕 then Submodule.Quotient.mk ⟨f, hf⟩ else 0
 
 theorem mk'_of {f : β → ℂ} (hf : f ∈ 𝓕) : mk' hI f = Submodule.Quotient.mk ⟨f, hf⟩ := by
-  rw [mk', dif_pos hf]
+  rw [mk', dite_eq_left hf]
 
 theorem mk'_surj (x : X hI) : ∃ f ∈ 𝓕, mk' hI f = x := by
   obtain ⟨f, rfl⟩ := Submodule.Quotient.mk_surjective (N hI) x

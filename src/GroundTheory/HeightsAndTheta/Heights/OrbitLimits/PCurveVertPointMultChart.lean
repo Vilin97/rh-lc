@@ -151,7 +151,7 @@ theorem CurveVertPointMultChart.proof (hCh : CurveVertPointChart.Statement)
       isSimpleModule_iff_quot_maximal.mpr ⟨_, inferInstance, ⟨LinearEquiv.refl _ _⟩⟩
     exact Module.length_eq_one _ _
 
-  rw [multAt, dif_pos hWp, locLen, dif_pos hmp]
+  rw [multAt, dite_eq_left hWp, locLen, dite_eq_left hmp]
   congr 1
   rw [length_localizedModule_quotient, length_localizedModule_quotient,
     length_quotient_of_surjective Φ hsurj _ (hker.le.trans (Ideal.map_mono le_sup_left)), hJ,

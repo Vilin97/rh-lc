@@ -120,7 +120,7 @@ theorem redM_nsmul (PP : Pl D.host.E) {b a : ℕ} {N : Matrix (Fin b) (Fin a) (E
   have h : (m • N) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := nsmul_mem (hN i j) m
   show redM PP (m • N) i j = (m : kP PP) * redM PP N i j
   unfold redM
-  rw [dif_pos h, dif_pos (hN i j), ← nsmul_eq_mul]
+  rw [dite_eq_left h, dite_eq_left (hN i j), ← nsmul_eq_mul]
   exact (resS D.host.F PP).toAddMonoidHom.map_nsmul m ⟨N i j, hN i j⟩
 
 theorem topL_smul {κ : Type} [CommRing κ] {b a : ℕ} (k : ℕ) (c : κ) (y : Matrix (Fin b) (Fin a) κ) :
@@ -158,13 +158,13 @@ theorem map_omegaQ_smul (τ : ℂ ≃+* ℂ) {a b : ℕ} (Q : Finset (Pl D.host.
     · rw [hdet PP h, Units.isUnit_units_mul]
   unfold omegaQ
   by_cases h : ∀ PP ∈ Q, LowZero r (y PP) ∧ IsUnit (topL r (y PP)).det
-  · rw [dif_pos h, dif_pos (hiff.2 h), map_prod, ← Finset.prod_mul_distrib]
+  · rw [dite_eq_left h, dite_eq_left (hiff.2 h), map_prod, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun PP _ => ?_
     have e : (hiff.2 h PP.1 PP.2).2.unit = (v PP.1 PP.2 ^ r)⁻¹ * (h PP.1 PP.2).2.unit :=
       Units.ext (by rw [IsUnit.unit_spec, Units.val_mul, IsUnit.unit_spec]; exact hdet PP.1 PP.2)
     rw [map_zpow₀, ← hξ PP.1 PP.2, e, MonoidHom.map_mul, MonoidHom.map_inv, Units.val_mul, Units.val_inv_eq_inv_val,
       _root_.zpow_neg_one, _root_.zpow_neg_one, mul_inv, inv_inv]
-  · rw [dif_neg h, dif_neg (mt hiff.1 h), map_zero, mul_zero]
+  · rw [dite_eq_right h, dite_eq_right (mt hiff.1 h), map_zero, mul_zero]
 
 theorem exists_idele_at {PP : Pl D.host.E} {e : AE D} (he : Formalism.L2.NTheta.IsIdemAt e PP) (v : (kP PP)ˣ) :
     ∃ s : (AE D)ˣ, ∀ (χ : (AE D)ˣ →* Circle) (χH : Formalism.L2.Host.HChar D.host.E) (ξ : (kP PP)ˣ →* ℂˣ),

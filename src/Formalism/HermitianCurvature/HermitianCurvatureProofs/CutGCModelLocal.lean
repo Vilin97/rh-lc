@@ -54,7 +54,7 @@ theorem locOp_mulOp (f : MA.SmQ r TT) : LocOpQ ((MA.anQ r TT).mulOp f) := by
 
 theorem dirE_zeta (v : M.Var r) (hv : ((ofLex v).1 : ℕ) = r) : MA.dirE v = ((0 : Fin r → ℂ), (1 : ℂ)) := by
   unfold MA.dirE
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem fderiv_zeta_local {f₁ f₂ : MA.Qp r TT → ℂ} (hf₁ : f₁ ∈ MA.smSub r TT) (hf₂ : f₂ ∈ MA.smSub r TT)
     (c : Fin r → ℂ) (V : Set ℂ) (hV : IsOpen V)

@@ -48,7 +48,7 @@ theorem parab_eq_blk : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
     rw [hM]; exact (p : GLw n w).isUnit
   unfold GlobalTheory.BCT.blk
   simp only
-  rw [dif_pos hU]
+  rw [dite_eq_left hU]
   exact Units.ext (by rw [IsUnit.unit_spec, hM])
 
 end GlobalTheory.CompanionTheory.ParabBlock

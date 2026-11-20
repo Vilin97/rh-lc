@@ -609,7 +609,7 @@ theorem hostDer : HostDer (hostRaw φ hinj hH he h) := by
     refine ⟨?_, g2, v, g3, (hH_ggIso φ hinj _).trans g4⟩
     have h1 := (gal_eq_art φ hinj hH he h σ _).mpr
       ((frob_art hH h p hp P σ (ZMod.unitOfCoprime p hcop) (ZMod.coe_unitOfCoprime _ _)).mp hσ)
-    rw [h1, HostRaw.psAt, dif_pos (show Nat.Coprime p (hostRaw φ hinj hH he h).condN from hcop)]
+    rw [h1, HostRaw.psAt, dite_eq_left (show Nat.Coprime p (hostRaw φ hinj hH he h).condN from hcop)]
     rfl
   · have hm : ((l : ℤ) : 𝓞 (hostE ζ a b)) ∈ P := by
       have : Fact l.Prime := ⟨hl⟩

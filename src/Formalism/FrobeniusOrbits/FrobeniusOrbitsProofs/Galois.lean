@@ -320,7 +320,7 @@ theorem hPart_lift (h : IsLayer (e + 2) q d ζ a b) {σ : hostE ζ a b ≃ₐ[�
   have hex : ∃ u : (ZMod (2 ^ (e + 2)))ˣ, ((σ (thE ζ a b) : hostE ζ a b) : L) =
       ζ ^ (u : ZMod (2 ^ (e + 2))).val + ζ⁻¹ ^ (u : ZMod (2 ^ (e + 2))).val := ⟨_, hθ⟩
   unfold hPart
-  rw [dif_pos hex, hcl_eq_iff]
+  rw [dite_eq_left hex, hcl_eq_iff]
   have hs := hθ.symm.trans hex.choose_spec
   exact (trace_eq_iff_units h.1 _ _).mp hs.symm
 

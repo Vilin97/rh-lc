@@ -595,7 +595,7 @@ theorem norm_factor_le (y : Fin F.dim → ℝ) (τ : Fin F.f) (m : ℕ) :
   split_ifs with h h'
   · rw [Real.norm_eq_abs]
     have := norm_Evec_le F τ m
-    rw [Evec, dif_pos h] at this
+    rw [Evec, dite_eq_left h] at this
     nlinarith [abs_nonneg (y ⟨m, h⟩)]
   · rw [E_apply_of_ne F (Ne.symm h')]; simp
   · simp

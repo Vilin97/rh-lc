@@ -75,14 +75,14 @@ theorem xiTyped_of_ctx {Zd : LocDat D} {u u' : D.what₂.Word} {F0 : FlagG (VS D
   have hex := Formalism.L2.SG.Pf.Coef.normRepElig_of hN γ w hγ
   have hrep : repF γ = hex.choose.2.1 := by
     unfold repF nrep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hA1 : AdmWit γ.lam (gS D) (lf D F0) (repF γ) 1 := by
     rw [hrep]
     exact hex.choose_spec.2.1
   have hadm : IsAdmissible γ.lam (gS D) (lf D F0) (repF γ) := ⟨1, hA1⟩
   have hW : AdmWit γ.lam (gS D) (lf D F0) (repF γ) (admXi D γ.lam (lf D F0) (repF γ)) := by
     unfold admXi
-    rw [dif_pos hadm]
+    rw [dite_eq_left hadm]
     exact hadm.choose_spec
   generalize admXi D γ.lam (lf D F0) (repF γ) = ξ at hW ⊢
 

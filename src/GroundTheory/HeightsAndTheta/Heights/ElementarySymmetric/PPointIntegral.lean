@@ -49,7 +49,7 @@ theorem proof : PointIntegral.Statement := by
   have hZ : zeroSet J = {p} := zeroSet_ker_eval p
   have hex : ∃ A : Matrix (Fin 0) (Fin n) ℂ, IsFiniteProjection J A :=
     ⟨0, isFiniteProjection p 0⟩
-  rw [varInt, dif_pos hex]
+  rw [varInt, dite_eq_left hex]
   set A := hex.choose
   have hsheet : IsSheetAt J A p (fun _ => p) := by
     refine ⟨Set.univ, isOpen_univ, trivial, differentiableOn_const _, rfl, ?_, Set.univ,
@@ -68,7 +68,7 @@ theorem proof : PointIntegral.Statement := by
     intro y
     rw [chartDens, sheetSum, hfib y, finsum_mem_singleton]
     have hs : ∃ s, IsSheetAt J A p s := ⟨_, hsheet⟩
-    rw [dif_pos hs]
+    rw [dite_eq_left hs]
     simp [ReciprocityTheory.AnForm.maDens, ReciprocityTheory.AnForm.mdisc_zero]
   rw [chartInt]
   simp_rw [hdens]

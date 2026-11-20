@@ -95,7 +95,7 @@ theorem clW_bridge (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hC
               betaExponentOfRanks R.k R.rS R.r R.t (LocE.fPos R.k (cOf R j) (R.N j) y.1) := hlt
           rw [he'] at hlt'
           exact lt_irrefl _ hlt'
-        have hall := hpat.2 y.1 y'.1 h1.1 h1.2 hne (by unfold ocbM; rw [dif_pos h1]; exact hnz)
+        have hall := hpat.2 y.1 y'.1 h1.1 h1.2 hne (by unfold ocbM; rw [dite_eq_left h1]; exact hnz)
         refine not_allowed_of_beta_lt (t := R.t) hcj h1.1 h1.2 (Or.inl ?_) hall
         rw [← hrr]
         exact hlt
@@ -111,7 +111,7 @@ theorem clW_bridge (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hC
           split_ifs at hy <;> omega
         have h3 := hpat.1 y.1 hyk
         unfold ocbM at h3
-        rw [dif_pos ⟨h1.1, h1.1⟩] at h3
+        rw [dite_eq_left ⟨h1.1, h1.1⟩] at h3
         exact h3
       · rfl
       · exact absurd rfl h2
@@ -124,7 +124,7 @@ theorem clW_bridge (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hC
           intro he'
           rw [he'] at hy
           omega
-        have hall := hpat.2 y.1 y'.1 h1.1 h1.2 hne (by unfold ocbM; rw [dif_pos h1]; exact hnz)
+        have hall := hpat.2 y.1 y'.1 h1.1 h1.2 hne (by unfold ocbM; rw [dite_eq_left h1]; exact hnz)
         exact not_allowed_of_beta_lt (t := R.t) hcj h1.1 h1.2 (Or.inr ⟨hy, hy'⟩) hall
       · subst h2
         omega
@@ -144,7 +144,7 @@ theorem clW_bridge (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hC
     refine Finset.sum_eq_zero fun i hi => ?_
     have hi' : i < cOf R j - 1 := Finset.mem_range.1 hi
     unfold Loc.atN
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     have e1 : (⟨R.N j + i, by omega⟩ : Fin (R.N j + cOf R j)) = Fin.natAdd (R.N j) ⟨i, by omega⟩ := rfl
     rw [e1, clL_ext_natAdd]
     unfold Loc.eN
@@ -346,10 +346,10 @@ theorem clW_topLaw (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hC
     ctl_mem_JGsym hq hu hr1 (by omega) (r_le_X' R) ht (by omega) hκrs hH hredr
   have e1 : psi0P Ch w.1 = Ch.psi0 ⟨w.1, hw⟩ := by
     unfold psi0P
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
   have e2 : chiP Ch w.1 = chiAt Ch ⟨w.1, hw⟩ := by
     unfold chiP
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
   have hlamT : LocE.lamGBS (qOf w.1) (psi0P Ch w.1) (chiP Ch w.1) R.k R.r R.t R.m (R.N R.m - 1) 0 κr.1.symm.toLinearMap =
       ((lamJsym (Ch.psi0 ⟨w.1, hw⟩) (chiAt Ch ⟨w.1, hw⟩) (R.N R.m - 1) R.k R.r R.t R.m R.rS (r_le_X' R) ⟨h₁ w, hH⟩ : X.Kˣ) : X.K) := by
     rw [e1, e2]

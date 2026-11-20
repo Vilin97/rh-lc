@@ -84,7 +84,7 @@ theorem GlobalTheory.TripleAssembly.transport_eq : GlobalTheory.Published.HoweDu
       obtain ⟨q, hq⟩ := ex1
       exact ⟨q, fun Ψ hΨ => by rw [← hT₁ Ψ (hle hΨ)]; exact hq Ψ hΨ⟩
     unfold GlobalTheory.TripleAssembly.mapA GlobalTheory.TripleAssembly.thetaLift
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec Ψ hΨ
   · rw [← hI T₁ hT₁] at hΦ
     obtain ⟨Ψ, hΨ, rfl⟩ := Submodule.mem_map.1 hΦ
@@ -95,7 +95,7 @@ theorem GlobalTheory.TripleAssembly.transport_eq : GlobalTheory.Published.HoweDu
       obtain ⟨q, hq⟩ := ex2
       exact ⟨q, fun Ψ hΨ => by rw [← hT₂ Ψ (hle' hΨ)]; exact hq Ψ hΨ⟩
     unfold GlobalTheory.TripleAssembly.mapB GlobalTheory.TripleAssembly.thetaLift
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec Ψ hΨ
   · rw [← hI' T₂ hT₂] at hΦ
     obtain ⟨Ψ, hΨ, rfl⟩ := Submodule.mem_map.1 hΦ

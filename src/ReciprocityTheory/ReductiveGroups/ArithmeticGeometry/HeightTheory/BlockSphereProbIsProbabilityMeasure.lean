@@ -111,7 +111,7 @@ theorem height_one_prime_eq_span_gen (p : Ideal (KTp K d.D d.N)) (hp : p ∈ d.H
     obtain ⟨g, _, hg⟩ := ValUFD.heightOne_principal p hp.2
     exact ⟨⟨g, hg⟩⟩
   unfold Data.gen
-  rw [dif_pos hpr]
+  rw [dite_eq_left hpr]
   exact (Ideal.span_singleton_generator p).symm
 
 theorem fZ_factor_positive_places (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (F : KTp K d.D d.N)

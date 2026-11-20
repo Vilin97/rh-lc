@@ -56,7 +56,7 @@ theorem cayley_val (k : ℕ) (m : GL (Fin 2) ℝ) (a b : ℝ) (h00 : m 0 0 = a) 
   have hzP1 : zP.1 = z := rfl
   have hzpos' : 0 < zP.1.im := hzpos
   have hext : ext1 (U k m) z = F k m zP := by
-    unfold ext1; rw [dif_pos hz]; exact if_pos hzpos'
+    unfold ext1; rw [dite_eq_left hz]; exact if_pos hzpos'
   have hab : 0 < a ^ 2 + b ^ 2 := by
     have := lt_of_le_of_ne (sq_nonneg b) (Ne.symm (pow_ne_zero 2 hb)); nlinarith [sq_nonneg a]
   obtain ⟨s, hs_def⟩ : ∃ s, s = Real.sqrt (a ^ 2 + b ^ 2) := ⟨_, rfl⟩

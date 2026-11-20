@@ -84,7 +84,7 @@ theorem ordL_neg_one (w : Pl E) : ordL ((-1 : (w.adicCompletion E)ˣ) : w.adicCo
   have h1 : Valued.v ((-1 : (w.adicCompletion E)ˣ) : w.adicCompletion E) = 1 := by
     simp
   unfold ordL
-  rw [dif_neg (by rw [h1]; exact one_ne_zero)]
+  rw [dite_eq_right (by rw [h1]; exact one_ne_zero)]
   simp [h1]
   rfl
 
@@ -110,19 +110,19 @@ theorem mconv_twist {a b : ℕ} {w : Pl E} (c : GLw a w × GLw b w → ℂ) (hc 
 
 theorem toSub_val {n : ℕ} {w : Pl E} (hU : UL n w = ⊤) (x : UL n w) : toSub (UL n w) x.1 = x := by
   unfold toSub
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
 
 theorem toSub_mul {n : ℕ} {w : Pl E} (hU : UL n w = ⊤) (x y : GLw n w) :
     toSub (UL n w) (x * y) = toSub (UL n w) x * toSub (UL n w) y := by
   have hm : ∀ z : GLw n w, z ∈ UL n w := fun z => hU ▸ Subgroup.mem_top z
   unfold toSub
-  rw [dif_pos (hm _), dif_pos (hm _), dif_pos (hm _)]
+  rw [dite_eq_left (hm _), dite_eq_left (hm _), dite_eq_left (hm _)]
   rfl
 
 theorem val_toSub {n : ℕ} {w : Pl E} (hU : UL n w = ⊤) (y : GLw n w) : (toSub (UL n w) y).1 = y := by
   have hm : ∀ z : GLw n w, z ∈ UL n w := fun z => hU ▸ Subgroup.mem_top z
   unfold toSub
-  rw [dif_pos (hm _)]
+  rw [dite_eq_left (hm _)]
 
 def ulEquiv {n : ℕ} {w : Pl E} (hU : UL n w = ⊤) : UL n w ≃* GLw n w where
   toFun x := x.1

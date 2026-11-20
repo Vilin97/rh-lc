@@ -63,7 +63,7 @@ theorem arTop_true : GlobalTheory.Published.ArCalc → GlobalTheory.Published.Ar
     have hI := GlobalTheory.T.adelic_divisor_induced_linear D A N j S κ s x Φ k R P ι w L m (fun i a ha => (hw i a ha).2) hL n
     have ht := top _ P _ m _ hI (hΨ.1 n)
     have hex : ∃ t, (adlOf (Φ.C k) (metsOf x Φ k) (∑ i, n i • w i)).IsArTop t := ⟨_, ht⟩
-    rw [Adl.arTop, dif_pos hex]
+    rw [Adl.arTop, dite_eq_left hex]
     exact GlobalTheory.TrueGeo.ArUniq.isArTop_unique hC hD _ _ _ _ _ _ hex.choose_spec ht
   have h4 := GlobalTheory.T.polarization_of_homogeneous ι (Sym D.host.E →₀ ℤ) w (fun v => (adlOf (Φ.C k) (metsOf x Φ k) v).arTop)
     ((Φ.C k).Y.dim + 1) Ψ (1 / ((((m : ℕ) : ℝ)) ^ ((Φ.C k).Y.dim + 1) * (Module.finrank ℚ D.what₂.LL : ℝ)))

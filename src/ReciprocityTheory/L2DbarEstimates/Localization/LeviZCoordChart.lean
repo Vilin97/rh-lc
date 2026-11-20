@@ -45,7 +45,7 @@ private theorem db_apply_eq_wdb_of_mem_source {M : Type*} [TopologicalSpace M] (
     (hy : y ∈ e.source) : db n z k f y = wdb n k (f ∘ e.symm) (z y) := by
   have hex : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ y ∈ e.source := ⟨e, he, hy⟩
   unfold db
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   apply wdb_apply_congr_of_eventuallyEq
   exact (coe_symm_apply_of_isChart_val n z e (Classical.choose hex) he (Classical.choose_spec hex).1 y hy
     (Classical.choose_spec hex).2).fun_comp f
@@ -55,7 +55,7 @@ private theorem d_apply_eq_wd_of_mem_source {M : Type*} [TopologicalSpace M] (n 
     (hy : y ∈ e.source) : d n z k f y = wd n k (f ∘ e.symm) (z y) := by
   have hex : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ y ∈ e.source := ⟨e, he, hy⟩
   unfold d
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   apply wd_apply_congr_of_eventuallyEq
   exact (coe_symm_apply_of_isChart_val n z e (Classical.choose hex) he (Classical.choose_spec hex).1 y hy
     (Classical.choose_spec hex).2).fun_comp f

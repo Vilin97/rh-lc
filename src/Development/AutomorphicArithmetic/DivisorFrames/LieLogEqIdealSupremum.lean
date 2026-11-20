@@ -118,5 +118,5 @@ theorem UpperTheory.lie_log_eq_ideal_supremum :
   rw [← hqe] at key
   rw [hI, ← Real.log_inv]
   unfold FlagPt.lnLie
-  rw [dif_pos hi]
+  rw [dite_eq_left hi]
   exact congrArg Real.log (key.trans h2)

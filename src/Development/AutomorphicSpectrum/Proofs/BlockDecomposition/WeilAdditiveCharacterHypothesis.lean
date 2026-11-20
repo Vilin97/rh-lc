@@ -70,7 +70,7 @@ theorem weil_whittaker_unipotent_equivariance (χ : AddChar F Circle) (σ : E �
   unfold Wc
   by_cases h : ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det
   · have h' : ∃ t : Eˣ, Algebra.norm F (t : E) = ((uni2 x * g).val).det := by rwa [hdet]
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     have hch : h'.choose = h.choose :=
       choose_congr (by simp only [hdet]) h' h
     have e00 : (uni2 x * g).val 0 0 = g.val 0 0 + x * g.val 1 0 := by
@@ -99,7 +99,7 @@ theorem weil_whittaker_unipotent_equivariance (χ : AddChar F Circle) (σ : E �
       rW_shift χ σ μE lam _ _ _ _ x hc0]
     ring
   · have h' : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = ((uni2 x * g).val).det := by rwa [hdet]
-    rw [dif_neg h', dif_neg h, mul_zero]
+    rw [dite_eq_right h', dite_eq_right h, mul_zero]
 
 end
 

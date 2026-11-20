@@ -18,11 +18,11 @@ namespace GlobalTheory.PtExt.EpsGenCob
 
 theorem evU_mul' {Y : Scheme.{0}} {D : Type} [CommRing D] (y : Sp D ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ y ⁻¹ᵁ U)
     (a b : Γ(Y, U)) : evU y U (a * b) = evU y U a * evU y U b := by
-  unfold evU; rw [dif_pos h, dif_pos h, dif_pos h, map_mul]
+  unfold evU; rw [dite_eq_left h, dite_eq_left h, dite_eq_left h, map_mul]
 
 theorem evU_isUnit' {Y : Scheme.{0}} {D : Type} [CommRing D] (y : Sp D ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ y ⁻¹ᵁ U)
     (a : Γ(Y, U)ˣ) : IsUnit (evU y U a.val) := by
-  unfold evU; rw [dif_pos h]; exact a.isUnit.map _
+  unfold evU; rw [dite_eq_left h]; exact a.isUnit.map _
 
 theorem evU_cocycle {X : Scheme.{0}} (P : LB X) (hP : P.IsLB) {D : Type} [CommRing D] (y : Sp D ⟶ X)
     (a b c : P.ι) (ha : ⊤ ≤ y ⁻¹ᵁ P.U a) (hb : ⊤ ≤ y ⁻¹ᵁ P.U b) (hc : ⊤ ≤ y ⁻¹ᵁ P.U c) :

@@ -78,7 +78,7 @@ theorem dif_nonneg_of_antitone {v : Fin n → ℤ} (h : Antitone v) (j : Fin n) 
     0 ≤ dif v j := by
   have h1 : v ⟨j + 1, hj⟩ ≤ v j := h (Fin.le_def.mpr (Nat.le_succ _))
   unfold dif
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   omega
 
 theorem lm_ne_zero (j : Fin n) (hj : ¬ (j : ℕ) + 1 < n) {g : Mat n} (hg : g ∈ GLs n) : lm j g ≠ 0 := by

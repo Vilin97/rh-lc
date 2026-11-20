@@ -17,13 +17,13 @@ variable {D : D7}
 theorem ld_eq_leadMinorE (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) :
     ld Z = leadMinorE Z D.R.rS := by
   unfold ld leadMinorE
-  rw [dif_pos (Nat.le_succ _)]
+  rw [dite_eq_left (Nat.le_succ _)]
   rfl
 
 theorem det_eq_leadMinorE (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) :
     Z.det = leadMinorE Z (D.R.rS + 1) := by
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   rfl
 
 theorem cross_global {w w' : Point D.host.E (D.R.rS + 1)} {Z Z' : PairVal.MatR D} (hk : kind w = kind w')

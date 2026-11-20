@@ -66,7 +66,7 @@ theorem bDD_one {r c : ℕ} : bDD (1 : Matrix (Fin (r + c)) (Fin (r + c)) F) = 1
 
 theorem extendedCharacter_units (δ : Fˣ →* ℂˣ) (u : Fˣ) : chi0 δ (u : F) = ((δ u : ℂˣ) : ℂ) := by
   unfold chi0
-  rw [dif_neg u.ne_zero]
+  rw [dite_eq_right u.ne_zero]
   simp
 
 theorem unitCharExtendedByZero_mul (δ : Fˣ →* ℂˣ) {x y : F} (hx : x ≠ 0) (hy : y ≠ 0) :

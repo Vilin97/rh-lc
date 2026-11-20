@@ -17,7 +17,7 @@ theorem v_one_of_ordL {E : Type} [Field E] [NumberField E] [IsCMField E] {w : Pl
     (h : ordL (u : w.adicCompletion E) = 0) : Valued.v (u : w.adicCompletion E) = 1 := by
   have h0 : Valued.v (u : w.adicCompletion E) ≠ 0 := (Valuation.ne_zero_iff _).2 u.ne_zero
   unfold ordL at h
-  rw [dif_neg h0, neg_eq_zero] at h
+  rw [dite_eq_right h0, neg_eq_zero] at h
   have h1 : WithZero.unzero h0 = 1 := by simpa using congrArg Multiplicative.ofAdd h
   rw [← WithZero.coe_unzero h0, h1]
   rfl

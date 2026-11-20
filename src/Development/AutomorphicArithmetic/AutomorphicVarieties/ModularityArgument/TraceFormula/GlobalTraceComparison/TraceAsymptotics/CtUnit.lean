@@ -125,7 +125,7 @@ private lemma blk_eq {a b n : ℕ} (h : a + b = n) (w : Pl E) (m : GLw a w × GL
   have hv : (blk h w m X).val = Matrix.reindex e e (Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val) := by
     unfold blk
     simp only [← he]
-    rw [dif_pos hU]
+    rw [dite_eq_left hU]
     exact hU.unit_spec
   refine ⟨hv, Units.inv_eq_of_mul_eq_one_right ?_⟩
   rw [hv]
@@ -213,7 +213,7 @@ private lemma absHalf_one {w : Pl E} {x : w.adicCompletion E} (hx : Valued.v x =
   have h0 : ordL x = 0 := by
     have hne : Valued.v x ≠ 0 := by rw [hx]; exact one_ne_zero
     unfold ordL
-    rw [dif_neg hne]
+    rw [dite_eq_right hne]
     have : WithZero.unzero hne = 1 := by
       apply WithZero.coe_injective
       rw [WithZero.coe_unzero, hx]

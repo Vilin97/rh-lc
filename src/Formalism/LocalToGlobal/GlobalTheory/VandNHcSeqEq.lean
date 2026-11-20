@@ -52,7 +52,7 @@ theorem hcSeq_zero (W : Wts X Pr.Word R) (u : Pr.Word) (τ : X.Tau) :
   have h := aTop_eq_hc W u τ
   have hk := k_ge R
   unfold hcSeq
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   exact h
 
 theorem hcSeq_last (W : Wts X Pr.Word R) (u : Pr.Word) (τ : X.Tau) :
@@ -60,18 +60,18 @@ theorem hcSeq_last (W : Wts X Pr.Word R) (u : Pr.Word) (τ : X.Tau) :
   have h := bTop_eq_hc W u τ
   have hk := k_ge R
   unfold hcSeq
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   exact h
 
 theorem hcSeq_zero_eq (hW : W.Ok) (u u' : Pr.Word) (τ : X.Tau) : hcSeq W u τ 0 = hcSeq W u' τ 0 := by
   have hk := k_ge R
   unfold hcSeq
-  rw [dif_pos (by omega), dif_pos (by omega), hW.u_first u u' τ (by omega)]
+  rw [dite_eq_left (by omega), dite_eq_left (by omega), hW.u_first u u' τ (by omega)]
 
 theorem hcSeq_last_eq (hW : W.Ok) (u u' : Pr.Word) (τ : X.Tau) : hcSeq W u τ (R.k - 1) = hcSeq W u' τ (R.k - 1) := by
   have hk := k_ge R
   unfold hcSeq
-  rw [dif_pos (by omega), dif_pos (by omega), hW.u_last u u' τ (by omega)]
+  rw [dite_eq_left (by omega), dite_eq_left (by omega), hW.u_last u u' τ (by omega)]
 
 end Shape
 

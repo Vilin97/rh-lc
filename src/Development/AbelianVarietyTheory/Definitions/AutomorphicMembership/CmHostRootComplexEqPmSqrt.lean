@@ -175,7 +175,7 @@ theorem UnfFam.U_eq (u : UnfFam Xo c N ξ) {σ : c.F →+* ℂ} (h : Formalism.L
 
 theorem UnfFam.isEmpty_comp (u : UnfFam Xo c N ξ) {σ : c.F →+* ℂ} (h : ¬ Formalism.L2.PjFree.GoodEmb c σ) :
     IsEmpty (u.U σ).Comp := by
-  rw [UnfFam.U, dif_neg h]
+  rw [UnfFam.U, dite_eq_right h]
   exact inferInstanceAs (IsEmpty PEmpty)
 
 def UnfFam.supAt (u : UnfFam Xo c N ξ) (x : ℝ) (σ : c.F →+* ℂ) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (f : Rul Xo c) : ℝ :=

@@ -36,7 +36,7 @@ theorem cover_height_short_section_alt : _root_.GlobalTheory.CovTop.PublishedHod
     (fieldSz_host hH) hH.logfr.1 le_rfl _ (g3 i hi Y hY) (by rw [abs_neg]; exact FlatSz.abs_flatDegVal_le p i hH hw) u1 a3
     (fun τ => by
       unfold GlobalTheory.CompHS.gap
-      rw [dif_pos (by show (dat p i).p - 1 + 1 < (dat p i).p + (dat p i).q; omega)]
+      rw [dite_eq_left (by show (dat p i).p - 1 + 1 < (dat p i).p + (dat p i).q; omega)]
       exact a4 τ _ _ rfl (by show (dat p i).p - 1 + 1 = _; omega)) a5
   refine ⟨Real.exp (C * ((((Fm.D x ι).R.f : ℝ) * (Fm.D x ι).R.r * (Fm.L x ι).sc.L) ^ 3 * (∑ τ, ∑ k, |(u1 τ k : ℝ)|) +
     (((Fm.D x ι).R.f : ℝ) * (Fm.D x ι).R.r * (Fm.L x ι).sc.L) ^ 5)), fun Z => ?_, ?_⟩

@@ -78,17 +78,17 @@ theorem cancel {L A B U : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ} (hL : L.det �
 theorem sgLo_eq {K : Type} [Field K] (L : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     Formalism.L2.SG.PairVal.sgLo L = ∑ a : Fin r, L a.succ a.castSucc := by
   unfold Formalism.L2.SG.PairVal.sgLo
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem sgUp_eq {K : Type} [Field K] (U : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     Formalism.L2.SG.PairVal.sgUp U = ∑ a : Fin r, U a.castSucc a.succ := by
   unfold Formalism.L2.SG.PairVal.sgUp
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem sgn_adj (a : Fin r) : (-1 : ℂ) ^ (r - a.castSucc.1) * (-1 : ℂ) ^ (r - a.succ.1) = -1 := by

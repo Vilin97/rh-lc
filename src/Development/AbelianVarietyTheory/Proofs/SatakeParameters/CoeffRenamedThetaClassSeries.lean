@@ -30,7 +30,7 @@ theorem coeff_resV_thCl : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi 
   rw [hres, ← Finsupp.mapDomain_comp, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_map, hcomp]
   congr 2
   show TaylorLogMetric.taylor D (thCl t u μ cls j La La') _ = _
-  rw [thCl, dif_pos hr]
+  rw [thCl, dite_eq_left hr]
   exact taylor_reV hr.1 hr.2 _ α
 
 end GlobalTheory.TwV.DelB

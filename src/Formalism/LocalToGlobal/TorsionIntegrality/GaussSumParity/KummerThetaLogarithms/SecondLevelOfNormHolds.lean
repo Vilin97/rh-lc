@@ -33,7 +33,7 @@ theorem logPair {l : ℕ} (hl : 2 ≤ l) : C.IsLogPair (lgF K l) (expF K l) := b
   have h0 := lgF_zero_lemma (K := K) l
   have h1 := lgF_one_lemma_2 (K := K) hl
   have hu : IsUnit (PowerSeries.coeff 1 (lgF K l)) := by rw [h1]; exact isUnit_one
-  have he : expF K l = (lgF K l).substInvOfIsUnit hu := by rw [expF, dif_pos hu]
+  have he : expF K l = (lgF K l).substInvOfIsUnit hu := by rw [expF, dite_eq_left hu]
   refine ⟨h0, h1, ?_, ?_, ?_⟩
   · rw [he]; exact PowerSeries.constantCoeff_substInvOfIsUnit _ _
   · rw [he]; exact PowerSeries.subst_substInvOfIsUnit_left _ h0 hu

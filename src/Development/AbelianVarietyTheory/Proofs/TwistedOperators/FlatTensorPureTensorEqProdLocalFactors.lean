@@ -54,7 +54,7 @@ theorem locA_last (G : Grid k) (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : Me
         GlobalTheory.LocFlat.flCol ψ ν 1 (stepDatum hs φ ⟨G.m - 2, by omega⟩) (fromCols (x (G.m - 2)) (Matrix.of fun r _ => u r)))
         (x (G.m - 2 + 1) (topLast G (G.m - 2 + 1 + 1))) := by
   obtain rfl : j = G.m - 2 := by omega
-  rw [locA, dif_pos (by omega), stepDatum_eq_datC]
+  rw [locA, dite_eq_left (by omega), stepDatum_eq_datC]
   refine congrArg₂ (· * ·) ?_ ?_
   · exact theta_sub_congr G φ x (by omega) _ _ _ _
   · congr 1
@@ -69,7 +69,7 @@ theorem locA_double (G : Grid k) (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : 
         (GlobalTheory.LocFlat.flRow ψ ν ((G.m - 2 - (j + 1)) / 2 + 1) (stepDatum hs φ ⟨j + 1, by omega⟩)) q := by
   obtain ⟨a, ha⟩ := he
   obtain ⟨b, hb⟩ := hm
-  rw [locA, dif_neg (by omega), dif_pos (by omega), stepDatum_eq_datC, stepDatum_eq_datC]
+  rw [locA, dite_eq_right (by omega), dite_eq_left (by omega), stepDatum_eq_datC, stepDatum_eq_datC]
   exact congrArg₂ (fun A B => GlobalTheory.LocFlat.contr ψ ν A B q)
     (flCol_datC_congr ψ ν _ (by simp only; omega) (by omega) _ _ _ _)
     (flRow_datC_congr ψ ν _ (by simp only; omega) (by omega) _ _ _ _)

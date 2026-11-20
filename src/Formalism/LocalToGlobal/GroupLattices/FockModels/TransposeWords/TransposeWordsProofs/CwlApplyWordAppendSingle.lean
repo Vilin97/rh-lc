@@ -317,7 +317,7 @@ theorem cw_mem_letters (l : Fin r × Fin r × (Fin r × Fin n)) :
     have e3' : s.val < a.val := e3
     subst e1'
     refine ⟨s', a', ?_⟩
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     simp only [Option.some.injEq, Prod.mk.injEq, and_true]
     exact Fin.ext e2'
 

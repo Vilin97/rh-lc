@@ -648,7 +648,7 @@ theorem Kcol_succ (R : Type*) [CommRing R] {N n : ℕ} (mu : Fin (N + 1) → Fin
     Kcol R mu c (j + 1) =
       colStep c (colH (mu (⟨j, h⟩ : Fin N).castSucc) c) (colH (mu (⟨j, h⟩ : Fin N).succ) c) (letVec R ⟨j, h⟩)
         (Kcol R mu c j) := by
-  rw [Kcol, dif_pos h]
+  rw [Kcol, dite_eq_left h]
   rfl
 
 theorem Kcol_hom (R : Type*) [CommRing R] {N n : ℕ} (mu : Fin (N + 1) → Fin n → ℤ) (c : ℤ) :
@@ -2154,10 +2154,10 @@ theorem crRes_isGLRep (E : GLOps n K V) (h : GLRel E) (P : Submodule K V) [Finit
       apply Subtype.ext
       rw [Submodule.coe_sum, hx]
       refine Finset.sum_congr rfl fun mu hmu => ?_
-      rw [dif_pos hmu]
+      rw [dite_eq_left hmu]
     rw [hx']
     refine Submodule.sum_mem _ fun mu hmu => ?_
-    rw [dif_pos hmu]
+    rw [dite_eq_left hmu]
     exact Submodule.mem_iSup_of_mem mu (crRes_weight E P hP mu _ (hf mu hmu).1)
 
 theorem cr_in (D : Formalism.BasicNotions.D7) (h2 : Formalism.MainNotions.CovariantDegrees.adm2 D) {n : ℕ} {K V : Type} [Field K] [CharZero K]

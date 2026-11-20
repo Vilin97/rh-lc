@@ -87,7 +87,7 @@ theorem pd_of_tr {T : D.host.E} (u' : D.what₂.Word) (Λ Λ' : Submodule (𝓞 
       ∀ b, ModG (VS D) Λ (gS D) (σ (frame F' b) - frameAct (frame F) ξ b)) :
     TermDef.PD D Λ F u' (mapLF σ F') := by
   have hmap : mapLF σ F' = ⟨mapFlag σ hiso F'.fl, σ F'.zt⟩ := by
-    unfold mapLF; rw [dif_pos hiso]
+    unfold mapLF; rw [dite_eq_left hiso]
   have hisoT : ∀ a b, (VS D).hT (σ a) (σ b) = (VS D).hT a b := fun a b => hiso a b
   have hfr : ∀ b, frame (mapLF σ F') b = σ (frame F' b) := Formalism.L2.SG.NormCut.frame_mapLF hiso F'
   refine ⟨?_, ?_, ?_⟩

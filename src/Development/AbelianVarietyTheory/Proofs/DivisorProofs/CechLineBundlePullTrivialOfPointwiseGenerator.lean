@@ -22,10 +22,10 @@ theorem triv_pull_of_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (
   obtain ⟨hu, hn, hg⟩ := ht
   have hmul : ∀ {D : Type} [CommRing D] (x : Sp D ⟶ Y.left) (U : Y.left.Opens), ⊤ ≤ x ⁻¹ᵁ U →
       ∀ a b : Γ(Y.left, U), evU x U (a * b) = evU x U a * evU x U b := by
-    intro D _ x U h a b; unfold evU; rw [dif_pos h, dif_pos h, dif_pos h, map_mul]
+    intro D _ x U h a b; unfold evU; rw [dite_eq_left h, dite_eq_left h, dite_eq_left h, map_mul]
   have hone : ∀ {D : Type} [CommRing D] (x : Sp D ⟶ Y.left) (U : Y.left.Opens), ⊤ ≤ x ⁻¹ᵁ U →
       evU x U (1 : Γ(Y.left, U)) = 1 := by
-    intro D _ x U h; unfold evU; rw [dif_pos h, map_one]
+    intro D _ x U h; unfold evU; rw [dite_eq_left h, map_one]
   have hch : ∀ (j : PUnit → L.ι) {E : Type} [CommRing E] [Algebra R E] (z : Pt Y E),
       ⊤ ≤ z.left ⁻¹ᵁ (L.pull q.left).U j → ⊤ ≤ (z ≫ q).left ⁻¹ᵁ L.U (j PUnit.unit) :=
     fun j E _ _ z h p hp ↦ LB.wchart_le L (K := PUnit) (fun _ ↦ q.left) j PUnit.unit (h hp)
@@ -87,9 +87,9 @@ theorem triv_pull_of_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (
     have e3 : evU z.left _ ((L.pull q.left).g i j).val =
         evU (z ≫ q).left (L.U (i PUnit.unit) ⊓ L.U (j PUnit.unit)) (L.g (i PUnit.unit) (j PUnit.unit)).val := by
       unfold evU
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       have hij' : ⊤ ≤ (z ≫ q).left ⁻¹ᵁ (L.U (i PUnit.unit) ⊓ L.U (j PUnit.unit)) := hij
-      rw [dif_pos hij']
+      rw [dite_eq_left hij']
       exact (evalAt_pull_g L q.left z.left i j hij h).symm
     rw [e3, e2']
     exact (hg E z (i PUnit.unit) (j PUnit.unit) (hch i z hzi) (hch j z hzj)).symm

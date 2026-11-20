@@ -46,7 +46,7 @@ theorem natWeight_cast_eq_sub_last {N : ℕ} (lam : DomWeight N) (hN : 0 < N) (i
   have h1 : ((lam.w i - lam.w ⟨N - 1, by omega⟩).toNat : ℤ) = lam.w i - lam.w ⟨N - 1, by omega⟩ :=
     Int.toNat_of_nonneg (by omega)
   unfold DomWeight.natW DomWeight.detShift
-  rw [dif_pos hN]
+  rw [dite_eq_left hN]
   have h2 : (((lam.w i - lam.w ⟨N - 1, by omega⟩).toNat : ℕ) : ℝ) =
       (((lam.w i - lam.w ⟨N - 1, by omega⟩).toNat : ℤ) : ℝ) := by norm_cast
   rw [h2, h1]

@@ -192,7 +192,7 @@ theorem isBeta_betaH {n : ℕ} {Λ : GenLat E n}
     (h : ∃ β : c.F, β ≠ 0 ∧ BetaIs (Dw := Dw) c Λ β ∧ BetaAbs (Dw := Dw) c Λ β) :
     IsBeta Dw c Λ (betaH (Dw := Dw) c Λ) := by
   unfold betaH
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem map_blockPoly {K K' : Type} [Field K] [Field K'] (f : K →+* K') {n m : ℕ} (P : MvPolynomial (LtN Dw n) K)

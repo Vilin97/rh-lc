@@ -36,7 +36,7 @@ theorem mem_germ_range_of_mem_rB : ∀ (d : ℕ) (Z : Scheme.{0}) [IsIntegral Z]
       rw [Z.presheaf.germ_res_apply]
       have hr := (GlobalTheory.T.pulledBackProjCoordinateRatio_overlap_div d Z φ 0 i j (hgen 0) (hgen i)).2
       simp only [IntermediateField.coe_div, crd_val]
-      rw [← hr, rat, dif_pos (hgen i)]
+      rw [← hr, rat, dite_eq_left (hgen i)]
     | algebraMap r =>
       refine ⟨Z.presheaf.map (homOfLE le_top).op (p.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of ℂ)).inv.hom r)), ?_⟩
       rw [Z.presheaf.germ_res_apply]

@@ -58,7 +58,7 @@ theorem lift_spec : ∀ (D : D7) (i : Fin D.R.m), letI : IsCMField D.host.E := D
     rw [e]
     rfl
   unfold GlobalTheory.MassLink.lift
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 end GlobalTheory.MassLift

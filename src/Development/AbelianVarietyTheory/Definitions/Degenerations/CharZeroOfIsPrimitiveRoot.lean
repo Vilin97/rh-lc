@@ -322,7 +322,7 @@ theorem vF_const {F : Type} [Field F] {X Y : Scheme.{0}} {K : Type} [Fintype K] 
     (J : (Sp F ⟶ X) → (Inh.trivLB X).ι) (u : Fˣ) (hu : pullTop r a = unitOn u) : vF t r J = u := by
   have h : ⊤ ≤ r ⁻¹ᵁ LB.wchart (Inh.trivLB X) φ (fun k => J (r ≫ φ k)) := by rw [wchart_triv]; exact le_rfl
   unfold vF valF
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   erw [ht]
   have e : (r.appLE _ ⊤ h).hom (gv a (LB.wchart (Inh.trivLB X) φ fun k => J (r ≫ φ k))).val = (pullTop r a).val := by
     simp only [gv, res, pullTop, Units.coe_map, MonoidHom.coe_coe]
@@ -381,7 +381,7 @@ def toricNumOf : NumOf (toricPre K X q) F (toricNum q he hb F) where
   th_eq x := by
     refine ((_root_.one_mul _).trans (vF_one _ _)).trans ?_
     unfold sF valF
-    rw [dif_pos (by erw [wchart_triv]; exact le_rfl)]
+    rw [dite_eq_left (by erw [wchart_triv]; exact le_rfl)]
     exact ((congrArg _ (map_one _)).trans (map_one _)).symm
   ψ_eq y := by
     refine Eq.symm ((congrArg₂ (· * ·) (vF_const (psi_isConst q y) _ _ _ (pullTop_unitOn _ _)) (vF_one _ _)).trans ?_)

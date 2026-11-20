@@ -34,7 +34,7 @@ theorem liftPure_pure {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
       pr f ⊗ₜ GlobalTheory.SmallThetaModules.pureT s (fun v => pv v (φ v)) := by
   have H := GlobalTheory.PureLift.exists_pureLift σ Y Z M ψ hM P pr N pv s hs
   unfold GlobalTheory.TripleAssembly.liftPure
-  rw [dif_pos H]
+  rw [dite_eq_left H]
   exact H.choose_spec f φ hφ hφv
 
 theorem darbAlg_stable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
@@ -158,7 +158,7 @@ theorem mapA_mapB_equivariant_fin : GlobalTheory.Published.HoweDualityReal → G
     have H : ∃ T : Module.End ℂ (GlobalTheory.TripleAssembly.PiT R Γ Rf), ∀ Φ ∈ algF ψ θ true A B,
         GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf (ωA (1, g) Φ) = T (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf Φ) := ⟨T, hTg⟩
     unfold GlobalTheory.TripleAssembly.opFin
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     apply LinearMap.ext
     intro y
     have hy : y ∈ (algF ψ θ true A B).map (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf) := by rw [oA]; trivial

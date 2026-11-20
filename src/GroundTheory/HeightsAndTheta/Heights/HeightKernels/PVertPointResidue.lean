@@ -159,7 +159,7 @@ theorem VertPointResidue.proof (hC : CurveCharts.Statement) : VertPointResidue.S
     with hJ
   have hgeo : ∀ b, geoNum 0 W b = ((Module.length ℤ (MRing (fun _ : Unit => T) ⧸ J)).toNat : ℤ) := by
     intro b
-    rw [geoNum, dif_pos hWrel]
+    rw [geoNum, dite_eq_left hWrel]
   obtain ⟨hF, hFin, hcard⟩ := Inter.regularityLocalResidue_holds.chart_field_card hWmh hcW hdim (charOf W) hp
   letI : Field (MRing (fun _ : Unit => T) ⧸ J) := hF.toField
   set c : T := (hWrel ()).choose with hc

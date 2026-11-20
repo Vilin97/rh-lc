@@ -229,7 +229,7 @@ theorem cmLatticeWeylOperator_zero {d : ℕ} (hd : 0 < d) (F : ℂ → ℂ) : W1
 
 theorem lamA_eq (lam : Qbar →+* ℂ_[q]) (ι : ℂ ≃+* ℂ_[q]) (h : ∀ z : Qbar, ι (z : ℂ) = lam z) {z : ℂ}
     (hz : z ∈ Qbar) : lamA lam z = ι z := by
-  rw [lamA, dif_pos hz]; exact (h ⟨z, hz⟩).symm
+  rw [lamA, dite_eq_left hz]; exact (h ⟨z, hz⟩).symm
 
 theorem contDiff_opU {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (x : Fin g → ℂ) {F : (Fin g → ℂ) → ℂ}
     (hF : ContDiff ℂ ⊤ F) : ContDiff ℂ ⊤ (opU Hm x F) := by

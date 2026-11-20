@@ -125,7 +125,7 @@ theorem _root_.GlobalTheory.HilbFam.gval_linear_change : ∀ (F : Type) [Field F
         rw [hL (T.symm x), T.apply_symm_apply]
       · intro x i
         rw [hc (T.symm x) i, T.apply_symm_apply, inv_mul_cancel_left₀ (hlam i)]
-    rw [_root_.GlobalTheory.HilbFam.gval, dif_neg h', _root_.GlobalTheory.HilbFam.gval, dif_neg h,
+    rw [_root_.GlobalTheory.HilbFam.gval, dite_eq_right h', _root_.GlobalTheory.HilbFam.gval, dite_eq_right h,
       mul_zero]
 
 end GlobalTheory.HilbFam

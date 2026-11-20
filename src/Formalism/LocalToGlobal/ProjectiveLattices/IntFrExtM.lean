@@ -70,7 +70,7 @@ theorem exists_family {D : Datum H} {l : Level H} (X0 : Moduli D l) (hN : ∀ l'
   refine ⟨fun l' => if h : l' = l then cast (congrArg (Moduli D) h.symm) X0 else (hN l').some, ?_⟩
   first
     | (beta_reduce
-       rw [dif_pos rfl]
+       rw [dite_eq_left rfl]
        rfl)
     | simp
 

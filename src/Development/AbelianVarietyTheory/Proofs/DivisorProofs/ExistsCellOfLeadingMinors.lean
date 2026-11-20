@@ -121,8 +121,8 @@ theorem exists_inCell_of_leadingMinors_isUnit {m : ℕ} (M : Matrix (Fin m) (Fin
     ext i j
     unfold upMat
     by_cases hij : i < j
-    · rw [dif_pos hij]
-    · rw [dif_neg hij]
+    · rw [dite_eq_left hij]
+    · rw [dite_eq_right hij]
       by_cases e : i = j
       · subst e; rw [if_pos rfl, hUd]
       · rw [if_neg e, hUz i j (lt_of_le_of_ne (not_lt.1 hij) (Ne.symm e))]

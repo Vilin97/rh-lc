@@ -34,7 +34,7 @@ theorem quotEquiv_mk {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (I 
     (hb : Function.Bijective (quotMap I f)) (a : M) :
     quotEquiv I f ((I • (⊤ : Submodule R M)).mkQ a) = (I • (⊤ : Submodule R M)).mkQ (f a) := by
   unfold quotEquiv
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   rfl
 
 theorem quotMap_bijective {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (I : Ideal R) (f f' : M →ₗ[R] M)

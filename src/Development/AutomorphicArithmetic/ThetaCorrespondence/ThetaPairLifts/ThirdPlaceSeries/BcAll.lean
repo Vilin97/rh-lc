@@ -155,7 +155,7 @@ theorem main_alt_alt : ∀ (D : D7) (P : Pend D), GlobalTheory.TypeLeaf.SerLoc D
         apply hτ
         rw [if_neg hlab, atPlace_zero]
         unfold NTypes.onMt
-        rw [dif_pos (Subalgebra.zero_mem _)]
+        rw [dite_eq_left (Subalgebra.zero_mem _)]
         have e0 : (⟨0, Subalgebra.zero_mem _⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) = 0 := rfl
         rw [e0, map_zero]
         rfl

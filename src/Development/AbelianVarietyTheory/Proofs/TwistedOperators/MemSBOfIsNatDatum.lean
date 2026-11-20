@@ -324,7 +324,7 @@ theorem exists_tiedBoth (hL : L.Is μ₀) (W : G.Weil) (t : T) (i j : Fin D.R.m)
       exact this,
     hT.geo.hV'.cartan, fun v => by
       show IsSplitBasis _ _ (if h : v.1 ∈ Bs.P then bas ⟨v.1, h⟩ else 1)
-      rw [dif_pos v.2]
+      rw [dite_eq_left v.2]
       exact hbas v⟩
   obtain ⟨co, vac, dom, hMo⟩ := GlobalTheory.T.squareModel_negSpace_goodSchroedinger hL t i j M hM Bs hT.base V' Γ.W h.JW₁ _ _ _ _ hV' hT.geo.hW
   obtain ⟨om₁, hom⟩ := GlobalTheory.T.exists_weilRep_squarePair_characters_alpha_quotient hL t i j hst Bs hT.base V' Γ.W _ _ _ _ hV' hT.geo.hW _ hMo

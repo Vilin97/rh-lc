@@ -20,13 +20,13 @@ theorem GZ_apply (u v : Fin (D.R.rS + 1) → (VS D).V) (a b : Fin (D.R.rS + 1)) 
 
 theorem GDl_top' (u v : Fin (D.R.rS + 1) → (VS D).V) : GDl u v (D.R.rS + 1) = (GZ u v).det := by
   unfold GDl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem GDl_r' (u v : Fin (D.R.rS + 1) → (VS D).V) :
     GDl u v D.R.rS = ((GZ u v).submatrix Fin.castSucc Fin.castSucc).det := by
   unfold GDl
-  rw [dif_pos (Nat.le_succ _)]
+  rw [dite_eq_left (Nat.le_succ _)]
   have ecs : (Fin.castLE (Nat.le_succ D.R.rS) : Fin D.R.rS → Fin (D.R.rS + 1)) = Fin.castSucc :=
     funext fun i => Fin.ext rfl
   rw [ecs]

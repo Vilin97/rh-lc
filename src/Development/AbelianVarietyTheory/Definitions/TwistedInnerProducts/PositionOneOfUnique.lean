@@ -56,7 +56,7 @@ theorem mul_qX_colN {m : ℕ} (d : HypDec V V₀ ρ) (M : Matrix (Fin m) (Fin ρ
     (M * d.qX) *ᵥ colN d.e i = colN M i := by
   by_cases hi : i < ρ
   · rw [colN_eq_mulVec _ hi, colN_eq_mulVec _ hi, mulVec_mulVec, Matrix.mul_assoc, qX_e, Matrix.mul_one]
-  · rw [colN, colN, dif_neg hi, dif_neg hi, mulVec_zero]
+  · rw [colN, colN, dite_eq_right hi, dite_eq_right hi, mulVec_zero]
 
 variable {n n' : Type} {c c' : ℕ}
 
@@ -124,7 +124,7 @@ theorem xLastQ_first {V V₀ W W₀ : HSp D} {σ : ℕ} (dV : HypDec V V₀ (σ 
   have h : τ D.host.xi0 • (τ ∘ fourierJacobiVectors dV 0) = τ ∘ fourierJacobiVectors (srcDec dV) 0 := by
     rw [fourierJacobiVectors_source, if_pos σ.succ_pos]
     exact funext fun y => (map_mul τ _ _).symm
-  rw [mul_smul, h, mulVec_smul, ← comp_mulVec, fourierJacobiVectors, if_pos σ.succ_pos, xLastQ, mul_qX_colN, colN, dif_pos σ.succ_pos]
+  rw [mul_smul, h, mulVec_smul, ← comp_mulVec, fourierJacobiVectors, if_pos σ.succ_pos, xLastQ, mul_qX_colN, colN, dite_eq_left σ.succ_pos]
   rfl
 
 theorem exists_isRule : ∃ β, IsRule C ψ hψ τ γ β := by

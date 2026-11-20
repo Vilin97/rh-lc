@@ -172,43 +172,43 @@ def rv {n : ℕ} (a : Fin n) : Fin n := ⟨n - 1 - a.1, by omega⟩
 theorem rv_rv {n : ℕ} (a : Fin n) : rv (rv a) = a := Fin.ext (by simp <;> omega)
 
 theorem frame_isotropic (ob : Bool) (a : Fin D.R.rS) : fr X ob (xI (hrD D) a) = X.e0 a := by
-  unfold fr; rw [dif_pos (show (xI (hrD D) a).1 < D.R.rS from a.2)]; rfl
+  unfold fr; rw [dite_eq_left (show (xI (hrD D) a).1 < D.R.rS from a.2)]; rfl
 
 theorem fr_w (ob : Bool) (i : Fin D.R.k) : fr X ob (wI (hrD D) i) = if ob then X.bw i else X.bwd (rv i) := by
   unfold fr
-  rw [dif_neg (show ¬ (wI (hrD D) i).1 < D.R.rS by simp), dif_pos (show (wI (hrD D) i).1 < D.R.rS + D.R.k by simp)]
+  rw [dite_eq_right (show ¬ (wI (hrD D) i).1 < D.R.rS by simp), dite_eq_left (show (wI (hrD D) i).1 < D.R.rS + D.R.k by simp)]
   congr 1 <;> congr 1 <;> ext <;> simp
 
 theorem frame_anisotropic (ob : Bool) : fr X ob (zI (hrD D)) = X.z0 := by
   unfold fr
-  rw [dif_neg (show ¬ (zI (hrD D)).1 < D.R.rS by simp <;> omega),
-    dif_neg (show ¬ (zI (hrD D)).1 < D.R.rS + D.R.k by simp), if_pos (by simp)]
+  rw [dite_eq_right (show ¬ (zI (hrD D)).1 < D.R.rS by simp <;> omega),
+    dite_eq_right (show ¬ (zI (hrD D)).1 < D.R.rS + D.R.k by simp), if_pos (by simp)]
 
 theorem fr_y (ob : Bool) (a : Fin D.R.rS) : fr X ob (yI (hrD D) a) = X.f0 (rv a) := by
   unfold fr
-  rw [dif_neg (show ¬ (yI (hrD D) a).1 < D.R.rS by simp <;> omega),
-    dif_neg (show ¬ (yI (hrD D) a).1 < D.R.rS + D.R.k by simp <;> omega), if_neg (by simp <;> omega),
-    dif_pos (show (yI (hrD D) a).1 - (D.R.rS + D.R.k + 1) < D.R.rS by simp)]
+  rw [dite_eq_right (show ¬ (yI (hrD D) a).1 < D.R.rS by simp <;> omega),
+    dite_eq_right (show ¬ (yI (hrD D) a).1 < D.R.rS + D.R.k by simp <;> omega), if_neg (by simp <;> omega),
+    dite_eq_left (show (yI (hrD D) a).1 - (D.R.rS + D.R.k + 1) < D.R.rS by simp)]
   congr 1; ext; simp
 
 theorem dual_frame_isotropic (ob : Bool) (a : Fin D.R.rS) : frd X ob (xI (hrD D) a) = X.f0 a := by
-  unfold frd; rw [dif_pos (show (xI (hrD D) a).1 < D.R.rS from a.2)]; rfl
+  unfold frd; rw [dite_eq_left (show (xI (hrD D) a).1 < D.R.rS from a.2)]; rfl
 
 theorem frd_w (ob : Bool) (i : Fin D.R.k) : frd X ob (wI (hrD D) i) = if ob then X.bwd i else X.bw (rv i) := by
   unfold frd
-  rw [dif_neg (show ¬ (wI (hrD D) i).1 < D.R.rS by simp), dif_pos (show (wI (hrD D) i).1 < D.R.rS + D.R.k by simp)]
+  rw [dite_eq_right (show ¬ (wI (hrD D) i).1 < D.R.rS by simp), dite_eq_left (show (wI (hrD D) i).1 < D.R.rS + D.R.k by simp)]
   congr 1 <;> congr 1 <;> ext <;> simp
 
 theorem dual_frame_anisotropic (ob : Bool) : frd X ob (zI (hrD D)) = -X.z0 := by
   unfold frd
-  rw [dif_neg (show ¬ (zI (hrD D)).1 < D.R.rS by simp <;> omega),
-    dif_neg (show ¬ (zI (hrD D)).1 < D.R.rS + D.R.k by simp), if_pos (by simp)]
+  rw [dite_eq_right (show ¬ (zI (hrD D)).1 < D.R.rS by simp <;> omega),
+    dite_eq_right (show ¬ (zI (hrD D)).1 < D.R.rS + D.R.k by simp), if_pos (by simp)]
 
 theorem frd_y (ob : Bool) (a : Fin D.R.rS) : frd X ob (yI (hrD D) a) = X.e0 (rv a) := by
   unfold frd
-  rw [dif_neg (show ¬ (yI (hrD D) a).1 < D.R.rS by simp <;> omega),
-    dif_neg (show ¬ (yI (hrD D) a).1 < D.R.rS + D.R.k by simp <;> omega), if_neg (by simp <;> omega),
-    dif_pos (show (yI (hrD D) a).1 - (D.R.rS + D.R.k + 1) < D.R.rS by simp)]
+  rw [dite_eq_right (show ¬ (yI (hrD D) a).1 < D.R.rS by simp <;> omega),
+    dite_eq_right (show ¬ (yI (hrD D) a).1 < D.R.rS + D.R.k by simp <;> omega), if_neg (by simp <;> omega),
+    dite_eq_left (show (yI (hrD D) a).1 - (D.R.rS + D.R.k + 1) < D.R.rS by simp)]
   congr 1; ext; simp
 
 end Formalism.L2.SG.Pf.KppLoc

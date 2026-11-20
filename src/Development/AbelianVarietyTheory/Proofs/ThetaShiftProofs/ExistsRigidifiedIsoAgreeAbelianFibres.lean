@@ -46,7 +46,7 @@ theorem gm_eq_of_eq_along_section {Y Z T : Scheme.{0}} {N : LB Y} (hN : ∀ y : 
 
 theorem valR_eq_of_gs {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (hU : ⊤ ≤ x ⁻¹ᵁ U)
     (a b : Γ(X, U)) (h : ∀ z, gs x z U a = gs x z U b) : valR x U a = valR x U b := by
-  rw [valR, valR, dif_pos hU, dif_pos hU]
+  rw [valR, valR, dite_eq_left hU, dite_eq_left hU]
   congr 1
   have : (x.app U).hom a = (x.app U).hom b := fn_ext fun z hz => by
     rw [gs_pull (𝟙 _) x z U hz, gs_pull (𝟙 _) x z U hz, Category.id_comp]

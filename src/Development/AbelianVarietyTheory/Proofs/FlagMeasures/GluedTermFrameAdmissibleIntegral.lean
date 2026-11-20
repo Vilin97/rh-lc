@@ -55,7 +55,7 @@ theorem glued_frame_PD : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D
     ext x
     simp
   have hmapL : mapLF (g⁻¹ * g') (lf D (X.Fu u')) = Formalism.L2.SG.Saturated.mapL (g⁻¹ * g') hβ (lf D (X.Fu u')) := by
-    unfold mapLF; rw [dif_pos hβ]; rfl
+    unfold mapLF; rw [dite_eq_left hβ]; rfl
   obtain ⟨-, ⟨-, -, hlift', hconv'⟩, hX'⟩ := id hr'
   refine ⟨?_, ?_, ?_⟩
   · have h1 := (Formalism.L2.SG.Pf.IsLift_mapL (g⁻¹ * g') hβ _ _).2 hlift'

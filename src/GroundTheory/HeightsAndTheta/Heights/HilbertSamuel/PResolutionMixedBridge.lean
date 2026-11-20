@@ -31,7 +31,7 @@ theorem ResolutionMixedBridge.proof : ResolutionMixedBridge.Statement := by
   have key := AnResBridge.bridge d.R hex.choose (fun j => HermLine.ofCone (M j)) B.inv 1 d.arith
     hex.choose_spec (fun j => gbamix_smoothHerm_ofCone (hM j)) hBs hsec
   unfold ptsIntegral
-  rw [dif_pos hex, hgl]
+  rw [dite_eq_left hex, hgl]
   exact key
 
 end

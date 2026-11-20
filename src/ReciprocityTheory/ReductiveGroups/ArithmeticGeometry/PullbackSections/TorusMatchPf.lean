@@ -308,7 +308,7 @@ theorem perFr_conj (X : Data E r) (y : Frame X.Ψ r) (v : Fin r → E) {ρ : E �
   have hc : conjEmb ρ ∉ X.Ψ := fun hc => (conj_mem_iff ρ).mp hc h
   have hcc : conjEmb (conjEmb ρ) ∈ X.Ψ := by rw [conjEmb_conjEmb]; exact h
   unfold perFr
-  rw [dif_neg hc, dif_pos hcc, dif_pos (by have := X.p0_le; omega)]
+  rw [dite_eq_right hc, dite_eq_left hcc, dite_eq_left (by have := X.p0_le; omega)]
   have key : ∀ (ρ' : E →+* ℂ) (h' : ρ' ∈ X.Ψ), ρ' = ρ →
       hermC ρ' X.Gm (col (mat y ⟨ρ', h'⟩) ⟨X.p0 - 1 - i, by have := X.p0_le; omega⟩) (Data.emb ρ' v) =
         hermC ρ X.Gm (col (mat y ⟨ρ, h⟩) ⟨X.p0 - 1 - i, by have := X.p0_le; omega⟩) (Data.emb ρ v) := by
@@ -320,7 +320,7 @@ theorem perFr_self (X : Data E r) (y : Frame X.Ψ r) (v : Fin r → E) {τ : E �
     (hi : X.p0 + i < r) :
     perFr X y v τ i = ((mat y ⟨τ, h⟩)⁻¹.mulVec (Data.emb τ v)) ⟨X.p0 + i, hi⟩ := by
   unfold perFr
-  rw [dif_pos h, dif_pos hi]
+  rw [dite_eq_left h, dite_eq_left hi]
 
 end Pin1
 

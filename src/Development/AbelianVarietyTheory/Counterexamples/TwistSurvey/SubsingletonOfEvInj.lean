@@ -25,7 +25,7 @@ theorem evAt_injective_of_ne {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks
       · obtain ⟨τ, -, hτ⟩ := Finset.prod_eq_zero_iff.1 h2
         exact absurd (inner_self_eq_zero.1 hτ) (hv τ)
     · unfold ipM
-      rw [dif_neg h]
+      rw [dite_eq_right h]
   have h3 := (hm i σ).2.2 (x - y) (x - y)
   unfold ipAt at h3
   rw [hip, mul_zero] at h3

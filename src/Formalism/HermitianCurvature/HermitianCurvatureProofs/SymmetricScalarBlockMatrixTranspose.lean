@@ -562,7 +562,7 @@ lemma lowW_inj (σ : Equiv.Perm (Fin p)) : Function.Injective (lowW σ) := by
   intro v1 v2 h
   funext q
   have := congrFun (congrFun h q.1.1) q.1.2
-  rw [lowW_apply, lowW_apply, dif_pos q.2, dif_pos q.2] at this
+  rw [lowW_apply, lowW_apply, dite_eq_left q.2, dite_eq_left q.2] at this
   simpa using this
 
 lemma upper_inj : Function.Injective (G.upper (d := p)) := by
@@ -709,37 +709,37 @@ lemma subdiagonal_sum_block2 (A : Matrix (Fin p) (Fin p) ℂ) (B : Matrix (Fin p
     have hi := i.isLt
     by_cases ha : i.val + 1 < p
     · have hlt : (Fin.castAdd s i).val + 1 < p + s := by simp; omega
-      rw [dif_pos hlt, dif_pos ha, dif_neg (by omega), add_zero]
+      rw [dite_eq_left hlt, dite_eq_left ha, dite_eq_right (by omega), add_zero]
       have e : (⟨(Fin.castAdd s i).val + 1, hlt⟩ : Fin (p + s)) = Fin.castAdd s ⟨i.val + 1, ha⟩ := Fin.ext (by simp)
       rw [e, block2_apply_upper_left]
     · by_cases hs : 0 < s
       · have hlt : (Fin.castAdd s i).val + 1 < p + s := by simp; omega
-        rw [dif_pos hlt, dif_neg ha, dif_pos ⟨by omega, hs⟩, zero_add]
+        rw [dite_eq_left hlt, dite_eq_right ha, dite_eq_left ⟨by omega, hs⟩, zero_add]
         have e : (⟨(Fin.castAdd s i).val + 1, hlt⟩ : Fin (p + s)) = Fin.natAdd p ⟨0, hs⟩ := Fin.ext (by simp; omega)
         rw [e, block2_apply_lower_left]
-      · rw [dif_neg (by simp; omega), dif_neg ha, dif_neg (by omega), add_zero]
+      · rw [dite_eq_right (by simp; omega), dite_eq_right ha, dite_eq_right (by omega), add_zero]
   have h2 : ∀ i : Fin s, (if h : (Fin.natAdd p i).val + 1 < p + s then blk2 A B C D ⟨(Fin.natAdd p i).val + 1, h⟩ (Fin.natAdd p i) else 0) =
       (if h : i.val + 1 < s then D ⟨i.val + 1, h⟩ i else 0) := by
     intro i
     by_cases ha : i.val + 1 < s
     · have hlt : (Fin.natAdd p i).val + 1 < p + s := by simp; omega
-      rw [dif_pos hlt, dif_pos ha]
+      rw [dite_eq_left hlt, dite_eq_left ha]
       have e : (⟨(Fin.natAdd p i).val + 1, hlt⟩ : Fin (p + s)) = Fin.natAdd p ⟨i.val + 1, ha⟩ := Fin.ext (by simp; omega)
       rw [e, block2_apply_lower_right]
-    · rw [dif_neg (by simp; omega), dif_neg ha]
+    · rw [dite_eq_right (by simp; omega), dite_eq_right ha]
   simp only [h1, h2, Finset.sum_add_distrib]
   congr 2
   by_cases hps : 0 < s ∧ 0 < p
-  · rw [dif_pos hps, Finset.sum_eq_single ⟨p - 1, by omega⟩]
-    · rw [dif_pos ⟨by simp; omega, hps.1⟩]
+  · rw [dite_eq_left hps, Finset.sum_eq_single ⟨p - 1, by omega⟩]
+    · rw [dite_eq_left ⟨by simp; omega, hps.1⟩]
     · intro i _ hi
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h, -⟩
       exact hi (Fin.ext (by simp; omega))
     · simp
-  · rw [dif_neg hps]
+  · rw [dite_eq_right hps]
     refine Finset.sum_eq_zero fun i _ => ?_
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨h, h'⟩
     exact hps ⟨h', by omega⟩
 
@@ -753,26 +753,26 @@ theorem charBlock : CharBlock := by
     congr 2
     unfold cornerA
     by_cases hps : 0 < s ∧ 0 < p
-    · rw [dif_pos hps, dif_pos hps, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
+    · rw [dite_eq_left hps, dite_eq_left hps, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
       · rw [hlh.1, mul_one]; rfl
       · intro c _ hc
         have : c.val < p - 1 := by have := c.isLt; have : c.val ≠ p - 1 := fun e => hc (Fin.ext e); omega
         rw [hlh.2 c ⟨p - 1, by omega⟩ (kL_lt.mpr (Fin.lt_def.mpr this)), mul_zero]
       · simp
-    · rw [dif_neg hps, dif_neg hps]
+    · rw [dite_eq_right hps, dite_eq_right hps]
   · rw [symmetricScalarBlockMatrix_mul, supS_eq, supS_eq, supS_eq]
     simp only [Matrix.one_mul, Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add, Matrix.mul_one]
     rw [symmetricScalarBlockMatrix_transpose, subdiagonal_sum_block2]
     congr 2
     unfold cornerB
     by_cases hps : 0 < s ∧ 0 < p
-    · rw [dif_pos hps, dif_pos hps, transpose_apply, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
+    · rw [dite_eq_left hps, dite_eq_left hps, transpose_apply, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
       · rw [huh.1, one_mul]; rfl
       · intro c _ hc
         have : c.val < p - 1 := by have := c.isLt; have : c.val ≠ p - 1 := fun e => hc (Fin.ext e); omega
         rw [huh.2 ⟨p - 1, by omega⟩ c (kU_lt.mpr (Fin.lt_def.mpr this)), zero_mul]
       · simp
-    · rw [dif_neg hps, dif_neg hps]
+    · rw [dite_eq_right hps, dite_eq_right hps]
 
 theorem cornerInv : CornerInv := by
   intro p s a b lh uh l u hlh hl huh hu
@@ -783,7 +783,7 @@ theorem cornerInv : CornerInv := by
   constructor
   · unfold cornerA
     by_cases hps : 0 < s ∧ 0 < p
-    · rw [dif_pos hps, dif_pos hps, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
+    · rw [dite_eq_left hps, dite_eq_left hps, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
       · rw [hlhi.1, mul_one, Matrix.mul_apply, Finset.sum_eq_single ⟨0, hps.1⟩]
         · rw [hl.1, one_mul]; rfl
         · intro c _ hc
@@ -794,10 +794,10 @@ theorem cornerInv : CornerInv := by
         have : c.val < p - 1 := by have := c.isLt; have : c.val ≠ p - 1 := fun e => hc (Fin.ext e); omega
         rw [hlhi.2 c ⟨p - 1, by omega⟩ (kL_lt.mpr (Fin.lt_def.mpr this)), mul_zero]
       · simp
-    · rw [dif_neg hps, dif_neg hps]
+    · rw [dite_eq_right hps, dite_eq_right hps]
   · unfold cornerB
     by_cases hps : 0 < s ∧ 0 < p
-    · rw [dif_pos hps, dif_pos hps, Matrix.mul_apply, Finset.sum_eq_single ⟨0, hps.1⟩]
+    · rw [dite_eq_left hps, dite_eq_left hps, Matrix.mul_apply, Finset.sum_eq_single ⟨0, hps.1⟩]
       · rw [hu.1, mul_one, Matrix.mul_apply, Finset.sum_eq_single ⟨p - 1, by omega⟩]
         · rw [huhi.1, one_mul]; rfl
         · intro c _ hc
@@ -808,7 +808,7 @@ theorem cornerInv : CornerInv := by
         have : 0 < c.val := by have : c.val ≠ 0 := fun e => hc (Fin.ext e); omega
         rw [hu.2 c ⟨0, hps.1⟩ (kU_lt.mpr (Fin.lt_def.mpr this)), mul_zero]
       · simp
-    · rw [dif_neg hps, dif_neg hps]
+    · rw [dite_eq_right hps, dite_eq_right hps]
 
 end twoBlocks
 

@@ -249,7 +249,7 @@ def Dp (k : ℕ) (b : F) : (Proj (piece hN)).Opens := by
   classical exact if hb : b ∈ N k then Proj.basicOpen (piece hN) (hel hN k b hb) else ⊥
 
 theorem Dp_of_mem {k : ℕ} {b : F} (hb : b ∈ N k) : Dp hN k b = Proj.basicOpen (piece hN) (hel hN k b hb) := by
-  rw [Dp, dif_pos hb]
+  rw [Dp, dite_eq_left hb]
 
 def psi [IsIntegral (Proj (piece hN))] : (Proj (piece hN)).functionField →+* F :=
   (psiAt hN _).comp (Proj.stalkIso' (piece hN) (genericPoint (Proj (piece hN)))).toRingHom

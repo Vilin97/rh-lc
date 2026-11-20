@@ -365,7 +365,7 @@ theorem cHalf_spec {I' : Ideal (𝓞 E)} (h : I' ⊔ I'.map (H.bar : 𝓞 E →+
     have : mb - 1 = -m := by rw [← hsum]; ring
     rw [this]; exact neg_mem hm
   unfold cHalf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem dvd_EF {m : ℕ} (x : Dw.La) {y : Dw.La}

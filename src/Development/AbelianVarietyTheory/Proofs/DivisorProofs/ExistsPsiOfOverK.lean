@@ -57,7 +57,7 @@ theorem labels_overK : ∀ {D : D7} (σ : D.what₂.LL →+* ℂ),
   have main : ∀ ρ, labE σ (lab σ ρ) = tauE D ρ := by
     intro ρ
     have hs : labE σ (lab σ ρ) = tauE D ρ ∨ labE σ (lab σ ρ) = (starRingEnd ℂ).comp (tauE D ρ) := by
-      unfold lab; rw [dif_pos (ConjReading.lab_exists σ ρ)]; exact (ConjReading.lab_exists σ ρ).choose_spec
+      unfold lab; rw [dite_eq_left (ConjReading.lab_exists σ ρ)]; exact (ConjReading.lab_exists σ ρ).choose_spec
     refine hs.resolve_right fun h' => ?_
     rw [key] at h'
     exact ConjReading.conj_not_mem D ρ _ h' (Subgroup.mul_mem _ hg (D.eTau _).2)

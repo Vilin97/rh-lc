@@ -60,7 +60,7 @@ theorem coset_transport {G H : Type} [Group G] [Group H] (ψ : G →* H) (T U J 
     · rw [Finset.sum_image]
       · refine Finset.sum_congr rfl fun γ hγ => ?_
         have hc : ∃ x ∈ Ds, (x : G ⧸ J) = (pre γ : G ⧸ J) := ⟨_, hpD γ hγ, rfl⟩
-        rw [dif_pos hc]
+        rw [dite_eq_left hc]
         have hj : hc.choose⁻¹ * pre γ ∈ J := QuotientGroup.eq.1 hc.choose_spec.2
         have ht : hc.choose⁻¹ * pre γ ∈ T := mul_mem (inv_mem hc.choose_spec.1.1) (hpre γ hγ).2
         rw [← hF (g * hc.choose) _ hj ht, mul_assoc, mul_inv_cancel_left]
@@ -197,7 +197,7 @@ theorem transport_label : GlobalTheory.Published.AutomorphicFormsFiniteGL → �
       (hA.PV j).ψ (Formalism.IndefR.principalLevelFrame.pre (hA.PV j) γ) = γ := by
     intro γ hγ
     have h := (hA.PV j).onto γ (hR1 γ hγ).1
-    rw [Formalism.IndefR.principalLevelFrame.pre, dif_pos h]
+    rw [Formalism.IndefR.principalLevelFrame.pre, dite_eq_left h]
     exact h.choose_spec
   obtain ⟨Ds, d1, d2, d3, d4⟩ := coset_transport (hA.PV j).ψ (GlobalTheory.InertSph.Gv D.host.E D.R.nV sp.v)
     (Umax D.host.E D.R.nV) (P.M.loc i).J _ α (GlobalTheory.Hk3.rep (Formalism.IndefR.Links.Vc D j) sp.w d)

@@ -31,7 +31,7 @@ private theorem valR_comp_eq_valR_app' {A : Type} [CommRing A] {X Z : Scheme.{0}
     valR x O ((m.appLE U O h).hom r) = valR (x ≫ m) U r := by
   have hU : ⊤ ≤ (x ≫ m) ⁻¹ᵁ U := fun p hp => h (hO hp)
   unfold valR
-  rw [dif_pos hO, dif_pos hU]
+  rw [dite_eq_left hO, dite_eq_left hU]
   congr 1
   show ((m.appLE U O h) ≫ x.appLE O ⊤ hO).hom r = _
   rw [Scheme.Hom.appLE_comp_appLE]

@@ -159,7 +159,7 @@ theorem mass_tr {φ : V ≃ₗ[K] V'} (hφ : ∀ x y, h' (φ x) (φ y) = h x y) 
       rw [tr_symm_tr] at this
       exact ⟨_, this⟩
     unfold mass
-    rw [dif_neg hs, dif_neg hs']
+    rw [dite_eq_right hs, dite_eq_right hs']
 
 theorem mass_ortho_eq {n : ℕ} {L : Submodule (𝓞 K) V} {L' : Submodule (𝓞 K) V'}
     (hL : IsOrthoLattice h L n) (hL' : IsOrthoLattice h' L' n) : mass h L = mass h' L' := by

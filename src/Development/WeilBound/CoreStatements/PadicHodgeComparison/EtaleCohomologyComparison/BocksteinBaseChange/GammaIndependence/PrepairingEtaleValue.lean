@@ -85,7 +85,7 @@ def cP (M : Model l K) (n : ℕ) : M.V n →+ (Module.Dual K (HdR M.q n) →+ R.
 
 theorem cP_tmV {M : Model l K} (hM : G M) (n : ℕ) (z : ℚ_[l]) (u : M.T n) (φ : Module.Dual K (HdR M.q n)) :
     cP hF hL E β κ M n (tmV M n z u) φ = R.q z * gamma hF β κ (a0 hL M hM) n (E.e _ n u) φ := by
-  rw [cP, dif_pos hM, cV_tmV]
+  rw [cP, dite_eq_left hM, cV_tmV]
 
 theorem cP_toV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (u : M.T n) (φ : Module.Dual K (HdR M.q n)) :
     cP hF hL E β κ M n (M.toV n u) φ = gamma hF β κ a n (E.e a n u) φ := by
@@ -93,7 +93,7 @@ theorem cP_toV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (u : M.T n) (φ
 
 theorem cP_not {M : Model l K} (hM : ¬ G M) (n : ℕ) (v : M.V n) (φ : Module.Dual K (HdR M.q n)) :
     cP hF hL E β κ M n v φ = 0 := by
-  rw [cP, dif_neg hM]; rfl
+  rw [cP, dite_eq_right hM]; rfl
 
 include hL in
 

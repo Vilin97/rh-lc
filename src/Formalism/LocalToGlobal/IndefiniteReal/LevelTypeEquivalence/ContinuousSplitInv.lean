@@ -59,7 +59,7 @@ theorem atTau_eq (τ : D.what₂.Tau) (g : Matrix (Fin V.rank) (Fin V.rank) ℂ)
     atTau (thetaC D) V τ g = atH D V τ g hg := by
   have hex : ∃ x, IsAtTau (thetaC D) V τ g x := ⟨_, isAtTau_atH D V τ g hg⟩
   unfold atTau
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact matA_inj D V ((matA_of_isAtTau D V hex.choose_spec).trans (matA_atH D V τ g hg).symm)
 
 theorem atH_one (τ : D.what₂.Tau) : atH D V τ 1 (unitary_one D V τ) = 1 := by

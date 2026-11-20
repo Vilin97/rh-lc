@@ -76,7 +76,7 @@ theorem step_lamLevi : LeviSubgroupRestriction := by
   have hchk : ∀ a, Grp.chk (G.μ a / G.μnext a) (G.Δ a (p : GL (Fin n) k)) =
       (((G.μ a / G.μnext a) (∏ b, (if b ≤ a then D b else 1)) : ℂˣ) : ℂ) := by
     intro a
-    rw [Grp.chk, dif_neg (by rw [hΔ a]; exact Units.ne_zero _)]
+    rw [Grp.chk, dite_eq_right (by rw [hΔ a]; exact Units.ne_zero _)]
     congr 3
     ext
     simp [hΔ a]

@@ -218,7 +218,7 @@ theorem colFrame_lt (L : LevCh D T) {j : ℕ} (h : j < D.R.m) : HEq (colFrame L 
 
 theorem colFrame_m (L : LevCh D T) : HEq (colFrame L D.R.m) L.βX := by
   obtain ⟨j, hj⟩ : ∃ j, D.R.m = j + 1 := ⟨D.R.m - 1, by have := D.R.two_le_m; omega⟩
-  have : HEq (colFrame L (j + 1)) L.βX := by rw [colFrame, dif_neg (by omega)]; exact cast_heq _ _
+  have : HEq (colFrame L (j + 1)) L.βX := by rw [colFrame, dite_eq_right (by omega)]; exact cast_heq _ _
   rwa [← hj] at this
 
 structure Frames (G : GridData L sc) where

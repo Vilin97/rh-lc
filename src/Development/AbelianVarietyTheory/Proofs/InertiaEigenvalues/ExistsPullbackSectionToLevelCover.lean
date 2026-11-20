@@ -124,7 +124,7 @@ theorem pullRule_eq (f : Rul Xo c) (p : TRing d.c₂.F) (u : FrPt d.Xo₂ d.c₂
   intro y hy
   have h : ∃ y : FrPt Xo c p.R, FrOver d u y := ⟨y, hy⟩
   unfold pullRule
-  rw [dif_pos h, GlobalTheory.ClassSumCompare.frUnder_unique d h.choose_spec hy]
+  rw [dite_eq_left h, GlobalTheory.ClassSumCompare.frUnder_unique d h.choose_spec hy]
 
 end GlobalTheory.CovPull
 
@@ -175,7 +175,7 @@ theorem evR_pullRule (hO : GlobalTheory.ClsVal.Cmp.OverBase d) (hK : KA l ≤ KA
   have e : evR d.Xo₂ d.c₂ (pullRule d f) y₂ =
       hT.choose_spec.choose (pullRule d f hT.choose hT.choose_spec.choose_spec.choose) := by
     unfold evR evalAt
-    rw [dif_pos hT]
+    rw [dite_eq_left hT]
   rw [e]
   exact key _ _ _ hT.choose_spec.choose_spec.choose_spec
 

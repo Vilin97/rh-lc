@@ -153,7 +153,7 @@ theorem ordRat_eq_of_pow {x : Ω} {m : ℕ} {a : K} (hm : 0 < m) (ha : a ≠ 0)
     (h : valuation Ω x ^ m = valuation Ω (algebraMap K Ω a)) : ordRat K x = ord a / m := by
   have hex : ∃ p : ℕ × K, 0 < p.1 ∧ p.2 ≠ 0 ∧
       valuation Ω x ^ p.1 = valuation Ω (algebraMap K Ω p.2) := ⟨(m, a), hm, ha, h⟩
-  rw [ordRat, dif_pos hex]
+  rw [ordRat, dite_eq_left hex]
   obtain ⟨hp1, hp2, hp3⟩ := hex.choose_spec
   set p := hex.choose
 
@@ -172,7 +172,7 @@ omit [ValuativeExtension K Ω] in
 
 @[simp]
 theorem ordRat_zero : ordRat K (0 : Ω) = 0 := by
-  rw [ordRat, dif_neg]
+  rw [ordRat, dite_eq_right]
   rintro ⟨p, hp1, hp2, hp3⟩
   rw [map_zero, zero_pow hp1.ne'] at hp3
   exact ((_root_.map_ne_zero _).mpr hp2) ((Valuation.zero_iff _).mp hp3.symm)

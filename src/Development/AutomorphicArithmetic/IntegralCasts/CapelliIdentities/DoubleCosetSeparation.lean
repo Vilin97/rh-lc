@@ -118,7 +118,7 @@ theorem UpperTheory.Reformulated.B.DoubleCosetSeparation.dcosSep :
     have h0 : Valued.v (ϖ : w.adicCompletion E) ≠ 0 := by simp
     have h1 : Valued.v (ϖ : w.adicCompletion E) < 1 := by
       unfold Formalism.UG.ordL at hϖ
-      rw [dif_neg h0] at hϖ
+      rw [dite_eq_right h0] at hϖ
       rw [← WithZero.coe_unzero h0, ← WithZero.coe_one, WithZero.coe_lt_coe, ← Multiplicative.toAdd_lt]
       rw [toAdd_one]
       omega

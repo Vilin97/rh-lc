@@ -93,7 +93,7 @@ termination_by I.card
 decreasing_by exact Finset.card_erase_lt_of_mem (Finset.max'_mem _ _)
 
 lemma img_empty (m : Matrix (Fin k) (Fin k) A) : img m ∅ = extOne := by
-  rw [img, dif_neg Finset.not_nonempty_empty]
+  rw [img, dite_eq_right Finset.not_nonempty_empty]
 
 lemma img_insert_max (m : Matrix (Fin k) (Fin k) A) (b : Fin k) (I : Finset (Fin k)) (hb : ∀ x ∈ I, x < b) :
     img m (insert b I) = wedgeR (m b) (img m I) := by
@@ -106,7 +106,7 @@ lemma img_insert_max (m : Matrix (Fin k) (Fin k) A) (b : Fin k) (I : Finset (Fin
       · exact le_rfl
       · exact (hb y hy).le
     · exact Finset.le_max' _ _ (Finset.mem_insert_self b I)
-  rw [img, dif_pos (Finset.insert_nonempty b I)]
+  rw [img, dite_eq_left (Finset.insert_nonempty b I)]
   simp only [hmax, Finset.erase_insert hbI]
 
 lemma sg_top (a : Fin k) (I : Finset (Fin k)) (hb : ∀ x ∈ I, x < a) : exteriorSign A (insert a I) a = 1 := by

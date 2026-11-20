@@ -100,14 +100,14 @@ theorem parA_eq (D : D7) (eta : D.what₂.Tau → ℚ) (h : ∀ τ, eta τ = 1 /
     · simp only [Prod.mk.injEq] at hi
       obtain ⟨rfl, rfl⟩ := hi
       refine ⟨⟨i, by have := i.2; omega⟩, ?_, ?_⟩
-      · unfold lamAt; rw [dif_pos i.2]
+      · unfold lamAt; rw [dite_eq_left i.2]
       · unfold sgA; simp [i.2]
     · simp only [Prod.mk.injEq] at hi
       obtain ⟨rfl, rfl⟩ := hi
       refine ⟨⟨D.R.k - 1 + i, by have := i.2; omega⟩, ?_, ?_⟩
       · unfold lamAt
-        rw [dif_neg (show ¬ (D.R.k - 1 + (i : ℕ) < D.R.k - 1) by omega),
-          dif_pos (show D.R.k - 1 + (i : ℕ) - (D.R.k - 1) < D.R.m by have := i.2; omega)]
+        rw [dite_eq_right (show ¬ (D.R.k - 1 + (i : ℕ) < D.R.k - 1) by omega),
+          dite_eq_left (show D.R.k - 1 + (i : ℕ) - (D.R.k - 1) < D.R.m by have := i.2; omega)]
         simp only [Nat.add_sub_cancel_left]
       · unfold sgA
         simp only [Nat.even_iff]
@@ -117,12 +117,12 @@ theorem parA_eq (D : D7) (eta : D.what₂.Tau → ℚ) (h : ∀ τ, eta τ = 1 /
     by_cases c : (a : ℕ) < D.R.k - 1
     · refine ⟨_, Or.inl ⟨⟨a, c⟩, rfl⟩, ?_, ?_⟩
       · change (D.hc τ).v ⟨a, c⟩ = lamAt (D.hc τ) a
-        unfold lamAt; rw [dif_pos c]
+        unfold lamAt; rw [dite_eq_left c]
       · change true = sgA D.R a
         unfold sgA; simp [c]
     · refine ⟨_, Or.inr ⟨⟨(a : ℕ) - (D.R.k - 1), by omega⟩, rfl⟩, ?_, ?_⟩
       · change -(D.hc τ).b _ = lamAt (D.hc τ) a
-        unfold lamAt; rw [dif_neg c, dif_pos (by omega)]
+        unfold lamAt; rw [dite_eq_right c, dite_eq_left (by omega)]
       · change decide _ = sgA D.R a
         unfold sgA
         simp only [Nat.even_iff]

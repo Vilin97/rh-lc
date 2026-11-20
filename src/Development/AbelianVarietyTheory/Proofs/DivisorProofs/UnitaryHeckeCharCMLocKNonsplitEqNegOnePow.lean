@@ -15,7 +15,7 @@ theorem valued_eq_exp_ordL (v : HeightOneSpectrum (𝓞 F)) (x : (v.adicCompleti
   rw [← WithZero.exp_log h0]
   congr 1
   unfold Formalism.UG.ordL
-  rw [dif_neg h0, neg_neg]
+  rw [dite_eq_right h0, neg_neg]
   have key : ∀ (z : WithZero (Multiplicative ℤ)) (h : z ≠ 0), WithZero.log z = Multiplicative.toAdd (WithZero.unzero h) := by
     intro z h
     cases z with

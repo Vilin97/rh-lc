@@ -1254,20 +1254,20 @@ theorem comb {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonar
   let X : Matrix (Fin n) (Fin n) k →* ℂ :=
     { toFun := fun M => if h : M.det ≠ 0 then χ (GeneralLinearGroup.mkOfDetNeZero M h) else 0
       map_one' := by
-        rw [dif_pos (by simp), ← map_one χ]
+        rw [dite_eq_left (by simp), ← map_one χ]
         congr 1
         exact Units.ext rfl
       map_mul' := fun M N => by
         by_cases hM : M.det ≠ 0
         · by_cases hN : N.det ≠ 0
-          · rw [dif_pos hM, dif_pos hN, dif_pos (by rw [det_mul]; exact mul_ne_zero hM hN), ← map_mul]
+          · rw [dite_eq_left hM, dite_eq_left hN, dite_eq_left (by rw [det_mul]; exact mul_ne_zero hM hN), ← map_mul]
             congr 1
             exact Units.ext rfl
-          · rw [dif_neg hN, mul_zero, dif_neg (by simp [not_not.1 hN])]
-        · rw [dif_neg hM, zero_mul, dif_neg (by simp [not_not.1 hM])] }
+          · rw [dite_eq_right hN, mul_zero, dite_eq_right (by simp [not_not.1 hN])]
+        · rw [dite_eq_right hM, zero_mul, dite_eq_right (by simp [not_not.1 hM])] }
   have hXe : ∀ M (h : M.det ≠ 0), χ (GeneralLinearGroup.mkOfDetNeZero M h) = X M := fun M h => by
     show _ = dite _ _ _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   have hX : ∀ M : Matrix (Fin n) (Fin n) k, M.det ≠ 0 → X M ≠ 0 := fun M h => by
     rw [← hXe M h]; exact ((Group.isUnit _).map χ).ne_zero
   obtain ⟨ϖ, hϖ⟩ := exists_isUnif (k := k)

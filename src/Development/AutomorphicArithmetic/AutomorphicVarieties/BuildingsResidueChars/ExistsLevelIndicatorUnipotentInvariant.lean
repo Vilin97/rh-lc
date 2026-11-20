@@ -27,7 +27,7 @@ private theorem blocks_read {R : Type} [CommRing R] {x y : Matrix (Fin 2) (Fin 2
     exact Nat.le_add_right _ _
   have row : ∀ (a : Fin 2) (l : Fin (2 + 2)), blockEntry X (finSumFinEquiv (Sum.inr a)) l = 0 := by
     intro a l
-    rw [blockEntry_apply, dif_neg]
+    rw [blockEntry_apply, dite_eq_right]
     intro hh
     have := vr a
     omega
@@ -45,7 +45,7 @@ private theorem blocks_read {R : Type} [CommRing R] {x y : Matrix (Fin 2) (Fin 2
     intro l _
     obtain ⟨l, rfl⟩ := finSumFinEquiv.surjective l
     rcases l with l | l
-    · rw [blockEntry_apply, dif_neg, zero_mul]
+    · rw [blockEntry_apply, dite_eq_right, zero_mul]
       intro hh
       have := vl l
       omega

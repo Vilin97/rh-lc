@@ -116,7 +116,7 @@ theorem cls_spec (hR : IsRowReps D (X.Fu u) what₂) (hL : LatRowLat X u) (h : H
   have hex : ∃ Λ', Λ' ∈ what₂ ∧ Eqv X u Λ' (lat X u h) :=
     (hR.2 (lat X u h) (hL h (lat X u h) (lat_coe X u h))).exists
   unfold cls
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact Classical.choose_spec hex
 
 theorem cls_eq (hR : IsRowReps D (X.Fu u) what₂) (hL : LatRowLat X u) {h : Hfin X u}

@@ -48,7 +48,7 @@ theorem UpperTheory.padic_log_sum_eq_archimedean :
   congr 1
   funext p
   by_cases hp : p.Prime
-  · rw [dif_pos hp]
+  · rw [dite_eq_left hp]
     haveI : Fact p.Prime := ⟨hp⟩
     have h := GlobalTheory.T.p_adic_product_formula K p b hb
     rw [finsum_eq_sum_of_fintype] at h
@@ -57,5 +57,5 @@ theorem UpperTheory.padic_log_sum_eq_archimedean :
       Nat.factorization_def _ hp, Nat.factorization_def _ hp, padicValRat_def, padicValInt]
     rw [Int.cast_sub, Int.cast_natCast, Int.cast_natCast]
     ring
-  · rw [dif_neg hp]
+  · rw [dite_eq_right hp]
     simp [Nat.factorization_eq_zero_of_not_prime _ hp]

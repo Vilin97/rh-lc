@@ -47,7 +47,7 @@ def reps (N : ℕ) : Finset (GAf L n) :=
   if h : ∃ T, IsClassReps (congSub L n N) T then h.choose else ∅
 
 theorem reps_spec {N : ℕ} (hN : 0 < N) : IsClassReps (congSub L n N) (reps L n N) := by
-  rw [reps, dif_pos (exists_reps_cong hN)]
+  rw [reps, dite_eq_left (exists_reps_cong hN)]
   exact (exists_reps_cong hN).choose_spec
 
 def InvAt {W : Type} (N : ℕ) (f : GAf L n → W) : Prop := ∀ κ, NG.Cong L n N κ → ∀ g, f (g * κ) = f g
@@ -110,7 +110,7 @@ def lev {W : Type} (f : GAf L n → W) : ℕ := if h : ∃ N, 0 < N ∧ InvAt N 
 theorem lev_spec {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation ℂ (GQ L n) W} {f : GAf L n → W}
     (hf : f ∈ NG.AFall L n ρ) : 0 < lev f ∧ InvAt (lev f) f := by
   have h : ∃ N, 0 < N ∧ InvAt N f := hf.2
-  rw [lev, dif_pos h]
+  rw [lev, dite_eq_left h]
   exact h.choose_spec
 
 variable (a : NG.AlgWt L n) (β : a.W →ₗ⋆[ℂ] a.W →ₗ[ℂ] ℂ)

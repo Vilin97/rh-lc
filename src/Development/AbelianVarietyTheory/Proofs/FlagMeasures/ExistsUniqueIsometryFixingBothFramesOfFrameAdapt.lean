@@ -30,13 +30,13 @@ lemma dl_swap (F : FlagG S r T) (F' : FlagG S r T') (l : ℕ) : Dl F' F l = star
 
 lemma dl_top (F : FlagG S r T) (F' : FlagG S r T') : Dl F F' (r + 1) = (Zhat F F').det := by
   unfold Dl leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 lemma dl_adj (F : FlagG S r T) (F' : FlagG S r T') :
     (Zhat F F').adjugate (Fin.last r) (Fin.last r) = Dl F F' r := by
   unfold Dl leadMinorE
-  rw [dif_pos (Nat.le_succ r), Matrix.adjugate_fin_succ_eq_det_submatrix, Fin.succAbove_last]
+  rw [dite_eq_left (Nat.le_succ r), Matrix.adjugate_fin_succ_eq_det_submatrix, Fin.succAbove_last]
   rw [Even.neg_one_pow ⟨_, rfl⟩, one_mul]
   congr 1
 

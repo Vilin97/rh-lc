@@ -52,7 +52,7 @@ theorem posAt_of_cptCoef_of_xiExists (hXi : B.XiExists) : P5.ThmPActualCpt → �
       (fun e => Formalism.FourierDecayAlt.P.slice_compact_support_coefficient Wp Wq P p F j hj w h hh hF e)
     exact (Complex.nonneg_iff.1 h0).1
   · unfold KB.Pl.RR D.RRplace
-    rw [dif_neg (fun h1 => hh h1.1)]
+    rw [dite_eq_right (fun h1 => hh h1.1)]
     simp
 
 theorem formPosCpt_of_xiExists (hXi : B.XiExists) : PBL.FormPosCpt :=

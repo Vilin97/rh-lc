@@ -38,7 +38,7 @@ theorem exists_abstract_value {G R : Type} [AddCommGroup G] [AddCommGroup R] (ψ
       rw [sub_sub_sub_cancel_left] at h1
       exact sub_eq_zero.1 (hKL _ (L.sub_mem h.choose_spec.1 hl') h1)
     show dite _ _ _ = _
-    rw [dif_pos h, e]
+    rw [dite_eq_left h, e]
   have gen : ∀ u ∈ L, (∀ l ∈ L, ψ (B l u) * ψ (B (p (l + u)) (l + u)) = ψ (B (p l) l)) →
       ∀ x, ψ (B x u) * χ (x + u) = χ x := fun u hu H x => by
     by_cases h : ∃ l ∈ L, K (x - l)

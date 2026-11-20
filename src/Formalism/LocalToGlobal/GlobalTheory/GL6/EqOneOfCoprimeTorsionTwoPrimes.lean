@@ -158,7 +158,7 @@ theorem torsion_reduction_trivial (S : StepLevel F E σ J T f bad) (G : GLoc F E
       Ideal.Quotient.mk (IsLocalRing.maximalIdeal (v.adicCompletionIntegers F)) (A p q) := by
     intro p q
     unfold redM
-    rw [dif_pos (show G.mat i v h fr x p q ∈ v.adicCompletionIntegers F from hMi p q)]
+    rw [dite_eq_left (show G.mat i v h fr x p q ∈ v.adicCompletionIntegers F from hMi p q)]
     rfl
   have hup : redGL (n := Fin n) (IsLocalRing.maximalIdeal (v.adicCompletionIntegers F)) aGL ∈
       upperUni n (v.adicCompletionIntegers F ⧸ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F)) := by

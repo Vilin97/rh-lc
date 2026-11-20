@@ -160,7 +160,7 @@ theorem gf_pos_tr (hT : Formalism.L2.SG.Pf.Bridge.TrHyp F Qm Qim c) (hT' : Forma
   have hΛpos : 0 < Λ := Finset.prod_pos fun i _ => Complex.normSq_pos.mpr
     (Formalism.L2.SG.Pf.Bridge.lam_ne hT one_ne_zero _)
   unfold Gv Formalism.L2.SG.RealObj.Dl at h
-  rw [dif_pos le_rfl, dif_pos (Nat.le_succ r)] at h
+  rw [dite_eq_left le_rfl, dite_eq_left (Nat.le_succ r)] at h
   rw [← Complex.normSq_eq_norm_sq, ← Complex.normSq_eq_norm_sq] at h
   have hΛ2 : 0 < Λ * Λ := mul_pos hΛpos hΛpos
   have key := mul_pos hΛ2 h

@@ -27,7 +27,7 @@ private theorem valR_restrict_eq_valR {A : Type} [CommRing A] {X : Scheme.{0}} (
       ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR y U f := by
   have hU : ⊤ ≤ (TopologicalSpace.Opens.map y.base).obj U := h.trans (fun z hz => hVU hz)
   unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR
-  rw [dif_pos h, dif_pos hU]
+  rw [dite_eq_left h, dite_eq_left hU]
   congr 1
   rw [← RingHom.comp_apply, ← CommRingCat.hom_comp, AlgebraicGeometry.Scheme.Hom.map_appLE]
 

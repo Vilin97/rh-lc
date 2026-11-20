@@ -120,7 +120,7 @@ theorem fourth_expansion_identity : ExpansionDualCovector := by
       · have hx : ¬ (2 * (i0 + s'' + 1) + k - p.val < i0) := by
           intro hlt; apply hp
           exact ⟨⟨2 * (i0 + s'' + 1) + k - p.val, hlt⟩, by ext; simp [sR, esI]; omega⟩
-        unfold Zb; rw [dif_pos ha, dif_neg hx, star_zero]
+        unfold Zb; rw [dite_eq_left ha, dite_eq_right hx, star_zero]
       · rfl
     · intro a b
       have hb := b.isLt
@@ -130,7 +130,7 @@ theorem fourth_expansion_identity : ExpansionDualCovector := by
       have hav : (Fin.castLE (by omega : i0 ≤ i0 + s'' + 1) a).val = a.val := by simp
       unfold Zb
       rw [hav, hsv]
-      rw [dif_pos a.isLt, dif_pos (by omega)]
+      rw [dite_eq_left a.isLt, dite_eq_left (by omega)]
       congr 2
       apply Fin.ext; simp only; omega
   have hP := fourth_peeling_identity A k (i0 + s'') z' yb E hG i ell hz' hyb

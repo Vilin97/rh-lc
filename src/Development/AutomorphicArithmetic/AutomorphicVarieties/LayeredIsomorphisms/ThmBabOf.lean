@@ -46,7 +46,7 @@ theorem UpperTheory.V.Win.thmBab_of :
         exact ⟨R', ⟨_, L₀, _, _, hab, hR'⟩⟩
       have hRl : Rl l (L l) = Classical.choose hP := by
         show (if h : ∃ R, P l (L l) R then Classical.choose h else 0) = _
-        rw [dif_pos hP]
+        rw [dite_eq_left hP]
       obtain ⟨_, L₀₀, _, _, hab0, hR0⟩ := Classical.choose_spec hP
       obtain ⟨x0, hx0⟩ := partB CK hCKpos hK l (Classical.choose hP) hl2 (L l) hmu L₀₀ hab0 hR0
         J Ct eps A1 hJpos hCt0.le heps

@@ -73,11 +73,11 @@ theorem GlobalTheory.StepVec.onHalf_viaRed_eq_locFn : ∀ (D : D7) (v : FinPl D)
       exact (hr.2.2.2 (N i j) (h i j)).1
   unfold viaRed
   by_cases hI : IsIntM N
-  · rw [dif_pos (hiff.2 hI), if_pos ⟨hh, hI⟩]
+  · rw [dite_eq_left (hiff.2 hI), if_pos ⟨hh, hI⟩]
     congr 1
     ext i j
     obtain ⟨hm, hm'⟩ := hr.2.2.2 (N i j) (hI i j)
     simp only [Matrix.of_apply, Matrix.map_apply]
     unfold redM
-    rw [dif_pos (hI i j), ← hm']
-  · rw [dif_neg (fun h => hI (hiff.1 h)), if_neg (fun h => hI h.2)]
+    rw [dite_eq_left (hI i j), ← hm']
+  · rw [dite_eq_right (fun h => hI (hiff.1 h)), if_neg (fun h => hI h.2)]

@@ -107,7 +107,7 @@ theorem avg_eq {ξ : Fin (m + 1) → k} {A : AddSubgroup (Fin (m + 1) → k)} {v
     avg ψ h π ξ A v = ((p.2.card : ℂ)⁻¹) •
       ∑ t ∈ p.2, (starRingEnd ℂ ((ψ (ξ ⬝ᵥ t) : Circle) : ℂ)) • π (colEl k m N h t) v := by
   have hd : ∃ p, AvgData ψ h π ξ A v p := ⟨p, hp⟩
-  rw [avg, dif_pos hd]
+  rw [avg, dite_eq_left hd]
   obtain ⟨hq1, hq2, hq3, hq4, hq5, hq6⟩ := hd.choose_spec
   obtain ⟨hp1, hp2, hp3, hp4, hp5, hp6⟩ := hp
   have key := card_smul_sum_eq hq1 hp1 hq5 hq6 hp5 hp6
@@ -400,7 +400,7 @@ theorem avg_zero_char (ξ0 : Fin (m + 1) → k) (hξ0 : ξ0 = 0) (A : AddSubgrou
     rw [avg_eq h π ψ hp, avg_eq h π 1 ((hiff p).mp hp)]
     simp only [zero_dotProduct, AddChar.map_zero_eq_one]
   · have hd' : ¬ ∃ p, AvgData 1 h π 0 A v p := fun ⟨p, hp⟩ => hd ⟨p, (hiff p).mpr hp⟩
-    rw [avg, avg, dif_neg hd, dif_neg hd']
+    rw [avg, avg, dite_eq_right hd, dite_eq_right hd']
 
 theorem avg_congr_char (hψ : Continuous ψ) (hπ : IsSmooth π) {ξ ξ' : Fin (m + 1) → k} {A : AddSubgroup (Fin (m + 1) → k)}
     (hA : IsLat A) (hξ : ∀ a ∈ A, ψ (ξ ⬝ᵥ a) = ψ (ξ' ⬝ᵥ a)) (v : V) :

@@ -142,14 +142,14 @@ theorem depth_sum {D : D7} (B : WeightFamilies.Prov D) {j : ℕ} (large₂ : Siz
     unfold nusOf primeBound
     rw [H1algLink.eWL_eq]
     by_cases ha : ∃ i : Fin 2, ((D.host.g i : ℕ) : 𝓞 B.KO) ∈ la.asIdeal
-    · rw [dif_pos ha, mul_div_assoc]
+    · rw [dite_eq_left ha, mul_div_assoc]
       refine mul_le_mul_of_nonneg_left ?_ (by positivity)
       have hc := (H1algLink.prime_mem_iff la (hg _)).1 (Classical.choose_spec ha)
       have := Finset.single_le_sum (fun i (_ : i ∈ Finset.univ) => e3 (resCharOf la) i)
         (Finset.mem_univ (Classical.choose ha))
       rw [if_pos hc] at this
       linarith
-    · rw [dif_neg ha]
+    · rw [dite_eq_right ha]
       refine mul_le_mul_of_nonneg_left ?_ (by positivity)
       by_cases hb : ((D.host.QS : ℕ) : 𝓞 B.KO) ∈ la.asIdeal
       · rw [if_pos hb, show ringChar (𝓞 B.KO ⧸ la.asIdeal) = resCharOf la from rfl]
@@ -172,7 +172,7 @@ theorem depth_sum {D : D7} (B : WeightFamilies.Prov D) {j : ℕ} (large₂ : Siz
     have a5 := e4 la
     rw [if_neg hnA] at a5
     unfold nusOf
-    rw [dif_neg (fun ⟨i, hi⟩ => hne _ (hgS i) (hg i) hi), if_neg (fun h => hla (hsm ((hQ la).1 h))),
+    rw [dite_eq_right (fun ⟨i, hi⟩ => hne _ (hgS i) (hg i) hi), if_neg (fun h => hla (hsm ((hQ la).1 h))),
       if_neg (not_or.2 ⟨hne _ (by simp [hS]) hq, hne _ (by simp [hS]) hd⟩), le_antisymm a5 (h0 la)]
     simp
 

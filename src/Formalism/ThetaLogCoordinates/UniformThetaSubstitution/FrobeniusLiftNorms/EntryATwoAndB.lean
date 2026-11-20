@@ -48,7 +48,7 @@ def iN (β : KapI ν r1 E →₀ ℕ) (s : ZMod (2 * ν)) (e' : ℕ) : ℕ :=
 lemma iN_of_not_mem (β : KapI ν r1 E →₀ ℕ) (s : ZMod (2 * ν)) (e' : ℕ) (h : e' ∉ range E) :
     iN β s e' = 0 := by
   unfold iN
-  rw [dif_neg (fun h' => h (Finset.mem_range.2 h'))]
+  rw [dite_eq_right (fun h' => h (Finset.mem_range.2 h'))]
 
 lemma sum_iN [NeZero ν] (β : KapI ν r1 E →₀ ℕ) (A : Finset (ZMod (2 * ν))) :
     ∑ s ∈ A, ∑ e' ∈ range E, iN β s e' =

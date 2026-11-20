@@ -23,7 +23,7 @@ theorem th_pull_tauOf (w : HeightOneSpectrum (𝓞 X.K)) (hw : (Pr.T u : 𝓞 X.
   have := hX.nonempty_Tau
   have e : tauOfR hX hPr u w P = tauOfC w P.1 := by
     unfold tauOfR
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
     rfl
   rw [e]
   by_cases hs : seenC Pr u w

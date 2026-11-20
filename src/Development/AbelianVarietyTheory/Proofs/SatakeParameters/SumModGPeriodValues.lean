@@ -36,7 +36,7 @@ theorem chArg_smul_extZero {k : Type} [CommRing k] {n' n c : ℕ} (a : k)
     (y : (Fin n' → k) →ₗ[k] (Fin n → k)) : Loc.chArg (a • extZero (c + 1) c y) = 0 := by
   rw [chArg_eq]
   refine Finset.sum_eq_zero fun i _ => ?_
-  rw [LinearMap.smul_apply, Pi.smul_apply, extZero_single, dif_neg (by simp; omega), smul_zero]
+  rw [LinearMap.smul_apply, Pi.smul_apply, extZero_single, dite_eq_right (by simp; omega), smul_zero]
 
 variable {g : ℕ} [Fact g.Prime]
 

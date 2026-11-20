@@ -193,13 +193,13 @@ theorem flagV_e {M : Type} [Zero M] {ρ k n : ℕ} (e f : Fin ρ → M) (b : Fin
     congr 1
     exact Fin.ext hl
   · rw [if_neg h] at hl
-    rw [dif_neg (by omega), dif_neg (by omega), dif_pos hl, dif_neg h]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dif_pos hl, dite_eq_right h]
 
 theorem flagV_b {M : Type} [Zero M] {ρ k n : ℕ} (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin k)
     (l : Fin n) (hl : l.1 = ρ + i.1) : flagV ρ k n e f b z l = b i := by
   have := i.2
   unfold flagV
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dif_pos (by omega)]
   congr 1
   exact Fin.ext (by simp only; omega)
 
@@ -343,7 +343,7 @@ theorem core (I : AutInst) {κ : Type} [CommRing κ] (π : IntAf I.F I.E →+* �
           · rw [if_neg hij, sub_zero] at h1
             rw [if_neg fun h => hij (Fin.ext (by omega))]
             exact Z0 h1
-    · rw [dif_neg hi, if_neg hi, resOf_zero]
+    · rw [dite_eq_right hi, if_neg hi, resOf_zero]
 
 end Core
 

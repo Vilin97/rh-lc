@@ -98,7 +98,7 @@ theorem evD_trDY_polDY : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos 
     rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_monomial,
       Finsupp.prod_mapDomain_index (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
     unfold phi0
-    rw [dif_pos h', map_mul, map_prod]
+    rw [dite_eq_left h', map_mul, map_prod]
     congr 1
     · unfold valZ
       exact transpC_map_eval ι _ _

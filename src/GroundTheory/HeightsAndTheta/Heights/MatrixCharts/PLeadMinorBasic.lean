@@ -18,14 +18,14 @@ theorem LeadMinorBasic.proof : LeadMinorBasic.Statement := by
     congr 1
     ext a b
     simp only [Matrix.of_apply]
-    rw [dif_pos ⟨a.2, b.2⟩]
+    rw [dite_eq_left ⟨a.2, b.2⟩]
   · intro hS i hi
     have e : (Matrix.of fun a b : Fin i =>
         if h : (a : ℕ) < d ∧ (b : ℕ) < d then S ⟨a, h.1⟩ ⟨b, h.2⟩ else 0) =
         S.submatrix (Fin.castLE hi) (Fin.castLE hi) := by
       ext a b
       simp only [Matrix.of_apply, Matrix.submatrix_apply]
-      rw [dif_pos ⟨a.2.trans_le hi, b.2.trans_le hi⟩]
+      rw [dite_eq_left ⟨a.2.trans_le hi, b.2.trans_le hi⟩]
       rfl
     unfold leadMinor
     rw [e]

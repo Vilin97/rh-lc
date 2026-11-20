@@ -35,10 +35,10 @@ theorem extendByZero_strictAnti_of_positive_gaps {p : ℕ} (l : Fin p → ℕ) (
   have h1 := hg ⟨a, by omega⟩ (by show a + 1 < p; omega)
   have h2 : a + 1 < p := by omega
   unfold gapZ at h1
-  rw [dif_pos h2] at h1
+  rw [dite_eq_left h2] at h1
   have h3 : l ⟨b, hb⟩ ≤ l ⟨a + 1, h2⟩ := hl (show a + 1 ≤ b by omega)
   unfold ext0
-  rw [dif_pos hb, dif_pos (by omega : a < p)]
+  rw [dite_eq_left hb, dite_eq_left (by omega : a < p)]
   simp only at h1
   omega
 

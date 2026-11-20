@@ -24,7 +24,7 @@ theorem mem_pair_X_iff (a : O) (f : O⟦X⟧) (B : ℕ) :
     have hdvd : (X : O⟦X⟧) ^ B ∣ f - C a * g := by
       rw [PowerSeries.X_pow_dvd_iff]
       intro m hm
-      rw [map_sub, PowerSeries.coeff_C_mul, hg, PowerSeries.coeff_mk, dif_pos hm, ← hc m hm, sub_self]
+      rw [map_sub, PowerSeries.coeff_C_mul, hg, PowerSeries.coeff_mk, dite_eq_left hm, ← hc m hm, sub_self]
     obtain ⟨w, hw⟩ := hdvd
     rw [Ideal.mem_span_pair]
     exact ⟨g, w, by linear_combination (-1 : O⟦X⟧) * hw⟩

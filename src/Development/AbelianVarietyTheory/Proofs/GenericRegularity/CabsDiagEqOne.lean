@@ -205,10 +205,10 @@ theorem cabs_diag_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
       unfold Formalism.L2.PjFree.perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
       unfold Formalism.L2.PjFree.perFr
-      rw [dif_neg a, dif_pos (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ (U.X k').Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ (U.X k').Ψ from hτ), dite_eq_left hn]
       rfl
   have hinj : ∀ j j', (e j).1 = (e j').1 → ((e j).2 : ℕ) = (e j').2 → j = j' := by
     intro j j' h1 h2

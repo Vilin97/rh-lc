@@ -185,12 +185,12 @@ theorem BlockComplexGramMetricChange.proof (hMC : MetricChange.Statement)
   have hC₀ : ∀ n, blockCChi d n = -(1 / 2) * Real.log (Matrix.det (fun k l =>
       ∫ y, pairValH d.A n ((p n).2 k) ((p n).2 l) (blockPt d y) ∂d.dV :
         Matrix (Fin (p n).1) (Fin (p n).1) ℂ)).re := fun n => by
-    rw [blockCChi, dif_pos (hex n)]
+    rw [blockCChi, dite_eq_left (hex n)]
     rfl
   have hC₁ : ∀ n, blockCChi (d.withMetric A' P0' hdeg hc hle hp) n = -(1 / 2) * Real.log (Matrix.det (fun k l =>
       ∫ y, pairValH A' n ((p n).2 k) ((p n).2 l) (blockPt d y) ∂d.dV :
         Matrix (Fin (p n).1) (Fin (p n).1) ℂ)).re := fun n => by
-    rw [blockCChi, dif_pos (show ∃ q : (Σ r : ℕ, Fin r → MvPolynomial (Σ k, ι k) ℚ),
+    rw [blockCChi, dite_eq_left (show ∃ q : (Σ r : ℕ, Fin r → MvPolynomial (Σ k, ι k) ℚ),
       IsSecBasisM (d.withMetric A' P0' hdeg hc hle hp).y (d.withMetric A' P0' hdeg hc hle hp).k₀ n q.2 from hex n)]
     rfl
 

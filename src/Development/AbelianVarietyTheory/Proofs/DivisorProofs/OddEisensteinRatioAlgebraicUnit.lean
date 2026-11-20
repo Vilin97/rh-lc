@@ -147,14 +147,14 @@ theorem at_place (hI : GlobalTheory.NormSum.Inp D) {δ t0 : ℂ} (hC : Crv D ⊤
   have hun : ‖lam u‖ = 1 := norm_det_eq_one (lam.comp (phiK D)) hb hl hl'
   change c ^ 2 = ζ * (u : ℂ) at hc
   have hcQ : c ∈ Qbar := mem_Qbar_of_pow (n := 2) (by norm_num) (hc ▸ mul_mem hζQ u.2)
-  rw [lamC, dif_pos hε] at hεn
-  rw [lamC, dif_pos hε'] at hεn'
+  rw [lamC, dite_eq_left hε] at hεn
+  rw [lamC, dite_eq_left hε'] at hεn'
   have hε0 : ε ≠ 0 := left_ne_zero_of_mul hz
   have hκQ : κ ∈ Qbar := by
     rw [eq_div_of_mul_eq hε0 key]
     exact div_mem (mul_mem (mul_mem hε' hcQ) hμQ) hε
   refine ⟨hκQ, ?_⟩
-  rw [lamC, dif_pos hκQ]
+  rw [lamC, dite_eq_left hκQ]
   have root : ∀ (x : Qbar) (n : ℕ), 0 < n → (x : ℂ) ^ n = 1 → ‖lam x‖ = 1 := by
     intro x n hn hx
     have : x ^ n = 1 := Subtype.ext (by simpa using hx)

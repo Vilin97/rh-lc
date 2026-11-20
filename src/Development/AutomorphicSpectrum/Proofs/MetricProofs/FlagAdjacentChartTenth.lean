@@ -30,10 +30,10 @@ theorem normScale_ne (M : FlagModel y Ψ N j) {c : NonPluckerBlocks M.blk → �
   | some k =>
     by_cases h : ∀ p, M.blk p ≠ some k
     · show dite _ _ _ ≠ 0
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact hc ⟨k, h⟩
     · show dite _ _ _ ≠ 0
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       exact one_ne_zero
 
 theorem normScale_base (M : FlagModel y Ψ N j) (c : NonPluckerBlocks M.blk → ℂ) (k : NonPluckerBlocks M.blk) :
@@ -44,7 +44,7 @@ theorem normScale_step (M : FlagModel y Ψ N j) (c : NonPluckerBlocks M.blk → 
     (hp : M.blk p = some k) : normScale M c (some k) = 1 := by
   have h : ¬ ∀ p, M.blk p ≠ some k := fun h => h p hp
   show dite _ _ _ = 1
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 end Scale
 

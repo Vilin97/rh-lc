@@ -34,7 +34,7 @@ theorem chAt_prod_eq_gtChar {n : ℕ} (lam : DomWeight n) (t : Fin n → ℂ) (h
   have hex : ∃ g : GL (Fin n) ℂ, (g : Matrix (Fin n) (Fin n) ℂ).charpoly = ∏ i, (X - C (t i)) :=
     ⟨hdet.unit, by simp [charpoly_diagonal]⟩
   unfold chAt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨P, hP⟩ := exists_mul_eq_mul_diagonal _ t ht hex.choose_spec
   set g := hex.choose
   let D : GL (Fin n) ℂ := P⁻¹ * g * P

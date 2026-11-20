@@ -23,7 +23,7 @@ theorem UpperTheory.V.AlgebraTools.hkApply :
   have hv : ∀ v : fixd ρ K', (hk2 ρ K K' x v : M) = dc ρ K K' x v := by
     intro v
     unfold hk2
-    rw [dif_pos h2]
+    rw [dite_eq_left h2]
     rfl
   refine ⟨hv, fun s hs hu v => ?_, fun a ha b hb => ?_⟩
   · rw [hv, h1 s hs hu v v.2]

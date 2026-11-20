@@ -44,20 +44,20 @@ theorem exists_adForms_value {G Γ W : Type} [Group G] [Group Γ] [NormedAddComm
       have h2 : ∃ γ' : Γ, ∃ k' ∈ J, ι γ * (ι γ₁ * x₀ * k₁) * (k : G) = ι γ' * x₀ * k' :=
         ⟨γ * γ₁, k₁ * k, J.mul_mem hk₁ k.2, e2⟩
       have h1 : ∃ γ' : Γ, ∃ k' ∈ J, ι γ₁ * x₀ * k₁ = ι γ' * x₀ * k' := ⟨γ₁, k₁, hk₁, rfl⟩
-      rw [dif_pos h2, dif_pos h1, hval _ h2 (γ * γ₁) (k₁ * k) (J.mul_mem hk₁ k.2) e2,
+      rw [dite_eq_left h2, dite_eq_left h1, hval _ h2 (γ * γ₁) (k₁ * k) (J.mul_mem hk₁ k.2) e2,
         hval _ h1 γ₁ k₁ hk₁ rfl, map_mul, Module.End.mul_apply]
     · have h2 : ¬ ∃ γ' : Γ, ∃ k' ∈ J, ι γ * h * (k : G) = ι γ' * x₀ * k' := by
         rintro ⟨γ', k', hk', e⟩
         refine hh ⟨γ⁻¹ * γ', k' * (k : G)⁻¹, J.mul_mem hk' (J.inv_mem k.2), ?_⟩
         calc h = (ι γ)⁻¹ * (ι γ * h * (k : G)) * (k : G)⁻¹ := by group
           _ = ι (γ⁻¹ * γ') * x₀ * (k' * (k : G)⁻¹) := by rw [e, map_mul, map_inv]; group
-      rw [dif_neg h2, dif_neg hh, map_zero]
+      rw [dite_eq_right h2, dite_eq_right hh, map_zero]
   · have h0 : ∃ γ : Γ, ∃ k ∈ J, x₀ = ι γ * x₀ * k := ⟨1, 1, J.one_mem, by simp⟩
     dsimp only
-    rw [dif_pos h0, hval _ h0 1 1 J.one_mem (by simp), map_one, Module.End.one_apply]
+    rw [dite_eq_left h0, hval _ h0 1 1 J.one_mem (by simp), map_one, Module.End.one_apply]
   · intro y hy
     dsimp only
-    rw [dif_neg hy]
+    rw [dite_eq_right hy]
 
 theorem eq_one_of_gam_bot {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     {n : ℕ} {hc : CMData F E} {J : Matrix (Fin n) (Fin n) E} {K : Subgroup (GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))}

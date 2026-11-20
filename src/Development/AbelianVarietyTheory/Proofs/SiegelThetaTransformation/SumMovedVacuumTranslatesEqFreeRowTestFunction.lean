@@ -376,7 +376,7 @@ variable {D : SW.Level X} {𝔐 : Ideal (𝓞 E)} {hn : r ≤ n} {y y' : Matrix 
 
 theorem datF_eq {κ : D.J} (h1 : D.Red (fun i => y (Fin.castLE hn i)) κ)
     (h2 : ∀ k : Fin n, r ≤ (k : ℕ) → Cong X 𝔐 (y k) 0) : datF D 𝔐 hn y = (D.lam κ : ℂˣ) := by
-  rw [datF, dif_pos ⟨⟨κ, h1⟩, h2⟩]
+  rw [datF, dite_eq_left ⟨⟨κ, h1⟩, h2⟩]
   congr 2
   exact Subtype.ext (Lev.red_unique (Exists.choose_spec (⟨κ, h1⟩ :
     ∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k)) h1)

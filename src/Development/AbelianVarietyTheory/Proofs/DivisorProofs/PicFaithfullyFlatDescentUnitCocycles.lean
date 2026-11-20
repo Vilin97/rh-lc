@@ -196,7 +196,7 @@ theorem δ_eq {A B : Type} [CommRing A] [CommRing B] [Algebra A B] [Module.Faith
     {u : (B ⊗[A] B)ˣ} (hu : UCoc A B u) :
     δ A B u = Submodule.unitsToPic A B (isUnit_descMod hu).unit := by
   have : Module.Invertible A (descMod A B u) := inferInstanceAs (Module.Invertible A ((isUnit_descMod hu).unit : Submodule A B))
-  rw [δ, dif_pos this, Submodule.unitsToPic_apply]
+  rw [δ, dite_eq_left this, Submodule.unitsToPic_apply]
   rfl
 
 end GlobalTheory.PicCech

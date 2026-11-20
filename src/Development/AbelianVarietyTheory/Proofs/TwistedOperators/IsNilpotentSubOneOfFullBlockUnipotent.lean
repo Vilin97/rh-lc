@@ -251,7 +251,7 @@ theorem principal_last (h : HidaSetting R F) (hbig : ∀ k, Module.finrank ℚ D
     · rw [h.models.gW]
       show actG0 _ _ _ _ _ y = _
       unfold actG0
-      rw [dif_pos hl, levChi, (levFn_eq_one_chainMember_flags_trivial i _).2, Units.val_one, inv_one, one_mul]
+      rw [dite_eq_left hl, levChi, (levFn_eq_one_chainMember_flags_trivial i _).2, Units.val_one, inv_one, one_mul]
     · have hk := hl.choose_spec
       have := fixed_last h hbig hi (finU _ y) (finU _ hl.choose) hk.2.1 (by rw [coe_finU, hk.2.2]; exact hn)
         (by rw [← map_mul]; exact e)

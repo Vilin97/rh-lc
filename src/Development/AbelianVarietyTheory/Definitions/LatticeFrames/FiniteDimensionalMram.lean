@@ -128,7 +128,7 @@ open Classical in
 def Phi : (D.div.Nu u).V →ₗ[D.what₂.LL] (MtDual D Am).V := if h : PhiRat D Am u then h.choose else 0
 
 theorem isPhi_Phi (h : PhiRat D Am u) : IsPhi D Am u (Phi D Am u) := by
-  unfold Phi; rw [dif_pos h]; exact h.choose_spec
+  unfold Phi; rw [dite_eq_left h]; exact h.choose_spec
 
 theorem isPhi_unique {Φ Ψ} (h : IsPhi D Am u Φ) (h' : IsPhi D Am u Ψ) : Φ = Ψ := by
   ext x : 1

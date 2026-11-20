@@ -104,9 +104,9 @@ theorem isChar_finsum_conj_ext0_of_isChar :
   · have hm : q.out⁻¹ * g * q.out ∈ H := (inv_smul_eq_iff_conj_mem H g q).mp h
     have he : (⟨q.out⁻¹ * g * q.out, hm⟩ : H) = cosetCocycle H g q :=
       Subtype.ext (by simp [cosetCocycle, h])
-    rw [if_pos h, ext0, dif_pos hm, hσ, he]
+    rw [if_pos h, ext0, dite_eq_left hm, hσ, he]
     rfl
   · have hm : q.out⁻¹ * g * q.out ∉ H := fun hm => h ((inv_smul_eq_iff_conj_mem H g q).mpr hm)
-    rw [if_neg h, ext0, dif_neg hm, map_zero]
+    rw [if_neg h, ext0, dite_eq_right hm, map_zero]
 
 end GlobalTheory.BI

@@ -320,7 +320,7 @@ private theorem card_filter_not_mem_sz_eq_succ {n N : ℕ} (h : n + 1 = N) (lam 
   rw [hsh] at hc
   unfold nuNext at hc
   split_ifs with hs
-  · rw [dif_neg (show ¬ (s.1 + 1 < n) by omega)] at hc
+  · rw [dite_eq_right (show ¬ (s.1 + 1 < n) by omega)] at hc
     have hlast : sg.natW s = 0 := by
       have e : s = ⟨n - 1, by omega⟩ := Fin.ext (by simp; omega)
       rw [e]

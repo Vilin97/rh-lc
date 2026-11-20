@@ -262,13 +262,13 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.heckeEx :
       intro g hg
       by_cases hc : Continuous (tensFun b φ) ∧ HasCompactSupport (tensFun b φ)
       · have h1 : tens b φ g = tensFun b φ g := by
-          rw [tens, dif_pos hc]
+          rw [tens, dite_eq_left hc]
           rfl
         rw [h1, tensFun, hφ] at hg
         by_contra hn
         exact hg (by rw [Set.indicator_of_notMem (show _ ∉ (levOn S U : Set (FA K (2 + 2))) from hn), mul_zero])
       · have h1 : tens b φ g = 0 := by
-          rw [tens, dif_neg hc]
+          rw [tens, dite_eq_right hc]
           rfl
         exact absurd h1 hg
     have hAB := hAct.2.2 0

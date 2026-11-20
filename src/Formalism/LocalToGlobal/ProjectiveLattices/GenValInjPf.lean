@@ -36,7 +36,7 @@ theorem evR_of_frMap (hW : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ 
     {w : FrPt Xo c S} (hy : FrMap φ y w) : evR Xo c f w = φ (f p y) := by
   have hT : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) w := ⟨p, φ, y, hy⟩
   unfold evR evalAt
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   exact hW f hf S _ _ _ _ _ _ w hT.choose_spec.choose_spec.choose_spec hy
 
 theorem rule_eq_zero_of_genSpec (hW : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z))

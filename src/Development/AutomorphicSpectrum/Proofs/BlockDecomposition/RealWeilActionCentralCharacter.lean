@@ -124,10 +124,10 @@ theorem piRc_central (n : ℤ) (t : ℝ) (a : ℝˣ) (g : GL (Fin 2) ℝ) (x : �
       intro h2
       exact h ((mul_pos_iff_of_pos_left ha2).mp h2)
     unfold piRc
-    rw [dif_neg h, dif_neg h', mul_zero]
+    rw [dite_eq_right h, dite_eq_right h', mul_zero]
   have h' : 0 < ((dg2 a a * g).val).det := by rw [hdet]; exact mul_pos ha2 h
   unfold piRc
-  rw [dif_pos h, dif_pos h']
+  rw [dite_eq_left h, dite_eq_left h']
   set D : ℝ := (g.val).det with hD
   have hs : Real.sqrt ((dg2 a a * g).val).det = |(a : ℝ)| * Real.sqrt D := by
     rw [hdet, Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq_eq_abs]

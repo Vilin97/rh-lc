@@ -47,6 +47,6 @@ theorem exists_iK : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (w :
   have h2 := E.iL_lam v x
   simp only [RingHom.comp_apply] at h1
   simp only [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingEquiv.coe_toRingHom]
-  rw [h1, h2, lamV, dif_pos hx]
+  rw [h1, h2, lamV, dite_eq_left hx]
 
 end GlobalTheory.KerIK

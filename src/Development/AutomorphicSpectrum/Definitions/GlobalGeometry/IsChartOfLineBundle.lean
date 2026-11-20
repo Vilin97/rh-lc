@@ -111,7 +111,7 @@ theorem exists_isDegOn (y : (Σ k, ι k) → Ω) (a : K → ℤ) {e₀ : E} (he 
     Submodule.span (regAt ξ p) {(∏ k, y ⟨k, h.choose k⟩ ^ a k) • e₀} else ⊥, he, fun p _ c hc => ?_⟩
   have h : ∃ c, InChart ξ (seg y) c p := ⟨c, hc⟩
   show (if h : ∃ c, InChart ξ (seg y) c p then _ else _) = _
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact le_antisymm (span_chart_le hc h.choose_spec a e₀) (span_chart_le h.choose_spec hc a e₀)
 
 theorem isVB_of_isDegOn {o : Type} [CommRing o] [Algebra o Ω] {y : (Σ k, ι k) → Ω}

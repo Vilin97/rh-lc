@@ -191,7 +191,7 @@ def hkB (hst : HkStab D T S In) (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (P : P
 theorem hkB_zero (hst : HkStab D T S In) (i : T.Tw) (j : ℕ) (b : Bool) (P : PlE D.host) :
     hkB D T S In hst i j b 0 P = 1 := by
   unfold hkB
-  rw [dif_neg]
+  rw [dite_eq_right]
   intro h
   exact absurd h.2.2.1 (by omega)
 
@@ -337,9 +337,9 @@ theorem fd_MtSubT (wt : WtData D T) (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (G
     FiniteDimensional (FractionRing (T.Ok i k)) ↥(MtSubT D T wt i j b k Good) := by
   by_cases h : ∃ L : LevT D T i k, Good L ∧
       FiniteDimensional (FractionRing (T.Ok i k)) ↥(NX.TypeSpF D.host.E D.R.nV (FractionRing (T.Ok i k)) (rhoKT D T wt i j b k) L.J L.χ)
-  · rw [MtSubT, dif_pos h]
+  · rw [MtSubT, dite_eq_left h]
     exact h.choose_spec.2
-  · rw [MtSubT, dif_neg h]
+  · rw [MtSubT, dite_eq_right h]
     infer_instance
 
 end Mt

@@ -70,7 +70,7 @@ theorem good_of_parts {k : Type} [Field k] (Φ : FibPre k) (N : ℕ) (q : Quadra
       exact hm
     · rw [hsum i₀ α _ key l, wt_lin Φ ha α l]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [dif_pos i.2]
+      rw [dite_eq_left i.2]
   · intro α hα a ha h0
     obtain ⟨i₀, hm⟩ := cover α
     have key : ∀ i, a i ≠ 0 → cls i = cls i₀ := fun i hi => hcls i₀ i α hm (ha i hi)

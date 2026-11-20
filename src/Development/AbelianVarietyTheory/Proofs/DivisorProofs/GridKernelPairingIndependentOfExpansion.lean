@@ -186,7 +186,7 @@ theorem colOf_add (j₀ : Fin D.R.m) (a b : aSub S t e (.inl j₀)) (x : ∀ j, 
         hj (congrArg Fin.val (Sum.inl_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hj₀, dif_pos hj₀, dif_pos hj₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
+  · rw [dite_eq_left hj₀, dite_eq_left hj₀, dite_eq_left hj₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
 
 theorem colOf_smul (j₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inl j₀)) (x : ∀ j, FinPt G (.top j)) :
     colOf S t e (Function.update g (.inl j₀) (c • a)) x = c • colOf S t e (Function.update g (.inl j₀) a) x := by
@@ -200,7 +200,7 @@ theorem colOf_smul (j₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inl j₀)) (x 
         hj (congrArg Fin.val (Sum.inl_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hj₀, dif_pos hj₀, Function.update_self, Function.update_self, map_smul]
+  · rw [dite_eq_left hj₀, dite_eq_left hj₀, Function.update_self, Function.update_self, map_smul]
 
 theorem rowOf_add (i₀ : Fin D.R.m) (a b : aSub S t e (.inr i₀)) (y : ∀ i, FinPt G (.grid i D.R.m)) :
     rowOf S t e (Function.update g (.inr i₀) (a + b)) y =
@@ -220,7 +220,7 @@ theorem rowOf_add (i₀ : Fin D.R.m) (a b : aSub S t e (.inr i₀)) (y : ∀ i, 
         hj (congrArg Fin.val (Sum.inr_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hi₀, dif_pos hi₀, dif_pos hi₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
+  · rw [dite_eq_left hi₀, dite_eq_left hi₀, dite_eq_left hi₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
 
 theorem rowOf_smul (i₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inr i₀)) (y : ∀ i, FinPt G (.grid i D.R.m)) :
     rowOf S t e (Function.update g (.inr i₀) (c • a)) y = c • rowOf S t e (Function.update g (.inr i₀) a) y := by
@@ -234,7 +234,7 @@ theorem rowOf_smul (i₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inr i₀)) (y 
         hj (congrArg Fin.val (Sum.inr_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hi₀, dif_pos hi₀, Function.update_self, Function.update_self, map_smul]
+  · rw [dite_eq_left hi₀, dite_eq_left hi₀, Function.update_self, Function.update_self, map_smul]
 
 end Upd
 
@@ -285,7 +285,7 @@ def gd (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t) (k : Fin D.R.m 
 
 theorem gd_coe {S : GridChoice W U} {t : T} {e : AE D} {d : PureDat G t} {k : Fin D.R.m ⊕ Fin D.R.m}
     (h : (intersection_update_fsHerm_neg_one d k).fn ∈ aSub S t e k) : ((gd S t e d k : aSub S t e k) : _ → ℂ) = (intersection_update_fsHerm_neg_one d k).fn := by
-  rw [gd, dif_pos h]
+  rw [gd, dite_eq_left h]
 
 theorem rOp_coe (S : GridChoice W U) (t : T) (e : AE D) (k : Fin D.R.m ⊕ Fin D.R.m) (g : aSub S t e k) :
     ((rOp S t e k g : thSub W (pr D t k)) : _ → ℂ) = tOp W S.Z (pr D t k) e g := rfl
@@ -301,7 +301,7 @@ theorem colMap_eq (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t)
     (x : ∀ j, FinPt G (.top j)) : S.colMap d x = colOf S t e (gd S t e d) x := by
   unfold GridChoice.colMap colOf
   refine congrArg (fun F => F ∘ₗ _) (chainTo_congr _ _ _ fun j hj => ?_)
-  rw [dif_pos hj, dif_pos hj]
+  rw [dite_eq_left hj, dite_eq_left hj]
   obtain ⟨h1, h2⟩ := h (.inl ⟨j, hj⟩)
   exact kkMap_eq_kLin S.Z (d.1 ⟨j, hj⟩) (x j) (x (j + 1)) (rOp S t e (.inl ⟨j, hj⟩) (gd S t e d (.inl ⟨j, hj⟩)))
     (by rw [rOp_coe, gd_coe h2]; exact h1.symm)
@@ -311,7 +311,7 @@ theorem rowMap_eq (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t)
     (y : ∀ i, FinPt G (.grid i D.R.m)) : S.rowMap d y = rowOf S t e (gd S t e d) y := by
   unfold GridChoice.rowMap rowOf
   refine congrArg (fun F => F ∘ₗ _) (chainTo_congr _ _ _ fun j hj => ?_)
-  rw [dif_pos hj, dif_pos hj]
+  rw [dite_eq_left hj, dite_eq_left hj]
   obtain ⟨h1, h2⟩ := h (.inr ⟨j, hj⟩)
   exact kkMap_eq_kLin S.Z (d.2 ⟨j, hj⟩) (y j) (y (j + 1)) (rOp S t e (.inr ⟨j, hj⟩) (gd S t e d (.inr ⟨j, hj⟩)))
     (by rw [rOp_coe, gd_coe h2]; exact h1.symm)

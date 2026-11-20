@@ -22,7 +22,7 @@ def finOr {α : Type} (s : Set α) : Finset α := by
 
 theorem mem_finOr {α : Type} {s : Set α} (h : s.Finite) {x : α} : x ∈ finOr s ↔ x ∈ s := by
   unfold finOr
-  rw [dif_pos h, Set.Finite.mem_toFinset]
+  rw [dite_eq_left h, Set.Finite.mem_toFinset]
 
 def rootN (N : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / N)
 

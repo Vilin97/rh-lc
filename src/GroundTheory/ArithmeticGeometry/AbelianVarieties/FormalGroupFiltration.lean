@@ -128,7 +128,7 @@ theorem wVal_zero : wVal W 0 = 0 := by
 
 omit [IsFractionRing 𝒪 K] in
 theorem pointE_zero : pointE K W 0 = 0 := by
-  rw [pointE, zwPoint, dif_neg]
+  rw [pointE, zwPoint, dite_eq_right]
   rintro ⟨-, h⟩
   apply h
   rw [MaxIdealPoint.val_zero, wVal_zero, map_zero]

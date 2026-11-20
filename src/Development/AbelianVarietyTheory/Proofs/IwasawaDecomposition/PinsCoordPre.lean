@@ -16,7 +16,7 @@ theorem extTo_basis {E : Type} [Field E] (n N : ℕ) (a : Fin n) (b : Fin N) (h 
   by_cases e : i = b
   · subst e
     have : (i:ℕ) < n := h ▸ a.2
-    rw [dif_pos this, show (⟨i, this⟩ : Fin n) = a from Fin.ext h.symm]; simp
+    rw [dite_eq_left this, show (⟨i, this⟩ : Fin n) = a from Fin.ext h.symm]; simp
   · rw [Pi.single_eq_of_ne e]
     split_ifs with h1
     · exact Pi.single_eq_of_ne (fun e' => e (Fin.ext (by rw [← h, ← e']))) _

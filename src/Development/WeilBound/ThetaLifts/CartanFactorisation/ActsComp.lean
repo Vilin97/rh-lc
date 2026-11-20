@@ -187,7 +187,7 @@ theorem killInf (hU : Unimod) (hT : ThetaBasic) (hO : ArchOp) (hLie : ArchLie) (
         have hl' : ∀ x : Q, l x = Λ x := fun x => LinearMap.congr_fun hl x
         obtain ⟨l', hl't, hll⟩ := ht l (fun z hz => (hl' ⟨z, augle hz⟩).trans (hΛ hz)) fun k hk x hx y hy => by
           have hk' : k ∈ K := by rw [← SetLike.mem_coe, hKe]; exact hk
-          rw [dif_pos hk', (hA ⟨k, hk'⟩ ⟨x, hx⟩ y).1 hy, hl', hl' ⟨x, hx⟩]
+          rw [dite_eq_left hk', (hA ⟨k, hk'⟩ ⟨x, hx⟩ y).1 hy, hl', hl' ⟨x, hx⟩]
           exact hΛe ⟨k, hk'⟩ ⟨x, hx⟩
         have e : Λ = LinearMap.lcomp ℂ _ Q.subtype l' := LinearMap.ext fun x => (hl' x).symm.trans (hll x x.2)
         rw [e, Finset.coe_image]

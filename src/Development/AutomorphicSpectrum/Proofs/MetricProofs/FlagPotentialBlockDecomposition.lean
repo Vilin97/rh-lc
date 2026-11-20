@@ -40,7 +40,7 @@ theorem det_eq_sd_mul (T : Matrix (Fin N) (Fin N) ℂ) (Q : Fin N → Prop) [Dec
 theorem minor_eq_sd (T : Matrix (Fin N) (Fin N) ℂ) (S : Finset (Fin N)) :
     minorIJ T S S = sd T (· ∈ S) := by
   unfold minorIJ sd
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
   let e : Fin S.card ≃ {a // a ∈ S} := (S.orderIsoOfFin rfl).toEquiv
   letI : Fintype {a // a ∈ S} := Subtype.fintype (· ∈ S)
   refine Eq.trans ?_ (Matrix.det_submatrix_equiv_self e (sq T (· ∈ S)))

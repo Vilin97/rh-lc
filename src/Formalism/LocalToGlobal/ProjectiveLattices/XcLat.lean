@@ -58,12 +58,12 @@ theorem hNs (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F �
   (isNormOn_supC _ (h.supDef j hj) (dom_wtA w) (goodEmb_goodOf _ σ)).of_goodOf
 
 theorem hNl (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) : IsNormOn (T.C j w) σ (h.Nl j w σ) := by
-  rw [Nl, dif_pos hj]
+  rw [Nl, dite_eq_left hj]
   exact (isNormOn_l2C _ (h.l2Def j hj _ (goodEmb_goodOf _ σ)) (dom_wtA w)).of_goodOf
 
 theorem hle (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) :
     ∀ f ∈ T.C j w, h.Nl j w σ f ≤ T.Ns j w σ f := by
-  rw [Nl, dif_pos hj]
+  rw [Nl, dite_eq_left hj]
   obtain ⟨_, _, _, hD⟩ := h.dictU j hj _ (goodEmb_goodOf _ σ)
   exact l2C_le_supC _ (goodEmb_goodOf _ σ) _ hD.2.2.2.1 (h.muUnit j hj _ (goodEmb_goodOf _ σ))
 

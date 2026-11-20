@@ -178,11 +178,11 @@ private theorem trOn_res {S : Submodule ℂ V} (hSX : S ≤ X) {f : Module.End �
       exact H _ hx
   unfold trOn
   by_cases H : ∀ x ∈ S, f x ∈ S
-  · rw [dif_pos H, dif_pos (hiff.2 H), ← LinearMap.trace_conj' _ (Submodule.comapSubtypeEquivOfLe hSX)]
+  · rw [dite_eq_left H, dite_eq_left (hiff.2 H), ← LinearMap.trace_conj' _ (Submodule.comapSubtypeEquivOfLe hSX)]
     congr 1
     ext x
     simp [LinearEquiv.conj_apply, h, Submodule.comapSubtypeEquivOfLe]
-  · rw [dif_neg H, dif_neg fun H' => H (hiff.1 H')]
+  · rw [dite_eq_right H, dite_eq_right fun H' => H (hiff.1 H')]
 
 private theorem iso_res {σ : Un n →* (V →ₗ[ℂ] V)} {σ' : Un n →* (X →ₗ[ℂ] X)}
     (hσ : ∀ k x, (σ' k x : V) = σ k x) (hK : IsK σ) (E : KMod n) {S : Submodule ℂ V} (hfd : FiniteDimensional ℂ S)

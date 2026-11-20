@@ -49,7 +49,7 @@ theorem isUnit_det_blk (s : Set ι) {p : GL ι R} (hp : p ∈ stab R s) :
 open Classical in
 theorem bdet_val (s : Set ι) {p : GL ι R} (hp : p ∈ stab R s) :
     ((bdet s p : Rˣ) : R) = ((p : Matrix ι ι R).submatrix (Subtype.val : s → ι) Subtype.val).det := by
-  rw [bdet, dif_pos (isUnit_det_blk s hp), IsUnit.unit_spec]
+  rw [bdet, dite_eq_left (isUnit_det_blk s hp), IsUnit.unit_spec]
 
 theorem bdet_mul (s : Set ι) {p q : GL ι R} (hp : p ∈ stab R s) (hq : q ∈ stab R s) :
     bdet s (p * q) = bdet s p * bdet s q := by

@@ -118,7 +118,7 @@ theorem indep_phi_cmp (hdom : IsDomain O) (hFr : IsFractionRing O LL)
           rw [ho m, Algebra.smul_def, mul_smul]
       _ = 0 := by rw [← Finset.smul_sum, hsum, smul_zero]
   have hPN := ker_NDl W T i h3 hmod hR (x := z) ⟨hzN, hzD⟩
-    (by unfold Formalism.MainNotions.ArcLiftingSetup.cmpD; rw [dif_pos hzN]; exact hcz)
+    (by unfold Formalism.MainNotions.ArcLiftingSetup.cmpD; rw [dite_eq_left hzN]; exact hcz)
   obtain ⟨y, hy, hyΔ, hzy⟩ := hPN
   rw [pow_one] at hzy
   have hyl : (letE i : LetA O n) • y = y := by

@@ -388,7 +388,7 @@ variable {R F}
 theorem levelChar_spec (h : R.grp_levels F) : IsLevelChar R F (levelChar R F) := by
   have h' := exists_isLevelChar h
   unfold levelChar
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 end Level

@@ -30,18 +30,18 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem gm_val_stalk {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a : Γ(X, U)ˣ) :
     (gm f y U a).val = (f.stalkMap y).hom ((X.presheaf.germ U (f y) h).hom a.val) := by
-  rw [gm, dif_pos h]
+  rw [gm, dite_eq_left h]
   exact (Scheme.Hom.germ_stalkMap_apply f U y h a.val).symm
 
 theorem gm_id_val {Y : Scheme.{0}} (y : Y) (U : Y.Opens) (h : y ∈ U) (a : Γ(Y, U)ˣ) :
     (gm (𝟙 Y) y U a).val = (Y.presheaf.germ U y h).hom a.val := by
-  rw [gm, dif_pos (show (𝟙 Y : Y ⟶ Y) y ∈ U from h)]
+  rw [gm, dite_eq_left (show (𝟙 Y : Y ⟶ Y) y ∈ U from h)]
   rfl
 
 theorem gm_val_ev {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U)
     (h' : ⊤ ≤ (Y.fromSpecStalk y ≫ f) ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
     (gm f y U a).val = ev (Y.fromSpecStalk y ≫ f) U h' a.val := by
-  rw [gm, dif_pos h]
+  rw [gm, dite_eq_left h]
   have h1 : ⊤ ≤ Y.fromSpecStalk y ⁻¹ᵁ (f ⁻¹ᵁ U) := top_le_stalk_preimage y (𝟙 Y) h
   refine (ev_fromSpecStalk_eq y h h1 _).symm.trans (Eq.trans ?_ (ev_appLE (Y.fromSpecStalk y) f le_rfl h1 h' a.val))
   rw [← Scheme.Hom.app_eq_appLE]

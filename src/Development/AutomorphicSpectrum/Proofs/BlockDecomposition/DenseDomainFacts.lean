@@ -98,7 +98,7 @@ theorem denseD : DenseD := by
     rw [hc, div_mul_eq_mul_div, div_le_iff₀ (by positivity)]
     nlinarith
   refine ⟨hg.toLp _, ⟨f, hf.contDiffOn, cpt_of hL hKc hz, ?_⟩, ?_⟩
-  · simp only [cls]; rw [dif_pos hg]
+  · simp only [cls]; rw [dite_eq_left hg]
   · rw [Metric.mem_closedBall, dist_comm, Lp.dist_def,
       ← ENNReal.le_ofReal_iff_toReal_le ((Lp.memLp x).sub (Lp.memLp (hg.toLp _))).eLpNorm_ne_top hε.le]
     have h1 : eLpNorm (⇑x - ⇑(hg.toLp _)) 2 μ = eLpNorm (⇑x - fun y : G n => f y.val) 2 μ :=

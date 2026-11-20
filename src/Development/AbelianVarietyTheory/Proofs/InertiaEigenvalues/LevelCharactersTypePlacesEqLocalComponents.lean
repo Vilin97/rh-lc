@@ -82,7 +82,7 @@ theorem GlobalTheory.TwInputs.tau_eq_locK : GlobalTheory.Published.GlobalArtinRe
   have hex : ∃ s : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om, NX.TameRep (D.naut.plGw k v) 1 s u := ⟨σ, hTR⟩
   have e2 : NX.tameVal (D.ntw.chi1 i (j.1 + 1) true) (D.naut.plGw k v) 1 u = D.ntw.chi1 i (j.1 + 1) true σ := by
     unfold NX.tameVal
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     refine GlobalTheory.T.tameChar_eq_of_tameRep_congr (D.naut.plGw k v) (D.ntw.twistBaseCoefficientRing_isAdic i) _ (D.ntw.twistCharacterFamily_continuous i (j.1 + 1) true) (by omega) hm
       (fun A hA s hs => ?_) _ _ u u hex.choose_spec hTR (by rw [sub_self]; exact zero_mem _)
     rw [hN]

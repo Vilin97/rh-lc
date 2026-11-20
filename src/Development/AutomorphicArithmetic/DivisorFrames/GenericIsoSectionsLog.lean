@@ -10,7 +10,7 @@ private theorem valAt_alg {K : Type} [Field K] {Z : Scheme.{0}} [AlgebraicGeomet
     (a : Z.presheaf.stalk (below y)) :
     TrueGeo.valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [TrueGeo.valAt, dif_pos h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
+  rw [TrueGeo.valAt, dite_eq_left h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
 
 private theorem valAt_ne {K : Type} [Field K] {Z : Scheme.{0}} [AlgebraicGeometry.IsIntegral Z] {y : Sp K ⟶ Z}
     {f : Z.functionField} (hf : UnitAt (below y) f) : TrueGeo.valAt y f ≠ 0 := by

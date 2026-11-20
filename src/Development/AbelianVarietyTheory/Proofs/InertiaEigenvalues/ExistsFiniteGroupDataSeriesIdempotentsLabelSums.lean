@@ -206,7 +206,7 @@ theorem lzE_ser (hidem : ∀ f, e f * e f = e f) (hcen : ∀ f a, e f * a = a * 
       have hs := hex.choose_spec.2 rfl
       simp only [cast_eq] at hs
       unfold labF
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
       by_contra hne
       exact (decS_spec g r).1.2.2.1 t ht (hs.symm.trans (hj _ hne))
     rw [hlab]

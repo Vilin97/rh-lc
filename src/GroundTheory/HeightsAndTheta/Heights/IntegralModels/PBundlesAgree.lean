@@ -61,7 +61,7 @@ variable (E E' : X.Modules)
 lemma germ_lift (U : X.Opens) (hU : genericPoint X ∈ U) (s : Γ(E, U)) :
     E'.presheaf.germ U (genericPoint X) hU (lift E E' φ hex U s) =
       φ (E.presheaf.germ U (genericPoint X) hU s) := by
-  rw [lift, dif_pos hU]
+  rw [lift, dite_eq_left hU]
   exact (hex U hU s).choose_spec
 
 include hE' in

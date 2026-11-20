@@ -42,7 +42,7 @@ theorem GlobalTheory.RowShape.cols_jacBes_rowN : Big fun {D} {Γ} _ _ {Pl0 T} {A
     obtain ⟨k, hk⟩ := D.R.m_even
     exact ⟨k - σ - 2, by omega⟩
   unfold GlobalTheory.RowShape.rowN
-  rw [dif_pos (by omega), dif_pos (by omega)]
+  rw [dite_eq_left (by omega), dite_eq_left (by omega)]
   have hrat : ∀ {m n : ℕ} (N : Matrix (Fin m) (Fin n) D.host.E) (z : Fin n → D.host.E),
       GlobalTheory.MixModel.rat N *ᵥ ratV z = ratV (N *ᵥ z) := by
     intro m n N z

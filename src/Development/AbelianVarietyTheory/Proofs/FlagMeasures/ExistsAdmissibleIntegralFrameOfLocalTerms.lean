@@ -41,7 +41,7 @@ theorem lift_transport (D : D7) (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hγ :
     (Λ₁ Λ₂ : Submodule (𝓞 D.host.E) (VS D).V) (h : Formalism.HermitianLatticesTheory.gmap γ Λ₁ = Λ₂) {T : D.host.E}
     (F : LFlag (VS D) D.R.rS T) (hL : IsLift Λ₁ F) : IsLift Λ₂ (mapLF γ F) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   refine ⟨?_, ?_⟩
   · rw [← h]
     exact ⟨F.fl.z, hL.1, rfl⟩

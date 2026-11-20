@@ -16,7 +16,7 @@ theorem zhat_apply (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) (a b : Fin 
 theorem lead_r (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) :
     leadMinorE (Zhat F F') r = (Pm F F').det := by
   unfold leadMinorE
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   congr 1
   ext a b
   have hc : ∀ x : Fin r, Fin.castLE (Nat.le_succ r) x = Fin.castSucc x := fun x => Fin.ext rfl
@@ -25,7 +25,7 @@ theorem lead_r (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) :
 theorem leadingMinor_full_eq_det (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) :
     leadMinorE (Zhat F F') (r + 1) = (Zhat F F').det := by
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   rfl
 
 def kk (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) (c : Fin r) : E :=

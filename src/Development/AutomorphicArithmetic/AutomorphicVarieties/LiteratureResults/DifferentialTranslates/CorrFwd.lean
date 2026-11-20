@@ -98,5 +98,5 @@ theorem UpperTheory.V.Lit.Dr.corrFwd :
   obtain ⟨k, hk⟩ := exists_unitary hp.choose_spec.symm
   obtain ⟨u, hu⟩ := QuotientGroup.mk_out_eq_mul U x
   beta_reduce
-  rw [dif_pos hp, altL_apply, hk, hu, alt_cpt Ξ α hα, alt_fin Ξ α hU _ _ u.2, alt_apply]
+  rw [dite_eq_left hp, altL_apply, hk, hu, alt_cpt Ξ α hα, alt_fin Ξ α hU _ _ u.2, alt_apply]
   simp only [back_sand]

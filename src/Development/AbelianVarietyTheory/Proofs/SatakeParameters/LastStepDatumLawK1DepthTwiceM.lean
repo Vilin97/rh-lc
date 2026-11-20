@@ -179,7 +179,7 @@ theorem residueClassProduct_invariant_K1Depth_twiceM (hq : ((q : ℕ) : 𝓞 E) 
   have hlast : N - 1 < N := by omega
   have hat : ∀ v : Sp E N, atNL E N (N - 1) v = v ⟨N - 1, hlast⟩ := fun v => by
     unfold atNL
-    rw [dif_pos hlast]
+    rw [dite_eq_left hlast]
     rfl
   have hqn : ∀ k : ℕ, IntAt P ((q : E) ^ k) := fun k => by
     have h := IntAt.coe P (((q : ℕ) : 𝓞 E) ^ k)
@@ -276,7 +276,7 @@ theorem redMQ_idEquiv {E : Type} [Field E] [NumberField E] [StarRing E] (P : Hei
 
 theorem xiZ_one' {k K : Type} [CommRing k] [Field K] (ξ : kˣ →* Kˣ) : xiZ ξ (1 : k) = 1 := by
   unfold xiZ
-  rw [dif_pos isUnit_one]
+  rw [dite_eq_left isUnit_one]
   simp
 
 end Main

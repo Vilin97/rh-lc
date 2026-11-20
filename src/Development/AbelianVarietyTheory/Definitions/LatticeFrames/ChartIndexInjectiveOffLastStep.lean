@@ -89,7 +89,7 @@ theorem exists_top_base (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Late
     have e2 : (extTo I.SQ p.1.1).fr P = 1 := by
       rw [extTo_fr]
       unfold ptFr GlobalTheory.Mem.Col2.latFr
-      rw [dif_neg hq.1.2.1, dif_neg hQ, hN]
+      rw [dite_eq_right hq.1.2.1, dite_eq_right hQ, hN]
       exact if_pos rfl
     rw [e2]
     refine (congrFun (congrFun e1 i) j).trans ?_

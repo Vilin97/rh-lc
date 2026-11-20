@@ -39,7 +39,7 @@ private theorem pdeg_nsmul {R : Type} [CommRing R] {X : Scheme.{0}} {q : X ⟶ S
     simp
   · have h' : ¬ ∃ a, IsDeg p N ζ a := fun ⟨_, Z, i, hi, hZ, alg, hz, hd, _⟩ =>
       h ⟨_, Z, i, hi, hZ, alg, hz, hd, rfl⟩
-    rw [pdeg, pdeg, dif_neg h, dif_neg h', mul_zero]
+    rw [pdeg, pdeg, dite_eq_right h, dite_eq_right h', mul_zero]
 
 private theorem nsmul_div_eq {X : Scheme.{0}} [IsIntegral X] {L N : LB X} (hL : L.IsLB) (hN : N.IsLB)
     {s : L.ι → X.functionFieldˣ} {t : N.ι → X.functionFieldˣ} (hs : IsRatSec L s) (ht : IsRatSec N t) (a b : ℕ)

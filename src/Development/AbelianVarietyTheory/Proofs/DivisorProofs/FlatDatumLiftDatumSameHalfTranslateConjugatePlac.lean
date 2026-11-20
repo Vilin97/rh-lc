@@ -175,7 +175,7 @@ theorem X_pval : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (ϖ : 𝓞 D.host.E), (
         have e2 : (h2 P.1 P.2).2.unit = (h P.1 P.2).unit * (hu P.1).unit := Units.ext (key P.1 P.2).2
         rw [e1, hξ P.1 P.2, e2, map_mul, Units.val_mul, zpow_neg_one, Units.val_inv_eq_inv_val]
         field_simp
-    · rw [dif_neg, dif_neg, mul_zero]
+    · rw [dite_eq_right, dite_eq_right, mul_zero]
       · intro h2
         exact h fun PP hPP => isUnit_of_mul_isUnit_left (by rw [← (key PP hPP).2]; exact (h2 PP hPP).2)
       · intro h1
@@ -735,7 +735,7 @@ theorem pull_flat (hC : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) {Q : Finset (
   · rw [if_neg fun h => hi h.2]
     split_ifs with h
     · unfold omegaQ
-      rw [dif_neg, mul_zero]
+      rw [dite_eq_right, mul_zero]
       intro h'
       have := int_ct (X_pint D Q e he ϖ hϖ hϖ0 _ _ _ _ iW' (gramFr_mul_inv _ _) _ hy h.2 fun PP hPP => (h' PP hPP).1)
       rw [ct_ct] at this

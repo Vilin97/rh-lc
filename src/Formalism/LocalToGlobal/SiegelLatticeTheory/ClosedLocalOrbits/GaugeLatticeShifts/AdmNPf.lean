@@ -124,7 +124,7 @@ def ModGAt : Prop :=
 theorem frame_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : LFlag (VS D) D.R.rS T) (c : Fin (D.R.rS + 1)) : frame (mapLF γ F) c = γ (frame F c) := by
   unfold frame mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   show (mapFlag γ hγ F.fl).fvec c = γ (F.fl.fvec c)
   simp only [FlagG.fvec, mapFlag]
   induction c using Fin.lastCases with

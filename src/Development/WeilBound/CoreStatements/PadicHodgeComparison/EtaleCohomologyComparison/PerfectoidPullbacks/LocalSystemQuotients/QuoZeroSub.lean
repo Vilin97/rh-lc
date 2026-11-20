@@ -153,7 +153,7 @@ theorem seqflat0_pf : ∀ {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l
       have := quo_zero_sub l (Kt l (B.schFn M.p) r.ρ 1) j
       exact ⟨fun a b _ => Subsingleton.elim a b, fun y => ⟨0, Subsingleton.elim _ _⟩⟩
     · dsimp only
-      rw [dif_neg hn]
+      rw [dite_eq_right hn]
       have e : ∀ y, (psiP (B.schFn M.p) r.ρ hn).mapH j y =
           (hinv (cmpq (sW l (B.schFn M.p) r.ρ (n + 1)).A l n)
             fun i => GlobalTheory.T.compare_quotient_bijective _ _ (sW l (B.schFn M.p) r.ρ (n + 1)).A l n i).mapH j
@@ -166,7 +166,7 @@ theorem seqflat0_pf : ∀ {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l
       have := quo_zero_sub l (Kt l (B.schFn M.p) r.ρ 1) j
       exact Subsingleton.elim _ _
     · dsimp only
-      rw [dif_neg hn]
+      rw [dite_eq_right hn]
       exact psiP_compat hn j x
 
 end CrystallineSemistableComparison.Pb.LsQ

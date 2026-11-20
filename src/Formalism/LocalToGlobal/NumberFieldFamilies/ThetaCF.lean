@@ -138,7 +138,7 @@ theorem atTau_spec (hU : AtTauU D) {V : HSp D} {τ : D.what₂.Tau} {g : Matrix 
     (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) : IsAtTau (th0 D) V τ g (atTau (th0 D) V τ g) := by
   have hex : ∃ x, IsAtTau (th0 D) V τ g x := (hU V τ g hg).exists
   unfold atTau
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem atTau_eq (hU : AtTauU D) {V : HSp D} {τ : D.what₂.Tau} {g : Matrix (Fin V.rank) (Fin V.rank) ℂ}
@@ -398,7 +398,7 @@ theorem pairC_spec (h : VolEx D) (V : HSp D) : GoodPair V (pairC V) := by
   have e : ∃ p, GoodPairR D.sp.cm (tauE D) D.cd V p := (goodPair_ex h V).imp fun p hp => (goodPair_iff V p).1 hp
   rw [goodPair_iff]
   unfold pairC pairR
-  rw [dif_pos e]
+  rw [dite_eq_left e]
   exact e.choose_spec
 
 def intC (V : HSp D) (f : GA D V → ℂ) : ℂ := ∫ h in (pairC V).2, f h ∂(pairC V).1

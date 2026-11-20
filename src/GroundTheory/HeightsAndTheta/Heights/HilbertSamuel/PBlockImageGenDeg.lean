@@ -88,7 +88,7 @@ theorem eventualValue_eq {K : Type*} (f : (K → ℤ) → ℤ) (e : ℚ) (h : �
     obtain ⟨m, hm⟩ := h.exists
     exact ⟨f m, h.mono fun m' hm' => by exact_mod_cast hm'.trans hm.symm⟩
   unfold eventualValue
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨m, hm1, hm2⟩ := (hex.choose_spec.and h).exists
   rw [← hm1]
   exact hm2

@@ -111,7 +111,7 @@ noncomputable def valAt (ϖ : kˣ) (y : IrrGL k) : ℂˣ :=
 
 theorem valAt_ofChar (ϖ : kˣ) (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ) : valAt ϖ (IrrGL.ofChar μ hμ) = μ ϖ := by
   have h : ∃ (μ' : kˣ →* ℂˣ) (hμ' : IsSmoothChar μ'), IrrGL.ofChar μ hμ = IrrGL.ofChar μ' hμ' := ⟨μ, hμ, rfl⟩
-  rw [valAt, dif_pos h]
+  rw [valAt, dite_eq_left h]
   obtain ⟨hμ', e⟩ := h.choose_spec
   exact (congrArg (fun f : kˣ →* ℂˣ => f ϖ) (IrrGL.ofChar_inj.1 e)).symm
 

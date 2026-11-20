@@ -32,7 +32,7 @@ theorem locOf_eq_alt {π : NG.AutRep D.host.E D.R.nV} {w : PlE D.host} {x} (hx :
     subst hs
     exact locAt_of_split _ s
   unfold _root_.GlobalTheory.AutQuot.locOf_alt
-  rw [dif_pos hex, locAt_unique (rep_iso π) hex.choose_spec hx]
+  rw [dite_eq_left hex, locAt_unique (rep_iso π) hex.choose_spec hx]
 end
 end GlobalTheory.AutQuot
 namespace GlobalTheory.AutQuot

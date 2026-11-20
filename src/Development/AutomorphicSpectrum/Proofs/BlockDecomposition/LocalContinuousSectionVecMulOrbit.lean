@@ -52,11 +52,11 @@ noncomputable def orbitSection (j : Fin n) (ζ ξ : Fin n → k) : GL (Fin n) k 
 
 theorem coe_orbitSection (j : Fin n) (ζ ξ : Fin n → k) (h0 : ζ j ≠ 0) (h1 : ξ j ≠ 0) :
     (orbitSection j ζ ξ : Matrix (Fin n) (Fin n) k) = shear j (ζ j)⁻¹ ζ ξ := by
-  rw [orbitSection, dif_pos ⟨h0, h1⟩]
+  rw [orbitSection, dite_eq_left ⟨h0, h1⟩]
 
 theorem coe_orbitSection_inv (j : Fin n) (ζ ξ : Fin n → k) (h0 : ζ j ≠ 0) (h1 : ξ j ≠ 0) :
     ((orbitSection j ζ ξ)⁻¹ : (Matrix (Fin n) (Fin n) k)ˣ).val = shear j (-(ξ j)⁻¹) ζ ξ := by
-  rw [orbitSection, dif_pos ⟨h0, h1⟩]
+  rw [orbitSection, dite_eq_left ⟨h0, h1⟩]
   rfl
 
 end Shear

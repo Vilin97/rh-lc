@@ -46,7 +46,7 @@ theorem nonempty_cLift : ∀ {O : Type} [CommRing O] {X : Scheme.{0}} {q : X ⟶
         (Units.map (Scheme.ΓSpecIso (CommRingCat.of ((G.obj T').B ⧸ (G.obj T').J))).hom.hom.toMonoidHom
           (D.u (B.thSp (G.map φ) ≫ p T) (p T') h))).choose
     else 1, fun {T T'} φ h => ?_⟩⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (unit_lift (G.obj T').J (fun x hx => thick_isNilpotent (G.obj T') x hx)
     (Units.map (Scheme.ΓSpecIso (CommRingCat.of ((G.obj T').B ⧸ (G.obj T').J))).hom.hom.toMonoidHom
       (D.u (B.thSp (G.map φ) ≫ p T) (p T') h))).choose_spec

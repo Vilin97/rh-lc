@@ -79,7 +79,7 @@ theorem ipM_smul_meas (M : DSModel V S) (ν : Measure (GA D V)) (𝓕 : Set (GA 
       refine ⟨k / c, (isMultiplicityInner_smul_measure_iff M ν 𝓕 T T' c hc _).1 ?_⟩
       rwa [mul_div_cancel₀ _ hcC]
     unfold ipM
-    rw [dif_neg h, dif_neg h', mul_zero]
+    rw [dite_eq_right h, dite_eq_right h', mul_zero]
 
 end ScaleIP
 

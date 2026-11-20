@@ -48,7 +48,7 @@ theorem NoCommonZero.rd {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {s
   obtain ⟨f, hf, h0⟩ := h (U.un k ⟨x, hx⟩)
   refine ⟨f, hf, ?_⟩
   show (open Classical in if h : x ∈ (U.X k).dom then toC (evR Xo c f (U.un k ⟨x, h⟩)) else 0) ≠ 0
-  rw [dif_pos hx]; exact h0
+  rw [dite_eq_left hx]; exact h0
 
 end Objects
 

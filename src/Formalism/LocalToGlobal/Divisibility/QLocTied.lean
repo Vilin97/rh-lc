@@ -177,7 +177,7 @@ theorem nuP_succ (C : CharFrame D) (P : HeightOneSpectrum (𝓞 D.host.E)) (j : 
     nuP C P (j.1 + 1) = ((C.mu0 j)⁻¹).loc P := by
   have hj := j.2
   unfold nuP
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   first
     | rfl
     | (congr 3; ext; simp)

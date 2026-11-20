@@ -10,12 +10,12 @@ open Classical
 
 theorem ratIn_lt {x y : ℝ} (h : x < y) : ((Formalism.MainNotions.N.ratIn x y : ℚ) : ℝ) < y := by
   unfold Formalism.MainNotions.N.ratIn
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (exists_rat_btwn h).choose_spec.2
 
 theorem ratIn_of_not_lt {x y : ℝ} (h : ¬ x < y) : Formalism.MainNotions.N.ratIn x y = 0 := by
   unfold Formalism.MainNotions.N.ratIn
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem x_pos' {D : D7} (L : SizeData₂ D) : 0 < L.sc.x := by linarith [L.sc.one_lt_alt]
 

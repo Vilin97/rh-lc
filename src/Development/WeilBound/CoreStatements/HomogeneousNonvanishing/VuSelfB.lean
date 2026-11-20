@@ -36,7 +36,7 @@ theorem surj_desc (M : RatModel o Ω) (q : Sp Ω ⟶ M.Z) (hq : q = M.pt) :
     Scheme.germ_stalkClosedPointTo, ← hf]
   have htop : ⊤ ≤ M.pt ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem M.pt hc).ge
   unfold valF
-  rw [dif_pos htop]
+  rw [dite_eq_left htop]
   simp only [Scheme.Hom.appLE, Iso.trans_hom, Functor.mapIso_hom, CommRingCat.comp_apply]
   rfl
 
@@ -96,7 +96,7 @@ private theorem valF_pt_mul' (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set 
     rw [hw]
     exact hgen
   unfold valF
-  rw [dif_pos htop, dif_pos htop, dif_pos htop]
+  rw [dite_eq_left htop, dite_eq_left htop, dite_eq_left htop]
   simp only [map_mul]
 
 private theorem valF_pt_one' (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set M.Z).Nonempty) :
@@ -111,7 +111,7 @@ private theorem valF_pt_one' (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set 
     rw [hw]
     exact hgen
   unfold valF
-  rw [dif_pos htop]
+  rw [dite_eq_left htop]
   simp only [map_one]
 
 private theorem exists_unit_valF_pt_eq_of_mem_O (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set M.Z).Nonempty)
@@ -263,7 +263,7 @@ private theorem valF_mul_var (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set 
     rw [hw]
     exact hgen
   unfold valF
-  rw [dif_pos htop, dif_pos htop, dif_pos htop]
+  rw [dite_eq_left htop, dite_eq_left htop, dite_eq_left htop]
   simp only [map_mul]
 
 private theorem valF_one_var (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set M.Z).Nonempty) :
@@ -278,7 +278,7 @@ private theorem valF_one_var (M : RatModel o Ω) {V : M.Z.Opens} (hV : (V : Set 
     rw [hw]
     exact hgen
   unfold valF
-  rw [dif_pos htop]
+  rw [dite_eq_left htop]
   simp only [map_one]
 
 theorem exists_unit {M : RatModel o Ω} {H : LB M.Z} {e : H.ι → Ω} (he : M.GenTriv H e) {m : ℕ}

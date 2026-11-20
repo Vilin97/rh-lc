@@ -103,7 +103,7 @@ theorem exists_isSkew_dbl (B : Base F E) (hcm : IsCMExt F E σ) {n r s : ℕ} (W
     exact GlobalTheory.DblUnfoldCont.isCartan_dbl _ _ (hW.cartan w)
   · intro v
     show IsSplitBasis (B.τ v) (sumLat finSumFinEquiv W.L W.L) (if h : (v : Pl F) ∈ B.P then (hex ⟨v, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (hex v).choose_spec
 
 theorem exists_weil : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

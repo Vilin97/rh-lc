@@ -93,7 +93,7 @@ theorem expU_val {n : ℕ} (ε : Fin n → Bool) (M : Matrix (Fin n) (Fin n) ℂ
     (hM : Mᴴ * Formalism.REAL.Jm ε + Formalism.REAL.Jm ε * M = 0) :
     (((expU ε M : Formalism.REAL.UJ ε) : (Matrix (Fin n) (Fin n) ℂ)ˣ) : Matrix (Fin n) (Fin n) ℂ) = NormedSpace.exp M := by
   unfold expU
-  rw [dif_pos (inUJ_exp ε M hM)]
+  rw [dite_eq_left (inUJ_exp ε M hM)]
   rfl
 
 theorem expU_zero {n : ℕ} (ε : Fin n → Bool) : expU ε 0 = 1 := by

@@ -94,7 +94,7 @@ theorem cellRes_locMap {M N : Type} [AddCommGroup M] [Module (MRingOver S ι) M]
       rw [lmap_mk, GenTwistGenerated.cellRes_mk h, GenTwistGenerated.cellRes_mk h,
         lmap_mk]
   · unfold KH.cellRes
-    rw [dif_neg h, dif_neg h, LinearMap.zero_apply, LinearMap.zero_apply, map_zero]
+    rw [dite_eq_right h, dite_eq_right h, LinearMap.zero_apply, LinearMap.zero_apply, map_zero]
 
 theorem cechD_cechMap {M N : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [AddCommGroup N]
     [Module (MRingOver S ι) N] (g : M →ₗ[MRingOver S ι] N) (n : ℕ) (z : KH.CechC S ι M n) :

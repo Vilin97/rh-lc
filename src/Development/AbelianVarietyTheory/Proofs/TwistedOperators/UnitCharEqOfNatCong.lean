@@ -308,8 +308,8 @@ theorem unitChar_eq_of_natCong : ∀ (D : D7) (ν : (AE D)ˣ →* Circle) (e : A
     fun i j => by rw [Nat.mul_one]; exact h i j
   unfold GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar
   by_cases hx : ∃ x, GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.IsUnitDet e P x
-  · rw [dif_pos (f hx), dif_pos hx, GlobalTheory.UnitCharCong.nu_eq he (n := N) (c := 1) hl hP hZint h1 hx.choose_spec (f hx).choose_spec]
-  · rw [dif_neg (fun h => hx (g h)), dif_neg hx]
+  · rw [dite_eq_left (f hx), dite_eq_left hx, GlobalTheory.UnitCharCong.nu_eq he (n := N) (c := 1) hl hP hZint h1 hx.choose_spec (f hx).choose_spec]
+  · rw [dite_eq_right (fun h => hx (g h)), dite_eq_right hx]
 
 end GlobalTheory.UnitCharCong
 

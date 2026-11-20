@@ -24,7 +24,7 @@ theorem realM_mt {θ : InfFam D} (hθ : IsInfFam θ) (W : HSp D) (h : GA D W) (�
     realM θ (Formalism.L2.Theta.mt W h) τ = archM W th h := by
   have e : θ hτ.choose = th :=
     GlobalTheory.SmoothForms.RealPts.infEmb_unique τ _ _ (by have := hθ hτ.choose; rwa [← hτ.choose_spec] at this) hth
-  rw [realM, dif_pos hτ, compAt, e]
+  rw [realM, dite_eq_left hτ, compAt, e]
   rfl
 
 theorem exists_atComp {θ : InfFam D} (hθ : IsInfFam θ) {W : HSp D} {r : ℕ} (hr : W.rank = r)

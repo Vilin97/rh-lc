@@ -17,7 +17,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem toSub_cLoc_val (hE : Unr E) (w : Pl E) (x : finU E n) :
     ((toSub (UL n w) (cLoc w (x : UA E n)) : UL n w) : GLw n w) = cLoc w (x : UA E n) := by
   unfold toSub
-  rw [dif_pos (cLoc_mem_UL E hE n w x)]
+  rw [dite_eq_left (cLoc_mem_UL E hE n w x)]
 
 theorem factor_ne_zero (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (hK : ∀ᶠ w in cofinite, K' w = KL n w)
     (f : ∀ w : Pl E, UL n w → ℂ) (hf : ∀ᶠ w in cofinite, f w = (KL n w : Set (UL n w)).indicator 1)

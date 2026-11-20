@@ -172,7 +172,7 @@ theorem UpperTheory.V.Z.Sym.So.outS :
   have hsl := sLev L B hB T S VL A hA hF w hwS h S₁ hw hS₁ (hiw w hw) U hFw y hy hlev _ ψ hSF.level g ![t, t⁻¹] H.2.2.2.1
   have he := hSF.eig t' g H.2.1 H.1
   exact ⟨g, fun w' => if h' : IsSplitAt w' then fun i => iu T w' h' (SD.dS t' (un w') i) else 1, H.2.2.2.1, H.2.2.2.2.1,
-    fun w' hw' => (H.2.2.2.2.2 w' (hS₁ hw') (hF.pl.split w' (hS₁ hw'))).trans (by beta_reduce; rw [dif_pos (hF.pl.split w' (hS₁ hw'))]),
+    fun w' hw' => (H.2.2.2.2.2 w' (hS₁ hw') (hF.pl.split w' (hS₁ hw'))).trans (by beta_reduce; rw [dite_eq_left (hF.pl.split w' (hS₁ hw'))]),
     hsl.trans (he.trans (congrArg (· • ψ) H.2.2.1))⟩
 
 end

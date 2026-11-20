@@ -175,7 +175,7 @@ theorem primeFiltNext_spec [IsNoetherianRing S] {A : Submodule (Poly S N) M}
       ∀ p ∈ colonIdeal A (𝓜.primeFiltNext A).1, ∀ d : ℕ,
         homogeneousComponent d p ∈ colonIdeal A (𝓜.primeFiltNext A).1 := by
   unfold primeFiltNext
-  rw [dif_pos ⟨hA, hne⟩]
+  rw [dite_eq_left ⟨hA, hne⟩]
   exact (Classical.choose_spec (exists_isPrime_colonIdeal hA hne)).2
 
 def primeFiltSeq [IsNoetherianRing S] : ℕ → Submodule (Poly S N) M
@@ -300,7 +300,7 @@ theorem card_prime_eq_length (F : PrimeFilt 𝓜) (pp : Ideal (Poly S N)) [pp.Is
       exact Module.length_bot
     | succ j ih =>
       intro hj
-      rw [Finset.sum_range_succ, ← ih (by omega), dif_pos (by omega)]
+      rw [Finset.sum_range_succ, ← ih (by omega), dite_eq_left (by omega)]
       exact hstep ⟨j, by omega⟩
   calc (((Finset.univ.filter fun k => F.prime k = pp).card : ℕ) : ℕ∞)
       = ∑ k : Fin F.n, (if F.prime k = pp then 1 else 0 : ℕ∞) := by
@@ -308,7 +308,7 @@ theorem card_prime_eq_length (F : PrimeFilt 𝓜) (pp : Ideal (Poly S N)) [pp.Is
     _ = ∑ i ∈ Finset.range F.n,
           (if h : i < F.n then (if F.prime ⟨i, h⟩ = pp then 1 else 0) else 0 : ℕ∞) := by
         rw [← Fin.sum_univ_eq_sum_range]
-        exact Finset.sum_congr rfl fun k _ => by rw [dif_pos k.isLt]
+        exact Finset.sum_congr rfl fun k _ => by rw [dite_eq_left k.isLt]
     _ = Module.length R (Loc (F.step ⟨F.n, by omega⟩)) := (key _ le_rfl).symm
     _ = Module.length R (LocalizedModule pp.primeCompl M) := by
         rw [show (⟨F.n, by omega⟩ : Fin (F.n + 1)) = Fin.last F.n from rfl, F.step_last]

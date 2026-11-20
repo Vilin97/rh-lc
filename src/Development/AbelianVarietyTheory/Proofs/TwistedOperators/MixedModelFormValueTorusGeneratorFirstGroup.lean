@@ -190,7 +190,7 @@ theorem ordL_of_val {x : L} (hx : Valued.v x = WithZero.exp (1 : ℤ)) : ordL x 
       -Multiplicative.toAdd (WithZero.unzero h) = -1 := by
     rintro _ h rfl; rfl
   unfold ordL
-  rw [dif_neg (by rw [hx]; exact WithZero.exp_ne_zero)]
+  rw [dite_eq_right (by rw [hx]; exact WithZero.exp_ne_zero)]
   exact key _ _ hx
 
 theorem cayley_dInv {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ σ q) (h2 : Valued.v (2 : L) = 1) {n : ℕ}

@@ -121,7 +121,7 @@ theorem components_of_params : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀
     by_cases hl : l ∈ Jf
     · rw [dif_pos hl] at h
       exact ⟨hl, Option.some.inj h⟩
-    · rw [dif_neg hl] at h
+    · rw [dite_eq_right hl] at h
       cases h
   refine ⟨fun l => if h : l ∈ Jf then some (κ l h) else none, ?_, ?_, ?_, ?_⟩
   · intro a ha b hb hab

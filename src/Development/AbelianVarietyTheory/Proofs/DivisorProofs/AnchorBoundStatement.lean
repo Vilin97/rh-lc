@@ -34,7 +34,7 @@ theorem anchor_eq (P : ParameterChoice' D L) (t : D.what₂.Tau) (τ : Psi p.T.Q
   have hj : D.R.k - 2 < (D.R.sigW ((i : ℕ) + 1)).1 := by omega
   obtain ⟨-, hnn⟩ := GlobalTheory.RecGaps.bigEnt p P i t (D.R.k - 2) hj
   unfold anchor
-  rw [dif_pos hlt, GlobalTheory.CovTop.WtRead.laOf_big D p.T p.fw.laws i (p.κ i) t τ hτ _ ⟨D.R.k - 2, hj⟩ (by simp; omega),
+  rw [dite_eq_left hlt, GlobalTheory.CovTop.WtRead.laOf_big D p.T p.fw.laws i (p.κ i) t τ hτ _ ⟨D.R.k - 2, hj⟩ (by simp; omega),
     (p.fw.kap i t).1 ⟨D.R.k - 2, hj⟩]
   rw [GlobalTheory.RecGaps.sig_Wc]
   unfold aPl
@@ -47,7 +47,7 @@ theorem abs_anchor_sub_le (P : ParameterChoice' D L) (t : D.what₂.Tau) (τ : P
   have ha := anchor_eq p i P t τ hτ
   have hn : (p.κ i).n = D.R.nV := (p.fw.kap i t).2.2
   have hv : Formalism.L2.NTheta.lamAt (D.hc t) (D.R.k - 2) = (D.hc t).v ⟨D.R.k - 2, by omega⟩ := by
-    unfold Formalism.L2.NTheta.lamAt; rw [dif_pos (by omega)]
+    unfold Formalism.L2.NTheta.lamAt; rw [dite_eq_left (by omega)]
   have hc := L.cloud_v t ⟨D.R.k - 2, by omega⟩
   have hsw : ((D.R.sigW ((i : ℕ) + 1)).1 : ℚ) - ((D.R.k - 2 : ℕ) + 1) = (i : ℚ) + 1 := by
     rw [show (D.R.sigW ((i : ℕ) + 1)).1 = D.R.k + (i : ℕ) by simp only [Ranks.sigW]; omega,
@@ -118,7 +118,7 @@ theorem anchorAt_of {PP A : ℝ} (P : ParameterChoice' D L) (hw : WtNum p i PP) 
     refine Finset.sum_congr rfl fun ρ _ => ?_
     congr 2
     simp only [NumDatum.w, NumDatum.eQ]
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     congr 3
   have hancS : ∑ τ : Psi p.T.Q.H, (((dat p i).p : ℝ) - (dat p i).q) *
       ((anchor (dat p i) (wtA (p.κ i)) (p.κ i).n (D.R.k - 1) τ : ℤ) : ℝ) * (ofRecord D L p.Del p.h0).logOm =

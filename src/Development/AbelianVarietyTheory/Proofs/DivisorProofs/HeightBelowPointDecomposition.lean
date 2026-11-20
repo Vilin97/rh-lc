@@ -100,7 +100,7 @@ theorem main : ∀ {F : Type} [Field F] [NumberField F] {C : CxSt F} {Y : Var F}
         ∑ᶠ (y : AlgPt Y) (_ : below y.1 = below p), A.lg v h.some y else 0 := by
     rw [mul_finsum]
     refine finsum_congr fun v => ?_
-    rw [dif_pos (inferInstance : Nonempty (TrueGeo.Ext v))]
+    rw [dite_eq_left (inferInstance : Nonempty (TrueGeo.Ext v))]
     exact @sum_over F _ _ Y K _ _ φ p hp _ _ _ _ (algebraMap F (AlgebraicClosure F))
       (inferInstanceAs (Fintype (EmbOver φ))) (A.lg v (extOf v))
   have h₃ := finrank_eq p hp

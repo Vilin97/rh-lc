@@ -33,7 +33,7 @@ theorem differentiableAt_coef {α : A.Fld} (h : A.IsForm α) (x : A.Pt) (S : Fin
 
 theorem loc_one_eventuallyEq (x : A.Pt) : A.loc 1 x.1.1 =ᶠ[𝓝 x.crd] fun _ => 1 :=
   Filter.eventually_of_mem (target_mem_nhds A x) fun v hv => by
-    rw [HolAtlas.loc, dif_pos hv]
+    rw [HolAtlas.loc, dite_eq_left hv]
     rfl
 
 end GlobalTheory.CxForm.GlobLin

@@ -42,7 +42,7 @@ theorem exists_frame_of_sig {ι : Type} [Fintype ι] [DecidableEq ι] (M : Matri
 theorem frameOf_spec {ι : Type} [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℂ)
     (h : ∃ Y : Matrix ι ι ℂ, IsUnit Y.det ∧ (Y⁻¹).conjTranspose * Y⁻¹ = M) :
     IsUnit (frameOf M).det ∧ ((frameOf M)⁻¹).conjTranspose * (frameOf M)⁻¹ = M := by
-  rw [frameOf, dif_pos h]
+  rw [frameOf, dite_eq_left h]
   exact h.choose_spec
 
 end Frames

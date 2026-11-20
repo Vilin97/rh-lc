@@ -25,11 +25,11 @@ def levCol (L : LevCh D T) (t : T) (j : ℕ) : Subgroup (GL (Fin (columnBlock L 
 
 theorem levCol_lt (L : LevCh D T) (t : T) {j : ℕ} (h : j + 1 < D.R.m) : HEq (levCol L t j)
     (Formalism.L2.DIV.lev D.sp.cm (Yc D (j + 1)).gram (L.βY (j + 1)) (L.datYt t (j + 1) L.triv)) := by
-  rw [levCol, dif_pos h]; exact cast_heq _ _
+  rw [levCol, dite_eq_left h]; exact cast_heq _ _
 
 theorem levCol_top (L : LevCh D T) (t : T) {j : ℕ} (h : ¬ j + 1 < D.R.m) : HEq (levCol L t j)
     (Formalism.L2.DIV.lev D.sp.cm D.sp.X'.gram L.βX (L.datXt t)) := by
-  rw [levCol, dif_neg h]; exact cast_heq _ _
+  rw [levCol, dite_eq_right h]; exact cast_heq _ _
 
 def levJ (G : GridData L sc) (t : T) : ∀ X : Node, Subgroup (GL (Fin (G.V X).rank) (Lev.EAf D))
   | .grid i 0 => G.levCong (.grid i 0)

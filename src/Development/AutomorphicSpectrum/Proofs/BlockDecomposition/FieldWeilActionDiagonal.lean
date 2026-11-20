@@ -34,7 +34,7 @@ theorem piE_diag : GL2LocalData.ForEF fun F _ _ _ _ _ _ _ E _ _ _ _ _ _ _ χ σ 
         rw [← hdet, ← hs, hat, ← map_mul, ← Units.val_mul, mul_inv_cancel_left]
       exact mul_left_cancel₀ ha0 e
     show GL2LocalData.piG _ _ _ _ _ _ _ _ = _ * GL2LocalData.piG _ _ _ _ _ _ _ _
-    rw [GL2LocalData.piG, GL2LocalData.piG, dif_neg h, dif_neg h', mul_zero]
+    rw [GL2LocalData.piG, GL2LocalData.piG, dite_eq_right h, dite_eq_right h', mul_zero]
   obtain ⟨s, hs⟩ := h
   have hN' : Algebra.norm F ((s * t : Eˣ) : E) = ((dg2 a 1 * g).val).det := by
     rw [Units.val_mul, map_mul, hs, ← hat, hdet, mul_comm]

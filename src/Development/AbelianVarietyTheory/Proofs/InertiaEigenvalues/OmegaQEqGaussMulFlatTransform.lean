@@ -89,13 +89,13 @@ theorem fourier_flat (k : Type) [Field k] [Fintype k] (ψ : AddChar k ℂ) (ξ :
   rw [sum_GL_character_neg_det_addChar_trace, sum_addChar_trace_rectMatrix_mul ψ hψ u₂]
   by_cases hu2 : u₂ = 0
   swap
-  · rw [if_neg hu2, mul_zero, dif_neg (fun h => hu2 ((lowZero_iff_submatrix_natAdd_eq_zero u).mp h.1)), mul_zero]
+  · rw [if_neg hu2, mul_zero, dite_eq_right (fun h => hu2 ((lowZero_iff_submatrix_natAdd_eq_zero u).mp h.1)), mul_zero]
   rw [if_pos hu2]
   by_cases hdet : IsUnit u₁.det
   swap
   · have h0 : u₁.det = 0 := by
       by_contra h; exact hdet (isUnit_iff_ne_zero.mpr h)
-    rw [hsing u₁ h0, zero_mul, dif_neg, mul_zero]
+    rw [hsing u₁ h0, zero_mul, dite_eq_right, mul_zero]
     rintro ⟨-, h⟩
     rw [topLeftBlock_eq_submatrix_castAdd] at h
     exact hdet h

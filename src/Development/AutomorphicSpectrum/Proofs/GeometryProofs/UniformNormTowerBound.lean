@@ -163,7 +163,7 @@ theorem homN_eq_of_frBor {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (hσ : GoodEmb
       · have hi : i < Dw.mult τ := lt_of_le_of_lt hij hj
         rw [dif_pos hj, dif_pos hi]
         exact Int.toNat_le_toNat (by linarith [hanti τ ⟨i, hi⟩ ⟨j, hj⟩ hij])
-      · rw [dif_neg hj]; exact Nat.zero_le _
+      · rw [dite_eq_right hj]; exact Nat.zero_le _
     have hgp := GlobalTheory.ReadCont.pow_succ_mem_secZ (Xo := Xo) (c := c) (by rw [GlobalTheory.AllWt.secZ_nat]; exact hg) M
     have hex : (fun i => (ex Dw a ((M + 1) * n) i : ℤ)) =
         (M + 1) • (fun i => (ex Dw (fun _ => 4) n i : ℤ)) + e₀ := by

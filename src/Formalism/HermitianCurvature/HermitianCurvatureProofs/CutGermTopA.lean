@@ -44,7 +44,7 @@ private theorem rr_succ_eq_ite_hsInner_else_leading {P : M.Par} {Wp Wq : Type} [
       else Top.topOf P p.l0 p.T p.ν' p.m₀ p.Θ p.TP F w Q Q' := by
   unfold KB.Pl.RR D.RRplace
   by_cases hl : D.IsLocPt Q (P.r + 1) ∧ D.IsLocPt Q' (P.r + 1)
-  · rw [dif_pos hl, dif_neg (by omega), if_pos rfl]
+  · rw [dite_eq_left hl, dif_neg (by omega), if_pos rfl]
     rfl
   · rw [dif_neg hl]
     have hz : ∀ G : B.Mat P.k P.r → (Wq →L[ℂ] Wp),

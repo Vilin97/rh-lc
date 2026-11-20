@@ -36,7 +36,7 @@ theorem compInv_eq_substInv (s : R⟦X⟧) (h0 : constantCoeff s = 0) (h1 : IsUn
     ⟨s.substInvOfIsUnit h1, constantCoeff_substInvOfIsUnit s h1,
       subst_substInvOfIsUnit_right s h0 h1⟩
   unfold compInv
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact eq_substInv_of_right s h0 h1 _ hex.choose_spec.1 hex.choose_spec.2
 
 end Tools

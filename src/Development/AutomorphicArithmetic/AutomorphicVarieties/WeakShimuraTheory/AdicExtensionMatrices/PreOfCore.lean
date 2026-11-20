@@ -68,12 +68,12 @@ theorem UpperTheory.V.Ws.sxPreOfCore :
     rw [hr, Matrix.charpoly_map, ← X.cp_map, Polynomial.map_map]
     rfl
   · intro v i s hs
-    rw [dif_pos hs, hB, X.ψ_map]
+    rw [dite_eq_left hs, hB, X.ψ_map]
     exact (hψ v i ⟨s, hs⟩).symm
   · intro v i
     simpa using X.ψ_cont v i
   · intro v i s hs
-    rw [dif_pos hs]
+    rw [dite_eq_left hs]
     exact X.ψ_red v i ⟨s, hs⟩
   · intro R _ _ _ f f' h1 h2
     refine X.genB R f f' h1 fun v i s => ?_

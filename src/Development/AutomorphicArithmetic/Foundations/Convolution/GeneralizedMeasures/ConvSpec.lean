@@ -15,7 +15,7 @@ theorem UpperTheory.ConvolutionTheory.GM.convSpec :
   have h1 : ∀ x, GM.conv ν β γ x = ∫ y, β y * γ (y⁻¹ * x) ∂ν := by
     intro x
     unfold GM.conv
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec x
   refine ⟨h1, fun μ _ => ?_⟩
   have h2 : GM.conv ν β γ = g := by

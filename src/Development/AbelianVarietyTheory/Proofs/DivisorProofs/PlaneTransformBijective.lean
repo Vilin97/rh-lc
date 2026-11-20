@@ -88,7 +88,7 @@ theorem planeCoef_inv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   have hQd : IsUnit Q.det := (Matrix.isUnit_iff_isUnit_det Q).1 hQ
   have hC : planeCoef H = Q⁻¹.submatrix e id := by
     unfold planeCoef
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   have hPm : planeMat H = Q.submatrix id e := by
     rw [hQdef]
     ext i k

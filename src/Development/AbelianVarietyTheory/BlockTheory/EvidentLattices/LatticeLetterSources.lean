@@ -87,13 +87,13 @@ theorem srcAt_bijective (o : LamObj c nΨ n') : Function.Bijective (srcAt o) := 
     · have h := (o.τΨ a).2
       refine ⟨⟨(o.τΨ a).1, j.cast (if_pos h).symm⟩, ?_⟩
       unfold srcAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       simp only [Subtype.coe_eta, Equiv.symm_apply_apply]
       rfl
     · have h := (o.τ' a).2
       refine ⟨⟨(o.τ' a).1, j.cast (if_neg h).symm⟩, ?_⟩
       unfold srcAt
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       simp only [Subtype.coe_eta, Equiv.symm_apply_apply]
       rfl
 

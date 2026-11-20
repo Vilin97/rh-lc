@@ -91,7 +91,7 @@ theorem arcNum_of_poly {K₁ : Type} [Field K₁] (P : MvPolynomial (ArcLt Dw) (
     arcNum (algebraMap _ (ArcS Dw K₁) P) = P := by
   have hs : ∃ Q, algebraMap (MvPolynomial (ArcLt Dw) (LaurentSeries K₁)) (ArcS Dw K₁) Q =
       algebraMap _ (ArcS Dw K₁) P := ⟨P, rfl⟩
-  rw [arcNum, dif_pos hs]
+  rw [arcNum, dite_eq_left hs]
   exact GlobalTheory.ArcConst.algebraMap_injective Dw K₁ hs.choose_spec
 
 theorem wchar_gen {S : Type} [CommRing S] (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (t : Ix Dw → Sˣ)

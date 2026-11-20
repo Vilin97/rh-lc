@@ -87,7 +87,7 @@ theorem hasCompactSupport_ctMu_split : ∀ (E : Type) [Field E] [NumberField E] 
     set y := (k : GLw n w)⁻¹ * blk h w m (Multiplicative.toAdd X) * k with hy
     have hyS : y ∈ S := by
       refine ⟨⟨y, hUL y⟩, subset_tsupport _ ?_, rfl⟩
-      have : toSub (UL n w) y = ⟨y, hUL y⟩ := by rw [toSub, dif_pos (hUL y)]
+      have : toSub (UL n w) y = ⟨y, hUL y⟩ := by rw [toSub, dite_eq_left (hUL y)]
       simpa [this] using hk
     have e : blk h w m (Multiplicative.toAdd X) = (k : GLw n w) * y * (k : GLw n w)⁻¹ := by
       rw [hy]; group

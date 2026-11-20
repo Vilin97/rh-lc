@@ -25,7 +25,7 @@ noncomputable def divisibleUnitsComplex : DivisibleBy (Additive ℂˣ) ℤ where
     Additive.ofMul (Classical.choose (units_complex_exists_zpow a.toMul n h))
   div_zero a := by simp
   div_cancel {n} a hn := by
-    rw [dif_neg hn, ← ofMul_zpow, Classical.choose_spec (units_complex_exists_zpow a.toMul n hn)]
+    rw [dite_eq_right hn, ← ofMul_zpow, Classical.choose_spec (units_complex_exists_zpow a.toMul n hn)]
     rfl
 
 theorem charExtend_main : PI.CharExtend := by

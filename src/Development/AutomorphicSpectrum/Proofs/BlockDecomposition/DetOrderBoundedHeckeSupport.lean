@@ -25,7 +25,7 @@ private theorem v_eq_ofAdd_lemma {E : Type} [Field E] [NumberField E] {w : Heigh
     (x : w.adicCompletion E) (hx : x ≠ 0) :
     Valued.v x = ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
-  rw [ordL, dif_neg h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
+  rw [ordL, dite_eq_right h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
 
 theorem ordL_det_range : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ → ∀ g : GL (Fin n) (w.adicCompletion E), IsInt w g.val → IsInt w (ϖ • (g⁻¹).val) → ∃ i ≤ n, ordL g.val.det = (i : ℤ) := by
   intro E _ _ w n ϖ hϖ g hg hgi

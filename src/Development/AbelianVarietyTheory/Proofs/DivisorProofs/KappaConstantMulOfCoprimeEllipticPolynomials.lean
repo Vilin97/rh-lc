@@ -509,7 +509,7 @@ theorem kap_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E 
   have e₂ := exists_norm E (n := P₂.natDegree) ⟨h₂.1, rfl, h₂.2.2⟩
   have e := exists_norm E (n := (P₁ * P₂).natDegree) ⟨h.1, rfl, h.2.2⟩
   unfold kap
-  rw [dif_pos e, dif_pos e₁, dif_pos e₂, mass_mul hn e.choose e₁.choose e₂.choose
+  rw [dite_eq_left e, dite_eq_left e₁, dite_eq_left e₂, mass_mul hn e.choose e₁.choose e₂.choose
     (by rw [e₁.choose_spec, e₂.choose_spec]; exact hc) (by rw [e.choose_spec]; exact h.2.2.1)
     (by rw [e.choose_spec, e₁.choose_spec, e₂.choose_spec]),
     UniqueFactorizationMonoid.normalizedFactors_mul h₁.1.ne_zero h₂.1.ne_zero, Multiset.card_add, pow_add,

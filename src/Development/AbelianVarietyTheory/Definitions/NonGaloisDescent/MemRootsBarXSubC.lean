@@ -182,7 +182,7 @@ def tf (x : Fbar g) : ZC := if h : x ≠ 0 then (exists_lifts g h).choose else 0
 
 theorem tf_spec {x : Fbar g} (hx : x ≠ 0) : Lifts g x (tf g x) := by
   unfold tf
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact (exists_lifts g hx).choose_spec
 
 theorem tf_zero : tf g 0 = 0 := by
@@ -224,7 +224,7 @@ variable {g}
 theorem thetaOf_gen_pow (L : LabelDatum g) {d : ℕ} (hd : 0 < d) {x : Fbar g} (hx : x ^ (g ^ d - 1) = 1) (n : ℕ) :
     thetaOf L d x (L.gen d ^ n) = L.teich x ^ n := by
   have hex : ∃ m : ℕ, L.gen d ^ n = L.gen d ^ m := ⟨n, rfl⟩
-  rw [thetaOf, dif_pos hex]
+  rw [thetaOf, dite_eq_left hex]
   have hm := hex.choose_spec
   have hN := N_pos g hd
   have hP : IsPrimitiveRoot (L.gen d) (g ^ d - 1) :=
@@ -278,7 +278,7 @@ theorem eSerC_zero (L : LabelDatum g) (n : ℕ) (f : (ZMod g)[X])
   rw [eSerC, hempty, finsum_mem_empty]
 
 theorem toG_coe {n : ℕ} (x : Gn g n) : toG (x : Mt g n) = x := by
-  rw [toG, dif_pos x.isUnit]
+  rw [toG, dite_eq_left x.isUnit]
   exact Units.ext (IsUnit.unit_spec _)
 
 theorem tl_self {n : ℕ} (M : Mt g n) : tl n M = M := by
@@ -334,7 +334,7 @@ theorem isCuspOf_one (L : LabelDatum g) : IsCuspOf L (X - C 1) (fun _ : Gn g 1 =
   have : NeZero (g ^ 1 - 1) := ⟨(N_pos g one_pos).ne'⟩
   obtain ⟨i, -, hi⟩ := hP.eq_pow_of_pow_eq_one hzN
   simp only [Nat.sub_self, pow_zero, one_mul, Finset.sum_range_one, pow_one]
-  rw [thetaOf, dif_pos ⟨i, hi.symm⟩, map_one, one_pow]
+  rw [thetaOf, dite_eq_left ⟨i, hi.symm⟩, map_one, one_pow]
 
 theorem hasLabel_one (L : LabelDatum g) : HasLabel L (fun _ : Gn g 1 => (1 : ℂ)) (X - C 1) := by
   have key : hcL [(⟨1, fun _ => 1⟩ : Pc g)] 1 = fun _ : Gn g 1 => (1 : ℂ) := by

@@ -74,7 +74,7 @@ private theorem exists_polynomial_lift_adjoinRoot_selfRecip {E : Type} [Field E]
   have hex : ∃ Q' : SelfRecip E Q.1.natDegree, Q'.1 = Q.1 :=
     ⟨⟨Q.1, by rw [Q.2.2.2.1]; exact Q.2⟩, rfl⟩
   dsimp only
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact adjoinRoot_mk_eq_of_selfRecip_val_eq g Q hex.choose hex.choose_spec _
     (adjoinRoot_exists_mk_eq (f := hex.choose.1) (g Q.1.natDegree hex.choose)).choose_spec
 

@@ -27,9 +27,9 @@ theorem chiW_cont (w : InfinitePlace F) : ContinuousOn (d.chiW w) {z : ℂ | z �
 theorem chiW_norm (w : InfinitePlace F) : ∀ z : ℂ, z ≠ 0 → ‖d.chiW w z‖ = 1 := by
   intro z _
   by_cases h : IsUnit (d.uW w z)
-  · rw [SD.chiW, dif_pos h]
+  · rw [SD.chiW, dite_eq_left h]
     exact Circle.norm_coe _
-  · rw [SD.chiW, dif_neg h, norm_one]
+  · rw [SD.chiW, dite_eq_right h, norm_one]
 
 theorem chiW_pos (w : InfinitePlace F) : ∀ r : ℝ, 0 < r → d.chiW w (r : ℂ) = 1 :=
   d.chiW_pos_pf w

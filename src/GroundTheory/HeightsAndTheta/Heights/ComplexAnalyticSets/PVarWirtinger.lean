@@ -95,7 +95,7 @@ theorem VarWirtinger.proof (hDSC : DiscriminantSheetCover.Statement) (hMF : Mass
     rw [hfibeq, finsum_mem_range hinj, finsum_eq_sum_of_fintype]
     refine Finset.sum_congr rfl fun j _ => ?_
     have h : ∃ s', IsSheetAt J A (s k j y) s' := ⟨_, hsh j⟩
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hxf : s k j y ∈ fibre J A y := hfibeq ▸ ⟨j, rfl⟩
     rw [hterm _ _ hxf h]
     have heq := SheetSumMeasurable.sheet_eventuallyEq (hsh j) h.choose_spec

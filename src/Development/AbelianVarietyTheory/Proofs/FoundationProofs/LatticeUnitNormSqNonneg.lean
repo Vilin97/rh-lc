@@ -44,7 +44,7 @@ theorem exists_extension (M : IntermediateField ℚ ℂ) [FiniteDimensional ℚ 
   refine ⟨φ, fun x hx => ?_⟩
   rw [← hφ]
   unfold TaylorLogMetric.liftM
-  rw [dif_pos hx, dif_pos (hle hx)]
+  rw [dite_eq_left hx, dite_eq_left (hle hx)]
   rfl
 
 theorem lattice_unitNormSq_nonneg (Λ : AddSubgroup ℂ) (g : ℂ → ℂ) : 0 ≤ nrm1Sq Λ g := by
@@ -324,7 +324,7 @@ theorem norm_meanInf_posLog_le : ∃ C : ℝ, 0 < C ∧ ∀ (D : D7), Inp D → 
         unfold cj
         rw [hρ _ (hzM p)]
         unfold TaylorLogMetric.liftM
-        rw [dif_pos (hzM p)]
+        rw [dite_eq_left (hzM p)]
       rw [he]
       exact mul_le_of_le_one_left (by positivity) hg1
   clear_value E₀

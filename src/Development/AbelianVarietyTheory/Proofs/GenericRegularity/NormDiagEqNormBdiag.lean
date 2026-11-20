@@ -47,10 +47,10 @@ theorem norm_diag_eq_norm_bdiag : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
       unfold perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
       unfold perFr
-      rw [dif_neg a, dif_pos (show conjEmb (relab c σ (e j).1) ∈ (U.X k').Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (e j).1) ∈ (U.X k').Ψ from hτ), dite_eq_left hn]
       rfl
   have hinj : ∀ j j', (e j).1 = (e j').1 → ((e j).2 : ℕ) = (e j').2 → j = j' := by
     intro j j' h1 h2
@@ -141,9 +141,9 @@ theorem norm_diag_eq_norm_bdiag : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   rw [h0]
   unfold bdiag
   rcases h1 with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
-  · rw [if_neg (by omega), inv_inv, dif_pos a, dif_pos hn]
-  · rw [if_pos (by omega), dif_neg a,
-      dif_pos (show conjEmb (relab c σ τ₀) ∈ (U.X k').Ψ from hτ), dif_pos hn]
+  · rw [if_neg (by omega), inv_inv, dite_eq_left a, dite_eq_left hn]
+  · rw [if_pos (by omega), dite_eq_right a,
+      dite_eq_left (show conjEmb (relab c σ τ₀) ∈ (U.X k').Ψ from hτ), dite_eq_left hn]
     rfl
 
 end GlobalTheory.BorelDiag

@@ -135,7 +135,7 @@ theorem inFrame_sM'_k (b : Fin L.n → AE F E) : inFrame d.b (_root_.PositivityT
   have hex : ∃ x : d.G, inFrame d.b x = _root_.PositivityTheory.SiegelWeilFormula.Act.C5.bMat_k (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_k R L b) :=
     ⟨⟨kfour.nU d.b (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_k R L b), kfour.nU_mem (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.nilpotentMap_add d) R.hε (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_cond_k b)⟩, kfour.inFrame_nU _ _⟩
   unfold _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sM_k _root_.PositivityTheory.SiegelWeilFormula.Act.C5.elt_k
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 theorem sig_delta_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb uM nb' w₁ cM δ) : σ δ = -(((R.ε : ℤ) : E)) * δ := by
   have hx : inFrame d.b (cM (0, 1)) = kfour.nM (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.aB_k L δ 1) := by

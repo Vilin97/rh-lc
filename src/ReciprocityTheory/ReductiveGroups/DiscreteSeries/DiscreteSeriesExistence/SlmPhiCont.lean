@@ -24,7 +24,7 @@ theorem toL2_eq_toLp_of_memLp {F : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (hF : MemLp (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε)) :
     toL2 ε F = hF.toLp _ := by
   unfold toL2
-  rw [dif_pos hF]
+  rw [dite_eq_left hF]
 
 theorem slm_exists_y {g : Matrix (Fin n) (Fin n) ℂ} (hg : Formalism.REAL.inUJ ε g) :
     ∃ y : Formalism.REAL.UJ ε, Formalism.MainNotions.S.umat y = g := by

@@ -70,9 +70,9 @@ theorem revGL_mul_invT_unip {r : ℕ} (x : BlockIx a r → R) :
   congr 1
   · exact if_congr (by rw [eq_comm, Fin.rev_eq_iff]) rfl rfl
   · by_cases h : (j : ℕ) < r ∧ r ≤ (i.rev : ℕ)
-    · rw [dif_pos h, dif_pos (by simp only [Fin.val_rev] at h ⊢; omega)]
+    · rw [dite_eq_left h, dite_eq_left (by simp only [Fin.val_rev] at h ⊢; omega)]
       simp [blockRev]
-    · rw [dif_neg h, dif_neg (by simp only [Fin.val_rev] at h ⊢; omega), neg_zero]
+    · rw [dite_eq_right h, dite_eq_right (by simp only [Fin.val_rev] at h ⊢; omega), neg_zero]
 
 def smIrrInvT [TopologicalSpace R] (σ : SmIrr (GL (Fin a) R)) : SmIrr (GL (Fin a) R) where
   V := σ.V

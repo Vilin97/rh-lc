@@ -43,7 +43,7 @@ theorem UpperTheory.exists_refinement_block_order :
     by_cases ha : a = j <;> by_cases hb : b = j
     · subst ha
       subst hb
-      rw [dif_pos rfl, dif_pos rfl]
+      rw [dite_eq_left rfl, dite_eq_left rfl]
       constructor
       · rintro (h | ⟨-, h⟩)
         · exact absurd h (lt_irrefl _)
@@ -55,7 +55,7 @@ theorem UpperTheory.exists_refinement_block_order :
           rw [eq_of_heq h1.2, eq_of_heq h2.2]
           exact Fin.lt_iff_val_lt_val.mp h3
     · subst ha
-      rw [dif_pos rfl, dif_neg hb]
+      rw [dite_eq_left rfl, dite_eq_right hb]
       constructor
       · rintro (h | ⟨-, h⟩)
         · exact Or.inl (Fin.lt_iff_val_lt_val.mpr h)
@@ -64,7 +64,7 @@ theorem UpperTheory.exists_refinement_block_order :
         · exact Or.inl (Fin.lt_iff_val_lt_val.mp h)
         · exact absurd (congrArg Sigma.fst h2) hb
     · subst hb
-      rw [dif_neg ha, dif_pos rfl]
+      rw [dite_eq_right ha, dite_eq_left rfl]
       constructor
       · rintro (h | ⟨h, -⟩)
         · exact Or.inl (Fin.lt_iff_val_lt_val.mpr h)
@@ -72,7 +72,7 @@ theorem UpperTheory.exists_refinement_block_order :
       · rintro (h | ⟨p', q', h1, -, -⟩)
         · exact Or.inl (Fin.lt_iff_val_lt_val.mp h)
         · exact absurd (congrArg Sigma.fst h1) ha
-    · rw [dif_neg ha, dif_neg hb]
+    · rw [dite_eq_right ha, dite_eq_right hb]
       constructor
       · rintro (h | ⟨-, h⟩)
         · exact Or.inl (Fin.lt_iff_val_lt_val.mpr h)

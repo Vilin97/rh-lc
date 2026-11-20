@@ -241,7 +241,7 @@ def flagClosure (Z : Mdl Y i₀) (s : Finset (Step Y i₀)) : Mdl Y i₀ := if h
 
 theorem isFlagCl_flagClosure {Z : Mdl Y i₀} {s : Finset (Step Y i₀)} (h : ∃ Z', IsFlagCl Z s Z') :
     IsFlagCl Z s (flagClosure Z s) := by
-  rw [flagClosure, dif_pos h]
+  rw [flagClosure, dite_eq_left h]
   exact h.choose_spec
 
 theorem isFlagCl_empty {Z : Mdl Y i₀} (h : ∃ f, IsMap Z Z f) : IsFlagCl Z ∅ Z :=

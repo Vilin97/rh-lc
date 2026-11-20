@@ -114,7 +114,7 @@ private theorem tr_core (hTr : UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.TrLe
   unfold trc
   rw [← hlev]
   unfold twTr trOn
-  rw [dif_pos hstab, dif_pos hpres, hres, map_smul, smul_eq_mul]
+  rw [dite_eq_left hstab, dite_eq_left hpres, hres, map_smul, smul_eq_mul]
   field_simp
 
 theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.seenTr_pf :

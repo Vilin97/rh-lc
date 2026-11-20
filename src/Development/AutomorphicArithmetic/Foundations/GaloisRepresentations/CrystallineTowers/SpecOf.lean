@@ -72,7 +72,7 @@ def invM (H : Matrix m (Fin d) R) : Matrix (Fin d) m R :=
 theorem invM_spec (H : Matrix m (Fin d) R) (h : ∃ Ψ : Matrix (Fin d) m R, Ψ * H = 1 ∧ H * Ψ = 1) :
     invM H * H = 1 ∧ H * invM H = 1 := by
   unfold invM
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem mul_inv_twist {n : Type} [Fintype n] [DecidableEq n] (H : Matrix m n R) (Φ : Matrix n m R) (ρ : Matrix n n R)

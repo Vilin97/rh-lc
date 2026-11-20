@@ -331,8 +331,8 @@ theorem isQuasiRegularSeq_iff_finsuppAntidiag {ι : Type*} [Fintype ι] [Decidab
       rw [← MonoDeg.sum_eq_sum_finsuppAntidiag a
         fun β => monoVal f β • if hβ : β.degree = a then c ⟨β, hβ⟩ else 0]
       convert hc using 3 with β
-      rw [dif_pos β.2]) α.1 α.2
-    rwa [dif_pos α.2] at this
+      rw [dite_eq_left β.2]) α.1 α.2
+    rwa [dite_eq_left α.2] at this
 
 theorem isQuasiRegularSeq_self_iff (f : ι → R) :
     IsQuasiRegularSeq R f ↔ ∀ (a : ℕ) (p : MvPolynomial ι R), p.IsHomogeneous a →

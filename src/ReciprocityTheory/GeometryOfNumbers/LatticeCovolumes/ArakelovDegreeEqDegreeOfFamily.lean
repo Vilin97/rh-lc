@@ -33,7 +33,7 @@ theorem arakelovDegree_eq_degreeOfFamily (h : HermFam K V) {E : Submodule (𝓞 
     {v : Fin r → V} (hv : IsFrame K E v) : deg h E = degreeOfFamily h E v := by
   have hex : ∃ p : (Σ r : ℕ, Fin r → V), IsFrame K E p.2 := ⟨⟨r, v⟩, hv⟩
   unfold deg
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact degreeOfFamily_eq_degreeOfFamily h hE hex.choose_spec hv
 
 theorem deg_of_le (h : HermFam K V) {E' E : Submodule (𝓞 K) V} (hE' : E'.FG) (hE : E.FG)

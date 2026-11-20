@@ -94,7 +94,7 @@ theorem positive_count : PosCount := by
       (le_antisymm (h1 ▸ hl) (Finset.sum_nonneg hnn))
     funext t
     have := hz t.1 (Finset.mem_univ _)
-    rw [extZ_apply, dif_pos t.2] at this
+    rw [extZ_apply, dite_eq_left t.2] at this
     rcases mul_eq_zero.1 this with h | h
     · exact absurd h (ne_of_gt t.2)
     · simpa [Complex.normSq_eq_zero] using h

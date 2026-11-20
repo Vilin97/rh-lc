@@ -172,7 +172,7 @@ theorem embGL_diag_B {n N : ℕ} (h : n + 1 = N) (t : Fin n → ℂˣ) :
   have hb2 := b.2
   rw [embGL_apply_B, Matrix.diagonal_apply]
   by_cases ha : a.1 < n <;> by_cases hb : b.1 < n
-  · rw [dif_pos ha, dif_pos hb]
+  · rw [dite_eq_left ha, dite_eq_left hb]
     show (Matrix.diagonal fun a => (t a : ℂ)) ⟨a.1, ha⟩ ⟨b.1, hb⟩ = _
     rw [Matrix.diagonal_apply]
     by_cases hab : a = b
@@ -181,12 +181,12 @@ theorem embGL_diag_B {n N : ℕ} (h : n + 1 = N) (t : Fin n → ℂˣ) :
     · have hne : (⟨a.1, ha⟩ : Fin n) ≠ ⟨b.1, hb⟩ := fun e => hab (Fin.ext (Fin.mk.inj_iff.mp e))
       simp [hab, hne]
   · have hab : a ≠ b := fun e => hb (e ▸ ha)
-    rw [dif_pos ha, dif_neg hb, if_neg hab]
+    rw [dite_eq_left ha, dite_eq_right hb, if_neg hab]
   · have hab : a ≠ b := fun e => ha (e ▸ hb)
-    rw [dif_neg ha, if_pos hb, if_neg hab]
+    rw [dite_eq_right ha, if_pos hb, if_neg hab]
   · have hab : a = b := Fin.ext (by omega)
     subst hab
-    rw [dif_neg ha, if_neg hb, if_pos rfl]
+    rw [dite_eq_right ha, if_neg hb, if_pos rfl]
     simp [dB, ha]
 
 theorem torus_mem_B {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (W : Submodule ℂ (MvPolynomial (Fin N × Fin N) ℂ))

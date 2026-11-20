@@ -87,7 +87,7 @@ theorem localMult_map (hF : Function.Surjective (Int.castRingHom F)) {J W' : Ide
       change e (Ideal.Quotient.mk _ (s * y)) = Ideal.Quotient.mk _ (red n F s) * e (Ideal.Quotient.mk _ y)
       rw [he, he, map_mul, map_mul]
   unfold localMult ReciprocityTheory.ChartRestriction.G.Geo.multAt
-  rw [dif_pos hQ, dif_pos hW', ← VerticalPartMultiplicity.length_localizedModule_quotient, hlen]
+  rw [dite_eq_left hQ, dite_eq_left hW', ← VerticalPartMultiplicity.length_localizedModule_quotient, hlen]
 
 theorem proof : SectionCycleModP.Statement := by
   intro n p W F _ hp _ hpW hF hpF i _

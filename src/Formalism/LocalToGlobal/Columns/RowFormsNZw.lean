@@ -183,7 +183,7 @@ theorem nz_sg_even (hW : W.Ok) (hf : Even X.f) (he : ∀ j : Fin R.m, ∃ z : �
       rw [← hz]
       refine Finset.sum_congr rfl fun τ _ => ?_
       unfold RowPar.eAt
-      rw [dif_pos hB]
+      rw [dite_eq_left hB]
     have h3 : Fintype.card X.Tau = c + c := hc
     rw [h2, h3, hy, nsmul_eq_mul]
     push_cast
@@ -292,7 +292,7 @@ theorem nz_lamV_even (hW : W.Ok) (hf : Even X.f) (he : ∀ j : Fin R.m, ∃ z : 
       rw [← hz]
       refine Finset.sum_congr rfl fun τ _ => ?_
       unfold RowPar.eAt
-      rw [dif_pos hB]
+      rw [dite_eq_left hB]
     have h5 : Fintype.card X.Tau = c + c := hc
     rw [h4, h5, hy, nsmul_eq_mul]
     push_cast

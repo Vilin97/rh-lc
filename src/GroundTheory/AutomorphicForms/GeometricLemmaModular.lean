@@ -66,7 +66,7 @@ noncomputable def leviParCoord : lieLeviPar F n γ δ ≃ₗ[F] (LeviParIndex n 
   invFun x := ⟨Matrix.of fun i j => if h : γ i = γ j ∧ ¬ δ j < δ i then x ⟨(i, j), h⟩ else 0,
     fun i j hij => by
       simp only [Matrix.of_apply]
-      rw [dif_neg hij]⟩
+      rw [dite_eq_right hij]⟩
   map_add' A B := rfl
   map_smul' c A := rfl
   left_inv A := by
@@ -235,7 +235,7 @@ theorem coe_leviParCoord_symm_single (t : LeviParIndex n γ δ) :
   · obtain ⟨h1, h2⟩ := hij
     have ht : (⟨(i, j), h1 ▸ h2 ▸ t.2⟩ : LeviParIndex n γ δ) = t := by
       ext <;> simp [← h1, ← h2]
-    rw [dif_pos (h1 ▸ h2 ▸ t.2), if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
+    rw [dite_eq_left (h1 ▸ h2 ▸ t.2), if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
   · rw [if_neg hij]
     split_ifs with h
     · rw [Pi.single_apply, if_neg]

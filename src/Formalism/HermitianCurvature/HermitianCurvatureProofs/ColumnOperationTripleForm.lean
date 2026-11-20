@@ -590,7 +590,7 @@ theorem triple_form_recursion : Formalism.FourierDecayAlt.A5.TTStep := by
         (if hl : x.1 ∈ Finset.Ioo j n then cf ⟨x.1, hl⟩ else 0) • lamN R Z x.1 v =
         ∑ x : {l // l ∈ Finset.Ioo j n}, cf x • lamC x.1 (Submodule.Quotient.mk v) := by
       refine Finset.sum_congr rfl fun x _ => ?_
-      rw [dif_pos x.2]; rfl
+      rw [dite_eq_left x.2]; rfl
     rw [e3, e1]; abel
 
 end Formalism.FourierDecayAlt.P

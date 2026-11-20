@@ -315,8 +315,8 @@ end Frames
 theorem letterOf_emb (τ : E →+* ℂ) (k : ℕ) :
     letterOf Dw (.inl (T.emb τ, k)) = (letterOf Dw (.inl (τ, k))).map T.letter := by
   by_cases h : k < Dw.mult τ
-  · rw [letterOf, letterOf, dif_pos h, dif_pos (T.mult_emb τ ▸ h)]; rfl
-  · rw [letterOf, letterOf, dif_neg h, dif_neg (T.mult_emb τ ▸ h)]; rfl
+  · rw [letterOf, letterOf, dite_eq_left h, dite_eq_left (T.mult_emb τ ▸ h)]; rfl
+  · rw [letterOf, letterOf, dite_eq_right h, dite_eq_right (T.mult_emb τ ▸ h)]; rfl
 
 theorem expo_sym {w : Sym E →₀ ℤ} (hw : ∀ a ∈ w.support, a.2.2.isLeft = true) (z : Letter Dw) :
     expo Dw (w.mapDomain T.sym) (T.letter z) = expo Dw w z := by

@@ -208,7 +208,7 @@ theorem matrix_redOf (m : ℕ) (t ρ₁ : ℂ) (p : XY m) :
           rw [Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
           rw [not_lt, Fin.le_iff_val_le_val] at hrc
           omega
-        rw [dif_neg hrc, tri_gt _ _ hcr]
+        rw [dite_eq_right hrc, tri_gt _ _ hcr]
         by_cases hrc' : r = c
         · subst hrc'
           simp

@@ -22,7 +22,7 @@ theorem embWb_apply_offW (γ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (v : Fin 
     intro j
     unfold isW at hi
     simp only [embWb]
-    rw [dif_neg (fun h => hi h.1)]
+    rw [dite_eq_right (fun h => hi h.1)]
     by_cases h : i = j
     · subst h; simp [hi]
     · simp [h]
@@ -39,7 +39,7 @@ theorem embWb_mulVec_eq_zero_on_isW (γ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ
   · have h0 : embWb k r γ i j = 0 := by
       unfold isW at hi hj
       simp only [embWb]
-      rw [dif_neg (fun h => hj h.2), if_neg (fun h => h.2 hi)]
+      rw [dite_eq_right (fun h => hj h.2), if_neg (fun h => h.2 hi)]
     rw [h0, zero_mul]
 
 theorem measurable_invM : Measurable (invM : Mt k r → Mt k r) := by

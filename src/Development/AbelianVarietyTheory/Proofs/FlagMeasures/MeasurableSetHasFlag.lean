@@ -533,7 +533,7 @@ theorem type_measurable : ∀ (I : AutInst) (a : ℕ) (j : Fin a → ℕ), ∃ s
   have hs : ∀ x τ, HasType I x j τ → s x = τ := by
     intro x τ hx
     show (if h : ∃ τ, HasType I x j τ then h.choose else 0) = τ
-    rw [dif_pos ⟨τ, hx⟩]
+    rw [dite_eq_left ⟨τ, hx⟩]
     exact huniq x _ _ (Exists.choose_spec _) hx
   have hD : {x : I.GA | ∃ τ, HasType I x j τ} =
       ⋃ S' : Fin (a + 1) → ↥{N : Submodule (𝓞 I.E) (Fin I.n → I.E) | N.FG}, {x | P (fun i => (S' i).1) x} := by
@@ -565,7 +565,7 @@ theorem type_measurable : ∀ (I : AutInst) (a : ℕ) (j : Fin a → ℕ), ∃ s
           · exact (hn ⟨τ, hxτ⟩).elim
       · have h0 : s x = 0 := by
           show (if h : ∃ τ, HasType I x j τ then h.choose else 0) = 0
-          rw [dif_neg hx]
+          rw [dite_eq_right hx]
         rw [h0]
         constructor
         · intro hB'

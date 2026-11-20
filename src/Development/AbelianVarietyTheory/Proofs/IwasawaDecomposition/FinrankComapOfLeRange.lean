@@ -87,7 +87,7 @@ theorem seeIso : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type)
     rw [Submodule.coe_smul]
     refine Submodule.smul_mem _ _ ?_
     unfold sEEofTT
-    rw [dif_pos hE]
+    rw [dite_eq_left hE]
     exact (mem_EEC St Gd _).1 (hE.choose_spec.2.choose _).2
   · refine (finrank_of_evalTieT hE).trans ?_
     refine Eq.symm ((finrank_twSub (E := R.HE.H) (twAt D.what₂.embLL A3.A.v0)

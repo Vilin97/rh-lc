@@ -34,7 +34,7 @@ private theorem valueAt_genericPoint {X : Scheme.{0}} [IsIntegral X] {U : X.Open
     rw [Scheme.Hom.appLE, Scheme.fromSpecStalk_app hU, Category.assoc, Category.assoc, ← Functor.map_comp]
     exact congrArg (_ ≫ ·) ((congrArg (_ ≫ ·) ((Spec (X.presheaf.stalk _)).presheaf.map_id _)).trans
       (Category.comp_id _))
-  rw [valF, dif_pos h]
+  rw [valF, dite_eq_left h]
   have e' : (X.fromSpecStalk (genericPoint X)).appLE U ⊤ h ≫ (Scheme.ΓSpecIso _).hom = X.presheaf.germ U _ hU := by
     rw [e, Category.assoc, Iso.inv_hom_id, Category.comp_id]
   exact congrArg (fun g => g.hom a) e'
@@ -58,7 +58,7 @@ private theorem exists_div {X Z : Scheme.{0}} [IsIntegral X] (ι : X ⟶ Z) (L :
   let r : (pullLB ι L).lb.ι → X.functionFieldˣ := fun i => if h : s i ≠ 0 then Units.mk0 _ h else 1
   have hr : ∀ i, genericPoint X ∈ ι ⁻¹ᵁ L.U i → (r i : X.functionField) = s i := fun i hi => by
     simp only [r]
-    rw [dif_pos (h0 i (top_le_preimage_genericPointMap_comp ι hi))]
+    rw [dite_eq_left (h0 i (top_le_preimage_genericPointMap_comp ι hi))]
     rfl
   have hR : IsRatSec (pullLB ι L).lb r := fun i j h => by
     rw [hr i h.1, hr j h.2, ← valueAt_genericPoint h, ht i j (top_le_preimage_genericPointMap_comp ι (U := L.U i ⊓ L.U j) h)]

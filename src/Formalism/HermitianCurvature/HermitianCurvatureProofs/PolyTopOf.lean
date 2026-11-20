@@ -60,18 +60,18 @@ theorem polyTop_of (hKA : KrAA) : PBN.PolyTop := by
     · refine ⟨fun _ => 0, ?_, fun y => ?_⟩
       · show (0 : Wq →L[ℂ] Wp) = _ • D.vecV Bs p.ν' p.m₀ G q
         unfold D.vecV
-        rw [dif_pos hpos, dif_neg h', smul_zero]
+        rw [dite_eq_left hpos, dite_eq_right h', smul_zero]
       · show D.vecV Bs p.ν' p.m₀ _ q = _
         unfold D.vecV
-        rw [dif_pos hpos, dif_neg h']
+        rw [dite_eq_left hpos, dite_eq_right h']
         simp
   · refine ⟨fun _ => 0, ?_, fun y => ?_⟩
     · show (0 : Wq →L[ℂ] Wp) = _ • D.vecV Bs p.ν' p.m₀ G q
       unfold D.vecV
-      rw [dif_neg hpos, smul_zero]
+      rw [dite_eq_right hpos, smul_zero]
     · show D.vecV Bs p.ν' p.m₀ _ q = _
       unfold D.vecV
-      rw [dif_neg hpos]
+      rw [dite_eq_right hpos]
       simp
 
 end Formalism.FourierDecayAlt.P.VandermondePolynomialIntegral

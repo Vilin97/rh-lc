@@ -35,26 +35,26 @@ theorem GlobalTheory.Mem.SymChar.Resid.hA_bw_symVec_not_ewAt : ∀ (D : D7) (X :
   rw [if_neg hEw]
   unfold GlobalTheory.SeeConjRead.flagV
   by_cases h1 : j.1 < D.R.rS
-  · rw [dif_pos h1, if_neg (by omega), sub_zero]
+  · rw [dite_eq_left h1, if_neg (by omega), sub_zero]
     exact hS _ ((X.weightVectorsIntegral m).2.2 ⟨j.1, h1⟩).1
-  rw [dif_neg h1]
+  rw [dite_eq_right h1]
   by_cases h2 : j.1 < D.R.rS + D.R.k
-  · rw [dif_pos h2]
+  · rw [dite_eq_left h2]
     have e : ((Fin.rev (⟨j.1 - D.R.rS, by omega⟩ : Fin D.R.k)) = m) ↔ j.val = D.R.rS + D.R.k - 1 - m.val := by
       rw [Fin.ext_iff, Fin.val_rev]; simp only [Fin.val_mk]; constructor <;> intro h <;> omega
     have := hB (Fin.rev ⟨j.1 - D.R.rS, by omega⟩)
     by_cases h' : j.val = D.R.rS + D.R.k - 1 - m.val
     · rw [if_pos h']; rwa [if_pos (e.2 h')] at this
     · rw [if_neg h']; rwa [if_neg (fun hh => h' (e.1 hh))] at this
-  rw [dif_neg h2]
+  rw [dite_eq_right h2]
   by_cases h4 : j.1 = D.R.rS + D.R.k
-  · rw [dif_pos h4, if_neg (by omega), sub_zero]
+  · rw [dite_eq_left h4, if_neg (by omega), sub_zero]
     exact hS _ (X.weightVectorsIntegral m).1
-  rw [dif_neg h4]
+  rw [dite_eq_right h4]
   by_cases h3 : j.1 < 2 * D.R.rS + D.R.k + 1
-  · rw [dif_pos h3, if_neg (by omega), sub_zero]
+  · rw [dite_eq_left h3, if_neg (by omega), sub_zero]
     exact hS _ ((X.weightVectorsIntegral m).2.2 _).2.1
-  · rw [dif_neg h3, if_neg (by omega), sub_zero, hA_zero_right']
+  · rw [dite_eq_right h3, if_neg (by omega), sub_zero, hA_zero_right']
     exact zero_mem _
 
 end

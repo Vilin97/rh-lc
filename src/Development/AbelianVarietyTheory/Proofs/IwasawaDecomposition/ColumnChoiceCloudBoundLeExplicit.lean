@@ -233,7 +233,7 @@ theorem cloudBound_of (D : D7) (Δ : ℕ) (hD1 : 1 ≤ Δ)
     have hf := hfill u (D.eTau.symm g) hm
     have hfe : (((D.hcW u (D.eTau.symm g)).e ⟨0, hm⟩ : ℚ) : ℝ) = Formalism.BasicNotions.wj D 1 (D.eTau.symm g) := by
       unfold Formalism.BasicNotions.wj
-      rw [dif_pos (by omega), D.hcW_e]
+      rw [dite_eq_left (by omega), D.hcW_e]
     rw [hfe] at hf
     have hka : Formalism.MainNotions.G.kaJ D 1 = ((D.R.k : ℝ) + D.R.t + 1) / 2 := by
       unfold Formalism.MainNotions.G.kaJ; push_cast; ring

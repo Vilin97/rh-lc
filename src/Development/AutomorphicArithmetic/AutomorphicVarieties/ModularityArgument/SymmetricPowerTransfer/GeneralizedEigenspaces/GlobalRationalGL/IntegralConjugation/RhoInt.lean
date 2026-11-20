@@ -35,12 +35,12 @@ private theorem star_int (P : Pre L) (v : Pl (Lp L)) (x : Lsq (Kv v) (cv v P.Δ)
   classical
   have hf : ∀ u : Plc L, (if h : un u = v then P.rho v u h x else 0) ∈ u.adicCompletionIntegers L := fun u => by
     by_cases hu : un u = v
-    · rw [dif_pos hu]; exact hx u hu
-    · rw [dif_neg hu]; exact zero_mem _
+    · rw [dite_eq_left hu]; exact hx u hu
+    · rw [dite_eq_right hu]; exact zero_mem _
   let a : Af L := ⟨fun u => if h : un u = v then P.rho v u h x else 0, Filter.Eventually.of_forall hf⟩
   have ha : ∀ w h, P.rho v w h x = pLoc L w a := fun w h => by
     show _ = dite _ _ _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [rhoStar L P v x a ha w h]
   exact conj_int a hf w
 

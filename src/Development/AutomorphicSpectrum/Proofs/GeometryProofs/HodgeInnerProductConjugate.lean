@@ -130,9 +130,9 @@ theorem valAt'_cc {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) (U : Y.Opens) (f : Γ(Y, U
   have hi := top_le_inv (starRingEnd ℂ) (fun a => by simp) (x := x) (U := U)
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · rw [dif_pos h, dif_pos (hi.2 h)]
+  · rw [dite_eq_left h, dite_eq_left (hi.2 h)]
     exact val_spMap _ x U h _ f
-  · rw [dif_neg h, dif_neg (fun h' => h (hi.1 h')), map_zero]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h (hi.1 h')), map_zero]
 
 section Analysis
 

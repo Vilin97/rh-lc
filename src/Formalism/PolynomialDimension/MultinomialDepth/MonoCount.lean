@@ -1448,7 +1448,7 @@ theorem count_HW [NeZero r] (L : Letters N) (j0 : ℕ) {q : ℕ} (J : Fin q → 
     have h2 := (linearIndepOn_finset_iff.mp (hbli ν.1)) (fun y => if hy : y ∈ b ν.1 then g ⟨ν, ⟨y, hy⟩⟩ else 0) (by
       rw [← Finset.sum_attach, ← h1, Finset.univ_eq_attach]
       refine Finset.sum_congr rfl fun y _ => ?_
-      rw [dif_pos y.2]; rfl) x.1 x.2
+      rw [dite_eq_left y.2]; rfl) x.1 x.2
     simpa [x.2] using h2
   obtain ⟨k1, k2, k3⟩ := count_Y L j0 J M h la (fun i => hbHW _ _ i.2.2) (fun i => hbP _ _ i.2.2) hli
     (by

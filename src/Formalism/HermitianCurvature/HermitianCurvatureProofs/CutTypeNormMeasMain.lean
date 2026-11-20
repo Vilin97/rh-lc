@@ -162,7 +162,7 @@ theorem typeNormMeas_of_typeComm_houseMeas (hTC : TypeComm) (hHM : HouseMeas) : 
       exact not_lt.2 (mul_nonpos_of_nonneg_of_nonpos (Complex.normSq_nonneg _) (by linarith))
     show D.vecV p.T.base p.ν' p.m₀ Y (TBB.bigPt P.r c) = 0
     unfold D.vecV
-    rw [dif_neg]
+    rw [dite_eq_right]
     exact fun h => hG h.2
 
   have hD0 : MeasurableSet D0 := by

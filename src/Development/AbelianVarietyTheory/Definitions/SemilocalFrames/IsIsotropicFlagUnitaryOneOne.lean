@@ -252,14 +252,14 @@ theorem locSize_mU : locSize ![1] W2 (uMat mU) 0 = 1 / 2 := by
     intro h; simpa using congrFun h 0
   have h0 : detOn (uMat mU) ⊥ = 1 := by
     unfold detOn
-    rw [dif_pos (by intro y hy; rw [Submodule.mem_bot] at hy; subst hy; simp)]
+    rw [dite_eq_left (by intro y hy; rw [Submodule.mem_bot] at hy; subst hy; simp)]
     rw [LinearMap.det_eq_one_of_subsingleton]; simp
   have h1 : detOn (uMat mU) (Submodule.span ℂ {![1, 1]}) = 2 := by
     have hs : ∀ y ∈ Submodule.span ℂ {(![1, 1] : Fin 2 → ℂ)},
         Matrix.toLin' (uMat mU) y ∈ Submodule.span ℂ {(![1, 1] : Fin 2 → ℂ)} := fun y hy =>
       (mU_mem 1 y hy).1
     unfold detOn
-    rw [dif_pos hs]
+    rw [dite_eq_left hs]
     have : (Matrix.toLin' (uMat mU)).restrict hs = (2 : ℂ) • LinearMap.id := by
       ext ⟨y, hy⟩ : 1
       obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hy

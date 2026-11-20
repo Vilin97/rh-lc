@@ -17,7 +17,7 @@ theorem divCycle_support_finite {K : Type} [Fintype K] {ι : K → Type} [∀ k,
   by_contra h
   apply hW
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg (fun h' => h h'.1)]
+  rw [dite_eq_right (fun h' => h h'.1)]
 
 theorem cycEval_ratDiv {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {O : Type} [CommRing O] [IsNoetherianRing O] (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))

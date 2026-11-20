@@ -22,7 +22,7 @@ theorem weylDim_of_weylProd (h : PI.WeylProd) {n : ℕ} (lam : DomWeight n) : We
     apply Int.toNat_of_nonneg
     unfold DomWeight.detShift
     have hn : 0 < n := lt_of_le_of_lt (Nat.zero_le _) t.isLt
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     have h1 : t ≤ (⟨n - 1, by omega⟩ : Fin n) := by
       rw [Fin.le_def]
       have := t.isLt

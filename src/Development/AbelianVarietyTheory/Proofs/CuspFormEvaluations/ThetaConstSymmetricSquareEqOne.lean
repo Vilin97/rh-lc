@@ -82,10 +82,10 @@ private theorem isHolFam_comp' {Y Y' : Scheme.{0}} {n : ℕ} {e : (Fin n → ℂ
     intro z
     unfold valAt'
     by_cases hz : ⊤ ≤ e z ⁻¹ᵁ (h ⁻¹ᵁ U)
-    · rw [dif_pos hz, dif_pos (by exact hz)]
+    · rw [dite_eq_left hz, dite_eq_left (by exact hz)]
       unfold valAt
       rfl
-    · rw [dif_neg hz, dif_neg (by exact hz)]
+    · rw [dite_eq_right hz, dite_eq_right (by exact hz)]
   refine ⟨ho, ?_⟩
   simp only [hv]
   exact hd

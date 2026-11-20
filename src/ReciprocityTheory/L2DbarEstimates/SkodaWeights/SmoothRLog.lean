@@ -138,7 +138,7 @@ private theorem db_log_eq_inv_mul_db {M : Type*} [TopologicalSpace M] (n : ℕ) 
       ((ph y : ℝ) : ℂ)⁻¹ * db n z k (fun y => ((ph y : ℝ) : ℂ)) y := by
   unfold db
   by_cases hex : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ y ∈ e.source
-  · rw [dif_pos hex, dif_pos hex]
+  · rw [dite_eq_left hex, dite_eq_left hex]
     have hs := Classical.choose_spec hex
     generalize Classical.choose hex = e at hs ⊢
     have hzy : z y = e y := hs.1 hs.2
@@ -167,7 +167,7 @@ private theorem db_log_eq_inv_mul_db {M : Type*} [TopologicalSpace M] (n : ℕ) 
     simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.smul_apply,
       Complex.ofRealCLM_apply, smul_eq_mul, Complex.ofReal_mul, Complex.ofReal_inv]
     ring
-  · rw [dif_neg hex, dif_neg hex, mul_zero]
+  · rw [dite_eq_right hex, dite_eq_right hex, mul_zero]
 
 private theorem ofReal_vsq_perp_eq {p : ℕ} (g w : Fin p → ℂ) (hS : vsq g ≠ 0) :
     ((vsq (perp g w) : ℝ) : ℂ) = ∑ l, w l * (starRingEnd ℂ) (w l) -

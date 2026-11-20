@@ -60,7 +60,7 @@ lemma mC_v (a : ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{
         (chainsXIso R E p).hom ≫ mF a ha p s h := by
     rintro q rfl e h'
     simp
-  rw [mC, Cochain.mk_v, dif_pos (by omega)]
+  rw [mC, Cochain.mk_v, dite_eq_left (by omega)]
   exact key _ (by omega) _ _
 
 end LateralTheory.EtaleFoundations.MkPf

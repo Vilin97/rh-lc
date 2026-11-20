@@ -98,7 +98,7 @@ def rt (ε : Fin n → Bool) (Λ : Type) (N : ℕ) (h : Mx n) : Bd (Λ × UJset 
 
 theorem rt_apply {Λ : Type} {N : ℕ} {h : Mx n} (hh : h ∈ UJset ε) (F : Bd (Λ × UJset ε)) (i : Λ × UJset ε) :
     rt ε Λ N h F i = (wt N (i.2.1 * h) : ℂ) / wt N i.2.1 * F (i.1, ⟨i.2.1 * h, mul_mem_UJ i.2.2 hh⟩) := by
-  rw [rt, dif_pos hh, wcomp_apply]
+  rw [rt, dite_eq_left hh, wcomp_apply]
 
 theorem modRep_rt (ε : Fin n → Bool) (Λ : Type) (N : ℕ) : ModRep ε (rt ε Λ N) := by
   refine ⟨?_, fun a ha b hb => ?_, 1, N, fun g hg => ?_⟩
@@ -110,7 +110,7 @@ theorem modRep_rt (ε : Fin n → Bool) (Λ : Type) (N : ℕ) : ModRep ε (rt ε
     simp only [mul_assoc]
     have := wt_ne N (i.2.1 * a)
     field_simp
-  · rw [rt, dif_pos hg, one_mul]
+  · rw [rt, dite_eq_left hg, one_mul]
     exact norm_wcomp _ _ _ _ _
 
 variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {σ : Mx n → (H →L[ℂ] H)}

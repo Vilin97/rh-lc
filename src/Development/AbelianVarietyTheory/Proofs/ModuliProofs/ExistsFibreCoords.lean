@@ -70,7 +70,7 @@ theorem fderiv_fn_resG {g : ℕ} {A₀ : Over (Sp ℂ)} [GrpObj A₀] {L₀ : LB
     intro y hy
     have hy2 : ⊤ ≤ y ⁻¹ᵁ W := hy.trans (fun q hq => h hq)
     unfold valAt'
-    rw [dif_pos hy, dif_pos hy2]
+    rw [dite_eq_left hy, dite_eq_left hy2]
     unfold valAt
     congr 1
     rw [← Scheme.Hom.map_appLE y hy (homOfLE h).op]

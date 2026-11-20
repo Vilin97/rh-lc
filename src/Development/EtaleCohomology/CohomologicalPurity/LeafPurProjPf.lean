@@ -55,7 +55,7 @@ theorem purT_char {d : ℕ} (T : ∀ P : SP d, Tube P) (q : ℕ) [NeZero q] (P :
     (pull _ (pullback.snd (T P).π (sch.map P.ι)) (tw q i) n x), ?_, ?_⟩
   · exact AddEquiv.ofBijective_apply_symm_apply _ (((T P).ok q hq).1 i n)
   · unfold purT
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact AddEquiv.ofBijective_apply_symm_apply _ (((T P).ok q hq).2.2.1 (n + 2 * d) (i + d))
 
 end PurProjPf

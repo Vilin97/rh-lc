@@ -103,7 +103,7 @@ theorem gramFn_eq {r : ℕ} {b : Fin r → 𝔐.Li} {z : Sp ℂ ⟶ 𝔐.X} {w :
   have hex : ∃ (Γ : Matrix (Fin r) (Fin r) ℂ) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X),
       CoordsAt 𝔐.ξ M.x z w ∧ 𝔐.Interior z ∧ 𝔐.M.GramAt 𝔐.t.PP.L z b Γ := ⟨Γ, z, hw, hi, h1⟩
   unfold HodgeMetric.gramFn
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨z₀, hw₀, -, hΓ₀⟩ := hex.choose_spec
   have hz : z₀ = z := (tp.1 w hw.1 (tp.2.2 z w (𝔐.all _) hw).1).unique ⟨𝔐.all _, hw₀⟩ ⟨𝔐.all _, hw⟩
   rw [hz] at hΓ₀

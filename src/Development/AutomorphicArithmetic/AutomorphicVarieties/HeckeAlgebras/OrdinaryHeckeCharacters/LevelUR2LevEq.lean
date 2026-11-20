@@ -25,11 +25,11 @@ private theorem le_cmp_same {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [Numbe
       exact h'
     obtain ⟨_, x, rfl⟩ := g
     unfold CaseU.cmp at hg ⊢
-    rw [dif_pos h0] at hg
-    rw [dif_pos h']
+    rw [dite_eq_left h0] at hg
+    rw [dite_eq_left h']
     exact UpperTheory.mem_maximalCompact_of_under_eq L n x w w' h hg
   · unfold CaseU.cmp
-    rw [dif_neg h']
+    rw [dite_eq_right h']
     exact one_mem _
 
 theorem UpperTheory.V.Hi.levelUR2LevEq :

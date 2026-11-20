@@ -106,7 +106,7 @@ theorem sub_eq_sum (x : Fin n → ℝ) (i j : ℕ) (hij : i ≤ j) (hj : j < n) 
     rw [Finset.sum_Ioc_succ_top hij, ← ih hj']
     have : An.sr x (j + 1) = x ⟨j, hj'⟩ - x ⟨j + 1, hj⟩ := by
       unfold An.sr
-      rw [dif_pos ⟨by omega, hj⟩]
+      rw [dite_eq_left ⟨by omega, hj⟩]
       rfl
     rw [this]
     ring

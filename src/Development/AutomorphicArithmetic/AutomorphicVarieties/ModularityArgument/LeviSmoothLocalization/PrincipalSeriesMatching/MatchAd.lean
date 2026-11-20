@@ -109,7 +109,7 @@ private theorem step (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (
     rintro w ζ ⟨hζ, hm⟩
     refine Finset.mem_image.2 ⟨_, Multiset.mem_toFinset.2 hm, ?_⟩
     have h : ∃ ξ hξ, IrrGL.ofChar ζ hζ = IrrGL.ofChar ξ hξ := ⟨ζ, hζ, rfl⟩
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     obtain ⟨hξ, e⟩ := h.choose_spec
     exact ((polFacts _).2.2.1 _ _ _ _ e).symm
   obtain ⟨χ, hχv, hχ⟩ := globTw ℚ K v θ hθ S₀ bad bad'

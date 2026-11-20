@@ -98,7 +98,7 @@ theorem exists_locDerK_desc : ∀ {R : Type} [CommRing R] [IsDomain R] {Q : DegP
     exact hc i j _ (le_inf (inf_le_left.trans hWV) inf_le_right) _
   have hle : b ⁻¹ᵁ (m ⁻¹ᵁ W) ≤ a ⁻¹ᵁ (Y.q.left ⁻¹ᵁ W) := by
     rw [← Scheme.Hom.comp_preimage, ← Scheme.Hom.comp_preimage, w]
-  rw [e1, pbT, pbT, dif_pos (le_refl _), dif_pos hle, ← hq i W hWV]
+  rw [e1, pbT, pbT, dite_eq_left (le_refl _), dite_eq_left hle, ← hq i W hWV]
   have k : ∀ (c : Z' ⟶ Q.P.A.left) (_ : c = b ≫ m) (hc : b ⁻¹ᵁ (m ⁻¹ᵁ W) ≤ c ⁻¹ᵁ W) x,
       (b.appLE (m ⁻¹ᵁ W) (b ⁻¹ᵁ (m ⁻¹ᵁ W)) (le_refl _)).hom ((m.app W).hom x) = (c.appLE W _ hc).hom x := by
     rintro _ rfl hc x

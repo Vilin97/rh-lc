@@ -86,7 +86,7 @@ theorem evR_pullRule_nat (hO : GlobalTheory.ClsVal.Cmp.OverBase d) (hK : KA l �
   have e : evR d.Xo₂ d.c₂ (pullRule d f) y₂ =
       hT.choose_spec.choose (pullRule d f hT.choose hT.choose_spec.choose_spec.choose) := by
     unfold evR evalAt
-    rw [dif_pos hT]
+    rw [dite_eq_left hT]
   rw [e]
   exact key _ _ _ hT.choose_spec.choose_spec.choose_spec
 

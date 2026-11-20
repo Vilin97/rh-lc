@@ -140,7 +140,7 @@ theorem exists_stalkDer (Z : Scheme) (d : Fld Z) (hd : IsField ⊤ d) (z : Z) :
 theorem germ_mem_of_valR_eq_zero (A : Type) [CommRing A] (Z : Scheme) (x : Sp A ⟶ Z) (W : Z.Opens)
     (hW : ⊤ ≤ x ⁻¹ᵁ W) (q₀ : Sp A) (h : x.base q₀ ∈ W) (g : Γ(Z, W)) (hg : valR x W g = 0) :
     Z.presheaf.germ W _ h g ∈ maximalIdeal (Z.presheaf.stalk (x.base q₀)) := by
-  rw [valR, dif_pos hW] at hg
+  rw [valR, dite_eq_left hW] at hg
   have h0 : Scheme.Hom.appLE x W ⊤ hW g = 0 := by
     have := congrArg (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom hg
     rwa [← CommRingCat.comp_apply, Iso.hom_inv_id, CommRingCat.id_apply, map_zero] at this

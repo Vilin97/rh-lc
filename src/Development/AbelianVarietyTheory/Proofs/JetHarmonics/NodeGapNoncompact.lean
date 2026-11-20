@@ -11,9 +11,9 @@ theorem lam_eq (k r : ℕ) (hk : 1 ≤ k) (v : Fin (k - 1) → ℝ) (b : Fin (2 
   funext s
   unfold lam48
   by_cases h : s.val < k - 1
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     exact (param_cloud r k hk v b ⟨s.val, h⟩).symm
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     have hs : s = nodeIdx r k hk ⟨s.val - (k - 1), by have := s.isLt; omega⟩ := by
       apply Fin.ext
       simp only [nodeIdx]

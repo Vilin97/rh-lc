@@ -178,12 +178,12 @@ theorem chi_fin_of_glevH {S : StepLevel F E σ J T f bad} {G : GLoc F E σ gp}
     rw [Function.mem_mulSupport, finprod_eq_dif] at hv
     by_cases h : (gp a : 𝓞 F) ∈ v.asIdeal
     · exact Finset.mem_coe.2 ((Set.Finite.mem_toFinset (hfin a)).2 h)
-    · rw [dif_neg h] at hv
+    · rw [dite_eq_right h] at hv
       exact absurd rfl hv
   rw [finprod_eq_prod_of_mulSupport_subset _ hsup, ← Finset.prod_pow]
   refine Finset.prod_eq_one fun v hv => ?_
   have h : (gp a : 𝓞 F) ∈ v.asIdeal := (Set.Finite.mem_toFinset (hfin a)).1 hv
-  rw [finprod_eq_dif, dif_pos h]
+  rw [finprod_eq_dif, dite_eq_left h]
   have hd : Nat.card (GL (Fin n) (kv F v)) ∣ ∏ a : Fin 2, ∏ v ∈ (hfin a).toFinset, Nat.card (GL (Fin n) (kv F v)) :=
     (Finset.dvd_prod_of_mem _ hv).trans (Finset.dvd_prod_of_mem (fun a : Fin 2 => ∏ v ∈ (hfin a).toFinset, Nat.card (GL (Fin n) (kv F v)))
       (Finset.mem_univ a))

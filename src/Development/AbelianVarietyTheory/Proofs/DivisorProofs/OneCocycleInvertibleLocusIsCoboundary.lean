@@ -32,7 +32,7 @@ theorem oneCocycle_invertibleLocus_isCoboundary : ∀ {R : Type} [CommRing R] {C
       (if h : ∃ w : L ⟶ G.obj t, l ≫ w = u then gL t h.choose else 0) = gL t w := by
     intro t u w hw
     have h : ∃ w : L ⟶ G.obj t, l ≫ w = u := ⟨w, hw⟩
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact congrArg (gL t) (Subsingleton.elim _ _)
   intro t t' u a hu
   obtain ⟨w, hw, -⟩ := huniv (G.obj t) u hu

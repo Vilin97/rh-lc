@@ -186,7 +186,7 @@ theorem hwFin : PositivityTheory.PfSWUS.SwFockk.HWFin := by
   have hx : IsUnit (cf.mapMatrix (adj (a⁻¹).1)).det := by rw [hdet]; exact Units.isUnit _
   have hmodu : (GlobalTheory.GaugeEx.modu (Fv D.host.F v ⊗[D.host.F] D.host.E) (cf.mapMatrix (adj (a⁻¹).1)).det : ℝ) =
       ((absEv D.host.F D.host.E v (unitFin D.host.F D.host.E v (Matrix.GeneralLinearGroup.det a)) : ℝ≥0) : ℝ)⁻¹ := by
-    rw [GlobalTheory.GaugeEx.modu, dif_pos hx, GlobalTheory.LocTateInt.distribHaarChar_Ev, IsUnit.unit_spec, hdet, ← absEv_apply,
+    rw [GlobalTheory.GaugeEx.modu, dite_eq_left hx, GlobalTheory.LocTateInt.distribHaarChar_Ev, IsUnit.unit_spec, hdet, ← absEv_apply,
       absEv_conjUnit, map_inv, NNReal.coe_inv]
 
   have hOset : ((PositivityTheory.PfSWUS.SwFockk.lstd D.host.F D.host.E n v : AddSubgroup _) :

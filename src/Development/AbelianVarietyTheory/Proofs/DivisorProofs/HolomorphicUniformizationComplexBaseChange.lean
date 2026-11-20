@@ -114,7 +114,7 @@ theorem isD_iff_isDiff : ∀ (R : Type) [CommRing R] [IsDomain R] [Algebra (Frac
       (Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((b'.left.appLE U' ⊤ h).hom f') = valR b'.left U' f' := by
     intro U' h f'
     unfold valR
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   constructor
   · intro hD U' h f'
     have h0 : ⊤ ≤ ptB ν d 0 ⁻¹ᵁ (e.inv ⁻¹ᵁ U') := by

@@ -225,7 +225,7 @@ theorem hilbert_graph_of_torsion : Out.Laws → Out.Laws2 → ∀ (g N κ l j : 
       simpa using this
     exact_mod_cast h1
   have hex : ∃ d ≤ (N * (1 + κ)) ^ P.g, (d : ZMod (l ^ j)) ^ 2 = S.det := ⟨δ, hδB, hδ2⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hsp := Classical.choose_spec hex
   have hEq : δ = Classical.choose hex := eq_of_sq_eq hBk hδB hsp.1 (hδ2.trans hsp.2.symm)
   rw [← hEq]

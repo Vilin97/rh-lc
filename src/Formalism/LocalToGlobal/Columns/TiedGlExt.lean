@@ -39,15 +39,15 @@ theorem recFrExt (hS : SpStd d.toColBase) (hH : HostHyp d) (hP : PtSurj d) (hP' 
       · subst hxb
         have hlt : (x : ℕ) < d.R.N d.R.m - 1 := by rw [← hb]; exact b.2
         have hbx : (⟨(x : ℕ), hlt⟩ : Fin (d.R.N d.R.m - 1)) = b := Fin.ext hb.symm
-        rw [if_pos rfl, dif_pos hlt, hbx, Pi.single_eq_same]
+        rw [if_pos rfl, dite_eq_left hlt, hbx, Pi.single_eq_same]
       · rw [if_neg hxb]
         by_cases h1 : (x : ℕ) < d.R.N d.R.m - 1
-        · rw [dif_pos h1, Pi.single_eq_of_ne]
+        · rw [dite_eq_left h1, Pi.single_eq_of_ne]
           intro h2
           apply hxb
           apply Fin.ext
           rw [← hb, ← h2]
-        · rw [dif_neg h1]
+        · rw [dite_eq_right h1]
     rw [hx]
     by_cases hxb : x = b'
     · rw [if_pos hxb, if_pos hxb, map_one]

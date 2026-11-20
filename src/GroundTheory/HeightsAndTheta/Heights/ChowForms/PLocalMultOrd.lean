@@ -119,7 +119,7 @@ theorem LocalMultOrd.proof : LocalMultOrd.Statement := by
     exact Module.length_eq_of_surjective (S := AW) (R := C) (M := C) hπs
   have hloc : localMult J W = (Module.length AW (AW ⧸ J.map (algebraMap A AW))).toNat := by
     unfold localMult
-    rw [dif_pos hWp]
+    rw [dite_eq_left hWp]
   rw [hloc, hlen, hord]
   exact ENat.natCast_toNat hfin
 

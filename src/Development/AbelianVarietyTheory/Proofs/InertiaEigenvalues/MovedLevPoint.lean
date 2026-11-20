@@ -33,7 +33,7 @@ theorem cSep_mem {D : D7} {H : Geo.Tor.Host D.host.E} (l : Geo.Tor.Level H) :
     have : (1 : 𝓞 D.host.E) ∈ l.Mb ⊔ Mfr l := by rw [show l.Mb ⊔ Mfr l = ⊤ from l.coprime]; trivial
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 this
     exact ⟨y, hy, by rw [← hxy, sub_add_cancel_right]; exact neg_mem hx⟩
-  unfold cSep; rw [dif_pos hex]; exact hex.choose_spec
+  unfold cSep; rw [dite_eq_left hex]; exact hex.choose_spec
 
 theorem finVec_div {D : D7} (W : HSp D) (v : Fin W.rank → D.host.E) (c : D.host.E) :
     finVec W (fun x => v x / c) = ((1 : Af D.host.F) ⊗ₜ[D.host.F] c⁻¹) • finVec W v := by

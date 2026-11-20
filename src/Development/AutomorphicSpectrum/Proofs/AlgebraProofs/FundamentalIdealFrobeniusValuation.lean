@@ -131,19 +131,19 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.fundamental_ideal_frobenius_va
     · intro m
       dsimp only
       by_cases h : m ≠ 0 ∧ m < p ^ f
-      · rw [dif_pos h]
+      · rw [dite_eq_left h]
         have hd := Classical.choose_spec (num_surj h.2)
         have hne : ∃ n, ((Classical.choose (num_surj h.2) : Fin f → Fin p) n : ℕ) ≠ 0 :=
           (num_ne_zero_iff hp _).mp (by rw [hd]; exact h.1)
         have e : σ ^ m = σ ^ num (Classical.choose (num_surj h.2)) := by rw [hd]
         rw [e]
         exact hT.2 _ hne
-      · rw [dif_neg h]
+      · rw [dite_eq_right h]
         exact (Classical.choose_spec (eig_rank_one p C v R hv hpv F f hcard AA hst (σ ^ m)).1).2
     · intro d hd
       dsimp only
       have h : num d ≠ 0 ∧ num d < p ^ f := ⟨hd, num_lt d⟩
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       have := num_inj (Classical.choose_spec (num_surj h.2))
       rw [this]
   obtain ⟨hAug, hCar, hCol⟩ := r_decomp_relay p C v R hv hpv F f hcard AA hst σ hσ c' hc'

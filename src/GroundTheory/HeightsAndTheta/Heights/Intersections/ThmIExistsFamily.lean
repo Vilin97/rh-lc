@@ -70,7 +70,7 @@ def secOf (P : Ideal (MRing ι)) (b : K → ℕ) : MRing ι :=
 theorem secOf_spec {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (b : K → ℕ) :
     IsMultiHomog (secOf P b) b ∧ secOf P b ∉ P := by
   have h := exists_form hP b
-  rw [secOf, dif_pos h]
+  rw [secOf, dite_eq_left h]
   exact h.choose_spec
 
 theorem sec_mul {P : Ideal (MRing ι)} (hpr : P.IsPrime) {A B : HermLine ι} {s t : MRing ι}

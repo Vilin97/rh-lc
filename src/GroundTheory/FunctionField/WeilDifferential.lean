@@ -400,7 +400,7 @@ noncomputable def divisor (ω : WeilDifferential k K) : Divisor k K :=
 
 theorem mem_weilSpace_iff_le_divisor {ω : WeilDifferential k K} (hω : ω ≠ 0) (D : Divisor k K) :
     toDual ω ∈ weilSpace D ↔ D ≤ ω.divisor := by
-  rw [divisor, dif_neg hω]
+  rw [divisor, dite_eq_right hω]
   exact Classical.choose_spec (exists_divisor hω) D
 
 theorem smul_mem_weilSpace_iff_mem_L {ω : WeilDifferential k K} (hω : ω ≠ 0) (D : Divisor k K)

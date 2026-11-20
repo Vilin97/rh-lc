@@ -314,12 +314,12 @@ lemma hwmf_tele (ε : Fin n → Bool) (m : Fin n → ℤ) : ∀ k : ℕ, ∀ a :
       exact ⟨a', by simp [ha'mem.1, ha'mem.2], by simp⟩
     rw [hset, ih _ hcard a' rfl]
     unfold mexp
-    rw [dif_pos hne, ha'def]
+    rw [dite_eq_left hne, ha'def]
     ring
   · have hemp := Finset.not_nonempty_iff_eq_empty.1 hne
     rw [hemp, Finset.sum_empty, add_zero]
     unfold mexp
-    rw [dif_neg hne]
+    rw [dite_eq_right hne]
 
 lemma hwmf_bd_single (ε : Fin n → Bool) {a b : Fin n} (he : ε a = ε b) :
     bdPart ε (single a b (1 : ℂ)) = single a b 1 := by

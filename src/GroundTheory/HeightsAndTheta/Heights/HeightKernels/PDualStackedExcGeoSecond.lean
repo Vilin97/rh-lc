@@ -83,14 +83,14 @@ theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Sta
       geoNum n (linPrime α M) (fun _ => degSecond) = ((Module.length ℤ k).toNat : ℤ)
   | 0, α, M, hα, hM => by
     have hrel := isRelevant_linPrime hα hM
-    rw [geoNum, dif_pos hrel]
+    rw [geoNum, dite_eq_left hrel]
     obtain ⟨e⟩ := hBase T k α M hα hM (fun κ => (hrel κ).choose) (fun κ => (hrel κ).choose_spec)
     rw [e.toAddEquiv.toIntLinearEquiv.length_eq]
   | n + 1, α, M, hα, hM => by
     have hrel : ∀ κ, ∃ j, (X ⟨κ, j⟩ : MRing (stackedBlocks T)) ∉ linPrime α M := isRelevant_linPrime hα hM
     rw [geoNum]
     unfold IsRelevant
-    rw [dif_pos hrel, Fintype.sum_sum_type, Fintype.sum_unique, Fintype.sum_unique]
+    rw [dite_eq_left hrel, Fintype.sum_sum_type, Fintype.sum_unique, Fintype.sum_unique]
     rw [show degSecond (Sum.inl default) = 0 from degSecond_inl, show degSecond (Sum.inr default) = 1 from degSecond_inr,
       zero_mul, zero_add, one_mul]
     obtain ⟨M', hM', hsupp, hmult⟩ := hCut T k n α M hα hM ((hrel (Sum.inr ())).choose)

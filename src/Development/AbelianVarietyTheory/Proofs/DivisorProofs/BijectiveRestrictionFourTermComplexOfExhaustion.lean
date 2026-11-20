@@ -117,7 +117,7 @@ theorem level_p0_surjective (K : Cx C) {P P' : ObjectProperty C} (h : P ≤ P') 
   refine ⟨fun T ↦ if hT : P T.obj then g ⟨T.obj, hT⟩ else 0, ?_⟩
   funext T
   show (if hT : P T.obj then g ⟨T.obj, hT⟩ else 0) = g T
-  rw [dif_pos T.property]
+  rw [dite_eq_left T.property]
 
 theorem level_p1_surjective (K : Cx C) {P P' : ObjectProperty C} (h : P ≤ P') :
     Function.Surjective (lvl K h).p1 := by
@@ -129,9 +129,9 @@ theorem level_p1_surjective (K : Cx C) {P P' : ObjectProperty C} (h : P ≤ P') 
   refine Prod.ext (funext fun T ↦ funext fun T' ↦ funext fun φ ↦ ?_) (funext fun T ↦ ?_)
   · show (if hT : P T.obj ∧ P T'.obj then
       c.1 ⟨T.obj, hT.1⟩ ⟨T'.obj, hT.2⟩ (ObjectProperty.homMk φ.hom) else 0) = c.1 T T' φ
-    rw [dif_pos ⟨T.property, T'.property⟩]; rfl
+    rw [dite_eq_left ⟨T.property, T'.property⟩]; rfl
   · show (if hT : P T.obj then c.2 ⟨T.obj, hT⟩ else 0) = c.2 T
-    rw [dif_pos T.property]
+    rw [dite_eq_left T.property]
 
 end Lvl
 

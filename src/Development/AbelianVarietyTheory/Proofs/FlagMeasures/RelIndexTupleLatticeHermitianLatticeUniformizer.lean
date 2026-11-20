@@ -227,11 +227,11 @@ theorem relIndex_tupLat_hermLat : ∀ {F : Type} [Field F] [ValuativeRel F] [Top
     have hd : ∀ a b, hermOf L m x a b = hermOf L m y a b := fun a b => by rw [h]
     refine Prod.ext (funext fun a => ?_) (funext fun p => ?_)
     · have := hd a a
-      rw [hermOf_apply, hermOf_apply, dif_neg (lt_irrefl a), dif_neg (lt_irrefl a),
-        dif_neg (lt_irrefl a), dif_neg (lt_irrefl a)] at this
+      rw [hermOf_apply, hermOf_apply, dite_eq_right (lt_irrefl a), dite_eq_right (lt_irrefl a),
+        dite_eq_right (lt_irrefl a), dite_eq_right (lt_irrefl a)] at this
       exact Subtype.ext (GlobalTheory.UnramOrder.algebraMap_inj L this)
     · have := hd p.1.1 p.1.2
-      rw [hermOf_apply, hermOf_apply, dif_pos p.2, dif_pos p.2] at this
+      rw [hermOf_apply, hermOf_apply, dite_eq_left p.2, dite_eq_left p.2] at this
       exact Subtype.ext this
   have hA2 : ∀ X, X ∈ hermLat L m ↔ ∃ g, hermOf L m g = X := by
     intro X

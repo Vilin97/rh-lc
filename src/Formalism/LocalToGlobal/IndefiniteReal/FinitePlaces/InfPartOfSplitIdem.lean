@@ -283,7 +283,7 @@ theorem isIntM_mul_left_iff {a b : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D))
 
 theorem redM_of_int (PP : Formalism.L2.DIV.Pl D.host.E) {a b : ℕ} {N : Matrix (Fin b) (Fin a) (EAf D)} (hN : IsIntM N) (i j) :
     redM PP N i j = Formalism.L2.DIV.resS D.host.F PP ⟨N i j, hN i j⟩ := by
-  unfold redM; rw [dif_pos (hN i j)]
+  unfold redM; rw [dite_eq_left (hN i j)]
 
 set_option maxHeartbeats 1000000 in
 

@@ -48,7 +48,7 @@ private theorem det_tInv (x : GL (Fin 2) (A ℚ)) :
 
 private theorem iy_inv (y : ℝ) (h : y ≠ 0) : iy y⁻¹ = (iy y)⁻¹ := by
   unfold iy
-  rw [dif_neg h, dif_neg (inv_ne_zero h), ← map_inv]
+  rw [dite_eq_right h, dite_eq_right (inv_ne_zero h), ← map_inv]
   congr 1
   apply Units.ext
   funext _
@@ -56,7 +56,7 @@ private theorem iy_inv (y : ℝ) (h : y ≠ 0) : iy y⁻¹ = (iy y)⁻¹ := by
 
 private theorem ab_iy (y : ℝ) (h : y ≠ 0) : ab (iy y) = |y| := by
   unfold ab iy
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   have := GlobalTheory.HenQ.DetSplit.ideleModule_infId (K := ℚ) ⟨fun _ => y, fun _ => y⁻¹, funext fun _ => mul_inv_cancel₀ h, funext fun _ => inv_mul_cancel₀ h⟩
   rw [this]
   simp

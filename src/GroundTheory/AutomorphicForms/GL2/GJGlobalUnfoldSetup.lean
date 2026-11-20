@@ -145,13 +145,13 @@ theorem mul_blockEntry_mul {R : Type*} [CommRing R] {k : ℕ} {A B : Matrix (Fin
       intro a _
       by_cases ha : (a : ℕ) < k
       · rw [hA i a hi ha, zero_mul]
-      · rw [blockEntry_apply, dif_neg (by omega), mul_zero]
+      · rw [blockEntry_apply, dite_eq_right (by omega), mul_zero]
     · have hj : (j : ℕ) < k := by omega
       by_cases hb : k ≤ (b : ℕ)
       · rw [hB b j hb hj, mul_zero]
       · rw [Finset.sum_eq_zero, zero_mul]
         intro a _
-        rw [blockEntry_apply, dif_neg (by omega), mul_zero]
+        rw [blockEntry_apply, dite_eq_right (by omega), mul_zero]
 
 theorem blockEntry_injective {R : Type*} [CommRing R] {k : ℕ} :
     Injective (blockEntry : (UPos n k → R) → Matrix (Fin n) (Fin n) R) := by
@@ -268,7 +268,7 @@ omit [NumberField K] in
 theorem isBlockUpper_unipMatrix {k : ℕ} (X : UPos n k → K) : IsBlockUpper k (unipMatrix X) := by
   intro i j hi hj
   simp only [unipMatrix, Matrix.add_apply, blockEntry_apply]
-  rw [Matrix.one_apply, if_neg (by intro h; subst h; omega), dif_neg (by omega), add_zero]
+  rw [Matrix.one_apply, if_neg (by intro h; subst h; omega), dite_eq_right (by omega), add_zero]
 
 theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ ∈ unipLattice K n k) :
     unipOne K n k ξ ∈ parabolicOne K n k := by

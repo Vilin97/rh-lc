@@ -61,9 +61,9 @@ theorem UpperTheory.ConvolutionTheory.BW.resTyp :
     ⟨ρ.ρ.comp (j.comp (MonoidHom.inr _ _)), ρ.cont.comp (hj.comp (continuous_const.prodMk continuous_id)), ?_⟩, key⟩
   · funext k
     have h : lev (Ad E) r s ((k : GA E r), 1) ∈ KA E (r + s) := key k 1
-    rw [resL, dif_pos h]
+    rw [resL, dite_eq_left h]
     rfl
   · funext k
     have h : lev (Ad E) r s (1, (k : GA E s)) ∈ KA E (r + s) := key 1 k
-    rw [resR, dif_pos h]
+    rw [resR, dite_eq_left h]
     rfl

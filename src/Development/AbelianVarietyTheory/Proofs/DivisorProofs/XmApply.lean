@@ -17,7 +17,7 @@ def pre (ι : L →+ AE F E) (z : AE F E) : L := if h : ∃ x, ι x = z then h.c
 
 theorem pre_spec (ι : L →+ AE F E) {z : AE F E} (h : ∃ x, ι x = z) : ι (pre ι z) = z := by
   unfold pre
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def tJ (ι : L →+ AE F E) {m n : Type} (J : Matrix m n E) : Matrix m n L :=

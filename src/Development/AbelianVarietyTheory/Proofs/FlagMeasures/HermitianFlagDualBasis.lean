@@ -91,7 +91,7 @@ theorem expand (hσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) {r : ℕ} {P : 
     have hc' : c < b := hc
     symm
     rw [Finset.sum_eq_single c]
-    · rw [dif_pos hc', pairR hσ hJ hP, Fin.castSucc_castLT, if_pos rfl, one_smul]
+    · rw [dite_eq_left hc', pairR hσ hJ hP, Fin.castSucc_castLT, if_pos rfl, one_smul]
     · intro a _ hac
       split_ifs with h
       · rw [pairR hσ hJ hP, Fin.castSucc_castLT, if_neg (fun e => hac e.symm), zero_smul]
@@ -171,6 +171,6 @@ theorem exists_coeff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       symm
       show hR (Fv F v) σ J (ratV (F := F) (Fv F v) (P.f (a.castLT (lt_of_lt_of_le h (Fin.le_last b)))))
         (lin (Fv F v) σ J (s : HA (Fv F v) σ J) (ratV (F := F) (Fv F v) (F0 P b))) = x ⟨(a, b), h⟩
-      rw [H b, pair_sum hss hJ hP, Fin.castSucc_castLT, if_neg h.ne, dif_pos h]
+      rw [H b, pair_sum hss hJ hP, Fin.castSucc_castLT, if_neg h.ne, dite_eq_left h]
 
 end GlobalTheory.UnitriangularCoeff

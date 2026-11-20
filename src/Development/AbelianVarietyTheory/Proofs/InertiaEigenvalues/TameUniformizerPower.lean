@@ -215,7 +215,7 @@ theorem residue_of_cong {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Alge
   have hred : redThrough A κ (σ y / y) = (a : Formalism.CyclotomicNorms.Fbar g) := by
     rw [redThrough_eq_of_val_sub κ (tameQuot_mem A σ hg1 hgΩ hy) haA h3]
     unfold redThrough
-    rw [dif_pos haA]
+    rw [dite_eq_left haA]
     have : (⟨(a : Ω), haA⟩ : A) = (a : A) := Subtype.ext (by simp)
     rw [this, map_natCast, map_natCast]
   have hz : ζ 1 = (a : Formalism.CyclotomicNorms.Fbar g) := by rw [← hTy, hred]

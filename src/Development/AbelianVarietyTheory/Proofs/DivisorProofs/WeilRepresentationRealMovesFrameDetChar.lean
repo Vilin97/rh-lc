@@ -38,7 +38,7 @@ theorem frMove_mul {D : D7} (θ : InfFam D) (W : HSp D) (X : Data D.host.E W.ran
   have e : realM θ (Formalism.L2.Theta.mt W (u * v)) τ.1 =
       realM θ (Formalism.L2.Theta.mt W u) τ.1 * realM θ (Formalism.L2.Theta.mt W v) τ.1 := by
     unfold realM
-    rw [dif_pos hτ, dif_pos hτ, dif_pos hτ, GlobalTheory.UnitaryChar.compAt_mt_mul]
+    rw [dite_eq_left hτ, dite_eq_left hτ, dite_eq_left hτ, GlobalTheory.UnitaryChar.compAt_mt_mul]
   show (Matrix.reindex (finCongr rfl) (finCongr rfl) (realM θ (Formalism.L2.Theta.mt W (u * v)) τ.1) * mat x τ :
       Matrix (Fin W.rank) (Fin W.rank) ℂ) =
     Matrix.reindex (finCongr rfl) (finCongr rfl) (realM θ (Formalism.L2.Theta.mt W u) τ.1) *

@@ -33,14 +33,14 @@ variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
 
 theorem sphOp_rep {P : Pl D.host.E} {d : List ℤ} (h : IsLab V P d) : SphOp V P d (GlobalTheory.Hk3.rep V P d) := by
   unfold GlobalTheory.Hk3.rep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem heckeOn_rep_of_not (M : DSModel V S) {P : Pl D.host.E} {d : List ℤ} (h : ¬ IsLab V P d) (U : MMap M) :
     heckeOn M (GlobalTheory.Hk3.rep V P d) U = 0 := by
   ext v g
   unfold GlobalTheory.Hk3.rep
-  rw [dif_neg h, heckeOn, postOn_apply, heckeLin_apply, Finset.sum_empty]
+  rw [dite_eq_right h, heckeOn, postOn_apply, heckeLin_apply, Finset.sum_empty]
   rfl
 
 theorem postOn_single (M : DSModel V S) (P : Pl D.host.E) (d : List ℤ) (U : MMap M) :
@@ -159,7 +159,7 @@ theorem parts_of_projector {H : Type} [NormedAddCommGroup H] [InnerProductSpace 
     refine (hW _ _).2 ⟨LinearMap.congr_fun hp x, fun P d hP _ => ?_⟩
     have h3 := Module.End.mem_eigenspace_iff.1 (hx ⟨(P, d), hP⟩)
     have h4 : h P (Finsupp.single d 1) (p x) = p (h P (Finsupp.single d 1) x) := LinearMap.congr_fun (he P hP _).eq x
-    rw [dif_pos hP, h4, ← map_smul]
+    rw [dite_eq_left hP, h4, ← map_smul]
     exact congrArg _ h3
   · rintro c g hg hg' _ ⟨x, hx, rfl⟩
     obtain ⟨h1, h2⟩ := (hW c x).1 hx

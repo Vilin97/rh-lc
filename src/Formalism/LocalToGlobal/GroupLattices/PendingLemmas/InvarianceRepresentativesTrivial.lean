@@ -155,7 +155,7 @@ theorem delt_spec (j : ℕ) (c : X.Lv.comp j) (L : (X.Pj j).Tup) (h : (X.Pj j).I
     ∃ L0 : (X.Pj j).Tup, (c, L0) ∈ repOf X.Lv hfin j ∧ L = (X.Lv.lev j c).smul (delt X hfin j c L) L0 := by
   classical
   unfold delt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact ⟨_, (Classical.choose_spec (repOf_ex X.Lv hfin j c L h).exists).1,
     (Classical.choose_spec (repOf_ex X.Lv hfin j c L h).exists).2.choose_spec⟩
 

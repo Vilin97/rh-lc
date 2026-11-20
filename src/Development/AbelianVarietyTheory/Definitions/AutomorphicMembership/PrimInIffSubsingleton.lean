@@ -136,7 +136,7 @@ theorem LiesAt.mul {w : Formalism.MainNotions.S.Point E (r + 1)} (h : LiesAt w Z
       _ = _ := by rw [e]; simp only [Matrix.mul_assoc]
 
 theorem liesAt_ptOfMat (h : ∃ w, LiesAt w Z) : LiesAt (ptOfMat Z) Z := by
-  rw [ptOfMat, dif_pos h]; exact h.choose_spec
+  rw [ptOfMat, dite_eq_left h]; exact h.choose_spec
 
 theorem ptOfMat_congr {Z' : Matrix (Fin (r + 1)) (Fin (r + 1)) E} (h : ∀ w, LiesAt w Z ↔ LiesAt w Z') :
     ptOfMat Z = ptOfMat Z' := by

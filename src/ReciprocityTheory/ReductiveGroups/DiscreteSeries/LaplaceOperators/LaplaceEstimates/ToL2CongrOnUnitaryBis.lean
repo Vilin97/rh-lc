@@ -156,7 +156,7 @@ theorem eqOn_unitary_of_toL2_eq {F G : Matrix (Fin n) (Fin n) ℂ → ℂ} (hF :
   have hF2 : MemLp (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := hF.2 []
   have hG2 : MemLp (fun g : Formalism.REAL.UJ ε => G (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := hG.2 []
   unfold toL2 at h
-  rw [dif_pos hF2, dif_pos hG2] at h
+  rw [dite_eq_left hF2, dite_eq_left hG2] at h
   have hae := (MemLp.toLp_eq_toLp_iff hF2 hG2).1 h
   have hcF : Continuous (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) := Formalism.REAL.continuous_smooth_on_group_eval hF.1
   have hcG : Continuous (fun g : Formalism.REAL.UJ ε => G (Formalism.MainNotions.S.umat g)) := Formalism.REAL.continuous_smooth_on_group_eval hG.1
@@ -182,7 +182,7 @@ theorem toL2_add_smooth {F G : Matrix (Fin n) (Fin n) ℂ → ℂ} (hF : IsSmoot
   have hG2 : MemLp (fun g : Formalism.REAL.UJ ε => G (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := hG.2 []
   have hS2 : MemLp (fun g : Formalism.REAL.UJ ε => (F + G) (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := hF2.add hG2
   unfold toL2
-  rw [dif_pos hS2, dif_pos hF2, dif_pos hG2]
+  rw [dite_eq_left hS2, dite_eq_left hF2, dite_eq_left hG2]
   exact MemLp.toLp_add hF2 hG2
 
 theorem toL2_smul_smooth (a : ℂ) {F : Matrix (Fin n) (Fin n) ℂ → ℂ} (hF : IsSmoothL2 ε F) :
@@ -191,7 +191,7 @@ theorem toL2_smul_smooth (a : ℂ) {F : Matrix (Fin n) (Fin n) ℂ → ℂ} (hF 
   have hS2 : MemLp (fun g : Formalism.REAL.UJ ε => (a • F) (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) :=
     hF2.const_smul a
   unfold toL2
-  rw [dif_pos hS2, dif_pos hF2]
+  rw [dite_eq_left hS2, dite_eq_left hF2]
   exact MemLp.toLp_const_smul a hF2
 
 theorem exists_phi {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (T : Y →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ))

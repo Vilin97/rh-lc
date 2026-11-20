@@ -25,7 +25,7 @@ theorem eq_of_values {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U) {x x' 
   ext1
   refine RingHom.ext fun f => ?_
   have := e f
-  rw [valAt', valAt', dif_pos h, dif_pos h'] at this
+  rw [valAt', valAt', dite_eq_left h, dite_eq_left h'] at this
   exact this
 
 theorem fderiv_eq_zero_of_origin {w : Fin g → ℂ}

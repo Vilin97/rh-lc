@@ -37,7 +37,7 @@ theorem continuedLFunction_of_not
     (hχ : ¬ ∃ τ : ℝ, ∀ x : IdeleGroup K,
       (χ.toIdele x : ℂ) = ((ideleModule K x : ℝ) : ℂ) ^ ((τ : ℂ) * I)) :
     χ.continuedLFunction = χ.normalizedLFunction := by
-  rw [continuedLFunction, dif_neg hχ]
+  rw [continuedLFunction, dite_eq_right hχ]
 
 theorem differentiable_continuedLFunction
     (hχ : ¬ ∃ τ : ℝ, ∀ x : IdeleGroup K,
@@ -63,7 +63,7 @@ theorem continuedLFunction_of_forall :
       (limUnder (𝓝[≠] (-((τ : ℂ) * I))) χ.normalizedLFunction) := by
   have h : ∃ τ : ℝ, ∀ x : IdeleGroup K,
       (χ.toIdele x : ℂ) = ((ideleModule K x : ℝ) : ℂ) ^ ((τ : ℂ) * I) := ⟨τ, hτ⟩
-  rw [continuedLFunction, dif_pos h, choose_eq_of_forall hτ h]
+  rw [continuedLFunction, dite_eq_left h, choose_eq_of_forall hτ h]
 
 theorem continuedLFunction_of_ne {s : ℂ} (hs : s ≠ -((τ : ℂ) * I)) :
     χ.continuedLFunction s = χ.normalizedLFunction s := by

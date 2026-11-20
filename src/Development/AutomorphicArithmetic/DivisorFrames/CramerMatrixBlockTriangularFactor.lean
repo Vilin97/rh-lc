@@ -47,20 +47,20 @@ theorem UpperTheory.cramer_matrix_block_triangular_factor :
       UpperTheory.lastRowCofactor X σ k ⟨l, hl⟩ / lead X σ (k + 1) k.2 else 0, ?_, ?_, ?_, ?_⟩
   · intro l k hlk
     have : (k : ℕ) < l := hlk
-    rw [Matrix.of_apply, dif_neg (by omega)]
+    rw [Matrix.of_apply, dite_eq_right (by omega)]
   · ext ρ k
     rw [Matrix.mul_apply, cram, Matrix.of_apply, UpperTheory.colMinor_expand_last_row, Finset.sum_div]
     refine Fintype.sum_of_injective (Fin.castLE k.2) (Fin.castLE_injective _) _ _ ?_ ?_
     · intro l hl
-      rw [Matrix.of_apply, dif_neg, mul_zero]
+      rw [Matrix.of_apply, dite_eq_right, mul_zero]
       intro hl'
       exact hl ⟨⟨l, hl'⟩, rfl⟩
     · intro j
       have hj : ((Fin.castLE k.2 j : Fin r) : ℕ) < (k : ℕ) + 1 := j.2
-      rw [Matrix.of_apply, dif_pos hj, mul_div_assoc]
+      rw [Matrix.of_apply, dite_eq_left hj, mul_div_assoc]
       rfl
   · intro i
-    rw [Matrix.of_apply, dif_pos (Nat.lt_succ_self _), div_mul_cancel₀ _ (h _ _)]
+    rw [Matrix.of_apply, dite_eq_left (Nat.lt_succ_self _), div_mul_cancel₀ _ (h _ _)]
     exact UpperTheory.lastRowCofactor_last_eq_lead X σ i
   · rw [Matrix.det_of_lowerTriangular]
     · refine Finset.prod_eq_one fun k _ => ?_

@@ -59,12 +59,12 @@ theorem thetaMbe0G_of (h0 : DetG) (h1 : CoordG) (h2 : SplitIsometryCountVanishes
       ((H.Zhat f f').submatrix Fin.castSucc Fin.castSucc).det = H.Dl f f' r := by
     intro f f'
     unfold HermSp.Dl
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
     rfl
   have hfull : ∀ f f' : Fin (r + 1) → V, H.Dl f f' (r + 1) = (H.Zhat f f').det := by
     intro f f'
     unfold HermSp.Dl
-    rw [dif_pos le_rfl]
+    rw [dite_eq_left le_rfl]
     rfl
   have hyp' := hyp
   obtain ⟨⟨hterm, _⟩, _, _, hid, _, _⟩ := hyp'

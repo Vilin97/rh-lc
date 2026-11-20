@@ -13,7 +13,7 @@ private theorem shaInj_phi {O W : Type} [CommRing O] [AddCommGroup W] [Module O 
   refine ⟨fun w' => if h : ∃ y : O, w' = y • w then Ideal.Quotient.mk _ h.choose else 0, fun y => ?_⟩
   have h : ∃ y' : O, y • w = y' • w := ⟨y, rfl⟩
   dsimp only
-  rw [dif_pos h, Ideal.Quotient.eq, Ideal.mem_span_singleton, ← hw, sub_smul, ← h.choose_spec, sub_self]
+  rw [dite_eq_left h, Ideal.Quotient.eq, Ideal.mem_span_singleton, ← hw, sub_smul, ← h.choose_spec, sub_self]
 
 private theorem continuous_and_cocycle_eq_of_z1U_whole_group {O Γ W : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ]
     [AddCommGroup W] [Module O W] [TopologicalSpace W] [DiscreteTopology W] [IsTopologicalAddGroup W]

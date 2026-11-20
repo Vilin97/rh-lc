@@ -42,11 +42,11 @@ theorem opOf_single_of_not {V : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M
     (d : List ℤ) (h : ¬ IsLab V P d) : opOf π P (Finsupp.single d 1) = 0 := by
   rw [opOf_single]
   unfold rep
-  rw [dif_neg h, Finset.sum_empty]
+  rw [dite_eq_right h, Finset.sum_empty]
 
 theorem sphOp_rep {V : HSp D} {P : Pl D.host.E} {d : List ℤ} (h : IsLab V P d) : SphOp V P d (rep V P d) := by
   unfold rep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem eq_of_split {V : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (P : Pl D.host.E)

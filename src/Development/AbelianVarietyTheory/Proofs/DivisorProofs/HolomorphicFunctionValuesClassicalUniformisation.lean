@@ -19,10 +19,10 @@ theorem valF_comp_app (x : Sp ℂ ⟶ X) (φ : X ⟶ Y) (U : Y.Opens) (f : Γ(Y,
     valF x (φ ⁻¹ᵁ U) ((φ.app U).hom f) = valF (x ≫ φ) U f := by
   by_cases h : ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U
   · have h' : ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [valF, valF, dif_pos h', dif_pos h]
+    rw [valF, valF, dite_eq_left h', dite_eq_left h]
     simp only [Scheme.Hom.comp_appLE, CommRingCat.comp_apply]
   · have h' : ¬ ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [valF, valF, dif_neg h', dif_neg h]
+    rw [valF, valF, dite_eq_right h', dite_eq_right h]
 
 theorem valF_eq_valAt' (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : valF x U f = valAt' x U f := rfl
 

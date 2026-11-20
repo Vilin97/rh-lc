@@ -185,7 +185,7 @@ theorem exists_isotypic_projection {n : ℕ} (H : Type) [NormedAddCommGroup H] [
       rw [hsum, map_sum, Finset.sum_congr rfl fun j _ => hj j, ← Finset.sum_mul]
     congr 1
     unfold trOn
-    rw [dif_pos hSD, LinearMap.trace_eq_matrix_trace ℂ b, Matrix.trace]
+    rw [dite_eq_left hSD, LinearMap.trace_eq_matrix_trace ℂ b, Matrix.trace]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Matrix.diag_apply, LinearMap.toMatrix_apply]
     rfl

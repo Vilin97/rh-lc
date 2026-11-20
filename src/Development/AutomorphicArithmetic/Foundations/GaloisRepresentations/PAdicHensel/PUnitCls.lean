@@ -51,7 +51,7 @@ theorem UpperTheory.Gal.G1.pUnitCls :
   by_cases h2 : (2 * D : ℤ) ∈ v.1.asIdeal
   · have hk' := congrFun hk ⟨v.1, h2⟩
     dsimp only at hk'
-    rw [dif_pos v.2, dif_pos v.2] at hk'
+    rw [dite_eq_left v.2, dite_eq_left v.2] at hk'
     have hk'' := Option.some.inj hk'
     obtain ⟨z, hz⟩ := hκ v.1 _ _ (hval t) (hval t') hk''
     refine ⟨z, 0, ?_⟩

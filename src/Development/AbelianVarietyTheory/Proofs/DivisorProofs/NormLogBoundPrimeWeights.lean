@@ -73,7 +73,7 @@ theorem abs_num_le : Hypotheses2 → ∀ (F : Type) [Field F] [NumberField F] (Y
   have hsub2 : ∀ l ∈ S, Function.support (fun z => (Scheme.ord ((l : V.X.functionField)) z : ℝ) * dl l z) ⊆ T := by
     intro l hl z hz
     refine Finset.mem_union_right _ (Finset.mem_biUnion.2 ⟨l, hl, ?_⟩)
-    rw [dif_pos (hS l hl).1]
+    rw [dite_eq_left (hS l hl).1]
     refine (hU l (hS l hl).1).2.1.mem_toFinset.2 fun h0 => hz ?_
     simp [h0]
   have hnn : ∀ z, ∀ l ∈ S, 0 ≤ a l * Real.log l * ((Scheme.ord ((l : V.X.functionField)) z : ℝ) * dl l z) :=

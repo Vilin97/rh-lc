@@ -11,7 +11,7 @@ private lemma detC_img {S κ : Type} [CommRing S] [LinearOrder κ] {d : ℕ} (ρ
   have h := card_img e
   have hu : e = (img e).orderEmbOfFin h :=
     Finset.orderEmbOfFin_unique' h (fun x => by simp [img])
-  rw [detC, dif_pos h]
+  rw [detC, dite_eq_left h]
   congr 1
   ext a b
   simp only [Matrix.of_apply]
@@ -103,13 +103,13 @@ theorem UpperTheory.Gal.productCup_of_system.koszulThree_of_det :
     have hex : ∃ i, e i = (e0 j).1 := ⟨j, rfl⟩
     have : hex.choose = j := e.injective hex.choose_spec
     simp only [ρ]
-    rw [dif_pos hex, this]
+    rw [dite_eq_left hex, this]
   have h2 : ∀ a, ρ (e0' a) = N a := fun a => by
     have hn : ¬ ∃ j, e j = (e0' a).1 := fun ⟨j, hj⟩ => hdis a j hj.symm
     have hex : ∃ i, e' i = (e0' a).1 := ⟨a, rfl⟩
     have : hex.choose = a := e'.injective hex.choose_spec
     simp only [ρ]
-    rw [dif_neg hn, dif_pos hex, this]
+    rw [dite_eq_right hn, dite_eq_left hex, this]
   have hρ : ∀ l b, ρ l b ∈ R := fun l b => by
     simp only [ρ]
     split_ifs with h h'

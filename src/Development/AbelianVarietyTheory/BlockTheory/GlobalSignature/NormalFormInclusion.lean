@@ -121,9 +121,9 @@ theorem nf_one (Pr : Primes X) (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (hP 
     · funext l
       rw [Pi.add_apply, hx, hc]
       by_cases h : l.1 < R.N j
-      · rw [dif_pos h, dif_neg (by omega), add_zero]
+      · rw [dite_eq_left h, dite_eq_right (by omega), add_zero]
         rfl
-      · rw [dif_neg h, dif_pos (by omega), zero_add]
+      · rw [dite_eq_right h, dite_eq_left (by omega), zero_add]
         congr 1
         exact Fin.ext (by simp; omega)
   · refine sup_le ?_ ?_

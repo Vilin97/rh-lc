@@ -222,7 +222,7 @@ theorem formSt : GlobalTheory.ChainPts.SysB.FormSt := by
         res_pullbackSections h _ _ _ _
       rw [e]
       rfl
-    rw [valF, dif_pos (hwT.trans (w.preimage_mono hT))]
+    rw [valF, dite_eq_left (hwT.trans (w.preimage_mono hT))]
     refine (congrArg (Scheme.ΓSpecIso (.of k)).hom (appLE_resG w hT hwT _)).symm.trans ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [e₁, hc, map_sum, map_sum, map_sum, map_sum]

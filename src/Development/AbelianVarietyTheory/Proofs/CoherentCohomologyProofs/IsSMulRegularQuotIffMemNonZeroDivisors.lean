@@ -209,7 +209,7 @@ theorem exists_sub_sum_range_mem (f : ι → R) {N : Type*} (s : N → M)
         monoVal f α.1 • s (if hβ : α.1.degree = n then e ⟨α.1, hβ⟩ else c α.1) =
         ∑ a ∈ Finset.range n, ∑ α : MonoDeg ι a, monoVal f α.1 • s (c α.1) := by
       refine Finset.sum_congr rfl fun a ha => Finset.sum_congr rfl fun α _ => ?_
-      rw [dif_neg (α.2.trans_ne (Finset.mem_range.mp ha).ne)]
+      rw [dite_eq_right (α.2.trans_ne (Finset.mem_range.mp ha).ne)]
     have h2 : ∑ α : MonoDeg ι n,
         monoVal f α.1 • s (if hβ : α.1.degree = n then e ⟨α.1, hβ⟩ else c α.1) =
         ∑ α : MonoDeg ι n, monoVal f α.1 • s (e α) :=

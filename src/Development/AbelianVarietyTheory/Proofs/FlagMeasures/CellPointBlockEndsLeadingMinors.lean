@@ -136,7 +136,7 @@ theorem blockEnds_minors : ∀ (D : D7) (z z' : (Fin (2 * D.R.rS + D.R.k + 1) �
     intro l hl
     have h1 := Formalism.MainNotions.S.Bridge.normSq_leadMinor_ZhatO D.R.k D.R.rS z z' γ l hl
     rw [hZ, Formalism.MainNotions.S.Bridge.leadMinor_cell L (ptMat p) U hL hU' l hl] at h1
-    rw [DminN, dif_pos (Nat.lt_succ_of_le hl)]
+    rw [DminN, dite_eq_left (Nat.lt_succ_of_le hl)]
     exact h1.symm
   have hiff : ∀ l : ℕ, 1 ≤ l → (DminN z z' γ l ≠ 0 ↔ l ∈ ptBlockEnds p) := by
     intro l hl
@@ -145,7 +145,7 @@ theorem blockEnds_minors : ∀ (D : D7) (z z' : (Fin (2 * D.R.rS + D.R.k + 1) �
       rw [zero_add] at h2
       rw [Ne, ← Complex.normSq_eq_zero, key l hl', Complex.normSq_eq_zero]
       exact h2
-    · rw [DminN, dif_neg (by omega)]
+    · rw [DminN, dite_eq_right (by omega)]
       exact ⟨fun h0 => absurd rfl h0, fun hm => absurd (e1 l hm).2 hl'⟩
   have hG0 : 0 < Gf D.R.k D.R.rS z z' γ :=
     lt_of_le_of_ne (Formalism.QuantumDeterminants.gNonneg D.R.k D.R.rS z z' hz hz' hT hT' γ hU) (Ne.symm hG)
@@ -153,7 +153,7 @@ theorem blockEnds_minors : ∀ (D : D7) (z z' : (Fin (2 * D.R.rS + D.R.k + 1) �
   · rw [h0] at hsum
     simp at hsum
   · simp [DminN, Formalism.QuantumDeterminants.Dmin]
-  · rw [DminN, dif_pos (by omega), ← Complex.normSq_eq_norm_sq]
+  · rw [DminN, dite_eq_left (by omega), ← Complex.normSq_eq_norm_sq]
     have := mul_nonneg (mul_pos hT hT').le
       (Complex.normSq_nonneg (Formalism.QuantumDeterminants.Dmin D.R.k D.R.rS z z' γ ⟨D.R.rS, by omega⟩))
     exact sub_le_self _ this

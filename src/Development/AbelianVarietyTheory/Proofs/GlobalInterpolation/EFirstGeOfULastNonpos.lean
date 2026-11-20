@@ -87,12 +87,12 @@ theorem bTop_cast (X : Ch D u) (τ : D.what₂.Tau) :
   have hk := k_pred_lt D.R
   have hN : D.R.N 0 = D.R.k := by simp [Ranks.N]
   have h := X.fm.lam_eq 0 (Nat.zero_le _) τ ⟨D.R.N 0 - 1, by omega⟩
-  rw [dif_pos (show D.R.N 0 - 1 < D.R.k by omega)] at h
+  rw [dite_eq_left (show D.R.N 0 - 1 < D.R.k by omega)] at h
   have e : (⟨D.R.N 0 - 1, by omega⟩ : Fin D.R.k) = ⟨D.R.k - 1, hk⟩ := Fin.ext (by simp only; omega)
   simp only [e, hcToWeightQ, rhoVec] at h
   rw [D.hcW_last u τ (by omega), Nat.cast_sub (by omega)] at h
   unfold MemberForms.bTop DomWeight.detShift uLast
-  rw [dif_pos (D.R.N_pos 0)]
+  rw [dite_eq_left (D.R.N_pos 0)]
   push_cast at h ⊢
   rw [h, show (D.R.N 0 : ℚ) = D.R.k by exact_mod_cast hN]
   ring
@@ -162,7 +162,7 @@ theorem w''_le_eFirst (L : SizeData₂ D) (τ : D.what₂.Tau) (hτ : τ ∉ top
     L.sc.w'' D.R.n ≤ ((eFirst (D.hc τ) : ℚ) : ℝ) := by
   have e : wj D 1 τ = ((eFirst (D.hc τ) : ℚ) : ℝ) := by
     unfold wj eFirst
-    rw [dif_pos (show 1 - 1 < D.R.m from m_pos _)]
+    rw [dite_eq_left (show 1 - 1 < D.R.m from m_pos _)]
   rw [← e]
   by_cases h : (D.eTau τ : D.R.GG) ∈ D.host.thickPlaces
   · exact (w''_le_b L.sc _ (by unfold Ranks.n; positivity)).trans (L.win_thick 1 le_rfl (m_pos _) τ h).1

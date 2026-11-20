@@ -138,7 +138,7 @@ theorem ptOf_co (hx : ∀ m, homAt (𝟙 (Sp V))
     {A : Type} [CommRing A] [Algebra Ω A] {m : ℕ} {ψ : Jet V (Fin 1 × Fin d) m →+* A} (h : Compat β ψ)
     {a : Fin d → A} (e : co ψ = a) : ptOf β x A a = rho ψ h ≫ x m := by
   have hh : ∃ p : (m : ℕ) × (Jet V (Fin 1 × Fin d) m →+* A), Compat β p.2 ∧ co p.2 = a := ⟨⟨m, ψ⟩, h, e⟩
-  rw [ptOf, dif_pos hh]
+  rw [ptOf, dite_eq_left hh]
   exact indep hx _ h (hh.choose_spec.2.trans e.symm)
 
 end Main

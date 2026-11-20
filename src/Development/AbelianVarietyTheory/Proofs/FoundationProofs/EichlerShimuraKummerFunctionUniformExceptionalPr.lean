@@ -18,7 +18,7 @@ theorem toGQ_mul (m m' : Matrix (Fin 2) (Fin 2) ℤ) (h : 0 < m.det) (h' : 0 < m
     toGQ (m * m') = toGQ m * toGQ m' := by
   have hmm : 0 < (m * m').det := by rw [Matrix.det_mul]; exact mul_pos h h'
   unfold toGQ
-  rw [dif_pos hmm, dif_pos h, dif_pos h']
+  rw [dite_eq_left hmm, dite_eq_left h, dite_eq_left h']
   apply Subtype.ext
   apply Units.ext
   exact Matrix.map_mul (f := Int.castRingHom ℚ)

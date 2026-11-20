@@ -32,7 +32,7 @@ theorem hasEig_eigOfType {R : RealDat3 D A3 Ks} {F : Face3 D A3} {X0 : BaseLevel
     HasEig R F Y π (eigOfType R F Y π) := by
   unfold eigOfType principalLevelFrame.cOfT
   unfold HasEig at h ⊢
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 end GlobalTheory.Mem.R3

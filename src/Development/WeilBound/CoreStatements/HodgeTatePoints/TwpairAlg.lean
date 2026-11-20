@@ -69,7 +69,7 @@ theorem extZero_mem {H : Subgroup T} {A : Subalgebra R (H → R)} (hA : IsHopfOr
     have h1 : t⁻¹ * (u * H.subtype h) ∈ H := by
       rw [← mul_assoc]; exact H.mul_mem hu h.2
     simp only [extZero]
-    rw [dif_pos h1]
+    rw [dite_eq_left h1]
     congr 1
     exact Subtype.ext (mul_assoc _ _ _).symm
   · have : (fun h : H => extZero H t a (u * H.subtype h)) = 0 := by
@@ -78,7 +78,7 @@ theorem extZero_mem {H : Subgroup T} {A : Subalgebra R (H → R)} (hA : IsHopfOr
         rw [← mul_assoc]
         exact fun h1 => hu ((H.mul_mem_cancel_right h.2).1 h1)
       simp only [extZero]
-      rw [dif_neg h1]
+      rw [dite_eq_right h1]
       rfl
     rw [this]
     exact A.zero_mem
@@ -125,11 +125,11 @@ theorem pair_ind : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed 
     funext z
     rw [Finset.sum_apply, Finset.sum_eq_single ((z.1 : T ⧸ H), (z.2 : T ⧸ H))]
     · simp only [extZero₂]
-      rw [dif_pos ⟨(key _ _).2 rfl, (key _ _).2 rfl⟩]
+      rw [dite_eq_left ⟨(key _ _).2 rfl, (key _ _).2 rfl⟩]
       simp only [mul_inv_cancel_left]
     · intro c _ hc
       simp only [extZero₂]
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨a, b⟩
       exact hc (Prod.ext ((key _ _).1 a) ((key _ _).1 b))
     · simp

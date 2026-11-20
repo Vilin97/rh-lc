@@ -684,7 +684,7 @@ theorem Slab.ooLintSum_of {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting 
       have hy1 : Ph X u Y.hK (T i) y ≠ 0 := by
         intro h0; apply hy; simp only [hG, h0, enorm_zero, zero_mul]
       have hd : ∃ n h k, IsDec X u y.2 n h k := by
-        by_contra hn; apply hy1; unfold Ph; rw [dif_neg hn]
+        by_contra hn; apply hy1; unfold Ph; rw [dite_eq_right hn]
       obtain ⟨s, hs, ρ, hsy⟩ := hcov y hd
       exact ⟨s, hs, Set.mem_iUnion.2 ⟨ρ, hsy⟩⟩
     have hGu : ∀ y ∈ ⋃ ρ, slab (Y.cs u) ρ (Ωs ρ), ∀ s ∈ Srat X u, s * y ∈ ⋃ ρ, slab (Y.cs u) ρ (Ωs ρ) → s = 1 := by

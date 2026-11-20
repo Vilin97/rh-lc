@@ -39,7 +39,7 @@ def recChainFS (hc : X.Tau → HCParam R) (F : ℕ → GFamS X.K) (hF : ∀ j, (
     obtain ⟨a, ha⟩ := (rec_sInt R (hc τ) ⟨i, h⟩).2
     have e : (RowPar.of (hc τ)).eAt i = (hc τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sSharpH
     rw [e]
@@ -50,7 +50,7 @@ def recChainFS (hc : X.Tau → HCParam R) (F : ℕ → GFamS X.K) (hF : ∀ j, (
     obtain ⟨a, ha⟩ := (rec_sInt R (hc τ) ⟨i, h⟩).1
     have e : (RowPar.of (hc τ)).eAt i = (hc τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sDivH
     rw [e]

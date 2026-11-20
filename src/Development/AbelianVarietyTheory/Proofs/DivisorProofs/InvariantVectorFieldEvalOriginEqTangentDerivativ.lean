@@ -23,7 +23,7 @@ theorem valR_eq_germ (x : Sp A ⟶ X) (U : X.Opens) (hx : x (IsLocalRing.closedP
       x.appLE U ⊤ (Scheme.preimage_eq_top_of_closedPoint_mem x hx).ge ≫ (Scheme.ΓSpecIso (CommRingCat.of A)).hom := by
     rw [Scheme.germ_stalkClosedPointTo]
     simp [Iso.trans_hom, Scheme.Hom.app_eq_appLE, Scheme.Hom.appLE_map_assoc]
-  rw [e, valR, dif_pos (Scheme.preimage_eq_top_of_closedPoint_mem x hx).ge]
+  rw [e, valR, dite_eq_left (Scheme.preimage_eq_top_of_closedPoint_mem x hx).ge]
   rfl
 
 end GlobalTheory.CoordsOrigin

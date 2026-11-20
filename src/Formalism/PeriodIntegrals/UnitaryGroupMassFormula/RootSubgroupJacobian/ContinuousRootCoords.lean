@@ -174,11 +174,11 @@ theorem flag_eq_one_add {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (
   ext i j
   simp only [Matrix.add_apply, vM]
   by_cases hm : (i, j) ∈ rootPat p
-  · rw [dif_pos hm]
+  · rw [dite_eq_left hm]
     have hij : i ≠ j := ne_of_lt ((mem_rootPat.mp hm).1)
     rw [Matrix.one_apply_ne hij, zero_add]
     rfl
-  · rw [dif_neg hm, add_zero]
+  · rw [dite_eq_right hm, add_zero]
     by_cases hji : j ≤ i
     · rw [flagMat_lower hN i j hji, Matrix.one_apply]
     · have hij : i < j := not_le.mp hji

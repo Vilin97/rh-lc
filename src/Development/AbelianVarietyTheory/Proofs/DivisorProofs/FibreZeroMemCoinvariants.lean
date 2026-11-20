@@ -32,7 +32,7 @@ theorem isFirstMax_unique {a d : ℕ} {Y : Matrix (Fin a) (Fin d) k} {J J' : Fin
 theorem sec_val {a d : ℕ} {Y : Matrix (Fin a) (Fin d) k} {J : Fin a ↪ Fin d} (h : IsFirstMax Y J) :
     (sec Y).val = Y.submatrix id J := by
   have hex : ∃ J, IsFirstMax Y J := ⟨J, h⟩
-  rw [sec, dif_pos hex]
+  rw [sec, dite_eq_left hex]
   show Y.submatrix id hex.choose = _
   rw [isFirstMax_unique hex.choose_spec h]
 

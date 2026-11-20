@@ -43,7 +43,7 @@ theorem setup (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (𝓞 D.host.K)) (δ
 
 theorem lamC_eq {p : ℕ} [Fact p.Prime] {lam : Qbar →+* ℂ_[p]} {ι : ℂ ≃+* ℂ_[p]}
     (hι : ∀ x : Qbar, ι (x : ℂ) = lam x) {x : ℂ} (hx : x ∈ Qbar) : lamC lam x = ι x := by
-  rw [lamC, dif_pos hx]; exact (hι ⟨x, hx⟩).symm
+  rw [lamC, dite_eq_left hx]; exact (hι ⟨x, hx⟩).symm
 
 theorem model_polys {p : ℕ} [Fact p.Prime] (g : GL3Theta.G1 p) (A B P : ℂ_[p])
     (hA : lamC g.lam (-(g2 g.abelian₂) / 4) = -A / 4) (hB : lamC g.lam (-(g3 g.abelian₂) / 4) = -B / 4) :

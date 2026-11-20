@@ -210,7 +210,7 @@ def rhoBase : D.host.E →+* ℂ_[l] :=
 
 theorem rhoBase_apply (x : D.host.E) : rhoBase D lam x = lamC lam (D.host.φ₀ x) := by
   unfold lamC
-  rw [dif_pos]
+  rw [dite_eq_left]
   rfl
 
 def rhoK : D.host.K →+* ℂ_[l] := (rhoBase D lam).comp (algebraMap D.host.K D.host.E)

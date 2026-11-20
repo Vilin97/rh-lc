@@ -76,7 +76,7 @@ noncomputable def extendRep (a : PrimeDivisor X → X.functionField) (x : X) : X
 omit [AlgebraicGeometry.IsNoetherian X] [IsNormalScheme X] in
 lemma extendRep_point (a : PrimeDivisor X → X.functionField) (Z : PrimeDivisor X) :
     extendRep a Z.point = a Z := by
-  rw [extendRep, dif_pos (show ringKrullDim (X.presheaf.stalk Z.point) = 1 from Z.2)]
+  rw [extendRep, dite_eq_left (show ringKrullDim (X.presheaf.stalk Z.point) = 1 from Z.2)]
   rfl
 
 lemma quot_eq_zero_of_not_primeDivisor {x : X} (hx : ¬ ringKrullDim (X.presheaf.stalk x) = 1)
@@ -104,7 +104,7 @@ lemma mk_extendRep_mem (a : repartitions k X) :
   rintro z ⟨-, hz⟩
   by_cases h : ringKrullDim (X.presheaf.stalk z.1) = 1
   · refine ⟨PrimeDivisor.ofPoint z.1 h, fun hmem => hz ?_, rfl⟩
-    rw [QuotientAddGroup.eq_zero_iff, extendRep, dif_pos h, mem_pointSubgroup_iff]
+    rw [QuotientAddGroup.eq_zero_iff, extendRep, dite_eq_left h, mem_pointSubgroup_iff]
     intro h'
     exact (PrimeDivisor.mem_divisorSubgroup _ _ _).mp hmem
   · exact absurd (quot_eq_zero_of_not_primeDivisor D h _) hz
@@ -148,7 +148,7 @@ lemma repToQuot_eq_zero_iff (a : repartitions k X) :
     funext z
     change (QuotientAddGroup.mk (extendRep a.1 z.1) : X.functionField ⧸ pointSubgroup D z.1) = 0
     by_cases hz : ringKrullDim (X.presheaf.stalk z.1) = 1
-    · rw [QuotientAddGroup.eq_zero_iff, extendRep, dif_pos hz, mem_pointSubgroup_iff]
+    · rw [QuotientAddGroup.eq_zero_iff, extendRep, dite_eq_left hz, mem_pointSubgroup_iff]
       intro _
       exact (PrimeDivisor.mem_divisorSubgroup _ _ _).mp (h _)
     · exact quot_eq_zero_of_not_primeDivisor D hz _
@@ -193,7 +193,7 @@ lemma repToQuot_surjective : Function.Surjective (repToQuot k D) := by
   rw [repToQuot_apply]
   by_cases hz : ringKrullDim (X.presheaf.stalk z.1) = 1
   · have := hr (PrimeDivisor.ofPoint z.1 hz)
-    rw [extendRep, dif_pos hz]
+    rw [extendRep, dite_eq_left hz]
     exact this
   · exact (quot_eq_zero_of_not_primeDivisor D hz _).trans
       (quot_eq_zero_of_not_primeDivisor D hz _).symm
@@ -217,7 +217,7 @@ lemma constToQuot_top (t : constSections (⊤ : X.Opens)) :
   funext z
   rw [constToQuot_app_apply, repToQuot_apply]
   by_cases hz : ringKrullDim (X.presheaf.stalk z.1) = 1
-  · rw [extendRep, dif_pos hz, constSections_apply_eq t z ⟨genericPoint X, trivial⟩]
+  · rw [extendRep, dite_eq_left hz, constSections_apply_eq t z ⟨genericPoint X, trivial⟩]
     rfl
   · exact (quot_eq_zero_of_not_primeDivisor D hz _).trans
       (quot_eq_zero_of_not_primeDivisor D hz _).symm

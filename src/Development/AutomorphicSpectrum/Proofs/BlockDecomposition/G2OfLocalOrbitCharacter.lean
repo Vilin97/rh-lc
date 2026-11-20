@@ -82,7 +82,7 @@ theorem resultant_factors_prod_eq_one {E : Type} [Field E] [NumberField E] [IsCM
         rw [if_pos ⟨u, hu, huw⟩]
       have hne : (-1) ^ (a * b) * algebraMap E (w.adicCompletion E) d ≠ 0 :=
         mul_ne_zero (pow_ne_zero _ (neg_ne_zero.2 one_ne_zero)) (hA0 d hd0)
-      rw [hdelta, dif_pos hne]
+      rw [hdelta, dite_eq_left hne]
       have hunit : (Units.mk0 _ hne : (w.adicCompletion E)ˣ) = atFin w (k * kc⁻¹) := by
         apply Units.ext
         have e1 : ((atFin w (k * kc⁻¹) : (w.adicCompletion E)ˣ) : w.adicCompletion E) =
@@ -196,7 +196,7 @@ theorem delta_eventually_one {E : Type} [Field E] [NumberField E] [IsCMField E] 
       rw [hres]
       simp only [hn₁, hn₂, hdl]
       rw [if_pos hsp]
-    rw [hdelta, dif_pos hne]
+    rw [hdelta, dite_eq_left hne]
     have hunit : (Units.mk0 _ hne : (w.adicCompletion E)ˣ) = atFin w u := by
       apply Units.ext
       simp [atFin, u, map_mul, map_pow]

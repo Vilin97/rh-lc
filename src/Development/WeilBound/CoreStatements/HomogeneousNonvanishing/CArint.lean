@@ -67,7 +67,7 @@ theorem c_arint : SheetIndepStatement → PtsIndepStatement → GoodProjExistsSt
   have hind := hP K ι P e hex.choose Ψ' (fun j => conjLine (L j)) (conjLine A) s hV hgood hgood'
     hLc hAc hsc
   unfold arInt ptsIntegral
-  rw [dif_pos hex, dif_pos hex]
+  rw [dite_eq_left hex, dite_eq_left hex]
   exact hind.trans heq
 
 end PositivityTheory.UnitarySelfGeneration

@@ -57,7 +57,7 @@ theorem sum_flagV {M : Type} [AddCommMonoid M] (ρ k n : ℕ) (hn : n = 2 * ρ +
     unfold flagV
     have := a.2
     simp only [Fin.val_cast, Fin.val_natAdd]
-    rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega), dif_pos (by omega)]
     congr 1
     ext
     simp [Fin.val_rev]

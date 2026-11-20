@@ -17,7 +17,7 @@ theorem valF_resG {F : Type} [Field F] {X : Scheme.{0}} (y : Sp F ⟶ X) {U W : 
     (hy : ⊤ ≤ y ⁻¹ᵁ W) : valF y W (resG X h f) = valF y U f := by
   have hU : ⊤ ≤ y ⁻¹ᵁ U := fun a ha => h (hy ha)
   unfold valF
-  rw [dif_pos hy, dif_pos hU]
+  rw [dite_eq_left hy, dite_eq_left hU]
   congr 1
   show (X.presheaf.map (homOfLE h).op ≫ y.appLE W ⊤ hy).hom f = _
   rw [Scheme.Hom.map_appLE]

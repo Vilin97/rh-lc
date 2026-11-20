@@ -33,7 +33,7 @@ theorem mem_cl_emb (I : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host
 theorem theta_spec (D : D7) : IsIntegral ℤ (theta D) ∧ theta D + D.host.conj (theta D) = 1 := by
   have h := thetaEx_holds D
   unfold theta
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 end Onto

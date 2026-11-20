@@ -306,7 +306,7 @@ theorem proof : JoinIntNum.Statement := by
       · rintro (k | u)
         · exact hm k
         · exact le_abs_self _
-    rw [eventualValue, eventualValue, dif_neg hc, dif_neg hc']
+    rw [eventualValue, eventualValue, dite_eq_right hc, dite_eq_right hc']
 
 end JoinIntNum
 

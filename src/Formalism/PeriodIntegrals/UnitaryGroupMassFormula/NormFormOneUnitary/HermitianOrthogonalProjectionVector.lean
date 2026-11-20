@@ -46,13 +46,13 @@ theorem herm_Hpk_of_inWb_eq_sum_wI (k r j : ℕ) (y : Fin j → Fin (2 * r + k +
 theorem Vv_zero {k r j : ℕ} (y : Fin j → Fin (2 * r + k + 1) → ℂ) (N : Matrix (Fin j) (Fin j) ℂ)
     (c : ℕ) (hc : j ≤ c) : Vv y N c = 0 := by
   unfold Vv
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem Vv_iso (k r j : ℕ) (y : Fin j → Fin (2 * r + k + 1) → ℂ) (N : Matrix (Fin j) (Fin j) ℂ)
     (hyy : ∀ a a', herm (Hpk k r) (y a) (y a') = 0) (b c : ℕ) (hb : b < j) (hc : c < j) :
     herm (Hpk k r) (Vv y N b) (Vv y N c) = 0 := by
   unfold Vv
-  rw [dif_pos hb, dif_pos hc]
+  rw [dite_eq_left hb, dite_eq_left hc]
   exact herm_comb k r j y hyy _ _
 
 theorem hermitian_orthogonal_projection_vector (k r j : ℕ) (y : Fin j → Fin (2 * r + k + 1) → ℂ) (N : Matrix (Fin j) (Fin j) ℂ)
@@ -85,7 +85,7 @@ theorem projection_vector_coordinate (k r j : ℕ) (hj : j ≤ r) (y : Fin j →
     Vv y N b q = if (sg k r q).val = b then 1 else 0 := by
   have hq2 := q.isLt
   unfold Vv
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   by_cases hs : (sg k r q).val < j
   · have hsr : sR k r j hj ⟨(sg k r q).val, hs⟩ = q := by
@@ -160,7 +160,7 @@ theorem nf_sum (k r j : ℕ) (hj : j ≤ r) (y : Fin j → Fin (2 * r + k + 1) �
     have hV : ∀ l : Fin j, Vv y N l.val p = ∑ a', N l a' * y a' p := by
       intro l
       unfold Vv
-      rw [dif_pos l.isLt]
+      rw [dite_eq_left l.isLt]
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Fin.eta]
     simp only [hV]
     have h1 : y a p = ∑ a', (∑ l, y a (sR k r j hj l) * N l a') * y a' p := by

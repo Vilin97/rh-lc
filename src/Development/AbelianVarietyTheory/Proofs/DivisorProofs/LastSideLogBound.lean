@@ -91,7 +91,7 @@ theorem ext_lam_lo (i : ℕ) (hi : i < R.k) :
     (ext (W.lamTrue u R.m τ) i : ℚ) =
       (W.hc u τ).u ⟨i, hi⟩ - ((R.k : ℚ) - 1) / 2 + (i : ℚ) - (R.m : ℚ) * (((R.t : ℚ) + 1) / 2) := by
   have hiN : i < R.N R.m := by unfold Ranks.N; omega
-  rw [ext, dif_pos hiN]
+  rw [ext, dite_eq_left hiN]
   exact GlobalTheory.BranchMembers.lamTrue_lo W u τ ⟨i, hiN⟩ ⟨i, hi⟩ rfl
 
 theorem ext_lam_hi (B ρ : ℕ) (hB : B < R.m) (hρ : ρ < R.t + 1) :
@@ -101,13 +101,13 @@ theorem ext_lam_hi (B ρ : ℕ) (hB : B < R.m) (hρ : ρ < R.t + 1) :
   have h1 : (B + 1) * (R.t + 1) ≤ R.m * (R.t + 1) := Nat.mul_le_mul_right _ hB
   have hiN : R.k + B * (R.t + 1) + ρ < R.N R.m := by
     unfold Ranks.N; rw [Nat.succ_mul] at h1; omega
-  rw [ext, dif_pos hiN]
+  rw [ext, dite_eq_left hiN]
   exact GlobalTheory.BranchMembers.lamTrue_hi W u τ ⟨_, hiN⟩ B ρ hρ rfl
 
 theorem ext_sg (hW : W.Ok) (i : ℕ) (hi : i < R.N R.m - 1) :
     (ext (W.sgTrue τ) i : ℚ) =
       (RowPar.of (W.hc u τ)).sgHC i - RowPar.sh R - ((R.k : ℚ) - 2) / 2 - (R.m : ℚ) * (((R.t : ℚ) + 1) / 2) + (i : ℚ) := by
-  rw [ext, dif_pos hi]
+  rw [ext, dite_eq_left hi]
   exact GlobalTheory.BranchMembers.sgTrue_entry W hW u τ ⟨i, hi⟩
 
 end Place
@@ -273,7 +273,7 @@ theorem uW_first (N : NumDatum) (δ : Code N) (z : RPl N.R) (h : 0 < N.R.k) : N.
 theorem uW_last (N : NumDatum) (δ : Code N) (z : RPl N.R) (h : N.R.k - 1 < N.R.k) :
     N.uW δ z ⟨N.R.k - 1, h⟩ = (N.hc z).u ⟨N.R.k - 1, h⟩ := by
   unfold NumDatum.uW
-  rw [dif_neg (by simp only; omega)]
+  rw [dite_eq_right (by simp only; omega)]
 
 theorem castQ {a b : ℚ} (h : a ≤ b) : (a : ℝ) ≤ (b : ℝ) := Rat.cast_le.mpr h
 

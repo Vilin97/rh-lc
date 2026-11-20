@@ -163,7 +163,7 @@ theorem thetaOf_pow (L : LabelDatum g) {d : ℕ} (hd : 0 < d) {x : Formalism.Cyc
   have hp : IsPrimitiveRoot (L.gen d) (g ^ d - 1) := L.gen_order d hd ▸ IsPrimitiveRoot.orderOf _
   have h1 := (prim_iff hp (pos g hd) _ _).1 h.choose_spec
   have h2 : L.teich x ^ (g ^ d - 1) = 1 := by rw [← map_pow, hx, map_one]
-  rw [thetaOf, dif_pos h, pow_eq_pow_mod _ h2, pow_eq_pow_mod n h2, h1]
+  rw [thetaOf, dite_eq_left h, pow_eq_pow_mod _ h2, pow_eq_pow_mod n h2, h1]
 
 theorem isCusp_one (χ : Gn g 1 → ℂ) : IsCusp χ ↔ IsIrr χ :=
   ⟨fun h => h.2.1, fun h => ⟨one_pos, h, fun a h1 h2 => by omega⟩⟩

@@ -235,7 +235,7 @@ theorem conjP_notMem_rowSG (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : 
 
 theorem rhoT_mul_rhoS (i : ℕ) (P : rowSG Pr sel mu) {a : X.E} (h : IsUnit (redP P.1 a)) :
     rhoT Ch sel mu i P a * rhoS Ch sel mu i P a = 1 := by
-  rw [rhoT, rhoS, LocE.unitV, LocE.unitV, dif_pos h, dif_pos h, ← Units.val_mul]
+  rw [rhoT, rhoS, LocE.unitV, LocE.unitV, dite_eq_left h, dite_eq_left h, ← Units.val_mul]
   split_ifs <;> simp
 
 theorem value_part (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : ∀ i, Pr.g i ∈ S) {σ₀ : X.K →+* ℂ} {ee : X.Tau → ℚ} {j : Fin R.m}
@@ -281,15 +281,15 @@ theorem value_part (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : ∀ i, Pr.g i ∈ S)
   rw [partAf, ← hξ, map_part hμ.tame y _ _ hk hx, map_part hξt y _ _ hk hx, ← Units.val_mul, ← Finset.prod_mul_distrib,
     Units.coe_prod, map_prod]
   refine Finset.prod_congr rfl fun P _ => ?_
-  rw [rhoT, LocE.unitV, dif_pos (hun P), Units.val_mul]
+  rw [rhoT, LocE.unitV, dite_eq_left (hun P), Units.val_mul]
   by_cases hP : P.1 ∈ Pr.vGs
   · have hu : ξ.UnrAt P.1 := by
       by_contra hn
       obtain ⟨i, hi⟩ := g_mem_of_vGs hPr hP
       refine g_notMem_of_goodPl hPr hS (by_contra fun hg => ?_) i hi
       exact (GlobalTheory.Mem.ReadTwist.mem_qprime_iff hξ _).2 ⟨P.1, rfl, hn⟩ (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 mu.2.2 _) hg)
-    rw [if_pos hP, locK_unr hu (hk P), Units.val_one, mul_one, hμ.atg ⟨P.1, hP⟩ _ (b P) (hun P).unit rfl (hr P), chiP, dif_pos hP,
-      chiAt, extChi, dif_pos j.2]
+    rw [if_pos hP, locK_unr hu (hk P), Units.val_one, mul_one, hμ.atg ⟨P.1, hP⟩ _ (b P) (hun P).unit rfl (hr P), chiP, dite_eq_left hP,
+      chiAt, extChi, dite_eq_left j.2]
     rfl
   · have hQ := (Finset.mem_union.1 P.2).resolve_left hP
     rw [if_neg hP, locK_unr (hμ.unr P.1 (g_notMem_of_goodPl hPr hS (mem_QE mu hsel hQ).2)) (hk P), Units.val_one, one_mul,

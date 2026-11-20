@@ -50,9 +50,9 @@ theorem trU_eigen (f : M) (u : U) : r u (trU r U ψ f) = ((ψ u : Kˣ) : K) • 
   congr 1
   unfold invChar
   by_cases hg : g ∈ U
-  · rw [dif_pos hg, dif_pos (U.mul_mem u.2 hg), ← Units.val_mul,
+  · rw [dite_eq_left hg, dite_eq_left (U.mul_mem u.2 hg), ← Units.val_mul,
       show (⟨u * g, U.mul_mem u.2 hg⟩ : U) = u * ⟨g, hg⟩ from rfl, map_mul, mul_inv, mul_inv_cancel_left]
-  · rw [dif_neg hg, dif_neg (fun h => hg ((U.mul_mem_cancel_left u.2).1 h)), mul_zero]
+  · rw [dite_eq_right hg, dite_eq_right (fun h => hg ((U.mul_mem_cancel_left u.2).1 h)), mul_zero]
 
 theorem trU_of_eigen {f : M} (hf : ∀ u : U, r u f = ((ψ u : Kˣ) : K) • f) : trU r U ψ f = (Nat.card U : K) • f := by
   classical

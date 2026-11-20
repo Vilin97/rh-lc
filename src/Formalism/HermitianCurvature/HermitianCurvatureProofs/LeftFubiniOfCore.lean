@@ -34,7 +34,7 @@ theorem leftFubini_of_core (hC : LeftFubiniLemmas.CoreLF) : LeftFubiniLemmas.Lef
     intro h2
     funext y
     unfold D.castF
-    rw [Formalism.FourierDecayAlt.P.Dx2.MN.castM_rfl, D.sliceAt, dif_pos hj]
+    rw [Formalism.FourierDecayAlt.P.Dx2.MN.castM_rfl, D.sliceAt, dite_eq_left hj]
     rfl
   simp only [hx, hs]
   exact hmain g hg H hH hR

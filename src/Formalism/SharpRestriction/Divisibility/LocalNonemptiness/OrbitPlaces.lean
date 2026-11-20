@@ -88,14 +88,14 @@ theorem nuE_step (a : ℕ) (h : a + 1 < D.R.m) : (D.R.t : ℚ) + 3 ≤ nuE D τ 
   have h1 : ((D.R.t : ℚ) + 3) / 2 ≤ (D.hc τ).e ⟨a + 1, h⟩ - (D.hc τ).b ⟨a + 1, h⟩ := (D.hc τ).gap_be ⟨a + 1, h⟩
   have h2 : ((D.R.t : ℚ) + 3) / 2 ≤ (D.hc τ).b ⟨a + 1, h⟩ - (D.hc τ).e ⟨a, ha⟩ := (D.hc τ).gap_eb ⟨a, ha⟩ h
   unfold nuE
-  rw [dif_pos h, dif_pos ha]
+  rw [dite_eq_left h, dite_eq_left ha]
   linarith
 
 theorem nuE_int (a : ℕ) : ∃ z : ℤ, nuE D τ a = z := by
   unfold nuE
   by_cases h : a < D.R.m
-  · rw [dif_pos h]; exact (D.hc τ).e_int ⟨a, h⟩
-  · rw [dif_neg h]; exact ⟨0, by simp⟩
+  · rw [dite_eq_left h]; exact (D.hc τ).e_int ⟨a, h⟩
+  · rw [dite_eq_right h]; exact ⟨0, by simp⟩
 
 def nuQ (i r : ℕ) : ℚ :=
   DV.srcPar D u τ r + nuE D τ i - (((D.R.N i : ℕ) : ℚ) + ((D.R.N (i + 1) : ℕ) : ℚ) - 1 - 2 * (r : ℚ)) / 2
@@ -103,7 +103,7 @@ def nuQ (i r : ℕ) : ℚ :=
 theorem nuRow_eq (i r : ℕ) (hi : i < D.R.m) : DV.nuRow D u (i + 1) τ r = ((nuQ D u τ i r : ℚ) : ℝ) := by
   have hw : DV.wSz D (i + 1) τ = ((nuE D τ i : ℚ) : ℝ) := by
     unfold DV.wSz nuE
-    rw [dif_pos ⟨by omega, by omega⟩, dif_pos hi]
+    rw [dite_eq_left ⟨by omega, by omega⟩, dite_eq_left hi]
     rfl
   unfold DV.nuRow nuQ
   rw [hw]
@@ -114,7 +114,7 @@ theorem nuRow_eq (i r : ℕ) (hi : i < D.R.m) : DV.nuRow D u (i + 1) τ r = ((nu
 theorem nuQ_lt (i r : ℕ) (hr : r < D.R.k) :
     nuQ D u τ i r = (D.hcW u τ).u ⟨r, hr⟩ + nuE D τ i - (D.R.k : ℚ) - (2 * (i : ℚ) + 1) * ((D.R.t : ℚ) + 1) / 2 + 1 / 2 + r := by
   unfold nuQ DV.srcPar Ranks.N
-  rw [dif_pos hr]
+  rw [dite_eq_left hr]
   push_cast
   ring
 
@@ -142,9 +142,9 @@ theorem nuQ_ge (i r : ℕ) (hi : i < D.R.m) (hk : D.R.k ≤ r) (hrN : r < D.R.N 
     ring
   have he : nuE D τ ((r - D.R.k) / (D.R.t + 1)) = (D.hcW u τ).e ⟨(r - D.R.k) / (D.R.t + 1), ham⟩ := by
     unfold nuE
-    rw [dif_pos ham, D.hcW_e u τ]
+    rw [dite_eq_left ham, D.hcW_e u τ]
   unfold nuQ DV.srcPar Ranks.N
-  rw [dif_neg (not_lt.2 hk), dif_pos ham, he]
+  rw [dite_eq_right (not_lt.2 hk), dite_eq_left ham, he]
   generalize (D.hcW u τ).e ⟨(r - D.R.k) / (D.R.t + 1), ham⟩ = E at *
   push_cast
   rw [hr]
@@ -171,7 +171,7 @@ theorem nu_last (hk : 0 < D.R.k) :
   have h2 := (D.hcW u τ).gap_be ⟨0, hm⟩
   have he : nuE D τ 0 = (D.hcW u τ).e ⟨0, hm⟩ := by
     unfold nuE
-    rw [dif_pos hm, D.hcW_e u τ]
+    rw [dite_eq_left hm, D.hcW_e u τ]
   rw [he]
   linarith
 

@@ -111,7 +111,7 @@ private lemma continuous_d_of_ck_two {n : ℕ} {z : M → V n} (hz : IsLocalHome
     intro x hx
     unfold d
     have hex : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨e0, hc0, hx⟩
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     set e := Classical.choose hex with he_def
     have he : IsChart n z e ∧ x ∈ e.source := Classical.choose_spec hex
     have hzx : z x = e x := he.1 he.2

@@ -224,7 +224,7 @@ theorem nq_of_lamData (P : M.Par) (hOK : P.OK) (l : ℕ) (hl1 : 1 ≤ l) (hlk : 
     refine Finset.prod_congr rfl fun s hs => ?_
     obtain ⟨h1, h2⟩ := Finset.mem_Icc.1 hs
     simp only [lamN]
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     simp only [Fin.val_mk, Nat.sub_add_cancel h1]
   have hb : (0 : ℝ) ≤ b ^ (8 * P.r + 20) / (P.T * P.T') :=
     div_nonneg (pow_nonneg (by linarith [hL.b_ge_three]) _) (mul_pos hOK.T_pos hOK.T'_pos).le

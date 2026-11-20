@@ -22,7 +22,7 @@ variable {g : ℕ} [Fact g.Prime] in
 theorem _root_.GlobalTheory.GLm.OpenCell.coe_toG {n : ℕ} {M : _root_.GlobalTheory.GLq.Mt g n} (h : IsUnit M) :
     ((_root_.GlobalTheory.GLq.toG M : _root_.GlobalTheory.GLq.Gn g n) : _root_.GlobalTheory.GLq.Mt g n) = M := by
   unfold _root_.GlobalTheory.GLq.toG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem pm_coe {n : ℕ} (σ : Equiv.Perm (Fin n)) :
@@ -332,7 +332,7 @@ variable {g : ℕ} [Fact g.Prime] in
 private lemma entN_eq_zero_of_le {A : Type} [Zero A] {n : ℕ} (M : Matrix (Fin n) (Fin n) A) {i j : ℕ}
     (h : n ≤ i ∨ n ≤ j) : _root_.Formalism.MainNotions.ArithmeticCylinders.entN M i j = 0 := by
   unfold _root_.Formalism.MainNotions.ArithmeticCylinders.entN
-  rw [dif_neg]
+  rw [dite_eq_right]
   omega
 
 open Polynomial in

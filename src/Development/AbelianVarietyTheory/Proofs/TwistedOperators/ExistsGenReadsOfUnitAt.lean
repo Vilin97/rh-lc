@@ -171,7 +171,7 @@ theorem realPt_fin (S T : HSp D) (X : Matrix (Fin T.rank) (Fin S.rank) D.host.E)
 theorem realM_realPt {θ : InfFam D} (hθ : IsInfFam θ) (S T : HSp D) (X : Matrix (Fin T.rank) (Fin S.rank) D.host.E)
     {τ : D.host.E →+* ℂ} (hτ : ∃ ρ, τ = tauE D ρ) (i j) :
     realM θ (GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues.realPt S T X) τ i j = τ (X i j) := by
-  rw [realM, dif_pos hτ]
+  rw [realM, dite_eq_left hτ]
   change θ hτ.choose (Algebra.TensorProduct.map (fstA D.host.F) (AlgHom.id D.host.F D.host.E)
     (pairA D.host.F 1 0 ⊗ₜ X i j)) = _
   rw [Algebra.TensorProduct.map_tmul]

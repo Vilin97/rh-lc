@@ -49,13 +49,13 @@ theorem multAt_sup_range_eq {P W : Ideal (MRing ι)} {s : MRing ι} {v : τ → 
     (hi : v i ∉ W) : multAt (P ⊔ Ideal.span (Set.range fun j => s * v j)) W = multAt (P ⊔ Ideal.span {s}) W := by
   have := hW
   unfold multAt
-  rw [dif_pos hW, dif_pos hW, GroundTheory.Heights₂.Heights.NumbersDVR.length_localizedQuot_eq_of_mul_le
+  rw [dite_eq_left hW, dite_eq_left hW, GroundTheory.Heights₂.Heights.NumbersDVR.length_localizedQuot_eq_of_mul_le
     (sup_range_le P s v) hi (fun y hy => mul_mem_sup_range i hy)]
 
 theorem multAt_eq_zero_of_not_le {J W : Ideal (MRing ι)} (hW : W.IsPrime) (h : ¬ J ≤ W) : multAt J W = 0 := by
   have := hW
   unfold multAt
-  rw [dif_pos hW, Module.length_eq_zero_iff.mpr
+  rw [dite_eq_left hW, Module.length_eq_zero_iff.mpr
     (GroundTheory.Heights₂.Heights.NumbersDVR.localizedQuot_subsingleton_of_not_le _ W h)]
   rfl
 

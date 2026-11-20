@@ -31,7 +31,7 @@ theorem exists_extension (K : Type) [Field K] [NumberField K] (p : ℕ) [Fact p.
       @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom, fun k => ⟨hmem k, ?_⟩⟩
   unfold TaylorLogMetric.lamC
-  rw [dif_pos (hmem k)]
+  rw [dite_eq_left (hmem k)]
   exact f.commutes k
 
 theorem norm_le_one_of_valuation (K : Type) [Field K] [NumberField K] (p : ℕ) [Fact p.Prime]
@@ -65,7 +65,7 @@ theorem root_of_unity_norm {p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar 
     rw [hz]; exact isAlgebraic_one
   refine ⟨hmem, ?_⟩
   unfold TaylorLogMetric.lamC
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   have h1 : (⟨z, hmem⟩ : TaylorLogMetric.Qbar) ^ n = 1 := Subtype.ext (by simpa using hz)
   have h2 : ‖lam ⟨z, hmem⟩‖ ^ n = 1 := by rw [← norm_pow, ← map_pow, h1, map_one, norm_one]
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn).1 h2

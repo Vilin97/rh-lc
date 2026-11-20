@@ -102,7 +102,7 @@ theorem ew_eq_weight (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp
   have hRR : p.RR F (P.r + 1) [] (TBB.bigPt P.r c) (TBB.bigPt P.r c) =
       B.hsInner (p.V F (TBB.bigPt P.r c)) (p.V F (TBB.bigPt P.r c)) := by
     unfold KB.Pl.RR D.RRplace
-    rw [dif_pos ⟨hloc, hloc⟩, dif_neg (by omega), if_pos rfl, if_pos rfl]
+    rw [dite_eq_left ⟨hloc, hloc⟩, dite_eq_right (by omega), if_pos rfl, if_pos rfl]
     rfl
   have hEw : TBB.Ew p (fun _ => 1) F (P.r + 1) [] (TBB.bigPt P.r c) =
       Real.sqrt (TBB.nPt P.k P.r (TBB.TTp p) (TBB.bigPt P.r c)) *
@@ -126,7 +126,7 @@ theorem ew_eq_weight (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp
       linarith
     have hV0 : p.V F (TBB.bigPt P.r c) = 0 := by
       unfold KB.Pl.V D.vecV
-      rw [dif_neg]
+      rw [dite_eq_right]
       exact fun hh => hG hh.2
     have h0 : B.hsVec (0 : Wq →L[ℂ] Wp) = 0 := by
       simpa using JCTx2.hsVec_smul' (0 : ℂ) (0 : Wq →L[ℂ] Wp)

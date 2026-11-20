@@ -456,7 +456,7 @@ theorem aTop_indep : X.fm.aTop = Y.fm.aTop :=
 theorem bTop_indep : X.fm.bTop = Y.fm.bTop := by
   funext τ
   unfold MemberForms.bTop DomWeight.detShift
-  rw [dif_pos (D.R.N_pos 0), dif_pos (D.R.N_pos 0), lam_indep X Y 0 (Nat.zero_le _)]
+  rw [dite_eq_left (D.R.N_pos 0), dite_eq_left (D.R.N_pos 0), lam_indep X Y 0 (Nat.zero_le _)]
 
 theorem levelSetting_indep_chain (hT : X.A.T = Y.A.T) : HidaSetting X ↔ HidaSetting Y := by
   have hA : Alcove X ↔ Alcove Y := by

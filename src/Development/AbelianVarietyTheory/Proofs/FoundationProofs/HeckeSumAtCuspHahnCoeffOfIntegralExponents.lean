@@ -35,7 +35,7 @@ theorem sub_coeff (ε : Ω →+* ℂ) (q : ℕ) (hq : 0 < q) (j : ℚ) (φ : Hah
   have hq' : (0 : ℚ) < (q : ℚ) := by exact_mod_cast hq
   have h : (0 : ℚ) < 1 / (q : ℚ) := by positivity
   unfold sub scale
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e : (OrderIso.mulLeft₀ (1 / (q : ℚ)) h).toOrderEmbedding ((q : ℚ) * s) = s := by
     simp only [RelIso.coe_toRelEmbedding, OrderIso.coe_toOrderEmbedding, OrderIso.mulLeft₀_apply]
     field_simp

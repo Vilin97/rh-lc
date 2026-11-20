@@ -13,7 +13,7 @@ namespace GlobalTheory.HeckeFamilyMatrices.UlSemisimple
 theorem toGL_det (g : Matrix (Fin 2) (Fin 2) ℤ) (hg : g.det ≠ 0) :
     (toGL g : Matrix (Fin 2) (Fin 2) ℝ).det = (g.det : ℝ) := by
   unfold toGL
-  rw [dif_neg hg]
+  rw [dite_eq_right hg]
   simp only [Matrix.GeneralLinearGroup.mkOfDetNeZero, Matrix.det_fin_two]
   simp [Matrix.det_fin_two]
 

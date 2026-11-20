@@ -133,7 +133,7 @@ end General
 theorem numOf_w (L : SizeData₂ D) {j : ℕ} (hj : InR D j) (z : RPl D.R) : (numOf D L).w j z = wj D j (plOf D z) := by
   have h1 : j - 1 < D.R.m := by have := hj.1; have := hj.2; omega
   unfold NumDatum.w NumDatum.eQ wj
-  rw [dif_pos (show 1 ≤ j ∧ j ≤ (numOf D L).R.m from hj), dif_pos h1]
+  rw [dite_eq_left (show 1 ≤ j ∧ j ≤ (numOf D L).R.m from hj), dite_eq_left h1]
   rfl
 
 theorem numOf_aPlus (L : SizeData₂ D) (j : ℕ) (z : RPl D.R) (i : ℕ) :

@@ -189,7 +189,7 @@ theorem partnerIsomorphismCount_of_bounds (hT2 : Formalism.MainNotions.ThinScale
       rw [nIso_mk_out]
       exact hT2p.1 hDl _ _ rfl rfl
     · have hc2 : clsOf (Zd.M p) (Loc.HermSp.ZZplusOf (Zd.M p) ((locH Zd p).Zhat t₁.f f₂') t₁.T t₁.T') = none := by
-        unfold clsOf; rw [dif_neg (fun h => hu2 h.2)]
+        unfold clsOf; rw [dite_eq_right (fun h => hu2 h.2)]
       rw [hc2]
       have h0 : ∀ o : Option ((Zd.M p).Cls D.R.rS), nIsoO Zd.M p o none = 0 := fun o => by cases o <;> rfl
       rw [h0, Nat.card_eq_zero]

@@ -16,14 +16,14 @@ theorem mem_divs {A : Type} [CommRing A] [IsDedekindDomain A] {a : A} (ha : a �
     have h := Ideal.finite_factors hI
     simpa only [Ideal.dvd_span_singleton] using h
   unfold divs
-  rw [dif_pos hfin, Set.Finite.mem_toFinset]
+  rw [dite_eq_left hfin, Set.Finite.mem_toFinset]
   rfl
 
 theorem ofQ_w {N : ℕ} {x : Fin N → ℚ} (h : Antitone x) (hz : ∀ i, ∃ z : ℤ, x i = z) (i : Fin N) :
     ((ofQ x).w i : ℚ) = x i := by
   obtain ⟨z, hz'⟩ := hz i
   unfold ofQ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   simp [hz']
 
 theorem anti_sub_rho {N : ℕ} (x : ℕ → ℚ) (h : ∀ n, n + 1 < N → x (n + 1) + 1 ≤ x n) :
@@ -67,12 +67,12 @@ variable {R : Ranks} (P : HCParam R)
 
 theorem bAt_of {n : ℕ} (h : n < R.m) : (of P).bAt n = P.b ⟨n, h⟩ := by
   unfold RowPar.bAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem eAt_of {n : ℕ} (h : n < R.m) : (of P).eAt n = P.e ⟨n, h⟩ := by
   unfold RowPar.eAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem bAt_int (n : ℕ) : ∃ z : ℤ, (of P).bAt n = z := by
@@ -89,12 +89,12 @@ theorem eAt_int (n : ℕ) : ∃ z : ℤ, (of P).eAt n = z := by
 
 theorem vb_lo {n : ℕ} (h : n < R.k - 1) : (of P).vb n = P.v ⟨n, h⟩ := by
   unfold RowPar.vb
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem vb_hi {n : ℕ} (h : ¬ n < R.k - 1) : (of P).vb n = -(of P).bAt (n - (R.k - 1)) := by
   unfold RowPar.vb
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem vb_int (n : ℕ) : ∃ z : ℤ, (of P).vb n = z := by
   unfold RowPar.vb
@@ -149,7 +149,7 @@ def sh (R : Ranks) : ℚ := ((R.m : ℚ) * ((R.t : ℚ) + 1)) / 2
 
 theorem sgHC_lo (S : RowPar R) {n : ℕ} (h : n < R.k - 1) : S.sgHC n = sh R + S.vb n := by
   unfold RowPar.sgHC RowPar.vb RowPar.sh
-  rw [dif_pos h, dif_pos h]
+  rw [dite_eq_left h, dite_eq_left h]
 
 theorem sgHC_b (S : RowPar R) (B : ℕ) : S.sgHC (R.k - 1 + B * (R.t + 1)) = sh R - S.bAt B := by
   have h1 : ¬ (R.k - 1 + B * (R.t + 1) < R.k - 1) := by omega
@@ -157,7 +157,7 @@ theorem sgHC_b (S : RowPar R) (B : ℕ) : S.sgHC (R.k - 1 + B * (R.t + 1)) = sh 
   have e2 : B * (R.t + 1) % (R.t + 1) = 0 := by simp
   have e3 : B * (R.t + 1) / (R.t + 1) = B := Nat.mul_div_cancel B (Nat.succ_pos _)
   unfold RowPar.sgHC RowPar.sh
-  rw [dif_neg h1, e, if_pos e2, e3]
+  rw [dite_eq_right h1, e, if_pos e2, e3]
   ring
 
 theorem sgHC_e (S : RowPar R) (B ρ : ℕ) (h1 : 1 ≤ ρ) (h2 : ρ ≤ R.t) :
@@ -167,7 +167,7 @@ theorem sgHC_e (S : RowPar R) (B ρ : ℕ) (h1 : 1 ≤ ρ) (h2 : ρ ≤ R.t) :
   have e : R.k - 1 + B * (R.t + 1) + ρ - (R.k - 1) = B * (R.t + 1) + ρ := by omega
   have hne : ¬ ((B * (R.t + 1) + ρ) % (R.t + 1) = 0) := by rw [hd.2]; omega
   unfold RowPar.sgHC RowPar.sh
-  rw [dif_neg h1', e, if_neg hne, hd.1, hd.2]
+  rw [dite_eq_right h1', e, if_neg hne, hd.1, hd.2]
   ring
 
 theorem sgHC_step {n : ℕ} (hn : n + 1 < R.N R.m - 1) : (of P).sgHC (n + 1) + 1 ≤ (of P).sgHC n := by
@@ -444,7 +444,7 @@ theorem lamOf_wtN {R : Ranks} (P : HCParam R) {j : ℕ} (hj : j ≤ R.m) (i : Fi
       exact ⟨-y, by rw [he, hy]; push_cast; ring⟩
   obtain ⟨z, hz⟩ := hint
   unfold Examples₂.lamOf
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   show ((⌊Examples₂.wtQ P j hj i⌋ : ℤ) : ℚ) = _
   rw [hz, Int.floor_intCast, ← hz]
   unfold Examples₂.wtQ Examples₂.wtN
@@ -461,7 +461,7 @@ theorem wtN_new {R : Ranks} (P : HCParam R) {j : ℕ} (hj : j < R.m) {n : ℕ} (
     Nat.div_eq_of_lt_le (by omega) (show n - R.k < (j + 1) * (R.t + 1) by omega)
   have hbm : Examples₂.blkN R n < R.m := hb ▸ hj
   unfold Examples₂.wtN
-  rw [dif_neg (by omega : ¬ n < R.k), dif_pos hbm]
+  rw [dite_eq_right (by omega : ¬ n < R.k), dite_eq_left hbm]
   have e : (⟨Examples₂.blkN R n, hbm⟩ : Fin R.m) = ⟨j, hj⟩ := Fin.ext hb
   rw [e, hb]
 
@@ -519,7 +519,7 @@ theorem lamTrue_new (u : Word) {j : ℕ} (hj : j < R.m) (τ : X.Tau) (i : Fin (R
     have h2 : i.1 < R.k + (j + 1) * (R.t + 1) := i.2
     exact Nat.div_eq_of_lt_le (by omega) (show i.1 - R.k < (j + 1) * (R.t + 1) by omega)
   have hj1 : j + 1 ≤ R.m := by omega
-  rw [lamTrue_eq W u (j + 1) τ i, lamN_eq W u hj1 τ i, dif_neg hk]
+  rw [lamTrue_eq W u (j + 1) τ i, lamN_eq W u hj1 τ i, dite_eq_right hk]
   have e : (⟨(i.1 - R.k) / (R.t + 1), R.blk_lt hj1 i hk⟩ : Fin R.m) = ⟨j, hj⟩ := Fin.ext hblk
   rw [e, hblk]
   have hN0 : ((R.N (j + 1 - 1) : ℕ) : ℚ) = R.k + j * (R.t + 1) := by

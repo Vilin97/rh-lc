@@ -65,7 +65,7 @@ def IsRep (μ : Measure (G n)) (b : Mat n → V) (y : Lp V 2 μ) : Prop :=
 theorem toL_coe {μ : Measure (G n)} {f : Mat n → V} (h : MemLp (fun y : G n => f y.val) 2 μ) :
     IsRep μ f (toL μ f) := by
   unfold IsRep toL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.coeFn_toLp
 
 variable [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure]

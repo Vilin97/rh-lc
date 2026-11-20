@@ -44,7 +44,7 @@ theorem baseSubst_rename (hv : IsBlockMap κ v) (G : GenFibre v P') (t : MRing �
       rw [eval₂Hom_X']
       have h1 : (v p).1 ∈ Set.range κ := ⟨p.1, (hv.2.2.1 p).symm⟩
       have h2 : v p ∈ Set.range v := ⟨p, rfl⟩
-      rw [dif_pos h1, dif_pos h2, hv.2.1 h2.choose_spec]
+      rw [dite_eq_left h1, dite_eq_left h2, hv.2.1 h2.choose_spec]
   exact DFunLike.congr_fun h t
 
 omit [Fintype K'] [∀ k, Fintype (ι' k)] in
@@ -52,7 +52,7 @@ omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem baseSubst_X_fib (G : GenFibre v P') (q : Σ k : FibreBlock κ, ι' k.1) :
     baseSubst κ G (X ⟨q.1.1, q.2⟩) = X q := by
   unfold baseSubst
-  rw [eval₂Hom_X', dif_neg q.1.2]
+  rw [eval₂Hom_X', dite_eq_right q.1.2]
 
 omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 
@@ -229,7 +229,7 @@ theorem PFFibreMult.proof : PFFibreMult.Statement := by
       rw [fibreIdeal_eq_map hv G, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
     rw [hJ0, Ideal.map_map, Ideal.map_map, hcomp]
   unfold multAt
-  rw [dif_pos hQ, dif_pos hWp, ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient,
+  rw [dite_eq_left hQ, dite_eq_left hWp, ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient,
     ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient, hJ,
     length_quot_map_of_surjective θ hsurj _ hker]
 

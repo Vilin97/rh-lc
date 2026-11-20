@@ -388,7 +388,7 @@ theorem reps_of_sphOp (hK : hyp V P = K) (h : IsPrimeIdem P e f) (h1 : ϖ ∈ P.
   exact Reps.of_dc ha hb ⟨fun γ hγ => (hc.1 γ hγ).2, hc.2⟩
 
 theorem sphOp_rep (h : IsLab V P d) : SphOp V P d (rep V P d) := by
-  rw [Hk3.rep, dif_pos h]
+  rw [Hk3.rep, dite_eq_left h]
   exact h.choose_spec
 
 theorem exists_reps (hK : hyp V P = K) {R : Finset (GA D V)} (hR : SphOp V P d R) :

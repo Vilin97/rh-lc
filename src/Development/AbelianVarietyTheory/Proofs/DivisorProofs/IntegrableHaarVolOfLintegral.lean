@@ -52,7 +52,7 @@ theorem integrable_volGL_of_lintegral {k : Type} [Field k] [ValuativeRel k] [Top
       have hle : a ≤ 1 := by
         rw [ha, ← hu]
         exact Model.nabs_le_one _ (det_mem_integer _ hg)
-      rw [hIdef, Set.indicator_of_mem hg, dif_neg h0, hu, ← ha, ENNReal.ofReal_rpow_of_pos hp]
+      rw [hIdef, Set.indicator_of_mem hg, dite_eq_right h0, hu, ← ha, ENNReal.ofReal_rpow_of_pos hp]
       have hFg : F g = a ^ σ := by
         rw [hF]; simp only [Set.indicator_of_mem hg, one_mul]; rfl
       rw [hFg, Real.enorm_of_nonneg (Real.rpow_nonneg hp.le _),

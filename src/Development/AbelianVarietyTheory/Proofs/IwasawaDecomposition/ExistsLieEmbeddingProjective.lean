@@ -46,7 +46,7 @@ def co (w : Tn t R) : Fin n → R := if h : ∃ a, IsCombAtG t x u a w then h.ch
 
 theorem Bas.co_spec (h : Bas x u) {w : Tn t R} (hw : IsTanAtG t x w) : IsCombAtG t x u (co x u w) w := by
   have e := (h.2 w hw).exists
-  rw [co, dif_pos e]
+  rw [co, dite_eq_left e]
   exact e.choose_spec
 
 theorem Bas.co_eq (h : Bas x u) {w : Tn t R} {a : Fin n → R} (ha : IsCombAtG t x u a w) : co x u w = a :=

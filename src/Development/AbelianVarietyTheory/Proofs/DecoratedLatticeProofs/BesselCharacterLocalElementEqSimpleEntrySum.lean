@@ -103,7 +103,7 @@ theorem π_simple {g : GA D V} {q : GL (n ⊕ Fin c) k} (h : (mt V g).map p.π =
     {x : k} (hx : p.pr (κ i) * t i = x * t (i + 1)) : p.π (hA V g (a (i + 1)) (a (c - 1 - i))) = x * ent q i := by
   have h1 := π_coef p H hl hr h ⟨i, by omega⟩ ⟨i + 1, hi⟩
   have h2 : t (i + 1) ≠ 0 := col_ne_zero F _ (hr ⟨i + 1, hi⟩)
-  rw [ent, dif_pos hi]
+  rw [ent, dite_eq_left hi]
   refine mul_left_cancel₀ h2 (h1.trans ?_)
   simp only [hx]
   ring
@@ -139,10 +139,10 @@ theorem col_eq {ρ : ℕ} {B : BesLev D ρ} {s : k} {FA : Frame k B.A.rank n} {F
   have := i.2
   unfold scal besselAuxiliaryVectors
   split_ifs with e1 e2
-  · rw [h1 ⟨i, e1⟩ i rfl r, colN, dif_pos e1]
+  · rw [h1 ⟨i, e1⟩ i rfl r, colN, dite_eq_left e1]
   · exact h2 i e2 r
   · have e3 : 2 * ρ - i < ρ := by omega
-    rw [h3 ⟨2 * ρ - i, e3⟩ i (by simp only; omega) r, colN, dif_pos e3]
+    rw [h3 ⟨2 * ρ - i, e3⟩ i (by simp only; omega) r, colN, dite_eq_left e3]
 
 theorem psiBes_isLoc : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : Place D k) (ψ : AddChar (AF D.host.F) ℂ) (ψk : AddChar k Circle), p.IsChar ψ ψk → ∀ (σ : ℕ) (B : BesLev D σ) (s : k) (n : Type) [Fintype n] [DecidableEq n] (c : ℕ) (FA : Frame k B.A.rank n) (FV : Frame k B.V.rank (n ⊕ Fin c)), p.IsBesFrame B s FA FV → ∀ (g : GA D B.V) (q : GL (n ⊕ Fin c) k), q ∈ N k n c (σ + 1) → p.IsLoc FV g q → psiBes ψ B.d 1 (vecB B.o B.ζ) g = (ψk (GlobalTheory.RootEx.simpleSum q) : ℂ) := by
   intro D k _ _ _ _ p ψ ψk hψ σ B s n _ _ c FA FV hF g q hq hg

@@ -43,7 +43,7 @@ theorem xiTop_inv (hX : X.Ok) (hPr : Pr.Ok) (hc : cst.Ok) (hQ : QE sel (mu : Chr
   have hq0 : ((qOf w.1 : ℕ) : X.E) ≠ 0 := ciQ_ne_zero hu
   have ef : frsF sel mu p w = p.deco.1.liftFr ⟨w.1, hw⟩ := by
     unfold frsF
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
   obtain ⟨k, hk⟩ : ∃ k, cst.B = k + 1 := ⟨cst.B - 1, by have := hc.B_pos; omega⟩
   refine topDat_congr Ch sel mu cst hX hPr hc hn w hw _ _ _ (fun j => by rw [ef]; exact xtRepY_int sel mu cst p.deco Y hYm w hw j) fun j => ?_
 

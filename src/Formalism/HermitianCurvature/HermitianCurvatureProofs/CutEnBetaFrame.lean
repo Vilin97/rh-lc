@@ -14,7 +14,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem toSm_val_of_mem (P : M.Par) {u : MA.Qp P.r P.TT → ℂ} (h : u ∈ MA.smSub P.r P.TT) :
     ((MA.toSm P u : MA.SmQ P.r P.TT) : MA.Qp P.r P.TT → ℂ) = u := by
-  unfold MA.toSm; rw [dif_pos h]
+  unfold MA.toSm; rw [dite_eq_left h]
 
 theorem hsVec_sum_smul {V W : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [NormedAddCommGroup W]
     [InnerProductSpace ℂ W] [FiniteDimensional ℂ W] {ι : Type} [Fintype ι] (c : ι → ℂ) (e : ι → (W →L[ℂ] V)) :
@@ -118,7 +118,7 @@ theorem beta_frame_identity_holds : BetaFrame := by
     rw [← setIntegral_eq_integral_of_forall_compl_eq_zero hz]
     refine setIntegral_congr_fun hQm fun x hx => ?_
     simp only [MA.ext, hval J₁ hJ₁, hval J₂ hJ₂]
-    rw [dif_pos (show x ∈ MA.Qset S.G.r (D.parOf S v).TT from hx)]
+    rw [dite_eq_left (show x ∈ MA.Qset S.G.r (D.parOf S v).TT from hx)]
     rw [hW x hx, map_mul, Complex.conj_ofReal]
     have hw := wq_pos (k := S.G.k) hx
     have hs : ((Real.sqrt (MA.wq S.G.k x (D.parOf S v).TT) : ℝ) : ℂ) *

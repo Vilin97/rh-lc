@@ -63,7 +63,7 @@ theorem tanEv_sum_smul {X : Scheme.{0}} (t : SAB H X) {k : Type} [CommRing k] {x
     rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   change tanEv t hv h (a j • s j) = _
-  rw [tanEv_smul, valR, dif_pos h]
+  rw [tanEv_smul, valR, dite_eq_left h]
 
 end GlobalTheory.LocM.LatChart
 

@@ -34,7 +34,7 @@ theorem unfoldingAffineLinearMap_add_eq_add_frM (xj z : (Fin n' → F) →ₗ[F]
         Pi.single (⟨s.1, hs⟩ : Fin n') 1 := by
       funext b
       simp only [Pi.single_apply, Fin.ext_iff, Fin.val_castAdd]
-    rw [dif_neg hf, dif_neg hf, dif_pos hs, dif_pos hs, e]
+    rw [dite_eq_right hf, dite_eq_right hf, dite_eq_left hs, dite_eq_left hs, e]
     split_ifs with hl
     · simp
     · simp
@@ -47,7 +47,7 @@ theorem unfoldingAffineLinearMap_add_eq_add_frM (xj z : (Fin n' → F) →ₗ[F]
         apply hs
         rw [← h]
         simp
-    rw [e, map_zero, dif_neg hs, dif_neg hs]
+    rw [e, map_zero, dite_eq_right hs, dite_eq_right hs]
     simp
 
 theorem chArg_add (x : (Fin (n' + c') → F) →ₗ[F] (Fin (n + c) → F)) (z : (Fin n' → F) →ₗ[F] (Fin n → F)) (a : F) :

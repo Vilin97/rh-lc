@@ -26,11 +26,11 @@ lemma eps_eq (P : Pair K G) : eps P = ((Fintype.card P.H : ℕ) : K)⁻¹ • ep
   symm
   refine Fintype.sum_of_injective Subtype.val Subtype.val_injective _ _ ?_ ?_
   · intro x hx
-    rw [dif_neg]
+    rw [dite_eq_right]
     intro hm
     exact hx ⟨⟨x, hm⟩, rfl⟩
   · intro h
-    rw [dif_pos h.2]
+    rw [dite_eq_left h.2]
 
 lemma characteristic_polynomial_compatibility (P : Pair K G) (y h : P.H) :
     ((P.chi y : Kˣ) : K) * (((P.chi (y * h))⁻¹ : Kˣ) : K) = (((P.chi h)⁻¹ : Kˣ) : K) := by

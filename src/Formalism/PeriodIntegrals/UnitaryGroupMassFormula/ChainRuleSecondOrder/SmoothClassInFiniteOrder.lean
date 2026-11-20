@@ -207,10 +207,10 @@ theorem basis_exists (k r : ℕ) : ∃ (N : ℕ) (e : Fin N → B.Mat k r) (c : 
     conv_lhs => rw [← h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     show _ = (if h : B.inLie k r X then bs.repr ⟨X, h⟩ i * s i else 0) • ((s i)⁻¹ • ((bs i : lieSub k r) : B.Mat k r))
-    rw [dif_pos hX, smul_smul, mul_assoc, mul_inv_cancel₀ (hs0 i).ne', mul_one]
+    rw [dite_eq_left hX, smul_smul, mul_assoc, mul_inv_cancel₀ (hs0 i).ne', mul_one]
   · intro X hX i
     show |(if h : B.inLie k r X then bs.repr ⟨X, h⟩ i * s i else 0)| ≤ K
-    rw [dif_pos hX.1, abs_mul, abs_of_pos (hs0 i)]
+    rw [dite_eq_left hX.1, abs_mul, abs_of_pos (hs0 i)]
     have hXn : ‖(⟨X, hX.1⟩ : lieSub k r)‖ ≤ 1 := by
       show ‖X‖ ≤ 1
       exact (Matrix.norm_le_iff zero_le_one).2 hX.2
@@ -232,7 +232,7 @@ theorem cst_spec {A : ℝ} {F : B.Mat k r → E} (hF : C2.CCsc k r A F) (u v : L
     (hu : ∀ X ∈ u, B.unitLie k r X) (hv : ∀ X ∈ v, B.unitLie k r X) {g : B.Mat k r} (hg : g ∈ B.GV k r) :
     B.gN g ^ (A - C2.B0 r * ((u.length : ℝ) + v.length)) * ‖B.dLR u v F g‖ ≤ cst hF u v := by
   unfold cst
-  rw [dif_pos ⟨hu, hv⟩]
+  rw [dite_eq_left ⟨hu, hv⟩]
   exact Classical.choose_spec (hF.2 u v hu hv) g hg
 
 def termT {N : ℕ} (e : Fin N → B.Mat k r) (K : ℝ) {A : ℝ} {F : B.Mat k r → E} (hF : C2.CCsc k r A F)

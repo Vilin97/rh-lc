@@ -18,7 +18,7 @@ variable {Z : Scheme.{0}}
 
 theorem rsT_eq {O₀ O : Z.Opens} (h : O ≤ O₀) (s : Γ(Z, O₀)) : rsT s O = resG Z h s := by
   unfold rsT
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem rsT_self {O : Z.Opens} (s : Γ(Z, O)) : rsT s O = s := by
   unfold rsT resG
@@ -65,7 +65,7 @@ theorem rsT_rsT {O₀ O O' : Z.Opens} (h' : O' ≤ O) (h : O ≤ O₀) (s : Γ(Z
 theorem rsT_pbT {Y : Scheme.{0}} (f : Z ⟶ Y) {O₀ : Y.Opens} {O O' : Z.Opens} (h' : O' ≤ O)
     (h : O ≤ f ⁻¹ᵁ O₀) (s : Γ(Y, O₀)) : rsT (pbT f s O) O' = pbT f s O' := by
   unfold pbT
-  rw [dif_pos h, dif_pos (h'.trans h), rsT_eq h']
+  rw [dite_eq_left h, dite_eq_left (h'.trans h), rsT_eq h']
   unfold resG
   rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
 

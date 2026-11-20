@@ -432,7 +432,7 @@ theorem LevTie.norm_eq_one {d : DeltaDat Xo c n} {σ : c.F →+* ℂ} {ph : (Fin
     have : y k = 0 := dif_neg (not_lt.2 hk)
     rw [this]; exact cong_refl _
   rw [h xs y (fun i => by rw [e]; exact ⟨hx i, cong_refl _⟩) e0, datF,
-    dif_pos ⟨⟨1, by simp only [e]; exact red_one⟩, e0⟩, norm_mul, ht, norm_lam, one_mul]
+    dite_eq_left ⟨⟨1, by simp only [e]; exact red_one⟩, e0⟩, norm_mul, ht, norm_lam, one_mul]
 
 theorem spanInd_laws (d : DeltaDat Xo c n) :
     (∀ x x' : Fin n → LaJ Xo c d, (∀ b : Fin n, b.val < Dw.p + Dw.q → x b = x' b) → spanInd d x = spanInd d x') ∧

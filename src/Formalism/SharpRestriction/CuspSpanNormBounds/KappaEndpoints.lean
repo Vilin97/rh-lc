@@ -2599,7 +2599,7 @@ theorem final_bound_closes (D : D7) (large₂ : SizeData₂ D) (C : ℝ) (hC : 1
     (one_le_degree_f D) hd
   rw [two_rank_add_two_eq_m D, log_scale_eq_L D large₂] at h
   unfold k2C0 at hk
-  rw [dif_pos hC] at hk
+  rw [dite_eq_left hC] at hk
   exact h hk
 
 end Close
@@ -2854,7 +2854,7 @@ theorem sum_over_coranks_real (N Cn k r f : ℕ) (b g NT D' D'' S' S'' : ℝ) (h
   have hratio : ((N : ℝ) / g) ^ (k * f) * Hn ^ N * ((N * k * f : ℕ) : ℝ) ^ (4 * f) ≤ 1 / 2 := by
     have h := (Formalism.HermitianLatticeCounting.Final.S6.ratioBound N hN1).choose_spec k r f b g hb hf hlf
     unfold k2R0 at hk
-    rw [dif_pos hN1] at hk
+    rw [dite_eq_left hN1] at hk
     exact h hk hg
   have hmid : ∑ s ∈ Finset.Icc 1 (k - 1), ((Cn : ℝ) / g) ^ (s * k * f) * (D' * D'' * NT) ^ (Cn * s) *
       ((Cn * s * f : ℕ) : ℝ) ^ (4 * s * f) ≤ (S' * S'') ^ (2 * Cn * k) := by
@@ -4098,7 +4098,7 @@ theorem ng_Dl_term {P : FPair H r} {n n' : V ≃ₗ[E] V} (hn : n ∈ P.A.NSet) 
   choose B k1 k2 k3 using N_row P.B hn'
   unfold FPair.Dm HermSp.Dl
   by_cases hl : l ≤ r + 1
-  · rw [dif_pos hl, dif_pos hl]
+  · rw [dite_eq_left hl, dite_eq_left hl]
     have e : H.Zhat (fun b => n (P.A.f b)) (fun b => n' (P.B.f b)) =
         (Matrix.of fun a d => M.L.cj (A a d)) * H.Zhat P.A.f P.B.f * (Matrix.of fun c b => B b c) := by
       ext a b
@@ -4109,7 +4109,7 @@ theorem ng_Dl_term {P : FPair H r} {n n' : V ≃ₗ[E] V} (hn : n ∈ P.A.NSet) 
     rw [e]
     exact ng_minor hl _ _ _ (fun a d had => by simp [h1 a d had]) (fun a => by simp [h2 a])
       (fun c b hbc => by simp [k1 b c hbc]) (fun a => by simp [k2 a])
-  · rw [dif_neg hl, dif_neg hl]
+  · rw [dite_eq_right hl, dite_eq_right hl]
 
 section Std
 
@@ -4250,11 +4250,11 @@ theorem ng_gram_base (P : FPair H r) : (H.gram (Sum.elim P.A.f P.B.f)).det = (-1
     rfl
   have e1 : P.Dm (r + 1) = Zh.det := by
     unfold FPair.Dm HermSp.Dl
-    rw [dif_pos le_rfl]
+    rw [dite_eq_left le_rfl]
     rfl
   have e2 : P.Dm r = (Zh.submatrix Fin.castSucc Fin.castSucc).det := by
     unfold FPair.Dm HermSp.Dl
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
     rfl
   rw [d1, d2]
   unfold FPair.Gv HermSp.Gdet HermSp.normE
@@ -5212,7 +5212,7 @@ theorem NGBaseInt_of (hP : P.PrimeTo) (hpt : P.IsPoint) : NGBaseInt P := by
   have hD : ∀ l, l ≤ r + 1 → P.Dm l = (∏ j : Fin l, (-1 : E) ^ (r - j.val)) * ngLm (ptEntryL w.blocks) l := by
     intro l hl
     unfold FPair.Dm HermSp.Dl ngLm
-    rw [dif_pos hl, ← Matrix.det_mul_row]
+    rw [dite_eq_left hl, ← Matrix.det_mul_row]
     congr 1
     ext a b
     simp only [Matrix.submatrix_apply, Matrix.of_apply]
@@ -5924,7 +5924,7 @@ theorem NGMat_of (hP : P.PrimeTo) (hR : P.RelG (theta M)) : NGMat P := by
   have hD : ∀ l, l ≤ r + 1 → P.Dm l = (∏ j : Fin l, (-1 : E) ^ (r - j.val)) * ngLm (ptEntryL w.blocks) l := by
     intro l hl
     unfold FPair.Dm HermSp.Dl ngLm
-    rw [dif_pos hl, ← Matrix.det_mul_row]
+    rw [dite_eq_left hl, ← Matrix.det_mul_row]
     congr 1
     ext a b
     simp only [Matrix.submatrix_apply, Matrix.of_apply]
@@ -6281,7 +6281,7 @@ variable {P : FPair H r}
 
 theorem ngs_Dm_last (P : FPair H r) : P.Dm (r + 1) = (H.Zhat P.A.f P.B.f).det := by
   unfold FPair.Dm HermSp.Dl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem NGOrbit0_of_mat (hR : P.RelG (theta M)) (hMat : NGMat P) : NGOrbit0 P := by

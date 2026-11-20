@@ -127,7 +127,7 @@ theorem comp_eq_prodPts (hv : IsLieBasis v) (u : G ⟶ G) [IsMonHom u] (j : Fin 
     v j ≫ u = prodPts (fun i => lieMat hv u i j) v := by
   have h := (SqZero.existsUnique_lieMatrix u hv.1 hv).exists.choose_spec j
   rw [ReciprocityTheory.ChartRestriction.G.Chart.isLieComb_iff] at h
-  rw [lieMat, dif_pos (show IsMonHom u from inferInstance)]
+  rw [lieMat, dite_eq_left (show IsMonHom u from inferInstance)]
   exact h
 
 end GlobalTheory.LieCoordFibre

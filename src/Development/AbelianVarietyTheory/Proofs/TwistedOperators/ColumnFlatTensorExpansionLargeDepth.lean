@@ -153,7 +153,7 @@ theorem colFlat_expansion : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t : T
   · intro κ _ j
     refine ⟨rfl, ?_⟩
     dsimp only
-    rw [dif_pos j.2]
+    rw [dite_eq_left j.2]
     exact hc₁ κ j
   · intro y hy
     refine Eq.trans ?_ (flatTensor_exOne_eq_exInd (G := locGrid ch.G t w.1) one_le_sLen _ _ _ _ _ φ _).symm

@@ -122,7 +122,7 @@ def thetaFull : ThetaX D where
   chrOf_inf := fun _ j τ => by
     show chrExp D (j.1 + 1) τ = _
     unfold chrExp
-    rw [dif_pos ⟨Nat.le_add_left _ _, j.2⟩]
+    rw [dite_eq_left ⟨Nat.le_add_left _ _, j.2⟩]
     rfl
   etaT := Multiplicative.ofAdd fun _ => 1 / 2
   etaT_inf := fun _ => Or.inl rfl

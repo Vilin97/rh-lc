@@ -91,7 +91,7 @@ theorem finite_support : ∀ (F : Type) [Field F] [NumberField F] (C : CxSt F) (
   have h₂ (v) : ∑ᶠ y, (k : ℝ) * A.lg v (hne v).some ⟨(E y).1.1 ≫ V.π, (Category.assoc _ _ _).trans (E y).1.2⟩ =
       (k * V.π.residueDegree w : ℝ) *
         if h : Nonempty (Ext v) then ∑ᶠ (y : AlgPt Y) (_ : below y.1 = V.π w), A.lg v h.some y else 0 := by
-    rw [dif_pos (hne v), ← mul_finsum, ← finsum_subtype_eq_finsum_cond, mul_assoc]
+    rw [dite_eq_left (hne v), ← mul_finsum, ← finsum_subtype_eq_finsum_cond, mul_assoc]
     refine congrArg _ (Eq.trans ?_ (CoverHt.finsum_lifts (algebraMap F _) V.π Y.str w hw (A.lg v (hne v).some)))
     exact finsum_comp_equiv E (f := fun z => A.lg v (hne v).some ⟨z.1.1 ≫ V.π, (Category.assoc _ _ _).trans z.1.2⟩)
   have hdeg : V.π.residueDegree w ≠ 0 := by

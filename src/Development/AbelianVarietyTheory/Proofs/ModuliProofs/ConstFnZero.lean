@@ -15,7 +15,7 @@ namespace GlobalTheory.KS.Cocycle
 
 theorem rsT_of_le {Y : Scheme.{0}} {O₀ O : Y.Opens} (h : O ≤ O₀) (s : Γ(Y, O₀)) :
     rsT s O = (Y.presheaf.map (homOfLE h).op).hom s := by
-  unfold rsT; rw [dif_pos h]
+  unfold rsT; rw [dite_eq_left h]
 
 theorem rsT_rsT {Y : Scheme.{0}} {O₀ O₁ O₂ : Y.Opens} (h : O₁ ≤ O₀) (h' : O₂ ≤ O₁) (s : Γ(Y, O₀)) :
     rsT (rsT s O₁) O₂ = rsT s O₂ := by
@@ -32,7 +32,7 @@ theorem rsT_sub {Y : Scheme.{0}} {O₀ O : Y.Opens} (h : O ≤ O₀) (s t : Γ(Y
 
 theorem pbT_id {Y : Scheme.{0}} {O : Y.Opens} (s : Γ(Y, O)) : pbT (𝟙 Y) s O = s := by
   unfold pbT
-  rw [dif_pos (show O ≤ (𝟙 Y) ⁻¹ᵁ O from le_rfl)]
+  rw [dite_eq_left (show O ≤ (𝟙 Y) ⁻¹ᵁ O from le_rfl)]
   have : (𝟙 Y : Y ⟶ Y).appLE O O (show O ≤ (𝟙 Y) ⁻¹ᵁ O from le_rfl) = 𝟙 _ := by
     change 𝟙 _ ≫ Y.presheaf.map (𝟙 (Opposite.op O)) = _
     simp

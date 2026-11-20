@@ -56,7 +56,7 @@ theorem sum_bExp {N n : ℕ} (hN : N = n + 1) {lam : DomWeight N} {sg : DomWeigh
     ((∑ s, (bBr hN lam sg s).toNat : ℕ) : ℤ) + lam.detShift = nBr lam sg := by
   have h1 : lam.detShift = lam.w (iL hN) := by
     unfold DomWeight.detShift
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     congr 1
     exact Fin.ext (by simp only [iL]; omega)
   have h2 : ∑ s, (((bBr hN lam sg s).toNat : ℕ) : ℤ) = ∑ s, (lam.w (iC hN s) - sg.w s) :=

@@ -40,7 +40,7 @@ theorem mixLat_form_borel : ∀ (L : Type) [Field L] [Valued L (WithZero (Multip
     refine mul_eq_zero_of_right _ (Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun j _ => ?_)
     by_cases hj : j.1 < n - n / 2
     · rw [ha0 i j hj, zero_mul]
-    · rw [hE', embLow, dif_neg (by simp only [Fin.val_rev]; omega), map_zero, mul_zero]
+    · rw [hE', embLow, dite_eq_right (by simp only [Fin.val_rev]; omega), map_zero, mul_zero]
   have hsplit : ρ (a + E') = ρ a * ρ E' := by
     rw [hS.1.rho_mul, h0]
     simp

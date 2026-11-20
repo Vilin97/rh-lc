@@ -96,7 +96,7 @@ theorem parabCoord_surjective : Function.Surjective (parabCoord K b) := by
     have h0 : ¬ b i < b j := by rw [hi]; exact lt_irrefl _
     show M i j = _
     simp only [M]
-    rw [dif_neg h0, dif_pos hi]
+    rw [dite_eq_right h0, dite_eq_left hi]
   have hdet : M.det ≠ 0 := by
     rw [hT.det]
     refine Finset.prod_ne_zero_iff.mpr fun c _ => ?_

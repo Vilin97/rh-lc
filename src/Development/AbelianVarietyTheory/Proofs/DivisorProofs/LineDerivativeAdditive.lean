@@ -49,7 +49,7 @@ theorem archMat_injective (h : IsCMExt F E σ) (τ : EmbOver E w) : Function.Inj
 theorem secA_archMat (h : IsCMExt F E σ) (τ : EmbOver E w) (y : GArch σ J w) :
     secA σ J τ (archMat σ J τ y) = embArch σ J w y := by
   have hu : ∃ y' : GArch σ J w, archMat σ J τ y' = archMat σ J τ y := ⟨y, rfl⟩
-  rw [secA, dif_pos hu, archMat_injective h τ hu.choose_spec]
+  rw [secA, dite_eq_left hu, archMat_injective h τ hu.choose_spec]
 
 theorem exists_archMat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (τ : EmbOver E w) {u : Matrix (Fin n) (Fin n) ℂ}
     (hu : sigA (J.map τ.1) u * u = 1) : ∃ y : GArch σ J w, archMat σ J τ y = u := by

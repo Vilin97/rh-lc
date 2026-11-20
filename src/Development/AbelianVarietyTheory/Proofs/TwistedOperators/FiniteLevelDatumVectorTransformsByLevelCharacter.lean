@@ -98,7 +98,7 @@ theorem omegaG_mul_right {a b : ℕ} (L : LevDat D.host.E ℂ a) (hs : L.s = 0)
   unfold omegaG
   by_cases hy : GCond L y
   · have hy' : GCond L (fun PP => y PP * (γ PP).val) := gCond_mul L γ hγ hP y _ (fun _ => rfl) hy
-    rw [dif_pos hy', dif_pos hy]
+    rw [dite_eq_left hy', dite_eq_left hy]
     have key : ∀ PP : ↥L.Pg, hy'.2.choose PP = hy.2.choose PP * γ PP.1 := fun PP => Units.ext (by
       rw [Units.val_mul, hy'.2.choose_spec.1 PP, hy.2.choose_spec.1 PP, topL_mul_right])
     have hc : (⟨fun PP => upperLeftBlock L.hr (hy'.2.choose PP), hy'.2.choose_spec.2.2⟩ : L.P.H) =
@@ -113,7 +113,7 @@ theorem omegaG_mul_right {a b : ℕ} (L : LevDat D.host.E ℂ a) (hs : L.s = 0)
     ring
   · have hy' : ¬ GCond L (fun PP => y PP * (γ PP).val) := fun h => hy (gCond_mul L (fun PP => (γ PP)⁻¹) hγi hPi _ y
       (fun PP => by rw [Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.mul_one]) h)
-    rw [dif_neg hy', dif_neg hy, mul_zero]
+    rw [dite_eq_right hy', dite_eq_right hy, mul_zero]
 
 theorem omegaQ_mul_right {n r : ℕ} (hr : r ≤ n) (Q : Finset (Pl D.host.E)) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
     (γ : ∀ PP : Pl D.host.E, GL (Fin r) (kP PP)) (u : ∀ PP : Pl D.host.E, Matrix (Fin n) (Fin r) (kP PP)) :

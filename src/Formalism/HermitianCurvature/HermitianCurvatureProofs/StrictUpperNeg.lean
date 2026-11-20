@@ -35,14 +35,14 @@ theorem upper_eQ_cc {j : ℕ} (p : (G.UT j → ℂ) × (Fin j → ℂ)) (a b : F
 theorem upper_eQ_cl {j : ℕ} (p : (G.UT j → ℂ) × (Fin j → ℂ)) (a : Fin j) :
     G.upper (eQ j p) a.castSucc (Fin.last j) = p.2 a := by
   simp only [G.upper, G.strictUpper, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply]
-  rw [if_neg (Fin.castSucc_ne_last a), dif_pos (Fin.castSucc_lt_last a), zero_add]
+  rw [if_neg (Fin.castSucc_ne_last a), dite_eq_left (Fin.castSucc_lt_last a), zero_add]
   have e : (⟨(a.castSucc, Fin.last j), Fin.castSucc_lt_last a⟩ : G.UT (j + 1)) = eL (Sum.inr a) := rfl
   rw [e, eQ_eq, combineUpperTriangular_inr]
 
 theorem upper_eQ_lc {j : ℕ} (p : (G.UT j → ℂ) × (Fin j → ℂ)) (b : Fin j) :
     G.upper (eQ j p) (Fin.last j) b.castSucc = 0 := by
   simp only [G.upper, G.strictUpper, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply]
-  rw [if_neg (Ne.symm (Fin.castSucc_ne_last b)), dif_neg (not_lt.2 (Fin.castSucc_lt_last b).le), zero_add]
+  rw [if_neg (Ne.symm (Fin.castSucc_ne_last b)), dite_eq_right (not_lt.2 (Fin.castSucc_lt_last b).le), zero_add]
 
 theorem upper_eQ_ll {j : ℕ} (p : (G.UT j → ℂ) × (Fin j → ℂ)) :
     G.upper (eQ j p) (Fin.last j) (Fin.last j) = 1 := by

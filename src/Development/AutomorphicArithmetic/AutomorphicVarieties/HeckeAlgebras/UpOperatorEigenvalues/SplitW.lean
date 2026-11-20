@@ -112,7 +112,7 @@ theorem UpperTheory.V.Hi.Up.main :
         congr 1
         funext j
         split_ifs <;> simp)) (j + 1) j.2
-    rwa [dif_pos ⟨Nat.succ_pos _, j.2⟩] at this
+    rwa [dite_eq_left ⟨Nat.succ_pos _, j.2⟩] at this
   have hfin := fun v i => fin_part R x hN hA v i (ho v i)
   have up : ∀ [Fact (CommOn (R.M K) ((hset Q R.τ₀).op Λ.Λ))], _ :=
     coreUp hN L Ω l n c _ hA Λ.Λ R.θ R.isWt ι _ lam d ξ c0 sp hsp Y K

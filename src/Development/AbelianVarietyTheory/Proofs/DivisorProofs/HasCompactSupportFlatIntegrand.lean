@@ -68,9 +68,9 @@ theorem exists_fill_entry (hs : 1 ≤ G.s) (x : ColArgs G) (y : RowArgs G) (j : 
   refine ⟨frame (b := G.rank (G.m, j)) (by have := topRank_add hs j; have := j.2; omega) rs.1.2,
     frame (b := G.rank (G.m, j + 1)) (by have := topRank_add hs (j + 1); have := j.2; omega) rs.1.1,
     basePt _ (x j) rs.1.1 rs.1.2, fun e => ?_⟩
-  rw [fill_theta, transpose_apply, downMap, dif_pos j.2]
+  rw [fill_theta, transpose_apply, downMap, dite_eq_left j.2]
   simp only [reindex_apply, submatrix_apply, Equiv.symm_apply_apply, stepPt, Matrix.add_apply, of_apply]
-  rw [dif_pos rs.2, add_sub_cancel_left]
+  rw [dite_eq_left rs.2, add_sub_cancel_left]
 
 theorem exists_isCompact_of_mul_mem {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
     (A : GL m k) (B : GL n k) :

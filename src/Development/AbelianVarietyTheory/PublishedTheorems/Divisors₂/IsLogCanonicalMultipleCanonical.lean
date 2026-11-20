@@ -94,7 +94,7 @@ theorem IsFormOrd.unique {η : RatForms p n} (hη : η ≠ 0) {a b : ℤ} (h : E
 theorem IsFormOrd.formOrd_eq {η : RatForms p n} (hη : η ≠ 0) {a : ℤ} (h : E.IsFormOrd η a) :
     E.formOrd η = a := by
   have h' : ∃ a, E.IsFormOrd η a := ⟨a, h⟩
-  rw [formOrd, dif_pos h']
+  rw [formOrd, dite_eq_left h']
   exact h'.choose_spec.unique hη h
 
 variable (E)

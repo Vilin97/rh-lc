@@ -72,7 +72,7 @@ theorem GlobalTheory.CompanionTheory.FineProd.jmL_prodIrr : ∀ {k : Type} [Fiel
   by_cases hWd : ∑ a, (W.get a).1 = N
   swap
   · have hSe : S = ∅ := Finset.eq_empty_of_forall_notMem fun c hc => hWd (hSdeg c hc)
-    rw [hSe, jmL, dif_neg hWd]
+    rw [hSe, jmL, dite_eq_right hWd]
     simp
   let m : Fin h → Type := fun i => Fin (x i).1
   let m' : Fin W.length → Type := fun j => Fin (W.get j).1
@@ -133,7 +133,7 @@ theorem GlobalTheory.CompanionTheory.FineProd.jmL_prodIrr : ∀ {k : Type} [Fiel
         refine (GlobalTheory.T.segment_rep_jacquet_word_multiplicity hA hJ (Γ i) (x i).rep (hΓ i) (sub W c i) (fun w hw => ?_)).2 hi
         obtain ⟨p, -, rfl⟩ := List.mem_map.1 hw
         exact hW _ (List.get_mem _ _)
-  rw [jmL, dif_pos hWd]
+  rw [jmL, dite_eq_left hWd]
   refine Eq.trans key ?_
   have hcard : (Finset.univ.filter fun b : SizeMatrix m m' => ∃ c ∈ S, b.1 = colourMat W c).card = S.card := by
     symm

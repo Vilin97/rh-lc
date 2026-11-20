@@ -356,7 +356,7 @@ theorem DecoPts.card_nb (c : DecoPts S E n ST SG) {S0 : Set (HeightOneSpectrum (
     (i : ℕ) (d : S.D) : (c.nb P.1.asIdeal i d).card = gaussBin (SplitOff.q P) n i := by
   have hfin := DecoSet.heckeSet_finite P.1.ne_bot (conjIdeal_ne_bot P.1.ne_bot) i (c.pts d)
   unfold DecoPts.nb DecoSet.heckeNb
-  rw [Finset.card_map, dif_pos hfin, ← Set.ncard_eq_toFinset_card _ hfin, ← Nat.card_coe_set_eq]
+  rw [Finset.card_map, dite_eq_left hfin, ← Set.ncard_eq_toFinset_card _ hfin, ← Nat.card_coe_set_eq]
   exact DecoSet.card_heckeSet (c.pts d) P.1 (SplitOff.conjP_ne P)
     (fun Q => SplitOff.ne_of_mem P (Or.inl (Or.inr Q.2))) (fun w => SplitOff.ne_of_mem P (Or.inr w.2)) i
 

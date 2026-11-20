@@ -59,7 +59,7 @@ theorem clsPinD_of_famCol_of_trueW : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B
             | exact (congrArg (fun G => ReadsG (W.R.T.cols.forms u).clsP.toG (W.R.T.cols.forms u).valP.eW f.j f.g.bT G F.1) e).mpr hG'
         refine ⟨_, hex.choose_spec.1 rfl, ?_⟩
         unfold _root_.GlobalTheory.Fam.tailCoefficient
-        rw [dif_pos hex]
+        rw [dite_eq_left hex]
         split
         · rfl
         · next h => exact absurd rfl h
@@ -84,7 +84,7 @@ theorem clsPinD_of_famCol_of_trueW : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B
             | exact (congrArg (fun G => ReadsG (W.R.T.tw.pt.cls u a h0) (W.R.T.tw.pt.val u a h0).eW f.j f.g.bT G F.1) e).mpr hG'
         refine ⟨_, hex.choose_spec.2 h0, ?_⟩
         unfold _root_.GlobalTheory.Fam.tailCoefficient
-        rw [dif_pos hex]
+        rw [dite_eq_left hex]
         split
         · next h => exact absurd h h0
         · rfl

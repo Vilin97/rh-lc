@@ -159,7 +159,7 @@ theorem windows_of_large_scale : ∀ eps cD ch C8 : ℝ, 0 < eps → eps < 1 / 5
     intro j h1 h2 τ
     have hj : j - 1 < D.R.m := by omega
     unfold wj
-    rw [dif_pos hj, heR]
+    rw [dite_eq_left hj, heR]
     have a1 := hjη ⟨j - 1, hj⟩
     have a2 := hj0 ⟨j - 1, hj⟩
     constructor <;> linarith

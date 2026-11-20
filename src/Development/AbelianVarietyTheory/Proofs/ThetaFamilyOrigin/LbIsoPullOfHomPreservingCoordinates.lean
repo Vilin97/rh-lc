@@ -31,7 +31,7 @@ theorem crd_pull {X Y : Scheme.{0}} (φ : X ⟶ Y) (H : LB Y) {J : Type} (s : J 
   rw [hv j]
   congr 1
   unfold valR
-  rw [dif_pos hl, dif_pos hl']
+  rw [dite_eq_left hl, dite_eq_left hl']
   congr 1
   change _ = (y.appLE _ ⊤ hl').hom ((φ.appLE _ _ (pull_le H φ (fun _ => l))).hom ((s j).f l))
   rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]

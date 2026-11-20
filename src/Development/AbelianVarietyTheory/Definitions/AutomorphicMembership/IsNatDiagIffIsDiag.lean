@@ -174,7 +174,7 @@ def ofMod (F : Z.X.Modules) : Z.Sh :=
   if h : ∃ S : Z.Sh, Nonempty (S.toMod ≅ F) then h.choose else ⟨0, 0, 0, 0, 0⟩
 
 theorem ofMod_iso {F : Z.X.Modules} (h : ∃ S : Z.Sh, Nonempty (S.toMod ≅ F)) : Nonempty ((Z.ofMod F).toMod ≅ F) := by
-  rw [ofMod, dif_pos h]
+  rw [ofMod, dite_eq_left h]
   exact h.choose_spec
 
 def Idl : Type := {J : Z.X.IdealSheafData // ∀ x ∈ J.support, x ∉ Z.opn}
@@ -229,15 +229,15 @@ open Classical in
 def diagCl (Z₁ Z₂ : Mdl Y i₀) : Mdl Y i₀ := if h : ∃ Z', IsDiag Z₁ Z₂ Z' then h.choose else Z₁
 
 theorem blowUp_spec {Z : Mdl Y i₀} {J : Z.Idl} (h : ∃ Z', IsNBlow Z J Z') : IsNBlow Z J (blowUp Z J) := by
-  rw [blowUp, dif_pos h]
+  rw [blowUp, dite_eq_left h]
   exact h.choose_spec
 
 theorem natDiagCl_spec {Z₁ Z₂ : Mdl Y i₀} (h : ∃ Z', IsNatDiag Z₁ Z₂ Z') : IsNatDiag Z₁ Z₂ (natDiagCl Z₁ Z₂) := by
-  rw [natDiagCl, dif_pos h]
+  rw [natDiagCl, dite_eq_left h]
   exact h.choose_spec
 
 theorem diagCl_spec {Z₁ Z₂ : Mdl Y i₀} (h : ∃ Z', IsDiag Z₁ Z₂ Z') : IsDiag Z₁ Z₂ (diagCl Z₁ Z₂) := by
-  rw [diagCl, dif_pos h]
+  rw [diagCl, dite_eq_left h]
   exact h.choose_spec
 
 theorem NatCorr.refl (Z : Mdl Y i₀) : NatCorr Z Z := ⟨⟨dvd_rfl, le_rfl, dvd_rfl⟩, le_rfl, fun _ _ hk _ _ => hk⟩

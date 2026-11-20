@@ -62,10 +62,10 @@ theorem lamT_of_lt (j : Fin D.R.m) (τ : D.what₂.Tau) (a : ℕ) (h : a < (Vc D
   have hn : 0 < (Vc D j).rank := by omega
   have hle : (lamL j τ).detShift ≤ (lamL j τ).w ⟨a, h⟩ := by
     unfold DomWeight.detShift
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     exact (lamL j τ).anti (Fin.mk_le_mk.2 (by omega))
   unfold lamT DomWeight.natW
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   omega
 
 theorem anti (L : SizeData₂ D) (j : Fin D.R.m) : ∀ τ a b, a ≤ b → b < (parOf L j).Nr → (wts L j).lam τ b ≤ (wts L j).lam τ a := by
@@ -105,7 +105,7 @@ theorem U_last (L : SizeData₂ D) (j : Fin D.R.m) (τ : D.what₂.Tau) :
   have hlt : (Vc D j).rank - 1 < (Vc D j).rank := by omega
   have h1 := lamT_of_lt j τ _ hlt
   have h2 : (lamL j τ).detShift = (lamL j τ).w ⟨(Vc D j).rank - 1, hlt⟩ := by
-    unfold DomWeight.detShift; rw [dif_pos (by omega)]
+    unfold DomWeight.detShift; rw [dite_eq_left (by omega)]
   show Formalism.CohomologicalDescent.UnitNormBounds.UN (Vc D j).rank (lamT j τ) ((Vc D j).rank - 1) = 0
   unfold Formalism.CohomologicalDescent.UnitNormBounds.UN
   omega
@@ -152,7 +152,7 @@ theorem c_le (L : SizeData₂ D) (j : Fin D.R.m) (τ : D.what₂.Tau) (hv : Vals
     simp only [hrow, hU] at h
     have hg := (D.hc τ).gap_be ⟨D.R.m - 1, by omega⟩
     have hw : wj D D.R.m τ = (((D.hc τ).e ⟨D.R.m - 1, by omega⟩ : ℚ) : ℝ) := by
-      unfold wj; rw [dif_pos (by omega)]
+      unfold wj; rw [dite_eq_left (by omega)]
     have hg' : (((D.hc τ).b ⟨D.R.m - 1, by omega⟩ : ℚ) : ℝ) + ((D.R.t : ℝ) + 3) / 2 ≤
         (((D.hc τ).e ⟨D.R.m - 1, by omega⟩ : ℚ) : ℝ) := by
       have h2 : ((((D.hc τ).e ⟨D.R.m - 1, by omega⟩ - (D.hc τ).b ⟨D.R.m - 1, by omega⟩ : ℚ)) : ℝ) ≥ ((((D.R.t : ℚ) + 3) / 2 : ℚ) : ℝ) := by

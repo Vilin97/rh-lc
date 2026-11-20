@@ -30,7 +30,7 @@ def ext {y : ℕ} (t : Fin y → ℝ) (j : ℕ) : ℝ := if h : j < y then t ⟨
 theorem sum_ext {y N : ℕ} (hN : y ≤ N) (t : Fin y → ℝ) (g : ℕ → ℝ → ℝ) (hg : ∀ j, g j 0 = 0) :
     ∑ j : Fin y, g j (t j) = ∑ j ∈ range N, g j (ext t j) := by
   rw [← Finset.sum_subset (Finset.range_mono hN) fun j _ hj => by
-    rw [ext, dif_neg (by simpa using hj), hg], ← Fin.sum_univ_eq_sum_range (fun j => g j (ext t j))]
+    rw [ext, dite_eq_right (by simpa using hj), hg], ← Fin.sum_univ_eq_sum_range (fun j => g j (ext t j))]
   exact Finset.sum_congr rfl fun j _ => by simp [ext]
 
 theorem sum_cut {q N : ℕ} (hN : q ≤ N) (g : ℕ → ℝ) :
@@ -50,9 +50,9 @@ theorem ext_nonneg {y : ℕ} {t : Fin y → ℝ} (ht : t ∈ Cone y) (j : ℕ) :
 theorem ext_anti {y : ℕ} {t : Fin y → ℝ} (ht : t ∈ Cone y) : Antitone (ext t) := by
   intro i j hij
   by_cases hj : j < y
-  · rw [ext, ext, dif_pos hj, dif_pos (by omega)]
+  · rw [ext, ext, dite_eq_left hj, dite_eq_left (by omega)]
     exact ht.1 (by simpa [Fin.le_def] using hij)
-  · rw [ext, dif_neg hj]
+  · rw [ext, dite_eq_right hj]
     exact ext_nonneg ht i
 
 theorem coneAff (r : ℕ) (a b : ℝ) (h : ∀ k : ℕ, 1 ≤ k → k ≤ r → a + b * ((k : ℝ) - 1) / 2 < 0) :
@@ -235,7 +235,7 @@ theorem exponent_bound_orthogonal_case : ExpSo := by
     · by_cases hjy : j < y
       · have : (j : ℝ) + 1 ≤ Y := by exact_mod_cast (by omega : j + 1 ≤ Y)
         exact mul_nonneg (by linarith) a0
-      · rw [ext, dif_neg hjy, mul_zero]
+      · rw [ext, dite_eq_right hjy, mul_zero]
   have e1 : rho2 n s = n * ∑ i, s i - ∑ i, ∑ j, min (s i) (s j) := by
     rw [sum_min_self hs, rho2, Finset.mul_sum, ← Finset.sum_sub_distrib]
     exact Finset.sum_congr rfl fun i _ => by ring

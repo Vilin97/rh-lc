@@ -36,17 +36,17 @@ end Affine
 theorem aff_stab_low {R : Type} [CommRing R] (n r : ℕ) (g : GL (Fin n) R) (i : Fin r) (b : Fin (n + r)) :
     (stab R n (n + r) (Nat.le_add_right n r) g : Matrix (Fin (n + r)) (Fin (n + r)) R) (Fin.natAdd n i) b =
       (1 : Matrix (Fin (n + r)) (Fin (n + r)) R) (Fin.natAdd n i) b := by
-  rw [stab_apply, dif_neg (by simp only [Fin.val_natAdd]; omega), Matrix.one_apply]
+  rw [stab_apply, dite_eq_right (by simp only [Fin.val_natAdd]; omega), Matrix.one_apply]
 
 theorem aff_stab_lowc {R : Type} [CommRing R] (n r : ℕ) (g : GL (Fin n) R) (i : Fin r) (a : Fin (n + r)) :
     (stab R n (n + r) (Nat.le_add_right n r) g : Matrix (Fin (n + r)) (Fin (n + r)) R) a (Fin.natAdd n i) =
       (1 : Matrix (Fin (n + r)) (Fin (n + r)) R) a (Fin.natAdd n i) := by
-  rw [stab_apply, dif_neg (by simp only [Fin.val_natAdd]; omega), Matrix.one_apply]
+  rw [stab_apply, dite_eq_right (by simp only [Fin.val_natAdd]; omega), Matrix.one_apply]
 
 theorem aff_stab_top {R : Type} [CommRing R] (n r : ℕ) (g : GL (Fin n) R) (a b : Fin n) :
     (stab R n (n + r) (Nat.le_add_right n r) g : Matrix (Fin (n + r)) (Fin (n + r)) R) (Fin.castAdd r a)
       (Fin.castAdd r b) = (g : Matrix (Fin n) (Fin n) R) a b := by
-  rw [stab_apply, dif_pos (by simp only [Fin.val_castAdd]; exact ⟨a.2, b.2⟩)]
+  rw [stab_apply, dite_eq_left (by simp only [Fin.val_castAdd]; exact ⟨a.2, b.2⟩)]
   rfl
 
 theorem aff_conj {K : Type} [Field K] (n r : ℕ) (i : Fin r) (h : GL (Fin n) K) (y : Fin (n + r) → K)

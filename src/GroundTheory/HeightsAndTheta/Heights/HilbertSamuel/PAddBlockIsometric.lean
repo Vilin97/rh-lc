@@ -66,7 +66,7 @@ theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι}
   · have hc' : W ∈ divSupp P g := by
       simp only [divSupp, Set.mem_ofPred_eq] at hc ⊢
       exact ⟨e2.mp (e1.mpr hc.1), hc.2⟩
-    rw [if_pos hc, if_pos hc', multAt, multAt, dif_pos hW, dif_pos hW]
+    rw [if_pos hc, if_pos hc', multAt, multAt, dite_eq_left hW, dite_eq_left hW]
     exact congrArg ENat.toNat (l1.symm.trans l2)
   · have hc' : W ∉ divSupp P g := by
       intro h

@@ -119,7 +119,7 @@ theorem surjective_mackeyRealRes_iff :
       if hd : mackeySubgroup (W : Subgroup G) (ψ w).toMonoidHom d.out = ⊤ then t ⟨⟨w, d⟩, hd⟩ else 0
     refine ⟨c, funext fun p => ?_⟩
     have := congrFun (congrFun hc p.1.1) p.1.2
-    rw [dif_pos p.2] at this
+    rw [dite_eq_left p.2] at this
     exact this
   · intro hs t
     obtain ⟨c, hc⟩ := hs fun p => t p.1.1 p.1.2

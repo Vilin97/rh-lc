@@ -254,7 +254,7 @@ theorem exists_divisor [IsDiscreteValuationRing (normInteger K)] (hr : 0 < r) {t
         (h6 ρ hρ).trans (max_le (hβ k) le_rfl)⟩
     rw [S_succ]
     change Spec k (S k).1 (if h : ∃ p', Spec k (S k).1 p' then h.choose else S k)
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   have inv : ∀ k, Inv k := by
     intro k

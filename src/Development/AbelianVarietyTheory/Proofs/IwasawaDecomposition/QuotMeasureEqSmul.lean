@@ -45,7 +45,7 @@ theorem lab_emb (ρ : D.what₂.Tau) : lab D.what₂.embLL ρ = ρ := by
   have h : ∃ τ, labE D.what₂.embLL τ = tauE D ρ ∨ labE D.what₂.embLL τ = (starRingEnd ℂ).comp (tauE D ρ) :=
     ⟨ρ, Or.inl (hE ρ)⟩
   unfold lab
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hs := h.choose_spec
   generalize h.choose = τ at hs
   rw [hE] at hs
@@ -86,7 +86,7 @@ theorem dimK_eq (hK : DV.KapDef D) (i : Fin D.R.m) (τ : D.what₂.Tau) (s : ℕ
           ((D.R.t : ℚ) + 1 + 2 * (c : ℕ)) / 2 := fun c => by
       have := c.2
       unfold DV.aMinusQ Formalism.L2.NTheta.lamAt
-      rw [dif_pos (by omega), dif_neg (by omega), dif_pos (by omega), neg_neg]
+      rw [dite_eq_left (by omega), dite_eq_right (by omega), dite_eq_left (by omega), neg_neg]
       congr 4
       omega
     apply Int.cast_injective (α := ℚ)
@@ -171,7 +171,7 @@ theorem integral_phiC (T : CoreJ D) (hL : LawsJ T) (h : LawsCore T.toCore) {j : 
   have hm := h.cuspidalL2Subspace j hj σ hg _ _ (dom_wtA w)
   have e : h.Nl j w σ' (f : T.R j) = lieFac (T.Q.Dw j) (xiR D) (wtA w) * ‖(hm f).toLp _‖ := by
     subst hσ
-    rw [LawsCore.Nl, dif_pos hj, l2C, dif_pos f.2]
+    rw [LawsCore.Nl, dite_eq_left hj, l2C, dite_eq_left f.2]
     rfl
   rw [e]
   clear e hσ
@@ -191,7 +191,7 @@ theorem normSq_eq {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} {μ
   have h1 : ∃ c, IsMultIP M μ 𝓕 (H.e x) (H.e x) c := by
     by_contra hc
     apply inner_self_ne_zero (𝕜 := ℂ).2 hx
-    rw [h, ipM, dif_neg hc, mul_zero]
+    rw [h, ipM, dite_eq_right hc, mul_zero]
   rw [(ipM_spec _ _ _ _ _ h1 v v).2, sq_eq_inner, h]
   simp [inner_self_eq_norm_sq_to_K, hv]
 

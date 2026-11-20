@@ -638,7 +638,7 @@ theorem ColObj.sgFin_eq_sgExp (C : ColObj K I) (u : I) (h : ∀ w, w ∉ C.supp 
     rw [Finset.mem_coe, Finsupp.mem_support_iff, ← hz z]
     exact hzs
   unfold sgFin
-  rw [dif_pos hfin]
+  rw [dite_eq_left hfin]
   ext z
   exact hz z
 
@@ -849,7 +849,7 @@ theorem cZC_spec {C₀ : ℝ} (h : 0 ≤ C₀) : 0 ≤ cZC C₀ ∧ ∀ {X : Fie
     (∀ τ, DualSlope X.K (W.lamTrue u 0 τ)) → (∀ τ, MaxSlopeNablaBound X.K (kap_succ R) (W.lamTrue u 0 τ)) →
     ZiiC W u (cZC C₀) a b' L S ≤ (Mu0H W Ch hX u).mu ∧ (Mu0H W Ch hX u).muMax ≤ ZiiiC W u (cZC C₀) a b' L S := by
   unfold cZC
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec (propZ_col' C₀ h)
 
 def xLowC (n : ScNum) : ℝ :=
@@ -887,12 +887,12 @@ theorem lamRowC_strictAnti (P : HCParam R) : StrictAnti (lamRowC (RowPar.of P)) 
   have hm := R.two_le_m
   simp only [lamRowC, RowPar.of]
   by_cases h1 : i + 1 < R.k - 1
-  · rw [dif_pos h1, dif_pos (show i < R.k - 1 by omega)]
+  · rw [dite_eq_left h1, dite_eq_left (show i < R.k - 1 by omega)]
     have a1 := P.u_gt_v ⟨i + 1, h1⟩
     have a2 := P.v_gt_u ⟨i, by omega⟩
     exact_mod_cast lt_trans a1 a2
   · by_cases h2 : i < R.k - 1
-    · rw [dif_neg h1, dif_pos (show i + 1 - (R.k - 1) < R.m by omega), dif_pos h2]
+    · rw [dite_eq_right h1, dite_eq_left (show i + 1 - (R.k - 1) < R.m by omega), dite_eq_left h2]
       have a1 := P.u_last_gt (by omega) (by omega)
       have a2 := P.v_gt_u ⟨i, h2⟩
       have e1 : P.u ⟨i + 1, by omega⟩ = P.u ⟨R.k - 1, by omega⟩ := congrArg P.u (Fin.ext (by simp; omega))
@@ -901,8 +901,8 @@ theorem lamRowC_strictAnti (P : HCParam R) : StrictAnti (lamRowC (RowPar.of P)) 
       rw [e1] at a2
       have a3 : -P.b ⟨0, by omega⟩ < P.v ⟨i, h2⟩ := lt_trans a1 a2
       exact_mod_cast a3
-    · rw [dif_neg h1, dif_neg h2, dif_pos (show i + 1 - (R.k - 1) < R.m by omega),
-        dif_pos (show i - (R.k - 1) < R.m by omega)]
+    · rw [dite_eq_right h1, dite_eq_right h2, dite_eq_left (show i + 1 - (R.k - 1) < R.m by omega),
+        dite_eq_left (show i - (R.k - 1) < R.m by omega)]
       have j1 := P.gap_be ⟨i - (R.k - 1), by omega⟩
       have j2 := P.gap_eb ⟨i - (R.k - 1), by omega⟩ (by simp; omega)
       have e3 : P.b ⟨i + 1 - (R.k - 1), by omega⟩ = P.b ⟨i - (R.k - 1) + 1, by omega⟩ :=

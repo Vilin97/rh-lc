@@ -58,7 +58,7 @@ private theorem lf_minor {R : Type} [CommRing R] (X : UPos (2 + 2) 2 → R) (a b
     intro M k
     rw [unipMatrix, add_mul, one_mul, Matrix.add_apply, Matrix.mul_apply, Finset.sum_eq_zero, add_zero]
     intro l _
-    rw [blockEntry_apply, dif_neg, zero_mul]
+    rw [blockEntry_apply, dite_eq_right, zero_mul]
     simp
   rw [Matrix.submatrix_apply, mul_assoc, h1, Matrix.mul_apply, Matrix.mul_apply, Fin.sum_univ_add]
   simp only [blk, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd,

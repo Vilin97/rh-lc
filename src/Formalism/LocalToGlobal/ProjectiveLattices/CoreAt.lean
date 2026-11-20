@@ -38,7 +38,7 @@ theorem parAt_pins : (parAt D hF hz hN l hl).Pins := by
   refine ⟨⟨rfl, rfl, rfl, tauEmb_sqrt D⟩, hl, eOf_spec D hF, fun j hj => ?_⟩
   show IsDatW D j (datumAtLift D _ (datHolds D) j)
   unfold datumAtLift
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   exact isDatW_datumOf D _ j _ _
 
 theorem parAt_pq (j : ℕ) : 1 ≤ ((parAt D hF hz hN l hl).Dw j).p + ((parAt D hF hz hN l hl).Dw j).q :=

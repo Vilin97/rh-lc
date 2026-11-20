@@ -75,8 +75,8 @@ theorem jordan_holder_mult_eq_of_class (y : IrrGL k) {V W : Type} [AddCommGroup 
     (π : Representation ℂ (GL (Fin y.1) k) V) (π' : Representation ℂ (GL (Fin y.1) k) W)
     (hπ : HasFiniteLength π) (hπ' : HasFiniteLength π') (h : cl0 π = cl0 π') :
     jhMult (IrrGL.rep y) π = jhMult (IrrGL.rep y) π' := by
-  have e1 : cl0 π = clsGL π hπ := by unfold cl0; rw [dif_pos hπ]
-  have e2 : cl0 π' = clsGL π' hπ' := by unfold cl0; rw [dif_pos hπ']
+  have e1 : cl0 π = clsGL π hπ := by unfold cl0; rw [dite_eq_left hπ]
+  have e2 : cl0 π' = clsGL π' hπ' := by unfold cl0; rw [dite_eq_left hπ']
   have h2 := congrArg (fun a : GrothGL k => a ⟨y.1, y.2⟩) (e1.symm.trans (h.trans e2))
   simp only [clsGL_apply, cls_apply] at h2
   have h3 : (jhMult (IrrGL.rep y) π).toNat = (jhMult (IrrGL.rep y) π').toNat := by exact_mod_cast h2

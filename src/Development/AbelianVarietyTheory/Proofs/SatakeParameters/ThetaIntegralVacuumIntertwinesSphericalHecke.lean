@@ -129,7 +129,7 @@ theorem exists_dual_rep (V : HSp D) (P : Pl D.host.E) (d : List ℤ) :
   by_cases h : IsLab V P d
   · have hs : SphOp V P d (Hk3.rep V P d) := by
       unfold Hk3.rep
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact h.choose_spec
     obtain ⟨α, hα, R', h1, h2, h3, h4⟩ := exists_dual V P d _ hs
     refine ⟨α, hα, R', h2, h3, h4, fun M _ _ π u hu => ?_⟩

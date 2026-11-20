@@ -22,7 +22,7 @@ def gOf (Lt : Fin nV → Submodule W (Fin (m + 1) → Qq)) : Fin nV → GL (Fin 
 
 theorem gOf_spec (Lt : Fin nV → Submodule W (Fin (m + 1) → Qq)) (h : ∀ v, IsLattice W (Lt v)) : Lt = tupOf W (gOf Lt) := by
   unfold gOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec (exists_tupOf W Lt h)
 
 def clsC (I : LocId L p nV W Qq) (hdet : IsUnit sp.gram0.det) (hk : m + 1 = R.k) (i : compL L p)

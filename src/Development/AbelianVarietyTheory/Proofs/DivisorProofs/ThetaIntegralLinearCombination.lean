@@ -57,10 +57,10 @@ theorem valAt'_comp {X Y : Scheme.{0}} (x : Sp ℂ ⟶ X) (φ : X ⟶ Y) (U : Y.
     valAt' (x ≫ φ) U f = valAt' x (φ ⁻¹ᵁ U) ((φ.app U).hom f) := by
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U)
-  · rw [dif_pos h, dif_pos (show ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_left h, dite_eq_left (show ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
     unfold valAt
     congr 1
-  · rw [dif_neg h, dif_neg (show ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
 
 theorem factor : ∀ (Λ : PeriodPair) (Ω : ℂ), Ω ≠ 0 → ∀ (Y : Scheme.{0}) (N : ℕ) (i : Y ⟶ PSpace ℂ N),
     IsClosedImmersion i → ∀ (ψ : scheme (curve Λ Ω) ⟶ PSpace ℂ N) (φ : ℂ → (Sp ℂ ⟶ Y)),

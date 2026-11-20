@@ -99,7 +99,7 @@ theorem topAt_facts {D : D7} (P : Pl D.host.E) {m n : ℕ} (hmn : n ≤ m)
   have hred : A'.map (resS (↥D.host.F) P) = topL n (redM P U) := by
     ext i j
     simp only [Matrix.map_apply, topL, redM]
-    rw [dif_pos ⟨lt_of_lt_of_le i.2 hmn, j.2⟩, dif_pos (hU _ _)]
+    rw [dite_eq_left ⟨lt_of_lt_of_le i.2 hmn, j.2⟩, dite_eq_left (hU _ _)]
     rfl
   have hint : ∀ i j, Valued.v (topAt P hmn U i j) ≤ 1 := by
     intro i j

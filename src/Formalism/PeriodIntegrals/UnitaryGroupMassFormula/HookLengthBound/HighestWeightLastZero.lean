@@ -20,7 +20,7 @@ theorem highest_weight_det_mul : HwDetMul := by
       intro s
       have hs := s.isLt
       simp only [nuNext, Fin.val_castSucc]
-      rw [dif_pos (show (s : ℕ) + 1 < n + 1 by omega), dif_pos (show (s : ℕ) + 1 < n + 1 by omega)]
+      rw [dite_eq_left (show (s : ℕ) + 1 < n + 1 by omega), dite_eq_left (show (s : ℕ) + 1 < n + 1 by omega)]
       omega
     simp only [hlast, hcs, Nat.sub_zero]
     have hL : lpMinor ℚ ((Fin.last n : ℕ) + 1) (r := n + 1) (n := n + 1) (by simp) (by simp) =
@@ -49,10 +49,10 @@ theorem highest_weight_last_zero : HwLastZero := by
   rw [map_pow, lpMinor_rename n ((s : ℕ) + 1) _ _ (by omega) (by omega)]
   congr 1
   simp only [nuNext, Fin.val_castSucc]
-  rw [dif_pos (show (s : ℕ) + 1 < n + 1 by omega)]
+  rw [dite_eq_left (show (s : ℕ) + 1 < n + 1 by omega)]
   by_cases h : (s : ℕ) + 1 < n
-  · rw [dif_pos h]; rfl
-  · rw [dif_neg h]
+  · rw [dite_eq_left h]; rfl
+  · rw [dite_eq_right h]
     have : (⟨s.val + 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp; omega)
     rw [this, hl]
 

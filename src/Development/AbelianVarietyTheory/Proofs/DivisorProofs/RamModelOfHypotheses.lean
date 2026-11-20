@@ -65,7 +65,7 @@ omit [NumberField E] [IsCMField E] in
 
 theorem parOf_single' (a : Sym E) {n : ℤ} (hn : n ≠ 0) : parOf (Finsupp.single a n) = a.2.1 := by
   have h : (Finsupp.single a n).support.Nonempty := by simp [Finsupp.support_single_ne_zero _ hn]
-  rw [parOf, dif_pos h, Finset.mem_singleton.1 (Finsupp.support_single_subset h.choose_spec)]
+  rw [parOf, dite_eq_left h, Finset.mem_singleton.1 (Finsupp.support_single_subset h.choose_spec)]
 
 end General
 
@@ -85,8 +85,8 @@ theorem rootSym_eq (a : ℕ → Bool) (R : Option ℝ) (r : DV.Rt D.what₂.Tau 
   have hq := O.S.rank_eq
   unfold rootSym rootLetter
   by_cases hi : (r.2 : ℕ) < O.j
-  · rw [if_pos (by omega), dif_pos hi, if_pos hi]
-  · rw [if_neg (by omega), dif_neg hi, if_neg hi]
+  · rw [if_pos (by omega), dite_eq_left hi, if_pos hi]
+  · rw [if_neg (by omega), dite_eq_right hi, if_neg hi]
     have : O.S.Dw.p + O.S.Dw.q = O.N := by omega
     rw [this]
 

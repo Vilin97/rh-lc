@@ -92,7 +92,7 @@ theorem GlobalTheory.symm_int_cocycle_stdLat_coboundary :
   intro l hl l' hl'
   have hll : l + l' ∈ L := L.add_mem hl hl'
   show c l l' = (if h : l + l' ∈ L then (s ⟨l + l', h⟩).fst else 0) - (if h : l ∈ L then (s ⟨l, h⟩).fst else 0) - (if h : l' ∈ L then (s ⟨l', h⟩).fst else 0)
-  rw [dif_pos hll, dif_pos hl, dif_pos hl']
+  rw [dite_eq_left hll, dite_eq_left hl, dite_eq_left hl']
   have hadd := congrArg Ext.fst (s.map_add ⟨l, hl⟩ ⟨l', hl'⟩)
   have e : (⟨l, hl⟩ + ⟨l', hl'⟩ : L) = ⟨l + l', hll⟩ := rfl
   rw [e] at hadd

@@ -15,7 +15,7 @@ def resF (x : F) : 𝓀[F] := if h : x ∈ 𝒪[F] then IsLocalRing.residue 𝒪
 def liftF (c : 𝓀[F]) : F := ((IsLocalRing.residue_surjective c).choose : 𝒪[F])
 
 theorem resF_coe (o : 𝒪[F]) : resF F (o : F) = IsLocalRing.residue 𝒪[F] o := by
-  rw [resF, dif_pos o.2]
+  rw [resF, dite_eq_left o.2]
 
 theorem liftF_mem (c : 𝓀[F]) : liftF F c ∈ 𝒪[F] :=
   (IsLocalRing.residue_surjective c).choose.2

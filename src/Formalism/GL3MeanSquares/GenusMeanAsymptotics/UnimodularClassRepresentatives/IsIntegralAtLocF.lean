@@ -90,7 +90,7 @@ theorem psiP_eq_one' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
       rintro T₀ ⟨h1, -⟩
       exact Finset.mem_singleton.mp h1
   unfold psiP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨h1, h2⟩ := hex.choose_spec
   set s := hex.choose
   obtain ⟨T₀, ⟨hT₀, -⟩, -⟩ := h2 (locF 𝔭 C) (LocF.locF_idem _ _)

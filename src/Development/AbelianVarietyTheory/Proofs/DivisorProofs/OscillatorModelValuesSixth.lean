@@ -174,7 +174,7 @@ theorem cSep_sub_one (l : Level H) : cSep l - 1 ∈ l.Mb := by
   obtain ⟨a, ha, b, hb, e⟩ := Submodule.mem_sup.1 (l.coprime.ge (Submodule.mem_top (x := (1 : 𝓞 E))))
   have h : ∃ c, c ∈ Mfr l ∧ c - 1 ∈ l.Mb := ⟨b, hb, by rw [← e, sub_add_cancel_right]; exact neg_mem ha⟩
   unfold cSep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec.2
 
 theorem sub_mem_of_pairing (l : Level H) (f : Dw.La →ₗ[𝓞 E] Dw.La) (hf : ∀ a b, (l.M : ℤ) ∣ Dw.EF (f a) (f b) - Dw.EF a b)

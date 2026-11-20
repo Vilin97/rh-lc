@@ -56,6 +56,6 @@ def tanDer (v : TanM (𝟙 (Sp R)) G) (f : G.left.presheaf.stalk (origin G)) : R
 theorem tanDer_eq (v : TanM (𝟙 (Sp R)) G) (f : G.left.presheaf.stalk (origin G)) :
     tanDer G v f = (((G.left.presheaf.stalkCongr (Inseparable.of_eq (tv_closedPoint G v).symm)).hom ≫
       Scheme.stalkClosedPointTo (R := CommRingCat.of (DualNumber R)) (tv v).left).hom f).snd := by
-  rw [tanDer, dif_pos (tv_closedPoint G v)]
+  rw [tanDer, dite_eq_left (tv_closedPoint G v)]
 
 end GlobalTheory.CoordsOrigin

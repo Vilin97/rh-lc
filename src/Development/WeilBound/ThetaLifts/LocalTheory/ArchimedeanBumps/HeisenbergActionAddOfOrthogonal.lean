@@ -113,7 +113,7 @@ theorem pv_opI (hA : ArchOp) {M : Model σ X W} {χX χW om r s r' s'} (hP : IsP
     beta_reduce
     rw [e]
     exact h₂ q ⟨hq.1, e ▸ om_sch hP _ hq.2⟩⟩
-  rw [opI, dif_pos h]
+  rw [opI, dite_eq_left h]
   exact (pv_act hP.good h.choose_spec).symm
 
 open Classical in
@@ -123,7 +123,7 @@ def unp (M : Model σ X W) (l : SInf F (Fin n × Fin d) →L[ℂ] ℂ) (Ψ : Fn 
 
 theorem un_pv {M : Model σ X W} (hM : M.IsGood B.ψ) (l) (g) : unp M l (PV M g) = l g := by
   have h : ∃ g', PV M g = PV M g' := ⟨g, rfl⟩
-  rw [unp, dif_pos h, ← pure_inj M.vac (fun v => (hM.vac v).2.1) hM.std h.choose_spec]
+  rw [unp, dite_eq_left h, ← pure_inj M.vac (fun v => (hM.vac v).2.1) hM.std h.choose_spec]
 
 theorem e_pv {M : Model σ X W} {M₁ : Model σ X₁ W₁} (hM : M.IsGood B.ψ) {e ei ev} (h : IsEvLoc M M₁ e ei ev) (f) :
     e (PV M f) = PV M₁ (ei f) := by

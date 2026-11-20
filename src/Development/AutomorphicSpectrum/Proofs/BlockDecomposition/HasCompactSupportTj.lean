@@ -19,7 +19,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 theorem isUnifV_of_ordL {w : Pl E} {x : w.adicCompletion E} (h0 : x ≠ 0) (h : ordL x = 1) : IsUnifV E w x := by
   have hv : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 h0
   unfold ordL at h
-  rw [dif_neg hv] at h
+  rw [dite_eq_right hv] at h
   have e : WithZero.unzero hv = Multiplicative.ofAdd (-1 : ℤ) := by
     apply Multiplicative.toAdd.injective
     rw [toAdd_ofAdd]
@@ -30,7 +30,7 @@ theorem isUnifV_of_ordL {w : Pl E} {x : w.adicCompletion E} (h0 : x ≠ 0) (h : 
 theorem ordL_eq_zero {w : Pl E} {x : w.adicCompletion E} (h : Valued.v x = 1) : ordL x = 0 := by
   have hv : Valued.v x ≠ 0 := by rw [h]; exact one_ne_zero
   unfold ordL
-  rw [dif_neg hv]
+  rw [dite_eq_right hv]
   have e : WithZero.unzero hv = 1 := by
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, h]

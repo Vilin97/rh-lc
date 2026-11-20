@@ -32,7 +32,7 @@ theorem piRc_eq (n : ℤ) (t : ℝ) (g : GL (Fin 2) ℝ) (h : 0 < (g.val).det) (
     piRc (chC n (Complex.I * t)) g (PhiInf n) x = preG n t g * monoX n x *
       Complex.exp (2 * Real.pi * Complex.I * tauG g * ((Complex.normSq x : ℝ) : ℂ)) := by
   unfold piRc preG monoX tauG wG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   set D : ℝ := (g.val).det with hD
   have hr : 0 < Real.sqrt D := Real.sqrt_pos.mpr h
   have hrD : Real.sqrt D ^ 2 = D := Real.sq_sqrt h.le

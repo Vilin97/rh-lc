@@ -177,7 +177,7 @@ theorem core (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (ι : E →+* k) (σ₀ 
         refine hJ ⟨g, (hpat g).2 ⟨hgKO, fun a b hf => ?_⟩, hgT⟩
         rw [hgT]
         exact (hpatM hint).2 ⟨hc.2.2.1, hc.2.2.2⟩ a b hf
-      rw [LocE.unitV, dif_neg hnu, _root_.inv_zero, mul_zero, map_zero]
+      rw [LocE.unitV, dite_eq_right hnu, _root_.inv_zero, mul_zero, map_zero]
     · rw [map_zero]
 
 end GlobalTheory.SymBridge.TopAgree

@@ -163,11 +163,11 @@ private theorem unitChar_mul (ν : (AE D)ˣ →* Circle) {e : AE D} (hE : toEAf 
   unfold unitChar
   by_cases hR : ∃ u, IsUnitDet e R u
   · have hK : ∃ u, IsUnitDet e (κ.1 * R) u := ⟨_, fwd _ hR.choose_spec⟩
-    rw [dif_pos hR, dif_pos hK, uniq hK.choose_spec (fwd _ hR.choose_spec), ← Circle.coe_mul]
+    rw [dite_eq_left hR, dite_eq_left hK, uniq hK.choose_spec (fwd _ hR.choose_spec), ← Circle.coe_mul]
     congr 1
     rw [map_mul, mul_inv_rev, mul_inv_cancel_left]
   · have hK : ¬ ∃ u, IsUnitDet e (κ.1 * R) u := fun ⟨u, hu⟩ => hR ⟨_, bwd u hu⟩
-    rw [dif_neg hR, dif_neg hK, mul_zero]
+    rw [dite_eq_right hR, dite_eq_right hK, mul_zero]
 
 private theorem frMapAdj_pull (A' WW : HSp D) (βA βA' : GL (Fin A'.rank) (EAf D)) (βW βW' : GL (Fin WW.rank) (EAf D))
     (k : GA D WW) {e : AE D} (he : e * e = e)

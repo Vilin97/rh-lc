@@ -34,7 +34,7 @@ theorem trv_eq (g : G'.left ⟶ G'.left) (q : Sp R ⟶ X) {v : Sp (DualNumber R)
     trv hψ g q v = w ≫ g ≫ ψ := by
   have h : v ≫ t.G.hom = (spMap (algebraMap R (DualNumber R)) ≫ q) ≫ p := by
     rw [← hw, Category.assoc, hψ.w, ← Category.assoc, hw']
-  rw [trv, dif_pos h]
+  rw [trv, dite_eq_left h]
   congr 1
   exact hψ.hom_ext (by rw [hψ.lift_fst, hw]) (by rw [hψ.lift_snd, hw'])
 

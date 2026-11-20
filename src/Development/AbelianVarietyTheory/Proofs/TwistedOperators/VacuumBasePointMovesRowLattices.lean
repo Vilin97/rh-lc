@@ -151,7 +151,7 @@ theorem moves_idx (t : T) (B : Frames G) (b : Pts G) (hb : IsBase t B b) (j : �
   obtain ⟨δ, hδ, hfin⟩ := hb.2.1 j hj
   refine moves_of_isFinOf _ hfin _ _ ?_
   have hN : GlobalTheory.RowShape.rowN G j = (G.rowDec j hjm).lat (G.Λ (.top j)) (GlobalTheory.RowShape.rowId D j) := by
-    unfold GlobalTheory.RowShape.rowN; rw [dif_pos hjm]
+    unfold GlobalTheory.RowShape.rowN; rw [dite_eq_left hjm]
   rw [lat_grid G j hj'.1 hjm, hN]
   by_cases hodd : Odd j
   · obtain ⟨γ, hγ, hγ'⟩ := exists_rat_of_GQ _ δ hδ.1
@@ -198,14 +198,14 @@ theorem moves_rowN (t : T) (B : Frames G) (b : Pts G) (hb : IsBase t B b) (j : �
       omega
     have hN : GlobalTheory.RowShape.rowN G j = G.Λ (.grid D.R.m j) := by
       unfold GlobalTheory.RowShape.rowN
-      rw [dif_pos hjm, lat_grid G j h1 hjm]
+      rw [dite_eq_left hjm, lat_grid G j h1 hjm]
       congr 1
       funext p
       exact absurd p.2 (by omega)
     rw [hN]
     exact moves_one _ _ _
   · have hN : GlobalTheory.RowShape.rowN G j = G.Λ (.grid D.R.m j) := by
-      unfold GlobalTheory.RowShape.rowN; rw [dif_neg hjm]
+      unfold GlobalTheory.RowShape.rowN; rw [dite_eq_right hjm]
     rw [hN]
     exact moves_one _ _ _
 

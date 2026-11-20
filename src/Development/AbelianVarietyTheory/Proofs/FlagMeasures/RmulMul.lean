@@ -103,7 +103,7 @@ theorem exists_reps (L : LocE F E) (t : E) (m : ℕ) (hm : m ≠ 0)
   · rintro _ ⟨x, rfl⟩
     refine ⟨⟨fun i j h => ?_, fun i => ?_⟩, fun i j => ?_⟩
     · simp only [lift]
-      rw [dif_neg (not_lt_of_gt h), if_neg (ne_of_gt h)]
+      rw [dite_eq_right (not_lt_of_gt h), if_neg (ne_of_gt h)]
     · simp [lift]
     · simp only [lift]
       split_ifs

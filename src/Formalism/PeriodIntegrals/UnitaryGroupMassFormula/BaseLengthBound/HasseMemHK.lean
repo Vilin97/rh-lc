@@ -145,7 +145,7 @@ def phi (hHS : HasseSmul) (hHV : HasseVan) (T k : ℕ) : ↥(Fk G la T k) →ₗ
 theorem phi_tau (hHS : HasseSmul) (hHV : HasseVan) (T k : ℕ) (hk : k < a0 D j T) (x : ↥(JKo G la k)) :
     phi G la hHS hHV T k (tau G la T k x) = psi G la hHS k x := by
   unfold phi
-  rw [dif_pos hk, LinearMap.comp_apply, LinearEquiv.coe_coe]
+  rw [dite_eq_left hk, LinearMap.comp_apply, LinearEquiv.coe_coe]
   have e : ((tau G la T k).quotKerEquivOfSurjective (tau_surj G la T k)).symm (tau G la T k x) =
       Submodule.Quotient.mk x := by
     rw [LinearEquiv.symm_apply_eq, LinearMap.quotKerEquivOfSurjective_apply_mk]

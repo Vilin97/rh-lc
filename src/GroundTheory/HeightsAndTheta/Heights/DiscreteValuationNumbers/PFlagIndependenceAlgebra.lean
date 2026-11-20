@@ -21,7 +21,7 @@ theorem divCycle_finite_support (P : Ideal (ReciprocityTheory.ChartRestriction.G
   by_contra h
   rw [Function.mem_support] at hW
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
-  rw [dif_neg (fun h' => h h'.1)] at hW
+  rw [dite_eq_right (fun h' => h h'.1)] at hW
   exact hW rfl
 
 theorem ratDiv_finite_support (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :

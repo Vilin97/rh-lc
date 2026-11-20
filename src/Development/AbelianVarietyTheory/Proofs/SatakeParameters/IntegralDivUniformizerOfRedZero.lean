@@ -82,7 +82,7 @@ theorem _root_.GlobalTheory.TypePrimeUnif.intAt_div_of_notMem_sq {E : Type} [Fie
     exact ⟨(Ideal.Quotient.mk w.asIdeal s)⁻¹ * Ideal.Quotient.mk w.asIdeal r, r, s, hs, hsr,
       mul_inv_cancel_left₀ hs0 _⟩
   unfold _root_.Formalism.L2.Col.redP at h0
-  rw [dif_pos key] at h0
+  rw [dite_eq_left key] at h0
   have hspec := key.choose_spec
   rw [h0] at hspec
   obtain ⟨r, s, hs, hsr, hc⟩ := hspec

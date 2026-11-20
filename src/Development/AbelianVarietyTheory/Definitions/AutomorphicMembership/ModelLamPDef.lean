@@ -195,7 +195,7 @@ def model {C : Cols B} {d : C.Tup → ℕ} (h : Fits C d) (n n₀ a : ℕ) : Row
   eMu u := LinearEquiv.refl ℂ (C.mem u).A.Mram
   eMt0 u := (h.mt0 u).some
   perCol_base_eq_PtilCol u φ F := by
-    rw [dif_pos rfl]; rfl
+    rw [dite_eq_left rfl]; rfl
   Bu_linL u F := by
     refine ⟨fun x y => ?_, fun c x => ?_⟩
     · show (C.mem u).P.Ptil (Formalism.ThetaLiftIndependence.chainOpM (C.mem u).C.wt (C.mem u).C.Kmap B.R.m (x.1 + y.1)) _ = _
@@ -208,7 +208,7 @@ def model {C : Cols B} {d : C.Tup → ℕ} (h : Fits C d) (n n₀ a : ℕ) : Row
     refine ⟨fun x y => ?_, fun c x => ?_⟩ <;> simp [PeriodMap.Ptil, PeriodMap.PtilCol]
   eMtTw u μ := (h.mtTw u μ).some
   perCol_tie u μ hμ φ F := by
-    rw [dif_neg hμ]; rfl
+    rw [dite_eq_right hμ]; rfl
   eMu_isom _ _ _ := rfl
 
 theorem nonempty_iff (C : Cols B) : Nonempty (RowsRest B C) ↔ ∃ d, Fits C d :=

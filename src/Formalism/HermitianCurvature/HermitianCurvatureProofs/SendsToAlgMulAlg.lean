@@ -81,7 +81,7 @@ theorem QQi_castSucc' (L : R.LevelData (Pr (RadSp P.k P.r z z' π π')) P.r)
     (st : Fr.Start (Pr (RadSp P.k P.r z z' π π'))) (l : Fin P.r) (Y : ℂ) :
     QQi L st l.castSucc Y = (Ts (site L l) (star Y))ᴴ * QQi L st l.succ Y * Ts (site L l) Y := by
   have h : ∀ Y' : ℂ, tprod L Y' l.val = tprod L Y' (l.val + 1) * Ts (site L l) Y' := fun Y' => by
-    rw [tprod, dif_pos l.isLt]
+    rw [tprod, dite_eq_left l.isLt]
   unfold QQi
   rw [Fin.val_castSucc, Fin.val_succ, h, h, Matrix.conjTranspose_mul]
   simp only [Matrix.mul_assoc]

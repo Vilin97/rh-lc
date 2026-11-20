@@ -221,7 +221,7 @@ theorem mean_log_period : ∀ (D : D7), admG1 D → ∀ (cc : Ideal (𝓞 D.host
     nlinarith [sq_nonneg (h.embedding r)]
   have e1 : TaylorLogMetric.liftM M (g2 (lamOf D cc δ)) ^ 3 - 27 * TaylorLogMetric.liftM M (g3 (lamOf D cc δ)) ^ 2 = 1 :=
     (algebraMap M ℂ).injective (by
-      rw [map_sub, map_mul, map_pow, map_pow, map_ofNat, map_one, ← h1, TaylorLogMetric.liftM, TaylorLogMetric.liftM, dif_pos h2, dif_pos h3]; rfl)
+      rw [map_sub, map_mul, map_pow, map_pow, map_ofNat, map_one, ← h1, TaylorLogMetric.liftM, TaylorLogMetric.liftM, dite_eq_left h2, dite_eq_left h3]; rfl)
   choose L hL using fun s : M →+* ℂ => hex (s (TaylorLogMetric.liftM M (g2 (lamOf D cc δ)))) (s (TaylorLogMetric.liftM M (g3 (lamOf D cc δ)))) (by
     have := congrArg s e1
     rw [map_sub, map_mul, map_pow, map_pow, map_ofNat, map_one] at this
@@ -236,7 +236,7 @@ theorem mean_log_period : ∀ (D : D7), admG1 D → ∀ (cc : Ideal (𝓞 D.host
       · rintro ⟨y, hy, rfl⟩
         obtain ⟨c, hc, rfl⟩ := (FractionalIdeal.mem_coeIdeal _).1 hy
         exact ⟨c, hc, rfl⟩)
-    (by rw [← e2, ← e3]; exact h1) M _ _ (by rw [← e2, TaylorLogMetric.liftM, dif_pos h2]) (by rw [← e3, TaylorLogMetric.liftM, dif_pos h3]) L hL
+    (by rw [← e2, ← e3]; exact h1) M _ _ (by rw [← e2, TaylorLogMetric.liftM, dite_eq_left h2]) (by rw [← e3, TaylorLogMetric.liftM, dite_eq_left h3]) L hL
   refine Eq.trans ?_ key
   congr 1
   refine (Fintype.sum_equiv (RingHom.equivRatAlgHom M ℂ) _ _ fun s => ?_).symm

@@ -52,10 +52,10 @@ theorem integral_formula_passes_to_limits : Formalism.FourierDecayAlt.KB.LimitIn
       · rw [hθ' A w' h]
         exact ge_of_tendsto' (hco A ⟨w', h⟩) fun n => (hprob (φ n) A).1 w'
       · show 0 ≤ (if h : w' ∈ B then a A ⟨w', h⟩ else 0)
-        rw [dif_neg h]
+        rw [dite_eq_right h]
     · intro w' h
       show (if h : w' ∈ B then a A ⟨w', h⟩ else 0) = 0
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     · have e1 : ∑ w' ∈ B, θ' A w' = ∑ x : B, a A x := by
         rw [← Finset.sum_coe_sort B]
         exact Finset.sum_congr rfl fun x _ => hθ' A x.1 x.2

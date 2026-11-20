@@ -210,7 +210,7 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
       rw [map_mul, mul_smul, hp, MvPolynomial.aeval_X, hz]
       simp only [zop, evZ, map_mul, Subalgebra.coe_mul, MvPolynomial.aeval_X, Module.End.mul_apply]
   refine ⟨A, inferInstance, inferInstance, inferInstance, inferInstance, fun p => z p.1 (p.2 + 1),
-    fun k => if h : k.1 ∉ S then H' k.1 h (k.2 + 1) else 0, I, t, hZ, fun k hk v => by beta_reduce; rw [dif_pos hk, hH'],
+    fun k => if h : k.1 ∉ S then H' k.1 h (k.2 + 1) else 0, I, t, hZ, fun k hk v => by beta_reduce; rw [dite_eq_left hk, hH'],
     hsurj, fun v φ x => ?_, fun j φ x => ?_, fun p φ => ?_, fun k hk φ => ?_, fun φ β R => ?_⟩
   · rw [hc, hc]
     exact (congrArg (fun ψ : Sm E n => d.comp ψ.1 x) (hT v φ)).trans ((compShift E S n d φ x φ.2.1.toUmg).1 v)
@@ -248,7 +248,7 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
   · have hk' : k.1 ∉ S := hk
     funext x
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [dif_pos hk', hc, hH', compHecke E S n d φ k.1 (k.2 + 1) x φ.2.1.toUmg φ.2.2 hk' k.2.2, Dat.hEP, map_sum,
+      rw [dite_eq_left hk', hc, hH', compHecke E S n d φ k.1 (k.2 + 1) x φ.2.1.toUmg φ.2.2 hk' k.2.2, Dat.hEP, map_sum,
       Finset.sum_smul, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     have e : ∀ (v : Fin d.len → ℝ) (c : ℂ), lift I t (AddMonoidAlgebra.single v (MvPolynomial.C c)) =

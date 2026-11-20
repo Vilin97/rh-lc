@@ -16,7 +16,7 @@ theorem flagRoot_term_big {H : Host E} (Dw : Datum H) (la : GlobalTheory.AllWt.W
       (GlobalTheory.AllWt.wtOf Dw la 0).1 (τ.1, (i : ℕ)) := rfl
   rw [he, GlobalTheory.AllWt.wtOf_big la 0 τ i i.2]
   unfold flagRoot
-  rw [dif_pos τ.2]
+  rw [dite_eq_left τ.2]
   simp only [sub_zero, map_neg, neg_mul, neg_neg]
   rfl
 
@@ -33,7 +33,7 @@ theorem flagRoot_term_small {H : Host E} (Dw : Datum H) (la : GlobalTheory.AllWt
     ext; simp [Fin.val_rev]; omega
   rw [he, GlobalTheory.AllWt.wtOf_small la 0 τ i i.2, hj]
   unfold flagRoot
-  rw [dif_neg (GlobalTheory.AllWt.conj_not_mem τ)]
+  rw [dite_eq_right (GlobalTheory.AllWt.conj_not_mem τ)]
   have hτ : (⟨conjEmb (conjEmb τ.1), GlobalTheory.AllWt.conj_mem (GlobalTheory.AllWt.conj_not_mem τ)⟩ : GlobalTheory.AllWt.Psi H) = τ :=
     Subtype.ext (GlobalTheory.AllWt.conjEmb_conjEmb _)
   have hx : ((⟨conjEmb (conjEmb τ.1), GlobalTheory.AllWt.conj_mem (GlobalTheory.AllWt.conj_not_mem τ)⟩ : GlobalTheory.AllWt.Psi H),

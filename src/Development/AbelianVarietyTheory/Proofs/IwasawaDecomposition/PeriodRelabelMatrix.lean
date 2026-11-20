@@ -130,13 +130,13 @@ theorem perFr_conj {r : ℕ} (X : Data E r) (y : Frame X.Ψ r) (v : Fin r → E)
       hermC ρ₁ X.Gm (col (mat y ⟨ρ₁, h1⟩) ⟨X.p0 - 1 - i, hi⟩) (Data.emb ρ₁ v) =
         hermC ρ₂ X.Gm (col (mat y ⟨ρ₂, h2⟩) ⟨X.p0 - 1 - i, hi⟩) (Data.emb ρ₂ v) := by
     rintro _ _ rfl _ _; rfl
-  rw [Formalism.L2.PjFree.perFr, dif_neg hT', dif_pos (by rw [hcc]; exact hT : conjEmb (conjEmb T) ∈ X.Ψ), dif_pos hi]
+  rw [Formalism.L2.PjFree.perFr, dite_eq_right hT', dite_eq_left (by rw [hcc]; exact hT : conjEmb (conjEmb T) ∈ X.Ψ), dite_eq_left hi]
   exact key _ _ hcc _ _
 
 theorem perFr_self {r : ℕ} (X : Data E r) (y : Frame X.Ψ r) (v : Fin r → E) (T : E →+* ℂ) (hT : T ∈ X.Ψ)
     (i : ℕ) (hi : X.p0 + i < r) :
     Formalism.L2.PjFree.perFr X y v T i = ((mat y ⟨T, hT⟩)⁻¹.mulVec (Data.emb T v)) ⟨X.p0 + i, hi⟩ := by
-  rw [Formalism.L2.PjFree.perFr, dif_pos hT, dif_pos hi]
+  rw [Formalism.L2.PjFree.perFr, dite_eq_left hT, dite_eq_left hi]
 
 end GlobalTheory.ShFam.PerDet
 

@@ -98,11 +98,11 @@ theorem dp_embOn_eq (s : Finset (Fin n)) (T : Matrix s s ℂ) : embOn s T = dp_i
   ext a b
   rw [incl_mul_apply]
   by_cases ha : a ∈ s
-  · rw [dif_pos ha, mul_proj_apply]
+  · rw [dite_eq_left ha, mul_proj_apply]
     by_cases hb : b ∈ s
-    · rw [dif_pos hb, embOn, dif_pos ⟨ha, hb⟩]
-    · rw [dif_neg hb, embOn, dif_neg (fun h => hb h.2)]
-  · rw [dif_neg ha, embOn, dif_neg (fun h => ha h.1)]
+    · rw [dite_eq_left hb, embOn, dite_eq_left ⟨ha, hb⟩]
+    · rw [dite_eq_right hb, embOn, dite_eq_right (fun h => hb h.2)]
+  · rw [dite_eq_right ha, embOn, dite_eq_right (fun h => ha h.1)]
 
 theorem proj_mul_mul_incl (s : Finset (Fin n)) (M : Matrix (Fin n) (Fin n) ℂ) :
     proj s * M * dp_incl s = M.submatrix (fun i : s => (i : Fin n)) (fun i : s => (i : Fin n)) := by

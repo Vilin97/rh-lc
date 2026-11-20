@@ -69,7 +69,7 @@ theorem valHom_eq [LocallyOfFiniteType s] (x : S) (hx : IsClosed ({x} : Set S)) 
   have hex : ∃ φ : S.residueField x →+* ℂ, φ.comp (constRes s x) = RingHom.id ℂ :=
     ⟨_, valHom_spec s x hx⟩
   unfold valHom
-  rw [dif_pos hex, valHom_unique s x hx _ hex.choose_spec]
+  rw [dite_eq_left hex, valHom_unique s x hx _ hex.choose_spec]
 
 theorem evaluation_res {U V : S.Opens} (h : V ≤ U) (f : Γ(S, U)) (x : S) (hx : x ∈ V) :
     S.evaluation V x hx (S.presheaf.map (homOfLE h).op f) = S.evaluation U x (h hx) f := by

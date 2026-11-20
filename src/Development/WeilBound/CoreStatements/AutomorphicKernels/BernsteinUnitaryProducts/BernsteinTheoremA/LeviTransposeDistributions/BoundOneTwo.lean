@@ -64,7 +64,7 @@ def extZ (φ : SB (GL (Fin m) k)) : Matrix (Fin m) (Fin m) k → ℂ :=
   fun y => if h : IsUnit y then φ.1 h.unit else 0
 
 theorem extZ_val (φ : SB (GL (Fin m) k)) (u : GL (Fin m) k) : extZ φ u.val = φ.1 u := by
-  rw [extZ, dif_pos u.isUnit, IsUnit.unit_of_val_units]
+  rw [extZ, dite_eq_left u.isUnit, IsUnit.unit_of_val_units]
 
 theorem extZ_mem (φ : SB (GL (Fin m) k)) : extZ φ ∈ SB (Matrix (Fin m) (Fin m) k) := by
   have hE := isOpenEmbedding_valGL (k := k) (m := m)

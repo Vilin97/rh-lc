@@ -128,8 +128,8 @@ theorem conj_bound {p : ℕ} [Fact p.Prime] {z : ℂ} {r : ℝ} (hz : z ∈ Qbar
     (lam : Qbar →+* ℂ_[p]) : ‖lamC lam ((starRingEnd ℂ) z)‖ ≤ r := by
   have h1 := h (lam.comp conjQbar)
   have hz' : (starRingEnd ℂ) z ∈ Qbar := (conjQbar ⟨z, hz⟩).2
-  rw [lamC, dif_pos hz] at h1
-  rw [lamC, dif_pos hz']
+  rw [lamC, dite_eq_left hz] at h1
+  rw [lamC, dite_eq_left hz']
   exact h1
 
 theorem CoordInt.at_place {D : D7} {N Q : ℕ} {B : ℝ} (hE : Exponents S del b) (h : CoordInt D N B Q del) (σ : K →+* ℂ)
@@ -159,7 +159,7 @@ theorem CoordInt.at_place {D : D7} {N Q : ℕ} {B : ℝ} (hE : Exponents S del b
       have h1 : ((gam D P.J g : ℕ) : ℂ_[p]) = algebraMap ℚ_[p] ℂ_[p] (gam D P.J g : ℚ_[p]) := by simp
       rw [h1, norm_algebraMap', Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast h0), Padic.valuation_natCast]
       simp
-    rw [e, lamC, dif_pos (Subtype.property _), Subtype.coe_eta, map_inv₀, map_natCast, norm_inv, hn]
+    rw [e, lamC, dite_eq_left (Subtype.property _), Subtype.coe_eta, map_inv₀, map_natCast, norm_inv, hn]
     exact Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast hp.one_le) hv
   · intro hg T x hx
     obtain ⟨hm, hb⟩ := h3 g hg T
@@ -202,7 +202,7 @@ example {p : ℕ} [hp : Fact p.Prime] (e : ℝ) (he : 0 ≤ e) (lam : Qbar →+*
     (1 : ℂ) ∈ Qbar ∧ ‖lamC lam 1‖ ≤ (p : ℝ) ^ e := by
   have : (⟨1, one_mem _⟩ : Qbar) = 1 := rfl
   refine ⟨one_mem _, ?_⟩
-  rw [lamC, dif_pos (one_mem _), this, map_one, norm_one]
+  rw [lamC, dite_eq_left (one_mem _), this, map_one, norm_one]
   exact Real.one_le_rpow (by exact_mod_cast hp.out.one_le) he
 
 example {K : Type} [Field K] [NumberField K] (b : ℝ) (hb : 0 ≤ b) :

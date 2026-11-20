@@ -174,7 +174,7 @@ theorem hasDerivAt_of_mem_Vsp (ε : Fin n → Bool) (m : Fin n → ℤ) {f : KG 
   have hc : HasDerivAt (fun t : ℝ => toMK (kcurve ε X t)) X 0 := by
     have hk : ∀ t : ℝ, toMK (kcurve ε X t) = NormedSpace.exp ((t : ℝ) • X) := fun t => by
        unfold kcurve
-       rw [dif_pos hX, Classical.choose_spec (exists_curve ε hX) t, Complex.coe_smul]
+       rw [dite_eq_left hX, Classical.choose_spec (exists_curve ε hX) t, Complex.coe_smul]
     simp only [hk]
     letI iR : NormedRing (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedRing
     letI : NormedAlgebra ℂ (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedAlgebra
@@ -191,7 +191,7 @@ theorem hasDerivAt_of_mem_Vsp (ε : Fin n → Bool) (m : Fin n → ℤ) {f : KG 
     L.hasFDerivAt.comp_hasDerivAt 0 hc
   have h0 : toMK (kcurve ε X 0) = 1 := by
     unfold kcurve
-    rw [dif_pos hX, Classical.choose_spec (exists_curve ε hX) 0]
+    rw [dite_eq_left hX, Classical.choose_spec (exists_curve ε hX) 0]
     simp
   have hLx : L (toMK (kcurve ε X 0)) = toMK x := by
     rw [h0]

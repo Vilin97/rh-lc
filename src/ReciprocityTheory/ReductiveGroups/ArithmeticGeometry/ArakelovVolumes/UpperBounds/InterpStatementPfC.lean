@@ -118,7 +118,7 @@ theorem vol_val (hU : IsOpen U) :
       (Set.subset_univ _) (Set.subset_univ _)) (fun i => hU.measurableSet.subtype_image (hf i))]
     exact tsum_congr fun i => (volFun_val_eq_volume_image hU _ (hf i)).symm
   ext A hA
-  rw [vol, dif_pos hadd, Measure.ofMeasurable_apply _ hA,
+  rw [vol, dite_eq_left hadd, Measure.ofMeasurable_apply _ hA,
     Measure.comap_apply _ Subtype.val_injective (fun s hs => hU.measurableSet.subtype_image hs) _ hA]
   exact volFun_val_eq_volume_image hU A hA
 

@@ -64,11 +64,11 @@ theorem hw_rename (R : Type) [CommRing R] {n : ℕ} (ν : Fin (n + 1) → ℕ) (
   have hexp : nuNext ν s.castSucc = nuNext (fun s => ν s.castSucc) s := by
     unfold nuNext
     by_cases h : s.val + 1 < n
-    · rw [dif_pos (by simp only [Fin.val_castSucc] <;> omega), dif_pos h]
+    · rw [dite_eq_left (by simp only [Fin.val_castSucc] <;> omega), dite_eq_left h]
       rfl
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       have hs : s.val + 1 = n := by omega
-      rw [dif_pos (by simp only [Fin.val_castSucc] <;> omega)]
+      rw [dite_eq_left (by simp only [Fin.val_castSucc] <;> omega)]
       have : (⟨(s.castSucc : Fin (n + 1)).val + 1, by simp only [Fin.val_castSucc] <;> omega⟩ : Fin (n + 1)) = Fin.last n :=
         Fin.ext (by simp only [Fin.val_castSucc, Fin.val_last] <;> omega)
       rw [this, hlast]
@@ -78,7 +78,7 @@ theorem hw_rename (R : Type) [CommRing R] {n : ℕ} (ν : Fin (n + 1) → ℕ) (
 
 theorem natW_last {n : ℕ} (lam : DomWeight (n + 1)) : lam.natW (Fin.last n) = 0 := by
   unfold DomWeight.natW DomWeight.detShift
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   have : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp)
   rw [this]
   simp
@@ -127,7 +127,7 @@ theorem sqAct_of_last_zero (R : Type) [CommRing R] {n : ℕ} (lt : DomWeight (n 
     sqAct R (n + 1) lt H f = rowAct R (H : Matrix (Fin (n + 1)) (Fin (n + 1)) R).transpose f := by
   have hd : lt.detShift = 0 := by
     unfold DomWeight.detShift
-    rw [dif_pos (Nat.succ_pos n)]
+    rw [dite_eq_left (Nat.succ_pos n)]
     have : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp)
     rw [this, h0]
   unfold sqAct detPow

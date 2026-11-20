@@ -8,7 +8,7 @@ theorem hx4v2_ratio_smul {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V
     (hg : g ≠ 0) (s : Ω) : ratio (Ω := Ω) (s • g) g = s := by
   unfold ratio
   have hex : ∃ a : Ω, s • g = a • g := ⟨s, rfl⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact (smul_left_injective Ω hg hex.choose_spec).symm
 
 theorem hx4v2_eq_ratio_smul {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V]
@@ -18,7 +18,7 @@ theorem hx4v2_eq_ratio_smul {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module �
   obtain ⟨a, ha⟩ := (finrank_eq_one_iff_of_nonzero' (⟨g, hgW⟩ : W) hg').mp hW ⟨f, hf⟩
   have hex : ∃ a : Ω, f = a • g := ⟨a, (congrArg Subtype.val ha).symm⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]

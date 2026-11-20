@@ -19,7 +19,7 @@ theorem UpperTheory.Gal.Join.traceQuot :
   haveI : FiniteDimensional ℂ (LinearMap.range B) := Submodule.finiteDimensional_of_le hRS
   refine ⟨inferInstance, ?_⟩
   unfold trIn
-  rw [dif_pos hTP]
+  rw [dite_eq_left hTP]
   have h1 : LinearMap.trace ℂ (LinearMap.range B) (B.restrict (fun x _ => (⟨x, rfl⟩ : B x ∈ LinearMap.range B)))
       = LinearMap.trace ℂ S (B.restrict hBS) := by
     have key := LinearMap.trace_restrict_eq_of_forall_mem ((LinearMap.range B).comap S.subtype)

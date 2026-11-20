@@ -119,7 +119,7 @@ theorem entN_eq {r : ℕ} (M : Matrix (Fin r) (Fin r) (ZMod p)) (i j : Fin r) {a
     M i j = entN M a b := by
   subst ha hb
   unfold entN
-  rw [dif_pos ⟨i.2, j.2⟩]
+  rw [dite_eq_left ⟨i.2, j.2⟩]
 
 theorem sum_eq (ob : Bool) {N N' : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod p)}
     (hinv : ∀ i, i + 1 < D.R.r → entN N' i (i + 1) = -entN N i (i + 1)) :

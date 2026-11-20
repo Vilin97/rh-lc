@@ -112,7 +112,7 @@ theorem over_scale_vecAt {X : Scheme.{0}} [IsIntegral X] (i : X ⟶ MP ℤ m n) 
 theorem over_liftOf {X : Scheme.{0}} {i : X ⟶ MP ℤ m n} {y : GlobalTheory.CxPts (i ≫ mpStr ℤ m n) σ₀}
     {z : (Σ k, Bk n k) → ℂ} (h : Over i y z) : Over i y (liftOf i y) := by
   have hex : ∃ z, Over i y z := ⟨z, h⟩
-  rw [liftOf, dif_pos hex]
+  rw [liftOf, dite_eq_left hex]
   exact hex.choose_spec
 
 theorem differentiableOn_vecAt {X : Scheme.{0}} (i : X ⟶ MP ℤ m n) (p : ∀ k, Bk n k)

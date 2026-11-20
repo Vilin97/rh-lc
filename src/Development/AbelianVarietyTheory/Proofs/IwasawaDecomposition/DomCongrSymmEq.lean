@@ -57,12 +57,12 @@ theorem tie_tr {G H E : Type} [Group G] [Group H] [AddCommGroup E] [Module ℂ E
   by_cases hb : b ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ H)
   · have ha : a ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ G) := by
       rw [← h1]; exact mem_center_map _ hb
-    rw [dif_pos ha, dif_pos hb, AlgHom.comp_apply]
+    rw [dite_eq_left ha, dite_eq_left hb, AlgHom.comp_apply]
     congr 1
     exact Subtype.ext h1.symm
   · have ha : a ∉ Subalgebra.center ℂ (MonoidAlgebra ℂ G) := by
       intro ha; apply hb; rw [← h2]; exact mem_center_map _ ha
-    rw [dif_neg ha, dif_neg hb]
+    rw [dite_eq_right ha, dite_eq_right hb]
 
 set_option maxHeartbeats 1000000 in
 

@@ -22,13 +22,13 @@ theorem coeff_pushVars_mapDomain {j : σ → ι} (hj : Function.Injective j) (f 
   have h : ∃ α' : σ →₀ ℕ, Finsupp.mapDomain j α' = Finsupp.mapDomain j α := ⟨α, rfl⟩
   rw [coeff_apply]
   unfold pushVars
-  rw [dif_pos h, Finsupp.mapDomain_injective hj h.choose_spec]
+  rw [dite_eq_left h, Finsupp.mapDomain_injective hj h.choose_spec]
 
 theorem coeff_pushVars_of_not {j : σ → ι} (f : MvPowerSeries σ O) (β : ι →₀ ℕ)
     (h : ¬∃ α : σ →₀ ℕ, Finsupp.mapDomain j α = β) : coeff β (pushVars j f) = 0 := by
   rw [coeff_apply]
   unfold pushVars
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem pushVars_add {j : σ → ι} (hj : Function.Injective j) (f g : MvPowerSeries σ O) :
     pushVars j (f + g) = pushVars j f + pushVars j g := by

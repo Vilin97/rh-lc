@@ -66,9 +66,9 @@ theorem g_rel {K : Type} [Field K] {X : Scheme.{0}} {N n e : ℕ} (i : X ⟶ PSp
   by_cases hk : (k : ℕ) = 0
   · have hk0 : k = 0 := Fin.ext hk
     subst hk0
-    rw [dif_pos hk]
+    rw [dite_eq_left hk]
     exact hinv 0
-  · rw [dif_neg hk]
+  · rw [dite_eq_right hk]
     have e1 : (⟨(k : ℕ) - 1, by omega⟩ : Fin (n + 1)).succ = k.castSucc := Fin.ext (by simp; omega)
     rw [htA, e1, ← hinv k, hA]
 

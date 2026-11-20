@@ -23,7 +23,7 @@ theorem ofFn_monoLines_perm {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fin
     have hn : n < (Finsupp.toMultiset m).toList.length := by rwa [List.length_map] at h₂
     rw [List.getElem_ofFn, List.getElem_map]
     simp only [monoLines]
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     rfl
   rw [h1, ← Multiset.coe_eq_coe, ← Multiset.map_coe, Multiset.coe_toList, Multiset.coe_toList, hm,
     Multiset.map_map]
@@ -55,7 +55,7 @@ theorem arMono_mapDomain_some {Ψ : Type} [Fintype Ψ] {N : ℕ} (M : RootModel 
     have hj : (j : ℕ) < (Finsupp.toMultiset (Finsupp.mapDomain some μ)).toList.length := by
       rw [hlen]; exact j.2
     simp only [monoLines]
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     exact hall _ (List.get_mem _ _)
   have hmain := arNum_linear_arList_symm.2 M.K M.ι M.P (dimFl Ψ N) M.arith (II M.K M.ι) (hII M.K M.ι) _ _ hsm
     (by simpa [Function.comp_def, RootModel.line] using hperm)

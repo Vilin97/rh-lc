@@ -15,14 +15,14 @@ open TopologicalSpace
 theorem map_gm {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a : Γ(X, U)ˣ) :
     Units.map (f.stalkMap y).hom.toMonoidHom (gm (𝟙 X) (f y) U a) = gm f y U a := by
   refine Units.ext ?_
-  rw [gm, gm, dif_pos h, dif_pos (show (𝟙 X : X ⟶ X) (f y) ∈ U from h)]
+  rw [gm, gm, dite_eq_left h, dite_eq_left (show (𝟙 X : X ⟶ X) (f y) ∈ U from h)]
   exact Scheme.Hom.germ_stalkMap_apply f U y h a.val
 
 theorem gm_image {X Y : Scheme.{0}} (f : Y ⟶ X) [IsOpenImmersion f] (y : Y) (V : Y.Opens) (h : y ∈ V) (a : Γ(Y, V)ˣ) :
     gm f y (f ''ᵁ V) (Units.map (f.appIso V).inv.hom.toMonoidHom a) = gm (𝟙 Y) y V a := by
   refine Units.ext ?_
   have h' : f y ∈ f ''ᵁ V := ⟨y, h, rfl⟩
-  rw [gm, gm, dif_pos h', dif_pos (show (𝟙 Y : Y ⟶ Y) y ∈ V from h)]
+  rw [gm, gm, dite_eq_left h', dite_eq_left (show (𝟙 Y : Y ⟶ Y) y ∈ V from h)]
   change (Y.presheaf.germ (f ⁻¹ᵁ (f ''ᵁ V)) y h').hom (((f.appIso V).inv ≫ f.app (f ''ᵁ V)).hom a.val) =
     (Y.presheaf.germ V y h).hom a.val
   rw [Scheme.Hom.appIso_inv_app]

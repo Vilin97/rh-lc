@@ -17,7 +17,7 @@ theorem toGQ_coe (σ : SL(2, ℤ)) : toGQ (σ : Matrix (Fin 2) (Fin 2) ℤ) = of
   have h : (0 : ℤ) < (σ : Matrix (Fin 2) (Fin 2) ℤ).det := by
     rw [Matrix.SpecialLinearGroup.det_coe]; exact one_pos
   unfold toGQ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   apply Subtype.ext
   apply Units.ext
   ext i j

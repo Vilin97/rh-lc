@@ -44,12 +44,12 @@ theorem hk_single (V : HSp D) (P : Pl D.host.E) (d : List ℤ) : hk V P (Finsupp
 
 theorem sphOp_rep {V : HSp D} {P : Pl D.host.E} {d : List ℤ} (h : IsLab V P d) : SphOp V P d (rep V P d) := by
   unfold rep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem rep_of_not {V : HSp D} {P : Pl D.host.E} {d : List ℤ} (h : ¬ IsLab V P d) : rep V P d = ∅ := by
   unfold rep
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem dualLab_dualLab (d : List ℤ) : dualLab (dualLab d) = d := by
   simp [dualLab, List.map_reverse]
@@ -209,7 +209,7 @@ theorem exists_ops (J : Subgroup (GA D V)) (χ : GA D V → ℂ) (SF : Finset (H
     classical
     refine Submodule.mem_iSup_of_mem (fun P d => if hP : ok P then x (⟨P, hP⟩, d) else 0) (hin _ y fun P d hP _ => ?_)
     rw [h1, Submodule.mem_iInf] at hy
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact Module.End.mem_eigenspace_iff.1 (hy (⟨P, hP⟩, d))
   · rw [Submodule.mem_comap, mem_partFull] at hx
     rw [hlin P hP cc, evC, Finsupp.sum, Finsupp.sum, LinearMap.sum_apply, Finset.sum_smul]

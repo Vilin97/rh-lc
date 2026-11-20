@@ -296,10 +296,10 @@ theorem stdB_add_insP (ν : kˣ →* ℂˣ) {ϖ : kˣ} (hϖ : GlobalTheory.Split
   by_cases hA : (∀ i j, Z i j ∈ 𝒪[k]) ∧ ∀ i, Z i ⟨b + 1, by omega⟩ ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c)
   · rw [if_pos hA, mul_one]
     by_cases hB : (blk₂ Y).det ≠ 0 ∧ IsGLO (blk₂ Y) ∧ ∀ i j, blk₁ Y i j ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c)
-    · rw [dif_pos hB, dif_pos ⟨h2 ▸ hB.1, h2 ▸ hB.2.1, h1.2 ⟨hB.2.2, hA⟩⟩]
+    · rw [dite_eq_left hB, dite_eq_left ⟨h2 ▸ hB.1, h2 ▸ hB.2.1, h1.2 ⟨hB.2.2, hA⟩⟩]
       simp only [h2]
-    · rw [dif_neg hB, dif_neg fun h => hB ⟨h2 ▸ h.1, h2 ▸ h.2.1, (h1.1 h.2.2).1⟩]
-  · rw [if_neg hA, mul_zero, dif_neg fun h => hA (h1.1 h.2.2).2]
+    · rw [dite_eq_right hB, dite_eq_right fun h => hB ⟨h2 ▸ h.1, h2 ▸ h.2.1, (h1.1 h.2.2).1⟩]
+  · rw [if_neg hA, mul_zero, dite_eq_right fun h => hA (h1.1 h.2.2).2]
 
 end Local
 

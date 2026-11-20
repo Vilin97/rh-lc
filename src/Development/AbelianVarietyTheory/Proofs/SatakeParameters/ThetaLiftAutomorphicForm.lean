@@ -171,7 +171,7 @@ theorem ext_pre {V : HSp D} {n : ℕ} (c : CoefA V) (hc : ∀ h ∈ GfC V, c.ρ 
     exact ⟨h, Subtype.ext e⟩
   have hp : (finHom V).rangeRestrict (PV.ψ (preF PV k)) = k := by
     unfold preF
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   show c.ρ (PV.ψ (preF PV k))⁻¹ (f ((finHom V).rangeRestrict (PV.ψ (preF PV k)))) = _
   rw [hp, hc _ (inv_mem (PV.into _)), Module.End.one_apply]

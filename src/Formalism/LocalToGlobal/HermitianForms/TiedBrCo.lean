@@ -25,7 +25,7 @@ theorem fnInv_fnOf (G : ι → Matrix (Fin n) (Fin n) ℂ) (s : ι → ℤ) (M :
     (h : ∀ τ, IsUnit (M τ).det) (P : MvPolynomial (ι × Fin n × Fin n) ℂ) : fnInv G s M (fnOf G s M P) = P := by
   classical
   unfold fnInv
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact LinearMap.congr_fun (Classical.choose_spec (LinearMap.exists_leftInverse_of_injective (fnOf G s M)
       (LinearMap.ker_eq_bot.mpr (fnOf_injective G s M h)))) P
 

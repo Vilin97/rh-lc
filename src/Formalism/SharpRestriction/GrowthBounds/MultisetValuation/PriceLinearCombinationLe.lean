@@ -27,7 +27,7 @@ theorem ne_b_top (hS : Formalism.MainNotions.SizesAt L) (s : Fin ((D.gat u w hg)
   obtain ⟨_, h2, h3, _⟩ := ((hL u w hg).2.2.2.2.2.2 t0 ht0).2 s
   rw [(h3 hs).2]
   unfold Formalism.MainNotions.G.bL
-  rw [dif_pos (h2.1 hs)]
+  rw [dite_eq_left (h2.1 hs)]
   exact ⟨L.bT_ge _, ne_bT_le hS _⟩
 
 include hL ht0 in
@@ -37,7 +37,7 @@ theorem ne_a_top (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0)))
   obtain ⟨_, h2, h3, _⟩ := ((hL u w hg).2.2.2.2.2.2 t0 ht0).2 s
   rw [(h3 hs).1]
   unfold Formalism.MainNotions.G.aL
-  rw [dif_pos (h2.1 hs)]
+  rw [dite_eq_left (h2.1 hs)]
   exact ne_aT_le _
 
 end Orbit

@@ -48,7 +48,7 @@ theorem norm_muInvDet {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr 
       (fun x y hx hy => by rw [map_mul, norm_mul, hx, hy, one_mul]) fun v => ?_
     split_ifs with hv
     · simp
-    · rw [Units.val_zpow_eq_zpow_val, map_zpow₀, norm_zpow, mUof, dif_pos hj, Units.val_mul, Units.val_inv_eq_inv_val,
+    · rw [Units.val_zpow_eq_zpow_val, map_zpow₀, norm_zpow, mUof, dite_eq_left hj, Units.val_mul, Units.val_inv_eq_inv_val,
         Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀, norm_mul, norm_inv, norm_inv,
         hval _ (GlobalTheory.ColPeriod.Scal.g_notMem_sel hX hPr hsel hv), norm_map_of_finOrder _ (GlobalTheory.CharVal.finOrder_unifVal hfin _)]
       simp

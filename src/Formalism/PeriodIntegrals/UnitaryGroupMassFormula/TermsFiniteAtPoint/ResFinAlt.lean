@@ -28,7 +28,7 @@ theorem resFin_holds : ResFin := by
     fun x => if hx : x ∈ Λ then fun i => (((hmem x hx).choose i : ℤ) : ZMod c) else 0, ?_⟩
   intro x hx y hy hxy
   beta_reduce at hxy
-  rw [dif_pos hx, dif_pos hy] at hxy
+  rw [dite_eq_left hx, dite_eq_left hy] at hxy
   have hax := (hmem x hx).choose_spec
   have hby := (hmem y hy).choose_spec
   have hdiv : ∀ i, (c : ℤ) ∣ (hmem y hy).choose i - (hmem x hx).choose i := fun i => by

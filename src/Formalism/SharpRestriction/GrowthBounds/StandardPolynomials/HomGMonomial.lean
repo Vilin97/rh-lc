@@ -124,14 +124,14 @@ theorem kcol_pol {R : Type} [CommRing R] (ka : Fin (N + 1) → Fin n → ℤ) (c
     intro a b
     unfold xOf
     by_cases h1 : a < N
-    · rw [dif_pos h1]
+    · rw [dite_eq_left h1]
       have e : (if a = i.val then 1 else 0) = mdG N n i (Finsupp.single ((⟨a, h1⟩ : Fin N), b) 1) := by
         show _ = multideg (Finsupp.single ((⟨a, h1⟩ : Fin N), b) 1) i
         rw [md_single]
         simp [Fin.ext_iff]
       rw [e]
       exact homG_monomial _ _ _
-    · rw [dif_neg h1]; exact HomG.zero _ _
+    · rw [dite_eq_right h1]; exact HomG.zero _ _
   have key : multideg m i = _ :=
     KG_hom (mdG N n i) c (hsOf ka c) (xOf R N n) (fun a => if a = i.val then 1 else 0) hx N J m (Finset.mem_coe.1 hm)
   rw [key, Finset.sum_eq_single i.val]

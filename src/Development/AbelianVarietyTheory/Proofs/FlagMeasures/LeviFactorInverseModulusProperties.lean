@@ -34,14 +34,14 @@ theorem exists_cont_detOn (V : Submodule ℂ (Fin n → ℂ)) :
       rw [hp]
       apply Subtype.ext
       simp [LinearMap.restrict_apply, Matrix.toLin'_apply]
-    rw [detOn, dif_pos h', ← LinearMap.det_toMatrix b]
+    rw [detOn, dite_eq_left h', ← LinearMap.det_toMatrix b]
     congr 2
     ext i k
     rw [LinearMap.toMatrix_apply, Matrix.of_apply, e k]
 
 theorem detOn_one (V : Submodule ℂ (Fin n → ℂ)) : detOn (1 : Matrix (Fin n) (Fin n) ℂ) V = 1 := by
   have h' : ∀ y ∈ V, Matrix.toLin' (1 : Matrix (Fin n) (Fin n) ℂ) y ∈ V := fun y hy => by simpa using hy
-  rw [detOn, dif_pos h']
+  rw [detOn, dite_eq_left h']
   have hid : (Matrix.toLin' (1 : Matrix (Fin n) (Fin n) ℂ)).restrict h' = LinearMap.id :=
     LinearMap.ext fun y => Subtype.ext (by simp [LinearMap.restrict_apply])
   rw [hid, LinearMap.det_id, norm_one]

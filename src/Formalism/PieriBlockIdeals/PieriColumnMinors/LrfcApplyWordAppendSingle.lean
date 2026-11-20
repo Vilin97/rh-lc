@@ -240,7 +240,7 @@ theorem lrf_mem_col (s : Fin n) (l : Fin r × Fin r × (Fin r × Fin n)) :
     simp only at h1 h2 h3
     refine ⟨a, List.mem_finRange a, ?_⟩
     have hr : s.val < r := lt_trans h2 a.isLt
-    rw [dif_pos ⟨h2, hr⟩, h3]
+    rw [dite_eq_left ⟨h2, hr⟩, h3]
     congr 2
     exact Fin.ext h1.symm
 

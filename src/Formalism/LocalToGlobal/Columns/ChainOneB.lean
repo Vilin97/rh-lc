@@ -220,7 +220,7 @@ variable {Ch sel mu cst}
 theorem ocbPsiC_ne (hCh : Ch.Ok) (σ : X.K →+* ℂ) {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∈ Pr.vGs) : ocbPsiC Ch σ P ≠ 1 := by
   have h1 : psi0P Ch P ≠ 1 := by
     unfold psi0P
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact hCh.psi_zero_nontrivial_character ⟨P, hP⟩
   obtain ⟨a, ha⟩ := (AddChar.ne_one_iff).1 h1
   refine (AddChar.ne_one_iff).2 ⟨a, fun h => ha ?_⟩
@@ -260,12 +260,12 @@ theorem ocbIsRed_one {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum
   have h1 : Loc.atN ((1 : Sp E (n + c) ≃ₗ[E] Sp E (n + c)) (Loc.eN E (n + c) s)) l = if l = s then 1 else 0 := by
     show Loc.atN (Loc.eN E (n + c) s) l = _
     unfold Loc.atN Loc.eN
-    rw [dif_pos hl]
+    rw [dite_eq_left hl]
   have h2 : Loc.atN ((1 : (Fin (n + c) → 𝓞 E ⧸ P.asIdeal) ≃ₗ[𝓞 E ⧸ P.asIdeal] (Fin (n + c) → 𝓞 E ⧸ P.asIdeal))
       (Loc.eN (𝓞 E ⧸ P.asIdeal) (n + c) s)) l = if l = s then 1 else 0 := by
     show Loc.atN (Loc.eN (𝓞 E ⧸ P.asIdeal) (n + c) s) l = _
     unfold Loc.atN Loc.eN
-    rw [dif_pos hl]
+    rw [dite_eq_left hl]
   rw [h1, h2]
   by_cases hls : l = s
   · subst hls

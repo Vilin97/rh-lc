@@ -101,7 +101,7 @@ theorem sliceAt_apply {k r : ℕ} {ι : Type} [Fintype ι] {E0 : Type} [NormedAd
       (U.muXi k (D.ptSize p) 0 (r - D.ptSize p) (D.ptPerm p))) :
     D.sliceAt k r z z' F p γ e = D.sliceAt k r z z' (fun g => F g e) p γ := by
   unfold D.sliceAt
-  rw [dif_pos hle, dif_pos hle]
+  rw [dite_eq_left hle, dite_eq_left hle]
   unfold U.PhiFun
   have := (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : ι => E0) e).integral_comp_comm hint
   exact this.symm ▸ rfl

@@ -47,7 +47,7 @@ theorem wTg_eq {n : ℕ} {ε : Fin n → Bool} {V : Type} [Zero V] {Q : Matrix (
     wTg Q Qi W m = W γ := by
   have hex : ∃ γ : Formalism.REAL.UJ ε, uMat γ = Q * m * Qi := ⟨γ, hγ⟩
   unfold wTg
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   congr 1
   apply Subtype.ext; apply Units.ext
   exact hex.choose_spec.trans hγ.symm

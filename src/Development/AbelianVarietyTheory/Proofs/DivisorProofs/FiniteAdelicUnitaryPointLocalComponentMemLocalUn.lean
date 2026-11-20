@@ -37,7 +37,7 @@ theorem eq_cj_of_ext (w u : Pl E) (hu : u = w) (f : u.adicCompletion E →+* w.a
       ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨f, hf, hext⟩
   have hcj : cj u = hex.choose := by
     unfold cj
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hfs : (f : u.adicCompletion E → u.adicCompletion E) = hex.choose :=
     (HeightOneSpectrum.denseRange_algebraMap E u).equalizer hf hex.choose_spec.1
       (funext fun k => by simp only [Function.comp_apply, hext, hex.choose_spec.2])

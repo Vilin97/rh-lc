@@ -39,14 +39,14 @@ theorem perFr_of_unitary {E : Type} [Field E] [NumberField E] [IsCMField E] {r :
   unfold perFr
   rw [hp, hG]
   by_cases h1 : τ ∈ X.Ψ
-  · rw [dif_pos h1, dif_pos ((hΨ τ).2 h1)]
+  · rw [dite_eq_left h1, dite_eq_left ((hΨ τ).2 h1)]
     split_ifs with h2
     · rw [hm τ h1, hemb, Matrix.mul_inv_rev, ← Matrix.mulVec_mulVec,
         Matrix.mulVec_mulVec (Data.emb τ v) (γ.1.map τ)⁻¹, Matrix.nonsing_inv_mul _ (hdetγ τ), Matrix.one_mulVec]
     · rfl
-  rw [dif_neg h1, dif_neg (mt (hΨ τ).1 h1)]
+  rw [dite_eq_right h1, dite_eq_right (mt (hΨ τ).1 h1)]
   by_cases h3 : conjEmb τ ∈ X.Ψ
-  · rw [dif_pos h3, dif_pos ((hΨ _).2 h3)]
+  · rw [dite_eq_left h3, dite_eq_left ((hΨ _).2 h3)]
     split_ifs with h4
     · have hu : (γ.1.map (conjEmb τ))ᵀ * X.Gm.map (conjEmb τ) *
           (γ.1.map (conjEmb τ)).map (starRingEnd ℂ) = X.Gm.map (conjEmb τ) := by
@@ -66,7 +66,7 @@ theorem perFr_of_unitary {E : Type} [Field E] [NumberField E] [IsCMField E] {r :
         fun A c Y => by rw [Matrix.dotProduct_mulVec c Aᵀ Y, Matrix.vecMul_transpose]
       rw [hm _ h3, hcol, hemb, hermC_eq, hermC_eq, star_mulVec', e1, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hu]
     · rfl
-  rw [dif_neg h3, dif_neg (mt (hΨ _).1 h3)]
+  rw [dite_eq_right h3, dite_eq_right (mt (hΨ _).1 h3)]
 
 theorem point_eq_of_isometry {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {σ' : KA l →+* ℂ} {g : ℕ}

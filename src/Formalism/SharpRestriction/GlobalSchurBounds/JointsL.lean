@@ -719,21 +719,21 @@ theorem sizes_clause_seventeen {D : D7} (L : SizeData₂ D) (P : ParameterChoice
 
 theorem db_vN {D : D7} (ρ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k - 1) :
     StandardLattice.vN D ρ i = (((D.hc ρ).v ⟨i, h⟩ : ℚ) : ℝ) := by
-  unfold StandardLattice.vN; rw [dif_pos h]
+  unfold StandardLattice.vN; rw [dite_eq_left h]
 
 theorem db_uN {D : D7} (u : D.what₂.Word) (ρ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k) :
     StandardLattice.uN D u ρ i = (((D.hcW u ρ).u ⟨i, h⟩ : ℚ) : ℝ) := by
-  unfold StandardLattice.uN; rw [dif_pos h]
+  unfold StandardLattice.uN; rw [dite_eq_left h]
 
 theorem db_bN {D : D7} (ρ : D.what₂.Tau) (j : ℕ) (h : j < D.R.m) :
     StandardLattice.bN D ρ j = (((D.hc ρ).b ⟨j, h⟩ : ℚ) : ℝ) := by
-  unfold StandardLattice.bN; rw [dif_pos h]
+  unfold StandardLattice.bN; rw [dite_eq_left h]
 
 theorem db_wj {D : D7} (ρ : D.what₂.Tau) (j : ℕ) (h : j < D.R.m) :
     wj D (j + 1) ρ = (((D.hc ρ).e ⟨j, h⟩ : ℚ) : ℝ) := by
   have h' : j + 1 - 1 < D.R.m := by simpa using h
   unfold wj
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   have : (⟨j + 1 - 1, h'⟩ : Fin D.R.m) = ⟨j, h⟩ := Fin.ext (by simp)
   rw [this]
 

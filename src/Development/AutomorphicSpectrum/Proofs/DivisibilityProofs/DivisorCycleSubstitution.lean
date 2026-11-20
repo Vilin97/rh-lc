@@ -19,7 +19,7 @@ theorem divCycle_support_finite {O : Type} [CommRing O] [IsDomain O] [IsDiscrete
   by_contra hn
   apply hW
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact fun h => hn h.1
 
 theorem cycList_ratDiv {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

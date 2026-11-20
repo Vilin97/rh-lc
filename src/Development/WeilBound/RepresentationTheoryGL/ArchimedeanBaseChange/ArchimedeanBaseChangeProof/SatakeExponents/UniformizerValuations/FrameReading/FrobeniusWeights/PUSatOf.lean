@@ -114,7 +114,7 @@ theorem uSatOf_holds : USatOf := by
   have hcond : ∀ v ∈ fixed σ.ρ (KL n w),
       levOp σ.ρ (KL n w) (KL n w) (fun u => Tj ℂ n (Ov E w) ϖ k u.1) LinearMap.id v ∈ fixed σ.ρ (KL n w) :=
     fun v hv => by rw [heig v hv]; exact Submodule.smul_mem _ _ hv
-  rw [twTr, dif_pos hcond]
+  rw [twTr, dite_eq_left hcond]
   have hres : (levOp σ.ρ (KL n w) (KL n w) (fun u => Tj ℂ n (Ov E w) ϖ k u.1) LinearMap.id).restrict hcond =
       c • (1 : Module.End ℂ (fixed σ.ρ (KL n w))) := by
     ext v

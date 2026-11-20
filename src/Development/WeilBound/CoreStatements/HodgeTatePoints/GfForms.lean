@@ -274,7 +274,7 @@ theorem geoNum_one_linear (W : Ideal (MRing J)) :
   by_cases h : IsRelevant W
   · refine ⟨fun k => ∑ᶠ W' ∈ divSupp W (X ⟨k, (h k).choose⟩),
       (multAt (W ⊔ Ideal.span {(X ⟨k, (h k).choose⟩ : MRing J)}) W' : ℤ) * geoNum 0 W' Fin.elim0, fun a => ?_⟩
-    rw [geoNum, dif_pos h, Subsingleton.elim (Fin.init fun _ : Fin (0 + 1) => a) Fin.elim0]
-  · exact ⟨0, fun a => by rw [geoNum, dif_neg h]; simp⟩
+    rw [geoNum, dite_eq_left h, Subsingleton.elim (Fin.init fun _ : Fin (0 + 1) => a) Fin.elim0]
+  · exact ⟨0, fun a => by rw [geoNum, dite_eq_right h]; simp⟩
 
 end PositivityTheory.HtPt.Gf

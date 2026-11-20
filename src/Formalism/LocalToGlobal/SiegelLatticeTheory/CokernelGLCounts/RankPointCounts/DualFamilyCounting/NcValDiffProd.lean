@@ -80,7 +80,7 @@ lemma valued_dV (v : HeightOneSpectrum (𝓞 F)) : Valued.v (dV v) = exp (-(mDif
       exact intValuation_le_of_mem_different v hy
   have hd : IsDiffVal v (dV v) := by
     unfold dV
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   obtain ⟨-, hle, y, hyD, hyv⟩ := hd
   apply le_antisymm
@@ -95,7 +95,7 @@ lemma absV_of_valued_eq (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v) (n : ℤ) 
     rw [h]
     exact WithZero.exp_ne_zero
   unfold absV
-  rw [dif_neg hx]
+  rw [dite_eq_right hx]
   congr 1
   have hu : WithZero.unzero hx = Multiplicative.ofAdd n := by
     apply WithZero.coe_injective

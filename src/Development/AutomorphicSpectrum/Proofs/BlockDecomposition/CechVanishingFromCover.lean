@@ -49,7 +49,7 @@ theorem pull_extZ {W : ObjectProperty C} (hW : Cosieve W) {n : ℕ} (y : Crystal
   have h : W ((t ⋙ W.ι).obj 0) := (t.obj 0).property
   change extZ hW y (t ⋙ W.ι) = y t
   unfold extZ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem van_of_subsingleton {W : ObjectProperty C} (hW : Cosieve W) (j : ℕ)

@@ -19,7 +19,7 @@ namespace GlobalTheory.NLink.RowsCD
 
 theorem lt_ratIn {x y : ℝ} (h : x < y) : x < ((Formalism.MainNotions.N.ratIn x y : ℚ) : ℝ) := by
   unfold Formalism.MainNotions.N.ratIn
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (exists_rat_btwn h).choose_spec.1
 
 theorem flat_pos {D : D7} (L : SizeData₂ D) (bd : Prop) (l : ℕ) : 0 < Formalism.MainNotions.N.flat L bd l := by

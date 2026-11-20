@@ -38,7 +38,7 @@ theorem GlobalTheory.XGeoStd.exists_xgeo : GlobalTheory.Published.StrongApproxSU
       · rw [if_pos h.symm, if_pos h]
       · rw [if_neg (fun h' => h h'.symm), if_neg h], rfl, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · rw [← lat_X hI j]; exact Iff.rfl
-    · rw [dif_pos hj]; exact hc j hj
+    · rw [dite_eq_left hj]; exact hc j hj
 
     case refine_3 => exact isLineVec_zeta l Z u
     case refine_4 => exact norm_zeta l Z u

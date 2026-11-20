@@ -254,7 +254,7 @@ theorem monoAt_rowN (G : GridData L sc) (j σ : ℕ) (hj : j + 2 * σ + 2 = D.R.
     MonoAt (besDecAt G j σ hj) (rowN G j) (coreL G j) v := by
   have hjm : j < D.R.m := by omega
   have hc : D.R.m - 1 - j = 2 * σ + 1 := by omega
-  have e : rowN G j = (G.rowDec j hjm).lat (G.Λ (.top j)) (rowId D j) := by rw [rowN, dif_pos hjm]
+  have e : rowN G j = (G.rowDec j hjm).lat (G.Λ (.top j)) (rowId D j) := by rw [rowN, dite_eq_left hjm]
   rw [e]
   exact auxiliaryLattice_splitsAlongWitt_at_place (G.rowDec j hjm) hc (lam σ) (lam_ne σ) (G.Λ (.top j)) (rowId D j) (lineId D j) (rowId_mid hj) v
 

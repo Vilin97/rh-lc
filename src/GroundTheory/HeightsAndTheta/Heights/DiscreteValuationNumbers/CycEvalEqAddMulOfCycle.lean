@@ -61,7 +61,7 @@ theorem vNum_vecCons_zero (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.M
   unfold eventualValue
   have hex : ∃ c, ∀ᶠ m in Filter.atTop, (fun _ : K → ℤ => (0 : ℤ)) m = c :=
     ⟨0, Filter.Eventually.of_forall fun _ => rfl⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨m, hm'⟩ := hex.choose_spec.exists
   exact hm'.symm
 

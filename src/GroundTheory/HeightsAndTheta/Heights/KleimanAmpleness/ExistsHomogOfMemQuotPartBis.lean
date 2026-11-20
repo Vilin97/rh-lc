@@ -199,7 +199,7 @@ theorem evMap_mk {I : ∀ k, Finset (ι k)} (hI : Good y I) (g : MRingOver S ι)
     evMap y I (LocalizedModule.mk (Ideal.Quotient.mk (mIdealOver S y) g) t) =
       aeval y g / aeval y (t : MRingOver S ι) := by
   unfold evMap
-  rw [dif_pos hI]
+  rw [dite_eq_left hI]
   exact ev_mk y I hI _ t
 
 end Eval
@@ -405,7 +405,7 @@ theorem cellRes_smul {J I : ∀ k, Finset (ι k)} (s : S)
   · induction x using LocalizedModule.induction_on with
     | h m t => rw [LocalizedModule.smul'_mk, cellRes_mk h, cellRes_mk h, LocalizedModule.smul'_mk]
   · unfold cellRes
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     simp
 
 theorem cellRes_mem_locPart {J I : ∀ k, Finset (ι k)} (h : cellMon S J ≤ cellMon S I) (β : K → ℤ)

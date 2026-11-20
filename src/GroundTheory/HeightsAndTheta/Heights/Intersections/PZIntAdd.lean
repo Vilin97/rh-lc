@@ -28,7 +28,7 @@ theorem locDens_congr_germ {n : ℕ} {X : Type} [TopologicalSpace X] (A : FinHol
 theorem ZIntAdd.proof : ZIntAdd.Statement := by
   intro K _ _ ι _ P e L A B hP hR hL hA hB
   unfold zInt
-  rw [dif_pos hR, dif_pos hR, dif_pos hR]
+  rw [dite_eq_left hR, dite_eq_left hR, dite_eq_left hR]
   set R := hR.some
   unfold Res.int
   have hpA := R.isPotential_pot (isSmoothPot_logH hA)

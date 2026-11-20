@@ -24,12 +24,12 @@ theorem amp_locS_nonempty {k r : ℕ} (W : LocW k r) : Nonempty (LocS W) := by
 theorem amp_lamS_lo (R : Ranks) (P : HCParam R) (i : Fin R.r) (h : i.val < R.k - 1) :
     lamS R P i = (P.v ⟨i.val, h⟩ : ℝ) := by
   unfold lamS
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem amp_lamS_hi (R : Ranks) (P : HCParam R) (i : Fin R.r) (h : ¬ i.val < R.k - 1)
     (h' : i.val - (R.k - 1) < R.m) : lamS R P i = -(P.b ⟨i.val - (R.k - 1), h'⟩ : ℝ) := by
   unfold lamS
-  rw [dif_neg h, dif_pos h']
+  rw [dite_eq_right h, dite_eq_left h']
 
 theorem amp_b_lt (R : Ranks) (P : HCParam R) (j : ℕ) (h : j + 1 < R.m) :
     P.b ⟨j, by omega⟩ < P.b ⟨j + 1, h⟩ := by

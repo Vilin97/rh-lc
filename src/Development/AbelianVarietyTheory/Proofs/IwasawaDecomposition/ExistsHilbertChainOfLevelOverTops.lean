@@ -161,7 +161,7 @@ theorem exists_chainHilb : ∀ (D : D7) (C : ChainReal D) (b : Bool) (U : D.what
     have hh : 1 ≤ j ∧ j ≤ D.R.m - 1 := ⟨h1, h2⟩
     obtain ⟨hi, hr, hip⟩ := hL μ j h2
     dsimp only [jM]
-    rw [dif_pos hh]
+    rw [dite_eq_left hh]
     refine ⟨?_, ?_, ?_⟩
     · rw [LinearMap.coe_comp]; exact hi.comp (LinearEquiv.injective _)
     · rw [LinearMap.range_comp_of_range_eq_top _ (LinearEquiv.range _), hr]
@@ -170,18 +170,18 @@ theorem exists_chainHilb : ∀ (D : D7) (C : ChainReal D) (b : Bool) (U : D.what
       exact (LinearIsometryEquiv.inner_map_map _ x x').symm
   · intro μ hU x v h
     dsimp only [io]
-    rw [dif_pos hU, dif_pos rfl]
+    rw [dite_eq_left hU, dite_eq_left rfl]
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearIsometryEquiv.coe_toLinearEquiv,
       LinearIsometryEquiv.apply_symm_apply]
     exact hr0 μ x _
   · intro μ hU j h1 h2 x v h
     dsimp only [io]
-    rw [dif_pos hU, dif_neg (by omega), dif_neg (by omega)]
+    rw [dite_eq_left hU, dite_eq_right (by omega), dite_eq_right (by omega)]
     rw [LinearMap.comp_apply, hR μ j (by omega)]
     rfl
   · intro μ hU x v v' hv h
     dsimp only [io]
-    rw [dif_pos hU, dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_left hU, dite_eq_right (by omega), dite_eq_left (by omega)]
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearIsometryEquiv.coe_toLinearEquiv]
     rw [heqv_self, hR μ _ le_rfl]
     refine congrArg (fun y => C.ipP b μ (D.R.m - 1) (jM μ (D.R.m - 1) x)
@@ -189,6 +189,6 @@ theorem exists_chainHilb : ∀ (D : D7) (C : ChainReal D) (b : Bool) (U : D.what
     exact congrArg (jX μ) (heqv_heq _ _ v' v hv)
   · intro μ hU j
     dsimp only [io]
-    rw [dif_neg hU]
+    rw [dite_eq_right hU]
 
 end GlobalTheory.ChainHilb

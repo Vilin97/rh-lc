@@ -22,7 +22,7 @@ theorem UpperTheory.haar_quotient_subgroup :
     simp only [e]
     exact hρ₀.2 x
   unfold quotInt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hn : IsNrm j ν (fun x : H => hex.choose (x : G)) :=
     ⟨hex.choose_spec.1.comp measurable_subtype_coe, fun x => by
       simpa only [Subgroup.coe_mul] using hex.choose_spec.2 x⟩

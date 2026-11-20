@@ -94,11 +94,11 @@ theorem atPtG_holds {D : Formalism.BasicNotions.D7} (u u' : D.what₂.Word) (F0 
       exact Finset.prod_congr rfl fun b _ => by rw [star_pow, star_neg, star_one]
     have hD : Dmin w l = ((ptMat w).submatrix (Fin.castLE h) (Fin.castLE h)).det := by
       unfold Dmin
-      rw [dif_pos h]
+      rw [dite_eq_left h]
     have hM : leadMinorE (ZhatL (lf D F0) F') l =
         ((ZhatL (lf D F0) F').submatrix (Fin.castLE h) (Fin.castLE h)).det := by
       unfold leadMinorE
-      rw [dif_pos h]
+      rw [dite_eq_left h]
     rw [hD, hM, conjF_eq_star, e1, star_mul', hst]
     linear_combination (-(((ZhatL (lf D F0) F').submatrix (Fin.castLE h) (Fin.castLE h)).det *
       star ((ZhatL (lf D F0) F').submatrix (Fin.castLE h) (Fin.castLE h)).det)) * hss
@@ -117,7 +117,7 @@ theorem dnInDens_of {D : Formalism.BasicNotions.D7} {u u' : D.what₂.Word} {F0 
   have hex := hN γ w hγ
   have hz : zT γ = ZhatL (lf D F0) hex.choose.2.1 := by
     unfold zT nrep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   obtain ⟨⟨hPD, hmk⟩, hadm, -, -, -⟩ := hex.choose_spec
   have hTF := Formalism.L2.SG.Closed.TermFun_holds D u u' F0 γ.lam (hrows.1 γ.lam γ.mem)
   have hGt := TermDef.Gt_mk hTF.1 ⟨_, hPD⟩

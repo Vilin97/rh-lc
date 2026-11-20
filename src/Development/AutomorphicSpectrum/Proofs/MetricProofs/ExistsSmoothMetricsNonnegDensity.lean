@@ -60,7 +60,7 @@ theorem exists_dominating_twist : ∀ (K : Type) [Fintype K] (ι : K → Type) [
     · exact le_rfl
   · unfold setSheetDensity
     by_cases hγ : ∃ γ, IsSetSheet S Ψ y w γ
-    · rw [dif_pos hγ, dif_pos hγ]
+    · rw [dite_eq_left hγ, dite_eq_left hγ]
       have hs := hγ.choose_spec
       have hmem : hγ.choose y ∈ S := hs.2.self_of_nhds.2.1
       have hg := hgg _ hmem
@@ -71,7 +71,7 @@ theorem exists_dominating_twist : ∀ (K : Type) [Fintype K] (ι : K → Type) [
             mul_le_mul hg (hab hs) (abs_nonneg _) ((abs_nonneg _).trans hg)
         _ = 3 ^ e * (g' (hγ.choose y) * maDensity
               (fun j y' => pot (fun j => ((L j).tensor (T j)).tensor (T j)) j (hγ.choose y')) y) := by ring
-    · rw [dif_neg hγ, dif_neg hγ]
+    · rw [dite_eq_right hγ, dite_eq_right hγ]
       simp
 
 end GlobalTheory.CompanionTheory.Ar.Pub.CxTwist

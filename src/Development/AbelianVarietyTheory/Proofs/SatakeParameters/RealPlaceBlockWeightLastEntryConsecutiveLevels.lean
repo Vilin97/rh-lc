@@ -37,14 +37,14 @@ theorem lamAt_lastS (l : ℕ) (v : X.Pl) (s : Fin (X.G.P.n' v)) :
     unfold liftWt
     beta_reduce
     have h1 : 1 ≤ (l + 1) * (X.Fl.t + 1) := Nat.one_le_iff_ne_zero.2 (Nat.mul_ne_zero (by omega) (by omega))
-    rw [dif_neg (by simp only [Fin.val_last]; omega)]
+    rw [dite_eq_right (by simp only [Fin.val_last]; omega)]
     simp only [Fin.val_last]
     have h2 : X.G.P.m + (l + 1) * (X.Fl.t + 1) - (X.G.P.m + 1) = (l + 1) * (X.Fl.t + 1) - 1 := by omega
     rw [h2, succ_mul_succ_sub_one_div_succ]
   · rw [if_neg h, if_pos (show IsOddPos s by unfold IsOddPos; rw [Nat.even_iff] at h; omega), Fin.rev_last]
     unfold liftWt
     beta_reduce
-    rw [dif_pos (by simp)]
+    rw [dite_eq_left (by simp)]
     rfl
 
 theorem nuv_one (j : ℕ) (v : X.Pl) (s : Fin (X.G.P.n' v)) :
@@ -52,7 +52,7 @@ theorem nuv_one (j : ℕ) (v : X.Pl) (s : Fin (X.G.P.n' v)) :
   unfold Sys.nuv nu
   rw [if_pos ⟨le_refl 1, by omega⟩]
   unfold lamI
-  rw [dif_pos ⟨le_refl 1, by omega⟩]
+  rw [dite_eq_left ⟨le_refl 1, by omega⟩]
   rfl
 
 theorem nuv_one_at_firstLevelIndex (v : X.Pl) (s : Fin (X.G.P.n' v)) :
@@ -60,7 +60,7 @@ theorem nuv_one_at_firstLevelIndex (v : X.Pl) (s : Fin (X.G.P.n' v)) :
   unfold Sys.nuv nu NN
   rw [if_pos ⟨by omega, by omega⟩]
   unfold lamI
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   congr 2
   ext
   simp

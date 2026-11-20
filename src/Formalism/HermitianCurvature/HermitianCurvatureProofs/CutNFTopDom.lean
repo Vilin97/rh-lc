@@ -57,11 +57,11 @@ theorem domination_at_zero_holds : NFDomZero := by
   unfold D.RRplace
   by_cases hl : D.IsLocPt x (P.r + 1)
   · have hG : ¬ 0 < TBB.Gp p x := fun h => hc ⟨hl, h⟩
-    rw [dif_pos ⟨hl, hl⟩, dif_neg (by omega)]
+    rw [dite_eq_left ⟨hl, hl⟩, dite_eq_right (by omega)]
     have hv : ∀ H' : B.Mat P.k P.r → (Wq →L[ℂ] Wp), D.vecV p.T.base p.ν' p.m₀ H' x = 0 := by
       intro H'
       unfold D.vecV
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨-, h⟩
       apply hG
       unfold TBB.Gp

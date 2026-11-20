@@ -199,7 +199,7 @@ theorem lie_Dv_eq {t : D.what₂.Tau} {τ : Emb D p} (ht : jc.comp τ = tauEmb D
     have := S.p_eq
     omega
   have e : rootLn S (t, i') = (false, ⟨.inl (jc.comp τ, i), by rw [letterOf_lie S jc τ i]; rfl⟩) := by
-    rw [rootLn, dif_pos hi]
+    rw [rootLn, dite_eq_left hi]
     simp only [ht, h]
   rw [mdlOf_lie_Dv, e, vdiv_lnId_false z hp hW _ _ (letterOf_lie S jc τ i)]
 
@@ -212,7 +212,7 @@ theorem om_Dv_eq {t : D.what₂.Tau} {τ : Emb D p} (ht : jc.comp τ = tauEmb D 
   have hi : ¬ (i' : ℕ) < S.Dw.p := by omega
   have e' : (i.rev : ℕ) = S.Dw.p + S.Dw.q - 1 - i' := by rw [Fin.val_rev]; omega
   have e : rootLn S (t, i') = (true, ⟨.inl (conjEmb (jc.comp τ), i.rev), by rw [letterOf_om S jc τ i]; rfl⟩) := by
-    rw [rootLn, dif_neg hi]
+    rw [rootLn, dite_eq_right hi]
     simp only [ht, e']
   rw [mdlOf_om_Dv, e, vdiv_lnId_true z hp hW _ _ (letterOf_om S jc τ i)]
 

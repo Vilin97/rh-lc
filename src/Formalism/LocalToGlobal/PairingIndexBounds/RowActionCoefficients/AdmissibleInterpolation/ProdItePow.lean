@@ -458,7 +458,7 @@ theorem IstOf_apply (j : ℕ) (J : ∀ b : BX X, Fin (cX X j b) → ℕ → Fin 
     IstOf X j J b.1 b.2 k.val i' = J b k i' := by
   obtain ⟨v, s⟩ := b
   unfold IstOf
-  rw [dif_pos k.isLt]
+  rw [dite_eq_left k.isLt]
 
 omit [Algebra (K0 p) Kc] [CharZero Kc] in
 theorem map_tgt (j : ℕ) (i0 : X.Pl → ℕ) (H : BX X → Matrix (Fin (NJ X (j + 1))) (Fin (NJ X (j + 1))) X.G.Kf)

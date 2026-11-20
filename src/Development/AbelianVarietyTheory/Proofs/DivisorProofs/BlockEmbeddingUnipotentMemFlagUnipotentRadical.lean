@@ -75,7 +75,7 @@ theorem blockEmb_unip_mem : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     intro x a b hab
     rw [Matrix.sub_apply, Matrix.map_apply]
     change Φ.symm ((1 + GlobalTheory.CuspRep.nilM x : Matrix (Fin d) (Fin d) _) a b) - _ = 0
-    rw [Matrix.add_apply, map_add (f := _), GlobalTheory.CuspRep.nilM, Matrix.of_apply, dif_neg hab, map_zero, add_zero]
+    rw [Matrix.add_apply, map_add (f := _), GlobalTheory.CuspRep.nilM, Matrix.of_apply, dite_eq_right hab, map_zero, add_zero]
     by_cases hab' : a = b <;> simp [Matrix.one_apply, hab']
   have core : ∀ (x : GlobalTheory.CuspRep.BlockIx d r' → GlobalTheory.CuspRep.Ad E) {I : Set (Fin r)} {y : Fin n → AF F ⊗[F] E},
       (∀ a, (adMat F (cT (σ : E →+* E) X * J) *ᵥ y) (e a) = 0) →

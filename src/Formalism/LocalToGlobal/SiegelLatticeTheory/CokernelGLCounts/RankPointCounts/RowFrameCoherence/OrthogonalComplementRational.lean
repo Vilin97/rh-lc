@@ -218,7 +218,7 @@ theorem zhat_rat (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) :
 theorem dl_rat (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) X.B.I.E) :
     Formalism.L2.SG.RealObj.Dl (Z.map (X.B.I.φ v)) (D.R.rS + 1) = X.B.I.φ v Z.det := by
   unfold Formalism.L2.SG.RealObj.Dl
-  rw [dif_pos le_rfl, RingHom.map_det]
+  rw [dite_eq_left le_rfl, RingHom.map_det]
   congr 1
 
 theorem adj_rat (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) X.B.I.E) :

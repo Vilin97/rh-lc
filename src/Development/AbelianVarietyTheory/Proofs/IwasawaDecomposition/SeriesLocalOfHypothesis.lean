@@ -80,7 +80,7 @@ theorem conj_blocks (hn : n' = n) (h : n = r + t) (ht : 0 < t) (hr : r ≤ n) (h
   obtain rfl : x = b * e * b⁻¹ := Units.ext (Matrix.ext fun a c => hx a c)
   have hb' : b ∈ blockTri (blk2 r) := mem_twoBlockTriangular_of_blockTriangular hb
   have he' : e ∈ blockTri (blk2 r) := mem_twoBlockTriangular_of_blockTriangular fun a c ha hc => by
-    rw [he, dif_neg (by omega), if_neg (by rintro rfl; omega)]
+    rw [he, dite_eq_right (by omega), if_neg (by rintro rfl; omega)]
   have hd : dBlk (blk2 r) 1 e = 1 := by
     refine Units.ext ?_
     rw [diag_block_det_val 1 he']
@@ -91,7 +91,7 @@ theorem conj_blocks (hn : n' = n) (h : n = r + t) (ht : 0 < t) (hr : r ≤ n) (h
         unfold blk2 at this
         rw [if_pos h'] at this
         omega
-      rw [Matrix.submatrix_apply, he, dif_neg (fun h' => ha h'.1)]
+      rw [Matrix.submatrix_apply, he, dite_eq_right (fun h' => ha h'.1)]
       simp [Matrix.one_apply, Subtype.ext_iff]
     rw [e1]
     simp
@@ -99,7 +99,7 @@ theorem conj_blocks (hn : n' = n) (h : n = r + t) (ht : 0 < t) (hr : r ≤ n) (h
     refine Units.ext ?_
     rw [upper_block_val_submatrix hr he']
     ext a c
-    rw [Matrix.submatrix_apply, he, dif_pos ⟨a.2, c.2⟩]
+    rw [Matrix.submatrix_apply, he, dite_eq_left ⟨a.2, c.2⟩]
     rfl
   rw [blkOf_eq h ht]
   refine ⟨mul_mem (mul_mem hb' he') (inv_mem hb'), ?_, ?_⟩
@@ -136,7 +136,7 @@ theorem red_of_isLiftAt (s : ReciprocityTheory.Aut.SplitPlace L) {k : Type} [Com
   have h := hl a c
   show φ (y.val a c) = _
   by_cases hac : (a : ℕ) < r ∧ (c : ℕ) < r
-  · rw [dif_pos hac] at h ⊢
+  · rw [dite_eq_left hac] at h ⊢
     rw [← hy a c] at h
     have h2 : φ (y.val a c - ((g.val ⟨a, hac.1⟩ ⟨c, hac.2⟩).val : Os s)) = 0 := (hφ.ker _).2 (by
       have e : ((y.val a c - ((g.val ⟨a, hac.1⟩ ⟨c, hac.2⟩).val : Os s) : Os s) : s.v.adicCompletion (maximalRealSubfield L)) =
@@ -148,7 +148,7 @@ theorem red_of_isLiftAt (s : ReciprocityTheory.Aut.SplitPlace L) {k : Type} [Com
     rw [h2]
     show _ = iso (g.val ⟨a, hac.1⟩ ⟨c, hac.2⟩)
     rw [← map_natCast iso, ZMod.natCast_zmod_val]
-  · rw [dif_neg hac] at h ⊢
+  · rw [dite_eq_right hac] at h ⊢
     rw [← hy a c] at h
     by_cases e : a = c
     · rw [if_pos e] at h ⊢

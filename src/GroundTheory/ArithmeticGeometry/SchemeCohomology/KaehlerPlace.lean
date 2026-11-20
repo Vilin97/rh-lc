@@ -167,7 +167,7 @@ theorem kaehlerCoeff_smul_D {t : K} (ht : D k K t ≠ 0) (ω : Ω[K⁄k]) :
   have hω : ω ∈ Submodule.span K {D k K t} := by rw [span_D_eq_top_of_ne_zero ht]; trivial
   have h := Submodule.mem_span_singleton.mp hω
   classical
-  rw [kaehlerCoeff, dif_pos h]
+  rw [kaehlerCoeff, dite_eq_left h]
   exact h.choose_spec
 
 theorem kaehlerCoeff_eq {t : K} (ht : D k K t ≠ 0) {ω : Ω[K⁄k]} {c : K} (h : c • D k K t = ω) :

@@ -43,7 +43,7 @@ theorem isSelfDualFor_measV (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v :
     obtain ⟨ν, hν⟩ := GlobalTheory.SplitWeil.exists_isSelfDual_of_hasConductor hc
     refine ⟨ν, hν.1, fun f hf => ?_⟩
     simpa only [hχ] using hν.2 f hf
-  rw [measV, dif_pos h]
+  rw [measV, dite_eq_left h]
   exact h.choose_spec
 
 theorem fourV_sb : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ v : Pl F, (∃ x, psiLoc ψ v x ≠ 1) →

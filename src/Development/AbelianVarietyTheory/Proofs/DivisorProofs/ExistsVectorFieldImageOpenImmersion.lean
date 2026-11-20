@@ -30,7 +30,7 @@ def push (d : ∀ O : Z'.Opens, Γ(Z', O) → Γ(Z', O)) (O : Z.Opens) (f : Γ(Z
 
 theorem app_push (d : ∀ O : Z'.Opens, Γ(Z', O) → Γ(Z', O)) (O : Z.Opens) (h : O ≤ φ.opensRange)
     (f : Γ(Z, O)) : (φ.app O).hom (push φ d O f) = d (φ ⁻¹ᵁ O) ((φ.app O).hom f) := by
-  rw [push, dif_pos h, ← appEquiv_apply φ O h, RingEquiv.apply_symm_apply]
+  rw [push, dite_eq_left h, ← appEquiv_apply φ O h, RingEquiv.apply_symm_apply]
 
 theorem le_range {W₀ : Z'.Opens} {O : Z.Opens} (hO : O ≤ φ ''ᵁ W₀) : O ≤ φ.opensRange :=
   hO.trans (Scheme.Hom.image_le_opensRange φ W₀)

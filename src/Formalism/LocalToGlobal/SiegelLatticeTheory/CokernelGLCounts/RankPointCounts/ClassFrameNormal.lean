@@ -114,14 +114,14 @@ theorem normalFormC_of (h1 : LiftAtSomeC X Y u u' κ)
   have hptOf : Formalism.L2.SG.PairVal.ptOf s.1.toTerm = w0 := by
     have e : Formalism.L2.SG.PairVal.ptOf s.1.toTerm = hex.choose := by
       unfold Formalism.L2.SG.PairVal.ptOf
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
     rw [e]
     exact h2 _ _ _ hex.choose_spec.1 hw0
   have hex1 : ∃ w, s.1.toTerm.atPt w := ⟨w0, hw0⟩
   have hc : Formalism.L2.SG.PairVal.cTerm vR s.1.toTerm =
       Formalism.L2.SG.PairVal.phaseAt s.1.toTerm (Formalism.L2.SG.PairVal.ptOf s.1.toTerm) * (vR s.1.toTerm : ℂ) := by
     unfold Formalism.L2.SG.PairVal.cTerm
-    rw [dif_pos hex1]
+    rw [dite_eq_left hex1]
     unfold Formalism.L2.SG.PairVal.cAt
     rw [hptOf, h2 _ _ _ hex1.choose_spec hw0]
   have hexF : ∃ p : X.B.I.Ginf × X.B.I.Ginf, Formalism.L2.SG.RealObj.IsDFrameX X u u' 1 i0 i0'
@@ -142,7 +142,7 @@ theorem normalFormC_of (h1 : LiftAtSomeC X Y u u' κ)
     unfold Formalism.L2.SG.RealObj.unscaledOperatorAtPointRepresentative
     rw [if_pos ⟨γ0, hγ0⟩]
     unfold Formalism.L2.SG.RealObj.unscaledFrameConjugatedOperator
-    rw [dif_pos hexF]
+    rw [dite_eq_left hexF]
   refine ⟨(Formalism.L2.SG.RealObj.InfCut.piIso X u hexF.choose.1 hS).trans
       (Formalism.L2.SG.RealObj.InfCut.piIso X u g hg),
     (Formalism.L2.SG.RealObj.InfCut.piIso X u' hexF.choose.2 hS').trans

@@ -32,7 +32,7 @@ theorem val_emR (h : GL (Fin 2) ℝ) :
     apply h0
     linarith
   unfold GL2LocalData.emR
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 theorem emR_mul (g h : GL (Fin 2) ℝ) : GL2LocalData.emR (g * h) = GL2LocalData.emR g * GL2LocalData.emR h := by

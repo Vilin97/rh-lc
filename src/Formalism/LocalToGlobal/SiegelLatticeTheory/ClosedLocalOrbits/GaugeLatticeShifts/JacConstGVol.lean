@@ -210,7 +210,7 @@ theorem norm_skMat_sq (x : UCo k) :
         (if h : i.1.2 < i.1.1 then ‖x.2 ⟨(i.1.1, i.1.2), h⟩‖ ^ 2 else 0) = 0 := fun i => dif_neg i.2
     have h2 : ∀ i : Low k,
         (if h : i.1.2 < i.1.1 then ‖x.2 ⟨(i.1.1, i.1.2), h⟩‖ ^ 2 else 0) = ‖x.2 i‖ ^ 2 :=
-      fun i => by rw [dif_pos i.2]
+      fun i => by rw [dite_eq_left i.2]
     simp only [h1, h2, Finset.sum_const_zero, add_zero]
   rw [RLk_sq]
   simp only [key, Finset.sum_add_distrib]

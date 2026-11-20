@@ -21,7 +21,7 @@ theorem restricted_derivative_linear (G : GlobalFamilyData X ka wL wF) (la : Hei
   have h1 : hasse X la G.w β ((c • x : ↥(HK X la G.w wF)) : Lw X la G.w) ∈ HK X la G.w wF := hP β _ (c • x).2
   have h2 : hasse X la G.w β (x : Lw X la G.w) ∈ HK X la G.w wF := hP β _ x.2
   unfold rD
-  rw [dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h1, dite_eq_left h2]
   show _ = c • toA0K X la G.w wF ⟨_, h2⟩
   rw [← LinearMap.map_smul_of_tower, ← sub_eq_zero, ← map_sub]
   refine leading_coeff_eq_zero_of_jet la G.w _ ?_

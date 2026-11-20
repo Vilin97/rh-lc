@@ -130,14 +130,14 @@ theorem leadingTermLength : LeadingTermLength := by
       have hc : ∀ α, deg α < k → c α = 0 := by
         intro α hα
         simp only [c]
-        rw [dif_neg (by omega)]
+        rw [dite_eq_right (by omega)]
       have hyF := hmem1 k c hc
       have hyN : ∑ α, ∑ i, c α i • u α i ∈ N := (hNmem _).mpr ⟨c, rfl⟩
       have hσ : σ k ⟨x, hx⟩ = σ k ⟨∑ α, ∑ i, c α i • u α i, hyF⟩ := by
         funext β
         rw [hval1 k c hyF hc β, ← ha β]
         simp only [c]
-        rw [dif_pos β.2]
+        rw [dite_eq_left β.2]
       have hd : x - ∑ α, ∑ i, c α i • u α i ∈ F (k + 1) := by
         refine hkill' k _ ((F k).sub_mem hx hyF) ?_
         have hz : (⟨x - ∑ α, ∑ i, c α i • u α i, (F k).sub_mem hx hyF⟩ : ↥(F k)) =

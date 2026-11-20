@@ -16,7 +16,7 @@ private lemma mul_eq_cj_mul_of_exists {m : Matrix (Fin 2) (Fin 2) ℤ} {δ : SL(
     m * (δ : Matrix (Fin 2) (Fin 2) ℤ) =
       (_root_.GlobalTheory.KZ.H3.cj m δ : Matrix (Fin 2) (Fin 2) ℤ) * m := by
   unfold _root_.GlobalTheory.KZ.H3.cj
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 open Matrix in

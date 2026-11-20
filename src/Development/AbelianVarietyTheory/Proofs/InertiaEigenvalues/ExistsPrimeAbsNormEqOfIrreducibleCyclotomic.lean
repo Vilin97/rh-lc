@@ -26,7 +26,7 @@ theorem exists_prime_absNorm_eq_of_irreducible_cyclotomic : ∀ (K : Type) [Fiel
   have hcl : ∀ P, ¬ m ∣ Ideal.absNorm P.asIdeal → (cl P : ZMod m) = (Ideal.absNorm P.asIdeal : ℕ) := by
     intro P hP
     simp only [cl]
-    rw [dif_neg (by rwa [ZMod.natCast_eq_zero_iff])]
+    rw [dite_eq_right (by rwa [ZMod.natCast_eq_zero_iff])]
     rfl
   by_contra hcon
   push Not at hcon

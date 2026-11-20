@@ -170,7 +170,7 @@ theorem chLoc_mem_bkOn (hπ : Function.Surjective π) (v : PlE D.host) (hv : v �
     chLoc i π hκ ρ hs v y ∈ bkOn bkP i ρ κ' B v ↔ y ∈ bkOn bkP i ρ κ B v := by
   have : RingHomSurjective (π : Λ →+* Λ') := ⟨hπ⟩
   unfold bkOn
-  rw [dif_pos hv, dif_pos hv]
+  rw [dite_eq_left hv, dite_eq_left hv]
   refine Iff.trans ?_ (Submodule.apply_mem_span_image_iff_mem_span (f := chLoc i π hκ ρ hs v) (h1Ch_bijective _ _ _ _ _).1)
   refine iff_of_eq (congrArg (fun S => chLoc i π hκ ρ hs v y ∈ Submodule.span Λ' S) (Set.ext fun w => ⟨?_, ?_⟩))
   · rintro ⟨z, c, y, b, h1, h2, h3, rfl⟩
@@ -374,7 +374,7 @@ theorem resLam_toLam (F : MvPolynomial ι (X.O0 i)) :
       congr 3
       funext t
       by_cases ht : t = q <;> simp [Pi.single_apply, he.eq_iff, ht]
-    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dif_neg hq, map_zero, sub_eq_zero, ← map_one (MonoidAlgebra.of _ _)]
+    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dite_eq_right hq, map_zero, sub_eq_zero, ← map_one (MonoidAlgebra.of _ _)]
       congr 1
       apply Multiplicative.toAdd.injective
       funext t

@@ -228,7 +228,7 @@ theorem sepHol {k : InfinitePlace F → ℕ} {c : Pl F → ℕ} {ω : HChar F} {
     have hEq : ext1 (fun t : P => f (Function.update z v t, x)) =ᶠ[𝓝 t0] G := by
       filter_upwards [(isOpen_ne_fun Complex.continuous_im continuous_const).mem_nhds ht0'] with t ht
       have ht' : t.im ≠ 0 := ht
-      rw [ext1, dif_pos ht']
+      rw [ext1, dite_eq_left ht']
       change f (Function.update z v (pP t ht'), x) = G t
       rw [hfe, hB t ht', hN t ht']
     refine (DifferentiableAt.congr_of_eventuallyEq ?_ hEq).differentiableWithinAt

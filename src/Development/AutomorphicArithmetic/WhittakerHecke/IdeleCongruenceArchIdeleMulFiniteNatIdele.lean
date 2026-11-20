@@ -20,7 +20,7 @@ private theorem val_le (N : ℕ) (v : H.P ℚ) : Valued.v (N : H.Kv v) ≤ 1 := 
 private theorem cp_iy {y : ℝ} (h : y ≠ 0) (v : H.P ℚ) : H.cp v ((iy y : (A ℚ)ˣ) : A ℚ) = 1 := by
   have : ((iy y : (A ℚ)ˣ) : A ℚ).2 = 1 := by
     unfold iy
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     show (1 : FiniteAdeleRing (𝓞 ℚ) ℚ) - 0 + 0 = 1
     simp
   exact (congrArg (pLoc ℚ v) this).trans (map_one _)

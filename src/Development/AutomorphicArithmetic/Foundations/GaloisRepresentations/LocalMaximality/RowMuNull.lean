@@ -27,7 +27,7 @@ private lemma detC_eq {κ : Type} [LinearOrder κ] {p : ℕ} (ρ : κ → Fin p 
     (f : Fin p → κ) (hc : s.card = p) (hs : ∀ x, f x ∈ s) (hf : StrictMono f) :
     detC ρ s = (Matrix.of fun a b => ρ (f a) b).det := by
   unfold detC
-  rw [dif_pos hc, Finset.orderEmbOfFin_unique hc hs hf]
+  rw [dite_eq_left hc, Finset.orderEmbOfFin_unique hc hs hf]
 
 private lemma rowMu_inr (l : Mi d) (m : Fin (d + 1)) : T.rowMu (toLex (Sum.inr l)) m =
     (if m = (ofLex l).1 then (T.X m * T.Y (ofLex l).2 : S) else 0) -

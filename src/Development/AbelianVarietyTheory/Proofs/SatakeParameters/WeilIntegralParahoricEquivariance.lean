@@ -87,7 +87,7 @@ theorem germ_app_mem (Z : Scheme.{0}) [IsIntegral Z] (p : Z ⟶ Sp ℂ) (φ : Z 
     rw [hc]
     exact IntermediateField.algebraMap_mem _ _
   · have hr : (Z.presheaf.germ _ _ h).hom (GlobalTheory.ProjSpace.pullRatio φ (φ ⁻¹ᵁ chart d 0) 0 le_rfl j) = rat φ 0 j := by
-      rw [rat, dif_pos h, ratioSec_eq, ← Scheme.Hom.appLE_eq_app]
+      rw [rat, dite_eq_left h, ratioSec_eq, ← Scheme.Hom.appLE_eq_app]
       rfl
     simp only [Function.comp_apply]
     rw [hr]

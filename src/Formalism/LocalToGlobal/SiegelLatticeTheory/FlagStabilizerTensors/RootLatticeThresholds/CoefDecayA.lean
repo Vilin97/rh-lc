@@ -25,7 +25,7 @@ theorem cstW_spec {A : ℝ} {F : B.Mat k r → E} (hF : CCw k r A F) (u v : List
     (hu : ∀ X ∈ u, B.unitLie k r X) (hv : ∀ X ∈ v, B.unitLie k r X) {g : B.Mat k r} (hg : g ∈ B.GV k r) :
     B.gN g ^ A * ‖B.dLR u v F g‖ ≤ cstW hF u v := by
   unfold cstW
-  rw [dif_pos ⟨hu, hv⟩]
+  rw [dite_eq_left ⟨hu, hv⟩]
   exact Classical.choose_spec (hF.2 u v hu hv) g hg
 
 def termW {N : ℕ} (e : Fin N → B.Mat k r) (K : ℝ) {A : ℝ} {F : B.Mat k r → E} (hF : CCw k r A F)

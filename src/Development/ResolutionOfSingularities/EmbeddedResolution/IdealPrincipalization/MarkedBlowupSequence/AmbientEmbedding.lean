@@ -179,7 +179,7 @@ private theorem isBlowupAlongIdealSheaf_succAmbientEmbeddingMorphism (hres : Fun
     (n : ℕ) (st : AmbientEmbedding s n) (h : n < s.length) :
     Blowup.IsBlowupAlongIdealSheaf (ambientEmbeddingSucc hres hno s hcen n st).2 (imageIdealSheaf st.emb (s.center n)) := by
   unfold ambientEmbeddingSucc
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Blowup.blowup.isBlowupAlongIdealSheaf_proj _
 
 private theorem succAmbientEmbedding_comp_blowupMorphism (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
@@ -191,10 +191,10 @@ private theorem succAmbientEmbedding_comp_blowupMorphism (hres : FunctorialResol
       s.map n ≫ st.emb := by
   unfold ambientEmbeddingSucc
   by_cases h : n < s.length
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     exact embeddingIntoBlowupImageIdealSheaf_comp_proj hres hno s n h st.ambient st.emb st.emb_isClosedImmersion
       (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     exact Category.id_comp _
 
 private theorem ker_succAmbientEmbedding_eq_strictTransform (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
@@ -206,7 +206,7 @@ private theorem ker_succAmbientEmbedding_eq_strictTransform (hres : FunctorialRe
       Blowup.strictTransform (ambientEmbeddingSucc hres hno s hcen n st).2
         (imageIdealSheaf st.emb (s.center n)) st.emb.ker := by
   unfold ambientEmbeddingSucc
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact ker_embeddingIntoBlowupImageIdealSheaf hres hno s n h st.ambient st.emb st.emb_isClosedImmersion
     (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
 

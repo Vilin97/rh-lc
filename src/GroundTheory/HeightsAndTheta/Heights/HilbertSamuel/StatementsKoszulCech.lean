@@ -101,7 +101,7 @@ theorem cechD_polyCochain (V : Ideal (MRingOver S ι)) (f : MRingOver S ι) :
       rintro g ⟨k, j, hj, rfl⟩
       exact ⟨k, j, hFJ k hj, rfl⟩
     unfold KH.cellRes
-    rw [dif_pos hle, ← LocalizedModule.mkLinearMap_apply, IsLocalizedModule.liftOfLE_apply,
+    rw [dite_eq_left hle, ← LocalizedModule.mkLinearMap_apply, IsLocalizedModule.liftOfLE_apply,
       LocalizedModule.mkLinearMap_apply]
   funext J
   obtain ⟨J, hJne, hJ⟩ := J
@@ -134,7 +134,7 @@ theorem cechD_polyCochain (V : Ideal (MRingOver S ι)) (f : MRingOver S ι) :
   rcases (show (J k).card = 1 ∨ (J k).card = 2 by omega) with h1 | h2
   · obtain ⟨a, hJk⟩ := Finset.card_eq_one.mp h1
     rw [Finset.sum_congr hJk (fun _ _ => rfl), Finset.sum_singleton]
-    erw [dif_neg]
+    erw [dite_eq_right]
     · rfl
     · rintro ⟨hne, -⟩
       have := hne k
@@ -149,7 +149,7 @@ theorem cechD_polyCochain (V : Ideal (MRingOver S ι)) (f : MRingOver S ι) :
     rw [Finset.sum_congr hJk (fun _ _ => rfl), Finset.sum_pair hab.ne]
     by_cases hP : (∀ l, (Function.update J k ((J k).erase a) l).Nonempty) ∧
         ∑ l, ((Function.update J k ((J k).erase a) l).card - 1) = 0
-    · erw [dif_pos hP, dif_pos (hface a ha b hb hP)]
+    · erw [dite_eq_left hP, dite_eq_left (hface a ha b hb hP)]
       change KH.faceSign J k a • KH.cellRes S M (Function.update J k ((J k).erase a)) J
             (LocalizedModule.mk (Ideal.Quotient.mk V f) 1) +
           KH.faceSign J k b • KH.cellRes S M (Function.update J k ((J k).erase b)) J
@@ -172,7 +172,7 @@ theorem cechD_polyCochain (V : Ideal (MRingOver S ι)) (f : MRingOver S ι) :
         simp [Finset.filter_insert, Finset.filter_singleton, hab, pow_succ, pow_add]
       erw [hsa, hsb, neg_smul, add_neg_cancel]
     · have hP' := fun h => hP (hface b hb a ha h)
-      erw [dif_neg hP, dif_neg hP']
+      erw [dite_eq_right hP, dite_eq_right hP']
       simp
 
 end KoszulCech

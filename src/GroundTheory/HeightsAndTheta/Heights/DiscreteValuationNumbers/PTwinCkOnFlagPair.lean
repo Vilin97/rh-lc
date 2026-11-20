@@ -131,7 +131,7 @@ theorem ChernClassOnFlagPair.proof (h1 : JoinPointFlagModel.Statement)
         simp only [Fin.append_right, IndefiniteRowSideFullHecke.NumbersDVR.Bundles.ratCyc, sub_self,
           IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval, Finsupp.sum_zero_index]
     unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.ck
-    rw [dif_pos hne]
+    rw [dite_eq_left hne]
     let _ := (Classical.choice hne).finK
     let _ := (Classical.choice hne).finι
     refine (h3 O Ω K ι y d N E B B' hW2 ((BundleExamples.sameGeneric_iff hϖ y B B').mpr hBB')
@@ -173,7 +173,7 @@ theorem ChernClassOnFlagPair.proof (h1 : JoinPointFlagModel.Statement)
           (Fin.append φ.deg _) _) _ = _
       rw [hd, append_pullDeg]
     unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.rootNum
-    rw [dif_pos hne]
+    rw [dite_eq_left hne]
     let _ := (Classical.choice hne).finK
     let _ := (Classical.choice hne).finι
     refine (h4 O Ω K ι y d N E B B hW2 ((BundleExamples.sameGeneric_iff hϖ y B B).mpr hsame)

@@ -26,9 +26,9 @@ theorem gfun_eq_mul (ν : kˣ →* ℂˣ) (ϖ : kˣ) (n c : ℕ) {m r : ℕ} (A 
     simp [GlobalTheory.SplitWeil.cball]
   unfold gfun
   by_cases h : A.det ≠ 0 ∧ IsGLO A ∧ ∀ i j, B i j ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c)
-  · rw [dif_pos h, dif_pos h, dif_pos ⟨h.1, h.2.1, h0⟩]
+  · rw [dite_eq_left h, dite_eq_left h, dite_eq_left ⟨h.1, h.2.1, h0⟩]
     simp
-  · rw [dif_neg h, dif_neg h, mul_zero]
+  · rw [dite_eq_right h, dite_eq_right h, mul_zero]
 
 theorem isLocallyConstant_gfun' {ν : kˣ →* ℂˣ} {ϖ : kˣ} {n : ℕ} (c : ℕ) (hϖ : GlobalTheory.SplitFlip.IsUnif ϖ)
     (hν : GlobalTheory.SplitFlip.CondLE ϖ n ν) (m r : ℕ) :

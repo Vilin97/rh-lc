@@ -26,7 +26,7 @@ theorem redV_eq_of_int (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (PP :
       Formalism.L2.Herm.intAf F E) (i : Fin n) :
     redV β PP v i = resS F PP ⟨_, h i⟩ := by
   unfold redV
-  rw [dif_pos (h i)]
+  rw [dite_eq_left (h i)]
 
 end RedLemmas
 

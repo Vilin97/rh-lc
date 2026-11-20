@@ -57,7 +57,7 @@ theorem ConePolar.proof (h₁ : SliceDim.Statement) (h₂ : LinearNoetherNormali
   refine ⟨1, fun n h J ℓ g hJ hdim hℓ hg hgc => ?_⟩
   have hex : ∃ A : Matrix (Fin e) (Fin n) ℂ, IsFiniteProjection (J ⊔ Ideal.span {linForm ℓ - 1}) A :=
     h₂ n e _ (h₁ n e J ℓ hJ hdim hℓ)
-  rw [one_mul, varInt, dif_pos hex, h₃ n e h J ℓ g hex.choose hJ hdim hℓ hg hgc hex.choose_spec,
+  rw [one_mul, varInt, dite_eq_left hex, h₃ n e h J ℓ g hex.choose hJ hdim hℓ hg hgc hex.choose_spec,
     chartInt]
   refine integral_congr_ae (Eventually.of_forall fun y => ?_)
   simp only [chartDens, sheetSum]

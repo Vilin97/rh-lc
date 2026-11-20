@@ -22,7 +22,7 @@ theorem card_blk (r t : ℕ) (c : Fin (t + 1)) (hc : c ≠ 0) :
   have hct := c.isLt
   refine ⟨⟨⟨r + ((c : ℕ) - 1), by omega⟩, ?_⟩, ?_⟩
   · unfold blkG
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
     exact Fin.ext (by simp; omega)
   · rintro ⟨a, ha⟩
     apply Subtype.ext

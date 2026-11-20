@@ -28,7 +28,7 @@ theorem atTau_spec (hθ : IsInfFam θ) (V : HSp D) (τ : D.what₂.Tau) {g : Mat
     (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) : IsAtTau θ V τ g (atTau θ V τ g) := by
   have hu := existsUnique_isAtTau V τ θ hθ g hg
   unfold atTau
-  rw [dif_pos hu.exists]
+  rw [dite_eq_left hu.exists]
   exact hu.exists.choose_spec
 
 theorem atTau_mem (V : HSp D) (τ : D.what₂.Tau) (g : Matrix (Fin V.rank) (Fin V.rank) ℂ) :

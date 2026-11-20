@@ -201,7 +201,7 @@ theorem hFlMono_sum_single (II : IntersectionSystem) (hII : IsIntersectionSystem
       simp [Multiset.length_toList]
       omega
     unfold monoLines
-    rw [hm, dif_pos hk, hσ k hk]
+    rw [hm, dite_eq_left hk, hσ k hk]
     rfl
   unfold hFlMono
   rw [if_pos hdeg, hML]

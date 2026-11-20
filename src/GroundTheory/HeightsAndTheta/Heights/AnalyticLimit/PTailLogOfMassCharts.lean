@@ -193,7 +193,7 @@ theorem sum_lintegral_eq_mInt [CompactSpace X] [T2Space X] (hYo : IsOpen Yo)
     ∑ i, ∫⁻ z in (A.chart i).target,
       ENNReal.ofReal ((ReciprocityTheory.AnForm.M.existsPartition A).some.χ i ((A.chart i).symm z) *
         h ((A.chart i).symm z) * locDens A (fun i => potForm th (u i)) i z) = ENNReal.ofReal (mInt A (fun i => potForm th (u i)) h) := by
-  rw [mInt, dif_pos (ReciprocityTheory.AnForm.M.existsPartition A)]
+  rw [mInt, dite_eq_left (ReciprocityTheory.AnForm.M.existsPartition A)]
   unfold ReciprocityTheory.AnForm.M.integralWith
   rw [ENNReal.ofReal_sum_of_nonneg (fun i _ => setIntegral_nonneg
     (A.chart i).open_target.measurableSet fun z hz => weight_nonneg hYo hth hu hnn _ h h0 hoff i hz)]

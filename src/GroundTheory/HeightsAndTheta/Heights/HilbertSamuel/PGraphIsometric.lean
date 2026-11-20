@@ -39,7 +39,7 @@ theorem mem_divSupp_and_multAt_eq {P W : Ideal (MRing κ)} {f g u v : MRing κ} 
   refine ⟨⟨GroundTheory.Heights₂.Heights.NumbersDVR.mem_minimalPrimes_of_mul_mem hu hv (mul_mem_sup_span huv)
     (mul_mem_sup_span hvu) hf.1, hf.2⟩, ?_⟩
   unfold multAt
-  rw [dif_pos hWp, dif_pos hWp,
+  rw [dite_eq_left hWp, dite_eq_left hWp,
     GroundTheory.Heights₂.Heights.NumbersDVR.length_localized_eq_of_mul_mem hu hv (mul_mem_sup_span huv)
       (mul_mem_sup_span hvu)]
 

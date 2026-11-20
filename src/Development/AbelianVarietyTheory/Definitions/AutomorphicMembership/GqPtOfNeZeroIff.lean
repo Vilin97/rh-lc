@@ -136,7 +136,7 @@ theorem Gq_nullPt {ζ : E} (hζ : ζ ≠ 0) (h : ζ * σ ζ = T * T') :
       rw [SgAlg.lead, e, Matrix.submatrix_diagonal _ _ (Fin.castLE_injective _), Matrix.det_diagonal]
       exact Finset.prod_eq_one fun i _ => if_neg (Fin.castSucc_lt_last i).ne
     exact ⟨w, by rw [Gq, h1, h2, h, map_one]; ring⟩
-  rw [nullPt, dif_pos k]; exact k.choose_spec
+  rw [nullPt, dite_eq_left k]; exact k.choose_spec
 
 omit [NumberField E] in
 

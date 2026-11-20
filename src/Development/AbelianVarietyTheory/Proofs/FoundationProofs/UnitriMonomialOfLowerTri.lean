@@ -149,10 +149,10 @@ theorem wordOf_eq (e : Fin r × Fin n →₀ ℕ) : wordOf e = (positions r n).m
   | cons a l ih =>
     by_cases h : s.val < a.val
     · have hr : s.val < r := lt_trans h a.2
-      rw [List.filterMap_cons, dif_pos ⟨h, hr⟩, List.filter_cons_of_pos (by simpa using h)]
+      rw [List.filterMap_cons, dite_eq_left ⟨h, hr⟩, List.filter_cons_of_pos (by simpa using h)]
       simp only [List.map_cons, ih]
       simp [letter, hr]
-    · rw [List.filterMap_cons, dif_neg (fun h' => h h'.1), List.filter_cons_of_neg (by simpa using h)]
+    · rw [List.filterMap_cons, dite_eq_right (fun h' => h h'.1), List.filter_cons_of_neg (by simpa using h)]
       exact ih
 
 theorem pairwise_positions :

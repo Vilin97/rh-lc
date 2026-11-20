@@ -30,7 +30,7 @@ private theorem wtBd_wtOf (n : ℕ) (E : Finset ℚ) (B : ℝ) (hB : 0 ≤ B) (h
     have h' : ((a : ℕ) : ℝ) ≤ ((a' : ℕ) : ℝ) := by exact_mod_cast h
     push_cast at e1' e2' ⊢
     linarith [b1.1, b1.2, b2.1, b2.2]
-  · rw [wtOf, dif_neg hc]
+  · rw [wtOf, dite_eq_right hc]
     simp only [Pi.zero_apply, sub_self, Int.cast_zero]
     linarith
 
@@ -46,7 +46,7 @@ private theorem wtBd_natW {n : ℕ} (lam : DomWeight n) (C : ℝ)
   have h2 := lam.anti hle
   have h3 : ((lam.natW a : ℕ) : ℤ) = lam.w a - lam.w ⟨n - 1, by omega⟩ := by
     unfold DomWeight.natW DomWeight.detShift
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     exact Int.toNat_of_nonneg (by linarith)
   rw [← h3] at h1
   exact_mod_cast h1

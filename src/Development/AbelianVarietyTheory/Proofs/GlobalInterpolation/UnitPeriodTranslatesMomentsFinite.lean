@@ -86,7 +86,7 @@ theorem moments_fin : (∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B :
   have hne : δ / δ₀ ≠ 0 := by
     intro h; have := hUn ι; rw [h, map_zero, norm_zero] at this; exact zero_ne_one this
   have hδ0 : δ ≠ 0 := by intro h; apply hne; rw [h, zero_div]
-  have hlam : lamC lam (δ / δ₀) = ι (δ / δ₀) := by rw [lamC, dif_pos hQ]; exact (hι ⟨_, hQ⟩).symm
+  have hlam : lamC lam (δ / δ₀) = ι (δ / δ₀) := by rw [lamC, dite_eq_left hQ]; exact (hι ⟨_, hQ⟩).symm
   refine ⟨Ω * (Ideal.absNorm cc : ℂ_[p]) * lamC lam (δ / δ₀), ?_, ?_⟩
   · rw [norm_mul, norm_mul, hΩ, hlam, hUn ι, GlobalTheory.MomOne.Basic.norm_nat_eq_one (Nat.Coprime.symm hcop)]
     norm_num

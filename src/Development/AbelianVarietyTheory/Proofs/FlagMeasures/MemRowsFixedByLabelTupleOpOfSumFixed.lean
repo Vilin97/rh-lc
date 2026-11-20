@@ -51,7 +51,7 @@ theorem mem_VT_of_sum_fixed : ∀ (D : D7) (X : HidaSetting D) (red : X.B.I.Gf �
   have hReT : ReT X {t} = X.B.Re.comp Ta := by
     have hex : ∃ T, X.B.I.IsRConvF X.B.μf X.B.fund X.B.R (eT X {t}) T := ⟨_, hRT⟩
     unfold ReT
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact huniq _ _ _ (Classical.choose_spec hex) hRT
   obtain ⟨z, hz⟩ := LinearMap.mem_range.1 hf
   have hRef : X.B.Re f = f := by

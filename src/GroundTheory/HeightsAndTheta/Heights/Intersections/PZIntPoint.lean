@@ -165,7 +165,7 @@ theorem mInt_one_of_dim_zero (A : FinHolAtlas 0 X) (x₀ : X) (hX : ∀ x, x = x
     simp [locDens, ReciprocityTheory.AnForm.maDens, ReciprocityTheory.AnForm.mdisc_zero]
   have hvol : (volume : Measure (Fin 0 → ℂ)).real Set.univ = 1 := by
     simp [Measure.real, volume_pi]
-  rw [ReciprocityTheory.AnForm.M.mInt, dif_pos hpart]
+  rw [ReciprocityTheory.AnForm.M.mInt, dite_eq_left hpart]
   set Q := hpart.some
   have hterm : ∀ j, ∫ y in (A.chart j).target, Q.χ j ((A.chart j).symm y) * 1 * locDens A Φ j y =
       Q.χ j x₀ := by
@@ -192,7 +192,7 @@ end Point
 theorem ZIntPoint.proof : ZIntPoint.Statement := by
   intro K _ _ ι _ P φ hP hR
   unfold zInt
-  rw [dif_pos hR]
+  rw [dite_eq_left hR]
   obtain ⟨x₀, hx₀⟩ := Res.eq_of_isProjVar_zero hP hR.some
   exact mInt_one_of_dim_zero hR.some.atlas x₀ hx₀ _
 

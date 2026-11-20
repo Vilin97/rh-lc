@@ -184,7 +184,7 @@ theorem exists_ev {S : Scheme.{0}} {U : S.Opens} (hU : IsAffineOpen U) (z : Sp �
   refine ⟨g, hg, fun f => ?_⟩
   subst hg
   obtain ⟨_, h2⟩ := point_of_ringHom hU g
-  rw [ev, dif_pos hz]
+  rw [ev, dite_eq_left hz]
   exact h2 f
 
 theorem exists_coords {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K → Type}

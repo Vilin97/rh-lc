@@ -289,7 +289,7 @@ theorem famD_pos (e : Sg → CMType H ⊕ CMType H) (b : ∀ t, Fin (labelRk D t
     (P : ∀ c' : ∀ k, J k, mseg y c' ≠ 0 → ChartPack G O c')
     (i : ∀ (c' : ∀ k, J k) (τ), (Fin (labelRk D (e τ)) → Ω) →ₗ[Ω] (Fin (D.p + D.q) → Ω)) (c' : ∀ k, J k)
     (h : mseg y c' ≠ 0) : famD e b pq sc w P i c' = chartD e b pq sc w (P c' h) (i c') := by
-  rw [famD, dif_pos h]
+  rw [famD, dite_eq_left h]
 
 theorem isLatFamily_congr {V : Type} [AddCommGroup V] [Module Ω V] {o : Type} [CommRing o] [Algebra o Ω]
     {A B : (∀ k, J k) → AddSubgroup V} (h : ∀ c', mseg y c' ≠ 0 → A c' = B c') (hA : IsLatFamily o y A) :

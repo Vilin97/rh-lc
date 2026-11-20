@@ -19,7 +19,7 @@ variable (H : Subgroup (GLG E n SG))
 theorem qdf_ptOfF_spec (q : QLoc hc n Q Θ) (hSF : DecoPtSurjF hc n ST SG Q q) (p : DecoF E n ST SG Q) :
     FrOver q (ptOfF hc n ST SG Q q p).1 p := by
   unfold ptOfF
-  rw [dif_pos (hSF p)]
+  rw [dite_eq_left (hSF p)]
   exact (hSF p).choose_spec
 
 theorem qdf_levUQ_le_UAd (q : QLoc hc n Q Θ) : levUQ hc n ST SG Q H q ≤ UAd hc n := by

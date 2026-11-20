@@ -692,7 +692,7 @@ theorem ptMat_det_ne {K : Type} [Field K] {n : ℕ} (p : Point K n) : (ptMat p).
 
 theorem Dmin_top_ne (w : Point D.host.E (D.R.rS + 1)) : LocalSplitGroups.Dmin w (D.R.rS + 1) ≠ 0 := by
   unfold LocalSplitGroups.Dmin
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   have : (ptMat w).submatrix (Fin.castLE (le_refl (D.R.rS + 1))) (Fin.castLE (le_refl (D.R.rS + 1))) = ptMat w := by
     ext a b; rfl
   rw [this]

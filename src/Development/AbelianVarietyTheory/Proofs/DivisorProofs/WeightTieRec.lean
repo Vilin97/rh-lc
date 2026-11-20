@@ -46,13 +46,13 @@ theorem weightTie_rec : ∀ (D : D7) (large₂ : SizeData₂ D) (EX : ErrX D), (
     obtain ⟨i, hi⟩ := i
     have hi' : i < D.R.k := hi
     by_cases h : 1 ≤ i ∧ i + 1 < D.R.k
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       obtain ⟨l, rfl⟩ : ∃ l, i = l + 1 := ⟨i - 1, by omega⟩
       have hl : l < D.R.k - 2 := by omega
       have a := D.s.u_letter u (tauPl D z) l hl
       rw [D.hcW_v, ← hfl] at a
       exact a
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       by_cases h0 : i = 0
       · subst h0
         exact D.hcW_first u _ hi'

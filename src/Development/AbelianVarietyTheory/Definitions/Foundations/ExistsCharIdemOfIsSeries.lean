@@ -67,7 +67,7 @@ private theorem sum_superdiag_eq_sum_entN (M : Matrix (Fin N) (Fin N) (ZMod g)) 
   rw [Fin.sum_univ_eq_sum_range (fun i => Formalism.MainNotions.ArithmeticCylinders.entN M i (i + 1)) N]
   obtain ⟨n, rfl⟩ : ∃ n, N = n + 1 := ⟨N - 1, by omega⟩
   rw [Finset.sum_range_succ, Nat.add_sub_cancel,
-    show Formalism.MainNotions.ArithmeticCylinders.entN M n (n + 1) = 0 by unfold Formalism.MainNotions.ArithmeticCylinders.entN; rw [dif_neg (by omega)], add_zero]
+    show Formalism.MainNotions.ArithmeticCylinders.entN M n (n + 1) = 0 by unfold Formalism.MainNotions.ArithmeticCylinders.entN; rw [dite_eq_right (by omega)], add_zero]
 
 open Formalism.MainNotions.ArithmeticCylinders in
 
@@ -151,7 +151,7 @@ theorem sum_edge_eq_phiJ (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ
     Fin.sum_univ_eq_sum_range (fun i => if i + 1 ≠ s ∧ ¬(0 < k ∧ i + 1 = s + k) then entN M i (i + 1) else 0) N,
     Fin.sum_univ_eq_sum_range (fun i => if i + 1 = s then entN M i (s + k) else 0) N,
     sum_range_eq_sum_split_of_last_eq_zero (fun i => entN M i (i + 1)) (fun i => if i + 1 ≠ s ∧ ¬(0 < k ∧ i + 1 = s + k) then entN M i (i + 1) else 0)
-      s k N hN (fun i => rfl) (by unfold entN; rw [dif_neg (by omega)])]
+      s k N hN (fun i => rfl) (by unfold entN; rw [dite_eq_right (by omega)])]
   have e2 : ∑ i ∈ Finset.range N, (if i + 1 = s then entN M i (s + k) else 0) =
       if 1 ≤ s then entN M (s - 1) (s + k) else 0 := by
     rcases s with _ | t
@@ -189,11 +189,11 @@ theorem coeff_eJ (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ) (hN : 
       rw [show b = ⟨s + k, by omega⟩ from Fin.ext h3]
       have := H a h1 h2
       unfold entN at this
-      rw [dif_pos ⟨a.isLt, by omega⟩] at this
+      rw [dite_eq_left ⟨a.isLt, by omega⟩] at this
       exact this
     · intro H a h1 h2
       unfold entN
-      rw [dif_pos ⟨by omega, by omega⟩]
+      rw [dite_eq_left ⟨by omega, by omega⟩]
       exact H ⟨a, by omega⟩ ⟨s + k, by omega⟩ h1 h2 rfl
   · funext u
     have hE := sum_edge_eq_phiJ ψ hψ s k hN h (u : Matrix (Fin N) (Fin N) (ZMod g))

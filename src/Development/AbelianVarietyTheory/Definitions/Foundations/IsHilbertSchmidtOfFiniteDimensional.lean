@@ -384,7 +384,7 @@ omit [TopologicalSpace G] [CompleteSpace H] in
 theorem IsRepOp.repOp_eq {T : H →L[ℂ] H} (h : IsRepOp π μ f T) : repOp π μ f = T := by
   have h' : ∃ T, IsRepOp π μ f T := ⟨T, h⟩
   ext v
-  rw [repOp, dif_pos h', (h'.choose_spec v).2, (h v).2]
+  rw [repOp, dite_eq_left h', (h'.choose_spec v).2, (h v).2]
 
 omit [CompleteSpace H] in
 
@@ -736,7 +736,7 @@ theorem _root_.GlobalTheory.PRep.IsSmooth.smoothOp_apply (hρ : IsSmooth ρ) (hf
       rw [RingHom.id_apply, map_smul l, map_lcIntegral (hi _).1 (hi _).2,
         map_lcIntegral (hi _).1 (hi _).2, ← integral_smul]
       simp only [map_smul, smul_comm c]
-  rw [smoothOp, dif_pos h, h.choose_spec]
+  rw [smoothOp, dite_eq_left h, h.choose_spec]
 
 theorem _root_.GlobalTheory.PRep.IsSmooth.map_smoothOp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [CompleteSpace E] (hρ : IsSmooth ρ) (hf : IsLocallyConstant f) (hc : HasCompactSupport f)

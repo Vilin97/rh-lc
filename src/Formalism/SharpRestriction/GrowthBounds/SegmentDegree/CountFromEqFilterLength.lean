@@ -120,12 +120,12 @@ def toL (r K : ℕ) (LL : Letters (Fin N)) (B : Fin N → ℕ) : BranchingDimens
 theorem toL_vec (LL : Letters (Fin N)) (B : Fin N → ℕ) (i : ℕ) (h : 1 ≤ i ∧ i ≤ N) :
     (toL r K LL B).vec i = LL.vec ⟨i - 1, by omega⟩ := by
   simp only [toL]
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem toL_B (LL : Letters (Fin N)) (B : Fin N → ℕ) (i : ℕ) (h : 1 ≤ i ∧ i ≤ N) :
     (toL r K LL B).B i = B ⟨i - 1, by omega⟩ := by
   simp only [toL]
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 section
 variable {n0 : ℕ} {LL : Letters (Fin N)} {B : Fin N → ℕ} {od : Fin N → Fin N} {bb : Fin N → ℝ} {a La : ℝ} {p : ℕ}
@@ -245,7 +245,7 @@ theorem toL_TData (H : HypT N n0 r K LL B od bb a La p) : (toL r K LL B).TData 1
   have hi : 1 ≤ i ∧ i ≤ N := ⟨by omega, h2⟩
   have hb : toB bb p i = 13 * bb ⟨i - 1, by omega⟩ / (p : ℝ) := by
     simp only [toB]
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
   refine ⟨?_, fun l hl1 hl2 hl3 => ?_⟩
   · rw [hb]
     have := H.bb_pos ⟨i - 1, by omega⟩ (by simp only; omega)

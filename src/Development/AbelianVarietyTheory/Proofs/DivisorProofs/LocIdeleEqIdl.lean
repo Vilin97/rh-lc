@@ -44,7 +44,7 @@ theorem frameEquiv_inr {N m : ℕ} (hr : N = m + 2) (i : Fin 1) : ((frameEquiv h
 theorem frameGL_val {v : Pl F} (t : E →ₐ[F] Fv F v) {N m : ℕ} (H : Plane E N m) (hr : N = m + 2)
     (h : IsUnit (frameMat t H hr)) : ((frameGL t H hr : GL (Fin N) (Fv F v)) : Matrix (Fin N) (Fin N) (Fv F v)) =
       frameMat t H hr := by
-  rw [frameGL, dif_pos h]; rfl
+  rw [frameGL, dite_eq_left h]; rfl
 
 end GlobalTheory.LineFrame
 

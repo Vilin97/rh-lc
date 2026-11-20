@@ -78,6 +78,6 @@ theorem Wc_unipotent_mul : ∀ (F : Type) [Field F] [ValuativeRel F] [Topologica
     ring
   · have hg' : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = ((u * g).val).det := by
       rw [hdet]; exact hg
-    rw [GL2LocalData.Wc, GL2LocalData.Wc, dif_neg hg, dif_neg hg', mul_zero]
+    rw [GL2LocalData.Wc, GL2LocalData.Wc, dite_eq_right hg, dite_eq_right hg', mul_zero]
 
 end GlobalTheory.CompanionTheory.SphTheta.WcLeft

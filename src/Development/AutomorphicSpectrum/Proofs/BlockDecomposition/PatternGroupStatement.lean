@@ -152,18 +152,18 @@ theorem card_patSet (h : IsPat Φ) :
         rw [Matrix.add_apply]
         simp only [fill]
         rcases eq_or_ne i j with rfl | hij
-        · rw [Matrix.one_apply_eq, dif_neg (h.1 i), add_zero, hu.1 rfl]
+        · rw [Matrix.one_apply_eq, dite_eq_right (h.1 i), add_zero, hu.1 rfl]
         · rw [Matrix.one_apply_ne hij, zero_add]
           by_cases hΦ : Φ i j
-          · rw [dif_pos hΦ]
-          · rw [dif_neg hΦ, hu.2 hij hΦ]
+          · rw [dite_eq_left hΦ]
+          · rw [dite_eq_right hΦ, hu.2 hij hΦ]
       right_inv := fun f => by
         funext p
         show (1 + fill Φ f) p.1.1 p.1.2 = f p
         have hne : p.1.1 ≠ p.1.2 := fun e => h.1 p.1.2 (by have hp := p.2; rw [e] at hp; exact hp)
         rw [Matrix.add_apply, Matrix.one_apply_ne hne, zero_add]
         simp only [fill]
-        rw [dif_pos p.2] }
+        rw [dite_eq_left p.2] }
   rw [← Nat.card_coe_set_eq, Nat.card_congr e, Nat.card_fun, Nat.card_eq_fintype_card (α := K)]
 
 def pair (E : ι → ι → K) (M : Matrix ι ι K) : K := ∑ i, ∑ j, E i j * M i j

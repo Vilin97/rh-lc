@@ -132,14 +132,14 @@ theorem phi_operator_transfer_holds : JAPhiOp := by
     ring
   have hR : (trJ S T v e J ρ) = ⟨u, hu⟩ := by
     unfold trJ MA.toSm
-    rw [dif_pos hu]
+    rw [dite_eq_left hu]
   have hP : MA.toSm (D.parOf S v) p = ⟨p, hp⟩ := by
     unfold MA.toSm
-    rw [dif_pos hp]
+    rw [dite_eq_left hp]
   rw [hL, hR, hP]
   have hm : (fun q => p q * u q) ∈ MA.smSub (D.parOf S v).r (D.parOf S v).TT := Subalgebra.mul_mem _ hp hu
   unfold MA.toSm
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   rfl
 
 end Formalism.FourierDecayAlt.P.CutMP.JA

@@ -172,7 +172,7 @@ theorem field_bound (χ : AddChar F Circle) (σ : E ≃ₐ[F] E) (μE : Measure 
     unfold GL2LocalData.Wc
     rw [hdet, h00, h01, h10, h11]
     by_cases h : ∃ t : Eˣ, Algebra.norm F (t : E) = (a : F)
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       set t : Eˣ := h.choose with ht
       have htN : Algebra.norm F (t : E) = (a : F) := h.choose_spec
       have ha : (a : F) / a = 1 := div_self a.ne_zero
@@ -195,7 +195,7 @@ theorem field_bound (χ : AddChar F Circle) (σ : E ≃ₐ[F] E) (μE : Measure 
           exact Set.indicator_of_notMem (s := {x : E | x ∈ 𝒪[E]}) hm _
         rw [hv]
         simp
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact Or.inl rfl
   rcases key _ rfl with h0 | ⟨hle, hn⟩
   · rw [h0]

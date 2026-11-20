@@ -39,7 +39,7 @@ theorem hasDiv_of_pCrd_pt : ∀ (k Ω o : Type) [CommRing k] [Field Ω] [Algebra
   have hval : ∀ i, ev (((M.pt ≫ g).appLE _ _ hV).hom ((GlobalTheory.ProjSpace.coord o n i).f (j PUnit.unit))) =
       valF M.pt W (GlobalTheory.ProjSpace.pullRatio g W c le_rfl i) := by
     intro i
-    rw [valF, dif_pos hW]
+    rw [valF, dite_eq_left hW]
     change (Scheme.ΓSpecIso (CommRingCat.of Ω)).hom.hom (resG (Sp Ω) hV' _) = _
     rw [GlobalTheory.ProjSpace.resG_appLE, GlobalTheory.ProjSpace.pullRatio, GlobalTheory.ProjSpace.appLE_appLE]
     rfl

@@ -117,7 +117,7 @@ theorem onto : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {
   have hex : ∃ t, ∃ J : QJ a t, J.Reads ∧ Nonempty (J.Ch j) := ⟨t, J, hJ, ⟨α⟩⟩
   have hUp : GlobalTheory.LevProd.Up a j hj = GlobalTheory.LevProd.relax hex.choose_spec.choose j hj hex.choose_spec.choose_spec.2.some := by
     unfold GlobalTheory.LevProd.Up
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hJ₀ : hex.choose_spec.choose.Reads := hex.choose_spec.choose_spec.1
   have hgl := fun i : Fin J.r => GlobalTheory.LocEmb.exists_gl _ _ (J.G i).q ((I.rec7 l Z).sp.X j)
     (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) ((J.G i).FX j (by have := GlobalTheory.LevProd.step_index_le_s J i hj; omega))

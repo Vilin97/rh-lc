@@ -47,7 +47,7 @@ theorem valR_pullRatio (x : Sp ℂ ⟶ MP ℤ m n) {k : Fin (m + 1)} (i j : Bk n
     valR x (blockChart n k i) (pullRatio (prB n k) _ i le_rfl j) =
       valR (x ≫ prB n k) (chart ℤ (n k) i) (ratio ℤ (n k) i j) := by
   have h' : ⊤ ≤ (x ≫ prB n k) ⁻¹ᵁ chart ℤ (n k) i := h
-  rw [valR, valR, dif_pos h, dif_pos h', pullRatio,
+  rw [valR, valR, dite_eq_left h, dite_eq_left h', pullRatio,
     ← Scheme.Hom.appLE_comp_appLE x (prB n k) (chart ℤ (n k) i) (blockChart n k i) ⊤ le_rfl h]
   rfl
 

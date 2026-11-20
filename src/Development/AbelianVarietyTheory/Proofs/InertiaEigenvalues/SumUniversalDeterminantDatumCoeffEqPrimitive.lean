@@ -15,9 +15,9 @@ theorem sum_univCoef_eq_prim : ∀ (k C : Type) [Field k] [Finite k] [AddCommGro
     intro U
     unfold univTerm
     by_cases h : Compl U.1 y
-    · rw [dif_pos h, if_pos h]
+    · rw [dite_eq_left h, if_pos h]
       simp [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
-    · rw [dif_neg h, if_neg h]
+    · rw [dite_eq_right h, if_neg h]
       simp
   have hsum : ∑ c, univCoef β κ c y = ((Nat.card k : ℚ) ^ (r * (n - r)))⁻¹ *
       (Nat.card {U : Planes k r n // Compl U.1 y} : ℚ) := by

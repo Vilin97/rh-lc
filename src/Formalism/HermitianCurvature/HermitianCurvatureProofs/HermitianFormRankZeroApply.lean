@@ -326,7 +326,7 @@ theorem stabilizer_subset_range {z : Fin (2 * r + k + 1) → ℂ} (hz : C2.StdZ 
     refine ⟨hn.1.1, fun i b hb => ?_, fun i b hb1 hb2 hi => hn.1.2.2 i b hb1 (by omega) hi⟩
     have hf := stabilizer_fixes_flag_vector hz hn ⟨b.val, by omega⟩
     unfold fvec at hf
-    rw [dif_pos hb] at hf
+    rw [dite_eq_left hb] at hf
     have := congrFun hf i
     have e : eI k r ⟨b.val, hb⟩ = b := Fin.ext rfl
     rw [e] at this
@@ -334,7 +334,7 @@ theorem stabilizer_subset_range {z : Fin (2 * r + k + 1) → ℂ} (hz : C2.StdZ 
   obtain ⟨x, rfl⟩ := rset_sub_range hR
   have hz' : Rn k r 0 x *ᵥ z = z := by
     have := stabilizer_fixes_flag_vector hz hn (Fin.last r)
-    unfold fvec at this; rw [dif_neg (by simp)] at this; exact this
+    unfold fvec at this; rw [dite_eq_right (by simp)] at this; exact this
   have hc := (cstr_iff hz x.1).1 ((rn_fix_z_iff hz x).1 hz')
   refine ⟨(fun i a => x.1 i.castSucc a, x.2), ?_⟩
   unfold E embX

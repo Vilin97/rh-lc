@@ -20,7 +20,7 @@ theorem sub_coeff (ε : Ω →+* ℂ) {a b d : ℚ} (h : 0 < a / d) (φ : HahnSe
     show s = (a / d) * ((a / d)⁻¹ * s)
     rw [mul_inv_cancel_left₀ h.ne']
   unfold sub scale
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   conv_lhs => rw [hs]
   rw [HahnSeries.embDomain_coeff]
   rfl

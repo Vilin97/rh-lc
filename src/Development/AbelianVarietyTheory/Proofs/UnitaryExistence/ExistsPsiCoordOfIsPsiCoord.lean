@@ -170,7 +170,7 @@ theorem vPsiAt_eq_psiVal {v : LatticeVal R ℝ} {f : R →+* C} {p : ℕ} (hv : 
   have h0 := PsiCoordLocal.ne_zero_of_coord h.choose_spec
   obtain ⟨u, hu⟩ := PsiCoordLocal.exists_unit_of_coord h.choose_spec hr
   have hf' : f h.choose ≠ 0 := fun e => hf (by rw [hu, map_mul, e, mul_zero])
-  rw [vPsiAt, dif_pos h, psiVal_eq v (isPsiCoord_toUnitK h.choose_spec h0), hv _ h0 hf']
+  rw [vPsiAt, dite_eq_left h, psiVal_eq v (isPsiCoord_toUnitK h.choose_spec h0), hv _ h0 hf']
 
 theorem betaAt_eq_periodForm {v : LatticeVal R ℝ} {f : R →+* C} {p : ℕ} (hv : ReadsAt v f p) {D : DegPre R}
     {a b : D.X} (ha : ∃ r, PsiCoord D a r ∧ f r ≠ 0) (hb : ∃ r, PsiCoord D b r ∧ f r ≠ 0)
@@ -225,7 +225,7 @@ theorem vPsiAt_eq_mul (hφ : IsCentred φ) {p : ℕ} (hp : IsOverPrime R p) {D :
     vPsiAt D (φ.comp (algebraMap R (FractionRing R))) p χ = psiOrdAt_vp hφ hp D χ * -Real.logb p ‖(p : C)‖ := by
   have h := (exists_psiCoord_iff D χ).2 hI
   have h0 := PsiCoordLocal.ne_zero_of_coord h.choose_spec
-  rw [vPsiAt, dif_pos h, psiOrdAt_vp, psiVal_eq _ (isPsiCoord_toUnitK h.choose_spec h0)]
+  rw [vPsiAt, dite_eq_left h, psiOrdAt_vp, psiVal_eq _ (isPsiCoord_toUnitK h.choose_spec h0)]
   change -Real.logb p ‖φ (algebraMap R _ h.choose)‖ = Real.log ‖φ (algebraMap R _ h.choose)‖ / _ * _
   have := (hφ.log_norm_p_neg hp).2.ne
   simp only [Real.logb]

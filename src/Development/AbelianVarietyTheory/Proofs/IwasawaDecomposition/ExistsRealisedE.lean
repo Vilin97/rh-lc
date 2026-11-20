@@ -95,7 +95,7 @@ abbrev recXE : ThetaX D where
     rw [Module.End.mul_apply, actReal_apply hθ V τ hg, actReal_apply hθ V τ hh, actReal_apply hθ V τ (mul_mem_UH hg hh),
       (GlobalTheory.PointAtPlaceHom.atTau_laws D θ hθ V τ).2.2.1 g hg h hh, mul_assoc]
   actR_cusp V τ g hg F hF := by
-    rw [actReal, dif_pos hg]; exact trE_cusp hθ V _ _ F hF
+    rw [actReal, dite_eq_left hg]; exact trE_cusp hθ V _ _ F hF
   Gf V := GfC V
   actF := actFin hθ
   actF_cusp V g F hF := trE_cusp hθ V g (fun φ h => GlobalTheory.T.smoothAutomorphicForm_rightTranslate_finiteAdelic D θ hθ V φ h g g.2) F hF
@@ -176,7 +176,7 @@ abbrev recTE : ThetaTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) where
     have h1 := (GlobalTheory.PointAtPlaceHom.atTau_laws D θ' hθ V τ).1 g hg
     refine ⟨h1.exists, fun h hh F x => ?_⟩
     have e : atTau θ' V τ g = h := by
-      rw [atTau, dif_pos h1.exists]; exact h1.unique h1.exists.choose_spec hh
+      rw [atTau, dite_eq_left h1.exists]; exact h1.unique h1.exists.choose_spec hh
     rw [← e]
     exact actReal_apply hθ V τ hg F x⟩
   ksph V S g := mem_ksph

@@ -398,7 +398,7 @@ theorem twist_indFam_zero {n N R : ℕ} (Λ : Lt E n) :
       ∃ s : ℕ, s ≡ 1 [MOD R ^ 2] ∧ ∀ v ∈ stdL E N, (s : E) • v ∈ stdL E N :=
     ⟨fun _ _ => by simp, 1, Nat.ModEq.refl 1, by simp⟩
   unfold twist
-  rw [dif_pos h, smul_zero]
+  rw [dite_eq_left h, smul_zero]
   exact if_pos fun _ => Λ.zero_mem
 
 theorem exists_concrete : ∃ (_ : IsCMField (CyclotomicField 3 ℚ))

@@ -36,7 +36,7 @@ theorem symbolMapBihomogeneous : KappaBihom := by
     by_contra hg
     have h0 : mono K k d g = 0 := by
       unfold mono
-      rw [dif_neg hg]
+      rw [dite_eq_right hg]
     rw [h0, map_zero] at h2
     simp at h2
   refine Submodule.mem_inf.2 ⟨?_, ?_⟩ <;> rw [mem_weightedHomogeneousSubmodule] <;> intro n hn <;>

@@ -15,7 +15,7 @@ theorem exists_multiplicative_ideal_extension :
   have hd : ∀ P : HeightOneSpectrum (𝓞 K), ¬ m ≤ P.asIdeal → d P.asIdeal = c P := by
     intro P hP
     simp only [d]
-    rw [dif_pos ⟨P.isPrime, P.ne_bot⟩, if_neg hP]
+    rw [dite_eq_left ⟨P.isPrime, P.ne_bot⟩, if_neg hP]
   have hd0 : ∀ Q, m ≤ Q → d Q = 0 := by
     intro Q hQ
     simp only [d]

@@ -121,7 +121,7 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
       rw [LinearEquiv.apply_symm_apply]
       exact hz
     by_cases hw : w.1 ∈ Pr.vGs
-    · rw [dif_pos hw]
+    · rw [dite_eq_left hw]
       obtain ⟨hne, -, hqm⟩ := ybSet_props2 sel mu cst hY w hw
       have hr0 := representative_mem hne
       have hq : ((qOf w.1 : ℕ) : X.E) • (frsF sel mu p w).symm (repY Y) ∈ stdAt X.E (R.N (m2 + 1)) w.1 := by
@@ -134,7 +134,7 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
         simp [rhoS, LocE.unitV, redP_one]
       rw [h1, one_mul, map_one, inv_one, Units.val_one, mul_one] at key
       exact key
-    · rw [dif_neg hw]
+    · rw [dite_eq_right hw]
       obtain ⟨hne, hqm⟩ := coupling_index_scaled_mem_local sel mu cst hY w hw
       have hr0 := representative_mem hne
       have hq : ((qOf w.1 : X.E) ^ cst.M) • (frsF sel mu p w).symm (repY Y) ∈ stdAt X.E (R.N (m2 + 1)) w.1 := by

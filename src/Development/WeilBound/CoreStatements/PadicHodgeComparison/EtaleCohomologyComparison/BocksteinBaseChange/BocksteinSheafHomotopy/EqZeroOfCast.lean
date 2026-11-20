@@ -17,7 +17,7 @@ namespace RootOfUnityLemmas
 
 theorem pick_neg {α : Type*} [Zero α] {P : α → Prop} (h : ¬ ∃ a, P a) : pick P = 0 := by
   unfold pick
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem cast_zero' {q : ℕ} {E : Spc} {n i n' i' : ℤ} (hn : n = n') (hi : i = i') :
     (0 : Ht q E n i).cast hn hi = 0 := by

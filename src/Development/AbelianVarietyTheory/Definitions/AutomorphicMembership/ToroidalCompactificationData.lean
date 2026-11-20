@@ -114,7 +114,7 @@ theorem zOf_frameOver {z : Pt D.what₂.Tau j (N - j)} (hz : z ∈ DomI D.what�
   have h : ∃ f, s.zOf L k f = z := by
     obtain ⟨f, hf, e⟩ := FrameOnto.frame_onto _ N j (s.fd k) s.j_le _ (s.lab L k) (s.p0_eq k) z hz
     exact ⟨⟨f, hf⟩, e⟩
-  rw [frameOver, dif_pos h]
+  rw [frameOver, dite_eq_left h]
   exact h.choose_spec
 
 theorem framePt_eq {f f' : (s.fd k).dom} {g : D.what₂.Tau → GL (Fin j ⊕ Fin (N - j)) ℂ}

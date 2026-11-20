@@ -42,7 +42,7 @@ theorem xiLev_eq_const_mul_locFac : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.
   choose c hc hspec using fun n j hj => loc_all W hW u a ha hat hi n j hj
   refine ⟨fun j => if h : j + 1 ≤ B.R.m then ∏ n, c n j h else 1, fun j hj => ?_, ?_⟩
   · dsimp only
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact Finset.prod_ne_zero_iff.2 fun n _ => hc n j _
   · intro t J hR j hj α γ
     choose Ξ hΞ hΞe using fun n => hspec n j hj t J hR α γ
@@ -50,7 +50,7 @@ theorem xiLev_eq_const_mul_locFac : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.
     rw [map_prod, prod_bij W hW u a t _ (fun n => c n j hj * Ξ n z) (fun n P hP => hΞe n P hP z),
       Finset.prod_mul_distrib]
     dsimp only
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
 
 end GlobalTheory.Fam.LocLev
 end

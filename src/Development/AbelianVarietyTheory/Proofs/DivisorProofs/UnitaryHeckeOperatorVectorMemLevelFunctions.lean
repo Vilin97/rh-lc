@@ -12,10 +12,10 @@ theorem toSub_mul_right {G : Type} [Group G] (H : Subgroup G) (K : Subgroup H) (
   unfold toSub
   by_cases hy : y ∈ H
   · have h2 : y * (k : G) ∈ H := H.mul_mem hy k.2
-    rw [dif_pos h2, dif_pos hy]
+    rw [dite_eq_left h2, dite_eq_left hy]
     exact hu k hk ⟨y, hy⟩
   · have h2 : y * (k : G) ∉ H := fun h => hy (by simpa using H.mul_mem h (H.inv_mem k.2))
-    rw [dif_neg h2, dif_neg hy]
+    rw [dite_eq_right h2, dite_eq_right hy]
 
 theorem toSub_mul_left {G : Type} [Group G] (H : Subgroup G) (K : Subgroup H) (u : H → ℂ)
     (hu : ∀ k ∈ K, ∀ x, u (k * x) = u x) (y : G) (k : H) (hk : k ∈ K) :
@@ -23,10 +23,10 @@ theorem toSub_mul_left {G : Type} [Group G] (H : Subgroup G) (K : Subgroup H) (u
   unfold toSub
   by_cases hy : y ∈ H
   · have h2 : (k : G) * y ∈ H := H.mul_mem k.2 hy
-    rw [dif_pos h2, dif_pos hy]
+    rw [dite_eq_left h2, dite_eq_left hy]
     exact hu k hk ⟨y, hy⟩
   · have h2 : (k : G) * y ∉ H := fun h => hy (by simpa using H.mul_mem (H.inv_mem k.2) h)
-    rw [dif_neg h2, dif_neg hy]
+    rw [dite_eq_right h2, dite_eq_right hy]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 

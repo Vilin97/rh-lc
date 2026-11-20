@@ -100,7 +100,7 @@ theorem isHecke_conj {K K' : Subgroup G} (hle : K' ≤ K) (hn : (K'.subgroupOf K
 theorem trace_of_not_finite {W : Type} [AddCommGroup W] [Module ℂ W] (hW : ¬ Module.Finite ℂ W)
     (L : W →ₗ[ℂ] W) : LinearMap.trace ℂ W L = 0 := by
   unfold LinearMap.trace
-  rw [dif_neg]
+  rw [dite_eq_right]
   · simp
   · rintro ⟨s, ⟨b⟩⟩
     exact hW (Module.Finite.of_basis b)

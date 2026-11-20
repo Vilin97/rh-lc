@@ -36,7 +36,7 @@ def FlagFam.lat {Z : Mdl Y i₀} (s : FlagFam P Z) : Lat Z := if h : ∃ L : Lat
 
 theorem FlagFam.lat_full {Z : Mdl Y i₀} (L : Lat Z) (h : L.IsTop ∨ P Z L) : (FlagFam.full L h).lat = L := by
   have h₁ : ∃ L' : Lat Z, (FlagFam.full L h).1 = allSteps L' := ⟨L, rfl⟩
-  rw [FlagFam.lat, dif_pos h₁]
+  rw [FlagFam.lat, dite_eq_left h₁]
   exact (allSteps_injective h₁.choose_spec).symm
 
 open Classical in

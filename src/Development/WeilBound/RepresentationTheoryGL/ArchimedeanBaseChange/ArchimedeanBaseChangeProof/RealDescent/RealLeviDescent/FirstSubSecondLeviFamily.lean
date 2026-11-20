@@ -109,7 +109,7 @@ def qOp {V : Type} [AddCommGroup V] [Module ℂ V] (B : Submodule ℂ V) (f : Mo
 theorem qOp_intw {V : Type} [AddCommGroup V] [Module ℂ V] (B : Submodule ℂ V) (f : Module.End ℂ V)
     (h : ∀ x ∈ B, f x ∈ B) : Intw B.mkQ f (qOp B f) := fun x => by
   unfold qOp
-  rw [dif_pos (show B ≤ B.comap f from fun y hy => h y hy)]
+  rw [dite_eq_left (show B ≤ B.comap f from fun y hy => h y hy)]
   rfl
 
 section Chains

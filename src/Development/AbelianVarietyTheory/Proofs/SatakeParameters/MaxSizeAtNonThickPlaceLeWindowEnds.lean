@@ -25,7 +25,7 @@ theorem floor_size_le_wB {D : D7} (L : SizeData₂ D) (g : D.R.GG) (j : Fin D.R.
   have hj : j.1 + 1 ≤ D.R.m := j.2
   have hw : wj D (j.1 + 1) ρ = (((D.hc ρ).e j : ℚ) : ℝ) := by
     have hj' : j.1 + 1 - 1 < D.R.m := by have := j.2; omega
-    rw [wj, dif_pos hj']
+    rw [wj, dite_eq_left hj']
     have : (⟨j.1 + 1 - 1, hj'⟩ : Fin D.R.m) = j := Fin.ext (by simp)
     rw [this]
   have hthick : (D.eTau ρ : D.R.GG) ∉ D.host.thickPlaces := by rw [hρ']; exact hg

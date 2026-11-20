@@ -50,7 +50,7 @@ theorem markVal_int (n : ℕ) (β : LinearMap.BilinForm ℤ (Fin n → O)) :
   classical
   unfold markVal
   have h : ∃ β' : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, ((β a b : ℤ) : ℝ) = β' a b := ⟨β, fun _ _ => rfl⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e : h.choose = β := LinearMap.ext₂ fun a b => by
     have := h.choose_spec a b
     exact_mod_cast this.symm

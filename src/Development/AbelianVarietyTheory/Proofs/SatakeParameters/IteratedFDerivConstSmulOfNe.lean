@@ -106,18 +106,18 @@ theorem lamC_mul' {p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ
   unfold TaylorLogMetric.lamC
   by_cases ht : t ∈ TaylorLogMetric.Qbar
   · have hst : s * t ∈ TaylorLogMetric.Qbar := TaylorLogMetric.Qbar.mul_mem hs ht
-    rw [dif_pos hst, dif_pos hs, dif_pos ht, ← map_mul]
+    rw [dite_eq_left hst, dite_eq_left hs, dite_eq_left ht, ← map_mul]
     rfl
   · have hst : s * t ∉ TaylorLogMetric.Qbar := by
       intro h
       apply ht
       have : s⁻¹ * (s * t) ∈ TaylorLogMetric.Qbar := TaylorLogMetric.Qbar.mul_mem (TaylorLogMetric.Qbar.inv_mem hs) h
       rwa [← mul_assoc, inv_mul_cancel₀ hs0, one_mul] at this
-    rw [dif_neg hst, dif_neg ht, mul_zero]
+    rw [dite_eq_right hst, dite_eq_right ht, mul_zero]
 
 theorem lamC_zero' {p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_[p]) : TaylorLogMetric.lamC lam 0 = 0 := by
   unfold TaylorLogMetric.lamC
-  rw [dif_pos (TaylorLogMetric.Qbar.zero_mem)]
+  rw [dite_eq_left (TaylorLogMetric.Qbar.zero_mem)]
   exact map_zero lam
 
 theorem pSer_const_mul' (D : D7) {N N' p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_[p]) {s : ℂ} (hs : s ∈ TaylorLogMetric.Qbar)
@@ -262,7 +262,7 @@ def frameInv (fd : FData X D) (j : ℕ) (La : X.Lt j) : ∀ v : X.Pl, GL (Fin ((
 theorem frameGL_val (fd : FData X D) (j : ℕ) (La : X.Lt j) (v : X.Pl) (h : IsUnit (fd.frM j La v).det) :
     ((frameGL fd j La v : GL _ _) : Matrix _ _ _) = fd.frM j La v := by
   unfold frameGL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 open Classical in

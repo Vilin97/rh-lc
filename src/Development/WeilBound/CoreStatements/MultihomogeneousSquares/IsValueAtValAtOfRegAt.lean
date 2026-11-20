@@ -28,7 +28,7 @@ theorem isValueAt_valAt_of_regAt {K : Type} [Fintype K] {J : K → Type} [∀ k,
     exact hwh (hw.2 h (GroundTheory.Heights₂.Heights.LowerBoundFree.mem_mCoordIdeal_of_aeval_eq_zero x hh h0))
   have hex : ∃ v, IsValueAt x s w v := ⟨_, d, g, h, hg, hh, hxh, hgh, hwh, rfl⟩
   unfold GroundTheory.Heights₂.Heights.LowerBoundFree.valAt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem c0 : C0 := by

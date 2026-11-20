@@ -211,6 +211,6 @@ theorem geoAbs : GeoAbs := by
       refine hex ⟨fun g => ρ fun _ => g, hρ.1.comp (Measurable.of_eval fun _ => measurable_id), fun x => ?_⟩
       exact hρ.2 fun _ => x
     unfold quotInt
-    rw [dif_neg no, dif_neg hex]
+    rw [dite_eq_right no, dite_eq_right hex]
 
 end UpperTheory.ConvolutionTheory.L1

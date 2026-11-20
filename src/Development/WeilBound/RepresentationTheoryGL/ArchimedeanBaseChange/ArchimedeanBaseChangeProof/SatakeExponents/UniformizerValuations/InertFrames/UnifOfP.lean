@@ -20,7 +20,7 @@ theorem v_of_ordL_eq_one {L : Type} [Field L] [Valued L (WithZero (Multiplicativ
     intro h
     exact hx0 ((Valuation.zero_iff _).mp h)
   unfold ordL at hx
-  rw [dif_neg h0] at hx
+  rw [dite_eq_right h0] at hx
   have hu : WithZero.unzero h0 = Multiplicative.ofAdd (-1 : ℤ) := by
     apply Multiplicative.toAdd.injective
     simp only [toAdd_ofAdd]

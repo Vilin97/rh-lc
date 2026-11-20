@@ -79,7 +79,7 @@ theorem kumH_apply {F Ω' : Type*} [Field F] [Field Ω'] [Algebra F Ω'] {N : �
     conv_lhs => rw [hk b, map_mul, map_pow, hfix a, hk a]
     ring
   unfold kumH
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem eps_eOm [IsAlgClosed Ω] (q : ℚ) : ε (eOm ε q) = Complex.exp (2 * Real.pi * Complex.I * (q : ℂ)) := by

@@ -39,7 +39,7 @@ theorem UpperTheory.pdeg_eq_of_isDeg :
     ∀ (p : ℕ) [Fact p.Prime] (X : Scheme.{0}) (d : ℕ) (N : Fin d → LB X), (∀ j, (N j).IsLB) → ∀ (z : X) (a : ℤ), IsDeg p N z a → pdeg p N z = a := by
   intro p _ X d N hN z a ha
   have hex : ∃ a, IsDeg p N z a := ⟨a, ha⟩
-  rw [pdeg, dif_pos hex]
+  rw [pdeg, dite_eq_left hex]
   obtain ⟨Z', i', _, _, _, hz', -, e'⟩ := hex.choose_spec
   obtain ⟨Z, i, _, _, _, hz, -, e⟩ := ha
   rw [e', e]

@@ -16,7 +16,7 @@ theorem evalAt_eq_of (hWD : EvalWD pts mapR) (f : Rules pts) (hf : IsNatural pts
     (h : mapR φ y w) : evalAt pts mapR f w = φ (f p y) := by
   have hT : FromTest pts mapR w := ⟨p, φ, y, h⟩
   unfold evalAt
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   exact hWD f hf S _ p _ φ _ y w hT.choose_spec.choose_spec.choose_spec h
 
 theorem indep_of_complex [Algebra K ℂ] (hWD : EvalWD pts mapR)

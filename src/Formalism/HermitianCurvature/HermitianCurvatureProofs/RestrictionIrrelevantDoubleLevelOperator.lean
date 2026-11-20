@@ -45,7 +45,7 @@ theorem mulVec_bvec {m : ℕ} (g : Matrix (Fin m) (Fin m) ℂ) (i j : Fin m) : (
 
 theorem fvec_last (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) : fvec k r z (Fin.last r) = z := by
   unfold fvec
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
 
 theorem Nlev_last {k r : ℕ} {n : Mx k r} (hn : n ∈ Nlev k r (Fin.last r)) : n = 1 := by
   obtain ⟨⟨hU, -, h3⟩, -, hfix⟩ := hn
@@ -3060,7 +3060,7 @@ theorem rho_int (h : P.OK) (π : Ty P) (i : ℕ) (hi : i ∈ Finset.Icc 1 (P.k -
   obtain ⟨n₁, hn₁⟩ := h.int_u (i + 1) hi1
   obtain ⟨n₂, hn₂⟩ := h.int_u' (i + 1) hi1
   unfold rho
-  rw [dif_pos hi']
+  rw [dite_eq_left hi']
   unfold M.Par.lo
   rcases max_choice (P.u (i + 1)) (P.u' (i + 1)) with hm | hm
   · rw [hm]

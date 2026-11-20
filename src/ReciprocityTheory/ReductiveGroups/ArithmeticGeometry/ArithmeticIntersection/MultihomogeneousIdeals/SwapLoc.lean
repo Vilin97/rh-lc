@@ -215,7 +215,7 @@ noncomputable def lenAt {R : Type*} [CommRing R] (J W : Ideal R) : ℕ∞ :=
 
 theorem lenAt_eq {R : Type*} [CommRing R] (J W : Ideal R) [hW : W.IsPrime] :
     lenAt J W = Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J)) := by
-  rw [lenAt, dif_pos hW]
+  rw [lenAt, dite_eq_left hW]
 
 theorem length_quot_ne_top_of_mem_minimalPrimes {A : Type*} [CommRing A] [IsNoetherianRing A]
     [IsLocalRing A] (I : Ideal A) (hm : IsLocalRing.maximalIdeal A ∈ I.minimalPrimes) :

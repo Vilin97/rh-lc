@@ -281,7 +281,7 @@ def nData (H : Host R) (what₂ : Rows.Data R) (hsha : ∀ p e, what₂.shaLen p
   plOm := ⟨placeOf _, isPlaceOver_placeOf _⟩
   ldat := lData H
   sha_eq := fun p hp e _ _ n h => by
-    rw [hsha, shaTrue, dif_pos hp.out]
+    rw [hsha, shaTrue, dite_eq_left hp.out]
     show ((Formalism.GaloisCohomology.shaLen (lData H p) (e : ℤ)).toNat : ℚ) = n
     rw [h, ENat.toNat_natCast]
   Loc := Empty
@@ -911,9 +911,9 @@ theorem idempotent_good_tuples_eq_zero {N : NData R H what₂} {A : NAut N} (T :
 theorem good_tuple_condition_of_idempotent_zero {N : NData R H what₂} {A : NAut N} (T : NTypes A) (h : T.e0 = 0)
     (h1 : ∀ μ, what₂.eOp μ = 0) (h2 : ∀ μ j, what₂.eMt μ j = 0) : T.IdempotentMatchesAction := by
   refine ⟨fun μ => ?_, fun μ j => ?_⟩
-  · rw [h, h1, NTypes.onAmb, dif_pos (zero_mem _)]
+  · rw [h, h1, NTypes.onAmb, dite_eq_left (zero_mem _)]
     exact (map_zero (T.cenAmb μ)).symm
-  · rw [h, h2, NTypes.onMt, dif_pos (zero_mem _)]
+  · rw [h, h2, NTypes.onMt, dite_eq_left (zero_mem _)]
     exact (map_zero (T.cenMt μ j)).symm
 
 end Types

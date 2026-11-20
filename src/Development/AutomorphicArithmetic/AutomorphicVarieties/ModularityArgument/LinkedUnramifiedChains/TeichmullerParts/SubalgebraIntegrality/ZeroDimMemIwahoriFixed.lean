@@ -334,7 +334,7 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
 private theorem toGS_sec (hb : Function.Bijective ((toGS n s).comp (GaS n s).subtype)) (p : GS n s) :
     toGS n s (secS n s p) = p := by
   unfold secS
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   exact (MulEquiv.ofBijective _ hb).apply_symm_apply p
 
 private theorem toKT_eq (hb : Function.Bijective ((toGS n s).comp (GaS n s).subtype)) (u : Ub n s) {k : Ga l L n} (hk : k ∈ KS n s)

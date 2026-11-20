@@ -97,7 +97,7 @@ theorem unitAt_mul {q : ℕ} [Fact q.Prime] {a b : ℂ} (ha : Mod1All a) (hb : M
   have hab : a * b ∈ Qbar := mul_mem ha' hb'
   have e : lamC lam (a * b) = lamC lam a * lamC lam b := by
     unfold lamC
-    rw [dif_pos hab, dif_pos ha', dif_pos hb', ← map_mul]
+    rw [dite_eq_left hab, dite_eq_left ha', dite_eq_left hb', ← map_mul]
     rfl
   rw [e, norm_mul, hua lam, hub lam, one_mul]
 

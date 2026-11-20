@@ -147,7 +147,7 @@ private theorem Lop_apply_of_min_eq (f : ι → V →+ V) (h : ι → ι → V �
       (if h2 : (t.erase m0).Nonempty then h m0 ((t.erase m0).min' h2) v • y (t.erase m0) else 0) := by
   subst hm
   unfold Lop
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
 
 private theorem neg_one_pow_card_erase_of_mem (t : Finset ι) (i : ι) (hi : i ∈ t) :
     (-1 : ℤ) ^ (t.erase i).card = -(-1) ^ t.card := by
@@ -241,24 +241,24 @@ private theorem Dtot_Lop_eq_zero_of_Dtot_eq_zero_of_empty_eq_zero (p : ℕ) (d :
         · rw [show GlobalTheory.cubeSign s' n = 1 from cubeSign_min_eq_one s' h2]
           simp only [one_smul]
           by_cases h3 : (s'.erase n).Nonempty
-          · rw [dif_pos h3, dif_pos h3, ← sub_smul]
+          · rw [dite_eq_left h3, dite_eq_left h3, ← sub_smul]
             congr 1
             rw [← hD.cocycle m n ((s'.erase n).min' h3) v]
             ring
-          · rw [dif_neg h3, dif_neg h3, Finset.not_nonempty_iff_eq_empty.mp h3, hy0]
+          · rw [dite_eq_right h3, dite_eq_right h3, Finset.not_nonempty_iff_eq_empty.mp h3, hy0]
             simp
         · intro b hb hbn
           have hnb : n ∈ s'.erase b := Finset.mem_erase.mpr ⟨fun e => hbn e.symm, hns⟩
           have hmin : (s'.erase b).min' ⟨n, hnb⟩ = n :=
             le_antisymm ((s'.erase b).min'_le n hnb)
               (Finset.le_min' _ _ _ (fun z hz => s'.min'_le z (Finset.mem_of_mem_erase hz)))
-          rw [dif_pos ⟨n, hnb⟩, hmin, smul_comm (h m n v) (GlobalTheory.cubeSign s' b), sub_self]
+          rw [dite_eq_left ⟨n, hnb⟩, hmin, smul_comm (h m n v) (GlobalTheory.cubeSign s' b), sub_self]
         · intro hn
           exact absurd hns hn
       have hcomm : ∀ x : ExteriorAlgebra K V,
           h m n v • ((-1 : ℤ) ^ s.card • x) = (-1 : ℤ) ^ s.card • (h m n v • x) :=
         fun x => smul_comm _ _ _
-      rw [dif_pos h2, ← hn_eq, hSh, hLs', dsm, hD.dh, hys s', hc]
+      rw [dite_eq_left h2, ← hn_eq, hSh, hLs', dsm, hD.dh, hys s', hc]
       simp only [neg_smul, smul_neg, neg_neg, mul_neg, mul_sub, sub_mul, smul_add, smul_sub,
         mul_smul_comm, hε, hcomm]
       abel
@@ -266,7 +266,7 @@ private theorem Dtot_Lop_eq_zero_of_Dtot_eq_zero_of_empty_eq_zero (p : ℕ) (d :
       have hdy0 : delta y s = 0 := by
         rw [hdy, hs'e]
         simp [hy0]
-      rw [dif_neg h2, hdy0, hs'e]
+      rw [dite_eq_right h2, hdy0, hs'e]
       simp [Lop, hy0]
 
 theorem prodL_closed (p : ℕ) (d : ExteriorAlgebra K V →+ ExteriorAlgebra K V) (f : ι → V →+ V)

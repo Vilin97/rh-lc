@@ -25,7 +25,7 @@ def coL {m : ℕ} (L : Lv Y m) (M : Model l K) (r j : ℕ) : HG (L.QB M) r j →
 
 theorem isCo (hC : CoEx l K) {m : ℕ} (L : Lv Y m) {M : Model l K} (hM : M.Sm) {r : ℕ} (j : ℕ) (h : r < m) :
     IsCo L.γB M.q (L.QB M) L.θ L.tB_mem r j (coL L M r j) := by
-  rw [coL, dif_pos (hC L M hM r j h).2]
+  rw [coL, dite_eq_left (hC L M hM r j h).2]
   exact (hC L M hM r j h).2.choose_spec
 
 theorem aCo (hC : CoEx l K) {m : ℕ} (L : Lv Y m) {M : Model l K} (hM : M.Sm) {r : ℕ} (j : ℕ) (h : r < m) :
@@ -106,7 +106,7 @@ theorem gam_eq {r j m : ℕ} (hm : r ≤ m) {x : Y.Fam M r j} (hx : CB.Comp x) {
     gam S x = coL (S m) M r j w := by
   induction m, hm using Nat.le_induction with
   | base =>
-    rw [gam, dif_pos ⟨w, hw⟩]
+    rw [gam, dite_eq_left ⟨w, hw⟩]
     exact congrArg _ ((H.ex.ex (S r) M hM r j r.lt_succ_self x hx).unique (Exists.choose_spec ⟨w, hw⟩) hw)
   | succ m hm ih =>
     obtain ⟨w', h1, h2⟩ := down H.co H.hom H.mu H.form (H.dn m).some hM (Nat.lt_succ_of_le hm) x w hw

@@ -13,7 +13,7 @@ namespace GlobalTheory.PtExt
 theorem evalSectionAtPointOrZero_specMap_comp (Y : Scheme.{0}) (D D' : Type) [CommRing D] [CommRing D'] (φ : D →+* D') (x : Sp D ⟶ Y) (U : Y.Opens) (a : Γ(Y, U)) (h : ⊤ ≤ x ⁻¹ᵁ U) : evU (spMap φ ≫ x) U a = φ (evU x U a) := by
   have h' : ⊤ ≤ (spMap φ ≫ x) ⁻¹ᵁ U := fun p _ ↦ h (Set.mem_univ _)
   unfold evU
-  rw [dif_pos h', dif_pos h]
+  rw [dite_eq_left h', dite_eq_left h]
   unfold GlobalTheory.Cris.evalAt
   rw [← Scheme.Hom.appLE_comp_appLE (spMap φ) x U ⊤ ⊤ h le_rfl]
   have e := congrArg (fun k => k.hom (x.appLE U ⊤ h a)) (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom φ))
@@ -23,7 +23,7 @@ theorem evalSectionAtPointOrZero_specMap_comp (Y : Scheme.{0}) (D D' : Type) [Co
 theorem evalSectionAtPointOrZero_restriction (Y : Scheme.{0}) (D : Type) [CommRing D] (x : Sp D ⟶ Y) (U V : Y.Opens) (h : V ≤ U) (a : Γ(Y, U)) (hV : ⊤ ≤ x ⁻¹ᵁ V) : evU x V ((Y.presheaf.map (homOfLE h).op).hom a) = evU x U a := by
   have hU : ⊤ ≤ x ⁻¹ᵁ U := hV.trans (fun p hp ↦ h hp)
   unfold evU
-  rw [dif_pos hV, dif_pos hU]
+  rw [dite_eq_left hV, dite_eq_left hU]
   unfold GlobalTheory.Cris.evalAt
   have e := congrArg (fun k => k.hom a) (Scheme.Hom.map_appLE x hV (homOfLE h).op)
   simp only [RingHom.comp_apply, CommRingCat.comp_apply] at e ⊢
@@ -57,12 +57,12 @@ theorem evalSectionAtPointOrZero_schemeHom_app (Y Z : Scheme.{0}) (D : Type) [Co
   unfold evU
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (q ⁻¹ᵁ U)
   · have h' : ⊤ ≤ (x ≫ q) ⁻¹ᵁ U := h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     unfold GlobalTheory.Cris.evalAt
     simp only [RingHom.comp_apply]
     rw [Scheme.Hom.comp_appLE, CommRingCat.comp_apply]
   · have h' : ¬ ⊤ ≤ (x ≫ q) ⁻¹ᵁ U := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem dualNumberPoint_preimage_top_of_reduction (Y : Scheme.{0}) (D : Type) [CommRing D] (y : Sp (DualNumber D) ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ (spMap (TrivSqZeroExt.fstHom D D D).toRingHom ≫ y) ⁻¹ᵁ U) : ⊤ ≤ y ⁻¹ᵁ U := by
   intro p _

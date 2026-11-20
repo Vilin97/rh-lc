@@ -75,10 +75,10 @@ theorem corner_sg (σ : Fin (n + 1) → Fin (n + 1)) (hσ : ∀ a, σ (σ a) = a
             (if j = j₀ ∧ j.val + 1 = n then c / M (Fin.last n) j₀ else 0) := by
         intro j
         by_cases h1 : j.val + 1 < n + 1
-        · rw [dif_pos h1, dif_pos h1, Matrix.sub_apply]
+        · rw [dite_eq_left h1, dite_eq_left h1, Matrix.sub_apply]
           congr 1
           simp only [hX, Matrix.of_apply, Fin.ext_iff, Fin.val_last]
-        · rw [dif_neg h1, dif_neg h1]
+        · rw [dite_eq_right h1, dite_eq_right h1]
           have hn : ¬ (j = j₀ ∧ j.val + 1 = n) := fun h => h1 (by omega)
           rw [if_neg hn, sub_zero]
       unfold Formalism.DoubleCosetMeasures.sUp
@@ -134,28 +134,28 @@ theorem sLow_sgT (A : Matrix (Fin (r + 1)) (Fin (r + 1)) R) : Formalism.DoubleCo
   rw [← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases h : j.val + 1 < r + 1
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     simp only [Sg, Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.transpose_apply]
     have e : r - j.val = (r - (j.val + 1)) + 1 := by omega
     have hx : (-1 : R) ^ (r - (j.val + 1)) * (-1 : R) ^ (r - (j.val + 1)) = 1 := by
       rw [← mul_pow]; simp
     rw [e, pow_succ]
     linear_combination (-(A j ⟨j.val + 1, h⟩)) * hx
-  · rw [dif_neg h, dif_neg h, neg_zero]
+  · rw [dite_eq_right h, dite_eq_right h, neg_zero]
 
 theorem sUp_sgT (A : Matrix (Fin (r + 1)) (Fin (r + 1)) R) : Formalism.DoubleCosetMeasures.sUp (Sg R r * A.transpose * Sg R r) = -Formalism.DoubleCosetMeasures.sLow A := by
   unfold Formalism.DoubleCosetMeasures.sLow Formalism.DoubleCosetMeasures.sUp
   rw [← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases h : j.val + 1 < r + 1
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     simp only [Sg, Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.transpose_apply]
     have e : r - j.val = (r - (j.val + 1)) + 1 := by omega
     have hx : (-1 : R) ^ (r - (j.val + 1)) * (-1 : R) ^ (r - (j.val + 1)) = 1 := by
       rw [← mul_pow]; simp
     rw [e, pow_succ]
     linear_combination (-(A ⟨j.val + 1, h⟩ j)) * hx
-  · rw [dif_neg h, dif_neg h, neg_zero]
+  · rw [dite_eq_right h, dite_eq_right h, neg_zero]
 
 end Signs
 

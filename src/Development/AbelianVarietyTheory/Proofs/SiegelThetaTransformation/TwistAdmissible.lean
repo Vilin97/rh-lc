@@ -167,10 +167,10 @@ theorem _root_.GlobalTheory.SW.TwistAdm.twist_eq {R : ℕ} {𝔛 : _root_.Global
   by_cases h : ∀ ξ ∈ 𝔛, (R : E) • (x *ᵥ ξ) ∈ Λ
   · rw [if_pos h]
     simp only [_root_.GlobalTheory.SW.twist]
-    rw [dif_pos ⟨h, hex⟩]
+    rw [dite_eq_left ⟨h, hex⟩]
   · rw [if_neg h]
     simp only [_root_.GlobalTheory.SW.twist]
-    rw [dif_neg (fun h' => h h'.1)]
+    rw [dite_eq_right (fun h' => h h'.1)]
 
 open Matrix Complex NumberField Filter Topology in
 open scoped ComplexConjugate ComplexOrder Real Classical in

@@ -171,7 +171,7 @@ theorem chi_det_unit : ∀ (D : D7) (X : Fields) (s : Seam D X) (χ : TaylorLogM
     rw [e']
     exact mem_algebraicClosure_iff.1 (Subtype.prop _)
   refine ⟨hmem, ?_⟩
-  rw [TaylorLogMetric.lamC, dif_pos hmem]
+  rw [TaylorLogMetric.lamC, dite_eq_left hmem]
   have e2 : (⟨_, hmem⟩ : TaylorLogMetric.Qbar) ^ h = ∏ τ, (φ τ y)⁻¹ := Subtype.ext (by rw [← e']; simp)
   have e3 := congrArg (fun z => ‖lam z‖) e2
   simp only [map_pow, norm_pow, map_prod, norm_prod, map_inv₀, norm_inv] at e3

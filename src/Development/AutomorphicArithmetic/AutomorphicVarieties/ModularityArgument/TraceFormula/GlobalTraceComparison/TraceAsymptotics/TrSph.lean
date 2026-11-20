@@ -30,7 +30,7 @@ theorem trSph : TrSph := by
     simp [LinearMap.restrict_apply, hact x hx]
   haveI : Module.Finite ℂ (fixed τ.ρ (KGL w n)) := Module.finite_of_finrank_pos (by omega)
   unfold twTr
-  rw [dif_pos hmaps, hres, map_smul, LinearMap.trace_id, hfr]
+  rw [dite_eq_left hmaps, hres, map_smul, LinearMap.trace_id, hfr]
   simp
 
 end UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm

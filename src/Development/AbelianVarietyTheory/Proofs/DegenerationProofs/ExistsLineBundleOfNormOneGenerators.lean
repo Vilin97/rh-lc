@@ -42,14 +42,14 @@ theorem valF_comp_appIso {F : Type} [Field F] {X Y : Scheme.{0}} (f : Y ⟶ X) [
     rw [Scheme.Hom.comp_preimage, Scheme.Hom.preimage_image_eq]
   unfold valF
   by_cases h : ⊤ ≤ y₀ ⁻¹ᵁ V
-  · rw [dif_pos h, dif_pos (e ▸ h)]
+  · rw [dite_eq_left h, dite_eq_left (e ▸ h)]
     congr 1
     rw [← Scheme.Hom.appLE_comp_appLE y₀ f (f ''ᵁ V) V ⊤ (f.preimage_image_eq V).ge h,
       ← Scheme.Hom.appIso_hom']
     change (y₀.appLE V ⊤ h).hom (((f.appIso V).inv ≫ (f.appIso V).hom).hom u) = _
     rw [Iso.inv_hom_id]
     rfl
-  · rw [dif_neg h, dif_neg (e ▸ h)]
+  · rw [dite_eq_right h, dite_eq_right (e ▸ h)]
 
 theorem val_res_pullU {X Y : Scheme.{0}} (f : Y ⟶ X) (W : X.Opens) (V : Y.Opens)
     (h : V ≤ f ⁻¹ᵁ W) (ψ : Γ(X, W)ˣ) :

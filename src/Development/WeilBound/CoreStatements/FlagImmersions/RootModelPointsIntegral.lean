@@ -62,7 +62,7 @@ theorem monoLines_word {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype 
     exact k.2
   rw [← hσ k]
   simp only [monoLines]
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   rfl
 
 theorem map_prod_lin {J : Type} [Fintype J] [DecidableEq J] {d : ℕ} (Φ : MvPolynomial J ℝ →ₗ[ℝ] ℝ)

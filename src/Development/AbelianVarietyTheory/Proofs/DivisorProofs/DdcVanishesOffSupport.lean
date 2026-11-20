@@ -38,7 +38,7 @@ theorem ddc_elim_eq_zero_off_support : ∀ (M : Type) [TopologicalSpace M] (A : 
     hc.eventually (hK.isOpen_compl.mem_nhds (by beta_reduce; rw [hs]; exact hx))
   rw [GlobalTheory.SecForm.DdcGerm.ddc_eq_of_eventuallyEq (famAtlas A) _ x (fun _ => 0), delAt_dbarAt_zero_field, smul_zero]
   filter_upwards [ht, hev] with v hv hv'
-  rw [HolAtlas.loc, dif_pos hv]
+  rw [HolAtlas.loc, dite_eq_left hv]
   change algebraMap ℂ _ (((((famAtlas A).e x.1.1).symm v).2.elim 0 φ : ℝ) : ℂ) = 0
   rw [hz _ hv', Complex.ofReal_zero, map_zero]
 

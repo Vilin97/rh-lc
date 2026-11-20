@@ -12,7 +12,7 @@ theorem projCycle_eq_fundCycle {k : Type} [Field k] {N : ℕ} (J : Ideal (MvPoly
   by_cases hQ : Q ∈ GroundTheory.Heights₂.Heights.relComps J
   · haveI hp : Q.IsPrime := hQ.1.1.1
     have h1 := GlobalTheory.ChowHt.cast_projCycle_apply (J := J) (Q := Q) hQ
-    rw [if_pos hQ, GroundTheory.Heights₂.Heights.localMult, dif_pos hp]
+    rw [if_pos hQ, GroundTheory.Heights₂.Heights.localMult, dite_eq_left hp]
     have h2 := congrArg ENat.toNat h1
     rw [ENat.toNat_coe] at h2
     exact h2

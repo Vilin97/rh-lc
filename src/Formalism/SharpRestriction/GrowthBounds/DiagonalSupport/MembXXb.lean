@@ -37,7 +37,7 @@ theorem Mx_even {L₁ N₁' : ℕ} (hV : Fr.Valid L₁ N₁') (hnL : ∀ j, Dt.n
   have hc := Classical.choose_spec hex
   have heq : Classical.choose hex = u := hinj _ _ hc.1 hu hc.2
   unfold Mx
-  rw [dif_pos hex, if_pos he, heq]
+  rw [dite_eq_left hex, if_pos he, heq]
 
 theorem Mx_odd {L₁ N₁' : ℕ} (hV : Fr.Valid L₁ N₁') (hnL : ∀ j, Dt.nL j = (Fr.LLset (segZ j)).card) (j : ZMod J) (u : ℕ)
     (hu : u < Dt.nL j + r) (he : ¬ Even (pU p O Fr Dt j u)) :
@@ -54,7 +54,7 @@ theorem Mx_odd {L₁ N₁' : ℕ} (hV : Fr.Valid L₁ N₁') (hnL : ∀ j, Dt.nL
   have hc := Classical.choose_spec hex
   have heq : Classical.choose hex = u := hinj _ _ hc.1 hu hc.2
   unfold Mx
-  rw [dif_pos hex, if_neg he, heq]
+  rw [dite_eq_left hex, if_neg he, heq]
 
 theorem cond_at {TT : Finset (Fin n')} {L₁ L₂ : ℕ} {d : Fin n' → ℕ}
     (hM : MFH p Fr TT L₁ L₂ N₁ G' deg d Y (r + K) cP) (hnL : ∀ j, Dt.nL j = (Fr.LLset (segZ j)).card)

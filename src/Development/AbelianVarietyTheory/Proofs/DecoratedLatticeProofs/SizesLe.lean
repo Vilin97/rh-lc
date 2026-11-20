@@ -10,7 +10,7 @@ namespace GlobalTheory.Core.Rk.HdGap
 theorem bOne_eq (D : D7) (τ : D.what₂.Tau) (j : ℕ) (hj : j < D.R.m) :
     bOne D τ (j + 1) = (((D.hc τ).b ⟨j, hj⟩ : ℚ) : ℝ) := by
   unfold bOne
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 theorem gap_of {D : D7} {L C' Cl Cg cb Cu cT CT : ℝ} (H : GlobalTheory.Core.Deg.HypL D L C' Cl Cg cb Cu cT CT)

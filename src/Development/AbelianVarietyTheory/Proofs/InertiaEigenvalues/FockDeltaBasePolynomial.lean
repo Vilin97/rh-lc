@@ -52,7 +52,7 @@ theorem rename_minorPlus {D : D7} {H : Geo.Tor.Host D.host.E} (Dw : Datum H) {m 
   have ha := a.isLt; have hb := b.isLt; have hi := i.isLt
   simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.transpose_apply,
     GlobalTheory.Harm.baseCovec, GlobalTheory.Harm.xForm_single, varF]
-  rw [dif_pos ⟨by omega, by omega⟩, MvPolynomial.rename_X, fockVarEquiv_lt Dw hΨ hm ρ _ _ (by omega)]
+  rw [dite_eq_left ⟨by omega, by omega⟩, MvPolynomial.rename_X, fockVarEquiv_lt Dw hΨ hm ρ _ _ (by omega)]
   rfl
 
 theorem rename_minorMinus {D : D7} {H : Geo.Tor.Host D.host.E} (Dw : Datum H) {m n : ℕ}
@@ -68,7 +68,7 @@ theorem rename_minorMinus {D : D7} {H : Geo.Tor.Host D.host.E} (Dw : Datum H) {m
   have ha := a.isLt; have hb := b.isLt; have hi := i.isLt
   simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.transpose_apply,
     Matrix.submatrix_apply, id, GlobalTheory.Harm.baseVec, GlobalTheory.Harm.yForm_single, varF]
-  rw [dif_pos ⟨by omega, by omega⟩, MvPolynomial.rename_X, fockVarEquiv_ge Dw hΨ hm ρ _ _ (by omega)]
+  rw [dite_eq_left ⟨by omega, by omega⟩, MvPolynomial.rename_X, fockVarEquiv_ge Dw hΨ hm ρ _ _ (by omega)]
   refine congrArg MvPolynomial.X (Prod.ext rfl (Prod.ext rfl (Fin.ext ?_)))
   simp only [Fin.val_rev, Fin.val_castLE, Fin.revPerm_apply]
   omega

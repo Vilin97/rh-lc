@@ -353,7 +353,7 @@ theorem chiAt_one : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
   intro F E _ _ _ _ _ σ hσ P
   obtain ⟨e, f, -, h⟩ := exists_isPrimeIdem hσ P
   unfold chiAt
-  rw [dif_pos ⟨⟨e, f, h, fun _ _ _ _ => rfl⟩, exists_isUnifIdele hσ P⟩]
+  rw [dite_eq_left ⟨⟨e, f, h, fun _ _ _ _ => rfl⟩, exists_isUnifIdele hσ P⟩]
   rfl
 
 end GlobalTheory.CMPrimeIdele

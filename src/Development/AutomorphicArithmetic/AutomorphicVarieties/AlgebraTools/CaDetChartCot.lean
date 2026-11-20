@@ -28,7 +28,7 @@ theorem UpperTheory.V.AlgebraTools.chartGen_cotInd :
       simp only [b, Sum.elim_inl, Sum.elim_inr, Matrix.mulVec, dotProduct, dite_true]
       have e : ∀ j : {j // j ≠ c}, (if h : (j : ι) = c then
           -(∑ k : {k // k ≠ c}, a (Sum.inr k) * l k.1) else a (Sum.inr ⟨j, h⟩)) * m j
-          = a (Sum.inr j) * m j := fun j => by rw [dif_neg j.2]
+          = a (Sum.inr j) * m j := fun j => by rw [dite_eq_right j.2]
       rw [Finset.sum_congr rfl (fun j _ => e j)]
       have e2 : ∀ i, ∑ j, a (Sum.inl i) * l j * z i j = a (Sum.inl i) * ∑ j, z i j * l j := by
         intro i

@@ -160,7 +160,7 @@ theorem lw_size (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotion
       push_cast at h3
       have h4 : (Formalism.MainNotions.G.aL L (t0 + s.val • Formalism.MainNotions.G.hP D (D.what₂.places.resChar w)) : ℝ) ≤ 6 / 5 * L.sc.a := by
         unfold Formalism.MainNotions.G.aL
-        rw [dif_pos (hTT.1 hsT)]
+        rw [dite_eq_left (hTT.1 hsT)]
         exact lw_aT_le _
       linarith
     · unfold al

@@ -246,7 +246,7 @@ theorem phx_eq (hW : WordSmooth) (hP : Pts) (hC : CurveSmooth) {P : M.Par} (p : 
     have hk := hj2.comp hg hm
     exact hk.congr fun τ _ => rfl
   unfold phx
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 end asm
 

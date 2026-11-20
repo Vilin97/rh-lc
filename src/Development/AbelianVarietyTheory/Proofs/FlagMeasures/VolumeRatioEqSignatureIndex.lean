@@ -19,17 +19,17 @@ theorem exists_family {V : Type} {N k s : ℕ} (hN : N = s + k + 1 + s) (e : Fin
     fun j h => ?_, fun j a h => ?_⟩
   · have := a.2
     beta_reduce
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact congrArg e (Fin.ext h)
   · have := a.2
     beta_reduce
-    rw [dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_left (by omega)]
     exact congrArg β (Fin.ext (by simp only; omega))
   · beta_reduce
-    rw [dif_neg (by omega), dif_neg (by omega), dif_pos h]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
   · have := a.2
     beta_reduce
-    rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega)]
     exact congrArg f (Fin.ext (by simp only; omega))
 
 theorem index_cases {N k s : ℕ} (hN : N = s + k + 1 + s) (j : Fin N) :

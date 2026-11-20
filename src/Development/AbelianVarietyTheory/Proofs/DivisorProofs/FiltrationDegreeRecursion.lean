@@ -204,7 +204,7 @@ theorem deg_stepLat_succ (D : D7) (O : Setup D) (K : Type) [Field K] [NumberFiel
   have hlogr : ∀ σ : K →+* ℂ, Real.log ((h.gram σ e).det.re / (h.gram σ fun j => e j.castSucc).det.re) =
       Real.log (h.gram σ e).det.re - Real.log (h.gram σ fun j => e j.castSucc).det.re := fun σ =>
     Real.log_div (hpos e heli σ).ne' (hpos _ he0 σ).ne'
-  rw [arakelovDegree_eq_degreeOfFamily h hW'fg hv', arakelovDegree_eq_degreeOfFamily h hWfg hu, stepGrDeg, dif_pos hex, ← ha_def]
+  rw [arakelovDegree_eq_degreeOfFamily h hW'fg hv', arakelovDegree_eq_degreeOfFamily h hWfg hu, stepGrDeg, dite_eq_left hex, ← ha_def]
   unfold degreeOfFamily stepGrSq
   rw [← hU'_def, ← hU_def, hidx, Nat.cast_mul, Real.log_mul (by exact_mod_cast hne1) (by exact_mod_cast hne)]
   simp only [hvec1, hvec0, hlog1, hlog0, hlogr, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]

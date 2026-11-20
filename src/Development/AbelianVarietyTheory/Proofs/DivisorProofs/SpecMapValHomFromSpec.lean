@@ -22,7 +22,7 @@ def valHom (x : Sp ℂ ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) : Γ(X, U
 
 theorem valHom_apply (x : Sp ℂ ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     valHom x U h f = valAt' x U f := by
-  rw [valAt', dif_pos h]; rfl
+  rw [valAt', dite_eq_left h]; rfl
 
 theorem specMap_valHom_fromSpec (x : Sp ℂ ⟶ X) {U : X.Opens} (hU : IsAffineOpen U) (h : ⊤ ≤ x ⁻¹ᵁ U) :
     spMap (valHom x U h) ≫ hU.fromSpec = x := by

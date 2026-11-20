@@ -22,7 +22,7 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ 
   set e : Fin n₁ ⊕ Fin 2 ≃ Fin n := finSumFinEquiv.trans (finCongr hn) with he
   set Q' : Matrix (Fin n) (Fin n) E := (planeMat H).submatrix id e.symm with hQ'
   have hP : planeCoef H = Q'⁻¹.submatrix e id := by
-    rw [planeCoef, dif_pos hn]
+    rw [planeCoef, dite_eq_left hn]
   have hsurj : Function.Surjective Q'.mulVec := by
     have hrange : ∀ z ∈ X.L, z ∈ LinearMap.range Q'.mulVecLin := by
       intro z hz

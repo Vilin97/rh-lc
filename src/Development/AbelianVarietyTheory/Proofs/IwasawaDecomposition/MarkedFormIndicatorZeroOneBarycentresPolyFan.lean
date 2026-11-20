@@ -22,7 +22,7 @@ theorem exists_markFun {O : Type} [CommRing O] (bar : O → O) (ψ lab : InvFun 
     by_cases h : ∃ β : LinearMap.BilinForm ℤ (Fin m → O), ∀ a b, B a b = β a b
     · have h' : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, B (r a) (r b) = β a b :=
         ⟨pull r h.choose, fun a b => h.choose_spec _ _⟩
-      rw [dif_pos h, dif_pos h']
+      rw [dite_eq_left h, dite_eq_left h']
       have e : h'.choose = pull r h.choose := LinearMap.ext₂ fun a b => by
         have h1 := h'.choose_spec a b
         have h2 := h.choose_spec (r a) (r b)
@@ -32,7 +32,7 @@ theorem exists_markFun {O : Type} [CommRing O] (bar : O → O) (ψ lab : InvFun 
     · have h' : ¬ ∃ β : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, B (r a) (r b) = β a b := by
         rintro ⟨β, h3⟩
         exact h ⟨pull s β, fun a b => by rw [pull_apply, ← h3, hrs, hrs]⟩
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
   · intro B
     unfold markVal
     split_ifs with h h2

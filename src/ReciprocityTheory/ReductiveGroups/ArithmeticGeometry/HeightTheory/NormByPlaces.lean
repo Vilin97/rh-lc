@@ -44,7 +44,7 @@ theorem gen_span {p : Ideal (KTp K d.D d.N)} (hp : p ∈ d.HtOne) : p = Ideal.sp
     simpa using ENat.lt_one_iff_eq_zero.mp h1'
   have hpr : p.IsPrincipal := ⟨⟨q, heq.symm⟩⟩
   unfold Data.gen
-  rw [dif_pos hpr]
+  rw [dite_eq_left hpr]
   exact (Ideal.span_singleton_generator p).symm
 
 private lemma span_singleton_mem_htOne_of_prime {π : KTp K d.D d.N} (hπ : Prime π) : Ideal.span {π} ∈ d.HtOne := by

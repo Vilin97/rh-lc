@@ -305,13 +305,13 @@ theorem onC_eGood (hid : ∀ i p, E i p * E i p = E i p) (hcen : ∀ i p a, E i 
   have hz : ∀ w : W, onC Φ (0 : MonoidAlgebra ℂ (∀ i, G i)) w = 0 := by
     intro w
     unfold onC
-    rw [dif_pos (Subalgebra.zero_mem _)]
+    rw [dite_eq_left (Subalgebra.zero_mem _)]
     exact LinearMap.congr_fun (map_zero Φ) w
   have onC_mul : ∀ x y : MonoidAlgebra ℂ (∀ i, G i), x ∈ Subalgebra.center ℂ _ →
       y ∈ Subalgebra.center ℂ _ → ∀ w : W, onC Φ (x * y) w = onC Φ x (onC Φ y w) := by
     intro x y hx hy w
     unfold onC
-    rw [dif_pos (Subalgebra.mul_mem _ hx hy), dif_pos hx, dif_pos hy, ← Module.End.mul_apply, ← map_mul]
+    rw [dite_eq_left (Subalgebra.mul_mem _ hx hy), dite_eq_left hx, dite_eq_left hy, ← Module.End.mul_apply, ← map_mul]
     rfl
   have onC_sum : ∀ (s : Finset (∀ i, P i)) (f : (∀ i, P i) → MonoidAlgebra ℂ (∀ i, G i)),
       (∀ p, f p ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (∀ i, G i))) → ∀ w : W,
@@ -326,7 +326,7 @@ theorem onC_eGood (hid : ∀ i p, E i p * E i p = E i p) (hcen : ∀ i p a, E i 
       have h2 : ∑ p ∈ s, f p ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (∀ i, G i)) :=
         sum_mem (fun p _ => hf p)
       unfold onC
-      rw [dif_pos (add_mem h1 h2), dif_pos h1, dif_pos h2, ← LinearMap.add_apply, ← map_add (f := _)]
+      rw [dite_eq_left (add_mem h1 h2), dite_eq_left h1, dite_eq_left h2, ← LinearMap.add_apply, ← map_add (f := _)]
       rfl
   have hone : ∑ p : (∀ i, P i), tens (fun i => E i (p i)) = 1 := by
     rw [sum_tens]
@@ -350,7 +350,7 @@ theorem onC_eGood (hid : ∀ i p, E i p * E i p = E i p) (hcen : ∀ i p a, E i 
     have h1 : onC Φ (∑ p : (∀ i, P i), tens (fun i => E i (p i))) F = F := by
       rw [hone]
       unfold onC
-      rw [dif_pos (Subalgebra.one_mem _)]
+      rw [dite_eq_left (Subalgebra.one_mem _)]
       exact LinearMap.congr_fun (map_one Φ) F
     rw [onC_sum Finset.univ (fun p => tens (fun i => E i (p i))) cen F, Finset.sum_eq_single lab] at h1
     · exact h1

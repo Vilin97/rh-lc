@@ -103,7 +103,7 @@ theorem cell_identity : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCompl
         have := congrFun h (Fin.last m)
         simp [hl₀ w] at this
         omega
-      · rw [dif_neg hwT]
+      · rw [dite_eq_right hwT]
         exact GlobalTheory.RSCell.locFac_of_neg _ _ _ (i := Fin.last m) (by simp [hl₀ w]; exact hw)
     rw [h2]
     simp
@@ -139,7 +139,7 @@ theorem cell_identity : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCompl
     rw [ENNReal.ofReal_prod_of_nonneg (fun w _ => by positivity)]
     refine Finset.prod_congr rfl fun w hw => ?_
     have hwT : w ∉ T := fun h => (Finsupp.mem_support_iff.1 hw) (hνT w h)
-    rw [dif_neg hwT, dif_neg hwT, ← GlobalTheory.T.spherical_local_factor_norm_sq (Ideal.absNorm w.asIdeal) (Nat.pos_of_ne_zero (by
+    rw [dite_eq_right hwT, dite_eq_right hwT, ← GlobalTheory.T.spherical_local_factor_norm_sq (Ideal.absNorm w.asIdeal) (Nat.pos_of_ne_zero (by
       rw [Ne, Ideal.absNorm_eq_zero_iff]; exact w.ne_bot)) m (α ⟨w, hwT⟩) x (ν.1 w) (by rw [hνw]; exact hneg w),
       ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_pow (norm_nonneg _),
       ofReal_norm_eq_enorm]

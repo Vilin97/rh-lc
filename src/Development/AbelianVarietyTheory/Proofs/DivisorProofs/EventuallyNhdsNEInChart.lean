@@ -18,7 +18,7 @@ def rv (x : Sp ℂ ⟶ PSpace ℂ N) (i j : Fin (N + 1)) : ℂ := valAt' x (char
 
 theorem rv_eq {x : Sp ℂ ⟶ PSpace ℂ N} {i : Fin (N + 1)} (h : InChart x i) (j : Fin (N + 1)) :
     rv x i j = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom (pullRatio x ⊤ i h j) := by
-  rw [rv, valAt', dif_pos h]
+  rw [rv, valAt', dite_eq_left h]
   rfl
 
 theorem rv_self {x : Sp ℂ ⟶ PSpace ℂ N} {i : Fin (N + 1)} (h : InChart x i) : rv x i i = 1 := by

@@ -113,7 +113,7 @@ theorem cut_mem_St_red : ∀ {D : D7} (n : ℕ) (β γ y : GL (Fin n) (EAf D)) (
   have := hred (resS D.host.F PP) (hres PP hP) i j
   refine this.trans ?_
   unfold redM
-  rw [dif_pos (h1 i j)]
+  rw [dite_eq_left (h1 i j)]
   rfl
 
 end GlobalTheory.FrameIdem

@@ -53,7 +53,7 @@ theorem dl_eq (u u' : D.what₂.Word) (γ : X.B.I.Ginf) (v : InfinitePlace X.B.I
       (HermitianBlockSpans.blk (X.B.I.ε v) (fun a => rv X.B.I v (X.eR a)) (fun a => uMat (γ v) *ᵥ rv X.B.I v (X.eR a)) hl).det := by
   have h : l ≤ D.R.rS + 1 := hl.trans (Nat.le_succ _)
   unfold Dl
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   congr 1
   ext b c
   simp only [Matrix.submatrix_apply, ZX, Zhat, frm, famSc_one, HermitianBlockSpans.blk, Matrix.of_apply]
@@ -101,7 +101,7 @@ theorem fundOf_univ (t : GTerm X u u' (X.Fu u) (X.Fu u') what₂ rows') (hreg : 
   have hex : ∃ Ω, IsSFund X.B.I (ROinf t) Ω :=
     ⟨Set.univ, MeasurableSet.univ, fun x => ⟨1, h1, trivial⟩, fun x _ s hs _ => htriv s hs⟩
   unfold FundOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   ext x
   simp only [Set.mem_univ, iff_true]
   obtain ⟨s, hs1, hs2⟩ := hex.choose_spec.2.1 x

@@ -166,7 +166,7 @@ theorem generator_pair_conditions_of_admitted (D : Formalism.BasicNotions.D7) (h
     · ext; simp; omega
     · have h3 : i.val - 1 + 1 < Mj X.Fr j := by have := i.2; omega
       show (if h : i.val - 1 + 1 < Mj X.Fr j then (⟨i.val - 1 + 1, h⟩ : Fin (Mj X.Fr j)) else _) = i
-      rw [dif_pos h3]
+      rw [dite_eq_left h3]
       ext; simp; omega
     · ext y
       show y < i ↔ y ≤ (⟨i.val - 1, by omega⟩ : Fin (Mj X.Fr j))

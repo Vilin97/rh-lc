@@ -24,14 +24,14 @@ theorem kap_toSm_smul (c : ℂ) (u : MA.Qp P.r P.TT → ℂ) :
       have := Subalgebra.smul_mem (MA.smSub P.r P.TT) hu c
       exact this
     unfold MA.toSm
-    rw [dif_pos hcu, dif_pos hu]
+    rw [dite_eq_left hcu, dite_eq_left hu]
     rfl
   · by_cases hc : c = 0
     · subst hc
       have h0 : (fun q : MA.Qp P.r P.TT => (0 : ℂ) * u q) = 0 := by funext q; simp
       rw [h0, zero_smul]
       unfold MA.toSm
-      rw [dif_pos (Subalgebra.zero_mem _)]
+      rw [dite_eq_left (Subalgebra.zero_mem _)]
       rfl
     · have hcu : (fun q => c * u q) ∉ MA.smSub P.r P.TT := by
         intro h
@@ -42,7 +42,7 @@ theorem kap_toSm_smul (c : ℂ) (u : MA.Qp P.r P.TT → ℂ) :
         show u q = c⁻¹ * (c * u q)
         rw [← mul_assoc, inv_mul_cancel₀ hc, one_mul]
       unfold MA.toSm
-      rw [dif_neg hcu, dif_neg hu, smul_zero]
+      rw [dite_eq_right hcu, dite_eq_right hu, smul_zero]
 
 theorem actA_kap (κ : M.Ty P → ℂ) (f : M.Ty P → MA.SmQ P.r P.TT) :
     MA.actA P (MA.kap P (MA.DQ P) κ) f = fun ρ => κ ρ • f ρ := by

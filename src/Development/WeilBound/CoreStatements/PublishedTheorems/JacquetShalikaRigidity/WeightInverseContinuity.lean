@@ -61,7 +61,7 @@ variable [IsTotallyComplex E]
 theorem chart_inv (g : GA E a) {x : Lie E a} (hx : x ∈ invSet E a) :
     ∃ h : GA E a, ∀ f : GA E a → ℂ, chart f g x = f h :=
   ⟨g * infGL E a (show IsUnit (Matrix.of x) from hx).unit, fun f => by
-    rw [chart, dif_pos (show IsUnit (Matrix.of x) from hx)]⟩
+    rw [chart, dite_eq_left (show IsUnit (Matrix.of x) from hx)]⟩
 
 theorem chart_one (f : GA E a → ℂ) (g : GA E a) : chart f g (oneL E a) = f g := by
   have e := chart_val f g 1
@@ -214,7 +214,7 @@ theorem wtcmp (hH0 : H0) (hK1 : K1) (hk : 1 ≤ a) (M : ℕ) : ∃ r0 > 0, ∃ B
   refine ⟨r, hr, P ^ M, by positivity, fun F C hC hF g x hx => ?_⟩
   obtain ⟨hxu, hxQ⟩ := hball x hx
   have hxu' : IsUnit (Matrix.of x) := hxu
-  rw [chart, dif_pos hxu']
+  rw [chart, dite_eq_left hxu']
   set u := hxu'.unit with hu
   have e1 : (Matrix.of.symm (u⁻¹).val : LieI (InfinitePlace E) a) = invL x := by
     rw [Matrix.coe_units_inv, hu, IsUnit.unit_spec]; rfl

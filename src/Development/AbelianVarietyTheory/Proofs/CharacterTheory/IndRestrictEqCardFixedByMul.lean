@@ -24,10 +24,10 @@ theorem ind_restrict_eq_card_fixedBy_mul : ∀ (L : Type) [Field L] [CharZero L]
     unfold ext0
     by_cases hq : g • q = q
     · have hm := (out_conj_mem_iff_smul_eq H g q).2 hq
-      rw [dif_pos hm, if_pos hq, one_mul]
+      rw [dite_eq_left hm, if_pos hq, one_mul]
       exact hχ g q.out
     · have hm : q.out⁻¹ * g * q.out ∉ H := fun h => hq ((out_conj_mem_iff_smul_eq H g q).1 h)
-      rw [dif_neg hm, if_neg hq, zero_mul]
+      rw [dite_eq_right hm, if_neg hq, zero_mul]
   rw [ind_eq_finsum_cosets L G H _ hψ g, finsum_eq_sum_of_fintype]
   simp_rw [hterm]
   rw [← Finset.sum_mul, Finset.sum_boole, Nat.card_eq_fintype_card, Fintype.card_subtype]

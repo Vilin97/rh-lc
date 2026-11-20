@@ -131,7 +131,7 @@ def sec : RootFn A D := fun D' _ _ φ z ↦
 theorem sec_spec {D' : Type} [CommRing D'] [Algebra R D'] (φ : D →ₐ[R] D') (z : Pt A D')
     (hz : z ^ n = spOver φ ≫ x) : IsVal (b := b) ψ z₀ a φ z (sec hb ψ x z₀ hz₀ a ha hψ D' φ z) := by
   unfold sec
-  rw [dif_pos hz]
+  rw [dite_eq_left hz]
   exact Classical.choose_spec (exists_isVal hb ψ x z₀ hz₀ a ha hψ φ z hz)
 
 theorem isSec_sec : IsSec n b x (sec hb ψ x z₀ hz₀ a ha hψ) := by

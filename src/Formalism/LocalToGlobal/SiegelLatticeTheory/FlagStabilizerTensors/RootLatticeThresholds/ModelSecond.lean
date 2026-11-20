@@ -14,12 +14,12 @@ local notation "L" => Formalism.FourierDecayAlt.P.Dx2.Rad.low w
 def ht (q : Formalism.FourierDecayAlt.C2.Lstidx w) : ℕ := q.1.1.val - q.1.2.val
 
 theorem low_upper (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) (i j : Fin m) (h : i < j) : L y i j = 0 := by
-  rw [Formalism.FourierDecayAlt.P.Dx2.Rad.low_apply, Matrix.one_apply_ne (ne_of_lt h), zero_add, dif_neg]
+  rw [Formalism.FourierDecayAlt.P.Dx2.Rad.low_apply, Matrix.one_apply_ne (ne_of_lt h), zero_add, dite_eq_right]
   rintro ⟨h1, -⟩
   exact absurd (lt_trans h1 h) (lt_irrefl _)
 
 theorem low_diag (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) (i : Fin m) : L y i i = 1 := by
-  rw [Formalism.FourierDecayAlt.P.Dx2.Rad.low_apply, Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1), add_zero]
+  rw [Formalism.FourierDecayAlt.P.Dx2.Rad.low_apply, Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1), add_zero]
 
 theorem low_bt (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) : (L y).BlockTriangular OrderDual.toDual := by
   intro i j hij

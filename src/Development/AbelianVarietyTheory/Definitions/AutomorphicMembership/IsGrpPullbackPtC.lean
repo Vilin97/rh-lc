@@ -264,7 +264,7 @@ def alpOf (D : D7) (p n : ℕ) : 𝓞 D.host.E := if h : NHyp D p n then (exists
 theorem alpOf_spec {D : D7} {p n : ℕ} (h : NHyp D p n) :
     (alpOf D p n : D.host.E) * D.host.conj (alpOf D p n : D.host.E) = (n : D.host.E) ∧
       ((∃ mm : ℕ, n = mm ^ 2 ∧ alpOf D p n = (mm : 𝓞 D.host.E)) ∨ (alpOf D p n : D.host.E) ∈ D.host.K) := by
-  rw [alpOf, dif_pos h]
+  rw [alpOf, dite_eq_left h]
   exact (exists_alp h).choose_spec
 
 variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} {p : ℕ}

@@ -47,7 +47,7 @@ theorem bdd_sum {ι : Type*} (s : Finset ι) (f : ι → PowerSeries ℂ_[p]) (h
 
 theorem lamC_one (lam : Qbar →+* ℂ_[p]) : lamC lam 1 = 1 := by
   have h : (1 : ℂ) ∈ Qbar := one_mem _
-  rw [lamC, dif_pos h]
+  rw [lamC, dite_eq_left h]
   exact map_one lam
 
 theorem good_mul {g : GL3Theta.G1 p} {k l : ℕ} {F G : ℂ → ℂ} (hF : GoodAt g k F) (hG : GoodAt g l G) :

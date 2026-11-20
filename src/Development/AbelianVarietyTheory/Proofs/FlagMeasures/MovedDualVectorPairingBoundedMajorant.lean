@@ -238,7 +238,7 @@ lemma upperOff_ne {r : ℕ} {β : Fin r → ℕ} (hβ : Monotone β) (x : UToff 
   apply h
   unfold upperOff upper
   by_cases h1 : a < b
-  · rw [dif_pos h1]
+  · rw [dite_eq_left h1]
     exact dif_neg (not_not.2 (le_antisymm (hβ h1.le) hc.2))
   · rw [dif_neg h1, if_neg hc.1]
 
@@ -278,7 +278,7 @@ lemma Dmin_eq {k r j : ℕ} (hj : j ≤ r) (z z' : Fin (2 * r + k + 1) → ℂ) 
   have hb := b.2
   simp only at ha hb
   simp only [Matrix.submatrix_apply, Zhat, fvec]
-  rw [dif_pos (by simp; omega), dif_pos (by simp; omega), herm_e]
+  rw [dite_eq_left (by simp; omega), dite_eq_left (by simp; omega), herm_e]
   simp only [bvec, Matrix.mulVec_single_one, Matrix.col_apply, Zr]
   rfl
 

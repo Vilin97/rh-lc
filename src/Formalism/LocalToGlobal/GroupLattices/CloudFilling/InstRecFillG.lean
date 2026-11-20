@@ -34,7 +34,7 @@ theorem offRec_top (L : SizeData₂ D) (j : ℕ) (z : Bool × HH D) (hz : IsTopP
     congr 1
     exact Prod.ext hz'.1 rfl
   have h1 := L.win_top (cutJ D j) (cutJ_mem D j).1 (cutJ_mem D j).2 (tauOf D z) ⟨z.2, hz'.2⟩ h0
-  have h2 : bL L z.2 = L.bT ⟨z.2, hz'.2⟩ := by unfold bL; rw [dif_pos hz'.2]
+  have h2 : bL L z.2 = L.bT ⟨z.2, hz'.2⟩ := by unfold bL; rw [dite_eq_left hz'.2]
   unfold offRec
   rw [if_pos hz', h2]
   constructor <;> linarith [h1.1, h1.2]

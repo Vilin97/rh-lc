@@ -39,7 +39,7 @@ theorem interPoly_eq_zero {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ 
     | exact this
   rw [show monomial m (AddMonoidAlgebra.coeff Q m) = AddMonoidAlgebra.coeff Q m • basisMonomials κ ℝ m by
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]]
-  rw [map_smul, Var.interPoly, Module.Basis.constr_basis, dif_neg, smul_zero]
+  rw [map_smul, Var.interPoly, Module.Basis.constr_basis, dite_eq_right, smul_zero]
   rintro ⟨s, hs⟩
   apply hd
   set_option synthInstance.maxHeartbeats 100000 in

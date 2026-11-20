@@ -30,7 +30,7 @@ theorem prod_map_t_eq_smul_b : ∀ {R : Type} [CommRing R] {I : Type} [Fintype I
     have hsum : ∑ i, ((Pi.single a 1 : I → ℕ) + fun i => l.count i) i ≤ n + 1 := by
       refine le_of_eq_of_le ?_ hc
       exact Finset.sum_congr rfl fun i _ => (count_cons_eq_single_add a l i).symm
-    rw [List.map_cons, List.prod_cons, ih hc', mul_smul_comm, JetRing.t, J.mul, dif_pos hsum,
+    rw [List.map_cons, List.prod_cons, ih hc', mul_smul_comm, JetRing.t, J.mul, dite_eq_left hsum,
       ← Nat.cast_smul_eq_nsmul R, smul_smul, ← Nat.cast_mul]
     have hidx : (⟨(Pi.single a 1 : I → ℕ) + fun i => l.count i, hsum⟩ : Idx I n) = ⟨fun i => (a :: l).count i, hc⟩ := by
       apply Subtype.ext; funext i; exact (count_cons_eq_single_add a l i).symm

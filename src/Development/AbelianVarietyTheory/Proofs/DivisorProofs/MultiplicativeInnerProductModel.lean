@@ -57,7 +57,7 @@ theorem isMultiplicityInner_inner : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau 
     · by_contra hn
       have := hip z z
       unfold ipM at this
-      rw [dif_neg hn] at this
+      rw [dite_eq_right hn] at this
       exact hz (inner_self_eq_zero.1 this)
   rw [hip]
   apply ipM_spec

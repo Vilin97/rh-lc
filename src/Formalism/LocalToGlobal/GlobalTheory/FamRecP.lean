@@ -147,7 +147,7 @@ theorem tauZ_nonneg (hτ : TauNat L) (z : slopeLatticeData.FinPl D.what₂.LL) :
 theorem ioPr_resChar (hio : IoPrime L) (w : D.what₂.places.Pl) : ioPr L (D.what₂.places.resChar w) = L.io w := by
   have hex : ∃ w' : D.what₂.places.Pl, D.what₂.places.resChar w' = D.what₂.places.resChar w := ⟨w, rfl⟩
   unfold ioPr
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hio _ _ hex.choose_spec
 
 section Proj

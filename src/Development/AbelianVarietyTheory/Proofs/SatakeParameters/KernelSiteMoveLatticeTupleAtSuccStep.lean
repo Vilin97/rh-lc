@@ -81,17 +81,17 @@ theorem moveBy_succ : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [
     have hB : (J.cp std).B (i + 1) ((I.at' i hi).st.eC ⟨β, a⟩, La) =
         Formalism.L2.PairingIndexBounds.F.reGL (finCongr ((I.at' i hi).st.loc β).rk.symm) ((I.at' i hi).st.loc β).B := by
       show (dite (i + 1 ≤ D.R.m) _ _ : PtCh _ _).B = _
-      rw [dif_pos hi]
+      rw [dite_eq_left hi]
       show Formalism.L2.PairingIndexBounds.F.reGL (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm ((I.at' i hi).st.eC ⟨β, a⟩)).1).rk.symm)
         ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm ((I.at' i hi).st.eC ⟨β, a⟩)).1).B = _
       rw [Equiv.symm_apply_apply]
     have hJ : (J.cp std).J (i + 1) ((I.at' i hi).st.eC ⟨β, a⟩, La) =
         (gramN D (i + 1) hi).reindex (finCongr ((I.at' i hi).st.loc β).rk.symm) (finCongr ((I.at' i hi).st.loc β).rk.symm) := by
       show (dite (i + 1 ≤ D.R.m) _ _ : PtCh _ _).J = _
-      rw [dif_pos hi]
+      rw [dite_eq_left hi]
     have hiw : (J.cp std).iw (i + 1) ((I.at' i hi).st.eC ⟨β, a⟩, La) = ((I.at' i hi).st.loc β).iw := by
       show (dite (i + 1 ≤ D.R.m) _ _ : PtCh _ _).iw = _
-      rw [dif_pos hi]
+      rw [dite_eq_left hi]
       show ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm ((I.at' i hi).st.eC ⟨β, a⟩)).1).iw = _
       rw [Equiv.symm_apply_apply]
     have hρ : J.rho std v = ((I.at' i hi).st.loc β).iw v := (J.iw i hi β v).symm

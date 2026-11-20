@@ -396,7 +396,7 @@ theorem cellMon_mono {J I : ∀ k, Finset (ι k)} (h : ∀ k, J k ⊆ I k) : KH.
 theorem cellRes_of_le {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] {J I : ∀ k, Finset (ι k)}
     (h : KH.cellMon S J ≤ KH.cellMon S I) : KH.cellRes S M J I = LocalizedModule.liftOfLE _ _ h := by
   unfold KH.cellRes
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 variable [LinearOrder K] [∀ k, LinearOrder (ι k)]
 
@@ -476,7 +476,7 @@ theorem cechD_zero_eq_zero {M : Type} [AddCommGroup M] [Module (MRingOver S ι) 
   simp only [LinearMap.sum_apply]
   rw [Finset.sum_eq_single k0]
   · rw [Finset.sum_eq_add_of_mem i1 i2 hi1 hi2 (ne_of_lt hlt)]
-    · rw [dif_pos (hface i1 hi1), dif_pos (hface i2 hi2)]
+    · rw [dite_eq_left (hface i1 hi1), dite_eq_left (hface i2 hi2)]
       show KH.faceSign I.1 k0 i1 • KH.cellRes S M (Function.update I.1 k0 ((I.1 k0).erase i1)) I.1
           (z ⟨_, hface i1 hi1⟩) + KH.faceSign I.1 k0 i2 • KH.cellRes S M
           (Function.update I.1 k0 ((I.1 k0).erase i2)) I.1 (z ⟨_, hface i2 hi2⟩) = 0
@@ -522,7 +522,7 @@ theorem secCoch_spec {s : Ω} {a : K → ℤ} (hs : s ∈ chartLat y a 1) (J : K
     obtain ⟨e, F, hF⟩ := exists_fracData_of_mem_chartLat y hs (cellChart J) hc
     exact ⟨_, e, F, hF, cmon_mem S (cellChart_mem J) e, rfl⟩
   unfold secCoch
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem secCoch_mem {s : Ω} {a : K → ℤ} (hs : s ∈ chartLat y a 1) :

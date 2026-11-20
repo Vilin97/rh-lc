@@ -307,7 +307,7 @@ theorem cls_abs {A M Γ G : Type} [Ring A] [CharZero A] [Ring M] [Group Γ] [Gro
   refine ⟨γ, Classical.choose hex, ?_, (Classical.choose hex)⁻¹ * k, ?_, by group⟩
   · rw [Finset.mem_image]
     refine ⟨φ k, hfin.mem_toFinset.2 ⟨k, hk, rfl⟩, ?_⟩
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   · apply hU
     · exact hsub _ k hs.1 hk hs.2.le
     · rw [mul_inv_rev, inv_inv]

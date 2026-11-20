@@ -167,7 +167,7 @@ private theorem loc {A : Subalgebra ℂ (Module.End ℂ F)} [Nontrivial F] (hA :
           mul_assoc, ← (hc _).eq, mul_assoc]) (ρ a)
     change LinearMap.trace ℂ F ((ρ.symm (ρ a)).1 * c) = _ * LinearMap.trace ℂ F ((ρ.symm e).1 * c) at h1
     rw [AlgEquiv.symm_apply_apply] at h1
-    rw [h1, trOn, dif_pos (hW.2.1 a.1 a.2), hρ]
+    rw [h1, trOn, dite_eq_left (hW.2.1 a.1 a.2), hρ]
 
 private theorem prod_step {ι X : Type} [Fintype ι] [DecidableEq ι] [AddCommMonoid X] [Module ℂ X] {N : ι → Type}
     (Φ : (∀ i, N i) → X) (l : ∀ i, N i → ℂ) (e : ∀ i, N i)
@@ -329,7 +329,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.multiFac :
   · have h1 : ∀ i, trOn (W i) (a i * (t i).1) = ε i * trOn (W i) (a i * Θ) := fun i => by
       have p1 : ∀ x ∈ W i, (a i * (t i).1) x ∈ W i := (hW i).2.1 _ (mul_mem (ha i) (t i).2)
       have p2 : ∀ x ∈ W i, (a i * Θ) x ∈ W i := fun x hx' => (hW i).2.1 _ (ha i) _ (hst i x hx')
-      rw [trOn, trOn, dif_pos p1, dif_pos p2, ← smul_eq_mul (ε i), ← map_smul]
+      rw [trOn, trOn, dite_eq_left p1, dite_eq_left p2, ← smul_eq_mul (ε i), ← map_smul]
       congr 1
       ext x
       simp [hΘW i x.1 x.2, smul_smul, hε]

@@ -29,7 +29,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 theorem coe_toC0 {f : ℝ → ℂ} (h₁ : Continuous f) (h₂ : Tendsto f (cocompact ℝ) (𝓝 0)) (y : ℝ) : toC0 f y = f y := by
   have : Continuous f ∧ Tendsto f (cocompact ℝ) (𝓝 0) := ⟨h₁, h₂⟩
   simp only [toC0]
-  rw [dif_pos this]
+  rw [dite_eq_left this]
   rfl
 
 theorem adj_rho {n : ℕ} (E : KMod n) [CompleteSpace E.V] (k : Matrix.unitaryGroup (Fin n) ℂ) :

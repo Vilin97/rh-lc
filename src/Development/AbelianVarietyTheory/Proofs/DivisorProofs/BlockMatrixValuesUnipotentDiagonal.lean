@@ -11,7 +11,7 @@ theorem toGL_of_inv {R : Type} [CommRing R] {n : ℕ} (M N : Matrix (Fin n) (Fin
     (h₂ : N * M = 1) : toGL M = ⟨M, N, h₁, h₂⟩ := by
   unfold toGL
   have hu : IsUnit M := ⟨⟨M, N, h₁, h₂⟩, rfl⟩
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   exact Units.ext rfl
 
 theorem eye_mul_eye {R : Type} [CommRing R] (n o₁ o₂ o₃ b : ℕ) (h : o₂ + b ≤ n) :

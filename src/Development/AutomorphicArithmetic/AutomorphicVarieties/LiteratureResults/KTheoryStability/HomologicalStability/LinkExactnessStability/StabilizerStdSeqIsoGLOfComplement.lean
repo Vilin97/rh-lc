@@ -59,8 +59,8 @@ theorem isPad_stab {m n : ℕ} (h : m ≤ n) (A : GL (Fin m) R) :
   intro i k hk
   have : ¬ (k : ℕ) < m := by omega
   constructor
-  · rw [stab_apply, dif_neg (by tauto)]
-  · rw [stab_apply, dif_neg (by tauto)]
+  · rw [stab_apply, dite_eq_right (by tauto)]
+  · rw [stab_apply, dite_eq_right (by tauto)]
 
 theorem stdSeq_fixed_iff (n p : ℕ) (h : p ≤ n) (g : GL (Fin n) R) :
     g ∈ MulAction.stabilizer (GL (Fin n) R) (stdSeq R n p h) ↔

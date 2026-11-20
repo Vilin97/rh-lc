@@ -117,7 +117,7 @@ theorem core : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Recip
       have hft : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) w := ⟨p, ψ', z, hw⟩
       show evalAt _ _ f w = _
       unfold evalAt
-      rw [dif_pos hft]
+      rw [dite_eq_left hft]
       exact hWD f hf.1 S _ p _ ψ' _ z w hft.choose_spec.choose_spec.choose_spec hw
     have h2 : evC h Z f = ψ₁ (f p z) := key _ _ hz
     have h3 : evR Xo c f y' = φ (evC h Z f) := by

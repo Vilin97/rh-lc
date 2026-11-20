@@ -17,7 +17,7 @@ namespace GlobalTheory.MBLow.Cl.DZero
 theorem valR_push {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens)
     (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) : valR (spMap φ ≫ x) U f = φ (valR x U f) := by
   have h' : ⊤ ≤ (spMap φ ≫ x) ⁻¹ᵁ U := fun p _ => h (Set.mem_univ _)
-  rw [valR, valR, dif_pos h, dif_pos h']
+  rw [valR, valR, dite_eq_left h, dite_eq_left h']
   have e1 : (spMap φ ≫ x).appLE U ⊤ h' = x.appLE U ⊤ h ≫ (spMap φ).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm

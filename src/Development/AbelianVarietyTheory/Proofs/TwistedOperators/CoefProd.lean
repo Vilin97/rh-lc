@@ -34,7 +34,7 @@ theorem coef_prod (ch : Choice R) (t : T) (Φ : ch.G.Datum) (β : CosFam ch.G t)
     show ∏ i : Fin (D.R.m - 2), invVol (conjLevel one_le_sLen (givenLevel ch.G t w) ((repsAt ch.G t w).elt (β w))
       (j := (i : ℕ) + 1) (show (i : ℕ) + 1 < D.R.m by have := i.isLt; omega)) = _
     exact Finset.prod_congr rfl fun i _ => by
-      rw [dif_pos (show 1 + (i : ℕ) < D.R.m by have := i.isLt; omega)]
+      rw [dite_eq_left (show 1 + (i : ℕ) < D.R.m by have := i.isLt; omega)]
       exact hj _ _ (Nat.add_comm _ _) _ _
   have key : ∏ w, (ch.S.term t Φ β w).coef = ((idx D).map fun j => colCoef ch t β j).prod := by
     simp only [hw]

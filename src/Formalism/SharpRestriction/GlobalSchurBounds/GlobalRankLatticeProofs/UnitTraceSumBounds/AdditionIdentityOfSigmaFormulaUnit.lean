@@ -13,7 +13,7 @@ variable (D : D7) {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p])
 private lemma lamC_hom_lemma (x : D.host.K) :
     lamC lam (D.host.φ₀ (x : D.host.E)) = lam ⟨D.host.φ₀ (x : D.host.E), test_vector_mem_schwartz_bruhat D x⟩ := by
   unfold lamC
-  rw [dif_pos (test_vector_mem_schwartz_bruhat D x)]
+  rw [dite_eq_left (test_vector_mem_schwartz_bruhat D x)]
 
 theorem lamPhi_int (n : ℤ) : lamC lam (D.host.φ₀ (n : D.host.E)) = (n : ℂ_[p]) := by
   have h : (((n : D.host.K)) : D.host.E) = (n : D.host.E) := by push_cast; rfl
@@ -38,7 +38,7 @@ theorem tauK_mul (a b : D.host.K) : tauK D lam (a * b) = tauK D lam a * tauK D l
 private lemma lamC_hom_lemma_2 (z : D.host.E) :
     lamC lam (D.host.φ₀ z) = lam ⟨D.host.φ₀ z, test_vector_mem_schwartz_bruhat D z⟩ := by
   unfold lamC
-  rw [dif_pos (test_vector_mem_schwartz_bruhat D z)]
+  rw [dite_eq_left (test_vector_mem_schwartz_bruhat D z)]
 
 theorem tauKc_add (a b : D.host.K) : tauKc D lam (a + b) = tauKc D lam a + tauKc D lam b := by
   unfold tauKc

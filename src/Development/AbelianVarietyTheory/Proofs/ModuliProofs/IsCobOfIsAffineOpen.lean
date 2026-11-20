@@ -29,7 +29,7 @@ private lemma resG_self_moduli {Y : Scheme.{0}} {A : Y.Opens} (h : A ≤ A) (s :
 private lemma rsT_eq_resG {Y : Scheme.{0}} {A B : Y.Opens} (s : Γ(Y, A)) (h : B ≤ A) :
     rsT s B = resG Y h s := by
   unfold rsT
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 private lemma triv_secOn_ext {X : Scheme.{0}} {W : X.Opens} (σ τ : SecOn (LB.triv X) W)
     (h : (show LB.secGroup (LB.triv X) W from σ).1 PUnit.unit =

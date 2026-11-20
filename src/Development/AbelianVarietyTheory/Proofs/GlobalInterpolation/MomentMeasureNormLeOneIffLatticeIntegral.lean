@@ -42,7 +42,7 @@ variable {q : ℕ} [Fact q.Prime]
 theorem lamA_eq (ι : ℂ ≃+* ℂ_[q]) (lam : Qbar →+* ℂ_[q]) (hι : ∀ z : Qbar, ι (z : ℂ) = lam z) (x : ℂ) (hx : x ∈ Qbar) :
     lamA lam x = ι x := by
   unfold lamA
-  rw [dif_pos hx, ← hι ⟨x, hx⟩]
+  rw [dite_eq_left hx, ← hι ⟨x, hx⟩]
 
 theorem natCast_mem_Qbar (s : ℕ) : (s : ℂ) ∈ Qbar := (algebraicClosure ℚ ℂ).natCast_mem s
 

@@ -33,7 +33,7 @@ theorem blockGL_mem_mirS : ∀ (E : Type) [Field E] [NumberField E] (m r : ℕ) 
     rw [GroundTheory.Automorphic.FourierWhittaker.map_blockMat, hw1, GroundTheory.Automorphic.FourierWhittaker.blockMat_one]
   · intro j
     change GroundTheory.Automorphic.FourierWhittaker.blockMat _ h.val (Fin.last (m + r + 1)) j = _
-    rw [GroundTheory.Automorphic.FourierWhittaker.blockMat_apply, dif_neg (by simp)]
+    rw [GroundTheory.Automorphic.FourierWhittaker.blockMat_apply, dite_eq_right (by simp)]
     simp only [eq_comm]
 
 end GlobalTheory.BlockMirabolic

@@ -199,7 +199,7 @@ theorem twIdx_ok_of (hB : OcbBase Ch sel mu cst m2) (hs : cst.sharp = true) (G :
           have hok := twSt_chrOk hNall hC (j' + 1) b ⟨P.1, Finset.mem_union_right _ P.2⟩ hP (hd _ hP) (Nat.succ_ne_zero j')
           show (((twLam Ch sel mu cst (j' + 1) ⟨P.1, Finset.mem_union_right _ P.2⟩
             ((twSt Ch sel mu cst m2 (j' + 1)).h b ⟨P.1, Finset.mem_union_right _ P.2⟩)) g : X.Kˣ) : X.K) = _
-          rw [twLam, dif_pos hok]
+          rw [twLam, dite_eq_left hok]
           exact twChiVal_eq hok hr hx
       grpG := fun j b w hbar => by
         have hj := twSt_le Ch sel mu cst m2 j b
@@ -227,7 +227,7 @@ theorem twIdx_ok (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok) (h4 : ∀ w ∈ Pr.vGs,
     (fun P hP => by rw [twCst_D_Q hP]; omega) hQG hd hF hN hC hZ hAn
   · show twMuq Ch sel mu G (i + 1) P = _
     unfold twMuq
-    rw [if_neg hP, dif_pos (by omega)]
+    rw [if_neg hP, dite_eq_left (by omega)]
     rfl
   · show G.σ₀ (twMuq Ch sel mu G (i + 1) P) = _
     unfold twMuq

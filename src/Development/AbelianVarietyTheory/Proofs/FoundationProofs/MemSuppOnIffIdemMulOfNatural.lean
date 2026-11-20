@@ -19,7 +19,7 @@ theorem evR_of_frMap_test {f : Rul Xo c}
     evR Xo c f z = φ (f p y) := by
   have ht : Tested z := ⟨p, φ, y, h⟩
   unfold evR evalAt
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
   exact GlobalTheory.TransferCompare.evalWD_framed Xo c f hf S _ p _ φ _ y z ht.choose_spec.choose_spec.choose_spec h
 
 theorem idem_notMem_iff (Z : Comp Xo c) {p : TRing c.F} (y : FrPt Xo c p.R) (q : PrimeSpectrum p.R) :

@@ -178,7 +178,7 @@ theorem fdU_exp_le_prod {ε : Fin n → Bool} {c : ℝ} (hc : 0 ≤ c) (y : PCoo
     intro ab
     have hpm : pmat y ab.1.1 ab.1.2 = y ab := by
       simp only [pmat]
-      rw [dif_pos ab.2]
+      rw [dite_eq_left ab.2]
     have h2 : ‖y ab‖ ^ 2 ≤ hs (pmat y) := by
       unfold hs
       calc ‖y ab‖ ^ 2 = ‖pmat y ab.1.1 ab.1.2‖ ^ 2 := by rw [hpm]

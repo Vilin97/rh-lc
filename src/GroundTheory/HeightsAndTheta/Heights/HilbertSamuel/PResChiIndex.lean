@@ -269,7 +269,7 @@ theorem proof : ResChiIndex.Statement := by
   have h' : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d'.x n p.2 :=
     ⟨⟨_, _⟩, (exists_isSecBasis d'.x n).choose_spec⟩
   unfold resChi
-  rw [dif_pos h, dif_pos h']
+  rw [dite_eq_left h, dite_eq_left h']
   exact resChi_sub_of_bases d d' B hB hx hG n h.choose_spec h'.choose_spec
 
 end

@@ -240,7 +240,7 @@ theorem Cmp.prod_eq {σ : E →ₐ[F] E} {gp : Fin 2 → ℕ} {G : GLoc F E σ g
     Finset.prod_image]
   · refine Finset.prod_congr rfl fun w hw => ?_
     obtain rfl : jj w = j := (Finset.mem_filter.1 hw).2
-    rw [finprod_eq_dif, dif_pos (hj w), ← C.uniq _ _ _ w rfl]
+    rw [finprod_eq_dif, dite_eq_left (hj w), ← C.uniq _ _ _ w rfl]
   · intro w _ w' _ e
     exact (C.uniq _ _ (hj w') w e).trans (C.uniq _ _ (hj w') w' rfl).symm
   · intro v hv
@@ -248,7 +248,7 @@ theorem Cmp.prod_eq {σ : E →ₐ[F] E} {gp : Fin 2 → ℕ} {G : GLoc F E σ g
       by_contra h
       apply hv
       show (∏ᶠ (h : (gp j : 𝓞 F) ∈ v.asIdeal), f (C.W j v h)) = 1
-      rw [finprod_eq_dif, dif_neg h]
+      rw [finprod_eq_dif, dite_eq_right h]
     refine Finset.mem_coe.2 (Finset.mem_image.2 ⟨C.W j v h, Finset.mem_filter.2 ⟨Finset.mem_univ _, ?_⟩, C.ov j v h⟩)
     exact C.one _ _ v (by have := hj (C.W j v h); rwa [C.ov] at this) h
 

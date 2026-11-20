@@ -203,7 +203,7 @@ theorem _root_.GlobalTheory.ComplexPoints.eq_of_valAt'_eq (p : X ⟶ _root_.Reci
   have hne := (_root_.GlobalTheory.ComplexPoints.top_le_preimage_basicOpen_iff x U hU (f - g)).mp hb
   have he := h x hx hU
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' at he
-  rw [dif_pos hU, dif_pos hU] at he
+  rw [dite_eq_left hU, dite_eq_left hU] at he
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt at hne he
   rw [map_sub, map_sub, he, sub_self] at hne
   exact (hne rfl).elim
@@ -218,7 +218,7 @@ theorem _root_.GlobalTheory.ComplexPoints.isUnit_of_valAt'_ne_zero (p : X ⟶ _r
   have hle : U ≤ X.basicOpen f := opens_le_of_forall_complex_section p U _ fun x hx hU => by
     have := h x hx hU
     unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' at this
-    rw [dif_pos hU] at this
+    rw [dite_eq_left hU] at this
     exact (_root_.GlobalTheory.ComplexPoints.top_le_preimage_basicOpen_iff x U hU f).mpr this
   have hu := (X.toRingedSpace.isUnit_res_basicOpen f).map
     (X.presheaf.map (homOfLE hle).op).hom

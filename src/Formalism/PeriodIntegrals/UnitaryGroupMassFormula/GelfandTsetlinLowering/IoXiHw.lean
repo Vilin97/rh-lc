@@ -113,7 +113,7 @@ theorem capXi (hx : XiFacts) {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg
           omega)
         have h3 : lam.detShift = lam.w ⟨n, by omega⟩ := by
           unfold DomWeight.detShift
-          rw [dif_pos (by omega)] <;> congr 1
+          rw [dite_eq_left (by omega)] <;> congr 1
         linarith
       have e : pol ℂ (Fin.castLE (by omega : n ≤ n + 1) a') (Fin.castLE (by omega : n ≤ n + 1) a')
           (xi ℂ rfl lam sg) = ((sg.w a' - lam.detShift : ℤ) : ℂ) • xi ℂ rfl lam sg :=

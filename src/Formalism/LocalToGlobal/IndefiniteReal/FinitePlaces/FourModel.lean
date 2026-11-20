@@ -131,7 +131,7 @@ theorem coef_add_left (Φ : W → ℂ) (a y : W) {l : W} (hl : l ∈ L ⊓ X) :
   · have h1 : ¬ ∃ k, 0 < k ∧ IsInv k (L ⊓ X) (fun t => Φ (a + l + t) * (χ t y)⁻¹) :=
       fun ⟨k, hk, hi⟩ => h0 ⟨k, hk, (hiff k).mp hi⟩
     unfold integ
-    rw [dif_neg h1, dif_neg h0, mul_zero]
+    rw [dite_eq_right h1, dite_eq_right h0, mul_zero]
 
 include hfinX in
 theorem coef_add_right (hχr : ∀ t y y', χ t (y + y') = χ t y * χ t y')

@@ -66,7 +66,7 @@ theorem distribHaarChar_Ev (u : (Fv F v ⊗[F] E)ˣ) :
       LinearEquiv.symm_apply_apply]
   rw [hext] at ht
   rw [ht, GlobalTheory.ModuArtin.addEquivAddHaarChar_mulVecCE _ inferInstance inferInstance, hdet, GlobalTheory.GaugeEx.modu,
-    dif_pos (hdet ▸ hM)]
+    dite_eq_left (hdet ▸ hM)]
   convert GlobalTheory.CompanionTheory.SW.ProdFormula.distribHaarChar_eq_nnnorm v _ hN0 using 2
   exact Units.ext rfl
 

@@ -240,7 +240,7 @@ theorem proof (h₁ : FlagPolynomialValue.Statement) (h₂ : FlagGenericPointVal
         C (V' (τ, i) t' cc))
     have hl : lam τ (stepTw i) = w (Sum.inl (Sum.inr (τ, i))) / Z := by
       simp only [lam]
-      rw [dif_pos (show ((stepTw i : Fin D.N) : ℕ) < D.N - 1 from i.isLt)]
+      rw [dite_eq_left (show ((stepTw i : Fin D.N) : ℕ) < D.N - 1 from i.isLt)]
       rfl
     have e : ∀ a v : ℂ, w (Sum.inl (Sum.inr (τ, i))) / Z * (a * (v * Z)) =
         w (Sum.inl (Sum.inr (τ, i))) * (a * v) := fun a v => by field_simp

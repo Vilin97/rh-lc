@@ -198,12 +198,12 @@ theorem hkF_eq (V : HSp D) {W : Type} [AddCommGroup W] [Module ℂ W] (P : Pl D.
 
 theorem rep_spec {V : HSp D} {P : Pl D.host.E} {d : List ℤ} (h : IsLab V P d) : SphOp V P d (rep V P d) := by
   unfold Hk3.rep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem rep_empty {V : HSp D} {P : Pl D.host.E} {d : List ℤ} (h : ¬ IsLab V P d) : rep V P d = ∅ := by
   unfold Hk3.rep
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem opOf_nonlab {V : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) {P : Pl D.host.E}
     {d : List ℤ} (h : ¬ IsLab V P d) : opOf π P (Finsupp.single d 1) = 0 := by

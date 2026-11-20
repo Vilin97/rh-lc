@@ -117,7 +117,7 @@ theorem sqChar : SqCharStatement := by
       have hle : lam.detShift ≤ lam.w i := by
         have hN : 0 < N := lt_of_le_of_lt (Nat.zero_le _) i.isLt
         unfold Formalism.BasicNotions.DomWeight.detShift
-        rw [dif_pos hN]
+        rw [dite_eq_left hN]
         exact lam.anti (by rw [Fin.le_iff_val_le_val]; dsimp only; omega)
       simp only [Formalism.BasicNotions.DomWeight.natW]
       rw [Int.toNat_of_nonneg (by omega)]

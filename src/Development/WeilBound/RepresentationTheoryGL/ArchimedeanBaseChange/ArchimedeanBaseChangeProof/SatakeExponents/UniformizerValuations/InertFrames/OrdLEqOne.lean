@@ -18,7 +18,7 @@ theorem ordL_eq_one {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ
     ordL x = 1 := by
   unfold ordL
   have h0 : Valued.v x ≠ 0 := by rw [hx]; exact WithZero.coe_ne_zero
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   have hu : WithZero.unzero h0 = Multiplicative.ofAdd (-1 : ℤ) :=
     WithZero.coe_injective ((WithZero.coe_unzero h0).trans hx)
   rw [hu]

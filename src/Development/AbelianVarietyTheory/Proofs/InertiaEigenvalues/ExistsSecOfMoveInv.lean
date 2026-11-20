@@ -144,7 +144,7 @@ theorem exists_sec_of_moveInv (d : DeltaDat Xo c n) (hlev : d.IsLev) {a : (E →
   · intro k _ _ _ _ hk y y₂ ho
     have hy := hAll k y
     conv_lhs => unfold evR evalAt
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
     exact (hd _ _).exists.choose_spec k hk _ y y₂ hy.choose_spec.choose_spec.choose_spec ho
 
 theorem exists_sec_theta [StarRing (𝓞 E)] (nab : NabV Xo c) (hnab : IsNab Xo c nab) (Λ : GenLat E n) (N : ℕ)
@@ -165,7 +165,7 @@ theorem exists_sec_theta [StarRing (𝓞 E)] (nab : NabV Xo c) (hnab : IsNab Xo 
   · have hy := hAll k y
     obtain ⟨v, hv, -⟩ := hex k y
     unfold evR evalAt
-    rw [dif_pos hy, hnat _ _ _ _ y hy.choose_spec.choose_spec.choose_spec _ v (hex _ _).exists.choose_spec hv]
+    rw [dite_eq_left hy, hnat _ _ _ _ y hy.choose_spec.choose_spec.choose_spec _ v (hex _ _).exists.choose_spec hv]
     exact hv
 
 theorem formula_eq {V F S Qt J : Type} [Field F] [CommRing S] [Algebra F S] [Fintype Qt] [Fintype J]

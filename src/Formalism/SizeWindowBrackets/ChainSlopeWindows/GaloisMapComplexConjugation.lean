@@ -73,7 +73,7 @@ theorem frobenius_unit_spec : FrobUnitSpec := by
     · exact (unitsMap_eq_one_iff _ u).1 hu1
   have hspec : IsFrobUnit N p (frobUnit N p) := by
     unfold frobUnit
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   refine ⟨hspec, fun w hw => ?_⟩
   rw [isFrobUnit_iff] at hspec hw

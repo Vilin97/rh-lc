@@ -25,7 +25,7 @@ theorem adj_last (f f' : Fin (r + 1) → V) :
     (H.Zhat f f').adjugate (Fin.last r) (Fin.last r) = H.Dl f f' r := by
   rw [Matrix.adjugate_fin_succ_eq_det_submatrix]
   unfold HermSp.Dl
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   have hpow : ((-1 : E) ^ ((Fin.last r : ℕ) + (Fin.last r : ℕ))) = 1 := by
     rw [Fin.val_last, ← two_mul, pow_mul]
     simp

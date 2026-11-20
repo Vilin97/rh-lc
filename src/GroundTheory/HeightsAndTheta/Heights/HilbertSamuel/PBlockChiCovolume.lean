@@ -58,7 +58,7 @@ open BlockChiCovolume in
 theorem BlockChiCovolume.proof : BlockChiCovolume.Statement := by
   intro D K _ _ ι _ Ω _ _ d n E hE r ψ hψ hnorm _ _
   have hex := exists_isSecBasisM d.y d.k₀ n
-  rw [blockChi, dif_pos hex]
+  rw [blockChi, dite_eq_left hex]
   have hb := hex.choose_spec
   generalize hex.choose = p at hb ⊢
   obtain ⟨hbf, hli, hspan⟩ := hb

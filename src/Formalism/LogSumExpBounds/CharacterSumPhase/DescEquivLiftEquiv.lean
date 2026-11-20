@@ -277,7 +277,7 @@ theorem lam_mk (Z : Matrix (Fin (m+1)) (Fin (m+1)) RR) (hZ : IsUnit (toK K Z).de
       ← fV_apply, fV_mulVec Z hZ, Submodule.Quotient.mk_eq_zero]
     exact mem_range_alg _
   unfold lam descend
-  rw [dif_pos hle, Submodule.liftQ_apply, rowInvMod_apply, single_dotProduct, one_mul]
+  rw [dite_eq_left hle, Submodule.liftQ_apply, rowInvMod_apply, single_dotProduct, one_mul]
   rfl
 
 def aK (Z : Matrix (Fin (m+1)) (Fin (m+1)) RR) : Fin m → K :=

@@ -52,7 +52,7 @@ theorem ddc_fn_apply {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n
   rw [← delAt_dbarAt_fun ((h2.contDiffAt hn).of_le (by norm_cast))]
   refine GlobalTheory.SecForm.DdcGerm.ddc_eq_of_eventuallyEq A _ x _ ?_
   filter_upwards [hn] with v hv
-  rw [HolAtlas.loc, dif_pos hv]
+  rw [HolAtlas.loc, dite_eq_left hv]
   rfl
 
 variable {k : Type} [CommRing k] {B Y : Scheme.{0}} {q : B ⟶ Sp k} {p : Y ⟶ Sp k} {D D' : ℕ}

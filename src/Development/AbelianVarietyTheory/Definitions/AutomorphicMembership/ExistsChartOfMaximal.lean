@@ -50,11 +50,11 @@ theorem valF_map {F F' : Type} [Field F] [Field F'] (f : F →+* F') {X : Scheme
 
 theorem valF_natCast {F : Type} [Field F] {X : Scheme.{0}} {w : Sp F ⟶ X} {U : X.Opens} (h : ⊤ ≤ w ⁻¹ᵁ U) (n : ℕ) :
     valF w U (n : Γ(X, U)) = n := by
-  rw [valF, dif_pos h, map_natCast, map_natCast]
+  rw [valF, dite_eq_left h, map_natCast, map_natCast]
 
 theorem valF_one {F : Type} [Field F] {X : Scheme.{0}} {w : Sp F ⟶ X} {U : X.Opens} (h : ⊤ ≤ w ⁻¹ᵁ U) :
     valF w U 1 = 1 := by
-  rw [valF, dif_pos h, map_one, map_one]
+  rw [valF, dite_eq_left h, map_one, map_one]
 
 theorem maximal_of_stalk {X : Scheme.{0}} {x : X} {K : Type} [Field K] {f : X.presheaf.stalk x →+* K}
     (hf : Function.Injective f) (y : X) (hy : y ⤳ (spMap f ≫ X.fromSpecStalk x) (closedPoint K)) :

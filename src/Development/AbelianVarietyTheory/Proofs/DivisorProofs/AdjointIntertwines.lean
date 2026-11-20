@@ -86,7 +86,7 @@ theorem inner_eq_integral {H : Type} [NormedAddCommGroup H] [InnerProductSpace �
     have hc : ∃ c, IsMultIP M μ 𝓕 (e x) (e x) c := by
       by_contra hc
       apply hx
-      rw [← inner_self_eq_zero (𝕜 := ℂ), hip, ipM, dif_neg hc, mul_zero]
+      rw [← inner_self_eq_zero (𝕜 := ℂ), hip, ipM, dite_eq_right hc, mul_zero]
     have := ipM_spec M μ 𝓕 _ _ hc v v
     rw [hp, mul_one] at this
     exact ⟨this.1, by rw [hip, this.2]⟩
@@ -124,7 +124,7 @@ theorem actL_apply {D : D7} {V : HSp D} {β : GL (Fin V.rank) (EAf D)} {L : LevD
     (hk : ∃ κ, IsLevelLift V β L g0 κ) (Φ : GA D V → ℂ) (h : GA D V) :
     Links.actL V β L g0 Φ h = (levChi V β (flagL L) hk.choose)⁻¹ * Φ (h * hk.choose) := by
   show actG0 V β L g0 Φ h = _
-  rw [actG0, dif_pos hk]
+  rw [actG0, dite_eq_left hk]
 
 theorem span_of_pres {G Γ W K H : Type} [Group G] [Group Γ] [NormedAddCommGroup W] [InnerProductSpace ℂ W] [Field K]
     [NumberField K] [StarRing K] {ι : Γ →* G} {S : CSD K} {σ : K →+* ℂ} {ρ : Γ →* Module.End ℂ W} {J : Subgroup G}

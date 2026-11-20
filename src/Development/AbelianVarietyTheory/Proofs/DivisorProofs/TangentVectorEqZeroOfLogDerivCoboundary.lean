@@ -79,10 +79,10 @@ theorem lie_inj : ∀ (R : Type) [CommRing R] [IsLocalRing R] (P : PolAV (Sp R))
       have hU : ⊤ ≤ y.left ⁻¹ᵁ (P.L.U j ⊓ P.L.U j') := fun p hp => ⟨hj hp, hj' hp⟩
       have e₁ := congrArg (valHom (R := S) y.left _ hU) (hH j j')
       have r₁ : valHom (R := S) y.left _ hU (rsT (H j) _) = valHom (R := S) y.left _ hj (H j) := by
-        rw [rsT, dif_pos inf_le_left, ← valR_eq, ← valR_eq]
+        rw [rsT, dite_eq_left inf_le_left, ← valR_eq, ← valR_eq]
         exact valR_res _ _ hU _
       have r₂ : valHom (R := S) y.left _ hU (rsT (H j') _) = valHom (R := S) y.left _ hj' (H j') := by
-        rw [rsT, dif_pos inf_le_right, ← valR_eq, ← valR_eq]
+        rw [rsT, dite_eq_left inf_le_right, ← valR_eq, ← valR_eq]
         exact valR_res _ _ hU _
       simp only [dlg, GlobalTheory.Heat.DlogIndep.pbT_id, map_sub, map_mul, r₁, r₂] at e₁
       have e₂ : valHom (R := S) y.left _ hU (P.L.g j j').val * valHom (R := S) y.left _ hU (P.L.g j j')⁻¹.val = 1 := by

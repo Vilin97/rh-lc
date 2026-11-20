@@ -183,7 +183,7 @@ theorem eq_one_of_coboundary {k : Type} [CommRing k] {B : Over (Sp k)} [GrpObj B
     gen_chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull (translDiff B L x0) _ _ rfl) c hc⟩
 
 theorem pbT_id {X : Scheme.{0}} (O : X.Opens) (s : Γ(X, O)) : pbT (𝟙 X) s O = s := by
-  rw [pbT, dif_pos (show O ≤ (𝟙 X : X ⟶ X) ⁻¹ᵁ O from le_rfl)]
+  rw [pbT, dite_eq_left (show O ≤ (𝟙 X : X ⟶ X) ⁻¹ᵁ O from le_rfl)]
   exact (congrArg (fun φ => φ.hom s) (Scheme.Hom.appLE_eq_app (𝟙 X) (U := O))).trans rfl
 
 theorem mem_maximalIdeal_of_isCob : ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] (B : Over (Sp A)) [GrpObj B] [IsCommMonObj B] (g : ℕ) (L : LB B.left), IsAbelianScheme B → SmoothOfRelativeDimension g B.hom → L.IsLB → RelAmple B L → KTriv B L → (∀ i, IsAffineOpen (L.U i)) → Finite L.ι → ∀ (v : Fin g → TanM (𝟙 (Sp A)) B) (dd : Fin g → Fld B.left), (∀ a, IsInv B (v a) (dd a)) → (∀ w : TanM (𝟙 (Sp A)) B, ∃! cf : Fin g → A, w = ∑ a, cf a • v a) → ∀ (c : Fin g → A) (N : ℕ) (t : Fin N → A) (z : Fin N → C1 L.U), (∀ k, t k ∈ maximalIdeal A) → IsCob L.U (fun i j => ∑ a, constFn B.hom _ (c a) * dlg B (𝟙 _) L (dd a) i j (L.U i ⊓ L.U j) - ∑ k, constFn B.hom _ (t k) * z k i j) → ∀ a, c a ∈ maximalIdeal A := by
@@ -222,10 +222,10 @@ theorem mem_maximalIdeal_of_isCob : ∀ (A : Type) [CommRing A] [IsLocalRing A] 
         (valR_eq (R := S) _ _ hU _).symm.trans (GlobalTheory.InvFieldRing.valR_constFn _ _ _ hy _ hU a)
       have e₁ := congrArg (valHom (R := S) y.left _ hU) (hb j j')
       have r₁ : valHom (R := S) y.left _ hU (rsT (b j) _) = valHom (R := S) y.left _ hj (b j) := by
-        rw [rsT, dif_pos inf_le_left, ← valR_eq, ← valR_eq]
+        rw [rsT, dite_eq_left inf_le_left, ← valR_eq, ← valR_eq]
         exact valR_res _ _ hU _
       have r₂ : valHom (R := S) y.left _ hU (rsT (b j') _) = valHom (R := S) y.left _ hj' (b j') := by
-        rw [rsT, dif_pos inf_le_right, ← valR_eq, ← valR_eq]
+        rw [rsT, dite_eq_left inf_le_right, ← valR_eq, ← valR_eq]
         exact valR_res _ _ hU _
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [dlg, pbT_id, map_sub, map_sum, map_mul, hc, r₁, r₂] at e₁

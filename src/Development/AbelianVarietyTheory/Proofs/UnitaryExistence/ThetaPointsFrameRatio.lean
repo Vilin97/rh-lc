@@ -39,7 +39,7 @@ theorem sec_eq_scal_of_values (hT : Out.SecTwistSt) {E : Type} [Field E] [Number
   have hz' : pt ≫ gxFst x = (ex z).left := by rw [hz]; rfl
   have hU : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U (fun _ => j) := by
     by_contra h
-    exact hne (by unfold valAt'; rw [dif_neg h])
+    exact hne (by unfold valAt'; rw [dite_eq_right h])
   have hU' : ⊤ ≤ (ex z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j := by
     rw [← hz']
     intro p hp'

@@ -172,11 +172,11 @@ theorem CoprimeFifteen.three_not_dvd_condN (h : H.CoprimeFifteen) (hq : H.q ≠ 
 theorem psAt_of_coprime {p : ℕ} (h : Nat.Coprime p H.condN) :
     H.psAt p = (((H.art (ZMod.unitOfCoprime p h)).1.1 : ℤˣ) : ℤ) := by
   unfold HostRaw.psAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem psAt_of_not_coprime {p : ℕ} (h : ¬ Nat.Coprime p H.condN) : H.psAt p = 0 := by
   unfold HostRaw.psAt
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem psAt_eq_one_or {p : ℕ} (h : Nat.Coprime p H.condN) : H.psAt p = 1 ∨ H.psAt p = -1 := by
   rw [H.psAt_of_coprime h]

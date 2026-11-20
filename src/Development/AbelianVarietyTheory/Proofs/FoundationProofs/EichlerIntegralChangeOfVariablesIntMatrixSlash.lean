@@ -10,7 +10,7 @@ open GlobalTheory.EichlerChange
 
 lemma toGL_entry (g : Matrix (Fin 2) (Fin 2) ℤ) (h : g.det ≠ 0) (i j : Fin 2) :
     (toGL g : GL (Fin 2) ℝ) i j = ((g i j : ℤ) : ℝ) := by
-  unfold toGL; rw [dif_neg h]; rfl
+  unfold toGL; rw [dite_eq_right h]; rfl
 
 lemma toGL_det (g : Matrix (Fin 2) (Fin 2) ℤ) (h : g.det ≠ 0) :
     (toGL g).det.val = ((g.det : ℤ) : ℝ) := by

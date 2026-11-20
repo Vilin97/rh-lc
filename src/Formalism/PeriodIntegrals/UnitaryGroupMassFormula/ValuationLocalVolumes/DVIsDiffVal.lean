@@ -13,7 +13,7 @@ variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F))
 theorem dV_isDiffVal : IsDiffVal v (dV v) := by
   have h : ∃ d, IsDiffVal v d := diffExists v
   unfold dV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem val_pow_le (k : ℕ) (x : 𝓞 F) (hx : x ∈ differentIdeal ℤ (𝓞 F) ^ k) :

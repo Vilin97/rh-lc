@@ -649,7 +649,7 @@ theorem mem_plOver {p : ℕ} (hp : p.Prime) (w : slopeLatticeData.FinPl K) : w �
         (fun a b hab => Subtype.ext (Subtype.ext (congrArg (fun q => q.1) hab)))
     exact Set.toFinite _
   unfold plOver
-  rw [dif_pos hfin]
+  rw [dite_eq_left hfin]
   simp
 
 def tau0 (p₁ t₁ : ℕ) : slopeLatticeData.FinPl K →₀ ℤ :=

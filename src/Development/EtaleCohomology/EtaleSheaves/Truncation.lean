@@ -40,7 +40,7 @@ def ιT (K : CochainComplex C ℤ) (a : ℤ) : sT K a ⟶ K where
   comm' i j hij := by
     change i + 1 = j at hij
     by_cases h : a ≤ i
-    · rw [dif_pos h, dif_pos (by omega)]
+    · rw [dite_eq_left h, dite_eq_left (by omega)]
       have hj : (eG a).f ((i - a).toNat + 1) = j := by
         change a + (((i - a).toNat + 1 : ℕ) : ℤ) = j; push_cast; omega
       rw [sq K a (f_toNat h) hj]
@@ -51,7 +51,7 @@ def ιT (K : CochainComplex C ℤ) (a : ℤ) : sT K a ⟶ K where
 theorem ιT_f (K : CochainComplex C ℤ) (a : ℤ) {k : ℕ} {i : ℤ} (hk : (eG a).f k = i) :
     (ιT K a).f i = comp K a hk := by
   dsimp only [ιT]
-  rw [dif_pos (le_of_f hk)]
+  rw [dite_eq_left (le_of_f hk)]
   apply comp_indep
 
 instance (K : CochainComplex C ℤ) (a : ℤ) {k : ℕ} {i : ℤ} (hk : (eG a).f k = i) : IsIso (comp K a hk) := by

@@ -25,7 +25,7 @@ theorem liftVec_lev (v : Fin (2 * r' + k + 1) → ℂ) (j : Fin (2 * r' + k + 1)
   have hj := j.isLt
   have h1 : i ≤ (levPos k i r' j).val ∧ (levPos k i r' j).val < 2 * r' + k + 1 + i := by rw [lev_val]; omega
   simp only [liftVec]
-  rw [dif_pos h1]
+  rw [dite_eq_left h1]
   congr 1
   apply Fin.ext
   show j.val + i - i = j.val
@@ -34,7 +34,7 @@ theorem liftVec_lev (v : Fin (2 * r' + k + 1) → ℂ) (j : Fin (2 * r' + k + 1)
 theorem liftVec_out (v : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (i + r') + k + 1))
     (hp : ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) : liftVec k i r' v p = 0 := by
   simp only [liftVec]
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 theorem ιLev_lev (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p q : Fin (2 * r' + k + 1)) :
     ιLev k i r' g (levPos k i r' p) (levPos k i r' q) = g p q := by
@@ -43,7 +43,7 @@ theorem ιLev_lev (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ)
   have h1 : i ≤ (levPos k i r' p).val ∧ (levPos k i r' p).val < 2 * r' + k + 1 + i := by rw [lev_val]; omega
   have h2 : i ≤ (levPos k i r' q).val ∧ (levPos k i r' q).val < 2 * r' + k + 1 + i := by rw [lev_val]; omega
   simp only [ιLev]
-  rw [dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h1, dite_eq_left h2]
   congr 1 <;> apply Fin.ext
   · show p.val + i - i = p.val
     omega
@@ -53,13 +53,13 @@ theorem ιLev_lev (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ)
 theorem ιLev_out (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p q : Fin (2 * (i + r') + k + 1))
     (hp : ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) : ιLev k i r' g p q = if p = q then 1 else 0 := by
   simp only [ιLev]
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 theorem ιLev_in_out (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p q : Fin (2 * (i + r') + k + 1))
     (hp : i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i) (hq : ¬ (i ≤ q.val ∧ q.val < 2 * r' + k + 1 + i)) :
     ιLev k i r' g p q = 0 := by
   simp only [ιLev]
-  rw [dif_pos hp, dif_neg hq]
+  rw [dite_eq_left hp, dite_eq_right hq]
 
 theorem sum_lev {M : Type*} [AddCommMonoid M] (f : Fin (2 * (i + r') + k + 1) → M)
     (h : ∀ p : Fin (2 * (i + r') + k + 1), ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i) → f p = 0) :
@@ -122,7 +122,7 @@ theorem Lz_lev (X : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p
   have h1 : i ≤ (levPos k i r' p).val ∧ (levPos k i r' p).val < 2 * r' + k + 1 + i := by rw [lev_val]; omega
   have h2 : i ≤ (levPos k i r' q).val ∧ (levPos k i r' q).val < 2 * r' + k + 1 + i := by rw [lev_val]; omega
   simp only [Lz]
-  rw [dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h1, dite_eq_left h2]
   congr 1 <;> apply Fin.ext
   · show p.val + i - i = p.val
     omega
@@ -132,7 +132,7 @@ theorem Lz_lev (X : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p
 theorem Lz_out_left (X : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p q : Fin (2 * (i + r') + k + 1))
     (hp : ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) : Lz k i r' X p q = 0 := by
   simp only [Lz]
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 theorem Lz_out_right (X : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ) (p q : Fin (2 * (i + r') + k + 1))
     (hq : ¬ (i ≤ q.val ∧ q.val < 2 * r' + k + 1 + i)) : Lz k i r' X p q = 0 := by

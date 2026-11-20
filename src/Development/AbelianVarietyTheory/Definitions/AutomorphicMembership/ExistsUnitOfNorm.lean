@@ -135,7 +135,7 @@ theorem toStk_map (r : R) : toStk V (g r) = gs (spMap g) (gen V) ⊤ (DegPre.toO
 
 theorem toStk_valR {U : (Sp V).Opens} (h : ⊤ ≤ U) (a : Γ(Sp V, U)) :
     toStk V (valR (𝟙 (Sp V)) U a) = gs (𝟙 (Sp V)) (gen V) U a := by
-  rw [valR, dif_pos (show ⊤ ≤ 𝟙 (Sp V) ⁻¹ᵁ U from h), gs_eq _ _ U (h trivial)]
+  rw [valR, dite_eq_left (show ⊤ ≤ 𝟙 (Sp V) ⁻¹ᵁ U from h), gs_eq _ _ U (h trivial)]
   simp only [toStk, RingHom.comp_apply]
   rw [Iso.hom_inv_id_apply]
   exact TopCat.Presheaf.germ_res_apply (Sp V).presheaf (homOfLE h) (gen V) trivial a
@@ -228,13 +228,13 @@ abbrev rigV (D : DegPre R) (g : R →+* V) (i : D.P.L.ι) : ((Sp V).presheaf.sta
 theorem rigV_val {i : D.P.L.ι} (h : ⊤ ≤ eSec D.P.A ⁻¹ᵁ D.P.L.U i) : (rigV D g i).val = toStk V (g (rigAt D i)) := by
   have ht : (⊤ : (Sp R).Opens) ≤ LB.wchart D.P.L (K := PUnit) (fun _ => eSec D.P.A) fun _ => i :=
     fun y hy => Set.mem_iInter.2 fun _ => h hy
-  rw [toStk_map, BetaAdd.toOpen_top, rigAt, valR, dif_pos (show ⊤ ≤ 𝟙 (Sp R) ⁻¹ᵁ (D.P.L.pull (eSec D.P.A)).U fun _ => i from ht), Iso.hom_inv_id_apply]
+  rw [toStk_map, BetaAdd.toOpen_top, rigAt, valR, dite_eq_left (show ⊤ ≤ 𝟙 (Sp R) ⁻¹ᵁ (D.P.L.pull (eSec D.P.A)).U fun _ => i from ht), Iso.hom_inv_id_apply]
   exact (gs_unit _ _ _ (ht trivial) _).symm.trans (gs_res (spMap g) _ ht trivial _).symm
 
 theorem isUnit_rigAt {i : D.P.L.ι} (h : ⊤ ≤ eSec D.P.A ⁻¹ᵁ D.P.L.U i) : IsUnit (rigAt D i) := by
   have ht : (⊤ : (Sp R).Opens) ≤ LB.wchart D.P.L (K := PUnit) (fun _ => eSec D.P.A) fun _ => i :=
     fun y hy => Set.mem_iInter.2 fun _ => h hy
-  rw [rigAt, valR, dif_pos (show ⊤ ≤ 𝟙 (Sp R) ⁻¹ᵁ (D.P.L.pull (eSec D.P.A)).U fun _ => i from ht)]
+  rw [rigAt, valR, dite_eq_left (show ⊤ ≤ 𝟙 (Sp R) ⁻¹ᵁ (D.P.L.pull (eSec D.P.A)).U fun _ => i from ht)]
   exact ((Units.isUnit _).map _).map _
 
 theorem rigV_trans {i i' : D.P.L.ι} (h : eSec D.P.A (spMap g (gen V)) ∈ D.P.L.U i)

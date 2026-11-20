@@ -173,11 +173,11 @@ theorem iXc_eq (hS : SpStd d.toColBase) : CF.iXc (d.colRec a) = padL d.host.E (d
   funext j
   rw [padL_apply, Pi.single_apply]
   by_cases h : (j : ℕ) < d.R.N d.R.m - 1
-  · rw [dif_pos h, Pi.single_apply]
+  · rw [dite_eq_left h, Pi.single_apply]
     congr 1
     exact propext ⟨fun e => Fin.ext (show (j : ℕ) = k from congrArg (fun z : Fin (d.R.N d.R.m) => (z : ℕ)) e),
       fun e => Fin.ext (show (j : ℕ) = k from congrArg (fun z : Fin (d.R.N d.R.m - 1) => (z : ℕ)) e)⟩
-  · rw [dif_neg h, if_neg]
+  · rw [dite_eq_right h, if_neg]
     rintro rfl
     exact h k.2
 

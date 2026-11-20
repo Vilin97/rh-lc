@@ -22,7 +22,7 @@ theorem star_eq_conj' (t : D.host.E) : star t = D.host.conj t := by
 theorem theta_spec : IsIntegral ℤ (theta D) ∧ theta D + D.host.conj (theta D) = 1 := by
   have h := thetaEx_holds D
   unfold theta
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem entry_rel {X0 : Matrix (Fin D.R.rS) (Fin D.R.rS) D.host.E} {xs : Fin D.R.rS → (VS D).V}

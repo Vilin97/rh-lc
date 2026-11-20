@@ -326,10 +326,10 @@ theorem parabolicChart_parabolicMk (m : levi F n β) (u : UnipotentIndex n β �
   funext s
   rw [parabolicChart_apply, coe_parabolicMk, Matrix.add_apply, coordAddEquiv_apply]
   by_cases h : β s.1.1 = β s.1.2
-  · rw [dif_pos h, unipMatrix_apply_of_not_lt u (by rw [h]; exact lt_irrefl _), add_zero]
+  · rw [dite_eq_left h, unipMatrix_apply_of_not_lt u (by rw [h]; exact lt_irrefl _), add_zero]
     rfl
   · have hlt := lt_of_le_of_ne (not_lt.1 s.2) h
-    rw [dif_neg h, mem_levi.1 m.2 _ _ h, unipMatrix_apply_of_lt u hlt, zero_add]
+    rw [dite_eq_right h, mem_levi.1 m.2 _ _ h, unipMatrix_apply_of_lt u hlt, zero_add]
 
 variable (β) in
 

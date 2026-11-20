@@ -187,7 +187,7 @@ theorem leadT_diag (ι : Fin m × Fin m → σ) (hι : Function.Injective ι) (t
       ∏ i : Fin m, X (ι (i, i)) ^ (if i.val < t then 1 else 0) := by
   classical
   unfold PI.FJM.leadT
-  rw [dif_pos ⟨ht, ht⟩, AlgHom.map_det]
+  rw [dite_eq_left ⟨ht, ht⟩, AlgHom.map_det]
   have hD : (aeval (PI.FJMB.killS (PI.FJMB.offD ι))).mapMatrix ((blkM ι).submatrix (Fin.castLE ht) (Fin.castLE ht)) =
       Matrix.diagonal (fun i : Fin t => (X (ι (Fin.castLE ht i, Fin.castLE ht i)) : MvPolynomial σ ℂ)) := by
     ext i j

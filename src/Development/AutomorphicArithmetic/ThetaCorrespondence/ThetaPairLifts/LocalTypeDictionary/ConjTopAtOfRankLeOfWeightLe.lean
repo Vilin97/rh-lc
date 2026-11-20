@@ -89,7 +89,7 @@ theorem conjTopAt_of_rank_le_of_weight_le : (_root_.GlobalTheory.FunPr.ThetaLoca
     obtain ⟨ρ', e0, Ls, Lt, κ, k, n, r, s, hev, he0, hLs, hLt, hκ, hk, hs, hr, hlam, ⟨t, ht⟩, hJ, hfeq⟩ :=
       hA Φ β d hocc c j fm hfm σ ρ hρ
     have htc : GL3Theta.IsTwoTorsionPointUnkilled D (lamConj Qbar ρ' (lamOf D D.host.ccK ch.S.Z.δ)) (tc D ch.S.Z.δ ch.S.Z.t0 ρ) := by
-      rw [hlam]; unfold tc; rw [dif_pos ⟨t, ht⟩]; exact Exists.choose_spec _
+      rw [hlam]; unfold tc; rw [dite_eq_left ⟨t, ht⟩]; exact Exists.choose_spec _
     obtain ⟨harea, -, hdiff, hgr⟩ := tB D (hInp D) D.host.ccK ch.S.Z.δ ch.S.Z.t0 ch.S.Z.crv ch.S.Z.pt0 _ _ e0 hev he0
       Ls Lt hLs hLt κ hκ k n r s hk hs hr ρ' _ htc
     obtain ⟨hpos, Kx, hKx, hlogKx, hop⟩ := hFock D _ _ (wt ch.G (.top j)) (wt ch.G (.top (j + 1))) _ hJ

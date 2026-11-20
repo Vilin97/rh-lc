@@ -19,7 +19,7 @@ theorem continuousOn_cayInv : ContinuousOn (cayInv P Q) (cayS (D0 P Q)) := by
   have e : cayInv P Q = fun g => ⟨cayCand P Q g, cayCand_mem P Q g⟩ := by
     funext g
     first
-    | (unfold cayInv; rw [dif_pos (cayCand_mem P Q g)])
+    | (unfold cayInv; rw [dite_eq_left (cayCand_mem P Q g)])
     | simp [cayInv, cayCand_mem]
   rw [e]
   refine Topology.IsInducing.subtypeVal.continuousOn_iff.2 ?_

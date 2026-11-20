@@ -417,7 +417,7 @@ theorem det_block (h : j + c = s + 1) (hn : n = κ + j * (τ + 1))
   congr 1
   ext a b
   simp only [RingHom.mapMatrix_apply, submatrix_apply, Matrix.map_apply, Matrix.of_apply]
-  rw [hf, hf, eN_eq, Loc.atN, dif_pos (Fin.is_lt _)]
+  rw [hf, hf, eN_eq, Loc.atN, dite_eq_left (Fin.is_lt _)]
   rfl
 
 end Level

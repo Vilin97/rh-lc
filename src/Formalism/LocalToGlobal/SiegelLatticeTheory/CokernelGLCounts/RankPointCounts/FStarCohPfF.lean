@@ -47,7 +47,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
 theorem gdl_full (x y : Fin (D.R.rS + 1) → (VS D).V) :
     Formalism.L2.SG.Pf.ScalarFramePf.GDl x y (D.R.rS + 1) = (Formalism.L2.SG.Pf.ScalarFramePf.GZ x y).det := by
   unfold Formalism.L2.SG.Pf.ScalarFramePf.GDl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   have hc : (Fin.castLE (le_refl (D.R.rS + 1)) : Fin (D.R.rS + 1) → Fin (D.R.rS + 1)) = id :=
     funext fun i => Fin.ext rfl
   rw [hc, Matrix.submatrix_id_id]

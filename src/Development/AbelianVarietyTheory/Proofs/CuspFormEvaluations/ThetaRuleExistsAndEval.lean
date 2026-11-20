@@ -32,7 +32,7 @@ theorem thetaRule_exists_and_eval : Formalism.MainNotions.ModuliIntegralCharts.H
     obtain ⟨w, hw, -⟩ := hT k y a n xx P hP
     have e : evR Xo c f y = w := by
       unfold evR Formalism.L2.Pj.evalAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact GlobalTheory.thetaValue_natural hL hC E H Dw l Xo c nab hn _ _ _ _ y
         h.choose_spec.choose_spec.choose_spec a n xx P hP _ _ (hf _ _) hw
     rw [e]

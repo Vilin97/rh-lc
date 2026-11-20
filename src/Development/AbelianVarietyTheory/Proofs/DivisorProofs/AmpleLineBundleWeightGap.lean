@@ -47,7 +47,7 @@ theorem _root_.GlobalTheory.HSApp.exists_dominant_sub {E : Type} [Field E] [Numb
   have h₁ := hla τ k hk
   have h₂ := hM τ k hk
   unfold _root_.GlobalTheory.CompHS.gap at h₁ h₂ ⊢
-  rw [dif_pos hk] at h₁ h₂ ⊢
+  rw [dite_eq_left hk] at h₁ h₂ ⊢
   have e : ∀ i, ((M + 1) • la - ν) τ i = ((M + 1 : ℕ) : ℤ) * la τ i - ν τ i := by
     intro i
     simp

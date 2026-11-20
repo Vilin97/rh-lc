@@ -22,7 +22,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {P : HeightOneSpectru
 
 theorem extE_zero (κ : Sp E n ≃ₗ[E] Sp E n) (v : Sp E (n + 0)) : GlobalTheory.CongLevel.extE 0 κ v = κ v := by
   funext l
-  rw [GlobalTheory.CongLevel.extE_apply, Pi.add_apply, GlobalTheory.CongLevel.inX_apply, dif_pos (show l.1 < n from l.2)]
+  rw [GlobalTheory.CongLevel.extE_apply, Pi.add_apply, GlobalTheory.CongLevel.inX_apply, dite_eq_left (show l.1 < n from l.2)]
   show v l + (κ v l - v l) = κ v l
   ring
 

@@ -128,7 +128,7 @@ private theorem blowupAtCenter_eq_self_of_not_isAdmissibleCenter {k : Type u} [F
     (h : ¬ MarkedBlowupSequenceData.IsAdmissibleCenter s) :
     MarkedBlowupSequenceData.blowupAtCenter hinv s = s := by
   unfold MarkedBlowupSequenceData.blowupAtCenter
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 private theorem isLocallyMonomialTriple_tripleAtLastBlowup_blowupAtCenter
     (hGeom : MonomialGeometryHypotheses.{u}) (hinv : ComapIsoInvariance.{u}) (T : MarkedIdealWithBoundary.{u})

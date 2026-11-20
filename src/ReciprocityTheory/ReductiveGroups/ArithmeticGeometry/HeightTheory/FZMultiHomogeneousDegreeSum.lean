@@ -199,10 +199,10 @@ theorem rename_swap_F (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (F : KTp K d.D d.N)
       by_contra hnp
       apply hg0
       unfold Data.gen
-      rw [dif_neg hnp]
+      rw [dite_eq_right hnp]
     have hgspan : Ideal.span {d.gen P} = P := by
       unfold Data.gen
-      rw [dif_pos hprin]
+      rw [dite_eq_left hprin]
       exact Ideal.span_singleton_generator P
     have hFg : F = C κ * d.gen P ^ (∑ p ∈ T, e p) := by
       rw [hFeq, ← Finset.prod_pow_eq_pow_sum]

@@ -67,7 +67,7 @@ theorem laOf_big (D : D7) (T : CoreJ D) (hT : LawsJ T) (i : Fin D.R.m) (κ : Wei
   have hD := hT.pins.2.2.2 ((i : ℕ) + 1) ⟨by omega, i.2⟩
   have hk : (k : ℕ) < (T.Q.Dw ((i : ℕ) + 1)).p := by have := hD.1; have := a.2; omega
   simp only [laOf, weightOf, if_pos hk, hτ]
-  rw [GlobalTheory.WeightExponents.wtA_tauEmb hT.pins.1, Formalism.L2.Pj.ext0, dif_pos (by omega)]
+  rw [GlobalTheory.WeightExponents.wtA_tauEmb hT.pins.1, Formalism.L2.Pj.ext0, dite_eq_left (by omega)]
   have : (⟨(k : ℕ), by omega⟩ : Fin (D.R.sigW ((i : ℕ) + 1)).1) = a := Fin.ext ha.symm
   rw [this]
 
@@ -82,7 +82,7 @@ theorem laOf_small (D : D7) (T : CoreJ D) (hT : LawsJ T) (i : Fin D.R.m) (κ : W
   have hq := hD.2.1
   have hk : ¬ (k : ℕ) < (T.Q.Dw ((i : ℕ) + 1)).p := by omega
   simp only [laOf, weightOf, if_neg hk, hτ]
-  rw [GlobalTheory.Shares.WtDic.wtA_conj, Formalism.L2.Pj.ext0, dif_pos (by omega)]
+  rw [GlobalTheory.Shares.WtDic.wtA_conj, Formalism.L2.Pj.ext0, dite_eq_left (by omega)]
   have : (⟨(T.Q.Dw ((i : ℕ) + 1)).q - 1 - ((k : ℕ) - (T.Q.Dw ((i : ℕ) + 1)).p), by omega⟩ :
       Fin (D.R.sigW ((i : ℕ) + 1)).2) = a := Fin.ext (by simp only; omega)
   rw [this]

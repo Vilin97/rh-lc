@@ -29,7 +29,7 @@ variable {α : Type*} [MeasurableSpace α] {ν : Measure α}
 
 theorem TL_eq {f : α → ℂ} (h : MemLp f 2 ν) : TL ν f = h.toLp f := by
   unfold TL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem TL_congr {f g : α → ℂ} (hf : MemLp f 2 ν) (hfg : f =ᵐ[ν] g) : TL ν f = TL ν g := by
   rw [TL_eq hf, TL_eq (hf.ae_eq hfg)]

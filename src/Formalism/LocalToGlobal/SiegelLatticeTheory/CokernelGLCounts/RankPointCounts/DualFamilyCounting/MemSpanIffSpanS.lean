@@ -44,9 +44,9 @@ theorem mem_spanS_iff_sub {ι : Type} [Fintype ι] [DecidableEq ι] {b : ι → 
       exacts [T.zero_mem, hd _]
     · rw [Fintype.sum_eq_add_sum_subtype_ne _ i₀]
       dsimp only
-      rw [dif_pos rfl, zero_smul, zero_add]
+      rw [dite_eq_left rfl, zero_smul, zero_add]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [dif_neg j.2]
+      rw [dite_eq_right j.2]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum]
       refine Finset.sum_eq_zero fun j _ => ?_

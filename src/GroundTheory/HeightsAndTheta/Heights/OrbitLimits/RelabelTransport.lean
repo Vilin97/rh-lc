@@ -172,11 +172,11 @@ theorem multAt_map (J W : Ideal (MRingOver F ι)) :
   unfold multAt
   by_cases hW : W.IsPrime
   · have hW' : (W.map (ringEquiv F e h)).IsPrime := (isPrime_map_ringEquiv_iff _ W).2 hW
-    rw [dif_pos hW, dif_pos hW']
+    rw [dite_eq_left hW, dite_eq_left hW']
     exact congrArg ENat.toNat (length_localizedModule_quotient_map (ringEquiv F e h) J W)
   · have hW' : ¬ (W.map (ringEquiv F e h)).IsPrime :=
       fun h' => hW ((isPrime_map_ringEquiv_iff _ W).1 h')
-    rw [dif_neg hW, dif_neg hW']
+    rw [dite_eq_right hW, dite_eq_right hW']
 
 theorem divCycle_map_apply (V W : Ideal (MRingOver F ι)) (f : MRingOver F ι) :
     ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (V.map (ringEquiv F e h)) (ringEquiv F e h f)) (W.map (ringEquiv F e h)) : ℤ) =

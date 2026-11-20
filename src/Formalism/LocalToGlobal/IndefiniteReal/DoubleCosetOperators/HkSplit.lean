@@ -384,7 +384,7 @@ theorem embOn_mem (V : HSp D) {T : Set (HeightOneSpectrum (𝓞 D.host.F))} (s :
 theorem embOn_not (V : HSp D) {T : Set (HeightOneSpectrum (𝓞 D.host.F))} (s : ∀ v ∈ T, SplitD D v)
     {v : HeightOneSpectrum (𝓞 D.host.F)} (hv : v ∉ T) (a : GL (Fin V.rank) (v.adicCompletion D.host.F)) :
     embOn V T s v a = 1 := by
-  rw [embOn, dif_neg hv, MonoidHom.one_apply]
+  rw [embOn, dite_eq_right hv, MonoidHom.one_apply]
 
 def splitEmbOn (V : HSp D) (K : Set (GA D V)) (T : Set (HeightOneSpectrum (𝓞 D.host.F)))
     (s : ∀ v ∈ T, SplitD D v) (hK : ∀ v (hv : v ∈ T), ∀ a ∈ Kv v V.rank, embV V (s v hv) a ∈ K)

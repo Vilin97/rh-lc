@@ -17,7 +17,7 @@ theorem ev_top_eq (a : Γ(X, ⊤)) (y : CxPts p σ) :
     ev p σ ⊤ a y = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom (y.1.appTop.hom a) := by
   have h : ⊤ ≤ y.1 ⁻¹ᵁ (⊤ : X.Opens) := le_rfl
   show valR y.1 ⊤ a = _
-  rw [valR, dif_pos h]
+  rw [valR, dite_eq_left h]
   rfl
 
 theorem exists_ev_eq [UniversallyClosed p] [GeometricallyIntegral p] (a : Γ(X, ⊤)) :

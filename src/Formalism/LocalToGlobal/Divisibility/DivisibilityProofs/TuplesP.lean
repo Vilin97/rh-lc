@@ -1129,7 +1129,7 @@ theorem residue_character_exists : ResCharEx := by
 theorem b_resChar_spec (ξ : Chr F E L) (hξ : ∀ v : HeightOneSpectrum (𝓞 F), wildAt E v ≤ ξ.ker)
     (P : HeightOneSpectrum (𝓞 E)) : IsResChar ξ P (resChar ξ P) := by
   have h : ∃ χ, IsResChar ξ P χ := (residue_character_exists F E L ξ hξ P).exists
-  rw [resChar, dif_pos h]
+  rw [resChar, dite_eq_left h]
   exact h.choose_spec
 
 theorem residue_character_mul : ResCharMul := by
@@ -1436,7 +1436,7 @@ local notation "uIn" => Units.map (RInt F E).subtype.toMonoidHom
 theorem d_isRes (hEx : ResCharEx) (ξ : Chr F E L) (ht : ∀ v : HeightOneSpectrum (𝓞 F), wildAt E v ≤ ξ.ker)
     (P : HeightOneSpectrum (𝓞 E)) : IsResChar ξ P (resChar ξ P) := by
   have h : ∃ χ, IsResChar ξ P χ := (hEx F E L ξ ht P).exists
-  rw [resChar, dif_pos h]
+  rw [resChar, dite_eq_left h]
   exact h.choose_spec
 
 theorem d_isUnit_mk (P : HeightOneSpectrum (𝓞 E)) {b : 𝓞 E} (hb : b ∉ P.asIdeal) :

@@ -92,7 +92,7 @@ theorem exists_normalization_model : ∀ (k Ω : Type) [CommRing k] [IsNoetheria
       rintro _ rfl e
       exact fieldPt_appLE ρ hη
     have e := M.top_le_preimage_pt hU
-    rw [valF, dif_pos e]
+    rw [valF, dite_eq_left e]
     exact (congrArg (fun g => g.hom f) (key M.pt hρ e)).symm
   have hψfin : ψ.hom.Finite :=
     RingHom.Finite.comp (RingHom.finite_algebraMap.2 inferInstance) (RingHom.Finite.of_surjective ρ.hom hρs)
@@ -162,7 +162,7 @@ theorem exists_normalization_model : ∀ (k Ω : Type) [CommRing k] [IsNoetheria
       exact hηV
     refine ⟨(fieldPt ψ).fromNormalization ⁻¹ᵁ M.Z.basicOpen a, c,
       ⟨_, hW (x := IsLocalRing.closedPoint Ω') trivial⟩, ?_⟩
-    rw [valF, dif_pos hW]
+    rw [valF, dite_eq_left hW]
     exact hc
   let M' : RatModel k Ω' :=
     { Z := (fieldPt ψ).normalization

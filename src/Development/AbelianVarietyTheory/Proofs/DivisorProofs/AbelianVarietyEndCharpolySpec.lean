@@ -62,7 +62,7 @@ theorem isCharpoly_charpoly_unique (K : Type) [Field K] (A : AbVar K) (f : End A
   have hex := exists_isCharpoly A f
   have hc : IsCharpoly f (charpoly f) := by
     classical
-    rw [charpoly, dif_pos hex]
+    rw [charpoly, dite_eq_left hex]
     exact hex.choose_spec
   refine ⟨hc, fun P hP => Polynomial.funext fun n => ?_⟩
   rw [hP.2.2 n, hc.2.2 n]

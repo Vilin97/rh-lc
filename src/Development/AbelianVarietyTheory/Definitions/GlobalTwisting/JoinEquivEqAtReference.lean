@@ -279,7 +279,7 @@ theorem shiftOf_sgT {u : D.what₂.Word} {K : ClsPTied u} (V : ValPTied u K) : s
     omega
   have h1 : 0 < D.sp.X'.rank := rankP D ▸ h0
   unfold shiftOf DomWeight.detShift
-  rw [dif_pos h0, dif_pos h1, ← sgT_eq_lamX V τ]
+  rw [dite_eq_left h0, dite_eq_left h1, ← sgT_eq_lamX V τ]
   exact congrArg _ (Fin.ext (congrArg (· - 1) (rankP D).symm))
 
 section Point

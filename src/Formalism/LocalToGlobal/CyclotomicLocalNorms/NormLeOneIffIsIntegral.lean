@@ -28,7 +28,7 @@ theorem exists_rat_norm {x : Om l} (hx : x ≠ 0) : ∃ q : ℚ, ‖x‖ = (l : 
 def vq (x : Om l) : ℚ := if h : x = 0 then 0 else (exists_rat_norm h).choose
 
 theorem norm_eq_rpow {x : Om l} (hx : x ≠ 0) : ‖x‖ = (l : ℝ) ^ (-(vq x : ℝ)) := by
-  rw [vq, dif_neg hx]
+  rw [vq, dite_eq_right hx]
   exact (exists_rat_norm hx).choose_spec
 
 theorem vq_le_iff {x y : Om l} (hx : x ≠ 0) (hy : y ≠ 0) : vq x ≤ vq y ↔ ‖y‖ ≤ ‖x‖ := by

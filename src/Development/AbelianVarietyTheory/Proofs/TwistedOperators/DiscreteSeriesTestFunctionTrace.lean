@@ -47,7 +47,7 @@ def matRep (π : Formalism.REAL.UJ ε →* (X →L[ℂ] X)) (x : Matrix (Fin m) 
 
 theorem matRep_ujMat (π : Formalism.REAL.UJ ε →* (X →L[ℂ] X)) (g : Formalism.REAL.UJ ε) : matRep ε π (ujMat ε g) = π g := by
   have h : ∃ g', ujMat ε g' = ujMat ε g := ⟨g, rfl⟩
-  rw [matRep, dif_pos h, ujMat_injective ε h.choose_spec]
+  rw [matRep, dite_eq_left h, ujMat_injective ε h.choose_spec]
 
 theorem ujMat_mem_UJset (g : Formalism.REAL.UJ ε) : ujMat ε g ∈ UJset ε := g.2
 

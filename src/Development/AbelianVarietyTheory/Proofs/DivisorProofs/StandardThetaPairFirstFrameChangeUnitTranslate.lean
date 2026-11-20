@@ -137,10 +137,10 @@ private theorem unitChar_mul (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset 
   unfold unitChar
   by_cases hL : ∃ x, IsUnitDet e L x
   · have hLκ : ∃ x, IsUnitDet e (L * κ) x := ⟨_, isUnitDet_mul he hL.choose_spec hy⟩
-    rw [dif_pos hL, dif_pos hLκ, isUnitDet_unique hLκ.choose_spec (isUnitDet_mul he hL.choose_spec hy), map_mul,
+    rw [dite_eq_left hL, dite_eq_left hLκ, isUnitDet_unique hLκ.choose_spec (isUnitDet_mul he hL.choose_spec hy), map_mul,
       _root_.mul_inv_rev, Circle.coe_mul]
   · have hLκ : ¬ ∃ x, IsUnitDet e (L * κ) x := fun ⟨z, hz⟩ => hL ⟨_, isUnitDet_div he hκ hz hy⟩
-    rw [dif_neg hL, dif_neg hLκ, mul_zero]
+    rw [dite_eq_right hL, dite_eq_right hLκ, mul_zero]
 
 end GlobalTheory.frameChangeUnitDeterminant
 

@@ -257,7 +257,7 @@ theorem homS_of_entB {n' c' n c k₀ : ℕ} (hk' : k₀ ≤ n') (hk : k₀ ≤ n
   obtain ⟨h1', h2'⟩ := fIdx_fPos hk' l'.2
   have := h _ _ h1 h1'
   unfold LocE.entB Loc.atN at this
-  rw [h2, h2', dif_pos l.2, eN_eq l'.2] at this
+  rw [h2, h2', dite_eq_left l.2, eN_eq l'.2] at this
   exact this
 
 omit [NumberField E] [StarRing E] in

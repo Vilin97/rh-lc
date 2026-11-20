@@ -91,7 +91,7 @@ theorem main_term (hD : Disj bs) (μ : (Σ j : Fin nb, Fin (bs j).i) → ℂ)
     intro p
     have hex : ∃ p', colB bs p' = colB bs p := ⟨p, rfl⟩
     unfold owner
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact congrArg some (hinj hex.choose_spec)
   have hnone : ∀ k, owner bs k = none ↔ k ∉ Finset.univ.image (colB bs) := by
     intro k
@@ -102,7 +102,7 @@ theorem main_term (hD : Disj bs) (μ : (Σ j : Fin nb, Fin (bs j).i) → ℂ)
       exact Option.some_ne_none _ h
     · intro h
       unfold owner
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨p, rfl⟩
       exact h (Finset.mem_image_of_mem _ (Finset.mem_univ p))
   have hT : ∀ T : Choice bs, ∏ k, idealA bs μ y ee T k =

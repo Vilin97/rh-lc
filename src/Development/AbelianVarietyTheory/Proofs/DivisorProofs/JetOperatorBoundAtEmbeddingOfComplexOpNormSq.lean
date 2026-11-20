@@ -76,7 +76,7 @@ theorem degAt_eq (lam nu : ι → DomWeight a) (lam' : ι → DomWeight b) (hw :
   have e : ∀ i, (nu τ).w i = ((lam τ).natW i : ℤ) + lastEntry (nu τ) := fun i => by
     have hi := i.2
     have ha : 0 < a := by omega
-    rw [GlobalTheory.JetDeg.natW_cast, lastEntry, DomWeight.detShift, DomWeight.detShift, dif_pos ha, dif_pos ha,
+    rw [GlobalTheory.JetDeg.natW_cast, lastEntry, DomWeight.detShift, DomWeight.detShift, dite_eq_left ha, dite_eq_left ha,
       Int.toNat_of_nonneg (h0 _), hs', hs']
     ring
   simp [e, Finset.sum_add_distrib, mul_comm]

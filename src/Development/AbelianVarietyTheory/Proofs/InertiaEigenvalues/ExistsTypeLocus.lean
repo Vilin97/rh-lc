@@ -111,25 +111,25 @@ local notation "CZ" => Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
 theorem onMt_mul {a b : MonoidAlgebra ℂ (G0g D.nd)} (ha : a ∈ CZ) (hb : b ∈ CZ) :
     D.ntypes.onMt μ j (a * b) = D.ntypes.onMt μ j a * D.ntypes.onMt μ j b := by
   unfold NTypes.onMt
-  rw [dif_pos (Subalgebra.mul_mem _ ha hb), dif_pos ha, dif_pos hb]
+  rw [dite_eq_left (Subalgebra.mul_mem _ ha hb), dite_eq_left ha, dite_eq_left hb]
   have e : (⟨a * b, Subalgebra.mul_mem _ ha hb⟩ : ↥CZ) = ⟨a, ha⟩ * ⟨b, hb⟩ := Subtype.ext rfl
   rw [e, map_mul]
 
 theorem onMt_add {a b : MonoidAlgebra ℂ (G0g D.nd)} (ha : a ∈ CZ) (hb : b ∈ CZ) :
     D.ntypes.onMt μ j (a + b) = D.ntypes.onMt μ j a + D.ntypes.onMt μ j b := by
   unfold NTypes.onMt
-  rw [dif_pos (Subalgebra.add_mem _ ha hb), dif_pos ha, dif_pos hb]
+  rw [dite_eq_left (Subalgebra.add_mem _ ha hb), dite_eq_left ha, dite_eq_left hb]
   exact map_add (D.ntypes.cenMt μ j) ⟨a, ha⟩ ⟨b, hb⟩
 
 theorem onMt_one : D.ntypes.onMt μ j 1 = 1 := by
   unfold NTypes.onMt
-  rw [dif_pos (Subalgebra.one_mem _)]
+  rw [dite_eq_left (Subalgebra.one_mem _)]
   exact map_one (D.ntypes.cenMt μ j)
 
 theorem onMt_smul (c : ℂ) {a : MonoidAlgebra ℂ (G0g D.nd)} (ha : a ∈ CZ) :
     D.ntypes.onMt μ j (c • a) = c • D.ntypes.onMt μ j a := by
   unfold NTypes.onMt
-  rw [dif_pos (Subalgebra.smul_mem _ ha c), dif_pos ha]
+  rw [dite_eq_left (Subalgebra.smul_mem _ ha c), dite_eq_left ha]
   exact map_smul (D.ntypes.cenMt μ j) c ⟨a, ha⟩
 
 theorem onMt_sum {ι : Type} (S : Finset ι) (a : ι → MonoidAlgebra ℂ (G0g D.nd)) (ha : ∀ i ∈ S, a i ∈ CZ) :
@@ -138,7 +138,7 @@ theorem onMt_sum {ι : Type} (S : Finset ι) (a : ι → MonoidAlgebra ℂ (G0g 
   induction S using Finset.induction_on with
   | empty =>
     unfold NTypes.onMt
-    rw [Finset.sum_empty, Finset.sum_empty, dif_pos (Subalgebra.zero_mem _)]
+    rw [Finset.sum_empty, Finset.sum_empty, dite_eq_left (Subalgebra.zero_mem _)]
     exact map_zero (D.ntypes.cenMt μ j)
   | insert i S hi ih =>
     rw [Finset.sum_insert hi, Finset.sum_insert hi,
@@ -313,7 +313,7 @@ theorem eSer_mem (k : Fin 2) (v : D.nd.PlG k) (f : (ZMod (D.host.g k))[X]) :
 theorem onMt_coe (μ : D.what₂.Tup) (j : ℕ) (c : ↥CZ) :
     D.ntypes.onMt μ j (c : MonoidAlgebra ℂ (G0g D.nd)) = D.ntypes.cenMt μ j c := by
   unfold NTypes.onMt
-  rw [dif_pos c.2]
+  rw [dite_eq_left c.2]
 
 theorem series_fix (hSer : GlobalTheory.TypeLeaf.SerLoc D) (i : D.nd.Loc) (σ' : D.ntypes.Par)
     (F : D.what₂.Mt (D.nd.mu i) (D.nd.j i)) (hF : F ∈ D.ntypes.MtPar (D.nd.mu i) (D.nd.j i) σ')
@@ -505,7 +505,7 @@ theorem main : ∀ (D : D7) (P : Pend D), GlobalTheory.TypeLeaf.SerLoc D → adm
         apply hτ
         rw [if_neg hlab, atPlace_zero]
         unfold NTypes.onMt
-        rw [dif_pos (Subalgebra.zero_mem _)]
+        rw [dite_eq_left (Subalgebra.zero_mem _)]
         have e0 : (⟨0, Subalgebra.zero_mem _⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) = 0 := rfl
         rw [e0, map_zero]
         rfl

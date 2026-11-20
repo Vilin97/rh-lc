@@ -136,7 +136,7 @@ theorem loc_eq_zpow {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrA
     χ.loc w x = χ.val w ^ Formalism.UG.ordV E w x := by
   have h0 : Valued.v (x : w.adicCompletion E) ≠ 0 := by simp
   have e : Valued.v (x : w.adicCompletion E) = WithZero.exp (-Formalism.UG.ordV E w x) := by
-    rw [Formalism.UG.ordV, dif_neg h0, neg_neg]
+    rw [Formalism.UG.ordV, dite_eq_right h0, neg_neg]
     exact (WithZero.coe_unzero h0).symm
   have hu : IsUnitAt w (x / atFin w (unif w) ^ Formalism.UG.ordV E w x) := by
     have h2 : Valued.v _ = _ := unif_spec w

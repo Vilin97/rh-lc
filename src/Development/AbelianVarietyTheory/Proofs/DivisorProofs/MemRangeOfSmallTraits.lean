@@ -387,7 +387,7 @@ theorem nzFib_of_geom {S : Scheme.{0}} {G : Over S} {L : LB G.left} (σ : L.Sec)
   · rw [← Scheme.Hom.comp_apply, hy, Scheme.Hom.comp_apply]
     exact Scheme.fromSpecResidueField_apply _ _
   · have hle : ⊤ ≤ y ⁻¹ᵁ L.U j := fun z _ => hj ⟨z, rfl⟩
-    rw [valF, dif_pos hle] at hv
+    rw [valF, dite_eq_left hle] at hv
     have hu : IsUnit ((y.appLE (L.U j) ⊤ hle).hom (σ.f j)) :=
       (isUnit_map_iff (Scheme.ΓSpecIso (CommRingCat.of K)).commRingCatIsoToRingEquiv _).1 (isUnit_iff_ne_zero.2 hv)
     have hb := (Sp K).basicOpen_of_isUnit hu

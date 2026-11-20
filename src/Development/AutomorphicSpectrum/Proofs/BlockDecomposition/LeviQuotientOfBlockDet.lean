@@ -483,7 +483,7 @@ open Classical in
 theorem bdet_val {α : Type} [Fintype α] [DecidableEq α] (S : Set α) (g : GL α R) (hg : g ∈ stab R S) :
     ((bdet S g : Rˣ) : R) = ((g : Matrix α α R).submatrix (Subtype.val : S → α) Subtype.val).det := by
   unfold bdet
-  rw [dif_pos (block_unit g hg)]
+  rw [dite_eq_left (block_unit g hg)]
   rfl
 
 theorem det_sub_one {α : Type} [Fintype α] [DecidableEq α] {S : Set α} {_ : Fintype S} {_ : DecidableEq S}

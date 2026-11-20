@@ -94,7 +94,7 @@ theorem piZ_lin' [CharZero k] {n : ℕ} (Z : Subalgebra k (Matrix (Fin n) (Fin n
     show piZ Z x = ((e.symm (qL k Z x) : Z) : Matrix (Fin n) (Fin n) k)
     have h : ∃ c ∈ Z, qZ Z c = qZ Z x := ⟨_, (e.symm (qL k Z x)).2, key x⟩
     unfold piZ
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hc := h.choose_spec
     have hq : (⟨h.choose, hc.1⟩ : Z) = e.symm (qL k Z x) :=
       hinj (by rw [hφ, hφ]; exact hc.2.trans (key x).symm)

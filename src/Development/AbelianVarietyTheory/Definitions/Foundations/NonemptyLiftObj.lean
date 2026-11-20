@@ -88,11 +88,11 @@ theorem exists_ok (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) :
     rw [one_smul, wModel, h2, h3]
     have e1 : lamC lam (-4 / 4) = -1 := by
       have : (-4 / 4 : ℂ) = ((-1 : Qbar) : ℂ) := by norm_num
-      rw [this, lamC, dif_pos (-1 : Qbar).2]
+      rw [this, lamC, dite_eq_left (-1 : Qbar).2]
       exact (map_neg lam 1).trans (by rw [map_one])
     have e0 : lamC lam (-0 / 4) = 0 := by
       have : (-0 / 4 : ℂ) = ((0 : Qbar) : ℂ) := by norm_num
-      rw [this, lamC, dif_pos (0 : Qbar).2]
+      rw [this, lamC, dite_eq_left (0 : Qbar).2]
       exact map_zero lam
     rw [e1, e0]
   obtain ⟨wq, hwq⟩ := GlobalTheory.GenusOneDatum.exists_isWq ((1 : WeierstrassCurve.VariableChange ℂ_[p]) • wModel lam Λ)

@@ -68,7 +68,7 @@ theorem shapeProd_varMat_ne_zero {p q r s m k : ℕ} (ρ : Fin m → Ix p q) (κ
   apply pow_ne_zero
   have hc : t + 1 ≤ m ∧ t + 1 ≤ k := ⟨by omega, by omega⟩
   unfold PI.FJM.leadT
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   have hinj : Function.Injective
       (fun x : Fin (t + 1) × Fin (t + 1) => (ρ (Fin.castLE hc.1 x.1), κ (Fin.castLE hc.2 x.2))) := by
     rintro ⟨i, j⟩ ⟨i', j'⟩ hxy

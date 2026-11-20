@@ -249,20 +249,20 @@ theorem core (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (hϖ : ordL (ϖ : w.adicCo
       smul_smul] at e
     have e2 := smul_left_injective ℂ hv₀ e
     simp only [hχ']
-    rw [dif_pos ⟨gap_add hx hx', gap_add hy hy'⟩, dif_pos ⟨hx, hy⟩, dif_pos ⟨hx', hy'⟩]
+    rw [dite_eq_left ⟨gap_add hx hx', gap_add hy hy'⟩, dite_eq_left ⟨hx, hy⟩, dite_eq_left ⟨hx', hy'⟩]
     rw [e2, mul_comm]
   obtain ⟨j0, -, hj0⟩ := Finset.exists_ne_zero_of_sum_ne_zero hsum
   have hex : ∃ x y, Gap x ∧ Gap y ∧ χ' x y ≠ 0 := by
     refine ⟨x j0, y j0, (hgap j0).1, (hgap j0).2, ?_⟩
     simp only [hχ']
-    rw [dif_pos (hgap j0)]
+    rw [dite_eq_left (hgap j0)]
     exact right_ne_zero_of_mul hj0
   obtain ⟨ξa, ξb, hξ⟩ := GlobalTheory.T.multiplicative_character_on_cone a b (qh w) (qh_ne w) χ' hχ'mul hex
   have hev : ∀ x y (h : Gap x ∧ Gap y), ev2 w ξa ξb x y = χ ⟨(x, y), h⟩ := by
     intro x y h
     have := hξ x y h.1 h.2
     simp only [hχ'] at this
-    rw [dif_pos h] at this
+    rw [dite_eq_left h] at this
     exact this.symm
   refine ⟨ξa, ξb, ⟨(v₀ : V), v₀.2, by simpa using hv₀, fun x y hx hy => ?_⟩, ?_⟩
   · have e1 : hkG ρ (I2 a b w) (dc2 w ϖ x y) (v₀ : V) =

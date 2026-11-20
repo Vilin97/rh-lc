@@ -201,7 +201,7 @@ theorem refInputs : RefInputs (cx K v0) (crd K v0) where
       intro y
       have he : ∃ z, lin (fun _ : Fin 1 => (1 : ℂ)) z = lin (fun _ : Fin 1 => (1 : ℂ)) y := ⟨y, rfl⟩
       unfold solve
-      rw [dif_pos he]
+      rw [dite_eq_left he]
       exact lin_one_inj he.choose_spec
     have h2 : ∀ i k : Fin 1, relMat (lin (fun _ : Fin 1 => (1 : ℂ))) (lin (fun _ : Fin 1 => (1 : ℂ))) i k = 1 := by
       intro i k

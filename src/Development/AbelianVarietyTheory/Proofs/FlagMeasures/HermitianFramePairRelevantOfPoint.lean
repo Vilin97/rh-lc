@@ -66,10 +66,10 @@ theorem exists_coord_of_point {F : Type} [Field F] [ValuativeRel F] [Topological
   · simp only [hf_basis]
     have h1 : H.Dl P.A.f P.B.f (r + 1) =
         lead (Matrix.of fun a c => H.h (P.B.f c) (P.A.f a)) (Fin.last (r + 1)) := by
-      unfold HermSp.Dl; rw [dif_pos le_rfl]; rfl
+      unfold HermSp.Dl; rw [dite_eq_left le_rfl]; rfl
     have h2 : H.Dl P.A.f P.B.f r =
         lead (Matrix.of fun a c => H.h (P.B.f c) (P.A.f a)) (Fin.last r).castSucc := by
-      unfold HermSp.Dl; rw [dif_pos (Nat.le_succ r)]; rfl
+      unfold HermSp.Dl; rw [dite_eq_left (Nat.le_succ r)]; rfl
     rw [← h1, ← h2]
     exact hG
   · obtain ⟨g, hg⟩ := Option.isSome_iff_exists.1 h
@@ -90,7 +90,7 @@ theorem relG_of_point : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSp
   have hDm : ∀ l (hl : l ≤ r + 1), P.Dm l = S.D ⟨l, Nat.lt_succ_of_le hl⟩ := by
     intro l hl
     unfold FPair.Dm HermSp.Dl
-    rw [dif_pos hl]
+    rw [dite_eq_left hl]
     unfold Frames.D lead
     rw [hZm]
   have hmap : ∀ (f : Fin (r + 1) → V) (g : Fin (r + 1) → S.V), (∀ a, g a = c.e (f a)) →

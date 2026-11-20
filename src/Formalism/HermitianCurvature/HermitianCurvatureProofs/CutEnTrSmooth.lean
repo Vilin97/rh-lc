@@ -88,6 +88,6 @@ theorem trace_smoothness : TrSmooth := by
   show ContDiffOn ℝ MA.sm (MA.ext _) (MA.Qset (D.parOf S v).r (D.parOf S v).TT)
   refine hF.congr ?_
   intro x hx
-  rw [MA.ext, dif_pos hx]
+  rw [MA.ext, dite_eq_left hx]
 
 end Formalism.FourierDecayAlt.P.CutMP.En

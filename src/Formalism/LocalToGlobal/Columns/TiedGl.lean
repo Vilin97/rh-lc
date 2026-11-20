@@ -34,7 +34,7 @@ theorem glk_prod_i (A : Pr.vGs → ℂ) (i : Fin 2) :
   rw [finprod_eq_prod_of_mulSupport_subset (s := (Pr.vG i).image (underPl X.F))]
   · rw [Finset.prod_image]
     · refine Finset.prod_congr rfl fun w hw => ?_
-      rw [dif_pos (glk_vG_le i hw), dif_pos (glk_under_mem hc hPr i hw), glk_gwOf_under hc hPr i hw]
+      rw [dite_eq_left (glk_vG_le i hw), dite_eq_left (glk_under_mem hc hPr i hw), glk_gwOf_under hc hPr i hw]
     · intro w hw w' hw' e
       have e1 := glk_gwOf_under hc hPr i hw
       have e2 := glk_gwOf_under hc hPr i hw'
@@ -59,7 +59,7 @@ theorem glk_prod (A : Pr.vGs → ℂ) :
   have h0 : ∏ w : Pr.vGs, A w = ∏ w ∈ Pr.vGs, (if h : w ∈ Pr.vGs then A ⟨w, h⟩ else 1) := by
     rw [← Finset.prod_coe_sort Pr.vGs]
     refine Finset.prod_congr rfl fun w _ => ?_
-    rw [dif_pos w.2]
+    rw [dite_eq_left w.2]
   have hd : Disjoint (Pr.vG 0) (Pr.vG 1) := by
     rw [Finset.disjoint_left]
     intro w h0 h1

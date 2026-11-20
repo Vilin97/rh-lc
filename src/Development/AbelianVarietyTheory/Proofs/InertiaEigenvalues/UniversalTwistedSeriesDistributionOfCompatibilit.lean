@@ -81,7 +81,7 @@ theorem isOpen_coord (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) (Q : F
     refine MonoidHom.mem_ker.2 (Multiplicative.toAdd.injective ?_)
     rw [coord_apply Y i Q M hv, MonoidHom.mem_ker.1 hg]
     rfl
-  · have : coord Y i Q M v = 1 := by unfold coord; rw [dif_neg hv]
+  · have : coord Y i Q M v = 1 := by unfold coord; rw [dite_eq_right hv]
     rw [this, MonoidHom.ker_one]
     exact isOpen_univ
 

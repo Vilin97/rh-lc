@@ -19,14 +19,14 @@ theorem liftWt_antitone (t m : ℕ) (lam : Fin (m + 1) → ℤ) (w : ℕ → ℤ
   unfold G.liftWt
   by_cases ha : a.val < m + 1
   · by_cases hb : b.val < m + 1
-    · rw [dif_pos ha, dif_pos hb]
+    · rw [dite_eq_left ha, dite_eq_left hb]
       exact hl hab'
-    · rw [dif_pos ha, dif_neg hb]
+    · rw [dite_eq_left ha, dite_eq_right hb]
       have e1 : lam (Fin.last m) ≤ lam ⟨a.val, ha⟩ := hl (Fin.le_last _)
       have e2 := mono_from_one w hw 1 ((b.val - (m + 1)) / (t + 1) + 1) le_rfl (Nat.le_add_left _ _)
       linarith
   · have hb : ¬ b.val < m + 1 := by omega
-    rw [dif_neg ha, dif_neg hb]
+    rw [dite_eq_right ha, dite_eq_right hb]
     have e2 := mono_from_one w hw ((a.val - (m + 1)) / (t + 1) + 1) ((b.val - (m + 1)) / (t + 1) + 1)
       (Nat.le_add_left _ _) (Nat.add_le_add_right (Nat.div_le_div_right (Nat.sub_le_sub_right hab' _)) 1)
     linarith
@@ -95,12 +95,12 @@ def fills (u : D.what₂.Word) (w : D.what₂.places.Pl)
         show L.aT ⟨t, ht⟩ = G.aL L (tCo D (hT.gat_pos u w hg ⟨v, s⟩))
         rw [h2]
         unfold G.aL
-        rw [dif_pos ht]
+        rw [dite_eq_left ht]
       · rw [h1.2.1]
         show -L.bT ⟨t, ht⟩ = -G.bL L (tCo D (hT.gat_pos u w hg ⟨v, s⟩))
         rw [h2]
         unfold G.bL
-        rw [dif_pos ht]
+        rw [dite_eq_left ht]
     · intro hs
       exact H.base_off u w hg v s (fun h => hs (Finset.mem_filter.2 ⟨Finset.mem_univ _, h⟩))
   t := D.R.t

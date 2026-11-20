@@ -68,7 +68,7 @@ theorem decomp_lastRow : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComp
     simp [Fin.ext_iff]
   have hd : IsUnit (GlobalTheory.RSJ.secRow (fun i => pInf E (GlobalTheory.ZEul.lastRow g i))).det := by
     rw [hm, GlobalTheory.RSTheta.det_rowMat]; exact hu'
-  rw [GlobalTheory.RSJ.secInv, dif_pos hd]
+  rw [GlobalTheory.RSJ.secInv, dite_eq_left hd]
   congr 1
   exact Units.ext (hm.trans (GlobalTheory.RSTheta.val_rowGL hu').symm)
 

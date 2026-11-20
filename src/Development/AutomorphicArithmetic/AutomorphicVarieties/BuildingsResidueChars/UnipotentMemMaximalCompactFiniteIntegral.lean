@@ -56,11 +56,11 @@ theorem UpperTheory.unipotent_mem_maximalCompact_finite_integral :
         Matrix (Fin (2 + 2)) (Fin (2 + 2)) w.Completion) p.1.1 p.1.1 = 1 := by
       have hp := p.2.1
       change (((nn X : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) p.1.1 p.1.1).1 w = 1
-      rw [hent, unipMatrix, Matrix.add_apply, blockEntry_apply, dif_neg (by omega)]
+      rw [hent, unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_right (by omega)]
       simp
     have h0 := off_diag_zero _ (hinf w) hii hne
     change (((nn X : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) p.1.1 p.1.2).1 w = 0 at h0
-    rw [hent, unipMatrix, Matrix.add_apply, blockEntry_apply, dif_pos p.2, Matrix.one_apply_ne hne, zero_add] at h0
+    rw [hent, unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_left p.2, Matrix.one_apply_ne hne, zero_add] at h0
     exact h0
   set g : AdelicGLn.AdelicGL K (2 + 2) := ((nn X : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) with hg
   have h1 : (AdelicGLn.prodEquiv K (2 + 2) g).1 = 1 := by
@@ -70,7 +70,7 @@ theorem UpperTheory.unipotent_mem_maximalCompact_finite_integral :
     rw [hent, unipMatrix, Matrix.add_apply, blockEntry_apply]
     by_cases hab : a = b
     · subst hab
-      rw [dif_neg (by omega), Matrix.one_apply_eq, Matrix.one_apply_eq, add_zero]
+      rw [dite_eq_right (by omega), Matrix.one_apply_eq, Matrix.one_apply_eq, add_zero]
       rfl
     · rw [Matrix.one_apply_ne hab, Matrix.one_apply_ne hab]
       split_ifs with h

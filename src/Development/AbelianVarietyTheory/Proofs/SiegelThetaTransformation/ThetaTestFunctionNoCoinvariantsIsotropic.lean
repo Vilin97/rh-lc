@@ -151,7 +151,7 @@ theorem exists_pairing (D : Level X) (hn : r ≤ n) (hX : SelfD X X.Λ) {M : ℕ
   push Not at hcon
   obtain ⟨k, hk⟩ : ∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k := by
     by_contra h
-    exact hy (by rw [Level.dat, dif_neg fun h' => h h'.1])
+    exact hy (by rw [Level.dat, dite_eq_right fun h' => h h'.1])
   obtain ⟨s₁, hs₁, hgen⟩ := gen_of_red D hk
   obtain ⟨hLs, s₂, hs₂, -, hs₂'⟩ := hL
   obtain ⟨-, -, t, -, ht, -, ht'⟩ := hΛ

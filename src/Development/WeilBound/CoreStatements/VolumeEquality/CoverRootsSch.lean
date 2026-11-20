@@ -24,7 +24,7 @@ theorem val_eq (x : Sp F ⟶ X) (U : X.Opens) (h : centre x ∈ U) (s : Γ(X, U)
   exact this
 
 theorem valAt'_eq (p : Sp ℂ ⟶ X) (U : X.Opens) (h : centre p ∈ U) (s : Γ(X, U)) : valAt' p U s = val p U h s := by
-  rw [val_eq, valAt', dif_pos ((top_le_iff p U).2 h)]
+  rw [val_eq, valAt', dite_eq_left ((top_le_iff p U).2 h)]
   rfl
 
 theorem val_res (x : Sp F ⟶ X) {U V : X.Opens} (hVU : V ≤ U) (h : centre x ∈ V) (s : Γ(X, U)) :

@@ -224,7 +224,7 @@ theorem derUnip_decomp (ψ : AddChar k Circle) (m N : ℕ) (h : m + 2 ≤ N) (u 
         ∑ p : Fin N × Fin N with (p.2 : ℕ) = p.1 + 1 ∧ m + 2 - 1 ≤ (p.1 : ℕ), (u' : Matrix (Fin N) (Fin N) k) p.1 p.2 := by
       refine Finset.sum_congr rfl fun p hp => ?_
       have hp' := (Finset.mem_filter.1 hp).2
-      rw [hent, dif_neg (by omega), sub_zero]
+      rw [hent, dite_eq_right (by omega), sub_zero]
     exact congrArg (fun t => ((Circle.toUnits (ψ t) : ℂˣ) : ℂ)) hs
 
 end PositivityTheory.RgUd.Form.U.Atom

@@ -173,7 +173,7 @@ def frame (s : 𝓞 E →+* ℂ) (m : ℕ) : Fin m → Fin g → ℂ :=
 theorem frame_parseval {s : 𝓞 E →+* ℂ} {m : ℕ} (h : Module.finrank ℂ (eigSp R.B s) = m)
     {x y : Fin g → ℂ} (hx : x ∈ eigSp R.B s) (hy : y ∈ eigSp R.B s) :
     ∑ c, starRingEnd ℂ (R.ip (frame R s m c) x) * R.ip (frame R s m c) y = R.ip x y := by
-  rw [frame, dif_pos h]
+  rw [frame, dite_eq_left h]
   exact (exists_frame R _ m h).choose_spec.2 x hx y hy
 
 def lieOf (s : 𝓞 E →+* ℂ) (m : ℕ) (v : Λ) : Fin m → ℂ :=

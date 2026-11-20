@@ -102,7 +102,7 @@ theorem levelGroupAction_apply_of_exists_lift {β : GL (Fin V.rank) (Lev.EAf D)}
 
 theorem levelGroupActionOnAdelicFunctions_eq_zero_of_no_lift {β : GL (Fin V.rank) (Lev.EAf D)} {L : LevDat D.host.E ℂ V.rank} {g : G0 L.Pg L.r}
     (hk : ¬ ∃ κ, IsLevelLift V β L g κ) (f : GA D V → ℂ) : actG0 V β L g f = 0 := by
-  rw [actG0, dif_neg hk]
+  rw [actG0, dite_eq_right hk]
 
 end General
 

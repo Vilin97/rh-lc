@@ -34,7 +34,7 @@ theorem _root_.GlobalTheory.EtaForm.etaValAt_evR_of_fromTest : ∀ (E : Type) [F
     refine ⟨hy.choose, hy.choose_spec.choose, hy.choose_spec.choose_spec.choose,
       hy.choose_spec.choose_spec.choose_spec, ?_⟩
     unfold _root_.Formalism.L2.Pj.evR _root_.Formalism.L2.Pj.evalAt
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
   obtain ⟨p, φ, y₀, hφ, hval⟩ := key
   have h₀ : _root_.GlobalTheory.EtaForm.EtaValAt Xo c R cf xs y₀ (f p y₀) := hf p y₀
   refine ⟨hval ▸ transport _ _ φ y₀ y _ hφ h₀, ?_⟩

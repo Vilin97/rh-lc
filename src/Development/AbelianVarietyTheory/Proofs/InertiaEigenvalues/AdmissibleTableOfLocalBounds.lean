@@ -27,7 +27,7 @@ theorem sumOver_mono (D : D7) (l : ℕ) (hl : l ≠ 0) {f g : HeightOneSpectrum 
 theorem le_supZ {D : D7} (i : D.nd.Loc) (f : D.nd.X i → ℝ) {π : D.nd.X i} (hπ : π ∈ D.nd.Zgood i) :
     f π ≤ KillingConditions.supZ i f := by
   unfold KillingConditions.supZ
-  rw [dif_pos ⟨π, hπ⟩]
+  rw [dite_eq_left ⟨π, hπ⟩]
   exact Finset.le_sup' f hπ
 
 end GlobalTheory.NLink.Adm4Tab

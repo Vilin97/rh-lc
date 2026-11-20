@@ -231,7 +231,7 @@ theorem sum_map_pow_twist (s : ℝ) (w : HeightOneSpectrum (𝓞 E)) (A : Multis
 theorem hasSat_sat {a : ℕ} {σ : CG E a} {T : Finset (HeightOneSpectrum (𝓞 E))} (h : UnrOutside T σ)
     {w : HeightOneSpectrum (𝓞 E)} (hw : w ∉ T) : σ.HasSat w (sat σ w) := by
   unfold sat
-  rw [dif_pos (h w hw)]
+  rw [dite_eq_left (h w hw)]
   exact (h w hw).choose_spec
 
 theorem unrOutside_of_twist {a : ℕ} {σ σ₀ : CG E a} {s : ℝ} (he : σ = σ₀.twist (absPow E s))

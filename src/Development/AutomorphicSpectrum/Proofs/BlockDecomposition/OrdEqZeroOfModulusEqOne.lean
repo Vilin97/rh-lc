@@ -97,7 +97,7 @@ theorem Wc_eq {χ : AddChar F Circle} {σ : E ≃ₐ[F] E} {μ : Measure E} {c :
   have h : ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det := ⟨t, ht⟩
   have hm : modulus (h.choose : E) = modulus (t : E) := by
     rw [← modulus_norm (K := F), ← modulus_norm (K := F) (t : E), h.choose_spec, ht]
-  rw [GL2LocalData.Wc, dif_pos h, hform g _ h.choose_spec, val, char_congr c hc hm,
+  rw [GL2LocalData.Wc, dite_eq_left h, hform g _ h.choose_spec, val, char_congr c hc hm,
     intInd_congr (x := (h.choose : E) * algebraMap F E (mRow g)⁻¹)
       (y := (t : E) * algebraMap F E (mRow g)⁻¹) (by rw [modulus_mul, modulus_mul, hm])]
 

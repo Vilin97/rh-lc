@@ -27,7 +27,7 @@ theorem LocCyclePos.proof : LocCyclePos.Statement := by
   have hpos : 0 < Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J)) :=
     Module.length_pos
   unfold locCycle
-  rw [dif_pos hW]
+  rw [dite_eq_left hW]
   obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.mp hfin
   simp only at hn
   rw [← hn] at hpos ⊢

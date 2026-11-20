@@ -28,14 +28,14 @@ theorem frame_rat : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
     have hq := GlobalTheory.TopStep.qOf_notMem_sq hPin.fields.ok t.pr_ok hP
     have e1 : frsF t.sel (t.tup μ) p P = p.deco.1.liftFr ⟨P.1, hP⟩ := by
       unfold frsF
-      rw [dif_pos hP]
+      rw [dite_eq_left hP]
     have h1 : NearAt (seamP t.seam P.1) 1 (ratA D.host.F (A.crd i hi) * x.1 * ratA D.host.F (A.fb i hi β P)) (seamGL t.seam (p.deco.1.liftFr ⟨P.1, hP⟩)) := by
       rw [← e1, ← hD]; exact h0
     have e2 : frsF t.sel (t.tup μ) (((g, 1, 1) : UF t.X.E (D.R.N i) × GLG t.X.E (D.R.N i) t.Pr.vGs ×
         GLQ t.X.E (D.R.N i) (QE t.sel (t.tup μ : Chr t.X.F t.X.E t.X.K))) • p) P =
         (((g, (1 : GLG t.X.E (D.R.N i) t.Pr.vGs)) : UF t.X.E (D.R.N i) × GLG t.X.E (D.R.N i) t.Pr.vGs) • p.deco).1.liftFr ⟨P.1, hP⟩ := by
       unfold frsF
-      rw [dif_pos hP]
+      rw [dite_eq_left hP]
       rfl
     have key := GlobalTheory.FrameRat.nearAt_liftFr_smul t.seam p.deco ⟨P.1, hP⟩ g hq _ h1
     rw [e2, hD]
@@ -43,7 +43,7 @@ theorem frame_rat : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
   · have e : frsF t.sel (t.tup μ) (((g, 1, 1) : UF t.X.E (D.R.N i) × GLG t.X.E (D.R.N i) t.Pr.vGs ×
         GLQ t.X.E (D.R.N i) (QE t.sel (t.tup μ : Chr t.X.F t.X.E t.X.K))) • p) P = g.1 * frsF t.sel (t.tup μ) p P := by
       unfold frsF
-      rw [dif_neg hP, dif_neg hP]
+      rw [dite_eq_right hP, dite_eq_right hP]
       show g.1 * _ * _ = _
       simp
       rfl

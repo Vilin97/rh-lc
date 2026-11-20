@@ -275,7 +275,7 @@ theorem resChi_eq (d : HSMDatum D Ω κ) (n : ℕ)
     resChi d n = -(1 / 2) * Real.log
       (bGram (symMeasure d) (fun k => secFun (h.choose.2 k)) (wgt d.m n)).det.re := by
   unfold resChi
-  rw [dif_pos h, det_resGram d h.choose_spec.1]
+  rw [dite_eq_left h, det_resGram d h.choose_spec.1]
 
 end
 

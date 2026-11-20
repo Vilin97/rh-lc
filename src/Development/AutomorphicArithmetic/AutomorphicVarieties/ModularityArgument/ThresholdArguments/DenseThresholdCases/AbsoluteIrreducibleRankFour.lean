@@ -136,7 +136,7 @@ private theorem ne_cmp {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberFiel
     (h : ((l : ℕ) : 𝓞 (Lp L)) ∉ (w.under (𝓞 (Lp L))).asIdeal) (x : UA L n) :
     cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold CaseU.cmp
-  rw [dif_pos (ne_notMem h)]
+  rw [dite_eq_left (ne_notMem h)]
   rfl
 section
 variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]

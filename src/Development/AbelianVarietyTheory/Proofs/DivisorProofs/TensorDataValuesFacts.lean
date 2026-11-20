@@ -57,7 +57,7 @@ theorem cmp_c (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') (χ' : 
 
 theorem wv_ne_zero (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') (x : N'.A) : wv T ν ν' x ≠ 0 := by
   unfold TensTor.wv valF
-  rw [dif_pos]
+  rw [dite_eq_left]
   · exact (((T.w.s _).isUnit.map _).map _).ne_zero
   · intro p _
     refine ⟨Set.mem_iInter.2 fun k => ?_, ν'.good _ trivial⟩

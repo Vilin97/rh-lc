@@ -781,7 +781,7 @@ theorem exampleParameter_weight_bounds (j : ℕ) (hj : j ≤ Examples₂.R0.m) (
     by_cases h : i.1 < Examples₂.R0.k
     · rw [dif_pos h]
       exact hu ⟨i.1, h⟩
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact he ⟨(i.1 - Examples₂.R0.k) / (Examples₂.R0.t + 1), Examples₂.R0.blk_lt hj i h⟩
   rw [← Examples₂.lamOf_eq Examples₂.hc0 j hj i] at key
   exact ⟨by exact_mod_cast key.1, by exact_mod_cast key.2⟩

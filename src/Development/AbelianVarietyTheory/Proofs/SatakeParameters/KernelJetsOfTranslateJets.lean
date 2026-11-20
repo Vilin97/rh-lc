@@ -26,7 +26,7 @@ variable {p : ℕ} [Fact p.Prime] {lam : Qbar →+* ℂ_[p]}
 
 theorem intAt_iff {x : ℂ} : IntAt lam x ↔ ∃ h : x ∈ Qbar, ‖lam ⟨x, h⟩‖ ≤ 1 := by
   unfold IntAt lamC
-  exact ⟨fun ⟨h, h1⟩ => ⟨h, by rwa [dif_pos h] at h1⟩, fun ⟨h, h1⟩ => ⟨h, by rwa [dif_pos h]⟩⟩
+  exact ⟨fun ⟨h, h1⟩ => ⟨h, by rwa [dite_eq_left h] at h1⟩, fun ⟨h, h1⟩ => ⟨h, by rwa [dite_eq_left h]⟩⟩
 
 theorem intAt_mul {x y : ℂ} (hx : IntAt lam x) (hy : IntAt lam y) : IntAt lam (x * y) := by
   obtain ⟨h, h1⟩ := intAt_iff.1 hx

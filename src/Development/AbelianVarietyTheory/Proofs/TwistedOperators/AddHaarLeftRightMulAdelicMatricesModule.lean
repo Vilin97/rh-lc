@@ -65,20 +65,20 @@ theorem chi_Af (F : Type) [Field F] [NumberField F] {κ : Type} [Fintype κ] [De
       change evalV F v ((M *ᵥ j x) i) = evalV F v (jS F S ((MS *ᵥ x.1) i, (MO *ᵥ x.2) i))
       rw [evalV_jS]
       by_cases hv : v ∈ S
-      · rw [dif_pos hv]
+      · rw [dite_eq_left hv]
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
         refine Finset.sum_congr rfl fun k _ => ?_
         change evalV F v (M i k) * evalV F v (jS F S (x.1 k, x.2 k)) = _
-        rw [evalV_jS, dif_pos hv]
+        rw [evalV_jS, dite_eq_left hv]
         rfl
-      · rw [dif_neg hv]
+      · rw [dite_eq_right hv]
         change _ = ι ((MO *ᵥ x.2) i) ⟨v, hv⟩
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
         refine Finset.sum_congr rfl fun k _ => ?_
         change evalV F v (M i k) * evalV F v (jS F S (x.1 k, x.2 k)) = _
-        rw [evalV_jS, dif_neg hv]
+        rw [evalV_jS, dite_eq_right hv]
         rfl)
   rw [key, GlobalTheory.T.addEquivAddHaarChar_prodCongr, addEquivAddHaarChar_eq_one_of_compactSpace (mulVecCE MO huO), mul_one,
     GlobalTheory.T.addEquivAddHaarChar_mulVec_artinian_reduced (SPart F S)

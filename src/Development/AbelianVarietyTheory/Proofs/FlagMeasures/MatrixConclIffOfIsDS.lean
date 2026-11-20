@@ -109,7 +109,7 @@ def onMatrices (π : UJ ε → (H →L[ℂ] H)) (M : Matrix (Fin n) (Fin n) ℂ)
 
 theorem onMatrices_umat (π : UJ ε → (H →L[ℂ] H)) (g : UJ ε) : onMatrices π (umat g) = π g := by
   have h : umat g ∈ UJset ε := g.2
-  rw [onMatrices, dif_pos h, toGroup_umat]
+  rw [onMatrices, dite_eq_left h, toGroup_umat]
 
 theorem isURepOn_iff (π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) :
     IsURepOn (UJset ε) π ↔ IsUnitaryRep fun g : UJ ε => π (umat g) := by

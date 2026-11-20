@@ -44,10 +44,10 @@ theorem typeIdem_map {Q Q' W : Type} [Group Q] [Group Q'] [AddCommGroup W] [Modu
     rw [← hK, j.apply_symm_apply]
   simp only [GlobalTheory.Orb.typeIdem, Function.comp_apply]
   by_cases hg : j.symm y ∈ K
-  · rw [dif_pos ((hy y).2 hg), dif_pos hg, hv]
+  · rw [dite_eq_left ((hy y).2 hg), dite_eq_left hg, hv]
     simp only [Representation.character, MonoidHom.comp_apply,
       hr ⟨j.symm y, hg⟩ ⟨y, (hy y).2 hg⟩ (j.apply_symm_apply y).symm]
-  · rw [dif_neg (mt (hy y).1 hg), dif_neg hg]
+  · rw [dite_eq_right (mt (hy y).1 hg), dite_eq_right hg]
 
 theorem isIrreducible_comp_mulEquiv {H H' X : Type} [Group H] [Group H'] [AddCommGroup X] [Module ℂ X]
     (ρ : Representation ℂ H' X) (φ : H ≃* H') (h : ρ.IsIrreducible) :

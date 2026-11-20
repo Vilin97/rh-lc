@@ -361,7 +361,7 @@ theorem mv_spec {s : TT Y u u'} {t : RT Y u u'} (h : s.toTerm = t) :
   refine ⟨hl, hdc'.choose, hdc'.choose_spec.1, hdc'.choose_spec.2.choose, hdc'.choose_spec.2.choose_spec.1,
     hdc'.choose_spec.2.choose_spec.2.1, hdc'.choose_spec.2.choose_spec.2.2, ?_⟩
   unfold mvOf
-  rw [dif_pos hdc']
+  rw [dite_eq_left hdc']
 
 theorem beta_Xsp (s₁ s₂ : TT Y u u') :
     (Xsp s₁.frame).map ((s₂.lin * s₁.lin⁻¹ : (VS D).V ≃ₗ[D.host.E] (VS D).V) : (VS D).V →ₗ[D.host.E] (VS D).V) =

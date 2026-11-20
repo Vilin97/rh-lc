@@ -17,7 +17,7 @@ theorem ratio_single {Z : Comp Xo c} (G : WTZ E) (r s : Om Z) (hs : s ≠ 0) :
   have hex : ∃ a : Om Z, (AddMonoidAlgebra.single G r : AC Z) = a • AddMonoidAlgebra.single G s :=
     ⟨r / s, by rw [AddMonoidAlgebra.smul_single', div_mul_cancel₀ r hs]⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have e := hex.choose_spec
   rw [AddMonoidAlgebra.smul_single'] at e
   have e2 : r = hex.choose * s := by

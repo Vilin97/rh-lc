@@ -116,7 +116,7 @@ theorem intNum_projectiveSpace (F : Type*) [Field F] (N : ℕ) :
       simp [binomFn, this]
   have hex : ∃ c, ∀ᶠ m : Unit → ℤ in Filter.atTop, binomFn 0 (m ()) = c := ⟨1, hev⟩
   unfold eventualValue
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨m, h1, h2⟩ := (hex.choose_spec.and hev).exists
   exact h1.symm.trans h2
 
@@ -278,7 +278,7 @@ theorem eq_monomial_of_isMultiHomog_point {F : Type*} [Field F] (f : Reciprocity
 
 theorem resDeg_point (F : Type*) [Field F] : resDeg (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))) = 1 := by
   unfold resDeg
-  rw [dif_pos Ideal.isPrime_bot]
+  rw [dite_eq_left Ideal.isPrime_bot]
   have hle : homFracDegZero (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))) = ⊥ := by
     refine le_antisymm ?_ bot_le
     unfold homFracDegZero

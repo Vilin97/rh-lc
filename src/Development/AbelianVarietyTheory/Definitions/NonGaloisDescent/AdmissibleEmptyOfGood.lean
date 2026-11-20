@@ -439,7 +439,7 @@ theorem vec_empty {F : Frame S T} (hF : F.Good) : F.vec (TypeDat.empty D T.rank)
   have h1 : ∀ y : Reds D S.rank T.rank, omegaG (TypeDat.empty D T.rank).levT (TypeDat.empty D T.rank).muC y = 1 := fun y => by
     haveI : IsEmpty ↥(TypeDat.empty D T.rank).levT.Pg := ⟨fun PP => absurd PP.2 (Finset.notMem_empty _)⟩
     unfold omegaG
-    rw [dif_pos ⟨fun _ h => absurd h (Finset.notMem_empty _), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
+    rw [dite_eq_left ⟨fun _ h => absurd h (Finset.notMem_empty _), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
       fun PP => isEmptyElim PP, Subgroup.mem_bot.2 (Subsingleton.elim _ _)⟩, Finset.univ_eq_empty, Finset.prod_empty,
       Finset.prod_empty, mul_one, mul_one]
     rfl

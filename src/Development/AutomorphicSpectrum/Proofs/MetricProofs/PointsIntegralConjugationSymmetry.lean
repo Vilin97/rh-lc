@@ -161,7 +161,7 @@ theorem sheetDensity_star {L : Fin e → HermLine ι} (hLc : ∀ j, IsConjInvari
   by_cases hex : ∃ γ, IsSheet P Ψ y w γ
   · have hex' : ∃ γ, IsSheet P Ψ' (star y) (star w) γ :=
       ⟨_, isSheet_star hΨ hex.choose_spec⟩
-    rw [dif_pos hex, dif_pos hex', hy w _ _ hex.choose_spec (back _ hex'.choose_spec)]
+    rw [dite_eq_left hex, dite_eq_left hex', hy w _ _ hex.choose_spec (back _ hex'.choose_spec)]
     set γ := hex'.choose with hγ
     have hspec : IsSheet P Ψ' (star y) (star w) γ := hex'.choose_spec
     have hz : γ (star y) ∈ mcPts P := hspec.2.self_of_nhds.2.1
@@ -180,7 +180,7 @@ theorem sheetDensity_star {L : Fin e → HermLine ι} (hLc : ∀ j, IsConjInvari
       exact hLc j _
     rw [h1, h3]
   · have hex' : ¬ ∃ γ, IsSheet P Ψ' (star y) (star w) γ := fun ⟨γ, h⟩ => hex ⟨_, back γ h⟩
-    rw [dif_neg hex, dif_neg hex']
+    rw [dite_eq_right hex, dite_eq_right hex']
 
 end Pts
 

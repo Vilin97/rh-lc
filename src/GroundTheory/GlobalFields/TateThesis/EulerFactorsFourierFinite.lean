@@ -312,7 +312,7 @@ def unitOrOne {F : Type*} [GroupWithZero F] (x : F) : Fˣ :=
 
 theorem coe_unitOrOne {F : Type*} [GroupWithZero F] {x : F} (hx : x ≠ 0) :
     ((unitOrOne x : Fˣ) : F) = x := by
-  rw [unitOrOne, dif_neg hx, Units.val_mk0]
+  rw [unitOrOne, dite_eq_right hx, Units.val_mk0]
 
 theorem finiteTestFun_eq_zero_of_dvd {x : FiniteAdeleRing (𝓞 K) K} {v : HeightOneSpectrum (𝓞 K)}
     (hv : v.asIdeal ∣ χ.conductor) (hx : Valued.v (x v) ≠ 1) : χ.finiteTestFun x = 0 :=

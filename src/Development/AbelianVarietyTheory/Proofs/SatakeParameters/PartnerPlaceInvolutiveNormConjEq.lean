@@ -20,7 +20,7 @@ theorem eTau_tauSg (D : D7) (τ : D.what₂.Tau) :
     have := (Formalism.HC.Frame.mem_Psi_iff _).1 (D.eTau τ).2
     simp [sgm, this]
   unfold tauSg
-  rw [dif_pos h, Equiv.apply_symm_apply]
+  rw [dite_eq_left h, Equiv.apply_symm_apply]
 
 theorem sgm_mul_sgm (D : D7) : sgm D * sgm D = 1 := by
   simp [sgm, Prod.ext_iff]

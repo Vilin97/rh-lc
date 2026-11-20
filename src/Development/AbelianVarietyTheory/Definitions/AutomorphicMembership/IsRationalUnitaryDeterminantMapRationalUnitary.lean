@@ -241,7 +241,7 @@ theorem relDetQ_self (N : ℕ) (M : Submodule (𝓞 H.E) (Fin N → H.E)) : relD
 theorem tildeQ_mk {χ : HChar H.E} (h : KDq H SQ ≤ (χ.1.comp (finPartI H.E)).ker) (a : Ideles H.E) :
     tildeQ H SQ χ (QuotientGroup.mk a) = χ.1 (finPartI H.E a) := by
   unfold tildeQ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem tildeQ_eq_comp {χ : HChar H.E} (h : KD H ≤ (χ.1.comp (finPartI H.E)).ker) :
@@ -274,12 +274,12 @@ theorem norm_tildeQ {χ : HChar H.E} (hu : χ.IsUnitary) (x : DtQ H SQ) : ‖((t
     rw [tildeQ_mk H SQ h]
     exact hu _
   · unfold tildeQ
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     simp
 
 theorem muTilQ_succ (mu : Fin R.m → HChar H.E) (j : Fin R.m) : muTilQ H SQ mu (j.1 + 1) = tildeQ H SQ (mu j) := by
   unfold muTilQ
-  rw [dif_pos ⟨Nat.le_add_left 1 j.1, j.2⟩]
+  rw [dite_eq_left ⟨Nat.le_add_left 1 j.1, j.2⟩]
   rfl
 
 theorem exists_eq_div_conj : letI := H.cmStar
@@ -335,7 +335,7 @@ theorem exists_isUnitaryPointsMapFinerDeterminants : ∃ f, IsUnitaryPointsMapFi
 
 theorem isUnitaryPointsMap_unitaryRationalPointsFiner : IsUnitaryPointsMapFinerDeterminants H SQ (e1Q H SQ) := by
   unfold e1Q
-  rw [dif_pos (exists_isUnitaryPointsMapFinerDeterminants H SQ)]
+  rw [dite_eq_left (exists_isUnitaryPointsMapFinerDeterminants H SQ)]
   exact (exists_isUnitaryPointsMapFinerDeterminants H SQ).choose_spec
 
 theorem isRationalUnitaryDeterminantMap_rationalUnitary : IsRationalUnitaryDeterminantMap H (e1T H) :=
@@ -361,6 +361,6 @@ example (χ : HChar H.E) (h : KDq H SQ ≤ (χ.1.comp (finPartI H.E)).ker) : let
 
 example (mu : Fin R.m → HChar H.E) : muTilQ H SQ mu 0 = 1 := by
   unfold muTilQ
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 end GlobalTheory.Mem.Col2

@@ -36,7 +36,7 @@ theorem rdU_eq_zero_iff (hL : GlobalTheory.Reg.EvLaws Xo c) (U : Unf Xo c σ r) 
     Finset.prod_ne_zero_iff.2 fun i _ => pow_ne_zero _ (t i).ne_zero
   have h4 : rdU U f k x = toC (evR Xo c f (U.un k x)) := by
     simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk]
-    rw [dif_pos x.2]
+    rw [dite_eq_left x.2]
   have h5 : φ (evC h Z f) = 0 ↔ evC h Z f = 0 := map_eq_zero_iff φ φ.toRingHom.injective
   rw [h4, ← h5, ← h1, h2, mul_eq_zero, or_iff_right h3]
   rfl

@@ -225,7 +225,7 @@ theorem pie_bad_zero (n b : ℕ) (lam : Fin n → ℕ) (hlam : Antitone lam) :
     have hl : lam j ≤ lam (pie_pr j) := hlam hprj
     have hg : pie_g lam mu = pie_sw mu j := by
       unfold pie_g
-      rw [dif_pos hB, hjdef]
+      rw [dite_eq_left hB, hjdef]
     refine ⟨j, hj.1, by omega, hg, ?_, pie_B_sw hjB hmax (hle _)⟩
     intro k
     by_cases hkj : k = j
@@ -279,7 +279,7 @@ theorem pie_bad_zero (n b : ℕ) (lam : Fin n → ℕ) (hlam : Antitone lam) :
     show pie_g lam (pie_g lam mu) = mu
     rw [hg]
     unfold pie_g
-    rw [dif_pos hne', hmax', pie_sw_sw mu hj0 hj1]
+    rw [dite_eq_left hne', hmax', pie_sw_sw mu hj0 hj1]
 
 theorem pie_good_iff {n : ℕ} (lam mu : Fin n → ℕ) :
     ¬ (pie_B lam mu).Nonempty ↔ ∀ i j : Fin n, i.val + 1 = j.val → mu j ≤ lam i := by

@@ -37,7 +37,7 @@ theorem isValueAt_congr {T : Over X} {s : LB.Sec (LPow A L a T)} {z z' : T ⟶ A
     have key := hτ j y hy hy
     clear hτ h
     unfold gm at key
-    rw [dif_pos hyU] at key
+    rw [dite_eq_left hyU] at key
     have key2 := congrArg Units.val key
     simp only [MonoidHom.comp_apply] at key2
     unfold pullU at key2
@@ -53,7 +53,7 @@ private lemma gm_id_eq_germ_map {Y : Scheme.{0}} {U V : Y.Opens} (hVU : V ≤ U)
     ((gm (𝟙 Y) y U x : (Y.presheaf.stalk y)ˣ) : Y.presheaf.stalk y) =
       Y.presheaf.germ V y hy ((Y.presheaf.map (homOfLE hVU).op).hom (x : Γ(Y, U))) := by
   unfold gm
-  rw [dif_pos (show (𝟙 Y : Y ⟶ Y) y ∈ U from hVU hy)]
+  rw [dite_eq_left (show (𝟙 Y : Y ⟶ Y) y ∈ U from hVU hy)]
   simp only [MonoidHom.comp_apply]
   unfold pullU
   simp only [Units.coe_map, MonoidHom.coe_coe]

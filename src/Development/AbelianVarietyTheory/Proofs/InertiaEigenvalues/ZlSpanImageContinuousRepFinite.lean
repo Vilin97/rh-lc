@@ -57,7 +57,7 @@ theorem zl_span_image_finite : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group �
     have hex : ∃ g, ψ g = y := hU y hyU
     refine ⟨hex.choose, ?_, hex.choose_spec⟩
     simp only [t, Finset.coe_image, Set.mem_image, Finset.mem_coe]
-    exact ⟨y, hyU, by rw [dif_pos hex]⟩
+    exact ⟨y, hyU, by rw [dite_eq_left hex]⟩
 
   let A : (Γ →₀ ℤ_[l]) → V := fun f => f.sum fun h c' => ((c' : ℚ_[l])) • ρV h
   have hSM : ∀ f : Γ →₀ ℤ_[l], (f.sum fun h c' => ((algebraMap ℚ_[l] (PadicAlgCl l)) (c' : ℚ_[l])) • ρ h) = ((A f : V) : Matrix (Fin a) (Fin a) (PadicAlgCl l)) := by

@@ -110,6 +110,6 @@ theorem conjugate_pieces_same_mass :
     rw [ptsIntegral_eq_at hRes resBridge hP hΨ' hL hBs' (isSectionOn_one_of_degree_zero hP hBa'),
       ptsIntegral_eq_at hRes resBridge hP hΨ hL hBs (isSectionOn_one_of_degree_zero hP hBa), hI]
   · unfold ptsIntegral
-    rw [dif_neg hex, dif_neg hex]
+    rw [dite_eq_right hex, dite_eq_right hex]
 
 end GlobalTheory.CompanionTheory.Ar.Giv

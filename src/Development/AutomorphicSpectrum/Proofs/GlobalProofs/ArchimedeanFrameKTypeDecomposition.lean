@@ -77,7 +77,7 @@ theorem coordHerm_map_unit (σ : E →ₐ[F] E) (hσ : HeckeCharacterZeroLocus.S
   have hcond : Function.Injective φ ∧ ∀ s, MeasurableSet s → NullMeasurableSet (φ '' s) P := by
     by_contra hc
     have h0 : coordHerm R σ b lam 1 = 0 := by
-      rw [hν, Measure.comap, dif_neg hc]
+      rw [hν, Measure.comap, dite_eq_right hc]
     have := isOpen_univ.measure_pos (coordHerm R σ b lam 1) Set.univ_nonempty
     simp [h0] at this
   have hs : Function.Surjective φ := by

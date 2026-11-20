@@ -104,13 +104,13 @@ theorem UpperTheory.unitChar_idempotentSum_eq_prod_unitInd :
     have hex : ∃ x, GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.IsUnitDet ε N x := ⟨x, hU⟩
     have he : hex.choose = x := Units.ext (ae_ext (hex.choose_spec.1.trans hU.1.symm) fun Q => by
       rw [hex.choose_spec.2.1, hU.2.1])
-    rw [GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar, dif_pos hex, he, hx, map_prod ν, ← Finset.prod_inv_distrib]
+    rw [GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar, dite_eq_left hex, he, hx, map_prod ν, ← Finset.prod_inv_distrib]
     refine (map_prod Circle.coeHom _ _).trans (Finset.prod_congr rfl fun i _ => ?_)
-    rw [GlobalTheory.StdPairCone.unitInd, dif_pos (h i)]
+    rw [GlobalTheory.StdPairCone.unitInd, dite_eq_left (h i)]
     rfl
   · obtain ⟨i, hi⟩ := not_forall.1 h
-    rw [Finset.prod_eq_zero (Finset.mem_univ i) (by rw [GlobalTheory.StdPairCone.unitInd, dif_neg hi]),
-      GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar, dif_neg]
+    rw [Finset.prod_eq_zero (Finset.mem_univ i) (by rw [GlobalTheory.StdPairCone.unitInd, dite_eq_right hi]),
+      GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar, dite_eq_right]
     rintro ⟨x, -, h2, h3⟩
     apply hi
     have h4 := (mem_OA_iff _).1 h3 (splitPrime (τ i))

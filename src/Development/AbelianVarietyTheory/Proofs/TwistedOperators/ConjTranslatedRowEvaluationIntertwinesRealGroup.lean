@@ -115,7 +115,7 @@ theorem star_dite_mul_right (B : RowsAut) (f f' : B.I.GA → ℂ) (G : B.I.GA)
   subst hf'
   by_cases hm : MemLp f 2 ((B.I.muA B.μf).restrict B.fund)
   · have hm' := memLp_mul_right B f hf hm G
-    rw [dif_pos hm', dif_pos hm]
+    rw [dite_eq_left hm', dite_eq_left hm]
     have hsf : ∀ γ ∈ B.I.GFset, ∀ y, (star f) (γ * y) = (star f) y := fun γ hγ y => by
       simp only [Pi.star_apply, hf γ hγ y]
     have hS : ((star (hm.toLp f) : B.I.L2 B.μf B.fund) : B.I.GA → ℂ)
@@ -134,7 +134,7 @@ theorem star_dite_mul_right (B : RowsAut) (f f' : B.I.GA → ℂ) (G : B.I.GA)
       have h2 := memLp_mul_right B (fun x => f (x * G)) hl h' G⁻¹
       have he : ∀ x, f (x * G⁻¹ * G) = f x := fun x => by rw [mul_assoc, inv_mul_cancel, mul_one]
       exact h2.ae_eq (Filter.Eventually.of_forall he)
-    rw [dif_neg hn', dif_neg hm, star_zero_L2, map_zero]
+    rw [dite_eq_right hn', dite_eq_right hm, star_zero_L2, map_zero]
 
 private lemma isUnit_of_mem_UH' {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau)
     {g : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) : IsUnit g := by

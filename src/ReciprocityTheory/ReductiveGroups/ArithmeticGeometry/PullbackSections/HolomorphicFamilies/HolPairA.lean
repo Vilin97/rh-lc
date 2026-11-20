@@ -25,7 +25,7 @@ theorem isHolTo_comp {Y Y' : Scheme.{0}} {B : Set V} {y : V → (Sp ℂ ⟶ Y)} 
     rw [hpre]
     exact hb.2
   unfold valAt'
-  rw [dif_pos hb2, dif_pos hb.2]
+  rw [dite_eq_left hb2, dite_eq_left hb.2]
   first
     | rfl
     | simp [Scheme.comp_app]

@@ -287,7 +287,7 @@ theorem typesE_of (hcap : CapFromHC) (u u' : D.what₂.Word) (e : InfinitePlace 
     intro w dw hdw i hi
     obtain ⟨h1, h2⟩ := Finset.mem_Icc.mp hi
     rw [Formalism.L2.SG.Pf.SzHypOf.gOf_place, hdw, Formalism.MainNotions.BridgeLemma.cfg_u D w τ (h5 w τ) i h1 h2,
-      dif_pos (by omega : i - 1 < D.R.k), hpl]
+      dite_eq_left (by omega : i - 1 < D.R.k), hpl]
     obtain ⟨j, rfl⟩ : ∃ j, i = j + 1 := ⟨i - 1, by omega⟩
     rw [Formalism.MainNotions.BridgeLemma.uOne_succ D w τ j (by omega)]
     rfl

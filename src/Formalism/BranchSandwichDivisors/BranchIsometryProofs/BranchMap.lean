@@ -1544,7 +1544,7 @@ theorem bm_eig {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam 
       exact Finset.sum_congr rfl fun s _ => hβs s
     · have : lamZ lam i.castSucc = (lam i : ℤ) := by
         unfold lamZ
-        rw [dif_pos (by simp : (i.castSucc : Fin (n + 1)).val < n)]
+        rw [dite_eq_left (by simp : (i.castSucc : Fin (n + 1)).val < n)]
         rfl
       rw [this]
       have := hpos i
@@ -1552,7 +1552,7 @@ theorem bm_eig {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam 
     · by_cases hi : i.val + 1 < n
       · have hz : lamZ lam i.succ = (lam ⟨i.val + 1, hi⟩ : ℤ) := by
           unfold lamZ
-          rw [dif_pos (by simpa using hi : (i.succ : Fin (n + 1)).val < n)]
+          rw [dite_eq_left (by simpa using hi : (i.succ : Fin (n + 1)).val < n)]
           rfl
         rw [hz]
         by_contra hcon
@@ -1568,7 +1568,7 @@ theorem bm_eig {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam 
           htop.symm)
       · have hz : lamZ lam i.succ = 0 := by
           unfold lamZ
-          rw [dif_neg (by simpa using hi : ¬ (i.succ : Fin (n + 1)).val < n)]
+          rw [dite_eq_right (by simpa using hi : ¬ (i.succ : Fin (n + 1)).val < n)]
         rw [hz]
         show (0 : ℤ) ≤ (lam i : ℤ) - β i
         rw [hβs, ← hcol i]
@@ -2029,13 +2029,13 @@ theorem bmG_nuNext_of_succ {n : ℕ} (ν : Fin n → ℕ) (i j : Fin n) (h : j.v
     have := j.isLt
     omega
   unfold nuNext
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   congr 1
   exact Fin.ext h.symm
 
 theorem bmG_nuNext_last {n : ℕ} (ν : Fin n → ℕ) (i : Fin n) (h : ¬ i.val + 1 < n) : nuNext ν i = 0 := by
   unfold nuNext
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem bmG_minor_empty (R : Type*) [CommRing R] {r n : ℕ} (I : Fin 0 → Fin r) (hs : 0 ≤ n) :
     initMinor R I hs = 1 := by
@@ -2244,9 +2244,9 @@ theorem bmG_rowsB {n : ℕ} (i : Fin n) :
   funext p
   simp only [rowsB]
   by_cases h : p.val < i.val
-  · rw [if_pos h, dif_pos h]
+  · rw [if_pos h, dite_eq_left h]
     rfl
-  · rw [if_neg h, dif_neg h]
+  · rw [if_neg h, dite_eq_right h]
 
 def bmG_D (R : Type*) [CommRing R] (n : ℕ) (s : ℕ) : MvPolynomial (Fin n × Fin n) R :=
   if h : s ≤ n then lpMinor R s h h else 1
@@ -2256,7 +2256,7 @@ theorem bmG_D_zero (R : Type*) [CommRing R] (n : ℕ) : bmG_D R n 0 = 1 := by
 
 theorem bmG_D_eq (R : Type*) [CommRing R] (n : ℕ) (s : ℕ) (h : s ≤ n) :
     bmG_D R n s = initMinor R (Fin.castLE h) h := by
-  rw [bmG_D, dif_pos h]
+  rw [bmG_D, dite_eq_left h]
   rfl
 
 theorem bmG_hw (R : Type*) [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hIL : bmIL lam sg) :
@@ -2269,7 +2269,7 @@ theorem bmG_hw (R : Type*) [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hIL 
   rw [← pow_add]
   have h1 : bmG_D R n (i.val + 1) = lpMinor R (i.val + 1) (by omega) (by omega) := by
     unfold bmG_D
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   rw [h1]
   congr 1
   by_cases hi : i.val + 1 < n
@@ -2355,7 +2355,7 @@ theorem bm_xi_row {R : Type} [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hI
     · rw [← bmG_sumB]; exact bmG_initMinor_rowHom R _ _
   convert h1 using 1
   by_cases ha : a.val < n
-  · rw [dif_pos ha]
+  · rw [dite_eq_left ha]
     have hne : a ≠ Fin.last n := fun h => by rw [h] at ha; simp at ha
     have h2 := congrFun (hw_weight_eq lam hanti) ⟨a.val, ha⟩
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, initW] at h2
@@ -2383,7 +2383,7 @@ theorem bm_xi_row {R : Type} [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hI
           omega
     have h9 := (hIL ⟨a.val, ha⟩).1
     omega
-  · rw [dif_neg ha]
+  · rw [dite_eq_right ha]
     have hl : a = Fin.last n := Fin.ext (by have := a.isLt; simp; omega)
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [if_pos hl, if_neg (by have := i.isLt; omega), if_neg (by have := i.isLt; omega)]

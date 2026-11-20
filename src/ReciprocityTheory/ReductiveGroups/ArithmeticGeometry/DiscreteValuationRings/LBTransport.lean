@@ -290,7 +290,7 @@ theorem gen_transport (hL : L.IsLB) (hs : LB.SameSum φ ε φ' ε') (t : LB.Gen 
     have hσ' : ∀ k', σ (φ' k') = j' k' := by
       intro k'
       simp only [σ]
-      rw [dif_pos ⟨k', rfl⟩]
+      rw [dite_eq_left ⟨k', rfl⟩]
       exact hj' _ _ (⟨k', rfl⟩ : ∃ k₀, φ' k₀ = φ' k').choose_spec
     have hsum : ∏ k, tr L O (φ k) ((ρ ∘ φ) k) (j k) ^ ε k = ∏ k', tr L O (φ' k') (ρ (φ' k')) (j' k') ^ ε' k' := by
       have := prod_zpow_of_sameSum φ ε φ' ε' hs (fun ψ => tr L O ψ (ρ ψ) (σ ψ))
@@ -450,7 +450,7 @@ theorem sec_transport (hL : L.IsLB) (hs : LB.SameSum φ ε φ' ε') (s : LB.Sec 
     have hσ' : ∀ k', σ (φ' k') = j' k' := by
       intro k'
       simp only [σ]
-      rw [dif_pos ⟨k', rfl⟩]
+      rw [dite_eq_left ⟨k', rfl⟩]
       exact hj' _ _ (⟨k', rfl⟩ : ∃ k₀, φ' k₀ = φ' k').choose_spec
     have hsum : ∏ k, tr L O (φ k) ((ρ ∘ φ) k) (j k) ^ ε k = ∏ k', tr L O (φ' k') (ρ (φ' k')) (j' k') ^ ε' k' := by
       have := prod_zpow_of_sameSum φ ε φ' ε' hs (fun ψ => tr L O ψ (ρ ψ) (σ ψ))

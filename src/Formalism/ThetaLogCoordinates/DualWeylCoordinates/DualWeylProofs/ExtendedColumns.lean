@@ -83,19 +83,19 @@ lemma qk_T_tab {n : ℕ} [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) (I 
   · by_cases h1 : c ≤ mu (lastIdx n)
     · have : extendedColumns I c = univ := by
         unfold extendedColumns
-        rw [dif_neg (by simp only [TCols, mem_Ioc]; omega), if_pos h1]
+        rw [dite_eq_right (by simp only [TCols, mem_Ioc]; omega), if_pos h1]
       rw [this]
       exact qk_dom_univ _
     · by_cases h2 : c + 1 ≤ mu 0
       · have hc : c ∈ TCols mu := by simp only [TCols, mem_Ioc]; omega
         have hc' : c + 1 ∈ TCols mu := by simp only [TCols, mem_Ioc]; omega
-        have e1 : extendedColumns I c = (I ⟨c, hc⟩).1 := by unfold extendedColumns; rw [dif_pos hc]
-        have e2 : extendedColumns I (c + 1) = (I ⟨c + 1, hc'⟩).1 := by unfold extendedColumns; rw [dif_pos hc']
+        have e1 : extendedColumns I c = (I ⟨c, hc⟩).1 := by unfold extendedColumns; rw [dite_eq_left hc]
+        have e2 : extendedColumns I (c + 1) = (I ⟨c + 1, hc'⟩).1 := by unfold extendedColumns; rw [dite_eq_left hc']
         rw [e1, e2, qk_dom_iff]
         exact hI ⟨c, hc⟩ hc'
       · have : extendedColumns I (c + 1) = ∅ := by
           unfold extendedColumns
-          rw [dif_neg (by simp only [TCols, mem_Ioc]; omega), if_neg (by omega)]
+          rw [dite_eq_right (by simp only [TCols, mem_Ioc]; omega), if_neg (by omega)]
         rw [this]
         exact qk_dom_empty _
 
@@ -109,7 +109,7 @@ def qk_tabEquiv {n : ℕ} [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) :
     apply Subtype.ext
     show extendedColumns I.1 c = _
     unfold extendedColumns
-    rw [dif_pos c.2]
+    rw [dite_eq_left c.2]
   right_inv T := by
     apply Subtype.ext
     funext c

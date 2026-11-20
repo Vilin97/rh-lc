@@ -24,7 +24,7 @@ theorem intNumL_ofFn_eq [DecidableEq K] (F : Type) [Field F] (Q : Ideal (Recipro
 
 theorem divCycle_one (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (1 : MRing ι ℤ)) W : ℤ) = 0 := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨h, -⟩
   have e : (P ⊔ Ideal.span {(1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)}) = ⊤ := by simp
   rw [e] at h
@@ -35,7 +35,7 @@ theorem isPrime_mem_of_divCycle_ne {P W : Ideal (ReciprocityTheory.ChartRestrict
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
   by_cases hc : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W
   · exact ⟨hc.1.1.1, hc.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self s))⟩
-  · rw [dif_neg hc] at h
+  · rw [dite_eq_right hc] at h
     exact absurd rfl h
 
 end SlopeTestRemainingChoices

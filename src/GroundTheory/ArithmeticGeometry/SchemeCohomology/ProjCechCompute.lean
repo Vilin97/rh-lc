@@ -250,7 +250,7 @@ theorem topMap_bijective {k : ℤ} {m : ℕ} :
     have h1 : lval (CechOrdered.altProj _ _ (m + 1) σ₀) id = lval σ₀ id := by
       unfold lval
       rw [CechOrdered.altProj_apply_of_strictMono _ _ strictMono_id]
-    rw [h1, lval_ofL, dif_pos Set.range_id]
+    rw [h1, lval_ofL, dite_eq_left Set.range_id]
     change (∑ e ∈ ν.support, AddMonoidAlgebra.single e.1 (ν e)).coeff e.1 = ν e
     rw [coeff_sum']
     simp only [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]

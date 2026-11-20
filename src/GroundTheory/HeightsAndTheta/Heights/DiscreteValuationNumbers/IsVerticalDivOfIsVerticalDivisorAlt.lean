@@ -75,10 +75,10 @@ theorem intCyc_divCycle [IsNoetherianRing R] (P : Ideal (ReciprocityTheory.Chart
   rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.intCyc, Finsupp.mapRange_apply, hc, divCycle]
   by_cases h : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W
   · have h' : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s := h
-    rw [if_pos h', dif_pos h, ReciprocityTheory.ChartRestriction.G.Geo.multAt, dif_pos h.1.1.1]
+    rw [if_pos h', dite_eq_left h, ReciprocityTheory.ChartRestriction.G.Geo.multAt, dite_eq_left h.1.1.1]
     all_goals rfl
   · have h' : W ∉ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s := h
-    rw [if_neg h', dif_neg h, Nat.cast_zero]
+    rw [if_neg h', dite_eq_right h, Nat.cast_zero]
 
 end Ring
 

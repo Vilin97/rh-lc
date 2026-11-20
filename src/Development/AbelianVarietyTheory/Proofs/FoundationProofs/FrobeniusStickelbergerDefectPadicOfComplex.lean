@@ -47,7 +47,7 @@ theorem map_tq_of_algEnt (F : ℂ → ℂ) (hF : AlgEnt F) :
     PowerSeries.map (algebraMap (↥Qbar) ℂ) (tq F) = GlobalTheory.FrobStick.tay F := by
   ext n
   simp only [tq, GlobalTheory.FrobStick.tay, PowerSeries.coeff_map, PowerSeries.coeff_mk]
-  rw [dif_pos (hF.2 n)]
+  rw [dite_eq_left (hF.2 n)]
   rfl
 
 theorem mvmap_injective {R S : Type*} [CommRing R] [CommRing S] (h : R →+* S)

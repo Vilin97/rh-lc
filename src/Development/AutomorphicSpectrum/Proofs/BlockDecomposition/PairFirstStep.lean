@@ -63,7 +63,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ}
 theorem sl₁_eq {F : H E a b → ℂ} {m₂ : GA E b} {φ : Sm E a} (h : φ.1 = fun x => F (x, m₂)) : sl₁ F m₂ = φ := by
   have hex : ∃ φ : Sm E a, φ.1 = fun x => F (x, m₂) := ⟨φ, h⟩
   unfold sl₁
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact Subtype.ext (hex.choose_spec.trans h.symm)
 
 theorem ap₁_prod (T : Sm E a →ₗ[ℂ] Sm E a) (φ₁ : Sm E a) (φ₂ : Sm E b) :

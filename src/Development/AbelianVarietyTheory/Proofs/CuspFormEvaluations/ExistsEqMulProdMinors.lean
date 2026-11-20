@@ -208,14 +208,14 @@ theorem notMem_vars : (∀ i (k : Fin n), p ≤ k → z (i, k) ∉ P.vars) ∧
         have := k.2
         rw [mixedWeight_apply] at h₂
         split_ifs with hk
-        · rw [dif_pos hk, dif_neg (by omega)] at h₂
+        · rw [dite_eq_left hk, dite_eq_right (by omega)] at h₂
           linarith
         · positivity
       have h₄ := (Finset.sum_eq_sum_iff_of_le h₁).1
         ((sum_dite_lt (by omega) fun i => (a i : ℤ)).trans hsa.symm)
       intro i k hk
       have h₅ := h₄ k (Finset.mem_univ _)
-      rw [dif_neg (by omega), eq_comm,
+      rw [dite_eq_right (by omega), eq_comm,
         Finset.sum_eq_zero_iff_of_nonneg fun _ _ => by positivity] at h₅
       exact_mod_cast h₅ i (Finset.mem_univ _)
     · have h₁ : ∀ k ∈ (Finset.univ : Finset (Fin n)),
@@ -227,14 +227,14 @@ theorem notMem_vars : (∀ i (k : Fin n), p ≤ k → z (i, k) ∉ P.vars) ∧
         have := k.2
         rw [mixedWeight_apply] at h₂
         split_ifs with hk
-        · rw [dif_pos hk, dif_neg (by omega)] at h₂
+        · rw [dite_eq_left hk, dite_eq_right (by omega)] at h₂
           linarith
         · positivity
       have h₄ := (Finset.sum_eq_sum_iff_of_le h₁).1
         ((sum_dite_rev_lt (by omega) fun i => (b i : ℤ)).trans hsb.symm)
       intro i k hk
       have h₅ := h₄ k (Finset.mem_univ _)
-      rw [dif_neg (by omega), eq_comm,
+      rw [dite_eq_right (by omega), eq_comm,
         Finset.sum_eq_zero_iff_of_nonneg fun _ _ => by positivity] at h₅
       exact_mod_cast h₅ i (Finset.mem_univ _)
   constructor

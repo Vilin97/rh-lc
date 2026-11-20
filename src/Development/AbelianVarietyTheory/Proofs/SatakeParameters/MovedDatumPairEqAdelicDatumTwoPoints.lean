@@ -16,6 +16,6 @@ theorem xiM_eq_adelic : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X}
     simp
   show Formalism.L2.PairingIndexBounds.F.movD _ _ _ z = _
   unfold Formalism.L2.PairingIndexBounds.F.movD Joint.xi0
-  rw [dif_pos h, hz]
+  rw [dite_eq_left h, hz]
 
 end GlobalTheory.TwV.Xc

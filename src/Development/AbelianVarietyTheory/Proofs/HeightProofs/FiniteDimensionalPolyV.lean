@@ -45,7 +45,7 @@ def kerE (ε : Fin n → Bool) (i : ℕ) : KG ε → ℂ :=
 
 theorem isKer_kerE {ε : Fin n → Bool} {i : ℕ} (h : ∃ e, IsKer ε i e) : IsKer ε i (kerE ε i) := by
   unfold kerE
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def rder (ε : Fin n → Bool) (l : List (Matrix (Fin n) (Fin n) ℂ)) (φ : KG ε → ℂ) : KG ε → ℂ :=
@@ -78,7 +78,7 @@ theorem toMK_one (ε : Fin n → Bool) : toMK (1 : KG ε) = 1 := rfl
 theorem toMK_expK {ε : Fin n → Bool} {X : Matrix (Fin n) (Fin n) ℂ} (h : inK ε X) (t : ℝ) :
     toMK (expK ε X t) = NormedSpace.exp ((t : ℂ) • X) := by
   unfold expK
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact toM_expG ε X t h.1
 
 theorem inK_of_skew {ε : Fin n → Bool} {X : Matrix (Fin n) (Fin n) ℂ} (h1 : X ∈ GlobalTheory.SmoothGlob.lieSet ε)

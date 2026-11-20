@@ -37,7 +37,7 @@ theorem row_type : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.
   have e := h2 ⟨j - 1, hj'⟩ A3.A.μ0 (D.what₂.ft σ) (Or.inl Y.tup0) (hiso σ ⟨j - 1, hj'⟩)
   simp only [Fin.val_mk, Nat.sub_add_cancel hj1, Y.tup0] at e
   unfold RealDat3.lamN
-  rw [dif_pos hj', e]
+  rw [dite_eq_left hj', e]
   rfl
 
 end GlobalTheory.Mem.RowType

@@ -253,7 +253,7 @@ theorem fx_differentiableOn_jac_chart {M : Type*} [TopologicalSpace M] (n : ℕ)
     have hex : ∃ e' : OpenPartialHomeomorph M (V n), IsChart n z e' ∧ e.symm y ∈ e'.source :=
       ⟨e, he, hx⟩
     unfold d
-    rw [dif_pos hex, hzx]
+    rw [dite_eq_left hex, hzx]
     obtain ⟨he', hx'⟩ := Classical.choose_spec hex
     have hev : (f ∘ (Classical.choose hex).symm) =ᶠ[𝓝 y] (f ∘ e.symm) := by
       have h1 : ∀ᶠ w in 𝓝 y, w ∈ e.target := e.open_target.mem_nhds hy

@@ -71,7 +71,7 @@ theorem transvection_apply' {n : ℕ} (a a' : Fin n) (d : L) (i j : Fin n) :
 
 theorem ordL_one [Valued L (WithZero (Multiplicative ℤ))] : ordL (1 : L) = 0 := by
   unfold ordL
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   simp
   rfl
 

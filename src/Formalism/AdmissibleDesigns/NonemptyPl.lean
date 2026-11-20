@@ -29,7 +29,7 @@ def plOf (n : ℕ) : HeightOneSpectrum (𝓞 D.host.E) :=
 
 theorem plOf_idx {v : HeightOneSpectrum (𝓞 D.host.E)} (h : v ∈ plSet i dc) : plOf i dc (idx i dc v) = v := by
   unfold plOf idx
-  rw [dif_pos h, dif_pos ((plSet i dc).equivFin ⟨v, h⟩).isLt]
+  rw [dite_eq_left h, dite_eq_left ((plSet i dc).equivFin ⟨v, h⟩).isLt]
   simp
 
 theorem idx_inj {v w : HeightOneSpectrum (𝓞 D.host.E)} (hv : v ∈ plSet i dc) (hw : w ∈ plSet i dc)

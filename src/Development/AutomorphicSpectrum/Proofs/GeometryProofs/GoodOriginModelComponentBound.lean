@@ -37,7 +37,7 @@ theorem chart_value {h : GenFrEx Xo c} (C : GlobalTheory.Reg.FChart h) {L : Type
     intro T _ _ p χ u v hv
     have hft : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) v := ⟨p, χ, u, hv⟩
     unfold evR evalAt
-    rw [dif_pos hft]
+    rw [dite_eq_left hft]
     exact hWD g hg.1 T _ p _ χ _ u v hft.choose_spec.choose_spec.choose_spec hv
   have hbor : ∀ {T : Type} [CommRing T] [IsReduced T] [Algebra c.F T] (t : Ix Dw → Tˣ) (v v' : FrPt Xo c T), FrBor t v v' →
       evR Xo c g v' = ((∏ i, t i ^ GlobalTheory.CompanionTheory.Ar.Rec.exZ Dw a i : Tˣ) : T) * evR Xo c g v := by

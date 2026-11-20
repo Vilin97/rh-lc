@@ -29,7 +29,7 @@ theorem dropHom_surjective (ho : Function.Injective o) :
   funext a
   have hj : ∃ b, o b = o a := ⟨a, rfl⟩
   show (if hj : ∃ b, o b = o a then (hj.choose_spec ▸ x hj.choose : GL (Fin (d (o a))) R) else 1) = x a
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   exact key (o a) _ hj.choose_spec a rfl
 
 variable {n : Type} [Fintype n] [DecidableEq n]

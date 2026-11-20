@@ -63,7 +63,7 @@ theorem mk_monomial_eq (I : ∀ k, Finset (ι k)) (u v : (Σ k, ι k) →₀ ℕ
     ext q
     simp only [Finsupp.add_apply, posExp, negExp, Finsupp.coe_equivFunOnFinite_symm]
     omega
-  rw [monoFrac, dif_pos hneg, LocalizedModule.mk_eq]
+  rw [monoFrac, dite_eq_left hneg, LocalizedModule.mk_eq]
   refine ⟨1, ?_⟩
   simp only [one_smul, Submonoid.smul_def, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, ← map_mul,
     monomial_mul, mul_one]
@@ -122,7 +122,7 @@ theorem embed_apply_cell [LinearOrder K] [∀ k, LinearOrder (ι k)] (a : (Σ k,
   rw [LinearMap.pi_apply]
   split_ifs with h
   · rfl
-  · rw [LinearMap.zero_apply, monoFrac, dif_neg h, smul_zero]
+  · rw [LinearMap.zero_apply, monoFrac, dite_eq_right h, smul_zero]
 
 end KHFreeDecomp
 

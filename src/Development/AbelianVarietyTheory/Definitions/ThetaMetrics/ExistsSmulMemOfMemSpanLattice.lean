@@ -820,7 +820,7 @@ variable {A : Submodule (𝓞 K) V} {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem arDeg_eq_frameDeg (hA : A.FG) {e : ι → V} (he : IsLatticeFrame A e) :
     h.arDeg A = h.frameDeg A e := by
-  rw [arDeg, dif_pos hA]
+  rw [arDeg, dite_eq_left hA]
   exact h.frameDeg_eq_frameDeg hA (exists_isLatticeFrame hA).choose_spec he
 
 theorem arDeg_eq (hA : A.FG) {e : ι → V} (mem : ∀ i, e i ∈ A) (he : LinearIndependent K e)

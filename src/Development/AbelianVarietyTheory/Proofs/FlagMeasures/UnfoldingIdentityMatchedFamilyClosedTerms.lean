@@ -46,7 +46,7 @@ theorem dl_scale₂ (H : HermSp M V) {r : ℕ} (s s' : Fin (r + 1) → E) (f f' 
     H.Dl (fun a => s a • f a) (fun b => s' b • f' b) l =
       (∏ i : Fin l, M.L.cj (s (Fin.castLE hl i)) * s' (Fin.castLE hl i)) * H.Dl f f' l := by
   unfold HermSp.Dl
-  rw [dif_pos hl, dif_pos hl]
+  rw [dite_eq_left hl, dite_eq_left hl]
   have hsub : (H.Zhat (fun a => s a • f a) (fun b => s' b • f' b)).submatrix (Fin.castLE hl) (Fin.castLE hl) =
       Matrix.diagonal (fun i => M.L.cj (s (Fin.castLE hl i))) *
         (H.Zhat f f').submatrix (Fin.castLE hl) (Fin.castLE hl) *

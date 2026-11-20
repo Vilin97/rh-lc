@@ -171,7 +171,7 @@ theorem finrank_cuspW_le : GlobalTheory.UCls.MassBound → GlobalTheory.UCls.Tor
     · rw [(hs k).2.2 γ hγ x hx, hχ k γ hγ, one_mul]
     · classical
       show (if h : x ∈ ((U σ).X k).dom then _ else 0) = 0
-      rw [dif_neg hx]
+      rw [dite_eq_right hx]
   obtain ⟨S, hS_def⟩ : ∃ S : Submodule ℂ (FDSec (U σ).X), S = Submodule.span ℂ (rdU (U σ) '' (Cw : Set (Rul Xo c))) :=
     ⟨_, rfl⟩
   have hS : ∀ P ∈ S, P ∈ holSub (U σ).X (laU (U σ) a n) ∧ (∀ k, ContinuousOn (P k) ((U σ).X k).dom) ∧

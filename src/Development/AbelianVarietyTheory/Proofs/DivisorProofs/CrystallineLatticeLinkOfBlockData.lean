@@ -29,14 +29,14 @@ def glue {ι X : Type} [Inhabited X] (inc : ι → (E →+* PadicAlgCl l)) (f g 
 theorem glue_inc {ι X : Type} [Inhabited X] {inc : ι → (E →+* PadicAlgCl l)} (hH : IsHalf inc) (f g : ι → X) (τ : ι) :
     glue inc f g (inc τ) = f τ := by
   have h : ∃ τ', inc τ' = inc τ := ⟨τ, rfl⟩
-  rw [glue, dif_pos h]
+  rw [glue, dite_eq_left h]
   exact congrArg f (hH.1 h.choose_spec)
 
 theorem glue_cj {ι X : Type} [Inhabited X] {inc : ι → (E →+* PadicAlgCl l)} (hH : IsHalf inc) (f g : ι → X) (τ : ι) :
     glue inc f g (cj (inc τ)) = g τ := by
   have h : ¬ ∃ τ', inc τ' = cj (inc τ) := fun ⟨τ', h'⟩ => hH.2.1 τ τ' h'.symm
   have h' : ∃ τ', cj (inc τ') = cj (inc τ) := ⟨τ, rfl⟩
-  rw [glue, dif_neg h, dif_pos h']
+  rw [glue, dite_eq_right h, dite_eq_left h']
   exact congrArg g (hH.1 (cj_injective h'.choose_spec))
 
 def labels {ι : Type} (inc : ι → (E →+* PadicAlgCl l)) (P : Par) (W : Wts ι) (mu : ι → ℕ → ℕ) :

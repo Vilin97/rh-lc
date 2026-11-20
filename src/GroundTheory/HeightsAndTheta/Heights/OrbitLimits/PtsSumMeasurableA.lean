@@ -59,7 +59,7 @@ theorem exists_lift_family {P : Ideal (MRing ι)}
   have hBsome : ∀ t : T, Bo (some t) = if ∃ γ, Lift t γ then Bl t.1 else ∅ := fun t => rfl
   have hγsome : ∀ t : T, (h : ∃ γ, Lift t γ) → γo (some t) = h.choose := fun t h => by
     show (if h : ∃ γ, Lift t γ then h.choose else fun _ _ => 0) = _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   have hBo : ∀ o, IsOpen (Bo o) := by
     rintro (_ | t)
     · exact isOpen_empty

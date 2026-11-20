@@ -118,7 +118,7 @@ theorem hgtFin_ioH_le_one {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {n : ℕ} 
     rw [e, hgtFin_mul p hk, absEv_apply]
     exact normDet_le_one hσ L v _ fun x hx => levi_mulVec_mem σ hQ L v y p hk e hx
   · show iwAbs _ _ _ ≤ 1
-    rw [iwAbs, dif_neg h]
+    rw [iwAbs, dite_eq_right h]
 
 end GlobalTheory.Core.Rk.HgtFin
 

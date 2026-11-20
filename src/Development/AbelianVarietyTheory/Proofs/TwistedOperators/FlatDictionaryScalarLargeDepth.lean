@@ -129,8 +129,8 @@ theorem elt_stair (G : GridData L sc) (t : T) (w : Pl D.host.E)
     · exact through_elt _ hj
     · exact elt_eq_one t w _ (by omega)
   · show onColumn (G := locGrid G t w) _ (i, j) = onColumn (G := grid0 G w) _ (i, j)
-    rw [onColumn, onColumn, dif_neg (show ¬ (i, j).1 = (locGrid G t w).m from hi),
-      dif_neg (show ¬ (i, j).1 = (grid0 G w).m from hi)]
+    rw [onColumn, onColumn, dite_eq_right (show ¬ (i, j).1 = (locGrid G t w).m from hi),
+      dite_eq_right (show ¬ (i, j).1 = (grid0 G w).m from hi)]
     rfl
 
 end Grid0
@@ -176,7 +176,7 @@ theorem scal : Big fun ch => ScalP ch := by
         · exact a
       have hoff : ∀ i j, i ≠ D.R.m → epsV ch.G t w (i, j) = 1 := fun i j hi => by
         show onColumn (G := locGrid ch.G t w) _ (i, j) = 1
-        rw [onColumn, dif_neg (show ¬ (i, j).1 = (locGrid ch.G t w).m from hi)]
+        rw [onColumn, dite_eq_right (show ¬ (i, j).1 = (locGrid ch.G t w).m from hi)]
       have h1 : charFactor ({locGrid ch.G t w with mu := fun j => (muBase R.toLevCh j).loc w} : Grid (Kw w))
           (epsV ch.G t w) = 1 := by
         refine charFactor_eq_one _ _ (epsV_mem t w) (fun i hi => ⟨hoff i _ (Nat.ne_of_lt hi), ?_⟩) (fun j hj => ?_) ?_
@@ -187,7 +187,7 @@ theorem scal : Big fun ch => ScalP ch := by
           · exact hoff _ _ e
         · replace hj : j < D.R.m := hj
           show IsUnram ((muBase R.toLevCh (j + 1)).loc w)
-          rw [muBase, dif_pos hj]
+          rw [muBase, dite_eq_left hj]
           refine GlobalTheory.FunObj.Good.isUnram_loc.2 ((R.toLevCh.C.isMu0 ⟨j, hj⟩).unr w fun k hk => ?_)
           refine ha (ch.G.pl.mem_S0_of_sum_eq.2 (Or.inr ((GlobalTheory.ChiGrid.S1_mem_OmF D).2 ?_)))
           have : ((D.host.g k : ℕ) : 𝓞 D.host.F) ∈ (w.under (𝓞 D.host.F)).asIdeal := by

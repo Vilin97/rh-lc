@@ -54,14 +54,14 @@ private theorem fac_pos (χ ξ : kˣ →* ℂˣ) (hξ : IsSmoothChar ξ) (hu : I
   have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * χ) :=
     ⟨ξ, ⟨hξ, rfl⟩, hu⟩
   unfold pfac
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨h', e⟩ := h.choose_spec.1
   rw [← IrrGL.ofChar_inj.1 e]
 
 private theorem fac_neg (χ : kˣ →* ℂˣ) (y : IrrGL k) (h : ¬ ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)) :
     pfac χ y = 1 := by
   unfold pfac
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨ξ, ⟨hξ, e⟩, hu⟩
   exact h ⟨ξ, hξ, e, hu⟩
 

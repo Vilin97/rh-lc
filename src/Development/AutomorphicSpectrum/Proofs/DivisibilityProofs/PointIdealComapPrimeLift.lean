@@ -128,8 +128,8 @@ theorem pl_corr : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [
       exact hlen
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     by_cases hm : W'.comap φ ∈ J.minimalPrimes
-    · rw [dif_pos ⟨hmin'.2 hm, hr⟩, dif_pos ⟨hm, hrel⟩]
+    · rw [dite_eq_left ⟨hmin'.2 hm, hr⟩, dite_eq_left ⟨hm, hrel⟩]
       exact congrArg (fun t : ℕ∞ => ((ENat.toNat t : ℕ) : ℤ)) hlen'
-    · rw [dif_neg (fun hh => hm (hmin'.1 hh.1)), dif_neg (fun hh => hm hh.1)]
+    · rw [dite_eq_right (fun hh => hm (hmin'.1 hh.1)), dite_eq_right (fun hh => hm hh.1)]
 
 end GlobalTheory.CompanionTheory.Ar.Num

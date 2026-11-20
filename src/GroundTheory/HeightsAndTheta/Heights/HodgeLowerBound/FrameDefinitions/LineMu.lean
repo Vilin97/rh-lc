@@ -21,7 +21,7 @@ theorem valAt_line_zero {z : (Σ _ : Unit, Fin 2) → ℂ} : valAt yLine (0 : Ω
   classical
   have h : IsValueAt yLine (0 : Ω) z 0 := by simpa using isValueAt_intCast yLine z 0
   unfold valAt
-  rw [dif_pos ⟨0, h⟩]
+  rw [dite_eq_left ⟨0, h⟩]
   obtain ⟨d, g, h', hg, hh, hy, heq, hz0, hv⟩ := (⟨0, h⟩ : ∃ v, IsValueAt yLine (0 : Ω) z v).choose_spec
   rw [hv]
   rw [zero_mul] at heq
@@ -125,7 +125,7 @@ theorem gramAt_line (hz : ∃ i, z ⟨(), i⟩ ≠ 0) :
     simp [lineMetric, Finset.sum_apply, Pi.single_apply] at this
     exact this.symm
   unfold gramAt
-  rw [dif_pos hl, dif_pos hS, hSe]
+  rw [dite_eq_left hl, dite_eq_left hS, hSe]
   show _ * (1 : Matrix (Fin 2) (Fin 2) ℂ) * _ = _
   rw [Matrix.mul_one]
   rfl
@@ -238,7 +238,7 @@ theorem muMetric_line {z : (Σ _ : Unit, Fin 2) → ℂ} (hz : ∃ i, z ⟨(), i
   classical
   obtain ⟨i, hi⟩ := hz
   have h : Nonempty (MuFrameAt (lineHodge II hII) z) := ⟨stdFrameAt hi⟩
-  rw [muMetric, dif_pos h]
+  rw [muMetric, dite_eq_left h]
   exact norm_muFrameAt _
 
 theorem muLine_h {z : (Σ _ : Unit, Fin 2) → ℂ} (hz : ∃ i, z ⟨(), i⟩ ≠ 0) :

@@ -13,7 +13,7 @@ theorem DivCycleFiniteSupport.proof : DivCycleFiniteSupport.Statement.{u} := by
   by_contra hmin
   apply hW
   unfold divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact fun h => hmin h.1
 
 end GroundTheory.Heights₂.Heights.NumbersDVR

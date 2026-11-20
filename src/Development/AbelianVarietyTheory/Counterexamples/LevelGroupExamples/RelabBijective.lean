@@ -92,7 +92,7 @@ theorem perFr_beyond (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) {τ : E
       hermC (conjEmb τ) X.Gm (col (mat x ⟨conjEmb τ, conj_mem X h⟩) ⟨0, hr⟩) (Data.emb (conjEmb τ) v) := by
   have h0 : X.p0 - 1 - i = 0 := by omega
   unfold perFr
-  rw [dif_neg h, dif_pos (conj_mem X h), dif_pos (h0 ▸ hr)]
+  rw [dite_eq_right h, dif_pos (conj_mem X h), dif_pos (h0 ▸ hr)]
   simp only [h0]
 
 theorem rdU_mul (U : Unf Xo c σ r) (f g : Rul Xo c) : rdU U (f * g) = rdU U f * rdU U g := by

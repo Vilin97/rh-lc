@@ -121,7 +121,7 @@ theorem leadMinor_transpose (Γ : Matrix (Fin r) (Fin r) ℂ) (s : ℕ) : leadMi
 
 theorem leadMinor_pos_of_posDef (hΓ : Γ.PosDef) {s : ℕ} (h : s ≤ r) : 0 < leadMinor Γ s := by
   unfold leadMinor
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (Complex.pos_iff.1 (hΓ.submatrix (Fin.castLE_injective h)).det_pos).1
 
 example (a d : ℝ) (ha : a ≠ 0) (b : ℂ) :

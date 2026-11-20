@@ -49,12 +49,12 @@ theorem herm_w_bvec {i : Fin (2 * r + k + 1)} (hi : i.val < r ∨ r + k < i.val)
 theorem fam_in {e : Fin (k + 1) → Fin (2 * r + k + 1) → ℂ} {i : Fin (2 * r + k + 1)} (h : r ≤ i.val ∧ i.val ≤ r + k) :
     fam k r e i = e ⟨i.val - r, by omega⟩ := by
   simp only [fam]
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem fam_out {e : Fin (k + 1) → Fin (2 * r + k + 1) → ℂ} {i : Fin (2 * r + k + 1)} (h : i.val < r ∨ r + k < i.val) :
     fam k r e i = bvec i := by
   simp only [fam]
-  rw [dif_neg]
+  rw [dite_eq_right]
   omega
 
 theorem famGram {e : Fin (k + 1) → Fin (2 * r + k + 1) → ℂ} (he : ONb k r e) (i j : Fin (2 * r + k + 1)) :

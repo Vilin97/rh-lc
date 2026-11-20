@@ -396,7 +396,7 @@ theorem locOp_mem (v : Pl F) (T : ((κ → AF F) → ℂ) → ((κ → AF F) →
 
 theorem acts_locOp {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} {φ : (κ → Fv F v) → ℂ}
     (h : ∃ φ₁, φ₁ ∈ SB (κ → Fv F v) ∧ Acts (evFin F v) T φ φ₁) : Acts (evFin F v) T φ (locOp v T φ) := by
-  rw [locOp, dif_pos h]
+  rw [locOp, dite_eq_left h]
   exact h.choose_spec.2
 
 theorem locOp_eq {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} {φ φ₁ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v))
@@ -405,7 +405,7 @@ theorem locOp_eq {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) → 
 
 theorem acts_locOpInf {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} {f : SInf F κ} (h : ∃ f₁ : SInf F κ, Acts (evI F) T f f₁) :
     Acts (evI F) T f (locOpInf T f) := by
-  rw [locOpInf, dif_pos h]
+  rw [locOpInf, dite_eq_left h]
   exact h.choose_spec
 
 variable (F κ) in
@@ -642,7 +642,7 @@ theorem coneInfInt_apply (f : SInf F (Fin n × Fin d)) (k : UA σ X.J) (l : (AE 
 theorem coe_coneInf {f : SInf F (Fin n × Fin d)}
     (h : ∃ g : SInf F (Fin n₁ × Fin d₁), ⇑g = coneInfFun B M om ei K μK μ u ν z f) :
     ⇑(coneInf B M om ei K μK μ u ν z f) = coneInfFun B M om ei K μK μ u ν z f := by
-  rw [coneInf, dif_pos h]
+  rw [coneInf, dite_eq_left h]
   exact h.choose_spec
 
 theorem coneInf_eq {f : SInf F (Fin n × Fin d)} {g : SInf F (Fin n₁ × Fin d₁)}

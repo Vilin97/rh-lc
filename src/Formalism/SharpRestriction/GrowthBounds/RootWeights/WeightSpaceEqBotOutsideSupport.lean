@@ -56,7 +56,7 @@ theorem lagrangeFactor_kills_other_weight (E : GLOps n K V) (mu nu : Fin n → �
   have h : ∃ a, nu a ≠ mu a := by
     by_contra hc; exact hne (funext fun a => by_contra fun h => hc ⟨a, h⟩)
   unfold lagrangeWeightFactor
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   simp [(mem_weightSp_iff_diagonal_apply E nu x).1 hx]
 
 theorem lagrangeFactor_preserves_stable (E : GLOps n K V) (mu nu : Fin n → ℤ) (W : Submodule K V)

@@ -133,7 +133,7 @@ theorem clsOf_mul_sgn (p : PlF D) (Y : MatP D p) :
     congr 1
   · have hc' : ¬ ((∀ a b, (Y * S) a b ∈ (M p).R) ∧ IsUnit (Y * S).det) := by
       rintro ⟨h1', h2'⟩; exact hc ⟨hint.1 h1', hdet.1 h2'⟩
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 theorem clsSgn_holds (Zd : LocDat D) : ClsSgn Zd := by
   intro p Y s

@@ -82,7 +82,7 @@ theorem gIdil_of' (hWTC : GlobalTheory.Published.WeilThetaConvergence) (hDecA : 
     unfold famC
     exact SchwartzDifferenceQuotient.isSch_smul _ (gCSch V.rank n ε _ _ hc htc _ _ h1 h2)
   have hphi : ∀ P : PX V.rank n, phiS θ τ fr (cLoc l τ) Ψ P = ⟨tens θ τ fr (fP (cLoc l τ) P) Ψ, hΨ.2 _ (hsch1 P)⟩ := by
-    intro P; unfold phiS; rw [dif_pos (hΨ.2 _ (hsch1 P))]
+    intro P; unfold phiS; rw [dite_eq_left (hΨ.2 _ (hsch1 P))]
   have hω : ∀ (y : GR n) (P : PX V.rank n), (ω (g * ι y) (phiS θ τ fr (cLoc l τ) Ψ P)).1 =
       tens θ τ fr (L (y₀ * y) (fP (cLoc l τ) P)) (A Ψ) := by
     intro y P

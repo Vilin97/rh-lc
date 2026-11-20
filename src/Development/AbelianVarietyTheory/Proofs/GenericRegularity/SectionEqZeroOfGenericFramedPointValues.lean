@@ -17,7 +17,7 @@ theorem evR_eq_map_of_test_point {E : Type} [Field E] [NumberField E] [IsCMField
     evR Xo c g w = φ (g p y) := by
   have h : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) w := ⟨p, φ, y, hw⟩
   unfold evR evalAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact hL.wd g hg.1 S _ p _ φ _ y w h.choose_spec.choose_spec.choose_spec hw
 
 theorem sec_eq_zero_of_generic_values :

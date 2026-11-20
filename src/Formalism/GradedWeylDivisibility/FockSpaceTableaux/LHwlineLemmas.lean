@@ -333,7 +333,7 @@ theorem lhwline_elim_cleared [Infinite K] (x : Fin r × Fin n → K)
     have hy := ih (by omega)
     have hel : lhwline_elim (k + 1) x = highestWeightLineUpdate ⟨k, hr⟩ ⟨k, hn⟩ (lhwline_elim k x) := by
       simp only [lhwline_elim]
-      rw [dif_pos ⟨hr, hn⟩]
+      rw [dite_eq_left ⟨hr, hn⟩]
     rw [hel]
     apply lhwline_step_cleared k hr hn _ hy
     apply lhwline_pivot_ne k hr hn _ hy

@@ -42,7 +42,7 @@ theorem ptOk : PtOk := by
     intro ψ hψ
     have h : ∃ r, 0 ≤ r ∧ ∀ x y g, ψ x y g ≠ 0 → logSize (finGL E a g.1) ≤ r ∧ logSize (finGL E b g.2) ≤ r :=
       (PositivityTheory.Rg.BcB.F.BlockFiniteConvolution.rtAlg' E A.blk 1 1).2.2 ψ hψ
-    rw [PositivityTheory.Rg.BcB.F.sizeOf, dif_pos h]
+    rw [PositivityTheory.Rg.BcB.F.sizeOf, dite_eq_left h]
     exact h.choose_spec
   refine ⟨herm_chi l₁, herm_chi l₂, ?_, ?_, ?_⟩
   · intro wa wb ψ hψ

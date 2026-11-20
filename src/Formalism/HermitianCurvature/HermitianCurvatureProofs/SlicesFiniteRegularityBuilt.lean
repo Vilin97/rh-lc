@@ -554,7 +554,7 @@ theorem pos_levels (hL : LettersDD) (hP : PosCore) (hI : IntG) (hT : OrbitSliceI
     obtain ⟨-, hT2⟩ := Formalism.FourierDecayAlt.P.Dx2.SL.phi_transport (k := k) (ρ := ρ) hP _ _ hσ _ _ hd
       (D.castV (by omega) T.base.z) (D.castV (by omega) T.base.z') (D.castF (by omega) G) γ
     unfold D.sliceAt
-    rw [dif_pos (by omega), hT2]
+    rw [dite_eq_left (by omega), hT2]
     simp only [Formalism.FourierDecayAlt.P.Dx2.SL.castV_castV, Formalism.FourierDecayAlt.P.Dx2.SL.castF_castF]
   have e1 : r = ph + (n + 1) + ρ := hsum.symm
   have e2 : ph + (n + 1) + ρ = r := hsum

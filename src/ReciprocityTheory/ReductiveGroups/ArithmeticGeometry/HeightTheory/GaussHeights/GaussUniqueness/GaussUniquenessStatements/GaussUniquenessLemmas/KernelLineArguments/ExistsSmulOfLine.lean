@@ -35,7 +35,7 @@ theorem ratio_eq_of {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V] {f 
     (hg : g ≠ 0) (h : f = a • g) : ratio f g = a := by
   unfold ratio
   have hex : ∃ a : Ω, f = a • g := ⟨a, h⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have h2 := hex.choose_spec
   exact smul_left_injective Ω hg (h.symm.trans h2).symm
 

@@ -1150,7 +1150,7 @@ theorem dcrel_of {Λ Λ' : Submodule (𝓞 E) S.V} {T T' : E} (F : LFlag S r T) 
     (hΛ : Formalism.HermitianLatticesTheory.gmap γ Λ' = Λ) {n n' : S.V ≃ₗ[E] S.V} (hn : n ∈ NLam Λ F) (hn' : n' ∈ NLam Λ' F')
     (h : γ₂ = n * γ * n') : DCRel Λ F (mapLF γ F') (mapLF γ₂ F') := by
   have hm : γ * n' * γ⁻¹ ∈ NLam Λ (mapLF γ F') := by
-    rw [mapLF, dif_pos hγ]
+    rw [mapLF, dite_eq_left hγ]
     refine ⟨⟨(Formalism.HermitianLatticesTheory.isom S.hT).mul_mem ((Formalism.HermitianLatticesTheory.isom S.hT).mul_mem hγ hn'.1.1) ((Formalism.HermitianLatticesTheory.isom S.hT).inv_mem hγ),
       by rw [gmap_mul, gmap_mul, gmap_inv hΛ, hn'.1.2, hΛ]⟩, fun j x hx => ?_, fun x hx => ?_⟩
     · change x ∈ (mapFlag γ hγ F'.fl).Xa (j + 1) at hx
@@ -1166,11 +1166,11 @@ theorem dcrel_of {Λ Λ' : Submodule (𝓞 E) S.V} {T T' : E} (F : LFlag S r T) 
       refine ⟨n' (γ.symm x) - γ.symm x, hn'.2.2 _ hy, ?_⟩
       simp [le_mul_app, le_inv_app, map_sub]
   refine ⟨n, hn, γ * n' * γ⁻¹, hm, fun a => ?_, ?_⟩
-  · rw [mapLF, mapLF, dif_pos hγ, dif_pos hγ₂]
+  · rw [mapLF, mapLF, dite_eq_left hγ, dite_eq_left hγ₂]
     show (mapFlag γ₂ hγ₂ F'.fl).fvec a = n ((γ * n' * γ⁻¹) ((mapFlag γ hγ F'.fl).fvec a))
     rw [fvec_mapFlag, fvec_mapFlag, h]
     simp [le_mul_app, le_inv_app]
-  · rw [mapLF, mapLF, dif_pos hγ, dif_pos hγ₂]
+  · rw [mapLF, mapLF, dite_eq_left hγ, dite_eq_left hγ₂]
     show γ₂ F'.zt = n ((γ * n' * γ⁻¹) (γ F'.zt))
     rw [h]
     simp [le_mul_app, le_inv_app]

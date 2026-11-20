@@ -127,7 +127,7 @@ theorem omega_congr {a b : ℕ} (Pg Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : �
       have : (c PP.1 PP.2).2.unit = (e.1 c PP.1 PP.2).2.unit := Units.ext (by
         rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 (Or.inr PP.2)])
       rw [this]
-    · rw [dif_neg c, dif_neg (fun c' => c (e.2 c'))]
+    · rw [dite_eq_right c, dite_eq_right (fun c' => c (e.2 c'))]
   rw [h1, h2]
 
 theorem exists_omega_field (Pg Q : Finset (Pl D.host.E)) : ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧

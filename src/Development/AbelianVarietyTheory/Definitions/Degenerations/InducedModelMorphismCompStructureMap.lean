@@ -483,7 +483,7 @@ theorem val_eq {y : Sp K ⟶ M.Z} {U : M.Z.Opens} (hy : Set.range y ⊆ U) {f : 
     exact valR_res y e ((top_le_preimage_iff y _).2 hW) g
   have hex : ∃ q : (Σ U : M.Z.Opens, Γ(M.Z, U)), Set.range y ⊆ q.1 ∧ valF M.pt q.1 q.2 = x := ⟨⟨U, f⟩, hy, hf⟩
   unfold RatModel.val
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨hq1, hq2⟩ := hex.choose_spec
   have hy2 : Set.range y ⊆ ((hex.choose.1 ⊓ U : M.Z.Opens) : Set M.Z) := fun p hp => ⟨hq1 hp, hy hp⟩
   have hW : ((hex.choose.1 ⊓ U : M.Z.Opens) : Set M.Z).Nonempty := ⟨_, hy2 ⟨IsLocalRing.closedPoint K, rfl⟩⟩
@@ -495,7 +495,7 @@ theorem val_valF {y : Sp K ⟶ M.Z} {U : M.Z.Opens} (hy : Set.range y ⊆ U) (f 
 
 theorem val_of_notMem {y : Sp K ⟶ M.Z} (w : Sp K) {x : Ω} (hx : x ∉ M.O (y w)) : M.val y x = 0 := by
   unfold RatModel.val
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨q, hq, rfl⟩
   exact hx (valF_mem_O (hq ⟨w, rfl⟩) q.2)
 

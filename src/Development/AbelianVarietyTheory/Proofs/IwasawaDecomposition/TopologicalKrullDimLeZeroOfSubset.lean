@@ -208,7 +208,7 @@ theorem valAt_algebraMap {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y
     (a : Z.presheaf.stalk (below y)) :
     TrueGeo.valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [TrueGeo.valAt, dif_pos h, IsFractionRing.injective _ Z.functionField h.choose_spec]
+  rw [TrueGeo.valAt, dite_eq_left h, IsFractionRing.injective _ Z.functionField h.choose_spec]
 
 end Cut
 

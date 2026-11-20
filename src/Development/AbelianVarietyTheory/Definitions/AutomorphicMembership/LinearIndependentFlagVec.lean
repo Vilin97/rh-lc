@@ -423,7 +423,7 @@ theorem intFrame_grFr (l : PsiT D → ℕ → ℤ) (i : (grLB ct l).ι) : IntFra
 theorem nonempty_grIso (l : PsiT D → ℕ → ℤ) : Nonempty ((ct.Lb l).toMod ≅ GlobalTheory.LB.toMod (grLB ct l)) := by
   haveI := (GlobalTheory.VB.isVB_toMod (isGrLB_grLB ct l).1).isFiniteQC
   unfold At.Lb
-  rw [dif_pos (exists_grLB ct l)]
+  rw [dite_eq_left (exists_grLB ct l)]
   exact GlobalTheory.ModelPresentation.nonempty_ofMod_toMod_iso _ _ _ _ p ct.W ct.hp ct.hW _ _ ct.YY (GlobalTheory.LB.toMod (grLB ct l))
 
 def grIso (l : PsiT D → ℕ → ℤ) : (ct.Lb l).toMod ≅ GlobalTheory.LB.toMod (grLB ct l) := (nonempty_grIso ct l).some

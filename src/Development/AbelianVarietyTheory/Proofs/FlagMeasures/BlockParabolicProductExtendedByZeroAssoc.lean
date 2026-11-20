@@ -13,12 +13,12 @@ variable {g : ℕ} [Fact g.Prime]
 
 theorem toG_coe {n : ℕ} (x : Gn g n) : toG (x : Mt g n) = x := by
   unfold toG
-  rw [dif_pos (Units.isUnit x)]
+  rw [dite_eq_left (Units.isUnit x)]
   exact Units.ext (IsUnit.unit_spec _)
 
 theorem coe_toG {n : ℕ} {M : Mt g n} (h : IsUnit M) : ((toG M : Gn g n) : Mt g n) = M := by
   unfold toG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact IsUnit.unit_spec h
 
 theorem toG_mul {n : ℕ} {M N : Mt g n} (h : IsUnit M) (h' : IsUnit N) : toG (M * N) = toG M * toG N := by
@@ -178,12 +178,12 @@ theorem stage_right {a m n : ℕ} (hn : n = a + m) (k : ℂ) (φ F : Gn g m → 
 
 theorem entN_tl {m n : ℕ} (M : Mt g n) {i j : ℕ} (hi : i < m) (hj : j < m) :
     entN (tl m M) i j = entN M i j := by
-  rw [entN, dif_pos ⟨hi, hj⟩]
+  rw [entN, dite_eq_left ⟨hi, hj⟩]
   rfl
 
 theorem entN_br {a m n : ℕ} (M : Mt g n) {i j : ℕ} (hi : i < m) (hj : j < m) :
     entN (br a m M) i j = entN M (a + i) (a + j) := by
-  rw [entN, dif_pos ⟨hi, hj⟩]
+  rw [entN, dite_eq_left ⟨hi, hj⟩]
   rfl
 
 theorem inPar_iff {a n : ℕ} (M : Mt g n) :
@@ -193,14 +193,14 @@ theorem inPar_iff {a n : ℕ} (M : Mt g n) :
     have hjn : j < n := by omega
     unfold InPar at h
     unfold entN
-    rw [dif_pos ⟨hi, hjn⟩]
+    rw [dite_eq_left ⟨hi, hjn⟩]
     exact h ⟨i, hi⟩ ⟨j, hjn⟩ hj hai
   · intro h
     unfold InPar
     intro i j hj hai
     have := h i j i.2 hj hai
     unfold entN at this
-    rwa [dif_pos ⟨i.2, j.2⟩] at this
+    rwa [dite_eq_left ⟨i.2, j.2⟩] at this
 
 theorem par_par {a b c n : ℕ} (hn : n = a + b + c) (M : Mt g n) :
     (InPar (a + b) M ∧ InPar a (tl (a + b) M)) ↔ (InPar a M ∧ InPar b (br a (b + c) M)) := by

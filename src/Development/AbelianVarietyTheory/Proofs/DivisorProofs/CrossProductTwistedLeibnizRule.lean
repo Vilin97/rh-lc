@@ -279,7 +279,7 @@ theorem evD_crossT (w : ℤ) (a b : ℕ) (U : Scheme.{0}) (y : BSx (twX E V) a b
     evD (crossT V ℓ μ hk α z) w a b U y = sg (m * a) • xv μ α z w a b (baseS V y) (vertS V ℓ y) := by
   by_cases h : -((a + b : ℕ) : ℤ) + k = w
   · rw [evD_eq _ _ _ _ h, evT_crossT_xv]
-  · rw [evD, dif_neg h, xv, dif_neg (by push_cast at h; omega), smul_zero]
+  · rw [evD, dite_eq_right h, xv, dite_eq_right (by push_cast at h; omega), smul_zero]
 
 theorem hB_crossT (w : ℤ) (a b : ℕ) (U : Scheme.{0}) (y : BSx (twX E V) a b U) :
     hB (crossT V ℓ μ hk α z) w a b U y = sg (m * a + m) • bisimplexFunctionBoundaryFirst (xv μ α z w) a b (baseS V y) (vertS V ℓ y) := by

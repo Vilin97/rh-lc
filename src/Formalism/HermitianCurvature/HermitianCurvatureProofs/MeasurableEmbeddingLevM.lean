@@ -18,7 +18,7 @@ def projM (y : Mt k (1 + ρ)) : Mt k ρ := fun a b => y ⟨a.val + 1, by omega�
 theorem projM_levM (x : Mt k ρ) : projM (B2.levM k ρ x) = x := by
   funext a b
   simp only [projM, B2.levM, ιLev, Matrix.of_apply]
-  rw [dif_pos ⟨by omega, by omega⟩, dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩, dite_eq_left ⟨by omega, by omega⟩]
   rfl
 
 theorem continuous_levM : Continuous (B2.levM k ρ) := by

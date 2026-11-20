@@ -26,7 +26,7 @@ theorem muInf_compact_pos : ∃ K : Set X.B.I.Ginf, IsCompact K ∧ 0 < Formalis
 theorem cooOf_eq (u u' : D.what₂.Word) (sc C : ℝ) (hC : 0 < C) (h : Disint X u u' sc C) : DisintegrationConstant X u u' sc = C := by
   have hex : ∃ C, 0 < C ∧ Disint X u u' sc C := ⟨C, hC, h⟩
   unfold DisintegrationConstant
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨hC1, hD1⟩ := hex.choose_spec
   obtain ⟨K, hK, hK0, hKt⟩ := muInf_compact_pos X
   have hKm : MeasurableSet K := hK.measurableSet

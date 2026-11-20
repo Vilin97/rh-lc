@@ -28,7 +28,7 @@ theorem levelForm_top_diag (p : KB.Pl P Wp Wq) (H : B.Mat P.k P.r → (Wq →L[�
     p.RR H (P.r + 1) w a a = Top.topOf P p.l0 p.T p.ν' p.m₀ p.Θ p.TP H w a a := by
   by_cases hg : D.IsLocPt a (P.r + 1) ∧ 0 < D.ptG (Tz P.k P.r p.T.base.z * Tz P.k P.r p.T.base.z') P.r a
   · unfold KB.Pl.RR D.RRplace
-    rw [dif_pos ⟨hg.1, hg.1⟩, dif_neg (by omega), if_pos rfl]
+    rw [dite_eq_left ⟨hg.1, hg.1⟩, dite_eq_right (by omega), if_pos rfl]
     split_ifs with hw
     · subst hw
       exact (Formalism.FourierDecayAlt.P.top_of_empty Formalism.FourierDecayAlt.P.vector_valued_types Wp Wq P p.l0 p.T p.ν' p.m₀ p.Θ p.TP H a a p.hP p.hF
@@ -36,7 +36,7 @@ theorem levelForm_top_diag (p : KB.Pl P Wp Wq) (H : B.Mat P.k P.r → (Wq →L[�
     · rfl
   · have hV : ∀ F, D.vecV p.T.base p.ν' p.m₀ F a = 0 := fun F => by
       unfold D.vecV
-      rw [dif_neg hg]
+      rw [dite_eq_right hg]
     have ht : Top.topOf P p.l0 p.T p.ν' p.m₀ p.Θ p.TP H w a a = 0 := by
       simp only [Top.topOf, hV, ContinuousLinearMap.comp_zero, hsInner_zero_zero, mul_zero,
         Finset.sum_const_zero]

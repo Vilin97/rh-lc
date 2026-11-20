@@ -197,7 +197,7 @@ theorem cmpD_letter (T : LocLat G Qp LL O) (c : ZMod n) {x : W.DD T}
   obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hxl
   have hN : ((letE c : LetA O n) • LinearMap.id : W.DD T →ₗ[LetA O n] W.DD T) y ∈ W.N T := hxN.1
   unfold Formalism.MainNotions.ArcLiftingSetup.cmpD
-  rw [dif_pos hN]
+  rw [dite_eq_left hN]
   have e : (⟨((letE c : LetA O n) • LinearMap.id : W.DD T →ₗ[LetA O n] W.DD T) y, hN⟩ : ↥(W.N T)) =
       (letE c : LetA O n) • (⟨y, hy⟩ : ↥(W.N T)) := by
     ext; simp

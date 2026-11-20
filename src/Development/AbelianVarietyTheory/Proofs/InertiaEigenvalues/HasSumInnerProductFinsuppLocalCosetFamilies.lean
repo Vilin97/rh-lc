@@ -55,7 +55,7 @@ theorem isFinIdem_fid (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) : IsFinId
     obtain ⟨ε, hε⟩ := GlobalTheory.IdemSupport.exists_placeIdem (D := D) v
     exact ⟨_, ε, hε, rfl⟩
   unfold Eu.fid
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem fid_orth {v w : HeightOneSpectrum (𝓞 D.host.F)} (h : v ≠ w) : Eu.fid D v * Eu.fid D w = 0 := by
@@ -136,7 +136,7 @@ theorem cmp_famProd (R : RealDat D A Ks) (i : Fin D.R.m) (v : HeightOneSpectrum 
     (F : ∀ v, Eu.LX R i v) (hF : {w | F w ≠ Eu.lx0 R i w}.Finite) :
     (c (Eu.famProd R i F))⁻¹ * Eu.rep (F v) ∈ levW R i := by
   unfold Eu.famProd
-  rw [dif_pos hF, map_listProd c v (fun w => Eu.rep (F w)) (cmp_self _ (rep_supp (F v)).2 (hc _).1 (hc _).2)
+  rw [dite_eq_left hF, map_listProd c v (fun w => Eu.rep (F w)) (cmp_self _ (rep_supp (F v)).2 (hc _).1 (hc _).2)
     (fun w hw => cmp_other _ (trivAt_of_supp _ (fid_orth hw.symm) (rep_supp (F w)).2) (hc _).1 (hc _).2) _
     (Finset.nodup_toList _)]
   split_ifs with h
@@ -194,7 +194,7 @@ theorem coef_famProd (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (hM : FinMult 
     coef R i t μ 𝓕 (Eu.famProd R i F) = ∏ᶠ v, Eu.acoef R i t μ 𝓕 v (F v) := by
   rw [finprod_eq_prod_of_mulSupport_subset (s := hF.toFinset), ← Finset.prod_map_toList]
   · unfold Eu.famProd
-    rw [dif_pos hF]
+    rw [dite_eq_left hF]
     refine mul_listProd (coef R i t μ 𝓕) (Model.coef_one R i t hVN μ 𝓕 hμ) (fun w => Eu.rep (F w))
       (fun v => GfC (Wc D i) ⊓ GlobalTheory.IdemSupport.suppGroup (Wc D i) (1 - Eu.fid D v)) (fun v w hw => ?_)
       (fun v γ hγ => ?_) _ (Finset.nodup_toList _)
@@ -212,7 +212,7 @@ theorem trPair_eq_bop {R : RealDat D A Ks} {i : Fin D.R.m} (h : TransLaws R i) {
     (hγ : γ ∈ GfC (Wc D i)) (x y) : trPair R i γ x y = ⟪x, Eu.Bop R i γ y⟫_ℂ := by
   have hex := h.2.2.1 γ hγ
   unfold Eu.Bop
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec.2 x y
 
 theorem coef_out (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (hM : FinMult R i t) (hLF : LevFix R i t)

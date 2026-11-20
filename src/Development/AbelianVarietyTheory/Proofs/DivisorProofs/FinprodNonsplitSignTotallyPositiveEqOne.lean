@@ -48,7 +48,7 @@ theorem valued_eq_exp {L : Type} [Field L] [Valued L (WithZero (Multiplicative �
     Valued.v x = WithZero.exp (-ordL x) := by
   have h0 : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold ordL
-  rw [dif_neg h0, neg_neg]
+  rw [dite_eq_right h0, neg_neg]
   conv_lhs => rw [← WithZero.coe_unzero h0]
   rfl
 

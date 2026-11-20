@@ -206,11 +206,11 @@ lemma sig_split {p q : ℕ} (G : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ)
     intro P _ c d hd
     rw [← Fintype.sum_subtype_add_sum_subtype P (fun i => star (d i) * ((lam i : ℂ) * d i))]
     have h0 : ∑ i : {x // ¬ P x}, star (d i.1) * ((lam i.1 : ℂ) * d i.1) = 0 := by
-      apply Finset.sum_eq_zero; intro i _; rw [hd, dif_neg i.2]; simp
+      apply Finset.sum_eq_zero; intro i _; rw [hd, dite_eq_right i.2]; simp
     rw [h0, add_zero]
     apply Finset.sum_congr rfl
     intro i _
-    rw [hd, dif_pos i.2]
+    rw [hd, dite_eq_left i.2]
   have hEv : ∀ (P : Fin p ⊕ Fin q → Prop) [DecidablePred P] (c : {i // P i} → ℂ) (i : Fin p ⊕ Fin q),
       ((Matrix.of fun (i : Fin p ⊕ Fin q) (j : {i // P i}) => if i = j.1 then (1 : ℂ) else 0) *ᵥ c) i =
         if h : P i then c ⟨i, h⟩ else 0 := by

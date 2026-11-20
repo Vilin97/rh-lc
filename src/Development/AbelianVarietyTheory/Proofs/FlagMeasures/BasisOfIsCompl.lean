@@ -119,7 +119,7 @@ theorem lead_unit {n : ℕ} (w : Pt E n) (ε : Fin n → E) (hε : ∀ b, IsUnit
     rw [entry_zero, zero_mul]
     intro h
     apply hb
-    rw [dif_pos (h ▸ b.2)]
+    rw [dite_eq_left (h ▸ b.2)]
     exact Fin.ext h
   · intro a
     simp only [Matrix.submatrix_apply, Matrix.of_apply, Pt.mat, Fin.val_castLE]

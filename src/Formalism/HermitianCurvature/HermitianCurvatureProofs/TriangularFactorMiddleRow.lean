@@ -84,7 +84,7 @@ theorem Tn_X_col (j : ℕ) (hj : j ≤ r) (y : Fin j → Fin (2 * r + k + 1) →
 
 theorem Cf_nonS (j : ℕ) (hj : j ≤ r) (y : Fin j → Fin (2 * r + k + 1) → ℂ) (l q : Fin (2 * r + k + 1))
     (hq : ¬ r + k < q.val) : Cf k r j hj y l q = 0 := by
-  unfold Cf; rw [dif_neg (by omega)]
+  unfold Cf; rw [dite_eq_right (by omega)]
 
 theorem triangular_factor_middle_row (j : ℕ) (hj : j ≤ r) (y : Fin j → Fin (2 * r + k + 1) → ℂ) (p q : Fin (2 * r + k + 1))
     (hp : r ≤ p.val ∧ p.val ≤ r + k) : Tn k r j hj y p q = Cf k r j hj y p q := by

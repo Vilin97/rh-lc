@@ -67,12 +67,12 @@ theorem phi_surjective : Function.Surjective (phi (K := K) v) := by
   obtain ⟨y, hy⟩ := (GlobalTheory.LFun.finAdEquiv F K).surjective
     ⟨fun w => if h : w.under (𝓞 F) = v then z ⟨w, h⟩ else 0, by
       filter_upwards [(finite_over (K := K) v).compl_mem_cofinite] with u hu
-      rw [dif_neg (by simpa using hu)]
+      rw [dite_eq_right (by simpa using hu)]
       exact zero_mem _⟩
   refine ⟨Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F K) y, funext fun u => ?_⟩
   rw [phi_apply, ← GlobalTheory.LFun.finAdEquiv_apply u.2, hy]
   show (if h : u.1.under (𝓞 F) = v then z ⟨u.1, h⟩ else 0) = z u
-  rw [dif_pos u.2]
+  rw [dite_eq_left u.2]
 
 end CompanionTheory.Rg.BcB.G3.TensorComplP
 

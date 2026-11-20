@@ -20,7 +20,7 @@ theorem trOn_eq_zero_of_finrank_eq_zero {V : Type} [AddCommGroup V] [Module ℂ 
     · haveI := hf
       haveI : Subsingleton M := Module.finrank_zero_iff.mp h
       rw [Subsingleton.elim (L.restrict hL) 0, map_zero]
-    · rw [LinearMap.trace, dif_neg]
+    · rw [LinearMap.trace, dite_eq_right]
       · rfl
       · rintro ⟨s, ⟨b⟩⟩
         exact hf (Module.Finite.of_basis b)
@@ -30,14 +30,14 @@ theorem trOn_of_eq_smul {V : Type} [AddCommGroup V] [Module ℂ V] (M : Submodul
     (L : V →ₗ[ℂ] V) (c : ℂ) (h : ∀ v ∈ M, L v = c • v) : trOn M L = c * Module.finrank ℂ M := by
   have hM : ∀ v ∈ M, L v ∈ M := fun v hv => by rw [h v hv]; exact M.smul_mem c hv
   unfold trOn
-  rw [dif_pos hM]
+  rw [dite_eq_left hM]
   have hr : L.restrict hM = c • LinearMap.id := by
     ext v
     simp [LinearMap.restrict_apply, h v v.2]
   rw [hr, map_smul, smul_eq_mul]
   by_cases hf : FiniteDimensional ℂ M
   · rw [LinearMap.trace_id]
-  · rw [LinearMap.trace, dif_neg, Module.finrank_of_not_finite hf]
+  · rw [LinearMap.trace, dite_eq_right, Module.finrank_of_not_finite hf]
     · simp
     · rintro ⟨s, ⟨b⟩⟩
       exact hf (Module.Finite.of_basis b)

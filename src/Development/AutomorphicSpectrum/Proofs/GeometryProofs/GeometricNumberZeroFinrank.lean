@@ -227,7 +227,7 @@ theorem geoNum_zero_eq_finrank : ∀ (B : Type) [Fintype B] (J : B → Type) [�
   have hc : ∀ k, (X ⟨k, (hrel k).choose⟩ : MRing J) ∉ W := fun k => (hrel k).choose_spec
   have hmax := ker_theta_isMaximal (p := p) hbir hPW hc hWh hw hX
   have hsurj := theta_surjective hPW hc hmax
-  rw [geoNum, dif_pos hrel]
+  rw [geoNum, dite_eq_left hrel]
   congr 1
   exact length_toNat_of_addEquiv
     ((Ideal.quotEquivOfEq (ker_theta hPW hc hWh).symm).trans

@@ -180,7 +180,7 @@ theorem proof : Statement := by
     have : (W.map (algebraMap _ (MvPolynomial (Fin n) ℚ))).IsPrime :=
       IsLocalization.isPrime_of_isPrime_disjoint (intUnits n) _ W hWp hWd
     by_cases hm : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P (IndefiniteRowSideFullHecke.ArithBezout.linForm u)
-    · rw [if_pos (hmem.mpr hm), if_pos hm, localMult, dif_pos this, ReciprocityTheory.ChartRestriction.G.Geo.multAt, dif_pos hWp,
+    · rw [if_pos (hmem.mpr hm), if_pos hm, localMult, dite_eq_left this, ReciprocityTheory.ChartRestriction.G.Geo.multAt, dite_eq_left hWp,
         length_eq (A' := MvPolynomial (Fin n) ℚ) (intUnits n) J W hWd]
     · rw [if_neg (fun h => hm (hmem.mp h)), if_neg hm]
   · rw [if_neg fun h => hW' h.1.1.1]

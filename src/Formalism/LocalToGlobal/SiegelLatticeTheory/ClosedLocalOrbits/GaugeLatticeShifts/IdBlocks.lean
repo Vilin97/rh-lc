@@ -782,7 +782,7 @@ theorem idDiagBlocks_of (cs : ColSys X u what₂) (FdN : Set X.B.I.Ginf) (hK2 : 
       have hΩ : IsSFund X.B.I (ROinf t0) (FundOf t0) := by
         have h := hFE t0
         unfold FundOf
-        rw [dif_pos h]
+        rw [dite_eq_left h]
         exact h.choose_spec
       have hNf : X.muN u FdN ≠ ⊤ := fun h => by rw [h] at hN0; simp at hN0
       have hHf : X.muH u Set.univ ≠ ⊤ := fun h => by rw [h] at hH0; simp at hH0
@@ -956,7 +956,7 @@ theorem idOffBlocks_of (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN 
     have hΩ : IsSFund X.B.I (ROinf t.1) (FundOf t.1) := by
       have h := hFE t.1
       unfold FundOf
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact h.choose_spec
     obtain ⟨hS, hN⟩ := hC hu t.1 t.2
     obtain ⟨hRc, hRm, hRi, hRN⟩ := hR hu t.1 t.2

@@ -232,7 +232,7 @@ theorem globalDatumRegularity_of_typesCompatibility (T : NormalizedTypesCompatib
   rw [hiota, redThrough_primeToPart B κ (D.ntypes.teichC k) ū hpos]
   unfold redThrough
   have hB : D.ntypes.teichC k ū ∈ B := hy ▸ hyB
-  rw [dif_pos hB]
+  rw [dite_eq_left hB]
   congr 2
   exact Subtype.ext hy
 

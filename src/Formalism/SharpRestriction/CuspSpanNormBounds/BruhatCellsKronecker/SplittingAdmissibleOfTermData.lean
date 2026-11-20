@@ -65,7 +65,7 @@ theorem tie_Dl_eq' {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace
     (F : FlagG S r T) (F' : FlagG S r T') (j : ℕ) (hj : j ≤ r + 1) :
     Dl F F' j = ((Zhat F F').submatrix (Fin.castLE hj) (Fin.castLE hj)).det := by
   unfold Formalism.MainNotions.S.Dl Formalism.MainNotions.S.leadMinorE
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
 
 section Packets
 

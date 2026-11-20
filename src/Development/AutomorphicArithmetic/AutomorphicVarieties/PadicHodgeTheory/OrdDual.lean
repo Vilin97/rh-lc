@@ -187,7 +187,7 @@ theorem dual_ord (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Typ
     have e : ∀ j (hj : j < 0), j = wt a b → Y j hj = Y _ h := by
       rintro j hj rfl; rfl
     rw [Matrix.add_apply, hY _ h g a b rfl, Matrix.sub_apply, Matrix.sub_apply, rz_eq, adRep_baseLift_apply, adRep_baseLift_apply,
-      Matrix.of_apply, Matrix.of_apply, dif_pos h, dif_pos (hw ▸ h), e _ _ hw]
+      Matrix.of_apply, Matrix.of_apply, dite_eq_left h, dite_eq_left (hw ▸ h), e _ _ hw]
     ring
   obtain ⟨n, hn1, hn2, hn3⟩ := exists_conj _ r' hr.red γ hγ X
   refine ⟨conjBy n r', n⁻¹, ⟨dcr_conj hr n hn1, fun g a b h => ?_⟩, (congOne_iff _ _).2 (by rw [map_inv, hn1, inv_one]),

@@ -77,7 +77,7 @@ theorem unif_mem [NumberField K] (la : HeightOneSpectrum (𝓞 K)) :
       norm_num
     · rw [← la.intValuation_le_pow_iff_mem, hπ, WithZero.exp_le_exp]
       norm_num
-  rw [Data.unif, dif_pos hex]
+  rw [Data.unif, dite_eq_left hex]
   exact hex.choose_spec
 
 noncomputable def unifOp (la : HeightOneSpectrum (𝓞 K)) : Op D N la :=
@@ -181,7 +181,7 @@ theorem gOrd_eq (d : Data K ι Ω WT A) (la : HeightOneSpectrum (𝓞 K)) {q : K
   have hex : ∃ m : ℤ, ∃ u : Op d.D d.N la, IsUnit u ∧
       q = (algebraMap K (KTf K d.D d.N) ((unif la : 𝓞 K) : K)) ^ m * OpToKT d.D d.N la u :=
     ⟨m, u, hu, hq⟩
-  rw [gOrd, dif_pos hex]
+  rw [gOrd, dite_eq_left hex]
   obtain ⟨u', hu', hq'⟩ := hex.choose_spec
   exact exp_unique d.D d.N la hu' hu (hq'.symm.trans hq)
 

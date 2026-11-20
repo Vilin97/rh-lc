@@ -119,7 +119,7 @@ theorem goodOp_star_ev : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : 
       · have hgk := hgood k hk
         have heg : eg X k = D.ntypes.e0.coeff (red k) / (vol : ℂ) := by
           unfold eg
-          rw [dif_pos ⟨hk, ⟨red k, hgk⟩⟩]
+          rw [dite_eq_left ⟨hk, ⟨red k, hgk⟩⟩]
           congr 1
           exact Formalism.L2.SG.Pf.rowDictEgWellDef_holds X k _ _ (Classical.choose_spec _) hgk
         rw [Finset.sum_eq_single (red k)]
@@ -130,7 +130,7 @@ theorem goodOp_star_ev : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : 
           exact absurd (Finset.mem_univ _) hn
       · have heg : eg X k = 0 := by
           unfold eg
-          rw [dif_neg (fun h' => hk h'.1)]
+          rw [dite_eq_right (fun h' => hk h'.1)]
         rw [heg, zero_mul]
         symm
         refine Finset.sum_eq_zero fun γ _ => Set.indicator_of_notMem (fun hm => hk ((hCmem γ k).1 hm).1) _

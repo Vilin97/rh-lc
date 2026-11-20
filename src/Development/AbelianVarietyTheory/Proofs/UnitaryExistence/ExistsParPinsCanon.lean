@@ -58,11 +58,11 @@ theorem exists_par_pins_canon (D : D7) (hF : OFull D) (hz : OZeta D)
   · refine ⟨⟨rfl, rfl, rfl, tauEmb_sqrt D⟩, hl, eOf_spec D hF, fun j hj => ?_⟩
     show IsDatW D j (datumAtLift D _ (datLaws_all D) j)
     unfold datumAtLift
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     exact isDatW_datumOf D _ j _ _
   · show ∃ hP hd, HEq (datumAtLift D _ (datLaws_all D) j) (datumOfRecord D j hj hP hd)
     unfold datumAtLift
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     exact ⟨Formalism.IndefR.Fin.factPrincipalDatum, datDom_holds D j hj _, HEq.rfl⟩
 
 end GlobalTheory.Member.ParExist

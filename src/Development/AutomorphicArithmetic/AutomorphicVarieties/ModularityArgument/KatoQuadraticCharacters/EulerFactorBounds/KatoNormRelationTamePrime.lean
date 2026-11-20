@@ -200,7 +200,7 @@ theorem UpperTheory.V.Z.Kato.Nb.kato_norm_relation_tame_prime :
     exact (zmod_val_cast_eq_cast_hom hrM (Units.val ν)).symm.trans (hred r (Nat.le_add_right r n))
   have hq : (π (ZMod.unitOfCoprime p hpM))⁻¹ = inv1 (l ^ r) p := by
     have hu : IsUnit (p : ZMod (l ^ r)) := (ZMod.isUnit_iff_coprime _ _).2 (hpl.pow_right _)
-    rw [inv1, dif_pos hu]
+    rw [inv1, dite_eq_left hu]
     congr 1
     ext
     exact map_natCast (ZMod.castHom hrM (ZMod (l ^ r))) p

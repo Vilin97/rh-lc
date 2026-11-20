@@ -28,7 +28,7 @@ theorem joints_of_standard_character : ∀ {B : Base} {X : PreX B.toPre} (I : TC
       exact HeightOneSpectrum.valuation_le_one v y
     have e1 := GlobalTheory.Mem.TypePrimes.psiG_true I hOk hP l Z _ (hC (I.rec7 l Z).u₀).gl _ hψ k v h ε hε c y hc ⟨_, hy⟩ rfl
     unfold Joints.redV
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
     exact e1
 end GlobalTheory.Mem.JointsTrue
 end

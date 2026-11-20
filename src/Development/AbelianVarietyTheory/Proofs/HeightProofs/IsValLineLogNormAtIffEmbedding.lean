@@ -108,7 +108,7 @@ theorem val_spMap (σ : K →+* ℂ) (V : (Sp K).Opens) (h : ⊤ ≤ V) (f : Γ(
   have h' : ⊤ ≤ (spMap σ ≫ 𝟙 (Sp K)) ⁻¹ᵁ V := by rw [Category.comp_id]; exact (le_spMap_iff σ V).2 h
   have e := TangentOrigin.evalPt_spMap_comp σ (𝟙 (Sp K)) V h h' f
   rw [← TangentOrigin.valAt'_eq_evalPt, Category.comp_id] at e
-  rw [e, valR, dif_pos (show ⊤ ≤ 𝟙 (Sp K) ⁻¹ᵁ V from h)]
+  rw [e, valR, dite_eq_left (show ⊤ ≤ 𝟙 (Sp K) ⁻¹ᵁ V from h)]
   rfl
 
 theorem fn_ext_spMap (σ : K →+* ℂ) (V : (Sp K).Opens) (f g : Γ(Sp K, V))

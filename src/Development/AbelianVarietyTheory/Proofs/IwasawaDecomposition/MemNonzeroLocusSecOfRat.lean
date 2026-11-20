@@ -37,7 +37,7 @@ theorem fnOf_locFn (hf : ∀ x ∈ U, D.RegularAt x f) (i : (toLB D).ι) (h : ge
     fnOf _ h (locFn D U f i) = f * i.1.2 := by
   have h2 : ∀ x ∈ U ⊓ (toLB D).U i, RegAt x (f * i.1.2) := fun x hx =>
     (i.2.2 x hx.2).regularAt_iff.1 (hf x hx.1)
-  rw [locFn, dif_pos ⟨h, h2⟩]
+  rw [locFn, dite_eq_left ⟨h, h2⟩]
   exact (exists_fnOf_eq h h2).choose_spec
 
 theorem locFn_mem (hf : ∀ x ∈ U, D.RegularAt x f) : locFn D U f ∈ secOn (toLB D) U := fun i j =>
@@ -59,7 +59,7 @@ def secOfRat (D : CartierDiv X) (U : X.Opens) (f : X.functionField) : ((toLB D).
 
 theorem secOfRat_eq (hf : ∀ x ∈ U, D.RegularAt x f) :
     secOfRat D U f = KeyNear.pullOn U.ι (fun y => y.2) (locFn D U f) (locFn_mem hf) := by
-  rw [secOfRat, dif_pos hf]
+  rw [secOfRat, dite_eq_left hf]
 
 theorem mem_nonzeroLocus_secOfRat (hf : ∀ x ∈ U, D.RegularAt x f) (y : U.toScheme)
     (hy : D.GeneratesAt (U.ι y) f) : y ∈ nonzeroLocus (secOfRat D U f) := by

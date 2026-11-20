@@ -177,7 +177,7 @@ private lemma germ_app_app_eq_germ_app_comp {A B C : Scheme.{0}} (r : A ⟶ B) (
 private lemma gm_res_toroidal_compactification {A B : Scheme.{0}} (f : A ⟶ B) (y : A) {U V : B.Opens} (hVU : V ≤ U)
     (hy : f y ∈ V) (u : Γ(B, U)ˣ) : gm f y V (res hVU u) = gm f y U u := by
   ext1
-  rw [gm, gm, dif_pos hy, dif_pos (hVU hy)]
+  rw [gm, gm, dite_eq_left hy, dite_eq_left (hVU hy)]
   simp only [MonoidHom.comp_apply, Units.coe_map, res, pullU, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
   exact germ_app_presheaf_map_eq_germ_app f y hVU hy _
 
@@ -201,7 +201,7 @@ theorem gm_pullGen {Z Z' : Scheme.{0}} (L : LB X) {K : Type} [Fintype K] (φ : K
   have hle : LB.wchart L (fun k => h ≫ φ k) j ≤ h ⁻¹ᵁ LB.wchart L φ j :=
     fun _ hy => Set.mem_iInter.2 fun k => Set.mem_iInter.1 hy k
   ext1
-  rw [gm, gm, dif_pos hz, dif_pos (show (r ≫ h) z ∈ LB.wchart L φ j from hz')]
+  rw [gm, gm, dite_eq_left hz, dite_eq_left (show (r ≫ h) z ∈ LB.wchart L φ j from hz')]
   simp only [LB.pullGen, MonoidHom.comp_apply, Units.coe_map, res, pullU, RingHom.toMonoidHom_eq_coe,
     MonoidHom.coe_coe]
   exact (germ_app_presheaf_map_eq_germ_app r z hle hz _).trans (germ_app_app_eq_germ_app_comp r h z _ hz' _)
@@ -234,7 +234,7 @@ theorem toStk_valF (x : Sp F ⟶ X) (U : X.Opens) (z : Sp F) (h : x z ∈ U) (a 
   have e1 := congrArg (fun g => g.hom ((x.appLE U ⊤ h').hom a.val))
     (Scheme.ΓSpecIso (CommRingCat.of F)).hom_inv_id
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_id, RingHom.id_apply] at e1
-  rw [valF, dif_pos h', gm, dif_pos h]
+  rw [valF, dite_eq_left h', gm, dite_eq_left h]
   simp only [toStk, RingHom.comp_apply, MonoidHom.comp_apply, Units.coe_map, pullU,
     RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
   rw [e1]

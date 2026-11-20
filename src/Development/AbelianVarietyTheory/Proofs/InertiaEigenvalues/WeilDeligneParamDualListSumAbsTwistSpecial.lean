@@ -104,7 +104,7 @@ theorem iso_sp_dual (n : ℕ) : (WDRep.sp h n).dual.Iso (WDRep.sp h n) := by
       LinearMap.neg_apply, LinearMap.dualMap_apply, shiftEnd_single, shiftEnd_apply]
     by_cases hi : 1 ≤ (i : ℕ)
     · have hr : (i.rev : ℕ) + 1 < n := by rw [Fin.val_rev]; omega
-      rw [dif_pos hr, if_pos hi]
+      rw [dite_eq_left hr, if_pos hi]
       have he : (⟨(i.rev : ℕ) + 1, hr⟩ : Fin n) = (⟨(i : ℕ) - 1, by omega⟩ : Fin n).rev := by
         ext; simp only [Fin.val_rev]; omega
       rw [he]
@@ -112,7 +112,7 @@ theorem iso_sp_dual (n : ℕ) : (WDRep.sp h n).dual.Iso (WDRep.sp h n) := by
       simp only [hk, Nat.add_sub_cancel, pow_succ]
       ring
     · have hr : ¬ (i.rev : ℕ) + 1 < n := by rw [Fin.val_rev]; omega
-      rw [dif_neg hr, if_neg hi]
+      rw [dite_eq_right hr, if_neg hi]
       simp
 
 namespace WDClass

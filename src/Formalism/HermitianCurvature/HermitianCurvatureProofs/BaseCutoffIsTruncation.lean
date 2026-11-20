@@ -418,12 +418,12 @@ theorem topLiftVanishing_of_density_of_radialOp (hDens : C6.LemmaDens) (hRad : L
   unfold D.vecV
   by_cases h : D.IsLocPt p (P.r + 1) ∧ 0 < D.ptG (Tz P.k P.r Bs.z * Tz P.k P.r Bs.z') P.r p
   swap
-  · rw [dif_neg h, dif_neg h]
-  rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_right h, dite_eq_right h]
+  rw [dite_eq_left h, dite_eq_left h]
   by_cases h' : ∃ γ ∈ B.GV P.k P.r, Zhat P.k P.r Bs.z Bs.z' γ = D.ptMatN p (P.r + 1) ∧ D.IsDFrame Bs ν' m₀ γ
   swap
-  · rw [dif_neg h', dif_neg h']
-  rw [dif_pos h', dif_pos h']
+  · rw [dite_eq_right h', dite_eq_right h']
+  rw [dite_eq_left h', dite_eq_left h']
   obtain ⟨hγ, hZ, -⟩ := h'.choose_spec
   obtain ⟨hmono, hd⟩ := Formalism.FourierDecayAlt.P.Dx2.VV.ptMatN_monoP' p (P.r + 1) h.1.2 h.1.1
   have hZm := hZ.trans hmono

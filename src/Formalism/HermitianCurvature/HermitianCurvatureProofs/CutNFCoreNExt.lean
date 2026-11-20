@@ -47,7 +47,7 @@ theorem nf_sum_pad {E : Type*} [AddCommGroup E] [Module ℂ E] {Q M : ℕ} (hQ :
     omega
   · intro i _ hi
     have hi' : ¬ i < Q + 1 := by simpa using hi
-    rw [dif_neg hi', smul_zero]
+    rw [dite_eq_right hi', smul_zero]
 
 theorem nf_scoef_unique (p : KB.Pl P Wp Wq) (w : List C.Letter) (e : Wd.Ix (Fin w.length)) {Q Q' : ℕ}
     {L : Fin (Q + 1) → B.DiffOp P.k P.r Wp Wq} {L' : Fin (Q' + 1) → B.DiffOp P.k P.r Wp Wq}
@@ -69,13 +69,13 @@ theorem nf_scoef_unique (p : KB.Pl P Wp Wq) (w : List C.Letter) (e : Wd.Ix (Fin 
     (Set.range (fun s : ℝ => (s : ℂ))) (Set.infinite_range_of_injective Complex.ofReal_injective) ?_ qq
     (lt_of_lt_of_le qq.isLt hq1)
   · simp only [sub_eq_zero] at hz
-    rw [dif_pos qq.isLt] at hz
+    rw [dite_eq_left qq.isLt] at hz
     by_cases hq : (qq : ℕ) ≤ Q'
-    · rw [dif_pos hq]
-      rw [dif_pos (by omega : (qq : ℕ) < Q' + 1)] at hz
+    · rw [dite_eq_left hq]
+      rw [dite_eq_left (by omega : (qq : ℕ) < Q' + 1)] at hz
       exact hz
-    · rw [dif_neg hq]
-      rw [dif_neg (by omega : ¬ (qq : ℕ) < Q' + 1)] at hz
+    · rw [dite_eq_right hq]
+      rw [dite_eq_right (by omega : ¬ (qq : ℕ) < Q' + 1)] at hz
       exact hz
   · rintro _ ⟨s, rfl⟩
     have e1 : ∑ i ∈ Finset.range (max Q Q' + 1),

@@ -85,12 +85,12 @@ theorem sameServed (K : G.Consts) (A A' : GAll) (hR : A.D.R = A'.D.R)
     by_cases hne : (GC.VV X1 K a b p).Nonempty
     · have hne2 : (GC.VV X2 K a b p).Nonempty := hne
       unfold GC.ioP
-      rw [dif_pos hne, dif_pos hne2, eSig]
+      rw [dite_eq_left hne, dite_eq_left hne2, eSig]
       congr 1
       exact Finset.sup'_congr hne rfl fun t0 _ => eSv (hC0 hne) t0
     · have hne2 : ¬ (GC.VV X2 K a b p).Nonempty := hne
       unfold GC.ioP
-      rw [dif_neg hne, dif_neg hne2]
+      rw [dite_eq_right hne, dite_eq_right hne2]
   · show ∀ t0 ∈ GC.VV X1 K a b p, ∀ t0' : GC.HH D2, t0.val = t0'.val →
       GC.kapv X1 K a b p t0 = GC.kapv X2 K a b p t0' ∧ GC.Sv X1 K a b p t0 = GC.Sv X2 K a b p t0'
     intro t0 ht0 t0' htt

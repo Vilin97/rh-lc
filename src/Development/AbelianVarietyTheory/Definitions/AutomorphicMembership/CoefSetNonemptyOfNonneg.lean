@@ -377,7 +377,7 @@ variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} {p : ℕ} 
 theorem nonempty_lbTriv (l : PsiT D → ℕ → ℤ) : Nonempty (GrTriv ct.YY (ct.expo l) (ct.Lb l).toMod) := by
   have h := GradedPieces.exists_isGrLB _ _ _ _ p ct.W ct.hp ct.hW _ _ ct.YY ct.isYY.2.1 (ct.expo l)
   unfold At.Lb
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact nonempty_grTriv ct.hp ct.hW h.choose_spec
 
 def lbTriv (l : PsiT D → ℕ → ℤ) : GrTriv ct.YY (ct.expo l) (ct.Lb l).toMod := (nonempty_lbTriv ct l).some

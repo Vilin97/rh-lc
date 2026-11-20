@@ -194,7 +194,7 @@ theorem redL_spec {x : Fin n → E} {s : 𝓞 E} (hs : s ∉ P.asIdeal) (hx : s 
     (Ideal.Quotient.mk P.asIdeal s : Res P) • redL M P x = Submodule.Quotient.mk (⟨_, hx⟩ : M) := by
   have h : ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • x ∈ M := ⟨s, hs, hx⟩
   unfold redL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have ht : (Ideal.Quotient.mk P.asIdeal h.choose : Res P) ≠ 0 := mk_ne_zero h.choose_spec.1
   rw [smul_comm, inv_smul_eq_iff₀ ht, mk_smul_mk, mk_smul_mk]
   congr 1
@@ -275,7 +275,7 @@ theorem extF_of_mem (g : Module.Dual (Res P) (TDat.Red M P)) {x : Fin n → E} (
       g (Submodule.Quotient.mk z) = Ideal.Quotient.mk P.asIdeal s * a :=
     ⟨g (redL M P x), s, hs, ⟨_, hx'⟩, rfl, by rw [← redL_spec hs hx', map_smul]; rfl⟩
   unfold TDat.extF
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨t, ht, ⟨z, hz⟩, e, h2⟩ := h.choose_spec
   obtain rfl : z = t • x := e
   apply mul_left_cancel₀ (mk_ne_zero ht)
@@ -285,7 +285,7 @@ theorem extF_of_mem (g : Module.Dual (Res P) (TDat.Red M P)) {x : Fin n → E} (
 theorem extF_of_notMem (g : Module.Dual (Res P) (TDat.Red M P)) {x : Fin n → E} (hx : x ∉ localization₂ P.asIdeal M) :
     TDat.extF M P g x = 0 := by
   unfold TDat.extF
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨_, s, hs, z, e, -⟩
   exact hx ((memLoc P M _).2 ⟨s, hs, e ▸ z.2⟩)
 

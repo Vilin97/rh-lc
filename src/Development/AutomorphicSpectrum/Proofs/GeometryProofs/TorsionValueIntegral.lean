@@ -194,7 +194,7 @@ theorem gs_valF {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Op
   have e : (Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom ((x.appLE U ⊤ h).hom f)) =
       (x.appLE U ⊤ h).hom f := by
     exact congrArg (fun q => q.hom ((x.appLE U ⊤ h).hom f)) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of F)))
-  rw [valF, dif_pos h, e, GlobalTheory.TranslMove.gs_appLE (𝟙 _) x z U ⊤ h trivial f, Category.id_comp]
+  rw [valF, dite_eq_left h, e, GlobalTheory.TranslMove.gs_appLE (𝟙 _) x z U ⊤ h trivial f, Category.id_comp]
 
 theorem torsVal_good {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] (P : RigLB G) (s : H0 P.L 1) {F : Type}
     [Field F] {b : Sp F ⟶ S} (y : Over.mk b ⟶ G) (N : ℕ) (T : F) (h : TorsVal P s y N T) :

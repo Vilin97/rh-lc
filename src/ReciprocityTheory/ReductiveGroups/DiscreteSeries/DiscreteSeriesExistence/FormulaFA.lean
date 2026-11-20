@@ -312,7 +312,7 @@ theorem ffa_memLp (hP : IsPsiFor ε lam T Ψ) (u v : T.V) :
 theorem uniformisationL2_ae_eq_jfun (hP : IsPsiFor ε lam T Ψ) (u v : T.V) :
     (uniformisationL2 ε Ψ u v : Formalism.REAL.UJ ε → ℂ) =ᵐ[Formalism.REAL.muG ε] fun y => jfun Ψ u v (Formalism.MainNotions.S.umat y) := by
   unfold uniformisationL2 toL2
-  rw [dif_pos (ffa_memLp hP u v)]
+  rw [dite_eq_left (ffa_memLp hP u v)]
   exact (ffa_memLp hP u v).coeFn_toLp
 
 theorem ffa_jfun_cont (hP : IsPsiFor ε lam T Ψ) (u v : T.V) : ContinuousOn (jfun Ψ u v) (UJset ε) := by

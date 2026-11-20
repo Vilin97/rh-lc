@@ -67,7 +67,7 @@ theorem entPl_nonempty (D : D7) : Nonempty (EntPl D) := by
   choose lam iL h1 h2 using fun w => exists_placeEmb D w
   exact ⟨⟨lam, iL, fun w x => by
     obtain ⟨hx, e⟩ := h1 w x
-    rw [lamV, dif_pos hx, e], fun w x _ => (h1 w x).choose_spec, h2⟩⟩
+    rw [lamV, dite_eq_left hx, e], fun w x _ => (h1 w x).choose_spec, h2⟩⟩
 
 def entZero (D : D7) (Dx : DivX D) (Tw : TwForms D) (P : EntPl D)
     (h0 : ∀ u μ i, Subsingleton ((Tw.fm u μ).lat i).V) : KerEnt D Dx Tw :=

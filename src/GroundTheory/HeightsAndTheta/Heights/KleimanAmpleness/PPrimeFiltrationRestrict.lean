@@ -39,7 +39,7 @@ theorem residue_wellDefined {a : Ω} {b c b0 c0 : chartRing S x (singleChart hj)
 theorem residueAt_eq {a : Ω} {b c : chartRing S x (singleChart hj)} (hc : ψ c ≠ 0)
     (h : a * (c : Ω) = b) : residueAt hj ψ a = ψ b / ψ c := by
   have hr : RegularAt hj ψ a := ⟨b, c, hc, h⟩
-  rw [residueAt, dif_pos hr]
+  rw [residueAt, dite_eq_left hr]
   exact residue_wellDefined hj ψ hc h hr.choose_spec.choose_spec.1 hr.choose_spec.choose_spec.2
 
 theorem residueAt_of_mem (a : chartRing S x (singleChart hj)) : residueAt hj ψ (a : Ω) = ψ a := by

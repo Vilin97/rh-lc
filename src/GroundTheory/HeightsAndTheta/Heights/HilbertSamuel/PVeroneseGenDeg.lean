@@ -111,7 +111,7 @@ theorem eventualValue_eq {K : Type*} (F : (K → ℤ) → ℤ) (c : ℤ)
     (h : ∀ᶠ m in atTop, F m = c) : GroundTheory.Heights₂.Heights.NumbersDVR.eventualValue F = c := by
   unfold GroundTheory.Heights₂.Heights.NumbersDVR.eventualValue
   have hex : ∃ c, ∀ᶠ m in atTop, F m = c := ⟨c, h⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨m, h1, h2⟩ := (hex.choose_spec.and h).exists
   rw [← h1, h2]
 

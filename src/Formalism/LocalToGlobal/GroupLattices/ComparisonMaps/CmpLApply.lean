@@ -40,7 +40,7 @@ variable {S emb embLL G e A pos embV yc}
 theorem valC_spec (hex : ValEx S emb embLL G A pos embV yc) (x : V) (i : G.comp) (L : G.P.Tup) (hL : G.P.IsLatTup L) :
     IsVal S emb embLL G A pos embV yc x i L (valC S emb embLL G A pos embV yc x i L) := by
   unfold valC
-  rw [dif_pos (hex x i L hL)]
+  rw [dite_eq_left (hex x i L hL)]
   exact Classical.choose_spec (hex x i L hL)
 
 theorem map_smul' {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (a : R) (Q : MvPolynomial ι R) :

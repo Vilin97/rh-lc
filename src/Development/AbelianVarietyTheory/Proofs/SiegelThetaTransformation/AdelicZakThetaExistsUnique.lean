@@ -270,7 +270,7 @@ theorem isZak_Th : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ x ∈ C.X.dom, 
   intro D S T C x hx φ hφ
   have h := exists_isZak C hx hφ
   have h1 : C.IsZak x φ (C.Th x φ) := by
-    rw [Ctx.Th, dif_pos h]
+    rw [Ctx.Th, dite_eq_left h]
     exact h.choose_spec
   exact ⟨h1, fun f hf => ((GlobalTheory.T.thetaFunction_space_heisenberg_laws D S T C).2.1 f _ hf.1 h1.1).2 fun w hw => (hf.2 w hw).trans (h1.2 w hw).symm⟩
 

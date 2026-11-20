@@ -27,7 +27,7 @@ lemma sum_extendByZero_le_sum {p : ℕ} (g : Fin p → ℕ) (m : ℕ) : ∑ i : 
         apply Finset.sum_subset (Finset.range_mono (le_max_right m p))
         intro k _ hk
         rw [Finset.mem_range] at hk
-        rw [dif_neg hk]
+        rw [dite_eq_right hk]
 
 open Classical in
 lemma sum_single_embedding_extend_le {E : Type} [Field E] [NumberField E] (e : E →+* ℂ) (mult : (E →+* ℂ) → ℕ) {p : ℕ}

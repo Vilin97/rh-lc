@@ -97,7 +97,7 @@ variable {V : HSp D} {n : ℕ}
 theorem pre_psi (Q : principalLevelFrame.RowPsi V n) (κ : Formalism.AUTREP.GAf D.host.E n) : principalLevelFrame.pre Q (Q.ψ κ) = κ := by
   have h : ∃ x, Q.ψ x = Q.ψ κ := ⟨κ, rfl⟩
   unfold principalLevelFrame.pre
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Q.inj h.choose_spec
 
 theorem psi_pre (Q : principalLevelFrame.RowPsi V n) {γ : GA D V} (hγ : γ ∈ GfC V) : Q.ψ (principalLevelFrame.pre Q γ) = γ := by
@@ -106,7 +106,7 @@ theorem psi_pre (Q : principalLevelFrame.RowPsi V n) {γ : GA D V} (hγ : γ ∈
 
 theorem pre_of_not_mem (Q : principalLevelFrame.RowPsi V n) {γ : GA D V} (hγ : γ ∉ GfC V) : principalLevelFrame.pre Q γ = 1 := by
   unfold principalLevelFrame.pre
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨x, rfl⟩
   exact hγ (Q.into x)
 

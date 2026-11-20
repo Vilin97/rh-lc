@@ -9,7 +9,7 @@ noncomputable section
 theorem pushB_forward : PushForwardStatement := by
   intro e X _ _ _ A Φ hΦ q T S hT hTS hS hint hq hdet hfin g hg
   have hne := existsPartition A
-  rw [mInt, dif_pos hne]
+  rw [mInt, dite_eq_left hne]
   set P := hne.some with hP
   have hSc : IsClosed S := pushA_isClosed A hS
   have hTc : ∀ x, x ∉ S → x ∈ Tᶜ := fun x hx hxT => hx (hTS hxT)

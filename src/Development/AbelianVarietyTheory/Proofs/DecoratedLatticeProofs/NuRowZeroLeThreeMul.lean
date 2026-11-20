@@ -64,7 +64,7 @@ theorem nuRow_zero_le_three_mul (large₂ : SizeData₂ D) (P : ParameterChoice'
     linarith [P.kS_le, mul_le_mul_of_nonneg_right hk' hS.le]
   have hwj : wj D (i + 1) τ = (((D.hc τ).e ⟨i, hi⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (by simpa using hi)]
+    rw [dite_eq_left (by simpa using hi)]
     rfl
   rw [RowWeightLemmas.nuRow_head D u i hi τ 0 hk0, D.hcW_first u τ hk0, D.hcW_e]
   push_cast

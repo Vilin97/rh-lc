@@ -124,7 +124,7 @@ theorem norm_meanInf_posLog_le : ∃ C : ℝ, 0 < C ∧ ∀ (D : D7), ∀ (cc : 
         unfold cj
         rw [hρ _ (hzM p)]
         unfold TaylorLogMetric.liftM
-        rw [dif_pos (hzM p)]
+        rw [dite_eq_left (hzM p)]
       rw [he]
       exact mul_le_of_le_one_left (by positivity) hg1
   clear_value E₀

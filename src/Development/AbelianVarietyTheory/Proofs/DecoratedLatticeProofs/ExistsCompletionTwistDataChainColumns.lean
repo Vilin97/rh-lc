@@ -121,7 +121,7 @@ theorem locChar_q {P : HeightOneSpectrum (𝓞 E)} (q : ℕ) (hq : ((q : ℕ) : 
   unfold LocE.locChar
   rw [valuation_self P q hq h0, zpow_one, zpow_one, div_self hqE]
   unfold LocE.unitV
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have h2 : hu.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, h1]; rfl)
   rw [h2, map_one, Units.val_one, mul_one]
 

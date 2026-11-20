@@ -317,12 +317,12 @@ theorem locF_mem_KD (v : HeightOneSpectrum (𝓞 H.F)) (k : (H.F)ˣ) : locF H.F 
 theorem tildeD_mk {χ : HChar H.E} (h : KD H ≤ (χ.1.comp (finPartI H.E)).ker) (a : Ideles H.E) :
     tildeD H χ (QuotientGroup.mk a) = χ.1 (finPartI H.E a) := by
   unfold tildeD
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem muTilT_succ (mu : Fin R.m → HChar H.E) (j : Fin R.m) : muTilT H mu (j.1 + 1) = tildeD H (mu j) := by
   unfold muTilT
-  rw [dif_pos ⟨Nat.le_add_left 1 j.1, j.2⟩]
+  rw [dite_eq_left ⟨Nat.le_add_left 1 j.1, j.2⟩]
   rfl
 
 theorem mem_UOT {x : DtT H} : x ∈ UOT H ↔ ∃ a : Ideles H.E,
@@ -330,7 +330,7 @@ theorem mem_UOT {x : DtT H} : x ∈ UOT H ↔ ∃ a : Ideles H.E,
 
 theorem isRationalUnitaryDeterminantMap_rationalUnitaryToDeterminants (h : ∃ f, IsRationalUnitaryDeterminantMap H f) : IsRationalUnitaryDeterminantMap H (e1T H) := by
   unfold e1T
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem relDetT_self (N : ℕ) (M : Submodule (𝓞 H.E) (Fin N → H.E)) : relDetT H N M M = 1 := by

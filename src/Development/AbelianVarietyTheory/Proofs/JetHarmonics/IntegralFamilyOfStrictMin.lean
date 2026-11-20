@@ -31,9 +31,9 @@ def ordFn (hϖ : Irreducible ϖ) (c : FractionRing V) : WithTop ℚ :=
 theorem ordFn_of_hasVal (hϖ : Irreducible ϖ) {c : FractionRing V} {n : ℤ} (h : HasVal ϖ c n) :
     ordFn hϖ c = ((n : ℚ) : WithTop ℚ) := by
   have h0 := ne_zero_of_hasVal hϖ h
-  rw [ordFn, dif_neg h0, hasVal_unique hϖ (hasVal_of_ne_zero hϖ h0).choose_spec h]
+  rw [ordFn, dite_eq_right h0, hasVal_unique hϖ (hasVal_of_ne_zero hϖ h0).choose_spec h]
 
-theorem ordFn_zero (hϖ : Irreducible ϖ) : ordFn hϖ 0 = ⊤ := by rw [ordFn, dif_pos rfl]
+theorem ordFn_zero (hϖ : Irreducible ϖ) : ordFn hϖ 0 = ⊤ := by rw [ordFn, dite_eq_left rfl]
 
 theorem le_ordFn_iff (hϖ : Irreducible ϖ) (c : FractionRing V) (n : ℤ) :
     ((n : ℚ) : WithTop ℚ) ≤ ordFn hϖ c ↔

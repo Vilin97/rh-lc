@@ -644,7 +644,7 @@ theorem hasLocalCoordsOnSmoothHypersurface_of_comap (p : P ⟶ Spec (CommRingCat
       have hne : ((ρ b : Fin n)) ≠ j₀ := (ρ b).2
       show (if h : ((ρ b : Fin n)) = j₀ then (c.restrict hU'U).coord j₀
         else wb (ρ.symm ⟨((ρ b : Fin n)), h⟩)) = wb b
-      rw [dif_neg hne]
+      rw [dite_eq_right hne]
       congr 1
       have hsub : (⟨((ρ b : Fin n)), hne⟩ : {j : Fin n // j ≠ j₀}) = ρ b := rfl
       rw [hsub, Equiv.symm_apply_apply]
@@ -751,7 +751,7 @@ theorem hasLocalCoordsOnSmoothHypersurface_of_comap (p : P ⟶ Spec (CommRingCat
     · intro b
       show (if h : b.succ = 0 then ULift.up.{u} j₀
         else ULift.up.{u} ((ρ (b.succ.pred h) : Fin n))) = ULift.up ((ρ b : Fin n))
-      rw [dif_neg (Fin.succ_ne_zero b), Fin.pred_succ]
+      rw [dite_eq_right (Fin.succ_ne_zero b), Fin.pred_succ]
   have hbij : Function.Bijective F := by
     refine (Fintype.bijective_iff_injective_and_card F).mpr ⟨?_, ?_⟩
     · intro t₁ t₂ ht

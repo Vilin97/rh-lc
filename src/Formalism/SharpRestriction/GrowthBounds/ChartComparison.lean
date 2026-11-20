@@ -116,7 +116,7 @@ theorem cmpSJ_apply {I : CmpJIn Tw u μ w h Lv} (H : CmpJHyp c I) (hS : BlockRat
     (x : ((Tw.fm u μ).lat (j + 1)).V) :
     cmpSJ H hS j x = (I.at' j hj).st.cmpJ (c.embW u w h) ((I.at' j hj).eps.symm x) := by
   unfold cmpSJ
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   rfl
 
 theorem descUp {I : CmpJIn Tw u μ w h Lv} (H : CmpJHyp c I) (Gt : GatTies D) : DescUp c u w h Lv := by

@@ -647,7 +647,7 @@ theorem mean_comparison_of_genus_mass_pos {C' Cl Cg cb Cu cT CT C0 A A1 : ℝ}
   have hex : ∃ reps, Formalism.ThetaLiftIndependence.IsClassReps (D.sp.X 0).hT (L0X D Λ₀ (lf D F0)) reps := by
     by_contra hno
     unfold Formalism.HermitianLatticesTheory.mass at hm
-    rw [dif_neg hno] at hm
+    rw [dite_eq_right hno] at hm
     exact lt_irrefl _ hm
   obtain ⟨reps, hreps⟩ := hex
   have hMG := hM hH.2.1.2.1 hH.2.1.2.2.2.1 hH.2.1.2.2.2.2.2.1 F0 he hz what₂ hrows Λ₀ hrow0 reps hreps

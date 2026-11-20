@@ -363,7 +363,7 @@ theorem rtj_grAll_pl {pl : (Σ i : Fin K, Fin (what₂ i)) → Fin N} (hpl : Fun
     grAll pl gr (pl s) = gr s.1 s.2 := by
   unfold grAll
   have h : ∃ s', pl s' = pl s := ⟨s, rfl⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hs : h.choose = s := hpl h.choose_spec
   rw [hs]
 
@@ -373,7 +373,7 @@ theorem jetProd : JetProdSt := by
     intro s
     unfold kindAll
     have h : ∃ s', pl s' = pl s := ⟨s, rfl⟩
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hs : h.choose = s := hpl h.choose_spec
     rw [hs]
   have hout : ∀ ρ : Fin N, ρ ∉ Finset.univ.image pl →
@@ -384,10 +384,10 @@ theorem jetProd : JetProdSt := by
       exact hρ (Finset.mem_image_of_mem pl (Finset.mem_univ s))
     have h1 : grAll pl gr ρ = 1 := by
       unfold grAll
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     have h2 : kindAll pl kind ρ = none := by
       unfold kindAll
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     rw [h1, h2, rtj_rowCopy_eq, rtj_rowCopy_eq]
     simp only [rtjH, map_one, map_zero, rtj_mvExp_zero, mul_one]
   have hreindex : ∀ f : Fin N → MvPowerSeries (Fin N × WV I) C, (∀ ρ ∉ Finset.univ.image pl, f ρ = 1) →

@@ -463,7 +463,7 @@ theorem weil_deg_zero (γ : M2 E 0) (φ : Matrix (Fin n) (Fin 0) E → ℂ) : we
       fun Z _ z z' => by rw [f, thH_deg_zero, thH_deg_zero, one_mul]⟩
   have := h.choose_spec.2 _ (I_mem_Hn Ψ) 0 0
   rw [f, thH_deg_zero, thH_deg_zero, one_mul] at this
-  rw [weil, dif_pos h, this]
+  rw [weil, dite_eq_left h, this]
 
 theorem eis_deg_zero (φ : Matrix (Fin n) (Fin 0) E → ℂ) (Z : CM Ψ 0 0) (z z' : CM Ψ n 0) :
     eis Ψ φ Z z z' = φ 0 := by

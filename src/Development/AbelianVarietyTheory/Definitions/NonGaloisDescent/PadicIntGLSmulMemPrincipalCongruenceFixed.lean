@@ -165,7 +165,7 @@ theorem det_blk (x y : Gn g 1) : Matrix.GeneralLinearGroup.det (blk 1 1 2 x y) =
     rw [Matrix.isUnit_iff_isUnit_det, hd]; exact Units.isUnit _
   have : blk 1 1 2 x y = hu.unit := by
     show toG M = _
-    rw [toG, dif_pos hu]
+    rw [toG, dite_eq_left hu]
   rw [this]; ext; rw [← hd]; simp
 
 theorem isParVec_tame (χ χ' : (ZMod g)ˣ →* ℂˣ) (v : ℂ) (hv : v ≠ 0) :

@@ -53,6 +53,6 @@ theorem Wc_intInd_right_invariant : ∀ (F : Type) [Field F] [ValuativeRel F] [T
         rw [Units.val_mul, Matrix.det_mul]
       rw [ht', hs, hd] at hmul
       exact mul_right_cancel₀ (hs ▸ hs0) hmul
-    rw [GL2LocalData.Wc, GL2LocalData.Wc, dif_neg hg, dif_neg hg']
+    rw [GL2LocalData.Wc, GL2LocalData.Wc, dite_eq_right hg, dite_eq_right hg']
 
 end GlobalTheory.CompanionTheory.SphTheta.InertAsm

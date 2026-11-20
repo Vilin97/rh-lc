@@ -148,7 +148,7 @@ theorem DatLoc.invOn {Ξ : Formalism.L2.Col.HomE D.host.E a b → ℂ} (h : DatL
     intro x
     have hx : ∃ y, embH emb δ y = embH emb δ x := ⟨x, rfl⟩
     unfold onV
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact congrArg Ξ (hinj hx.choose_spec)
   rintro _ ⟨x, -, rfl⟩ _ - ⟨m, hm, rfl⟩
   rw [← map_add (f := _), hon, hon]

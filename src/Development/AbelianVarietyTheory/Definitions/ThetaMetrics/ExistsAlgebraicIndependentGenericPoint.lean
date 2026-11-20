@@ -309,7 +309,7 @@ theorem isPrincipal_elimIdeal [Nonempty β] {p : Ideal (MvPolynomial σ K)} [p.I
       Finset.sum_subtype (p := fun l => l ≠ j₀) (F := inferInstance) _ (by simp)]
     simp only [t, s, dif_pos, neg_mul, Finset.sum_mul, mul_assoc, ← C_mul, div_mul_cancel₀ _ h0]
     rw [neg_add_eq_zero]
-    exact Finset.sum_congr rfl fun k _ => by rw [dif_neg k.2]
+    exact Finset.sum_congr rfl fun k _ => by rw [dite_eq_right k.2]
   have hz : aeval t (rename (fun v => δ (some v)) g) = 0 := by
     refine aeval_eq_zero_of_mem_elimIdeal (ξ := fun j => C (ξ j)) (fun a ha => ?_)
       (fun h => h0 (C_eq_zero.1 (congrFun h j₀))) ht hg

@@ -40,7 +40,7 @@ theorem exists_affine_scalar : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
   have hg : pbT Y.q.left (Q.P.L.g (h.j i) (h'.j i')).val (Y.q.left ⁻¹ᵁ V) *
       pbT Y.q.left (Q.P.L.g (h.j i) (h'.j i'))⁻¹.val (Y.q.left ⁻¹ᵁ V) = 1 := by
     unfold pbT
-    rw [dif_pos hle, dif_pos hle, ← map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, map_one]
+    rw [dite_eq_left hle, dite_eq_left hle, ← map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, map_one]
   have mono : ∀ (δ : Fld Y.H.left) {W₁ W₂ : Y.H.left.Opens}, W₁ ≤ W₂ → IsField W₂ δ → IsField W₁ δ :=
     fun δ W₁ W₂ hle H => ⟨fun W hW => H.1 W (hW.trans hle), fun W hW => H.2.1 W (hW.trans hle),
       fun W W' hh hW => H.2.2 W W' hh (hW.trans hle)⟩

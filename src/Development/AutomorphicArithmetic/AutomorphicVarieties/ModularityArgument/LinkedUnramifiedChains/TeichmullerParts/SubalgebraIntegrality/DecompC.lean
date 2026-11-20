@@ -163,9 +163,9 @@ theorem cmp_mem {w : Plc L} (U : Subgroup (GLw n w)) (x : UA L n) (hx : cLoc w x
     cmp n w ((away l L n).rangeRestrict x) ∈ U := by
   unfold CaseU.cmp
   by_cases h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     exact hx
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     exact one_mem _
 
 private theorem pi_mem_first_iwahori_filtration {σ : Type} [Finite σ] {G : σ → Type} [∀ v, Group (G v)] (I : ∀ v, Iwa (G v)) (b : ℕ)

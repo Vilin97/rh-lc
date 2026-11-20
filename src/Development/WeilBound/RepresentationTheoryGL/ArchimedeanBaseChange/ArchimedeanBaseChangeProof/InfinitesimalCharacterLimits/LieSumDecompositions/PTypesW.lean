@@ -146,12 +146,12 @@ theorem fd_Wf (hW : FiniteDimensional ℂ W) (n : ℕ) : FiniteDimensional ℂ (
       rcases eq_or_ne n N with rfl | hn
       · have e : topW n W n = W := by
           unfold topW
-          rw [dif_pos rfl]
+          rw [dite_eq_left rfl]
         rw [e]
         exact hW
       · have e : topW N W n = ⊥ := by
           unfold topW
-          rw [dif_neg hn]
+          rw [dite_eq_right hn]
         rw [e]
         infer_instance
     have h2 : FiniteDimensional ℂ ↥(⨆ (s : Fin (N + 1)) (_ : 0 < (s : ℕ) ∧ n + s ≤ N), DL n s (Wf N W (n + s)) :
@@ -174,7 +174,7 @@ theorem lt_le_Wf : lt W ≤ Wf N W N := by
   refine le_trans (w_lt_mono ?_) (le_rsp _)
   have e : topW N W N = W := by
     unfold topW
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
   calc W = topW N W N := e.symm
     _ ≤ w_pre N W N := le_sup_left.trans le_sup_left
 

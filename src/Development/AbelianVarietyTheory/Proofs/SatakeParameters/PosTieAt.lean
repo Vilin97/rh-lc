@@ -18,7 +18,7 @@ theorem GlobalTheory.TwV.DelA.posTie_at : AllSites (fun {D L hT Gi Gl Kc Dx cX e
     have he : TaylorLogMetric.embT D (hT.gat_pos u w hg ⟨v, s⟩) x = embT D (hT.gat_pos u w hg ⟨v, s⟩) x := rfl
     have hL : TaylorLogMetric.lamC S.lam (TaylorLogMetric.embT D (hT.gat_pos u w hg ⟨v, s⟩) x) = ι ((embT D (hT.gat_pos u w hg ⟨v, s⟩)) x) := by
       unfold TaylorLogMetric.lamC
-      rw [dif_pos (he ▸ hz)]
+      rw [dite_eq_left (he ▸ hz)]
       rw [hι ⟨_, hz⟩]
       rfl
     rw [← hL, h, Formalism.L2.Herm.star_conj]

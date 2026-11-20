@@ -78,12 +78,12 @@ theorem dg_mul_col (hn : 1 < n) (i₀ : Fin n) (h₀ : (i₀ : ℕ) = 0) (s : F�
   rw [Matrix.diagonal_mul, Matrix.mul_diagonal]
   simp only [cM, Matrix.of_apply]
   by_cases h : (j : ℕ) = 0 + 1 ∧ (i : ℕ) < 0 + 1
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     have e1 : i = i₀ := Fin.ext (by omega)
     have e2 : j ≠ i₀ := fun e => by subst e; omega
     subst e1
     simp [Pi.mulSingle_eq_of_ne e2]
-  · rw [dif_neg h, dif_neg h]; simp
+  · rw [dite_eq_right h, dite_eq_right h]; simp
 
 end Diag
 
@@ -148,8 +148,8 @@ theorem div_col (c : ℕ) (y : Fin (0 + 1) → F)
   rw [add_sub_cancel_left]
   simp only [cM, Matrix.of_apply]
   by_cases h : (j : ℕ) = 0 + 1 ∧ (i : ℕ) < 0 + 1
-  · rw [dif_pos h]; exact hy _
-  · rw [dif_neg h]; exact ⟨0, (𝒪[F]).zero_mem, by simp⟩
+  · rw [dite_eq_left h]; exact hy _
+  · rw [dite_eq_right h]; exact ⟨0, (𝒪[F]).zero_mem, by simp⟩
 
 theorem exists_unit_of_one_add (y : F) (hy : y ∈ 𝒪[F]) :
     ∃ e : (𝒪[F])ˣ, ((e : 𝒪[F]) : F) = 1 + (uniformizer F : F) * y := by

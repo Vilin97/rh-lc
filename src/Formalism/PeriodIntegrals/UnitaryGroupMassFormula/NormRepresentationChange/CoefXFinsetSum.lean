@@ -21,10 +21,10 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 theorem sgUp_eq_sum {K : Type} [Field K] [NumberField K] (U : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     sgUp U = ∑ a : Fin r, U a.castSucc a.succ := by
   unfold sgUp
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   apply Finset.sum_congr rfl
   intro a _
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem frame_d_mem {Λ : Submodule (𝓞 E) S.V} (G : LFlag S r T) {n : S.V ≃ₗ[E] S.V} (hn : n ∈ NLam Λ G)
@@ -54,7 +54,7 @@ theorem fmat_sup (D : D7) {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (n : (VS D)
     (a : Fin D.R.rS) :
     fmat D G n a.castSucc a.succ = G.fl.coefX (n (frame G a.succ) - frame G a.succ) a := by
   unfold fmat
-  rw [if_neg (fun h => by have := congrArg Fin.val h; simp at this), zero_add, dif_pos (by simp)]
+  rw [if_neg (fun h => by have := congrArg Fin.val h; simp at this), zero_add, dite_eq_left (by simp)]
   rfl
 
 theorem loc_entry (D : D7) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (G : LFlag (VS D) D.R.rS T)

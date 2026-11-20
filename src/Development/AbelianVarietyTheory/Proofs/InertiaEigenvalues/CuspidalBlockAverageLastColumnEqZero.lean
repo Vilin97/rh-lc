@@ -44,9 +44,9 @@ theorem blkU_eq_unip {R : Type} [CommRing R] {a r : ℕ} (x : UnipotentBlockColu
   congr 1
   have hj := j.2
   by_cases h : (i : ℕ) < r ∧ r ≤ (j : ℕ)
-  · rw [dif_pos h, dif_pos ⟨h.1, h.2, by omega⟩]
+  · rw [dite_eq_left h, dite_eq_left ⟨h.1, h.2, by omega⟩]
     rfl
-  · rw [dif_neg h, dif_neg (fun h' => h ⟨h'.1, h'.2.1⟩)]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h ⟨h'.1, h'.2.1⟩)]
 
 theorem avg_blk_last_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ),
     Continuous F → (∀ (γ : GL (Fin a) E) (g : GA E a), F (ratGL E a γ * g) = F g) → GlobalTheory.CuspRep.IsCuspidal F →

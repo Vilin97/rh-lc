@@ -76,7 +76,7 @@ theorem av_eq' (φ : AddChar k Circle) (col : (Fin n → k) → V →ₗ[ℂ] V)
     av φ col ξ A v = ((p.2.card : ℂ)⁻¹) • ∑ t ∈ p.2, (starRingEnd ℂ ((φ (ξ ⬝ᵥ t) : Circle) : ℂ)) • col t v := by
   have hd : ∃ p, AD φ col ξ A v p := ⟨p, hp⟩
   unfold av
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   obtain ⟨h1, -, h3, h4, h5, h6⟩ := hd.choose_spec
   obtain ⟨g1, -, g3, g4, g5, g6⟩ := hp
   exact avg_indep A _ _ h1 g1 _ _ h5 h6 g5 g6 _ (summand_inv φ col hca ξ v _ h3 h4)

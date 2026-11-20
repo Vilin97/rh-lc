@@ -118,7 +118,7 @@ theorem colStep_congr {n : ℕ} {P : Type*} [CommRing P] {c c' : ℤ} (hc : 1 �
 
 theorem Kcol_ge (R : Type*) [CommRing R] {N n : ℕ} (mu : Fin (N + 1) → Fin n → ℤ) (c : ℤ) (j : ℕ) (h : ¬ j < N) :
     Kcol R mu c (j + 1) = Kcol R mu c j := by
-  rw [Kcol, dif_neg h]
+  rw [Kcol, dite_eq_right h]
 
 theorem Kcol_congr (R : Type*) [CommRing R] {N n : ℕ} (mu mu' : Fin (N + 1) → Fin n → ℤ) (c c' : ℤ)
     (hc : 1 ≤ c ↔ 1 ≤ c') (hh : ∀ i, colH (mu i) c = colH (mu' i) c') :

@@ -291,8 +291,8 @@ theorem norm_lamC_of_root {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) {a
     simp only [map_pow, norm_pow, map_one, norm_one] at this
     exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hk.ne').1 this
   have h4 : (⟨a * c, mul_mem h1 hc⟩ : Qbar) = ⟨a, h1⟩ * ⟨c, hc⟩ := rfl
-  rw [lamC, dif_pos (mul_mem h1 hc), h4, map_mul, norm_mul, h3, one_mul] at h
-  rw [lamC, dif_pos hc, h]
+  rw [lamC, dite_eq_left (mul_mem h1 hc), h4, map_mul, norm_mul, h3, one_mul] at h
+  rw [lamC, dite_eq_left hc, h]
 
 end GlobalTheory.NormSum.VacMove
 

@@ -102,7 +102,7 @@ private theorem exists_proj {O S X : Type} [CommRing O] [AddCommGroup S] [Module
   have hP : ∀ y, P (L y) = Q y := fun y => by
     have ht : ∃ y', L y' = L y := ⟨y, rfl⟩
     show (if ht : ∃ y', L y' = L y then Q ht.choose else 0) = Q y
-    rw [dif_pos ht, hL ht.choose_spec]
+    rw [dite_eq_left ht, hL ht.choose_spec]
   have hmem : ∀ a ∈ ⨆ j, 𝒜 j, ∃ y, L y = a := fun a ha => by
     rw [Submodule.iSup_eq_range_dfinsupp_lsum] at ha
     exact LinearMap.mem_range.1 ha

@@ -27,7 +27,7 @@ theorem nf_prime (v : HeightOneSpectrum (𝓞 E)) : normalizedFactors v.asIdeal 
 
 theorem idl_prime (v : HeightOneSpectrum (𝓞 E)) : idl v.asIdeal = unifAt v := by
   rw [idl, nf_prime, Multiset.map_singleton, Multiset.prod_singleton, primeIdele,
-    dif_pos ⟨v.isPrime, v.ne_bot⟩]
+    dite_eq_left ⟨v.isPrime, v.ne_bot⟩]
 
 theorem ind {P : Ideal (𝓞 E) → Prop} (h1 : P ⊤)
     (h2 : ∀ (v : HeightOneSpectrum (𝓞 E)) (I : Ideal (𝓞 E)), I ≠ ⊥ → P I → P (v.asIdeal * I)) :

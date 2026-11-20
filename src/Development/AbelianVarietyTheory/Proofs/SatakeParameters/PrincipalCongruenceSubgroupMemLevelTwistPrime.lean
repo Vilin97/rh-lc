@@ -107,7 +107,7 @@ theorem entry_cong {N : ℕ} (g : Sp E N ≃ₗ[E] Sp E N)
       ((qOf P : ℕ) : E) * (((qOf P : ℕ) : E)⁻¹ • (g (Loc.eN E N l) - Loc.eN E N l)) ⟨i, hi⟩ := by
     conv_lhs => rw [e]
     unfold Loc.atN
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     simp [Loc.eN]
   have h1 : IntAt P (if i = l then (1 : E) else 0) := by
     split_ifs

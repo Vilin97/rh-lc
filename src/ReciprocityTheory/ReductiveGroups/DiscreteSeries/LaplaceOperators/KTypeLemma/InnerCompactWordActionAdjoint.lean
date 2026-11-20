@@ -123,7 +123,7 @@ theorem compactWordAction_single_apply (hV : IsKStableSub ε E V) {a b : Fin n} 
     compactWordAction ε E V hV a b (Finsupp.single p v) q = (if p.2 = q.2 then adLW a b p.1 q.1 • v else 0) +
       (if p = q then (⟨E a b v, hV a b hab v v.2⟩ : V) else 0) := by
   classical
-  rw [compactWordAction_single, dif_pos hab, Finsupp.add_apply, Finsupp.single_apply, Finsupp.finsetSum_apply]
+  rw [compactWordAction_single, dite_eq_left hab, Finsupp.add_apply, Finsupp.single_apply, Finsupp.finsetSum_apply]
   congr 1
   simp only [Finsupp.smul_apply, Finsupp.single_apply, Prod.ext_iff]
   by_cases h : p.2 = q.2
@@ -176,7 +176,7 @@ theorem lift0 (hV : IsKStableSub ε E V) [FiniteDimensional ℂ V] (hE : IsGlRep
       Submodule.smul_mem _ _ (Finsupp.single_mem_supported ℂ _ ?_)) ?_
     · show w'.length ≤ R
       rw [TRA.adLW_length a b _ _ hw']; exact hpS
-    · rw [dif_pos hab]
+    · rw [dite_eq_left hab]
       exact Finsupp.single_mem_supported ℂ _ hpS
   let cr : InnerProductSpace.Core ℂ (KS (n := n) V) :=
     { inner := fun x y => ipK V x y

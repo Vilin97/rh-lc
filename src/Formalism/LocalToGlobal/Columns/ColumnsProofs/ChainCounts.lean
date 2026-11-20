@@ -528,7 +528,7 @@ theorem redY_injOn (hU : UnifG Pr) (hQ : QE sel (mu : Chr X.F X.E X.K) = ∅) {n
     have hP := mem_vGs_of_QE sel mu hQ P
     have hh := congrFun h P
     unfold redY at hh
-    rw [dif_pos hP, dif_pos hP] at hh
+    rw [dite_eq_left hP, dite_eq_left hP] at hh
     exact be_diff d.2 ⟨P.1, hP⟩ (hU P.1 hP) (hq P) (hq' P) hh
   rw [hYe, hYe']
   ext z

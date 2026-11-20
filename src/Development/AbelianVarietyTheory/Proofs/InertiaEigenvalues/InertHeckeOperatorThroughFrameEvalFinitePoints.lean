@@ -108,7 +108,7 @@ theorem heckeVec_frame_eval : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
   have hv : ∀ x (hx : TrivOutside {v} x), D.hval h (D.loc x) = h (p (ψ ⟨x, hx⟩)) := by
     intro x hx
     have e1 : D.loc x = (p (ψ ⟨x, hx⟩)).val := by rw [hloc, hp]; rfl
-    rw [InertDatum.hval, dif_pos (e1 ▸ (p (ψ ⟨x, hx⟩)).2)]
+    rw [InertDatum.hval, dite_eq_left (e1 ▸ (p (ψ ⟨x, hx⟩)).2)]
     congr 1
     exact Subtype.ext e1
 

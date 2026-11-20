@@ -51,7 +51,7 @@ theorem dimOf_eq {x : MP ℤ m n} {d : ℕ} (h : topologicalKrullDim (closure ({
   have hx : ∃ d : ℕ, topologicalKrullDim (closure ({x} : Set (MP ℤ m n))) = d := ⟨d, h⟩
   have e := hx.choose_spec.symm.trans h
   have e' : hx.choose = d := by exact_mod_cast e
-  rw [dimOf, dif_pos hx, e']
+  rw [dimOf, dite_eq_left hx, e']
 
 def htFn (II : IntersectionSystem) (A : HermLine (Bk n)) (x : MP ℤ m n) : ℝ :=
   cycVal II A (dimOf x) (ptIdeal x)

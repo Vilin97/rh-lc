@@ -158,7 +158,7 @@ theorem stableInv_conj (g : V ≃ₗ[E] V) (hg : g * γ * g⁻¹ ∈ h.unitaryGr
     h.stableInv γ (g * γ * g⁻¹) = h.invOf γ g hg := by
   have H : ∃ g' : V ≃ₗ[E] V, g' * γ * g'⁻¹ = g * γ * g⁻¹ ∧ g * γ * g⁻¹ ∈ h.unitaryGroup :=
     ⟨g, rfl, hg⟩
-  rw [stableInv, dif_pos H]
+  rw [stableInv, dite_eq_left H]
   exact h.invOf_eq_of_eq γ _ _ _ _ H.choose_spec.1
 
 theorem stableInv_self : h.stableInv γ γ = 1 := by

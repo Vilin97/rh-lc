@@ -121,9 +121,9 @@ private theorem prod_univ_eq_prod_subtype_of_eq_one_off {n' : ℕ} (TT : Finset 
 theorem dimV_flat (hW : WeylV) {p n' : ℕ} (R : RS p n') (mm : ℕ) {TT : Finset (Fin n')} (A B : TT → ℕ) :
     ((dimV R.Kf (flatW (mm + 1) A B) : ℕ) : ℚ) = ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℚ) := by
   rw [dimV_weyl hW R mm _ (flatW_dom mm A B)]
-  rw [prod_univ_eq_prod_subtype_of_eq_one_off TT _ (fun s hs => by rw [lamAt_flat, dif_neg hs])]
+  rw [prod_univ_eq_prod_subtype_of_eq_one_off TT _ (fun s hs => by rw [lamAt_flat, dite_eq_right hs])]
   refine Finset.prod_congr rfl fun s _ => ?_
-  rw [lamAt_flat, dif_pos s.2]
+  rw [lamAt_flat, dite_eq_left s.2]
 
 theorem dimV_tops (hW : WeylV) {p n' : ℕ} (R : RS p n') (mm : ℕ) (TT : Finset (Fin n'))
     (lam0 : Fin n' → Fin (mm + 1 + 1) → ℤ) (hdom : IsDominant lam0) (hz : ∀ s, s ∉ TT → lam0 s = 0) :

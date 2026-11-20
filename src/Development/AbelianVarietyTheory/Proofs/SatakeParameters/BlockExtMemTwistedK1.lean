@@ -24,10 +24,10 @@ theorem ext_mem_twisted_k1_level : ∀ {E : Type} [Field E] [NumberField E] [Sta
   · intro x l
     rw [extI_val]
     by_cases hl : l.1 < n
-    · rw [dif_pos (show l.1 < n + 1 - 1 by omega)]
+    · rw [dite_eq_left (show l.1 < n + 1 - 1 by omega)]
       have := congrFun (prH_sumE rfl j.1 1 x) ⟨l.1, hl⟩
       exact this
-    · rw [dif_neg (show ¬ l.1 < n + 1 - 1 by omega)]
+    · rw [dite_eq_right (show ¬ l.1 < n + 1 - 1 by omega)]
       have e : l = Br.iL (rfl : n + 1 = n + 1) := Fin.ext (by have := l.2; show l.1 = n; omega)
       subst e
       rw [sumE_last, Units.val_one, one_mul]

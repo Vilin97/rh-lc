@@ -93,11 +93,11 @@ theorem del_mul_dbar_fn {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas 
   have l₁ (v) (hv : v ∈ x.ch.target) : A.loc (A.fn f) x.1.1 =ᶠ[𝓝 v]
       fun u => algebraMap ℂ (Alt n) (f (x.ch.symm u)) := by
     filter_upwards [x.ch.open_target.mem_nhds hv] with u hu
-    rw [HolAtlas.loc, dif_pos hu]
+    rw [HolAtlas.loc, dite_eq_left hu]
     rfl
   have l₂ : A.loc (A.dbar (A.fn f)) x.1.1 =ᶠ[𝓝 x.crd] dbarAt fun u => algebraMap ℂ (Alt n) (f (x.ch.symm u)) := by
     filter_upwards [x.ch.open_target.mem_nhds hc] with u hu
-    rw [HolAtlas.loc, dif_pos hu, ← ((delAt_dbarAt_linear_local n u).2.2.2.1 _ _ (l₁ u hu)).2]
+    rw [HolAtlas.loc, dite_eq_left hu, ← ((delAt_dbarAt_linear_local n u).2.2.2.1 _ _ (l₁ u hu)).2]
     exact congrArg (dbarAt _) (x.ch.right_inv hu)
   have key := delAt_mul_dbarAt hg h₁ h₀ e
   rw [← ((delAt_dbarAt_linear_local n _).2.2.2.1 _ _ l₂).1, ← ((delAt_dbarAt_linear_local n _).2.2.2.1 _ _ (l₁ _ hc)).1,

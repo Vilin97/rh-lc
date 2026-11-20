@@ -137,7 +137,7 @@ theorem equivariantHom_mem_of_stable : ∀ (G H J : Type) [Group G] [Group H] [D
       simp only [con, LinearMap.comp_apply, LinearEquiv.coe_coe] at h3
       rw [h3]
       simp
-    · rw [DirectSum.component.of, dif_neg (Ne.symm hj), hzero T hT j (honly j hj) v]
+    · rw [DirectSum.component.of, dite_eq_right (Ne.symm hj), hzero T hT j (honly j hj) v]
   let S' : Subrepresentation (β j0) :=
     { toSubmodule := S.comap Φ
       apply_mem_toSubmodule := by

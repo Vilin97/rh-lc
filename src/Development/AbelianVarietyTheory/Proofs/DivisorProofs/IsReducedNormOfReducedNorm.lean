@@ -143,7 +143,7 @@ theorem isReducedNormOf_reducedNorm (x : C) : IsReducedNormOf F C x (reducedNorm
   classical
   have h := exists_isReducedNormOf (F := F) (C := C) x
   unfold reducedNorm
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec h
 
 theorem det_eq_reducedNorm {n : Type} [Fintype n] [DecidableEq n] (hn : Fintype.card n = deg F C)

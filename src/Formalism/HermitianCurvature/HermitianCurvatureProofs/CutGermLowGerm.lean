@@ -26,7 +26,7 @@ theorem rr_congr_belowG {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [Inne
     (a b : C.LPt) : p.RR F i w a b = p.RR F₂ i w a b := by
   by_cases hl : D.IsLocPt a i ∧ D.IsLocPt b i
   · unfold KB.Pl.RR D.RRplace
-    rw [dif_pos hl, dif_pos hl, dif_pos hi, dif_pos hi]
+    rw [dite_eq_left hl, dite_eq_left hl, dite_eq_left hi, dite_eq_left hi]
     have hU : ∀ (e : Wd.Ix (Fin w.length)), ∀ g ∈ B.GV P.k P.r,
         D.uwG P.k P.r p.T.base.z p.T.base.z' F₂ i hi w e g = D.uwG P.k P.r p.T.base.z p.T.base.z' F i hi w e g :=
       fun e g hg => (Formalism.FourierDecayAlt.P.CutEXUw.uwG_congrG p.T.base.z p.T.base.z' i hi isOpen_univ
@@ -113,7 +113,7 @@ theorem rr_eq_formLev (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] W
     p.RR F i w a b = D.formLev p.T (M.sgn P p.l0) ⟨i, by omega⟩ w (KB.slv p.T F i hi w a ha.2)
       (KB.slv p.T F i hi w b hb.2) := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos ⟨ha, hb⟩, dif_pos hi]
+  rw [dite_eq_left ⟨ha, hb⟩, dite_eq_left hi]
   rfl
 
 def lam (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (w : List C.Letter) (a : C.LPt) : ℝ :=

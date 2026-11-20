@@ -77,7 +77,7 @@ theorem gram_eq_of_single {Uf : ∀ σ' : c.F →+* ℂ, Formalism.L2.PjFree.Unf
 theorem unfFam_empty (U : Formalism.L2.PjFree.Unf Xo c σ r) (σ' : c.F →+* ℂ) (h : σ' ≠ σ) :
     IsEmpty (unfFam U σ').Comp := by
   unfold unfFam
-  rw [dif_neg (Ne.symm h)]
+  rw [dite_eq_right (Ne.symm h)]
   exact inferInstanceAs (IsEmpty Empty)
 
 theorem unfFam_self (U : Formalism.L2.PjFree.Unf Xo c σ r) : unfFam U σ = U := dif_pos rfl

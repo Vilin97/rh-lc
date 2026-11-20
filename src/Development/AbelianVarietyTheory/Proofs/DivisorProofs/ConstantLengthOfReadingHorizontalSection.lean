@@ -299,7 +299,7 @@ theorem rdU_eq_mul_horizGen {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (hσ : Good
         rw [show (⟨_, hb⟩ : Fin r) = ε (.inl b) from Fin.ext (by rw [hε₁]; simp only [hp0])]
         rfl
       unfold perFr
-      rw [dif_neg hnot, dif_pos (hcc.symm ▸ hτ)]
+      rw [dite_eq_right hnot, dif_pos (hcc.symm ▸ hτ)]
       exact (dif_pos hb).trans (key _ hcc _))
     (fun a b => by
       rw [hP, Equiv.apply_symm_apply]

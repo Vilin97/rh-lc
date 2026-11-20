@@ -103,7 +103,7 @@ open scoped CategoryTheory.Obj TensorProduct ContDiff in
 private lemma valAt'_sub_of_top_le {X : Scheme} (q : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ ⟶ X) (U : X.Opens) (hU : ⊤ ≤ q ⁻¹ᵁ U)
     (a b : Γ(X, U)) : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' q U (a - b) = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' q U a - _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' q U b := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt'
-  rw [dif_pos hU, dif_pos hU, dif_pos hU]
+  rw [dite_eq_left hU, dite_eq_left hU, dite_eq_left hU]
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt
   simp only [map_sub]
 
@@ -114,7 +114,7 @@ private lemma not_mem_basicOpen_of_valAt'_eq_zero {X : Scheme} (q : _root_.Recip
     (s : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ) : q.base s ∉ X.basicOpen f := by
   intro hs
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' at hf
-  rw [dif_pos hU] at hf
+  rw [dite_eq_left hU] at hf
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt at hf
   have h0 : q.appLE U ⊤ hU f = 0 := by
     have := congrArg (Scheme.ΓSpecIso (CommRingCat.of ℂ)).inv.hom hf
@@ -137,7 +137,7 @@ private lemma valAt'_presheaf_map {X : Scheme} (q : _root_.ReciprocityTheory.Cha
     (hV : ⊤ ≤ q ⁻¹ᵁ V) (a : Γ(X, U)) : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' q V (X.presheaf.map i.op a) = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' q U a := by
   have hU : ⊤ ≤ q ⁻¹ᵁ U := fun s hs => i.le (hV hs)
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt'
-  rw [dif_pos hU, dif_pos hV]
+  rw [dite_eq_left hU, dite_eq_left hV]
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt
   rw [← Scheme.Hom.map_appLE q hV i.op]
   rfl

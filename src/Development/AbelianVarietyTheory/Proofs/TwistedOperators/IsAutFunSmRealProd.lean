@@ -56,7 +56,7 @@ theorem realProd_update (hθ : IsInfFam θ) {g : D.what₂.Tau → Matrix (Fin V
   have h1 := update_mem hg τ₀ hg'
   have h2 := update_mem hg τ₀ (GlobalTheory.PointAtPlaceHom.one_mem_UH (gramAt D V τ₀))
   unfold realProd
-  rw [dif_pos ⟨hθ, h1⟩, dif_pos ⟨hθ, h2⟩, ← Finset.mul_noncommProd_erase Finset.univ (Finset.mem_univ τ₀),
+  rw [dite_eq_left ⟨hθ, h1⟩, dite_eq_left ⟨hθ, h2⟩, ← Finset.mul_noncommProd_erase Finset.univ (Finset.mem_univ τ₀),
     ← Finset.mul_noncommProd_erase Finset.univ (Finset.mem_univ τ₀) (fun τ => atTau θ V τ (Function.update g τ₀ 1 τ))]
   simp only [Function.update_self, GlobalTheory.PointAtPlaceHom.atTau_one hθ, one_mul]
   congr 1
@@ -70,7 +70,7 @@ theorem realProd_commute (hθ : IsInfFam θ) {g : D.what₂.Tau → Matrix (Fin 
   classical
   have h2 := update_mem hg τ₀ (GlobalTheory.PointAtPlaceHom.one_mem_UH (gramAt D V τ₀))
   unfold realProd
-  rw [dif_pos ⟨hθ, h2⟩]
+  rw [dite_eq_left ⟨hθ, h2⟩]
   refine Finset.noncommProd_commute _ _ _ _ fun τ _ => ?_
   by_cases h : τ = τ₀
   · subst h
@@ -80,7 +80,7 @@ theorem realProd_commute (hθ : IsInfFam θ) {g : D.what₂.Tau → Matrix (Fin 
 
 theorem realProd_one (hθ : IsInfFam θ) : realProd θ V (fun _ => 1) = 1 := by
   unfold realProd
-  rw [dif_pos ⟨hθ, fun τ => GlobalTheory.PointAtPlaceHom.one_mem_UH _⟩]
+  rw [dite_eq_left ⟨hθ, fun τ => GlobalTheory.PointAtPlaceHom.one_mem_UH _⟩]
   rw [Finset.noncommProd_eq_pow_card _ _ _ 1 fun τ _ => GlobalTheory.PointAtPlaceHom.atTau_one hθ V τ, one_pow]
 
 theorem isAutFunSm_realProd (hθ : IsInfFam θ) (g : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ)

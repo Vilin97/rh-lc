@@ -79,7 +79,7 @@ theorem petGood_eq {j : ℕ} (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ
     (hm : JMemL2 (T.V j σ) σ (rdC (T.U j) σ (wtA w) w.n) (T.dict j σ) (T.mu j σ)) {f : T.R j} (hf : f ∈ forms T j w) :
     petGood T j w σ f = l2C (T.U j) σ (T.V j σ) (T.dict j σ) (T.mu j σ) (xiR D) (wtA w) w.n hm f := by
   have hf' : f ∈ cusp (T.Q.Xo j) T.Q.c (T.U j) (wtA w) w.n := hf
-  rw [l2C, dif_pos hf', petGood, Core.phiAd, map_smul, eLpNorm_const_smul, ENNReal.toReal_mul]
+  rw [l2C, dite_eq_left hf', petGood, Core.phiAd, map_smul, eLpNorm_const_smul, ENNReal.toReal_mul]
   congr 1
   · simp [abs_of_pos (lieFac_pos _ _ _)]
   · exact (Lp.norm_toLp _ (hm ⟨f, hf'⟩)).symm

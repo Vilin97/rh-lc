@@ -107,8 +107,8 @@ theorem unfolding_smallHomFunction_levelPrime_bounded (hq : (Formalism.L2.Col.qO
     refine intAt_sum _ fun j _ => (mem_stdAt.1 hy j).mul ?_
     have h := hent _ (left_ne_zero_of_mul ht) (Fin.castAdd c l) (Fin.castAdd (c + 1) j)
     have hj := j.2
-    rw [linearMap_unfolding_apply_single, dif_neg (by unfold Loc.IsFree; simp only [Fin.val_castAdd]; omega), dif_pos (by simp),
-      dif_pos (by simp)] at h
+    rw [linearMap_unfolding_apply_single, dite_eq_right (by unfold Loc.IsFree; simp only [Fin.val_castAdd]; omega), dite_eq_left (by simp),
+      dite_eq_left (by simp)] at h
     simpa [LocE.scE] using h
   · unfold Loc.E1
     congr 1
@@ -135,7 +135,7 @@ theorem unfolding_smallHomFunction_levelPrime_bounded (hq : (Formalism.L2.Col.qO
       by_contra h0
       refine hn (Fintype.mem_piFinset.2 fun p => Finset.mem_filter.2 ⟨Fintype.mem_piFinset.1 ht p, ?_⟩)
       have h := hent _ (left_ne_zero_of_mul h0) p.1.1 p.1.2
-      rw [linearMap_unfolding_apply_single, dif_pos p.2] at h
+      rw [linearMap_unfolding_apply_single, dite_eq_left p.2] at h
       have h' := intAt_zpow_mono (v := ((c + 1 : ℕ) : ℤ)) (by
         have := p.1.2.2
         unfold LocE.scE

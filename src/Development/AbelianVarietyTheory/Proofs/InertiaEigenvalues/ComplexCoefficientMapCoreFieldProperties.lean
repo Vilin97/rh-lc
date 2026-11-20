@@ -133,7 +133,7 @@ theorem GlobalTheory.AdTh.CoefC.coefMap_complex_core : ∀ (D : D7) (G : Type) [
       exact e2.trans e1.symm
     have hu : IsUnit (γE.val).det := (Matrix.isUnit_iff_isUnit_det γE.val).1 γE.isUnit
     have hγE : Matrix.nonsingInvUnit γE.val hu = γE := Units.ext rfl
-    rw [hup, hup, rhoM, dif_pos hu, hγE, CoefExt.up_rhoVr, hlab]
+    rw [hup, hup, rhoM, dite_eq_left hu, hγE, CoefExt.up_rhoVr, hlab]
     exact h1 γ γE hγ _
   ·
     have hs := CoefExt.span_top (W := (R.cV i).W) (c' := c0) hE h3

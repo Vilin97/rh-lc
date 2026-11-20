@@ -137,7 +137,7 @@ def val (T : Submonoid (MRingOver ℚ ι)) (x : LocalizedModule T (MRingOver ℚ
 
 theorem val_mk {T : Submonoid (MRingOver ℚ ι)} (hT : ∀ t ∈ T, aeval y t ≠ 0) (m : MRingOver ℚ ι ⧸ idealOver y ℚ)
     (t : T) : val y T (LocalizedModule.mk m t) = evQ y m / aeval y (t : MRingOver ℚ ι) := by
-  rw [val, dif_pos hT]
+  rw [val, dite_eq_left hT]
   rfl
 
 theorem val_add (T : Submonoid (MRingOver ℚ ι)) (x x' : LocalizedModule T (MRingOver ℚ ι ⧸ idealOver y ℚ)) :
@@ -404,7 +404,7 @@ theorem resFacesS {S : Type} [CommRing S] {M : Type} [AddCommGroup M] [Module (M
     simp only [LinearMap.sum_apply]
     rw [Finset.sum_eq_single k0]
     · rw [Finset.sum_eq_add_of_mem i1 i2 hi1 hi2 (ne_of_lt hlt)]
-      · rw [dif_pos (hface i1 hi1), dif_pos (hface i2 hi2)]
+      · rw [dite_eq_left (hface i1 hi1), dite_eq_left (hface i2 hi2)]
         rfl
       · intro i hi hne'
         rw [hI] at hi
@@ -619,7 +619,7 @@ theorem ChartLatQCech.proof : ChartLatQCech.Statement := by
       have hwv : ∀ J : KH.Cell K ι 0, (∀ k, y ⟨k, cellChart J k⟩ ≠ 0) → val y _ (w J) = s := by
         intro J hJ
         simp only [w]
-        rw [dif_pos (hex J hJ)]
+        rw [dite_eq_left (hex J hJ)]
         exact (hex J hJ).choose_spec.2
       have hwZ : w ∈ KH.cechZc ι (KH.quotPart ℚ (idealOver y ℚ)) b 0 := by
         refine Submodule.mem_inf.mpr ⟨fun J _ => hw J, ?_⟩

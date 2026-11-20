@@ -72,7 +72,7 @@ variable (hF : R.Facts) (hC : C.Facts) (Fm : FMap G C I D β₁.pull)
 theorem delta_key {M : Model l K} {a : D.Ch M} (hM : G M) {j : ℕ} {c : R.A} {x : (D.H' a).N j} {y : (D.A a).N j}
     (h : β.β' a j x = c • y) (f : Module.Dual C.K₀ (I.D M j)) :
     Fm.ψ a j x f = iP C Fm.k c * delta hF hC Fm a j y f := by
-  rw [delta, dif_pos hM]
+  rw [delta, dite_eq_left hM]
   exact GamU.hom_key _ _ _ _ _ _ h f
 
 theorem delta_key' {M : Model l K} {a : D.Ch M} (hM : G M) {j : ℕ} (y : (D.A a).N j) (f : Module.Dual C.K₀ (I.D M j)) :
@@ -169,7 +169,7 @@ def cC (M : Model l K) (n : ℕ) : M.V n →+ (Module.Dual C.K₀ (I.D M n) →+
 
 theorem cC_tmV {M : Model l K} (hM : G M) (n : ℕ) (z : ℚ_[l]) (u : M.T n) (f : Module.Dual C.K₀ (I.D M n)) :
     cC hF hC Fm hL E M n (tmV M n z u) f = C.q z * delta hF hC Fm (a0 hL M hM) n (E.e _ n u) f := by
-  rw [cC, dif_pos hM, cD_tmV]
+  rw [cC, dite_eq_left hM, cD_tmV]
 
 theorem cC_toV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (u : M.T n) (f : Module.Dual C.K₀ (I.D M n)) :
     cC hF hC Fm hL E M n (M.toV n u) f = delta hF hC Fm a n (E.e a n u) f := by
@@ -177,7 +177,7 @@ theorem cC_toV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (u : M.T n) (f 
 
 theorem cC_not {M : Model l K} (hM : ¬ G M) (n : ℕ) (v : M.V n) (f : Module.Dual C.K₀ (I.D M n)) :
     cC hF hC Fm hL E M n v f = 0 := by
-  rw [cC, dif_neg hM]; rfl
+  rw [cC, dite_eq_right hM]; rfl
 
 def crys (hE : EtSide G) (hinj : ∀ (M : Model l K) (n : ℕ), G M → ∀ {a : ℕ} (b : Module.Basis (Fin a) ℚ_[l] (M.V n))
     (z : Fin a → C.C), (∀ f, ∑ i, z i * cC hF hC Fm hL E M n (b i) f = 0) → z = 0) : CrysCmp G C I where

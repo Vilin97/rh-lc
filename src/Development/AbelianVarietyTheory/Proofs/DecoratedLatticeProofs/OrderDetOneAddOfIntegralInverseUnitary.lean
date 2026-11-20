@@ -149,7 +149,7 @@ theorem ordL_det_one_add_of_inv_int : ∀ (L : Type) [Field L] [Valued L (WithZe
     rw [eq_inv_of_mul_eq_one_right vy, ← WithZero.coe_inv, ← ofAdd_neg, neg_neg]
   have h0 : Valued.v (1 + g.1.1).det ≠ 0 := by rw [vX]; exact WithZero.coe_ne_zero
   unfold ordL
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   have hu : ((WithZero.unzero h0 : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) =
       ((Multiplicative.ofAdd (∑ i, max (d i) 0) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) :=
     (WithZero.coe_unzero h0).trans vX

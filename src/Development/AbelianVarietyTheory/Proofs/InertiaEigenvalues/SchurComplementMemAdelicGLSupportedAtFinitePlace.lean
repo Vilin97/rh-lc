@@ -47,4 +47,4 @@ theorem GlobalTheory.SchurExt.mkGL_Scof_mem_supS : ∀ (E : Type) [Field E] [Num
       GL (Fin (m + 1)) (Ad E)) : Matrix (Fin (m + 1)) (Fin (m + 1)) (Ad E)).map f = 1
     rw [coe_mkGL hu]
     exact hS
-  · rw [mkGL, dif_neg hu, map_one]
+  · rw [mkGL, dite_eq_right hu, map_one]

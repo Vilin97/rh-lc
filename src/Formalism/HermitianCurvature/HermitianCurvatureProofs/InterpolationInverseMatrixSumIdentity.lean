@@ -471,7 +471,7 @@ theorem interpolation_inverse_matrix_sum_identity {M N : Type*} [AddCommGroup M]
   have hj' : j < m := Finset.mem_range.1 hj
   rw [LinearMap.smul_apply, map_smul]
   dsimp only
-  rw [dif_pos hj', key j hj' x]
+  rw [dite_eq_left hj', key j hj' x]
 
 theorem interp {M N : Type*} [AddCommGroup M] [Module ℂ M] [AddCommGroup N] [Module ℂ N]
     (e : M →ₗ[ℂ] N) (he : Function.Injective e) (F : ℂ → Module.End ℂ M) (m : ℕ) (c : ℕ → M → N)

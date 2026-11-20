@@ -737,7 +737,7 @@ theorem thetaUpInV0_level_of (Y : Prov D X) (hc : D.ntypes.e0 ∈ Subalgebra.cen
   rw [he', Module.End.one_apply] at hx
   show Y.sK.thetaUp μ x ∈ LinearMap.range (Y.sK.eOp μ)
   refine LinearMap.mem_range.mpr ⟨Y.sK.thetaUp μ x, ?_⟩
-  rw [Y.sK.eOp_tie μ, dif_pos hc, Y.cen_tie μ]
+  rw [Y.sK.eOp_tie μ, dite_eq_left hc, Y.cen_tie μ]
   exact hx.symm
 
 def IdempotentCentral (D : D7) : Prop := D.ntypes.e0 ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
@@ -1022,8 +1022,8 @@ theorem thetaUpInV0_of (Y : Prov D X) {EE : Type} [NormedAddCommGroup EE] [Inner
   obtain ⟨z, hz⟩ := LinearMap.mem_range.mp hKx
   have hidem : Y.sK.eOp μ (Y.sK.thetaUp μ (aE x)) = Y.sK.thetaUp μ (aE x) := by
     rw [← hz, ← LinearMap.comp_apply, Y.sK.eOp_idem μ]
-  rw [Y.sK.eOp_tie μ, dif_pos hc'] at hidem
-  rw [S.eOp_tie μ, dif_pos hc', hcen μ, hth μ x]
+  rw [Y.sK.eOp_tie μ, dite_eq_left hc'] at hidem
+  rw [S.eOp_tie μ, dite_eq_left hc', hcen μ, hth μ x]
   exact hidem
 
 theorem sharp_downTo (D : D7) (μ : D.what₂.Tup) (j : ℕ) :

@@ -124,7 +124,7 @@ def lamTau (τ : D.what₂.Tau) : D.host.E →+* ℂ_[l] :=
 theorem tauEmb_eq (τ : D.what₂.Tau) : tauEmb D lam τ = lamTau D lam τ := by
   funext x
   unfold tauEmb lamC
-  rw [dif_pos (emb_mem (embT D τ) x)]
+  rw [dite_eq_left (emb_mem (embT D τ) x)]
   rfl
 
 def IsIntGL {N : ℕ} (k : Matrix (Fin N) (Fin N) ℂ) : Prop := (∀ a b, IntAt lam (k a b)) ∧ UnitAt lam k.det

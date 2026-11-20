@@ -87,7 +87,7 @@ theorem sheetDensity_eq_of_isSheet : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (P 
     rw [hcz]
     exact logNormRat_torus hA hcne _
   unfold sheetDensity
-  rw [dif_pos hex, hval]
+  rw [dite_eq_left hex, hval]
   exact congrArg (logNormRat A f g (γ v) * ·) h1
 
 end GlobalTheory.CompanionTheory.MixZ.ArchEq

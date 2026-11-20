@@ -155,7 +155,7 @@ private theorem lo_le_rho_and_rho_le_hi (hP : P.OK) {m : ℕ} (h1 : 1 ≤ m) (h2
       _ ≤ P.hi m - P.lo m := Nat.floor_le (by linarith)
   have h0 : (0 : ℝ) ≤ (((ρ ⟨m - 1, by omega⟩ : Fin _) : ℕ) : ℝ) := Nat.cast_nonneg _
   unfold M.rho
-  rw [dif_pos ⟨h1, h2⟩]
+  rw [dite_eq_left ⟨h1, h2⟩]
   constructor <;> linarith
 
 private theorem hi_succ_lt_lo (m : ℕ) : P.hi (m + 1) < P.lo m := by

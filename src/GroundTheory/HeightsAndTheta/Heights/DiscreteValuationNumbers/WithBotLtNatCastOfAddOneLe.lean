@@ -90,7 +90,7 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
           ((Ideal.span_singleton_le_iff_mem _).mpr (Q.mul_mem_left h hsQ))⟩ hQG
       have hne : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ≠ 0 := by
         unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-        rw [dif_pos ⟨hGs, hGrel⟩]
+        rw [dite_eq_left ⟨hGs, hGrel⟩]
         have := localizedQuot_nontrivial_of_le (P ⊔ Ideal.span {s}) G hGs.1.2
         have h0 : multAt (P ⊔ Ideal.span {s}) G ≠ 0 :=
           (Module.length_pos (R := Localization.AtPrime G)

@@ -147,7 +147,7 @@ theorem eigs [IsAlgClosed C] [CharZero C] {n : ℕ} (p : Fin n → Mat C N) (y :
   choose m hmlt hmeq using hm
   let g : Fin n → ℕ → C := fun r t => if h : t < (S r).card then ((S r).equivFin.symm ⟨t, h⟩ : C) else 0
   have hg : ∀ i, g (rep i) (m i) ∈ S (rep i) := by
-    intro i; simp only [g]; rw [dif_pos (by rw [hSc]; exact hmlt i)]; exact Finset.coe_mem _
+    intro i; simp only [g]; rw [dite_eq_left (by rw [hSc]; exact hmlt i)]; exact Finset.coe_mem _
   have hsupp : ∀ i, ∃ w : Fin N → C, w ≠ 0 ∧ y *ᵥ w = g (rep i) (m i) • w ∧ ∀ k, ¬ π.SameCycle i k → p k *ᵥ w = 0 := by
     intro i; obtain ⟨w, hw0, hwe, hws⟩ := hSe _ _ (hg i)
     exact ⟨w, hw0, hwe, fun k hk => hws k (fun hc => hk ((hrep i).symm.trans hc))⟩
@@ -164,7 +164,7 @@ theorem eigs [IsAlgClosed C] [CharZero C] {n : ℕ} (p : Fin n → Mat C N) (y :
   have hmm : m i = m i' := by
     have h2 := h
     simp only [g] at h2
-    rw [dif_pos (by rw [hSc]; exact hmlt i), dif_pos (by rw [hSc]; exact hmlt i')] at h2
+    rw [dite_eq_left (by rw [hSc]; exact hmlt i), dite_eq_left (by rw [hSc]; exact hmlt i')] at h2
     have key : ∀ r r' : Fin n, r = r' → ∀ t t' (ht : t < (S r).card) (ht' : t' < (S r').card),
         ((S r).equivFin.symm ⟨t, ht⟩ : C) = (S r').equivFin.symm ⟨t', ht'⟩ → t = t' := by
       intro r r' hr; subst hr; intro t t' ht ht' he

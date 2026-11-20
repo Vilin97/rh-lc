@@ -37,7 +37,7 @@ theorem closed_atMid {𝒞 : FamClass} {P : ∀ {eps : ℝ}, FamP eps → ℝ �
   unfold Closed
   refine ⟨ε1, hε1, fun eps he he1 => ⟨sharpThresholdTransform (Classical.choose (hK eps he he1)), fun Fm CH hC hL => ?_⟩⟩
   dsimp only
-  rw [dif_pos ⟨he, he1⟩]
+  rw [dite_eq_left ⟨he, he1⟩]
   exact Classical.choose_spec (hK eps he he1) Fm _ hC (large_of_large_thresholds hL)
 
 theorem closed_largeE {𝒞 : FamClass} {P Q : ∀ {eps : ℝ}, FamP eps → ℝ → Prop} (K0 : ℝ → TransportedAlt) (hP : Closed 𝒞 P)

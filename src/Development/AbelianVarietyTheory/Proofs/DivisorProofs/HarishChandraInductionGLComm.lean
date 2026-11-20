@@ -71,7 +71,7 @@ theorem aflipG_conj {n : ℕ} (x : GL (Fin n) F) : ∃ p : GL (Fin n) F, aflipG 
 
 theorem toG_coe' {n : ℕ} (x : GL (Fin n) F) : toG (x : Matrix (Fin n) (Fin n) F) = x := by
   unfold toG
-  rw [dif_pos x.isUnit]
+  rw [dite_eq_left x.isUnit]
   exact Units.ext (IsUnit.unit_spec _)
 
 theorem cl_conj {n : ℕ} {α : GL (Fin n) F → ℂ} (hα : IsCl α) (p x : GL (Fin n) F) :
@@ -90,7 +90,7 @@ theorem class_aflip {n : ℕ} {α : GL (Fin n) F → ℂ} (hα : IsCl α) (M : M
       rintro ⟨x, hx⟩
       exact h ⟨aflipG x, by rw [aflipG_coe, hx, aflip_aflip]⟩
     unfold toG
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem inPar_aflip {a b : ℕ} (y : GL (Fin (a + b)) F) : InPar b (aflipG y) ↔ InPar a y := by
   constructor
@@ -107,7 +107,7 @@ theorem tl_aflip {a b : ℕ} (M : Matrix (Fin (a + b)) (Fin (a + b)) F) : tl b (
   have hj := j.2
   rw [aflip_apply]
   unfold tl br ent
-  rw [dif_pos (by omega), dif_pos (by simp only [Fin.val_rev]; omega), aflip_apply]
+  rw [dite_eq_left (by omega), dite_eq_left (by simp only [Fin.val_rev]; omega), aflip_apply]
   congr 1 <;> apply Fin.ext <;> simp only [Fin.val_rev] <;> omega
 
 theorem br_aflip {a b : ℕ} (M : Matrix (Fin (a + b)) (Fin (a + b)) F) : br b a (aflip M) = aflip (tl a M) := by
@@ -116,7 +116,7 @@ theorem br_aflip {a b : ℕ} (M : Matrix (Fin (a + b)) (Fin (a + b)) F) : br b a
   have hj := j.2
   rw [aflip_apply]
   unfold tl br ent
-  rw [dif_pos (by omega), dif_pos (by simp only [Fin.val_rev]; omega), aflip_apply]
+  rw [dite_eq_left (by omega), dite_eq_left (by simp only [Fin.val_rev]; omega), aflip_apply]
   congr 1 <;> apply Fin.ext <;> simp only [Fin.val_rev] <;> omega
 
 theorem gal_id (n : ℕ) (y : GL (Fin n) F) : gal (RingHom.id F) n y = y := by

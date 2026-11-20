@@ -426,7 +426,7 @@ def instW (kapI : ℕ → (n' : ℕ) → Finset (Fin n') → (Fin n' → ℤ) �
         congr 1
         exact Prod.ext hz'.1 rfl
       have h1 := L.win_top j hj'.1 hj'.2 (tauOf D z) ⟨z.2, hz'.2⟩ h0
-      have h2 : G.bL L z.2 = L.bT ⟨z.2, hz'.2⟩ := by unfold G.bL; rw [dif_pos hz'.2]
+      have h2 : G.bL L z.2 = L.bT ⟨z.2, hz'.2⟩ := by unfold G.bL; rw [dite_eq_left hz'.2]
       rw [if_pos hj, if_pos hz', h2]
       constructor <;> linarith [h1.1, h1.2]
     · rw [if_neg hj]
@@ -486,7 +486,7 @@ theorem one_le_fill (hw : 1 ≤ L0.sc.w'' D.R.n) (j : ℕ) (z : Bool × G.HH D) 
     rw [if_pos hc]
     have hbl : (0 : ℝ) ≤ (G.bL L0 z.2 : ℝ) := by
       unfold G.bL
-      rw [dif_pos hc.2]
+      rw [dite_eq_left hc.2]
       exact hb'.trans (L0.bT_ge _)
     linarith [hs.1]
   · have hc : ¬ (z.1 = false ∧ z.2 ∈ D.host.TT) := htop

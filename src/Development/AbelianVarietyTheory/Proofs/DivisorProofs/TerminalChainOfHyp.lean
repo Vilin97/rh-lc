@@ -243,7 +243,7 @@ def rootLn (x : Rt D.what₂.Tau N) : Ln S.Dw :=
   if h : (x.2 : ℕ) < S.Dw.p then (false, ⟨.inl (tauEmb D x.1, x.2), by
     have e : S.Dw.mult (tauEmb D x.1) = S.Dw.p := by rw [Datum.mult, if_pos (A.cm x.1)]
     simp only [letterOf]
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl⟩)
   else (true, ⟨.inl (conjEmb (tauEmb D x.1), S.Dw.p + S.Dw.q - 1 - x.2), by
     have e : S.Dw.mult (tauEmb D x.1) = S.Dw.p := by rw [Datum.mult, if_pos (A.cm x.1)]
@@ -251,7 +251,7 @@ def rootLn (x : Rt D.what₂.Tau N) : Ln S.Dw :=
     have h₂ := S.rank_eq
     have := x.2.2
     simp only [letterOf]
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl⟩)
 
 def wholeLn : Fin (D.R.f * N) ⊕ Fin (D.R.f * N) → Ln S.Dw

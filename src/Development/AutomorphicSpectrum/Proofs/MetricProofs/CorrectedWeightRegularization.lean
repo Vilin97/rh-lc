@@ -444,7 +444,7 @@ private theorem exists_cuspData_cuspWeight_eq_of_torus_invariant (K : Type) [Fin
     rw [Finset.prod_congr rfl (fun τ _ => h1 τ), Finset.prod_const, Finset.card_univ]
   have hNz0 : ∀ z, Cd.Nz z I0 = Real.exp (- U z) := by
     intro z
-    rw [CuspData.Nz, dif_pos h0, hprod z _ _ hρ0]
+    rw [CuspData.Nz, dite_eq_left h0, hprod z _ _ hρ0]
     have hQ : Q (h0.choose_spec.choose ⟨0, by omega⟩) = 1 := by
       show ε ^ 2 * ((w0 0 : ℤ) : ℝ) ^ 2 + ((w0 1 : ℤ) : ℝ) ^ 2 = 1
       rw [hεa, hw01]

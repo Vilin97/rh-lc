@@ -48,7 +48,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
   by_cases hmem : y ∈ UL n w
   · have hloc : ((locPt w γ : UL n w) : GLw n w) = y := by
       simp only [locPt, toSub]
-      rw [dif_pos hmem]
+      rw [dite_eq_left hmem]
     have hyK : y ∈ GlobalTheory.LFun.KGL w n := by
       apply mem_KGL_of_entries
       · intro a b; exact (hw a b).1
@@ -69,7 +69,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     exact hk
   · have hloc : locPt w γ = 1 := by
       simp only [locPt, toSub]
-      rw [dif_neg hmem]
+      rw [dite_eq_right hmem]
     refine ⟨g, ?_, by rw [inv_mul_cancel]; exact one_mem _⟩
     rw [hloc]
     show g * 1 = 1 * (MonoidHom.id _) g

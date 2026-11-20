@@ -64,7 +64,7 @@ theorem dl_loc_unsigned {D : D7} (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F
     simp only [Formalism.MainNotions.S.Zhat]
     ring
   unfold Loc.HermSp.Dl Formalism.MainNotions.S.Dl leadMinorE
-  rw [dif_pos hl, dif_pos hl, hZ]
+  rw [dite_eq_left hl, dite_eq_left hl, hZ]
   have hsub : (Matrix.diagonal (fun a => (Z.M p).L.cj (frFac Z.δ p a)) *
         (Formalism.MainNotions.S.Zhat F F').map (D.s.atP p).ιE *
         Matrix.diagonal (fun b => frFac Z.δ p b)).submatrix (Fin.castLE hl) (Fin.castLE hl) =

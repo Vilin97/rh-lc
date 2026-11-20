@@ -68,7 +68,7 @@ theorem whittaker_torusShift_add_factorisation_induction (E : Type) [Field E] [N
       rw [hl₀a]; rfl
     rw [hsplit, GlobalTheory.CellDec.tl_add, GlobalTheory.CellDec.tl_single, ← mul_assoc, ← hg, h1, key, ← hl₀a,
       ← GlobalTheory.CellDec.tl_single, hg, mul_assoc, ← GlobalTheory.CellDec.tl_add, hjoin, ih hfT hflast,
-      Finsupp.support_single_add ha hb, Finset.prod_cons, dif_neg haT]
+      Finsupp.support_single_add ha hb, Finset.prod_cons, dite_eq_right haT]
     have hval : (Finsupp.single a b + f) a = b := by simp [hfa]
     have hrest : ∏ w ∈ f.support, (if h : w ∈ T then 1 else
           GlobalTheory.RSCell.sphZ (Ideal.absNorm w.asIdeal) (fun i => ((α ⟨w, h⟩ i : ℂˣ) : ℂ)) ((Finsupp.single a b + f) w)) =

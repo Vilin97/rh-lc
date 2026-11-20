@@ -78,7 +78,7 @@ theorem valAt_torus {x : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} (c : K 
     rw [valAt_eq hz hv, valAt_eq hcz (isValueAt_torus c hc hv)]
   · have h' : ¬ ∃ v, IsValueAt x s (fun q : Σ k, ι k => c q.1 * z q) v :=
       fun ⟨v, hv⟩ => h ⟨v, isValueAt_of_torus c hc hv⟩
-    rw [valAt, valAt, dif_neg h, dif_neg h']
+    rw [valAt, valAt, dite_eq_right h, dite_eq_right h']
 
 theorem main : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (x : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ) (c : K → ℂ), (∀ k, c k ≠ 0) →

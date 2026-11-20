@@ -86,7 +86,7 @@ theorem HorizontalAvoidingForm.proof : HorizontalAvoidingForm.Statement.{u} := b
     by_contra hmin
     apply hW
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_neg]
+    rw [dite_eq_right]
     exact fun h => hmin h.1
 
   have hT : ∀ Q ∈ insert P (hfin.toFinset.filter fun H => (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H),

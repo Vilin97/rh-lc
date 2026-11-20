@@ -85,7 +85,7 @@ theorem measV_selfDual (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (v : Pl F) (hn
   refine ⟨hn, c, hcond, ?_⟩
   have hm : measV ψ v = hex.choose := by
     unfold measV
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   rw [hm]
   exact ⟨hex.choose_spec.1, fun f hf => hex.choose_spec.2 f hf⟩
 

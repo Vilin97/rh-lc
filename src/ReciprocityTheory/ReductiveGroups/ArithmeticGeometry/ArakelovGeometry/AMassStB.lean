@@ -77,7 +77,7 @@ theorem gb_sheetDensity {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : Cone
       maDensity (fun _ : Fin D => gbPot) y := by
   have hs := h.choose_spec
   unfold sheetDensity
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   simp only [one_mul]
   apply maDensity_congr_of_eventuallyEq
   intro j
@@ -248,7 +248,7 @@ theorem gb_ptsIntegral (hInd : PtsIndepStatement) {x : Ix κ → Ω} {m : ConeMe
     (gbOne (κ := κ)) 1 harith hex.choose_spec hg (fun _ => hL) hSm hSec
   rw [gb_logNorm_one] at key
   unfold ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact key.trans (gb_ptsIntegralAt hfr hFS)
 
 end ReciprocityTheory.ChartRestriction.G.ArakelovGeometry

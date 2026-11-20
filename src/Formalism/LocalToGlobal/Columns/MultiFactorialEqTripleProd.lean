@@ -186,7 +186,7 @@ theorem degree_weight_cast_eq {n κ : ℕ} (h : κ + 1 = n) (lam : DomWeight n) 
 theorem det_shift_eq_last_weight {n κ : ℕ} (h : κ + 1 = n) (lam : DomWeight n) : lam.detShift = castW h lam (Fin.last κ) := by
   subst h
   unfold DomWeight.detShift
-  rw [dif_pos (Nat.succ_pos κ)]
+  rw [dite_eq_left (Nat.succ_pos κ)]
   rfl
 
 theorem max_slope_twisted_general (hS : FockSubNorm) (hC : HwNormBound) {n κ : ℕ} (h : κ + 1 = n) (lam : ι → DomWeight n)

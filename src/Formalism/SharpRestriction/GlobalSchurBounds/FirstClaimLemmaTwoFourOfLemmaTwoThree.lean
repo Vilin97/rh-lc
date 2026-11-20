@@ -563,7 +563,7 @@ theorem badZero_spec (Q : ℝ) {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ
     1 - 1 / 400 < (badZero Q χ).re ∧ |(badZero Q χ).im| ≤ Q ∧
       DirichletCharacter.LFunction χ (badZero Q χ) = 0 := by
   unfold badZero
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem num_bound {Q : ℝ} (hQ : 1 ≤ Q) : (max Q 3) ^ ((1 : ℝ) / 4) ≤ 3 * Q ^ ((1 : ℝ) / 4) := by

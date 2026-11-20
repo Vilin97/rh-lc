@@ -180,7 +180,7 @@ theorem dPrk_te {q : 𝓞 E} (hq : q ∈ P.1.asIdeal) (z : Sp E n) (hz : z ∈ d
   have hm : q • d.e1 P ∈ d.1.kerAt P := d.2.smul_mem_kerAt P hq (d.first_raising_mem_equivariant P)
   have h1 : d.te P q = dPrk d ha P t ⟨q • d.e1 P, lv_kerAt_le d ha P hm⟩ := by
     unfold DecoSet.te
-    rw [dif_pos hm]
+    rw [dite_eq_left hm]
     exact (lvPr_of_mem P.1 (M := d.1.kerAt P) (M' := d.1.LshKer P) (fun _ hx => lv_smul_LshKer_mem d ha P hx) hat
       ⟨q • d.e1 P, lv_kerAt_le d ha P hm⟩ hm).symm
   rw [h1, ← sub_eq_zero, ← map_sub]

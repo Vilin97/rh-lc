@@ -90,7 +90,7 @@ theorem redM_smul_of_res {b a : ℕ} {c : EAf D} (hc : c ∈ Formalism.L2.Herm.i
   have hsub : (⟨(c • N) i j, h2⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨c, hc⟩ * ⟨N i j, hN i j⟩ :=
     Subtype.ext (by simp [Matrix.smul_apply])
   unfold redM
-  rw [dif_pos h2, dif_pos (hN i j), hsub, map_mul, h1, one_mul]
+  rw [dite_eq_left h2, dite_eq_left (hN i j), hsub, map_mul, h1, one_mul]
 
 end GlobalTheory.LocSuppTw
 

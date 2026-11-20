@@ -31,15 +31,15 @@ theorem pullAt_of_dict : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I 
   have hN := (GlobalTheory.T.adelicCharacters_at_det_rational_isometry_rep_level J.A J.dtU J.a J.pins J.tie S.Xi S.muT S.law j hj (j + 1) hj1 (clsAt X H (j + 1) La'.1 La'.2)
     (J.pt std (j + 1) hj1 La') (d.gam (j + 1) hj1 La') (d.mem _ _ _) (d.kap (j + 1) hj1 La') (d.eq _ _ La' hLa')).2.2
   have e1 : d.eM j La = (gMat J j hj0 (d.gam j hj0 La)).submatrix (Fin.cast (hr j)) (Fin.cast (hr j)) := by
-    unfold Dec.eM; rw [dif_pos ⟨hj0, hr j⟩]
+    unfold Dec.eM; rw [dite_eq_left ⟨hj0, hr j⟩]
   have e2 : d.eM (j + 1) La' = (gMat J (j + 1) hj1 (d.gam (j + 1) hj1 La')).submatrix (Fin.cast (hr (j + 1))) (Fin.cast (hr (j + 1))) := by
-    unfold Dec.eM; rw [dif_pos ⟨hj1, hr (j + 1)⟩]
+    unfold Dec.eM; rw [dite_eq_left ⟨hj1, hr (j + 1)⟩]
   have e3 : thCl (X := sysS H X std) t u μ (clsAt X H) j La La' =
       reV (hr j) (hr (j + 1)) ((t.rd u μ).Th t.seam t.amb j (clsAt X H j La.1 La.2) (clsAt X H (j + 1) La'.1 La'.2)) := by
-    unfold thCl; rw [dif_pos ⟨hr j, hr (j + 1)⟩]
+    unfold thCl; rw [dite_eq_left ⟨hr j, hr (j + 1)⟩]
   have e4 : d.sP S j La La' = S.muT (j + 1) (Matrix.GeneralLinearGroup.det (d.kap j hj0 La).1) * d.chi (j + 1) hj1 La' /
       (S.muT (j + 1) (Matrix.GeneralLinearGroup.det (d.kap (j + 1) hj1 La').1) * d.chi j hj0 La) := by
-    unfold Dec.sP; rw [dif_pos hj1]
+    unfold Dec.sP; rw [dite_eq_left hj1]
   rw [e1, e2, e3, e4, ← reV_pull_submatrix]
   have key : ∀ a b c e k p : ℂ, c ≠ 0 → e ≠ 0 → c * e * k = a * b * p → k = a * b / (c * e) * p := by
     intro a b c e k p hc he h

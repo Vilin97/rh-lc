@@ -120,7 +120,7 @@ omit [Fintype K] [∀ k, Fintype (ι k)] [IsDomain O] [IsDiscreteValuationRing O
 theorem divCycle_unit (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (u : Oˣ) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (u : O))) W : ℤ)) = 0 := by
   funext W
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   · rfl
   rintro ⟨h, -⟩
   have hW : W.IsPrime := h.1.1

@@ -125,7 +125,7 @@ theorem liftMat_inj (hK : X.KFormL) (hZ : X.CrdZL cr b) (hT : Formalism.IndefR.R
     obtain ⟨y, hy⟩ := LinearMap.mem_range.mp (hcol k)
     show X.w0C b j (solve (X.w0C b j) (X.tC cr b j t (Pi.single k 1))) = _
     unfold solve
-    rw [dif_pos ⟨y, hy⟩]
+    rw [dite_eq_left ⟨y, hy⟩]
     exact (⟨y, hy⟩ : ∃ y, X.w0C b j y = X.tC cr b j t (Pi.single k 1)).choose_spec
   have htC : ∀ z : Fin ((lv (fc X.zs) b).dZ j t) → K,
       X.tC cr b j t (cpt Bs.v0.embedding z) = X.θ' j t (X.jL j t (cr.toL X.zs b j t z)) := by
@@ -144,7 +144,7 @@ theorem liftMat_inj (hK : X.KFormL) (hZ : X.CrdZL cr b) (hT : Formalism.IndefR.R
     simp only [Matrix.map_apply, CxData.liftMat, kMat]
     unfold kOf
     have hr : ∃ a, Bs.v0.embedding a = X.liftMatC cr b j t l k := hrat l k
-    rw [dif_pos hr]
+    rw [dite_eq_left hr]
     exact hr.choose_spec
   have hlin : ∀ z, X.tC cr b j t z = X.w0C b j ((X.liftMatC cr b j t).mulVec z) := by
     have : X.tC cr b j t = (X.w0C b j).comp (X.liftMatC cr b j t).mulVecLin := by

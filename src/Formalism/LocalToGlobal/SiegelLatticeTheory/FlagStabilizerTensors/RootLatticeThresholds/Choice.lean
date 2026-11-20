@@ -954,7 +954,7 @@ theorem rootCoord_tr {v : InfinitePlace X.B.I.F} {lam : ℂ} (hlam : lam ≠ 0)
   dsimp only
   rw [hf, hJ_smul_left', star_star]
   by_cases h : a.val + 1 < D.R.rS
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     set b : Fin D.R.rS := ⟨a.val + 1, h⟩
     have he : rv X.B.I v (X.eR b) = (lam ^ (D.R.rS - (b : ℕ)))⁻¹ • (Q *ᵥ Pi.single (eI D.R.k D.R.rS b) 1) := by
       rw [(hcol b b rfl).1, smul_smul, inv_mul_cancel₀ (hp b), one_smul]
@@ -967,7 +967,7 @@ theorem rootCoord_tr {v : InfinitePlace X.B.I.F} {lam : ℂ} (hlam : lam ≠ 0)
     have hexp : D.R.rS - (a : ℕ) = (D.R.rS - (b : ℕ)) + 1 := by simp only [b]; omega
     rw [hexp, pow_succ]
     field_simp [hp b]
-  · rw [dif_neg h, dif_neg h]
+  · rw [dite_eq_right h, dite_eq_right h]
     have hz : rv X.B.I v (X.zR u) = Q *ᵥ (Qi *ᵥ rv X.B.I v (X.zR u)) := by
       rw [Matrix.mulVec_mulVec, h2, Matrix.one_mulVec]
     have hQiQ : ∀ y, Qi *ᵥ (Q *ᵥ y) = y := fun y => by rw [Matrix.mulVec_mulVec, h1, Matrix.one_mulVec]

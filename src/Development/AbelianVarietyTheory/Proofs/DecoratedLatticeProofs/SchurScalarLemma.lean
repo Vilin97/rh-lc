@@ -163,7 +163,7 @@ theorem exists_scalar (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : Is
     refine eqv_transpose hθ hp hc hpr lam φ.toLinearMap (fun τ g hg v w hw => hf (funext fun y => ?_)) f.toLinearMap hfp hu x
     have ha : IsAtTau θ V τ g (atTau θ V τ g) := by
       have hex := (GlobalTheory.PointAtPlace.existsUnique_isAtTau V τ θ hθ g hg).exists
-      rw [atTau, dif_pos hex]
+      rw [atTau, dite_eq_left hex]
       exact hex.choose_spec
     set A := infGL θ V (atTau θ V τ g) with hA
     let y' : Frames G := ⟨fun ρ => ((A ρ)⁻¹ : GL (Fin V.rank) ℂ).1 * y.1 ρ, fun ρ => by

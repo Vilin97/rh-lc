@@ -173,7 +173,7 @@ theorem laGlob (hG : GlobalArtinReciprocity) (hH : HeckeLAdicCharacter) {F Ω : 
       exact hc0 (neg_eq_self.1 a2)
     show m _ - m _ = _
     simp only [m]
-    rw [dif_pos H1, dif_neg H2, sub_zero, hR1 _ _ _ H1.choose_spec (e1.symm ▸ H)]
+    rw [dite_eq_left H1, dite_eq_right H2, sub_zero, hR1 _ _ _ H1.choose_spec (e1.symm ▸ H)]
   obtain ⟨χ, hχ, -⟩ := GlobalTheory.AlgCharUnr.exists_algChar_unr E l Fact.out n 0 (fun φ => by
     have : ComplexEmbedding.conjugate (ComplexEmbedding.conjugate φ) = φ := star_star φ
     simp only [n, this]

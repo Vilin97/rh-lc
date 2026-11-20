@@ -99,7 +99,7 @@ theorem readOK_of_equiv (φ : VV ℂ σ ≃ₗ[ℂ] VV ℂ fun τ => (σ τ).dua
   have h1 : ∃ φ : VV ℂ σ →ₗ[ℂ] VV ℂ fun τ => (σ τ).dual, ∀ F, IsFunForm σ F (φ F) := ⟨φ, h⟩
   have h2 : ∃ φ : (VV ℂ fun τ => (σ τ).dual) →ₗ[ℂ] VV ℂ σ, ∀ f, IsFunForm σ (φ f) f :=
     ⟨φ.symm, fun f => by simpa using h (φ.symm f)⟩
-  rw [ReadOK, funOf, covOf, dif_pos h1, dif_pos h2]
+  rw [ReadOK, funOf, covOf, dite_eq_left h1, dite_eq_left h2]
   exact ⟨h1.choose_spec, h2.choose_spec⟩
 
 def brPair {N : ℕ} (hN : N = n + 1) (Λ : ι → DomWeight N) : VV ℂ Λ →ₗ[ℂ] (VV ℂ fun τ => (σ τ).dual) →ₗ[ℂ] ℂ :=

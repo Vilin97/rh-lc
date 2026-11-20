@@ -19,10 +19,10 @@ variable {g : ℕ} [Fact g.Prime]
 
 theorem entN_tl (m : ℕ) {n : ℕ} (M : Mt g n) {a b : ℕ} (ha : a < m) (hb : b < m) :
     entN (tl m M) a b = entN M a b := by
-  rw [entN, dif_pos ⟨ha, hb⟩]; rfl
+  rw [entN, dite_eq_left ⟨ha, hb⟩]; rfl
 
 theorem entN_fin {n : ℕ} (M : Mt g n) (a b : Fin n) : entN M a b = M a b := by
-  rw [entN, dif_pos ⟨a.2, b.2⟩]
+  rw [entN, dite_eq_left ⟨a.2, b.2⟩]
 
 theorem inR_iff (i : ℕ) {n : ℕ} (M : Mt g n) :
     InR i M ↔ ∀ a : ℕ, i ≤ a → a < n → (∀ b, b < a → entN M a b = 0) ∧ entN M a a = 1 := by

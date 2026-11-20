@@ -343,7 +343,7 @@ theorem hdeg : BlowUpOverLocPointDeg.Statement.{0} := by
     simpa [liftForm] using hϖW
   have hp : (specialIdeal W').IsPrime :=
     (SpecialIdealCorresp.proof O ϖ hϖ (Option K) (extIdx ι J) W' W' hW'min.1.1 hϖW').1
-  rw [specialRelDeg, dif_pos hp]
+  rw [specialRelDeg, dite_eq_left hp]
   refine inertiaDeg_eq_relDeg (IsLocalRing.residue O) IsLocalRing.residue_surjective P W
     (le_sup_left.trans hWmin.1.2) u W' (le_sup_left.trans hW'min.1.2) hW'W (specialIdeal W')
     (fun f => ?_) h 𝔫 h𝔫 hl

@@ -488,10 +488,10 @@ example (τ : HyperbolicCusp.flagData.Ψ) :
   funext a
   obtain ⟨i | i, rfl⟩ := (rowIdx Gauss.hr).surjective a
   · have : rowIdx Gauss.hr (Sum.inl i) = 1 := Fin.ext (by simp [hp])
-    rw [wtOf_inl, this, Harm.partOf_eq_add, dif_neg (by omega)]
+    rw [wtOf_inl, this, Harm.partOf_eq_add, dite_eq_right (by omega)]
     rfl
   · have : rowIdx Gauss.hr (Sum.inr i) = 0 := Fin.ext (by simp [hp])
-    rw [wtOf_inr, this, Harm.partOf_eq_add, dif_neg (by omega)]
+    rw [wtOf_inr, this, Harm.partOf_eq_add, dite_eq_right (by omega)]
     rfl
 
 example : EF HyperbolicCusp.flagData ![1, 0] ![-HyperbolicCusp.ii, 0] = -1 := by

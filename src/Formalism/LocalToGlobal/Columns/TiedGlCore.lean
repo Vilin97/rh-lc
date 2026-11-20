@@ -34,7 +34,7 @@ theorem gco_red_map {k : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hk : k �
   have hm : ((bc (gloPhi v spl) (bc (prV (E := E) v) k) : GL (Fin n) (v.adicCompletion F)) :
       Matrix (Fin n) (Fin n) (v.adicCompletion F)) i j ∈ v.adicCompletionIntegers F := by
     rw [e]; exact gloPhi_int v spl halg _ (afsplit_prV_int v _ (y i j).2)
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   congr 1
   exact Subtype.ext e.symm
 

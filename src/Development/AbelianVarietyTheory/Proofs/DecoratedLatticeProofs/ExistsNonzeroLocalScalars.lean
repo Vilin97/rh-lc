@@ -235,7 +235,7 @@ theorem main : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism
     exact (hcm j hj).2 d hd P a ha a' ha'
   · have hs : s (j + 1) = ct j h := by
       show (if hi : j + 1 + 1 < D.R.m then cm (j + 1) hi else if hk : j + 2 * 0 + 2 = D.R.m then ct j hk else 1) = ct j h
-      rw [dif_neg (by omega), dif_pos h]
+      rw [dite_eq_right (by omega), dif_pos h]
     rw [hs]
     exact (hct j h).2 d hd P
 

@@ -26,6 +26,6 @@ theorem locChar_eq_zpow_mul : ∀ (E K : Type) [Field E] [NumberField E] [Field 
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
   refine ⟨LocE.vP P q a, χ hu.unit, MonoidHom.isOfFinOrder χ (isOfFinOrder_of_finite _), ?_⟩
   unfold LocE.locChar LocE.unitV
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
 
 end GlobalTheory.LocCharVal

@@ -875,7 +875,7 @@ theorem lu_mul_EE {n : ℕ} {u : Matrix (Fin n) (Fin n) K} (hu : IsUpUni u) (r :
     refine Finset.sum_congr rfl fun k _ => ?_
     by_cases h : k < j
     · rw [lu_EE_lt r h, dif_pos h]
-    · rw [lu_EE_not_lt r h, dif_neg h, mul_zero]
+    · rw [lu_EE_not_lt r h, dite_eq_right h, mul_zero]
   rw [e1]
   by_cases hij : i < j
   · rw [lu_EE_lt _ hij, ← lu_sum_pairs j (fun p => u i p.1.1 * r p)]
@@ -888,7 +888,7 @@ theorem lu_mul_EE {n : ℕ} {u : Matrix (Fin n) (Fin n) K} (hu : IsUpUni u) (r :
     · rw [dif_pos h]
       have : u i k = 0 := hu.1 (lt_of_lt_of_le h (not_lt.1 hij))
       rw [this, zero_mul]
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
 
 theorem lu_EE_add {n : ℕ} (y z : Pr n → K) : EE (y + z) = EE y + EE z := by
   ext i j
@@ -2287,7 +2287,7 @@ theorem pw_one_add_EE {n : ℕ} (N : Pr n → K) (i j : Fin n) :
 theorem pw_isUpUni {n : ℕ} (N : Pr n → K) : IsUpUni (1 + EE N) := by
   refine ⟨fun i j hij => ?_, fun i => ?_⟩
   · have hij' : j < i := hij
-    rw [pw_one_add_EE, if_neg (ne_of_gt hij'), dif_neg (not_lt.2 hij'.le)]
+    rw [pw_one_add_EE, if_neg (ne_of_gt hij'), dite_eq_right (not_lt.2 hij'.le)]
   · rw [pw_one_add_EE, if_pos rfl]
 
 theorem pw_ys_zero {m : ℕ} (n : Pr (m + 1) → K) (τ : Fin m → K) (j : Fin m) (h : (0 : Fin (m + 1)) < j.succ) :
@@ -2367,7 +2367,7 @@ theorem pw_shape {m : ℕ} (hm : 1 ≤ m) (t c : K) (ξ : Fin m → K) (N : Pr (
         rw [if_pos this, if_pos hk]; ring
       · have : k.castSucc ≠ 0 := by
           intro h; apply hk; have := congrArg Fin.val h; simpa using this
-        rw [if_neg this, if_neg hk, dif_neg (by simp)]; ring
+        rw [if_neg this, if_neg hk, dite_eq_right (by simp)]; ring
     · have h0 : (0 : Fin (m + 1)) ≠ j'.succ := (Fin.succ_ne_zero j').symm
       have h1 : (0 : Fin (m + 1)) < j'.succ := Fin.succ_pos j'
       simp only [Hm, HH, Fin.cases_zero, if_neg h0, dif_pos h1]
@@ -2390,7 +2390,7 @@ theorem pw_shape {m : ℕ} (hm : 1 ≤ m) (t c : K) (ξ : Fin m → K) (N : Pr (
       · have h3 : i'.castSucc < j := lt_trans Fin.castSucc_lt_succ h2
         rw [dif_pos h2, if_neg h3.ne, dif_pos h3, pw_ys_succ _ _ _ _ h2 h3]
         rfl
-      · rw [dif_neg h2]
+      · rw [dite_eq_right h2]
         by_cases h3 : j.val + 1 = i'.succ.val
         · have h4 : i'.castSucc = j := by ext; simp at h3 ⊢; omega
           rw [if_pos h3, if_pos h4, mul_one]
@@ -2401,7 +2401,7 @@ theorem pw_shape {m : ℕ} (hm : 1 ≤ m) (t c : K) (ξ : Fin m → K) (N : Pr (
             rw [Fin.lt_def] at h h2
             have h6 : i'.succ.val ≠ j.val := fun e => h1 (Fin.ext e)
             simp at h h2 h6; omega
-          rw [if_neg h3, if_neg h4, dif_neg h5, mul_zero]
+          rw [if_neg h3, if_neg h4, dite_eq_right h5, mul_zero]
 
 theorem pw_lastE_add {m : ℕ} (ξ r : Fin m → K) : lastE (ξ + r) = lastE ξ + lastE r := by
   unfold lastE
@@ -2552,7 +2552,7 @@ theorem pw_Phi_eq (hC : Cst R ϖ L₀ Λ₀ Q a b) {m : ℕ} (Φ : ∀ n : ℕ, 
     · rw [if_neg h1, if_neg h1]
       by_cases h2 : i1 < j
       · rw [dif_pos h2, dif_pos h2, sub_self]; exact Λ₀.zero_mem
-      · rw [dif_neg h2, dif_neg h2]
+      · rw [dite_eq_right h2, dite_eq_right h2]
         by_cases h3 : j.val + 1 = i1.val
         · rw [if_pos h3, if_pos h3, sub_zero]; exact hC.abelian₂ _ ht
         · rw [if_neg h3, if_neg h3, sub_self]; exact Λ₀.zero_mem

@@ -1060,7 +1060,7 @@ theorem loc_facts {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   have : W.IsPrime := hW.1.1
   have htop : multAt (P ⊔ Ideal.span {f}) W ≠ ⊤ := length_localizedQuot_ne_top _ W hW
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_pos ⟨hW, hrel⟩, Int.toNat_natCast, ENat.coe_toNat htop]
+  rw [dite_eq_left ⟨hW, hrel⟩, Int.toNat_natCast, ENat.coe_toNat htop]
   exact h4.symm
 
 omit [DecidableEq K] in
@@ -1069,7 +1069,7 @@ theorem divCycle_ne_zero {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
     (hW : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes) (hrel : IsRelevant W) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 := by
   have : W.IsPrime := hW.1.1
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_pos ⟨hW, hrel⟩]
+  rw [dite_eq_left ⟨hW, hrel⟩]
   have := localizedQuot_nontrivial_of_le (P ⊔ Ideal.span {f}) W hW.1.2
   have h0 : multAt (P ⊔ Ideal.span {f}) W ≠ 0 :=
     (Module.length_pos (R := Localization.AtPrime W)
@@ -1081,7 +1081,7 @@ omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem divCycle_supp {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) :
     W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
   by_contra hc
-  exact h (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg hc])
+  exact h (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right hc])
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem divCycle_nonneg (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : 0 ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) := by
@@ -1252,7 +1252,7 @@ theorem relDeg_eq (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
     rw [← map_rename]
     rfl
   rw [e1, ffield_map _ hres, ffield_map _ hres, ffield_comp, ← homFrac_eq, ← homFrac_eq, srd,
-    dif_pos h]
+    dite_eq_left h]
   rfl
 
 end Blocks
@@ -1437,7 +1437,7 @@ theorem fibre_num (hϖ : Irreducible ϖ) (hP' : IsModelOver P' d)
         rw [mul_assoc]
         congr 1
         unfold vNum srd
-        rw [dif_pos hmp.isPrime, hpf', hcon]
+        rw [dite_eq_left hmp.isPrime, hpf', hcon]
       · simp
     rw [finsum_congr hterm, ← finsum_mul, fibre_degree hϖ hP' hP hf hfP hϖW hW φ hφ, mul_assoc]
   · rw [not_not] at hW

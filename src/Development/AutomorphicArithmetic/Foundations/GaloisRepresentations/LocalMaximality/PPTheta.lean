@@ -6,7 +6,7 @@ open scoped TensorProduct
 
 private lemma pk_mem {d : ℕ} {I : Finset (Fin (d + 1))} (h : I.Nonempty) : pk I ∈ I := by
   unfold pk
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Finset.min'_mem _ _
 
 private lemma lat_mem (hA : LatA) {F : Type} [Field F] [Algebra ℂ F] {d : ℕ} (x : Fin (d + 1) → Fˣ)
@@ -83,7 +83,7 @@ theorem UpperTheory.Gal.productCup_of_system.pTheta_of :
       detC (sysP K x a).rowMu (uni I L) = 0 := by
     intro I L h
     unfold detC
-    rw [dif_neg (by rw [hcard]; exact h)]
+    rw [dite_eq_right (by rw [hcard]; exact h)]
   have hθe : ∀ L : Finset (Mi d), detC (sysP K x a).rowMu (uni ∅ L) = 0 :=
     (hTh d _ _ (sysP K x a)).2.1
   have hval : ∀ (I J : Finset (Fin (d + 1))) (L : Finset (Mi d)),

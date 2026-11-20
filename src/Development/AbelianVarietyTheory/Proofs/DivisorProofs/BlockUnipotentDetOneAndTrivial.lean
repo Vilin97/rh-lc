@@ -17,25 +17,25 @@ theorem put_entry (n o₁ o₂ : ℕ) {p q : ℕ} (X : Matrix (Fin p) (Fin q) R)
 theorem toGL_coe {n : ℕ} {M : Matrix (Fin n) (Fin n) R} (h : IsUnit M) :
     ((toGL M : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) = M := by
   unfold toGL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem det_one_add_put (n o₁ o₂ : ℕ) {p q : ℕ} (X : Matrix (Fin p) (Fin q) R)
     (hd : o₁ + p ≤ o₂ ∨ o₂ + q ≤ o₁) : (1 + put n o₁ o₂ X).det = 1 := by
   have hdiag : ∀ i : Fin n, (1 + put n o₁ o₂ X) i i = 1 := by
     intro i
-    rw [Matrix.add_apply, Matrix.one_apply_eq, put_entry, dif_neg (by omega), add_zero]
+    rw [Matrix.add_apply, Matrix.one_apply_eq, put_entry, dite_eq_right (by omega), add_zero]
   rcases hd with hd | hd
   · rw [Matrix.det_of_upperTriangular]
     · simp [hdiag]
     · intro i j hij
       have h' : j.val < i.val := hij
-      rw [Matrix.add_apply, Matrix.one_apply_ne (show i ≠ j from fun e => by subst e; omega), put_entry, dif_neg (by omega), add_zero]
+      rw [Matrix.add_apply, Matrix.one_apply_ne (show i ≠ j from fun e => by subst e; omega), put_entry, dite_eq_right (by omega), add_zero]
   · rw [Matrix.det_of_lowerTriangular]
     · simp [hdiag]
     · intro i j hij
       have h' : i.val < j.val := hij
-      rw [Matrix.add_apply, Matrix.one_apply_ne (show i ≠ j from fun e => by subst e; omega), put_entry, dif_neg (by omega), add_zero]
+      rw [Matrix.add_apply, Matrix.one_apply_ne (show i ≠ j from fun e => by subst e; omega), put_entry, dite_eq_right (by omega), add_zero]
 
 theorem blk_mul (n o p : ℕ) (hp : o + p ≤ n) (A B : Matrix (Fin p) (Fin p) R) :
     (1 - eye R n o o p + put n o o A) * (1 - eye R n o o p + put n o o B) =
@@ -90,7 +90,7 @@ theorem dgM_in (n o p : ℕ) (A : Matrix (Fin p) (Fin p) R) (i j : Fin n) (hi : 
     (hj : o ≤ j.val ∧ j.val < o + p) :
     (1 - eye R n o o p + put n o o A) i j = A ⟨i.val - o, by omega⟩ ⟨j.val - o, by omega⟩ := by
   unfold eye
-  rw [Matrix.add_apply, Matrix.sub_apply, put_entry, put_entry, dif_pos ⟨hi, hj⟩, dif_pos ⟨hi, hj⟩]
+  rw [Matrix.add_apply, Matrix.sub_apply, put_entry, put_entry, dite_eq_left ⟨hi, hj⟩, dite_eq_left ⟨hi, hj⟩]
   simp only [Matrix.one_apply, Fin.ext_iff]
   by_cases h : i.val = j.val
   · have h' : i.val - o = j.val - o := by omega
@@ -102,7 +102,7 @@ theorem dgM_out (n o p : ℕ) (A : Matrix (Fin p) (Fin p) R) (i j : Fin n)
     (h : ¬((o ≤ i.val ∧ i.val < o + p) ∧ (o ≤ j.val ∧ j.val < o + p))) :
     (1 - eye R n o o p + put n o o A) i j = (1 : Matrix (Fin n) (Fin n) R) i j := by
   unfold eye
-  rw [Matrix.add_apply, Matrix.sub_apply, put_entry, put_entry, dif_neg h, dif_neg h, sub_zero, add_zero]
+  rw [Matrix.add_apply, Matrix.sub_apply, put_entry, put_entry, dite_eq_right h, dite_eq_right h, sub_zero, add_zero]
 
 theorem det_dg' (n o : ℕ) {p : ℕ} (hp : o + p ≤ n) (g : GL (Fin p) R) :
     GeneralLinearGroup.det (dg n o g) = GeneralLinearGroup.det g := by
@@ -170,18 +170,18 @@ theorem dg_mul_dg_eq_emb₂ (n p q : ℕ) (h : p + q = n) (a : GL (Fin p) R) (b 
   rcases i with i | i <;> rcases j with j | j
   · have hi := i.2
     have hj := j.2
-    rw [dif_pos (by simp only [stdSum_inl]; omega), dif_neg (by simp only [stdSum_inl]; omega), add_zero,
+    rw [dite_eq_left (by simp only [stdSum_inl]; omega), dite_eq_right (by simp only [stdSum_inl]; omega), add_zero,
       fromBlocks_apply₁₁]
     congr 1 <;> apply Fin.ext <;> simp
   · have hi := i.2
-    rw [dif_neg (by simp only [stdSum_inl, stdSum_inr]; omega), dif_neg (by simp only [stdSum_inl, stdSum_inr]; omega), add_zero,
+    rw [dite_eq_right (by simp only [stdSum_inl, stdSum_inr]; omega), dite_eq_right (by simp only [stdSum_inl, stdSum_inr]; omega), add_zero,
       fromBlocks_apply₁₂, Matrix.zero_apply]
   · have hj := j.2
-    rw [dif_neg (by simp only [stdSum_inl, stdSum_inr]; omega), dif_neg (by simp only [stdSum_inl, stdSum_inr]; omega), add_zero,
+    rw [dite_eq_right (by simp only [stdSum_inl, stdSum_inr]; omega), dite_eq_right (by simp only [stdSum_inl, stdSum_inr]; omega), add_zero,
       fromBlocks_apply₂₁, Matrix.zero_apply]
   · have hi := i.2
     have hj := j.2
-    rw [dif_neg (by simp only [stdSum_inr]; omega), dif_pos (by simp only [stdSum_inr]; omega), zero_add,
+    rw [dite_eq_right (by simp only [stdSum_inr]; omega), dite_eq_left (by simp only [stdSum_inr]; omega), zero_add,
       fromBlocks_apply₂₂]
     show _ = (b : Matrix (Fin q) (Fin q) R) i j
     exact congrArg₂ (fun x y => (b : Matrix (Fin q) (Fin q) R) x y) (Fin.ext (by simp)) (Fin.ext (by simp))

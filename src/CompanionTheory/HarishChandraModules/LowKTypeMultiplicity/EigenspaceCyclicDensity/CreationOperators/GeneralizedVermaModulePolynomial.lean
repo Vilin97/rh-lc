@@ -220,7 +220,7 @@ theorem free_module_induction : FreeStep := by
     · have e1 : dd ε i.1.1 i.1.2 (y j f) - y j (dd ε i.1.1 i.1.2 f) = if i = j then f else 0 := by
         simp only [y]
         by_cases hj : ε j.1.1 = true ∧ ε j.1.2 = false
-        · rw [dif_pos hj]
+        · rw [dite_eq_left hj]
           have := LinearMap.congr_fun (dd_yy i.1.1 i.1.2 (⟨j.1, hj⟩ : NC ε)) f
           simp only [LinearMap.sub_apply, Module.End.mul_apply] at this
           rw [this]

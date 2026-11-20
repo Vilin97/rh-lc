@@ -50,7 +50,7 @@ theorem levGen_chi (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (hN : 0 < N) (x 
   obtain ⟨m, rfl⟩ : ∃ m, N = m + 1 := ⟨N - 1, by omega⟩
   rw [Finset.sum_range_succ, Nat.add_sub_cancel]
   have : Formalism.MainNotions.ArithmeticCylinders.entN (x : Matrix (Fin (m + 1)) (Fin (m + 1)) (ZMod g)) m (m + 1) = 0 := by
-    unfold Formalism.MainNotions.ArithmeticCylinders.entN; rw [dif_neg]; omega
+    unfold Formalism.MainNotions.ArithmeticCylinders.entN; rw [dite_eq_right]; omega
   rw [this, add_zero]
 
 theorem coeff_eU (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (hN : 0 < N) (x : GG g N) :

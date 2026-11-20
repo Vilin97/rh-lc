@@ -242,7 +242,7 @@ theorem eigComp_eq (s : 𝓞 E →+* ℂ) (x : W) : eigComp ρ s x = proj ρ s x
     have hts : t ≠ s := Finset.ne_of_mem_erase ht
     exact Submodule.mem_iSup_of_mem t (Submodule.mem_iSup_of_mem hts (proj_mem ρ t x))
   unfold eigComp
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have h2 := hsup hex.choose_spec.2
   rw [LinearMap.mem_ker, map_sub, proj_eig_self hex.choose_spec.1, sub_eq_zero] at h2
   exact h2.symm

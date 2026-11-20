@@ -25,7 +25,7 @@ def valHom (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) : Γ(X, U) →+* ℂ :=
 
 theorem valAt'_eq_valHom {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     valAt' x U f = valHom x U h f := by
-  rw [valAt', dif_pos h]; rfl
+  rw [valAt', dite_eq_left h]; rfl
 
 theorem valAt'_mul {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
     valAt' x U (f * f') = valAt' x U f * valAt' x U f' := by
@@ -73,14 +73,14 @@ theorem valAt'_id_top (r : Γ(Sp ℂ, ⊤)) :
   have e : ∀ k, Scheme.Hom.appLE (𝟙 (Sp ℂ)) ⊤ ⊤ k = 𝟙 _ := fun k => by
     rw [← Scheme.Hom.id_app]
     exact (Scheme.Hom.app_eq_appLE (𝟙 (Sp ℂ)) (U := ⊤)).symm
-  rw [valAt', dif_pos (show ⊤ ≤ 𝟙 (Sp ℂ) ⁻¹ᵁ ⊤ from fun _ _ => trivial), valAt, e]
+  rw [valAt', dite_eq_left (show ⊤ ≤ 𝟙 (Sp ℂ) ⁻¹ᵁ ⊤ from fun _ _ => trivial), valAt, e]
   rfl
 
 theorem ext_of_valAt'_of_isIso [IsIso x] {U : X.Opens} {f f' : Γ(X, U)}
     (h : ⊤ ≤ x ⁻¹ᵁ U → valAt' x U f = valAt' x U f') : f = f' := by
   by_cases hU : ⊤ ≤ x ⁻¹ᵁ U
   · have h1 := h hU
-    rw [valAt', valAt', dif_pos hU, dif_pos hU] at h1
+    rw [valAt', valAt', dite_eq_left hU, dite_eq_left hU] at h1
     have h2 := (ConcreteCategory.bijective_of_isIso
       (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom).1 h1
     have hinj : Function.Injective (x.appLE U ⊤ hU).hom := by

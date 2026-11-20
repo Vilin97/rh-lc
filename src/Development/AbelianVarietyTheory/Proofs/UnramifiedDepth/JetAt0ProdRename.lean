@@ -352,8 +352,8 @@ theorem _root_.GlobalTheory.JetProd.jetProd : _root_.Formalism.L2.FormalSeriesBo
       rfl
     · intro ρ hρ
       have hn : ¬ ∃ s, pl s = ρ := fun ⟨s, hs⟩ => hρ ⟨s, hs⟩
-      have hZ1 : _root_.Formalism.L2.FormalSeriesBounds.grAll pl gr ρ = 1 := by unfold _root_.Formalism.L2.FormalSeriesBounds.grAll; rw [dif_neg hn]
-      have hK : _root_.Formalism.L2.FormalSeriesBounds.kindAll pl kind ρ = none := by unfold _root_.Formalism.L2.FormalSeriesBounds.kindAll; rw [dif_neg hn]
+      have hZ1 : _root_.Formalism.L2.FormalSeriesBounds.grAll pl gr ρ = 1 := by unfold _root_.Formalism.L2.FormalSeriesBounds.grAll; rw [dite_eq_right hn]
+      have hK : _root_.Formalism.L2.FormalSeriesBounds.kindAll pl kind ρ = none := by unfold _root_.Formalism.L2.FormalSeriesBounds.kindAll; rw [dite_eq_right hn]
       rw [hZ1, hK]
       show MvPowerSeries.rename _ (1 * _root_.Formalism.IncomingBounds.mvExp 0) = 1
       rw [mvExp_zero_eq_one', mul_one, map_one]

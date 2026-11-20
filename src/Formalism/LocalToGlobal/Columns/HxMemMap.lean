@@ -103,11 +103,11 @@ def hxPrk (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) : ↥(CH.Lk D u
 
 theorem hxPr_eq (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (z : ↥(CH.Ld D u i c)) :
     hxPr A P i v c z = (P i hi).pr v c (hxLd i hi c z) := by
-  unfold hxPr; rw [dif_pos hi]; rfl
+  unfold hxPr; rw [dite_eq_left hi]; rfl
 
 theorem hxPrk_eq (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (z : ↥(CH.Lk D u (A.Pv v) i c)) :
     hxPrk A P i v c z = (P i hi).prk v c (hxLk A i hi v c z) := by
-  unfold hxPrk; rw [dif_pos hi]; rfl
+  unfold hxPrk; rw [dite_eq_left hi]; rfl
 
 theorem hxPr_surj (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) :
     Function.Surjective (hxPr A P i v c) := by
@@ -125,7 +125,7 @@ theorem hxPr_smul (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (r : �
     congr 1
     exact Subtype.ext (((CF.crdN D i hi : (D.sp.X i).V →ₗ[D.host.E] (Fin (D.R.N i) → D.host.E)).restrictScalars
       (𝓞 D.host.E)).map_smul r z.1)
-  · unfold hxPr; rw [dif_neg hi]; simp
+  · unfold hxPr; rw [dite_eq_right hi]; simp
 
 theorem hxPr_ker (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (z : ↥(CH.Ld D u i c)) :
     hxPr A P i v c z = 0 ↔ z.1 ∈ A.Pv v • CH.Ld D u i c := by
@@ -153,7 +153,7 @@ theorem hxPrk_smul (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (r : �
     congr 1
     exact Subtype.ext (((CF.crdN D i hi : (D.sp.X i).V →ₗ[D.host.E] (Fin (D.R.N i) → D.host.E)).restrictScalars
       (𝓞 D.host.E)).map_smul r z.1)
-  · unfold hxPrk; rw [dif_neg hi]; simp
+  · unfold hxPrk; rw [dite_eq_right hi]; simp
 
 theorem hxPrk_ker (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (z : ↥(CH.Lk D u (A.Pv v) i c)) :
     hxPrk A P i v c z = 0 ↔ z.1 ∈ A.Pv v • CH.Lk D u (A.Pv v) i c := by

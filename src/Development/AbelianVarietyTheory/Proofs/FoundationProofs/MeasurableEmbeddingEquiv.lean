@@ -19,7 +19,7 @@ theorem repOp_congr {π : H →* (V →L[ℂ] V)} {π' : H' →* (V →L[ℂ] V)
   by_cases hT : ∃ T, IsRepOp π μ f T
   · obtain ⟨T, hT⟩ := hT
     rw [hT.repOp_eq, ((h T).1 hT).repOp_eq]
-  · rw [repOp, repOp, dif_neg hT, dif_neg fun ⟨T, h'⟩ => hT ⟨T, (h T).2 h'⟩]
+  · rw [repOp, repOp, dite_eq_right hT, dite_eq_right fun ⟨T, h'⟩ => hT ⟨T, (h T).2 h'⟩]
 
 theorem repOp_smul_measure (π : H →* (V →L[ℂ] V)) (μ : Measure H) (f : H → ℂ) {c : ℝ≥0} (hc : c ≠ 0) :
     repOp π (c • μ) f = repOp π μ ((c : ℂ) • f) := by
@@ -65,8 +65,8 @@ theorem IsUnitEquiv.hasTrace {π : H →* (V →L[ℂ] V)} {π' : H →* (W →L
     rw [(isRepOp_conj A hA hT).repOp_eq]
     exact ⟨ht.1.comp_comp _ _, (ht.1.trace_conj _).trans ht.2⟩
   · obtain ⟨A, hA⟩ := h.symm
-    rw [repOp, dif_neg hT] at ht
-    rw [repOp, dif_neg fun ⟨T, h'⟩ => hT ⟨_, isRepOp_conj A hA h'⟩]
+    rw [repOp, dite_eq_right hT] at ht
+    rw [repOp, dite_eq_right fun ⟨T, h'⟩ => hT ⟨_, isRepOp_conj A hA h'⟩]
     exact ⟨isTraceClass_zero, trace_zero.trans (trace_zero.symm.trans ht.2)⟩
 
 end Operators

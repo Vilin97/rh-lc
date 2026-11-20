@@ -29,7 +29,7 @@ def entZero (D : D7) (Dx : DivX D) (Tw : TwForms D) (PE : PlEmb D) [∀ u μ i, 
   iL_lam := fun w x => by
     obtain ⟨hx, h⟩ := PE.iL_spec w x
     unfold lamV
-    rw [dif_pos hx, h]
+    rw [dite_eq_left hx, h]
   iL_int := PE.iL_int
   Th := fun _ _ _ _ _ _ => 0
   VQ := fun _ _ _ _ => PUnit

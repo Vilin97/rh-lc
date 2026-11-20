@@ -62,12 +62,12 @@ theorem mInt_congr {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e 
     (hg : ∀ x, g x = g' x) : mInt A Φ g = mInt A Φ' g' := by
   unfold ReciprocityTheory.AnForm.M.mInt
   by_cases h : Nonempty (ChartPartition A)
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     unfold ReciprocityTheory.AnForm.M.integralWith
     refine Finset.sum_congr rfl fun j _ => ?_
     refine MeasureTheory.setIntegral_congr_fun (A.chart j).open_target.measurableSet fun y hy => ?_
     simp only [hg, hΦ j y hy]
-  · rw [dif_neg h, dif_neg h]
+  · rw [dite_eq_right h, dite_eq_right h]
 
 theorem locDens_cons_congr {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas (e + 1) X)
     {Q Q' : LocPot X} (Φ : Fin e → LocPot X)

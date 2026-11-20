@@ -124,7 +124,7 @@ theorem oneP_spec {X : ThetaX D} (T : ThetaTied D X) (hθ : IsInfFam (D := D) θ
     IsAtTau θ V τ (NormedSpace.exp (t • Y)) (oneP θ V τ Y t) := by
   have h := (T.actR.2 θ hθ V τ _ (exp_mem_UH (gramAt_unit V τ) hY t)).1
   unfold oneP atTau
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def reSig (s : (D.host.E →+* ℂ) → ℕ × ℕ) : HSp D := { V with sig := s }

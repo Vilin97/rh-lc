@@ -95,7 +95,7 @@ theorem ratio_self_eq_one (hd : d.AxH 𝒜) (c : ι) :
   have hw := hd.w_base c
   have hex : ∃ a : Ω c, d.w (d.jc c) c = a • d.w (d.jc c) c := ⟨1, (one_smul _ _).symm⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hs := hex.choose_spec
   have h0 : (hex.choose - 1) • d.w (d.jc c) c = 0 := by
     rw [sub_smul, one_smul, ← hs, sub_self]

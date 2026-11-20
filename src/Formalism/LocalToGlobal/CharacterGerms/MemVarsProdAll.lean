@@ -30,7 +30,7 @@ theorem kindAll_pl {pl : (Σ i : Fin K, Fin (what₂ i)) → Fin N} (hpl : Funct
     (kind : ∀ i, Fin (what₂ i) → Knd d) (s : Σ i : Fin K, Fin (what₂ i)) : kindAll pl kind (pl s) = kind s.1 s.2 := by
   unfold kindAll
   have hex : ∃ s', pl s' = pl s := ⟨s, rfl⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hc : hex.choose = s := hpl hex.choose_spec
   rw [hc]
 
@@ -103,7 +103,7 @@ theorem rowsOK_prodAll (G : ∀ g, Cart V d (I g) (J g)) (alt : Prop)
       exact h3 w hw'
     · exfalso
       unfold kindAll at hk
-      rw [dif_neg hex] at hk
+      rw [dite_eq_right hex] at hk
       cases hk
   · by_cases hex : ∃ s, pl s = ρ
     · obtain ⟨s, rfl⟩ := hex

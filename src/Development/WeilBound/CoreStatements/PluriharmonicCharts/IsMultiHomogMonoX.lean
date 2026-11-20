@@ -30,7 +30,7 @@ theorem div_eq_of_local {P Δ : Ideal (MRing ι)} (hPp : P.IsPrime) (hΔp : Δ.I
   have hP : h ∉ P := fun hh => hhΔ (hPΔ hh)
   have hone : multAt (P ⊔ Ideal.span {g}) Δ = 1 := by
     unfold multAt
-    rw [dif_pos hΔp, DiagonalOrderOne.length_eq_one_of_sat _ Δ
+    rw [dite_eq_left hΔp, DiagonalOrderOne.length_eq_one_of_sat _ Δ
       (sup_le hPΔ ((Ideal.span_singleton_le_iff_mem _).2 hgΔ)) hsat]
     rfl
   have hJΔ : P ⊔ Ideal.span {g * h} ≤ Δ :=

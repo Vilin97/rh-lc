@@ -117,7 +117,7 @@ private theorem toL2_congr_of_eq_on_umat (F G : Matrix (Fin n) (Fin n) ℂ → �
     rw [dif_pos hF, dif_pos hG]
     exact MemLp.toLp_congr _ _ (Filter.Eventually.of_forall h)
   · have hG : ¬ MemLp (fun g : Formalism.REAL.UJ ε => G (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := hfg ▸ hF
-    rw [dif_neg hF, dif_neg hG]
+    rw [dite_eq_right hF, dite_eq_right hG]
 
 theorem rightRegular_datumEmbedding (hP : IsPsiFor ε lam T Ψ) (v₀ v : T.V) (k : S7.KG ε) :
     rreg ε (S7.toMK k) (uniformisationL2 ε Ψ v₀ v) = uniformisationL2 ε Ψ v₀ (T.op k v) := by

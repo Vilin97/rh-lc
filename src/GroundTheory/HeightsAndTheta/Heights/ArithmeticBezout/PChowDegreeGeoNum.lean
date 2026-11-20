@@ -67,7 +67,7 @@ theorem ChowDegreeGeoNum.proof (hS : ChowDegreeSection.Statement) (hP : ChowDegr
     have hrel := hW.2.2
     have hiW : (X ⟨(), (hrel ()).choose⟩ : MRing (PBlk n)) ∉ W := (hrel ()).choose_spec
     have hpt := hP F n _ (hrel ()).choose hI (hIdim.trans hdim) (by rwa [hX])
-    rw [geoNum, dif_pos hrel]
+    rw [geoNum, dite_eq_left hrel]
     have hrange : Set.range (fun k : Unit => (X ⟨k, (hrel k).choose⟩ : MRing (PBlk n)) - 1) =
         {(X ⟨(), (hrel ()).choose⟩ : MRing (PBlk n)) - 1} := by
       rw [Set.range_unique]
@@ -85,7 +85,7 @@ theorem ChowDegreeGeoNum.proof (hS : ChowDegreeSection.Statement) (hP : ChowDegr
     rw [hC n p W F hp hW hpW hsurj h0 _ hiW,
       Finsupp.sum_mapDomain_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)] at hsec
     show (chowDegree _ (e + 2) : ℤ) = _
-    rw [hsec, geoNum, dif_pos hrel]
+    rw [hsec, geoNum, dite_eq_left hrel]
     simp only [Fintype.sum_unique, one_mul, Finsupp.sum, Nat.cast_sum, Nat.cast_mul]
     have hfin := ReciprocityTheory.ChartRestriction.G.Geo.divSupp_finite W (X ⟨(), (hrel ()).choose⟩ : MRing (PBlk n))
     rw [finsum_mem_eq_finite_toFinset_sum _ hfin]

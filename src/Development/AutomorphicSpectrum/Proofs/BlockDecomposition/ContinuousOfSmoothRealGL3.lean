@@ -28,7 +28,7 @@ theorem smoothR_continuous : ∀ W : GL (Fin 3) ℝ → ℂ, SmoothR W → Conti
   have he : W = fun g => ext W (Matrix.of.symm g.val : M3) := by
     funext g
     have h : (Matrix.of (Matrix.of.symm g.val : M3)).det ≠ 0 := hm g
-    rw [Ad3.ext, dif_pos h]
+    rw [Ad3.ext, dite_eq_left h]
     congr 1
     apply Units.ext
     simp

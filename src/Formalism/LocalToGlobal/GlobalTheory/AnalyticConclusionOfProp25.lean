@@ -135,10 +135,10 @@ theorem sel_spec {ε C x : ℝ} (h : FiltrationCocycleLiftCriterion.QDExists ε 
   have h' : ∃ q : ℕ, ∃ d : ℕ, FiltrationCocycleLiftCriterion.QDGood ε C x q d := h
   have hq : ∃ d : ℕ, FiltrationCocycleLiftCriterion.QDGood ε C x (FiltrationCocycleLiftCriterion.qSel ε C x) d := by
     unfold FiltrationCocycleLiftCriterion.qSel
-    rw [dif_pos h']
+    rw [dite_eq_left h']
     exact Nat.find_spec h'
   unfold FiltrationCocycleLiftCriterion.dSel
-  rw [dif_pos hq]
+  rw [dite_eq_left hq]
   exact Nat.find_spec hq
 
 theorem analyticEndSel : AnalyticEndSel := by

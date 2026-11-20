@@ -835,7 +835,7 @@ theorem nuW_last_nonneg (u : Pr.Word) (i : ℕ) (hi : i < R.m) (τ : X.Tau) : 0 
     have gen : ∀ (c : ℕ) (hc : c < R.m), c = i → -wG R ((W.hc u τ).e ⟨c, hc⟩) (c + 1) = -wG R ((W.hc u τ).e ⟨i, hi⟩) (i + 1) := by
       rintro c hc rfl; rfl
     unfold Examples₂.wtN
-    rw [dif_neg (by unfold Ranks.N; omega), dif_pos (by rw [hb]; exact hi)]
+    rw [dite_eq_right (by unfold Ranks.N; omega), dif_pos (by rw [hb]; exact hi)]
     exact gen _ _ hb
   have hlt : R.N i < R.N (i + 1) := by unfold Ranks.N; rw [Nat.succ_mul]; omega
   have hle : R.N (i + 1) ≤ R.N R.m := by
@@ -904,7 +904,7 @@ theorem lamTrue_natW (u : Pr.Word) {i : ℕ} (hi : i < R.m) (τ : X.Tau) (r : Fi
     show (_ : ℤ).toNat = ((W.lamTrue u i τ).w ⟨r.1, h⟩ - (W.lamTrue u i τ).detShift).toNat + nuLast W u i τ
     rw [d0]
     omega
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     have eo := W.lamTrue_new u hi τ r h
     have key : (W.lamTrue u (i + 1) τ).w r - (W.lamTrue u (i + 1) τ).detShift = 0 := by
       have : (((W.lamTrue u (i + 1) τ).w r - (W.lamTrue u (i + 1) τ).detShift : ℤ) : ℚ) = ((0 : ℤ) : ℚ) := by

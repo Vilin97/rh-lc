@@ -30,7 +30,7 @@ variable {X : Scheme.{0}}
 
 theorem toStk_valAt' (x : Sp ℂ ⟶ X) (U : X.Opens) (z : Sp ℂ) (h : x z ∈ U) (a : Γ(X, U)) :
     toStk z (valAt' x U a) = gs x z U a := by
-  rw [valAt', dif_pos ((top_le_iff_mem x U z).2 h), valAt, gs_eq x z U h]
+  rw [valAt', dite_eq_left ((top_le_iff_mem x U z).2 h), valAt, gs_eq x z U h]
   show ((Sp ℂ).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of ℂ)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom _)) = _
   rw [Iso.hom_inv_id_apply]

@@ -201,7 +201,7 @@ theorem valueSpan_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y 
 theorem eventualValue_eq {f : (K → ℤ) → ℤ} {v : ℤ} (h : ∀ᶠ m in atTop, f m = v) :
     NumbersDVR.eventualValue f = v := by
   have hex : ∃ c, ∀ᶠ m in atTop, f m = c := ⟨v, h⟩
-  rw [NumbersDVR.eventualValue, dif_pos hex]
+  rw [NumbersDVR.eventualValue, dite_eq_left hex]
   obtain ⟨m, h1, h2⟩ := (hex.choose_spec.and h).exists
   rw [← h1, h2]
 

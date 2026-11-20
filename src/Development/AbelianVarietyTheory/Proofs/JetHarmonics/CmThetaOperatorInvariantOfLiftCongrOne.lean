@@ -188,8 +188,8 @@ theorem _root_.GlobalTheory.MomOne.lift_change : ∀ (q : ℕ) [Fact q.Prime] (l
     have hdivN : ((q : ℤ) ^ n) ∣ N := by
       obtain ⟨-, h1, h2⟩ := hid
       unfold _root_.Formalism.L2.Ker.JMB.lamA at h1 h2
-      rw [dif_pos hepsQ] at h1
-      rw [dif_pos hconjQ] at h2
+      rw [dite_eq_left hepsQ] at h1
+      rw [dite_eq_left hconjQ] at h2
       have hle1 : ‖lam ⟨eps, hepsQ⟩‖ ≤ 1 := by
         have h3 := IsUltrametricDist.norm_add_le_max (lam ⟨eps, hepsQ⟩ - 1) 1
         rw [sub_add_cancel, norm_one] at h3

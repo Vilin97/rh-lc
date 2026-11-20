@@ -415,7 +415,7 @@ variable {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (Λ : AddSubgroup �
 
 theorem lamC_zero : lamC lam 0 = 0 := by
   unfold lamC
-  rw [dif_pos (zero_mem _)]
+  rw [dite_eq_left (zero_mem _)]
   exact map_zero lam
 
 def idxK (r : ℕ) (I : Fin n') (J : Fin n) (k : Fin r) : Fin (n' * n * r) := eIdx n' n r ((I, J), k)
@@ -592,7 +592,7 @@ theorem pSer_blk (hTB : TaylorProductOverBlocks) (G : Fin n' → Fin n → VC D 
     intro I J; ext β
     show lamC lam (taylor D (G I J) β) = lam (TQ I J β)
     unfold lamC
-    rw [dif_pos ((hG I J).2 β)]
+    rw [dite_eq_left ((hG I J).2 β)]
   ext α
   change lamC lam (MvPowerSeries.coeff α (taylorSer D (fun z => ∏ I, ∏ J, G I J (blkPt D eR eC I J z)))) = _
   rw [hT]

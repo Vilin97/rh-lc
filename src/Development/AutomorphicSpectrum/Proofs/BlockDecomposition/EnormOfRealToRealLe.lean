@@ -339,7 +339,7 @@ theorem quotStage_holds : PositivityTheory.Rg.BcB.D4.QuotStage := by
     GlobalTheory.CompanionTheory.QuotNorm.quotIntegral_eq hΦm hΦT hσ]
   have hfin' : ∫⁻ x, ‖F x‖ₑ * ∫⁻ t in D, σ (((t⁻¹ : T) : G) * x) ∂μT ∂μ ≠ ∞ := by
     have hex : ∃ ρ, IsQuotNormaliser (Γ₀.map T.subtype) Measure.count ρ := ⟨_, hρ⟩
-    rw [quotLIntegral, dif_pos hex] at hfin
+    rw [quotLIntegral, dite_eq_left hex] at hfin
     rwa [lintegral_normaliser_eq hF.enorm (fun h hh g => by simp only [hFH h hh g]) hρ hex.choose_spec]
   exact integral_stage μ (μT.restrict D) hF hσ.1
     (GlobalTheory.CompanionTheory.QuotNorm.ae_lt_top_of_normaliser hρ) hfin'

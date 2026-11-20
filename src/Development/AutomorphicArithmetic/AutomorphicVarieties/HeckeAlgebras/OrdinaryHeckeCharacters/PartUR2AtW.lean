@@ -22,7 +22,7 @@ private theorem cLoc_ne {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
 private theorem cmp_of {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {w : Plc L}
     (h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : UA L n) : cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold CaseU.cmp
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 private theorem cmp_loc {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {w u : Plc L}
@@ -32,7 +32,7 @@ private theorem cmp_loc {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberFie
   · rw [cmp_of h]
     exact cLoc_ne hx hu
   · unfold CaseU.cmp
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     rfl
 
 section

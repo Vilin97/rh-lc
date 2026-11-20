@@ -14,7 +14,7 @@ noncomputable def cN (r : ℕ) (c : Fin r → ℂ) (j : ℕ) : ℂ := if h : j <
 
 theorem cN_mk (r : ℕ) (c : Fin r → ℂ) (j : ℕ) (h : j < r) : c ⟨j, h⟩ = cN r c j := by
   unfold cN
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 def swp (k r : ℕ) (p : Fin (2 * r + k + 1)) : Fin (2 * r + k + 1) :=
   if r ≤ p.val ∧ p.val ≤ r + k then p else ⟨2 * r + k - p.val, by omega⟩
@@ -171,7 +171,7 @@ def μE {k : ℕ} (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (i j : ℕ) : �
 theorem μE_mk {k : ℕ} (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (i j : ℕ) (hi : i < k + 1) (hj : j < k + 1) :
     μ ⟨i, hi⟩ ⟨j, hj⟩ = μE μ i j := by
   unfold μE
-  rw [dif_pos ⟨hi, hj⟩]
+  rw [dite_eq_left ⟨hi, hj⟩]
 
 theorem bigCell_apply (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ)
     (p q : Fin (2 * r + k + 1)) :
@@ -183,21 +183,21 @@ theorem bigCell_apply (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1))
   have hq := q.isLt
   simp only [bigCell]
   by_cases h1 : q.val < r
-  · rw [dif_pos h1, if_pos h1, cN_mk r c q.val h1]
+  · rw [dite_eq_left h1, if_pos h1, cN_mk r c q.val h1]
     have e : (p = esI k r ⟨q.val, h1⟩) ↔ p.val = 2 * r + k - q.val := by
       rw [Fin.ext_iff]
       rfl
     by_cases h : p.val = 2 * r + k - q.val
     · rw [if_pos (e.mpr h), if_pos h]
     · rw [if_neg (mt e.mp h), if_neg h]
-  · rw [dif_neg h1, if_neg h1]
+  · rw [dite_eq_right h1, if_neg h1]
     by_cases h2 : q.val ≤ r + k
-    · rw [dif_pos h2, if_pos h2]
+    · rw [dite_eq_left h2, if_pos h2]
       by_cases h3 : r ≤ p.val ∧ p.val ≤ r + k
-      · rw [dif_pos h3, if_pos h3]
+      · rw [dite_eq_left h3, if_pos h3]
         exact μE_mk μ _ _ _ _
-      · rw [dif_neg h3, if_neg h3]
-    · rw [dif_neg h2, if_neg h2]
+      · rw [dite_eq_right h3, if_neg h3]
+    · rw [dite_eq_right h2, if_neg h2]
       have h4 : 2 * r + k - q.val < r := by omega
       rw [cN_mk r c _ h4]
 

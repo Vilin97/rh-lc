@@ -10,22 +10,22 @@ namespace GlobalTheory.CxForm.HolAtlas
 variable {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
 
 theorem loc_one {i : A.ι} {v : V n} (hv : v ∈ (A.e i).target) : A.loc 1 i v = 1 := by
-  rw [HolAtlas.loc, dif_pos hv]; rfl
+  rw [HolAtlas.loc, dite_eq_left hv]; rfl
 
 theorem loc_add (α β : A.Fld) (i : A.ι) (v : V n) : A.loc (α + β) i v = A.loc α i v + A.loc β i v := by
   by_cases hv : v ∈ (A.e i).target
-  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dif_pos hv, dif_pos hv, dif_pos hv]; rfl
-  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dif_neg hv, dif_neg hv, dif_neg hv, add_zero]
+  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dite_eq_left hv, dite_eq_left hv, dite_eq_left hv]; rfl
+  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dite_eq_right hv, dite_eq_right hv, dite_eq_right hv, add_zero]
 
 theorem loc_mul (α β : A.Fld) (i : A.ι) (v : V n) : A.loc (α * β) i v = A.loc α i v * A.loc β i v := by
   by_cases hv : v ∈ (A.e i).target
-  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dif_pos hv, dif_pos hv, dif_pos hv]; rfl
-  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dif_neg hv, dif_neg hv, dif_neg hv, mul_zero]
+  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dite_eq_left hv, dite_eq_left hv, dite_eq_left hv]; rfl
+  · rw [HolAtlas.loc, HolAtlas.loc, HolAtlas.loc, dite_eq_right hv, dite_eq_right hv, dite_eq_right hv, mul_zero]
 
 theorem loc_smul (c : ℂ) (α : A.Fld) (i : A.ι) (v : V n) : A.loc (c • α) i v = c • A.loc α i v := by
   by_cases hv : v ∈ (A.e i).target
-  · rw [HolAtlas.loc, HolAtlas.loc, dif_pos hv, dif_pos hv]; rfl
-  · rw [HolAtlas.loc, HolAtlas.loc, dif_neg hv, dif_neg hv, smul_zero]
+  · rw [HolAtlas.loc, HolAtlas.loc, dite_eq_left hv, dite_eq_left hv]; rfl
+  · rw [HolAtlas.loc, HolAtlas.loc, dite_eq_right hv, dite_eq_right hv, smul_zero]
 
 theorem isForm_algebra : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : HolAtlas M n), A.IsForm 1 ∧
     ∀ (c : ℂ) (α β : A.Fld), A.IsForm α → A.IsForm β → A.IsForm (α + β) ∧ A.IsForm (α * β) ∧ A.IsForm (c • α) := by

@@ -144,7 +144,7 @@ theorem rowsDomAtP_of (hN : SupportG.NormProd D) (hTU : TopUnram D) (hRD : RowsD
       unfold KrOf
       rw [if_neg (Nat.succ_ne_zero _), if_neg (lt_irrefl _), hx, hy]
       simp only
-      rw [Kglob, dif_pos rfl]
+      rw [Kglob, dite_eq_left rfl]
     have hR : rowKer (PairVal.vRdef D u u' F0 what₂ δ M) κ (nc * α) x.1 y.1 =
         (∑' ρ, chat (PairVal.vRdef D u u' F0 what₂ δ M) κ (nc * α) ρ wx *
           star (chat (PairVal.vRdef D u u' F0 what₂ δ M) κ (nc * α) ρ wy)) /

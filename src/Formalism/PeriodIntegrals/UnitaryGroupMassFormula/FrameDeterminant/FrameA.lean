@@ -27,7 +27,7 @@ theorem dl_eq_det (F : FlagG S r T) (F' : FlagG S r T') {j : ℕ} (hj : j ≤ r)
     rw [hc]
     simp only [FlagG.fvec, Fin.snoc_castSucc]
   unfold Dl leadMinorE
-  rw [dif_pos h1]
+  rw [dite_eq_left h1]
   congr 1
   ext a b
   simp only [Matrix.of_apply, Matrix.submatrix_apply, Zhat, brS]

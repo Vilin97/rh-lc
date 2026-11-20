@@ -340,7 +340,7 @@ def glOf {ι R : Type} [Fintype ι] [DecidableEq ι] [CommRing R] (M : Matrix ι
 theorem glOf_val {ι R : Type} [Fintype ι] [DecidableEq ι] [CommRing R] (M : Matrix ι ι R) (h : IsUnit M.det) :
     ((glOf M : GL ι R) : Matrix ι ι R) = M := by
   unfold glOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 variable (L n) in

@@ -279,7 +279,7 @@ theorem fibre_term_ae : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fin
     obtain ⟨U, hU, hxU, -, s, hs, hsa, G, hG, hpot⟩ := hΦt i x x ⟨(Φ i).mem_U x, hxY⟩
     exact ⟨U, hU, hxU, s, hs, hsa, G, hG, hpot⟩
   unfold sheetDensity
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   beta_reduce
   rw [hgv, sheet_density_eq M Q (Yᶜ ∪ Z) x hxb hγ' c B Φ hsm hsec]
 

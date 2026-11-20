@@ -123,7 +123,7 @@ def pcEnc (K s : ℕ) (v : Fin K → ℤ) (q : Fin (2 * s + 1)) : ℤ :=
 theorem pcEnc_apply {K s : ℕ} (v : Fin K → ℤ) (q : Fin (2 * s + 1)) (i : Fin K) (hs : pcPosition K s q.val = i.val) :
     pcEnc K s v q = v i := by
   unfold pcEnc
-  rw [dif_pos (by rw [hs]; exact i.2)]
+  rw [dite_eq_left (by rw [hs]; exact i.2)]
   congr 1
   exact Fin.ext hs
 

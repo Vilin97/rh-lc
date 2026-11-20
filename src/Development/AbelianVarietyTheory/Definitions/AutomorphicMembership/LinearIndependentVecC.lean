@@ -79,7 +79,7 @@ def stdFrame (hp : X.p0 = r - j) (z : Pt Tau j (r - j)) : X.dom :=
   else ⟨stdMat X hj κ 0, stdMat_mem X hj κ hp fun _ => zero_mem_hcDom _ _⟩
 
 theorem stdFrame_val (hp : X.p0 = r - j) {z : Pt Tau j (r - j)} (hz : z ∈ DomI Tau j (r - j)) :
-    (stdFrame X hj κ hp z).1 = stdMat X hj κ z := by rw [stdFrame, dif_pos hz]
+    (stdFrame X hj κ hp z).1 = stdMat X hj κ z := by rw [stdFrame, dite_eq_left hz]
 
 theorem domPt_stdFrame (hp : X.p0 = r - j) {z : Pt Tau j (r - j)} (hz : z ∈ DomI Tau j (r - j)) :
     domPt X hj κ (stdFrame X hj κ hp z).1 = z := by rw [stdFrame_val X hj κ hp hz, domPt_stdMat]

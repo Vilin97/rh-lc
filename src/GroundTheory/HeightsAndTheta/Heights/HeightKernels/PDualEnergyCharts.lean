@@ -136,7 +136,7 @@ theorem atProj (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement)
     have hex : ∃ γ, IsSheet (dualIdeal b) Ψ y
         (segre (ι := dualBlocks T) (dualPlanePt b σ (A σ *ᵥ Fin.cons 1 y))) γ := ⟨_, hsheet σ y⟩
     unfold sheetDensity
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     have hev := hnear σ y _ hex.choose_spec
     beta_reduce
     rw [hev.self_of_nhds, hpotF, hpotS]
@@ -185,7 +185,7 @@ theorem DualEnergyCharts.proof (hInt : ChartEnergyIntegrable.Statement) : DualEn
       (pot fun j : Fin D => if (j : ℕ) < k then dualLine F b hb else dualLine F.withStdMetric b hb)
       (fun z => Real.log ((dualLine F b hb).h z) - Real.log ((dualLine F.withStdMetric b hb).h z)) = _
   unfold ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hE k
 
 end

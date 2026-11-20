@@ -25,7 +25,7 @@ theorem massBasic_mass_eq (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (Rin
     (hs : ∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s) :
     mass h L = ∑ M ∈ hs.choose, ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ := by
   unfold mass
-  rw [dif_pos hs]
+  rw [dite_eq_left hs]
 
 theorem massBasic_self_mem_genus (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (RingOfIntegers K) V)
     (hL : Submodule.IsLattice K L) : L ∈ genus h L := by

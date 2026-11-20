@@ -42,7 +42,7 @@ theorem gw_resIso (hgi : gi ≫ g = 𝟙 XT) (w₀ : LB.Iso (LT.pull g) (LG.pull
       · have := mem_pull.1 hm.2
         rwa [sec_apply hgi] at this
     show gm r z _ _ = gm (r ≫ gi) z _ _
-    rw [gm, gm, dif_neg h, dif_neg h']; rfl
+    rw [gm, gm, dite_eq_right h, dite_eq_right h']; rfl
 
 theorem resIso_pgen (hgi : gi ≫ g = 𝟙 XT) (w₀ : LB.Iso (LT.pull g) (LG.pull c)) (hw₀ : PGen w₀) :
     PGen (resIso hgi w₀) := by

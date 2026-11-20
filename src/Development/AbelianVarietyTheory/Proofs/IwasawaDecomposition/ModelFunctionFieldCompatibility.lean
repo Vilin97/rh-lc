@@ -14,7 +14,7 @@ theorem ratVal_eq {Z : Scheme.{0}} [IsIntegral Z] {k : Type} [CommRing k] {q : Z
     (y : CxPts q σ) (f : Z.functionField) : ratVal f y = valAt y.1 f := by
   by_cases hf : RegAt (under y) f
   · exact ratVal_eq_valAt y hf
-  · rw [ratVal, valAt, dif_neg hf, dif_neg hf]
+  · rw [ratVal, valAt, dite_eq_right hf, dite_eq_right hf]
 
 theorem valAt_comp {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (j : Y ⟶ X) [IsPreimmersion j]
     (hη : j (genericPoint Y) ⤳ genericPoint X) {K : Type} [Field K] (y : Sp K ⟶ Y) (f : X.functionField) :
@@ -22,7 +22,7 @@ theorem valAt_comp {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (j : Y ⟶ X
   by_cases hf : RegAt (j (below y)) f
   · exact (valAt_fnMap j hη y hf).symm
   · have h₁ : ¬ RegAt (below (y ≫ j)) f := hf
-    rw [valAt, valAt, dif_neg h₁, dif_neg (mt (regAt_fnMap_iff j hη).1 hf)]
+    rw [valAt, valAt, dite_eq_right h₁, dite_eq_right (mt (regAt_fnMap_iff j hη).1 hf)]
 
 theorem main : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (M : TrueGeo.Model Y), haveI := M.ar.isIntegral; ∃ ρ : M.X.functionField ≃+* Y.Fn, (∀ (U : M.X.Opens) (hU : genericPoint M.X ∈ U) (hU' : genericPoint Y.X ∈ M.j ⁻¹ᵁ U) (s : Γ(M.X, U)), ρ (fnOf U hU s) = fnOf (M.j ⁻¹ᵁ U) hU' (M.j.app U s)) ∧ M.j (genericPoint Y.X) = genericPoint M.X ∧ (∀ (x : Y.X) (f : M.X.functionField), RegAt (M.j x) f ↔ RegAt x (ρ f)) ∧ (∀ (K : Type) [Field K] (y : Sp K ⟶ Y.X) (f : M.X.functionField), valAt (y ≫ M.j) f = valAt y (ρ f)) ∧ ∀ (σ : F →+* ℂ) (y : Pts Y σ) (y' : CxPts M.p (σ.comp (algebraMap (𝓞 F) F))), y'.1 = y.1 ≫ M.j → ∀ f : M.X.functionField, ratVal f y' = ratVal (ρ f) y := by
   intro F _ _ Y M

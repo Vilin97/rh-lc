@@ -21,7 +21,7 @@ def expG {n : ℕ} (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) (t : �
 
 lemma toM_expG {n : ℕ} (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) (h : inG ε X) :
     toM (expG ε X t) = NormedSpace.exp ((t : ℂ) • X) := by
-  rw [expG, dif_pos h]
+  rw [expG, dite_eq_left h]
   exact IsUnit.unit_spec _
 
 lemma Kset_mul {n : ℕ} (ε : Fin n → Bool) {g h : Matrix (Fin n) (Fin n) ℂ} (hg : g ∈ Kset ε)

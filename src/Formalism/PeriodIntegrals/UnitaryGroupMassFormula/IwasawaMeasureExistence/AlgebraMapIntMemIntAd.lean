@@ -268,7 +268,7 @@ theorem nrmF_eq (u : (AEf I)ˣ) : nrmF I u = ((FractionalIdeal.absNorm (FI I u) 
   have hf : IsFractional (𝓞 I.E)⁰ (idl I u) := h ▸ isFractional_cid I u
   have e : (⟨idl I u, hf⟩ : FractionalIdeal (𝓞 I.E)⁰ I.E) = FI I u := Subtype.ext h
   unfold nrmF
-  rw [dif_pos hf, e]
+  rw [dite_eq_left hf, e]
 
 theorem nrmF_pos (u : (AEf I)ˣ) : 0 < nrmF I u := by
   rw [nrmF_eq]

@@ -135,7 +135,7 @@ theorem GlobalTheory.OneAct.heckeFunI_unit : ∀ (L : Type) [Field L] [NumberFie
   rw [finsum_eq_single _ ((1 : GAf L n) : GAf L n ⧸ U)]
   · have hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = ((1 : GAf L n) : GAf L n ⧸ U) ∧ TrivOutside {v} x :=
       ⟨1, rfl, hone⟩
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     obtain ⟨hx1, hx2⟩ := hc.choose_spec
     have hxU : hc.choose ∈ U := by
       have := QuotientGroup.eq.1 hx1
@@ -143,7 +143,7 @@ theorem GlobalTheory.OneAct.heckeFunI_unit : ∀ (L : Type) [Field L] [NumberFie
     have hxM : hc.choose ∈ Umax L n := (hU _ hx2).1 hxU
     have hval : Dv.hval (dosetInd ℂ (KU Dv.σw n) 1) (Dv.loc hc.choose) = 1 := by
       unfold InertDatum.hval
-      rw [dif_pos (GlobalTheory.OneAct.loc_mem_GU Dv _)]
+      rw [dite_eq_left (GlobalTheory.OneAct.loc_mem_GU Dv _)]
       unfold dosetInd
       rw [Set.indicator_of_mem ((hdK _).2 (GlobalTheory.OneAct.loc_mem_KU Dv hxM))]
       rfl

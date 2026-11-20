@@ -232,13 +232,13 @@ theorem prod_kLetters {s : ℕ} (r A0 : ℕ) (A C : Fin s → ℕ) :
     intro i
     have hi := i.isLt
     simp only [hkd]
-    rw [if_neg (by omega), dif_pos (by omega), if_pos (by omega)]
+    rw [if_neg (by omega), dite_eq_left (by omega), if_pos (by omega)]
     simp only [show (2 * i.val + 1 - 1) / 2 = i.val by omega, Fin.eta]
   have k2 : ∀ i : Fin s, kd (2 * i.val + 2) = C i := by
     intro i
     have hi := i.isLt
     simp only [hkd]
-    rw [if_neg (by omega), dif_pos (by omega), if_neg (by omega)]
+    rw [if_neg (by omega), dite_eq_left (by omega), if_neg (by omega)]
     simp only [show (2 * i.val + 2 - 1) / 2 = i.val by omega, Fin.eta]
   simp only [hdeg, hsd]
   refine (Fin.prod_univ_eq_prod_range (fun n => (sd r (kd n) : ℚ)) (2 * s + 1)).trans ?_

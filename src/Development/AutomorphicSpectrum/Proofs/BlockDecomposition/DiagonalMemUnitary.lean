@@ -134,7 +134,7 @@ theorem countG : CountG := by
     intro i
     have := htr i.1 i.2
     unfold trOn at this
-    rwa [dif_pos (hB _)] at this
+    rwa [dite_eq_left (hB _)] at this
   haveI hWnt : ∀ i, Nontrivial (W i) := by
     intro i
     by_contra hnt
@@ -163,7 +163,7 @@ theorem countG : CountG := by
       ext ξ
       rw [hR0]
       have := hf i.1 i.2 ξ
-      rw [dif_pos i.2] at this
+      rw [dite_eq_left i.2] at this
       exact this
   let R := LinearEquiv.ofBijective R0 hbij
   let Fl := (flipA E A T).restrict (p := invA σ E) (q := invA σ E) hF
@@ -189,10 +189,10 @@ theorem countG : CountG := by
     rw [hno _ hμ'] at h1
     simpa using h1
   · have e1 : trOn (invA σ E) (flipA E A T) = LinearMap.trace ℂ (invA σ E) Fl := by
-      unfold trOn; rw [dif_pos hF]
+      unfold trOn; rw [dite_eq_left hF]
     have e2 : ∀ i : ι, trOn (hwSp E1 E2 (wtR i.1)) A = LinearMap.trace ℂ (H i) (a i) := by
       intro i
-      unfold trOn; rw [dif_pos (hA _)]
+      unfold trOn; rw [dite_eq_left (hA _)]
     rw [e1, htrace, hse, Finset.sum_image (fun x _ y _ h => wtR_injective h), Finset.mul_sum,
       ← Finset.sum_coe_sort (harmZ lam)]
     refine Finset.sum_congr rfl fun i _ => ?_

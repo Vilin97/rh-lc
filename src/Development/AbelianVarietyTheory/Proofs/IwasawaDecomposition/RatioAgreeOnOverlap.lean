@@ -36,12 +36,12 @@ theorem exists_chart_gen (Z : Mdl Y i₀) (y : Z.Pt) :
 theorem valF_res {F : Type} [Field F] {X : Scheme.{0}} {x : Sp F ⟶ X} {U V : X.Opens} (e : V ≤ U)
     (h : ⊤ ≤ x ⁻¹ᵁ V) (a : Γ(X, U)) : valF x V ((X.presheaf.map (homOfLE e).op).hom a) = valF x U a := by
   have h' : ⊤ ≤ x ⁻¹ᵁ U := fun q hq => e (h hq)
-  rw [valF, valF, dif_pos h, dif_pos h', ← Scheme.Hom.map_appLE x h (homOfLE e).op]
+  rw [valF, valF, dite_eq_left h, dite_eq_left h', ← Scheme.Hom.map_appLE x h (homOfLE e).op]
   rfl
 
 theorem valF_pow_natCast {F : Type} [Field F] {X : Scheme.{0}} {x : Sp F ⟶ X} {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U)
     (n : ℕ) : valF x U ((p : Γ(X, U)) ^ n) = (p : F) ^ n := by
-  rw [valF, dif_pos h, map_pow, map_pow, map_natCast, map_natCast]
+  rw [valF, dite_eq_left h, map_pow, map_pow, map_natCast, map_natCast]
 
 theorem exists_pow_of_rad {X : Scheme.{0}} {U : X.Opens} {C : Γ(X, U)}
     (h : (p : Γ(X, U)) ∈ (Ideal.span (Set.range ![C])).radical) : ∃ (n : ℕ) (c : Γ(X, U)), c * C = (p : Γ(X, U)) ^ n := by

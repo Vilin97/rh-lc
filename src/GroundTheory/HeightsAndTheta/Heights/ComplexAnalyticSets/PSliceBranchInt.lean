@@ -87,7 +87,7 @@ theorem SliceBranchInt.proof (hBP : IndefiniteRowSideFullHecke.ComplexSets.Branc
       obtain ⟨U, hU, hS, hc⟩ := hφ i
       exact ⟨U, hU, (show zeroSet W ⊆ zeroSet J from fun x hx p hp => hx p (hJW hp)).trans hS, hc⟩)
   · unfold varInt
-    rw [dif_pos hex, hA]
+    rw [dite_eq_left hex, hA]
     rfl
   · have h2 := hprop b (hypIncl w) (hball w hw) (Set.mem_iInter.1 hN.2 b)
     rwa [Metric.mem_closedBall, dist_zero_right, SliceBranchInt.norm_hypIncl] at h2

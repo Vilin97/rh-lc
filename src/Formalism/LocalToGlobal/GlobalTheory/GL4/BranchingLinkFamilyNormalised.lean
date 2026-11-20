@@ -63,7 +63,7 @@ theorem normTil_nonneg {n : ℕ} (lt : DomWeight (n + 1)) (G : GL (Fin (n + 1)) 
 theorem spread_eq {n : ℕ} (lt : DomWeight (n + 1)) :
     lt.spread = lt.w 0 - lt.w (Fin.last n) + ((n : ℤ) + 1) := by
   unfold DomWeight.spread
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   have : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp)
   rw [this]
   push_cast
@@ -148,7 +148,7 @@ theorem shiftW_shiftW_neg {N : ℕ} (lam : DomWeight N) (c : ℤ) : shiftW (shif
 theorem detShift_shiftW {N : ℕ} (lam : DomWeight N) (c : ℤ) (hN : 0 < N) :
     (shiftW lam c).detShift = lam.detShift + c := by
   unfold DomWeight.detShift
-  rw [dif_pos hN, dif_pos hN]
+  rw [dite_eq_left hN, dite_eq_left hN]
   rfl
 
 theorem natW_shiftW {N : ℕ} (lam : DomWeight N) (c : ℤ) : (shiftW lam c).natW = lam.natW := by

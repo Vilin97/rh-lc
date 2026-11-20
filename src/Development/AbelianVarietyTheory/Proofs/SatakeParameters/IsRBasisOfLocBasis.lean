@@ -178,7 +178,7 @@ theorem exists_tauHom (D : D7) (lam : TaylorLogMetric.Qbar →+* ℂ_[p]) (τ : 
   have h : ∀ x, TaylorLogMetric.embT D τ x ∈ TaylorLogMetric.Qbar := fun x =>
     mem_algebraicClosure_iff.2 ((Algebra.IsAlgebraic.isAlgebraic (R := ℚ) x).algHom (TaylorLogMetric.embT D τ).toRatAlgHom)
   refine ⟨lam.comp ((TaylorLogMetric.embT D τ).codRestrict TaylorLogMetric.Qbar h), funext fun x => ?_⟩
-  rw [TaylorLogMetric.tauEmb, TaylorLogMetric.lamC, dif_pos (h x)]
+  rw [TaylorLogMetric.tauEmb, TaylorLogMetric.lamC, dite_eq_left (h x)]
   rfl
 
 end GlobalTheory.JetTieCompare

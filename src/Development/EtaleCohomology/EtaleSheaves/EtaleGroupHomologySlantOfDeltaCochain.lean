@@ -165,7 +165,7 @@ theorem etale_group_homology_slant_of_delta_cochain (h : DeltaCo) : D3 := by
     rw [e]
     exact AddMonoidHom.liftOfRightInverse_comp_apply _ _ _ ⟨T, hk⟩ c
   unfold slantR
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem goal_of (h : DeltaCo) : LateralTheory.E.EtaleChapterDThree :=

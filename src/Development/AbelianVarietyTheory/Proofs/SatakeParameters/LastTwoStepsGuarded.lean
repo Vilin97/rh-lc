@@ -71,7 +71,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
 theorem atNL_last (v : Sp X.E (R.N R.m)) : atNL X.E (R.N R.m) (R.N R.m - 1) v = v (Br.iL (N_m_succ R)) := by
   have h : R.N R.m - 1 < R.N R.m := (Br.iL (N_m_succ R)).2
   unfold atNL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem good_ftY (hc : cst.Ok) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs) {n : ℕ} {y : Sp X.E n}
@@ -195,7 +195,7 @@ theorem fnMod_topDatum (hc : cst.Ok) {m2 : ℕ} (hm : R.m = m2 + 2) (P : rowSG P
 theorem frsF_mem {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs)
     (x : Sp X.E (R.N j)) : frsF sel mu p P x ∈ localization₂ P.1.asIdeal p.deco.1.N ↔ x ∈ stdAt X.E (R.N j) P.1 := by
   unfold frsF
-  rw [dif_pos hP]
+  rw [dite_eq_left hP]
   exact (liftFr_spec p.deco.2 ⟨P.1, hP⟩).1 x
 
 theorem frsF_symm_mem {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs)

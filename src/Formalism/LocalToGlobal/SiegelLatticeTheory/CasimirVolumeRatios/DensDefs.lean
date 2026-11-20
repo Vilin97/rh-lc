@@ -57,7 +57,7 @@ theorem ratM_spec {x : I.GA} (h : x ∈ I.GFset) :
     ratM I x ∈ Formalism.UG.UJ (starRingEnd I.E) I.J ∧
       I.fmat x.2 = (ratM I x : Matrix (Fin I.n) (Fin I.n) I.E).map (Formalism.UG.inclE (F := I.F) (Af I.F)) := by
   unfold ratM
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact ⟨h.choose_spec.1, h.choose_spec.2.2⟩
 
 theorem af_nontrivial (F : Type) [Field F] [NumberField F] : Nontrivial (Af F) := by

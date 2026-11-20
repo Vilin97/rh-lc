@@ -77,7 +77,7 @@ theorem nablaBdd : NablaBdd := by
         Formalism.CohomologicalDescent.LR.der (M + 1) (M + 1) ⟨c, hc⟩ ⟨c, hc⟩ (y : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ) := by
     intro c hc y
     unfold eV
-    rw [dif_pos ⟨hc, hc⟩]
+    rw [dite_eq_left ⟨hc, hc⟩]
     rfl
   have hc := congrArg (fun y : dualWeyl ℚ (M + 1) (M + 1) ν => AddMonoidAlgebra.coeff (y : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ) m) hx
   simp only [Submodule.coe_sub, Submodule.coe_smul, hea a ha, hea b hb, coeff_sub,

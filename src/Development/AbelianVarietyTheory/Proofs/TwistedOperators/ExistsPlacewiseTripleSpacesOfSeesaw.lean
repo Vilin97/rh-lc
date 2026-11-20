@@ -333,7 +333,7 @@ theorem GlobalTheory.PlaceSpaces.spaces_of_triple : ∀ (D : D7) (W W₁ X : HSp
   case h5 =>
     intro v
     show GlobalTheory.AdelicU.IsSplitBasis (Bs.τ v) _ (if h : v.1 ∈ Bs.P then (exW ⟨v.1, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (exW v).choose_spec
   case g1 =>
     intro a b
@@ -367,7 +367,7 @@ theorem GlobalTheory.PlaceSpaces.spaces_of_triple : ∀ (D : D7) (W W₁ X : HSp
   case g5 =>
     intro v
     show GlobalTheory.AdelicU.IsSplitBasis (Bs.τ v) _ (if h : v.1 ∈ Bs.P then (exW₁ ⟨v.1, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (exW₁ v).choose_spec
   case k1 =>
     intro a b
@@ -392,5 +392,5 @@ theorem GlobalTheory.PlaceSpaces.spaces_of_triple : ∀ (D : D7) (W W₁ X : HSp
   case k5 =>
     intro v
     show GlobalTheory.AdelicU.IsSplitBasis (Bs.τ v) _ (if h : v.1 ∈ Bs.P then (exX ⟨v.1, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (exX v).choose_spec

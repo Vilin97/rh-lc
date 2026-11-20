@@ -95,7 +95,7 @@ def sect (ξ : Fin (m + 1) → k) : GL (Fin (m + 1)) k :=
 
 theorem sect_spec {ξ : Fin (m + 1) → k} (h : ξ ≠ 0) :
     xz m ᵥ* (((sect ξ)⁻¹ : GL (Fin (m + 1)) k) : Matrix (Fin (m + 1)) (Fin (m + 1)) k) = ξ := by
-  rw [sect, dif_neg h, inv_inv]
+  rw [sect, dite_eq_right h, inv_inv]
   exact Classical.choose_spec (GlobalTheory.T.exists_GL_last_basis_vecMul_eq k m ξ h)
 
 open Classical in

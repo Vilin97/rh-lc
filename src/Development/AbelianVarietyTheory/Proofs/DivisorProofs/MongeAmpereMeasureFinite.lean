@@ -10,7 +10,7 @@ theorem maMeasure_lt_top_of_locally_finite : ∀ {e : ℕ} {X : Type} [Topologic
   intro e X _ _ _ _ _ A Φ O hO hV
   by_cases hne : Nonempty (ChartPartition A)
   swap
-  · unfold maMeasure; rw [dif_neg hne]; simp
+  · unfold maMeasure; rw [dite_eq_right hne]; simp
   rw [maMeasure_eq_sum A Φ hne, Measure.coe_finsetSum, Finset.sum_apply]
   refine ENNReal.sum_lt_top.mpr fun j _ => ?_
   set P := hne.some

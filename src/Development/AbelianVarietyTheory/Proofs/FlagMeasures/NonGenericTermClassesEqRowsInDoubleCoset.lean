@@ -51,7 +51,7 @@ theorem frame_orth_Xsp {T : E} (F : LFlag S r T) (i : Fin (r + 1)) (y : S.V) (hy
 theorem mapLF_fvec {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T)
     (i : Fin (r + 1)) : (mapLF γ F).fl.fvec i = γ (F.fl.fvec i) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   induction i using Fin.lastCases with
   | last => simp [FlagG.fvec, mapFlag]
   | cast a => simp [FlagG.fvec, mapFlag]

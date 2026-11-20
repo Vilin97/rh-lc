@@ -28,7 +28,7 @@ def plRed (Pl : PlSide D) (w : D.what₂.places.Pl) : Zbar (D.what₂.places.res
 
 theorem plRed_eq (Pl : PlSide D) (w : D.what₂.places.Pl) (z : Zbar (D.what₂.places.resChar w)) :
     plRed Pl w z = Formalism.L2.NT.redThrough (Pl.plB w) (Pl.plκ w) (Pl.ι w z) := by
-  rw [Formalism.L2.NT.redThrough, dif_pos (mem_plB Pl w z)]
+  rw [Formalism.L2.NT.redThrough, dite_eq_left (mem_plB Pl w z)]
   rfl
 
 theorem teichAt_of_iotaOk {Pl : PlSide D} (h : IotaOk D Pl) (w : D.what₂.places.Pl) : TeichAt (Pl.ι w) w (plRed Pl w) :=

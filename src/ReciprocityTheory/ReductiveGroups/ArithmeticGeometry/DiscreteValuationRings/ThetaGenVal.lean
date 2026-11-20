@@ -28,7 +28,7 @@ def valE (hϖ : Irreducible ϖ) (c : FractionRing V) : ℤ :=
 
 lemma hasVal_valE (hϖ : Irreducible ϖ) {c : FractionRing V} (hc : c ≠ 0) : HasVal ϖ c (valE hϖ c) := by
   unfold valE
-  rw [dif_neg hc]
+  rw [dite_eq_right hc]
   exact (hasVal_of_ne_zero hϖ hc).choose_spec
 
 open scoped Classical in

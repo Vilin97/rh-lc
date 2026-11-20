@@ -163,14 +163,14 @@ private theorem psi_at {m : ℕ} {α : KG K m → archCompact K m} {β : KG K m 
     psi α β f χ (arc1 a * fin1 (h : FA K m)) = f a * χ h := by
   have hm : arc1 a * fin1 (h : FA K m) ∈ KG K m := mul_mem (ha a) (hf h)
   obtain ⟨h1, h2⟩ := hu a h ⟨_, hm⟩ rfl
-  rw [psi, dif_pos hm, h1, h2]
+  rw [psi, dite_eq_left hm, h1, h2]
 
 private theorem psi_cont {m : ℕ} {α : KG K m → archCompact K m} {β : KG K m → AdelicGLn.integralFiniteGL K m}
     {f : archCompact K m → ℂ} {χ : AdelicGLn.integralFiniteGL K m → ℂ} (hα : Continuous α) (hβ : Continuous β)
     (hf : Continuous f) (hχ : Continuous χ) : Continuous fun k : KG K m => psi α β f χ k := by
   have e : (fun k : KG K m => psi α β f χ k) = fun k => f (α k) * χ (β k) := by
     funext k
-    rw [psi, dif_pos k.2]
+    rw [psi, dite_eq_left k.2]
   rw [e]
   exact (hf.comp hα).mul (hχ.comp hβ)
 
@@ -239,7 +239,7 @@ private theorem closing (κ : Measure (archCompact K 2)) (ν : Measure (AdelicGL
   calc _ = ∫ v₁ : KG K 2, psi α₂ β₂ (fun a => g₁ a * G) X (v₁ : G1 K 2) ∂ρ := by
         refine integral_congr_ae (Eventually.of_forall fun v₁ => ?_)
         change J v₁ = psi α₂ β₂ (fun a => g₁ a * G) X (v₁ : G1 K 2)
-        rw [hJ, psi, dif_pos v₁.2]
+        rw [hJ, psi, dite_eq_left v₁.2]
     _ = ∫ a, ∫ d, g₁ a * G * X d ∂ν ∂κ := by
         rw [hρF _ hFc]
         simp only [psi_at _ _ huniq₂ harc₂ hfin₂]

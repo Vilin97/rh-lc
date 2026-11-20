@@ -76,7 +76,7 @@ private theorem ipM_eq_of_isMultIP {M : DSModel V S} {μ : Measure (GA D V)} {�
     ipM M μ 𝓕 T T' = c := by
   have hex : ∃ c, IsMultIP M μ 𝓕 T T' c := ⟨c, h⟩
   unfold ipM
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact isMultIP_const_unique v hv hex.choose_spec h
 
 theorem ipM_smul_of_vec (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (T T' : MMap M) {a : ℝ}
@@ -93,7 +93,7 @@ theorem ipM_smul_of_vec (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (G
         one_smul] at hb
       exact hex ⟨_, hb⟩
     unfold ipM
-    rw [dif_neg hex, dif_neg hex', mul_zero]
+    rw [dite_eq_right hex, dite_eq_right hex', mul_zero]
 
 theorem exists_vec_of_ne {M : DSModel V S} {T : MMap M} (hT : T ≠ 0) :
     ∃ v : M.Vec, ∏ τ, ⟪(v τ : M.H τ), (v τ : M.H τ)⟫_ℂ ≠ 0 := by

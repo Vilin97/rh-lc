@@ -51,7 +51,7 @@ theorem orbJ_smulF (D : Formalism.FourierDecayAlt.B.RealPlaceData k r Wp Wq) (γ
         ∃ θ, Formalism.FourierDecayAlt.D.IsNormCut D γ μ θ ∧
         Integrable (fun p => θ p • Formalism.FourierDecayAlt.D.orbIntegrand D γ F p) D.μSS from congrArg Exists hP]
       exact h2
-    rw [dif_pos h1, dif_pos h2, choose_congr hP h1 h2, e2, integral_smul]
+    rw [dite_eq_left h1, dite_eq_left h2, choose_congr hP h1 h2, e2, integral_smul]
   · have h1 : ¬ ∃ θ, Formalism.FourierDecayAlt.D.IsNormCut D γ μ θ ∧
         Integrable (fun p => θ p • Formalism.FourierDecayAlt.D.orbIntegrand D γ (fun g => c • F g) p) D.μSS := by
       rw [show (∃ θ, Formalism.FourierDecayAlt.D.IsNormCut D γ μ θ ∧
@@ -59,7 +59,7 @@ theorem orbJ_smulF (D : Formalism.FourierDecayAlt.B.RealPlaceData k r Wp Wq) (γ
         ∃ θ, Formalism.FourierDecayAlt.D.IsNormCut D γ μ θ ∧
         Integrable (fun p => θ p • Formalism.FourierDecayAlt.D.orbIntegrand D γ F p) D.μSS from congrArg Exists hP]
       exact h2
-    rw [dif_neg h1, dif_neg h2, smul_zero]
+    rw [dite_eq_right h1, dite_eq_right h2, smul_zero]
 
 end Lin
 

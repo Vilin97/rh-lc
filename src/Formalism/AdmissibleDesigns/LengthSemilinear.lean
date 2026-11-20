@@ -185,7 +185,7 @@ theorem tieSel1_of
         (idx_mem_rows_cols i dc hw)
       have hb := hBk v hw y hm
       unfold Br.LlG
-      rw [dif_pos hw]
+      rw [dite_eq_left hw]
       exact hb
     · exact Submodule.mem_top
     · have hS : v ∉ D.nd.S i := fun h => h2 (Or.inl h)
@@ -226,10 +226,10 @@ private theorem plOf_idx_of_mem_plSet (v : HeightOneSpectrum (𝓞 D.host.E)) (h
     plOf i dc (idx i dc v) = v := by
   have h1 : idx i dc v = ((plSet i dc).equivFin ⟨v, hv⟩ : ℕ) := by
     unfold idx
-    rw [dif_pos hv]
+    rw [dite_eq_left hv]
   rw [h1]
   unfold plOf
-  rw [dif_pos (Fin.is_lt _)]
+  rw [dite_eq_left (Fin.is_lt _)]
   simp
 
 theorem plOf_mem_row {n : ℕ} (hn : n ∈ rowsN i dc) : plOf i dc n ∈ dc.row := by

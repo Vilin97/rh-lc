@@ -27,7 +27,7 @@ private theorem UpperTheory.exists_vector_of_minor_cofactors {K : Type} [Field K
         else (0 : K)) = 0 := by
     intro k hk
     have : (i : ℕ) < k := hk
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
   refine ⟨fun l => if hl : (l : ℕ) < (i : ℕ) + 1 then (-1) ^ ((i : ℕ) + (l : ℕ)) *
       (Matrix.of fun a b : Fin (i : ℕ) => P (σ a) (Fin.castLE i.2 ((⟨l, hl⟩ : Fin ((i : ℕ) + 1)).succAbove b))).det
         else 0, ?_, hz, ?_⟩

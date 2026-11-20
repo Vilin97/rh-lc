@@ -59,8 +59,8 @@ theorem partitionExtendByZero_antitone {p : ℕ} {f : Fin p → ℕ} (hf : Antit
   intro i k hik
   unfold ext0
   by_cases hk : k < p
-  · rw [dif_pos hk, dif_pos (lt_of_le_of_lt hik hk)]; exact hf hik
-  · rw [dif_neg hk]; exact Nat.zero_le _
+  · rw [dite_eq_left hk, dite_eq_left (lt_of_le_of_lt hik hk)]; exact hf hik
+  · rw [dite_eq_right hk]; exact Nat.zero_le _
 
 open Classical in
 

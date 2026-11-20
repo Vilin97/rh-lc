@@ -29,7 +29,7 @@ theorem vacFn_apply_base_add {K κ : Type} [CommRing K] [Invertible (2 : K)] [Fi
     (u : (κ → K) × (κ → K)) (hu : u ∈ Λ) :
     vacFn ψ₀ Λ χ x₀ (x₀ + u.1) = χ u * ψ₀ (-(x₀ ⬝ᵥ u.2) - ⅟(2 : K) * (u.1 ⬝ᵥ u.2)) := by
   have h : ∃ u' ∈ Λ, x₀ + u.1 = x₀ + u'.1 := ⟨u, hu, rfl⟩
-  rw [vacFn, dif_pos h]
+  rw [vacFn, dite_eq_left h]
   obtain ⟨hu', he⟩ := h.choose_spec
   set u' := h.choose
   have h1 : u.1 = u'.1 := add_left_cancel he

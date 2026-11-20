@@ -73,7 +73,7 @@ theorem traceLevel_flat (R : RealDat D A Ks) (i : Fin D.R.m) (B : Base (Vc D i) 
   symm
   refine Fintype.sum_of_injective (fun p : B.G.P.H => e.symm p) (fun p q hpq => Subtype.ext (e.symm.injective hpq)) _ _
     (fun g hg => ?_) (fun p => ?_)
-  · rw [dif_neg, zero_mul]
+  · rw [dite_eq_right, zero_mul]
     intro hgU
     exact hg ⟨⟨e g, (hU g).2 hgU⟩, e.symm_apply_apply g⟩
   · have hp : e.symm p ∈ U := (hU _).1 (by rw [MulEquiv.apply_symm_apply]; exact p.2)
@@ -83,7 +83,7 @@ theorem traceLevel_flat (R : RealDat D A Ks) (i : Fin D.R.m) (B : Base (Vc D i) 
       have hpe : (⟨e (e.symm p), hp'⟩ : B.G.P.H) = p := Subtype.ext (e.apply_symm_apply p)
       rw [hpe] at this
       exact this
-    rw [dif_pos hp, Units.val_inv_eq_inv_val, key, Units.val_inv_eq_inv_val, map_inv₀]
+    rw [dite_eq_left hp, Units.val_inv_eq_inv_val, key, Units.val_inv_eq_inv_val, map_inv₀]
 
 end GlobalTheory.TraceFlatLevel
 

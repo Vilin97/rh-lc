@@ -29,8 +29,8 @@ theorem coeff_chosenRed_eq_redHom : ∀ (D : D7) (X : HidaSetting D) (red : X.B.
   intro D X red hred a ha x
   by_cases hx : x ∈ X.B.I.Kset
   · have hc : x ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ := ⟨hx, red x, hred.1 x hx⟩
-    rw [dif_pos hc, if_pos hx,
+    rw [dite_eq_left hc, if_pos hx,
       coeff_goodAt_eq D X a ha x (red x) (Classical.choose hc.2) (hred.1 x hx) (Classical.choose_spec hc.2)]
-  · rw [dif_neg (fun h => hx h.1), if_neg hx]
+  · rw [dite_eq_right (fun h => hx h.1), if_neg hx]
 
 end GlobalTheory

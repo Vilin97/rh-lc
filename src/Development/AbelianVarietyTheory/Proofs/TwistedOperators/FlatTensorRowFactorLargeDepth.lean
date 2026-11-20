@@ -88,7 +88,7 @@ theorem flatTensor_rowFactor : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t 
   rw [Finset.prod_range]
   refine Finset.prod_congr rfl fun i _ => ?_
   simp only [GridChoice.rowAt]
-  rw [dif_pos (show (i : ℕ) < D.R.m from i.2)]
+  rw [dite_eq_left (show (i : ℕ) < D.R.m from i.2)]
   rfl
 
 end GlobalTheory.LocAsm

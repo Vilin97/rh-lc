@@ -27,7 +27,7 @@ variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {M : _root_.Global
 private lemma valR_one_degeneration {L : Type} [Field L] {X : Scheme} (x : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp L ⟶ X)
     (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR x U 1 = 1 := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR
-  rw [dif_pos h, map_one, map_one]
+  rw [dite_eq_left h, map_one, map_one]
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
 open scoped CategoryTheory.Obj in

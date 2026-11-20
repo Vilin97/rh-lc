@@ -286,7 +286,7 @@ theorem besChar_eq_valOf (ψ : AddChar (AF D.host.F) ℂ) {A B : HSp D} {ι : A.
     · rw [he]; exact ha
     · rw [he, hz]; exact ha'
   unfold besChar
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact isBesVal_unique ψ b e f z he hz ef zf n _ hex.choose_spec
 
 variable {A B : HSp D} {ι : A.V →ₗ[D.host.E] B.V}

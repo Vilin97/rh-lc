@@ -43,7 +43,7 @@ theorem evalAt_borR_of_borChart_int [Fintype ι] (h : BorChart pts mapR borR) (e
     (y y' : pts S) (hy : FromTest pts mapR y) (hy' : FromTest pts mapR y') (hb : borR t y y') :
     evalAt pts mapR f y' = ((∏ i, t i ^ e i : Sˣ) : S) * evalAt pts mapR f y := by
   unfold evalAt
-  rw [dif_pos hy, dif_pos hy']
+  rw [dite_eq_left hy, dite_eq_left hy']
   apply eq_of_locM (K := K)
   intro m hm
   obtain ⟨A, u, c, c', B, uB, uB', tB, π, π', cB, hc, hc', hπ, hπ', hbB, e1, e2, e3⟩ := h S t y y' hb m
@@ -89,13 +89,13 @@ theorem test_value_eq_const_mul_reading_secZ (hS : Out.SecBaseChangeSt) {Xo : Mo
   have hft : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨p, ψ, y, hz⟩
   have hev : evR Xo c f z = ψ (f p y) := by
     unfold evR evalAt
-    rw [dif_pos hft]
+    rw [dite_eq_left hft]
     exact hW f hf.1 (CAt σ) _ p _ ψ _ y z hft.choose_spec.choose_spec.choose_spec hz
   have hw := evR_frBor_of_mem_secZ hS Xo c e hf (CAt σ) t _ _ ht
   rw [← hev, hw]
   classical
   show _ = _ * (if h : x.1 ∈ (U.X k).dom then Formalism.L2.Pj.toC (evR Xo c f (U.un k ⟨x.1, h⟩)) else 0)
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
   rfl
 
 theorem reading_linearIndependent_secZ (hS : Out.SecBaseChangeSt) {Xo : Moduli Dw l} {c : Coeff l}

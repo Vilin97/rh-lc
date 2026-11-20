@@ -49,7 +49,7 @@ theorem map_jetSum {X : Fields} (A : Amb X) {a b : ℕ} (S : Finset (HeightOneSp
   by_cases h0 : Ξ x = 0
   · simp [h0]
   · have h := he x x.2 h0
-    rw [map_mul, Amb.jetK, desc, dif_pos h, h.choose_spec]
+    rw [map_mul, Amb.jetK, desc, dite_eq_left h, h.choose_spec]
     ring
 
 end GlobalTheory.DatumJets

@@ -106,7 +106,7 @@ theorem lp_ext {N : ℕ} {ν : Fin N → ℕ} {a b : dualWeyl ℚ N N ν}
 theorem eV_val {N : ℕ} (ν : Fin N → ℕ) {a b : ℕ} (ha : a < N) (hb : b < N) (x : dualWeyl ℚ N N ν) :
     ((eV N ν a b x : dualWeyl ℚ N N ν) : MvPolynomial (Fin N × Fin N) ℚ) =
       Formalism.CohomologicalDescent.LR.der N N ⟨a, ha⟩ ⟨b, hb⟩ (x : MvPolynomial (Fin N × Fin N) ℚ) := by
-  rw [eV, dif_pos ⟨ha, hb⟩]
+  rw [eV, dite_eq_left ⟨ha, hb⟩]
   rfl
 
 theorem lp_hw (hHw : ResHw) (p q : ℕ) (ν : Fin (p + q) → ℕ) (hν : Antitone ν) :
@@ -141,7 +141,7 @@ theorem lp_vanish (hDer : ResDer) (p q : ℕ) (ν : Fin (p + q) → ℕ) (μ : �
         rw [← Fin.sum_univ_eq_sum_range (fun c => (wtZ ν c : ℚ))]
         refine Finset.sum_congr rfl fun c _ => ?_
         have hc : (c : ℕ) < p + q := by omega
-        rw [wtZ, dif_pos hc]
+        rw [wtZ, dite_eq_left hc]
         rfl
       rw [e]
       exact_mod_cast hlt.ne

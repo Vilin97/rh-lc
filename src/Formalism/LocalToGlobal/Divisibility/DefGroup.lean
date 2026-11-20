@@ -99,7 +99,7 @@ def ext1 {G N : Type} [Group G] [One N] [Mul N] (P : Subgroup G) (f : P → N) (
 
 theorem extendOne_of_mem {G N : Type} [Group G] [One N] [Mul N] {P : Subgroup G} (f : P → N) {x : G} (h : x ∈ P) :
     ext1 P f x = f ⟨x, h⟩ := by
-  unfold ext1; rw [dif_pos h]
+  unfold ext1; rw [dite_eq_left h]
 
 theorem blockDiagonalExtendByOnePrimeField_one {G N : Type} [Group G] [MulOneClass N] (P : Subgroup G) (f : P →* N) : ext1 P f 1 = 1 := by
   rw [extendOne_of_mem _ P.one_mem]; exact f.map_one

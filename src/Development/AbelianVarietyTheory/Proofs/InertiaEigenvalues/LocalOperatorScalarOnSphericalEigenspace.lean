@@ -44,7 +44,7 @@ theorem isFinIdem_fid (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) : IsFinId
     obtain ⟨ε, hε⟩ := GlobalTheory.IdemSupport.exists_placeIdem (D := D) v
     exact ⟨_, ε, hε, rfl⟩
   unfold Eu.fid
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem exists_primeIdem {v : HeightOneSpectrum (𝓞 D.host.F)} {f : AE D} (hf : IsFinIdem D v f) :
@@ -78,7 +78,7 @@ theorem bop_spec (hTL : TransLaws R i) {γ : GA D (Wc D i)} (hγ : γ ∈ GfC (W
     trPair R i γ x y = ⟪x, Eu.Bop R i γ y⟫_ℂ := by
   have hex := hTL.2.2.1 γ hγ
   unfold Eu.Bop
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec.2 x y
 
 theorem bop_mul_lev (hLP : LevProd R i) (hTL : TransLaws R i) {γ k : GA D (Wc D i)} (hγ : γ ∈ GfC (Wc D i))

@@ -1657,7 +1657,7 @@ theorem cell_mulVec_bvec (g : Mx k r) (p q : Fin (2 * r + k + 1)) : (g *ᵥ bvec
 
 theorem cell_fvec (z : Fin (2 * r + k + 1) → ℂ) (l : Fin r) : fvec k r z l.castSucc = bvec (eI k r l) := by
   unfold fvec
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem cell_posL_inj {i : Fin (r + 1)} {j j' : Fin (mdim k r i)} (h : posL k r i j = posL k r i j') : j = j' := by

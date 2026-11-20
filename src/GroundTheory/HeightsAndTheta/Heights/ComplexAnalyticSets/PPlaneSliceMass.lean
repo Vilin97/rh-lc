@@ -118,7 +118,7 @@ theorem sheetSum_affChartIdeal {e : ℕ} (F : (Fin (e + 1) → ℂ) → ((Fin e 
   unfold sheetSum
   rw [fibre_affChartIdeal, finsum_mem_singleton]
   have hex : ∃ s, IsSheetAt (affChartIdeal e) (tailProj e) (Fin.cons 1 y) s := ⟨_, isSheetAt_consOne y⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hF _ (affChart_sheet_eventuallyEq hex.choose_spec)
 
 theorem maDens_congr {D : ℕ} {F G : Fin D → (Fin D → ℂ) → ℝ} {z : Fin D → ℂ}
@@ -216,7 +216,7 @@ theorem PlaneSliceMass.proof (h₁ : IntegralIndep.Statement) : PlaneSliceMass.S
     ⟨_, isFiniteProjection_tailProj e⟩
   show varInt (affChartIdeal e) e _ _ = 1
   unfold varInt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have habs : Integrable (chartAbsDens (affChartIdeal e) (tailProj e) (fun _ => 1)
       fun _ x => Real.log ((HermNorm.std (e + 1)).dualNorm x)) := by
     rw [funext chartAbsDens_affChartIdeal]

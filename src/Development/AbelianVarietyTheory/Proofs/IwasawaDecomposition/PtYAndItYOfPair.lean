@@ -46,7 +46,7 @@ theorem ptY_and_ItY_of_pair (hP : ItPair D) (hC : ∀ k, ChainPar D k) (hθ : Is
     exact ⟨It, fun t => h _ _ (hS t ⟨k, hk0⟩ hk).1 (hS t ⟨k, hk0⟩ hk).2⟩
   refine ⟨fun k => if hk : k + 1 < D.R.m then (h k hk).choose else 0, fun t k hk => ?_⟩
   show IsItW R.θ (R.MY k) (R.MY (k + 1)) (R.ωY t k) (R.ptY t k) (if hk : k + 1 < D.R.m then (h k hk).choose else 0)
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   exact (h k hk).choose_spec t
 
 end GlobalTheory.Chain.InnerSteps

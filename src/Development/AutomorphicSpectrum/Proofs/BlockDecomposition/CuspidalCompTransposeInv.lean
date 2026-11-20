@@ -68,13 +68,13 @@ theorem longWeyl_transposeInv_unipotent (h : r + s = 3) (X : UPos 3 r → R) :
     simp only [Fin.val_rev]
     omega
   by_cases c : (j : ℕ) < r ∧ r ≤ (Fin.rev i : ℕ)
-  · rw [dif_pos c, dif_pos (e2.1 c)]
+  · rw [dite_eq_left c, dite_eq_left (e2.1 c)]
     simp only [e1, tX, Pi.neg_apply]
     congr 2
     congr 1
     apply Subtype.ext
     simp [sw]
-  · rw [dif_neg c, dif_neg (fun d => c (e2.2 d))]
+  · rw [dite_eq_right c, dite_eq_right (fun d => c (e2.2 d))]
     simp only [e1]
 
 def tE (h : r + s = 3) : (UPos 3 r → 𝔸[ℚ]) ≃ᵐ (UPos 3 s → 𝔸[ℚ]) where

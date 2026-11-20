@@ -21,7 +21,7 @@ private theorem vertNum_eq {F : Type} [Field F] [NumberField F] {Y : Var F} (p :
   split_ifs with h
   · rw [UpperTheory.pdeg_eq_of_isDeg p V.X n _ (fun j => (N j).isLB) z _
       ⟨h.some.Z, h.some.i, h.some.imm, h.some.int, h.some.alg, h.some.gen, h.some.dim, rfl⟩]
-  · rw [VertCmp.pdeg, dif_neg fun ⟨_, Z, i, a₁, a₂, a₃, a₄, a₅, _⟩ => h ⟨⟨Z, i, a₁, a₂, a₃, a₄, a₅⟩⟩, Int.cast_zero]
+  · rw [VertCmp.pdeg, dite_eq_right fun ⟨_, Z, i, a₁, a₂, a₃, a₄, a₅, _⟩ => h ⟨⟨Z, i, a₁, a₂, a₃, a₄, a₅⟩⟩, Int.cast_zero]
 
 private theorem one_comp {F : Type} [Field F] [NumberField F] {Y : Var F} {C : CxSt F} (p : ℕ) [Fact p.Prime]
     (v : HeightOneSpectrum (𝓞 F)) (hp : (p : 𝓞 F) ∈ v.asIdeal) {d : ℕ} (hd : Y.dim = d) (A : Bool ⊕ Fin d → Adl C Y)

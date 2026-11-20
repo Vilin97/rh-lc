@@ -78,7 +78,7 @@ def kapNew (S : RealDat3 D A3 Ks) : ℝ := if h : ∃ κ, KapFixed S κ then h.c
 theorem kapNew_eq (S : RealDat3 D A3 Ks) {κ : ℝ} (h : KapFixed S κ) : kapNew S = κ := by
   have h' : ∃ κ, KapFixed S κ := ⟨κ, h⟩
   unfold kapNew
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   obtain ⟨t, p, hp, hl⟩ := h.2
   exact Lift.IsKap.unique h'.choose_spec.1 h.1 t p hp hl
 

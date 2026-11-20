@@ -51,7 +51,7 @@ theorem tauEmb_eq {D : D7} {p : ℕ} [Fact p.Prime] {lm : TaylorLogMetric.Qbar �
     TaylorLogMetric.tauEmb D lm τ x = ι (TaylorLogMetric.embT D τ x) := by
   have h := embT_mem D τ x
   show TaylorLogMetric.lamC lm (TaylorLogMetric.embT D τ x) = _
-  rw [TaylorLogMetric.lamC, dif_pos h]
+  rw [TaylorLogMetric.lamC, dite_eq_left h]
   exact (hι ⟨_, h⟩).symm
 
 end GlobalTheory.Proof.integralJets_normalisedThetaCombinations_away_d

@@ -86,7 +86,7 @@ private theorem trc_ind_ne (ρ : Representation ℂ G V) (K K' : Subgroup G) (hl
     ext v
     simp [LinearMap.restrict_apply, levOp_ind ρ K K' v v.2]
   unfold twTr
-  rw [dif_pos hc, hr, map_smul, LinearMap.trace_id, smul_eq_mul]
+  rw [dite_eq_left hc, hr, map_smul, LinearMap.trace_id, smul_eq_mul]
   have hpos : Module.finrank ℂ (fixed ρ K') ≠ 0 := by
     intro h0
     exact hne (Submodule.finrank_eq_zero.1 h0)

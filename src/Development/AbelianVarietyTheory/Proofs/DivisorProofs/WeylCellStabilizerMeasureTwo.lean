@@ -20,7 +20,7 @@ theorem v_eq_ofAdd_ordL {x : L} (hx : x ≠ 0) :
     Valued.v x = ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v x ≠ 0 := by simpa using hx
   unfold ordL
-  rw [dif_neg h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
+  rw [dite_eq_right h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
 
 theorem coe_mul_le_iff (g h : Multiplicative ℤ) (x : WithZero (Multiplicative ℤ)) :
     (g : WithZero (Multiplicative ℤ)) * x ≤ h ↔ x ≤ ((g⁻¹ * h : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by

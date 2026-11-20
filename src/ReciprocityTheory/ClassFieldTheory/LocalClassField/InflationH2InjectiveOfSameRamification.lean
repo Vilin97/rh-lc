@@ -144,7 +144,7 @@ theorem isInv_invUr (hK : FiniteDimensional ℚ_[p] K) : IsInv p K (invUr p K) :
   obtain ⟨f, hf⟩ := exists_isInv hK
   have h : ∃ f, IsInv p K f := ⟨_, hf⟩
   unfold invUr
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem invUr_bijective (hK : FiniteDimensional ℚ_[p] K) : Bijective (invUr p K) := by

@@ -396,7 +396,7 @@ theorem muZ_antitone (lam : Fin n → ℤ) (hl : Antitone lam) (lev : Fin n → 
 theorem dif_nonneg {v : Fin n → ℤ} (hv : Antitone v) (j : Fin n) (hj : (j : ℕ) + 1 < n) :
     0 ≤ GlobalTheory.CompanionTheory.ModelS.dif v j := by
   unfold GlobalTheory.CompanionTheory.ModelS.dif
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   have : j ≤ ⟨j + 1, hj⟩ := Fin.mk_le_mk.2 (Nat.le_succ _)
   have := hv this
   omega

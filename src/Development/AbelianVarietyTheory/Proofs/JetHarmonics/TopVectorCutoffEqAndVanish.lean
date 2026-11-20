@@ -91,7 +91,7 @@ theorem _root_.GlobalTheory.TopVec.tv_cutF (Wp Wq : Type) [NormedAddCommGroup Wp
     intro h H
     rw [hV]
     unfold _root_.Formalism.FourierDecayAlt.D.vecV
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨-, h'⟩
     rw [← hG] at h'
     linarith

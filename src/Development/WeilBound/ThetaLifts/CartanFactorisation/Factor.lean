@@ -50,7 +50,7 @@ theorem vanish {κ : Type} [Fintype κ] {Z P : Type} [AddCommGroup Z] [Module �
       refine h f hf _ (fun v => ?_) (ext_off w T ψ) (hz.imp_right fun ⟨v, hv⟩ => ⟨v, ?_⟩)
       · unfold ext; split_ifs with hv
         exacts [hψ ⟨v, hv⟩, hS v hv]
-      · unfold ext; rw [dif_pos v.2]; exact hv)
+      · unfold ext; rw [dite_eq_left v.2]; exact hv)
   have := congrArg L h0
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, map_zero] at this

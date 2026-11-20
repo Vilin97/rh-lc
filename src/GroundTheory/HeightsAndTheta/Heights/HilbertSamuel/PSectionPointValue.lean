@@ -77,7 +77,7 @@ theorem val_spec {y : (Σ k, ι k) → Ω} {A : HermLine ι} {n : ℕ} {s : Ω} 
     eval z (map (Int.castRingHom ℂ) g) =
       val y A n s z * eval z (map (Int.castRingHom ℂ) h) * (A.h z : ℂ) ^ n := by
   have H := (exists_rep_at hs hz).choose_spec
-  rw [val, dif_pos ⟨hs, hz⟩]
+  rw [val, dite_eq_left ⟨hs, hz⟩]
   have hc := cross hr H.1 hz
   have h1 := H.2
   have h2 := metric_ne (A := A) hz n

@@ -74,7 +74,7 @@ theorem pivotMinor_block {n j : ℕ} (h : j ≤ n) (M : Matrix (Fin n) (Fin n) R
     ext (r | r) (c | c)
     · simp only [Matrix.submatrix_apply, Matrix.fromBlocks_apply₁₁, topLeft, e, Equiv.trans_apply,
         finSumFinEquiv_apply_left, finCongr_apply, pivotCols]
-      rw [dif_pos (by simp; omega)]
+      rw [dite_eq_left (by simp; omega)]
       congr 1
     · simp only [Matrix.submatrix_apply, Matrix.fromBlocks_apply₁₂, Matrix.zero_apply, e, Equiv.trans_apply,
         finSumFinEquiv_apply_left, finSumFinEquiv_apply_right, finCongr_apply, pivotCols]

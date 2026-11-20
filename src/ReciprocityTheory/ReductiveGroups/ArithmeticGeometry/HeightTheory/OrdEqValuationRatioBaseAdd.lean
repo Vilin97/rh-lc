@@ -50,7 +50,7 @@ theorem ratio_eq_of_eq_smul_field {Ω' V : Type*} [Field Ω'] [AddCommGroup V] [
   classical
   have h : ∃ b : Ω', f = b • g := ⟨a, hf⟩
   unfold ratio
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact smul_left_injective Ω' hg (h.choose_spec.symm.trans hf)
 
 theorem eq_ratio_base_smul (hd : d.AxH 𝒜) (c : ι) {f : A c} (hf : f ∈ 𝒜 c d.wL) :

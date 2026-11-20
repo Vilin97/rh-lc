@@ -122,7 +122,7 @@ theorem sum_pairs_pmat {ε : Fin n → Bool} (w : Fin n → Fin n → ℝ) (z : 
         exact hP ⟨h1, h⟩
       have h3 : pmat z x.1 x.2 = 0 := by
         unfold pmat
-        rw [dif_neg (fun h => h.2 h2), dif_neg (fun h => lt_asymm h.1 h1)]
+        rw [dite_eq_right (fun h => h.2 h2), dite_eq_right (fun h => lt_asymm h.1 h1)]
       rw [if_pos h1, h3, norm_zero]
       ring
     · rw [if_neg h1]

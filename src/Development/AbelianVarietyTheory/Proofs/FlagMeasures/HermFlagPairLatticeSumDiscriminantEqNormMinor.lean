@@ -309,7 +309,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   intro K V _ _ _ _ _ _ _ _ H hK r N g Λ _ hΛ l hj hne
   have hr := hj.trans N.j_le
   have hl : l ≤ r + 1 := hr.trans (Nat.le_succ r)
-  have hD : Dl N.F N.F' l hl ≠ 0 := fun e => hne (by rw [NF.nD, dif_pos hl, e]; simp)
+  have hD : Dl N.F N.F' l hl ≠ 0 := fun e => hne (by rw [NF.nD, dite_eq_left hl, e]; simp)
   refine ⟨?_, ?_⟩
   swap
   · obtain ⟨A, hA0, hA⟩ := exists_ideal N hΛ.1 l
@@ -386,7 +386,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     rw [gidx, idx_eq L, GlobalTheory.Mass.DiscOrder.idxN_eq_one.2 hLT, eL, idx_sum l1 l2 hd, Nat.cast_one, div_one,
       Nat.cast_mul, i1, i2, mul_comm (2 : ℤ), zpow_mul, zpow_two]
   have h0 : (Ideal.absNorm N.𝔡 : ℝ) ≠ 0 := by exact_mod_cast fun e => N.𝔡_ne (Ideal.absNorm_eq_zero_iff.1 e)
-  rw [normD, NF.nD, dif_pos hl, ← k3, k1, k4, zpow_neg, mul_comm, ← mul_assoc,
+  rw [normD, NF.nD, dite_eq_left hl, ← k3, k1, k4, zpow_neg, mul_comm, ← mul_assoc,
     inv_mul_cancel₀ (zpow_ne_zero _ h0), one_mul]
 
 end GlobalTheory.DegCnt.FlagDisc

@@ -72,7 +72,7 @@ def valF (n : 𝓞 F) : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} →₀ ℕ :=
 theorem valF_apply {n : 𝓞 F} (hn : n ≠ 0) (𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}) :
     valF n 𝔭 = vF 𝔭.1 n := by
   unfold valF
-  rw [dif_pos hn]
+  rw [dite_eq_left hn]
   rfl
 
 def bId (v : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} →₀ ℕ) : Ideal (𝓞 F) := v.prod fun 𝔭 e => 𝔭.1 ^ e

@@ -652,7 +652,7 @@ theorem wtN_last_two (R : Ranks) (P : HCParam R) :
   have hb1 : Examples₂.blkN R (R.N R.m - 1) < R.m := by rw [e1]; omega
   have hb2 : Examples₂.blkN R (R.N R.m - 2) < R.m := by rw [e2]; omega
   unfold Examples₂.wtN
-  rw [dif_neg h1, dif_neg h2, dif_pos hb1, dif_pos hb2]
+  rw [dite_eq_right h1, dite_eq_right h2, dif_pos hb1, dif_pos hb2]
   have key : ∀ (a b : ℕ) (ha : a < R.m) (hb : b < R.m), a = b →
       -wG R (P.e ⟨a, ha⟩) (a + 1) = -wG R (P.e ⟨b, hb⟩) (b + 1) := by
     rintro a b ha hb rfl; rfl
@@ -1805,8 +1805,8 @@ theorem lam_last_two (D : Formalism.BasicNotions.D7) (u : D.what₂.Word) (τ : 
   have hmt : 2 * 2 ≤ D.R.m * (D.R.t + 1) := Nat.mul_le_mul hm (by omega)
   have h1 := (D.fm u).lam_eq D.R.m le_rfl τ i
   have h2 := (D.fm u).lam_eq D.R.m le_rfl τ j
-  rw [dif_neg (by rw [hi, hN]; omega)] at h1
-  rw [dif_neg (by rw [hj, hN]; omega)] at h2
+  rw [dite_eq_right (by rw [hi, hN]; omega)] at h1
+  rw [dite_eq_right (by rw [hj, hN]; omega)] at h2
   have hb : (i.1 - D.R.k) / (D.R.t + 1) = (j.1 - D.R.k) / (D.R.t + 1) := by
     rw [hi, hj]; exact blk_last_two D.R
   simp only [hb] at h1
@@ -4614,7 +4614,7 @@ theorem nm_nuNext (i : Fin n) : nuNext l.natW (iC hN i) = nuNext (lamN hN l) i :
   by_cases h : i.val + 1 < n
   · rw [dif_pos h, dif_pos (by simp only [iC]; omega)]
     rfl
-  · rw [dif_neg h, dif_pos (by simp only [iC]; omega)]
+  · rw [dite_eq_right h, dif_pos (by simp only [iC]; omega)]
     have : (⟨(iC hN i).val + 1, by simp only [iC]; omega⟩ : Fin N) = iL hN := Fin.ext (by simp only [iC, iL]; omega)
     rw [this, nm_natW_last]
 
@@ -4650,7 +4650,7 @@ theorem nm_lamZ (a : Fin (n + 1)) : lamZ (lamN hN l) a = (l.natW (Fin.cast hN.sy
   unfold lamZ
   by_cases h : a.val < n
   · rw [dif_pos h]; rfl
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     have : Fin.cast hN.symm a = iL hN := Fin.ext (by have := a.2; simp only [iL, Fin.val_cast]; omega)
     rw [this, nm_natW_last]; rfl
 

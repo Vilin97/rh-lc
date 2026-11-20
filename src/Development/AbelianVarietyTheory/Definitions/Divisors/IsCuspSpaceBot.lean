@@ -34,7 +34,7 @@ def shuf (R : Type) [CommRing R] (n m : ℕ) : GL (Fin n) R := toGL (eye R n 0 m
 
 theorem toGL_val {n : ℕ} (g : GL (Fin n) R) : toGL (g : Matrix (Fin n) (Fin n) R) = g := by
   unfold toGL
-  rw [dif_pos g.isUnit]
+  rw [dite_eq_left g.isUnit]
   exact Units.ext rfl
 
 end Blocks

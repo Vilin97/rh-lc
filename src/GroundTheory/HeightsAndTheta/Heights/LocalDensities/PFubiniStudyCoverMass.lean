@@ -123,7 +123,7 @@ theorem FubiniStudyCoverMass.proof (hFS : FubiniStudyChartDensity.Statement)
     set χ := hχ.some with hχdef
     have hmass : maMeasure A (fun _ => P) Set.univ = ∑ j, ∫⁻ y in (A.chart j).target,
         ENNReal.ofReal (χ.χ j ((A.chart j).symm y) * locDens A (fun _ => P) j y) := by
-      rw [maMeasure, dif_pos hχ, Measure.coe_finsetSum, Finset.sum_apply]
+      rw [maMeasure, dite_eq_left hχ, Measure.coe_finsetSum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [Measure.map_apply_of_aemeasurable ?_ MeasurableSet.univ, Set.preimage_univ,
         withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ]

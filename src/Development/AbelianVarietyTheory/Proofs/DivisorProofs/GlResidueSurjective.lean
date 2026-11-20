@@ -170,7 +170,7 @@ theorem relIndex_lev (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ : Submod
     refine ⟨⟨_, hxbig⟩, funext fun PP => ?_⟩
     rw [hφ, hred PP.1 (Finset.mem_union_right _ PP.2)]
     show (if h : PP.1 ∈ Q then g ⟨PP.1, h⟩ else 1) = g PP
-    rw [dif_pos PP.2]
+    rw [dite_eq_left PP.2]
   rw [Subgroup.relIndex, hcomap, Subgroup.index_comap_of_surjective _ hsurj, GlobalTheory.TwistIndex.index_pi_univ]
   exact Finset.prod_coe_sort Q fun PP => (blockTri (blk2 r) : Subgroup (GL (Fin V.rank) (kP PP))).index
 

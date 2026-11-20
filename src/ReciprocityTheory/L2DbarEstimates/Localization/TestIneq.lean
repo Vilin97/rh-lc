@@ -43,7 +43,7 @@ private theorem db_eq_wdb_comp_symm_of_isChart {M : Type*} [TopologicalSpace M] 
     (j : Fin n) (f : M → ℂ) (e : OpenPartialHomeomorph M (V n)) (he : IsChart n z e) {x : M}
     (hx : x ∈ e.source) : db n z j f x = wdb n j (f ∘ e.symm) (z x) := by
   have hex : ∃ c : OpenPartialHomeomorph M (V n), IsChart n z c ∧ x ∈ c.source := ⟨e, he, hx⟩
-  rw [db, dif_pos hex]
+  rw [db, dite_eq_left hex]
   obtain ⟨hc, hxc⟩ := Classical.choose_spec hex
   apply wdb_congr
   have hzx : z x = e x := he hx

@@ -65,7 +65,7 @@ theorem lead_inv {L U : Matrix (Fin N) (Fin N) K} (hL : IsLoUni L) (hU : IsUpUni
     rw [← Matrix.transpose_mul, ← Matrix.transpose_submatrix, ← Matrix.transpose_submatrix,
       Matrix.det_transpose, Matrix.det_transpose] at key
     exact key
-  · rw [dif_neg hl, dif_neg hl]
+  · rw [dite_eq_right hl, dite_eq_right hl]
 
 theorem det_mono_sq {w : Matrix (Fin N) (Fin N) K} {σ : Equiv.Perm (Fin N)} {d : Fin N → K}
     (hw : ∀ i j, w i j = if j = σ i then d i else 0) (I J : Fin n → Fin N) (hI : Function.Injective I)

@@ -67,7 +67,7 @@ theorem val_at_mark {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.H
   have hv := hval h' γ' ⟨hγ', hΛ', hm'⟩
   rw [GlobalTheory.WeightZeroValue.evR_eq_of_same_point hf hh', ← hxe, ← hv]
   show _ = (if h'' : (dict₂ h').2 ∈ (U₂.X (dict₂ h').1).dom then toC (evR d.Xo₂ d.c₂ d.cδ (U₂.un _ ⟨_, h''⟩)) else 0)
-  rw [dif_pos (hdom h')]
+  rw [dite_eq_left (hdom h')]
 
 end GlobalTheory.MarkVal
 

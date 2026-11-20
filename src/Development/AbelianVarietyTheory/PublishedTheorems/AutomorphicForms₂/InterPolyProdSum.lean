@@ -49,7 +49,7 @@ theorem interPoly_prod (s : Fin Y.dim → κ) : Y.interPoly Δ (∏ i, MvPolynom
   have h : ∃ t : Fin Y.dim → κ, ∑ i, Finsupp.single (t i) 1 = ∑ i, Finsupp.single (s i) 1 := ⟨s, rfl⟩
   rw [hprod]
   unfold interPoly
-  rw [Module.Basis.constr_basis, dif_pos h]
+  rw [Module.Basis.constr_basis, dite_eq_left h]
   exact_mod_cast inter_comp_eq_of_sum_single_eq Y Δ s h.choose h.choose_spec
 
 theorem interPoly_prod_sum [Fintype κ] (a : Fin Y.dim → κ → ℤ) :

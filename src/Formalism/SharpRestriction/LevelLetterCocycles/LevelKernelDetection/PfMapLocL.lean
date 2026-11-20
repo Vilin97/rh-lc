@@ -147,7 +147,7 @@ theorem mapLocL_lamOf_coe {T : LocLat G Qp LL O} (C : Coord W (baseIdOf hR) T) (
     have h2 := Formalism.MainNotions.UnusedSlot80.ArcF.φVB_pow_letter W T (c - (ell : ZMod n)) h1 ell
     rwa [sub_add_cancel] at h2
   unfold lamOf
-  rw [dif_pos hk, dif_pos h']
+  rw [dite_eq_left hk, dite_eq_left h']
 
 end Helpers
 

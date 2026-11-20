@@ -182,7 +182,7 @@ lemma fv_X (z : Fin (2 * r + k + 1) → ℂ) (b : Fin (r + 1)) (hb : b ≠ Fin.l
     have h1 := b.isLt
     have h2 : b.val ≠ r := fun h => hb (Fin.ext (by rw [h, Fin.val_last]))
     omega
-  rw [fvec, dif_pos hb']
+  rw [fvec, dite_eq_left hb']
   exact Submodule.subset_span ⟨⟨b.val, hb'⟩, rfl⟩
 
 lemma fv_hi {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (b : Fin (r + 1)) :

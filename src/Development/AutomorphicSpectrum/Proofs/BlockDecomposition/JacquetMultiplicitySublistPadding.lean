@@ -72,7 +72,7 @@ theorem jm_row : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] 
     intro r x y hx hy e
     subst e
     rfl
-  rw [GlobalTheory.T.jacquet_multiplicity_drop_zero_blocks Y hd o ho hnz hsum π, jmL, dif_pos hdeg]
+  rw [GlobalTheory.T.jacquet_multiplicity_drop_zero_blocks Y hd o ho hnz hsum π, jmL, dite_eq_left hdeg]
   exact hcongr _ _ _ _ hget.symm
 
 end GlobalTheory.CompanionTheory.FineProd

@@ -237,7 +237,7 @@ theorem exists_sec_of_regular : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     rw [hg' p y' L χ w' _ hw' hv', map_mul, hg' p y L χ w v hw hv, wchar_map]
   · have hh := hl.test _ (genFr h Z)
     unfold evC evR evalAt
-    rw [dif_pos hh]
+    rw [dite_eq_left hh]
     exact hg' _ _ _ _ _ _ hh.choose_spec.choose_spec.choose_spec (val_gen hb hA Z)
 
 end GlobalTheory.Reg.SecGlue

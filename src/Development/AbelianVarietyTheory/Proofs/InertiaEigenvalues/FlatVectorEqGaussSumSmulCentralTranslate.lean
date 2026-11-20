@@ -74,7 +74,7 @@ theorem lift_eq_gauss_model_flat : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
     rw [if_pos ⟨hh, hi⟩]
     apply LiftFlatModel.omegaFlat_congr
     intro PP hPP
-    rw [dif_pos hPP, F2, LiftFlatModel.frMapO_neg, LiftFlatModel.redM_neg _ (hRs u hu').2]
+    rw [dite_eq_left hPP, F2, LiftFlatModel.frMapO_neg, LiftFlatModel.redM_neg _ (hRs u hu').2]
 
   have hA : ∀ x : WO (Vc D i) (Wc D i),
       (if IsHalf eQ (x.map fun w => incA D (ϖ : D.host.E) * w) ∧
@@ -100,7 +100,7 @@ theorem lift_eq_gauss_model_flat : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
           if_pos ⟨hmem, hhalf⟩, mul_one, hPsiNeg u huR, if_pos hx]
         apply LiftFlatModel.omegaFlat_congr
         intro PP hPP
-        rw [dif_pos hPP]
+        rw [dite_eq_left hPP]
         show _ = -(redM PP (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i) (u.map fun w => incA D (ϖ : D.host.E) * w)))
         rw [hured ⟨PP, hPP⟩, neg_neg]
       · intro u' hu' hne

@@ -26,7 +26,7 @@ theorem thetaExt_alg (y : Per.BdRp l) :
     thetaExt (algebraMap (Per.BdRp l) (Per.BdR l) y) = Per.θD l y := by
   have h : ∃ z : Per.BdRp l, algebraMap (Per.BdRp l) (Per.BdR l) z =
       algebraMap (Per.BdRp l) (Per.BdR l) y := ⟨y, rfl⟩
-  rw [thetaExt, dif_pos h, (BdRField.bdR_isField l).2.1 h.choose_spec]
+  rw [thetaExt, dite_eq_left h, (BdRField.bdR_isField l).2.1 h.choose_spec]
 
 theorem exists_of_mem_FilD_zero {x : Per.BdR l} (hx : x ∈ Per.FilD l 0) :
     ∃ y : Per.BdRp l, x = algebraMap (Per.BdRp l) (Per.BdR l) y := by

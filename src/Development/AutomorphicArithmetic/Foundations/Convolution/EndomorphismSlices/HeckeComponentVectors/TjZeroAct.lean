@@ -127,9 +127,9 @@ theorem UpperTheory.Zero.ConvolutionTheory.EB.sat2Ex :
     (fun j => if h : j < b + 1 then t (0, ⟨j, h⟩) else 0) (by simpa using t00)
     (by simpa [Fin.last] using htb)
   have s₁ : ∀ i : Fin (a + 1), satEig (qV E w) a B₁ i = t (i, 0) := fun i => by
-    rw [h₁ i (Nat.lt_succ_iff.1 i.2), dif_pos i.2]
+    rw [h₁ i (Nat.lt_succ_iff.1 i.2), dite_eq_left i.2]
   have s₂ : ∀ j : Fin (b + 1), satEig (qV E w) b B₂ j = t (0, j) := fun j => by
-    rw [h₂ j (Nat.lt_succ_iff.1 j.2), dif_pos j.2]
+    rw [h₂ j (Nat.lt_succ_iff.1 j.2), dite_eq_left j.2]
   have tp : ∀ p : Fin (a + 1) × Fin (b + 1), t p = satEig (qV E w) a B₁ p.1 * satEig (qV E w) b B₂ p.2 := fun p => by
     rw [s₁, s₂]
     exact mul p

@@ -147,7 +147,7 @@ theorem DiffLoc_exists : ∃ d, IsDiffVal v d := by
 theorem DiffLoc_isDiffVal : IsDiffVal v (dV v) := by
   have h := DiffLoc_exists v
   unfold dV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem DiffLoc_sc_eq (x : Fv F v) : sc (E := E) v x = algebraMap (Fv F v) (Fv F v ⊗[F] E) x := rfl

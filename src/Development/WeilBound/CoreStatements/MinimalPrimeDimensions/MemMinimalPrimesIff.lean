@@ -179,7 +179,7 @@ theorem localMult_map {S L : Type} [CommRing S] [CommRing L] (φ : S →+* L) (W
     (hs : ∀ b, ∃ a s, φ s ∉ W' ∧ b * φ s = φ a) (hJ : RingHom.ker φ ≤ J) :
     localMult (J.map φ) W' = localMult J (W'.comap φ) := by
   have hW : (W'.comap φ).IsPrime := Ideal.comap_isPrime _ _
-  rw [localMult, localMult, dif_pos hW, dif_pos ‹W'.IsPrime›]
+  rw [localMult, localMult, dite_eq_left hW, dite_eq_left ‹W'.IsPrime›]
   congr 1
   set SW := Localization.AtPrime (W'.comap φ)
   set LW := Localization.AtPrime W'
@@ -271,7 +271,7 @@ theorem localMult_pr (hs : Function.Surjective (eval₂Hom c t)) (hk : t k = 1) 
     · exact q.zero_mem⟩
   have h2 := GroundTheory.Heights₂.Heights.localMult_map_of_flat (B := Polynomial A)
     (Ideal.span {eval₂Hom c t (linForm u)}) q (q.map Polynomial.C) Localization.AtPrime.map_eq_maximalIdeal
-  rw [← h2, Ideal.map_span, Set.image_singleton, Polynomial.algebraMap_eq, localMult, localMult, dif_pos hp, dif_pos hp]
+  rw [← h2, Ideal.map_span, Set.image_singleton, Polynomial.algebraMap_eq, localMult, localMult, dite_eq_left hp, dite_eq_left hp]
   refine congrArg (fun I : Ideal (Localization.AtPrime (q.map (Polynomial.C : A →+* Polynomial A))) =>
     (Module.length (Localization.AtPrime (q.map (Polynomial.C : A →+* Polynomial A))) (_ ⧸ I)).toNat) ?_
   rw [Ideal.map_span, Ideal.map_span, Set.image_singleton, Set.image_singleton, map_mul,

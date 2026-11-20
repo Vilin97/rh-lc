@@ -330,7 +330,7 @@ theorem rootIdx_left (τ : CMType H) (a : Fin D.p) :
 theorem rootIdx_right (τ : CMType H) (a : Fin D.q) :
     HodgeCpt.rootIdx D (τ, Fin.natAdd D.p a.rev) = ⟨.inr τ, a⟩ := by
   unfold HodgeCpt.rootIdx
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   congr 1
   apply Fin.ext
   have := a.2

@@ -251,7 +251,7 @@ theorem lIcell_of (hAw : AwayAct) (hDA : DecompAway) (hU : UnipTau) (hAI : AwayI
       ⟨tens θ τ fr (fP (cLoc l τ) P) Ψ0, hΨ0.2 _ (hSF _ _ _ hcpos P)⟩ := by
     intro P
     unfold phiS
-    rw [dif_pos (hΨ0.2 _ (hSF _ _ _ hcpos P))]
+    rw [dite_eq_left (hΨ0.2 _ (hSF _ _ _ hcpos P))]
 
   let aF : PX V.rank n → Matrix (Fin n) (Fin n) ℂ → (Fin V.rank → Fin n → ℂ) → ℂ := fun P b u =>
     Complex.exp (Complex.I * tLoc l τ * (b * gramX ε (fr⁻¹ * Matrix.of u)).trace) *

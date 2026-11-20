@@ -145,7 +145,7 @@ theorem radR_PhiP (hG : Gd z z' μs π π' Pr) {p : ℂ → (Wq →L[ℂ] Wp)} (
     NF.radR k r z z' μs ((PhiP z z' μs π π' Pr p : Q.RadSp k r z z' π π') : Q.Fn k r (Wq →L[ℂ] Wp)) =
       phiP z z' Pr p := by
   unfold PhiP
-  rw [dif_pos ⟨hG, hp⟩]
+  rw [dite_eq_left ⟨hG, hp⟩]
   exact (Classical.choose_spec (Formalism.FourierDecayAlt.P.radical_reduction_surjective Wp Wq k r z z' μs π π' hG.1 (phiP z z' Pr p)
       (phiP_mem hG hp))).2
 

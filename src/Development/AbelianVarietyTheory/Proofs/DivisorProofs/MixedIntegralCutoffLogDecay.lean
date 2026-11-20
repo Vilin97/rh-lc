@@ -168,7 +168,7 @@ theorem maMeasure_mono_on (Φ Ψ : Fin e → LocPot X) {E : Set X} (hE : Measura
       ae_restrict_of_ae (ae_restrict_mem (A.chart j).open_target.measurableSet)] with y h1 h2
     exact ENNReal.ofReal_le_ofReal (mul_le_mul_of_nonneg_left (h j y h2 h1) (hne.some.nonneg j _))
   · unfold maMeasure
-    rw [dif_neg hne, dif_neg hne]
+    rw [dite_eq_right hne, dite_eq_right hne]
 
 theorem maMeasure_null (Φ : Fin e → LocPot X) {Z : Set X} (hZ : MeasurableSet Z)
     (h : ∀ j, volume ((A.chart j).target ∩ (A.chart j).symm ⁻¹' Z) = 0) : maMeasure A Φ Z = 0 := by
@@ -181,7 +181,7 @@ theorem maMeasure_null (Φ : Fin e → LocPot X) {Z : Set X} (hZ : MeasurableSet
     rw [Measure.restrict_apply' (A.chart j).open_target.measurableSet, Set.inter_comm]
     exact h j
   · unfold maMeasure
-    rw [dif_neg hne]
+    rw [dite_eq_right hne]
     rfl
 
 end Meas

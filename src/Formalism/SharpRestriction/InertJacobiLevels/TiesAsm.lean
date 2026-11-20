@@ -139,7 +139,7 @@ theorem offW_false_shd {D : D7} (L : SizeData₂ D) (offS : ℕ → ℕ → ℝ)
     by_cases h : (D.R.ofNat t) ∈ D.host.TT
     · rw [if_pos ⟨rfl, h⟩]
     · rw [if_neg (fun h' => h h'.2)]
-      have e : G.bL L (D.R.ofNat t) = 0 := by unfold G.bL; rw [dif_neg h]
+      have e : G.bL L (D.R.ofNat t) = 0 := by unfold G.bL; rw [dite_eq_right h]
       rw [e, Int.cast_zero]
   · have hj' : j ∉ Finset.Icc 1 D.R.m := hj
     rw [if_neg hj, if_neg hj']

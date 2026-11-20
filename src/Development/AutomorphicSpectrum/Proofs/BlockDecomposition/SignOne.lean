@@ -30,7 +30,7 @@ theorem signOne : PositivityTheory.RgBcC.RealD.SignOne := by
     · exact absurd h hv0
   refine ⟨c, mul_self_eq_one_iff.mp hcc, ?_⟩
   have hB : B = c • LinearMap.id := LinearMap.ext fun w => by rw [hBw]; rfl
-  rw [trOn, dif_pos hS]
+  rw [trOn, dite_eq_left hS]
   change LinearMap.trace ℂ S B = c
   rw [hB, map_smul, LinearMap.trace_id]
   simp [h1]

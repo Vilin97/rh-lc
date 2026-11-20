@@ -57,7 +57,7 @@ theorem valR_appLE {X Y : Scheme.{0}} {x : Sp ℂ ⟶ X} {π : X ⟶ Y} {W : X.O
     (h : ⊤ ≤ x ⁻¹ᵁ W) (k : W ≤ π ⁻¹ᵁ U) (a : Γ(Y, U)) :
     valR x W (π.appLE U W k a) = valR (x ≫ π) U a := by
   have h' : ⊤ ≤ (x ≫ π) ⁻¹ᵁ U := h.trans (x.preimage_mono k)
-  rw [valR, valR, dif_pos h, dif_pos h']
+  rw [valR, valR, dite_eq_left h, dite_eq_left h']
   exact congrArg _ (Conormal.appLE_appLE rfl k h h' a)
 
 theorem cov_base (h : ⊤ ≤ (y ≫ unitSec P.A) ⁻¹ᵁ W) (k : W ≤ P.A.hom ⁻¹ᵁ U) (a : Γ(S, U)) :

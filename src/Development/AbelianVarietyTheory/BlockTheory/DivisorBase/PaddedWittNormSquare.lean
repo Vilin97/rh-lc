@@ -69,7 +69,7 @@ theorem natW_eq_padZero {a b : ℕ} (hab : a ≤ b) {lam ν : DomWeight a} {lam'
       · have ha : 0 < a := by omega
         have hz : ν.w ⟨a - 1, by omega⟩ ≤ 0 := by
           unfold lastEntry DomWeight.detShift at hg
-          rw [dif_pos ha] at hg
+          rw [dite_eq_left ha] at hg
           exact Int.toNat_eq_zero.mp hg
         have hidx : (⟨j0.1, hlt⟩ : Fin a) = ⟨a - 1, by omega⟩ := Fin.ext (by simp [j0]; omega)
         rw [hidx]
@@ -77,7 +77,7 @@ theorem natW_eq_padZero {a b : ℕ} (hab : a ≤ b) {lam ν : DomWeight a} {lam'
     · rfl
   have hshift : lam'.detShift = -s := by
     unfold DomWeight.detShift
-    rw [dif_pos hb]
+    rw [dite_eq_left hb]
     show lam'.w j0 = -s
     have h30 := h3 j0
     rw [hlast] at h30

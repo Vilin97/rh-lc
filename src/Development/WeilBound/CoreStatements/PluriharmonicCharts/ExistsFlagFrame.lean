@@ -58,16 +58,16 @@ theorem chartMono_dy (z : (Σ k, ι k) → L) (c : ∀ k, ι k) (p : Ψ × Fin N
   congr 1
   · rw [Finset.prod_subtype (p := fun k => ∀ p', M.blk p' ≠ some k) _ (by simp)]
     refine Finset.prod_congr (by congr) fun k _ => ?_
-    rw [FlagModel.dy, dif_pos k.2, _root_.zpow_neg]
+    rw [FlagModel.dy, dite_eq_left k.2, _root_.zpow_neg]
   · cases hp : M.blk p with
     | none =>
       refine Finset.prod_eq_one fun k hk => ?_
-      rw [FlagModel.dy, dif_neg (Finset.mem_filter.1 hk).2, hp, if_neg (by simp), zpow_zero]
+      rw [FlagModel.dy, dite_eq_right (Finset.mem_filter.1 hk).2, hp, if_neg (by simp), zpow_zero]
     | some k₁ =>
       have hk₁ : ¬ ∀ p', M.blk p' ≠ some k₁ := fun h => h p hp
       rw [Finset.prod_eq_single k₁ (fun k hk h => by
-        rw [FlagModel.dy, dif_neg (Finset.mem_filter.1 hk).2, hp, if_neg (by simpa using h.symm), zpow_zero])
-        (fun h => (h (Finset.mem_filter.2 ⟨Finset.mem_univ k₁, hk₁⟩)).elim), FlagModel.dy, dif_neg hk₁, if_pos hp,
+        rw [FlagModel.dy, dite_eq_right (Finset.mem_filter.1 hk).2, hp, if_neg (by simpa using h.symm), zpow_zero])
+        (fun h => (h (Finset.mem_filter.2 ⟨Finset.mem_univ k₁, hk₁⟩)).elim), FlagModel.dy, dite_eq_right hk₁, if_pos hp,
         zpow_one]
       rfl
 

@@ -75,7 +75,7 @@ theorem PtsSumMeasurable.proof : PtsSumMeasurable.Statement := by
     simp only
     rw [Set.indicator_of_mem hm, hdens m y hm.1]
     unfold sheetDensity
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact (hy _ _ _ hex.choose_spec hsh).symm
   have hmemF : ∀ m, y ∈ S m → σ m y ∈ (hfin y).toFinset := by
     intro m hm
@@ -118,7 +118,7 @@ theorem PtsSumMeasurable.proof : PtsSumMeasurable.Statement := by
       · rfl
     · have h0 : sheetDensity P Ψ (pot L) (logNorm A s) y w = 0 := by
         unfold sheetDensity
-        rw [dif_neg hex]
+        rw [dite_eq_right hex]
       refine Eventually.of_forall fun N => ?_
       rw [h0]
       refine (Finset.sum_eq_zero fun m _ => ?_).symm

@@ -167,17 +167,17 @@ lemma c2x2_antiW_sq (s : ℕ) : C2.antiW s * C2.antiW s = 1 := by
 lemma c2x2_simpleLow_succ {n : ℕ} (l : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
     C2.simpleLow l = ∑ a : Fin n, l a.succ a.castSucc := by
   unfold C2.simpleLow
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl (fun a _ => ?_)
-  rw [dif_pos (by have := a.isLt; simp only [Fin.coe_castSucc]; omega)]
+  rw [dite_eq_left (by have := a.isLt; simp only [Fin.coe_castSucc]; omega)]
   rfl
 
 lemma c2x2_simpleUp_succ {n : ℕ} (u : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
     C2.simpleUp u = ∑ a : Fin n, u a.castSucc a.succ := by
   unfold C2.simpleUp
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl (fun a _ => ?_)
-  rw [dif_pos (by have := a.isLt; simp only [Fin.coe_castSucc]; omega)]
+  rw [dite_eq_left (by have := a.isLt; simp only [Fin.coe_castSucc]; omega)]
   rfl
 
 theorem stabilizer_antidiagonal : C2.StabAntidiag := by
@@ -275,22 +275,22 @@ theorem lower_parabolic_coordinates : C2.LPCoords := by
     constructor
     · rintro ⟨v, rfl⟩
       refine ⟨⟨fun i j hij => ?_, fun i => ?_⟩, ⟨fun a b hab => ?_, fun a => ?_⟩⟩
-      · rw [c2x2_lowOf_sub, Matrix.one_apply_ne (ne_of_lt hij), dif_neg (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))), add_zero]
-      · rw [c2x2_lowOf_sub, Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1), add_zero]
+      · rw [c2x2_lowOf_sub, Matrix.one_apply_ne (ne_of_lt hij), dite_eq_right (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))), add_zero]
+      · rw [c2x2_lowOf_sub, Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1), add_zero]
       · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub,
-          Matrix.one_apply_ne (fun e => (ne_of_lt hab) (w.injective e)), dif_neg]
+          Matrix.one_apply_ne (fun e => (ne_of_lt hab) (w.injective e)), dite_eq_right]
         · simp
         · intro h; simp at h; exact absurd h.2 (not_lt.mpr (le_of_lt hab))
-      · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub, Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1)]
+      · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub, Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1)]
         simp [hd a]
     · rintro ⟨hl, hc⟩
       refine ⟨fun q => l q.1.1 q.1.2, ?_⟩
       ext i j
       rw [c2x2_lowOf_sub]
       rcases lt_trichotomy i j with hij | rfl | hij
-      · rw [Matrix.one_apply_ne (ne_of_lt hij), dif_neg (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))),
+      · rw [Matrix.one_apply_ne (ne_of_lt hij), dite_eq_right (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))),
           hl.1 i j hij, add_zero]
-      · rw [Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1), hl.2, add_zero]
+      · rw [Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1), hl.2, add_zero]
       · rw [Matrix.one_apply_ne (ne_of_gt hij), zero_add]
         split_ifs with h
         · rfl
@@ -314,22 +314,22 @@ theorem lower_parabolic_coordinates : C2.LPCoords := by
     constructor
     · rintro ⟨v, rfl⟩
       refine ⟨⟨fun i j hij => ?_, fun i => ?_⟩, ⟨fun a b hab => ?_, fun a => ?_⟩⟩
-      · rw [c2x2_lowOf_sub, Matrix.one_apply_ne (ne_of_lt hij), dif_neg (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))), add_zero]
-      · rw [c2x2_lowOf_sub, Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1), add_zero]
+      · rw [c2x2_lowOf_sub, Matrix.one_apply_ne (ne_of_lt hij), dite_eq_right (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))), add_zero]
+      · rw [c2x2_lowOf_sub, Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1), add_zero]
       · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub,
-          Matrix.one_apply_ne (fun e => (ne_of_gt hab) (w.injective e)), dif_neg]
+          Matrix.one_apply_ne (fun e => (ne_of_gt hab) (w.injective e)), dite_eq_right]
         · simp
         · intro h; simp at h; exact absurd h.2 (not_lt.mpr (le_of_lt hab))
-      · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub, Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1)]
+      · rw [monomialMatrix_conj_apply w d hd, c2x2_lowOf_sub, Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1)]
         simp [hd a]
     · rintro ⟨hl, hc⟩
       refine ⟨fun q => l q.1.1 q.1.2, ?_⟩
       ext i j
       rw [c2x2_lowOf_sub]
       rcases lt_trichotomy i j with hij | rfl | hij
-      · rw [Matrix.one_apply_ne (ne_of_lt hij), dif_neg (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))),
+      · rw [Matrix.one_apply_ne (ne_of_lt hij), dite_eq_right (fun h => absurd h.1 (not_lt.mpr (le_of_lt hij))),
           hl.1 i j hij, add_zero]
-      · rw [Matrix.one_apply_eq, dif_neg (fun h => lt_irrefl _ h.1), hl.2, add_zero]
+      · rw [Matrix.one_apply_eq, dite_eq_right (fun h => lt_irrefl _ h.1), hl.2, add_zero]
       · rw [Matrix.one_apply_ne (ne_of_gt hij), zero_add]
         split_ifs with h
         · rfl

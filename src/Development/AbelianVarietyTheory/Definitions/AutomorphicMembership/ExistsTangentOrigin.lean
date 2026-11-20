@@ -16,7 +16,7 @@ theorem valAt_algebraMap {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y
     (a : Z.presheaf.stalk (below y)) :
     valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [valAt, dif_pos h, IsFractionRing.injective _ Z.functionField h.choose_spec]
+  rw [valAt, dite_eq_left h, IsFractionRing.injective _ Z.functionField h.choose_spec]
 
 theorem valAt_eq_zero_iff {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z)
     {f : Z.functionField} (h : RegAt (below y) f) : valAt y f = 0 ↔ ¬ UnitAt (below y) f := by

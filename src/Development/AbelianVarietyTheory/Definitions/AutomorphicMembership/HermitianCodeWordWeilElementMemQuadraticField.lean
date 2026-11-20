@@ -141,7 +141,7 @@ theorem tauAt_sees (hX : X.AbelianUnramifiedExtensionConditions) {w : HeightOneS
       ⟨fun P P' e => eq_of_sees hPr u (ht P) (e ▸ ht P'), by rw [Fintype.card_coe, hPr.vT_card u]; rfl⟩
     exact ⟨Equiv.ofBijective t hb, ht⟩
   unfold tauAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec P
 
 theorem tauAt_mem_iff (hX : X.AbelianUnramifiedExtensionConditions) {w : HeightOneSpectrum (𝓞 X.K)} (hw : ((Pr.T u : ℕ) : 𝓞 X.K) ∈ w.asIdeal) (P : Pr.vT u)

@@ -115,7 +115,7 @@ theorem e_pos (L : SizeData₂ D) (t : D.what₂.Tau) : 0 < (((D.hc t).e i : ℚ
   have hn : (0 : ℝ) < D.R.n := by exact_mod_cast (D.R.ord_pos : 0 < D.R.n)
   have hw : 0 < L.sc.w'' D.R.n := by unfold Scale.w''; positivity
   have e : wj D ((i : ℕ) + 1) t = (((D.hc t).e i : ℚ) : ℝ) := by
-    unfold wj; rw [dif_pos (by simp)]; rfl
+    unfold wj; rw [dite_eq_left (by simp)]; rfl
   have hi := i.2
   rw [← e]
   by_cases h1 : (D.eTau t : D.R.GG) ∈ D.host.thickPlaces
@@ -144,7 +144,7 @@ theorem exists_e_ge (L : SizeData₂ D) : ∃ t : D.what₂.Tau, L.sc.b ≤ (((D
     exact Finset.mem_image.2 ⟨s, hs, rfl⟩
   obtain ⟨t, ht⟩ := ht
   have e : wj D ((i : ℕ) + 1) t = (((D.hc t).e i : ℚ) : ℝ) := by
-    unfold wj; rw [dif_pos (by simp)]; rfl
+    unfold wj; rw [dite_eq_left (by simp)]; rfl
   have hi := i.2
   exact ⟨t, e ▸ (L.win_thick ((i : ℕ) + 1) (by omega) (by omega) _ ht).1⟩
 
@@ -164,12 +164,12 @@ theorem e_le_row (hp : (dat p i).p = (D.R.sigW ((i : ℕ) + 1)).1) (τ : Psi p.T
     simp only [laOf, weightOf, k0]
     rw [if_pos (by omega), ht, hn, GlobalTheory.Shares.WtDic.wtA_tau]
     unfold ext0
-    rw [dif_pos h0, (p.fw.kap i t).1 ⟨0, h0⟩, GlobalTheory.RecGaps.sig_Wc]
+    rw [dite_eq_left h0, (p.fw.kap i t).1 ⟨0, h0⟩, GlobalTheory.RecGaps.sig_Wc]
   have e2 := Finset.single_le_sum (f := fun k => |(laOf (dat p i) (wtA (p.κ i)) (p.κ i).n τ k : ℝ)|)
     (fun k _ => abs_nonneg _) (Finset.mem_univ k0)
   have e3 := le_abs_self (laOf (dat p i) (wtA (p.κ i)) (p.κ i).n τ k0 : ℝ)
   have e4 : Formalism.L2.NTheta.lamAt (D.hc t) 0 = (D.hc t).v ⟨0, by omega⟩ := by
-    unfold Formalism.L2.NTheta.lamAt; rw [dif_pos (by omega)]
+    unfold Formalism.L2.NTheta.lamAt; rw [dite_eq_left (by omega)]
   have e5 := (L.cloud_v t ⟨0, by omega⟩).1
   have e6 : ∀ y : ℚ, (y : ℝ) - 1 ≤ ((⌊y⌋.toNat : ℕ) : ℝ) := fun y => by
     have a1 : ((y - 1 : ℚ) : ℝ) < ((⌊y⌋ : ℚ) : ℝ) := by exact_mod_cast Int.sub_one_lt_floor y
@@ -228,7 +228,7 @@ theorem mainT_le (hom : |(ofRecord D L p.Del p.h0).logOm| ≤ 3 * L.sc.L) :
   have hk := D.R.m_add_three_le_k
   have hw : ∀ ρ : RPl D.R, (ofRecord D L p.Del p.h0).w ((i : ℕ) + 1) ρ = (((D.hc (tauPl D ρ)).e i : ℚ) : ℝ) := fun ρ => by
     unfold NumDatum.w NumDatum.eQ
-    rw [dif_pos ⟨by omega, hi⟩]; rfl
+    rw [dite_eq_left ⟨by omega, hi⟩]; rfl
   have hr : (D.R.r : ℝ) + 1 = D.R.k + D.R.m := by exact_mod_cast (by unfold Ranks.r; omega : D.R.r + 1 = D.R.k + D.R.m)
   have h1 : (((i : ℕ) + 1 : ℕ) : ℝ) ≤ D.R.m := by exact_mod_cast hi
   have h2 : (1 : ℝ) ≤ (((i : ℕ) + 1 : ℕ) : ℝ) := by exact_mod_cast (by omega : 1 ≤ (i : ℕ) + 1)

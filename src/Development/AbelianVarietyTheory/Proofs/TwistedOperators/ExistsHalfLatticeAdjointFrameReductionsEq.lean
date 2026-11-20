@@ -68,7 +68,7 @@ theorem exists_half_redM_eq : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
   · rw [hent]; exact Subtype.prop _
   · funext j k
     unfold redM
-    rw [dif_pos (by rw [hent]; exact Subtype.prop _)]
+    rw [dite_eq_left (by rw [hent]; exact Subtype.prop _)]
     have hsub : (⟨frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) x j k, by rw [hent]; exact Subtype.prop _⟩ :
         Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨toEAf D e, hi⟩ * ∑ PP ∈ (R.Pg ∪ R.Q t).attach,
         ⟨toEAf D (es PP.1), hk PP.1 PP.2⟩ * Formalism.L2.DIV.oToS D.host.F D.host.E (a PP.1 j k) := Subtype.ext (hent j k)

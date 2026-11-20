@@ -54,7 +54,7 @@ def lineModel : CxModel (mCoordIdeal yLine) 1 where
         · exact absurd hv h
   fibre z hz z' hz' := by
     unfold projL
-    rw [dif_pos (vecL_ne_zero hz), dif_pos (vecL_ne_zero hz'), Projectivization.mk_eq_mk_iff]
+    rw [dite_eq_left (vecL_ne_zero hz), dite_eq_left (vecL_ne_zero hz'), Projectivization.mk_eq_mk_iff]
     constructor
     · rintro ⟨a, ha⟩
       refine ⟨fun _ => (a⁻¹ : ℂˣ), fun _ => Units.ne_zero _, ?_⟩
@@ -80,7 +80,7 @@ def lineModel : CxModel (mCoordIdeal yLine) 1 where
     funext z
     show projL z.1 = _
     unfold projL
-    rw [dif_pos (vecL_ne_zero z.2)]
+    rw [dite_eq_left (vecL_ne_zero z.2)]
     rfl
   sections := lineSections
 

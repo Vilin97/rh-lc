@@ -94,7 +94,7 @@ theorem lam_natW_val {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (t : ℕ) (
   subst h
   have hds : lam.detShift = lam.w ⟨n, by omega⟩ := by
     unfold DomWeight.detShift
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact congrArg lam.w (Fin.ext (by simp))
   have hle : lam.w ⟨n, by omega⟩ ≤ lam.w ⟨t, ht⟩ :=
     lam.anti (Fin.le_iff_val_le_val.mpr (by show t ≤ n; omega))
@@ -106,13 +106,13 @@ theorem lam_detShift {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) :
     lam.detShift = lam.w ⟨n, by omega⟩ := by
   subst h
   unfold DomWeight.detShift
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   exact congrArg lam.w (Fin.ext (by simp))
 
 theorem sg_detShift {n : ℕ} (sg : DomWeight n) (hn : 0 < n) :
     sg.detShift = sg.w ⟨n - 1, by omega⟩ := by
   unfold DomWeight.detShift
-  rw [dif_pos hn]
+  rw [dite_eq_left hn]
 
 theorem aLast_val {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg : DomWeight n) (hI : Interlace h lam sg)
     (hn : 0 < n) :
@@ -175,7 +175,7 @@ theorem colWt_eq {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg : DomWeight
     have h1 := card_lt_sz sg sz hshape ⟨tv, htn⟩
     have h2 := hL.2 ⟨tv, htn⟩
     simp only at h1 h2
-    rw [h1, h2, dif_pos (by omega), dif_pos hn]
+    rw [h1, h2, dite_eq_left (by omega), dite_eq_left hn]
     have e1 := natW_sg_val sg ⟨tv, htn⟩
     have e2 := lam_natW_val h lam tv htv
     have e3 := aLast_val h lam sg hI hn

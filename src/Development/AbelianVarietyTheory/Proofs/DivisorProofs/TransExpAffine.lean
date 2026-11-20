@@ -291,12 +291,12 @@ theorem transExp_affine : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matri
     fun a => if h : a ∈ X₁.S.HH X₁.M z₁ then e₂ ⟨a, h⟩ else 0, fun a ha => ?_, fun a ha => ?_, d 0,
     AddMonoidHom.mk' (fun a => d a - d 0) hd, fun a ha => ?_⟩
   · beta_reduce
-    rw [dif_pos ha]
+    rw [dite_eq_left ha]
     exact h₁ ⟨a, ha⟩
   · beta_reduce
-    rw [dif_pos ha]
+    rw [dite_eq_left ha]
     exact h₂ ⟨a, ha⟩
   · beta_reduce
-    rw [dif_pos ha, dif_pos ha, AddMonoidHom.mk'_apply, add_sub_cancel]
+    rw [dite_eq_left ha, dite_eq_left ha, AddMonoidHom.mk'_apply, add_sub_cancel]
 
 end GlobalTheory.Poinc.Sep.TransAff

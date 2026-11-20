@@ -49,7 +49,7 @@ theorem Ph_of_dec (X : HidaSetting D) (u : D.what₂.Word) (hK : X.LevelSubgroup
     Ph X u hK T y = phVal X u hK T y.1 n hh k := by
   have hex : ∃ n h k, IsDec X u y.2 n h k := ⟨n, hh, k, hd⟩
   unfold Ph
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact Formalism.L2.SG.Pf.phWellDef_holds X u T y.1 y.2 _ n _ k _ hh hex.choose_spec.choose_spec.choose_spec hd
 
 variable {X : HidaSetting D} {h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D} {u : D.what₂.Word}

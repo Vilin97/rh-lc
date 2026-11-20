@@ -113,7 +113,7 @@ def lamM (lam : Qbar →+* ℂ_[l]) : M →+* ℂ_[l] :=
 
 theorem lamM_apply (lam : Qbar →+* ℂ_[l]) (s : M) : lamM M lam s = lamC lam (s : ℂ) := by
   unfold lamC
-  rw [dif_pos (mem_Qbar M s)]
+  rw [dite_eq_left (mem_Qbar M s)]
   rfl
 
 variable (hM : ∀ τ x, embT D τ x ∈ M)
@@ -122,7 +122,7 @@ def embM (τ : D.what₂.Tau) : D.host.E →+* M := (embT D τ).codRestrict M (h
 
 theorem liftM_eq (τ : D.what₂.Tau) (x : D.host.E) : TaylorLogMetric.liftM M (embT D τ x) = embM D M hM τ x := by
   unfold TaylorLogMetric.liftM
-  rw [dif_pos (hM τ x)]
+  rw [dite_eq_left (hM τ x)]
   rfl
 
 theorem lamM_embM (lam : Qbar →+* ℂ_[l]) (τ : D.what₂.Tau) (x : D.host.E) :

@@ -163,7 +163,7 @@ variable {F : Type} [CommRing F]
 theorem intLift_of_mem (v : HeightOneSpectrum (𝓞 L⁺)) (y : v.adicCompletion L⁺)
     (h : y ∈ v.adicCompletionIntegers L⁺) : intLift v y = ⟨y, h⟩ := by
   unfold intLift
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem isUnit_det_of_uniTri {R : Type} [CommRing R] {r : ℕ} {A : Matrix (Fin r) (Fin r) R} (h : IsUniTri r A) :
     IsUnit A.det := by
@@ -207,7 +207,7 @@ theorem psiUTot_single (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk))
       have hne : a ≠ c := fun e => by subst e; exact lt_irrefl _ hca
       simp [Matrix.one_apply_ne hne]
   unfold psiUTot
-  rw [dif_pos hmem, hψ ⟨_, hmem⟩, psiUD, psiUOf_apply, Finset.prod_eq_single kv]
+  rw [dite_eq_left hmem, hψ ⟨_, hmem⟩, psiUD, psiUOf_apply, Finset.prod_eq_single kv]
   · dsimp only
     rw [Pi.mulSingle_eq_same]
   · intro kv' _ hne
@@ -233,7 +233,7 @@ theorem gVal_of (kv : Σ kk : Fin 2, D.nd.PlG kk) (s : SplitPlace D.host.E)
   show toKk D i k (psiUTot D i b (Pi.mulSingle kv (glOf (redMat s.v red (topR hrn xm))))) *
     (if h : IsUnit (red (intLift s.v (detT D.R.r xm))) then
       toKk D i k ((τ' h.unit : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)) else 1) = _
-  rw [hG, dif_pos hU', show hU'.unit = u from Units.ext (by rw [IsUnit.unit_spec, hu])]
+  rw [hG, dite_eq_left hU', show hU'.unit = u from Units.ext (by rw [IsUnit.unit_spec, hu])]
 
 end ChrG
 
@@ -260,7 +260,7 @@ theorem twisted_character_value (hT : ∀ i j b kv, pG D kv ∉ placesOver D.hos
         ringHomOfBaseOrderToFraction D i (tameVal (D.ntw.chi1 i j b) (pG D kv) ((1 : ℤ) * 1) u).1 := by
   intro i j b kv x u hl hu
   have h := hT i j b kv hl
-  rw [one_mul, tauNX, dif_pos h]
+  rw [one_mul, tauNX, dite_eq_left h]
   exact h.choose_spec x u hu
 
 end Tau

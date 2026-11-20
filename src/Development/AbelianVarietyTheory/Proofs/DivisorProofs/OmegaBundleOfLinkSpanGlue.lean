@@ -116,7 +116,7 @@ theorem exists_ringHom {X : Scheme.{0}} {R k : Type} [CommRing R] [Field k] (σ 
     change Spec.map (Scheme.ΓSpecIso (CommRingCat.of R)).hom ≫ Spec.map (w.appLE V.1 ⊤ hw) ≫ V.2.fromSpec = w
     rw [h, ← Scheme.isoSpec_Spec_hom, Iso.hom_inv_id_assoc]
   · have h' : ⊤ ≤ (spMap σ ≫ w) ⁻¹ᵁ V.1 := fun q _ => hw (Set.mem_univ (spMap σ q))
-    rw [valF, dif_pos h']
+    rw [valF, dite_eq_left h']
     have e : (spMap σ ≫ w).appLE V.1 ⊤ h' = w.appLE V.1 ⊤ hw ≫ (spMap σ).appTop := by
       rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
       exact (Scheme.Hom.appLE_comp_appLE (spMap σ) w V.1 ⊤ ⊤ hw le_rfl).symm

@@ -48,7 +48,7 @@ theorem exists_extend_zero_mem_ord : ∀ (R K : Type) [CommRing R] [IsDomain R] 
     have h : ∃ ψ' : c.C →ₐ[R] K, s₀ * torsMap ψ c.j = s₀ * torsMap ψ' c.j := ⟨ψ, rfl⟩
     have e : ψ = h.choose := hinj _ _ (mul_left_cancel h.choose_spec)
     show (if h : ∃ ψ' : c.C →ₐ[R] K, s₀ * torsMap ψ c.j = s₀ * torsMap ψ' c.j then h.choose u else 0) = _
-    rw [dif_pos h, ← e]
+    rw [dite_eq_left h, ← e]
   have hf0 : ∀ x, (∀ ψ : c.C →ₐ[R] K, x ≠ s₀ * torsMap ψ c.j) → f x = 0 := by
     intro x hx
     exact dif_neg (fun ⟨ψ, h⟩ => hx ψ h)

@@ -227,7 +227,7 @@ theorem radial_gauge_integrality_holds : GTRInt := by
     intro i hi
     obtain ⟨hi1, hi2⟩ := Finset.mem_Icc.1 hi
     unfold M.rho
-    rw [dif_pos ⟨hi1, hi2⟩]
+    rw [dite_eq_left ⟨hi1, hi2⟩]
     unfold M.Par.lo
     obtain ⟨a, ha⟩ := hOK.int_u (i + 1) (Finset.mem_Icc.2 ⟨by omega, by omega⟩)
     obtain ⟨b, hb⟩ := hOK.int_u' (i + 1) (Finset.mem_Icc.2 ⟨by omega, by omega⟩)

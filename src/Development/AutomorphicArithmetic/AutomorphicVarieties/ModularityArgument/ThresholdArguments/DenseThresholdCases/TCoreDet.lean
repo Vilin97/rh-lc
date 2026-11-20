@@ -315,8 +315,8 @@ theorem UpperTheory.V.Hi.coreDet_alt :
     refine ⟨Y.r, Y.cont, fun ⟨⟨w, B, σ⟩, hB, hσ⟩ => cd_pol ι _ n _ _ (Y.a w) (fun j hj => ?_) _ (Y.frob w B σ hB hσ)⟩
     change ι (x (H.genW θ a K w j)) = _
     rcases j with _ | j
-    · rw [HSet.genW, dif_neg (by omega), map_one, map_one, Y.a_zero]
-    · rw [HSet.genW, dif_pos ⟨j.succ_pos, hj⟩]
+    · rw [HSet.genW, dite_eq_right (by omega), map_one, map_one, Y.a_zero]
+    · rw [HSet.genW, dite_eq_left ⟨j.succ_pos, hj⟩]
       exact smul_left_injective ℂ hF ((hop (.inl (w, ⟨j, hj⟩))).symm.trans (Y.sph w (j + 1) F hFY.1))
   refine ⟨D, ψ, hD, hψ1, fun w B σ hB hσ => hDf ⟨(w, B, σ), hB, hσ⟩, hψ2, fun v j s g hg hs => ?_⟩
   rw [Finset.prod_congr rfl fun i _ => hψ3 v i s g hg hs, hu]

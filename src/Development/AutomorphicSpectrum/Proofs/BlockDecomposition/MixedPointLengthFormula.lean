@@ -324,7 +324,7 @@ theorem ptLen : GlobalTheory.CompanionTheory.MixZ.PtLen := by
     refine (hrel k).choose_spec ?_
     change mConeMap _ _ = 0
     simp [mConeMap, h0]
-  rw [hcard, show charOf (ptIdeal (i z)) = p from charOf_mCoordIdeal (ptCoord (i z)) p, geoNum, dif_pos hrel]
+  rw [hcard, show charOf (ptIdeal (i z)) = p from charOf_mCoordIdeal (ptCoord (i z)) p, geoNum, dite_eq_left hrel]
   exact length_mul_log (ptCoord (i z)) (fun k => (hrel k).choose) (ptChart (i z)) hy0
     (ptCoord_ptChart (i z)) (GlobalTheory.CompanionTheory.MPDict.FnDeg.closure_ptCoord m n (i z)) p
 

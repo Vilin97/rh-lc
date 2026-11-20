@@ -22,7 +22,7 @@ def rhoH (τ : D.what₂.Tau) : D.host.E →+* ℂ_[l] :=
 
 theorem rhoH_apply (τ : D.what₂.Tau) (x : D.host.E) : rhoH D lam τ x = lamC lam (embT D τ x) := by
   unfold lamC
-  rw [dif_pos (embT_mem D τ x)]
+  rw [dite_eq_left (embT_mem D τ x)]
   rfl
 
 theorem coe_rhoH (τ : D.what₂.Tau) : (rhoH D lam τ : D.host.E → ℂ_[l]) = tauEmb D lam τ :=

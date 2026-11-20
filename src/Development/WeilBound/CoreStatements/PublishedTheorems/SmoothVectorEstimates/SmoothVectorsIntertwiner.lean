@@ -67,7 +67,7 @@ theorem orb_rmul (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (g : GL (Fi
     congr 2
     ext1
     simp
-  · rw [dif_neg hM, dif_neg (mt hiff.mp hM)]
+  · rw [dite_eq_right hM, dite_eq_right (mt hiff.mp hM)]
 
 theorem orb_lmul (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (v : X) (M : LieI ι a)
     (hM : IsUnit (Matrix.of M)) (N : LieI ι a) :
@@ -83,7 +83,7 @@ theorem orb_lmul (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (v : X) (M 
     congr 2
     ext1
     simp
-  · rw [dif_neg hN, dif_neg (mt hiff.mp hN), map_zero]
+  · rw [dite_eq_right hN, dite_eq_right (mt hiff.mp hN), map_zero]
 
 omit [Fintype ι] in
 theorem orbit_map_intertwiner_comm (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (T : X →L[ℂ] X)

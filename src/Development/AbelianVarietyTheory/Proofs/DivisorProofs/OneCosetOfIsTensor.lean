@@ -17,7 +17,7 @@ theorem stepPt_add {n n' : Type} {c : ℕ} (x₀ : Matrix n n' k) (e : StepVar n
   ext r s
   simp only [stepPt, Matrix.add_apply, Matrix.of_apply]
   by_cases h : Free (c / 2 + 1) (r, s) ∨ Kept (r, s)
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     simp only [Pi.add_apply]
     ring
   · rw [dif_neg h, dif_neg h, hY r s (fun hf => h (Or.inl hf))]
@@ -105,7 +105,7 @@ theorem src_eq (hs : 1 ≤ G.s) (j : Fin (G.m - 1)) :
 theorem downMap_eq (hs : 1 ≤ G.s) (x : ColArgs G) (e : Vars G) (j : Fin (G.m - 1)) : downMap hs x e j =
     (stepPt (x j) (e j)).reindex (frame (tgt_eq hs j)) (frame (src_eq hs j)) := by
   unfold downMap
-  rw [dif_pos j.isLt]
+  rw [dite_eq_left j.isLt]
 
 variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {ϖ : kˣ} {e : ℕ} {T : G.Args → ℂ}
@@ -424,13 +424,13 @@ theorem oneCoset_of_isTensor [ν.IsAddHaarMeasure] (hs : 1 ≤ G.s) {J : G.Level
             ((Reps.through hs J (stair G ϖ e)).elt β (G.m, n + 1)) := by
         rw [DoubleCoset.eq]
         exact ⟨_, hr', _, hJn ▸ hw', hg'⟩
-      rw [hEltAt n, dif_pos hn2] at hmk ⊢
+      rw [hEltAt n, dite_eq_left hn2] at hmk ⊢
       have hb := (Reps.through hs J (stair G ϖ e)).mk_rep ⟨n, hn2⟩ (β ⟨n, hn2⟩)
       dsimp only [Reps.through]
       rw [if_pos (hmk.trans hb)]
   intro i
   have hi := key (i + 1) (by have := i.isLt; omega)
-  rw [hEltAt i, dif_pos i.isLt] at hi
+  rw [hEltAt i, dite_eq_left i.isLt] at hi
   rw [← (Reps.through hs J (stair G ϖ e)).mk_rep i (β i)]
   exact congrArg _ hi
 

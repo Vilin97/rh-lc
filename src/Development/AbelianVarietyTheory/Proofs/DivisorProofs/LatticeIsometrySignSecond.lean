@@ -231,7 +231,7 @@ theorem sub_sep_mem {H : Geo.Tor.Host D.host.E} {Dw : Datum H} (l : Geo.Tor.Leve
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 this
     exact ⟨y, hy, by rw [← hxy, sub_add_cancel_right]; exact neg_mem hx⟩
   have hc : cSep l ∈ Mfr l ∧ cSep l - 1 ∈ l.Mb := by
-    unfold cSep; rw [dif_pos hex]; exact hex.choose_spec
+    unfold cSep; rw [dite_eq_left hex]; exact hex.choose_spec
   have h1 : a - levRep q ∈ l.Mb • (⊤ : Submodule (𝓞 D.host.E) Dw.La) :=
     (Submodule.Quotient.eq _).1 (hq.trans (Classical.choose_spec (Submodule.Quotient.mk_surjective _ q)).symm)
   have hp : l.Mb * Mfr l = Ideal.span {(l.M : 𝓞 D.host.E)} := l.prod

@@ -126,7 +126,7 @@ noncomputable def lenAt (I Q : Ideal R) : ℕ :=
   if h : Q.IsPrime then (haveI := h; localLength I Q).toNat else 0
 
 theorem lenAt_of_isPrime (I Q : Ideal R) [h : Q.IsPrime] : lenAt I Q = (localLength I Q).toNat := by
-  rw [lenAt, dif_pos h]
+  rw [lenAt, dite_eq_left h]
 
 theorem localLength_ne_top_of_le [IsNoetherianRing R] {J I Q : Ideal R} [Q.IsPrime]
     (hQ : Q ∈ J.minimalPrimes) (hJ : J ≤ I) : localLength I Q ≠ ⊤ := by

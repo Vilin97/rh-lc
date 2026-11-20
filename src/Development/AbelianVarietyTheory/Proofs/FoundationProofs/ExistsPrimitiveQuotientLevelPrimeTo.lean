@@ -314,7 +314,7 @@ private lemma exists_finset_lev_mem_closure_bddRing (X : _root_.GlobalTheory.KZ.
     obtain ⟨hd, h10, h00, h11⟩ := hg'
     have hE : ∀ i j, _root_.GlobalTheory.KZ.ent (_root_.GlobalTheory.KZ.toGQ g) i j = g i j := fun i j => by
       unfold _root_.GlobalTheory.KZ.ent _root_.GlobalTheory.KZ.toGQ
-      rw [dif_pos hd]
+      rw [dite_eq_left hd]
       simp
     have h := X.exp_upper (_root_.GlobalTheory.KZ.toGQ g)
       (by rw [hE, h10]; simp) X.jK (r * g 1 1 / g 0 0)

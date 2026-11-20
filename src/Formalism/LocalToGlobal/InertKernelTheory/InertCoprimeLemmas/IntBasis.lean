@@ -87,7 +87,7 @@ def embQ (D : D7) (τ : D.what₂.Tau) : D.host.E →+* Qbar := (embT D τ).codR
 theorem lamC_embT (D : D7) (lam : Qbar →+* ℂ_[p]) (τ : D.what₂.Tau) (x : D.host.E) :
     lamC lam (embT D τ x) = lam (embQ D τ x) := by
   unfold lamC
-  rw [dif_pos (emb_mem D τ x)]
+  rw [dite_eq_left (emb_mem D τ x)]
   rfl
 
 theorem flog_constantCoeff (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p]) :

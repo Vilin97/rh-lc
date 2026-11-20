@@ -179,7 +179,7 @@ theorem immersion : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : L
       (∀ a j', Pm a j' = perFr X f.1 (φ k a : Fin N → D.host.E) (Formalism.L2.PjFree.relab κ.c κ.σ₀ (e j').1) (e j').2) →
       ∀ b (a : Fin j), Pm b (ρ a) =
         ((mat f.1 ψ)⁻¹.mulVec (Data.emb ψ.1 (φ k b : Fin N → D.host.E))) ⟨X.p0 + a, hi a⟩ := fun f Pm h b a => by
-    rw [h, Lv.relab_σ₀, he2, he1, perFr, dif_pos ψ.2, dif_pos (hi a)]
+    rw [h, Lv.relab_σ₀, he2, he1, perFr, dite_eq_left ψ.2, dite_eq_left (hi a)]
   let Fl : ℂ → (D.what₂.Tau × Fin j × Fin (N - j) → ℂ) := fun t => flat z + t • w'
   have hFl : Continuous Fl := by fun_prop
   have hFl0 : Fl 0 = flat z := by simp [Fl]

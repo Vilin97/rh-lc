@@ -287,8 +287,8 @@ theorem unitChar_congr {ν : (AE D)ˣ →* Circle} {e : AE D} {S : Finset (Pl D.
   have g := fun hx => exists_isUnitDet he hC hN' hZ' h' hx
   unfold unitChar
   by_cases hx : ∃ x, IsUnitDet e N x
-  · rw [dif_pos hx, dif_pos (f hx), nu_eq he hl hN hZ h hx.choose_spec (f hx).choose_spec]
-  · rw [dif_neg hx, dif_neg fun h => hx (g h)]
+  · rw [dite_eq_left hx, dite_eq_left (f hx), nu_eq he hl hN hZ h hx.choose_spec (f hx).choose_spec]
+  · rw [dite_eq_right hx, dite_eq_right fun h => hx (g h)]
 
 theorem isIntM_topL {b a k : ℕ} {Y : Matrix (Fin b) (Fin a) (EAf D)} (h : IsIntM Y) : IsIntM (topL k Y) := fun i j => by
   unfold topL

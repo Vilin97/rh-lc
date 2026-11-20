@@ -277,8 +277,8 @@ theorem exists_rational_section {C : Core} (T : C.Theta) (Om : Set C.G.toScheme)
         rw [map_mul, toStk_valF _ _ z hz', toStk_valF x _ z (l₂ i hz), toStk_valF x _ z (l₁ i hz), ht' i _ x z hz,
           ← Units.val_mul, inv_mul_cancel_right]
       have e₂ : valF x _ θ₀.val = valF x _ (T.θ.f j) := by
-        rw [hθ₀, valF, valF, dif_pos ((top_le_iff_mem x _ z).2 (l₁ i hz)),
-          dif_pos ((top_le_iff_mem x _ z).2 (lθ (l₁ i hz)))]
+        rw [hθ₀, valF, valF, dite_eq_left ((top_le_iff_mem x _ z).2 (l₁ i hz)),
+          dite_eq_left ((top_le_iff_mem x _ z).2 (lθ (l₁ i hz)))]
         congr 1
         change (C.A.left.presheaf.map (homOfLE lθ).op ≫ x.appLE _ _ _).hom _ = _
         rw [Scheme.Hom.map_appLE]

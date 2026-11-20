@@ -22,7 +22,7 @@ theorem frame_reps : ∀ (D : D7) (V : Formalism.BasicNotions.TH.HSp D) (n : ℕ
   intro D V n hF Ψ hΨ Pp hS d hd
   obtain ⟨s, hs⟩ := GlobalTheory.OffBad.splitPlace_of_isSplitPl D Pp (GlobalTheory.OffBad.isSplitPl_of_isSplit D Pp hS)
   have hv : Formalism.L2.NG.OverPl Pp s.v := by rw [← hs]; exact s.w_under
-  have hrep : GlobalTheory.Hk3.rep V Pp d = hd.choose := by unfold GlobalTheory.Hk3.rep; rw [dif_pos hd]
+  have hrep : GlobalTheory.Hk3.rep V Pp d = hd.choose := by unfold GlobalTheory.Hk3.rep; rw [dite_eq_left hd]
   obtain ⟨e, f, ϖ, α, -, hP, -, -, -, -, -, hα, -, hRs, hR⟩ := hd.choose_spec
   rw [hrep]
   have hK : ∀ k, k ∈ GlobalTheory.HeckeScalarSph.locK n s.v ↔

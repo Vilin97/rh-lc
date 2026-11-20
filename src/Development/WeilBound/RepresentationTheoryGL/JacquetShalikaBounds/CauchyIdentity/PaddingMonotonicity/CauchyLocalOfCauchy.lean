@@ -64,9 +64,9 @@ theorem padN_antitone {m k : ℕ} (hk : k ≤ m) {l : Fin k → ℕ} (hl : Antit
   simp only [padN]
   by_cases hj : (j : ℕ) < k
   · have hi : (i : ℕ) < k := lt_of_le_of_lt hij' hj
-    rw [dif_pos hj, dif_pos hi]
+    rw [dite_eq_left hj, dite_eq_left hi]
     exact hl (show (⟨i, hi⟩ : Fin k) ≤ ⟨j, hj⟩ from hij')
-  · rw [dif_neg hj]
+  · rw [dite_eq_right hj]
     exact Nat.zero_le _
 
 theorem padN_inj {m k : ℕ} (hk : k ≤ m) {l l' : Fin k → ℕ} (h : padN m l = padN m l') : l = l' := by

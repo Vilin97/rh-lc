@@ -49,12 +49,12 @@ variable [StarRing E] {n c : ℕ}
 
 omit [NumberField E] [StarRing E] in
 theorem inX_natAdd (x : Fin n → E) (b : Fin c) : Loc.inX E n c x (Fin.natAdd n b) = 0 := by
-  rw [inX_apply, dif_neg (by simp)]
+  rw [inX_apply, dite_eq_right (by simp)]
 
 omit [NumberField E] [StarRing E] in
 theorem atN_natAdd (v : Fin (n + c) → E) (b : Fin c) : Loc.atN v (n + b.1) = v (Fin.natAdd n b) := by
   unfold Loc.atN
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 omit [NumberField E] [StarRing E] in

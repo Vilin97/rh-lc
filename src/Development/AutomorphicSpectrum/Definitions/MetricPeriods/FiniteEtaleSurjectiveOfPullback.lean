@@ -252,7 +252,7 @@ theorem IsBlockDiag.det_eq_blocks {T : Matrix (Fin (p + q)) (Fin (p + q)) R} (h 
 
 theorem minorIJ_omIdx (T : Matrix (Fin (p + q)) (Fin (p + q)) R) :
     minorIJ T (omIdx (p + q) p) (omIdx (p + q) p) = (omBlock T).det := by
-  rw [minorIJ, dif_pos rfl]
+  rw [minorIJ, dite_eq_left rfl]
   let e : Fin q ≃ omIdx (p + q) p := Equiv.ofBijective (fun a => ⟨omEmb p q a, (mem_omIdx_iff p q _).2 ⟨a, rfl⟩⟩)
     ⟨fun a b h => (omEmb_strictMono p q).injective (congrArg Subtype.val h),
       fun i => let ⟨a, ha⟩ := (mem_omIdx_iff p q _).1 i.2; ⟨a, Subtype.ext ha⟩⟩
@@ -264,7 +264,7 @@ theorem minorIJ_omIdx (T : Matrix (Fin (p + q)) (Fin (p + q)) R) :
 
 theorem minorIJ_wIdx (T : Matrix (Fin (p + q)) (Fin (p + q)) R) :
     minorIJ T (wIdx (p + q) p) (wIdx (p + q) p) = (wBlock T).det := by
-  rw [minorIJ, dif_pos rfl]
+  rw [minorIJ, dite_eq_left rfl]
   let e : Fin p ≃ wIdx (p + q) p := Equiv.ofBijective (fun a => ⟨wEmb p q a, (mem_wIdx_iff p q _).2 ⟨a, rfl⟩⟩)
     ⟨fun a b h => (wEmb_strictMono p q).injective (congrArg Subtype.val h),
       fun i => let ⟨a, ha⟩ := (mem_wIdx_iff p q _).1 i.2; ⟨a, Subtype.ext ha⟩⟩

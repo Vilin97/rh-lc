@@ -131,8 +131,8 @@ theorem ext_integrableOn : ∀ (B : RowsAut) (C : Set B.I.GA), IsCompact C → �
     refine ⟨⟨h.choose, ?_⟩, ?_, ?_⟩
     · rw [← SetLike.mem_coe, hΓ]
       exact h.choose_spec.1
-    · rw [AutInst.rep, dif_pos h]
-    · rw [AutInst.rep, dif_pos h]
+    · rw [AutInst.rep, dite_eq_left h]
+    · rw [AutInst.rep, dite_eq_left h]
       exact h.choose_spec.2
   have hK : IsCompact (C * C⁻¹) := hC.mul hC.inv
   have hSfin : {γ : Γ | (γ : B.I.GA) ∈ C * C⁻¹}.Finite :=

@@ -39,5 +39,5 @@ theorem UpperTheory.V.Lit.Geo.fieldDef :
   obtain ⟨k, hk⟩ := unitary_of_eq hp.choose_spec.symm
   obtain ⟨u, hu⟩ := QuotientGroup.mk_out_eq_mul U x
   beta_reduce
-  rw [dif_pos hp, hk, hu, map_mul (finGL E a), ← mul_assoc, hY.lev _ u.2, ← sand_comp, ← hv_adHerm,
+  rw [dite_eq_left hp, hk, hu, map_mul (finGL E a), ← mul_assoc, hY.lev _ u.2, ← sand_comp, ← hv_adHerm,
     map_mul (infGL E a), mul_assoc, infGL_comm, ← mul_assoc, hY.cpt]

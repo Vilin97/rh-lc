@@ -127,7 +127,7 @@ theorem letterOf_inl_eq_some (τ : E →+* ℂ) (k : ℕ) (x : Letter Dw) :
     · obtain ⟨rfl, h2⟩ := Sigma.mk.inj_iff.1 (Option.some.inj h)
       exact ⟨rfl, by simpa [Fin.ext_iff] using h2⟩
   · rintro ⟨rfl, rfl⟩
-    rw [dif_pos a.isLt]
+    rw [dite_eq_left a.isLt]
 
 open Classical in
 

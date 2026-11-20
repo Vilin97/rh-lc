@@ -35,7 +35,7 @@ theorem continuous_Cw (w : Point D.host.E (D.R.rS + 1)) : Continuous fun c : Fre
 theorem Cw_apply_free (w : Point D.host.E (D.R.rS + 1)) (c : FreeE w → ℂ) (p : FreeE w) :
     Cw w c p.1.1 p.1.2 = c p := by
   simp only [Cw, Matrix.of_apply]
-  rw [if_neg (ne_of_lt p.2.1), dif_pos p.2]
+  rw [if_neg (ne_of_lt p.2.1), dite_eq_left p.2]
   rfl
 
 theorem inv_eq_adj {m : ℕ} {blk : Fin m → ℕ} {C : Matrix (Fin m) (Fin m) ℂ} (hC : IsUB blk C) : C⁻¹ = C.adjugate := by

@@ -51,15 +51,15 @@ theorem lift_apply (y : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (1 + r') + k
     if hp : 1 ≤ p.val ∧ p.val < 2 * r' + k + 1 + 1 then y ⟨p.val - 1, by omega⟩ else 0 := rfl
 
 @[simp] theorem lifted_vector_first (y : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' y (i0 k r') = 0 := by
-  rw [lift_apply, dif_neg (by simp)]
+  rw [lift_apply, dite_eq_right (by simp)]
 
 @[simp] theorem lift_iL (y : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' y (iL k r') = 0 := by
-  rw [lift_apply, dif_neg (by simp only [iL_val]; omega)]
+  rw [lift_apply, dite_eq_right (by simp only [iL_val]; omega)]
 
 @[simp] theorem lift_iM (y : Fin (2 * r' + k + 1) → ℂ) (j : Fin (2 * r' + k + 1)) :
     liftVec k 1 r' y (iM k r' j) = y j := by
   have := j.isLt
-  rw [lift_apply, dif_pos (by simp only [iM_val]; omega)]
+  rw [lift_apply, dite_eq_left (by simp only [iM_val]; omega)]
   exact congrArg y (Fin.ext (by simp))
 
 end Level

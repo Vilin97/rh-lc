@@ -41,7 +41,7 @@ theorem isWH_minorK_gen {N N' k : ℕ} {w : Fin N × Fin N' → ℕ} (v : Fin N'
     (h : k ≤ N ∧ k ≤ N') :
     IsWeightedHomogeneous w (minorK R N N' k) (∑ c : Fin k, v (Fin.castLE h.2 c)) := by
   unfold minorK
-  rw [dif_pos h, Matrix.det_apply]
+  rw [dite_eq_left h, Matrix.det_apply]
   refine IsWeightedHomogeneous.sum _ _ _ fun σ _ => ?_
   have hprod : IsWeightedHomogeneous w (∏ i : Fin k, (Matrix.of fun b c : Fin k =>
       (X (Fin.castLE h.1 b, Fin.castLE h.2 c) : MvPolynomial (Fin N × Fin N') R)) (σ i) i)
@@ -80,7 +80,7 @@ theorem isWH_minorK_row {N N' k : ℕ} {w : Fin N × Fin N' → ℕ} (P : Prop) 
       simp [h.1, h.2, hP]
     · simp [hP]
   · unfold minorK
-    rw [dif_neg h, if_neg (fun hc => h ⟨hc.1, hc.2.1⟩)]
+    rw [dite_eq_right h, if_neg (fun hc => h ⟨hc.1, hc.2.1⟩)]
     exact isWeightedHomogeneous_one R w
 
 end WH

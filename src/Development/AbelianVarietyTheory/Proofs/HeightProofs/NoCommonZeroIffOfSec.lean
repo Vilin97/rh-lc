@@ -134,7 +134,7 @@ theorem noCommonZero_of_closed
     exact ⟨p, φ.comp ψ, y', frMap_trans (Xo := Xo) (c := c) _ _ _ ψ φ y' y z hy' hz⟩
   have e : evR Xo c (w k) z = φ (evR Xo c (w k) y) := by
     unfold evR evalAt
-    rw [dif_pos hz', dif_pos hy]
+    rw [dite_eq_left hz', dite_eq_left hy]
     exact hW (w k) (hw k) _ _ _ _ _ _ _ z hz'.choose_spec.choose_spec.choose_spec
       (frMap_trans (Xo := Xo) (c := c) _ _ _ _ φ _ y z hy.choose_spec.choose_spec.choose_spec hz)
   rw [e, h0, map_zero]

@@ -116,11 +116,11 @@ theorem omegaLevel_surjective (n : ℕ) : Function.Surjective (G.omegaLevel n) :
     refine ⟨⟨u, fun k => ?_⟩, by simp [u, Nat.leRecOn_self]⟩
     rcases lt_trichotomy k n with hk | rfl | hk
     · simp only [u]
-      rw [dif_neg (by omega), dif_neg (by omega), map_zero]
+      rw [dite_eq_right (by omega), dite_eq_right (by omega), map_zero]
     · simp only [u]
-      rw [dif_pos le_rfl, dif_neg (by omega), Nat.leRecOn_self, hx]
+      rw [dite_eq_left le_rfl, dite_eq_right (by omega), Nat.leRecOn_self, hx]
     · simp only [u]
-      rw [dif_pos (by omega), dif_pos (show n + 1 ≤ k from hk), Nat.leRecOn_succ (show n + 1 ≤ k from hk)]
+      rw [dite_eq_left (by omega), dite_eq_left (show n + 1 ≤ k from hk), Nat.leRecOn_succ (show n + 1 ≤ k from hk)]
       exact hs k _
   induction n with
   | zero => exact fun x => ⟨0, (G.cot_zero_eq_zero _).trans (G.cot_zero_eq_zero _).symm⟩

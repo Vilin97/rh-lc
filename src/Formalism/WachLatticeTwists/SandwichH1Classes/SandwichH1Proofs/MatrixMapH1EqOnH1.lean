@@ -164,7 +164,7 @@ lemma ofFun_Mx {ℓ : ℕ} [Fact ℓ.Prime] {G : Type} [Group G] {OC : Type} [Co
     (actO : G →* (OC ≃ₐ[ℤ_[ℓ]] OC)) {r : ℕ} (Um : G → Matrix (Fin r) (Fin r) OC)
     (h : Um 1 = 1 ∧ ∀ g h, Um (g * h) = (Um h).map (actO g) * Um g) : (SL.ofFun actO Um).Mx = Um := by
   unfold SL.ofFun
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 lemma matrix_map_H1_eq_onH1 {ℓ : ℕ} [Fact ℓ.Prime] {G G' : Type} [Group G] [Group G'] [TopologicalSpace G'] {OC : Type}
     [CommRing OC] [Algebra ℤ_[ℓ] OC] [TopologicalSpace OC] [IsTopologicalRing OC]
@@ -172,7 +172,7 @@ lemma matrix_map_H1_eq_onH1 {ℓ : ℕ} [Fact ℓ.Prime] {G G' : Type} [Group G]
     (Y : Matrix (Fin r) (Fin r) OC) (p : G' →* G) (h : Inter S S' Y) :
     matrixMapOnH1 S S' Y p = (h.eqMap.comap p).onH := by
   unfold matrixMapOnH1
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 lemma w_facts {ℓ : ℕ} [Fact ℓ.Prime] (R : Setup ℓ) {r M0 h0 : ℕ} (F : R.Facts r M0 h0) :
     PadicInt.valuation ((R.w : ℤ_[ℓ]) - 1) = mOf ℓ R.s (M0 + h0) ∧ 1 ≤ mOf ℓ R.s (M0 + h0) ∧

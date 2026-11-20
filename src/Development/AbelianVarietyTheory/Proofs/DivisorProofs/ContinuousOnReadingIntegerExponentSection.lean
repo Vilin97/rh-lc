@@ -48,7 +48,7 @@ theorem differentiableOn_rdU_of_antitone {σ : c.F →+* ℂ} {r : ℕ} {U : Unf
     · have hi : i < Dw.mult τ := lt_of_le_of_lt hij hj
       rw [dif_pos hj, dif_pos hi]
       exact Int.toNat_le_toNat (by linarith [hanti τ ⟨i, hi⟩ ⟨j, hj⟩ hij])
-    · rw [dif_neg hj]; exact Nat.zero_le _
+    · rw [dite_eq_right hj]; exact Nat.zero_le _
   have hgp := pow_succ_mem_secZ (Xo := Xo) (c := c) (by rw [secZ_nat]; exact hg) M
   have hgf : g ^ (M + 1) * f ∈ sec Xo c a ((M + 1) * n) := by
     rw [← secZ_nat]

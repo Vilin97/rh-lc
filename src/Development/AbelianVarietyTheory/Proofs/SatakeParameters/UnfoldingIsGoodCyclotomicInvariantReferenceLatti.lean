@@ -63,7 +63,7 @@ theorem standardLattice_restriction_of_freeExtension_mem {n' c' n c : ℕ} {ex' 
   have h1 := mem_homS_sclLat.1 h (Fin.castAdd c l) (Fin.castAdd c' s)
   have hs : (Fin.castAdd c' s).1 < n' := s.2
   have hl : (Fin.castAdd c l).1 < n := l.2
-  rw [freeCoordinateExtension_apply_single, dif_neg (fun hf => absurd hf.1 (by omega)), dif_pos hs, dif_pos hl] at h1
+  rw [freeCoordinateExtension_apply_single, dite_eq_right (fun hf => absurd hf.1 (by omega)), dite_eq_left hs, dite_eq_left hl] at h1
   simpa [LocE.scE] using h1
 
 theorem chArg_int {n' c' n c : ℕ} {x : HomE E (n' + c') (n + c)}

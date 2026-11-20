@@ -45,12 +45,12 @@ theorem test_vector_mem_schwartz_bruhat (z : D.host.E) : D.host.φ₀ z ∈ Qbar
 
 theorem lamPhi_add (x y : D.host.E) : lamC lam (D.host.φ₀ (x + y)) = lamC lam (D.host.φ₀ x) + lamC lam (D.host.φ₀ y) := by
   unfold lamC
-  rw [dif_pos (test_vector_mem_schwartz_bruhat D (x + y)), dif_pos (test_vector_mem_schwartz_bruhat D x), dif_pos (test_vector_mem_schwartz_bruhat D y), ← map_add lam]
+  rw [dite_eq_left (test_vector_mem_schwartz_bruhat D (x + y)), dite_eq_left (test_vector_mem_schwartz_bruhat D x), dite_eq_left (test_vector_mem_schwartz_bruhat D y), ← map_add lam]
   exact congrArg lam (Subtype.ext (by simp))
 
 theorem lamPhi_mul (x y : D.host.E) : lamC lam (D.host.φ₀ (x * y)) = lamC lam (D.host.φ₀ x) * lamC lam (D.host.φ₀ y) := by
   unfold lamC
-  rw [dif_pos (test_vector_mem_schwartz_bruhat D (x * y)), dif_pos (test_vector_mem_schwartz_bruhat D x), dif_pos (test_vector_mem_schwartz_bruhat D y), ← map_mul lam]
+  rw [dite_eq_left (test_vector_mem_schwartz_bruhat D (x * y)), dite_eq_left (test_vector_mem_schwartz_bruhat D x), dite_eq_left (test_vector_mem_schwartz_bruhat D y), ← map_mul lam]
   exact congrArg lam (Subtype.ext (by simp))
 
 theorem okp_add (α β : ℂ_[p] × ℂ_[p]) (hα : α ∈ OKp D lam) (hβ : β ∈ OKp D lam) : α + β ∈ OKp D lam := by

@@ -56,7 +56,7 @@ theorem l2 : ConditionalKappaBounds.L2.LocalAdditiveCharacterExpansion := by
   let φb : (Fin f × Fin n → ZMod p) → R := fun v => φ (fun a => (((v a).val : ℕ) : ℚ_[p]))
   refine ⟨fun y => ∑ v : Fin f × Fin n → ZMod p, φb v * ζ ^ (∑ a, v a * (-y) a).val, fun x => ?_⟩
   by_cases h : ∀ a, ‖x a‖ ≤ 1
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     obtain ⟨xi, hxi, hxb0⟩ : ∃ xi : Fin f × Fin n → ℤ_[p], (∀ a, (xi a : ℚ_[p]) = x a) ∧
         ∀ a, PadicInt.toZMod (show ℤ_[p] from ⟨x a, h a⟩) = PadicInt.toZMod (xi a) :=
       ⟨fun a => ⟨x a, h a⟩, fun a => rfl, fun a => rfl⟩
@@ -99,7 +99,7 @@ theorem l2 : ConditionalKappaBounds.L2.LocalAdditiveCharacterExpansion := by
     · intro v _ hv
       rw [if_neg (sub_ne_zero.mpr (Ne.symm hv)), mul_zero]
     · simp
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     have : φ x = 0 := by
       by_contra hx
       exact h (h1 x hx)

@@ -647,7 +647,7 @@ def formalDegree : ℝ :=
 theorem formalDegree_pos (hπ : IsAdmissible π) [π.IsIrreducible]
     (hπ2 : IsSquareIntegrable Z ν π) : 0 < formalDegree ν π := by
   have h := schur_orthogonality hπ hπ2
-  rw [formalDegree, dif_pos h]
+  rw [formalDegree, dite_eq_left h]
   exact h.choose_spec.1
 
 theorem integral_eq_formalDegree (hπ : IsAdmissible π) [π.IsIrreducible]
@@ -656,7 +656,7 @@ theorem integral_eq_formalDegree (hπ : IsAdmissible π) [π.IsIrreducible]
     ∫ q : G ⧸ Z, (φ : Module.Dual ℂ V) (π q.out v) * (ψ : Module.Dual ℂ V) (π q.out⁻¹ w) ∂ν =
       (formalDegree ν π : ℂ)⁻¹ * ((φ : Module.Dual ℂ V) w * (ψ : Module.Dual ℂ V) v) := by
   have h := schur_orthogonality hπ hπ2
-  rw [formalDegree, dif_pos h]
+  rw [formalDegree, dite_eq_left h]
   exact h.choose_spec.2 v φ w ψ
 
 theorem eq_formalDegree (hπ : IsAdmissible π) [π.IsIrreducible]

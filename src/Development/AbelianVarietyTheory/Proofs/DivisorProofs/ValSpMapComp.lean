@@ -27,12 +27,12 @@ theorem valAt'_comp {X Y : Scheme.{0}} (x : Sp ℂ ⟶ X) (φ : X ⟶ Y) (U : Y.
   unfold valAt'
   by_cases h : ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U
   · have h1 : ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [dif_pos h, dif_pos h1]
+    rw [dite_eq_left h, dite_eq_left h1]
     unfold valAt
     rw [← Scheme.Hom.appLE_comp_appLE x φ U (φ ⁻¹ᵁ U) ⊤ le_rfl h1]
     rfl
   · have h1 : ¬ ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [dif_neg h, dif_neg h1]
+    rw [dite_eq_right h, dite_eq_right h1]
 
 theorem deriv_scale {g : ℕ} {X : Scheme.{0}} (e : (Fin g → ℂ) → (Sp ℂ ⟶ X)) {v : Sp (DualNumber ℂ) ⟶ X}
     {w : Fin g → ℂ} (h : IsDerivAt0 e w v) (s : ℂ) : IsDerivAt0 e (s • w) (spMap (epsScaleR s) ≫ v) := by

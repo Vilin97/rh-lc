@@ -80,10 +80,10 @@ private theorem exists_conj_blk_mulSingle_eq_stab (R : Type) [CommRing R] (q n :
     simp only [padMat, Matrix.of_apply, e1]
     by_cases hX : X.divNat = 0
     · by_cases hY : Y.divNat = 0
-      · rw [dif_pos ⟨(hlt X).2 hX, (hlt Y).2 hY⟩, if_pos ⟨hX, hY⟩]
-      · rw [dif_neg (fun hh => hY ((hlt Y).1 hh.2)),
+      · rw [dite_eq_left ⟨(hlt X).2 hX, (hlt Y).2 hY⟩, if_pos ⟨hX, hY⟩]
+      · rw [dite_eq_right (fun hh => hY ((hlt Y).1 hh.2)),
           if_neg (fun hh : X.divNat = 0 ∧ Y.divNat = 0 => hY hh.2)]
-    · rw [dif_neg (fun hh => hX ((hlt X).1 hh.1)),
+    · rw [dite_eq_right (fun hh => hX ((hlt X).1 hh.1)),
         if_neg (fun hh : X.divNat = 0 ∧ Y.divNat = 0 => hX hh.1)]
   ext x y
   rw [show (((MulAut.conj (⟨Pm, Pm, hPP, hPP⟩ : GL (Fin (q * n)) R)).toMonoidHom.comp

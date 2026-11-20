@@ -190,7 +190,7 @@ def pureVec (ξ : ∀ i, Hs i) (w : H) (y : ∀ i, Hs i) : H :=
 theorem pureVec_eq [DecidableEq ι] (hw : ∀ i, a i (ξ i) w = w) {y : ∀ i, Hs i} (hy : Formalism.MainNotions.KudlaSiegelWeil.Restr ξ y) {s : Finset ι}
     (hs : ∀ i ∉ s, y i = ξ i) : pureVec hc ξ w y = pr hc s y w := by
   have hy' : {i | y i ≠ ξ i}.Finite := hy
-  rw [pureVec, dif_pos hy']
+  rw [pureVec, dite_eq_left hy']
   have hsub : hy'.toFinset ⊆ s := fun i hi => by
     by_contra hn
     exact (hy'.mem_toFinset.1 hi) (hs i hn)

@@ -23,13 +23,13 @@ theorem ringEquiv_posIdele (r : ℝ) (hr : 0 < r) :
   · show Completion.extensionEmbeddingOfIsReal w.2 ((posIdele (K := K) r hr : 𝔸[K]).1 w) = r
     rw [← GroundTheory.Global.IdeleGroup.coe_infiniteProj, infiniteProj_posIdele]
     show Completion.extensionEmbeddingOfIsReal w.2 (GroundTheory.Global.posRealElem w.1 (r ^ w.1.mult)) = r
-    rw [GroundTheory.Global.posRealElem, dif_pos w.2, w.2.mult_eq_one, pow_one,
+    rw [GroundTheory.Global.posRealElem, dite_eq_left w.2, w.2.mult_eq_one, pow_one,
       ← Completion.ringEquivRealOfIsReal_apply, RingEquiv.apply_symm_apply]
   · show Completion.extensionEmbedding w.1 ((posIdele (K := K) r hr : 𝔸[K]).1 w) = (r : ℂ)
     rw [← GroundTheory.Global.IdeleGroup.coe_infiniteProj, infiniteProj_posIdele]
     show Completion.extensionEmbedding w.1 (GroundTheory.Global.posRealElem w.1 (r ^ w.1.mult)) = r
     have hc : ¬ w.1.IsReal := not_isReal_iff_isComplex.2 w.2
-    rw [GroundTheory.Global.posRealElem, dif_neg hc, mult, if_neg hc,
+    rw [GroundTheory.Global.posRealElem, dite_eq_right hc, mult, if_neg hc,
       ← Completion.ringEquivComplexOfIsComplex_apply (not_isReal_iff_isComplex.1 hc),
       RingEquiv.apply_symm_apply, Real.sqrt_sq hr.le]
 

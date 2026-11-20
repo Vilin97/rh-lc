@@ -185,7 +185,7 @@ theorem complement_skew : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
       cartan := hθ₁
       bas := fun v => by
         show IsSplitBasis (B.τ v) (lowLat (ι' * C) Y.L) (if h : v.1 ∈ B.P then β₁ ⟨v.1, h⟩ else 1)
-        rw [dif_pos v.2]
+        rw [dite_eq_left v.2]
         exact hβ₁ v }
 
 end GlobalTheory.PlaneCompl

@@ -97,7 +97,7 @@ theorem vertical_value : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hex : ∃ v, IsValueAt Dc.y (MvPolynomial.aeval Dc.y (Dc.vnum p) / MvPolynomial.aeval Dc.y (Dc.vden p) *
       chartMono Dc.y cc (-Dc.vdeg p)) (fun q => e₀ (w q)) v := by
     by_contra h
-    exact hne (by rw [GroundTheory.Heights₂.Heights.LowerBoundFree.valAt, dif_neg h])
+    exact hne (by rw [GroundTheory.Heights₂.Heights.LowerBoundFree.valAt, dite_eq_right h])
   obtain ⟨v, hv⟩ := hex
   rw [valAt_eq (hm e₀) hv] at hne
   obtain ⟨t, ht, het⟩ := descend hξ z e₀ ((tv e₀ _ _).2 hv)
@@ -106,7 +106,7 @@ theorem vertical_value : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hccz : ∀ k, e (w ⟨k, cc k⟩) ≠ 0 := fun k => (map_ne_zero e).2 (hcc k)
   have hc : ∃ c : (k : K) → J k, ∀ k, (fun q => e (w q)) ⟨k, c k⟩ ≠ 0 := ⟨cc, hccz⟩
   unfold ComponentData.vertFactor
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   have hcs := hc.choose_spec
   generalize hc.choose = c at hcs ⊢
   have hcs' : ∀ k, e (w ⟨k, c k⟩) ≠ 0 := hcs

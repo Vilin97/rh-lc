@@ -324,10 +324,10 @@ def rootElt (i j : Fin n) (a : F) : GL (Fin n) F :=
 
 theorem coe_rootElt {i j : Fin n} (h : i ≠ j) (a : F) :
     ((rootElt i j a : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) = 1 + Matrix.single i j a := by
-  rw [rootElt, dif_neg h]
+  rw [rootElt, dite_eq_right h]
 
 theorem rootElt_self (i : Fin n) (a : F) : rootElt i i a = 1 := by
-  rw [rootElt, dif_pos rfl]
+  rw [rootElt, dite_eq_left rfl]
 
 theorem rootElt_apply {i j : Fin n} (h : i ≠ j) (a : F) (r c : Fin n) :
     ((rootElt i j a : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) r c =

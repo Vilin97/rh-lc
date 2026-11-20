@@ -2706,7 +2706,7 @@ theorem jd_zero (G : GAtP p) (i : G.comp) (L0 : G.P.Tup) (ξ : G.P.Xsp) (i' : G.
   simp only [delta]
   rcases h with h | h
   · split_ifs <;> rfl
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
 
 theorem jd_uniq (G : GAtP p) (h1 : G.TrivStab) (i : G.comp) (L0 : G.P.Tup) (hL0 : G.P.IsLatTup L0)
     (γ γ' : (G.lev i).Γ) (h : (G.lev i).smul γ L0 = (G.lev i).smul γ' L0) : γ = γ' := by
@@ -2720,7 +2720,7 @@ theorem jd_apply (G : GAtP p) (h1 : G.TrivStab) (i : G.comp) (L0 : G.P.Tup) (γ 
   have hex : ∃ γ' : (G.lev i).Γ, (G.lev i).smul γ L0 = (G.lev i).smul γ' L0 := ⟨γ, rfl⟩
   have hc : hex.choose = γ := (jd_uniq G h1 i L0 hL0 _ _ hex.choose_spec).symm
   simp only [delta]
-  rw [dif_pos hex, if_pos trivial, hc]
+  rw [dite_eq_left hex, if_pos trivial, hc]
 
 theorem jd_self (G : GAtP p) (h1 : G.TrivStab) (i : G.comp) (L0 : G.P.Tup) (ξ : G.P.Xsp)
     (hL0 : G.P.IsLatTup L0) : delta G i L0 ξ i L0 = ξ := by

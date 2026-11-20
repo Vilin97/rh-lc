@@ -193,7 +193,7 @@ theorem phiAgree : ∀ (E K k : Type) [Field E] [NumberField E] [StarRing E] [Fi
       congr 2
       exact Finset.prod_congr rfl fun i _ => hDi i
     · have h0 : LocE.unitV (χ j) (Matrix.of fun p p' : Fin (κ + s + 1 + j * τ) => M p p').det = 0 := by
-        unfold LocE.unitV; rw [dif_neg hu]
+        unfold LocE.unitV; rw [dite_eq_right hu]
       rw [h0, _root_.inv_zero, mul_zero, map_zero]
       by_contra hne
       obtain ⟨⟨g, hgJ, hgv⟩, -⟩ := (TypeDatum.Phi_ne_zero_iff _ _).1 hne

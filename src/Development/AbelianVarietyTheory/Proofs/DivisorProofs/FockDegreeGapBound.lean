@@ -59,7 +59,7 @@ theorem sum_topWt (L : SizeData₂ D) : ∑ τ, topWt L τ = ∑ t : D.host.TT, 
 theorem wj_succ (D : D7) (i : ℕ) (hi : i < D.R.m) (τ : D.what₂.Tau) :
     wj D (i + 1) τ = (((D.hc τ).e ⟨i, hi⟩ : ℚ) : ℝ) := by
   unfold wj
-  rw [dif_pos (by simpa using hi)]
+  rw [dite_eq_left (by simpa using hi)]
   rfl
 
 theorem head_row (u : D.what₂.Word) (i : ℕ) (hi : i < D.R.m) (τ : D.what₂.Tau) (r : ℕ) (hr : r < D.R.k) :
@@ -148,7 +148,7 @@ theorem nuAbs_place (P : ParameterChoice' D L) (u : D.what₂.Word) (i : ℕ) (h
 
 theorem eQ_succ (D : D7) (i : ℕ) (hi : i < D.R.m) (τ : D.what₂.Tau) : eQ D (i + 1) τ = (D.hc τ).e ⟨i, hi⟩ := by
   unfold eQ
-  rw [dif_pos ⟨by omega, hi⟩]
+  rw [dite_eq_left ⟨by omega, hi⟩]
   rfl
 
 theorem ranks_le (D : D7) : (D.R.k : ℝ) + D.R.m ≤ D.R.N D.R.m ∧ (D.R.t : ℝ) + 1 ≤ D.R.N D.R.m := by
@@ -204,7 +204,7 @@ theorem letters_place (L : SizeData₂ D) (hK : KapDef D) (i : ℕ) (hi : i < D.
         unfold aPlus
         rw [aPlusQ_eq, eQ_succ D i hi, wj_succ D i hi]
         unfold sigPar
-        rw [dif_pos hr', abs_le]
+        rw [dite_eq_left hr', abs_le]
         push_cast
         constructor <;> linarith
       refine le_trans ?_ h1
@@ -220,7 +220,7 @@ theorem letters_place (L : SizeData₂ D) (hK : KapDef D) (i : ℕ) (hi : i < D.
       unfold aPlus
       rw [aPlusQ_eq, eQ_succ D i hi]
       unfold sigPar
-      rw [dif_neg (by omega), dif_pos hb, abs_le]
+      rw [dite_eq_right (by omega), dite_eq_left hb, abs_le]
       push_cast at c ⊢
       constructor <;> linarith [c.1, c.2]))
   have s3 := abs_le.1 (abs_sum_range_sub (fun r => |aMinus D (i + 1) τ r|) (D.R.m - (i + 1)) 0
@@ -231,7 +231,7 @@ theorem letters_place (L : SizeData₂ D) (hK : KapDef D) (i : ℕ) (hi : i < D.
       have c := abs_le.1 (L.be_close τ ⟨_, hb⟩ ⟨i, hi⟩)
       simp only [sub_zero, abs_abs]
       unfold aMinus aMinusQ
-      rw [eQ_succ D i hi, dif_pos hb, abs_le]
+      rw [eQ_succ D i hi, dite_eq_left hb, abs_le]
       push_cast at c ⊢
       constructor <;> linarith [c.1, c.2]))
   have b1 : ((i + 1 : ℕ) : ℝ) * (L.etaSz + 2 * D.R.N D.R.m) ≤ D.R.m * (L.etaSz + 2 * D.R.N D.R.m) :=

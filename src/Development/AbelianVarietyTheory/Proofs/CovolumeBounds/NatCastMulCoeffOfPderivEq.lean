@@ -165,7 +165,7 @@ theorem existsUnique_primitive_param {e : ι → σ} (he : Function.Injective e)
     fun _ => rfl
   have hf0 : ∀ α : σ →₀ ℕ, (∀ i, α (e i) = 0) → coeff α f = 0 := by
     intro α h
-    rw [hf, dif_neg]
+    rw [hf, dite_eq_right]
     push Not
     exact h
   have hf1 : ∀ i, pderiv (R := A) (e i) f = a i := by
@@ -177,7 +177,7 @@ theorem existsUnique_primitive_param {e : ι → σ} (he : Function.Injective e)
     have hq : (((n + single (e i) 1 : σ →₀ ℕ) (e hex.choose) : ℕ) : ℚ) ≠ 0 :=
       Nat.cast_ne_zero.mpr hex.choose_spec
     rw [add_tsub_cancel_right] at hk
-    rw [coeff_pderiv, hf, dif_pos hex, smul_mul_assoc, mul_comm]
+    rw [coeff_pderiv, hf, dite_eq_left hex, smul_mul_assoc, mul_comm]
     have : ((n (e i) : A) + 1) = (((n + single (e i) 1 : σ →₀ ℕ) (e i) : ℕ) : A) := by simp
     rw [this, hk, ← nsmul_eq_mul, ← Nat.cast_smul_eq_nsmul ℚ, smul_smul, inv_mul_cancel₀ hq,
       one_smul]

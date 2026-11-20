@@ -80,7 +80,7 @@ theorem BaseChange.of_found (hN : IntNumIsFieldIntersection.Statement.{u})
       Set.indicator_of_mem hW, Numbers.agree_of_existsUnique hN' hEU' I' hI' W n L hWv]
     simp only [ReciprocityTheory.ChartRestriction.G.Geo.multAt, dif_pos this]
     rfl
-  · rw [dif_neg (fun h => hW h.1), Set.indicator_of_notMem hW]
+  · rw [dite_eq_right (fun h => hW h.1), Set.indicator_of_notMem hW]
     simp
 
 theorem BaseChange.full (F : Type u) (F' : Type u') [Field F] [Field F'] [Algebra F F'] {K : Type}

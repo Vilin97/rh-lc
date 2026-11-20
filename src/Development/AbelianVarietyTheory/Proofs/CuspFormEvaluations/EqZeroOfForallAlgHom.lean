@@ -53,7 +53,7 @@ theorem pow_eq_one_of_complex {K : Type} [Field K]
   have hT : FromTest pts mapR z := ⟨p, φ', y, hz⟩
   have h0 := h z
   unfold evalAt at h0
-  rw [dif_pos hT, ← hW f hf (CAt σ) p _ φ' _ y _ z hz hT.choose_spec.choose_spec.choose_spec] at h0
+  rw [dite_eq_left hT, ← hW f hf (CAt σ) p _ φ' _ y _ z hz hT.choose_spec.choose_spec.choose_spec] at h0
   show φ' _ = 0
   rw [map_sub, map_pow, h0, map_one, sub_self]
 
@@ -65,7 +65,7 @@ theorem evalAt_pow_eq_one {K : Type} [Field K]
     {S : Type} [CommRing S] [Algebra K S] (y : pts S) (hT : FromTest pts mapR y) :
     evalAt pts mapR f y ^ k = 1 := by
   unfold evalAt
-  rw [dif_pos hT, ← map_pow, h, map_one]
+  rw [dite_eq_left hT, ← map_pow, h, map_one]
 
 end GlobalTheory.FiniteOrderRule
 

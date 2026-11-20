@@ -40,7 +40,7 @@ theorem killCompl_X_self {k i : ℕ} {σ : Fin k → Fin i} (hσ : Function.Inje
 
 theorem killCompl_X_of_notMem {k i : ℕ} {σ : Fin k → Fin i} (hσ : Function.Injective σ) {a : Fin i}
     (ha : a ∉ Set.range σ) : killCompl hσ (X a : MvPolynomial (Fin i) R) = 0 := by
-  rw [killCompl, aeval_X, dif_neg ha]
+  rw [killCompl, aeval_X, dite_eq_right ha]
 
 def kill (R : Type) [CommRing R] {k i : ℕ} {σ : Fin k → Fin i} (hσ : Function.Injective σ) :
     EpsAlg R i →ₐ[R] EpsAlg R k :=
@@ -300,7 +300,7 @@ theorem top_le_inf {x : Sp A ⟶ X} {U V : X.Opens} (hU : ⊤ ≤ x ⁻¹ᵁ U) 
 
 theorem valR_spMap (ρ : A →+* A') (x : Sp A ⟶ X) (V : X.Opens) (ht : ⊤ ≤ x ⁻¹ᵁ V) (a : Γ(X, V)) :
     valR (spMap ρ ≫ x) V a = ρ (valR x V a) := by
-  rw [valR, valR, dif_pos ht, dif_pos (top_le_comp ht _),
+  rw [valR, valR, dite_eq_left ht, dite_eq_left (top_le_comp ht _),
     ← Scheme.Hom.appLE_comp_appLE (spMap ρ) x V ⊤ ⊤ ht le_top]
   have e := congrArg (fun q => q.hom ((x.appLE V ⊤ ht).hom a))
     (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom ρ))
@@ -434,7 +434,7 @@ theorem rigVal_eq (hφ : IsGrpPullback P.A AA (spMap (algebraMap (𝓞 K) K)) φ
       valR (X := Sp (𝓞 K)) (spMap (algebraMap (𝓞 K) K)) _ (MM.rig.s p).val := by
   have hex : ∃ p : PUnit → MM.L.ι,
       ⊤ ≤ (spMap (algebraMap (𝓞 K) K)) ⁻¹ᵁ (show (Sp (𝓞 K)).Opens from (MM.L.pull (eSec AA)).U p) := ⟨p, hp⟩
-  rw [rigVal, dif_pos hex]
+  rw [rigVal, dite_eq_left hex]
   have hq := hex.choose_spec
   generalize hex.choose = q at hq
   have he := PolBaseChange.eSec_comm hφ

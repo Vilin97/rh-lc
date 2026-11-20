@@ -37,6 +37,6 @@ theorem valAt_eq_of_sameOrbit (K : Type) [Fintype K] (ι : K → Type) [∀ k, F
   · obtain ⟨v, hv⟩ := hv
     rw [valAt_eq hz hv, valAt_eq hz' (isValueAt_of_sameOrbit (sameOrbit_symm' h) hv)]
   · have hv' : ¬ ∃ v, IsValueAt x s z' v := fun ⟨v, hw⟩ => hv ⟨v, isValueAt_of_sameOrbit h hw⟩
-    rw [valAt, valAt, dif_neg hv, dif_neg hv']
+    rw [valAt, valAt, dite_eq_right hv, dite_eq_right hv']
 
 end GlobalTheory.CompanionTheory.Ar.PB.WSq.Fib

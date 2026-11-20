@@ -27,7 +27,7 @@ theorem add_le_of_gap {n : ℕ} (f : Fin n → ℤ) (hf : ∀ k : ℕ, k + 1 < n
     intro i h
     have h1 := hf (i + d) (by omega)
     unfold GlobalTheory.CompHS.gap at h1
-    rw [dif_pos (by omega)] at h1
+    rw [dite_eq_left (by omega)] at h1
     have h2 := ih i (by omega)
     have e : (⟨i + d + 1, by omega⟩ : Fin n) = ⟨i + (d + 1), h⟩ := Fin.ext (by simp; omega)
     rw [e] at h1
@@ -78,7 +78,7 @@ theorem exists_shift {p q : ℕ} (f : Fin (p + q) → ℤ) (hf : ∀ k : ℕ, k 
   · have h1 : f i ≤ f ⟨p, by omega⟩ := le_of_gap f hf _ i (by simp [Fin.le_def]; omega)
     have hg := hf (p - 1) (by omega)
     unfold GlobalTheory.CompHS.gap at hg
-    rw [dif_pos (by omega)] at hg
+    rw [dite_eq_left (by omega)] at hg
     have e : (⟨p - 1 + 1, by omega⟩ : Fin (p + q)) = ⟨p, by omega⟩ := Fin.ext (by simp; omega)
     rw [e] at hg
     have h2 : ((k : ℤ) + 1) * f i ≤ ((k : ℤ) + 1) * (f ⟨p - 1, by omega⟩ - 1) :=

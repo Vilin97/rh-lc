@@ -96,7 +96,7 @@ theorem redM_sub (PP : Formalism.L2.DIV.Pl D.host.E) {b c : ℕ} {N M : Matrix (
       Formalism.L2.DIV.resS D.host.F PP ⟨(N - M) i j, h⟩ else 0) =
     (if h : N i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E then Formalism.L2.DIV.resS D.host.F PP ⟨N i j, h⟩ else 0) -
     (if h : M i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E then Formalism.L2.DIV.resS D.host.F PP ⟨M i j, h⟩ else 0)
-  rw [dif_pos h1, dif_pos (hN i j), dif_pos (hM i j), ← (Formalism.L2.DIV.resS D.host.F PP).map_sub]
+  rw [dite_eq_left h1, dite_eq_left (hN i j), dite_eq_left (hM i j), ← (Formalism.L2.DIV.resS D.host.F PP).map_sub]
   rfl
 
 theorem redM_congr (PP : Formalism.L2.DIV.Pl D.host.E) {b c b' c' : ℕ} (N : Matrix (Fin b) (Fin c) (EAf D))
@@ -201,7 +201,7 @@ theorem exists_row {S T : HSp D} (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) 
     intro PP hPP j
     show (if h : R i0 j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E then
       Formalism.L2.DIV.resS D.host.F PP ⟨R i0 j, h⟩ else 0) = _
-    rw [dif_pos (hRint i0 j)]
+    rw [dite_eq_left (hRint i0 j)]
     have hr : (⟨R i0 j, hRint i0 j⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = r0 i0 j := rfl
     rw [hr]
     simp only [r0, if_pos rfl]

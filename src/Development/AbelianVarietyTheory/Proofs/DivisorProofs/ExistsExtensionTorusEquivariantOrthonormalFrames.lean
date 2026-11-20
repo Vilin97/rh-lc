@@ -43,7 +43,7 @@ theorem exists_extension : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     have hD : D (rmul y b) := ⟨(y, b), hy, hb, rfl⟩
     obtain ⟨h1, h2, h3⟩ := hD.choose_spec
     show (if h : D (rmul y b) then bchar la h.choose.2 * F h.choose.1 else 0) = _
-    rw [dif_pos hD]
+    rw [dite_eq_left hD]
     exact (value_indep X la F hF' hy h1 hb h2 h3).symm
   refine ⟨Q, fun y hy => ?_, fun x hx b hb => ?_⟩
   · have := hQ y hy _ (ExtFPf.oneF_mem X)

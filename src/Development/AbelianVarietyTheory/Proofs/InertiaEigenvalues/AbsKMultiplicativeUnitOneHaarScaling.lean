@@ -20,7 +20,7 @@ theorem secondCountable_K : SecondCountableTopology A.K := by
 
 theorem absK_unit (x : A.Kˣ) : A.absK (x : A.K) = (distribHaarChar A.K x : ℝ) := by
   unfold absK
-  rw [dif_pos x.isUnit]
+  rw [dite_eq_left x.isUnit]
   congr 2
   ext; rfl
 

@@ -123,7 +123,7 @@ theorem valR_spMap_comp {A B : Type} [CommRing A] [CommRing B] {X : Scheme.{0}} 
     (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     valR (spMap φ ≫ x) U f = φ (TangentOrigin.evalPt x U h f) := by
   have h' : ⊤ ≤ (spMap φ ≫ x) ⁻¹ᵁ U := fun p _ => h (Set.mem_univ _)
-  rw [valR, dif_pos h']
+  rw [valR, dite_eq_left h']
   exact TangentOrigin.evalPt_spMap_comp φ x U h h' f
 
 end GlobalTheory.TanLinComb
@@ -176,7 +176,7 @@ theorem val_one (U : (TF (R := R) ℂ ⊗ G).left.Opens) (f : Γ((TF (R := R) �
     rw [comp_lift, Category.comp_id, MonObj.comp_one]
   rw [e, Over.comp_left]
   show valR (spMap (algebraMap ℂ (DualNumber ℂ)) ≫ x0 G) U f = _
-  rw [valR_spMap_comp _ _ U h0, valF, dif_pos h0, TrivSqZeroExt.algebraMap_eq_inl]
+  rw [valR_spMap_comp _ _ U h0, valF, dite_eq_left h0, TrivSqZeroExt.algebraMap_eq_inl]
   rfl
 
 theorem dg_one : Dg (1 : TP R (DualNumber ℂ) ⟶ G) (fun _ _ => 0) := by

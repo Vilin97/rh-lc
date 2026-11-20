@@ -311,7 +311,7 @@ theorem chart_mul (φ : GA E a → ℂ) (g : GA E a) {x : Lie E a} (hx : IsUnit 
     exact Units.ext e.symm
   · have hxy : ¬ IsUnit (Matrix.of (lmul x y)) := by
       rw [e]; exact fun h => hy ((hx.mul_left_iff).1 h)
-    rw [dif_neg hy, dif_neg hxy]
+    rw [dite_eq_right hy, dite_eq_right hxy]
 
 theorem contDiffAt_chart (φ : Sm E a) (g : GA E a) {x : Lie E a} (hx : IsUnit (Matrix.of x)) :
     ContDiffAt ℝ 2 (chart φ.1 g) x :=

@@ -23,7 +23,7 @@ theorem divCycle_nonneg (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRi
 theorem divCycle_eq_zero_of_form_not_mem (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)}
     (hx : x ∉ W) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) = 0 := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact fun h => hx (h.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x)))
 
 end
@@ -33,7 +33,7 @@ theorem ExcessPositive.proof : ExcessPositive.Statement.{u} := by
   have hPp : P.IsPrime := hP.multiProj.isPrime
   have hGdef : G ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant G := by
     by_contra h
-    exact hsG (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg h])
+    exact hsG (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right h])
   have hGp : G.IsPrime := hGdef.1.1.1
   have hPG : P ≤ G := le_sup_left.trans hGdef.1.1.2
   obtain ⟨u, v, huG, huv⟩ := hD.2 G hGp hPG hGdef.2

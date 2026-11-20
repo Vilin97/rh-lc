@@ -206,7 +206,7 @@ theorem prod_lamN (t : T) (p : A.fam.base.Ix) :
   rw [h1, ← Fin.prod_univ_eq_prod_range]
   refine Finset.prod_congr rfl fun j _ => ?_
   unfold lamN
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   exact congrArg (fun k => R.lam k t p A.v0) (Fin.ext (Nat.add_sub_cancel _ _))
 
 set_option maxHeartbeats 1000000 in

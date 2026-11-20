@@ -18,7 +18,7 @@ theorem coeff_spec {A : Type} [CommRing A] (l : ℕ) (φ : A →+* A) (a : A) (n
   have h' : (l : A) ^ n ∣ φ^[n] a - ∑ i : Fin n, (l : A) ^ (i : ℕ) * coeff l φ a i ^ l ^ (n - i) := by
     rwa [Fin.sum_univ_eq_sum_range (fun i => (l : A) ^ i * coeff l φ a i ^ l ^ (n - i)) n]
   have e : coeff l φ a n = h'.choose := by
-    rw [coeff, dif_pos h']
+    rw [coeff, dite_eq_left h']
   have hc := h'.choose_spec
   rw [← e, Fin.sum_univ_eq_sum_range (fun i => (l : A) ^ i * coeff l φ a i ^ l ^ (n - i)) n] at hc
   rw [sum_range_succ, Nat.sub_self, pow_zero, pow_one, ← hc]

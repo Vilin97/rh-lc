@@ -25,7 +25,7 @@ theorem eigGen_integral_comb : ∀ (D : D7) (cD : D.what₂.Tau → ℂ), Formal
   · exact GlobalTheory.SplitEmbSep.norm_le_one_of_isIntegral (map_isIntegral_int g (f j).isIntegral_coe)
   · have e : ∀ j, tauEmb D lm τ' (a j) = g (TaylorLogMetric.liftM M (TaylorLogMetric.embT D τ' (a j))) := by
       intro j
-      rw [← hg', TaylorLogMetric.liftM, dif_pos (hM _ _)]
+      rw [← hg', TaylorLogMetric.liftM, dite_eq_left (hM _ _)]
       rfl
     have hc := congrFun hfv τ'
     simp only [Finset.sum_apply, Pi.smul_apply, hav] at hc

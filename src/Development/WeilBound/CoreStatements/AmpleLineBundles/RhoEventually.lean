@@ -191,7 +191,7 @@ theorem vl_eq (hall : ∀ q : X, genPt ξ ⤳ q)
     (tie : CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩)) {z : Sp ℂ ⟶ X} {w : (Σ k, J k) → ℂ}
     (h : CoordsAt ξ y z w) {a : Ω} {s : ℂ} (hs : ValAt ξ z a s) : vl ξ y a w = s := by
   have he : ∃ s : ℂ, ∃ z : Sp ℂ ⟶ X, CoordsAt ξ y z w ∧ ValAt ξ z a s := ⟨s, z, h, hs⟩
-  rw [vl, dif_pos he]
+  rw [vl, dite_eq_left he]
   obtain ⟨z', h', hs'⟩ := he.choose_spec
   rw [pt_unique hall tie h' h] at hs'
   exact CxVal.unique hs' hs

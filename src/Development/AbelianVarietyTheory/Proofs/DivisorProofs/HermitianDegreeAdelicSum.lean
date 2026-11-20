@@ -113,13 +113,13 @@ theorem deg_eq_neg_adelSum_div_finrank : ∀ (K : Type) [Field K] [NumberField K
     intro p
     by_cases hp : p.Prime
     · haveI : Fact p.Prime := ⟨hp⟩
-      rw [dif_pos hp, if_pos hp, if_pos hp]
+      rw [dite_eq_left hp, if_pos hp, if_pos hp]
       have e1 := finsum_lnGrP_eq_add_padicValNat_relIndex K g p Dst L hDstF hL hDstL
       have e2 := GlobalTheory.T.scaled_standard_lattice_padic_sum K g p D hD
       rw [← hI] at e1
       change ∑ᶠ j : K →+* ℂ_[p], ∑ k, lnGrP p j Dst k = _ at e2
       linarith
-    · rw [dif_neg hp, if_neg hp, if_neg hp]
+    · rw [dite_eq_right hp, if_neg hp, if_neg hp]
       ring
   have hfin : finPart L = g * Module.finrank ℚ K * Real.log D - Real.log I := by
     unfold finPart

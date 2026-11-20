@@ -1023,7 +1023,7 @@ def epsL (r l : ℕ) (hl : l ≤ r + 1) : D.host.E := ∏ b : Fin l, (-1 : D.hos
 theorem leadMinor_Sg (Zm : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) (l : ℕ) (hl : l ≤ D.R.rS + 1) :
     leadMinorE (Zm * Sg D.host.E D.R.rS) l = leadMinorE Zm l * epsL (D := D) D.R.rS l hl := by
   unfold leadMinorE
-  rw [dif_pos hl, dif_pos hl]
+  rw [dite_eq_left hl, dite_eq_left hl]
   have : (Zm * Sg D.host.E D.R.rS).submatrix (Fin.castLE hl) (Fin.castLE hl) =
       Zm.submatrix (Fin.castLE hl) (Fin.castLE hl) *
         Matrix.diagonal fun b : Fin l => (-1 : D.host.E) ^ (D.R.rS - (Fin.castLE hl b).val) := by

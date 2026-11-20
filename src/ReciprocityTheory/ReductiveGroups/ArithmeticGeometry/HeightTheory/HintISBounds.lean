@@ -91,7 +91,7 @@ private theorem eq_ratio_smul_of_mem_graded {d' : Data K ι Ω WT A} (hd : d'.Ax
   have hnz : (⟨e, he⟩ : 𝒜 c G) ≠ 0 := fun h0 => he0 (by simpa using congrArg Subtype.val h0)
   obtain ⟨a, ha⟩ := (finrank_eq_one_iff_of_nonzero' (⟨e, he⟩ : 𝒜 c G) hnz).mp (hd.finrank_one c G) ⟨f, hf⟩
   have hex : ∃ a : Ω c, f = a • e := ⟨a, by simpa using (congrArg Subtype.val ha).symm⟩
-  rw [ratio, dif_pos hex]
+  rw [ratio, dite_eq_left hex]
   exact hex.choose_spec
 
 theorem hint_meas (hd : d.AxH 𝒜) (c : ι) (sg : K →+* ℂ) {G : WT} {f : A c} (hf : f ∈ 𝒜 c G)

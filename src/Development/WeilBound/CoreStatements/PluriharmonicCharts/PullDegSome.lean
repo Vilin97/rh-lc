@@ -51,7 +51,7 @@ theorem isBlockMap_v₁ (k₀ : K) :
     | none =>
       refine ⟨⟨k₀, x⟩, ?_⟩
       unfold v₁
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       rfl
     | some k =>
       have hk : k ≠ k₀ := by
@@ -64,7 +64,7 @@ theorem isBlockMap_v₁ (k₀ : K) :
           | exact h1 ((Option.some_injective _ hj).trans hk)
       refine ⟨⟨k, x⟩, ?_⟩
       unfold v₁
-      rw [dif_neg hk]
+      rw [dite_eq_right hk]
 
 theorem pullDeg_some (xi : K → ℤ) (o : Option K) : pullDeg (some : K → Option K) xi o = o.elim 0 xi := by
   unfold pullDeg

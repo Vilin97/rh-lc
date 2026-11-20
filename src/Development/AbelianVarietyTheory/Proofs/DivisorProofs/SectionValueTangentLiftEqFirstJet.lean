@@ -22,7 +22,7 @@ theorem valR_comp_eq {R : Type} [CommRing R] {X Y : Scheme.{0}} (x : Sp R ⟶ X)
     valR (x ≫ s) V a = evalPt x U h ((s.appLE V U e).hom a) := by
   have h' : ⊤ ≤ (x ≫ s) ⁻¹ᵁ V := fun p hp => e (h hp)
   unfold valR evalPt
-  rw [dif_pos h', ← Scheme.Hom.appLE_comp_appLE x s V U ⊤ e h]
+  rw [dite_eq_left h', ← Scheme.Hom.appLE_comp_appLE x s V U ⊤ e h]
   rfl
 
 def sec (A : Over (Sp ℂ)) : A ⟶ baseOver (Sp ℂ) ⊗ A :=

@@ -109,7 +109,7 @@ private theorem prod_pow_comap_transformedBoundary_eq {X X' : Scheme.{u}} (π : 
     intro j _
     rw [hg1 j]
     exact congrArg (fun t : ℕ => ((Blowup.strictTransform π Z (L.get j)).comap W.ι) ^ t) (dif_pos j.isLt)
-  · rw [hg2, dif_neg (by simp : ¬ ((Fin.last L.length : Fin (L.length + 1)) : ℕ) < L.length)]
+  · rw [hg2, dite_eq_right (by simp : ¬ ((Fin.last L.length : Fin (L.length + 1)) : ℕ) < L.length)]
 
 private theorem isMonomialNear_transformedBoundary_of_isBlowupAlongIdealSheaf (hGeom : MonomialGeometryHypotheses.{u})
     {T : MarkedIdealWithBoundary.{u}} (hT : MonomialCenter.IsLocallyMonomialTriple T)

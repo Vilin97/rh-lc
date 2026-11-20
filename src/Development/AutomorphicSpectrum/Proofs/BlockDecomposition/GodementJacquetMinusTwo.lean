@@ -261,7 +261,7 @@ theorem lint_hG (ψ : AddChar F Circle) (f : GL (Fin 2) F → ℝ≥0∞) (hf : 
 theorem hr_val {r : Fin 2 → F} (h1 : r 1 ≠ 0) : (hr r).val = !![(r 1)⁻¹, 0; r 0, r 1] := by
   have hd : (!![(r 1)⁻¹, 0; r 0, r 1] : Matrix (Fin 2) (Fin 2) F).det ≠ 0 := by
     simp [Matrix.det_fin_two, h1]
-  rw [hr, dif_pos hd]
+  rw [hr, dite_eq_left hd]
   rfl
 
 theorem coord_val {y : F} (hy : y ≠ 0) (t : F) {r : Fin 2 → F} (h1 : r 1 ≠ 0) :
@@ -328,8 +328,8 @@ theorem gjm2 : Ad3.K.GL2LocalData.GJm2 := by
     intro r
     refine lintegral_congr fun t => lintegral_congr fun y => ?_
     by_cases h : y = 0 ∨ r 1 = 0
-    · rw [dif_pos h, Qc, if_pos h.symm]
-    · rw [dif_neg h, Qc, if_neg (fun h' => h h'.symm)]
+    · rw [dite_eq_left h, Qc, if_pos h.symm]
+    · rw [dite_eq_right h, Qc, if_neg (fun h' => h h'.symm)]
       push_neg at h
       exact key f h.1 t h.2
   have hmp := (measurePreserving_piFinTwo fun _ : Fin 2 => ν).lintegral_comp hW

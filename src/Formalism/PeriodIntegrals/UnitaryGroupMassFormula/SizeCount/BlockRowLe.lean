@@ -35,18 +35,18 @@ theorem nuRow_le (D : D7) (u : D.what₂.Word) (j : ℕ) (τ : D.what₂.Tau) (i
 theorem srcPar_lt (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k) :
     DV.srcPar D u τ i = (D.hcW u τ).u ⟨i, h⟩ := by
   unfold DV.srcPar
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem wSz_eq (D : D7) (j : ℕ) (τ : D.what₂.Tau) (hj : 1 ≤ j) (hm : j ≤ D.R.m) :
     DV.wSz D j τ = (((D.hc τ).e ⟨j - 1, by omega⟩ : ℚ) : ℝ) := by
   unfold DV.wSz
-  rw [dif_pos ⟨hj, hm⟩]
+  rw [dite_eq_left ⟨hj, hm⟩]
 
 theorem wSz_eq_wj (D : D7) (j : ℕ) (τ : D.what₂.Tau) (hj : 1 ≤ j) (hm : j ≤ D.R.m) :
     DV.wSz D j τ = wj D j τ := by
   rw [wSz_eq D j τ hj hm]
   unfold wj
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
 
 theorem cloudRow_le (D : D7) (u : D.what₂.Word) (j : ℕ) (τ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k) :
     DV.nuRow D u j τ i ≤ (((D.hcW u τ).u ⟨i, h⟩ : ℚ) : ℝ) + DV.wSz D j τ := by
@@ -98,7 +98,7 @@ theorem blockRow_le (D : D7) (L : SizeData₂ D) (u : D.what₂.Word) (j : ℕ) 
     omega
   have hwb : wj D (b + 1) τ = (((D.hc τ).e ⟨b, by omega⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl
   have hEb : (((D.hc τ).e ⟨(i - D.R.k) / (D.R.t + 1), hbm⟩ : ℚ) : ℝ) = wj D (b + 1) τ := by
     rw [hwb]
@@ -126,7 +126,7 @@ theorem blockRow_le (D : D7) (L : SizeData₂ D) (u : D.what₂.Word) (j : ℕ) 
   have hprod : ((D.R.t : ℝ) + 1) * 1 ≤ ((D.R.t : ℝ) + 1) * ((j : ℝ) - 1 - b) :=
     mul_le_mul_of_nonneg_left (by linarith) (by positivity)
   unfold DV.nuRow DV.srcPar
-  rw [dif_neg (by omega), dif_pos hbm, wSz_eq_wj D j τ hj hm, D.hcW_e]
+  rw [dite_eq_right (by omega), dite_eq_left hbm, wSz_eq_wj D j τ hj hm, D.hcW_e]
   push_cast
   rw [hEb, ← hrdef, hN1r, hN2r, hir]
   nlinarith [hA.1, hA.2, hB]

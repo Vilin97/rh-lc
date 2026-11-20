@@ -23,7 +23,7 @@ theorem fj_one (la : Wt X.Ψ r) (ξ : Fin r → E) (x : Frame X.Ψ r) :
     X.fj la ξ 0 (fun _ => 1) x = 1 := by
   have h := PeriodLatticeCountable.fd_exists X la
   unfold Data.fj
-  rw [if_pos (fun p _ => ⟨0, by simp⟩), dif_pos h]
+  rw [if_pos (fun p _ => ⟨0, by simp⟩), dite_eq_left h]
   obtain ⟨-, -, h0, h1⟩ := h.choose_spec
   have : (volume h.choose).toReal ≠ 0 := (ENNReal.toReal_pos h0.ne' h1.ne).ne'
   simp [Measure.real, this]

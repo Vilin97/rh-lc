@@ -26,7 +26,7 @@ theorem thetaExt_of_eq {x : Per6.BdR l} {y : Per6.BdRp l}
   have h1 : h0.choose = y :=
     IsPerfectoidField.algebraMap_bDeRham_injective (K := ℂ_[l]) (p := l)
       (h0.choose_spec.symm.trans h)
-  rw [thetaExt, dif_pos h0, h1]
+  rw [thetaExt, dite_eq_left h0, h1]
 
 theorem theta_gal (g : GQ l) (y : Per6.BdRp l) :
     Per6.θD l (Per6.toBot g • y) = actC l g (Per6.θD l y) := by

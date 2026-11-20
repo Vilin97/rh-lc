@@ -34,7 +34,7 @@ theorem framepf_gco_spec (x : ↥(NcS W T (c - 1))) :
     (x : W.DD T) = ∑ k, framepf_ι π' (c - 1) (framepf_gco Bs π' c x k) • Bs.b k := by
   have h := framepf_coord Bs π' (c - 1) hπ0 hR2 x.2
   unfold framepf_gco
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec h
 
 include hπ0 hΔπ hR2 γ0 in

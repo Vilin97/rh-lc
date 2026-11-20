@@ -51,7 +51,7 @@ theorem ratOf_mul {W : Y.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y) 
     ratOf σ * (i.1.2 : Y.functionField) = fnOf _ h (cd σ i) := by
   have hj : genericPoint Y ∈ W ⊓ (toLB D).U i ⊓ (toLB D).U (genChart D) := ⟨h, genChart_mem D⟩
   have hW : genericPoint Y ∈ W := h.1
-  rw [ratOf, dif_pos hW, cd_rel σ i (genChart D) hj]
+  rw [ratOf, dite_eq_left hW, cd_rel σ i (genChart D) hj]
   have := Units.ne_zero (genChart D).1.2
   field_simp
 
@@ -184,7 +184,7 @@ def funOf (V : X.Opens) (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D)
 theorem fnOf_funOf {V : X.Opens} (hV : genericPoint X ∈ V)
     (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :
     fnOf V hV (funOf hbij hReg V σ) = finv hbij (ratOf σ) := by
-  rw [funOf, dif_pos hV]
+  rw [funOf, dite_eq_left hV]
   exact (exists_fnOf_eq hV fun x hx => regAt_finv hbij hReg σ hx).choose_spec
 
 theorem funOf_add {V : X.Opens} (σ τ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :

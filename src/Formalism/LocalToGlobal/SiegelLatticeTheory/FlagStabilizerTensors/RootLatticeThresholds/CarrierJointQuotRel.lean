@@ -64,24 +64,24 @@ theorem relAlg (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ) (π : Fin (r + 1) �
     by_cases h : (π k.succ).val + 1 = (π k.castSucc).val
     · obtain ⟨j, hjv⟩ : ∃ j : Fin r, j.val = (π k.succ).val := ⟨⟨_, hcond k h⟩, rfl⟩
       have hψk : ψ k = j := by
-        rw [hψdef, dif_pos h]
+        rw [hψdef, dite_eq_left h]
         exact Fin.ext hjv.symm
       have hjc : j.castSucc = π k.succ := Fin.ext (by rw [Fin.coe_castSucc, hjv])
       have hjs : j.succ = π k.castSucc := Fin.ext (by rw [Fin.val_succ, hjv]; exact h)
       have h' : (π j.succ).val + 1 = (π j.castSucc).val := by
         rw [hjs, hjc, hπ, hπ, Fin.coe_castSucc, Fin.val_succ]
-      rw [hψk, hψdef, dif_pos h']
+      rw [hψk, hψdef, dite_eq_left h']
       apply Fin.ext
       show (π j.succ).val = k.val
       rw [hjs, hπ, Fin.coe_castSucc]
-    · have hψk : ψ k = k := by rw [hψdef, dif_neg h]
+    · have hψk : ψ k = k := by rw [hψdef, dite_eq_right h]
       rw [hψk, hψk]
   have hterm : ∀ k : Fin r, (U k k.succ).re = -(m (ψ k) (ψ k).succ).re := by
     intro k
     by_cases h : (π k.succ).val + 1 = (π k.castSucc).val
     · obtain ⟨j, hjv⟩ : ∃ j : Fin r, j.val = (π k.succ).val := ⟨⟨_, hcond k h⟩, rfl⟩
       have hψk : ψ k = j := by
-        rw [hψdef, dif_pos h]
+        rw [hψdef, dite_eq_left h]
         exact Fin.ext hjv.symm
       have hjc : j.castSucc = π k.succ := Fin.ext (by rw [Fin.coe_castSucc, hjv])
       have hjs : j.succ = π k.castSucc := Fin.ext (by rw [Fin.val_succ, hjv]; exact h)
@@ -112,7 +112,7 @@ theorem relAlg (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ) (π : Fin (r + 1) �
         rcases hP2 k with ⟨h', _⟩ | hlt
         · exact absurd h' h
         · exact hlt
-      have hψk : ψ k = k := by rw [hψdef, dif_neg h]
+      have hψk : ψ k = k := by rw [hψdef, dite_eq_right h]
       have eL : (∑ c : Fin r, if c.castSucc < π k.castSucc then
           conj (m c (π k.castSucc)) * Z c.castSucc k.succ else 0) = 0 :=
         Finset.sum_eq_zero fun c _ => by

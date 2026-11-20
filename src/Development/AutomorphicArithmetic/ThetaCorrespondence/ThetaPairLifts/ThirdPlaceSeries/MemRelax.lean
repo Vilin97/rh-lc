@@ -66,7 +66,7 @@ theorem onto_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B 
   have hex : ∃ t, ∃ J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t, J.Reads ∧ Nonempty (J.Ch j) := ⟨t, J, hJ, ⟨α⟩⟩
   have hUp : _root_.GlobalTheory.LevProd.upperLevelSubgroup a j hj = _root_.GlobalTheory.LevProd.relaxedLevelSubgroup hex.choose_spec.choose j hj hex.choose_spec.choose_spec.2.some := by
     unfold _root_.GlobalTheory.LevProd.upperLevelSubgroup
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hJ₀ : hex.choose_spec.choose.Reads := hex.choose_spec.choose_spec.1
   have hgl := fun i : Fin J.r => GlobalTheory.LocEmb.exists_gl _ _ (J.G i).q ((I.rec7 l Z).sp.X j)
     (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) ((J.G i).FX j (by have := _root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj; omega))

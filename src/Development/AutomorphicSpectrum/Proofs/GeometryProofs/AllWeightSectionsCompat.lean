@@ -157,7 +157,7 @@ theorem indicator_mem_suppOn {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ 
   by_cases hT : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) y
   swap
   · unfold evR evalAt
-    rw [dif_neg hT]
+    rw [dite_eq_right hT]
   obtain ⟨q, χ, y₀, hy₀⟩ := hT
   have hid := (sections_generic_indicators E H Dw l Xo c r U h e hC).2.2.2.1 Z
   have hu : IsIdempotentElem (χ (e Z q y₀)) := by

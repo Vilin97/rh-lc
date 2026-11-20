@@ -74,7 +74,7 @@ theorem GlobalTheory.EtC.Pair.cup_assoc_of_mul_assoc : ∀ (R : Type) [CommRing 
     refine Finset.sum_congr rfl fun p _ => ?_
     have hp := p.isLt
     simp only [G]
-    rw [dif_pos (by omega), Units.smul_def, Units.smul_def, map_zsmul, LinearMap.smul_apply, smul_smul,
+    rw [dite_eq_left (by omega), Units.smul_def, Units.smul_def, map_zsmul, LinearMap.smul_apply, smul_smul,
       ← Units.val_mul, ← Int.negOnePow_add]
     rw [hA (tu := -((N - (p : ℕ) : ℕ) : ℤ) + mk)]
     rotate_left
@@ -101,6 +101,6 @@ theorem GlobalTheory.EtC.Pair.cup_assoc_of_mul_assoc : ∀ (R : Type) [CommRing 
   refine Finset.sum_congr rfl fun r _ => ?_
   have hr := r.isLt
   simp only [G]
-  rw [dif_pos (by omega), Units.smul_def, Units.smul_def, map_zsmul, smul_smul, ← Units.val_mul,
+  rw [dite_eq_left (by omega), Units.smul_def, Units.smul_def, map_zsmul, smul_smul, ← Units.val_mul,
     ← Int.negOnePow_add, ss, ss]
   rfl

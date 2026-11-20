@@ -20,9 +20,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 theorem fok_unif {w : Pl E} {x : w.adicCompletion E} (hx : ordL x = 1) : IsUnifV E w x := by
   unfold ordL at hx
   by_cases h1 : Valued.v x = 0
-  · rw [dif_pos h1] at hx
+  · rw [dite_eq_left h1] at hx
     exact absurd hx (by norm_num)
-  · rw [dif_neg h1] at hx
+  · rw [dite_eq_right h1] at hx
     unfold IsUnifV
     rw [← WithZero.coe_unzero h1]
     congr 1
@@ -36,7 +36,7 @@ theorem fok_ordL_det {w : Pl E} {p : ℕ} {κ : GLw p w} (hκ : κ ∈ KGL w p) 
   have h1 : Valued.v ((GeneralLinearGroup.det κ : (w.adicCompletion E)ˣ) : w.adicCompletion E) ≠ 0 := by
     rw [hv]; exact one_ne_zero
   unfold ordL
-  rw [dif_neg h1]
+  rw [dite_eq_right h1]
   have e : WithZero.unzero h1 = 1 := by
     rw [← WithZero.coe_inj, WithZero.coe_unzero, hv]; rfl
   rw [e, toAdd_one, neg_zero]

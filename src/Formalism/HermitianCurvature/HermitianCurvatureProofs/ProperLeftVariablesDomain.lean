@@ -71,7 +71,7 @@ theorem slice_eq {k r : ℕ} (z z' : Fin (2 * r + k + 1) → ℂ) (H : B.Mat k r
         (D.castF e H) (fun a => a.elim0) := by
   funext y
   unfold D.castF
-  rw [Formalism.FourierDecayAlt.P.Dx2.MN.castM_rfl, D.sliceAt, dif_pos hle]
+  rw [Formalism.FourierDecayAlt.P.Dx2.MN.castM_rfl, D.sliceAt, dite_eq_left hle]
   rfl
 
 theorem mMap_castM {k j a b : ℕ} (h : a = b) (Z : Matrix (Fin j) (Fin j) ℂ) (g : B.Mat k a) :

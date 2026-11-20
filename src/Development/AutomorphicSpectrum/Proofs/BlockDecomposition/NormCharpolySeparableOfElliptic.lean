@@ -21,7 +21,7 @@ theorem cj_algebraMap {E : Type} [Field E] [NumberField E] [IsCMField E] {w : Pl
     rintro v rfl f hf h
     have hex : ∃ s : v.adicCompletion E →+* v.adicCompletion E, Continuous s ∧
         ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨f, hf, h⟩
-    rw [GlobalTheory.BCT.cj, dif_pos hex]
+    rw [GlobalTheory.BCT.cj, dite_eq_left hex]
     exact hex.choose_spec.2 x
   exact key _ (GlobalTheory.BCT.GlobLev.conjSrc_eq_of_not_split hw) _
     (conjLoc_spec (GlobalTheory.SplitPts.conjE E) _).1 (conjLoc_spec (GlobalTheory.SplitPts.conjE E) _).2.1

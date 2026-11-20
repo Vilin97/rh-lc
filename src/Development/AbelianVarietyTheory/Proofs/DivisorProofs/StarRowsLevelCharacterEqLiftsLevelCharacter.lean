@@ -42,7 +42,7 @@ end Level
 
 theorem ext_by_one_apply_of_not_mem_subgroup {G N : Type} [Group G] [One N] [Mul N] {P : Subgroup G} (f : P → N) {x : G} (h : x ∉ P) :
     ext1 P f x = 1 := by
-  unfold ext1; rw [dif_neg h]
+  unfold ext1; rw [dite_eq_right h]
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]

@@ -50,7 +50,7 @@ private theorem jR_r_eq_opC_jR_of_kFormR (hK : X.KFormR) (t : A3.fam3.base3.Tup)
       X.jR t ((A3.fam3.F.R t).r g (Basis.ofVectorSpace K (A3.fam3.amb3.FR t) k)) := by
     intro k
     unfold CxData.opC
-    rw [dif_pos hb]
+    rw [dite_eq_left hb]
     have e : X.jR t (Basis.ofVectorSpace K (A3.fam3.amb3.FR t) k) = Basis.mk hb.1 hb.2.ge k :=
       (Basis.mk_apply hb.1 hb.2.ge k).symm
     rw [e, Basis.constr_basis]
@@ -68,7 +68,7 @@ private theorem jL_r_eq_opLC_jL_of_kFormL (hK : X.KFormL) (j : A3.fam3.base3.J) 
       X.jL j t ((A3.fam3.F.L j t).r g (Basis.ofVectorSpace K (A3.fam3.amb3.FL j t) k)) := by
     intro k
     unfold CxData.opLC
-    rw [dif_pos hb]
+    rw [dite_eq_left hb]
     have e : X.jL j t (Basis.ofVectorSpace K (A3.fam3.amb3.FL j t) k) = Basis.mk hb.1 hb.2.ge k :=
       (Basis.mk_apply hb.1 hb.2.ge k).symm
     rw [e, Basis.constr_basis]

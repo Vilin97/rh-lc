@@ -82,7 +82,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
     GlobalTheory.ZH.uTors_closed _ _ _ ρ' p y₀ u l hint).1
   have hb : GSum.base X₁ z₁ ∈ X₁.S.supI X₁.M z₁ := by
     have hne : (X₁.S.supI X₁.M z₁).Nonempty := X₁.div z₁
-    rw [GSum.base, dif_pos hne]
+    rw [GSum.base, dite_eq_left hne]
     exact hne.some_mem
   have hx₀ := GlobalTheory.T.thetaSetup_dividingLabel_persists_deeperLevel g n F W Z i X₁ h1 h2 h3 h4 h5 h6 h7 ε₁ h8 D z₁ _ hb _ hz
   have hmem : GSum.lift D (y (cPt p)) (κ : X₁.S.Gam) ∈ l.yy.ker := by

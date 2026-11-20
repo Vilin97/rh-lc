@@ -104,9 +104,9 @@ theorem similitude_tri_of_hkIsog {E : Type} [Field E] [NumberField E] [IsCMField
     refine (GlobalTheory.LevelCusp.apply_of_cols e h.toLinearMap
       (fun τ i j => (p : ℂ) * toC (cf τ i j)) hcol (Pm v) τ ⟨n, hn⟩).trans
       (Finset.sum_congr rfl fun j _ => ?_)
-    rw [hPm, Equiv.apply_symm_apply, dif_pos ⟨hn, j.2⟩, _root_.mul_assoc]
+    rw [hPm, Equiv.apply_symm_apply, dite_eq_left ⟨hn, j.2⟩, _root_.mul_assoc]
   · beta_reduce
-    rw [dif_pos ⟨i.2, i.2⟩]
+    rw [dite_eq_left ⟨i.2, i.2⟩]
     exact congrArg _ (hcf1 τ i)
 
 end GlobalTheory.HeckeExist

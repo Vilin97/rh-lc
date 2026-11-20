@@ -53,7 +53,7 @@ theorem bkLoc_col (n : ℕ) (hw : plOf i dc n ∈ placesOver D.host.E (D.nd.l i)
     obtain ⟨m, rfl⟩ := hb
     have hz' : z ∈ fZ i dc n ρV := hz
     unfold fZ at hz'
-    rw [dif_pos hw] at hz'
+    rw [dite_eq_left hw] at hz'
     have hz2 : (fun g => (z (Br.iota D.nbr i _ hw g) : TrV (eK (D.nbr i _ hw)) V)) ∈
         finiteCocycles (Br.PD D.loc D.nbr i _ hw) (repL (eK (D.nbr i _ hw)) ρV (Br.iota D.nbr i _ hw)) := hz'
     have hpt : ∀ x, f.1 x = φ (qV (z x)) + ((Br.WKO i ρ π) (x : GE D.nd) (φ m) - φ m) := by

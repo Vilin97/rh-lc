@@ -76,10 +76,10 @@ theorem eigComp_spec {ρ : O →+* Module.End k V} {σ : O →+* k} {x : V} (h0 
   by_cases h : ∃ p ∈ eigSp ρ σ, x - p ∈ ⨆ σ' ∈ {σ' : O →+* k | σ' ≠ σ}, eigSp ρ σ'
   · have e : eigComp ρ σ x = h.choose := by
       unfold eigComp
-      rw [dif_pos h]
+      rw [dite_eq_left h]
     rw [e]
     exact h.choose_spec
-  · exact absurd (by unfold eigComp; rw [dif_neg h]) h0
+  · exact absurd (by unfold eigComp; rw [dite_eq_right h]) h0
 
 end Field
 

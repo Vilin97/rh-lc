@@ -92,7 +92,7 @@ theorem exists_comb (hG : GlobalFnsSt) (U : Unif I D A G) {k : ℕ} (hk : 1 ≤ 
       rw [e, ← Fintype.sum_subtype_add_sum_subtype (fun i => cls i = cls i₀),
         Finset.sum_eq_zero (s := (Finset.univ : Finset {i // ¬ cls i = cls i₀}))
           (fun i _ => by rw [if_neg i.2, zero_smul]), add_zero]
-      exact Finset.sum_congr rfl fun i _ => by rw [if_pos i.2]; beta_reduce; rw [dif_pos i.2]
+      exact Finset.sum_congr rfl fun i _ => by rw [if_pos i.2]; beta_reduce; rw [dite_eq_left i.2]
     · exact ⟨0, fun h => absurd h hc⟩
   choose b hb using hb
   have key : toF V (FractionRing V) r • F = ∑ i, toF V (FractionRing V) (b (cls i) i) • t i := by

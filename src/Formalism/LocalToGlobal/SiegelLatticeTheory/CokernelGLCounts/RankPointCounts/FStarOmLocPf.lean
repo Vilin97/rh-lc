@@ -35,7 +35,7 @@ theorem h_sub_left (x y z : V) : H.h (x - y) z = H.h x z - H.h y z := by
 
 theorem dl_last {r : ℕ} (f g : Fin (r + 1) → V) : H.Dl f g (r + 1) = (H.Zhat f g).det := by
   unfold Loc.HermSp.Dl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   rfl
 
 theorem om_pair {r : ℕ} (f g : Fin (r + 1) → V) (a : Fin (r + 1)) :

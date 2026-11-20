@@ -136,7 +136,7 @@ theorem differentiableAt_dir {n g : ℕ} {e : OpenPartialHomeomorph (CxPts (genS
       simp only [Function.comp_apply, hl b hb]
     · filter_upwards [hn] with b ⟨hb, h⟩
       refine ((hW b hb).2 U h f).symm.trans ?_
-      rw [ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR, dif_pos h]
+      rw [ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR, dite_eq_left h]
   have d₁ := LocalLift.isDerivAt0_const (ε (x b₀)) w hw'
   have d₀ := LocalLift.isDerivAt0_const (ε (x b₀)) 0 fun _ _ _ => map_zero _
   have e0 : ex (x b₀) 0 = 1 := by simpa using h3 _ (hs b₀ hb₀) 0 0

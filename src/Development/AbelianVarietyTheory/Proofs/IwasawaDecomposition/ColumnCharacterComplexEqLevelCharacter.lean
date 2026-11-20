@@ -31,7 +31,7 @@ theorem embLL_chiAt_eq_levChi : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2
     rw [← h2, MonoidHom.inv_apply, inv_inv]
   have e : Formalism.L2.Col.chiAt I.Ch ⟨w, hw⟩ (i : ℕ) u = I.Ch.chi i ⟨w, hw⟩ u := by
     simp only [Formalism.L2.Col.chiAt, Formalism.L2.Col.extChi]
-    rw [dif_pos (show (i : ℕ) < X.B.R.m from i.2)]
+    rw [dite_eq_left (show (i : ℕ) < X.B.R.m from i.2)]
     rfl
   rw [e, h2', Units.val_inv_eq_inv_val]
   change _ = (((((I.C.mu0 i).locK (⟨w, hw⟩ : {w // w ∈ (X.B.primes px).vGs}).1) k : ℂˣ) : ℂ))⁻¹

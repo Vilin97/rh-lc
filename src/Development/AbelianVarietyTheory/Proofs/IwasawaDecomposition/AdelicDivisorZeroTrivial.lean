@@ -70,7 +70,7 @@ theorem induced_adlOf_zero : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j
     have hlg : (adlOf (Φ.C k) (metsOf x Φ k) 0).lg v e y =
         Real.log (e.w (valAt y.1 (((eqn (0 : (Φ.C k).Y.Dv) (below y.1))⁻¹ : (Φ.C k).Y.Fnˣ) : (Φ.C k).Y.Fn))) := by
       show lgOf (Φ.C k) 0 v e y = _
-      rw [lgOf, dif_pos (LineTest.residueCharacteristic_prime v)]
+      rw [lgOf, dite_eq_left (LineTest.residueCharacteristic_prime v)]
       simp [LineTest.expo_zero, divOf]
     rw [hD0, hlg]
     obtain ⟨h0, hz⟩ := valAt_zpow y.1 (unitAt_eqn_zero (below y.1))

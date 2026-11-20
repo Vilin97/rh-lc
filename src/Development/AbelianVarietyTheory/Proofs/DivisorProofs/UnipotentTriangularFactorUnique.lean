@@ -21,7 +21,7 @@ theorem uniR_lowerTri {R : Type} [CommRing R] {m : ℕ} (n : Low m → R) :
   intro i j hij
   have hij' : i < j := hij
   simp only [uniR_apply]
-  rw [dif_neg (not_lt.mpr hij'.le), if_neg (ne_of_lt hij')]
+  rw [dite_eq_right (not_lt.mpr hij'.le), if_neg (ne_of_lt hij')]
 
 theorem uniR_diag {R : Type} [CommRing R] {m : ℕ} (n : Low m → R) (i : Fin m) :
     uniR n i i = 1 := by

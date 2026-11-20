@@ -17,11 +17,11 @@ theorem elim_ofGG_translate (D : D7) (a b : ℝ) (τ : D.what₂.Tau) (g : D.R.G
     rw [mul_assoc]; exact Subgroup.mul_mem_cancel_left _ hτ
   unfold ofGG
   by_cases hg : g ∈ D.R.Psi
-  · rw [dif_pos hg, dif_pos (h1.2 hg)]; rfl
-  · rw [dif_neg hg, dif_neg (fun h => hg (h1.1 h))]
+  · rw [dite_eq_left hg, dite_eq_left (h1.2 hg)]; rfl
+  · rw [dite_eq_right hg, dite_eq_right (fun h => hg (h1.1 h))]
     by_cases hc : g * D.R.cc ∈ D.R.Psi
-    · rw [dif_pos hc, dif_pos (h2.2 hc)]; rfl
-    · rw [dif_neg hc, dif_neg (fun h => hc (h2.1 h))]
+    · rw [dite_eq_left hc, dite_eq_left (h2.2 hc)]; rfl
+    · rw [dite_eq_right hc, dite_eq_right (fun h => hc (h2.1 h))]
 
 theorem kap_indep : ∀ (D : D7) (Y : ShimX D.what₂.Tau), ∀ (p : ℕ) (τ τ' : D.what₂.Tau),
     kap Y p τ = kap Y p τ' := by

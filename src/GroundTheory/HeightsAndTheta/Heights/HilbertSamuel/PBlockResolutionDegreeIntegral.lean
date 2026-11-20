@@ -122,7 +122,7 @@ theorem mass_potOf (hGG : GenDegGeomDeg.Statement) (d : HSMBlockDatum D K ι Ω)
   rw [hdeg] at hg
   rw [← hg]
   unfold geomDeg ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact key.symm
 
 end BlockResolutionDegreeIntegral

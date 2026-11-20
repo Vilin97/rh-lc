@@ -22,7 +22,7 @@ theorem refXi1_above (hm : R.m = m2 + 2) (i : ℕ) (hi : R.m ≤ i) (p : DecoSet
     (p' : DecoSet X.E (R.N (i + 1)) (Pr.vT u) Pr.vGs) (x : HomE X.E (R.N i) (R.N (i + 1))) :
     refXi1 Ch sel mu cst L hQ m2 al u i p p' x = 0 := by
   unfold refXi1 XiRef
-  rw [dif_neg (by omega), dif_neg (by omega), if_neg (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_right (by omega), if_neg (by omega)]
 
 def refArg1 {σ₀ : X.K →+* ℂ} {G : ChainGlob W σ₀} (hm : R.m = m2 + 2) (hE : XiEquiv W Λ Ch sel mu cst Am u (refXi1 Ch sel mu cst L hQ m2 al u))
     (H : XiHyp W Λ Ch sel mu cst Am u (refXi1 Ch sel mu cst L hQ m2 al u) G) : ChainArg W Λ G u :=

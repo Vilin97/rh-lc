@@ -32,7 +32,7 @@ theorem heckeFunI_one : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (
     intro x hx
     have hg := GlobalTheory.T.inertLocal_mem_unitaryGroup_antidiagonalForm L n v w Dv x
     unfold InertDatum.hval
-    rw [dif_pos hg]
+    rw [dite_eq_left hg]
     by_cases hxU : x ∈ U
     · rw [if_pos hxU]
       have hK := GlobalTheory.T.inertLocal_mem_integralPoints_of_latticeStabilizer L n v w Dv x ((hU x hx).1 hxU) hg
@@ -62,7 +62,7 @@ theorem heckeFunI_one : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (
     simp
   rw [finsum_eq_single _ ((1 : GAf L n) : GAf L n ⧸ U)]
   · have hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = ((1 : GAf L n) : GAf L n ⧸ U) ∧ TrivOutside {v} x := ⟨1, rfl, h1⟩
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     have hmem : hc.choose ∈ U := by
       have := QuotientGroup.eq.1 hc.choose_spec.1.symm
       simpa using this

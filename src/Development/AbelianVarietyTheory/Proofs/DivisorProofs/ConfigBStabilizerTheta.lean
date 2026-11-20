@@ -107,7 +107,7 @@ theorem coneFin_mem_soLoc : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
     by_cases h : ∃ φ₁, φ₁ ∈ SB (Fin (b + 2) × Fin (a + (b + 2)) → Fv F B.v₁) ∧ Acts (evFin F B.v₁) (om' (k.1, 1)) φ φ₁
     · exact GlobalTheory.T.local_schwartz_space_unitary_stable B G X om om' hT k.1 (mem_KAt.1 k.2).2 φ hφ _ (locOp_mem _ _ _) (acts_locOp h)
     · obtain ⟨-, ι, hι, -⟩ := hφ
-      rw [locOp, dif_neg h]
+      rw [locOp, dite_eq_right h]
       exact ⟨zero_mem _, ι, hι, fun Y _ => by simp⟩
   haveI := hVf
   obtain ⟨hmem, hT0⟩ := dbl_mem μK₁ μ₁ V _ hVmem hint

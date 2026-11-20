@@ -52,7 +52,7 @@ lemma ratio_eq {A B B' : AddSubgroup W} {φ : W → ℂ} (h : Fine A φ B) (h' :
 theorem cint_eq {A B : AddSubgroup W} {φ : W → ℂ} (h : Fine A φ B) :
     cint A φ = (∑ᶠ c : W ⧸ B, φ c.out) / (B.relIndex A : ℂ) := by
   have hn : Nice A φ := ⟨B, h⟩
-  rw [cint, dif_pos hn]
+  rw [cint, dite_eq_left hn]
   exact ratio_eq hn.choose_spec h
 
 lemma fine_ind {A B : AddSubgroup W} (hB : B ≤ A) (hi : B.relIndex A ≠ 0) :

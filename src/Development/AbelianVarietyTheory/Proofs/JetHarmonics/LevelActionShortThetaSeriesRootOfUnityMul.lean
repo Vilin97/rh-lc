@@ -64,8 +64,8 @@ theorem rdU_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reciproci
   have e : rdU U f k x = @dite _ (x ∈ (U.X k).dom) (Classical.propDecidable _)
       (fun h => toC (evR Xo c f (U.un k ⟨x, h⟩))) (fun _ => 0) := rfl
   by_cases hx : x ∈ (U.X k).dom
-  · exact ⟨hx, by rw [e, dif_pos hx]⟩
-  · exact absurd (by rw [e, dif_neg hx]) h
+  · exact ⟨hx, by rw [e, dite_eq_left hx]⟩
+  · exact absurd (by rw [e, dite_eq_right hx]) h
 
 set_option maxHeartbeats 1000000 in
 

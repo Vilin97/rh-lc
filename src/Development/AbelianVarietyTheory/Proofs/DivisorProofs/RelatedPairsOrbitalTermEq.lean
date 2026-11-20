@@ -266,7 +266,7 @@ theorem term_eq_termAt (G : HTGroup p) (P : DPair G) (Kf : Subgroup G.GAf) (f : 
     P.term Kf f r K φ = P.termAt Kf f r K φ x t hx δ z := by
   have hex : ∃ dz : Gr G r × Gr G r, IsNrm G r P.atP dz.1 dz.2 := ⟨(δ, z), hn⟩
   unfold DPair.term
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   set x₀ := P.trivAf.choose
   set t₀ := P.trivAf.choose_spec.choose
   have h₀ : Triv G (AfP p) P.β x₀ t₀ := P.trivAf.choose_spec.choose_spec
@@ -361,7 +361,7 @@ theorem term_eq_of_rel (G : HTGroup p) (P Q : DPair G) (Kf : Subgroup G.GAf)
       rw [h, hat, map_mul, map_mul, map_inv]
       group
     unfold DPair.term
-    rw [dif_neg hP, dif_neg hQ]
+    rw [dite_eq_right hP, dite_eq_right hQ]
 
 end GlobalTheory.LKDef.DRel
 

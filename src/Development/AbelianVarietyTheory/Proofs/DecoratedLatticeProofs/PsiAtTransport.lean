@@ -276,7 +276,7 @@ theorem psiAt_frames (hX : X.Ok) (hPr : Pr.Ok) (hL : L.Ok Ch sel mu cst G m2) (a
   rw [psiAt_cosetIn hL al P hP p' q' h]
   have hlift : ∀ {j : ℕ} (r : ChPt (R := R) sel mu u j), IsLiftFr r.deco.1 ⟨P.1, hP⟩ (frsF sel mu r P) := fun r => by
     unfold frsF
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact liftFr_spec r.deco.2 _
   have key := frames_cong (P := P.1) (k := k) (y := y) (k' := k') (y' := y')
     (f := frsF sel mu p.1.1 P) (g := frsF sel mu q.1.1 P) (f' := frsF sel mu p'.1.1 P) (g' := frsF sel mu q'.1.1 P)

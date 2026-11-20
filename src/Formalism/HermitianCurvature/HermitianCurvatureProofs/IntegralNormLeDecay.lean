@@ -72,7 +72,7 @@ theorem rr_eq_form {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ
     (hh : D.IsLocPt h j) :
     p.RR F j w h h = p.form j hj w (KB.slv p.T F j hj w h hh.2) (KB.slv p.T F j hj w h hh.2) := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos ⟨hh, hh⟩, dif_pos hj]
+  rw [dite_eq_left ⟨hh, hh⟩, dite_eq_left hj]
   rfl
 
 theorem bdd_of_tendsto {u : ℕ → ℂ} {x : ℂ} (hu : Tendsto u atTop (𝓝 x)) : ∃ B : ℝ, 0 ≤ B ∧ ∀ n, ‖u n‖ ≤ B := by

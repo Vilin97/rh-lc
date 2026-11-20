@@ -61,7 +61,7 @@ theorem smoothReal_dbar_sq {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M →
   have hex : ∃ e' : OpenPartialHomeomorph M (V n), IsChart n z e' ∧ c.symm y ∈ e'.source :=
     ⟨c, hc, hx⟩
   unfold db
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨hc1, hc2⟩ := Classical.choose_spec hex
   set c' := Classical.choose hex
   rw [hzx]

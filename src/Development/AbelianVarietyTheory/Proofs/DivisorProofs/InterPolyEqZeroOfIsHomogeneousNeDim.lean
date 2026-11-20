@@ -14,7 +14,7 @@ theorem interPoly_eq_zero_of_isHomogeneous (F : Type) [Field F] (Y : Var F) (κ 
   have hw : Finsupp.weight 1 d = k := hP (mem_support_iff.mp hd)
   have e : monomial d (AddMonoidAlgebra.coeff P d) = AddMonoidAlgebra.coeff P d • basisMonomials κ ℝ d := by
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]
-  rw [e, map_smul, interPoly, Module.Basis.constr_basis, dif_neg, smul_zero]
+  rw [e, map_smul, interPoly, Module.Basis.constr_basis, dite_eq_right, smul_zero]
   rintro ⟨s, hs⟩
   apply hk
   set_option synthInstance.maxHeartbeats 100000 in

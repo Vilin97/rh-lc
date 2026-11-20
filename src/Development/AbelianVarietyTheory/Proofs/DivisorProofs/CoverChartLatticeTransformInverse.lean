@@ -178,7 +178,7 @@ theorem change_tri : ∀ {F : Type} [Field F] [NumberField F] {Y : Var F} {C : C
     · rw [h0, map_zero]; exact regAt_zero _
     by_contra h
     have h1 := hκv f
-    rw [TrueGeo.valAt, dif_neg h] at h1
+    rw [TrueGeo.valAt, dite_eq_right h] at h1
     exact (map_ne_zero α).2 h0 h1.symm
   have hmap : ∀ M : Matrix (Fin (g + g)) (Fin (g + g)) F, (M.map κ).map (valAt (z ≫ V.j)) = M.map α :=
     fun M => Matrix.ext fun i j => hκv (M i j)

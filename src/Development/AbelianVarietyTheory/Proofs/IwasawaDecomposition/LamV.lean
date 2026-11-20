@@ -22,7 +22,7 @@ theorem exists_lam {p : ℕ} [Fact p.Prime] {L : Type} [Field L] [NumberField L]
       @_root_.DivisionSemiring.to_moduleIsTorsionFree,
       @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom, fun z => ?_⟩
-  rw [lamV, dif_pos (hmem z)]
+  rw [lamV, dite_eq_left (hmem z)]
   exact (f.commutes z).symm
 
 end GlobalTheory.PadicPlaceExt

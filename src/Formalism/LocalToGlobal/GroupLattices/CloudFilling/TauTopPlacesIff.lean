@@ -95,9 +95,9 @@ theorem latTiedAt_rec {D : D7} (L : SizeData₂ D) (P : ParameterChoice' D L) (K
       rw [hpos, tau_coe_val]
       unfold aL
       by_cases ht : bsH D.R.toFrame (hP D p) x + s.val • hP D p ∈ D.host.TT
-      · rw [if_pos ((tau_top_places_iff D _).2 ht), dif_pos ht]
+      · rw [if_pos ((tau_top_places_iff D _).2 ht), dite_eq_left ht]
         exact (lamRec_top L u _ ⟨_, ht⟩ rfl).1
-      · rw [if_neg (fun h => ht ((tau_top_places_iff D _).1 h)), dif_neg ht]
+      · rw [if_neg (fun h => ht ((tau_top_places_iff D _).1 h)), dite_eq_right ht]
     have hb : (fillsRec D u (D.R.iota (hP D p)) hS (rRec L p) Lc I ψ y e (cRec L)
         (cloudBound L P u)).b (vOfH D.R.toFrame (hP D p) (bsH D.R.toFrame (hP D p) x)) s =
         bL L (bsH D.R.toFrame (hP D p) x + s.val • hP D p) := by
@@ -106,8 +106,8 @@ theorem latTiedAt_rec {D : D7} (L : SizeData₂ D) (P : ParameterChoice' D L) (K
       rw [hpos, tau_coe_val]
       unfold bL
       by_cases ht : bsH D.R.toFrame (hP D p) x + s.val • hP D p ∈ D.host.TT
-      · rw [if_pos ((tau_top_places_iff D _).2 ht), dif_pos ht, (lamRec_top L u _ ⟨_, ht⟩ rfl).2, neg_neg]
-      · rw [if_neg (fun h => ht ((tau_top_places_iff D _).1 h)), dif_neg ht]
+      · rw [if_pos ((tau_top_places_iff D _).2 ht), dite_eq_left ht, (lamRec_top L u _ ⟨_, ht⟩ rfl).2, neg_neg]
+      · rw [if_neg (fun h => ht ((tau_top_places_iff D _).1 h)), dite_eq_right ht]
     refine ⟨?_, hmem, fun _ => ⟨ha, hb⟩, fun jj hj => ?_⟩
     · show ((D.eTau (D.eTau.symm (posG (zH D.R.toFrame (hP D p)) _)) : D.R.Psi) : D.R.GG) = _
       rw [Equiv.apply_symm_apply, hpos]

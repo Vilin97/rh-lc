@@ -183,13 +183,13 @@ theorem idx_succ (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok) (hsel : IsSel X sel) (h
   obtain ⟨al⟩ := hne
   have hB := clL_base hL hX hPr hCh hs
   obtain ⟨b, -⟩ := hL.surj j hj (fun P => if hP : P.1 ∈ Pr.vGs then 1 else γ P hP)
-    (fun P hP => by rw [dif_pos hP]; exact one_mem _) (fun P hP => by rw [dif_neg hP]; exact h1 P hP) (fun P => by
+    (fun P hP => by rw [dite_eq_left hP]; exact one_mem _) (fun P hP => by rw [dite_eq_right hP]; exact h1 P hP) (fun P => by
       by_cases hP : P.1 ∈ Pr.vGs
-      · rw [dif_pos hP]
+      · rw [dite_eq_left hP]
         exact ⟨al, (GlobalTheory.T.unfoldedDatum_ne_zero_iff_doubleCoset Ch sel mu cst L G s hX hPr hCh hsel hs hL j hj P hP _ _ (hL.stabG j al P hP) (one_mem _)
           (by rw [hs]; exact GlobalTheory.Mem.Col2.TC.ChTw.Match.IdxMatch.cosetOne hX hPr hCh hsel hs hL j (by omega) al P hP)).2
           (twNonVanG G.σ₀ hB hj P hP)⟩
-      · rw [dif_neg hP]
+      · rw [dite_eq_right hP]
         exact h2 P hP)
   exact ⟨b⟩
 
@@ -239,11 +239,11 @@ theorem exists_bij (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok) (hsel : IsSel X sel) 
     have h1 : ∀ i, hh (P i) = L.h j (b i) (P i) := fun i => by
       have h : ∃ i', P i' = P i := ⟨i, rfl⟩
       simp only [hh]
-      rw [dif_pos h, hinj h.choose_spec]
+      rw [dite_eq_left h, hinj h.choose_spec]
     obtain ⟨b₀, h2, -⟩ := hprod j hj hh fun Q => by
       by_cases h : ∃ i, P i = Q
-      · exact ⟨b h.choose, by simp only [hh]; rw [dif_pos h]⟩
-      · exact ⟨h0.some, by simp only [hh]; rw [dif_neg h]; exact hone j _ Q (by_contra fun hQ => h (hall Q hQ))⟩
+      · exact ⟨b h.choose, by simp only [hh]; rw [dite_eq_left h]⟩
+      · exact ⟨h0.some, by simp only [hh]; rw [dite_eq_right h]; exact hone j _ Q (by_contra fun hQ => h (hall Q hQ))⟩
     exact ⟨b₀, funext fun i => (hc i j hj _ _ _ _ (hφ b₀ i) (hb' i)).1 ((h2 _).trans (h1 i))⟩
 
 end GlobalTheory.LowJoin

@@ -8,7 +8,7 @@ open Formalism.MainNotions.G Formalism.MainNotions.flipOneThree Formalism.Counti
 
 theorem qc_midOf_zero (r : ℕ) : midOf (0 : Fin (r + 1 + 1)) = none := by
   unfold midOf
-  rw [dif_neg]
+  rw [dite_eq_right]
   simp
 
 theorem qc_rowA_add {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) (f g : MvPolynomial (Fin k × Fin n) K) (d : ℕ)
@@ -187,10 +187,10 @@ theorem qc_shapeC_om (r s : ℕ) (hs : s ≤ r) : shapeC 1 (qcOm r s) = qcOm (r 
     rw [if_neg h0]
     unfold midOf
     by_cases h1 : 0 < t.val ∧ t.val < r + 1
-    · rw [dif_pos h1]
+    · rw [dite_eq_left h1]
       simp only [Fin.val_mk]
       split_ifs <;> omega
-    · rw [dif_neg h1]
+    · rw [dite_eq_right h1]
       simp only
       split_ifs <;> omega
 

@@ -28,14 +28,14 @@ theorem detOn_mul {g h : Matrix (Fin n) (Fin n) ℂ} {V : Submodule ℂ (Fin n �
   have hh' : ∀ y ∈ V, Matrix.toLin' h y ∈ V := hh
   have hgh : ∀ y ∈ V, Matrix.toLin' (g * h) y ∈ V := fun y hy => by
     rw [Matrix.toLin'_mul]; exact hg _ (hh y hy)
-  rw [detOn, detOn, detOn, dif_pos hg', dif_pos hh', dif_pos hgh, ← norm_mul, ← map_mul]
+  rw [detOn, detOn, detOn, dite_eq_left hg', dite_eq_left hh', dite_eq_left hgh, ← norm_mul, ← map_mul]
   congr 2
   ext y : 2
   simp [Matrix.toLin'_mul]
 
 theorem detOn_one (V : Submodule ℂ (Fin n → ℂ)) : detOn 1 V = 1 := by
   have h : ∀ y ∈ V, Matrix.toLin' (1 : Matrix (Fin n) (Fin n) ℂ) y ∈ V := by simp
-  rw [detOn, dif_pos h, show (Matrix.toLin' (1 : Matrix (Fin n) (Fin n) ℂ)).restrict h = 1 by ext y : 2; simp]
+  rw [detOn, dite_eq_left h, show (Matrix.toLin' (1 : Matrix (Fin n) (Fin n) ℂ)).restrict h = 1 by ext y : 2; simp]
   simp
 
 variable (ε : Fin n → Bool)
@@ -246,12 +246,12 @@ theorem detOn_step {g : Matrix (Fin n) (Fin n) ℂ} {U U' : Submodule ℂ (Fin n
     have := Submodule.finrank_quotient_add_finrank (U.submoduleOf U')
     rw [(Submodule.submoduleOfEquivOfLe hle).finrank_eq] at this
     omega
-  rw [detOn, detOn, dif_pos hU1, dif_pos hU', LinearMap.det_eq_det_mul_det _ e he, h1, h2, LinearMap.det_conj,
+  rw [detOn, detOn, dite_eq_left hU1, dite_eq_left hU', LinearMap.det_eq_det_mul_det _ e he, h1, h2, LinearMap.det_conj,
     LinearMap.det_smul, h3]
   simp
 
 theorem detOn_bot (g : Matrix (Fin n) (Fin n) ℂ) : detOn g ⊥ = 1 := by
-  rw [detOn, dif_pos (by simp), LinearMap.det_eq_one_of_subsingleton]; simp
+  rw [detOn, dite_eq_left (by simp), LinearMap.det_eq_one_of_subsingleton]; simp
 
 theorem detOn_pos {g : UJ ε} {U : Submodule ℂ (Fin n → ℂ)} (h : ∀ y ∈ U, uMat g *ᵥ y ∈ U) :
     0 < detOn (uMat g) U := by
@@ -617,7 +617,7 @@ theorem exists_isIndModel_of_bound [CompleteSpace V] (F : Submodule ℂ (UJ ε �
     fun y _ f f' e => ?_⟩
   have ex : ∃ y' : UJ ε, uMat y' = uMat y := ⟨y, rfl⟩
   have : ex.choose = y := Subtype.ext (Units.ext ex.choose_spec)
-  rw [dif_pos ex, this, LinearMap.extendOfNorm_eq hd (hb' y)]
+  rw [dite_eq_left ex, this, LinearMap.extendOfNorm_eq hd (hb' y)]
   exact congrArg ι (Subtype.ext (funext fun g => (e g).symm))
 
 theorem exists_isIndModel [CompleteSpace V] (hW : IsIsoFlag ε j W) (hj : ∀ i, 1 ≤ j i)

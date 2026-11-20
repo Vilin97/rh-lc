@@ -347,7 +347,7 @@ theorem h2 (C R : Type) [Field C] [CommRing R] [Algebra R C] :
     refine ⟨extK (R := C) (C := C) K u, ?_⟩
     funext k
     show (if h : (k : N) ∈ K then u ⟨k, h⟩ else 0) = u k
-    rw [dif_pos k.2]
+    rw [dite_eq_left k.2]
   have hAK_lat : IsLat R (AA.carrier.map (resK (R := R) K)) :=
     isLat_map_lemma_5 v hv AA.carrier AA.lat (resK (R := C) (C := C) K) hres_surj
       (resK (R := R) K) (fun _ => rfl)

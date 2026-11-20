@@ -136,9 +136,9 @@ lemma mem_graph_iff_cj {M : IntermediateField ℚ ℂ} {ρ : M →ₐ[ℚ] ℂ} 
   rw [mem_graph]
   constructor
   · rintro ⟨h, e⟩
-    exact ⟨h, by rw [cj, TaylorLogMetric.liftM, dif_pos h, e]⟩
+    exact ⟨h, by rw [cj, TaylorLogMetric.liftM, dite_eq_left h, e]⟩
   · rintro ⟨h, e⟩
-    exact ⟨h, by rwa [cj, TaylorLogMetric.liftM, dif_pos h] at e⟩
+    exact ⟨h, by rwa [cj, TaylorLogMetric.liftM, dite_eq_left h] at e⟩
 
 lemma pair_iteratedDeriv_iff {S : Subring (ℂ × ℂ)} (hS : IsFieldGraph S) {f g : ℂ → ℂ} {n : ℕ} :
     (iteratedDeriv n f 0, iteratedDeriv n g 0) ∈ S ↔ (coef1 f n, coef1 g n) ∈ S := by

@@ -44,7 +44,7 @@ theorem bigCell_density_eq {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [I
   · have hV : p.V F (TBB.bigPt P.r c) = 0 := by
       show D.vecV p.T.base p.ν' p.m₀ F (Formalism.FourierDecayAlt.P.PBJ.bigPt c) = 0
       unfold D.vecV
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨-, hG⟩
       exact hlt (Formalism.FourierDecayAlt.P.PBM.zeta_big _ c hG)
     rw [hV, TBBx2.Tri.hsVec_zero]

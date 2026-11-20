@@ -140,9 +140,9 @@ private theorem complInv_eq_some_iff (m : ℕ) (S : Finset (Fin m)) {t : Fin m}
   constructor
   · intro h
     by_cases ht : t ∈ S
-    · rw [complInv_def, dif_pos ht] at h
+    · rw [complInv_def, dite_eq_left ht] at h
       simp at h
-    · rw [complInv_def, dif_neg ht] at h
+    · rw [complInv_def, dite_eq_right ht] at h
       have hj : Classical.choose (exists_complOrderEmb_eq m S ht) = j := Option.some.inj h
       have hspec := Classical.choose_spec (exists_complOrderEmb_eq m S ht)
       rw [hj] at hspec
@@ -151,7 +151,7 @@ private theorem complInv_eq_some_iff (m : ℕ) (S : Finset (Fin m)) {t : Fin m}
     have ht : t ∉ S := by
       rw [← h]
       exact complOrderEmb_notMem m S j
-    rw [complInv_def, dif_neg ht]
+    rw [complInv_def, dite_eq_right ht]
     have hspec := Classical.choose_spec (exists_complOrderEmb_eq m S ht)
     have heq : Classical.choose (exists_complOrderEmb_eq m S ht) = j :=
       (complOrderEmb m S).injective (by rw [hspec, h])
@@ -173,7 +173,7 @@ private theorem eq_none_of_bind_complInv_eq_none (m : ℕ) (S : Finset (Fin m)) 
   | some t =>
     exfalso
     have h' : complOrderEmbInv m S t = none := h
-    rw [complInv_def, dif_neg (hnot t rfl)] at h'
+    rw [complInv_def, dite_eq_right (hnot t rfl)] at h'
     simp at h'
 
 section

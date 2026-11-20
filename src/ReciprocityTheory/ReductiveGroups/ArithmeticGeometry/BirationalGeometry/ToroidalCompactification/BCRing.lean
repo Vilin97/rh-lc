@@ -216,7 +216,7 @@ theorem gs_comp {Z Y X : Scheme.{0}} (r : Z ⟶ Y) (F : Y ⟶ X) (z : Z) (U : X.
     gs (r ≫ F) z U f = (r.stalkMap z).hom (gs F (r z) U f) := by
   have h' : (r ≫ F) z ∈ U := h
   unfold gs
-  rw [dif_pos h', dif_pos h]
+  rw [dite_eq_left h', dite_eq_left h]
   have e := congrArg (fun φ => φ.hom ((F.app U).hom f)) (Scheme.Hom.germ_stalkMap r (F ⁻¹ᵁ U) z h)
   simp only [CommRingCat.comp_apply] at e
   rw [e]

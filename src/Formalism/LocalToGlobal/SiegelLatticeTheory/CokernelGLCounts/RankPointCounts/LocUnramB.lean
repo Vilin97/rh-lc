@@ -408,7 +408,7 @@ theorem conj_upU (T T' : ℕ) (w : Point D.host.E (D.R.rS + 1)) (p : PlF D) (hA 
     have hσ : H.σ = sgF w := rfl
     have hne : H.σ a ≠ H.σ b := fun h => (ne_of_gt hba) (by rw [← H.σσ a, ← H.σσ b, h])
     unfold Loc.uUp
-    rw [if_neg hne, dif_neg]
+    rw [if_neg hne, dite_eq_right]
     rintro ⟨hlt, hsb⟩
     obtain ⟨a1, a2, a3, -, -⟩ := pBlock w.1 a.val (by rw [hsum]; exact a.2)
     obtain ⟨b1, b2, b3, -, -⟩ := pBlock w.1 b.val (by rw [hsum]; exact b.2)

@@ -82,7 +82,7 @@ theorem sn_integral (b : Sp (OO p) ⟶ X) {U : X.Opens} (h : b (cPt p) ∈ U) (a
   have hg := gen_mem b h
   let v : OO p := (Scheme.ΓSpecIso (CommRingCat.of (OO p))).hom.hom ((b.appLE U ⊤ h').hom a)
   have e : valF (gPt p ≫ b) U a = (v : PadicAlgCl p) := by
-    rw [valF, dif_pos ((top_le_iff_mem _ U _).2 hg)]
+    rw [valF, dite_eq_left ((top_le_iff_mem _ U _).2 hg)]
     have e₁ := Scheme.Hom.appLE_comp_appLE (gPt p) b U ⊤ ⊤ h' le_top
     have e₂ := Scheme.ΓSpecIso_naturality (CommRingCat.ofHom (OO p).subtype)
     have e₃ : (gPt p).appLE ⊤ ⊤ le_top = (gPt p).appTop := (Scheme.Hom.app_eq_appLE _).symm

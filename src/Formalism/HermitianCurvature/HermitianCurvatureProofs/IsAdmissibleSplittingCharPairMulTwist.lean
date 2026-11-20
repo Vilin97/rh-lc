@@ -340,7 +340,7 @@ theorem evQ_smul (z : ℂ) (f : SmQ P.r P.TT) (q : Qp P.r P.TT) : evQ P (z • f
 theorem evQ_zero (q : Qp P.r P.TT) : evQ P 0 q = 0 := rfl
 
 theorem toSm_of_mem {u : Qp P.r P.TT → ℂ} (h : u ∈ smSub P.r P.TT) : toSm P u = ⟨u, h⟩ := by
-  unfold toSm; rw [dif_pos h]
+  unfold toSm; rw [dite_eq_left h]
 
 theorem evQ_toSm {u : Qp P.r P.TT → ℂ} (h : u ∈ smSub P.r P.TT) (q : Qp P.r P.TT) : evQ P (toSm P u) q = u q := by
   rw [toSm_of_mem P h]; rfl
@@ -7759,7 +7759,7 @@ theorem deB_spec {P L} (hTT : 0 ≤ P.TT) (hL : IsModelLevel P (DQ P) L) {β : A
     deB P L β ∈ BB P L ∧ ∀ y : ℂ, lb L y * β = β * lb L y + deB P L β * la L y := by
   have h := BB_lb hTT hL hβ
   unfold deB
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec h
 
 def deM {S : Type} [Fintype S] [DecidableEq S] (B : SlopeTestRemainingChoices S (A P (DQ P))) : SlopeTestRemainingChoices S (A P (DQ P)) :=

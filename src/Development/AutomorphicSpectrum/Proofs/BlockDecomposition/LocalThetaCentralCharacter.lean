@@ -48,7 +48,7 @@ theorem piG_choice : ForEF fun F _ _ _ _ _ _ _ E _ _ _ _ _ _ _ χ σ η =>
   have hcu : ((c u : ℂˣ) : ℂ) * (((c u)⁻¹ : ℂˣ) : ℂ) = 1 := by
     rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
   show piG χ σ (muE E χ) (lamE E χ η) c g Φ x = _
-  rw [piG, dif_pos h, hfun, GlobalTheory.CompanionTheory.WeilChoice.rW_const_mul, hu, map_mul, Units.val_mul]
+  rw [piG, dite_eq_left h, hfun, GlobalTheory.CompanionTheory.WeilChoice.rW_const_mul, hu, map_mul, Units.val_mul]
   linear_combination (-(((c h.choose : ℂˣ) : ℂ) * (((modulus (g.val).det : ℝ) : ℂ) ^ (1 / 2 : ℂ)) *
       rW χ σ (muE E χ) (lamE E χ η) (g.val 0 0 / (g.val).det) (g.val 0 1)
         (g.val 1 0 / (g.val).det) (g.val 1 1) (fun x => Φ (x * (h.choose : E))) x)) * hcu
@@ -78,7 +78,7 @@ theorem piG_cen : ForEF fun F _ _ _ _ _ _ _ E _ _ _ _ _ _ _ χ σ η =>
         rw [← hNa, ← map_mul, ← Units.val_mul, mul_inv_cancel_left, ht, hdet, hNa]
       exact mul_left_cancel₀ (pow_ne_zero 2 ha0) e
     show piG _ _ _ _ _ _ _ _ = _ * piG _ _ _ _ _ _ _ _
-    rw [piG, piG, dif_neg h, dif_neg h', mul_zero]
+    rw [piG, piG, dite_eq_right h, dite_eq_right h', mul_zero]
   obtain ⟨t, ht⟩ := h
   have hN' : Algebra.norm F ((ae * t : Eˣ) : E) = ((dg2 a a * g).val).det := by
     rw [Units.val_mul, map_mul, hNa, ht, hdet]

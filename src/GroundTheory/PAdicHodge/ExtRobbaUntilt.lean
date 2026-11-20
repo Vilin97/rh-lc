@@ -579,11 +579,11 @@ theorem untiltNorm_eq {q : T.Untilt ξ} {z : L} (hz0 : z ≠ 0) (hz : ‖z‖ �
   haveI := T.isDomain_untilt hξ
   have hq : q ≠ 0 := by
     rw [h]; exact mul_ne_zero (T.toUntilt_teich_ne_zero hξ hz0 hz) hu.ne_zero
-  rw [untiltNorm, dif_neg hq]
+  rw [untiltNorm, dite_eq_right hq]
   obtain ⟨hz'0, hz', u', hu', h'⟩ := Classical.choose_spec (T.exists_teich_mul_unit hξ hq)
   exact T.norm_eq_of_teich_mul_unit hξ hz'0 hz0 hz' hz hu' hu (h'.symm.trans h)
 
-@[simp] theorem untiltNorm_zero : T.untiltNorm hξ 0 = 0 := by rw [untiltNorm, dif_pos rfl]
+@[simp] theorem untiltNorm_zero : T.untiltNorm hξ 0 = 0 := by rw [untiltNorm, dite_eq_left rfl]
 
 theorem untiltNorm_teich {z : L} (hz : ‖z‖ ≤ 1) :
     T.untiltNorm hξ (T.toUntilt ξ (T.teichInt hz)) = ‖z‖ := by

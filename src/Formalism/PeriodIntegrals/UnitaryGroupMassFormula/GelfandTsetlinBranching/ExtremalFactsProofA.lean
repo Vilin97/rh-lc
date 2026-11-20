@@ -15,7 +15,7 @@ theorem natW_add_A {N : ℕ} (lam : DomWeight N) (i : Fin N) :
   have hle : lam.w ⟨N - 1, by omega⟩ ≤ lam.w i :=
     lam.anti (show i ≤ ⟨N - 1, by omega⟩ by rw [Fin.le_def]; simp; omega)
   unfold DomWeight.natW DomWeight.detShift
-  rw [dif_pos hN, Int.toNat_of_nonneg (by omega)]
+  rw [dite_eq_left hN, Int.toNat_of_nonneg (by omega)]
   ring
 
 theorem natW_anti_A {N : ℕ} (lam : DomWeight N) : Antitone lam.natW := by

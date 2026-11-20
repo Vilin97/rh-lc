@@ -36,9 +36,9 @@ def blockEquiv (ι : Type) (N j : ℕ) (hj : j ≤ N) : (Σ a : ι × Bool, Fin 
     obtain ⟨τ, k⟩ := x
     dsimp only
     by_cases h : (k : ℕ) < j
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       exact Prod.ext rfl (Fin.ext (by simp))
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact Prod.ext rfl (Fin.ext (by simp; omega))
 
 @[simp] theorem blockEquiv_fst (hj : j ≤ N) (z : Σ a : ι × Bool, Fin (rkB ι N j a)) :

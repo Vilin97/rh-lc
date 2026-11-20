@@ -85,7 +85,7 @@ theorem famProd_update_of_ne (R : RealDat D A Ks) (i : Fin D.R.m) (F : ∀ v, LX
     rw [Set.Finite.mem_toFinset]
     exact fun h => h hv
   unfold famProd
-  rw [dif_pos hF, dif_pos hF', ht,
+  rw [dite_eq_left hF, dite_eq_left hF', ht,
     prod_toList_insert_comm hF.toFinset v hnv (fun w => rep (Function.update F v x w))
       (fun a b h => rep_commute h _ _)]
   congr 1

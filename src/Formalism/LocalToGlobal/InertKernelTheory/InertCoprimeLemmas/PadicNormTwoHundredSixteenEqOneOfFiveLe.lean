@@ -23,7 +23,7 @@ open NumberField Formalism.BasicNotions
 theorem lamC_coe {p : ℕ} [Fact p.Prime] (lam : Formalism.MainNotions.TaylorLogMetric.Qbar →+* ℂ_[p]) (a : Formalism.MainNotions.TaylorLogMetric.Qbar) :
     Formalism.MainNotions.TaylorLogMetric.lamC lam (a : ℂ) = lam a := by
   unfold Formalism.MainNotions.TaylorLogMetric.lamC
-  rw [dif_pos a.2]
+  rw [dite_eq_left a.2]
 
 theorem taylor_sgStar_map (L : PeriodPair) (a2 a3 s0 : Formalism.MainNotions.TaylorLogMetric.Qbar) (h2 : L.g₂ = a2) (h3 : L.g₃ = a3)
     (hs : Formalism.L2.Th1.F.s2 L = s0) :

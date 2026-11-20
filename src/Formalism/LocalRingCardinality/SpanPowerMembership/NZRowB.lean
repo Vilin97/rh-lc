@@ -80,7 +80,7 @@ def stdSide : RowSide D EE where
   eOp_idem := fun _ => rfl
   eOp_sa := fun _ _ _ => rfl
   eOp_tie := fun _ => by
-    rw [dif_pos c.cen]
+    rw [dite_eq_left c.cen]
     show LinearMap.id = algebraMap ℂ (Module.End ℂ EE) (c.χ ⟨D.ntypes.e0, c.cen⟩)
     rw [c.one, map_one]; rfl
   RR := stdH D.what₂.LL n

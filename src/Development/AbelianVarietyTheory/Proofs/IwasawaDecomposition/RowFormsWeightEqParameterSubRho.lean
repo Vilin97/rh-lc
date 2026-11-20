@@ -17,16 +17,16 @@ theorem tup_sgHC_eq {R : Ranks} (P : HCParam R) (i : Fin (R.N R.m - 1)) :
   unfold Formalism.L2.Forms.sgHC RowPar.sgHC
   congr 1
   by_cases h1 : (i : ℕ) < R.k - 1
-  · rw [dif_pos h1, dif_pos h1]
+  · rw [dite_eq_left h1, dite_eq_left h1]
     rfl
-  · rw [dif_neg h1, dif_neg h1]
+  · rw [dite_eq_right h1, dite_eq_right h1]
     have h2 : ((i : ℕ) - (R.k - 1)) / (R.t + 1) < R.m := by
       rw [Nat.div_lt_iff_lt_mul (Nat.succ_pos _)]
       have := R.two_le_m
       have e : R.m * (R.t + 1) = R.m + R.m * R.t := by ring
       have e' : R.m * R.t.succ = R.m * (R.t + 1) := rfl
       omega
-    rw [dif_pos h2]
+    rw [dite_eq_left h2]
     split_ifs with h3
     · simp [RowPar.bAt, h2]
       rfl

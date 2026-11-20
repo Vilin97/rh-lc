@@ -229,7 +229,7 @@ private lemma mk_mul_reduction_eq_mk (P : HeightOneSpectrum (𝓞 E)) {x : E} {r
     ⟨Ideal.Quotient.mk P.asIdeal r * (Ideal.Quotient.mk P.asIdeal s)⁻¹, r, s, hs, h, by
       rw [mul_comm, mul_assoc, inv_mul_cancel₀ hs0, mul_one]⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨r', s', hs', h', hc'⟩ := hex.choose_spec
   have hs'0 : Ideal.Quotient.mk P.asIdeal s' ≠ 0 := by
     rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
@@ -271,7 +271,7 @@ theorem til_tmv_redA_iA (P : Pl E) {a : E} (h : IntAt P a) : redA P (iA F E a) =
     rw [resS_alg_lemma_2 P r hm0 (by rw [← map_mul, hsa])]
     exact mk_mul_reduction_eq_mk P hs hsa
   unfold redA
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨s', hs', hm', hc'⟩ := hex.choose_spec
   obtain ⟨r'', hr''⟩ := til_tmv_int_of_iA (F := F) (a := algebraMap (𝓞 E) E s' * a) (by
     rw [map_mul]

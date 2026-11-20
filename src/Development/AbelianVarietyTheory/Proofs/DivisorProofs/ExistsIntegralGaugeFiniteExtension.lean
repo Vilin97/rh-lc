@@ -33,7 +33,7 @@ theorem vF_sF_mem {F : Type} [Field F] {A : Type} [CommRing A] (f : A →+* F) {
       valF (spMap f ≫ r₀) W a = f ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((r₀.appLE W ⊤ hr).hom a)) := by
     intro W hr a
     have h' : ⊤ ≤ (spMap f ≫ r₀) ⁻¹ᵁ W := fun q _ => hr (Set.mem_univ (spMap f q))
-    rw [valF, dif_pos h']
+    rw [valF, dite_eq_left h']
     have e : (spMap f ≫ r₀).appLE W ⊤ h' ≫ (Scheme.ΓSpecIso (CommRingCat.of F)).hom =
         r₀.appLE W ⊤ hr ≫ (Scheme.ΓSpecIso (CommRingCat.of A)).hom ≫ CommRingCat.ofHom f := by
       rw [← Scheme.ΓSpecIso_naturality, ← Scheme.Hom.appLE_comp_appLE (spMap f) r₀ W ⊤ ⊤ hr le_rfl,

@@ -122,10 +122,10 @@ theorem conj_of_frames [∀ m, Nonempty (L m)] {N₁ N₂ : Matrix (Fin n) (Fin 
     simp only [Fin.val_cast]
     by_cases hi : (i : ℕ) + 1 < F₁.l m a
     · have hi2 : (i : ℕ) + 1 < F₂.l m (σ m a) := by rw [(hσ m a).1]; exact hi
-      rw [dif_pos hi, dif_pos hi2, hg, hΦ, hψ]
+      rw [dite_eq_left hi, dite_eq_left hi2, hg, hΦ, hψ]
       rfl
     · have hi2 : ¬ (i : ℕ) + 1 < F₂.l m (σ m a) := by rw [(hσ m a).1]; exact hi
-      rw [dif_neg hi, dif_neg hi2, map_zero]
+      rw [dite_eq_right hi, dite_eq_right hi2, map_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hGv, F₁.hv, F₂.hv, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -137,11 +137,11 @@ theorem conj_of_frames [∀ m, Nonempty (L m)] {N₁ N₂ : Matrix (Fin n) (Fin 
     refine Finset.sum_congr rfl fun a _ => ?_
     by_cases ha : F₁.s m a < F₁.l m a
     · have ha2 : F₂.s m (σ m a) < F₂.l m (σ m a) := by rw [(hσ m a).1, (hσ m a).2]; exact ha
-      rw [dif_pos ha, dif_pos ha2, map_smul, hg, hΦ, hψ]
+      rw [dite_eq_left ha, dite_eq_left ha2, map_smul, hg, hΦ, hψ]
       have hc : (Fin.cast (hσ m a).1.symm ⟨F₁.s m a, ha⟩ : Fin (F₂.l m (σ m a))) = ⟨F₂.s m (σ m a), ha2⟩ :=
         Fin.ext (by simp [(hσ m a).2])
       rw [hc]
     · have ha2 : ¬ F₂.s m (σ m a) < F₂.l m (σ m a) := by rw [(hσ m a).1, (hσ m a).2]; exact ha
-      rw [dif_neg ha, dif_neg ha2, map_zero]
+      rw [dite_eq_right ha, dite_eq_right ha2, map_zero]
 
 end PositivityTheory.RgUd.T.Nil.Orb.BReps

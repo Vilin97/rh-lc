@@ -75,12 +75,12 @@ def vM (v : S → ℂ) : Matrix (Fin n) (Fin n) ℂ := fun i j => if h : (i, j) 
 
 theorem vM_at (v : S → ℂ) (q : S) : vM S v q.1.1 q.1.2 = v q := by
   unfold vM
-  rw [dif_pos q.2]
+  rw [dite_eq_left q.2]
 
 theorem sUp_vM (hS : ∀ q ∈ S, q.1 < q.2) (v : S → ℂ) : SUp (vM S v) := by
   intro i j hji
   unfold vM
-  rw [dif_neg]
+  rw [dite_eq_right]
   intro hm
   have h1 : i < j := hS _ hm
   rw [Fin.lt_def] at h1

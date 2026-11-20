@@ -62,7 +62,7 @@ theorem ext_of_evU (R : Type) [CommRing R] (Y : Over (Sp R)) (U : Y.left.Opens) 
   have hz : ⊤ ≤ z.left ⁻¹ᵁ U := fromSpecStalk_top y U hy
   have e := h S z hz
   unfold evU at e
-  rw [dif_pos hz, dif_pos hz] at e
+  rw [dite_eq_left hz, dite_eq_left hz] at e
   unfold evalAt at e
   change (Scheme.ΓSpecIso S).hom ((Y.left.fromSpecStalk y).appLE U ⊤ hz a) =
     (Scheme.ΓSpecIso S).hom ((Y.left.fromSpecStalk y).appLE U ⊤ hz a') at e
@@ -102,7 +102,7 @@ theorem exists_unique_section : ∀ (R : Type) [CommRing R] (Y : Over (Sp R)) (U
       rw [hw, CommRingCat.ofHom_id, Spec.map_id, Category.id_comp]
     rw [← h1, hs (CommRingCat.of E) w ⟨(), le_top⟩]
     unfold evU
-    rw [dif_pos hz]
+    rw [dite_eq_left hz]
     unfold evalAt
     simp only [RingHom.comp_apply]
     congr 1

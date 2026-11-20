@@ -21,7 +21,7 @@ theorem IsLowInv.blockTriangular {L : Matrix (Fin m) (Fin m) R} (h : IsLowInv L)
 theorem upMat_blockTriangular (a : Above m → R) : (upMat a).BlockTriangular id := fun i j hij => by
   have hij' : j < i := hij
   unfold upMat
-  rw [dif_neg (not_lt.2 (le_of_lt hij')), if_neg (ne_of_gt hij')]
+  rw [dite_eq_right (not_lt.2 (le_of_lt hij')), if_neg (ne_of_gt hij')]
 
 @[simp] theorem upMat_diag (a : Above m → R) (i : Fin m) : upMat a i i = 1 := by
   simp [upMat]

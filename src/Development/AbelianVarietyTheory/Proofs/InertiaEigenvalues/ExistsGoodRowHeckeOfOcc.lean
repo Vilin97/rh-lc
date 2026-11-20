@@ -149,7 +149,7 @@ theorem actsOnSph_sphEig {hF : D.host.F = maximalRealSubfield D.host.E} {Q : pri
       exact ha x hx.1 hx.2
     · exact ⟨0, fun B h => (hB ⟨B, h⟩).elim⟩
   unfold sphEig
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 variable {Sp : D.what₂.Tau → SPar} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {M : DSModel V Sp}

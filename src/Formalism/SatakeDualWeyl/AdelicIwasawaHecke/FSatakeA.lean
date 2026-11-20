@@ -85,7 +85,7 @@ theorem fSatake_v_eq {x : L} (hx : x ≠ 0) :
     Valued.v x = ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold ordL
-  rw [dif_neg h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
+  rw [dite_eq_right h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
 
 private lemma ordL_eq_of_valuation_eq {x : L} (hx : x ≠ 0) {k : ℤ}
     (h : Valued.v x = ((Multiplicative.ofAdd (-k) : Multiplicative ℤ) : WithZero (Multiplicative ℤ))) :

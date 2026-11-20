@@ -19,7 +19,7 @@ theorem stk_onto {F : Type} [Field F] (z : Sp F) : Function.Surjective (toStk z)
 
 theorem stk_valR {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (z : Sp F) (h : x z ∈ U)
     (a : Γ(X, U)) : toStk z (valR x U a) = gs x z U a := by
-  rw [valR_of_field, valF, dif_pos ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
+  rw [valR_of_field, valF, dite_eq_left ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
   show ((Sp F).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _)) = _
   rw [Iso.hom_inv_id_apply]

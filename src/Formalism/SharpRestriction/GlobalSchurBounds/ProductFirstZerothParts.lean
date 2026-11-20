@@ -551,7 +551,7 @@ theorem relative_determinant_equation_of_admissible (G : Th22 D) (h : adm1 G) (t
     rw [hχ, ← hpin.2.2.2.2 N L L']
     unfold Formalism.MainNotions.TaylorLogMetric.chiRec
     have hex : ∃ x, idl x = idl (D.relDet N L L') := ⟨_, rfl⟩
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact congrArg (fun x => ((Formalism.MainNotions.TaylorLogMetric.chiQ D x : ℂˣ) : ℂ)) (hpin.1 hex.choose_spec)
   unfold Formalism.MainNotions.TaylorLogMetric.RelativeDeterminantEquation
   refine ⟨h1, fun N N' L L' L'' hN hN' => ?_, fun N N' L L₁ L' hN hN' => ?_⟩

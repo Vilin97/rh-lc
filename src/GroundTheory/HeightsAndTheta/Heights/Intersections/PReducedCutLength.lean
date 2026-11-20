@@ -23,7 +23,7 @@ theorem length_localizedModule_eq_one {B : Type*} [CommRing B] (hB : (⊥ : Idea
     Module.length (Localization.AtPrime p) (LocalizedModule p.primeCompl B) = 1 := by
   have h1 := localMult_eq_one_of_isRadical hB hp
   unfold localMult at h1
-  rw [dif_pos ‹p.IsPrime›, Ideal.map_bot] at h1
+  rw [dite_eq_left ‹p.IsPrime›, Ideal.map_bot] at h1
   have h2 : Module.length (Localization.AtPrime p)
       (Localization.AtPrime p ⧸ (⊥ : Ideal (Localization.AtPrime p))) = 1 := by
     have hne : Module.length (Localization.AtPrime p)

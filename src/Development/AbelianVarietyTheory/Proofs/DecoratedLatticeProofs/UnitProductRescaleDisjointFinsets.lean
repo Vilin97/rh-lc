@@ -24,8 +24,8 @@ theorem topL_mul_right (y : Matrix (Fin b) (Fin a) κ) (s : Matrix (Fin a) (Fin 
   rw [Matrix.mul_apply]
   unfold topL
   by_cases hp : p.val < b
-  · rw [dif_pos ⟨hp, q.2⟩, Matrix.mul_apply]
-    exact Finset.sum_congr rfl fun l _ => by rw [dif_pos ⟨hp, l.2⟩]
+  · rw [dite_eq_left ⟨hp, q.2⟩, Matrix.mul_apply]
+    exact Finset.sum_congr rfl fun l _ => by rw [dite_eq_left ⟨hp, l.2⟩]
   · rw [dif_neg fun h => hp h.1]
     exact (Finset.sum_eq_zero fun l _ => by rw [dif_neg fun h => hp h.1, zero_mul]).symm
 

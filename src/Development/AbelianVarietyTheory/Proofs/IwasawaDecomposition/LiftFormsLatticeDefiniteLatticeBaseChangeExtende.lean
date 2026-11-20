@@ -44,7 +44,7 @@ theorem kOf_apply (σ : K' →+* ℂ) (a : K') : kOf σ (σ a) = a := by
   classical
   have h : ∃ b : K', σ b = σ a := ⟨a, rfl⟩
   unfold kOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact σ.injective h.choose_spec
 
 theorem matLat_relMat_of_heq (φ : K →+* K') (σ : K →+* ℂ) (σ' : K' →+* ℂ)
@@ -94,7 +94,7 @@ theorem matLat_relMat_of_heq (φ : K →+* K') (σ : K →+* ℂ) (σ' : K' →+
       have hsol : solve w0' (t0' (Pi.single k 1)) = cpt σ' v := by
         apply hI
         unfold solve
-        rw [dif_pos hex]
+        rw [dite_eq_left hex]
         exact hex.choose_spec.trans hw.symm
       show kOf σ' (solve w0' (t0' (Pi.single k 1)) i) = v i
       rw [hsol]

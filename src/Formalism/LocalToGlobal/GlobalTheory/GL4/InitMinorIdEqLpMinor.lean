@@ -19,12 +19,12 @@ theorem hw_add_const (R : Type) [CommRing R] {m : ℕ} (ν : Fin (m + 1) → ℕ
     congr 1
     unfold nuNext
     have h : (s.castSucc : Fin (m + 1)).val + 1 < m + 1 := by simp only [Fin.val_castSucc]; omega
-    rw [dif_pos h, dif_pos h]
+    rw [dite_eq_left h, dite_eq_left h]
     dsimp only
     omega
   · have h : ¬ ((Fin.last m : Fin (m + 1)).val + 1 < m + 1) := by simp
     unfold nuNext
-    rw [dif_neg h, dif_neg h]
+    rw [dite_eq_right h, dite_eq_right h]
     dsimp only
     rw [Nat.sub_zero, Nat.sub_zero, pow_add]
     rfl
@@ -181,7 +181,7 @@ theorem xnN_det_mul {m : ℕ} (ν : Fin (m + 1) → ℕ) (f : MvPolynomial (Fin 
     have h := Formalism.BranchingDeterminantCap.xn_hW hf s
     have hs : Formalism.BranchingDeterminantCap.xnLam ν s.val = ν s := by
       unfold Formalism.BranchingDeterminantCap.xnLam
-      rw [dif_pos s.isLt]
+      rw [dite_eq_left s.isLt]
     rw [hs]
     exact h
 

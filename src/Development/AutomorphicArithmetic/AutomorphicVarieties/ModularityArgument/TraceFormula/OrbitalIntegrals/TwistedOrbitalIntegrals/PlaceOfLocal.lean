@@ -68,9 +68,9 @@ private theorem key (hT : GLTop) (hC : ExtCont) (hCC : CentComm) (hH : HaarComm)
       (d1.measurable.comp measurable_subtype_coe) Φ hΦc.measurable
       (fun t g => congrArg φ (twConj_mul_left _ _ (hS ▸ ⟨t, t.2, rfl⟩) g)) _ hρ
     refine Eq.trans ?_ k1.symm
-    rw [(y2 ν _).2, PositivityTheory.Rg.Tf.Geo.quotInt, dif_pos hex]
+    rw [(y2 ν _).2, PositivityTheory.Rg.Tf.Geo.quotInt, dite_eq_left hex]
     simp only [hl, id]
-  · rw [PositivityTheory.Rg.Tf.Geo.quotInt, dif_neg hex, PositivityTheory.Rg.Tf.Geo.quotInt, dif_neg fun ⟨ρ', h'⟩ => hex ⟨_, (y2 ν ρ').1.1 h'⟩]
+  · rw [PositivityTheory.Rg.Tf.Geo.quotInt, dite_eq_right hex, PositivityTheory.Rg.Tf.Geo.quotInt, dite_eq_right fun ⟨ρ', h'⟩ => hex ⟨_, (y2 ν ρ').1.1 h'⟩]
 
 theorem UpperTheory.V.Z.Tf.Orb.placeOfLocal :
     UpperTheory.V.Z.Tf.Orb.GLTop → UpperTheory.V.Z.Tf.Orb.ExtCont → UpperTheory.V.Z.Tf.Orb.CentComm → UpperTheory.V.Z.Tf.Orb.HaarComm → UpperTheory.V.Z.Tf.Orb.TwCentImg → UpperTheory.V.Z.Tf.Orb.GeoOfMatch → UpperTheory.V.Z.Tf.Orb.GeoTransport → UpperTheory.V.Z.Tf.Orb.AlongIndep → UpperTheory.V.Z.Tf.Orb.PlaceOfLocal := by

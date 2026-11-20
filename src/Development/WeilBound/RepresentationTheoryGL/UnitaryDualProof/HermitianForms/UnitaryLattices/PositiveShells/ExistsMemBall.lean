@@ -134,7 +134,7 @@ theorem avg_eq {A H : AddSubgroup (Fin (m + 1) → k)} {T : Finset (Fin (m + 1) 
     (hv : FixH h π H v) : avg (1 : AddChar k Circle) h π 0 A v = avgL h π T v := by
   have hd : ∃ p, AvgData (1 : AddChar k Circle) h π 0 A v p :=
     ⟨(H, T), hT.1, hT.2.1, hv, fun a _ => by simp, hT.2.2.1, hT.2.2.2⟩
-  rw [avg, dif_pos hd]
+  rw [avg, dite_eq_left hd]
   obtain ⟨p1, p2, p3, -, p5, p6⟩ := hd.choose_spec
   have e := avgL_eq (h := h) (π := π) (v := v) ⟨p1, p2, p5, p6⟩ p3 hT hv
   rw [← e, avgL_apply]

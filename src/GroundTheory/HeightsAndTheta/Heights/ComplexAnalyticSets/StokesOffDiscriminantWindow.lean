@@ -66,7 +66,7 @@ theorem sheetTerm_window {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin
       have hyV : y ∈ V := hxy ▸ hAV
       have hx' : x = s y := by rw [← hxy, hxs]
       have hex : ∃ s', IsSheetAt J A x s' := ⟨s, hsx⟩
-      rw [dif_pos hex, if_pos ⟨hyV, hx'⟩, h1 x _ hxy hex.choose_spec hsx, ← hx']
+      rw [dite_eq_left hex, if_pos ⟨hyV, hx'⟩, h1 x _ hxy hex.choose_spec hsx, ← hx']
     · have h0 : (if h : ∃ s', IsSheetAt J A x s' then H x h.choose else 0) = 0 := by
         split_ifs with hex
         · exact h2 x _ hxZ hxy hxW hex.choose_spec

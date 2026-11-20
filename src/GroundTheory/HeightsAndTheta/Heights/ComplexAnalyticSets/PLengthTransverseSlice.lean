@@ -115,7 +115,7 @@ theorem LengthTransverseSlice.proof (hCM : CMLengthParameters.Statement.{0})
       obtain ⟨s, hs, hsg⟩ := hT g (RingHom.mem_ker.1 hg)
       exact ⟨s, fun h => hs (RingHom.mem_ker.1 h), hsg⟩)
   unfold localMult
-  rw [dif_pos hWp, dif_pos (inferInstance : (RingHom.ker (eval q : MvPolynomial (Fin n) ℂ →+* ℂ)).IsPrime), h]
+  rw [dite_eq_left hWp, dite_eq_left (inferInstance : (RingHom.ker (eval q : MvPolynomial (Fin n) ℂ →+* ℂ)).IsPrime), h]
   rfl
 
 end GroundTheory.Heights₂.Heights

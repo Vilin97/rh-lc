@@ -13,7 +13,7 @@ theorem sub_add_le_spread {N : ℕ} (lam : DomWeight N) (a b : Fin N) :
   have h1 : lam.w a ≤ lam.w ⟨0, hN⟩ := lam.anti (Fin.le_def.2 (Nat.zero_le _))
   have h2 : lam.w ⟨N - 1, by omega⟩ ≤ lam.w b := lam.anti (Fin.le_def.2 (by have := b.2; simp only; omega))
   unfold DomWeight.spread
-  rw [dif_pos hN]
+  rw [dite_eq_left hN]
   linarith
 
 theorem alcoveAt_of_ok : ∀ (Z : Dat), Z.Ok → ∀ (u : Z.Pr.Word) (j : ℕ), j ≤ Z.R.m → AlcoveAt Z.W u j := by

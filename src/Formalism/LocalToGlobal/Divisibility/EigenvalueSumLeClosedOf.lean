@@ -911,7 +911,7 @@ theorem nf_inter_rec (hDel : D.s.Del = (Del : ℚ)) (u : D.what₂.Word) :
   have hi : i < D.R.k - 1 := by have : i + 1 < D.R.k := h; omega
   have hs : (ofRecord D L Del h0).sigPar z i = (D.hc (tauPl D z)).v ⟨i, hi⟩ := by
     unfold NumDatum.sigPar
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
   rw [hs]
   have hv : (D.hcW u (tauPl D z)).v = (D.hc (tauPl D z)).v := D.hcW_v u _
   have h1 := (D.hcW u (tauPl D z)).u_gt_v ⟨i, hi⟩
@@ -1004,7 +1004,7 @@ theorem nf_top_rec :
     exact_mod_cast this
   · have hs : (ofRecord D L Del h0).sigPar (false, t) ((ofRecord D L Del h0).R.k - 2) = (D.hc τ).v ⟨D.R.k - 2, by omega⟩ := by
       unfold NumDatum.sigPar
-      rw [dif_pos (show (ofRecord D L Del h0).R.k - 2 < (ofRecord D L Del h0).R.k - 1 by
+      rw [dite_eq_left (show (ofRecord D L Del h0).R.k - 2 < (ofRecord D L Del h0).R.k - 1 by
         show D.R.k - 2 < D.R.k - 1; omega)]
     rw [hs]
     have hv' : (0 : ℚ) ≤ (D.hc τ).v ⟨D.R.k - 2, by omega⟩ := by exact_mod_cast hv
@@ -1013,7 +1013,7 @@ theorem nf_top_rec :
     linarith
   · have hs : (ofRecord D L Del h0).sigPar (false, t) 0 = (D.hc τ).v ⟨0, by omega⟩ := by
       unfold NumDatum.sigPar
-      rw [dif_pos (show 0 < (ofRecord D L Del h0).R.k - 1 by show 0 < D.R.k - 1; omega)]
+      rw [dite_eq_left (show 0 < (ofRecord D L Del h0).R.k - 1 by show 0 < D.R.k - 1; omega)]
     rw [hs]
     unfold swRec
     push_cast
@@ -1041,8 +1041,8 @@ theorem nu_blk_eq (δ : Code N) (j : ℕ) (hj1 : 1 ≤ j) (hjm : j ≤ N.R.m) (z
     exact (Nat.div_lt_iff_lt_mul (by omega)).2 hlt
   refine ⟨q, hq, ?_⟩
   unfold NumDatum.nu NumDatum.srcPar NumDatum.eQ
-  rw [dif_neg (show ¬ i < N.R.k by omega), dif_pos (show q < N.R.m by omega),
-    dif_pos (show 1 ≤ j ∧ j ≤ N.R.m from ⟨hj1, hjm⟩)]
+  rw [dite_eq_right (show ¬ i < N.R.k by omega), dite_eq_left (show q < N.R.m by omega),
+    dite_eq_left (show 1 ≤ j ∧ j ≤ N.R.m from ⟨hj1, hjm⟩)]
   have hr : r < N.R.t + 1 := Nat.mod_lt _ (by omega)
   have hi' : (i : ℚ) = N.R.k + q * ((N.R.t : ℚ) + 1) + r := by
     have : i = N.R.k + (N.R.t + 1) * q + r := by omega
@@ -1217,7 +1217,7 @@ theorem nu_nonneg_from_bounds (hDel : D.s.Del = (Del : ℚ)) (P5 : ParameterChoi
           (((D.R.N (j - 1) : ℝ) + D.R.N j - 1 - 2 * (i : ℝ)) / 2) := by
       have hw' := ofRecord_w D L Del h0 hj1 z
       unfold NumDatum.nu NumDatum.srcPar
-      rw [dif_pos hik, ofRecord_uW D L Del h0 hDel u z]
+      rw [dite_eq_left hik, ofRecord_uW D L Del h0 hDel u z]
       unfold NumDatum.w at hw'
       push_cast
       rw [hw']

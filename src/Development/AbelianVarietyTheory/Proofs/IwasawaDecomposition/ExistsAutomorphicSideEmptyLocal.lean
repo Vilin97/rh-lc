@@ -112,7 +112,7 @@ theorem locOf_eq {π : NG.AutRep D.host.E D.R.nV} {w : PlE D.host} {x} (hx : Loc
     subst hs
     exact locAt_of_split _ s
   unfold locOf
-  rw [dif_pos hex, locAt_unique (rep_iso π) hex.choose_spec hx]
+  rw [dite_eq_left hex, locAt_unique (rep_iso π) hex.choose_spec hx]
 
 end
 
@@ -142,7 +142,7 @@ theorem f_sat (π : NG.AutRep D.host.E D.R.nV) (v : HeightOneSpectrum (𝓞 (max
       (α' : Fin (D.R.nV / 2) → ℂ), NG.OverPl w v' ∧ NG.SatAt (clsA π).rep Dv' α' :=
     ⟨v, Dv, α, hv, GlobalTheory.T.satakeParameters_inertPlace_independent_of_model _ _ π _ (autIso_symm (rep_iso π)) v w hv Dv Dv α hα⟩
   unfold satOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have key : ∀ (v' : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))) (Dv' : InertDatum D.host.E D.R.nV v' w)
       (α' : Fin (D.R.nV / 2) → ℂ), NG.OverPl w v' → NG.SatAt (clsA π).rep Dv' α' → NG.SatAt π Dv α' := by
     intro v' Dv' α' hv' hs'
@@ -159,7 +159,7 @@ theorem f_wt (π : NG.AutRep D.host.E D.R.nV) (a : NG.AlgWt D.host.E D.R.nV) (hd
   have hrb : (clsA π).rep.toAlgWt.IsDual b := (hba _ hπ.symm).1
   have hex : ∃ b, (clsA π).rep.toAlgWt.IsDual b := ⟨b, hrb⟩
   unfold wtOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨b', -, hbu', -⟩ := GlobalTheory.T.algWeight_contragredient_exists_unique _ _ (clsA π).rep.toAlgWt
   have h1 : b'.Iso hex.choose := (hbu' _).1 hex.choose_spec
   have h2 : b'.Iso b := (hbu' _).1 hrb
@@ -174,7 +174,7 @@ theorem f_infW (a : NG.AlgWt D.host.E D.R.nV) (τ : D.host.E →+* ℂ) (lam : F
   obtain ⟨huniq, hanti⟩ := GlobalTheory.T.algWeight_highestWeight_exists_unique_antitone _ _ (clsW a).rep τ
   have hex : ∃ lam, (clsW a).rep.HWAt τ lam ∧ Antitone lam := ⟨lam, hr, hanti lam hr⟩
   unfold hwOf
-  rw [dif_pos hex, huniq.unique hex.choose_spec.1 hr]
+  rw [dite_eq_left hex, huniq.unique hex.choose_spec.1 hr]
 
 theorem f_locUnr (π : NG.AutRep D.host.E D.R.nV) (s : SplitPlace D.host.E) (hs : π.SphAt s.v) :
     D.naut.unr (locOf hL D T (clsA π).rep s.w) := by

@@ -226,7 +226,7 @@ theorem scaledCusp_Nz [Nonempty Ψ] (D : ComponentData II Ψ K J Ω E) {I : Subm
       simp only [hg, Finset.prod_const, Finset.card_univ, mul_pow, ← pow_mul]
       ring
   obtain ⟨c, hc, h⟩ := key _ _ hex.choose_spec.choose_spec
-  exact ⟨c, hc, fun l hl z => by rw [CuspData.Nz, dif_pos hex]; exact h l hl z⟩
+  exact ⟨c, hc, fun l hl z => by rw [CuspData.Nz, dite_eq_left hex]; exact h l hl z⟩
 
 theorem exists_iso_line : ∃ I : Submodule ℤ (Fin 2 → ℤ), I ≠ ⊥ ∧ IsSaturated I ∧ IsIsoSub sympForm I := by
   refine ⟨LinearMap.ker (sympForm ![1, 0]), ?_, ?_, ?_⟩

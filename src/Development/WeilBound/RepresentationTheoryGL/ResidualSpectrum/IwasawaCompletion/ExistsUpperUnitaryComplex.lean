@@ -123,7 +123,7 @@ theorem sum_castLE_eq {c : ℕ} (d : Fin c → ℕ) {m : ℕ} (hm : m ≤ c) :
     ∑ x : Fin m, d (Fin.castLE hm x) = ∑ k ∈ Finset.range m, (if h : k < c then d ⟨k, h⟩ else 0) := by
   rw [← Fin.sum_univ_eq_sum_range (fun k => if h : k < c then d ⟨k, h⟩ else 0) m]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [dif_pos (lt_of_lt_of_le x.2 hm)]
+  rw [dite_eq_left (lt_of_lt_of_le x.2 hm)]
   rfl
 
 theorem blk_lt_stdBlocks {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) {i j : Fin N}
@@ -135,7 +135,7 @@ theorem blk_lt_stdBlocks {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) {i
   have h1 : ∑ k ∈ Finset.range (b + 1), (if h : k < c then n ⟨k, h⟩ else 0) ≤
       ∑ k ∈ Finset.range a, (if h : k < c then n ⟨k, h⟩ else 0) :=
     Finset.sum_le_sum_of_subset (Finset.range_subset_range.2 hij)
-  rw [Finset.sum_range_succ, dif_pos b.2] at h1
+  rw [Finset.sum_range_succ, dite_eq_left b.2] at h1
   simp only [Fin.eta] at h1
   have h2 : (j' : ℕ) < n b := j'.2
   omega

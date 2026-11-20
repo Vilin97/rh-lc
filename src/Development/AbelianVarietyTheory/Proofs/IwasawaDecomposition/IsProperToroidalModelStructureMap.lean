@@ -223,7 +223,7 @@ theorem lawSt : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : Lv A)
     haveI := hv.isFiniteQC
     obtain ⟨e⟩ := GlobalTheory.ModelPresentation.nonempty_ofMod_toMod_iso _ _ _ _ p ct.W ct.hp ct.hW _ _ ct.YY (GlobalTheory.LB.toMod h.choose)
     unfold At.IsInv At.Lb
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact hv.of_iso e.symm
   · haveI := noetherianSpace ct.hp.ne_zero ct.hW Z
     exact finite_maximal (F := {x : Z.X | ¬ Z.inQ x}) (by

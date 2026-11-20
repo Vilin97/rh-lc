@@ -245,7 +245,7 @@ theorem exists_div_detOm (hL : (FlagMod.detOm Z).IsLB) {f₀ : EigFrame Z (const
   have hr {J} (h : genericPoint V.X ∈ ((FlagMod.detOm Z).pull (j ≫ genι Z)).U J) :
       (r J : V.X.functionField) = (frameDet (J PUnit.unit) (hle h) f₀)⁻¹ := by
     simp only [r]
-    rw [dif_pos h, Units.val_inv_eq_inv_val, IsUnit.unit_spec]
+    rw [dite_eq_left h, Units.val_inv_eq_inv_val, IsUnit.unit_spec]
   have hrat : IsRatSec ((FlagMod.detOm Z).pull (j ≫ genι Z)) r := fun J J' hg => by
     have hh := GlobalTheory.FlagMod.le_preimage_inf (hle hg.1) (hle hg.2)
     have e₁ : fnOf _ hg (((FlagMod.detOm Z).pull (j ≫ genι Z)).g J J' : Γ(V.X, _)) =

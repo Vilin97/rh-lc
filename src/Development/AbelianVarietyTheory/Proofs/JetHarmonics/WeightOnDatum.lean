@@ -52,7 +52,7 @@ theorem weight_on_datum : ∀ (D : D7) (T : Core D), T.Q.Pins → ∀ (j : ℕ),
       rw [if_pos hτ', hp]
     rw [hmult, (hwt t _).1]
     unfold ext0
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact hlast hw t
   · have ht : Nonempty D.what₂.Tau := by
       by_cases h : InPsi T.Q.H D.host.φ₀

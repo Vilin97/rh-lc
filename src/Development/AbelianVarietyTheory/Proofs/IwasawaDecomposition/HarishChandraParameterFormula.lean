@@ -20,13 +20,13 @@ theorem hcStdU_succ (k Del : ℕ) (uF uL : ℤ) (c : Fin (k - 2) → Bool) (l : 
     hcStdU k Del uF uL c (l + 1) =
       ((k - 2 - l : ℕ) : ℚ) * (4 * (Del : ℚ)) - 1 / 2 - (if c ⟨l, h⟩ then (Del : ℚ) else 0) := by
   unfold hcStdU
-  rw [if_neg (Nat.succ_ne_zero l), dif_pos (by simpa using h)]
+  rw [if_neg (Nat.succ_ne_zero l), dite_eq_left (by simpa using h)]
   rfl
 
 theorem hcStdU_last (k Del : ℕ) (uF uL : ℤ) (c : Fin (k - 2) → Bool) (i : ℕ) (h0 : i ≠ 0)
     (h : ¬ i - 1 < k - 2) : hcStdU k Del uF uL c i = (uL : ℚ) + 1 / 2 := by
   unfold hcStdU
-  rw [if_neg h0, dif_neg h]
+  rw [if_neg h0, dite_eq_right h]
 
 theorem exists_hcParam_std : ∀ (R : Ranks) (Del hh : ℕ) (uF uL b1 : ℤ), 1 ≤ Del → R.t + 3 ≤ 2 * hh → ((R.k - 2 : ℕ) : ℤ) * (4 * Del) ≤ uF → uL ≤ -1 → -b1 ≤ uL → ∀ c : Fin (R.k - 2) → Bool, ∃ P : HCParam R, (∀ i : Fin (R.k - 1), (P).v i = ((R.k - 2 - i.1 : ℕ) : ℚ) * (4 * (Del : ℚ))) ∧ (∀ j : Fin R.m, (P).b j = (b1 : ℚ) + (j.1 : ℚ) * (2 * hh : ℚ) ∧ (P).e j = (P).b j + hh) ∧ (∀ h : 0 < R.k, (P).u ⟨0, h⟩ = (uF : ℚ) + 1 / 2 ∧ (P).u ⟨R.k - 1, by omega⟩ = (uL : ℚ) + 1 / 2) ∧ ∀ (l : ℕ) (h : l < R.k - 2), (P).u ⟨l + 1, by omega⟩ = (P).v ⟨l, by omega⟩ - 1 / 2 - (if c ⟨l, h⟩ then (Del : ℚ) else 0) := by
   intro R Del hh uF uL b1 hD hhh hF hL hb c

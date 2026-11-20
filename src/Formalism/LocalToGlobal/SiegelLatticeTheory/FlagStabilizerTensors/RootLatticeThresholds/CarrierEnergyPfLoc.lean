@@ -188,7 +188,7 @@ theorem locRep_of_sec (hS : StepSecX) {D : D7} (X : Formalism.L2.SG.HidaSetting.
   intro c hc v
   have hex : ∃ γ, HasDiag X u u' 1 c γ := ⟨fun w => h w (c w), fun w => hsec w (c w) (hc w)⟩
   have hh : HasDiag X u u' 1 c (hOf X u u' 1 c) := by
-    unfold hOf; rw [dif_pos hex]; exact hex.choose_spec
+    unfold hOf; rw [dite_eq_left hex]; exact hex.choose_spec
   have hee : ∀ a b, hJ (X.B.I.ε v) (rv X.B.I v (X.eR a)) (rv X.B.I v (X.eR b)) = 0 := fun a b => by
     rw [show X.eR a = X.crd (X.eX a) from rfl, show X.eR b = X.crd (X.eX b) from rfl,
       Formalism.L2.SG.RealObj.InfCut.UnitaryIsometries.hJ_rvX, X.ee, map_zero]

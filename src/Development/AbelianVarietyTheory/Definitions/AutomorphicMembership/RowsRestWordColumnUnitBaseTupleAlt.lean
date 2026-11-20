@@ -304,7 +304,7 @@ def RationalReadingWithoutCongruence.full {R : RealDat3 D A3 Ks} {F : Face3 D A3
     have hi : 1 ≤ (i : ℕ) + 1 ∧ (i : ℕ) + 1 ≤ D.R.m := ⟨by omega, i.2⟩
     rw [h _ w hi.1 hi.2]
     unfold etaOf
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     congr⟩
 
 def ZeDef (D : D7) : Prop :=
@@ -415,11 +415,11 @@ def perOf (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C) (u : B.Word) (μ : 
   shaLen_nonneg := W₀.shaLen_nonneg
   eMu := W₀.eMu
   eMt0 := e.e0
-  perCol_base_eq_PtilCol u φ F := by unfold perOf; rw [dif_pos rfl]; rfl
+  perCol_base_eq_PtilCol u φ F := by unfold perOf; rw [dite_eq_left rfl]; rfl
   Bu_linL := n.linL
   Bu_linR := n.linR
   eMtTw := e.eT
-  perCol_tie u μ h φ F := by unfold perOf; rw [dif_neg h]
+  perCol_tie u μ h φ F := by unfold perOf; rw [dite_eq_right h]
   eMu_isom := W₀.eMu_isom
 
 structure CenIs (p : PkB B C G) {e : PerD p} {W₀ : RowsRest B C} {n : Nums p W₀} {η : ℕ → B.places.Pl → ℚ} {hη : ∀ j w, 0 ≤ η j w}

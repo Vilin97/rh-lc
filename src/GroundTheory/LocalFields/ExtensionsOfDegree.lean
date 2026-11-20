@@ -79,7 +79,7 @@ theorem exists_adjoin_eq_of_norm_coeff_sub_lt (f : L[X]) (hm : f.Monic) (hirr : 
     intro a ha b hb hab
     have hmem : ‖a - b‖ ∈ D :=
       Finset.mem_image.2 ⟨(a, b), Finset.mem_filter.2 ⟨Finset.mem_product.2 ⟨ha, hb⟩, hab⟩, rfl⟩
-    rw [hr_def, dif_pos ⟨_, hmem⟩]
+    rw [hr_def, dite_eq_left ⟨_, hmem⟩]
     exact D.min'_le _ hmem
   refine ⟨r ^ f.natDegree, pow_pos hr _, ?_⟩
   intro g hgm hdeg hgc hclose β hβ

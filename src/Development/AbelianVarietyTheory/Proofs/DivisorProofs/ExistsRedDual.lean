@@ -45,7 +45,7 @@ theorem tr_spec {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
     [PerfectRing k' p] {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k} (hG' : G'.IsEt)
     (hG : G.IsEt) (s : SemiHom σ G' G) (l : Mod B G hG) (h : ∃ l', IsTr B σ hG' hG s l l') :
     IsTr B σ hG' hG s l (tr B hG' hG s l) := by
-  rw [tr, dif_pos h]
+  rw [tr, dite_eq_left h]
   exact Classical.choose_spec h
 
 section Red

@@ -164,10 +164,10 @@ theorem exists_coord : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpa
     rfl
   have hD1 : lead (H.Zhat P.A.f P.B.f) (Fin.last (r + 1)) = H.Dl P.A.f P.B.f (r + 1) := by
     unfold GlobalTheory.HL.lead HermSp.Dl
-    rw [dif_pos le_rfl]
+    rw [dite_eq_left le_rfl]
   have hD0 : lead (H.Zhat P.A.f P.B.f) (Fin.last r).castSucc = H.Dl P.A.f P.B.f r := by
     unfold GlobalTheory.HL.lead HermSp.Dl
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
   have hG' := hG
   unfold LocNG.FPair.Gv HermSp.Gdet HermSp.normE at hG'
   rw [← hD1, ← hD0, ← hZ] at hG'

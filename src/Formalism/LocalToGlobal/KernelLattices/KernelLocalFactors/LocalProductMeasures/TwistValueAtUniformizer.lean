@@ -186,7 +186,7 @@ theorem twist_value_at_uniformizer : XiUnif := by
     exact xv_same (ξ : Chr F E L) v' hin P b' b hb1' hb2' hb1 hb2 y (locId E v' w) y₀ (xvY v' b) hy (xv_coe v' w b hw) hs (xv_supp v' w) h1 hY1 h2 hY2
   have hsp : IsUnifVal (ξ : Chr F E L) P (unifVal (ξ : Chr F E L) P) := by
     unfold unifVal
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   exact hsp v hv (locId E v w) (xvY v b) b (xv_coe v w b hw) hb1 hb2 (xv_supp v w) hY1 hY2
 

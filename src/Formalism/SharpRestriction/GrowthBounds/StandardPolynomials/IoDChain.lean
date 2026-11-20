@@ -85,7 +85,7 @@ theorem sg_hom (φ : MonH X →+ ℕ) (wt : Fin (2 * segS X.TT j + 1) → ℕ)
       (ioD O C0 CE1 CE2 mu X β j (rename (chainEmb _ X.m _) (xOf (KK O) (2 * segS X.TT j + 1) X.m a b))) := by
     intro a b
     by_cases h : a < 2 * segS X.TT j + 1
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       have e : xOf (KK O) (2 * segS X.TT j + 1) X.m a b = MvPolynomial.X (⟨a, h⟩, b) := by
         simp [xOf, h]
       rw [e, ioD_chain]
@@ -110,7 +110,7 @@ theorem sg_hom (φ : MonH X →+ ℕ) (wt : Fin (2 * segS X.TT j + 1) → ℕ)
     rw [Finset.sum_range]
     refine Finset.sum_congr rfl fun a _ => ?_
     have ha := a.isLt
-    rw [dif_pos a.isLt]
+    rw [dite_eq_left a.isLt]
     have e1 : hsOf ka c a = colH (ka a.castSucc) c := by
       unfold hsOf
       congr 2

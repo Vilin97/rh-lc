@@ -18,7 +18,7 @@ theorem redFn_mul {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
     (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (PP : Pl E) {x y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)}
     (hx : x ∈ St β) (hy : y ∈ St β) : redFn β PP (x * y) = redFn β PP x * redFn β PP y := by
   unfold redFn ext1
-  rw [dif_pos (mul_mem hx hy), dif_pos hx, dif_pos hy]
+  rw [dite_eq_left (mul_mem hx hy), dite_eq_left hx, dite_eq_left hy]
   rw [← map_mul]
   congr 1
 
@@ -26,7 +26,7 @@ theorem redFn_inv {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
     (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (PP : Pl E) {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)}
     (hx : x ∈ St β) : redFn β PP x⁻¹ = (redFn β PP x)⁻¹ := by
   unfold redFn ext1
-  rw [dif_pos (inv_mem hx), dif_pos hx]
+  rw [dite_eq_left (inv_mem hx), dite_eq_left hx]
   rw [← map_inv]
   congr 1
 

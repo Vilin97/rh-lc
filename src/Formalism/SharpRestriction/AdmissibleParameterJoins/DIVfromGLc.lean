@@ -22,7 +22,7 @@ theorem ord_hclP (e l : ℕ) (hl : l.Prime) (h2 : l ≠ 2) :
   unfold LocalQuadraticParts.hclP hOf
   have hc2 : l.Coprime 2 := (Nat.coprime_primes hl Nat.prime_two).2 h2
   have hc : l.Coprime (2 ^ (e + 2)) := Nat.Coprime.pow_right _ hc2
-  rw [dif_pos hc, dif_pos hc2]
+  rw [dite_eq_left hc, dite_eq_left hc2]
 
 theorem dyadic_order_consequences (D : D7) (C : ℝ) (h : UnusedSlot33.Conclusion4 D C) : LocalQuadraticParts.OrderConsequences D C := by
   obtain ⟨-, h2, h3, h4⟩ := h

@@ -375,7 +375,7 @@ theorem stDiv : StDiv := by
             (GroundTheory.Heights₂.Heights.linForm u))})).toNat := by
       rw [hlen]
       unfold localMult
-      rw [dif_pos (show (qOf h.aff hz).IsPrime from inferInstance)]
+      rw [dite_eq_left (show (qOf h.aff hz).IsPrime from inferInstance)]
     by_cases hc : Order.coheight z = 1
     · have hmult := GlobalTheory.Cartier.mult_divOfSec (hL := hB) (s := su) (hs := hu) hc hi
       rw [hmult, hspan, ← hLM]

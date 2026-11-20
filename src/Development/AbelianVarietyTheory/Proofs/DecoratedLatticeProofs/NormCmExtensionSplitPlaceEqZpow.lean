@@ -21,7 +21,7 @@ namespace GlobalTheory.Doubling.AbsSplit
 theorem norm_eq_zpow {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) {a : Fv F v} (ha : a ≠ 0) :
     ‖a‖ = (qV F v : ℝ) ^ (-ordL a) := by
   have h0 : Valued.v a ≠ 0 := (map_ne_zero _).2 ha
-  rw [NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ h0, ordL, dif_neg h0, neg_neg]
+  rw [NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ h0, ordL, dite_eq_right h0, neg_neg]
   simp [qV]
 
 theorem ordL_congr {L L' : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] [Field L']

@@ -55,7 +55,7 @@ theorem gensJ_algebraic (P : Pre) (J : AmbIn P.host) (χ : HChar P.host.E) (Ξ :
 theorem allSetJ_subset (P : Pre) (J : AmbIn P.host) (χ : HChar P.host.E) {Ξ : Set (HChar P.host.E)} (h : Ξ.Finite)
     {K : Subfield ℂ} (hK : ∀ z ∈ gensJ P J χ Ξ, z ∈ K) : allSetJ P J χ Ξ ⊆ K := by
   have h1 := finAlg_allSetJ P J χ h
-  rw [gensJ, dif_pos h1] at hK
+  rw [gensJ, dite_eq_left h1] at hK
   exact h1.choose_spec.2.trans (Subfield.closure_le.2 hK)
 
 theorem jetsIn_of_isTw {B : Base} {X : PreX B.toPre} (hL : StagesInhab.HasLetters B.toPre) {I : ColIn B X} (h : I.Ok)
@@ -192,9 +192,9 @@ theorem extend_pinned : EvG fun K => ∀ (B : Base) (f : Fr B.toPre) (T : TwDat 
   refine ⟨fun _ => ∅, fun P g Ξ => if h : P = B.toPre then S P (h ▸ w.I.J) g Ξ else ∅, fun P g Ξ z hz => ?_, ?_⟩
   · dsimp only at hz
     by_cases h : P = B.toPre
-    · rw [dif_pos h] at hz
+    · rw [dite_eq_left h] at hz
       exact hSa _ _ _ _ z hz
-    · rw [dif_neg h] at hz
+    · rw [dite_eq_right h] at hz
       simp at hz
   intro B' f' T' hE hf _ hS₂
   have hK := Enl.KsC_eq hE
@@ -222,7 +222,7 @@ theorem extend_pinned : EvG fun K => ∀ (B : Base) (f : Fr B.toPre) (T : TwDat 
   have ef := eq_of_heq hf
   subst ef
   dsimp only at hS₂
-  rw [dif_pos rfl] at hS₂
+  rw [dite_eq_left rfl] at hS₂
   obtain ⟨I, hI, hTw, hJets, hC, hSS, hxi, hsel, hJ, hval, hroot, hfld⟩ :=
     hS B' w.px f' T' w.I.sel w.I.J hsp.1 hsp.2 hL hX w.ok.sel_ok w.ok.amb_ok hS₂
   have hval0 : ∀ C W V S N G, Formalism.L2.Host.ValLL0 (assemble B' C W V S N G) (Fr.at ⟨B', C, W, V, S, N, G⟩ f') :=

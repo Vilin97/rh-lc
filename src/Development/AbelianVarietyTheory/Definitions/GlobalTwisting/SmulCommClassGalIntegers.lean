@@ -153,7 +153,7 @@ theorem heckeVal_eq [IsGalois K L] (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔭 : Hei
     heckeVal L χ 𝔭 = (χ σ : ℂˣ) := by
   have h : (∀ σ, InInertia L 𝔭 σ → χ σ = 1) ∧ ∃ σ, IsFrob L 𝔭 σ := ⟨hχ, σ, hσ⟩
   unfold heckeVal
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨P, hP, hPo, h1⟩ := (isFrob_iff L 𝔭 _).1 h.2.choose_spec
   obtain ⟨P', hP', hPo', h2⟩ := (isFrob_iff L 𝔭 _).1 hσ
   have := 𝔭.isPrime
@@ -168,7 +168,7 @@ theorem heckeVal_eq [IsGalois K L] (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔭 : Hei
 theorem heckeVal_eq_zero (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔭 : HeightOneSpectrum (𝓞 K))
     (hχ : ¬ ∀ τ, InInertia L 𝔭 τ → χ τ = 1) : heckeVal L χ 𝔭 = 0 := by
   unfold heckeVal
-  rw [dif_neg fun h => hχ h.1]
+  rw [dite_eq_right fun h => hχ h.1]
 
 theorem heckeVal_of_unramIn [IsGalois K L] (χ : (L ≃ₐ[K] L) →* ℂˣ) {𝔭 : HeightOneSpectrum (𝓞 K)}
     (hu : UnramIn L 𝔭) {σ : L ≃ₐ[K] L} (hσ : IsFrob L 𝔭 σ) : heckeVal L χ 𝔭 = (χ σ : ℂˣ) :=

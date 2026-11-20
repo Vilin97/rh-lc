@@ -179,7 +179,7 @@ theorem chiAt_eq_val (hσ : IsCMExt F E σ) {χ : (AE F E)ˣ →* Circle} {P : H
     chiAt σ χ P = (val χ P : ℂ) := by
   have hc : IsUnramAt σ χ P ∧ ∃ x, IsUnifIdele σ P x := ⟨(isUnramAt_iff_unrAt hσ χ P).2 h, exists_isUnifIdele hσ P⟩
   obtain ⟨u, hu, e⟩ := exists_of_isUnifIdele hc.2.choose_spec
-  rw [chiAt, dif_pos hc, e, ← h.locChar_eq_val hu]
+  rw [chiAt, dite_eq_left hc, e, ← h.locChar_eq_val hu]
   rfl
 
 theorem chiAt_eq_zero (hσ : IsCMExt F E σ) {χ : (AE F E)ˣ →* Circle} {P : HeightOneSpectrum (𝓞 E)}

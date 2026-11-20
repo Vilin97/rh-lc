@@ -146,7 +146,7 @@ theorem inFrame_sM' (b : Fin L.n → AE F E) : inFrame d.b (sM R L b) = bMat (sB
   have hex : ∃ x : d.G, inFrame d.b x = bMat (sB R L b) :=
     ⟨⟨kfour.nU d.b (sB R L b), kfour.nU_mem (sig2 d) R.hε (sB_cond b)⟩, kfour.inFrame_nU _ _⟩
   unfold sM elt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem sig_delta (h : Hyp L nb uM nb' w₁ cM δ) : σ δ = -(((R.ε : ℤ) : E)) * δ := by

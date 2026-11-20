@@ -249,7 +249,7 @@ private lemma clEx (hH : HasTrLaw) (ch : F → ℂ) : ∃ cl : DX Δ → ℂ, (�
     intro g s hs
     have he : ∃ s, HasTr g s := ⟨s, hs⟩
     show (if h : ∃ s, HasTr g s then ch h.choose else 0) = ch s
-    rw [dif_pos he, (hH F Δ g).2.1 _ _ he.choose_spec hs]
+    rw [dite_eq_left he, (hH F Δ g).2.1 _ _ he.choose_spec hs]
   have zero : ∀ g, ¬ (∃ s, HasTr g s) → cl g = 0 := fun g he => dif_neg he
   refine ⟨cl, key, ?_, ?_⟩
   · intro g hg

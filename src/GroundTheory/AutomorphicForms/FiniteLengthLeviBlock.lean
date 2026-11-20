@@ -189,7 +189,7 @@ theorem restrictFun_blockExtend_of_ne {a b : Set.range δ} (hb : b ≠ a)
     (ε : Fin (blockSize δ a) → ℕ) : restrictFun δ (blockExtend δ a ε) b = fun _ => 0 := by
   funext k
   simp only [restrictFun, blockExtend]
-  rw [dif_neg]
+  rw [dite_eq_right]
   intro h
   exact hb ((fiberFin δ b k).2.symm.trans h)
 

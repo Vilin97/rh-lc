@@ -141,7 +141,7 @@ theorem IsFormOrd.unique {η : Forms c n} {a b : ℤ} (h : E.IsFormOrd η a)
 theorem IsFormOrd.formOrd_eq {η : Forms c n} {a : ℤ} (h : E.IsFormOrd η a) :
     E.formOrd η = a := by
   have h' : ∃ a, E.IsFormOrd η a := ⟨a, h⟩
-  rw [formOrd, dif_pos h']
+  rw [formOrd, dite_eq_left h']
   exact h'.choose_spec.unique h
 
 variable (E)

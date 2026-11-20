@@ -73,7 +73,7 @@ theorem fixX_of_unip {x : (Fin (M + c) → E) ≃ₗ[E] (Fin (M + c) → E)} (hU
   · intro v _ hvl
     by_cases hv : v.1 < M
     · rw [hU l v (by have := one_le_lv M l.1; unfold lv; rw [if_pos hv]; exact this), if_neg (Ne.symm hvl), mul_zero]
-    · rw [inX_apply, dif_neg hv, zero_mul]
+    · rw [inX_apply, dite_eq_right hv, zero_mul]
   · intro h; exact absurd (Finset.mem_univ l) h
 
 theorem unip_of {x : (Fin (M + c) → E) ≃ₗ[E] (Fin (M + c) → E)} (hR : Loc.R1cond E M c x)

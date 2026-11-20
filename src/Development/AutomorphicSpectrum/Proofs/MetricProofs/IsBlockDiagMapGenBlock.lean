@@ -55,10 +55,10 @@ theorem isMultiHomog_rename_base {σ : Type} (blk : σ → Option K) {d' : NonPl
   obtain ⟨m', hm', rfl⟩ := hm
   beta_reduce
   by_cases h : ∀ p, blk p ≠ some k
-  · rw [dif_pos h, ← hg m' hm' ⟨k, h⟩]
+  · rw [dite_eq_left h, ← hg m' hm' ⟨k, h⟩]
     refine Finset.sum_congr rfl fun i _ => ?_
     exact Finsupp.mapDomain_apply_of_injective hinj m' ⟨⟨k, h⟩, i⟩
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     refine Finset.sum_eq_zero fun i _ => Finsupp.mapDomain_of_notMem_range _ _ ?_
     rintro ⟨⟨⟨k', hk'⟩, b⟩, e⟩
     obtain ⟨rfl, -⟩ := Sigma.mk.inj_iff.mp e
@@ -119,7 +119,7 @@ theorem minorIJ_eq_det_of_card {R : Type} [CommRing R] (h : Matrix (Fin N) (Fin 
     minorIJ h I J = (h.submatrix (I.orderEmbOfFin hI) (J.orderEmbOfFin hJ)).det := by
   subst hJ
   unfold minorIJ
-  rw [dif_pos hI]
+  rw [dite_eq_left hI]
 
 theorem minorIJ_mul_sum {R : Type} [CommRing R] (T h : Matrix (Fin N) (Fin N) R) (I J : Finset (Fin N)) :
     minorIJ (T * h) I J = ∑ I', minorIJ T I I' * minorIJ h I' J := by
@@ -136,22 +136,22 @@ theorem minorIJ_mul_sum {R : Type} [CommRing R] (T h : Matrix (Fin N) (Fin N) R)
       · intro S _ hS
         by_contra hc
         apply hS
-        rw [show minorIJ h S J = 0 by unfold minorIJ; rw [dif_neg hc], mul_zero]
+        rw [show minorIJ h S J = 0 by unfold minorIJ; rw [dite_eq_right hc], mul_zero]
     rw [minorIJ_eq_det_of_card _ I J e rfl, hm, ReciprocityTheory.ChartRestriction.DS.cauchyBinet, hsum]
     refine Finset.sum_congr rfl fun S _ => ?_
     rw [minorIJ_eq_det_of_card T I S.1 e S.2, minorIJ_eq_det_of_card h S.1 J S.2 rfl]
     rfl
   · have h0 : minorIJ (T * h) I J = 0 := by
       unfold minorIJ
-      rw [dif_neg e]
+      rw [dite_eq_right e]
     rw [h0]
     symm
     refine Finset.sum_eq_zero fun I' _ => ?_
     by_cases e' : I.card = I'.card
     · rw [show minorIJ h I' J = 0 by
         unfold minorIJ
-        rw [dif_neg fun c => e (e'.trans c)], mul_zero]
-    · rw [show minorIJ T I I' = 0 by unfold minorIJ; rw [dif_neg e'], zero_mul]
+        rw [dite_eq_right fun c => e (e'.trans c)], mul_zero]
+    · rw [show minorIJ T I I' = 0 by unfold minorIJ; rw [dite_eq_right e'], zero_mul]
 
 theorem minorIJ_block_zero {R : Type} [CommRing R] {j : ℕ} {i : Fin N} {h : Matrix (Fin N) (Fin N) R}
     (hh : IsBlockDiag j h) {I : Finset (Fin N)} (hnot : ¬ IsStepRows N j i I) :
@@ -165,7 +165,7 @@ theorem minorIJ_block_zero {R : Type} [CommRing R] {j : ℕ} {i : Fin N} {h : Ma
       exact haI
     obtain ⟨r, rfl⟩ := hr
     unfold minorIJ
-    rw [dif_pos e]
+    rw [dite_eq_left e]
     refine Matrix.det_eq_zero_of_row_eq_zero r fun c => ?_
     have hb := Finset.orderEmbOfFin_mem (stepCols N j i) rfl c
     refine hh _ _ ?_
@@ -177,7 +177,7 @@ theorem minorIJ_block_zero {R : Type} [CommRing R] {j : ℕ} {i : Fin N} {h : Ma
     · simp only [stepCols, omIdx, Finset.mem_filter, Finset.mem_univ, true_and, if_neg hc] at hb haB
       omega
   · unfold minorIJ
-    rw [dif_neg e]
+    rw [dite_eq_right e]
 
 def genBlock (Ω : Type) [Field Ω] (N j : ℕ) : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N × Fin N) Ω) :=
   fun a b => if ((a : ℕ) < N - j ↔ (b : ℕ) < N - j) then X (a, b) else 0

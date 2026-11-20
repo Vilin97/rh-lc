@@ -78,7 +78,7 @@ theorem lc_eq {R : Type} [Zero R] {M : ℕ} (hM : 0 < M) (k : ℤ) (A : ℕ → 
     lc M k A (((k : ℚ) + n) / M) = A n := by
   have h : ∃ m : ℕ, ((k : ℚ) + n) / M = ((k : ℚ) + m) / M := ⟨n, rfl⟩
   unfold lc
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hM' : (M : ℚ) ≠ 0 := by exact_mod_cast hM.ne'
   have := h.choose_spec
   rw [div_left_inj' hM', add_right_inj] at this
@@ -88,7 +88,7 @@ theorem lc_eq {R : Type} [Zero R] {M : ℕ} (hM : 0 < M) (k : ℤ) (A : ℕ → 
 theorem lc_zero {R : Type} [Zero R] {M : ℕ} {k : ℤ} (A : ℕ → R) {r : ℚ} (h : ∀ n : ℕ, r ≠ ((k : ℚ) + n) / M) :
     lc M k A r = 0 := by
   unfold lc
-  rw [dif_neg]
+  rw [dite_eq_right]
   push_neg
   exact h
 

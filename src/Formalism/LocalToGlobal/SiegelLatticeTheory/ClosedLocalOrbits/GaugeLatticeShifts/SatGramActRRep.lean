@@ -103,7 +103,7 @@ theorem ampN_of_mk (FdN FdN' : Set X.B.I.Ginf) (hA : AmpRepN F0 F0' cs cs')
   have hFt : Formalism.L2.SG.HidaSetting.IsSFund X.B.I (ROinf t) (FundOf t) := by
     have h := hF t
     unfold FundOf
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   have key := hA t.lam t.lam' t.mem t.mem' t.rep p (grel_rep t p hp) (FundOf t) Ω hFt hΩ (hO t)
   have hc := congrArg (fun z => ((scl FdN FdN' (X := X) (u := u) (u' := u') * X.volK2 : ℝ) : ℂ) • z) key

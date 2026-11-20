@@ -225,7 +225,7 @@ theorem coordCount_of (S : HSpace E) (q : ℕ) (ρ B2 : ℝ) (hρ : 0 ≤ ρ) (h
   · intro L b hL hq hbL hbs
     have hgood : (keyOf S b L).2 ∈ St (keyOf S b L).1 := ⟨L, b, hL, hq, hbL, hbs, rfl⟩
     dsimp only
-    rw [dif_pos (hbound L b hL hq hbL hbs), Set.Finite.mem_toFinset]
+    rw [dite_eq_left (hbound L b hL hq hbL hbs), Set.Finite.mem_toFinset]
     exact hgood
 
 end Coord

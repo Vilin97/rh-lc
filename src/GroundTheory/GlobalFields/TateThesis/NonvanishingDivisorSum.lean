@@ -22,7 +22,7 @@ def idealDivisors (I : Ideal (𝓞 K)) : Finset (Ideal (𝓞 K)) :=
   if hI : I = ⊥ then ∅ else (finite_setOf_le_of_ne_bot hI).toFinset
 
 theorem mem_idealDivisors {I J : Ideal (𝓞 K)} (hI : I ≠ ⊥) : J ∈ idealDivisors I ↔ I ≤ J := by
-  rw [idealDivisors, dif_neg hI, Set.Finite.mem_toFinset]
+  rw [idealDivisors, dite_eq_right hI, Set.Finite.mem_toFinset]
   rfl
 
 @[simp]

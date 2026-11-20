@@ -194,9 +194,9 @@ theorem norm_nmat_sub_one_le {r : ℕ} (X : Data E r) (z : V (nd X)) (τ : X.Ψ)
   rw [Matrix.sub_apply, Matrix.one_apply]
   simp only [mat, nmat, Matrix.of_apply]
   by_cases h : b < a
-  · rw [dif_pos h, if_neg h.ne', sub_zero]
+  · rw [dite_eq_left h, if_neg h.ne', sub_zero]
     exact PiLp.norm_apply_le z _
-  · rw [dif_neg h, sub_self, norm_zero]
+  · rw [dite_eq_right h, sub_self, norm_zero]
     exact norm_nonneg _
 
 theorem isometry_of_orth {r : ℕ} (X : Data E r) {x0 x : Frame X.Ψ r} (h0 : IsOrth X x0)

@@ -99,7 +99,7 @@ theorem hsVec_norm_V_bigPt (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[�
   have h' := Formalism.FourierDecayAlt.P.exists_isotropic_frame P.k P.r Wp Wq p.T.base p.ν' p.m₀ _ p.hF hl hG'
   show ‖B.hsVec (D.vecV p.T.base p.ν' p.m₀ F (Formalism.FourierDecayAlt.P.PBJ.bigPt d))‖ = _
   unfold D.vecV
-  rw [dif_pos ⟨hl, hG'⟩, dif_pos h']
+  rw [dite_eq_left ⟨hl, hG'⟩, dite_eq_left h']
   obtain ⟨hγ, hZγ, -⟩ := h'.choose_spec
   have hζ : Tz P.k P.r p.T.base.z * Tz P.k P.r p.T.base.z' < Complex.normSq (d (Fin.last P.r)) :=
     Formalism.FourierDecayAlt.P.PBM.zeta_big _ d hG'

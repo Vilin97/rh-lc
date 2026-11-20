@@ -21,10 +21,10 @@ theorem fnVal_comp (r : Spec (CommRingCat.of A) ⟶ X) (q : X ⟶ Y) (V : Y.Open
   unfold fnVal
   by_cases h : ⊤ ≤ r ⁻¹ᵁ (q ⁻¹ᵁ V)
   · have h' : ⊤ ≤ (r ≫ q) ⁻¹ᵁ V := h
-    rw [dif_pos h, dif_pos h', Scheme.Hom.comp_appLE]
+    rw [dite_eq_left h, dite_eq_left h', Scheme.Hom.comp_appLE]
     rfl
   · have h' : ¬ ⊤ ≤ (r ≫ q) ⁻¹ᵁ V := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem fnVal_spec (θ : A →+* B) (p : Spec (CommRingCat.of A) ⟶ X) (U : X.Opens) (f : Γ(X, U))
     (h : ⊤ ≤ p ⁻¹ᵁ U) :
@@ -33,7 +33,7 @@ theorem fnVal_spec (θ : A →+* B) (p : Spec (CommRingCat.of A) ⟶ X) (U : X.O
   have h' : ⊤ ≤ (Spec.map (CommRingCat.ofHom θ) ≫ p) ⁻¹ᵁ U := fun z _ => h (Set.mem_univ _)
   refine ⟨h', ?_⟩
   unfold fnVal
-  rw [dif_pos h, dif_pos h']
+  rw [dite_eq_left h, dite_eq_left h']
   have e : (Spec.map (CommRingCat.ofHom θ) ≫ p).appLE U ⊤ h' =
       p.appLE U ⊤ h ≫ (Spec.map (CommRingCat.ofHom θ)).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]

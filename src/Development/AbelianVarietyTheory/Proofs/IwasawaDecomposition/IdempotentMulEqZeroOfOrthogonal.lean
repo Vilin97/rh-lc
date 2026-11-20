@@ -526,7 +526,7 @@ theorem omegaQ_congr {a b : ℕ} (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (r 
     refine Finset.prod_congr rfl fun PP _ => ?_
     congr 3
     exact Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 PP.2])
-  · rw [dif_neg hy, dif_neg fun h' => hy (hiff.2 h')]
+  · rw [dite_eq_right hy, dite_eq_right fun h' => hy (hiff.2 h')]
 
 open Classical in
 

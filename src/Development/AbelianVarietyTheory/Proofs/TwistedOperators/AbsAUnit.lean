@@ -50,15 +50,15 @@ theorem absA_mul {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
   classical
   unfold absA
   by_cases hz : IsUnit z <;> by_cases hw : IsUnit w
-  · rw [dif_pos (hz.mul hw), dif_pos hz, dif_pos hw, ← map_mul]; congr 1; ext; rfl
-  · rw [dif_neg (fun h => hw (isUnit_of_mul_isUnit_right h)), dif_neg hw, mul_zero]
-  · rw [dif_neg (fun h => hz (isUnit_of_mul_isUnit_left h)), dif_neg hz, zero_mul]
-  · rw [dif_neg (fun h => hz (isUnit_of_mul_isUnit_left h)), dif_neg hz, zero_mul]
+  · rw [dite_eq_left (hz.mul hw), dite_eq_left hz, dite_eq_left hw, ← map_mul]; congr 1; ext; rfl
+  · rw [dite_eq_right (fun h => hw (isUnit_of_mul_isUnit_right h)), dite_eq_right hw, mul_zero]
+  · rw [dite_eq_right (fun h => hz (isUnit_of_mul_isUnit_left h)), dite_eq_right hz, zero_mul]
+  · rw [dite_eq_right (fun h => hz (isUnit_of_mul_isUnit_left h)), dite_eq_right hz, zero_mul]
 
 theorem absA_unit {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (z : (AF F ⊗[F] E)ˣ) :
     absA F E z = Doubling.absE F E z := by
   classical
-  rw [absA, dif_pos z.isUnit]; rfl
+  rw [absA, dite_eq_left z.isUnit]; rfl
 
 variable {D : D7} {V : HSp D} (Φ : WittFrame V)
 

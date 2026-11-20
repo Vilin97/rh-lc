@@ -17,7 +17,7 @@ theorem frameOK_mapLF : ∀ (D : D7) (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V), 
   subst hΛ
   have e : mapLF γ F = PI.RepsIndep.Tr.mapL γ hγ F := by
     unfold mapLF
-    rw [dif_pos hγ]
+    rw [dite_eq_left hγ]
     rfl
   rw [e]
   exact PI.RepsIndep.Tr.FrameOK_map hγ hF

@@ -287,7 +287,7 @@ theorem slice_apply (I : AutInst) (f : I.GA → ℂ) (x : I.GA) (v : InfinitePla
     slice I f x v (uMat g) = f (x * (Pi.mulSingle v g, 1)) := by
   have h : ∃ g' : UJ (I.ε v), uMat g' = uMat g := ⟨g, rfl⟩
   simp only [slice]
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e : h.choose = g := Subtype.ext (Units.ext h.choose_spec)
   rw [e]
 

@@ -83,7 +83,7 @@ theorem hc_isChar_and_res_decomp : ∀ (g : ℕ) [Fact g.Prime] (a b n : ℕ), n
       by_cases h : tl a (x : Mt g n) = h₁ ∧ br a b (x : Mt g n) = h₂
       · rw [if_pos ((hπ x hx h₁ h₂).2 h), if_pos ⟨hx', h⟩]
       · rw [if_neg (fun e => h ((hπ x hx h₁ h₂).1 e)), if_neg (fun e => h e.2)]
-    · rw [dif_neg hx, if_neg (fun e => hx ((hP x).2 e.1))]
+    · rw [dite_eq_right hx, if_neg (fun e => hx ((hP x).2 e.1))]
   have hNP : (Nat.card P : ℂ) = ((Finset.univ.filter fun p : Gn g n => InPar a (p : Mt g n)).card : ℂ) := by
     congr 1
     rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
@@ -104,7 +104,7 @@ theorem hc_isChar_and_res_decomp : ∀ (g : ℕ) [Fact g.Prime] (a b n : ℕ), n
     intro y _
     by_cases hy : y⁻¹ * x * y ∈ P
     · rw [dif_pos hy, if_pos ((hP _).1 hy), hπv]
-    · rw [dif_neg hy, if_neg (fun e => hy ((hP _).2 e))]
+    · rw [dite_eq_right hy, if_neg (fun e => hy ((hP _).2 e))]
   · intro χ hχ
     have hsurj : Function.Surjective π := by
       rintro ⟨h₁, h₂⟩

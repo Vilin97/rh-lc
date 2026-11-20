@@ -46,7 +46,7 @@ theorem SegreChartIntegral.proof (hGood : SegreCoordGoodProj.Statement)
     goodProjExists K ι P (e + 1) hP
   have hpts : ptsIntegral P (pot L) g = ptsIntegralAt P hex.choose (pot L) g := by
     unfold ptsIntegral
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   rw [hpts]
   by_cases hne : ∃ z ∈ mcPts P, segre z i ≠ 0
   · obtain ⟨Ψ, hΨ, hΨ0⟩ := hGood K ι P (e + 1) i hP hne

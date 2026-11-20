@@ -123,7 +123,7 @@ private theorem low_coord {K : Type} [Field K] [NumberField K] :
   have hXc : Continuous X := continuous_pi fun p => by
     refine ((hN.matrix_elem p.1.1 p.1.2).sub (continuous_const (y := (1 : Matrix (Fin (2 + 2)) (Fin (2 + 2)) 𝔸[K]) p.1.1 p.1.2))).congr fun s => ?_
     show unipMatrix (X s) p.1.1 p.1.2 - _ = _
-    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dif_pos p.2, add_sub_cancel_left]
+    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_left p.2, add_sub_cancel_left]
   have hlow : ∀ g : G1 K (2 + 2), (∃ X m₁ m₂ t, g = nn X * lv m₁ m₂ t) → (F g).toBlocks₂₁ = 0 := by
     rintro _ ⟨X, m₁, m₂, t, rfl⟩
     simp only [F, Subgroup.coe_mul, hlv]

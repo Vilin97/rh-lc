@@ -69,7 +69,7 @@ theorem glFibre : GLFibre := by
   unfold TBB.NP
   congr 1
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos ⟨ha, hb⟩, dif_pos hjr]
+  rw [dite_eq_left ⟨ha, hb⟩, dite_eq_left hjr]
   rfl
 
 end

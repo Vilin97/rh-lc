@@ -137,15 +137,15 @@ theorem UlocAlt (S : P.Splits) (v : HeightOneSpectrum (𝓞 F)) (h : (P.T : 𝓞
 theorem Uloc_hyp (S : P.Splits) (v : HeightOneSpectrum (𝓞 F)) (h0 : (P.gp 0 : 𝓞 F) ∉ v.asIdeal)
     (h1 : (P.gp 1 : 𝓞 F) ∉ v.asIdeal) (h : (P.T : 𝓞 F) ∉ v.asIdeal) :
     P.Uloc S v = levelVL P.σ P.J v P.Lb := by
-  unfold Uloc; rw [if_neg h, dif_neg h0, dif_neg h1]
+  unfold Uloc; rw [if_neg h, dite_eq_right h0, dite_eq_right h1]
 
 theorem Uloc_g (S : P.Splits) (hT : ∀ i, Nat.Coprime P.T (P.gp i)) (hg : Nat.Coprime (P.gp 0) (P.gp 1)) :
     ∀ (i : Fin 2) (v : HeightOneSpectrum (𝓞 F)) (h : (P.gp i : 𝓞 F) ∈ v.asIdeal),
       P.Uloc S v = P.iwPre v (S i v h).φ
   | 0, v, h => by
-    unfold Uloc; rw [if_neg (fun hh => asm_not_both (hT 0) v hh h), dif_pos h]
+    unfold Uloc; rw [if_neg (fun hh => asm_not_both (hT 0) v hh h), dite_eq_left h]
   | 1, v, h => by
-    unfold Uloc; rw [if_neg (fun hh => asm_not_both (hT 1) v hh h), dif_neg (fun hh => asm_not_both hg v hh h), dif_pos h]
+    unfold Uloc; rw [if_neg (fun hh => asm_not_both (hT 1) v hh h), dite_eq_right (fun hh => asm_not_both hg v hh h), dite_eq_left h]
 
 theorem Uloc_lev (S : P.Splits) (hiw : P.IwLe) (v : HeightOneSpectrum (𝓞 F)) :
     P.Uloc S v ≤ levelVL P.σ P.J v P.Lb := by

@@ -106,9 +106,9 @@ theorem exists_nStage_act {B : Base} {C C₀ : Cols B} {W₀ : RowsRest B C₀} 
   have hz := ha (cenPull eR ⟨T.e0, hc⟩) fun g => (coeff_cenPull eR _ g).trans (hco (e₀ g))
   have htie : T.IdempotentMatchesAction := by
     refine ⟨fun μ => ?_, fun μ j => ?_⟩
-    · rw [NTypes.onAmb, dif_pos hc]
+    · rw [NTypes.onAmb, dite_eq_left hc]
       exact hz.1 μ
-    · rw [NTypes.onMt, dif_pos hc]
+    · rw [NTypes.onMt, dite_eq_left hc]
       exact hz.2 μ j
   have hy : ∀ x, ∃ y : ↥B.LL0, B.embLL (y : B.LL) = T.e0.coeff x := fun x => by
     obtain ⟨g, rfl⟩ := (grpEquiv N₀.naut A).surjective x

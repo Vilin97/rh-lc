@@ -44,14 +44,14 @@ theorem twLocChar_mul_unit (q : ℕ) (cq : K) (χ : (𝓞 E ⧸ P.asIdeal)ˣ →
   have hU : IsUnit (redP P (a / (q : E) ^ LocE.vP P q a)) := by
     by_contra hn
     unfold LocE.unitV at h2
-    rw [dif_neg hn] at h2
+    rw [dite_eq_right hn] at h2
     exact h2 rfl
   have hU' : IsUnit (redP P (a * u / (q : E) ^ LocE.vP P q a)) := by
     have e : a * u / (q : E) ^ LocE.vP P q a = a / (q : E) ^ LocE.vP P q a * u := by ring
     rw [e, isUnit_reduction_mul_iff₂ hu0 hu hu']
     exact hU
   unfold LocE.unitV
-  rw [dif_pos hU']
+  rw [dite_eq_left hU']
   exact Units.ne_zero _
 
 theorem firstUnfolding_const_mul {n' c' n c : ℕ} (psi : E → K) (vals : Finset E) (wt C : K) (Φ : Loc.SF E K (n' + c') (n + c))

@@ -145,7 +145,7 @@ def matB (R : RedB I m) (x : I.Gf) : Matrix (Fin m) (Fin m) (ZMod R.p) :=
   if hx : x ∈ I.Kset then Classical.choose (redMatB_exists I R.w R.hp R.hcard R.hb hx) else 0
 
 theorem matB_spec (R : RedB I m) {x : I.Gf} (hx : x ∈ I.Kset) : RedMatB I R.w R.p R.b x (matB R x) := by
-  unfold matB; rw [dif_pos hx]; exact Classical.choose_spec (redMatB_exists I R.w R.hp R.hcard R.hb hx)
+  unfold matB; rw [dite_eq_left hx]; exact Classical.choose_spec (redMatB_exists I R.w R.hp R.hcard R.hb hx)
 
 theorem matB_eq (R : RedB I m) {x : I.Gf} (hx : x ∈ I.Kset) {M : Matrix (Fin m) (Fin m) (ZMod R.p)}
     (h : RedMatB I R.w R.p R.b x M) : matB R x = M :=

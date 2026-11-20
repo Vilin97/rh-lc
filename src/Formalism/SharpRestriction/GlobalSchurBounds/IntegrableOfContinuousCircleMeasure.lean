@@ -146,7 +146,7 @@ theorem b_dimV_eq {n : ℕ} (lam : Fin n → ℤ) : dimV lam = Formalism.Hermiti
 
 theorem b_spread_eq {n : ℕ} (lt : DomWeight (n + 1)) : lt.spread = Formalism.HermitianLattices.TraceIntegrality.Wnum lt.w := by
   unfold Formalism.BasicNotions.DomWeight.spread Formalism.HermitianLattices.TraceIntegrality.Wnum
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   have e0 : (⟨0, Nat.succ_pos n⟩ : Fin (n + 1)) = 0 := Fin.ext (by simp)
   have e1 : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp)
   rw [e0, e1]
@@ -235,8 +235,8 @@ theorem b_lam_eq (D : D7) (u : D.what₂.Word) (j : ℕ) (hj : j ≤ D.R.m) (τ 
   rw [(D.fm u).lam_eq j hj τ i]
   unfold lamLiftN lamCol wJ
   by_cases h : i.1 < D.R.k
-  · rw [dif_pos h, if_pos h, dif_pos h]
-  · rw [dif_neg h, if_neg h, dif_pos (D.R.blk_lt hj i h)]
+  · rw [dite_eq_left h, if_pos h, dite_eq_left h]
+  · rw [dite_eq_right h, if_neg h, dite_eq_left (D.R.blk_lt hj i h)]
 
 theorem b_mem_tops (D : D7) (τ : D.what₂.Tau) : τ ∈ tops D ↔ IsTop D τ := by
   classical
@@ -278,7 +278,7 @@ theorem b_wJ_le {D : D7} {u : D.what₂.Word} {T g1 g2 : ℕ} {Cn x b L b' Sc et
 theorem b_spread_pos {N : ℕ} (hN : 0 < N) (lt : DomWeight N) : (1 : ℝ) ≤ (lt.spread : ℝ) := by
   have hs : (1 : ℤ) ≤ lt.spread := by
     unfold Formalism.BasicNotions.DomWeight.spread
-    rw [dif_pos hN]
+    rw [dite_eq_left hN]
     have h0 := lt.2 (show (⟨0, hN⟩ : Fin N) ≤ ⟨N - 1, by omega⟩ from Fin.mk_le_mk.2 (Nat.zero_le _))
     omega
   exact_mod_cast hs
@@ -323,7 +323,7 @@ theorem b_log_spread {D : D7} {u : D.what₂.Word} {T g1 g2 : ℕ} {Cn x b L b' 
       nlinarith
   have hsp : (((D.fm u).lam D.R.m τ).spread : ℝ) ≤ (Cn + 4) * (x * b * D.host.v) := by
     unfold DomWeight.spread
-    rw [dif_pos hNp]
+    rw [dite_eq_left hNp]
     push_cast
     rw [e0, e1]
     have hxb : 2 * b ≤ x * b := by nlinarith
@@ -1386,7 +1386,7 @@ theorem numbers_of_nums {D : D7} {T g1 g2 : ℕ} {Cn x b L b' Sc eta : ℝ} (K :
 theorem lamCol_stepB (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) (i : ℕ) (h : i + 1 < D.R.k) :
     lamCol D u τ (i + 1) < lamCol D u τ i + 1 := by
   unfold lamCol
-  rw [dif_pos h, dif_pos (show i < D.R.k by omega)]
+  rw [dite_eq_left h, dite_eq_left (show i < D.R.k by omega)]
   simp only [hcToWeightQ, rhoVec]
   have h1 := (D.hcW u τ).u_gt_v ⟨i, by omega⟩
   have h2 := (D.hcW u τ).v_gt_u ⟨i, by omega⟩
@@ -2182,7 +2182,7 @@ theorem nuLift_le {D : D7} {u : D.what₂.Word} {Cn x b L b' Sc eta : ℝ}
         have h4 : ((-wJ D u τ (((a : ℕ) - D.R.k) / (D.R.t + 1)) : ℚ) : ℝ) ≤ (lamCol D u τ (D.R.k - 1) : ℝ) := by
           exact_mod_cast h3
         exact le_trans h4 (hcol _ (by omega))
-      · have : wJ D u τ (((a : ℕ) - D.R.k) / (D.R.t + 1)) = 0 := by unfold wJ; rw [dif_neg hj]
+      · have : wJ D u τ (((a : ℕ) - D.R.k) / (D.R.t + 1)) = 0 := by unfold wJ; rw [dite_eq_right hj]
         rw [this]; simp; positivity
   unfold nuLift
   push_cast

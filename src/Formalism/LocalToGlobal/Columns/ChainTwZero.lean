@@ -119,11 +119,11 @@ theorem twZrExt_stab (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (S
     by_cases hl : l.1 < n
     · have := (hgv.1 fun i => by
         have h1 := h (Fin.castAdd c i)
-        rw [twZrExt_apply, twZrMap_coord, dif_pos (by simp)] at h1
+        rw [twZrExt_apply, twZrMap_coord, dite_eq_left (by simp)] at h1
         exact h1) ⟨l.1, hl⟩
       exact this
     · have h1 := h l
-      rwa [twZrExt_apply, twZrMap_coord, dif_neg hl] at h1
+      rwa [twZrExt_apply, twZrMap_coord, dite_eq_right hl] at h1
   · intro h l
     rw [twZrExt_apply, twZrMap_coord]
     split_ifs with hl
@@ -195,7 +195,7 @@ theorem twZr_chr (hc : cst.Ok) (P : rowSG Pr sel mu) (hP : P.1 ∉ Pr.vGs) (r : 
   rw [Matrix.det_isEmpty]
   unfold LocE.unitV
   have hu : IsUnit (redP P.1 (1 : X.E)) := by rw [redP_one]; exact isUnit_one
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have : hu.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, redP_one]; rfl)
   rw [this, map_one, Units.val_one, inv_one]
 

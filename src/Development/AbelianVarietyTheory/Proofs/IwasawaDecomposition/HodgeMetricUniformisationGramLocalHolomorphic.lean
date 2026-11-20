@@ -56,7 +56,7 @@ theorem lieGram_unif_local : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     exact hKu τ.1
   · filter_upwards [hsev, hKev, hex] with w ⟨hs, hflat⟩ hKw ⟨g0, hg0⟩
     have hexw : ∃ g, FrameAt e f₀ A₀ A (ψ (GlobalTheory.UnifDens.flatL h w)) g := ⟨g0, hg0⟩
-    rw [lieGram, dif_pos hexw]
+    rw [lieGram, dite_eq_left hexw]
     show (((hodgeMet T.Z U).gram _ hexw.choose τ.1)ᵀ).submatrix ec ec = _
     rw [hKw hs _ hexw.choose_spec (hodgeMet T.Z U) τ.1]
     have hG := GlobalTheory.HodgeGenUnf.hodgeMet_gram_frame T.Z hσ hU k ⟨s w, hs⟩ τ τ' rfl (Nat.le_add_right Dw.p Dw.q)

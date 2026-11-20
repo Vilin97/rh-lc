@@ -186,9 +186,9 @@ theorem xi_localQ (i : ℕ) (al : L.β i) (be : L.β (i + 1)) (hX : XiLaw Ch sel
         XiAt Ch sel mu cst i w (L.h i al w) (L.h (i + 1) be w) y := by
   unfold locChr
   by_cases hw : w.1 ∈ Pr.vGs
-  · rw [dif_pos hw, dif_pos hw, ← Units.val_inv_eq_inv_val]
+  · rw [dite_eq_left hw, dite_eq_left hw, ← Units.val_inv_eq_inv_val]
     exact hX w hw _ _ κ κ' (hκr hw) (hκr' hw) y
-  · rw [dif_neg hw, dif_neg hw, ← Units.val_inv_eq_inv_val]
+  · rw [dite_eq_right hw, dite_eq_right hw, ← Units.val_inv_eq_inv_val]
     have hk := hκQ hw
     have hk' := hκQ' hw
     subst hk
@@ -215,9 +215,9 @@ theorem psi_localQ (al : L.β m2) (b : L.β (m2 + 1)) (hPsi : PsiLaw Ch sel mu c
         PsiAt Ch sel mu cst m2 w (L.h m2 al w) x₀ y' := by
   unfold locChr
   by_cases hw : w.1 ∈ Pr.vGs
-  · rw [dif_pos hw, dif_pos hw, ← Units.val_inv_eq_inv_val]
+  · rw [dite_eq_left hw, dite_eq_left hw, ← Units.val_inv_eq_inv_val]
     exact hPsi w hw _ _ κ₀ κ (hκr₀ hw) (hκr hw) x₀ y'
-  · rw [dif_neg hw, dif_neg hw, ← Units.val_inv_eq_inv_val]
+  · rw [dite_eq_right hw, dite_eq_right hw, ← Units.val_inv_eq_inv_val]
     have hk := hκQ₀ hw
     have hk' := hκQ hw
     subst hk
@@ -374,7 +374,7 @@ theorem entB_frame (q k₀ c' n' c n : ℕ) (h' : k₀ ≤ n') (h : k₀ ≤ n) 
   unfold LocE.entB
   rw [s1, s1, sub_zero, zpow_zero, mul_one, eN_inB _ _ hlt']
   unfold Loc.atN
-  rw [dif_pos hlt]
+  rw [dite_eq_left hlt]
   rfl
 
 open Classical in
@@ -527,7 +527,7 @@ theorem jq_scal {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : 
         split_ifs <;> omega
       rw [Matrix.of_apply, Matrix.of_apply, et, es, eN_inB _ _ ht]
       unfold Loc.atN
-      rw [dif_pos hs]
+      rw [dite_eq_left hs]
     unfold LocE.lamQB
     rw [hm, unitV_eq, redP_det (Matrix.of fun s t : Fin (n - kj) => g.toLinearMap (Pi.single (fE k₀ c n h (brI hN t)) 1) (fE k₀ c n h (brI hN s)))
       fun s t => glint_int P hgG _ _]
@@ -571,7 +571,7 @@ theorem det_first_parabolic_eq_det_block {n c : ℕ} {r : Sp E (n + c) ≃ₗ[E]
     have e : (Pi.single j 1 : Sp E (n + c)) = Loc.inX E n c (Pi.single ⟨j.1, hj⟩ 1) := single_castAdd_inX ⟨j.1, hj⟩
     rw [hM, e]
     show r (Loc.inX E n c _) i = 0
-    rw [hx, ciInX_apply, dif_neg (by omega)]
+    rw [hx, ciInX_apply, dite_eq_right (by omega)]
   rw [det_LLz _ hL]
   have e1 : (LinearMap.toMatrix' r.toLinearMap).submatrix (Fin.castAdd c) (Fin.castAdd c) = LinearMap.toMatrix' g.toLinearMap := by
     ext i j
@@ -615,20 +615,20 @@ theorem joinCol_move {n' c' n c : ℕ} (hc' : c' = 1) {ri : Sp E (n' + c') ≃�
   have haN : ∀ v : Sp E (n' + 1), atNL E (n' + 1) n' v = v (Fin.last n') := by
     intro v
     unfold atNL
-    rw [dif_pos (Nat.lt_succ_self _)]
+    rw [dite_eq_left (Nat.lt_succ_self _)]
     rfl
   have hdec : v = Loc.inX E n' 1 (LinearMap.funLeft E E (Fin.castAdd 1) v) + (v (Fin.last n')) • Loc.eN E (n' + 1) n' := by
     funext l
     rw [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ciInX_apply]
     unfold Loc.eN
     by_cases hl : l.1 < n'
-    · rw [dif_pos hl, if_neg (by omega), mul_zero, add_zero]
+    · rw [dite_eq_left hl, if_neg (by omega), mul_zero, add_zero]
       rfl
     · have hl2 : l = Fin.last n' := Fin.ext (by
         have := l.2
         show l.1 = n'
         omega)
-      rw [dif_neg hl, if_pos (by rw [hl2]; rfl), mul_one, zero_add, hl2]
+      rw [dite_eq_right hl, if_pos (by rw [hl2]; rfl), mul_one, zero_add, hl2]
   have hπ : ∀ z : Sp E n', LinearMap.funLeft E E (Fin.castAdd 1) (Loc.inX E n' 1 z) = z := fun z => funext fun i => ciInX_castAdd z i
   have hπe : LinearMap.funLeft E E (Fin.castAdd 1) (Loc.eN E (n' + 1) n') = (0 : Sp E n') := by
     funext i
@@ -640,7 +640,7 @@ theorem joinCol_move {n' c' n c : ℕ} (hc' : c' = 1) {ri : Sp E (n' + c') ≃�
     omega
   have ha : ∀ z : Sp E n', (Loc.inX E n' 1 z) (Fin.last n') = 0 := by
     intro z
-    rw [ciInX_apply, dif_neg]
+    rw [ciInX_apply, dite_eq_right]
     show ¬ (n' < n')
     omega
   have hae : (Loc.eN E (n' + 1) n') (Fin.last n') = 1 := by

@@ -49,7 +49,7 @@ theorem kappa_last (Tp : ParamsT D L P) (hK : DV.KapDef D) {j : ℕ} (hj : InR D
     linarith
   rw [DV.aPlusQ_eq, hcast] at e2
   unfold DV.sigPar DV.eQ at e2
-  rw [dif_neg hi1, dif_pos hb, dif_pos ⟨h1, h2⟩, hidx] at e2
+  rw [dite_eq_right hi1, dite_eq_left hb, dite_eq_left ⟨h1, h2⟩, hidx] at e2
   have ht : 5 ≤ D.R.t := by
     have a1 := Tp.split; have a2 := Tp.nP_eq; have a3 := Tp.TO_nW; have a4 := Tp.nW_40
     have : 1 * Tp.nWn ≤ Tp.TO * Tp.nWn := Nat.mul_le_mul_right _ (by have := Tp.TO_40; omega)

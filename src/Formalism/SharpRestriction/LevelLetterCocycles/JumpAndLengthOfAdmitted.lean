@@ -669,7 +669,7 @@ theorem backPl_eq {u v : HeightOneSpectrum (𝓞 D.host.E)} (hu : u ∈ dc.col)
     (huv : IsConjPl D.host u v) : backPl i dc v = u := by
   have hex : ∃ u ∈ dc.col, IsConjPl D.host u v := ⟨u, hu, huv⟩
   unfold backPl
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨_, hc⟩ := hex.choose_spec
   exact conjPl_unique' _ _ _ _ hc huv
 
@@ -712,7 +712,7 @@ theorem sum_lenW_split (hdecl : RowsAreConj i dc) (e' : ℕ)
           2 * D.nd.vdel i + Br.h0W i u ρ π := by
     intro u hu
     unfold Formalism.MainNotions.TruncatedSeriesCountingIdentities.lenW
-    rw [dif_pos hu]
+    rw [dite_eq_left hu]
     unfold Br.lenCol
     first
     | exact lenCol_le e' _ _ _ _ _ (vdel_nonneg i) (hJ u hu)
@@ -723,7 +723,7 @@ theorem sum_lenW_split (hdecl : RowsAreConj i dc) (e' : ℕ)
     intro v hv
     have hnc : v ∉ dc.col := Finset.disjoint_left.mp dc.disj hv
     unfold Formalism.MainNotions.TruncatedSeriesCountingIdentities.lenW
-    rw [dif_neg hnc]
+    rw [dite_eq_right hnc]
     exact le_refl _
   have hnn : ∀ u ∈ dc.col, 0 ≤ rowNum e' c0 u := by
     intro u _

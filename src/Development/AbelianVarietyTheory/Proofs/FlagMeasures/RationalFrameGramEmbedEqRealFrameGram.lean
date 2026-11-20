@@ -50,7 +50,7 @@ theorem GlobalTheory.zhatRat_embed : ∀ (D : D7) (X : HidaSetting D) (Y : Full 
   have hM3' : ∀ y, X.crd (s.lin y) = (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) *ᵥ X.crd y := hM3
   have hL : (s.frame).fl.fvec b = s.lin ((X.Fu u').fvec b) := by
     unfold Formalism.L2.SG.TermOp.GTerm.frame Formalism.L2.SG.TermOp.mapLF
-    rw [dif_pos hiso]
+    rw [dite_eq_left hiso]
     exact mapFlag_fvec _ hiso _ _
   change embS D τ (brS (VS D) (s.frame.fl.fvec b) ((X.Fu u).fvec a)) = _
   rw [hL]

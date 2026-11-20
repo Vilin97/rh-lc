@@ -162,7 +162,7 @@ theorem trace_repOp_mul_eq_zero_of_isIsotypic : ∀ (G : Type) [Group G] [Topolo
   intro G _ _ _ _ _ μ f hf X _ _ _ H _ _ _ δ π hδ hπ hiso _ Q hQ htr hA
   by_cases hex : ∃ T, IsRepOp π μ f T
   swap
-  · have h0 : repOp π μ f = 0 := by rw [repOp, dif_neg hex]
+  · have h0 : repOp π μ f = 0 := by rw [repOp, dite_eq_right hex]
     rw [h0, zero_mul, trace_zero]
   have hR : IsRepOp π μ f (repOp π μ f) := by
     obtain ⟨T, hT⟩ := hex

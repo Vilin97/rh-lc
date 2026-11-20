@@ -18,7 +18,7 @@ section SlopeTestRemainingChoices
 
 theorem kOf_spec (σ : K →+* ℂ) {z : ℂ} (h : ∃ a : K, σ a = z) : σ (kOf σ z) = z := by
   unfold kOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem kOf_of (σ : K →+* ℂ) (a : K) : kOf σ (σ a) = a :=
@@ -79,7 +79,7 @@ theorem solve_spec {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (f : (Fi
     (h : e ∈ LinearMap.range f) : f (solve f e) = e := by
   have h' : ∃ y, f y = e := LinearMap.mem_range.1 h
   unfold solve
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 theorem relMat_spec {E : Type} [AddCommGroup E] [Module ℂ E] {D n : ℕ} (f : (Fin D → ℂ) →ₗ[ℂ] E)
@@ -233,7 +233,7 @@ theorem partPr_eq (q : Bs.Ix) :
       partPr Df t q = LinearMap.toMatrix' ((Df.Qp t q).subtype ∘ₗ Submodule.projectionOnto _ _ hc) := by
   have hc : IsCompl (Df.Qp t q) (⨆ (p' : Bs.Ix) (_ : p' ≠ q), Df.Qp t p') :=
     ⟨hi q, codisjoint_iff.2 (by rw [← iSup_split_single (Df.Qp t) q]; exact ht)⟩
-  exact ⟨hc, by unfold partPr; rw [dif_pos hc]⟩
+  exact ⟨hc, by unfold partPr; rw [dite_eq_left hc]⟩
 
 include hi ht in
 theorem partPr_mem (q : Bs.Ix) (y : Fin (Df.dQ t) → K) : (partPr Df t q).mulVec y ∈ Df.Qp t q := by

@@ -46,9 +46,9 @@ theorem IsProj.repr_app {o : ι → ℕ} {T : ∀ a, E a ⟶ L} {u : ∀ a, E a 
     obtain ⟨⟨a, i⟩, hz⟩ := z
     by_cases hab : a = b
     · subst hab
-      rw [dif_pos rfl, ← (hf' a).basis_apply h, Module.Basis.repr_self]
+      rw [dite_eq_left rfl, ← (hf' a).basis_apply h, Module.Basis.repr_self]
       simp [Finsupp.single_apply]
-    · rw [dif_neg hab]
+    · rw [dite_eq_right hab]
       simp [Finsupp.single_apply, hab]
   exact LinearMap.congr_fun key s
 

@@ -80,10 +80,10 @@ theorem valAt'_conj {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X,
     valAt' (κ ≫ y) U f = starRingEnd ℂ (valAt' y U f) := by
   by_cases h : ⊤ ≤ y ⁻¹ᵁ U
   · have h' := top_le_comp κ y h
-    rw [valAt', dif_pos h', valAt', dif_pos h]
+    rw [valAt', dite_eq_left h', valAt', dite_eq_left h]
     exact eval_spMap _ y U h h' f
   · have h' := mt (top_le_conj_iff y U).1 h
-    rw [valAt', dif_neg h', valAt', dif_neg h, map_zero]
+    rw [valAt', dite_eq_right h', valAt', dite_eq_right h, map_zero]
 
 theorem fderiv_conj_zero {g : ℕ} (F : (Fin g → ℂ) → ℂ) (w : Fin g → ℂ) :
     fderiv ℂ (star ∘ F ∘ star) 0 (star w) = star (fderiv ℂ F 0 w) := by

@@ -201,7 +201,7 @@ theorem atProj (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement)
     have hex : ∃ γ, IsSheet (dualIdeal b) Ψ y
         (segre (ι := dualBlocks T) (dualPlanePt b σ (A σ *ᵥ Fin.cons 1 y))) γ := ⟨_, hsheet σ y⟩
     unfold sheetDensity
-    rw [dif_pos hex, one_mul]
+    rw [dite_eq_left hex, one_mul]
     apply maDensity_congr_of_eventuallyEq
     intro j
     set γ := hex.choose with hγdef
@@ -262,7 +262,7 @@ theorem DualGeomDegCharts.proof (hInt : ChartDensityIntegrable.Statement) : Dual
   refine ⟨A, hA, ?_⟩
   show ptsIntegral (e := D) (dualIdeal b) (fun _ z => Real.log ((dualLine F b hb).h z)) (fun _ => 1) = _
   unfold ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hE
 
 end

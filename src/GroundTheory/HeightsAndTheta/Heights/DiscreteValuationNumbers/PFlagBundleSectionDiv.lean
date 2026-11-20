@@ -45,7 +45,7 @@ theorem eq_of_lt_of_le_of_mem_minimalPrimes {A : Type*} [CommRing A] [IsNoetheri
 theorem divCycle_eq_zero_of_not_mem {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
     {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hx : x ∉ W) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) = 0 := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨h, -⟩
   exact hx (h.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x)))
 
@@ -154,7 +154,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
           obtain ⟨n, hn⟩ := hsat q hq
           exact ⟨_, hsW n, hn⟩)
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hmin, hQ.relevant⟩, hmult]
+      rw [dite_eq_left ⟨hmin, hQ.relevant⟩, hmult]
       rfl
     · by_contra hne
       have hmin : W ∈ (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ⊔ Ideal.span {l}).minimalPrimes := by
@@ -170,7 +170,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
       exact hWQ (eq_of_lt_of_le_of_mem_minimalPrimes hmin hPQ' hQW).symm
   · have h0 : ∀ x, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) x) W : ℤ) = 0 := fun x => by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h, hr⟩
       exact hW ⟨h.1.1, hr, le_sup_left.trans h.1.2⟩
     have hWQ : W ≠ projIdeal F y w φ (truncCoord t i) := by

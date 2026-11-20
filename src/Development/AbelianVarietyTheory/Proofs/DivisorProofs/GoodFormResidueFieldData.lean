@@ -11,7 +11,7 @@ variable {A : Type} [CommRing A]
 
 theorem red_mem {S : Subring A} {ϖ a : A} (h : a ∈ S) :
     red S ϖ a = Ideal.Quotient.mk (piIdeal S ϖ) ⟨a, h⟩ := by
-  unfold red; rw [dif_pos h]
+  unfold red; rw [dite_eq_left h]
 
 theorem red_add' {S : Subring A} {ϖ a b : A} (ha : a ∈ S) (hb : b ∈ S) :
     red S ϖ (a + b) = red S ϖ a + red S ϖ b := by

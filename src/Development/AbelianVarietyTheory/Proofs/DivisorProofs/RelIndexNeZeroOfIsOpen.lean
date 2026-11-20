@@ -128,7 +128,7 @@ theorem trace_id_eq_finrank (W : Type) [AddCommGroup W] [Module ℂ W] :
   · exact LinearMap.trace_id ℂ W
   · rw [Module.finrank_of_not_finite hW]
     unfold LinearMap.trace
-    rw [dif_neg]
+    rw [dite_eq_right]
     · simp
     · rintro ⟨s, ⟨b⟩⟩
       exact hW (Module.Finite.of_basis b)

@@ -35,17 +35,17 @@ theorem sharp_weight_formula : SharpWtIs := by
   push_cast
   rw [h1, h2', hw, h3]
   unfold DV.nuRow DV.srcPar DV.wSz
-  rw [dif_pos (show 1 ≤ j + 1 ∧ j + 1 ≤ D.R.m by omega), he _ _ (by omega)]
+  rw [dite_eq_left (show 1 ≤ j + 1 ∧ j + 1 ≤ D.R.m by omega), he _ _ (by omega)]
   simp only [Ranks.N]
   by_cases hr : r.1 < D.R.k
-  · rw [dif_pos hr, dif_pos hr]
+  · rw [dite_eq_left hr, dite_eq_left hr]
     simp only [hcToWeightQ, rhoVec]
     push_cast
     ring
   · have hb : (r.1 - D.R.k) / (D.R.t + 1) < D.R.m := by
       have := D.R.blk_lt hj.le r hr
       omega
-    rw [dif_neg hr, dif_neg hr, dif_pos hb]
+    rw [dite_eq_right hr, dite_eq_right hr, dite_eq_left hb]
     have hdm := Nat.div_add_mod (r.1 - D.R.k) (D.R.t + 1)
     have hrk : (r.1 : ℝ) = D.R.k + (D.R.t + 1) * (((r.1 - D.R.k) / (D.R.t + 1) : ℕ) : ℝ) + (((r.1 - D.R.k) % (D.R.t + 1) : ℕ) : ℝ) := by
       have : r.1 = D.R.k + (D.R.t + 1) * ((r.1 - D.R.k) / (D.R.t + 1)) + (r.1 - D.R.k) % (D.R.t + 1) := by omega

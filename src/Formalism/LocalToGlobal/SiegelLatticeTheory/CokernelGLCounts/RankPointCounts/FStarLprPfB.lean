@@ -15,7 +15,7 @@ variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V] {H : HermSp M 
 
 theorem dl_full {r : ℕ} (f f' : Fin (r + 1) → V) : H.Dl f f' (r + 1) = (H.Zhat f f').det := by
   unfold HermSp.Dl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   simp [Fin.castLE_rfl]
 
 def Iso' {r : ℕ} (H : HermSp M V) (f' : Fin (r + 1) → V) : Prop :=

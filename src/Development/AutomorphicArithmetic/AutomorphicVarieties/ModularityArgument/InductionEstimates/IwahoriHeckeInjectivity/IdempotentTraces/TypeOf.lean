@@ -219,7 +219,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.typeOf :
     · simp [tens, hc]
     have ht : ∀ x, tens β φ x = kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) *
         φ (CuspidalSpectrum.finPart K n (x : AdelicGLn.AdelicGL K n)) := fun x => by
-      rw [tens, dif_pos hc]
+      rw [tens, dite_eq_left hc]
       rfl
     have c1 : Continuous fun k : G1 K n => ε k * tens β φ (k⁻¹ * g) := hε.mul (hcc.comp (continuous_inv.mul continuous_const))
     have c2 : Continuous fun k : G1 K n => tens β φ (g * k⁻¹) * ε k := (hcc.comp (continuous_const.mul continuous_inv)).mul hε

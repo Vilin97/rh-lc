@@ -274,7 +274,7 @@ theorem frAt_neg (w : Pl D.host.E) {a b : ℕ} (β' : GL (Fin b) (Lev.EAf D)) (�
 theorem colAt_eq (S : GridChoice W U) (t : T) (w : Pl D.host.E) (x : ∀ j : Fin D.R.m, WO (G.V (.top j)) (G.V (.top (j + 1))))
     {j : ℕ} (h : j < D.R.m) : S.colAt t w x j = (frAt w (S.βp (j + 1)) (S.βp j) (x ⟨j, h⟩)).submatrix
       (Fin.cast (topRank_eq G t w h)) (Fin.cast (topRank_eq G t w h.le)) := by
-  rw [GridChoice.colAt, dif_pos h, frAt, Comparison₂.fr, Matrix.map_mul, Matrix.map_mul, ← map_inv]
+  rw [GridChoice.colAt, dite_eq_left h, frAt, Comparison₂.fr, Matrix.map_mul, Matrix.map_mul, ← map_inv]
   rfl
 
 theorem rowAt_eq (S : GridChoice W U) (t : T) (w : Pl D.host.E)
@@ -284,7 +284,7 @@ theorem rowAt_eq (S : GridChoice W U) (t : T) (w : Pl D.host.E)
       (Fin.cast (rank_vertex G t w (X := (i + 1, D.R.m)) ⟨h, le_rfl⟩)) := by
   have e1 : Matrix.map (y ⟨i, h⟩) ((cpt w).comp (toEAf D)) = ((y ⟨i, h⟩).map (toEAf D)).map (cpt (D := D) w) := by
     ext; rfl
-  rw [GridChoice.rowAt, dif_pos h, e1, Comparison₂.coord_map]
+  rw [GridChoice.rowAt, dite_eq_left h, e1, Comparison₂.coord_map]
   rfl
 
 theorem colAt_add (S : GridChoice W U) (t : T) (w : Pl D.host.E) (x a : ∀ j : Fin D.R.m, WO (G.V (.top j)) (G.V (.top (j + 1)))) :

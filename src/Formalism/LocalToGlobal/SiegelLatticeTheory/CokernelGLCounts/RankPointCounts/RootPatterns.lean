@@ -61,7 +61,7 @@ theorem stCoordV_comp :
   simp only [Function.comp_apply]
   rw [hpc, Formalism.L2.SG.RealFrameCoordinates.stCoordV_eq C u' w γ τ y q]
   unfold rootCoords flagMat
-  rw [dif_pos (show ((idxF τ w).symm q).1.1.val < D.R.rS from ha), ← cMr_eq]
+  rw [dite_eq_left (show ((idxF τ w).symm q).1.1.val < D.R.rS from ha), ← cMr_eq]
   rfl
 
 include C in

@@ -27,7 +27,7 @@ theorem gC_teich_sub_eq_one : ∀ (l : ℕ) [Fact l.Prime] (ζ ζ' : Formalism.P
   have hex : ∃ N, IsGauss l ρ N := GlobalTheory.GaussExt.exists_gauss_acris l ρ hρ hρ1
   have hg : IsGauss l ρ (Classical.choose hex) := Classical.choose_spec hex
   have hC : gC l ρ (tc l ζ - tc l ζ') = Classical.choose hex (tc l ζ - tc l ζ') := by
-    unfold gC; rw [dif_pos hex]
+    unfold gC; rw [dite_eq_left hex]
   have hsub : tc l ζ - tc l ζ' =
       algebraMap (Formalism.Per.Ainf l) (Formalism.Per.Acris l) (Formalism.Per.tm ζ - Formalism.Per.tm ζ') := by
     unfold tc; rw [map_sub]

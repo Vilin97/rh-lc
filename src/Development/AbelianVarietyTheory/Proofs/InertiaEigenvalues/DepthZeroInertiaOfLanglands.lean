@@ -25,7 +25,7 @@ theorem redThrough_eq_of_val_sub_lt_one {Ω : Type} [Field Ω] (A : ValuationSub
     have : b = a - (a - b) := by ring
     rw [this]; exact A.sub_mem ha hab'
   unfold redThrough
-  rw [dif_pos ha, dif_pos hb]
+  rw [dite_eq_left ha, dite_eq_left hb]
   congr 1
   rw [← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff]
   show (⟨a, ha⟩ - ⟨b, hb⟩ : A) ∈ IsLocalRing.maximalIdeal A

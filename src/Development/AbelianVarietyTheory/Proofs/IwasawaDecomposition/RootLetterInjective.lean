@@ -166,7 +166,7 @@ theorem lieW_gen : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : Lv
   · have hx : ((rootLetter S (t, i)).1, ((rootLetter S (t, i)).2 : ℕ)) =
         (conjEmb (DV.tauEmb D t), S.Dw.p + S.Dw.q - 1 - (i : ℕ)) := by
       unfold rootLetter
-      rw [dif_neg hi]
+      rw [dite_eq_right hi]
       simp only [Prod.mk.injEq, true_and]
       omega
     rw [if_neg (show ¬ (i : ℕ) < S.Dw.p by omega), if_neg hi, hx, c1_dual_mdl, neg_one_smul, neg_neg]

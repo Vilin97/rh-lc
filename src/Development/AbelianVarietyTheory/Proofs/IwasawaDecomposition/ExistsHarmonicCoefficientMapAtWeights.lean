@@ -25,7 +25,7 @@ lemma floor_toNat_cast {x : ℚ} (z : ℤ) (hz : x = z) (h0 : 0 ≤ x) : ((⌊x�
 lemma lamAt_b {R : Ranks} (h : HCParam R) (n c : ℕ) (hc : c < R.m) (hn : n = R.k - 1 + c) : lamAt h n = -h.b ⟨c, hc⟩ := by
   subst hn
   unfold lamAt
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   congr 3
   omega
 
@@ -108,7 +108,7 @@ lemma lamV_eq : ∃ s : ℤ, ∀ n : Fin (Vc D i).rank, (lamV D i τ).w n =
       unfold IndefiniteWeightData.WeightData.lam
       rw [hWk]
       split_ifs with h2
-      · rw [lamAt, dif_pos (by omega)]
+      · rw [lamAt, dite_eq_left (by omega)]
         exact hWv ⟨n, by omega⟩
       · rw [lamAt_b (D.hc τ) n (n - (D.R.k - 1)) (by omega) (by omega), Int.cast_neg,
           show (n : ℕ) + 1 - (D.R.k - 1) = n - (D.R.k - 1) + 1 by omega]
@@ -154,10 +154,10 @@ theorem exists_io_record : ∀ (D : D7) (Q : Formalism.L2.Pj.Par D), Q.Pins → 
     congr 1
     · congr 1
       refine if_ctx_congr Iff.rfl (fun h => ?_) fun _ => rfl
-      rw [ext0, dif_pos (show (n : ℕ) < (D.R.sigW ((i : ℕ) + 1)).1 from h), h1]
+      rw [ext0, dite_eq_left (show (n : ℕ) < (D.R.sigW ((i : ℕ) + 1)).1 from h), h1]
       rfl
     · refine if_ctx_congr Iff.rfl (fun h => ?_) fun _ => rfl
-      rw [ext0, dif_pos (show (Fin.rev n : ℕ) < (D.R.sigW ((i : ℕ) + 1)).2 from h), h2]
+      rw [ext0, dite_eq_left (show (Fin.rev n : ℕ) < (D.R.sigW ((i : ℕ) + 1)).2 from h), h2]
       rfl
 
 end GlobalTheory.CoefMapRecord

@@ -29,10 +29,10 @@ theorem level_action_congr {L1 L2 : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank}
   unfold actG0
   by_cases h : ∃ κ, IsLevelLift V β L1 g1 κ
   · have h' : ∃ κ, IsLevelLift V β L2 g2 κ := let ⟨κ, hκ⟩ := h; ⟨κ, (hI κ).1 hκ⟩
-    rw [dif_pos h, dif_pos h', choose_congr' h h' (funext fun κ => propext (hI κ))]
+    rw [dite_eq_left h, dite_eq_left h', choose_congr' h h' (funext fun κ => propext (hI κ))]
     simp only [hc]
   · have h' : ¬ ∃ κ, IsLevelLift V β L2 g2 κ := fun ⟨κ, hκ⟩ => h ⟨κ, (hI κ).2 hκ⟩
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 variable {n r : ℕ} {κF : Type} [CommRing κF]
 

@@ -18,7 +18,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem lamAt_of_b {R : Ranks} (hc : HCParam R) (c : ℕ) (h1 : R.k - 1 ≤ c) (h2 : c - (R.k - 1) < R.m) :
     lamAt hc c = -hc.b ⟨c - (R.k - 1), h2⟩ := by
   unfold lamAt
-  rw [dif_neg (by omega), dif_pos h2]
+  rw [dite_eq_right (by omega), dite_eq_left h2]
 
 theorem lamAt_anti {R : Ranks} (hc : HCParam R) {d c : ℕ} (hdc : d ≤ c) (hc' : c < R.r) :
     lamAt hc c ≤ lamAt hc d := by

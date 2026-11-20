@@ -161,7 +161,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 theorem frsF_at {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs) (v : Sp X.E (R.N j)) :
     frsF sel mu p P v ∈ p.deco.1.at P.1 ↔ v ∈ stdAt X.E (R.N j) P.1 := by
   unfold frsF
-  rw [dif_pos hP]
+  rw [dite_eq_left hP]
   exact (Deco.liftFr_spec (p.deco.2.hasLift ⟨P.1, hP⟩)).1 v
 
 open Classical in

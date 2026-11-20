@@ -34,7 +34,7 @@ theorem parameter_record_conditions (D : D7) (hF : OFull D) (hz : OZeta D)
   refine ⟨⟨rfl, rfl, rfl, tauEmb_sqrt D⟩, levelG_M D _, eOf_spec D hF, fun j hj => ?_⟩
   show IsDatW D j (datumAtLift D (unramBridge D.host.E (cmUnram_conj D)) hDat j)
   unfold datumAtLift
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   exact isDatW_datumOf D _ j _ _
 
 theorem parameter_record_pq_pos (D : D7) (hF : OFull D) (hz : OZeta D)

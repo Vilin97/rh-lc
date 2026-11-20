@@ -186,7 +186,7 @@ theorem cb_weights : Formalism.NuclearRankWeightBounds.D.CBWeights := by
       simp only [← Complex.exp_eq_exp_ℂ]
       rfl
     unfold Formalism.NuclearRankWeightBounds.D.lead
-    rw [dif_pos hi, hexp]
+    rw [dite_eq_left hi, hexp]
     change ((U * _ * Uᴴ).submatrix c c).det = _
     rw [hsub, key]
     push_cast

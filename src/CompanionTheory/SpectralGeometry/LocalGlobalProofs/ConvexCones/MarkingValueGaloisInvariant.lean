@@ -64,7 +64,7 @@ theorem markVal_twist : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZe
   by_cases h2 : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, B a b = β a b
   · have h1 : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, B (fun j => σ (a j)) (fun j => σ (b j)) = β a b :=
       ⟨twForm σ n h2.choose, fun a b => h2.choose_spec _ _⟩
-    rw [dif_pos h1, dif_pos h2]
+    rw [dite_eq_left h1, dite_eq_left h2]
     have e : h1.choose = twForm σ n h2.choose := LinearMap.ext₂ fun a b => by
       have := (h1.choose_spec a b).symm.trans (h2.choose_spec _ _)
       exact_mod_cast this
@@ -75,6 +75,6 @@ theorem markVal_twist : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZe
       h2 ⟨twForm σ.symm n β, fun a b => by
         have := hβ (fun j => σ.symm (a j)) (fun j => σ.symm (b j))
         simpa using this⟩
-    rw [dif_neg h1, dif_neg h2]
+    rw [dite_eq_right h1, dite_eq_right h2]
 
 end GlobalTheory.CompanionTheory.Ar.Fan.TwistedForm

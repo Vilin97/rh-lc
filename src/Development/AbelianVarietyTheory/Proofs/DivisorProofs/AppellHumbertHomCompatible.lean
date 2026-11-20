@@ -143,7 +143,7 @@ theorem semichar {M : LB A.left} (hM : M.IsLB) (u : HolUnif A M g) {Hm : Matrix 
   rw [hlm] at law3
   change u.fr i 0 = χ ⟨l, hl⟩ * Complex.exp (↑Real.pi / 2 * hf Hm l l) * u.fr i l at law1
   change u.fr i l = χ ⟨m, hm⟩ * Complex.exp (↑Real.pi * hf Hm l m + ↑Real.pi / 2 * hf Hm m m) * u.fr i (l + m) at law2
-  rw [chi, dif_pos (add_mem hl hm), chi, dif_pos hl, chi, dif_pos hm]
+  rw [chi, dite_eq_left (add_mem hl hm), chi, dite_eq_left hl, chi, dite_eq_left hm]
   set a := hf Hm l l
   set b := hf Hm l m
   set c := hf Hm m l
@@ -188,7 +188,7 @@ theorem sumL_mem {M₀ M : LB A.left} (u₀ : HolUnif A M₀ g) (u : HolUnif A M
 omit [IsCommMonObj A] in
 theorem chi_ne {M : LB A.left} (u : HolUnif A M g) {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ}
     (hF : IsFactorAH u Hm χ) {z : Fin g → ℂ} (hz : z ∈ u.Λ) : chi u χ z ≠ 0 := by
-  rw [chi, dif_pos hz]
+  rw [chi, dite_eq_left hz]
   intro h0
   have := hF.2.1 ⟨z, hz⟩
   rw [h0, norm_zero] at this
@@ -228,7 +228,7 @@ theorem lam_factor {M₀ M : LB A.left} (hM : M.IsLB) (u₀ : HolUnif A M₀ g) 
       Complex.exp (↑Real.pi * hf Hm (sumL g I v) (sumL g I w) +
         ↑Real.pi / 2 * hf Hm (sumL g I w) (sumL g I w)) * u.fr (j I) (sumL g I (v + w)) := by
     intro I
-    rw [chi, dif_pos (sumL_mem u₀ u hex I hw), map_add (f := _)]
+    rw [chi, dite_eq_left (sumL_mem u₀ u hex I hw), map_add (f := _)]
     exact hF.2.2 ⟨_, sumL_mem u₀ u hex I hw⟩ (j I) _ (lam_chart u₀ u hex j v hv I)
   have hne : ∀ I, u.fr (j I) (sumL g I (v + w)) ≠ 0 := by
     intro I

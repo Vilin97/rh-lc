@@ -77,7 +77,7 @@ theorem bop_one {R : RealDat D A Ks} {i : Fin D.R.m} (hTL : TransLaws R i) : Eu.
       ∀ x y, trPair R i 1 x y = ⟪x, B y⟫_ℂ :=
     ⟨1, ContinuousLinearMap.norm_id_le, fun x y => by rw [h6]; rfl⟩
   unfold Eu.Bop
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   apply ContinuousLinearMap.ext
   intro y
   apply ext_inner_left ℂ
@@ -111,7 +111,7 @@ theorem local_coefficient_trivial_level_coset {R : RealDat D A Ks} {i : Fin D.R.
 theorem localCosetFamilyRepresentativeProd_trivial_eq_one (R : RealDat D A Ks) (i : Fin D.R.m) : Eu.famProd R i (Eu.lx0 R i) = 1 := by
   unfold Eu.famProd
   have hf : {w | Eu.lx0 R i w ≠ Eu.lx0 R i w}.Finite := by simp
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   have : hf.toFinset = ∅ := by simp
   rw [this]
   simp

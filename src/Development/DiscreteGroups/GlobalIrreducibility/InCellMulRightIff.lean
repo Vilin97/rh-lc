@@ -42,7 +42,7 @@ theorem cellFun_mul_left (p₀ : parab k (eOne m)) (g : GL (Fin m) k) :
       simp only [Subgroup.coe_mul]; group
     rw [e, cellFun_eq hS4 _ hy, cellFun_eq hS4 _ hy, dl_mul, Units.val_mul]
   · have h' : ¬ InCell S ((p₀ : GL (Fin m) k) * g) := fun h' => h ((inCell_mul_left_iff p₀ g).1 h')
-    rw [cellFun, dif_neg h', cellFun, dif_neg h, mul_zero]
+    rw [cellFun, dite_eq_right h', cellFun, dite_eq_right h, mul_zero]
 
 theorem cellFun_mul_right {s : GL (Fin m) k} (hs : s ∈ S) (g : GL (Fin m) k) :
     cellFun S (g * s) = cellFun S g := by
@@ -50,6 +50,6 @@ theorem cellFun_mul_right {s : GL (Fin m) k} (hs : s ∈ S) (g : GL (Fin m) k) :
   · obtain ⟨p, y, hy, rfl⟩ := h
     have e : (p : GL (Fin m) k) * wRev k m * y * s = p * wRev k m * (y * s) := by group
     rw [e, cellFun_eq hS4 _ (S.mul_mem hy hs), cellFun_eq hS4 _ hy]
-  · rw [cellFun, dif_neg (fun h' => h ((inCell_mul_right_iff hs g).1 h')), cellFun, dif_neg h]
+  · rw [cellFun, dite_eq_right (fun h' => h ((inCell_mul_right_iff hs g).1 h')), cellFun, dite_eq_right h]
 
 end DiscreteGroups.sglob.DzType

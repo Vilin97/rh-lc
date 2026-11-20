@@ -243,7 +243,7 @@ theorem atFrame_mul (a : ℂ) (h : ∀ c, f' c = a * f c) : atFrame f' = a * atF
   exacts [h _, (mul_zero _).symm]
 
 theorem atFrame_eq (c : Frame A B ι e) (h : ∀ c', f c' = f c) : atFrame f = f c := by
-  unfold atFrame; rw [dif_pos ⟨c⟩, h]
+  unfold atFrame; rw [dite_eq_left ⟨c⟩, h]
 
 end
 

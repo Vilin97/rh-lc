@@ -267,7 +267,7 @@ lemma wv_taylor (c : ℝ) {N j : ℕ} (hj : j + 2 ≤ 4 * N) (t h y : ℝ) (hh :
 lemma coe_toC0 {f : ℝ → ℂ} (h1 : Continuous f) (h2 : Tendsto f (cocompact ℝ) (𝓝 0)) :
     ⇑(toC0 f) = f := by
   unfold toC0
-  rw [dif_pos (⟨h1, h2⟩ : Continuous f ∧ Tendsto f (cocompact ℝ) (𝓝 0))]
+  rw [dite_eq_left (⟨h1, h2⟩ : Continuous f ∧ Tendsto f (cocompact ℝ) (𝓝 0))]
   rfl
 
 theorem fcurve : Fcurve := by

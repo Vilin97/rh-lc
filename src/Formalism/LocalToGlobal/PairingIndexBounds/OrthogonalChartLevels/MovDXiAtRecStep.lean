@@ -69,7 +69,7 @@ theorem movD_xiAt0 (j : ℕ) (La : (sysAt Ch std vp unif eO eO_spec dG dG_spec o
       fun x => rdH s rd cls j La La' (homRe hr.1 hr.2 x) := by
   funext x
   unfold movD xiAt0
-  rw [dif_pos hr]
+  rw [dite_eq_left hr]
   congr 2
   apply LinearMap.ext
   intro y

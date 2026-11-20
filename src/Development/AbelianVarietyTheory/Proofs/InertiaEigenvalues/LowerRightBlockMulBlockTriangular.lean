@@ -40,7 +40,7 @@ theorem exists_reps {G X : Type} [Group G] (J J' : Subgroup G) (φ : G → X) (A
 theorem extension_by_one_mul {G H : Type} [Group G] [Monoid H] (K : Subgroup G) (f : K →* H) {a b : G} (ha : a ∈ K) (hb : b ∈ K) :
     ext1 K f (a * b) = ext1 K f a * ext1 K f b := by
   unfold ext1
-  rw [dif_pos ha, dif_pos hb, dif_pos (mul_mem ha hb), ← map_mul]
+  rw [dite_eq_left ha, dite_eq_left hb, dite_eq_left (mul_mem ha hb), ← map_mul]
   rfl
 
 theorem lowerRightBlock_mul_blockTriangular {κ : Type} [CommRing κ] {n r : ℕ} (hr : r ≤ n) {a b : GL (Fin n) κ} (ha : a ∈ blockTri (blk2 r))

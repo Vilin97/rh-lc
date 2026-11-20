@@ -188,14 +188,14 @@ theorem qT_eq (d : LocData E n) {a : ℕ} (w : Pl E) (s : Finset (Fin (n / 2))) 
   unfold LocData.qT MT.entT
   by_cases h : LocData.admitted n a s
   · have h' : MT.admitted n a s := ⟨h.1.1, h.1.2.1, h.1.2.2, h.2.1, h.2.2⟩
-    rw [dif_pos h, dif_pos h', Finset.mul_sum]
+    rw [dite_eq_left h, dite_eq_left h', Finset.mul_sum]
     unfold Finsupp.sum
     rw [← Finset.sum_coe_sort]
     refine Finset.sum_congr rfl fun j _ => ?_
     unfold dc2
     ring
   · have h' : ¬ MT.admitted n a s := fun g => h ⟨⟨g.1, g.2.1, g.2.2.1⟩, g.2.2.2.1, g.2.2.2.2⟩
-    rw [dif_neg h, dif_neg h', mul_zero]
+    rw [dite_eq_right h, dite_eq_right h', mul_zero]
 
 theorem g₀_eq (d : LocData E n) {w : Pl E} (hT : w ∈ d.T) (y : UL n w) :
     d.g₀ w y = (((iwU n w (d.b w)).relIndex (KL n w) : ℕ) : ℂ) *

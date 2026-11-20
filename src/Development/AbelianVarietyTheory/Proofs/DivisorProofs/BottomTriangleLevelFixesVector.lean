@@ -91,9 +91,9 @@ theorem unitChar_mul (ν : (Formalism.L2.Theta.AE D)ˣ →* Circle) {e : Formali
   unfold unitChar
   by_cases h : ∃ y, IsUnitDet e N y
   · have h' : ∃ y, IsUnitDet e (K * N) y := ⟨_, isUnitDet_mul he hx h.choose_spec⟩
-    rw [dif_pos h, dif_pos h', isUnitDet_unique h'.choose_spec (isUnitDet_mul he hx h.choose_spec), map_mul, mul_inv,
+    rw [dite_eq_left h, dite_eq_left h', isUnitDet_unique h'.choose_spec (isUnitDet_mul he hx h.choose_spec), map_mul, mul_inv,
       Circle.coe_mul]
-  · rw [dif_neg h, dif_neg, mul_zero]
+  · rw [dite_eq_right h, dite_eq_right, mul_zero]
     rintro ⟨y, hy⟩
     have := isUnitDet_mul he hx' hy
     rw [← Matrix.mul_assoc, hK, Matrix.one_mul] at this
@@ -220,7 +220,7 @@ theorem detIdl_one (e : Formalism.L2.Theta.AE D) (S : HSp D) : detIdl e S 1 = 1 
   · refine Units.ext ?_
     rw [detIdl_val hee, Formalism.IndefR.Fin.LevelGroupLemmas.Lat.mt_one, Matrix.det_one, Units.val_one]
     ring
-  · rw [detIdl, dif_neg hee]
+  · rw [detIdl, dite_eq_right hee]
 
 theorem fix_of_unram {T : Type} {A A' WW : HSp D} {X : Tri T A A' WW} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
     {α β : T → ((Formalism.L2.Theta.AE D)ˣ →* Circle)} {νH : T → Formalism.L2.Host.HChar D.host.E} {S : T → Finset (Pl D.host.E)}

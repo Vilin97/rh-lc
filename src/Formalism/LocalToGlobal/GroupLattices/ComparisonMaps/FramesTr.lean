@@ -62,7 +62,7 @@ theorem cmpC_inj (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x)) (he
     have h' : ∃ Q, IsVal S emb embLL G A pos embV yc x i
         (fun v => colSpan (G.P.W v) (g v : Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v))) Q := ⟨Q, hQ⟩
     unfold valC
-    rw [dif_pos h']
+    rw [dite_eq_left h']
     exact Classical.choose_spec h'
   have h0 : valC S emb embLL G A pos embV yc x i
       (fun v => colSpan (G.P.W v) (g v : Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v))) = 0 := by
@@ -101,7 +101,7 @@ private theorem isVal_valC_of_isLatTup (hex : ValEx S emb embLL G A pos embV yc)
     (hL : G.P.IsLatTup L) : IsVal S emb embLL G A pos embV yc x i L (valC S emb embLL G A pos embV yc x i L) := by
   have h' := hex x i L hL
   unfold valC
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact Classical.choose_spec h'
 
 theorem cmpC_li (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x)) (hex : ValEx S emb embLL G A pos embV yc)

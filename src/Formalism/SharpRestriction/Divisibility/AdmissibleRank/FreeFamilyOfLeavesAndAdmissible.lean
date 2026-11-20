@@ -452,13 +452,13 @@ theorem hkSigPar_lt (D : D7) (τ : D.what₂.Tau) (i : ℕ) (hi : i + 1 < D.R.k 
   unfold DV.sigPar
   by_cases h1 : i + 1 < D.R.k - 1
   · have h0 : i < D.R.k - 1 := by omega
-    rw [dif_pos h1, dif_pos h0]
+    rw [dite_eq_left h1, dite_eq_left h0]
     have a := (D.hc τ).u_gt_v ⟨i + 1, h1⟩
     have b := (D.hc τ).v_gt_u ⟨i, h0⟩
     exact a.trans b
   · by_cases h0 : i < D.R.k - 1
     · have hb : i + 1 - (D.R.k - 1) < D.R.m := by omega
-      rw [dif_neg h1, dif_pos hb, dif_pos h0]
+      rw [dite_eq_right h1, dite_eq_left hb, dite_eq_left h0]
       have a := (D.hc τ).u_last_gt (by omega) (by omega)
       have b := (D.hc τ).v_gt_u ⟨i, h0⟩
       have e1 : (⟨i + 1 - (D.R.k - 1), hb⟩ : Fin D.R.m) = ⟨0, by omega⟩ := by
@@ -475,7 +475,7 @@ theorem hkSigPar_lt (D : D7) (τ : D.what₂.Tau) (i : ℕ) (hi : i + 1 < D.R.k 
     · have hb0 : i - (D.R.k - 1) < D.R.m := by omega
       have hb1 : i + 1 - (D.R.k - 1) < D.R.m := by omega
       have hb2 : i - (D.R.k - 1) + 1 < D.R.m := by omega
-      rw [dif_neg h1, dif_pos hb1, dif_neg h0, dif_pos hb0]
+      rw [dite_eq_right h1, dite_eq_left hb1, dite_eq_right h0, dite_eq_left hb0]
       have a := (D.hc τ).gap_be ⟨i - (D.R.k - 1), hb0⟩
       have b := (D.hc τ).gap_eb ⟨i - (D.R.k - 1), hb0⟩ hb2
       have e1 : (⟨i + 1 - (D.R.k - 1), hb1⟩ : Fin D.R.m) = ⟨i - (D.R.k - 1) + 1, hb2⟩ := by
@@ -523,7 +523,7 @@ theorem aMinusQ_step (D : D7) (j : ℕ) (τ : D.what₂.Tau) (c : ℕ) (hc : j +
   have h0 : j + c < D.R.m := by omega
   have h1 : j + (c + 1) < D.R.m := by omega
   unfold DV.aMinusQ
-  rw [dif_pos h0, dif_pos h1]
+  rw [dite_eq_left h0, dite_eq_left h1]
   have a := (D.hc τ).gap_be ⟨j + c, h0⟩
   have b := (D.hc τ).gap_eb ⟨j + c, h0⟩ hc
   have e1 : (⟨j + (c + 1), h1⟩ : Fin D.R.m) = ⟨j + c + 1, hc⟩ := by
@@ -545,7 +545,7 @@ theorem aMinusQ_first (D : D7) (j : ℕ) (h1 : 1 ≤ j) (hj : j < D.R.m) (τ : D
   have h0 : j + 0 < D.R.m := by omega
   have h2 : j - 1 + 1 < D.R.m := by omega
   unfold DV.aMinusQ DV.eQ
-  rw [dif_pos h0, dif_pos ⟨h1, hj.le⟩]
+  rw [dite_eq_left h0, dite_eq_left ⟨h1, hj.le⟩]
   have b := (D.hc τ).gap_eb ⟨j - 1, by omega⟩ h2
   have e1 : (⟨j + 0, h0⟩ : Fin D.R.m) = ⟨j - 1 + 1, h2⟩ := by
     rw [Fin.mk.injEq]

@@ -152,7 +152,7 @@ theorem resInt_eq {t : v.adicCompletion L} {a : 𝓞 L} (ha : Valued.v (t - alge
     rw [← sub_add_cancel t (algebraMap (𝓞 L) (v.adicCompletion L) a)]
     exact Valuation.map_add_le _ ha.le (val_int_le v a)
   unfold resInt
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
   exact tame_mk_eq v (ReciprocityTheory.Aut.adic_exists_approx v t ht).choose_spec ha
 
 def oneUnits : Subgroup (v.adicCompletion L)ˣ where

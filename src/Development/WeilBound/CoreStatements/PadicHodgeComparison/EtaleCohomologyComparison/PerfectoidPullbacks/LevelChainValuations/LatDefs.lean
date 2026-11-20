@@ -17,11 +17,11 @@ def dpowC (h : DPClosed ι δ) (n : ℕ) (x : A) : A := by
   classical exact if hx : ι x ∈ J then Classical.choose (h x hx n) else 0
 
 theorem dpowC_spec (h : DPClosed ι δ) {n : ℕ} {x : A} (hx : ι x ∈ J) : ι (dpowC h n x) = δ.dpow n (ι x) := by
-  rw [dpowC, dif_pos hx]; exact Classical.choose_spec (h x hx n)
+  rw [dpowC, dite_eq_left hx]; exact Classical.choose_spec (h x hx n)
 
 def dpComap (hι : Function.Injective ι) (h : DPClosed ι δ) : DividedPowers (J.comap ι) where
   dpow := dpowC h
-  dpow_null {n x} hx := by rw [dpowC, dif_neg (show ¬ ι x ∈ J from hx)]
+  dpow_null {n x} hx := by rw [dpowC, dite_eq_right (show ¬ ι x ∈ J from hx)]
   dpow_zero {x} hx := hι (by rw [dpowC_spec h hx, δ.dpow_zero hx, map_one])
   dpow_one {x} hx := hι (by rw [dpowC_spec h hx, δ.dpow_one hx])
   dpow_mem {n x} hn hx := by

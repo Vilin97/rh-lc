@@ -194,7 +194,7 @@ theorem HermDatum.isPsh_two_mul_sub_log_nz (A : HermDatum Em Ψ N j) (hj : j ≤
       A.nz hj P I = (∏ τ, (A.gramLie hj (P τ) τ v).det.re) /
         ((Submodule.span (𝓞 Em) (Set.range v)).toAddSubgroup.relIndex I.toAddSubgroup : ℝ) :=
     ⟨hI.choose, hI.choose_spec.choose, hI.choose_spec.choose_spec, fun P => by
-      rw [HermDatum.nz, dif_pos hI]⟩
+      rw [HermDatum.nz, dite_eq_left hI]⟩
   obtain ⟨ρ, v, hv, hnz⟩ := key
   obtain ⟨m, u, G, hG, hfr, htie, hB⟩ := hH ρ v hv
   have hidx : (0 : ℝ) < ((Submodule.span (𝓞 Em) (Set.range v)).toAddSubgroup.relIndex I.toAddSubgroup : ℝ) :=

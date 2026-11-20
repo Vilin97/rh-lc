@@ -25,7 +25,7 @@ theorem heckeD_eq_sum_of {v : HeightOneSpectrum (𝓞 L⁺)} {J : Subgroup (GAf 
     Finset.sum_image]
   · refine Finset.sum_congr rfl fun γ hγ => ?_
     have hc : ∃ x ∈ D, (x : GAf L n ⧸ J) = γ := ⟨γ, h1 γ hγ, rfl⟩
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     have ht := tr γ (h1 γ hγ) _ hc.choose_spec.1
     have hu : γ⁻¹ * hc.choose ∈ Umax L n := (hJ _ ht).1 (QuotientGroup.eq.1 hc.choose_spec.2.symm)
     have := congrFun (hf _ hu ht) (g * γ)

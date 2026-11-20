@@ -31,7 +31,7 @@ theorem BlockResolutionMixedBridge.proof : BlockResolutionMixedBridge.Statement 
       fun x => logNorm B.inv 1 (d.R.lift x x) :=
     funext fun x => congrFun hgl (d.R.lift x x)
   unfold ptsIntegral
-  rw [dif_pos hex, hgl, hgr]
+  rw [dite_eq_left hex, hgl, hgr]
   exact key
 
 end

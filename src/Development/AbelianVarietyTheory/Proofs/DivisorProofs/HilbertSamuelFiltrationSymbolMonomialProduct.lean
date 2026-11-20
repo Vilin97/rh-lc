@@ -33,7 +33,7 @@ theorem exists_filV_mulPow {K : Type} [Field K] [NumberField K] (X : Data K) {s 
       (fun _ hx => hx) ⟨f, hfF⟩) = Pi.single α (hs.res (X.T - a) m) :=
     Vanishing.sym_mulMono _ _ _ _ _ _ _ _ _ _ α (m : X.Sec (X.T - a)) _ hfeq
   unfold symV
-  rw [dif_pos haT]
+  rw [dite_eq_left haT]
   simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.pi_apply, LinearEquiv.coe_coe, LinearMap.coe_proj,
     Function.eval]
   rw [key]

@@ -148,7 +148,7 @@ private theorem rows_eq {R : Type} [CommRing R] (X : UPos (2 + 2) 2 → R) (a b 
     have : (blockEntry X * M) (Fin.natAdd 2 i) j = 0 := by
       rw [Matrix.mul_apply]
       refine Finset.sum_eq_zero fun l _ => ?_
-      rw [blockEntry_apply, dif_neg (by simp), zero_mul]
+      rw [blockEntry_apply, dite_eq_right (by simp), zero_mul]
     rw [unipMatrix, add_mul, one_mul, Matrix.add_apply, this, add_zero]
   ext i j
   rw [Matrix.submatrix_apply, Units.val_mul, coe_unipGL, mul_assoc, h1, Matrix.mul_apply, Matrix.mul_apply, Fin.sum_univ_add]

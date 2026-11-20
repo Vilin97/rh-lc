@@ -75,7 +75,7 @@ theorem fixK_of_fixesK (D : D7) (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[�
     Formalism.MainNotions.StandardLatticesGL3.FixK D M ρ := fun a => by
   refine ⟨hm a, ?_⟩
   unfold Formalism.MainNotions.StandardLatticesGL3.cj Formalism.MainNotions.TaylorLogMetric.liftM
-  rw [dif_pos (hm a)]
+  rw [dite_eq_left (hm a)]
   exact h a _ rfl
 
 open GlobalTheory.IndefiniteRowSideFullHecke.EquidistributedConjugates

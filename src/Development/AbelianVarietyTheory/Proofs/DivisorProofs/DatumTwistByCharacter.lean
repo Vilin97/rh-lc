@@ -37,7 +37,7 @@ theorem isDatum_twistFactor : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace
     exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').1 this
   have hval : ∀ l (hl : l ∈ M') (P : Pt E g),
       twistFactor M M' χ j l P = χ (Submodule.Quotient.mk ⟨l, hl⟩) * j l P := by
-    intro l hl P; unfold twistFactor; rw [dif_pos hl]
+    intro l hl P; unfold twistFactor; rw [dite_eq_left hl]
   refine ⟨hP, hM', ⟨fun l hl => ⟨?_, ?_⟩, ?_⟩, hs, hpos, ?_⟩
   · have : twistFactor M M' χ j l = fun P => χ (Submodule.Quotient.mk ⟨l, hl⟩) * j l P :=
       funext (hval l hl)

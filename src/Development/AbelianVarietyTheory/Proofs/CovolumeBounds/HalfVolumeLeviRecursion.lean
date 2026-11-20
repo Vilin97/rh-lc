@@ -69,7 +69,7 @@ theorem gram_K (k r : ℕ) (κ g : Mat k r) (hκ : κᴴ * κ = 1) (j : Fin (r +
 theorem fvec_zero (k r' : ℕ) (j : Fin (1 + r' + 1)) (hj : j.val = 0) :
     fvec k (1 + r') (isoVec k (1 + r')) j = e0 k r' := by
   unfold fvec e0
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   congr 1
   ext; simp [eI, a0, hj]
 
@@ -85,9 +85,9 @@ theorem fvec_succ (k r' : ℕ) (j : Fin (1 + r' + 1)) (b : Fin (r' + 1)) (hj : j
     fvec k (1 + r') (isoVec k (1 + r')) j = liftVec k 1 r' (fvec k r' (isoVec k r') b) := by
   unfold fvec
   by_cases hb : b.val < r'
-  · rw [dif_pos (by omega), dif_pos hb]
+  · rw [dite_eq_left (by omega), dite_eq_left hb]
     exact (PI.QnLevBasicsW.bvec_lift _ _ (by simp only [eI]; omega)).symm
-  · rw [dif_neg (by omega), dif_neg hb]
+  · rw [dite_eq_right (by omega), dite_eq_right hb]
     unfold isoVec
     rw [liftVec_smul', liftVec_add', PI.QnLevBasicsW.bvec_lift _ (wI k (1 + r') 0) (by simp only [wI]; omega),
       PI.QnLevBasicsW.bvec_lift _ (wI k (1 + r') (Fin.last k)) (by simp only [wI]; omega)]

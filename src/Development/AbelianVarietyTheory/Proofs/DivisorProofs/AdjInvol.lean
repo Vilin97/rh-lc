@@ -44,7 +44,7 @@ def sec (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : ∀
 variable {σ} (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : ∀ a, σ (σ a) = a)
 
 theorem sec_val {a : 𝔸} (h : σ a * a = 1) : ((sec σ anti one invol a : 𝔸ˣ) : 𝔸) = a := by
-  rw [sec, dif_pos h]
+  rw [sec, dite_eq_left h]
 
 theorem lieData : IsLieData σ (skew σ).subtype (sec σ anti one invol) where
   anti := anti

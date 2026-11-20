@@ -98,6 +98,6 @@ theorem GlobalTheory.Mem.Col2.TC.spaces_in_coordinates : ∀ {B : Base} {X : Pre
     ⟨(oX i).gram (rankN (I.rec7 l Z) i hi), fun x => (oX i).mem_standardLattice_iff_integral_coords (rankN (I.rec7 l Z) i hi) x, fun u a => ⟨fun c => ?_, ?_⟩⟩⟩
   · exact Crd.incl_co (S := B.sp.X B.R.m) (S' := B.sp.X') (rankN (I.rec7 l Z) _ le_rfl) (rankP (I.rec7 l Z)) B.sp.iX' hP.iX x j
   · unfold TC.latAt
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     exact Crd.map_symm_map (S := B.sp.X i) (TC.crd B i hi) _
   · exact ⟨Equiv.refl _, fun _ => rfl, fun _ _ => rfl⟩

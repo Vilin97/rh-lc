@@ -58,7 +58,7 @@ private theorem slope_map_eq_of_norm_eq {G E F : Type} [AddCommGroup G]
     rw [hc, hr]
   · have hβ : ¬ DiscreteTopology (H.map β).toIntSubmodule := fun h => hα (hd.1 h)
     unfold Formalism.F.slope Formalism.F.deg Formalism.F.covol
-    rw [dif_neg hα, dif_neg hβ]
+    rw [dite_eq_right hα, dite_eq_right hβ]
     simp
 
 theorem muMax_tie (A : Formalism.BasicNotions.HLat K) {n : ℕ} (L : Submodule (𝓞 K) (Fin n → K))

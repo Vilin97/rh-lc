@@ -43,7 +43,7 @@ theorem multAt_toNat_of_isRadical {K : Type*} {ι : K → Type*} {J W : Ideal (M
     [W.IsPrime] (hJ : J.IsRadical) (hW : W ∈ J.minimalPrimes) : (NumbersDVR.multAt J W).toNat = 1 := by
   have h1 := localMult_eq_one_of_isRadical hJ hW
   unfold localMult at h1
-  rw [dif_pos ‹W.IsPrime›] at h1
+  rw [dite_eq_left ‹W.IsPrime›] at h1
   unfold NumbersDVR.multAt
   rw [ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient]
   exact h1
@@ -80,11 +80,11 @@ theorem IntNumComponents.proof : IntNumComponents.Statement := by
   · rw [Set.indicator_of_mem (Finset.mem_coe.mpr hW)]
     have : W.IsPrime := (hS W hW).1.1
     by_cases hrel : NumbersDVR.IsRelevant W
-    · rw [dif_pos ⟨(hmin W).mpr hW, hrel⟩, multAt_toNat_of_isRadical hrad ((hmin W).mpr hW)]
+    · rw [dite_eq_left ⟨(hmin W).mpr hW, hrel⟩, multAt_toNat_of_isRadical hrad ((hmin W).mpr hW)]
       simp
-    · rw [dif_neg (fun h => hrel h.2), zero_mul,
+    · rw [dite_eq_right (fun h => hrel h.2), zero_mul,
         NumbersDVR.IntNumVanish.full ℂ K ι e W this (hWh W hW) (Or.inl hrel) a]
-  · rw [Set.indicator_of_notMem (by simpa using hW), dif_neg (fun h => hW ((hmin W).mp h.1)), zero_mul]
+  · rw [Set.indicator_of_notMem (by simpa using hW), dite_eq_right (fun h => hW ((hmin W).mp h.1)), zero_mul]
 
 end
 

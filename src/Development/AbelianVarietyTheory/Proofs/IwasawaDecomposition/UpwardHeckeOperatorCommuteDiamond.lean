@@ -82,7 +82,7 @@ theorem upAd_dia : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
         rw [e, hp, hc.2] at this
         rw [this]
         unfold valAt
-        rw [dif_pos h]
+        rw [dite_eq_left h]
       · have h' : ¬ ∃ η, AtV v η ∧ p (x * δ * η) = q := by
           rintro ⟨η, hη, hq⟩
           refine h ⟨δ⁻¹⁻¹ * η * δ⁻¹, atV_conj hη _, ?_⟩
@@ -90,7 +90,7 @@ theorem upAd_dia : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
           congr 1
           group
         unfold valAt
-        rw [dif_neg h, dif_neg h']
+        rw [dite_eq_right h, dite_eq_right h']
     unfold upAd
     rw [hp, key]
 

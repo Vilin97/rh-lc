@@ -365,7 +365,7 @@ variable {D : D7} {N N' r : ℕ} {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_
 theorem lamC_embT' (τ : D.what₂.Tau) (x : D.host.E) :
     lamC lam (embT D τ x) = lam (RestC.embQ (D := D) τ x) := by
   unfold lamC
-  rw [dif_pos (RestC.emb_mem (D := D) τ x)]
+  rw [dite_eq_left (RestC.emb_mem (D := D) τ x)]
   rfl
 
 theorem test_vector_mem_schwartz_bruhat (x : D.host.E) : D.host.φ₀ x ∈ Qbar := by
@@ -376,7 +376,7 @@ theorem isPadicIntegral_lamC_K (c : 𝓞 D.host.K) : IsIntP (lamC lam (D.host.φ
   have hI : IsIntegral ℤ ((c : D.host.K) : D.host.E) :=
     map_isIntegral_int (algebraMap D.host.K D.host.E) (NumberField.RingOfIntegers.isIntegral_coe c)
   unfold lamC
-  rw [dif_pos (test_vector_mem_schwartz_bruhat _)]
+  rw [dite_eq_left (test_vector_mem_schwartz_bruhat _)]
   exact RestC.norm_le_one_of_int (map_isIntegral_int (lam.comp (D.host.φ₀.codRestrict Qbar test_vector_mem_schwartz_bruhat)) hI)
 
 theorem coef_comb {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.host.E)}

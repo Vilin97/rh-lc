@@ -179,7 +179,7 @@ theorem psi_primary : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGro
           psi s W.1 (g.restrict W.2.2) =
           ∑ W ∈ Finset.univ.filter (fun W => W ≤ (A.restrictScalars F).comap π), P W := by
         have : ∀ W : {W : Submodule F V // W ≤ (A.restrictScalars F).comap π ∧ ∀ x ∈ W, g x ∈ W},
-          psi s W.1 (g.restrict W.2.2) = P W.1 := fun W => by simp only [P]; rw [dif_pos W.2.2]
+          psi s W.1 (g.restrict W.2.2) = P W.1 := fun W => by simp only [P]; rw [dite_eq_left W.2.2]
         rw [finsum_congr this, finsum_eq_sum_of_fintype,
           ← Finset.sum_subtype (Finset.univ.filter
             (fun W => W ≤ (A.restrictScalars F).comap π ∧ ∀ x ∈ W, g x ∈ W)) (by simp) P]
@@ -200,7 +200,7 @@ theorem psi_primary : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGro
         exact dif_neg fun h => hW' (nak W h hW)
     rw [h1]
     simp only [P]
-    rw [dif_pos htop, ← psi_conj F s _ _ Submodule.topEquiv]
+    rw [dite_eq_left htop, ← psi_conj F s _ _ Submodule.topEquiv]
     congr 1
   rw [← hG, main, hrk, hcard]
   simp only [Nat.cast_pow, ← pow_mul]

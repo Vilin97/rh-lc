@@ -30,7 +30,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
 theorem chartBaseRepresentative_penultimate_step (A : AdData t u μ St) (hi : t.m2 + 1 ≤ D.R.m) (β : (St (t.m2 + 1) hi).Ch) (P : SB t μ) :
     y0At A (t.m2 + 1) hi β P = A.y0 β P := by
   unfold y0At
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 end
 

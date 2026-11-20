@@ -17,7 +17,7 @@ theorem rD_eq (β : Idx D j G.N →₀ ℕ) (x : ↥(HK X la G.w wF))
     (h : hasse X la G.w β (x : Lw X la G.w) ∈ HK X la G.w wF) :
     rD G la β x = toA0K X la G.w wF ⟨_, h⟩ := by
   unfold rD
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem rD_add (β : Idx D j G.N →₀ ℕ) (x y : ↥(HK X la G.w wF)) :
     rD G la β (x + y) = rD G la β x + rD G la β y := by

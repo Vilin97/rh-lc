@@ -224,11 +224,11 @@ def latticeToHom (α : latticeHom L₁ L₂) : isogHom (weierstrassCurve L₁) (
 
 theorem latticeToHom_of_ne_zero (α : latticeHom L₁ L₂) (h : (α : ℂ) ≠ 0) :
     (latticeToHom α).1 = isogPt α.2 h := by
-  rw [latticeToHom, dif_neg h]
+  rw [latticeToHom, dite_eq_right h]
   rfl
 
 theorem latticeToHom_of_eq_zero (α : latticeHom L₁ L₂) (h : (α : ℂ) = 0) : latticeToHom α = 0 := by
-  rw [latticeToHom, dif_pos h]
+  rw [latticeToHom, dite_eq_left h]
 
 def omegaDeriv : KaehlerDifferential ℂ MeroField →ₗ[MeroField] MeroField := germDeriv.liftKaehlerDifferential
 

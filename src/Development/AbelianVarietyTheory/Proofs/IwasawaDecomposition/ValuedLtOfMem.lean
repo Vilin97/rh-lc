@@ -330,7 +330,7 @@ theorem exists_isPtOf_cm (n : ℕ) (ST SG Q : Finset (HeightOneSpectrum (𝓞 E)
     tauto) h1 p.deco
   obtain ⟨x, hx, hd⟩ : ∃ x ∈ UAd hc n, decoRaw ST SG x = p.deco.1 := by
     refine ⟨_, (Quotient.out q).2, ?_⟩
-    rw [← hq, decoPt, decoOf, dif_pos (decorated_lattice_exists hc n ST SG _ (Quotient.out q).2)]
+    rw [← hq, decoPt, decoOf, dite_eq_left (decorated_lattice_exists hc n ST SG _ (Quotient.out q).2)]
   have hN : Formalism.UG.CS.globLat x (stdLat E n) = p.deco.1.N := congrArg Deco.N hd
   obtain ⟨g, hg, c1, c2, c3⟩ := exists_modify (fun P hP => (h4 P (Or.inr (Or.inr hP))).2.2) hx (ptFr p)
     fun P _ => hN ▸ isFr_ptFr p P

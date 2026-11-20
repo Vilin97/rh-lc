@@ -32,7 +32,7 @@ theorem extF_eq (M : Submodule (𝓞 E) (Fin n → E)) (P : HeightOneSpectrum (�
       obtain ⟨s, hs, hsy⟩ := hy
       exact h ⟨modP.ext P M g y, s, hs, ⟨s • y, hsy⟩, rfl, (modP.ext_spec P M g y hs hsy).symm⟩
     · unfold modP.ext
-      rw [dif_neg hy]
+      rw [dite_eq_right hy]
 
 variable {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 

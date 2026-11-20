@@ -258,7 +258,7 @@ theorem md_fac_off (hX : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (
         (fun P' h1 h2 => by rw [hoth P' h1 h2]; exact hb2)
     have e3 : Units.map σ₀.toMonoidHom (mUof Ch mu i (sel v)) = (muLam σ₀ (m0 ⟨i, hi⟩) (mu : Chr X.F X.E X.K) v w)⁻¹ := by
       unfold muLam mUof
-      rw [MonoidHom.mul_apply, MonoidHom.comp_apply, e1, e2, dif_pos hi, map_mul, map_inv, map_inv, mul_inv]
+      rw [MonoidHom.mul_apply, MonoidHom.comp_apply, e1, e2, dite_eq_left hi, map_mul, map_inv, map_inv, mul_inv]
       congr 2
       apply Units.ext
       exact hT.muVal ⟨i, hi⟩ (sel v) (md_no_g hX.ok hPr hv (hsel v))
@@ -388,7 +388,7 @@ theorem md_fac_bad (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : XiOffG P
     · exact h3
   rw [hL]
   unfold muAtT LocE.locChar LocE.unitV
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   generalize LocE.vP P.1 (Col.qOf P.1) ((x : X.E) / star (x : X.E)) = n at *
   by_cases hP : P.1 ∈ Pr.vGs
   · rw [if_pos hP, if_pos hP]
@@ -400,7 +400,7 @@ theorem md_fac_bad (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : XiOffG P
     have h3 := hχ.atg ⟨P.1, hP⟩ c c₀ hu.unit hcc (by rw [IsUnit.unit_spec]; exact hmk.symm)
     have h4 : chiP Ch P.1 i = Ch.chi ⟨i, hi⟩ ⟨P.1, hP⟩ := by
       unfold chiP chiAt extChi
-      rw [dif_pos hP, dif_pos hi]
+      rw [dite_eq_left hP, dite_eq_left hi]
     rw [map_mul, map_zpow₀, h1, h4, h2, map_one, mul_one]
     have hb : G.σ₀ (((qVal (mu : Chr X.F X.E X.K) P.1)⁻¹ : X.Kˣ) : X.K) = (G.σ₀ ((qVal (mu : Chr X.F X.E X.K) P.1 : X.Kˣ) : X.K))⁻¹ := by
       rw [Units.val_inv_eq_inv_val, map_inv₀]
@@ -428,7 +428,7 @@ theorem md_fac_bad (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : XiOffG P
       twist_residue_character X.F X.E X.K S mu v P.1 hv c c₀ hu.unit hcc (by rw [IsUnit.unit_spec]; exact hmk)
         (fun P' h1 h2 => by rw [hoth P' h1 h2]; exact hc2)
     unfold muqT
-    rw [dif_pos hi, h1, h3, h4, one_mul, map_mul, map_zpow₀]
+    rw [dite_eq_left hi, h1, h3, h4, one_mul, map_mul, map_zpow₀]
     have hL1 : G.σ₀ ((((Ch.muVal ⟨i, hi⟩ P.1)⁻¹ * (qVal (mu : Chr X.F X.E X.K) P.1)⁻¹ : X.Kˣ)) : X.K) =
         (((G.mu0 ⟨i, hi⟩).val P.1 : ℂˣ) : ℂ)⁻¹ * (G.σ₀ ((qVal (mu : Chr X.F X.E X.K) P.1 : X.Kˣ) : X.K))⁻¹ := by
       rw [Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀, h2]

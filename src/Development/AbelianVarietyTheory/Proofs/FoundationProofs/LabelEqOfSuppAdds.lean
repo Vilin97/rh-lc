@@ -41,7 +41,7 @@ theorem entN_par {a b : ℕ} (x : Gn g a) (B : Matrix (Fin a) (Fin b) (ZMod g)) 
     (B = 0 → i < a → a ≤ j → entN (par finSumFinEquiv x B y).val i j = 0) := by
   refine ⟨fun hi hj => ?_, fun hi hj => ?_, ?_, fun hB hi hj => ?_⟩
   · have := par_apply finSumFinEquiv x B y (.inl ⟨i, hi⟩) (.inl ⟨j, hj⟩)
-    rw [entN, entN, dif_pos ⟨by omega, by omega⟩, dif_pos ⟨hi, hj⟩]
+    rw [entN, entN, dite_eq_left ⟨by omega, by omega⟩, dite_eq_left ⟨hi, hj⟩]
     exact this
   · unfold entN
     split_ifs with h
@@ -52,9 +52,9 @@ theorem entN_par {a b : ℕ} (x : Gn g a) (B : Matrix (Fin a) (Fin b) (ZMod g)) 
     · rfl
   · unfold entN
     by_cases h : i < b ∧ j < b
-    · rw [dif_pos ⟨by omega, by omega⟩, dif_pos h]
+    · rw [dite_eq_left ⟨by omega, by omega⟩, dite_eq_left h]
       exact par_apply finSumFinEquiv x B y (.inr ⟨i, h.1⟩) (.inr ⟨j, h.2⟩)
-    · rw [dif_neg (by omega), dif_neg h]
+    · rw [dite_eq_right (by omega), dite_eq_right h]
   · unfold entN
     split_ifs with h
     · have := par_apply finSumFinEquiv x B y (.inl ⟨i, hi⟩) (.inr ⟨j - a, by omega⟩)
@@ -88,7 +88,7 @@ theorem InChain.par {r t s : ℕ} {h : Gn g (r + s * t)} {y : Fin s → Gn g t} 
   · have hle : (i : ℕ) * t ≤ s * t := Nat.mul_le_mul_right _ (Nat.lt_succ_iff.1 i.2)
     rw [← ParInd.entN_self (Opp.par finSumFinEquiv h B z).val]
     by_cases hc : (a : ℕ) < r + s * t
-    · rw [(entN_par h B z a b).1 hc (by omega), entN, dif_pos ⟨hc, by omega⟩]
+    · rw [(entN_par h B z a b).1 hc (by omega), entN, dite_eq_left ⟨hc, by omega⟩]
       have hi : (i : ℕ) < s := by
         by_contra hi
         have : (i : ℕ) = s := by have := i.2; omega

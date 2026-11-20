@@ -236,7 +236,7 @@ theorem twist_clauses : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Alg
     have h11 : rhoK W e ψ s 1 1 ≠ 0 := by
       rw [hρ]; exact mul_ne_zero (inv_ne_zero (θ s).ne_zero) (right_ne_zero_of_mul hdet)
     refine ⟨by rw [hρ, h10, mul_zero], ?_⟩
-    rw [nuD, dif_pos h11, Units.val_mk0]
+    rw [nuD, dite_eq_left h11, Units.val_mk0]
   · rcases eq_or_ne r 0 with rfl | hr
     · rw [val_level_zero, Nat.cast_zero, zero_pow (Nat.one_le_iff_ne_zero.1 hNf.e_pos), inv_zero, zero_mul, zero_mul]
     · rw [chiK_update hr]

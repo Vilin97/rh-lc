@@ -123,12 +123,12 @@ def maxUnramifiedValFun (x : K₀) : WithTop ℤ :=
 
 theorem maxUnramifiedValFun_zero : maxUnramifiedValFun (0 : K₀) = ⊤ := by
   classical
-  rw [maxUnramifiedValFun, dif_pos rfl]
+  rw [maxUnramifiedValFun, dite_eq_left rfl]
 
 theorem maxUnramifiedValFun_eq {x : K₀} (hx : x ≠ 0) {D : ℤ} (h : ‖(x : PadicAlgCl p)‖ = ‖(p : PadicAlgCl p)‖ ^ D) :
     maxUnramifiedValFun x = D := by
   classical
-  rw [maxUnramifiedValFun, dif_neg hx]
+  rw [maxUnramifiedValFun, dite_eq_right hx]
   congr 1
   exact zpow_norm_p_injective ((exists_norm_eq_zpow_maxUnramified hx).choose_spec.symm.trans h)
 

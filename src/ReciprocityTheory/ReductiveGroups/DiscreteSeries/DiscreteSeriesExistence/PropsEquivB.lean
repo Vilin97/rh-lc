@@ -95,11 +95,11 @@ def resE (E : Fin n → Fin n → Module.End ℂ M) (V : Submodule ℂ M) (hst :
 variable {E : Fin n → Fin n → Module.End ℂ M} {V : Submodule ℂ M} {hst : IsKStableSub ε E V}
 
 theorem coe_resE {a b : Fin n} (h : ε a = ε b) (v : V) : ((resE E V hst a b v : V) : M) = E a b v := by
-  rw [resE, dif_pos h]
+  rw [resE, dite_eq_left h]
   rfl
 
 theorem resE_of_ne {a b : Fin n} (h : ¬ ε a = ε b) : resE E V hst a b = 0 := by
-  rw [resE, dif_neg h]
+  rw [resE, dite_eq_right h]
 
 theorem kRel_resE (hE : IsGlRep E) : KRel ε (resE E V hst) := by
   intro a b c d hab hcd

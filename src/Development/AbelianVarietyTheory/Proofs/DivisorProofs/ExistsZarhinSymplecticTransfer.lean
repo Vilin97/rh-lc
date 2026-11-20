@@ -119,7 +119,7 @@ theorem blk_jlMap (h : ℕ) (l : Fin 8) (a : Fin h ⊕ Fin h → ℤ) :
     rcases x with i | i <;> simp [blk, emb, jlMap]
   · have hl1 : 1 ≤ (l : ℕ) := Nat.one_le_iff_ne_zero.mpr fun h0 => hl (Fin.ext h0)
     rcases x with i | i <;> simp only [blk, emb, jlMap, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Function.comp_apply,
-      Sum.map_inl, Sum.map_inr, Pi.zero_apply] <;> rw [dif_neg] <;> simp only [finProdFinEquiv_apply_val, not_lt] <;>
+      Sum.map_inl, Sum.map_inr, Pi.zero_apply] <;> rw [dite_eq_right] <;> simp only [finProdFinEquiv_apply_val, not_lt] <;>
       nlinarith [i.2]
 
 theorem kap_jlMap (h d : ℕ) (k : Fin 8) (a : Fin h ⊕ Fin h → ℤ) :

@@ -281,7 +281,7 @@ theorem lamLdef_eq (X : Stages) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ X.B.R.m) (�
       by_cases b : i'.1 < X.B.R.k - 1
       · rw [dif_pos b, if_pos (show i'.1 + 1 ≤ _ from b), hv ⟨_, b⟩]
         rfl
-      · rw [dif_neg b, if_neg (show ¬ i'.1 + 1 ≤ _ from b), hB _ (by omega), Int.cast_neg,
+      · rw [dite_eq_right b, if_neg (show ¬ i'.1 + 1 ≤ _ from b), hB _ (by omega), Int.cast_neg,
           show i'.1 + 1 - (X.B.R.k - 1) = i'.1 - (X.B.R.k - 1) + 1 by omega]
         rfl
     · rw [if_neg a, if_neg (show ¬ i'.1 + 1 ≤ _ from a)]

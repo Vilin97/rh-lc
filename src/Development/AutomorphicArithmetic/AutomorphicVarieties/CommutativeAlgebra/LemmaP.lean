@@ -390,7 +390,7 @@ theorem UpperTheory.V.Alg.lemmaP :
         (fun u => if h : wf u = j then c ⟨u, h⟩ else 0) (by
           intro A' _ _ _ p' p'' η k1 k2 k3 k4 k5
           obtain ⟨r', α', m1, m2, m3⟩ := ho j c (by simpa only [hc] using hcb) A' p' p'' η k1 k2 k3 k4
-            (fun u => by rw [k5, dif_pos u.2]) (fun u hu => by rw [k5, dif_neg hu, zero_smul])
+            (fun u => by rw [k5, dite_eq_left u.2]) (fun u hu => by rw [k5, dite_eq_right hu, zero_smul])
           obtain ⟨s, ⟨s1, s2, s3⟩, -⟩ := hU.2 A' _ r' α' m1
           refine ⟨s, ?_, by rw [hpi, s1]⟩
           refine (hU.2 R i r α hU.1).unique ⟨?_, ?_, fun v => ?_⟩ ⟨rfl, rfl, fun v => rfl⟩
@@ -400,7 +400,7 @@ theorem UpperTheory.V.Alg.lemmaP :
             rw [← s3 v] at m4; exact m4)
       intro u
       have h4 := h3 u
-      rw [dif_pos u.2] at h4
+      rw [dite_eq_left u.2] at h4
       rw [← hc, residue_eq_zero_iff]
       exact h4
     rw [Nat.card_eq_fintype_card]

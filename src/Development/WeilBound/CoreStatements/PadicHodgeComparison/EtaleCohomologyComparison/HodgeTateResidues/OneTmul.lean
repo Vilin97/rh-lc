@@ -104,6 +104,6 @@ theorem co_abs {W : Type 1} [AddCommGroup W] [Module B W] {m r : ℕ} (hr : r < 
     · intro a ha w
       show coT (g.symm w) a = 0
       simp only [coT, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
-      rw [dif_neg (by omega)]
+      rw [dite_eq_right (by omega)]
 
 end CrystallineSemistableComparison.HT.CoA

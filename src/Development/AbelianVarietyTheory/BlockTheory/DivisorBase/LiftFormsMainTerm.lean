@@ -82,10 +82,10 @@ theorem omegaP_triv {a b : ℕ} (Pg : Finset (Pl D.host.E)) {r : ℕ} (hr : a = 
   · have h' : (∀ PP ∈ Pg, LowZero a (y PP)) ∧ ∃ g : (LevelP.triv Pg a ℂ).H, ∀ PP : Pg,
         ((g.1 PP : GL (Fin a) (kP PP.1)) : Matrix (Fin a) (Fin a) (kP PP.1)) = topL a (y PP.1) :=
       ⟨fun PP hP => (h PP hP).1, 1, fun PP => by rw [(h PP.1 PP.2).2]; rfl⟩
-    rw [dif_pos h', if_pos h, key]
+    rw [dite_eq_left h', if_pos h, key]
     simp [LevelP.triv]
     rfl
-  · rw [if_neg h, dif_neg]
+  · rw [if_neg h, dite_eq_right]
     rintro ⟨h1, g, hg⟩
     exact h fun PP hP => ⟨h1 PP hP, by rw [← hg ⟨PP, hP⟩, key]; rfl⟩
 
@@ -263,7 +263,7 @@ theorem lab_base (ρ : D.what₂.Tau) : lab D.what₂.embLL ρ = ρ := by
   have h : ∃ τ, labE D.what₂.embLL τ = tauE D ρ ∨ labE D.what₂.embLL τ = (starRingEnd ℂ).comp (tauE D ρ) :=
     ⟨ρ, Or.inl (labE_base ρ)⟩
   unfold lab
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hs := h.choose_spec
   generalize h.choose = τ at hs
   rw [labE_base] at hs

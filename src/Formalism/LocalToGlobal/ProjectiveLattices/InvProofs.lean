@@ -85,7 +85,7 @@ theorem cxIndep_of (hR : RdUIndep D) (hL : L2Independence D) : CxIndep D := by
   · have hσ := goodEmb_goodOf T.Q.c σ
     have hf' : f ∈ Core.C { T with U := U, V := V, dict := dict, mu := mu, Kf := Kf } j w := hC ▸ hf
     unfold NlM
-    rw [dif_pos hj, dif_pos hj]
+    rw [dite_eq_left hj, dite_eq_left hj]
     exact l2_independent_two_spaces hL T.Q j (T.U j) (U j) hU hU' _ hσ _ _ (h.spaceW j hj _ hσ) (h'.spaceW j hj _ hσ)
       _ _ (h.levelK j hj _ hσ) (h'.levelK j hj _ hσ) (h.finVol j hj _ hσ) _ _ _ _
       (h.dictU j hj _ hσ) (h'.dictU j hj _ hσ) (h.muUnit j hj _ hσ) (h'.muUnit j hj _ hσ)

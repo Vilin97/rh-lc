@@ -43,16 +43,16 @@ theorem diagExp_rev {n m : ℕ} (hm : 2 * m ≤ n) (a : Fin m → ℤ) (i : Fin 
   by_cases h1 : (i : ℕ) < m
   · have h2 : ¬ (i.rev : ℕ) < m := by omega
     have h3 : n - m ≤ (i.rev : ℕ) ∧ n - 1 - (i.rev : ℕ) < m := by omega
-    rw [dif_neg h2, dif_pos h3, dif_pos h1]
+    rw [dite_eq_right h2, dite_eq_left h3, dite_eq_left h1]
     rw [show (⟨n - 1 - (i.rev : ℕ), h3.2⟩ : Fin m) = ⟨i, h1⟩ from
       Fin.ext (show n - 1 - (i.rev : ℕ) = (i : ℕ) by omega)]
   · by_cases h4 : n - m ≤ (i : ℕ) ∧ n - 1 - (i : ℕ) < m
     · have h2 : (i.rev : ℕ) < m := by omega
-      rw [dif_pos h2, dif_neg h1, dif_pos h4, neg_neg]
+      rw [dite_eq_left h2, dite_eq_right h1, dite_eq_left h4, neg_neg]
       rw [show (⟨(i.rev : ℕ), h2⟩ : Fin m) = ⟨n - 1 - i, h4.2⟩ from Fin.ext hr]
     · have h2 : ¬ (i.rev : ℕ) < m := by omega
       have h3 : ¬ (n - m ≤ (i.rev : ℕ) ∧ n - 1 - (i.rev : ℕ) < m) := by omega
-      rw [dif_neg h2, dif_neg h3, dif_neg h1, dif_neg h4, neg_zero]
+      rw [dite_eq_right h2, dite_eq_right h3, dite_eq_right h1, dite_eq_right h4, neg_zero]
 
 theorem div_mem_intL {ϖ x : K} (hϖ : Valued.v ϖ = WithZero.exp (-1 : ℤ))
     (hx : x ∈ intL K) (hx' : x⁻¹ ∉ intL K) : x / ϖ ∈ intL K := by

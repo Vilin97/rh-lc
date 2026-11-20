@@ -182,7 +182,7 @@ theorem exists_twConj_dlt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     simp only [Units.val_mul, IsUnit.unit_spec, map_mul, hσβ]
     linear_combination (β * ((β₀⁻¹ : B.Aˣ) : B.A)) * hi' - (β * B.σ ((β₀⁻¹ : B.Aˣ) : B.A) * ((-1) ^ (m - 1) * u)) * hi
   · have hb : (β₀ : B.A) * ((β₀⁻¹ * hβu.unit : B.Aˣ) : B.A) = β := by simp
-    rw [hb, GlobalTheory.TwLat.dlt, dif_pos hGunit, hth]
+    rw [hb, GlobalTheory.TwLat.dlt, dite_eq_left hGunit, hth]
     have hGe : hGunit.unit = Gu := Units.ext (by rw [IsUnit.unit_spec, hβ])
     rw [hGe]
     have hII : ∀ g : GLw m w, invT m _ (invT m _ g) = g := fun g => by

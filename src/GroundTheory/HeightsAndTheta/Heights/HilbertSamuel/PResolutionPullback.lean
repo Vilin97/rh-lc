@@ -119,7 +119,7 @@ def blockRatio (k₀ : K) (z z' : (Σ k, ι k) → ℂ) : ℂ :=
 
 theorem blockRatio_eq {k₀ : K} {z' : (Σ k, ι k) → ℂ} (c : K → ℂ) (h : ∃ i : ι k₀, z' ⟨k₀, i⟩ ≠ 0) :
     blockRatio k₀ (fun p => c p.1 * z' p) z' = c k₀ := by
-  rw [blockRatio, dif_pos h]
+  rw [blockRatio, dite_eq_left h]
   exact mul_div_cancel_right₀ _ h.choose_spec
 
 theorem blockRatio_eq_div {k₀ : K} {z z' : (Σ k, ι k) → ℂ} (hzz : SameOrbit z z') {i : ι k₀}

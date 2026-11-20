@@ -141,7 +141,7 @@ theorem finrank_intertwiners_eq_card (hσ : σ.IsIrreducible)
     have h2 : c w • summandEquivL hinv w = 0 := by
       ext1 k
       have := h1 k
-      rw [orthogonalProjection_comp_sumEquivL hinv hsum, dif_pos w.2] at this
+      rw [orthogonalProjection_comp_sumEquivL hinv hsum, dite_eq_left w.2] at this
       simpa using this
     have := hσ.1
     obtain ⟨k, hk⟩ := exists_ne (0 : K)

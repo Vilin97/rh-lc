@@ -44,7 +44,7 @@ theorem col_e (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1)) (Fin (k
     bigCell k r c μ i (eI k r b) = if i.val = 2 * r + k - b.val then c b else 0 := by
   have hb : (eI k r b).val < r := b.isLt
   unfold bigCell
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   exact if_congr Fin.ext_iff rfl rfl
 
 theorem col_w (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ)
@@ -54,7 +54,7 @@ theorem col_w (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k + 1)) (Fin (k
   have hb := b.isLt
   have hv : (wI k r b).val = r + b.val := rfl
   unfold bigCell
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dif_neg (by omega), dite_eq_left (by omega)]
   split_ifs
   · congr 1
     apply Fin.ext
@@ -94,7 +94,7 @@ theorem bigCell_submatrix (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k +
   · exact dif_neg (by show ¬ (_ ∧ 2 * r + k - a.val ≤ _); omega)
   · exact if_neg (by show ¬ r + a.val = _; omega)
   · exact if_neg (by show ¬ r + a.val = _; omega)
-  · rw [dif_pos (by show r ≤ r + a.val ∧ r + a.val ≤ _; omega)]
+  · rw [dite_eq_left (by show r ≤ r + a.val ∧ r + a.val ≤ _; omega)]
     congr 1
     apply Fin.ext
     show r + a.val - r = a.val

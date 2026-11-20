@@ -48,7 +48,7 @@ theorem finsum_cosets_eq {G W : Type} [Group G] [AddCommMonoid W] (S K U : Subgr
   rw [hsum]
   refine finsum_congr fun q => ?_
   have hc : ∃ x : G, (x : G ⧸ U) = ι q ∧ x ∈ S := ⟨((q.out : S) : G), rfl, (q.out).2⟩
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   obtain ⟨h1, h2⟩ := hc.choose_spec
   have hm : ((q.out : S) : G)⁻¹ * hc.choose ∈ K :=
     (key _ _ (q.out).2 h2).1 (QuotientGroup.eq.1 h1.symm)
@@ -73,7 +73,7 @@ theorem heckeFunI_level_indep : ∀ (L : Type) [Field L] [NumberField L] [IsCMFi
       unfold InertDatum.hval
       by_cases hy : Dv.loc x ∈ Formalism.UG.GU Dv.σw n
       · have hyk : Dv.loc x * Dv.loc κ ∈ Formalism.UG.GU Dv.σw n := (Formalism.UG.GU Dv.σw n).mul_mem hy hκ
-        rw [dif_pos hyk, dif_pos hy]
+        rw [dite_eq_left hyk, dite_eq_left hy]
         have e := hbi 1 ⟨⟨Dv.loc κ, hκ⟩, hk⟩ ⟨Dv.loc x, hy⟩
         simp only [OneMemClass.coe_one, one_mul] at e
         exact e

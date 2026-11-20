@@ -97,7 +97,7 @@ theorem twPsiQ_eq (hz : σ₀ (twZeta σ₀ (qOf P ^ D)) = Complex.exp (2 * Real
     twPsiQ σ₀ xi0 P D a = twZeta σ₀ (qOf P ^ D) ^ b := by
   have hex : ∃ b : ℤ, IntAt P ((qOf P : X.E) ^ D * a) ∧ IntAt P (xi0 * a - (b : X.E) / (qOf P : X.E) ^ D) := ⟨b, ha, hb⟩
   unfold twPsiQ
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hc := hex.choose_spec.2
   apply twZeta_zpow_congr hz hq
   apply twDvd_of_intAt hq D
@@ -340,7 +340,7 @@ theorem twDig_spec {P : HeightOneSpectrum (𝓞 X.E)} (hq : (qOf P).Prime) (hu :
     {y : X.E} (hy : IntAt P y) : IntAt P ((y - twDig P N y) / (qOf P : X.E) ^ N) := by
   have hex := twRes_exists hq hu N y hy
   unfold twDig
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem twFin_bdd (sharp : Bool) {j : ℕ} {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∉ Pr.vGs) (hd : TwDegOne X P) :

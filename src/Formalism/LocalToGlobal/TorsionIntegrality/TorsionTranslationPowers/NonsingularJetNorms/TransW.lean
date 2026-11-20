@@ -544,7 +544,7 @@ theorem shiftCase (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l 
       have e : rep P = h.choose := by
         change (if P = 0 then 0 else
           if h : ∃ t : ℂ, (N : ℂ) * t ∈ L.lattice ∧ ptW l L ι W t = P then h.choose else 0) = _
-        rw [if_neg h0, dif_pos h]
+        rw [if_neg h0, dite_eq_left h]
       rw [e]
       exact h.choose_spec
   have hsys : IsShiftSys W (AddSubgroup.zmultiples (ptW l L ι W s)) (ptW l L ι W (ω₀ / 2))

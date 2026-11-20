@@ -92,7 +92,7 @@ theorem curv_lower : HessSt → CentSt → OnCore fun D O x P => ∃ C t₀ : �
     · have h1 := (hHess t ht htH' c σ τ i hi).2 ch y hy ξ
       have hc0 : 0 ≤ coef u τ i := coef_nonneg (fun τ a b hab => hu τ a b hab) τ hi
       have hc1 : coef u τ i ≤ 2 * ‖u‖ := by
-        rw [ShFam.coef, dif_pos hi]
+        rw [ShFam.coef, dite_eq_left hi]
         have ha := (norm_le_pi_norm (u τ) i).trans (norm_le_pi_norm u τ)
         have hb := (norm_le_pi_norm (u τ) ⟨i + 1, hi⟩).trans (norm_le_pi_norm u τ)
         rw [Real.norm_eq_abs] at ha hb

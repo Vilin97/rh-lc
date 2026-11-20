@@ -33,7 +33,7 @@ theorem shearGL_val (n : ℕ) (b : Fin (n + 1) → k) (hb : 1 + b (Fin.last n) �
   have h := GlobalTheory.CompanionTheory.MirPair.ShearOrbit.shear_mul_inv n b hb
   have hu : IsUnit (1 + vecMulVec (GlobalTheory.BZMir.eLast k n) b) :=
     ⟨⟨_, _, h, mul_eq_one_comm.mp h⟩, rfl⟩
-  rw [GlobalTheory.CompanionTheory.MirPair.shearGL, dif_pos hu]
+  rw [GlobalTheory.CompanionTheory.MirPair.shearGL, dite_eq_left hu]
   exact hu.unit_spec
 
 theorem shearGL_inv_val (n : ℕ) (b : Fin (n + 1) → k) (hb : 1 + b (Fin.last n) ≠ 0) :

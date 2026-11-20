@@ -76,7 +76,7 @@ theorem isArithFrobAt_frobG (D : D7) (p : ℕ) (hp : p.Prime) (P : Ideal (𝓞 D
     have hg' : D.host.sigmaOf g = σ := hg
     exact ⟨g, hg' ▸ hσ⟩
   unfold frobG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec P
 
 theorem phiPow_one_eq : ∀ (D : D7) (p : ℕ) [Fact p.Prime], UnramE D p → ∀ τ : Emb D p,

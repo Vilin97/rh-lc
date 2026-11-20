@@ -136,7 +136,7 @@ theorem chart_mul (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Rinf E)) :
     rw [hx, chart_val, mul_assoc, ← map_mul, ← chart_val φ g]
     rfl
   · have h' : ¬ IsUnit (Matrix.of (lmul (toL y.val) x)) := fun h' => h ((Units.isUnit_units_mul y _).1 h')
-    rw [Function.comp_apply, chart, chart, dif_neg h, dif_neg h']
+    rw [Function.comp_apply, chart, chart, dite_eq_right h, dite_eq_right h']
 
 theorem chart_rt_inf (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Rinf E)) :
     chart (fun x => φ (x * infGL E a y)) g = chart φ g ∘ rmul (toL y.val) := by
@@ -147,7 +147,7 @@ theorem chart_rt_inf (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Rinf E)
     rw [hx, chart_val, mul_assoc, ← map_mul, ← chart_val φ g]
     rfl
   · have h' : ¬ IsUnit (Matrix.of (rmul (toL y.val) x)) := fun h' => h ((Units.isUnit_mul_units _ y).1 h')
-    rw [Function.comp_apply, chart, chart, dif_neg h, dif_neg h']
+    rw [Function.comp_apply, chart, chart, dite_eq_right h, dite_eq_right h']
 
 theorem chart_rt_fin (φ : GA E a → ℂ) (g : GA E a) (k : GL (Fin a) (Af E)) :
     chart (fun x => φ (x * finGL E a k)) g = chart φ (g * finGL E a k) := by

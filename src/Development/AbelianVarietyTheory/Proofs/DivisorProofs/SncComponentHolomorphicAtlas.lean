@@ -73,7 +73,7 @@ def restrChart (χ : OpenPartialHomeomorph Y (Fin (n + 1) → ℂ)) (a : Fin (n 
     intro z hz
     have hz' : ins a z ∈ χ.target := hz
     show (if h : ins a z ∈ χ.target then _ else y₀).1 ∈ χ.source
-    rw [dif_pos hz']
+    rw [dite_eq_left hz']
     exact χ.map_target hz'
   left_inv' := by
     intro v hv
@@ -81,7 +81,7 @@ def restrChart (χ : OpenPartialHomeomorph Y (Fin (n + 1) → ℂ)) (a : Fin (n 
     have hm : ins a (fun b => χ v.1 (a.succAbove b)) ∈ χ.target := by
       rw [insertNth_drop a _ h0]; exact χ.map_source hv
     show (if h : ins a (fun b => χ v.1 (a.succAbove b)) ∈ χ.target then _ else y₀) = v
-    rw [dif_pos hm]
+    rw [dite_eq_left hm]
     apply Subtype.ext
     show χ.symm (ins a (fun b => χ v.1 (a.succAbove b))) = v.1
     rw [insertNth_drop a _ h0, χ.left_inv hv]
@@ -89,7 +89,7 @@ def restrChart (χ : OpenPartialHomeomorph Y (Fin (n + 1) → ℂ)) (a : Fin (n 
     intro z hz
     have hz' : ins a z ∈ χ.target := hz
     show (fun b => χ (if h : ins a z ∈ χ.target then _ else y₀).1 (a.succAbove b)) = z
-    rw [dif_pos hz']
+    rw [dite_eq_left hz']
     show (fun b => χ (χ.symm (ins a z)) (a.succAbove b)) = z
     rw [χ.right_inv hz']
     exact drop_insertNth a z
@@ -105,7 +105,7 @@ def restrChart (χ : OpenPartialHomeomorph Y (Fin (n + 1) → ℂ)) (a : Fin (n 
     intro z hz
     have hz' : ins a z ∈ χ.target := hz
     simp only [Function.comp_apply]
-    rw [dif_pos hz']
+    rw [dite_eq_left hz']
 
 end restr
 
@@ -119,7 +119,7 @@ theorem restrChart_symm_val (χ : OpenPartialHomeomorph Y (Fin (n + 1) → ℂ))
     ((restrChart χ a S hS y₀).symm z).1 = χ.symm (ins a z) := by
   have hz' : ins a z ∈ χ.target := hz
   show (if h : ins a z ∈ χ.target then _ else y₀).1 = _
-  rw [dif_pos hz']
+  rw [dite_eq_left hz']
 
 end restrLemmas
 

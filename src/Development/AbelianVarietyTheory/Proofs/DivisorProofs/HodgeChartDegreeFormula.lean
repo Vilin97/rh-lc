@@ -115,7 +115,7 @@ theorem chart_facts {C : CxSt F} {g : ℕ} (A : Fin g → Adl C Y) (p : ℕ) (V 
   have e2 : minorAt (H q.1) (i : ℕ) i.2.le (q.2.1 (i : ℕ)) = b * P := minor_eq_mul_inv (H q.1) _ hTm hd _ i.2.le _
   have hdi : V.φ (d (V.π z) i) ≠ 0 := by rw [map_ne_zero]; exact Units.ne_zero _
   unfold chartC
-  rw [dif_pos, Units.val_mk0, e1, e2]
+  rw [dite_eq_left, Units.val_mk0, e1, e2]
   · field_simp [hub.ne_zero, hP0]
   · rw [e1, e2]
     exact div_ne_zero (mul_ne_zero hua.ne_zero (mul_ne_zero hP0 hdi)) (mul_ne_zero hub.ne_zero hP0)

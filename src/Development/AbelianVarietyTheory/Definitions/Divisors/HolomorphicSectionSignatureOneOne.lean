@@ -267,7 +267,7 @@ def plOf {β : Type} (b : β) (f : D.what₂.Tau → β) (τ : D.host.E →+* �
 
 theorem plOf_tauE {β : Type} (b : β) (f : D.what₂.Tau → β) (ρ : D.what₂.Tau) : plOf b f (tauE D ρ) = f ρ := by
   have h : ∃ ρ', tauE D ρ = tauE D ρ' := ⟨ρ, rfl⟩
-  rw [plOf, dif_pos h, ← tauE_inj h.choose_spec]
+  rw [plOf, dite_eq_left h, ← tauE_inj h.choose_spec]
 
 theorem goodDict_of_ctx {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
     {σ : c.F →+* ℂ} {V : HSp D} (C : Ctx Xo c σ V V.rank) (hC : C.OK) {S : D.what₂.Tau → SPar} (M : DSModel V S)

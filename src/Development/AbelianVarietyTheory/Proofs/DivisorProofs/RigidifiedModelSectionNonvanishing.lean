@@ -24,7 +24,7 @@ theorem grpPullback_eSec_comp {S S' : Scheme.{0}} {G' : Over S'} [GrpObj G'] {G 
 
 theorem valR_unit_ne_zero {K : Type} [Field K] {X : Scheme.{0}} (x : Sp K ⟶ X) (U : X.Opens)
     (h : ⊤ ≤ x ⁻¹ᵁ U) (s : Γ(X, U)ˣ) : valR x U s.val ≠ 0 := by
-  rw [valR, dif_pos h]
+  rw [valR, dite_eq_left h]
   exact ((s.isUnit.map _).map _).ne_zero
 
 theorem rigVal_ne_zero : ∀ (K'' : Type) [Field K''] [NumberField K''] (P : Out.PolAV (Sp K'')) (AA : Over (Sp (𝓞 K''))) [GrpObj AA] [IsCommMonObj AA] (φ : P.A.left ⟶ AA.left) (MM : RigLB AA) (N : ℕ) (w : LB.Iso (MM.L.pull φ) (lbPow P.L N)) (i₀ : (lbPow P.L N).ι), IsModel w → ⊤ ≤ (eSec P.A) ⁻¹ᵁ (lbPow P.L N).U i₀ → rigVal w i₀ ≠ 0 := by
@@ -39,7 +39,7 @@ theorem rigVal_ne_zero : ∀ (K'' : Type) [Field K''] [NumberField K''] (P : Out
     refine ⟨fun _ => i, fun y _ => ?_⟩
     obtain rfl : y = z := Subsingleton.elim (α := PrimeSpectrum K) _ _
     exact Set.mem_iInter.2 fun _ => hi
-  rw [rigVal, dif_pos hex]
+  rw [rigVal, dite_eq_left hex]
   refine mul_ne_zero (valR_unit_ne_zero _ _ ?_ _) (valR_unit_ne_zero _ _ hex.choose_spec _)
   intro y hy
   refine ⟨hi hy, Set.mem_iInter.2 fun k => ?_⟩

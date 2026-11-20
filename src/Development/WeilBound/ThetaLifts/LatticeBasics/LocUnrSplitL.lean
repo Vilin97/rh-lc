@@ -47,7 +47,7 @@ theorem zeta (h : LF O (ϖ : k) nrm q) {A : kˣ →* ℂ} (hA : ∀ u : kˣ, nrm
       exact mul_inv_cancel₀ (zpow_pos hq _).ne')
     rw [map_mul, map_inv, map_zpow, mul_inv_eq_one₀ (zpow_ne_zero _ hϖ)] at this
     beta_reduce
-    rw [dif_neg h0, this, mul_zpow, hx, ← Complex.ofReal_zpow, ← Real.rpow_intCast, ← Real.rpow_intCast, ← Real.rpow_mul hq.le,
+    rw [dite_eq_right h0, this, mul_zpow, hx, ← Complex.ofReal_zpow, ← Real.rpow_intCast, ← Real.rpow_intCast, ← Real.rpow_mul hq.le,
       ← Real.rpow_mul hq.le]
     congr 3; push_cast; ring
   · have hd : b.1.det = ∏ i, b.1 i i := det_of_upperTriangular hb
@@ -56,7 +56,7 @@ theorem zeta (h : LF O (ϖ : k) nrm q) {A : kˣ →* ℂ} (hA : ∀ u : kˣ, nrm
     beta_reduce
     rw [map_mul, map_mul, hA (GeneralLinearGroup.det κ) ((GlobalTheory.CompanionTheory.QLDet.mem_GLint_iff h n κ).1 hκ).2, mul_one, this, map_prod]
     refine Finset.prod_congr rfl fun i _ => ?_
-    rw [dif_neg (h0 i), mul_assoc, ← Complex.ofReal_mul, ← Real.rpow_add (nrm.pos (h0 i))]
+    rw [dite_eq_right (h0 i), mul_assoc, ← Complex.ofReal_mul, ← Real.rpow_add (nrm.pos (h0 i))]
     simp [a]
   · rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg hq.le _), mul_assoc, e]
     exact hb _ (by have := i.2; omega)

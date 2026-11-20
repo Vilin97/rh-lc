@@ -173,7 +173,7 @@ theorem containsRayField_of_ray [IsGalois K L] (n : ℕ)
     have hc : (∀ σ : L ≃ₐ[K] L, InInertia L 𝔭 σ → χ σ = 1) ∧ ∃ σ, IsFrob L 𝔭 σ :=
       ⟨fun σ hσ => by rw [hu σ hσ, map_one], ⟨σ0, hσ0⟩⟩
     unfold heckeVal
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     obtain ⟨Q, hQp, hQo, hQ⟩ := hc.2.choose_spec
     have hQf : Ideal.absNorm Q = Ideal.absNorm 𝔭.asIdeal ^ f := by
       rw [hfdef, Ideal.inertiaDeg_eq_of_isGaloisGroup 𝔭.asIdeal 𝔓.asIdeal Q (L ≃ₐ[K] L),

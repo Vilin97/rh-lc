@@ -60,7 +60,7 @@ theorem star_eigenvalue_mul : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau → SP
   have hT' := (GlobalTheory.MultMem.mem_mult_iff D θ V S M _ _ T).1 hT
   have hex : ∃ a, IsMultIP M μ 𝓕 T T a := by
     by_contra hne
-    exact hip (by unfold ipM; rw [dif_neg hne])
+    exact hip (by unfold ipM; rw [dite_eq_right hne])
   have hIP := ipM_spec M μ 𝓕 T T hex
   choose v hv hv0 using fun τ => (Submodule.ne_bot_iff _).1 (GlobalTheory.GardingVec.sm_ne_bot D V S M τ)
   let w : M.Vec := fun τ => ⟨v τ, hv τ⟩

@@ -411,31 +411,31 @@ def dcdTan (r K : ℕ) : Fin (r + K) → Option (Fin K) := fun c =>
 
 lemma dcdPl_1 (r K : ℕ) (a : Fin r) : dcdPl r K (Fin.castAdd K a) = some a := by
   unfold dcdPl
-  rw [dif_pos (show (Fin.castAdd K a).val < r from a.2)]
+  rw [dite_eq_left (show (Fin.castAdd K a).val < r from a.2)]
   rfl
 
 lemma dcdPl_2 (r K : ℕ) (c : Fin (r + K)) (a : Fin r) (h : dcdPl r K c = some a) : c = Fin.castAdd K a := by
   unfold dcdPl at h
   by_cases hc : c.val < r
-  · rw [dif_pos hc] at h
+  · rw [dite_eq_left hc] at h
     rw [← Option.some.inj h]
     ext; rfl
-  · rw [dif_neg hc] at h
+  · rw [dite_eq_right hc] at h
     exact absurd h (by simp)
 
 lemma dcdTan_1 (r K : ℕ) (a : Fin K) : dcdTan r K (Fin.natAdd r a) = some a := by
   unfold dcdTan
-  rw [dif_pos (show r ≤ (Fin.natAdd r a).val by simp)]
+  rw [dite_eq_left (show r ≤ (Fin.natAdd r a).val by simp)]
   congr 1
   ext; simp
 
 lemma dcdTan_2 (r K : ℕ) (c : Fin (r + K)) (a : Fin K) (h : dcdTan r K c = some a) : c = Fin.natAdd r a := by
   unfold dcdTan at h
   by_cases hc : r ≤ c.val
-  · rw [dif_pos hc] at h
+  · rw [dite_eq_left hc] at h
     rw [← Option.some.inj h]
     ext; simp; omega
-  · rw [dif_neg hc] at h
+  · rw [dite_eq_right hc] at h
     exact absurd h (by simp)
 
 theorem hjc_pf (D : Formalism.BasicNotions.D7) (h14 : JointComponentsPaths D) : HJc D := by

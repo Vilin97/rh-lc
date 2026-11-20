@@ -53,7 +53,7 @@ private theorem stdA_ne (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) : ∃ X,
     rw [Matrix.one_apply]
     split_ifs
     exacts [one_mem _, zero_mem _]
-  rw [stdA, dif_pos h]
+  rw [stdA, dite_eq_left h]
   exact Units.ne_zero _
 
 open GlobalTheory.StdPairCone in
@@ -69,7 +69,7 @@ private theorem stdB_ne (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) : ∃ Y,
     rw [Matrix.one_apply]
     split_ifs
     exacts [one_mem _, zero_mem _]
-  rw [stdB, dif_pos h]
+  rw [stdB, dite_eq_left h]
   exact Units.ne_zero _
 
 end SlopeTestRemainingChoices

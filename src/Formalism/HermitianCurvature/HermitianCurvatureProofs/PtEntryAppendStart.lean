@@ -67,7 +67,7 @@ theorem vecV_of_G (Bs : B.RealPlaceData P.k P.r Wp Wq) (ν' : Fin (2 * P.r + P.k
     (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (Q : C.LPt)
     (hG : ¬ 0 < D.ptG (Tz P.k P.r Bs.z * Tz P.k P.r Bs.z') P.r Q) : D.vecV Bs ν' m₀ F Q = 0 := by
   unfold D.vecV
-  rw [dif_neg (fun h => hG h.2)]
+  rw [dite_eq_right (fun h => hG h.2)]
 
 theorem topOf_big (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (w : List C.Letter)
     (H H' : C.LPt) (s : ℕ) (t t' : ℂ) (hs : 2 ≤ s) (hH : D.ptSize H + s = P.r + 1) (hH' : D.ptSize H' + s = P.r + 1) :

@@ -27,7 +27,7 @@ theorem combD_apply (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : 
   simp only [combD, LinearMap.pi_apply, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   by_cases h : FaceOK J n (Function.update I.1.1 k ((I.1.1 k).erase i))
-  · rw [dif_pos h, dif_pos h]; rfl
+  · rw [dite_eq_left h, dite_eq_left h]; rfl
   · rw [dif_neg h, dif_neg h]; rfl
 
 theorem cell_ext {J : ∀ k, Finset (ι k)} {n : ℕ} {I₁ I₂ : CombCell ι J n} (h : I₁.1.1 = I₂.1.1) : I₁ = I₂ :=
@@ -112,7 +112,7 @@ theorem block_pair (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : C
   by_cases hOK : FaceOK J n (Function.update I.1.1 k ((I.1.1 k).erase a))
   · have hOK' := hiff.mp hOK
     simp only [t]
-    rw [dif_pos hOK, dif_pos hOK', hf b hb a ha hOK' hOK]
+    rw [dite_eq_left hOK, dite_eq_left hOK', hf b hb a ha hOK' hOK]
     rcases lt_or_gt_of_ne hab with h | h
     · rw [faceSign_pair I.1.1 k h he, neg_smul, add_neg_cancel]
     · rw [faceSign_pair I.1.1 k h (he.trans (Finset.pair_comm a b)), neg_smul, neg_add_cancel]
@@ -209,7 +209,7 @@ theorem contract_cocycle (J : ∀ k, Finset (ι k)) (n : ℕ) (k : K) (i₀ : ι
       rw [hI']
       exact faceSign_update_one I.1.1 hl i {i₀} h1 (Finset.card_singleton i₀)
     by_cases hc : FaceOK J n (Function.update I.1.1 l ((I.1.1 l).erase i))
-    · rw [dif_pos hc, dif_pos (hiff.mp hc), hsign]
+    · rw [dite_eq_left hc, dite_eq_left (hiff.mp hc), hsign]
       obtain ⟨I'', hk'', ho'', hgI⟩ := hg1 ⟨⟨_, hc.1⟩, hc.2⟩ hFk
       rw [hgI]
       congr 1
@@ -321,7 +321,7 @@ theorem cyclic_cohom (hC : KHCombContract.Statement) (J : ∀ k, Finset (ι k)) 
     simp only [Pi.smul_apply, singOne, smul_eq_mul]
     by_cases hI : ∀ k ∈ E, (I.1.1 k).card = 1
     · have h : ∃ I : CombCell ι J n, ∀ k ∈ E, (I.1.1 k).card = 1 := ⟨I, hI⟩
-      rw [dif_pos h, if_pos (fun k hk => hI k ((hE k).mpr hk)), mul_one]
+      rw [dite_eq_left h, if_pos (fun k hk => hI k ((hE k).mpr hk)), mul_one]
       exact hval I h.choose hI h.choose_spec
     · rw [if_neg (fun h => hI fun k hk => h k ((hE k).mp hk)), mul_zero]
       exact (hφI I).2 hI

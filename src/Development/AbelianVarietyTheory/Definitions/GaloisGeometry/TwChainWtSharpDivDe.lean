@@ -84,7 +84,7 @@ theorem locTop_den (hm : R.m = m2 + 2) (hc : cst.Ok) {P : rowSG Pr sel mu} {y : 
     have e : Loc.eN X.E (R.N (m2 + 1) + cOf R (m2 + 1)) s.1 = Pi.single (Fin.castAdd _ s) 1 := by
       funext t
       simp [Loc.eN, Pi.single_apply, Fin.ext_iff]
-    rw [e, LinearMap.comp_apply, LinearMap.comp_apply, castAdd_single, Loc.atN, dif_pos (show l.1 < R.N R.m - 1 + 0 from hl)] at h3
+    rw [e, LinearMap.comp_apply, LinearMap.comp_apply, castAdd_single, Loc.atN, dite_eq_left (show l.1 < R.N R.m - 1 + 0 from hl)] at h3
     exact (intAt_pow (intAt_nat _) _).mul h3
   · have h3 := GlobalTheory.SuppTop.intAt_of_ftY sel mu cst P _ _ h2 s
     obtain rfl : l = Br.iL (N_m_succ R) := Fin.ext (by have := l.2; show l.1 = R.N R.m - 1; omega)

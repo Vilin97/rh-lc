@@ -388,7 +388,7 @@ theorem _root_.GlobalTheory.DegCnt.Absorb.exists_ideal (N : _root_.GlobalTheory.
     rw [FractionalIdeal.coeIdeal_absNorm, hI, map_mul, map_zpow₀, FractionalIdeal.absNorm_span_singleton,
       FractionalIdeal.coeIdeal_absNorm] at hn
     unfold _root_.GlobalTheory.DegCnt.NF.nD
-    rw [dif_pos hl']
+    rw [dite_eq_left hl']
     have hq := congrArg (fun q : ℚ => (q : ℝ)) hn
     push_cast at hq
     rw [hq]
@@ -480,7 +480,7 @@ theorem _root_.GlobalTheory.DegCnt.Absorb.exists_absorbing_ideal : ∀ (K V : Ty
     intro l hl hn hD
     apply hn
     unfold _root_.GlobalTheory.DegCnt.NF.nD
-    rw [dif_pos hl, hD]
+    rw [dite_eq_left hl, hD]
     simp
   have hS : ∀ l ∈ S, ∃ hl : l ≤ r + 1, l ≤ N.j ∧ _root_.Formalism.HermitianLatticeCounting.S6.Dl N.F N.F' l hl ≠ 0 := by
     intro l hl

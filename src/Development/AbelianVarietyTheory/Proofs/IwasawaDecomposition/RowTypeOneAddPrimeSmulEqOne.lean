@@ -20,7 +20,7 @@ theorem unitV_one (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) : LocE.unitV χ (1 : 
     exact isUnit_one
   have h1 : h.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, GlobalTheory.TopStep.reduction_one₂, Units.val_one])
   unfold LocE.unitV
-  rw [dif_pos h, h1, map_one, Units.val_one]
+  rw [dite_eq_left h, h1, map_one, Units.val_one]
 
 omit [StarRing E] in
 theorem unitV_det_delta (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {t : ℕ} {A : Fin t → Fin t → E}
@@ -42,7 +42,7 @@ theorem entB_id (q : ℕ) {k₀ c n : ℕ} (hk : k₀ ≤ n) (ex : ℕ → ℕ) 
     unfold LocE.fIdx at h
     split_ifs at h <;> omega
   unfold LocE.entB Loc.atN
-  rw [dif_pos h1, LinearMap.id_apply]
+  rw [dite_eq_left h1, LinearMap.id_apply]
   unfold Loc.eN
   by_cases h : p = p'
   · subst h
@@ -106,7 +106,7 @@ theorem lamQB_cong (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (kj n c : ℕ) {y : 
       fun s t : Fin (n - kj) => (if s = t then 1 else 0) + (qOf P : E) * y (Pi.single ⟨_, hl t⟩ 1) ⟨_, hl s⟩ := by
     funext s t
     unfold Loc.atN
-    rw [dif_pos (hl s), eN_eq (hl t)]
+    rw [dite_eq_left (hl s), eN_eq (hl t)]
     simp [Pi.single_apply, Fin.ext_iff]
   rw [e, unitV_congr ξ (redP_det_add_q (A := fun s t => if s = t then 1 else 0) (fun s t => ?_) fun s t => ?_),
     unitV_det_delta ξ fun _ _ => rfl, inv_one]

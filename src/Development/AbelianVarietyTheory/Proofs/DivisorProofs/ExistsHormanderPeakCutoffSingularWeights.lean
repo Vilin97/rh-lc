@@ -45,13 +45,13 @@ theorem sum_entries (X : Data E r) (ξ : Fin (nd X) → ℂ) :
     intro a c
     split_ifs with h
     · rfl
-    · rw [low_apply, dif_neg h]; simp
+    · rw [low_apply, dite_eq_right h]; simp
   rw [Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => h2 a c,
     ← Fintype.sum_prod_type' (f := fun a c : Fin r =>
       if c < a then ‖(mat (nmat X (WithLp.toLp 2 ξ)) τ - 1) a c‖ ^ 2 else 0), ← Finset.sum_filter,
     Finset.sum_subtype (p := fun p : Fin r × Fin r => p.2 < p.1) _ (by simp)]
   refine Finset.sum_congr rfl fun y _ => ?_
-  rw [low_apply, dif_pos y.2]
+  rw [low_apply, dite_eq_left y.2]
 
 theorem levi_ball (X : Data E r) {x : Frame X.Ψ r} (hx : IsOrth X x) (hr : 0 < r) {z : V (nd X)}
     (hz : ‖z‖ ≤ 1 / (100 * (r : ℝ) ^ 2)) (ξ : Fin (nd X) → ℂ) :
@@ -86,8 +86,8 @@ theorem levi_ball (X : Data E r) {x : Frame X.Ψ r} (hx : IsOrth X x) (hr : 0 < 
   · simp [mat, nmat]
   · have := GlobalTheory.ChartNearOne.nmat_entry_le X z τ a c
     rwa [if_neg h.ne', sub_zero] at this
-  · rw [low_apply, dif_neg (not_lt.2 h)]
-  · rw [low_apply, dif_neg (not_lt.2 h)]
+  · rw [low_apply, dite_eq_right (not_lt.2 h)]
+  · rw [low_apply, dite_eq_right (not_lt.2 h)]
   · rw [Matrix.mul_assoc, hm, Matrix.nonsing_inv_mul_cancel_left _ _ hu]
   · rw [Matrix.mul_assoc, hrel τ, Matrix.nonsing_inv_mul_cancel_left _ _ hu]
 

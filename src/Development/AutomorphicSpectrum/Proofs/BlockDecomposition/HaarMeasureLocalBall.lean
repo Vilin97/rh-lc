@@ -39,7 +39,7 @@ theorem measure_translate_ballV : ∀ (F : Type) [Field F] [NumberField F] (v : 
   rw [Units.smul_def, IsUnit.unit_spec, h1, mul_one] at key
   rw [← key]
   have hm := GlobalTheory.GaugeProdFormula.modu_finite F v (ϖ ^ k) (pow_ne_zero k hϖ0)
-  rw [GlobalTheory.GaugeEx.modu, dif_pos hu] at hm
+  rw [GlobalTheory.GaugeEx.modu, dite_eq_left hu] at hm
   have hn : ‖ϖ‖ = ((Ideal.absNorm v.asIdeal : ℝ))⁻¹ := by
     rw [NumberField.FinitePlace.norm_def, HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v π, hπ,
       WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]

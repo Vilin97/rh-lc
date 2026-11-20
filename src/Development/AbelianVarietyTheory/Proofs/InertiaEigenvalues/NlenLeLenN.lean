@@ -198,9 +198,9 @@ theorem cond_le (v : PlE D.host) (hv : v ∈ placesOver D.host.E (D.ntw.l i))
       (toPi _ _) continuous_of_discreteTopology (fun _ _ => equivariant D i s k ψ _ _) x ∈
       Gen.bk (bk0 D) i s k ψ v := by
   unfold condL at hx
-  rw [dif_pos hv] at hx
+  rw [dite_eq_left hv] at hx
   unfold Gen.bk
-  rw [dif_pos hv]
+  rw [dite_eq_left hv]
   refine mem_of_span _ _ _ _ ?_ x hx
   rintro _ ⟨c₀, h₀, rfl⟩
   have hM : ∀ g : Gw D.nd v, latTpsi D.ntw i s (toOk D.ntw i k) ψ g.1 =

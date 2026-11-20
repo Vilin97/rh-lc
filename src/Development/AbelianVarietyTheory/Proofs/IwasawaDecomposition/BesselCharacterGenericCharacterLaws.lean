@@ -334,7 +334,7 @@ theorem besChar_eq (ψ : AddChar (AF D.host.F) ℂ) (d : BesDat A B ι) (g : GA 
   have hex : ∃ v, IsBesVal ψ d g v :=
     ⟨_, fun i j => T j i, b, (subOne_cols B d.e g (fun i j => T j i)).2 hT, (subOne_vec B g _ _).2 hb, rfl⟩
   unfold besChar
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨a, b', h1, h2, h3⟩ := hex.choose_spec
   have e1 := (subOne_cols B d.e g a).1 h1
   have e2 := (subOne_vec B g _ _).1 h2

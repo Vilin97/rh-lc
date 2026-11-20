@@ -142,15 +142,15 @@ theorem finsum_doubleCoset_eq_finprod_local : ∀ (ι G : Type) [Group G] (H : �
   · intro y _
     obtain ⟨g, hg⟩ := hsurj (fun i => if hi : i ∈ S0 then Quotient.out (y ⟨i, hi⟩) else 1) (by
       filter_upwards [S0.finite_toSet.compl_mem_cofinite] with i hi
-      rw [dif_neg (by simpa using hi)]; exact (KH i).one_mem)
+      rw [dite_eq_right (by simpa using hi)]; exact (KH i).one_mem)
     obtain ⟨a, b, ha, hb, he⟩ := DoubleCoset.mk_out_eq_mul T K g
     refine ⟨DoubleCoset.mk T K g, ?_, ?_⟩
     · rw [hAdef]
       intro i hi
       refine ⟨p i a, (hT a).1 ha i, p i b, (hK b).1 hb i, ?_⟩
-      rw [he, map_mul, map_mul, hg i, dif_neg hi, mul_one]
+      rw [he, map_mul, map_mul, hg i, dite_eq_right hi, mul_one]
     · funext i
-      rw [hΦ, he, map_mul, map_mul, hg i.1, dif_pos i.2]
+      rw [hΦ, he, map_mul, map_mul, hg i.1, dite_eq_left i.2]
       show DoubleCoset.mk (TH i.1) (KH i.1) (p i.1 a * Quotient.out (y i) * p i.1 b) = y i
       have h1 : DoubleCoset.mk (TH i.1) (KH i.1) (p i.1 a * Quotient.out (y i) * p i.1 b) =
           DoubleCoset.mk (TH i.1) (KH i.1) (Quotient.out (y i)) :=

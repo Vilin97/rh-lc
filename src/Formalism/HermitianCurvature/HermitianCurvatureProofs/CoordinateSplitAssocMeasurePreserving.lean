@@ -23,11 +23,11 @@ termination_by r - i
 
 theorem level_product_of_lt (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (w : List (Letter ℂ S)) (i : ℕ) (h : i < r) :
     levelProduct L w i = levelProduct L w (i + 1) * bTl L ⟨i, h⟩ w := by
-  rw [levelProduct, dif_pos h]
+  rw [levelProduct, dite_eq_left h]
 
 theorem level_product_of_ge (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (w : List (Letter ℂ S)) (i : ℕ) (h : r ≤ i) :
     levelProduct L w i = 1 := by
-  rw [levelProduct, dif_neg (by omega)]
+  rw [levelProduct, dite_eq_right (by omega)]
 
 theorem level_product_eq_list_prod (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (w : List (Letter ℂ S)) (n : ℕ) :
     ∀ i, r - i = n → i ≤ r →

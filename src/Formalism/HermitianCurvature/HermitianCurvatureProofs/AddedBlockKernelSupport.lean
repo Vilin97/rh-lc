@@ -162,7 +162,7 @@ theorem minor_lemma {n m : ℕ} (hmn : m < n) (x w y : Matrix (Fin n) (Fin n) K)
       sum_sub e he (fun k => w (e i) k * y k (e j)) (fun k hk => by
         have hkm : ¬ k.val < m := fun hc => hk (Set.mem_range.2 ⟨⟨k.val, hc⟩, Fin.ext rfl⟩)
         show w (e i) k * y k (e j) = 0
-        rw [hrow, dif_neg hkm, zero_mul])]
+        rw [hrow, dite_eq_right hkm, zero_mul])]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [hrow]
     split_ifs with hk
@@ -207,10 +207,10 @@ theorem supp_one (h : Point K) (s : ℕ) (hs : 1 ≤ s) (t : Kˣ)
     rw [revIn_app_lt s h.1 a.val ha, blk_app_lt s h.1 a.val ha, Function.update_apply,
       if_neg (ne_of_lt (blk_lt_length h.1 a.val ha))]
     by_cases hb : b.val < h.1.sum
-    · rw [dif_pos hb]
+    · rw [dite_eq_left hb]
       rfl
     · have hne : ¬ ((b : ℕ) = revIn h.1 a) := fun hc => hb (by rw [hc]; exact hrev)
-      rw [dif_neg hb, if_neg hne]
+      rw [dite_eq_right hb, if_neg hne]
   · intro a b ha
     show (if (b : ℕ) = revIn (h.1 ++ [s]) a then
         ((Function.update h.2 h.1.length t (blk (h.1 ++ [s]) a) : Kˣ) : K) else 0) =

@@ -148,10 +148,10 @@ private theorem hk_coef {k N : ℕ} (hN : 1 ≤ N) {χ : DirichletCharacter ℂ 
     by_cases h : ∃ 𝔫, 𝔪 = w.asIdeal * 𝔫
     · have e := congrArg Ideal.absNorm h.choose_spec
       rw [map_mul, hn] at e
-      rw [dif_pos h, if_pos ⟨_, e⟩, icoef]
+      rw [dite_eq_left h, if_pos ⟨_, e⟩, icoef]
       congr 1
       exact (Nat.div_eq_of_eq_mul_right hp.pos e).symm
-    · rw [dif_neg h, if_neg fun h' => h (dvd_of_norm w 𝔪 h')]
+    · rw [dite_eq_right h, if_neg fun h' => h (dvd_of_norm w 𝔪 h')]
   rw [hkCoef, hχ, hd, icoef, icoef, map_mul, hn]
   exact g.eig _ hp _ h1
 

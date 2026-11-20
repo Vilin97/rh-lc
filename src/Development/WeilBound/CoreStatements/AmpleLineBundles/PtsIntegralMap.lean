@@ -85,10 +85,10 @@ theorem multAt_map (J V : Ideal (MRing ι)) : multAt (J.map (ren e)) (V.map (ren
   unfold multAt
   by_cases hV : V.IsPrime
   · have hV' : (V.map (ren e)).IsPrime := (isPrime_map_ringEquiv_iff (ren e) V).2 hV
-    rw [dif_pos hV, dif_pos hV']
+    rw [dite_eq_left hV, dite_eq_left hV']
     exact congrArg ENat.toNat (length_localizedModule_quotient_map (ren e) J V)
   · have hV' : ¬ (V.map (ren e)).IsPrime := fun h' => hV ((isPrime_map_ringEquiv_iff (ren e) V).1 h')
-    rw [dif_neg hV, dif_neg hV']
+    rw [dite_eq_right hV, dite_eq_right hV']
 
 def chartId (V : Ideal (MRing ι)) (c : ∀ k, ι k) : Ideal (MRing ι) :=
   V ⊔ Ideal.span (Set.range fun k => (X ⟨k, c k⟩ : MRing ι) - 1)
@@ -110,12 +110,12 @@ theorem geoNum_map (V : Ideal (MRing ι)) (hV : IsRelevant V) (a b : Fin 0 → K
   have hV' := (relevant_iff e V).2 hV
   have h1 : geoNum 0 V b = ((Module.length ℤ (MRing ι ⧸ chartId V fun k => (hV k).choose)).toNat : ℤ) := by
     simp only [geoNum]
-    rw [dif_pos hV]
+    rw [dite_eq_left hV]
     rfl
   have h2 : geoNum 0 (V.map (ren e)) a =
       ((Module.length ℤ (MRing ι' ⧸ chartId (V.map (ren e)) fun k => (hV' k).choose)).toNat : ℤ) := by
     simp only [geoNum]
-    rw [dif_pos hV']
+    rw [dite_eq_left hV']
     rfl
   obtain ⟨φ⟩ := hc (fun k => (hV' k).choose) (fun k => e k (hV k).choose) (fun k => (hV' k).choose_spec)
     (fun k => by

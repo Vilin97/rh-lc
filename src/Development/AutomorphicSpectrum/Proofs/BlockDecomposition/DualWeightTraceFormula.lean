@@ -150,7 +150,7 @@ theorem trOn_transport {M N : Type*} [AddCommGroup M] [Module ℂ M] [AddCommGro
     · intro hy
       exact ⟨e.symm y, (hD _).2 (by simpa using hy), by simp⟩
   unfold trOn
-  rw [dif_pos hf, dif_pos hg, ← LinearMap.trace_conj' (f.restrict hf) (e.ofSubmodules D D' hmap)]
+  rw [dite_eq_left hf, dite_eq_left hg, ← LinearMap.trace_conj' (f.restrict hf) (e.ofSubmodules D D' hmap)]
   congr 1
   ext y
   simp [LinearEquiv.conj_apply, hfg]

@@ -142,11 +142,11 @@ noncomputable def projRestAt (a i : σ) : L i →ₗ⁅ℂ⁆ ⨁ k : {i // i �
   if h : i = a then 0 else lieAlgebraOf ℂ {i // i ≠ a} (fun k => L k.1) ⟨i, h⟩
 
 theorem projRestAt_self (a : σ) (x : L a) : projRestAt L a a x = 0 := by
-  rw [projRestAt, dif_pos rfl]; rfl
+  rw [projRestAt, dite_eq_left rfl]; rfl
 
 theorem projRestAt_ne (a i : σ) (h : i ≠ a) (x : L i) :
     projRestAt L a i x = of (fun k : {i // i ≠ a} => L k.1) ⟨i, h⟩ x := by
-  rw [projRestAt, dif_neg h]; rfl
+  rw [projRestAt, dite_eq_right h]; rfl
 
 noncomputable def projRest (a : σ) : (⨁ i, L i) →ₗ⁅ℂ⁆ ⨁ k : {i // i ≠ a}, L k.1 :=
   toLieAlgebra _ (projRestAt L a) (fun i j hij x y => by

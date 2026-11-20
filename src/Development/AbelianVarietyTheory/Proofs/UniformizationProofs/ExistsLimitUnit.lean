@@ -44,12 +44,12 @@ theorem exists_factor {V W : Type} [CommRing V] [CommRing W] (I : Ideal V) (φ :
 theorem gs_valR {A : Type} [CommRing A] {X Z : Scheme.{0}} (ρ : Z ⟶ Sp A) (y : Sp A ⟶ X) (V : X.Opens)
     (ht : ⊤ ≤ y ⁻¹ᵁ V) (s : Γ(X, V)) (z : Z) :
     gs ρ z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom (valR y V s)) = gs (ρ ≫ y) z V s := by
-  rw [valR, dif_pos ht, Iso.hom_inv_id_apply, ← gs_pull ρ y z V (ht trivial)]
+  rw [valR, dite_eq_left ht, Iso.hom_inv_id_apply, ← gs_pull ρ y z V (ht trivial)]
   exact gs_res ρ z ht trivial _
 
 theorem valR_id {A : Type} [CommRing A] (a : A) :
     valR (𝟙 (Sp A)) ⊤ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom a) = a := by
-  rw [valR, dif_pos (show ⊤ ≤ 𝟙 (Sp A) ⁻¹ᵁ ⊤ from le_top)]
+  rw [valR, dite_eq_left (show ⊤ ≤ 𝟙 (Sp A) ⁻¹ᵁ ⊤ from le_top)]
   have : Scheme.Hom.appLE (𝟙 (Sp A)) ⊤ ⊤ le_top = 𝟙 _ := by
     exact (Category.id_comp _).trans ((Sp A).presheaf.map_id _)
   rw [this]

@@ -81,7 +81,7 @@ noncomputable def ev {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (W : X.Opens) (e : ⊤ 
 
 theorem valAt'_eq {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (W : X.Opens) (e : ⊤ ≤ x ⁻¹ᵁ W) (h : Γ(X, W)) :
     valAt' x W h = (ev x W e).hom h := by
-  rw [valAt', dif_pos e]
+  rw [valAt', dite_eq_left e]
   rfl
 
 theorem exists_local {X Y : Scheme.{0}} (p : X ⟶ Sp ℂ) [LocallyOfFiniteType p] [IsReduced X]

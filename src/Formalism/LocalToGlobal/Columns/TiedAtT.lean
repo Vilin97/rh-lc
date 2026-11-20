@@ -88,7 +88,7 @@ theorem att_tauOf (w : HeightOneSpectrum (𝓞 X.K)) (hw : (Pr.T u : 𝓞 X.K) �
   have := hX.nonempty_Tau
   have e : tauOfR hX hPr u w P = tauOfC w P.1 := by
     unfold tauOfR
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
     rfl
   rw [e, ← mem_pullW]
   show algebraMap (𝓞 X.F) (𝓞 X.E) x ∈ P.1.asIdeal ↔ _

@@ -52,11 +52,11 @@ theorem valAt'_comp {X Y : Scheme.{0}} (x : Sp ℂ ⟶ X) (φ : X ⟶ Y) (U : Y.
   have hpre : (x ≫ φ) ⁻¹ᵁ U = x ⁻¹ᵁ φ ⁻¹ᵁ U := by simp
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ φ ⁻¹ᵁ U
-  · rw [dif_pos (by rwa [hpre]), dif_pos h]
+  · rw [dite_eq_left (by rwa [hpre]), dite_eq_left h]
     unfold valAt
     rw [Scheme.Hom.comp_appLE]
     rfl
-  · rw [dif_neg (by rwa [hpre]), dif_neg h]
+  · rw [dite_eq_right (by rwa [hpre]), dite_eq_right h]
 
 theorem isOpen_dom_and_differentiableOn_fn {g : ℕ} {A₀ : Over (Sp ℂ)} [GrpObj A₀] {L₀ : LB A₀.left}
     (u : HolUnif A₀ L₀ g) {X : Scheme.{0}} (m : A₀.left ⟶ X) (W : X.Opens) (f : Γ(X, W)) :

@@ -145,7 +145,7 @@ theorem CurveSectionQuotLocal.proof : CurveSectionQuotLocal.Statement := by
   let E := (LinearEquiv.ofBijective Φ ⟨hinj, hsurj⟩).extendScalarsOfIsLocalization S
     (Localization.AtPrime m)
   unfold locLen
-  rw [dif_pos hm, dif_pos hm, E.length_eq]
+  rw [dite_eq_left hm, dite_eq_left hm, E.length_eq]
 
 end
 

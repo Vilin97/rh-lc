@@ -99,7 +99,7 @@ theorem projectiveLine_integralWith_eq_one (P : ChartPartition p1) :
   exact integral_fsDens
 
 theorem projectiveLine_fubiniStudy_mass_one : mInt p1 (fun _ => fsPot) (fun _ => 1) = 1 := by
-  rw [mInt, dif_pos projLine_partition]
+  rw [mInt, dite_eq_left projLine_partition]
   exact projectiveLine_integralWith_eq_one _
 
 end

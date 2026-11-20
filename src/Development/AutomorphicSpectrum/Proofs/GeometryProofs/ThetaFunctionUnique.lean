@@ -37,8 +37,8 @@ variable {X Y : Scheme.{0}}
 
 theorem valF_eq_valAt' (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : valF x U f = valAt' x U f := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · rw [valF, dif_pos h, valAt', dif_pos h, valAt]
-  · rw [valF, dif_neg h, valAt', dif_neg h]
+  · rw [valF, dite_eq_left h, valAt', dite_eq_left h, valAt]
+  · rw [valF, dite_eq_right h, valAt', dite_eq_right h]
 
 theorem top_le_wchart {K : Type} [Fintype K] (L : LB X) (φ : Y ⟶ X) (x : Sp ℂ ⟶ Y) (i : L.ι)
     (h : ⊤ ≤ (x ≫ φ) ⁻¹ᵁ L.U i) : ⊤ ≤ x ⁻¹ᵁ LB.wchart L (fun _ : K => φ) (fun _ => i) :=

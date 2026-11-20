@@ -660,8 +660,8 @@ theorem cellD_apply (m : ℕ) (t : ReciprocityTheory.ChartRestriction.G.Arakelov
   unfold extC rem
   by_cases h : (∀ l, (Function.update J.1 k ((J.1 k).erase i) l).Nonempty) ∧
       ∑ l, ((Function.update J.1 k ((J.1 k).erase i) l).card - 1) = m
-  · rw [dif_pos h, dif_pos h]; rfl
-  · rw [dif_neg h, dif_neg h, smul_zero]; rfl
+  · rw [dite_eq_left h, dite_eq_left h]; rfl
+  · rw [dite_eq_right h, dite_eq_right h, smul_zero]; rfl
 
 theorem cellD_apply_not (m : ℕ) (t : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι m → Ω) (J : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι (m + 1)) (hJ : ¬ CellMeets y J.1) :
     cellD S y m t J = 0 := by
@@ -676,7 +676,7 @@ theorem dif_extC_eq_zero {q : ℕ} {s : ReciprocityTheory.ChartRestriction.G.Ara
       rw [cellD_apply S (q + 1) s ⟨J, hJ.1, hd⟩ hJ.2] at h
       exact h
     · refine Finset.sum_eq_zero fun k _ => Finset.sum_eq_zero fun i hi => ?_
-      rw [extC, dif_neg, smul_zero]
+      rw [extC, dite_eq_right, smul_zero]
       rintro ⟨hne, hdeg⟩
       have := deg_rem hi (by simpa [rem_apply_self] using hne k)
       omega
@@ -781,7 +781,7 @@ theorem CellContract.proof : CellContract.Statement := by
     have hgood : Good y I.1 := ⟨I.2.1, hI⟩
     have hsI : extC (q + 1) s I.1 = s I := by
       unfold extC
-      rw [dif_pos I.2]
+      rw [dite_eq_left I.2]
       rfl
     rw [cellD_apply S q _ I hI, ← hsI, ← dif_homot hc hf h0 I.1 hpos, dif_of_good hgood]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i hi => ?_

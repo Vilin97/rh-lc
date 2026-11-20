@@ -20,7 +20,7 @@ variable {F : Type*} [Field F] [IsAlgClosed F] [DecidableEq F] {A B : Weierstras
 theorem homPt_vcHom (C : VariableChange F) (hC : C • A = B) (R : A.toAffine.Point) :
     homPt (vcHom C hC) R = vcPoint C hC R := by
   have h0 : vcHom C hC ≠ 0 := fun h ↦ vcPt_ne_zero C hC (congrArg Subtype.val h)
-  rw [homPt, dif_neg h0, Isogeny.pointHom_apply]
+  rw [homPt, dite_eq_right h0, Isogeny.pointHom_apply]
   exact pointMap_eq_vcPoint C hC _ (isogOfHom_val _ h0) R
 
 variable {A' B' : WeierstrassCurve F} [A'.IsElliptic] [B'.IsElliptic]

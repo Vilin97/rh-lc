@@ -117,7 +117,7 @@ def ratio {B : Type} [CommRing B] (i j : Fin 2) (q : Fin 2 → B) : Bˣ :=
 theorem ratio_eq {B : Type} [CommRing B] {i j : Fin 2} {q : Fin 2 → B} (a c : Bˣ) (ha : q i = a) (hc : q j = c) :
     ratio i j q = a * c⁻¹ := by
   have h : IsUnit (q i) ∧ IsUnit (q j) := ⟨ha ▸ a.isUnit, hc ▸ c.isUnit⟩
-  rw [ratio, dif_pos h]
+  rw [ratio, dite_eq_left h]
   congr 2 <;> ext <;> simp [ha, hc]
 
 theorem ratio_rel {B : Type} [CommRing B] (i j : Fin 2) (q q' : Fin 2 → B) (h : rel B q q') :
@@ -128,7 +128,7 @@ theorem ratio_rel {B : Type} [CommRing B] (i j : Fin 2) (q q' : Fin 2 → B) (h 
     rw [ratio_eq a c ha.symm hc.symm, ratio_eq (u * a) (u * c) (by rw [hu, ← ha]; simp) (by rw [hu, ← hc]; simp),
       mul_inv, mul_mul_mul_comm, mul_inv_cancel, one_mul]
   · have h' : ¬ (IsUnit (q' i) ∧ IsUnit (q' j)) := by simpa [hu] using h
-    rw [ratio, ratio, dif_neg h, dif_neg h']
+    rw [ratio, ratio, dite_eq_right h, dite_eq_right h']
 
 abbrev linePt (k : Type) [CommRing k] : CommRingCat.{0} ⥤ Type where
   obj B := (k →+* B) × Quot (rel B)

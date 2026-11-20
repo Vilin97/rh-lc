@@ -202,7 +202,7 @@ theorem IsTauRule.mem_sec (hR : Odd R) {f : Rul Xo c} (hf : IsTauRule Xo c R cf 
 theorem IsTauRule.tauValAt_evR (hR : Odd R) {f : Rul Xo c} (hf : IsTauRule Xo c R cf x f) {S : Type} [CommRing S]
     [Algebra c.F S] {y : FrPt Xo c S} (hy : Tested y) : TauValAt Xo c R cf x y (evR Xo c f y) := by
   unfold evR evalAt
-  rw [dif_pos hy]
+  rw [dite_eq_left hy]
   exact (hf _ _).map hR _ hy.choose_spec.choose_spec.choose_spec
 
 end Val

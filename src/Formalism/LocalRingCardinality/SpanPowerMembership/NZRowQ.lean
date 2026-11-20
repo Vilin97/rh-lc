@@ -109,7 +109,7 @@ theorem prB_secB (h : n ≤ a) (y : EE) : prB b a h (secB b a y) = y := by
   show ∑ k : Fin n, secB b a y (Fin.castLE h k) • b k = y
   conv_rhs => rw [← b.sum_repr y]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [secB_apply, dif_pos (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2)]
+  rw [secB_apply, dite_eq_left (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2)]
   rfl
 
 theorem eP_secB (hn : n ≤ n1) (y : EE) : eP a n1 (secB b a y) = secB b a y := by
@@ -117,7 +117,7 @@ theorem eP_secB (hn : n ≤ n1) (y : EE) : eP a n1 (secB b a y) = secB b a y := 
   rw [eP_apply, secB_apply]
   by_cases hi : (i : ℕ) < n
   · rw [if_pos (lt_of_lt_of_le hi hn)]
-  · rw [dif_neg hi]; simp
+  · rw [dite_eq_right hi]; simp
 
 theorem coord_of_prB (h : n ≤ a) {u : En a} (hu : prB b a h u = 0) (k : Fin n) : u (Fin.castLE h k) = 0 := by
   have h2 := congrArg (fun z => b.repr z k) hu
@@ -136,16 +136,16 @@ theorem inner_secB_of_ker (h : n ≤ a) {u : En a} (hu : prB b a h u = 0) (y : E
     have e : Fin.castLE h ⟨i, hi⟩ = i := rfl
     rw [e] at this
     rw [this]; simp
-  · rw [dif_neg hi]; simp
+  · rw [dite_eq_right hi]; simp
 
 theorem inner_secB (h : n ≤ a) (y z : EE) : inner ℂ (secB b a y) (secB b a z) = inner ℂ y z := by
   rw [← b.repr.inner_map_map y z, PiLp.inner_apply, PiLp.inner_apply]
   refine (Fintype.sum_of_injective (Fin.castLE h) (Fin.castLE_injective h) _ _ (fun i hi => ?_)
     (fun k => ?_)).symm
   · have : ¬ (i : ℕ) < n := fun hlt => hi ⟨⟨i, hlt⟩, rfl⟩
-    rw [secB_apply, secB_apply, dif_neg this, dif_neg this]; simp
-  · rw [secB_apply, secB_apply, dif_pos (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2),
-      dif_pos (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2)]
+    rw [secB_apply, secB_apply, dite_eq_right this, dite_eq_right this]; simp
+  · rw [secB_apply, secB_apply, dite_eq_left (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2),
+      dite_eq_left (show ((Fin.castLE h k : Fin a) : ℕ) < n from k.2)]
     rfl
 
 theorem sum_smul_eb (z : Fin a → ℂ) : ∑ i, z i • eb a i = WithLp.toLp 2 z := by

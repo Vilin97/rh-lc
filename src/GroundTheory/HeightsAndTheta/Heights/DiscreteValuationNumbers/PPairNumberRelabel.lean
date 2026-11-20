@@ -86,14 +86,14 @@ theorem divCycle_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (ReciprocityTh
       (isRelevant_map_iff σ e hσ W)
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
-  · rw [dif_pos h, dif_pos (hiff.2 h)]
+  · rw [dite_eq_left h, dite_eq_left (hiff.2 h)]
     have : W.IsPrime := h.1.1.1
     have : (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)).IsPrime := (hiff.2 h).1.1.1
     have hl := GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.length_map (ren (R := R) σ) P W
       (le_sup_left.trans h.1.1.2) f
     unfold multAt
     exact congrArg (fun n : ℕ∞ => ((n.toNat : ℕ) : ℤ)) hl
-  · rw [dif_neg h, dif_neg (mt hiff.1 h)]
+  · rw [dite_eq_right h, dite_eq_right (mt hiff.1 h)]
 
 theorem ratDiv_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) :
     ratDiv (P.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)) (rename σ f) (rename σ g)

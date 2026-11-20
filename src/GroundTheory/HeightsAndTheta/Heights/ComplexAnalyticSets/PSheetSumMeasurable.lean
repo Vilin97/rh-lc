@@ -132,12 +132,12 @@ theorem measurable_sheetSum {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (
       t x = Φ (g x) (ReciprocityTheory.AnForm.maDens (fun k' => φ k' ∘ σ (e k)) (A *ᵥ x)) := by
     intro k x hx
     have hsh := (hWsh (e k) x (hEW k hx)).2
-    rw [htdef, dif_pos ⟨_, hsh⟩]
+    rw [htdef, dite_eq_left ⟨_, hsh⟩]
     exact term_eq Φ g φ hsh _
   have htS : ∀ x, t x ≠ 0 → ∃ s, IsSheetAt J A x s := by
     intro x hx
     by_contra h
-    exact hx (by rw [htdef, dif_neg h])
+    exact hx (by rw [htdef, dite_eq_right h])
 
   set σ' : ℕ → (Fin d → ℂ) → Fin n → ℂ := fun k => (U (e k)).piecewise (σ (e k)) fun _ => 0
     with hσ'
@@ -202,7 +202,7 @@ theorem measurable_sheetSum {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (
       rw [Finset.sum_eq_single_of_mem k0 (Finset.mem_range.2 hN), Set.indicator_of_mem hk0]
       intro k _ hk
       exact Set.indicator_of_notMem (fun hxk => hk (hEdisj k k0 x hxk hk0)) _
-    · have htx : t x = 0 := by rw [htdef, dif_neg hx]
+    · have htx : t x = 0 := by rw [htdef, dite_eq_right hx]
       refine Eventually.of_forall fun N => ?_
       rw [htx]
       refine (Finset.sum_eq_zero fun k _ => ?_).symm

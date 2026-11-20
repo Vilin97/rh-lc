@@ -117,7 +117,7 @@ theorem locChar_one {K : Type} [Field K] (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdea
   rw [valuation_one₂ hq hu, zpow_zero, zpow_zero, one_mul, div_one]
   have hU : IsUnit (redP P (1 : E)) := by rw [reduction_one']; exact isUnit_one
   unfold LocE.unitV
-  rw [dif_pos hU]
+  rw [dite_eq_left hU]
   have : hU.unit = 1 := Units.ext (by simp [reduction_one'])
   rw [this, map_one, Units.val_one]
 

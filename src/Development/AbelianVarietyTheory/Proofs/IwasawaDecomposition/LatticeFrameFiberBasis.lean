@@ -18,7 +18,7 @@ theorem exists_frame_of_rows : (∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   intro hΦ E _ _ _ H Dw Xo p W hp hW Y i₀ Z B L g hg U hU V hUV n m hm a hst c hext hrow k _ x hxU hxo
   classical
   obtain ⟨φx, hφ, hval⟩ : ∃ φ : Γ(Z.X, U) →+* k, spMap φ ≫ hU.fromSpec = x ∧ ∀ f, valR x U f = φ f :=
-    ⟨_, GlobalTheory.FlagMod.spMap_ev x hU hxU, fun f => by rw [valR, dif_pos hxU]; rfl⟩
+    ⟨_, GlobalTheory.FlagMod.spMap_ev x hU hxU, fun f => by rw [valR, dite_eq_left hxU]; rfl⟩
   obtain ⟨τ, mu, htr, hπ⟩ := StepBasis.exists_isTrans hg (x (IsLocalRing.closedPoint k))
   have h : ⊤ ≤ (x ≫ g) ⁻¹ᵁ V := GlobalTheory.FlagMod.le_preimage_map g hUV hxU
   obtain ⟨Φ, hΦw⟩ := hΦ E H Dw Xo p W hp hW Y i₀ Z B L g hg V n m hm k x h hxo τ mu hπ

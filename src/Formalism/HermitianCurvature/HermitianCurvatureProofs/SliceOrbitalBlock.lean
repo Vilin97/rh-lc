@@ -184,7 +184,7 @@ theorem sliceOmBlock : SliceOmBlock := by
   have hc := coreQ (k := k) (ρ := r - D.ptSize (h ++ [(n + 1, t), (1, c)])) (D.ptPerm h) (D.ptDiag h) (Om.σB (n + 1))
     (Fub.dQ (fun _ : Fin (n + 1) => t) (fun _ : Fin 1 => c)) _ _ _ γ (hT1 hint)
   unfold D.sliceAt
-  rw [dif_pos hle, hT2, hc, Om.omBlock_eq, smul_smul, ← Complex.ofReal_mul]
+  rw [dite_eq_left hle, hT2, hc, Om.omBlock_eq, smul_smul, ← Complex.ofReal_mul]
   rw [kapB_mul n, Complex.ofReal_one, one_smul]
   simp only [Dx2.SL.castV_castV, Dx2.SL.castF_castF]
 

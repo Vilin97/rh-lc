@@ -169,7 +169,7 @@ theorem gaussNorm_sum_monomial {J : Type} [Fintype J] (e : J → ℕ) (he : Func
       zero_le_one (e j)
     rw [hv, one_pow, _root_.mul_one, hcoeff] at this
     have h : ∃ j', e j' = e j := ⟨j, rfl⟩
-    rw [dif_pos h] at this
+    rw [dite_eq_left h] at this
     rwa [he h.choose_spec] at this
 
 end Gauss

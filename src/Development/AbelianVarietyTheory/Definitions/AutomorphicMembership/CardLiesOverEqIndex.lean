@@ -127,7 +127,7 @@ theorem card_liesOver (hpq : 1 ≤ Dw.p + Dw.q) (h : l.Dvd l₂) {Xo : Moduli Dw
   have k : ∃ n, 0 < n ∧ ∀ y : CxPt Xo c, Nat.card {y₂ : CxPt Xo₂ c₂ // LiesOver h y₂ y} = n :=
     ⟨_, (card_liesOver_eq_index hpq h Xo₂ c₂ y).1, fun y' =>
       (card_liesOver_eq_index hpq h Xo₂ c₂ y').2.trans (card_liesOver_eq_index hpq h Xo₂ c₂ y).2.symm⟩
-  rw [levDeg, dif_pos k]
+  rw [levDeg, dite_eq_left k]
   exact (Nat.find_spec k).2 y
 
 end GlobalTheory.ShFam.Pad

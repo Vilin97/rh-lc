@@ -287,8 +287,8 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
     unfold topCycle (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle by_cases hW) W : ℤ)) : W ∈ I.minimalPrimes ∧ IsRelevant W
     · have hWd : relDim W = ((n : ℕ) : WithBot (WithTop ℤ)) :=
         (relDim_eq_natCast_iff W n).mpr (hmin W hW.1)
-      rw [dif_pos ⟨hW.1, hW.2, hWd⟩, dif_pos hW]
-    · rw [dif_neg (fun h => hW ⟨h.1, h.2.1⟩), dif_neg hW]
+      rw [dite_eq_left ⟨hW.1, hW.2, hWd⟩, dite_eq_left hW]
+    · rw [dite_eq_right (fun h => hW ⟨h.1, h.2.1⟩), dite_eq_right hW]
   · have hzero : ∀ᶠ m in Filter.atTop, hilbFn I m = 0 := by
       by_cases htop : I = ⊤
       · rw [htop]
@@ -299,7 +299,7 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
       funext W
       simp only [Pi.zero_apply]
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨hWm, hWr⟩
       have hIW : I ≤ W := hWm.1.2
       by_cases htop : I = ⊤

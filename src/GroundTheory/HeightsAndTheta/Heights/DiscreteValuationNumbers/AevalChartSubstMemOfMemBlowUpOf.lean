@@ -180,7 +180,7 @@ theorem BlowUpStrictTransform.proof : BlowUpStrictTransform.Statement.{u} := by
 
   have := hH₀p
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_pos ⟨hmin₀, hrel₀⟩]
+  rw [dite_eq_left ⟨hmin₀, hrel₀⟩]
   have hne := length_localizedQuot_ne_top (P ⊔ Ideal.span {s}) H₀ hmin₀
   have hnz : multAt (P ⊔ Ideal.span {s}) H₀ ≠ 0 := by
     unfold multAt

@@ -45,7 +45,7 @@ theorem cplCoset_bound : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU
   have h0 := H.coset c y1 hmem P
   have hy' : SameCoset t.sel (t.tup μ) (t.cst μ) P y (A.y0 ((St _ (cpl_lt t μ).le).chOf c) P) := by
     unfold y0At at hy
-    rwa [dif_pos rfl] at hy
+    rwa [dite_eq_left rfl] at hy
   have hyw := cplCoset_sameCoset_of_common t.sel (t.tup μ) hy' h0
   set p := A.pt (t.m2 + 1) (cpl_lt t μ).le c with hp
   set w := (frsF t.sel (t.tup μ) p P).symm y1 with hw

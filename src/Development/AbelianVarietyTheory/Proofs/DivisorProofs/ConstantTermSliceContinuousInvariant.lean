@@ -79,14 +79,14 @@ theorem nilM_shear (D : Matrix (Fin a) (Fin a) R) (hD : ∀ i j : Fin a, r ≤ (
     rfl
   · have h0 : nilM (shear D x) i j = 0 := by
       unfold nilM
-      rw [Matrix.of_apply, dif_neg h]
+      rw [Matrix.of_apply, dite_eq_right h]
     rw [h0, Matrix.mul_apply]
     refine (Finset.sum_eq_zero fun k _ => ?_).symm
     by_cases hk : (i : ℕ) < r ∧ r ≤ (k : ℕ)
     · rw [hD k j hk.2 (by omega), mul_zero]
     · have h1 : nilM x i k = 0 := by
         unfold nilM
-        rw [Matrix.of_apply, dif_neg hk]
+        rw [Matrix.of_apply, dite_eq_right hk]
       rw [h1, zero_mul]
 
 theorem mul_nilM (D : Matrix (Fin a) (Fin a) R)
@@ -100,14 +100,14 @@ theorem mul_nilM (D : Matrix (Fin a) (Fin a) R)
     rw [← Matrix.mul_apply, Matrix.one_mul]
   · have h0 : nilM x i j = 0 := by
       unfold nilM
-      rw [Matrix.of_apply, dif_neg (fun h => hi h.1)]
+      rw [Matrix.of_apply, dite_eq_right (fun h => hi h.1)]
     rw [h0]
     refine Finset.sum_eq_zero fun k _ => ?_
     by_cases hk : (k : ℕ) < r ∧ r ≤ (j : ℕ)
     · rw [hD i k (by omega) hk.1, zero_mul]
     · have h1 : nilM x k j = 0 := by
         unfold nilM
-        rw [Matrix.of_apply, dif_neg hk]
+        rw [Matrix.of_apply, dite_eq_right hk]
       rw [h1, mul_zero]
 
 theorem unip_mul_eq (D : GL (Fin a) R)

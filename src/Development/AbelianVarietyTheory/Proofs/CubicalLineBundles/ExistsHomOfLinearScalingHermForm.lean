@@ -115,7 +115,7 @@ lemma exists_hom_affine {W : X.Opens} {D : Y.Opens} (hW : IsAffineOpen W) (hD : 
   congr 2
   ext f
   have := hρ f w hw
-  rw [valAt', valAt', dif_pos hw, dif_pos (hin w hw)] at this
+  rw [valAt', valAt', dite_eq_left hw, dite_eq_left (hin w hw)] at this
   exact this
 
 include hon in

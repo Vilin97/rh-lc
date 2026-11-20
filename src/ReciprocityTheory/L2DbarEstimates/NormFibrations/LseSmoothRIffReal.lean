@@ -57,7 +57,7 @@ private theorem d_eq_wd_of_isLocalHomeomorph_chart {M : Type*} [TopologicalSpace
     d n z j g x = wd n j (g ∘ e.symm) (z x) := by
   have h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨e, he, hx⟩
   unfold d
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   apply wd_congr
   filter_upwards [chart_symm_apply_eventually_eq hz (Classical.choose_spec h).1 he (Classical.choose_spec h).2 hx]
     with w hw
@@ -69,7 +69,7 @@ private theorem db_eq_wdb_of_isLocalHomeomorph_chart {M : Type*} [TopologicalSpa
     db n z j g x = wdb n j (g ∘ e.symm) (z x) := by
   have h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨e, he, hx⟩
   unfold db
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   apply wdb_congr
   filter_upwards [chart_symm_apply_eventually_eq hz (Classical.choose_spec h).1 he (Classical.choose_spec h).2 hx]
     with w hw

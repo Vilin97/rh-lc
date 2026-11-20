@@ -17,7 +17,7 @@ theorem negOne_zpow_ordL_mul {L : Type} [Field L] [Valued L (WithZero (Multiplic
     intro y m h
     have hne : Valued.v y ≠ 0 := by rw [h]; exact WithZero.coe_ne_zero
     unfold ordL
-    rw [dif_neg hne]
+    rw [dite_eq_right hne]
     have e : ((WithZero.unzero hne : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) = Multiplicative.ofAdd (-m) := by
       rw [WithZero.coe_unzero, h]
     rw [WithZero.coe_inj.mp e]
@@ -26,7 +26,7 @@ theorem negOne_zpow_ordL_mul {L : Type} [Field L] [Valued L (WithZero (Multiplic
     intro y hy
     have hne : Valued.v y ≠ 0 := (Valuation.ne_zero_iff _).mpr hy
     unfold ordL
-    rw [dif_neg hne]
+    rw [dite_eq_right hne]
     simp
   by_cases hx : x = 0
   · simp [hx]

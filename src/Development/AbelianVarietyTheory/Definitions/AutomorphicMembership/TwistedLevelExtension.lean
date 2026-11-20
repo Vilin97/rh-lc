@@ -289,7 +289,7 @@ theorem Q_star_nonempty {B : Base} {X : PreX B.toPre} {I : TC B X} (h : I.Ok) : 
     (I.tup I.muStar).2.1.1.1.1.2
   refine ⟨I.sel ((⟨w, hw.isPrime, hb⟩ : HeightOneSpectrum (𝓞 B.fields.E)).under (𝓞 B.fields.F)), ?_⟩
   show _ ∈ QE _ _
-  rw [QE, dif_pos hf]
+  rw [QE, dite_eq_left hf]
   exact Finset.mem_image_of_mem _ (hf.mem_toFinset.2 ((GlobalTheory.Mem.ReadTwist.mem_qprime_iff (h.xi_reads I.muStar) _).2 ⟨_, rfl, hP⟩))
 
 theorem exists_isTw : ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws), I.Ok ∧ I.IsTw ∧ TC.Pins B X ∧ I.Law0 l ∧

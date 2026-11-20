@@ -83,7 +83,7 @@ theorem rdU_eq_of_reads' {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (h : GenFrEx X
     hL.wt u n f hf (CAt σ) t _ _ (hL.test _ _) (hL.test _ _) hb
   have h4 : rdU U f k x = toC (evR Xo c f (U.un k x)) := by
     simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk]
-    rw [dif_pos x.2]
+    rw [dite_eq_left x.2]
   rw [h4, ← h1, h2]
   rfl
 
@@ -128,7 +128,7 @@ theorem aeval_mem_weight_zero_sections {f : Rul Xo c} (hf : f ∈ Formalism.L2.P
 theorem rdU_apply {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (f : Rul Xo c) (k : V.Comp) (x : (V.X k).dom) :
     rdU V f k x = toC (evR Xo c f (V.un k x)) := by
   simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk]
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
 
 theorem exists_two_emb {K Ω : Type} [Field K] [CharZero K] [Countable K] [Field Ω] [Countable Ω] [Algebra K Ω]
     (σ : K →+* ℂ) (a : Ω) (ha : IsAlgebraic K a) (hne : a ∉ (algebraMap K Ω).range) :

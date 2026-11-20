@@ -32,7 +32,7 @@ theorem lastPos_of_kapIs {D : D7} {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D (
   have h3 := Formalism.L2.NTheta.lamAt_add_add_le (D.hc τ) (D.R.k + i - 1 - k) k (by simp only [Ranks.r]; omega)
   have h4 : Formalism.L2.NTheta.lamAt (D.hc τ) (k + (D.R.k + i - 1 - k)) = -(D.hc τ).b i := by
     unfold Formalism.L2.NTheta.lamAt
-    rw [dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_left (by omega)]
     congr 2
     exact Fin.ext (by simp only; omega)
   have h5 := (D.hc τ).gap_be i

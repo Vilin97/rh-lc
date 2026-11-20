@@ -29,7 +29,7 @@ private theorem leibniz (X : Lie E a) {f f' : GA E a → ℂ} (h : f ∈ Sm E a)
 private theorem const_ev (c : ℂ) (g : GA E a) {x : Lie E a} (hx : x ∈ invSet E a) :
     chart (algebraMap ℂ (GA E a → ℂ) c) g x = c := by
   unfold chart
-  rw [dif_pos (show IsUnit (Matrix.of x) from hx)]
+  rw [dite_eq_left (show IsUnit (Matrix.of x) from hx)]
   rfl
 
 private theorem const_mem (c : ℂ) : algebraMap ℂ (GA E a → ℂ) c ∈ Sm E a := fun g =>

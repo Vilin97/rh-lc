@@ -22,7 +22,7 @@ theorem nrmL_dlt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E
   have hGd : IsUnit G.det := (Matrix.isUnit_iff_isUnit_det G).1 hG
   have hΦT : Φᵀ * Φ = 1 := mul_eq_one_comm.1 (GlobalTheory.GramTwistNorm.phi_mul_transpose m)
   have hd : (dlt e b β).val = (G⁻¹)ᵀ * Φᵀ := by
-    rw [dlt, dif_pos hG]
+    rw [dlt, dite_eq_left hG]
     change ((hG.unit⁻¹ : (Matrix (Fin m) (Fin m) (w.adicCompletion E))ˣ).val)ᵀ * Φᵀ = _
     rw [Matrix.coe_units_inv, IsUnit.unit_spec]
   have hdi : ((dlt e b β)⁻¹).val = Φ * Gᵀ := by

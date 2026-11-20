@@ -275,7 +275,7 @@ theorem main : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E
     intro u hu a ha
     obtain ⟨a', -, hrep⟩ := hX u hu
     have hex : ∃ σ, Formalism.L2.NX.TameRep P e σ u := ⟨_, hrep⟩
-    rw [Formalism.L2.NX.tameVal, dif_pos hex]
+    rw [Formalism.L2.NX.tameVal, dite_eq_left hex]
     exact hK _ u a hex.choose_spec ha
   have hU : ∀ u : 𝓞 E, u ∉ P.asIdeal → A0.valuation ((algebraMap E Ω (u : E)) ^ e) = 1 := by
     intro u hu

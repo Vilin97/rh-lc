@@ -133,7 +133,7 @@ theorem c2_tau_mem : C2.TauMem := by
           (fun p : Fin (2 * r + k + 1) => if hp : p.val < r then vX ⟨p.val, hp⟩ b' else 0) i = 0 := by
         intro i hi
         simp only
-        rw [dif_neg (by omega)]
+        rw [dite_eq_right (by omega)]
       have h1 := HermitianXiVector.herm_X_left _ z hyX hzW
       have h2 := HermitianXiVector.herm_X_left _ (C2.xiV k r ξ) hyX (HermitianXiVector.xiV_apply_last_block_zero ξ)
       have hlow : v (Fin.last r) b'.castSucc = 0 := hv.1 _ _ (Fin.castSucc_lt_last b')

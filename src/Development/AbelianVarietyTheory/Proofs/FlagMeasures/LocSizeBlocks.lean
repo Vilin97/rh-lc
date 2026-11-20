@@ -33,7 +33,7 @@ theorem detOn_of_frame {n : ℕ} {m : Type} [Fintype m] [DecidableEq m] (g : Mat
     change g *ᵥ (C *ᵥ u) = C *ᵥ (X *ᵥ u)
     rw [Matrix.mulVec_mulVec, hg, Matrix.mulVec_mulVec]
   unfold detOn
-  rw [dif_pos hst, he, LinearMap.det_conj, LinearMap.det_toLin']
+  rw [dite_eq_left hst, he, LinearMap.det_conj, LinearMap.det_toLin']
 
 theorem detOn_blocks {n a : ℕ} {j : Fin a → ℕ} (B : ∀ i, Matrix (Fin n) (Fin (j i)) ℂ)
     (p : Fin a → Prop) [DecidablePred p] (W : Submodule ℂ (Fin n → ℂ))
@@ -75,7 +75,7 @@ theorem detOn_blocks {n a : ℕ} {j : Fin a → ℕ} (B : ∀ i, Matrix (Fin n) 
         Finset.sum_subtype (Finset.univ.filter p) (p := p) (by simp)]
       · refine Finset.sum_congr rfl fun i _ => ?_
         beta_reduce
-        rw [dif_pos i.2]
+        rw [dite_eq_left i.2]
       · intro i _ hi
         beta_reduce
         rw [dif_neg (by simpa using hi), Matrix.mulVec_zero]

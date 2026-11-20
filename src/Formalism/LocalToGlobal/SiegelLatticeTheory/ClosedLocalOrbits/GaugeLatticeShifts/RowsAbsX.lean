@@ -54,14 +54,14 @@ theorem ptOfList_inj {D : Formalism.BasicNotions.D7} {i : ℕ} {x y : TB.Pt D.ho
   unfold DataInst.ptOfList at hx hy
   by_cases h1 : Formalism.L2.S.IsPtL (DataInst.signPt D.R.rS x) i
   · by_cases h2 : Formalism.L2.S.IsPtL (DataInst.signPt D.R.rS y) i
-    · rw [dif_pos h1] at hx
-      rw [dif_pos h2] at hy
+    · rw [dite_eq_left h1] at hx
+      rw [dite_eq_left h2] at hy
       have he := (Option.some.inj hx).trans (Option.some.inj hy).symm
       have hv := congrArg Subtype.val ((Formalism.L2.S.ptEquiv D.host.E i).symm.injective he)
       exact sign_list_injective D.R.rS 1 x y hv
-    · rw [dif_neg h2] at hy
+    · rw [dite_eq_right h2] at hy
       exact absurd hy (by simp)
-  · rw [dif_neg h1] at hx
+  · rw [dite_eq_right h1] at hx
     exact absurd hx (by simp)
 
 end Gen

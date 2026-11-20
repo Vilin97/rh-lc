@@ -54,7 +54,7 @@ theorem rayRec_of_has (hR : GlobalTheory.NT.RayField) {K : Ctx} (X : Stages) (f 
     exact DFunLike.congr_fun X.B.embE_φ₀ _
   · intro z hz
     refine hH z (Finset.mem_biUnion.2 ⟨_, hM, ?_⟩)
-    rw [raySet, dif_pos hM0]
+    rw [raySet, dite_eq_left hM0]
     exact hz
 
 end GlobalTheory.Plug.RayLarge

@@ -492,7 +492,7 @@ theorem arcL_at [NeZero n] (hΔ : IsUnit ((W.DelF.card : ℕ) : O)) : Formalism.
   have hN2 : W.map F x₁ ∈ W.N T₂ := W.map_N F hSur.1 hSur.2.1 x₁ hx₁N
   refine ⟨x₁, ⟨⟨hx₁N, hx₁Δ⟩, hx₁l⟩, ?_⟩
   unfold Formalism.MainNotions.ArcLiftingSetup.cmpD
-  rw [dif_pos hx₁N, dif_pos hx₂N, crisMap_φVB_pow]
+  rw [dite_eq_left hx₁N, dite_eq_left hx₂N, crisMap_φVB_pow]
   have hc := W.cmp_map F hSur.1 hSur.2.1 ⟨x₁, hx₁N⟩ hN2
   have e1 : Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap B F.f (W.cmp T₁ ⟨x₁, hx₁N⟩) = W.cmp T₂ ⟨W.map F x₁, hN2⟩ := hc.symm
   have e2 : (⟨W.map F x₁, hN2⟩ : ↥(W.N T₂)) = (((PD.p : ℕ) : O) ^ rr) • ⟨x₂, hx₂N⟩ :=

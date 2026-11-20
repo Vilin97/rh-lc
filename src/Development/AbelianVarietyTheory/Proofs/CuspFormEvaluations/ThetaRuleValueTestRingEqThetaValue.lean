@@ -25,7 +25,7 @@ theorem thValAt_evR_of_fromTest : ChartIndepSt2 → ∀ (E : Type) [Field E] [Nu
     hy.choose_spec.choose_spec.choose y hy.choose_spec.choose_spec.choose_spec a n x P hP _ w (hf _ _) hw
   have e : evR Xo c f y = w := by
     unfold evR Formalism.L2.Pj.evalAt
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
     exact key
   rw [e]
   exact hw

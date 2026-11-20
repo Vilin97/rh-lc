@@ -63,6 +63,6 @@ theorem rowAt_first_move : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
     simp only [GridChoice.rowAt]
     by_cases hi : i < D.R.m
     · rw [dif_pos hi, dif_pos hi, Function.update_of_ne (fun h => h1 (congrArg Fin.val h))]
-    · rw [dif_neg hi, dif_neg hi]
+    · rw [dite_eq_right hi, dite_eq_right hi]
 
 end GlobalTheory.FirstRowCoord

@@ -22,7 +22,7 @@ theorem class_congr_equiv {N : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V]
   by_cases h : HasFiniteLength π
   · rw [dif_pos h, dif_pos (h.of_equiv φ)]
     exact clsGL_congr φ _ _
-  · rw [dif_neg h, dif_neg (fun h' => h (h'.of_equiv φ.symm))]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h (h'.of_equiv φ.symm))]
 
 theorem class_induced_cast {r t N : ℕ} (h : r + t = N) {W : Type} [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (GL (Fin r) k × GL (Fin t) k) W) :

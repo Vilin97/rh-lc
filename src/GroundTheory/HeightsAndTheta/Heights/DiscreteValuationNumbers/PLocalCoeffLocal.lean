@@ -12,7 +12,7 @@ universe u
 theorem mem_minimalPrimes_of_locCycle_ne_zero' {S : Type*} [CommRing S] {J W : Ideal S}
     (h : locCycle J W ≠ 0) : W ∈ J.minimalPrimes := by
   by_contra hc
-  exact h (by unfold locCycle; rw [dif_neg hc])
+  exact h (by unfold locCycle; rw [dite_eq_right hc])
 
 theorem LocalCoeffLocal.proof (h₁ : LocCycleSpanMul.Statement.{u}) (h₂ : LocCyclePos.Statement.{u})
     (h₃ : MinimalPrimesSpanSingleton.Statement.{u}) (h₄ : LocalDomainDimTwo.Statement.{u})

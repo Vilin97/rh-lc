@@ -326,7 +326,7 @@ theorem resChi_eq_of_basis {κ : Type} [Fintype κ] (d : HSMDatum D Ω κ) {n s 
     resChi d n = -(1 / 2) * Real.log (resGram d n b).det := by
   have h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d.x n p.2 := ⟨⟨s, b⟩, hb⟩
   unfold resChi
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hp := h.choose_spec
   generalize h.choose = p at hp ⊢
   obtain ⟨s', b'⟩ := p
@@ -409,13 +409,13 @@ theorem BlockImageChi.proof : BlockImageChi.Statement := by
   by_cases h : ∃ p : (Σ s : ℕ, Fin s → MvPolynomial (Σ k, ι k) ℚ), IsSecBasisM d₀.y d₀.k₀ n p.2
   · have hb := h.choose_spec
     unfold blockChi
-    rw [dif_pos h, BlockImageChi.blockGram_eq d₀ M N d' hIm hmet hint n _ hb.1,
+    rw [dite_eq_left h, BlockImageChi.blockGram_eq d₀ M N d' hIm hmet hint n _ hb.1,
       BlockImageChi.resChi_eq_of_basis d' (BlockImageChi.isSecBasis_fwd hIm hb)]
   · have h' : ¬ ∃ p : (Σ s : ℕ, Fin s → MvPolynomial (Ix (Fin r)) ℚ), IsSecBasis d'.x n p.2 := by
       rintro ⟨p, hp⟩
       exact h ⟨⟨p.1, fun j => BlockImageChi.backQ d₀.k₀ M (p.2 j)⟩, BlockImageChi.isSecBasisM_back hIm hp⟩
     unfold blockChi resChi
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 end
 

@@ -79,7 +79,7 @@ private theorem core (D : D7) (ε : AE D) (Pw : Finset (Pl D.host.E)) (hε : IsI
     funext i j
     have h : a + j.1 < a + k := by omega
     show _ = GlobalTheory.BotMatch.evW (τ l) (if h : a + j.1 < a + k then Y i ⟨a + j.1, h⟩ else 0)
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     rfl
   simp only [stdB_eq, hb, ← RingHom.map_det]
   by_cases h : IsIntM Y ∧ ∀ i j, j.1 < a → GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.InId (∏ w ∈ Pw, w.asIdeal ^ c w) (Y i j)

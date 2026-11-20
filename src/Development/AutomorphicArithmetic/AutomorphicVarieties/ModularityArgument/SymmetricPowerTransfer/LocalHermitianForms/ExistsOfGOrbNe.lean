@@ -80,7 +80,7 @@ theorem exists_of_gOrb_ne {j : Etau K τ →ₐ[K] Matrix (Fin 2) (Fin 2) K} (hj
   apply mul_eq_zero_of_right
   unfold fZK
   dsimp only
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨w, hw⟩
   exact hcon (core _ w hw)
 

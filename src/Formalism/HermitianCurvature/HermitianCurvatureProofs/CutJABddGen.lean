@@ -181,7 +181,7 @@ theorem trJ_of_fibMat (S : C.HidaSetting E Wp Wq) (T : ∀ v : Fin S.f, D.LevTow
   beta_reduce
   rw [hw]
   unfold MA.toSm
-  rw [dif_pos X.2]
+  rw [dite_eq_left X.2]
 
 theorem real_to_bounded_holds : RealToBdd := by
   intro E _ _ _ Wp Wq _ _ _ _ _ _ S T v hPl e Cb c ca V b hFr hR hb

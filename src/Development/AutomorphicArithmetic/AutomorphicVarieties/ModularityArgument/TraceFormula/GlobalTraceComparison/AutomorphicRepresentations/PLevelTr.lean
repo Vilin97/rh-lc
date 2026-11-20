@@ -38,7 +38,7 @@ private theorem trOn_of_id {V : Type} [AddCommGroup V] [Module ℂ V] (M : Submo
     ext v
     simp [LinearMap.restrict_apply, hL v.1 v.2]
   unfold trOn
-  rw [dif_pos h, hid]
+  rw [dite_eq_left h, hid]
   exact LinearMap.trace_id ℂ _
 
 private theorem finFn_one {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (S : Set (Pl E))

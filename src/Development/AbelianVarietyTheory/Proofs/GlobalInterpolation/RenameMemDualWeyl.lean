@@ -119,7 +119,7 @@ variable {K : Type} [Field K] in
 private theorem DomWeight_detShift_eq_w_last {N : ℕ} (l : _root_.Formalism.BasicNotions.DomWeight N) (h : 0 < N) :
     l.detShift = l.w ⟨N - 1, by omega⟩ := by
   unfold _root_.Formalism.BasicNotions.DomWeight.detShift
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 open NumberField IsDedekindDomain MvPolynomial in
 open scoped Matrix in

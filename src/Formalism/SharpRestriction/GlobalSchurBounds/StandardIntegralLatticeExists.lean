@@ -117,7 +117,7 @@ theorem letterOf_eq (D : D7) (φ : D.R.GG) {d : ℕ} (τ0 : D.what₂.Tau) (s : 
   · rw [dif_pos h, Equiv.apply_symm_apply, prPsi_of_mem _ _ h]
   · have h' : D.R.cc * Formalism.MainNotions.TaylorLogMetric.posG D φ τ0 s ∈ D.R.Psi := by
       rw [← prPsi_of_not_mem _ _ h]; exact prPsi_mem _ _
-    rw [dif_neg h, dif_pos h', Equiv.apply_symm_apply, prPsi_of_not_mem _ _ h]
+    rw [dite_eq_right h, dif_pos h', Equiv.apply_symm_apply, prPsi_of_not_mem _ _ h]
 
 def IsFrobOf (D : D7) (p : ℕ) (φ : D.R.GG) : Prop :=
   ∀ (P : Ideal (𝓞 D.host.E)) [P.IsPrime] [P.LiesOver (Ideal.span {(p : ℤ)})],

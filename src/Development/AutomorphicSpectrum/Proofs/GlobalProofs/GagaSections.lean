@@ -18,10 +18,10 @@ theorem val_comp {X Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) (φ : Y ⟶ X) (U : X.Ope
     valAt' (x ≫ φ) U f = valAt' x (φ ⁻¹ᵁ U) ((φ.app U).hom f) := by
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U)
-  · rw [dif_pos h, dif_pos (show ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_left h, dite_eq_left (show ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
     unfold valAt
     congr 1
-  · rw [dif_neg h, dif_neg (show ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U from h)]
 
 theorem app_res {X Y : Scheme.{0}} (φ : Y ⟶ X) {U V : X.Opens} (h : V ≤ U) (a : Γ(X, U)) :
     (φ.app V).hom ((X.presheaf.map (homOfLE h).op).hom a) =

@@ -352,7 +352,7 @@ theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Stateme
       have hq := hcount Fl qq h.1
       unfold cutMult
       rw [← hq, ENat.toNat_natCast]
-    · rw [dif_neg h, hc1 qq, Nat.cast_eq_zero, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+    · rw [dite_eq_right h, hc1 qq, Nat.cast_eq_zero, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
       rintro l hl ⟨hed, hpq⟩
       have hrel := (Finset.mem_filter.mp hl).2
       have hsub : IsSubvar x qq d := hpq ▸ hed ▸ heSv l hrel

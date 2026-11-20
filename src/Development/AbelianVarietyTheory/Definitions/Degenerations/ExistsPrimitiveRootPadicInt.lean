@@ -354,7 +354,7 @@ def labOfZero {S : ThetaSys o Ω} {ρ : S.Real} {p : ℕ} [Fact p.Prime] {y₀ :
 theorem valF_one {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (hU : U = ⊤) (f : Γ(X, U))
     (hf : f = 1) : valF x U f = 1 := by
   subst hU hf
-  rw [valF, dif_pos (by simp), map_one, map_one]
+  rw [valF, dite_eq_left (by simp), map_one, map_one]
 
 theorem psiNorm_utest0 (χ) : (utest0 ζ hζ hu R fg frac p yK).PsiNorm χ 1 := by
   intro j _

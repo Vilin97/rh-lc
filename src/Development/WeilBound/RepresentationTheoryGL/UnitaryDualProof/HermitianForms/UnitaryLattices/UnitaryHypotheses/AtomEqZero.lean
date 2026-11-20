@@ -40,7 +40,7 @@ theorem atom_spec (d : ℕ) (hN : d + 2 ≤ N)
   have hh : ∃ hN : d + 2 ≤ N, Lvl k ψ π (N - 2 - d) (by omega) (d : ℝ) (chain hUD hψc hψ1 π hs B d) := ⟨hN, hL⟩
   have e : atom hUD hUA hψc hψ1 π hs B d = Classical.choose (hUA ψ hψc hψ1 (N - 2 - d) N (by omega) V π hs (d : ℝ)
       (chain hUD hψc hψ1 π hs B d) hL) := by
-    rw [atom, dif_pos hh]
+    rw [atom, dite_eq_left hh]
   rw [e]
   exact Classical.choose_spec (hUA ψ hψc hψ1 (N - 2 - d) N (by omega) V π hs (d : ℝ) (chain hUD hψc hψ1 π hs B d) hL)
 

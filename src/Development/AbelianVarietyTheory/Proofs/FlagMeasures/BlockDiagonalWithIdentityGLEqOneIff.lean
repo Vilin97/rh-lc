@@ -133,7 +133,7 @@ theorem blockDiagonalWithIdentityGL_eq_one_iff {k : ℕ} (h : Gn g k) : diag1 h 
       by rw [dM_mul, Units.inv_mul, dM_one]⟩, rfl⟩
   have hc : ((diag1 h (k + 1) : Gn g (k + 1)) : Mt g (k + 1)) = dM (h : Mt g k) := by
     change ((toG (dM (h : Mt g k)) : Gn g (k + 1)) : Mt g (k + 1)) = _
-    rw [toG, dif_pos hu]; rfl
+    rw [toG, dite_eq_left hu]; rfl
   constructor
   · intro e
     rw [e] at hc

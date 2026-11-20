@@ -27,7 +27,7 @@ theorem stepCols_ne_empty {N j : ℕ} (i : Fin N) : stepCols N j i ≠ ∅ := by
 theorem minor_singleton {R : Type} [CommRing R] {N : ℕ} (h : Matrix (Fin N) (Fin N) R) (a b : Fin N) :
     minorIJ h {a} {b} = h a b := by
   unfold minorIJ
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   haveI : Unique (Fin ({b} : Finset (Fin N)).card) := inferInstanceAs (Unique (Fin 1))
   rw [det_unique]
   show h _ _ = _
@@ -38,7 +38,7 @@ theorem minor_singleton {R : Type} [CommRing R] {N : ℕ} (h : Matrix (Fin N) (F
 theorem minor_empty {R : Type} [CommRing R] {N : ℕ} (h : Matrix (Fin N) (Fin N) R) :
     minorIJ h ∅ ∅ = 1 := by
   unfold minorIJ
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
   haveI : IsEmpty (Fin (∅ : Finset (Fin N)).card) := inferInstanceAs (IsEmpty (Fin 0))
   exact det_isEmpty
 

@@ -535,7 +535,7 @@ end Comp
 
 theorem gapGe_zero_of_antitone {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {la : AllWt.Weight Dw} (h : ∀ τ, Antitone (la τ)) : GapGe 0 la := fun τ k hk => by
-  rw [gap, dif_pos hk, sub_nonneg]
+  rw [gap, dite_eq_left hk, sub_nonneg]
   exact h τ (Fin.mk_le_mk.2 k.le_succ)
 
 end

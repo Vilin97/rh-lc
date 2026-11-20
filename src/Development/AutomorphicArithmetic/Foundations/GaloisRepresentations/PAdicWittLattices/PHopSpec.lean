@@ -37,7 +37,7 @@ theorem UpperTheory.Gal.G3.pHopSpec :
     exact ⟨A, toCorr A hA⟩
   have hspec : IsCorrOp l (H.sΩ Ω g) (H.tΩ Ω g) (hop l H Ω g) := by
     unfold hop
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   refine ⟨hspec, fun tr htr => ?_⟩
   have hA := ((hTr _ hT' H.q (H.s g ≫ H.q) H.q (H.s g) (H.t g) rfl (H.comm g) tr htr) _).2 gs rfl

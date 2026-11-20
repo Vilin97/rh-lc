@@ -56,7 +56,7 @@ theorem lamAre_set (Z : R3.ReadL R F X0 Y) (lab : D.what₂.FT → A3.fam3.base3
   refine ⟨lab, hl, fun i σ e he => ?_⟩
   have h : (i : ℕ) + 1 - 1 < D.R.m := i.2
   have e1 : (t.put (setLam X (lamOf Z lab))).logLam ((i : ℕ) + 1) σ e = lamOf Z lab ((i : ℕ) + 1) σ e := setLam_off X _ _ _ he
-  rw [e1, lamOf, dif_pos h]
+  rw [e1, lamOf, dite_eq_left h]
   exact ⟨fun h0 => if_neg h0, fun h0 => if_pos h0⟩
 
 theorem exists_lab (Z : R3.ReadL R F X0 Y) (hne : Nonempty D.what₂.FT → Nonempty A3.fam3.base3.Ix) :

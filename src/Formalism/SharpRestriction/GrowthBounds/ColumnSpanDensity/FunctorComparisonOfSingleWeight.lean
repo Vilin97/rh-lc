@@ -133,7 +133,7 @@ theorem functor_comparison_of_single_weight (hIOe : ExistsIO) (hPRe : ExistsPR) 
         intro j
         rw [hPR j, prodTopsT TT (fun s => pr1 s (j s) (Y s))]
         have := hIO j (fun s => if h : s ∈ TT then pr1 ⟨s, h⟩ (j ⟨s, h⟩) (Y ⟨s, h⟩) else 1)
-          (fun s hs => by rw [dif_neg hs])
+          (fun s hs => by rw [dite_eq_right hs])
         rw [show (∏ s : Fin n', blockEmb R.Kf s (if h : s ∈ TT then pr1 ⟨s, h⟩ (j ⟨s, h⟩) (Y ⟨s, h⟩) else 1)) =
           ∏ s : Fin n', rename (fun v => (s, v)) (if h : s ∈ TT then pr1 ⟨s, h⟩ (j ⟨s, h⟩) (Y ⟨s, h⟩) else 1) from rfl,
           this]

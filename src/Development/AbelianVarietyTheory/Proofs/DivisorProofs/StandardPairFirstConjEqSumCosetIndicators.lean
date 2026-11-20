@@ -84,7 +84,7 @@ theorem value {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {�
   have h3 : unitChar ν e (N.map (toE D)) * unitChar ν e (matE r) = 1 := h2.symm.trans h1
   have hx : ∃ x, IsUnitDet e (N.map (toE D)) x := by
     by_contra hx
-    rw [unitChar, dif_neg hx, zero_mul] at h3
+    rw [unitChar, dite_eq_right hx, zero_mul] at h3
     exact zero_ne_one h3
   refine ⟨hx, ?_⟩
   obtain ⟨x, hx⟩ := hx
@@ -120,16 +120,16 @@ theorem coset_iff {ε : 𝔸 D} {𝔪 : Ideal (𝓞 D.host.E)} (hε : 1 - ε ∈
     convert h3 using 1
     ring
   have h4 : ∀ (i : Fin a) j, (topL a W - invM r) i j = W ⟨i.1, i.2.trans_le had⟩ j - invM r i j := fun i j => by
-    rw [Matrix.sub_apply, topL, dif_pos ⟨i.2.trans_le had, j.2⟩]
+    rw [Matrix.sub_apply, topL, dite_eq_left ⟨i.2.trans_le had, j.2⟩]
   constructor
   · intro h
     have h5 := fun i j => add_mem (h1 i j) (h i j)
     simp only [sub_add_cancel] at h5
     refine ⟨fun i j => ?_, fun i j hi => ?_⟩
     · have := h5 ⟨i.1, i.2.trans_le had⟩ j
-      rwa [dif_pos i.2, ← h4] at this
+      rwa [dite_eq_left i.2, ← h4] at this
     · have := h5 i j
-      rwa [dif_neg (not_lt.2 hi), sub_zero] at this
+      rwa [dite_eq_right (not_lt.2 hi), sub_zero] at this
   · rintro ⟨h, h'⟩ i j
     have h6 : (W i j - if h : i.1 < a then invM r ⟨i.1, h⟩ j else 0) ∈ hatId D 𝔪 := by
       split_ifs with hi
@@ -150,7 +150,7 @@ theorem sum_eq {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {
   by_cases hc : ((∀ i j, W i j ∈ OhE D) ∧ ∀ i j, a ≤ i.1 → W i j ∈ hatId D 𝔪) ∧ ∃ x, IsUnitDet e ((topL a W).map (toE D)) x
   · obtain ⟨hc, x, hx⟩ := hc
     have hN : ∀ i j, topL a W i j ∈ OhE D := fun i j => by
-      rw [topL, dif_pos ⟨i.2.trans_le had, j.2⟩]
+      rw [topL, dite_eq_left ⟨i.2.trans_le had, j.2⟩]
       exact hc.1 _ _
     obtain ⟨S, -, he, -⟩ := id hG
     obtain ⟨k, hk, hkN⟩ := GlobalTheory.T.exists_integral_unitary_lift_idempotentPart e S he _ hN x hx
@@ -166,12 +166,12 @@ theorem sum_eq {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {
     rw [if_neg fun h => hsr (hu s ⟨hs, (cong_iff hk h1).1 h.1⟩), mul_zero]
   · rw [Finset.sum_eq_zero fun r hr => ?_]
     · split_ifs with h
-      · rw [unitChar, dif_neg fun hx => hc ⟨h, hx⟩, map_zero]
+      · rw [unitChar, dite_eq_right fun hx => hc ⟨h, hx⟩, map_zero]
       · rfl
     · rw [if_neg fun h => hc ⟨⟨fun i j => ?_, h.2⟩, (value hG hK (hR r hr) h.1).1⟩, mul_zero]
       by_cases hi : i.1 < a
       · have := add_mem (int_of_hat (h.1 ⟨i.1, hi⟩ j)) ((GlobalTheory.NormSum.mem_intG r).1 (hR r hr) ⟨i.1, hi⟩ j).2
-        rwa [Matrix.sub_apply, invM, sub_add_cancel, topL, dif_pos ⟨i.2, j.2⟩] at this
+        rwa [Matrix.sub_apply, invM, sub_add_cancel, topL, dite_eq_left ⟨i.2, j.2⟩] at this
       · exact int_of_hat (h.2 i j (not_lt.1 hi))
 
 theorem conj_stdFst_eq_sum : ∀ {D : D7} (S T : HSp D) {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d), a ≤ d → ∀ (e : AE D) (𝔪 : Ideal (𝓞 D.host.E)), GoodMod e 𝔪 →
@@ -188,7 +188,7 @@ theorem conj_stdFst_eq_sum : ∀ {D : D7} (S T : HSp D) {a d : ℕ} (hS : S.rank
   have hW : ∀ i j, toEAf D (t i j) = toE D (W i j) := fun i j => (toE_finQ _).symm
   have hN : topL S.rank (Matrix.of fun i j => toEAf D (t i j)) = (topL S.rank W).map (toE D) := by
     ext i j
-    rw [Matrix.map_apply, topL, topL, dif_pos ⟨i.2.trans_le had, j.2⟩, dif_pos ⟨i.2.trans_le had, j.2⟩]
+    rw [Matrix.map_apply, topL, topL, dite_eq_left ⟨i.2.trans_le had, j.2⟩, dite_eq_left ⟨i.2.trans_le had, j.2⟩]
     exact hW _ _
   have hc : ∀ r ∈ R, cosInd e 𝔪 rfl rfl (z r) t = if IsHalf e t then
       (if (∀ i j, (topL S.rank W - invM r) i j ∈ hatId D 𝔪) ∧ ∀ i j, S.rank ≤ i.1 → W i j ∈ hatId D 𝔪 then 1 else 0)

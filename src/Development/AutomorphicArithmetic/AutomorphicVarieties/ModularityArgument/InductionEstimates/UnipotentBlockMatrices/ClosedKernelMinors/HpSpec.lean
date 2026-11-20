@@ -63,7 +63,7 @@ private def top : PS R →* GL (Fin 2) R where
 
 private theorem low_unip (X : UPos (2 + 2) 2 → R) : Low (unipMatrix X) := by
   intro i j
-  rw [unipMatrix, Matrix.add_apply, low_one i j, blockEntry_apply, dif_neg, add_zero]
+  rw [unipMatrix, Matrix.add_apply, low_one i j, blockEntry_apply, dite_eq_right, add_zero]
   simp only [Fin.val_natAdd, Fin.val_castAdd]
   omega
 
@@ -74,7 +74,7 @@ private theorem top_unip (X : UPos (2 + 2) 2 → R) : top ⟨unipGL X, unip_mem 
   rw [Units.val_one, ← ul_one]
   ext i j
   change unipMatrix X (Fin.castAdd 2 i) (Fin.castAdd 2 j) = (1 : Matrix _ _ R) (Fin.castAdd 2 i) (Fin.castAdd 2 j)
-  rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dif_neg, add_zero]
+  rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_right, add_zero]
   simp only [Fin.val_castAdd]
   omega
 

@@ -12,7 +12,7 @@ theorem descend_mk {k : ℕ} (Z : Matrix (Fin k) (Fin k) RR) (r : Fin k → K)
     descend K Z r (Submodule.Quotient.mk v) = rowInvMod K Z r v := by
   classical
   unfold descend
-  rw [dif_pos hZ]
+  rw [dite_eq_left hZ]
   rfl
 
 variable {m : ℕ}

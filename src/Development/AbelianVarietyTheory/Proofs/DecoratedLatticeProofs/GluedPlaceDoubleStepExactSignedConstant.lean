@@ -54,7 +54,7 @@ theorem pairCount_pos : 0 < pairCount k n := by
 
 theorem card_withLat_eq_pairCount (Q : Pair k n) : (withLat Q.lat).card = pairCount k n := by
   unfold pairCount
-  rw [dif_pos ⟨Q⟩]
+  rw [dite_eq_left ⟨Q⟩]
   exact card_withLat_eq _ _
 
 end Count

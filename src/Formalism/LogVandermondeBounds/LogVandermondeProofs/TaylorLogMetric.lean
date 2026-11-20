@@ -59,25 +59,25 @@ lemma sq_ge_two (p : ℕ) (hp : 2 ≤ p) : 2 ≤ p ^ 2 := by nlinarith
 lemma coefL_pow (p j : ℕ) (hp : 2 ≤ p) : coefL p ((p ^ 2) ^ j) = 1 / (p : ℚ) ^ j := by
   have h : ∃ j', (p ^ 2) ^ j = (p ^ 2) ^ j' := ⟨j, rfl⟩
   unfold coefL
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hj : j = Classical.choose h := Nat.pow_right_injective (sq_ge_two p hp) (Classical.choose_spec h)
   rw [← hj]
 
 lemma coefL_zero (p a : ℕ) (h : ¬∃ j, a = (p ^ 2) ^ j) : coefL p a = 0 := by
   unfold coefL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 lemma coefG_pow (p j : ℕ) (hp : 2 ≤ p) : coefG p (p * (p ^ 2) ^ j) = 1 / (p : ℚ) ^ (j + 1) := by
   have h : ∃ j', p * (p ^ 2) ^ j = p * (p ^ 2) ^ j' := ⟨j, rfl⟩
   unfold coefG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hj : j = Classical.choose h := Nat.pow_right_injective (sq_ge_two p hp)
     (Nat.eq_of_mul_eq_mul_left (by omega) (Classical.choose_spec h))
   rw [← hj]
 
 lemma coefG_zero (p a : ℕ) (h : ¬∃ j, a = p * (p ^ 2) ^ j) : coefG p a = 0 := by
   unfold coefG
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 lemma coefA_pow (p i j : ℕ) (hp : 2 ≤ p) :
     coefA p ((p ^ 2) ^ i) (p * (p ^ 2) ^ j) = if i ≤ j then 1 / (p : ℚ) ^ (i + j + 1) else 0 := by
@@ -85,13 +85,13 @@ lemma coefA_pow (p i j : ℕ) (hp : 2 ≤ p) :
   by_cases hij : i ≤ j
   · have h : ∃ i' j', i' ≤ j' ∧ (p ^ 2) ^ i = (p ^ 2) ^ i' ∧ p * (p ^ 2) ^ j = p * (p ^ 2) ^ j' :=
       ⟨i, j, hij, rfl, rfl⟩
-    rw [dif_pos h, if_pos hij]
+    rw [dite_eq_left h, if_pos hij]
     obtain ⟨-, h2, h3⟩ := Classical.choose_spec (Classical.choose_spec h)
     have hi : i = Classical.choose h := Nat.pow_right_injective (sq_ge_two p hp) h2
     have hj : j = Classical.choose (Classical.choose_spec h) :=
       Nat.pow_right_injective (sq_ge_two p hp) (Nat.eq_of_mul_eq_mul_left (by omega) h3)
     rw [← hj, ← hi]
-  · rw [if_neg hij, dif_neg]
+  · rw [if_neg hij, dite_eq_right]
     rintro ⟨i', j', h1, h2, h3⟩
     have hi : i = i' := Nat.pow_right_injective (sq_ge_two p hp) h2
     have hj : j = j' := Nat.pow_right_injective (sq_ge_two p hp) (Nat.eq_of_mul_eq_mul_left (by omega) h3)
@@ -101,7 +101,7 @@ lemma coefA_pow (p i j : ℕ) (hp : 2 ≤ p) :
 lemma coefA_zero (p a b : ℕ) (h : ¬∃ i j, i ≤ j ∧ a = (p ^ 2) ^ i ∧ b = p * (p ^ 2) ^ j) :
     coefA p a b = 0 := by
   unfold coefA
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem logarithm_series_coefficient_identities : LogarithmSeriesIdentities := by
   intro p hp

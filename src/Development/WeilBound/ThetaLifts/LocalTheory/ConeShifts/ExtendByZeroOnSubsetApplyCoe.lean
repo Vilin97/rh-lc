@@ -149,7 +149,7 @@ def PU (J : Matrix (Fin n) (Fin n) E) (a : AF F) : UA σ J →* UA σ J :=
         Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_smul, h, h1, h2, h3, zero_smul, Matrix.one_mul, Matrix.mul_one, hg,
         add_zero, zero_add]
       rw [← add_smul]; simp
-    · unfold unitP; rw [dif_neg h]; exact Subgroup.one_mem _
+    · unfold unitP; rw [dite_eq_right h]; exact Subgroup.one_mem _
 
 theorem mat_PU {J : Matrix (Fin n) (Fin n) E} {a : AF F} (h : a * a = a) (g : UA σ J) :
     mat (PU σ J a g) = a • mat g + (1 - a) • (1 : Matrix _ _ (AE F E)) := coe_unitP h g.1

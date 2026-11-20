@@ -37,7 +37,7 @@ theorem cW_mulVec (θ : ℝ) {v : Fin (2 * r + k + 1) → ℂ} (hv : inWb k r v)
 
 theorem fvec_last (z : Fin (2 * r + k + 1) → ℂ) : fvec k r z (Fin.last r) = z := by
   unfold fvec
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
 
 end cWLemmas
 

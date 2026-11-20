@@ -48,7 +48,7 @@ private theorem valued_v_lt_one_of_ordL_eq_one (w : Pl E) (ϖ : (w.adicCompletio
     Valued.v (ϖ : w.adicCompletion E) < 1 := by
   have h0 : Valued.v (ϖ : w.adicCompletion E) ≠ 0 := by simp
   unfold ordL at hϖ
-  rw [dif_neg h0] at hϖ
+  rw [dite_eq_right h0] at hϖ
   have h1 : Multiplicative.toAdd (WithZero.unzero h0) = -1 := by linarith
   have h2 : WithZero.unzero h0 = Multiplicative.ofAdd (-1 : ℤ) := by rw [← h1]; rfl
   rw [← WithZero.coe_unzero h0, h2, ← WithZero.coe_one, WithZero.coe_lt_coe]

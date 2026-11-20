@@ -81,7 +81,7 @@ omit [NeZero n'] in
 theorem sum_eZ_val (e : Fin X.F.J → Fin r → ℕ) (j : Fin X.F.J) : X.eZ e (j.val : ℤ) = e j := by
   have hJ : 0 < X.F.J := lt_of_le_of_lt (Nat.zero_le _) j.isLt
   unfold Dat.eZ
-  rw [dif_pos hJ]
+  rw [dite_eq_left hJ]
   congr 1
   apply Fin.ext
   have h1 : ((j.val : ℤ) % (X.F.J : ℤ)) = j.val := Int.emod_eq_of_lt (by omega) (by exact_mod_cast j.isLt)

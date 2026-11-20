@@ -35,7 +35,7 @@ theorem trOn_eqvM (ι : H →* G) (hι : Function.Injective ι) (ρ : Representa
   have hR : ∀ k ∈ K', ∀ x, F (x * k) = F x := fun k hk x => (hF k hk x).2
   have hmaps := GlobalTheory.T.heckeOperator_preserves_equivariantRightInvariant G H V ι ρ K K' F hF
   unfold trOn
-  rw [dif_pos hmaps]
+  rw [dite_eq_left hmaps]
   haveI : Fintype (DoubleCoset.Quotient (ι.range : Set G) (K' : Set G)) := Fintype.ofFinite _
   set T := levOp (rightReg ℂ G V) K K' F LinearMap.id with hT
   set M := eqvM ι ρ K' with hM

@@ -67,14 +67,14 @@ theorem nu_numRec (large₂ : SizeData₂ D) (hD : ∃ n : ℕ, D.s.Del = n) (u 
   have e1 : (numDatumOfParameters D large₂).srcPar (codeRec large₂ u) z i = DV.srcPar D u (tauPl D z) i := by
     unfold NumDatum.srcPar DV.srcPar
     by_cases h : i < D.R.k
-    · rw [dif_pos h, dif_pos h]
+    · rw [dite_eq_left h, dite_eq_left h]
       exact uW_numRec large₂ hD u z ⟨i, h⟩
-    · rw [dif_neg h, dif_neg h, D.hcW_e]
+    · rw [dite_eq_right h, dite_eq_right h, D.hcW_e]
   have e2 : (((numDatumOfParameters D large₂).eQ j z : ℚ) : ℝ) = DV.wSz D j (tauPl D z) := by
     unfold NumDatum.eQ DV.wSz
     by_cases h : 1 ≤ j ∧ j ≤ D.R.m
-    · rw [dif_pos h, dif_pos h]
-    · rw [dif_neg h, dif_neg h, Rat.cast_zero]
+    · rw [dite_eq_left h, dite_eq_left h]
+    · rw [dite_eq_right h, dite_eq_right h, Rat.cast_zero]
   unfold NumDatum.nu DV.nuRow
   rw [e1, ← e2]
   push_cast
@@ -113,7 +113,7 @@ theorem nuRow_zero_le_three_mul (large₂ : SizeData₂ D) (P : ParameterChoice'
     linarith [P.kS_le, mul_le_mul_of_nonneg_right hk' hS.le]
   have hwj : wj D (i + 1) τ = (((D.hc τ).e ⟨i, hi⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (by simpa using hi)]
+    rw [dite_eq_left (by simpa using hi)]
     rfl
   rw [RowWeightLemmas.nuRow_head D u i hi τ 0 hk0, D.hcW_first u τ hk0, D.hcW_e]
   push_cast

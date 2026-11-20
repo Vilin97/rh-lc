@@ -113,10 +113,10 @@ theorem emb_mulVec_out (μ : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (v : Fin (2
     (i : Fin (2 * r + k + 1)) (hi : i.val < r ∨ r + k < i.val) : (embWb k r μ *ᵥ v) i = v i := by
   rw [Matrix.mulVec, dotProduct, Finset.sum_eq_single i]
   · unfold embWb
-    rw [dif_neg (by omega), if_pos ⟨rfl, by omega⟩, one_mul]
+    rw [dite_eq_right (by omega), if_pos ⟨rfl, by omega⟩, one_mul]
   · intro l _ hl
     unfold embWb
-    rw [dif_neg (by omega), if_neg (fun h => hl h.1.symm), zero_mul]
+    rw [dite_eq_right (by omega), if_neg (fun h => hl h.1.symm), zero_mul]
   · simp
 
 theorem wLast_inWb (s : ℂ) : inWb k r (s • wLast k r) := by

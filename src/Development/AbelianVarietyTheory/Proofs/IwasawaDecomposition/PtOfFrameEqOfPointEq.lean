@@ -157,10 +157,10 @@ theorem exists_frame_mulVec (X : Data E r) {p : ℕ} (hr : r = p + X.p0) (ρ : (
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
       unfold perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
       unfold perFr
-      rw [dif_neg a, dif_pos (show conjEmb (ρ (e j).1) ∈ X.Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (ρ (e j).1) ∈ X.Ψ from hτ), dite_eq_left hn]
       rfl
   have hbl : ∀ j j', V j j' ≠ 0 → (idx j).1 = (idx j').1 ∧ (((idx j).2 : ℕ) < X.p0 ↔ ((idx j').2 : ℕ) < X.p0) := by
     intro j j' h

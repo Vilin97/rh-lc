@@ -295,7 +295,7 @@ def what₂ : RowsRest B C :=
     Bu_linR := fun _ _ => ⟨fun _ _ => by simp, fun _ _ => by simp⟩
     eMtTw := eT
     perCol_tie := fun u μ hμ φ F => by
-      rw [dif_neg hμ]; rfl }
+      rw [dite_eq_right hμ]; rfl }
 
 theorem sub_md (m e j : ℕ) (h : j ≠ m) : Subsingleton (Eu (md m e j)) := by
   rw [md, if_neg h]

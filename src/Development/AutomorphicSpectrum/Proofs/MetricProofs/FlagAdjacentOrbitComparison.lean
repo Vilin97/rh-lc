@@ -201,7 +201,7 @@ theorem dy_sum_some (M : FlagModel y Ψ N j) {p : Ψ × Fin N} {k₀ : K} (hk : 
   rw [Finset.sum_eq_single k₀]
   · have e : M.dy p k₀ = 1 := by
       unfold FlagModel.dy
-      rw [dif_neg (fun h => h p hk), if_pos hk]
+      rw [dite_eq_right (fun h => h p hk), if_pos hk]
     rw [e]
     simp
   · intro k _ hne
@@ -210,7 +210,7 @@ theorem dy_sum_some (M : FlagModel y Ψ N j) {p : Ψ × Fin N} {k₀ : K} (hk : 
       simp
     · have e : M.dy p k = 0 := by
         unfold FlagModel.dy
-        rw [dif_neg h, if_neg fun e => hne (by rw [hk] at e; exact (Option.some_injective _ e).symm)]
+        rw [dite_eq_right h, if_neg fun e => hne (by rw [hk] at e; exact (Option.some_injective _ e).symm)]
       rw [e]
       simp
   · simp
@@ -224,7 +224,7 @@ theorem dy_sum_none (M : FlagModel y Ψ N j) {p : Ψ × Fin N} (hp : M.blk p = n
     simp
   · have e : M.dy p k = 0 := by
       unfold FlagModel.dy
-      rw [dif_neg h, if_neg fun e => by rw [hp] at e; exact absurd e (by simp)]
+      rw [dite_eq_right h, if_neg fun e => by rw [hp] at e; exact absurd e (by simp)]
     rw [e]
     simp
 
@@ -279,7 +279,7 @@ variable {N j : ℕ}
 
 theorem minor_one (S : Finset (Fin N)) : minorIJ (1 : Matrix (Fin N) (Fin N) ℂ) S S = 1 := by
   unfold minorIJ
-  rw [dif_pos rfl, Matrix.submatrix_one _ (S.orderEmbOfFin rfl).injective, Matrix.det_one]
+  rw [dite_eq_left rfl, Matrix.submatrix_one _ (S.orderEmbOfFin rfl).injective, Matrix.det_one]
 
 theorem exists_minor_ne (hj : j ≤ N) (i : Fin N) {h : Matrix (Fin N) (Fin N) ℂ} (hd : h.det ≠ 0) :
     ∃ I, minorIJ h I (stepCols N j i) ≠ 0 := by

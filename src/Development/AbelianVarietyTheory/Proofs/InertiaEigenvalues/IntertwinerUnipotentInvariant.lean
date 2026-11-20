@@ -169,13 +169,13 @@ theorem res_std (χ : Gn g (k + l) → ℂ) (x : Gn g k) (y : Gn g l) :
     intro M i j
     have hi := i.2
     have hj := j.2
-    rw [tl, entN, dif_pos ⟨by omega, by omega⟩]
+    rw [tl, entN, dite_eq_left ⟨by omega, by omega⟩]
     rfl
   have e2 : ∀ (M : Mt g (k + l)) (i j : Fin l), br k l M i j = M (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inr j)) := by
     intro M i j
     have hi := i.2
     have hj := j.2
-    rw [br, entN, dif_pos ⟨by omega, by omega⟩]
+    rw [br, entN, dite_eq_left ⟨by omega, by omega⟩]
     rfl
   refine Finset.sum_bij (fun B _ => par finSumFinEquiv x B y) (fun B _ => ?_) (fun B _ B' _ h => ?_)
     (fun z hz => ?_) (fun _ _ => rfl)

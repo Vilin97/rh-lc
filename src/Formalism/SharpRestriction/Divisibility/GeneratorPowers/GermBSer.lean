@@ -124,7 +124,7 @@ theorem val_scale {Y Z : Scheme.{0}} {K : Type} [Fintype K] (φ : K → (Y ⟶ t
     intro k
     have hk := hJ (r ≫ φ k)
     simpa using hk
-  rw [dif_pos hz, dif_pos (show r z ∈ (⊤ : Y.Opens) from trivial)]
+  rw [dite_eq_left hz, dite_eq_left (show r z ∈ (⊤ : Y.Opens) from trivial)]
   dsimp only
   refine (MonoidHom.map_mul _ _ _).trans ?_
   congr 1

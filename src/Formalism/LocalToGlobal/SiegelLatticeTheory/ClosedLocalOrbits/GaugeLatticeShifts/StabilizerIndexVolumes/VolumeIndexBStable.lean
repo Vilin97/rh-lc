@@ -187,7 +187,7 @@ theorem volume_index_b_stable (D : D7) (u u' : D.what₂.Word)
         apply hG'
         have e : Dl F0 F'.fl (D.R.rS + 1) = 0 := by
           unfold Dl leadMinorE
-          rw [dif_pos le_rfl]
+          rw [dite_eq_left le_rfl]
           exact h0
         rw [e, zero_mul]
       rw [Fintype.linearIndependent_iff]

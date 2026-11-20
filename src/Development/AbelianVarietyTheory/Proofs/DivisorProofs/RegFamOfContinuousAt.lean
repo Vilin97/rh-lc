@@ -18,7 +18,7 @@ def regFam {Y : Type} (Ei : ℂ → Y → ℂ) (s : ℂ) (y : Y) : ℂ :=
 theorem regFam_eq_of_tendsto {Y : Type} {Ei : ℂ → Y → ℂ} {s : ℂ} {v : Y → ℂ}
     (h : ∀ y, Tendsto (fun t => Ei t y) (𝓝[≠] s) (𝓝 (v y))) (y : Y) : regFam Ei s y = v y := by
   have h' : ∀ y, ∃ c, Tendsto (fun t => Ei t y) (𝓝[≠] s) (𝓝 c) := fun y => ⟨v y, h y⟩
-  rw [regFam, dif_pos h']
+  rw [regFam, dite_eq_left h']
   exact tendsto_nhds_unique (h' y).choose_spec (h y)
 
 theorem regFam_of_continuousAt {Y : Type} {Ei : ℂ → Y → ℂ} {s : ℂ} (h : ∀ y, ContinuousAt (fun t => Ei t y) s)
@@ -27,7 +27,7 @@ theorem regFam_of_continuousAt {Y : Type} {Ei : ℂ → Y → ℂ} {s : ℂ} (h 
 
 theorem regFam_of_not {Y : Type} {Ei : ℂ → Y → ℂ} {s : ℂ}
     (h : ¬ ∀ y, ∃ c, Tendsto (fun t => Ei t y) (𝓝[≠] s) (𝓝 c)) (y : Y) : regFam Ei s y = 0 := by
-  rw [regFam, dif_neg h]
+  rw [regFam, dite_eq_right h]
 
 example {Y : Type} (f : Y → ℂ) (s : ℂ) (y : Y) : regFam (fun _ => f) s y = f y :=
   regFam_of_continuousAt (Ei := fun _ => f) (s := s) (fun y => continuousAt_const (y := f y)) y

@@ -151,21 +151,21 @@ theorem exOf_rootLetter (L : CmList A) (u : AllWt.Weight S.Dw) (x : DV.Rt D.what
   have hx := x.2.2
   have hψ : L.ψ x.1 = ⟨DV.tauEmb D x.1, A.cm x.1⟩ := Subtype.ext (L.ψ_val x.1)
   by_cases h : (x.2 : ℕ) < S.Dw.p
-  · rw [RootSum.rootLetter, dif_pos h, if_pos h]
+  · rw [RootSum.rootLetter, dite_eq_left h, if_pos h]
     rw [hψ, one_mul]
     simp only [AllWt.exOf, exZ]
     unfold AllWt.wtOf
     dsimp only
-    rw [dif_pos (A.cm x.1), dif_pos h, sub_zero]
+    rw [dite_eq_left (A.cm x.1), dite_eq_left h, sub_zero]
     rfl
-  · rw [RootSum.rootLetter, dif_neg h, if_neg h]
+  · rw [RootSum.rootLetter, dite_eq_right h, if_neg h]
     have h' : conjEmb (conjEmb (DV.tauEmb D x.1)) (A.H.rt : D.host.E) = A.H.rt0 := by
       rw [RootSum.conjEmb_conjEmb']; exact A.cm x.1
     have hi : S.Dw.p + S.Dw.q - 1 - (x.2 : ℕ) < S.Dw.q := by omega
     simp only [AllWt.exOf, exZ]
     unfold AllWt.wtOf
     dsimp only
-    rw [dif_neg (RootSum.conj_tau_ne x.1), dif_pos h', dif_pos hi, sub_zero, neg_one_mul, neg_inj]
+    rw [dite_eq_right (RootSum.conj_tau_ne x.1), dite_eq_left h', dite_eq_left hi, sub_zero, neg_one_mul, neg_inj]
     congr 1
     · exact Subtype.ext ((RootSum.conjEmb_conjEmb' _).trans (L.ψ_val x.1).symm)
     · exact Fin.ext (by simp only [Fin.val_cast]; omega)

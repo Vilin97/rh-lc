@@ -36,7 +36,7 @@ def rowGL (ℓ : Fin a) (y : Fin a → R) : GL (Fin a) R :=
   if h : IsUnit (y ℓ) then (isUnit_rowMat_iff.2 h).unit else 1
 
 theorem val_rowGL {ℓ : Fin a} {y : Fin a → R} (h : IsUnit (y ℓ)) : (rowGL ℓ y).val = rowMat ℓ y := by
-  rw [rowGL, dif_pos h, IsUnit.unit_spec]
+  rw [rowGL, dite_eq_left h, IsUnit.unit_spec]
 
 theorem single_vecMul_rowGL {ℓ : Fin a} {y : Fin a → R} (h : IsUnit (y ℓ)) :
     Pi.single ℓ 1 ᵥ* (rowGL ℓ y).val = y := by

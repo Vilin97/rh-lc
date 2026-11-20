@@ -15,7 +15,7 @@ theorem gs_appLE {X Y : Scheme.{0}} (f : Y ⟶ X) (U : X.Opens) (V : Y.Opens) (e
   have hf : f y ∈ U := e hy
   have key := Y.presheaf.germ_res_apply (homOfLE e) y hy ((f.app U).hom a)
   unfold gs
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   split_ifs with h1
   · exact key
   · exact absurd hy h1
@@ -25,8 +25,8 @@ theorem gm_spMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (u : Aˣ
   have key := congrArg (fun g => (CommRingCat.Hom.hom g) (u : A)) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom f))
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at key
   unfold gm
-  rw [dif_pos (show (spMap f) z ∈ (⊤ : (Sp A).Opens) from trivial)]
-  rw [dif_pos (show (𝟙 (Sp B)) z ∈ (⊤ : (Sp B).Opens) from trivial)]
+  rw [dite_eq_left (show (spMap f) z ∈ (⊤ : (Sp A).Opens) from trivial)]
+  rw [dite_eq_left (show (𝟙 (Sp B)) z ∈ (⊤ : (Sp B).Opens) from trivial)]
   apply Units.ext
   simp only [MonoidHom.comp_apply, Units.coe_map, pullU, unitΓ, toΓ, MonoidHom.coe_coe, Scheme.Hom.id_app, CommRingCat.hom_id, RingHom.id_apply]
   erw [key]

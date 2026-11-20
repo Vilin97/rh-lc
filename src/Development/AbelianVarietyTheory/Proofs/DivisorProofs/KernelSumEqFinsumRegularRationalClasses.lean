@@ -168,10 +168,10 @@ theorem toSub_conj {G : Type} [Group G] (U : Subgroup G) (k : U) (y : G) :
     toSub U ((k : G)⁻¹ * y * k) = k⁻¹ * toSub U y * k := by
   unfold toSub
   by_cases hy : y ∈ U
-  · rw [dif_pos hy, dif_pos (mul_mem (mul_mem (inv_mem k.2) hy) k.2)]
+  · rw [dite_eq_left hy, dite_eq_left (mul_mem (mul_mem (inv_mem k.2) hy) k.2)]
     ext
     simp
-  · rw [dif_neg hy, dif_neg]
+  · rw [dite_eq_right hy, dite_eq_right]
     · simp
     · intro h
       apply hy

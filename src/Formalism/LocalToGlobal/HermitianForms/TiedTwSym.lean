@@ -37,12 +37,12 @@ def eYS {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls 
 
 theorem eYS_end {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (F : FormsTiedSym D u Ch chOf) (i : ℕ)
     (hi : i ≤ D.R.m) (h : i = 0 ∨ i = D.R.m) : eYS F i hi = (F.val i hi h).eY := by
-  rw [eYS, dif_pos h]
+  rw [eYS, dite_eq_left h]
 
 theorem eYS_mid {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (F : FormsTiedSym D u Ch chOf) (i : ℕ)
     (h1 : 1 ≤ i) (h2 : i + 1 ≤ D.R.m) : eYS F i (le_of_succ_m h2) = F.eYC i h1 h2 := by
   have hn : ¬(i = 0 ∨ i = D.R.m) := by omega
-  rw [eYS, dif_neg hn]
+  rw [eYS, dite_eq_right hn]
 
 theorem eYS_de {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (F : FormsTiedSym D u Ch chOf) (i : ℕ)
     (hi : i ≤ D.R.m) :

@@ -222,7 +222,7 @@ theorem sum_weights_per_datum : ∀ (K V W : Type) [Field K] [NumberField K] [St
       obtain ⟨i, hi, rfl⟩ := Finset.mem_image.1 (Finset.mem_coe.1 hP)
       refine ⟨sqM_shape _ _ _ (hj i hi), fun l hl => ?_⟩
       have hl' : l ≤ r + 1 := by omega
-      rw [← (hd i hi).1, lab, dif_pos ⟨hl, hl'⟩, ← AdaptInv.dl_eq (hA i hi).2.1 (hA i hi).2.2]
+      rw [← (hd i hi).1, lab, dite_eq_left ⟨hl, hl'⟩, ← AdaptInv.dl_eq (hA i hi).2.1 (hA i hi).2.2]
       rfl
   have c2 : ((s.image fun i => (N i).c).card : ℝ) ≤ 8 * ((Formalism.HermitianLatticesTheory.fDeg K) : ℝ) ^ 2 * Del ^ (2 * (2 + cf K)) := by
     have h1 := GlobalTheory.DegCnt.NormOneCount.main K hK Del hDel

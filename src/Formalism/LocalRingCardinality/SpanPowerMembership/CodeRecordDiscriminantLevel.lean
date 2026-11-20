@@ -407,12 +407,12 @@ variable {R : Ranks} (h : HCParam R) (n : ℕ)
 theorem hcLet_mid (l : ℕ) (hl : l < R.k - 2) :
     hcLet h n a ⟨l + 1, by omega⟩ = h.u ⟨l + 1, by omega⟩ - (if a ⟨l, hl⟩ then (n : ℚ) else 0) := by
   unfold hcLet
-  rw [dif_pos ⟨by simp, by simpa using hl⟩]
+  rw [dite_eq_left ⟨by simp, by simpa using hl⟩]
   rfl
 
 theorem hcLet_end (i : Fin R.k) (hi : i.1 = 0 ∨ R.k - 2 ≤ i.1 - 1) : hcLet h n a i = h.u i := by
   unfold hcLet
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 def hcWord : HCParam R :=
   { h with

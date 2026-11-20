@@ -19,12 +19,12 @@ theorem hw_shift (R : Type) [CommRing R] {m : ℕ} (ν : Fin (m + 1) → ℕ) (c
     congr 1
     unfold nuNext
     have h : (s.castSucc : Fin (m + 1)).val + 1 < m + 1 := by simp only [Fin.val_castSucc]; omega
-    rw [dif_pos h, dif_pos h]
+    rw [dite_eq_left h, dite_eq_left h]
     dsimp only
     omega
   · have h : ¬ ((Fin.last m : Fin (m + 1)).val + 1 < m + 1) := by simp
     unfold nuNext
-    rw [dif_neg h, dif_neg h]
+    rw [dite_eq_right h, dite_eq_right h]
     dsimp only
     rw [Nat.sub_zero, Nat.sub_zero, pow_add]
     rfl

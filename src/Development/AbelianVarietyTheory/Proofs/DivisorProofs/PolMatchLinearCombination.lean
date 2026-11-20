@@ -19,14 +19,14 @@ noncomputable def extMul {ι : Type} (M : ι → Type) [∀ v, AddCommGroup (M v
       intro w
       funext v
       by_cases hv : (v : ι) ∈ S
-      · rw [dif_pos hv]
+      · rw [dite_eq_left hv]
         by_cases hvi : v = ⟨i, h i.2⟩
         · subst hvi
           simp
         · have hne : (⟨v, hv⟩ : S) ≠ i := fun e => hvi (Subtype.ext (by rw [← e]))
-          rw [Function.update_of_ne hne, Function.update_of_ne hvi, dif_pos hv]
+          rw [Function.update_of_ne hne, Function.update_of_ne hvi, dite_eq_left hv]
       · have hvi : v ≠ ⟨i, h i.2⟩ := fun e => hv (by rw [e]; exact i.2)
-        rw [dif_neg hv, Function.update_of_ne hvi, dif_neg hv]
+        rw [dite_eq_right hv, Function.update_of_ne hvi, dite_eq_right hv]
     simp only [key]
     exact (PiTensorProduct.tprod ℂ).map_update_add _ _ _ _
   map_update_smul' x i c y := by
@@ -35,14 +35,14 @@ noncomputable def extMul {ι : Type} (M : ι → Type) [∀ v, AddCommGroup (M v
       intro w
       funext v
       by_cases hv : (v : ι) ∈ S
-      · rw [dif_pos hv]
+      · rw [dite_eq_left hv]
         by_cases hvi : v = ⟨i, h i.2⟩
         · subst hvi
           simp
         · have hne : (⟨v, hv⟩ : S) ≠ i := fun e => hvi (Subtype.ext (by rw [← e]))
-          rw [Function.update_of_ne hne, Function.update_of_ne hvi, dif_pos hv]
+          rw [Function.update_of_ne hne, Function.update_of_ne hvi, dite_eq_left hv]
       · have hvi : v ≠ ⟨i, h i.2⟩ := fun e => hv (by rw [e]; exact i.2)
-        rw [dif_neg hv, Function.update_of_ne hvi, dif_neg hv]
+        rw [dite_eq_right hv, Function.update_of_ne hvi, dite_eq_right hv]
     simp only [key]
     exact (PiTensorProduct.tprod ℂ).map_update_smul _ _ _ _
 
@@ -66,8 +66,8 @@ theorem extMul_tprod {ι : Type} (M : ι → Type) [∀ v, AddCommGroup (M v)] [
   congr 1
   funext v
   by_cases hv : (v : ι) ∈ S
-  · rw [dif_pos hv]
-  · rw [dif_neg hv, hu v v.2 hv]
+  · rw [dite_eq_left hv]
+  · rw [dite_eq_right hv, hu v v.2 hv]
 
 theorem polMatch_smul_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E)
     (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf →

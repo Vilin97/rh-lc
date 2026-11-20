@@ -64,7 +64,7 @@ theorem sphf : Ad3.K.GL2LocalData.WPiRep → Ad3.K.QuadraticBaseChangeGL3.Th.PIK
     have hex : ∃ t : Eˣ, Algebra.norm F (t : E) = ((1 : GL (Fin 2) F).val).det :=
       ⟨1, by simp⟩
     unfold GL2LocalData.Wc
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     have hN1 : Algebra.norm F (hex.choose : E) = 1 := by
       rw [hex.choose_spec]; simp
     generalize hex.choose = t at hN1 ⊢

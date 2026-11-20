@@ -122,7 +122,7 @@ theorem nonRelCharC_holds : NonRelCharC := by
   have hisoF : ∀ a b, (VS D).hT (t.lin a) (t.lin b) = (VS D).hT a b := hiso
   set F' := mapFlag t.lin hiso (X.Fu u') with hF'
   have hfr : t.frame = ⟨F', t.lin (X.Fu u').z⟩ := by
-    unfold GTerm.frame mapLF; rw [dif_pos hiso]; rfl
+    unfold GTerm.frame mapLF; rw [dite_eq_left hiso]; rfl
   have hnr : ¬ Relevant D.host.F (X.Fu u) F' := by
     intro h; apply ht
     unfold GTerm.relevant TermDef.Term.relevant TermDef.IsRel

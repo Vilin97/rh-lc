@@ -312,7 +312,7 @@ theorem sheet_term : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype
   obtain ⟨τ, σ, c, hτa, hτt, hdet, hγτ, hσS, hca, hc0, hσc⟩ := sheet_local K J P n Ψ V γ t hP hV hol hmem ht
   have hex : ∃ g, IsSheet P Ψ (sheetProj Ψ γ t) (sheetNorm Ψ (γ t)) g := ⟨σ, hσS⟩
   unfold sheetDensity
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨g, hgdef⟩ : ∃ g, g = hex.choose := ⟨_, rfl⟩
   have hg : IsSheet P Ψ (sheetProj Ψ γ t) (sheetNorm Ψ (γ t)) g := hgdef ▸ hex.choose_spec
   rw [← hgdef]
@@ -439,7 +439,7 @@ theorem ptsIntegral_sheets : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k,
   have hval : ptsIntegral (e := n) P (fun _ z => Real.log (A.h z)) G =
       ptsIntegralAt P Ψ (fun _ z => Real.log (A.h z)) G := by
     unfold ptsIntegral
-    rw [dif_pos hex, ← hΨdef]
+    rw [dite_eq_left hex, ← hΨdef]
   have hγ : ∀ m, AnalyticOnNhd ℂ (γ m) (V m) := fun m =>
     analyticOnNhd_of_differentiableOn (hS.isOpen m) (hS.hol m)
   have hmem : ∀ m, ∀ t ∈ V m, γ m t ∈ mcPts P := fun m t ht => (hS.mem m t ht).1

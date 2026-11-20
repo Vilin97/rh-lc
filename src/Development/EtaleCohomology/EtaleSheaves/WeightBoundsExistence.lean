@@ -83,7 +83,7 @@ theorem exists_cochain : ∃ η : Cochain ((chains R).obj E) K k,
     (((chains R).obj E).XIsoOfEq (by omega : p = -(((-p).toNat : ℕ) : ℤ))).hom ≫ comp F hF (-p).toNat q (by omega)
     else 0, fun N w h U x => ?_⟩
   unfold ev
-  rw [Cochain.mk_v, dif_pos (by omega), comp_cast F hF N _ (by omega) _ w h, comp, Iso.inv_hom_id_assoc]
+  rw [Cochain.mk_v, dite_eq_left (by omega), comp_cast F hF N _ (by omega) _ w h, comp, Iso.inv_hom_id_assoc]
   exact freeLift_gen _ _ _ _ U x
 
 end Lift
@@ -182,11 +182,11 @@ theorem LeafHAWBounds_proved : LeafHAWBounds := by
       Fh H α.1 β.1 U w p (N' - p) (y.sub 0 p (by omega)) (y.sub p (N' - p) (by omega))) ?_ x]
   swap
   · intro N' y hN
-    rw [dif_pos (by omega), hc N' w _ U y]
+    rw [dite_eq_left (by omega), hc N' w _ U y]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [Units.smul_def]
     unfold Fh
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   rw [bd_aw (Fh H α.1 β.1 U w) (fun p : ℕ => ((m * (p : ℤ)).negOnePow : ℤ)) (fun p : ℕ => ((m * ((p : ℤ) - 1)).negOnePow : ℤ))
     (fun p => by congr 2; push_cast; ring) N x]
   rw [secmap_sum, Finset.smul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
@@ -198,11 +198,11 @@ theorem LeafHAWBounds_proved : LeafHAWBounds := by
   refine recH _ _ _ _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_ ?_
   · refine bd_congr (fun q z hq => ?_) _
     unfold Fh
-    rw [dif_pos (by omega), dif_pos (by omega)]
+    rw [dite_eq_left (by omega), dite_eq_left (by omega)]
     exact hmul_congr H U α.1 β.1 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
   · refine bd_congr (fun q z hq => ?_) _
     unfold Fh
-    rw [dif_pos (by omega), dif_pos (by omega)]
+    rw [dite_eq_left (by omega), dite_eq_left (by omega)]
     exact hmul_congr H U α.1 β.1 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
   · subst hk
     simp only [← Units.val_mul, ← Int.negOnePow_add, ← Units.val_neg, ← Int.negOnePow_succ]

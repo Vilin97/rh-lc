@@ -44,7 +44,7 @@ theorem vRdef_eq_of (hV : Formalism.L2.SG.Pf.RelativeIndexFlags.VolumeIndexRepre
       ∃ x : Point D.host.E (D.R.rS + 1) × LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) × MatR D × MatR D,
         NormRep t x.1 x.2.1 x.2.2.1 x.2.2.2 := ⟨hr, hg, ⟨(w, F', L, U), hN⟩⟩
   unfold vRdef
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hx := hex.2.2.choose_spec
   set x := hex.2.2.choose with hxdef
   have hGx : Gval (lf D F0) x.2.1 ≠ 0 := by

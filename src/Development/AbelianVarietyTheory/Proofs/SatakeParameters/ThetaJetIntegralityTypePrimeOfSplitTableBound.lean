@@ -247,7 +247,7 @@ theorem jetLossAll_of_jetSplitAmb : JetSplitAmb → ∀ (D : D7) (EX : ErrX D)
   have hdisc := GlobalTheory.GoodDepth.not_dvd_discr_host D.R D.host _ hp (UpperTheory.Ram.g_notMem_small D i) hpq fun h => hpd h.dvd
   obtain ⟨lam, hlam⟩ := GlobalTheory.T.place_over_p_induced_by_algebraic_padic_embedding _ (recSeam D).σ₀ (D.host.g i) w hw
   obtain ⟨ι, hι⟩ := GlobalTheory.ThLoc.place_extends_to_iso _ lam
-  have hιC : ∀ x ∈ TaylorLogMetric.Qbar, TaylorLogMetric.lamC lam x = ι x := fun x hx => by rw [TaylorLogMetric.lamC, dif_pos hx]; exact (hι ⟨x, hx⟩).symm
+  have hιC : ∀ x ∈ TaylorLogMetric.Qbar, TaylorLogMetric.lamC lam x = ι x := fun x hx => by rw [TaylorLogMetric.lamC, dite_eq_left hx]; exact (hι ⟨x, hx⟩).symm
   have hval : ∀ k : D.what₂.LL, ‖ι ((recSeam D).σ₀ k)‖ ≤ 1 → w.valuation _ k ≤ 1 := fun k hk => by
     have hq : (recSeam D).σ₀ k ∈ TaylorLogMetric.Qbar := by
       rw [mem_algebraicClosure_iff]

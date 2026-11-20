@@ -17,12 +17,12 @@ theorem top2c2_wj_nonneg {D : D7} (L : SizeData₂ D) (j : ℕ) (τ : D.what₂.
     have key := S.wj_ge L τ (max j 1) hj1 hj2
     have hp := S.w''_pos L
     unfold wj at key ⊢
-    rw [dif_pos h]
-    rw [dif_pos h'] at key
+    rw [dite_eq_left h]
+    rw [dite_eq_left h'] at key
     have hf : (⟨max j 1 - 1, h'⟩ : Fin D.R.m) = ⟨j - 1, h⟩ := Fin.ext (by show max j 1 - 1 = j - 1; omega)
     rw [hf] at key
     linarith
-  · unfold wj; rw [dif_neg h]
+  · unfold wj; rw [dite_eq_right h]
 
 theorem top2c2_dlSize (eps : ℝ) (Fm : FamP eps) : J.DlSize Fm := by
   unfold J.DlSize

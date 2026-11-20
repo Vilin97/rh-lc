@@ -20,7 +20,7 @@ theorem cHkT_eq_of_isFrob : ∀ (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw) (b : Bo
     rw [map_mul, map_inv, inv_mul_eq_one] at h1
     exact h1.symm
   unfold cHkT
-  rw [dif_pos ⟨σ, hσ⟩, key _ (Exists.choose_spec (⟨σ, hσ⟩ : ∃ τ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om,
+  rw [dite_eq_left ⟨σ, hσ⟩, key _ (Exists.choose_spec (⟨σ, hσ⟩ : ∃ τ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om,
     IsFrob (F := D.host.E) (D.nd.plOm.1 P) (normV P) τ))]
 
 end GlobalTheory.HeightCounting.FormsStep

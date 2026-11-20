@@ -222,7 +222,7 @@ theorem cusp_of_iter (Γ : Subgroup SL(2, ℤ)) (k : ℕ) (F : (ℍ → ℂ) →
 theorem DdF_eq (k : ℤ) (σ : SL(2, ℤ)) (f : ℍ → ℂ) : DdF k σ f = f ∣[k] σ := by
   have : toGL (mat σ) = (σ : GL (Fin 2) ℝ) := by
     have hd : ¬ (mat σ).det = 0 := by simp
-    rw [toGL, dif_neg hd]
+    rw [toGL, dite_eq_right hd]
     ext i j
     rfl
   simp only [DdF, hkF, Finset.univ_unique, Finset.sum_singleton, this]

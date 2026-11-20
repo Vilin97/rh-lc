@@ -68,7 +68,7 @@ theorem mem_bkOn_of_orthogonal : ∀ (D : Formalism.BasicNotions.D7) (N : NData 
   · obtain ⟨y', hy', e⟩ := key
     obtain ⟨c, hc, hc'⟩ := isFCoc_iff.1 hy'
     unfold bkOn
-    rw [dif_pos hv]
+    rw [dite_eq_left hv]
     refine Submodule.subset_span ⟨y, c, y', 1, hc, hc', fun g a => ?_, rfl⟩
     rw [smul_eq_mul, mul_one, (eq_iff hK _ _).1 (e g a), hlift]
   · have : IsLocallyConstant fun g => y.1 g a :=
@@ -87,7 +87,7 @@ theorem mem_bkOn_of_orthogonal : ∀ (D : Formalism.BasicNotions.D7) (N : NData 
     have hx : Submodule.Quotient.mk x ∈ bkOn bkP i (Tgl i s) (1 : GE N →* Kˣ) K v := by
       obtain ⟨c, hc, hc'⟩ := isFCoc_iff.1 hd
       unfold bkOn
-      rw [dif_pos hv]
+      rw [dite_eq_left hv]
       exact Submodule.subset_span ⟨x, c, d, 1, hc, hc', fun g a => by rw [smul_eq_mul, mul_one], rfl⟩
     obtain ⟨f, hf, e⟩ := H x hx
     refine ⟨fun g => divMap ϖ (lift (f g)), hf.comp fun k => divMap ϖ (lift k), fun g h => ?_⟩

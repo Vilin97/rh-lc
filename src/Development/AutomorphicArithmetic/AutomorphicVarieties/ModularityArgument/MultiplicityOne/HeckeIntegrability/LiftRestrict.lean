@@ -212,5 +212,5 @@ theorem UpperTheory.V.Z.Mult.Pi.zTrA :
   have hinv : ∀ v ∈ fixed (τ w.1).ρ (N w.1), (Lv (τ w.1).ρ (N w.1) (F w.1 false) * Lv (τ w.1).ρ (N w.1) (F w.1 true)) v ∈
       fixed (τ w.1).ρ (N w.1) := fun v hv =>
     hαinv w ⟨_, hFh _ w.2 _⟩ _ (hαinv w ⟨_, hFh _ w.2 _⟩ v hv)
-  rw [GlobalTheory.BCT.trOn, dif_pos hinv]
+  rw [GlobalTheory.BCT.trOn, dite_eq_left hinv]
   rfl

@@ -79,7 +79,7 @@ theorem GlobalTheory.HeatRatioW.dl_comm_transl_ratio : ∀ (E : Type) [Field E] 
     have c3 := key _ _ hT₀ (le_trans hle le_rfl) le_rfl
     have := congrArg (fun φ => φ.hom g) (c2.symm.trans (c3.trans c1))
     simpa [Scheme.Hom.app_eq_appLE] using this.symm
-  rw [pbT, dif_pos hle]
+  rw [pbT, dite_eq_left hle]
   set φ := (T₀.appLE (m₀ ⁻¹ᵁ U) (m₀ ⁻¹ᵁ (T ⁻¹ᵁ U)) hle).hom
   rw [L5, L5] at e2
   have h1 : (2 * N : Γ(A₀.left, m₀ ⁻¹ᵁ U)) * dl U f = (m₀.app U).hom g₂ - (m₀.app U).hom g₁ := by

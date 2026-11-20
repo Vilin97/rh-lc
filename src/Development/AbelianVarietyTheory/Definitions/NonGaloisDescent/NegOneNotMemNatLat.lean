@@ -50,7 +50,7 @@ theorem secRow_mul_secInv {n : ℕ} (y : Fin (n + 1) → Cinf E) (hy : ∀ w, y 
     secRow y * (secInv y : Matrix (Fin (n + 1)) (Fin (n + 1)) (Cinf E)) = 1 := by
   have h : IsUnit (secRow y).det := by
     rw [det_secRow]; exact Pi.isUnit_iff.2 fun w => (hy w).isUnit
-  rw [secInv, dif_pos h]
+  rw [secInv, dite_eq_left h]
   exact (Matrix.nonsingInvUnit (secRow y) h).mul_inv
 
 omit [NumberField E] [IsTotallyComplex E] in

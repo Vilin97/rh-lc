@@ -21,7 +21,7 @@ def lg (q : ℕ) (z x : L) : ZMod q := if h : ∃ n : ℕ, z ^ n = x then (h.cho
 theorem lg_pow {z : L} (hz : IsPrimitiveRoot z q) (n : ℕ) : lg q z (z ^ n) = n := by
   have h : ∃ m : ℕ, z ^ m = z ^ n := ⟨n, rfl⟩
   unfold lg
-  rw [dif_pos h, ZMod.natCast_eq_natCast_iff]
+  rw [dite_eq_left h, ZMod.natCast_eq_natCast_iff]
   have h2 := h.choose_spec
   have h3 := ((hz.isOfFinOrder (NeZero.ne q)).pow_eq_pow_iff_modEq).1 h2
   rwa [← hz.eq_orderOf] at h3
@@ -42,12 +42,12 @@ theorem fv_rel (i : ℤ) (z : Prim q L) (ζ ξ : Prim q L) (a : (ZMod q)ˣ) (h :
   unfold fv
   by_cases hu : IsUnit (lg q z.1 ζ.1)
   · have hu' : IsUnit (lg q z.1 ξ.1) := hl ▸ hu.mul a.isUnit
-    rw [dif_pos hu, dif_pos hu']
+    rw [dite_eq_left hu, dite_eq_left hu']
     have : hu'.unit = hu.unit * a := Units.ext (by simp [hl])
     rw [this, mul_zpow, Units.val_mul, mul_comm]
   · have hu' : ¬ IsUnit (lg q z.1 ξ.1) := by
       rw [hl]; exact fun h' => hu ((Units.isUnit_mul_units _ a).1 h')
-    rw [dif_neg hu, dif_neg hu', mul_zero]
+    rw [dite_eq_right hu, dite_eq_right hu', mul_zero]
 
 theorem fv_self (i : ℤ) (z : Prim q L) : fv q i z.1 z.1 = 1 := by
   have hl : lg q z.1 z.1 = 1 := by
@@ -56,7 +56,7 @@ theorem fv_self (i : ℤ) (z : Prim q L) : fv q i z.1 z.1 = 1 := by
     rw [this, Nat.cast_one]
   unfold fv
   have hu : IsUnit (lg q z.1 z.1) := hl ▸ isUnit_one
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have : hu.unit = 1 := Units.ext (by simp [hl])
   rw [this, one_zpow, Units.val_one]
 

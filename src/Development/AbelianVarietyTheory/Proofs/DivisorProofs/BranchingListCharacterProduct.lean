@@ -13,7 +13,7 @@ theorem natW_top (lam : DomWeight (n + 1)) (a : Fin (n + 1)) :
     (lam.natW a : ℤ) = lam.w a - lam.w (Fin.last n) := by
   have h1 : lam.detShift = lam.w (Fin.last n) := by
     unfold DomWeight.detShift
-    rw [dif_pos (Nat.succ_pos n)]
+    rw [dite_eq_left (Nat.succ_pos n)]
     rfl
   have h2 := lam.anti (Fin.le_last a)
   unfold DomWeight.natW
@@ -44,7 +44,7 @@ theorem natW_low (hE : GlobalTheory.IndefiniteRowSideFullHecke.InterlacingNumera
   have h0 : 0 < n := by omega
   have h1 : sg.detShift = lam.w (Fin.last n) := by
     unfold DomWeight.detShift
-    rw [dif_pos h0]
+    rw [dite_eq_left h0]
     exact hE _ (by simp only; omega)
   have h2 : sg.w ⟨n - 1, by omega⟩ ≤ sg.w i := sg.anti (by rw [Fin.le_def]; simp only; omega)
   rw [hE ⟨n - 1, by omega⟩ (by simp only; omega)] at h2

@@ -110,7 +110,7 @@ theorem prj0_flagVec_mem_mL_or_sub_mem_mL : ∀ (D : D7) (X : HidaSetting D), (�
   · rintro ⟨h1, h2⟩
     have h3 : ¬ j < D.R.rS := by omega
     have h4 : j - D.R.rS < D.R.k := by omega
-    rw [flagVec, dif_neg h3, dif_pos h4]
+    rw [flagVec, dite_eq_right h3, dite_eq_left h4]
     exact orthProjReferenceFrame_middle_mem_levelMultiple X _ _
   · intro h
     unfold flagVec

@@ -613,7 +613,7 @@ theorem d_prod_rho (hrd : 0 < D.host.rdE) (l : ℕ) (h : l ≤ D.R.rS + 1) :
 theorem d_norm_Dmin (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (τ : D.what₂.Tau) (l : ℕ) (h : l ≤ D.R.rS + 1) :
     ‖DminN (Y.W τ).z (Y.W τ).z' (Y.γ t τ) l‖ = absDl D (ZhatL (X.fl t) (X.fl' t)) l τ := by
   unfold DminN absDl absReal leadMinorE Formalism.QuantumDeterminants.Dmin
-  rw [dif_pos (by omega : l < D.R.rS + 2), dif_pos h]
+  rw [dite_eq_left (by omega : l < D.R.rS + 2), dite_eq_left h]
   rw [d_minor_eq Y t τ l h, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity),
     d_prod_rho hrd l h, mul_comm]
 
@@ -623,7 +623,7 @@ theorem d_Gf_eq (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (τ : D.what₂.Tau) 
   have h1 := d_norm_Dmin Y hrd t τ (D.R.rS + 1) le_rfl
   have h2 := d_norm_Dmin Y hrd t τ D.R.rS (Nat.le_succ _)
   unfold DminN at h1 h2
-  rw [dif_pos (by omega)] at h1 h2
+  rw [dite_eq_left (by omega)] at h1 h2
   obtain ⟨_, _, _, _, hz, hz', _⟩ := Y.goodW τ
   unfold Formalism.QuantumDeterminants.Gf Gz
   rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq, hz, hz', ← h1, ← h2]
@@ -839,7 +839,7 @@ theorem d_size_eq (hrd : 0 < D.host.rdE) {Ch : ℝ} (hCh : 0 ≤ Ch) (t : D.s.Te
     refine Finset.prod_congr rfl fun l _ => ?_
     simp only [hF]
     unfold DminN
-    rw [dif_pos l.isLt]
+    rw [dite_eq_left l.isLt]
   have e0 : F 0 = 1 := by
     simp only [hF]
     rw [d_norm_Dmin Y hrd t τ 0 (Nat.zero_le _)]

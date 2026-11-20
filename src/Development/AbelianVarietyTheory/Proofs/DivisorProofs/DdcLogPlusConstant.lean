@@ -19,7 +19,7 @@ namespace GlobalTheory.ChainLog
 theorem loc_fn_eventuallyEq {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) (u : M → ℝ) (x : A.Pt) :
     A.loc (A.fn u) x.1.1 =ᶠ[𝓝 x.crd] fun v => algebraMap ℂ (Alt n) ((u ((A.e x.1.1).symm v) : ℝ) : ℂ) := by
   filter_upwards [(A.e x.1.1).open_target.mem_nhds ((A.e x.1.1).map_source x.2)] with v hv
-  rw [HolAtlas.loc, dif_pos hv]
+  rw [HolAtlas.loc, dite_eq_left hv]
   rfl
 
 theorem delAt_fun {n : ℕ} (g : V n → ℂ) (v : V n) :

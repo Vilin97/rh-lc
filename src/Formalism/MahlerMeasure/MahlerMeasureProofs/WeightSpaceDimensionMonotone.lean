@@ -2204,7 +2204,7 @@ theorem Ffull_pol (ρ : Fin r) (n : Fin T.t → ℕ) (f : MvPolynomial (Fin (T.p
       rw [this, Formalism.GM.M.FB.snoc_deg_last]
       have hb3 : b = ⟨T.pos i + 1, by omega⟩ := by apply Fin.ext; simp; omega
       rw [hb3, setTies_deg_eta LL T hadm i n]
-  · rw [dif_neg hb, if_neg hb]; simp
+  · rw [dite_eq_right hb, if_neg hb]; simp
 
 theorem Ffull_ycond [NeZero r] (ρ : Fin r) (n : Fin T.t → ℕ) (w : Fin r → ℤ)
     (f : MvPolynomial (Fin (T.pos i + 1) × Fin r) ℚ_[p])

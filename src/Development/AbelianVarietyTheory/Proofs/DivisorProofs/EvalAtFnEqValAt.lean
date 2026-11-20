@@ -25,7 +25,7 @@ theorem evalAt_fn_eq_valAt' {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E
       ← Scheme.Hom.appLE_comp_appLE (spMap φ) x U ⊤ ⊤ h le_rfl]
     congr 2
   have e2 := congrArg (fun t ↦ t.hom f) e
-  rw [valAt', dif_pos h', valAt, ← Hol.ev_apply p hp]
+  rw [valAt', dite_eq_left h', valAt, ← Hol.ev_apply p hp]
   exact e2.symm
 
 end GlobalTheory.AnPer

@@ -239,7 +239,7 @@ theorem _root_.GlobalTheory.FixNormField.fixed_classes_mod_norms : ∀ (K : Type
   have hrep2 : ∀ κ c, good κ c → good κ (rep2 κ) := fun κ c hc => by
     have h : ∃ c, good κ c := ⟨c, hc⟩
     dsimp only [rep2]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   obtain ⟨V, hV⟩ := exists_finset_fixedUnit_eq_mul_fixed_sq K τ
   refine ⟨(((Finset.univ ×ˢ T.powerset).image rep2) ×ˢ V).image (fun p => p.1 * p.2), ?_⟩

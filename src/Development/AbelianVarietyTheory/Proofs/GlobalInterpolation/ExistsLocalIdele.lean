@@ -123,7 +123,7 @@ theorem exists_unif {K : Type} [Field K] (ξ : Chr F E K) (v : HeightOneSpectrum
     · rw [hQ, hz.1, hv.1]
     · rw [hz.2 Q hQ, hv.2 Q hQ]
   unfold unifVal
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact (hex.choose_spec v hP y y₀ b e1 hb hb2 e2 e3 e4).symm
 
 end

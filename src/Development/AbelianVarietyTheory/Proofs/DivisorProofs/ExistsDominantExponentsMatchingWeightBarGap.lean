@@ -37,7 +37,7 @@ theorem exists_shift {p q : ℕ} (hp : 1 ≤ p) (hq : 1 ≤ q) (f : Fin (p + q) 
   · have h1 : f i ≤ f ⟨p, by omega⟩ := hf (by simp [Fin.le_def]; omega)
     have hg := hg0
     unfold GlobalTheory.CompHS.gap at hg
-    rw [dif_pos (by omega)] at hg
+    rw [dite_eq_left (by omega)] at hg
     have e : (⟨p - 1 + 1, by omega⟩ : Fin (p + q)) = ⟨p, by omega⟩ := Fin.ext (by simp; omega)
     rw [e] at hg
     have h2 : ((k : ℤ) + 1) * f i ≤ ((k : ℤ) + 1) * (f ⟨p - 1, by omega⟩ - 1) :=

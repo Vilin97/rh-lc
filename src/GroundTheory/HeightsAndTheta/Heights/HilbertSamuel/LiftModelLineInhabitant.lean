@@ -62,7 +62,7 @@ theorem cechDifferential_fullCell (S : Type) [CommRing S] (M : Type) [AddCommGro
 theorem cellRes_mk (S : Type) [CommRing S] {M : Type} [AddCommGroup M] [Module (MRingOver S L) M]
     (J I : ∀ k, Finset (L k)) (h : KH.cellMon S J ≤ KH.cellMon S I) (m : M) (s : KH.cellMon S J) :
     KH.cellRes S M J I (LocalizedModule.mk m s) = LocalizedModule.mk m ⟨s.1, h s.2⟩ := by
-  rw [KH.cellRes, dif_pos h, IsLocalizedModule.mk_eq_mk', IsLocalizedModule.mk_eq_mk',
+  rw [KH.cellRes, dite_eq_left h, IsLocalizedModule.mk_eq_mk', IsLocalizedModule.mk_eq_mk',
     LocalizedModule.liftOfLE, IsLocalizedModule.liftOfLE_mk']
 
 theorem cellMonoid_le_fullCell (S : Type) [CommRing S] (i : Fin 2) :
@@ -141,7 +141,7 @@ theorem chart_one_mem (c : Unit → ℤ) (i j n : ℕ) (hn : c () + j = n) (p : 
     rw [cechDifferential_fullCell]
     show KH.cellRes S (QM S) (face 0).1 c01.1 (if h : (1 : Fin 2) ∈ (face 0).1 () then _ else 0) -
       KH.cellRes S (QM S) (face 1).1 c01.1 (if h : (1 : Fin 2) ∈ (face 1).1 () then _ else 0) = _
-    rw [dif_pos h0, dif_neg h1, map_zero, sub_zero, cellRes_mk S _ _ (cellMonoid_le_fullCell S 0)]
+    rw [dite_eq_left h0, dite_eq_right h1, map_zero, sub_zero, cellRes_mk S _ _ (cellMonoid_le_fullCell S 0)]
     refine LocalizedModule.mk_eq.mpr ⟨1, ?_⟩
     simp only [one_smul, Submonoid.smul_def, mk_smul_quot]
     congr 1
@@ -168,7 +168,7 @@ theorem chart_zero_mem (c : Unit → ℤ) (i j n : ℕ) (hn : c () + i = n) (p :
     rw [cechDifferential_fullCell]
     show KH.cellRes S (QM S) (face 0).1 c01.1 (if h : (0 : Fin 2) ∈ (face 0).1 () then _ else 0) -
       KH.cellRes S (QM S) (face 1).1 c01.1 (if h : (0 : Fin 2) ∈ (face 1).1 () then _ else 0) = _
-    rw [dif_neg h0, dif_pos h1, map_zero, zero_sub, map_neg, neg_neg,
+    rw [dite_eq_right h0, dite_eq_left h1, map_zero, zero_sub, map_neg, neg_neg,
       cellRes_mk S _ _ (cellMonoid_le_fullCell S 1)]
     refine LocalizedModule.mk_eq.mpr ⟨1, ?_⟩
     simp only [one_smul, Submonoid.smul_def, mk_smul_quot]

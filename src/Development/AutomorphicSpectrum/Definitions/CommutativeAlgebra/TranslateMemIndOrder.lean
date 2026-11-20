@@ -64,7 +64,7 @@ theorem mem_augIdeal (A : Subalgebra R (T → R)) (f : A) : f ∈ augIdeal A ↔
 theorem dlogChar_of_mem (A : Subalgebra R (T → R)) (χ : T →* Rˣ) (h : (fun t => ((χ t : Rˣ) : R)) ∈ A) :
     dlogChar A χ =
       (augIdeal A).toCotangent ⟨⟨_, h⟩ - 1, by simp [augIdeal, evalAt, RingHom.mem_ker]⟩ := by
-  rw [dlogChar, dif_pos h]
+  rw [dlogChar, dite_eq_left h]
 
 end OrderApi
 

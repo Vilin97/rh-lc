@@ -373,7 +373,7 @@ def ιTerm (L : CochainComplex C ℤ) (p k t : ℤ) (h : p + k = t) :
 
 theorem ιTerm_zero (L : CochainComplex C ℤ) (p : ℤ) (h : p + 0 = p) :
     ιTerm L p 0 p h = (HomologicalComplex.singleObjXSelf (ComplexShape.up ℤ) 0 (L.X p)).hom := by
-  rw [ιTerm, dif_pos rfl]
+  rw [ιTerm, dite_eq_left rfl]
   exact Category.comp_id _
 
 theorem eq_zero_of_ιTerm {L : CochainComplex C ℤ} {p : ℤ} {h : p + 0 = p} {Y : C} {f : L.X p ⟶ Y}

@@ -204,7 +204,7 @@ theorem hecke_eq_smul_of_isot : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.
     obtain ⟨h, hh⟩ := Q.onto γ (hc.1 γ hγ).1
     have hex : ∃ x, Q.ψ x = γ := ⟨h, hh⟩
     unfold principalLevelFrame.pre
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   have hOn : ∀ T : MMap M, heckeOn M B T = ∑ γ ∈ B, principalLevelFrame.actM Q M (principalLevelFrame.pre Q γ) T := by
     intro T

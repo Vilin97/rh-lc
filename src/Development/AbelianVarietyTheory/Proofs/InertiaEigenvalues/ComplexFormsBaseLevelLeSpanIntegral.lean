@@ -39,11 +39,11 @@ theorem tr_mem_mtLat {B : Base S T} (hB : B.Good) {K : Type} [Field K] [NumberFi
   refine (Base.mem_mtLat B σ emb O).2 ⟨Submodule.mem_inf.2 ⟨?_, GlobalTheory.LawTrace.mem_lawForms_tr hf P⟩, fun x => ?_⟩
   · refine Submodule.mem_pi.2 fun x _ => GlobalTheory.LawTrace.tr_mem hf P x B.valSpace fun γ h => ?_
     unfold GlobalTheory.LawTrace.term
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact Submodule.smul_mem _ _ (Base.act_mem_valSpace _ (coefLat_le_valSpace hspan hP))
   · refine GlobalTheory.LawTrace.tr_mem hf P x (B.coefLat σ emb O x) fun γ h => ?_
     unfold GlobalTheory.LawTrace.term
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hx : x = Bridge.ratF S γ * y * ((⟨_, h⟩ : B.levJ ψ) : Bridge.Gf S) := by
       change x = Bridge.ratF S γ * y * ((Bridge.ratF S γ * y)⁻¹ * x)
       group

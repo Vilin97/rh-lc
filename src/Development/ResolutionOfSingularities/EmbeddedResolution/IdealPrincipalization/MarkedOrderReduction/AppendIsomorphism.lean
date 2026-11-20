@@ -69,7 +69,7 @@ private theorem appendObjIso_eq_right_of_pos {X : Scheme.{u}} (s : BlowupSequenc
     appendSchemeAtIso s t₁ t₂ e i hi = appendSchemeAtIsoOfLengthLt s t₁ t₂ e j i hij hj hjl := by
   have hne : ¬ i ≤ s.length := by omega
   unfold appendSchemeAtIso
-  rw [dif_neg hne]
+  rw [dite_eq_right hne]
   exact appendObjIsoRight_congr s t₁ t₂ e (i - s.length) j i (by omega) (by omega) (by omega)
     (by omega) hij hj hjl
 

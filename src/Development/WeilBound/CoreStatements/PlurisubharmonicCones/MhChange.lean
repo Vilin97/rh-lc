@@ -161,7 +161,7 @@ theorem muHodge : MuHodge := by
     · have h1 := (GlobalTheory.T.valAt_iff_value_at Or.𝔐.X Ω Or.𝔐.ξ K J Dc.y htie z w h hw _ _).2 hv1
       simp only [chartMono, Pi.neg_apply, _root_.zpow_neg, Finset.prod_inv_distrib] at h1
       rwa [← div_eq_mul_inv] at h1
-    · rw [ComponentData.vertFactor, dif_pos hex, valAt_eq hmc hv1, zMono, norm_prod]
+    · rw [ComponentData.vertFactor, dite_eq_left hex, valAt_eq hmc hv1, zMono, norm_prod]
       simp only [norm_zpow]
   have hQ1 : MhQ Or.𝔐.ξ Dc.y z w d.c Hd.aMu (lam * ∏ τ, (T τ).det)
       (‖valAt Dc.y d.u w‖ * ∏ k, ‖w ⟨k, d.c k⟩‖ ^ Hd.aMu k) := by

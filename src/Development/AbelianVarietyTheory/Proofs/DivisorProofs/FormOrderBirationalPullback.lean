@@ -120,6 +120,6 @@ theorem formOrd_ratPull_of_over : ∀ (k : Type) [Field k] (X Y : Scheme.{0}) [I
     rw [ha.formOrd_eq hη, (fwd a ha).formOrd_eq hne]
   · have h' : ¬ ∃ a, E'.IsFormOrd (EtaleKlt.ratPull p s n η) a :=
       fun ⟨a, ha⟩ => h ⟨a, bwd a ha⟩
-    rw [DivOver.formOrd, DivOver.formOrd, dif_neg h, dif_neg h']
+    rw [DivOver.formOrd, DivOver.formOrd, dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.BirOrd

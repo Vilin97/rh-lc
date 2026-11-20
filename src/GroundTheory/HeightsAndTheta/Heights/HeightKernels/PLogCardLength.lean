@@ -25,7 +25,7 @@ lemma term_eq (N : Type) [AddCommGroup N] [Module R N] (m : Ideal R) [hm : m.IsM
     term R N m = ((Module.length (Localization.AtPrime m)
       (LocalizedModule m.primeCompl N)).toNat : ℝ) * Real.log (Nat.card (R ⧸ m)) := by
   classical
-  rw [term, finsum_eq_if, if_pos hm, locLen, dif_pos hm.isPrime]
+  rw [term, finsum_eq_if, if_pos hm, locLen, dite_eq_left hm.isPrime]
 
 lemma term_of_not (N : Type) [AddCommGroup N] [Module R N] (m : Ideal R) (hm : ¬ m.IsMaximal) :
     term R N m = 0 := by

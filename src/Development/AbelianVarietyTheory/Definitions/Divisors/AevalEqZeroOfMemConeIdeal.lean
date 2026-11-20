@@ -211,7 +211,7 @@ def imageDeg (ev : V →ₗ[K] Ω) (D : ℕ) : ℕ := if h : ∃ δ, IsImageDeg 
 
 theorem IsImageDeg.imageDeg_eq {ev : V →ₗ[K] Ω} {D δ : ℕ} (h : IsImageDeg ev D δ) : imageDeg ev D = δ := by
   have h' : ∃ δ, IsImageDeg ev D δ := ⟨δ, h⟩
-  rw [imageDeg, dif_pos h']
+  rw [imageDeg, dite_eq_left h']
   exact h'.choose_spec.unique h
 
 theorem imageDeg_pos_iff (ev : V →ₗ[K] Ω) (D : ℕ) : 0 < imageDeg ev D ↔ IsImageDeg ev D (imageDeg ev D) := by
@@ -219,7 +219,7 @@ theorem imageDeg_pos_iff (ev : V →ₗ[K] Ω) (D : ℕ) : 0 < imageDeg ev D ↔
   by_cases h' : ∃ δ, IsImageDeg ev D δ
   · obtain ⟨δ, hδ⟩ := h'
     rwa [hδ.imageDeg_eq]
-  · rw [imageDeg, dif_neg h'] at h
+  · rw [imageDeg, dite_eq_right h'] at h
     exact absurd h (lt_irrefl 0)
 
 variable [NumberField K] [Module (𝓞 K) V]
@@ -251,7 +251,7 @@ variable {Nm : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V} {ev : V �
 
 theorem isImageHeight_imageHeight (h : ∃ x, IsImageHeight Nm L ev D x) :
     IsImageHeight Nm L ev D (imageHeight Nm L ev D) := by
-  rw [imageHeight, dif_pos h]
+  rw [imageHeight, dite_eq_left h]
   exact h.choose_spec
 
 theorem exists_isImageHeight_iff : (∃ x, IsImageHeight Nm L ev D x) ↔

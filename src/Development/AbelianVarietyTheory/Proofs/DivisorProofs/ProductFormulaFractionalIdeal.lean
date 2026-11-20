@@ -128,7 +128,7 @@ theorem idealLog_eq_of_pow_eq_span (𝔞 : Submodule (𝓞 K) K) (h𝔞 : 𝔞 �
     idealLog 𝔞 = (h : ℝ)⁻¹ * (-∑ σ : K →+* ℂ, Real.log ‖σ b‖) - -∑ σ : K →+* ℂ, Real.log ‖σ d‖ := by
   have hdK : (d : K) ≠ 0 := by exact_mod_cast hd
   have ha : ∃ a ∈ 𝔞, a ≠ 0 := Submodule.exists_mem_ne_zero_of_ne_bot h𝔞
-  rw [idealLog, dif_pos ha]
+  rw [idealLog, dite_eq_left ha]
   obtain ⟨ha1, ha0⟩ := ha.choose_spec
   generalize ha.choose = a at ha1 ha0
   obtain ⟨y, hy, hy'⟩ := (hI a).1 ha1

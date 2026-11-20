@@ -201,7 +201,7 @@ theorem v_lt_of_ordL_lt {x y : L} (hx : x ≠ 0) (hy : y ≠ 0) (h : ordL x < or
   have hx0 : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   have hy0 : Valued.v y ≠ 0 := (Valuation.ne_zero_iff _).2 hy
   unfold ordL at h
-  rw [dif_neg hx0, dif_neg hy0] at h
+  rw [dite_eq_right hx0, dite_eq_right hy0] at h
   rw [← WithZero.coe_unzero hx0, ← WithZero.coe_unzero hy0, WithZero.coe_lt_coe]
   show Multiplicative.toAdd (WithZero.unzero hy0) < Multiplicative.toAdd (WithZero.unzero hx0)
   omega

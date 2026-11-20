@@ -315,7 +315,7 @@ theorem lead_minor (j : Fin N × Fin N' → σ) (hj : ∀ b c, p (j (b, c)) ↔ 
   have hpoly : MvPolynomial.rename j (minorK C N N' k) = (Matrix.of fun b c : Fin k =>
       (MvPolynomial.X (j (Fin.castLE h1 b, Fin.castLE h2 c)) : MvPolynomial σ C)).det := by
     unfold minorK
-    rw [dif_pos ⟨h1, h2⟩, AlgHom.map_det]
+    rw [dite_eq_left ⟨h1, h2⟩, AlgHom.map_det]
     congr 1
     ext b c
     simp [MvPolynomial.rename_X]
@@ -325,7 +325,7 @@ theorem lead_minor (j : Fin N × Fin N' → σ) (hj : ∀ b c, p (j (b, c)) ↔ 
     apply Finset.sum_congr rfl
     intro b _
     unfold dgOne
-    rw [dif_pos ⟨lt_of_lt_of_le b.isLt h1, lt_of_lt_of_le b.isLt h2⟩]
+    rw [dite_eq_left ⟨lt_of_lt_of_le b.isLt h1, lt_of_lt_of_le b.isLt h2⟩]
     rfl
   rw [hpoly, hexp]
   exact hL
@@ -351,9 +351,9 @@ theorem low_monG (j : Fin N × Fin N' → σ) {t : σ → MvPowerSeries σ C} (h
   intro ρ _
   unfold dgOne
   by_cases h : ρ.val < N'
-  · rw [dif_pos h, dif_pos ⟨ρ.isLt, h⟩]
+  · rw [dite_eq_left h, dite_eq_left ⟨ρ.isLt, h⟩]
     exact low_tangent ht (j (ρ, ⟨ρ, h⟩)) _
-  · rw [dif_neg h, dif_neg (fun hh => h hh.2)]
+  · rw [dite_eq_right h, dite_eq_right (fun hh => h hh.2)]
     exact low_one
 
 theorem dg_apply (j : Fin N × Fin N' → σ) (hj : Function.Injective j) (f : ℕ → ℕ)
@@ -363,7 +363,7 @@ theorem dg_apply (j : Fin N × Fin N' → σ) (hj : Function.Injective j) (f : �
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single b.val]
   · unfold dgOne
     by_cases hbc : b.val = c.val
-    · rw [if_pos hbc, dif_pos ⟨b.isLt, by rw [hbc]; exact c.isLt⟩, Finsupp.single_apply,
+    · rw [if_pos hbc, dite_eq_left ⟨b.isLt, by rw [hbc]; exact c.isLt⟩, Finsupp.single_apply,
         if_pos (by congr 1; exact Prod.ext (Fin.ext rfl) (Fin.ext hbc))]
     · rw [if_neg hbc]
       split_ifs with h

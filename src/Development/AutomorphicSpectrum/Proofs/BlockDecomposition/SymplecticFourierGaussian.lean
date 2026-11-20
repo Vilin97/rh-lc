@@ -106,7 +106,7 @@ theorem mem_coset_iff (S : Finset Pl) (N : S → ℤ) (a : ∀ v : S, Qv v.1) (x
       rw [e] at this
       exact mem_int.2 (by simpa using this)
     · have := h v.1
-      rw [count_idl, dif_pos v.2] at this
+      rw [count_idl, dite_eq_left v.2] at this
       have e : (x - sup S a) v.1 = x v.1 - a v := by
         have : (x - sup S a) v.1 = x v.1 - (sup S a) v.1 := rfl
         rw [this, sup_apply]
@@ -115,7 +115,7 @@ theorem mem_coset_iff (S : Finset Pl) (N : S → ℤ) (a : ∀ v : S, Qv v.1) (x
   · rintro ⟨h1, h2⟩ w
     rw [count_idl]
     by_cases hw : w ∈ S
-    · rw [dif_pos hw]
+    · rw [dite_eq_left hw]
       have e : (x - sup S a) w = x w - a ⟨w, hw⟩ := by
         have : (x - sup S a) w = x w - (sup S a) w := rfl
         rw [this, sup_apply S a ⟨w, hw⟩]
@@ -140,11 +140,11 @@ theorem mem_dual_iff (S : Finset Pl) (N : S → ℤ) (y : Af) :
       rw [dif_neg hw] at this
       exact mem_int.2 (by simpa using this)
     · have := h v.1
-      rw [dif_pos v.2] at this
+      rw [dite_eq_left v.2] at this
       exact mem_valBall_iff_valued.2 (by simpa using this)
   · rintro ⟨h1, h2⟩ w
     by_cases hw : w ∈ S
-    · rw [dif_pos hw]
+    · rw [dite_eq_left hw]
       simpa using mem_valBall_iff_valued.1 (h2 ⟨w, hw⟩)
     · rw [dif_neg hw]
       simpa using mem_int.1 (h1 w hw)

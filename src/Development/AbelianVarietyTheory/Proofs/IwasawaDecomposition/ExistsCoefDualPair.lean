@@ -265,7 +265,7 @@ theorem coefA_dual (hθ : IsInfFam θ) {S : D.what₂.Tau → SPar} (M : DSModel
     exact h4
   · have ha : IsAtTau θ V τ g (atTau θ V τ g) := by
       have hex := (GlobalTheory.PointAtPlace.existsUnique_isAtTau V τ θ hθ g hg).exists
-      rw [atTau, dif_pos hex]
+      rw [atTau, dite_eq_left hex]
       exact hex.choose_spec
     set G := infGL θ V (atTau θ V τ g) with hGd
     let k := B * G * B⁻¹

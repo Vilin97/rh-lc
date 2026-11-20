@@ -464,7 +464,7 @@ theorem idx_eq_of_approx {x : T.RobbaExt ρ0} (hx : x ≠ 0) {ρ : ℝ} (h : 0 <
       T.extNorm ρ0 σ (x - c) < T.extNorm ρ0 σ x) :
     T.lowIdx x ρ = lowIndex (T.coeffB c) ρ ∧ T.highIdx x ρ = highIndex (T.coeffB c) ρ := by
   have hh : x ≠ 0 ∧ 0 < ρ ∧ ρ < ρ0 := ⟨hx, h⟩
-  rw [lowIdx, highIdx, dif_pos hh, dif_pos hh]
+  rw [lowIdx, highIdx, dite_eq_left hh, dite_eq_left hh]
   set c₀ := T.approx hx h
   set ρ₁ := min (ρ + η) ((ρ + ρ0) / 2)
   have hρρ₁ : ρ < ρ₁ := lt_min (by linarith) (mid_rad h).2.2
@@ -509,11 +509,11 @@ theorem coe_ne_zero_of_approx {x : T.RobbaExt ρ0} {c : T.Econ ρ0} {σ : Set.Io
 
 theorem lowIdx_eq_approx {x : T.RobbaExt ρ0} (hx : x ≠ 0) {ρ : ℝ} (h : 0 < ρ ∧ ρ < ρ0) :
     T.lowIdx x ρ = lowIndex (T.coeffB (T.approx hx h)) ρ := by
-  rw [lowIdx, dif_pos ⟨hx, h⟩]
+  rw [lowIdx, dite_eq_left ⟨hx, h⟩]
 
 theorem highIdx_eq_approx {x : T.RobbaExt ρ0} (hx : x ≠ 0) {ρ : ℝ} (h : 0 < ρ ∧ ρ < ρ0) :
     T.highIdx x ρ = highIndex (T.coeffB (T.approx hx h)) ρ := by
-  rw [highIdx, dif_pos ⟨hx, h⟩]
+  rw [highIdx, dite_eq_left ⟨hx, h⟩]
 
 theorem idx_mul {x y : T.RobbaExt ρ0} (hx : x ≠ 0) (hy : y ≠ 0) {ρ : ℝ} (h : 0 < ρ ∧ ρ < ρ0) :
     T.lowIdx (x * y) ρ = T.lowIdx x ρ + T.lowIdx y ρ ∧
@@ -555,7 +555,7 @@ theorem lowIdx_le_highIdx (x : T.RobbaExt ρ0) (ρ : ℝ) : T.lowIdx x ρ ≤ T.
     refine (T.zcoeff_eq_zero_iff y).1 (funext fun k => ?_)
     have := congrFun h0 (k - N)
     simpa using this
-  · rw [lowIdx, highIdx, dif_neg hh, dif_neg hh]
+  · rw [lowIdx, highIdx, dite_eq_right hh, dite_eq_right hh]
 
 theorem mult_nonneg (x : T.RobbaExt ρ0) (ρ : ℝ) : 0 ≤ T.mult x ρ :=
   sub_nonneg.2 (T.lowIdx_le_highIdx x ρ)

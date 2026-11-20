@@ -297,7 +297,7 @@ theorem Lat.glue_apply_of_inFibre {S : Finset ℕ} (hS : ∀ q ∈ S, q.Prime) (
     {q : ℕ} (hq : q ∈ S) {p : Cpt ξ} (hp : InFibre ξ q p) : Lat.glue S L₀ Lq p = Lq q p := by
   have h : ∃ q ∈ S, InFibre ξ q p := ⟨q, hq, hp⟩
   unfold Lat.glue
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   by_cases e : h.choose = q
   · rw [e]
   · exact (Lat.not_inFibre_of_coprime p ((Nat.coprime_primes (hS _ h.choose_spec.1) (hS _ hq)).2 e)

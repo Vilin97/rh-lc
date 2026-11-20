@@ -217,7 +217,7 @@ theorem exists_nf : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [Add
   obtain ⟨G, hG, hGT, hGX⟩ := exists_reframe F f hF
   obtain ⟨G', hG', hGT', hGX'⟩ := exists_reframe F' f' hF'
   have same : ∀ a : Fin (r + 1), j ≤ a.val → G'.e a = c • G.e a := fun a ha => by
-    rw [hG, hG', hf, hf', dif_neg (not_lt.mpr ha), dif_neg (not_lt.mpr ha)]
+    rw [hG, hG', hf, hf', dite_eq_right (not_lt.mpr ha), dite_eq_right (not_lt.mpr ha)]
   obtain ⟨ist, i1, i2, i3, i4⟩ := exists_ist G G' hj hS.1 same fun v => by
     obtain ⟨x, hx, hp⟩ := exists_perp F F' hj hD v
     exact ⟨x, Xa_le_X G j (by rwa [hGX]), fun u hu => hp u (by rwa [← hGX'])⟩
@@ -235,8 +235,8 @@ theorem exists_nf : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [Add
     have h := congrFun (congrFun hW a) b
     rw [Matrix.of_apply] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← h, hG, hG', hf, hf', dif_pos (show (Fin.castLE (hj.trans (Nat.le_succ r)) a).val < j from a.isLt),
-      dif_pos (show (Fin.castLE (hj.trans (Nat.le_succ r)) b).val < j from b.isLt), map_sum, Matrix.mul_apply]
+      rw [← h, hG, hG', hf, hf', dite_eq_left (show (Fin.castLE (hj.trans (Nat.le_succ r)) a).val < j from a.isLt),
+      dite_eq_left (show (Fin.castLE (hj.trans (Nat.le_succ r)) b).val < j from b.isLt), map_sum, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [map_smulₛₗ, B_sum_left, Matrix.mul_apply]
     rw [starRingEnd_apply, Matrix.map_apply, star_star, smul_eq_mul, mul_comm]

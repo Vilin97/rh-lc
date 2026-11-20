@@ -61,7 +61,7 @@ theorem moved_datum_eq_prod_alt : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies
     have hQ : ∀ y : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin (Yc D (j + 1)).rank) (Fin (Yc D j).rank) (Formalism.L2.DIV.kP PP),
         omegaQ (∅ : Finset (Formalism.L2.DIV.Pl D.host.E)) (datY _ D.R.r D.R.t j (r_le_Y j) (_root_.GlobalTheory.Fam.pk_z W).Pg ∅ (_root_.GlobalTheory.Fam.complexLevelStructure W) (_root_.GlobalTheory.Fam.pk_z W).chi
           (fun _ => 1) Frm.B).r (fun _ => 1) 1 y = 1 := fun y => by
-      rw [omegaQ, dif_pos (by simp)]; simp
+      rw [omegaQ, dite_eq_left (by simp)]; simp
     by_cases hI : IsIntM (frMapO (Yc D j) (Yc D (j + 1)) ((_root_.GlobalTheory.Fam.pk_z W).βY j) ((_root_.GlobalTheory.Fam.pk_z W).βY (j + 1))
       (actO _ _ (f.g.b j)⁻¹ (f.g.b (j + 1))⁻¹ x))
     · rw [if_pos ⟨hx, hI⟩, hQ, mul_one, _root_.GlobalTheory.T.local_groups_matrix_reading_alt D L hT Gi Gl Kc Yd cX ex W u f v n G pl hGR j]

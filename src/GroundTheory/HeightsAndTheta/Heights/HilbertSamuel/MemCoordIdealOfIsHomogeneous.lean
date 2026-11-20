@@ -70,7 +70,7 @@ theorem full : ResolutionL2SymmetricMeasure.Statement := by
   classical
   have hex : ∃ g : MvPolynomial (Ix κ) ℤ, g.IsHomogeneous n ∧ aeval d.x g = aeval d.x f := ⟨f, hf, rfl⟩
   unfold IndefiniteRowSideFullHecke.HilbertSamuel.secNorm
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨hgh, hgx⟩ := hex.choose_spec
   generalize hex.choose = g at hgh hgx ⊢
 

@@ -102,12 +102,12 @@ lemma minorF_eq {d : ℕ} (m : Matrix (Fin n) (Fin n) R) {I J : Finset (Fin n)} 
     minorF m I J = (m.submatrix (I.orderEmbOfFin hI) (J.orderEmbOfFin hJ)).det := by
   subst hI
   unfold minorF
-  rw [dif_pos hJ]
+  rw [dite_eq_left hJ]
 
 lemma minorF_ne (m : Matrix (Fin n) (Fin n) R) {I J : Finset (Fin n)} (h : J.card ≠ I.card) :
     minorF m I J = 0 := by
   unfold minorF
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 lemma emb_succAbove {d : ℕ} {J J' : Finset (Fin n)} (h : J.card = d + 1) (j : Fin (d + 1))
     (hJ' : J' = J.erase (J.orderEmbOfFin h j)) (h' : J'.card = d) :
@@ -356,9 +356,9 @@ lemma actF_oneF (m : Matrix (Fin n) (Fin n) R) : actF (oneF : Form R n) m = oneF
   unfold minorF
   by_cases hJ : J = ∅
   · subst hJ
-    rw [dif_pos rfl, if_pos rfl]
+    rw [dite_eq_left rfl, if_pos rfl]
     exact Matrix.det_eq_one_of_card_eq_zero (by first | exact Fintype.card_fin 0 | rfl | decide)
-  · rw [dif_neg, if_neg hJ]
+  · rw [dite_eq_right, if_neg hJ]
     simpa [Finset.card_eq_zero] using hJ
 
 lemma contrF_oneF (Y : Fin n → R) : contrF (oneF : Form R n) Y = 0 := by

@@ -36,7 +36,7 @@ theorem gcell_castLE (hk : k ≤ m) (x : GVar m a k b → S) (l l' : Fin k) :
     gcell x (Fin.castLE hk l') (Fin.castLE hk l) = (1 : Matrix (Fin k) (Fin k) S) l l' := by
   have h1 : ¬ k ≤ (l' : ℕ) := not_le.2 l'.2
   unfold gcell
-  rw [dif_neg (fun h => h1 h.2.2.1), Matrix.one_apply]
+  rw [dite_eq_right (fun h => h1 h.2.2.1), Matrix.one_apply]
   by_cases h : l = l'
   · simp [h]
   · rw [if_neg h, if_neg fun e => h (Fin.castLE_injective hk e).symm]

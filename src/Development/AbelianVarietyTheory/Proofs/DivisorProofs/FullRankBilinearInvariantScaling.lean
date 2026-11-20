@@ -73,7 +73,7 @@ theorem GlobalTheory.NormalCore.pv_transport : ∀ (k : Type) [Field k] [Valuati
     rw [hpvS, hpvB, ← hmB, hS₂eq, ← hg]
     exact alg_id _ _ _ hm' hc0
   · refine ⟨1, one_pos, ?_⟩
-    rw [show pv Bf B₁ B₂ = 0 from by rw [pv, dif_neg hB], mul_zero, pv, dif_neg]
+    rw [show pv Bf B₁ B₂ = 0 from by rw [pv, dite_eq_right hB], mul_zero, pv, dite_eq_right]
     rintro ⟨h₁, h₂⟩
     apply hB
     have key : ∀ Y : Matrix (Fin n) (Fin d) k, (g.1)ᵀ * (((g⁻¹).1)ᵀ * Y * (h⁻¹).1) * h.1 = Y := by

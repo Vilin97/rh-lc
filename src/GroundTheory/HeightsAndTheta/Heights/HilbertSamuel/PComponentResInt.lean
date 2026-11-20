@@ -21,7 +21,7 @@ theorem ComponentResInt.proof (h₁ : ComponentResBadNull.Statement) (h₂ : Com
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ), IsGoodProj P Ψ :=
     goodProjExists K ι P e hP
   unfold ptsIntegral GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.zInt
-  rw [dif_pos hex, dif_pos hR]
+  rw [dite_eq_left hex, dite_eq_left hR]
   set Ψ := hex.choose with hΨdef
   have hΨ : IsGoodProj P Ψ := hex.choose_spec
   set R := hR.some with hRdef

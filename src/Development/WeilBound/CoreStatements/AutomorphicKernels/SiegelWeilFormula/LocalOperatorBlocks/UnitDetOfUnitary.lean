@@ -160,7 +160,7 @@ theorem inG_nbLc {c : Matrix (Fin n) (Fin n) ℂ} (hc : cᴴ = c) : InG (nbLc c)
 def nbH (c : Matrix (Fin n) (Fin n) ℂ) : GR n := if h : cᴴ = c then toGR _ (inG_nbLc h) else 1
 
 theorem mR_nbH {c : Matrix (Fin n) (Fin n) ℂ} (hc : cᴴ = c) : mR (nbH c) = nbLc c := by
-  rw [nbH, dif_pos hc, mR_toGR]
+  rw [nbH, dite_eq_left hc, mR_toGR]
 
 theorem jG_eq : jG n = nG 1 * nbH (-1) * nG 1 := by
   apply mR_injective

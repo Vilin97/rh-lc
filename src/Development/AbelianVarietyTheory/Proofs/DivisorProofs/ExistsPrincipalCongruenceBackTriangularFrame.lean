@@ -91,7 +91,7 @@ theorem exists_congr_back : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       (Finset.sum_congr rfl fun j _ => ?_)
     rw [hP', Equiv.apply_symm_apply]
     simp only [A]
-    rw [dif_pos ⟨hi, j.2⟩]
+    rw [dite_eq_left ⟨hi, j.2⟩]
     rfl
   have hgiso : ∀ u v : (U.X k).Λ, Algebra.trace ℚ E (-(U.X k).ξ0 * herm (U.X k).Gm (gm u : Fin r → E)
       (gm v : Fin r → E)) = Algebra.trace ℚ E (-(U.X k).ξ0 * herm (U.X k).Gm (u : Fin r → E) (v : Fin r → E)) := by

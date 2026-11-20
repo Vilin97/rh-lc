@@ -230,7 +230,7 @@ theorem Wc_intInd_right (h2 : Module.finrank F E = 2) (χ : AddChar F Circle) (�
         rw [Units.val_mul, Matrix.det_mul]
       rw [ht', hs, hd] at hmul
       exact mul_right_cancel₀ (hs ▸ hs0) hmul
-    rw [GL2LocalData.Wc, GL2LocalData.Wc, dif_neg hg, dif_neg hg']
+    rw [GL2LocalData.Wc, GL2LocalData.Wc, dite_eq_right hg, dite_eq_right hg']
 
 theorem Wc_std_eq (h2 : Module.finrank F E = 2) (hcont : Continuous (algebraMap F E))
     (hord : GroundTheory.LocalField.ord (algebraMap F E (unifUnit F : F)) = 1)

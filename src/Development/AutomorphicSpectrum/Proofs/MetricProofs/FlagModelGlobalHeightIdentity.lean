@@ -33,7 +33,7 @@ theorem GlobalTheory.CompanionTheory.Ar.PB.BMx.exists_gram_logBounds_noGlobal : 
     have hex : ∃ (Γ : Matrix (Fin (D.p + D.q)) (Fin (D.p + D.q)) ℂ) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X),
         CoordsAt 𝔐.ξ M.x z w ∧ 𝔐.Interior z ∧ 𝔐.M.GramAt 𝔐.t.PP.L z (gb tie F τ) Γ := ⟨Γ, z, hw, hi, hΓ⟩
     unfold HodgeMetric.gramFn
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     obtain ⟨z₀, hw₀, hi₀, hΓ₀⟩ := hex.choose_spec
     rw [uniq hw₀ hw] at hΓ₀
     exact GlobalTheory.T.gram_matrix_change_frame E H D l (Xo l) c Y S M.Ω _ _ M.x 𝔐 z _ _ _ _

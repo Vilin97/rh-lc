@@ -31,7 +31,7 @@ theorem b_eq_wT (C : Choice X θ) (hB : WuBessel C) (u : D.what₂.Word) (τ : D
   have hex : ∃ γ : Formalism.REAL.UJ (X.B.I.ε (vOf X τ)), uMat γ = C.Q τ * (m * C.y τ) * C.Qi τ :=
     ⟨Formalism.L2.SG.Pf.LocJEq.ujOf' _ hJ, rfl⟩
   unfold wT
-  rw [dif_pos hex, Formalism.L2.SG.Pf.LocJEq.wloc_eq C hB u τ]
+  rw [dite_eq_left hex, Formalism.L2.SG.Pf.LocJEq.wloc_eq C hB u τ]
   have hc : Formalism.MainNotions.S.umat hex.choose = C.Q τ * (m * C.y τ) * C.Qi τ := hex.choose_spec
   rw [hc]
   unfold v0Of sigB

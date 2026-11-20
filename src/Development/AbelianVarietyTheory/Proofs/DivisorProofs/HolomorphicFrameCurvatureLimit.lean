@@ -107,7 +107,7 @@ theorem GlobalTheory.EigGramChart.gram_eq_chg : ∀ (D : D7) (O : Setup D) (c : 
       rw [hz u hu]
       exact hc
     change dite _ _ _ = _
-    rw [dif_pos h0]
+    rw [dite_eq_left h0]
     change pairAll (a u).2 h0 _ * _ = pairAll (a u).2 hc _ * _
     rw [← Chart.tr_mul' (pb (hV.pick (zu u))) (pb c₀) cE (hmem u c₀ hzc), ← Matrix.mul_assoc]
     congr 1

@@ -300,7 +300,7 @@ theorem exists_theta (P : Ideal (MRing ι)) [P.IsPrime] {t : ℕ} (c : Fin t →
       ext a b
       simp [iota]
     have e4 : ∏ a : Fin (j.1 + 1), diagE P n a.1 = lam P n (Sum.inr j) := by
-      rw [Fin.prod_univ_eq_prod_range (fun i => diagE P n i), prod_diagE, lamN, dif_pos (by omega)]
+      rw [Fin.prod_univ_eq_prod_range (fun i => diagE P n i), prod_diagE, lamN, dite_eq_left (by omega)]
     simp only [RingHom.comp_apply, scaleHom, coe_eval₂Hom, eval₂_X, map_mul, flagMap]
     refine (minor_scale θ ((algebraMap (LRing P n) (OmegaF P n)).comp C) (genMat (FnField P) n) (B.map C)
       (fun a => diagE P n a.1) h (B.map σ) e1 e2 (hh.trans e3.symm) j i).trans ?_

@@ -197,7 +197,7 @@ theorem dictionary {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Recip
       rw [dif_pos a, dif_pos hn]
     · rw [if_pos (by omega)]
       unfold Formalism.L2.PjFree.perFr
-      rw [dif_neg a, dif_pos (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ X.Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dif_pos (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ X.Ψ from hτ), dif_pos hn]
       rfl
   · obtain ⟨h1, h2⟩ := PerBor.moveMat_support _ idx hb j j' hne
     rw [← hqq] at h2

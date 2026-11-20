@@ -423,7 +423,7 @@ theorem mapLF_eq {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formali
     {T : D.host.E} (F F' : FlagG (VS D) D.R.rS T) (he : ∀ a, γ (F.e a) = F'.e a) (hz : γ F.z = F'.z) :
     mapLF γ (lf D F) = lf D F' := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   have hfl : Formalism.L2.SG.TermOp.mapFlag γ hγ F = F' := flagG_ext (funext he) hz
   show (⟨Formalism.L2.SG.TermOp.mapFlag γ hγ F, γ F.z⟩ : LFlag (VS D) D.R.rS T) = ⟨F', F'.z⟩
   rw [hfl, hz]

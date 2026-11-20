@@ -116,7 +116,7 @@ theorem le_gap_bar {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Recip
     (hp : 1 ≤ Dw.p) (hq : 1 ≤ Dw.q) (u : AllWt.Weight Dw) (τ : Psi H) (hu : Antitone (u τ)) (t : ℤ) :
     t ≤ gap (u τ + t • hodgeWt Dw τ) (Dw.p - 1) := by
   have h := hu (show (⟨Dw.p - 1, by omega⟩ : Fin (Dw.p + Dw.q)) ≤ ⟨Dw.p - 1 + 1, by omega⟩ from Nat.le_succ _)
-  rw [gap, dif_pos (by omega)]
+  rw [gap, dite_eq_left (by omega)]
   simp only [hodgeWt, CompHt.barWt, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   rw [if_pos (by omega), if_neg (by omega)]
   linarith

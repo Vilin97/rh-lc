@@ -28,7 +28,7 @@ theorem ratio_single {F Γ : Type} [Field F] [AddCommGroup Γ] (g : Γ) (a b : F
       (AddMonoidAlgebra.single g b) = a / b := by
   have hex : ∃ c : F, (AddMonoidAlgebra.single g a : AddMonoidAlgebra F Γ) = c • AddMonoidAlgebra.single g b :=
     ⟨a / b, by rw [AddMonoidAlgebra.smul_single', div_mul_cancel₀ a hb]⟩
-  rw [ReciprocityTheory.ChartRestriction.G.T0.ratio, dif_pos hex]
+  rw [ReciprocityTheory.ChartRestriction.G.T0.ratio, dite_eq_left hex]
   have hc := hex.choose_spec
   rw [AddMonoidAlgebra.smul_single'] at hc
   have hv : a = hex.choose * b := by

@@ -157,8 +157,8 @@ theorem embOn_mul_embOn_disj {s t : Finset (Fin n)} (hst : ∀ c, c ∈ s → c 
   by_cases h1 : a ∈ s ∧ c ∈ s
   · by_cases h2 : c ∈ t ∧ b ∈ t
     · exact absurd h2.1 (hst c h1.2)
-    · rw [dif_neg h2, mul_zero]
-  · rw [dif_neg h1, zero_mul]
+    · rw [dite_eq_right h2, mul_zero]
+  · rw [dite_eq_right h1, zero_mul]
 
 theorem WD_prod (Q R Q' R' : Matrix (Fin n) (Fin n) ℂ) :
     (Cm n * fromBlocks 0 Q R 0 * (Cm n)⁻¹) * (Cm n * fromBlocks 0 Q' R' 0 * (Cm n)⁻¹) =

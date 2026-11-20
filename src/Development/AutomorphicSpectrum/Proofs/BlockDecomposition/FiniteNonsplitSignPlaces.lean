@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.FinSign
 theorem ordL_eq_zero_of_v_eq_one {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {x : L}
     (h : Valued.v x = 1) : ordL x = 0 := by
   unfold ordL
-  rw [dif_neg (by rw [h]; exact one_ne_zero)]
+  rw [dite_eq_right (by rw [h]; exact one_ne_zero)]
   simp [h]
   rfl
 

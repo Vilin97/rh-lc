@@ -16,7 +16,7 @@ theorem v_eq_of_ne {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ)
     Valued.v x = ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h0 : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold ordL
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   simp
 
 theorem diagT_mem_iwGL {E : Type} [Field E] [NumberField E] [IsCMField E] (w : Pl E) (n : ℕ)

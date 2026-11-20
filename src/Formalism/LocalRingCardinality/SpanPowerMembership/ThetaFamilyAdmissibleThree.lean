@@ -102,7 +102,7 @@ def thetaG : ThetaX D where
   chrOf_inf := fun _ j τ => by
     show chrExp D (j.1 + 1) τ = _
     unfold chrExp
-    rw [dif_pos ⟨Nat.le_add_left _ _, j.2⟩]
+    rw [dite_eq_left ⟨Nat.le_add_left _ _, j.2⟩]
     rfl
   etaT := Multiplicative.ofAdd fun _ => 1 / 2
   etaT_inf := fun _ => Or.inl rfl
@@ -209,7 +209,7 @@ def muOf (P : TPar D) (j : ℕ) : Multiplicative (D.what₂.Tau → ℚ) :=
 
 theorem muOf_isMu (P : TPar D) : Formalism.MainNotions.CayleySignature.IsMu (thetaG D) P (muOf D P) := fun j τ => by
   show (if h : 1 ≤ j.1 + 1 ∧ j.1 + 1 ≤ D.R.m then -P.e τ ⟨j.1 + 1 - 1, by omega⟩ else 0) = _
-  rw [dif_pos ⟨Nat.le_add_left _ _, j.2⟩]
+  rw [dite_eq_left ⟨Nat.le_add_left _ _, j.2⟩]
   rfl
 
 theorem thetaFamily_admissible_one : Formalism.MainNotions.CayleySignature.RallisSiegelWeilFormula D (thetaG D) := fun P _ => by

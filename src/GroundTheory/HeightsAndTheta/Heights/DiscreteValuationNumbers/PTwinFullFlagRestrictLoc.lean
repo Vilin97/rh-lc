@@ -252,7 +252,7 @@ def rs (z : Ω) : FractionRing (MRingOver (kap O) ι ⧸ Q) :=
 theorem rs_eq (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {z : Ω} {F G : MRingOver O ι} (hFG : IsLocFrac O Q F G)
     (hz : z = aeval x F / aeval x G) : rs x Q z = resOf O Q F G := by
   have hm : z ∈ locAlg x Q := hz ▸ mem_locAlg hPQ hFG
-  rw [rs, dif_pos hm]
+  rw [rs, dite_eq_left hm]
   obtain ⟨h1, _, h2⟩ := (mem_locAlg_iff.1 hm).choose_spec.choose_spec
   exact resOf_congr hPQ h1 hFG (h2.symm.trans hz)
 

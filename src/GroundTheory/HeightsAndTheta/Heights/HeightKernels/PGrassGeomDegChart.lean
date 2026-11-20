@@ -221,7 +221,7 @@ theorem GrassGeomDegChart.proof : GrassGeomDegChart.Statement := by
   obtain ⟨B, hB, hval⟩ := ptsIntegralAt_eq hex.choose_spec
   refine ⟨B, hB, ?_⟩
   unfold geomDeg ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hval
 
 end

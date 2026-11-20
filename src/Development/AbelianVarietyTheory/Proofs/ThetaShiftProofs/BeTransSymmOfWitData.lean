@@ -19,7 +19,7 @@ theorem exists_unit_gm_spMap {A F : Type} [CommRing A] [Field F] {X : Scheme.{0}
   rw [← toStk_valF _ U z hz]
   congr 1
   have ht := (top_le_iff_mem (spMap f ≫ x) U z).2 hz
-  rw [valF, dif_pos ht]
+  rw [valF, dite_eq_left ht]
   have e1 : (spMap f ≫ x).appLE U ⊤ ht = x.appLE U ⊤ h ≫ (spMap f).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm

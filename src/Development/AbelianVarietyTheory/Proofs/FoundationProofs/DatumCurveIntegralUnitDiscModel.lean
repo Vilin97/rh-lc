@@ -478,7 +478,7 @@ theorem modelEx_holds : ∀ D : D7, GL3Theta.modelEx D := by
   have eA : (A : ℂ) = -L.g₂ / 4 := by rw [← e2]
   have eB : (B : ℂ) = -L.g₃ / 4 := by rw [← e3]
   have hV : wModel lam (lamOf D cc δ) = ⟨0, 0, 0, lam A, lam B⟩ := by
-    rw [wModel, lamC, lamC, dif_pos a2, dif_pos a3]
+    rw [wModel, lamC, lamC, dite_eq_left a2, dite_eq_left a3]
   have hΔ' : -16 * (4 * A ^ 3 + 27 * B ^ 2) = 1 := Qbar.val.toRingHom.injective (by
     simp only [map_pow, map_neg, map_add (f := _), map_mul, map_ofNat, map_one]
     change -16 * (4 * (A : ℂ) ^ 3 + 27 * (B : ℂ) ^ 2) = 1

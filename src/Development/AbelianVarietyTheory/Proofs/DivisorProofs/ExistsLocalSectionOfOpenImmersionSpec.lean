@@ -41,7 +41,7 @@ theorem valF_ne_zero_of_le {F : Type} [Field F] {X : Scheme.{0}} {x : Sp F ⟶ X
   have e1 := Scheme.basicOpen_appLE x ⊤ U h a
   rw [top_inf_eq] at e1
   have e2 : (Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom (valF x U a) = (x.appLE U ⊤ h).hom a := by
-    rw [valF, dif_pos h]
+    rw [valF, dite_eq_left h]
     exact (Scheme.ΓSpecIso (CommRingCat.of F)).hom_inv_id_apply _
   have e3 : x ⁻¹ᵁ X.basicOpen a =
       (Sp F).basicOpen ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom (valF x U a)) := by

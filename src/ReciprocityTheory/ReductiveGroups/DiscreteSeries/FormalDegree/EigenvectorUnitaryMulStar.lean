@@ -55,7 +55,7 @@ theorem leading_minor_sum_weights {ε : Fin n → Bool} (z : PCoord ε → ℂ) 
       ((pmat_isHermitian z).eigenvectorUnitary : Matrix (Fin n) (Fin n) ℂ)ᴴ) i =
       ∑ S, ((wS z hi S : ℝ) : ℂ) * ∏ s ∈ S.1, d s := by
   unfold Del
-  rw [dif_pos hi]
+  rw [dite_eq_left hi]
   have h := leading_minor_conj_diagonal (RingHom.id ℂ) hi ((pmat_isHermitian z).eigenvectorUnitary : Matrix (Fin n) (Fin n) ℂ) d
   rw [matrix_map_id, matrix_map_id] at h
   rw [h]
@@ -96,7 +96,7 @@ theorem lemma3b {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i 
   simp only [Matrix.diagonal_one, (pmat_eigenvectorUnitary_mul_conjTranspose_and_conj_mul z).1, Finset.prod_const_one, mul_one] at h
   have h1 : Del (1 : Matrix (Fin n) (Fin n) ℂ) i = 1 := by
     unfold Del
-    rw [dif_pos hi, Matrix.submatrix_one _ (Fin.castLE_injective hi), Matrix.det_one]
+    rw [dite_eq_left hi, Matrix.submatrix_one _ (Fin.castLE_injective hi), Matrix.det_one]
   exact_mod_cast h.symm.trans h1
 
 open Polynomial in

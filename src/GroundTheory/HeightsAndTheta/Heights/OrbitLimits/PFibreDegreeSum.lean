@@ -200,9 +200,9 @@ theorem FibreDegreeSum.proof : FibreDegreeSum.Statement := by
     have hm : Geo.multAt (P ⊔ Ideal.span {C (p : ℤ)}) W =
         (NumbersDVR.multAt (P ⊔ Ideal.span {C (p : ℤ)}) W).toNat :=
       Bridge.multAt_eq_toNat _ _
-    rw [NumbersDVR.divCycle, dif_pos hW', hm, Bridge.intNum_map_eq_geoNum p e W hMP hpW hdimW a]
+    rw [NumbersDVR.divCycle, dite_eq_left hW', hm, Bridge.intNum_map_eq_geoNum p e W hMP hpW hdimW a]
   · have hW' : ¬(W ∈ (P ⊔ Ideal.span {C (p : ℤ)}).minimalPrimes ∧ NumbersDVR.IsRelevant W) := hW
-    rw [Set.indicator_of_notMem hW, NumbersDVR.divCycle, dif_neg hW', zero_mul]
+    rw [Set.indicator_of_notMem hW, NumbersDVR.divCycle, dite_eq_right hW', zero_mul]
 
 end
 

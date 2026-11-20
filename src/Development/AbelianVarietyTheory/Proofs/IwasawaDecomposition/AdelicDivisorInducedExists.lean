@@ -45,14 +45,14 @@ theorem GlobalTheory.ShFam.Pad.induced_adlOf_line : HTBoundSt → ∀ (D : D7) (
     by_cases hne : w.support.Nonempty
     · have hpar : parOf w = some R := by
         unfold parOf
-        rw [dif_pos hne]
+        rw [dite_eq_left hne]
         exact (hw _ hne.choose_spec).2
       rw [hpar]
       exact (GlobalTheory.T.family_metrics_smooth D A N j S κ s x Φ k σ (expo S.Dw w)).1 R hR
     · have hw0 : w = 0 := Finsupp.support_eq_empty.1 (Finset.not_nonempty_iff_eq_empty.1 hne)
       have hpar : parOf w = none := by
         unfold parOf
-        rw [dif_neg hne]
+        rw [dite_eq_right hne]
       rw [hpar]
       refine mSmooth_metsOf_none_zero x Φ k σ _ ?_
       subst hw0

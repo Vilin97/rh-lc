@@ -67,7 +67,7 @@ theorem charSum_detects_multiple : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ)
       refine ⟨fun y => if h : IsHalf (cA D e) y ∧ k • y ∈ Λ then (hU y h.1 h.2).exists.choose else 0, ?_⟩
       intro y h1 h2
       dsimp only
-      rw [dif_pos (And.intro h1 h2)]
+      rw [dite_eq_left (And.intro h1 h2)]
       exact (hU y h1 h2).exists.choose_spec
     have rep_eq : ∀ y r, IsHalf (cA D e) y → k • y ∈ Λ → r ∈ R → y - r ∈ Λ → rep y = r :=
       fun y r h1 h2 hr hd => (hU y h1 h2).unique (rep_spec y h1 h2) ⟨hr, hd⟩

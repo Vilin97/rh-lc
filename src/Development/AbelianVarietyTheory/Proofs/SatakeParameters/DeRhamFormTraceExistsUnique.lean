@@ -74,7 +74,7 @@ theorem trDR_isTrDR_unique : ∀ (k K L : Type) [Field k] [CharZero k] [Field K]
   have htr : IsTrDR k K L (trDR k K L) := by
     have h : ∃ T, IsTrDR k K L T := ⟨_, ex⟩
     unfold trDR
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   exact ⟨htr, fun T hT => uniq T _ hT htr⟩
 

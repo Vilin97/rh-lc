@@ -333,7 +333,7 @@ theorem exists_ul {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (hA : A.det ≠ 0)
     simp only [Matrix.vecMul, dotProduct, T, Matrix.submatrix_apply, Pi.neg_apply] at e
     have e2 : (∑ x, if h : i < x then r i ⟨x, h⟩ * A x c else 0) = ∑ j : {j : Fin n // i < j}, r i j * A j c := by
       rw [← Finset.sum_subset (Finset.filter_subset (fun x => i < x) Finset.univ) (fun x _ hx => by
-        rw [dif_neg (by simpa using hx)]), Finset.sum_subtype (p := fun x => i < x) _ (fun x => by simp)]
+        rw [dite_eq_right (by simpa using hx)]), Finset.sum_subtype (p := fun x => i < x) _ (fun x => by simp)]
       exact Finset.sum_congr rfl fun j _ => dif_pos j.2
     rw [Matrix.mul_apply, Finset.sum_congr rfl fun j _ => hv j, Finset.sum_add_distrib, Finset.sum_ite_eq, e2, e]
     simp

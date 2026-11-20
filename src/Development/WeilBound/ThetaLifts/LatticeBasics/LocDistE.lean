@@ -21,7 +21,7 @@ open Classical in
 noncomputable def toGL (X : Matrix (Fin d) (Fin d) k) : GL (Fin d) k := if h : IsUnit X then h.unit else 1
 
 theorem toGL_val {X : Matrix (Fin d) (Fin d) k} (h : X.det ≠ 0) : (toGL X).1 = X := by
-  rw [toGL, dif_pos ((isUnit_iff_isUnit_det X).2 h.isUnit)]; rfl
+  rw [toGL, dite_eq_left ((isUnit_iff_isUnit_det X).2 h.isUnit)]; rfl
 
 theorem toGL_coe (x : GL (Fin d) k) : toGL x.1 = x := Units.ext (toGL_val x.det_ne_zero)
 

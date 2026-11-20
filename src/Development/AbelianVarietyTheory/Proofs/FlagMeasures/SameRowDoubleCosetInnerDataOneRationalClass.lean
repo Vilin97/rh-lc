@@ -130,7 +130,7 @@ theorem mem_orth_iff (A : Submodule D.host.E (VS D).V) (y : (VS D).V) :
 theorem frame_mapLF {T : D.host.E} (P : LFlag (VS D) D.R.rS T) (γ : GV D) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) :
     ∀ a, frame (mapLF γ P) a = γ (frame P a) := by
   intro a
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
   show FlagG.fvec (mapFlag γ hγ P.fl) a = γ (FlagG.fvec P.fl a)
   unfold FlagG.fvec
   refine Fin.lastCases ?_ (fun i => ?_) a

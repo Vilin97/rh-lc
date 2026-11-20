@@ -988,13 +988,13 @@ theorem twisted_idempotent_holds : TwistedIdempotent := by
     rw [tw_lemma, tw_lemma]
     by_cases hg : g ∈ J
     · have hg' : g⁻¹ ∈ J := J.inv_mem hg
-      rw [dif_pos hg', dif_pos hg, map_mul, conj_char_inv]
+      rw [dite_eq_left hg', dite_eq_left hg, map_mul, conj_char_inv]
       have e : (⟨g⁻¹, hg'⟩ : J) = (⟨g, hg⟩ : J)⁻¹ := rfl
       rw [e, map_inv, inv_inv]
       simp
     · have hg' : g⁻¹ ∉ J := fun h => hg (by simpa using J.inv_mem h)
-      rw [dif_neg hg', dif_neg hg, map_zero]
-  · rw [tw_lemma, dif_pos J.one_mem]
+      rw [dite_eq_right hg', dite_eq_right hg, map_zero]
+  · rw [tw_lemma, dite_eq_left J.one_mem]
     have e : (⟨1, J.one_mem⟩ : J) = 1 := rfl
     rw [e, map_one, inv_one, Units.val_one, mul_one]
   · intro V _ _ ρ

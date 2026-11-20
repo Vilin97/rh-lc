@@ -8,7 +8,7 @@ variable {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n]
 
 theorem red_coe (S : Subring A) (ϖ : A) (s : S) :
     red S ϖ (s : A) = Ideal.Quotient.mk (piIdeal S ϖ) s := by
-  unfold red; rw [dif_pos s.2]
+  unfold red; rw [dite_eq_left s.2]
 
 theorem inPow_one_iff (S : Subring A) (ϖ : A) (hϖ : ϖ ∈ S) (s : S) :
     InPow S ϖ 1 (s : A) ↔ Ideal.Quotient.mk (piIdeal S ϖ) s = 0 := by

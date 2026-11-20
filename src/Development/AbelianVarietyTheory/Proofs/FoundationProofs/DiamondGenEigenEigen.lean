@@ -8,7 +8,7 @@ namespace GlobalTheory.HeckeFamilyMatrices.SsD
 theorem toGL_mat (σ : SL(2, ℤ)) : toGL (mat σ) = (σ : GL (Fin 2) ℝ) := by
   have h : (mat σ).det ≠ 0 := by simp [mat]
   unfold toGL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   ext i j
   simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, mat]
 

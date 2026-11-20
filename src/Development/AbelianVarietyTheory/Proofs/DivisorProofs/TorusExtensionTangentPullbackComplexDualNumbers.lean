@@ -80,7 +80,7 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type
     have hv1 : valR (𝟙 (Sp (DualNumber V))) ⊤ ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber V))).inv.hom
         (1 + TrivSqZeroExt.inr a)) = 1 + TrivSqZeroExt.inr a := by
       have h0 : ⊤ ≤ 𝟙 (Sp (DualNumber V)) ⁻¹ᵁ ⊤ := fun _ _ => trivial
-      rw [valR, dif_pos h0]
+      rw [valR, dite_eq_left h0]
       simp only [Scheme.Hom.appLE, Scheme.Hom.id_app]
       erw [show (homOfLE h0) = 𝟙 (⊤ : (Sp (DualNumber V)).Opens) from rfl]
       simp

@@ -260,7 +260,7 @@ def part [MeasurableSpace M] (α : A.Fld) (ε : ℤˣ) : Measure M :=
 def integral [MeasurableSpace M] (α : A.Fld) : ℝ := (A.part α 1).real univ - (A.part α (-1)).real univ
 
 theorem loc_crd (α : A.Fld) (x : A.Pt) : A.loc α x.1.1 x.crd = α x := by
-  rw [loc, dif_pos (x.ch.map_source x.2)]
+  rw [loc, dite_eq_left (x.ch.map_source x.2)]
   exact congrArg α (Subtype.ext (Prod.ext rfl (x.ch.left_inv x.2)))
 
 theorem isForm_fn {u : M → ℝ} (hu : A.SmoothOn univ fun y => u y) : A.IsForm (A.fn u) := by

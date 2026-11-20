@@ -25,15 +25,15 @@ theorem hom_eq {a b : (NE κ)ᵒᵖ} (f g : a ⟶ b) : f = g := Subsingleton.eli
 
 theorem triVal_eq (c : CC F 2) (X : (NE κ)ᵒᵖ) {s : Finset κ} (hs : s.card = 2 + 1) (h : s ⊆ sub X) :
     mp F (homOf (a := ne s (card_nonempty ⟨s, hs⟩)) (b := X) h) (c ⟨s, hs⟩) = triVal F c X s := by
-  unfold triVal; rw [dif_pos ⟨hs, h⟩]
+  unfold triVal; rw [dite_eq_left ⟨hs, h⟩]
 
 theorem triVal_map (c : CC F 2) {X Y : (NE κ)ᵒᵖ} (f : X ⟶ Y) {s : Finset κ} (h : s ⊆ sub X) :
     mp F f (triVal F c X s) = triVal F c Y s := by
   unfold triVal
   by_cases hs : s.card = 2 + 1
-  · rw [dif_pos ⟨hs, h⟩, dif_pos ⟨hs, h.trans (sub_subset f)⟩, ← mp_comp]
+  · rw [dite_eq_left ⟨hs, h⟩, dite_eq_left ⟨hs, h.trans (sub_subset f)⟩, ← mp_comp]
     congr 1
-  · rw [dif_neg (fun h' => hs h'.1), dif_neg (fun h' => hs h'.1), map_zero]
+  · rw [dite_eq_right (fun h' => hs h'.1), dite_eq_right (fun h' => hs h'.1), map_zero]
 
 theorem alternatingToOrderedCechDegreeTwo_apply_triple (c : CC F 2) {a b d : (NE κ)ᵒᵖ} (f : a ⟶ b) (g : b ⟶ d) :
     e2 F c a b d f g = if mn d < mn b ∧ mn b < mn a then -triVal F c d {mn d, mn b, mn a} else 0 := by

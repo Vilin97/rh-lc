@@ -19,7 +19,7 @@ private theorem exists_stalk {Y : Scheme.{0}} (s' : Y ⟶ Sp ℂ) (y : CxPts s' 
       (Scheme.stalkClosedPointTo y.1).hom ((Y.presheaf.germ W _ hW).hom b) = valR y.1 W b := by
     intro W hW b
     have hh : ⊤ ≤ y.1 ⁻¹ᵁ W := (Points.le_preimage_iff y.1 W).mpr hW
-    rw [valR, dif_pos hh]
+    rw [valR, dite_eq_left hh]
     have := congrArg (fun g => g.hom b) (Scheme.germ_stalkClosedPointTo y.1 W hW)
     simp only [CommRingCat.hom_comp, RingHom.comp_apply] at this
     rw [this]

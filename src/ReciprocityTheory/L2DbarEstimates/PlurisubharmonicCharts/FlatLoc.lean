@@ -284,7 +284,7 @@ private theorem d_eq_wd_comp_chart_symm' {n : ℕ} {M : Type*} [TopologicalSpace
     d n z j G x = wd n j (G ∘ E.symm) (z x) := by
   unfold d
   have h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨E, hE, hx⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨hc, hxc⟩ := Classical.choose_spec h
   apply wd_congr
   filter_upwards [chart_symm_eventuallyEq_of_isChart' hc hE hxc hx] with v hv
@@ -295,7 +295,7 @@ private theorem db_eq_wdb_comp_chart_symm' {n : ℕ} {M : Type*} [TopologicalSpa
     db n z j G x = wdb n j (G ∘ E.symm) (z x) := by
   unfold db
   have h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨E, hE, hx⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨hc, hxc⟩ := Classical.choose_spec h
   apply wdb_congr
   filter_upwards [chart_symm_eventuallyEq_of_isChart' hc hE hxc hx] with v hv

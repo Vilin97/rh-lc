@@ -214,19 +214,19 @@ theorem parOf_eq (σ : D.what₂.FT) (s : SplitPlace D.host.E) (τ : IrrRep (GL 
   classical
   have h : Nonempty (LocAt D rep σ s.w) := ⟨⟨⟨s, τ⟩, rfl, hτ⟩⟩
   unfold parOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact parAt_eq hL D rep _ s rfl τ hτ
 
 theorem parOf_dim (σ : D.what₂.FT) (w : PlE D.host) : (parOf hL D rep σ w).lpDim = D.R.r := by
   classical
   unfold parOf
   by_cases h : Nonempty (LocAt D rep σ w)
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     generalize h.some = p
     obtain ⟨⟨s0, τ0⟩, hw, hl⟩ := p
     subst hw
     exact lpDim_locRec hL _ τ0
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     exact (unrW D).dim σ w
 
 theorem parOf_tame (σ : D.what₂.FT) (s : SplitPlace D.host.E) (τ : IrrRep (GL (Fin D.R.r) (s.w.adicCompletion D.host.E)))
@@ -262,7 +262,7 @@ theorem satOf_spec (S : Submodule ℂ (GAf L n → W)) (v : HeightOneSpectrum (�
   refine ⟨h.choose_spec.choose_spec.choose, satAtS_transfer S _ v _ Dv
     (HeightOneSpectrum.ext (hsp.1.symm.trans hO)) _ hsp.2, ?_⟩
   unfold satOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem exists_rowWD_rowTrue : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r), RowDepth D rep →
     ∃ Rw : RowWD D, RowTrue hL D rep Rw.par Rw.sat := by

@@ -254,7 +254,7 @@ theorem piChar_eq (L : (ι → F) ≃ₗ[F] (ι → F)) :
     piChar L = IndefiniteRowSideFullHecke.WmSys.absF (LinearMap.det (L : (ι → F) →ₗ[F] (ι → F))) := by
   obtain ⟨g, rfl⟩ := (glEquiv F ι).surjective L
   rw [← glChar_apply, glChar_eq, ← LinearEquiv.coe_det, det_glEquiv, IndefiniteRowSideFullHecke.WmSys.absF,
-    dif_neg (Units.ne_zero _), Units.mk0_val]
+    dite_eq_right (Units.ne_zero _), Units.mk0_val]
 
 end Pi
 

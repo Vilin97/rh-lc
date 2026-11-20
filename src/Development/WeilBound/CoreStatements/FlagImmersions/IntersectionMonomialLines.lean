@@ -60,7 +60,7 @@ theorem intersection_monomial_lines : ∀ II : IntersectionSystem, IsIntersectio
       rw [hlen]
       exact k.2
     simp only [monoLines, Function.comp_apply, hσ k]
-    rw [dif_pos hk]
+    rw [dite_eq_left hk]
     rfl
   refine ⟨hdeg, σ, hmono, ?_⟩
   rw [hmono]

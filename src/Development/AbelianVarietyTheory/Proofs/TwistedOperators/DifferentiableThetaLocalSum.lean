@@ -465,7 +465,7 @@ private theorem arith {N N' : ℕ} (U : Matrix.unitaryGroup (Fin N) D.host.E) (U
   refine ⟨⟨(hc (algebraMap Qbar ℂ)).1, fun σ => (hc σ).2⟩, (hc (algebraMap Qbar ℂ)).2, fun M M' q _ a1 a2 a3 a4 lam => ?_⟩
   obtain ⟨h3, h4⟩ := h ℂ_[q] lam (fun τ => normOne_emb lam _ _ (norm_det_padic U a1 a3))
     fun τ => normOne_emb lam _ _ (norm_det_padic U' a2 a4)
-  rw [lamC, dif_pos h3]
+  rw [lamC, dite_eq_left h3]
   exact h4
 
 private theorem jetTh_rat : GlobalTheory.FunPr.Hypotheses₂ → (∀ D, GlobalTheory.NormSum.Inp D) → ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type}

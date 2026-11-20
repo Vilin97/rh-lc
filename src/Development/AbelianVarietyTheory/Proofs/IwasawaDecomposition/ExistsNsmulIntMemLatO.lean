@@ -412,7 +412,7 @@ theorem redM_add_nsmul {b c : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) {n : ℕ}
   funext i j
   have h2 : (N + n • N') i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := add_mem (h i j) (nsmul_mem (h' i j) n)
   unfold redM
-  rw [dif_pos h2, dif_pos (h i j)]
+  rw [dite_eq_left h2, dite_eq_left (h i j)]
   have e : (⟨_, h2⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨_, h i j⟩ + n • ⟨_, h' i j⟩ := rfl
   have h0 : (n : Formalism.L2.DIV.kP PP) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk PP.asIdeal), Ideal.Quotient.eq_zero_iff_mem]
@@ -471,11 +471,11 @@ theorem omegaQ_congr {a b : ℕ} (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (r 
     forall_congr' fun PP => forall_congr' fun hPP => by rw [h PP hPP]
   unfold omegaQ
   by_cases h1 : ∀ PP ∈ Q, LowZero r (y PP) ∧ IsUnit (topL r (y PP)).det
-  · rw [dif_pos h1, dif_pos (hiff.1 h1)]
+  · rw [dite_eq_left h1, dite_eq_left (hiff.1 h1)]
     refine Finset.prod_congr rfl fun PP _ => ?_
     congr 3
     exact Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 PP.2])
-  · rw [dif_neg h1, dif_neg fun h2 => h1 (hiff.2 h2)]
+  · rw [dite_eq_right h1, dite_eq_right fun h2 => h1 (hiff.2 h2)]
 
 theorem omegaK_congr {a b : ℕ} (Pg : Finset (Formalism.L2.DIV.Pl D.host.E))
     {y y' : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP)} (h : ∀ PP ∈ Pg, y PP = y' PP) :

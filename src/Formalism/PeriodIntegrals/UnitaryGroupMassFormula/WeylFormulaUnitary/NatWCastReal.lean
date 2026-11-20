@@ -68,7 +68,7 @@ theorem natW_cast {N : ℕ} (lam : DomWeight N) (i : Fin N) :
   have hle : lam.w ⟨N - 1, by omega⟩ ≤ lam.w i :=
     lam.anti (Fin.le_iff_val_le_val.mpr (by simp only; omega))
   unfold DomWeight.natW DomWeight.detShift
-  rw [dif_pos hN0]
+  rw [dite_eq_left hN0]
   exact Int.toNat_of_nonneg (by omega)
 
 theorem natW_cast_real {N : ℕ} (lam : DomWeight N) (i : Fin N) :

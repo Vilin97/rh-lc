@@ -50,7 +50,7 @@ theorem UpperTheory.V.Alg.ker_coef :
     intro x a hx u
     have h : ∃ a : κ → O, x = ∑ v, a v • ε v := ⟨a, hx⟩
     simp only [co]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hd : ∑ v, (h.choose v - a v) • ε v = 0 := by
       simp only [sub_smul, Finset.sum_sub_distrib]
       rw [← h.choose_spec, ← hx, sub_self]

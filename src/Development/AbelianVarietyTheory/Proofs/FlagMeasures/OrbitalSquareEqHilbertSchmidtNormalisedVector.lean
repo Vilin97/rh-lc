@@ -167,7 +167,7 @@ theorem besselPhi_eq_reindexConj_rootCoords (hz : Bs.z = L.z) (γ : Point ℂ (r
   have hq : q.1.2.val < r := by have h1 := q.2.1; have h2 := q.1.1.isLt; rw [Fin.lt_def] at h1; omega
   show star (C2.uMap k r Bs.z (Matrix.of x) q.1.2 q.1.1) = star (flagMat k r L.z (Matrix.of x) q.1.2 q.1.1)
   unfold C2.uMap flagMat
-  rw [dif_pos hq, dif_pos hq, hz]
+  rw [dite_eq_left hq, dite_eq_left hq, hz]
   exact congrArg star (DF.herm_es _ _)
 
 theorem rootMeas_iff (hz : Bs.z = L.z) (hc : L.c = cStd) (γ : Point ℂ (r + 1)) {g : B.Mat k r}
@@ -435,7 +435,7 @@ theorem orbSq_eq_vecV : ∃ c₃ : ℝ, ∀ (k r : ℕ) (L : LocBessel k r) (μs
     rw [(rootMeas_iff L Bs hz hc γ hg hZ hpos μR).1 hR, inv_pow] at hQ
     rw [orbInt_eq L Bs hS hc hN hFc hrel hH hπ hQ hex.choose_spec.1, ← hs_orbJ L Bs hb F _ hp hG hg hZ]
     unfold D.orbJ
-    rw [dif_pos hex, hsNormSq_hsVec]
+    rw [dite_eq_left hex, hsNormSq_hsVec]
     generalize (∫ p, hex.choose p • D.orbIntegrand Bs g F p ∂Bs.μSS) = X
     have e : ∀ t : ℝ, B.hsVec (t • X) = t • B.hsVec X := fun _ => rfl
     rw [e, norm_smul, mul_pow, Real.norm_eq_abs, sq_abs]

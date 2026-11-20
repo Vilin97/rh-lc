@@ -50,7 +50,7 @@ private theorem valAt'_app_eq_valAt'_comp_moduli {Y Z : Scheme.{0}} (x : Sp ℂ 
     rw [Scheme.Hom.comp_appLE]
     rfl
   · have hh' : ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U := hh
-    rw [dif_neg hh, dif_neg hh']
+    rw [dite_eq_right hh, dite_eq_right hh']
 
 private theorem valAt'_constFn' {Y : Scheme.{0}} (y : Sp ℂ ⟶ Y) (q : Y ⟶ Sp ℂ) (hq : y ≫ q = 𝟙 _) (U : Y.Opens)
     (h : ⊤ ≤ y ⁻¹ᵁ U) (c : ℂ) : valAt' y U (constFn q U c) = c := by

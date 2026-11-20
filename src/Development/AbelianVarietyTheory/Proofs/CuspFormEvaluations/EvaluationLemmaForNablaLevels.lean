@@ -110,7 +110,7 @@ theorem evR_of_test (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ 
     (z : FrPt Xo c S) (h : FrMap φ y z) : evR Xo c f z = φ (f p y) := by
   have ht : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨p, φ, y, h⟩
   unfold evR evalAt
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
   exact hWD f hf S _ p _ φ _ y z ht.choose_spec.choose_spec.choose_spec h
 
 theorem evR_baseChange (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z))

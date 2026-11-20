@@ -34,7 +34,7 @@ theorem fnVal_const (p : Spec (CommRingCat.of A) ⟶ X) (π : X ⟶ Spec (CommRi
   rw [hp, ← Category.comp_id (Spec.map _), fnVal_specMap θ _ ⊤ le_top]
   congr 1
   unfold fnVal
-  rw [dif_pos (show ⊤ ≤ (𝟙 (Spec (CommRingCat.of R)) : _ ⟶ _) ⁻¹ᵁ ⊤ from le_top)]
+  rw [dite_eq_left (show ⊤ ≤ (𝟙 (Spec (CommRingCat.of R)) : _ ⟶ _) ⁻¹ᵁ ⊤ from le_top)]
   have e : (𝟙 (Spec (CommRingCat.of R)) : _ ⟶ _).appLE ⊤ ⊤ le_top = 𝟙 _ := by
     simp [Scheme.Hom.appLE]
   rw [e]

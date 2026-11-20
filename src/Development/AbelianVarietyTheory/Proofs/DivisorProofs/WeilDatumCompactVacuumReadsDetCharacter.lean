@@ -21,7 +21,7 @@ namespace GlobalTheory.AdTh.RealCompact
 theorem realM_tauE {D : D7} (θ : InfFam D) {m n : ℕ} (w : Mx D m n) (ρ : D.what₂.Tau) :
     realM θ w (tauE D ρ) = compAt θ ρ w := by
   have h : ∃ ρ', tauE D ρ = tauE D ρ' := ⟨ρ, rfl⟩
-  rw [realM, dif_pos h, ← GlobalTheory.SmoothForms.RealPts.tauE_injective D h.choose_spec]
+  rw [realM, dite_eq_left h, ← GlobalTheory.SmoothForms.RealPts.tauE_injective D h.choose_spec]
 
 theorem mat_frMove {D : D7} (θ : InfFam D) (W : HSp D) (X : Data D.host.E W.rank) (k : GA D W)
     (x : Frame X.Ψ W.rank) (ρ : D.what₂.Tau) (τ : X.Ψ) (h : τ.1 = tauE D ρ) :

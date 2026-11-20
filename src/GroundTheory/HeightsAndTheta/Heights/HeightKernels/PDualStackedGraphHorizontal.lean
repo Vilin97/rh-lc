@@ -57,9 +57,9 @@ theorem multAt_eq_of_mul_mem {K' : Type} [Fintype K'] {ι : K' → Type} [∀ k,
     {I J W : Ideal (MRing ι)} (hIJ : I ≤ J) {s : MRing ι} (hs : s ∉ W) (hsJ : ∀ x ∈ J, s * x ∈ I) :
     multAt I W = multAt J W := by
   by_cases hW : W.IsPrime
-  · rw [multAt, multAt, dif_pos hW, dif_pos hW]
+  · rw [multAt, multAt, dite_eq_left hW, dite_eq_left hW]
     exact congrArg ENat.toNat (length_localized_eq hIJ hs hsJ)
-  · rw [multAt, multAt, dif_neg hW, dif_neg hW]
+  · rw [multAt, multAt, dite_eq_right hW, dite_eq_right hW]
 
 theorem sup_le_of_mul_mem {A : Type*} [CommRing A] {I Q : Ideal A} (hQ : Q.IsPrime) {f g s : A} (hs : s ∉ Q)
     (hsg : s * g ∈ I ⊔ Ideal.span {f}) (hle : I ⊔ Ideal.span {f} ≤ Q) : I ⊔ Ideal.span {g} ≤ Q := by

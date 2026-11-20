@@ -32,7 +32,7 @@ theorem PtsPosDensIntegrable.proof (hMass : PtsSemiPosMassFinite.Statement) : Pt
     intro y w
     unfold sheetDensity
     by_cases hγ : ∃ γ, IsSheet P Ψ y w γ
-    · rw [dif_pos hγ, dif_pos hγ]
+    · rw [dite_eq_left hγ, dite_eq_left hγ]
       have hS := hγ.choose_spec
       have hab : |maDensity (fun j y' => pot L j (hγ.choose y')) y| ≤
           3 ^ e * maDensity (fun j y' => pot N j (hγ.choose y')) y :=
@@ -50,7 +50,7 @@ theorem PtsPosDensIntegrable.proof (hMass : PtsSemiPosMassFinite.Statement) : Pt
         _ = C * max (1 * maDensity (fun j y' => pot N j (hγ.choose y')) y) 0 := by
             rw [one_mul, max_eq_left hn, hCdef]
             ring
-    · rw [dif_neg hγ, dif_neg hγ, max_self, mul_zero]
+    · rw [dite_eq_right hγ, dite_eq_right hγ, max_self, mul_zero]
 
   have hpt : ∀ y, ENNReal.ofReal (ptsPosDens P Ψ (pot L) g y) ≤
       ENNReal.ofReal C * ENNReal.ofReal (ptsPosDens P Ψ (pot N) (fun _ => 1) y) := by

@@ -319,7 +319,7 @@ theorem lat_glue : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommR
       exact LatGlue.not_inFibre_of_inFibre hξ q (hS _ h.choose_spec.1) (hS l hl) hne
         h.choose_spec.2 hq
     show (if h : ∃ l ∈ S, InFibre ξ l q then Lp h.choose q else L₀ q) = Lp l q
-    rw [dif_pos h, e]
+    rw [dite_eq_left h, e]
   refine ⟨L, ?_, hL1, hL2⟩
   intro p _
   by_cases h : ∃ l ∈ S, InFibre ξ l p

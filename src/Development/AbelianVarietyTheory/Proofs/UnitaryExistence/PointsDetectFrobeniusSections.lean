@@ -60,7 +60,7 @@ theorem ptsDetect_of {K : Type} [Field K] {ι : Type} [Fintype ι]
   have hT : FromTest pts mapR z := ⟨p, φ, y, hz⟩
   have h0 := h Ω z
   unfold evalAt at h0
-  rw [dif_pos hT] at h0
+  rw [dite_eq_left hT] at h0
   rw [← h0]
   exact hW g hg.1 Ω p _ φ _ y _ z hz hT.choose_spec.choose_spec.choose_spec
 

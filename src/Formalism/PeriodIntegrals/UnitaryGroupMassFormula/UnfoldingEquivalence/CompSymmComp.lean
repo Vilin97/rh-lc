@@ -16,7 +16,7 @@ theorem atN_map {n c i : ℕ} {r : (Fin (n + c) → k) ≃ₗ[k] (Fin (n + c) �
     intro l hl
     rw [Pi.sub_apply, Pi.smul_apply, eN_apply, smul_eq_mul]
     by_cases hl' : l.1 = n + i
-    · rw [if_pos hl', mul_one, PI.UnfoldEquiv.Loc.atN, dif_pos hlt]
+    · rw [if_pos hl', mul_one, PI.UnfoldEquiv.Loc.atN, dite_eq_left hlt]
       have hle : l = ⟨n + i, hlt⟩ := Fin.ext hl'
       rw [hle, sub_self]
     · rw [if_neg hl', mul_zero, sub_zero]

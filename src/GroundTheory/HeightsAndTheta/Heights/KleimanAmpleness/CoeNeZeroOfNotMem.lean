@@ -153,7 +153,7 @@ theorem resMap_eq_zero_iff (u : locIn (chartRingOver S y c) p) : resMap y c p u 
 
 theorem residue_of_mem (a : chartRingOver S y c) : residue S y c p a = resq y c p a := by
   unfold residue resq
-  rw [dif_pos a.2]
+  rw [dite_eq_left a.2]
 
 theorem resMap_algebraMap (s : S) (h : algebraMap S Ω s ∈ locIn (chartRingOver S y c) p) :
     resMap y c p ⟨algebraMap S Ω s, h⟩ = algebraMap S (ResField S y c p) s := by

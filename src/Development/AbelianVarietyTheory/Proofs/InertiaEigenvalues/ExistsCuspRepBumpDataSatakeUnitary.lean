@@ -33,7 +33,7 @@ theorem bumpData : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
     intro w
     have hx : ∃ B, (CG.mk π₀).HasSat w.1 B := hT w.1 w.2
     unfold sat
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact hx.choose_spec
   have hα : ∀ w : {w : HeightOneSpectrum (𝓞 E) // w ∉ T}, ∃ f : Fin a → ℂˣ,
       Finset.univ.val.map f = sat (CG.mk π₀) w.1 := fun w => exists_enum _ (hsat w).card

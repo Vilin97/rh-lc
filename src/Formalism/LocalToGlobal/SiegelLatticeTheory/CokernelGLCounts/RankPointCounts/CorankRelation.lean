@@ -208,7 +208,7 @@ theorem mem_Xsp_mapLF {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.H
     x ∈ Xsp (Formalism.L2.SG.TermOp.mapLF γ F) ↔ γ.symm x ∈ Xsp F := by
   have h1 : Xsp (Formalism.L2.SG.TermOp.mapLF γ F) = (Xsp F).map (γ : S.V →ₗ[E] S.V) := by
     unfold Formalism.L2.SG.TermOp.mapLF
-    rw [dif_pos hγ]
+    rw [dite_eq_left hγ]
     show Submodule.span E (Set.range fun a => γ (F.fl.e a)) =
       (Submodule.span E (Set.range F.fl.e)).map (γ : S.V →ₗ[E] S.V)
     rw [Submodule.map_span, ← Set.range_comp]

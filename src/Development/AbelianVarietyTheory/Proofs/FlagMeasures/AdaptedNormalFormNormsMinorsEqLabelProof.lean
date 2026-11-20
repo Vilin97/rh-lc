@@ -93,7 +93,7 @@ theorem labC : LabC := by
       simp only [labT, if_pos hl]
       exact hnf l hl'
     unfold GlobalTheory.DegCnt.NF.nD
-    rw [dif_pos hl', hDl l hl', nloc_eq, hlab, norm_star, hd, frameExp_cast _ _ hl']
+    rw [dite_eq_left hl', hDl l hl', nloc_eq, hlab, norm_star, hd, frameExp_cast _ _ hl']
   refine ⟨hjT, ?_, ?_, ?_, ?_⟩
   · have hz : N.F.e (Fin.last D.R.rS) - (F0 X u).e (Fin.last D.R.rS) ∈ (F0 X u).X := hN.2.1 (Fin.last _)
     have h1 : ((N.T : ℕ) : D.host.E) = ((Tu D u : ℕ) : D.host.E) := by
@@ -127,10 +127,10 @@ theorem labC : LabC := by
     unfold GlobalTheory.DegAsm.lab
     by_cases hl : l ≤ jT t
     · have hl' : l ≤ D.R.rS + 1 := by omega
-      rw [dif_pos ⟨hl, hl'⟩]
+      rw [dite_eq_left ⟨hl, hl'⟩]
       simp only [labT, if_pos hl]
       rw [hnf l hl', star_star]
-    · rw [dif_neg (fun h => hl h.1)]
+    · rw [dite_eq_right (fun h => hl h.1)]
       simp only [labT, if_neg hl, star_zero]
 
 end GlobalTheory.TypeAsm

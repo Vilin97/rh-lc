@@ -151,7 +151,7 @@ lemma aeval_tri {S : Type*} [CommRing S] [Algebra R S] (e h : ℕ → S) (he0 : 
         rw [map_mul, map_mul, map_pow, map_neg, map_one, ih (k - i) (by omega) (by omega)]
         have hy : MvPolynomial.aeval (fun j : Fin n => e (j + 1)) (yv R n (i + 1)) = e (i + 1) := by
           simp only [yv]
-          rw [dif_pos (by omega)]
+          rw [dite_eq_left (by omega)]
           simp
         rw [hy, show k + 1 - (i + 1) = k - i by omega, pow_succ]
         ring

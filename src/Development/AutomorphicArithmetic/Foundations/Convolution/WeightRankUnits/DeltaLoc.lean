@@ -14,7 +14,7 @@ private theorem muAt_unit {E : Type} [Field E] [NumberField E] [IsCMField E] (μ
     UpperTheory.ConvolutionTheory.G2.muAt μ u (k : E) = ((μ.locK u k : ℂˣ) : ℂ) := by
   have h : algebraMap E (u.adicCompletion E) (k : E) ≠ 0 := (_root_.map_ne_zero _).2 k.ne_zero
   unfold UpperTheory.ConvolutionTheory.G2.muAt
-  rw [dif_pos h, show Units.mk0 _ h = atFin u k from Units.ext rfl]
+  rw [dite_eq_left h, show Units.mk0 _ h = atFin u k from Units.ext rfl]
   rfl
 
 private theorem absHalf_sign {E : Type} [Field E] [NumberField E] [IsCMField E] (w : Pl E) (n : ℕ) :
@@ -100,7 +100,7 @@ theorem UpperTheory.ConvolutionTheory.G2.deltaLoc :
         hm _ _ (hA R hR) (hA _ hcR), absHalf_sign, one_mul]
     unfold delta
     simp only [hdeg₁, hdeg₂, hDw, hres']
-    rw [if_pos hsp, dif_pos hwd, hfirst, hsecond]
+    rw [if_pos hsp, dite_eq_left hwd, hfirst, hsecond]
     ring
   · have hfib : {x : Pl E | x.under (𝓞 (maximalRealSubfield E)) = w.under (𝓞 (maximalRealSubfield E))} = {w} := by
       ext x

@@ -78,7 +78,7 @@ theorem jmL_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     rw [Finset.sum_congr rfl fun a _ => hy a]
     simp [hl]
   unfold jmL
-  rw [dif_pos hd, jm_seg hA hZ Δ W.get hy hd]
+  rw [dite_eq_left hd, jm_seg hA hZ Δ W.get hy hd]
   congr 1
   refine propext ⟨fun ⟨h, h2⟩ => ?_, ?_⟩
   · refine List.ext_get (by simp [h]) fun n h1 h3 => ?_

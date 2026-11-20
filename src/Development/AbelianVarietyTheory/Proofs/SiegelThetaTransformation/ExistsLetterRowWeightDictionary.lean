@@ -152,7 +152,7 @@ theorem GlobalTheory.Dict.exists_dic : ∀ (E : Type) [Field E] [NumberField E] 
   · rcases hidx j with ⟨t, i, h1, h2, h3⟩ | ⟨t, i, h1, h2, h3⟩
     · have hi := i.isLt
       rw [pv, Function.comp_apply, h3, h2, h1, per_of_le _ _ _ _ (by simp), perFr,
-        dif_pos (show relab c σ t.1 ∈ X.Ψ from (f t).2), dif_pos (by omega)]
+        dite_eq_left (show relab c σ t.1 ∈ X.Ψ from (f t).2), dite_eq_left (by omega)]
       rfl
     · have hi := i.isLt
       have h4 : relab c σ (ComplexEmbedding.conjugate t.1) = ComplexEmbedding.conjugate (f t).1 := hcj t.1
@@ -163,7 +163,7 @@ theorem GlobalTheory.Dict.exists_dic : ∀ (E : Type) [Field E] [NumberField E] 
       obtain ⟨τ, hτ⟩ := u
       obtain ⟨τ, rfl⟩ := i1.surjective τ
       rw [show ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ from i1 τ, perFr,
-        dif_neg (fun h => (X.cmType τ).1 h hτ), dif_pos (show conjEmb τ ∈ X.Ψ from hτ), dif_pos (by omega)]
+        dite_eq_right (fun h => (X.cmType τ).1 h hτ), dite_eq_left (show conjEmb τ ∈ X.Ψ from hτ), dite_eq_left (by omega)]
       rfl
   · rcases hidx j with ⟨t, i, h1, h2, h3⟩ | ⟨t, i, h1, h2, h3⟩
     · rw [h3, h1]
@@ -202,5 +202,5 @@ theorem GlobalTheory.Dict.exists_dic : ∀ (E : Type) [Field E] [NumberField E] 
     have := hpos t.1 t.2 (by rw [i3 _ t.2]; exact hp)
     rw [i3 _ t.2] at this
     simp only [Function.comp_apply, Equiv.symm_apply_apply, k₀, diffOf]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
     exact this

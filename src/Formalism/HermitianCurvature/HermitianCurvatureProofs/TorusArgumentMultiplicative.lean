@@ -65,7 +65,7 @@ theorem extend_by_zero_posSemidef : C7.ExtendZeroPSD := by
   ext w w'
   simp only [P, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.of_apply]
   by_cases hw : w ∈ S <;> by_cases hw' : w' ∈ S
-  · rw [dif_pos ⟨hw, hw'⟩]
+  · rw [dite_eq_left ⟨hw, hw'⟩]
     rw [Finset.sum_eq_single ⟨w', hw'⟩]
     · rw [Finset.sum_eq_single ⟨w, hw⟩]
       · simp
@@ -74,7 +74,7 @@ theorem extend_by_zero_posSemidef : C7.ExtendZeroPSD := by
     · intro s _ hs; have : (s : ι) ≠ w' := fun h => hs (Subtype.ext h); simp [this]
     · simp
   all_goals
-    rw [dif_neg (by tauto)]
+    rw [dite_eq_right (by tauto)]
     symm
     apply Finset.sum_eq_zero
     intro s _

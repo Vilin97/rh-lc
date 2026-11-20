@@ -45,7 +45,7 @@ theorem val_dV (h : ¬ (differentIdeal ℤ (𝓞 F) ≤ v.asIdeal)) : Valued.v (
 
 theorem absV_of_val_one {x : Fv F v} (h : Valued.v x = 1) : absV v x = 1 := by
   unfold absV
-  rw [dif_neg (by rw [h]; exact one_ne_zero)]
+  rw [dite_eq_right (by rw [h]; exact one_ne_zero)]
   have : WithZero.unzero (show Valued.v x ≠ 0 by rw [h]; exact one_ne_zero) = 1 := by
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, h]
@@ -59,7 +59,7 @@ theorem absV_g (g : ℕ) (hcard : Nat.card (𝓞 F ⧸ v.asIdeal) = g) (hg1 : (g
   have e1 : ((g : v.adicCompletionIntegers F) : v.adicCompletion F) = (g : Fv F v) := by simp
   rw [e1] at hv
   unfold absV
-  rw [dif_neg (by rw [hv]; exact WithZero.coe_ne_zero)]
+  rw [dite_eq_right (by rw [hv]; exact WithZero.coe_ne_zero)]
   have hu : WithZero.unzero (show Valued.v (g : Fv F v) ≠ 0 by rw [hv]; exact WithZero.coe_ne_zero) =
       Multiplicative.ofAdd (-1 : ℤ) := by
     apply WithZero.coe_injective

@@ -67,7 +67,7 @@ theorem seam_lat_bot {D : D7} {X : Fields} (s : Seam D X) (n : ℕ) : s.lat (⊥
 
 theorem chiRec_bot (D : D7) (idl : D.Dt ⧸ D.UO → TaylorLogMetric.IdE D) (h : TaylorLogMetric.RelDetPinned D idl) : TaylorLogMetric.chiRec D idl ⊥ = 0 := by
   unfold TaylorLogMetric.chiRec
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact fun hx => not_N1_bot D ((h.2.1 ⊥).2 hx)
 
 theorem not_heq_amb {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l))

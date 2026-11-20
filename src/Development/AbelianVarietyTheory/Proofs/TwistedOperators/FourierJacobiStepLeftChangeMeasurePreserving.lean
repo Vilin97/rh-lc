@@ -23,9 +23,9 @@ theorem affine {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [F
         (if s = b.2 then g r b.1 else 0) * (if h : (Free (c / 2 + 1) b ∨ Kept b) then e ⟨b, h⟩ else 0) := by
       rw [← Fintype.sum_subtype_add_sum_subtype (fun b => Free (c / 2 + 1) b ∨ Kept b)]
       rw [Finset.sum_eq_zero (s := Finset.univ) (f := fun b : {b // ¬ (Free (c / 2 + 1) b ∨ Kept b)} => _)
-        (fun b _ => by rw [dif_neg b.2, mul_zero]), add_zero]
+        (fun b _ => by rw [dite_eq_right b.2, mul_zero]), add_zero]
       simp only [Matrix.mulVec, dotProduct, stepLin, of_apply]
-      refine Finset.sum_congr rfl fun b _ => by rw [dif_pos b.2]
+      refine Finset.sum_congr rfl fun b _ => by rw [dite_eq_left b.2]
     rw [h2, Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [Finset.sum_eq_single s]

@@ -71,7 +71,7 @@ variable {K : Type*} {κ : K → Type*} {R : Type*} [CommRing R]
 theorem divCycle_eq_zero {I W : Ideal (NumbersDVR.MRing κ R)} (f : NumbersDVR.MRing κ R)
     (h : ¬ (W.IsPrime ∧ NumbersDVR.IsRelevant W ∧ I ≤ W)) : NumbersDVR.divCycle I f W = 0 := by
   unfold NumbersDVR.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨hmin, hrel⟩
   exact h ⟨hmin.1.1, hrel, le_sup_left.trans hmin.1.2⟩
 
@@ -112,11 +112,11 @@ theorem divCycle_eq_of_cross (I : Ideal (NumbersDVR.MRing κ R)) {f g f' g' : Nu
   by_cases hc : W ∈ (I ⊔ Ideal.span {f}).minimalPrimes ∧ NumbersDVR.IsRelevant W
   · have hc' : W ∈ (I ⊔ Ideal.span {g}).minimalPrimes ∧ NumbersDVR.IsRelevant W :=
       ⟨e2.mp (e1.mpr hc.1), hc.2⟩
-    rw [dif_pos hc, dif_pos hc']
+    rw [dite_eq_left hc, dite_eq_left hc']
     exact congrArg (fun m : ℕ∞ ↦ (m.toNat : ℤ)) (l1.symm.trans l2)
   · have hc' : ¬ (W ∈ (I ⊔ Ideal.span {g}).minimalPrimes ∧ NumbersDVR.IsRelevant W) :=
       fun h ↦ hc ⟨e1.mp (e2.mpr h.1), h.2⟩
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 end Cycle
 

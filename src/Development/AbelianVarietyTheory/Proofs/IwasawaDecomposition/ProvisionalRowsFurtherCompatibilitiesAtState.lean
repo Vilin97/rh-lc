@@ -71,7 +71,7 @@ theorem mLU_eq (Z Z' : w.Lt) (hX : B.fields.Ok) {Xg Xg' : Finset (Gc B w.px → 
       lMat (D := (w.st Z').toD7) (famR (w.st Z') w.I hX Set.univ Xg' tr').A (lev0 w.I) (chr0 w.I) i (tAll w.I a) := by
     have hi : 1 ≤ (i : ℕ) + 1 ∧ (i : ℕ) + 1 ≤ (w.st Z').toD7.R.m := ⟨by omega, i.2⟩
     unfold mLU
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     exact (by with_unfolding_all exact ((Eq.refl (lMat (D := (w.st Z').toD7) (famR (w.st Z') w.I hX Set.univ Xg' tr').A (lev0 w.I) (chr0 w.I) i (tAll w.I a))) :))
   exact (by with_unfolding_all exact ((heq_of_eq e) :))
 

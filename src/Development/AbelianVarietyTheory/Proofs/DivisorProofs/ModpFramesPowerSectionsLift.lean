@@ -30,7 +30,7 @@ def ev (g : X.functionField) : Z.functionField :=
 theorem ev_algebraMap (a : X.presheaf.stalk (f (genericPoint Z))) :
     ev f (algebraMap _ X.functionField a) = evR f a := by
   have h : RegAt (f (genericPoint Z)) (algebraMap _ X.functionField a) := ⟨a, rfl⟩
-  rw [ev, dif_pos h]
+  rw [ev, dite_eq_left h]
   congr 1
   exact IsFractionRing.injective _ X.functionField h.choose_spec
 
@@ -103,7 +103,7 @@ def evu (u : X.functionFieldˣ) : Z.functionFieldˣ :=
 
 theorem val_evu {u : X.functionFieldˣ} (h : UnitAt (f (genericPoint Z)) (u : X.functionField)) :
     (evu f u : Z.functionField) = ev f u := by
-  rw [evu, dif_pos h]; rfl
+  rw [evu, dite_eq_left h]; rfl
 
 theorem unitAt_evu {z : Z} {u : X.functionFieldˣ} (h : UnitAt (f z) (u : X.functionField)) :
     UnitAt z (evu f u : Z.functionField) := by

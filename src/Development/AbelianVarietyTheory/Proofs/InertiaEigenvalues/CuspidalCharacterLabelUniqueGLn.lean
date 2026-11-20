@@ -163,7 +163,7 @@ theorem thetaOf_gen_pow (L : LabelDatum g) (d : ℕ) (hd : 0 < d) (w : Formalism
     thetaOf L d w (L.gen d ^ n) = L.teich w ^ n := by
   have hex : ∃ n' : ℕ, L.gen d ^ n = L.gen d ^ n' := ⟨n, rfl⟩
   unfold thetaOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hs := hex.choose_spec
   have h1 : 1 < g ^ d := Nat.one_lt_pow hd.ne' (Fact.out : g.Prime).one_lt
   have hfo : IsOfFinOrder (L.gen d) := orderOf_pos_iff.mp (by rw [L.gen_order d hd]; omega)

@@ -85,7 +85,7 @@ lemma aw_eq (n : ℕ) : Pr.aw n = ∑ x ∈ Finset.HasAntidiagonal.antidiagonal 
   refine Finset.sum_congr rfl fun p _ => ?_
   have := p.isLt
   simp only [S]
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 lemma bd_sum {N : ℕ} {ι : Type*} (s : Finset ι) (g : ι → Pr N →₀ ℤ) :
@@ -170,9 +170,9 @@ theorem leaf_aw_of : LateralTheory.EtaleFoundations.SteenPf.leaf_aw := by
   simp only [d_S]
   rw [Finset.sum_add_distrib, Finset.Nat.sum_antidiagonal_succ, Finset.Nat.sum_antidiagonal_succ']
   have z1 : g1 (N + 1) (0, N + 1) = 0 := by
-    unfold g1; rw [dif_pos (by simp)]; rfl
+    unfold g1; rw [dite_eq_left (by simp)]; rfl
   have z2 : g2 (N + 1) (N + 1, 0) = 0 := by
-    unfold g2; rw [dif_pos (by simp)]
+    unfold g2; rw [dite_eq_left (by simp)]
     show (-1 : ℤ) ^ (N + 1) • (0 : Pr (N + 1) →₀ ℤ) = 0
     exact smul_zero _
   rw [z1, z2, zero_add, zero_add, ← Finset.sum_add_distrib]
@@ -182,7 +182,7 @@ theorem leaf_aw_of : LateralTheory.EtaleFoundations.SteenPf.leaf_aw := by
   simp only at hx
   subst hx
   unfold g1 g2 S
-  rw [dif_pos (by simp; omega), dif_pos (by simp; omega), dif_pos (by simp)]
+  rw [dite_eq_left (by simp; omega), dite_eq_left (by simp; omega), dite_eq_left (by simp)]
   exact key p r
 
 end LateralTheory.EtaleFoundations.AwPf

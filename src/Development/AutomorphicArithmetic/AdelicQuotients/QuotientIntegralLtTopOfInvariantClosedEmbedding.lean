@@ -28,5 +28,5 @@ theorem UpperTheory.quotientIntegral_lt_top_of_invariant_closedEmbedding :
     (fun x : H => hex.choose (x : G)) hΦ.measurable hinv hn (hfin _ hn)
   refine Eq.trans ?_ h1.symm
   unfold quotInt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   rfl

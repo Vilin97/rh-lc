@@ -169,7 +169,7 @@ theorem nrmFin_one_bdQ_le : Hypotheses2 → HypothesesH → ∀ (D : D7) (A : Am
       exact h₁
     · have : (bdQ P k).nrmFin v 1 1 e y = 0 := by
         simp only [Adl.nrmFin, one_pow, one_mul, pow_one]
-        rw [TrueGeo.valAt, dif_neg hr, map_zero,
+        rw [TrueGeo.valAt, dite_eq_right hr, map_zero,
           Real.zero_rpow (one_div_ne_zero (Nat.cast_ne_zero.2 (bdQ P k).n.ne_zero)), zero_mul]
       rw [this]
       exact (Real.exp_pos _).le

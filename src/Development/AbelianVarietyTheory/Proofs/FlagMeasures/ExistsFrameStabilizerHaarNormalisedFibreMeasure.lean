@@ -27,7 +27,7 @@ theorem exists_tied_haar : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have hsd := GlobalTheory.TraceSelfDual.exists_selfDual_trace F E σ hcm ψ hψ v hne (Formalism.L2.SG.LocVol.UIdx r)
   have hU : (Formalism.L2.SG.LocVol.sdE (E := E) ψ v (Formalism.L2.SG.LocVol.UIdx r)).IsAddHaarMeasure := by
     unfold Formalism.L2.SG.LocVol.sdE
-    rw [dif_pos hsd]
+    rw [dite_eq_left hsd]
     exact hsd.choose_spec.1
   obtain ⟨μS, hμS, hprod⟩ := GlobalTheory.T.haar_frameStabilizer_local_fixer_section_product F E σ hcm n J hJ v r P T hP μ0 hμ0 hconj _ hU
   refine ⟨μS, hμS, μ0, hμ0, ?_, ?_⟩
@@ -36,7 +36,7 @@ theorem exists_tied_haar : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       unfold Formalism.L2.SG.LocVol.omAt
       have hmem : Formalism.L2.SG.LocVol.TFl σ J v P ∈ HermR (Fv F v) σ (r + 1) :=
         map_mem_HermR (Fv F v) σ _ hT
-      rw [dif_pos hmem]
+      rw [dite_eq_left hmem]
       rfl
     unfold Formalism.L2.SG.LocVol.IsCompatLoc
     rw [hom]

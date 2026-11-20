@@ -111,7 +111,7 @@ theorem resT_hT_pair_flag : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T
       rw [e, map_zero]
       simp [hac]
   unfold resT
-  rw [hT_eq_hY, dif_pos hint, ← hres]
+  rw [hT_eq_hY, dite_eq_left hint, ← hres]
   exact sub_eq_zero.1 key
 
 end GlobalTheory.SeeConjChar

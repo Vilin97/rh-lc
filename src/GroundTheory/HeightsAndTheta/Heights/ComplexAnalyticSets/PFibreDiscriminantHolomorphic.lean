@@ -56,7 +56,7 @@ theorem fibreDiscr_eq_pairProd {Y : Set (σ → ℂ)} {d : ℕ} {A : (σ → ℂ
     (Set.finite_range p).eq_of_subset_of_encard_le hsub (by rw [hr]; exact hle)
   have hN : {x | x ∈ Y ∧ A x = y}.encard = N := heq ▸ hr
   unfold fibreDiscr
-  rw [dif_pos hN]
+  rw [dite_eq_left hN]
   unfold pairProd
   symm
   refine Finset.prod_bij (fun q _ => (p q.1, p q.2)) ?_ ?_ ?_ ?_
@@ -160,7 +160,7 @@ theorem continuousAt_of_count_ne {Y : Set (σ → ℂ)} {d : ℕ} {A : (σ → �
     (hN : {x | x ∈ Y ∧ A x = y₀}.encard ≠ N) : ContinuousAt (fibreDiscr Y A l N) y₀ := by
   have hf0 : fibreDiscr Y A l N y₀ = 0 := by
     unfold fibreDiscr
-    rw [dif_neg hN]
+    rw [dite_eq_right hN]
   obtain ⟨ρ, hρ, hρD⟩ := Metric.isOpen_iff.1 hD y₀ hy₀
   have hKD : closedBall y₀ (ρ / 2) ⊆ D := (closedBall_subset_ball (by linarith)).trans hρD
   have hYK := hproper _ hKD (isCompact_closedBall y₀ (ρ / 2))
@@ -200,10 +200,10 @@ theorem continuousAt_of_count_ne {Y : Set (σ → ℂ)} {d : ℕ} {A : (σ → �
   by_cases hNy : {x | x ∈ Y ∧ A x = y}.encard = N
   swap
   · unfold fibreDiscr
-    rw [dif_neg hNy, norm_zero]
+    rw [dite_eq_right hNy, norm_zero]
     exact hε
   unfold fibreDiscr
-  rw [dif_pos hNy]
+  rw [dite_eq_left hNy]
   have hTcard : (Set.finite_of_encard_eq_coe hNy).toFinset.card = N := by
     have := (Set.finite_of_encard_eq_coe hNy).encard_eq_coe_toFinset_card
     rw [hNy] at this

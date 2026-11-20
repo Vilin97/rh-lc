@@ -46,7 +46,7 @@ theorem val_gPt_of_stalk : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o 
           Opposite.op (⊤ : (Spec (M.Z.presheaf.stalk x)).Opens) ⟶ Opposite.op ⊤) = 𝟙 _ := rfl
       rw [e, CategoryTheory.Functor.map_id, Category.comp_id]
     unfold valR
-    erw [dif_pos hU0, eA]
+    erw [dite_eq_left hU0, eA]
     simp only [CommRingCat.comp_apply]
     erw [Iso.inv_hom_id_apply]
     rfl

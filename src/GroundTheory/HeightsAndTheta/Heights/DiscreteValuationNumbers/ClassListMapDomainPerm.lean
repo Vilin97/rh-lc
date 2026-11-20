@@ -136,7 +136,7 @@ theorem polyNum_eq_classNum {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteVal
   congr 1
   have hlen : (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList deg μ).length = d := by
     rw [monoList_eq, List.length_map, FlagTypings.length_monoList hH hμ]
-  rw [dif_pos hlen]
+  rw [dite_eq_left hlen]
   refine (intNum_get_cast _ _ _ _ hlen).trans ?_
   rw [List.append_nil]
   refine FlagTypings.intNumL_perm _ _ ?_

@@ -243,7 +243,7 @@ theorem vertFactor_eq (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ 
   classical
   have hc : ∃ c : (k : K) → ι k, ∀ k, w ⟨k, c k⟩ ≠ 0 :=
     ⟨fun k => (hw.1 k).choose, fun k => (hw.1 k).choose_spec⟩
-  rw [ComponentData.vertFactor, dif_pos hc]
+  rw [ComponentData.vertFactor, dite_eq_left hc]
   have hwc : ∀ k, w ⟨k, hc.choose k⟩ ≠ 0 := hc.choose_spec
   generalize hc.choose = c at hwc ⊢
   set b := D.vdeg p with hbdef

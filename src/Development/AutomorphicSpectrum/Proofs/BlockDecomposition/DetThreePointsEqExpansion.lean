@@ -26,7 +26,7 @@ theorem em_val (h : GL (Fin 2) F) : (Ad3.K.GL2LocalData.em h).val =
     rw [det_three_points_eq_expansion]
     exact det_ne h
   unfold Ad3.K.GL2LocalData.em
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 theorem blk_mul_em (h : GL (Fin 2) F) (x : Fin 2 → F) :

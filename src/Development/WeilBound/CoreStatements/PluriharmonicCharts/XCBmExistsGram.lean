@@ -28,7 +28,7 @@ theorem PositivityTheory.Xgp.t_c_bm_exists_gram : ∀ (E : Type) [Field E] [Numb
     have hex : ∃ (Γ : Matrix (Fin (D.p + D.q)) (Fin (D.p + D.q)) ℂ) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X),
         CoordsAt 𝔐.ξ M.x z w ∧ 𝔐.Interior z ∧ 𝔐.M.GramAt 𝔐.t.PP.L z (gb tie F τ) Γ := ⟨Γ, z, hw, hi, h1⟩
     unfold HodgeMetric.gramFn
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     obtain ⟨z₀, hw₀, -, hΓ₀⟩ := hex.choose_spec
     have hz : z₀ = z := (tp.1 w hw.1 (tp.2.2 z w (𝔐.all _) hw).1).unique ⟨𝔐.all _, hw₀⟩ ⟨𝔐.all _, hw⟩
     rw [hz] at hΓ₀
@@ -38,5 +38,5 @@ theorem PositivityTheory.Xgp.t_c_bm_exists_gram : ∀ (E : Type) [Field E] [Numb
   obtain ⟨hex, -⟩ := omBundle_dualFrame 𝔐 τ _ (tie.frameO _ F hF hq τ)
   have hex' : ∃ v : Fin D.q → 𝔐.Vgen (.inr τ), ∀ a b, tie.omFrame F τ a (v b) = if a = b then 1 else 0 := hex
   unfold dualFam
-  rw [dif_pos hex']
+  rw [dite_eq_left hex']
   exact hex'.choose_spec

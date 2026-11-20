@@ -30,7 +30,7 @@ private theorem units_map_stalkMap_gm_eq_gm_comp {X Y Z : Scheme.{0}} (r : Z ⟶
   unfold gm
   by_cases h : s (r z) ∈ U
   · have h' : (r ≫ s) z ∈ U := h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     apply Units.ext
     simp only [Units.coe_map, MonoidHom.coe_coe]
     unfold pullU
@@ -39,7 +39,7 @@ private theorem units_map_stalkMap_gm_eq_gm_comp {X Y Z : Scheme.{0}} (r : Z ⟶
     simp only [CommRingCat.hom_comp, RingHom.comp_apply] at key
     exact key
   · have h' : ¬ (r ≫ s) z ∈ U := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
     simp
 
 private theorem units_map_stalkMap_bw_eq_bw_comp {X X' Y Z : Scheme.{0}} {M : LB X} {M' : LB X'} {j : ℕ} {pr : Fin j → (X' ⟶ X)}

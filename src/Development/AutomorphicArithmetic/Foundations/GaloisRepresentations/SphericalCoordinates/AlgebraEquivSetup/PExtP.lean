@@ -14,7 +14,7 @@ theorem UpperTheory.Gal.W2.Seed.pExtP :
     intro γ g g₂ hγ
     have h : ∃ γ : Γ, (ι γ).2⁻¹ * g₂ ∈ K₂ := ⟨γ, hγ⟩
     dsimp only [F]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have hδ := h.choose_spec
     generalize h.choose = δ at hδ ⊢
     have hε : (ι (δ⁻¹ * γ)).2 ∈ K₂ := by
@@ -30,7 +30,7 @@ theorem UpperTheory.Gal.W2.Seed.pExtP :
   have zero : ∀ (g : X) (g₂ : X₂), (¬ ∃ γ : Γ, (ι γ).2⁻¹ * g₂ ∈ K₂) → F (g, g₂) = 0 := by
     intro g g₂ h
     dsimp only [F]
-    rw [dif_neg h]
+    rw [dite_eq_right h]
   have mem : F ∈ forms ι (K.prod K₂) ξ := by
     refine ⟨fun γ p => ?_, fun k hk p => ?_⟩
     · obtain ⟨g, g₂⟩ := p

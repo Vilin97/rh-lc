@@ -74,14 +74,14 @@ theorem opI_mul (M N : LieI ι a) (v : X) : opI ρ M (opI ρ N v) = opI ρ (mulI
   by_cases hM : IsUnit (Matrix.of M)
   · by_cases hN : IsUnit (Matrix.of N)
     · have hMN : IsUnit (Matrix.of (mulI M N)) := by rw [of_mulI]; exact hM.mul hN
-      rw [dif_pos hM, dif_pos hN, dif_pos hMN, ← ContinuousLinearMap.mul_apply, ← map_mul]
+      rw [dite_eq_left hM, dite_eq_left hN, dite_eq_left hMN, ← ContinuousLinearMap.mul_apply, ← map_mul]
       congr 2
       ext : 1
       simp [of_mulI]
     · have hMN : ¬ IsUnit (Matrix.of (mulI M N)) := by rw [of_mulI, isUnit_mul_iff']; tauto
-      rw [dif_neg hN, dif_neg hMN]; simp
+      rw [dite_eq_right hN, dite_eq_right hMN]; simp
   · have hMN : ¬ IsUnit (Matrix.of (mulI M N)) := by rw [of_mulI, isUnit_mul_iff']; tauto
-    rw [dif_neg hM, dif_neg hMN]; simp
+    rw [dite_eq_right hM, dite_eq_right hMN]; simp
 
 end Orb
 

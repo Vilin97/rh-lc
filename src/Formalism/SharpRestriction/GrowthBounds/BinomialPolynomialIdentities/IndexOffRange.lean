@@ -23,16 +23,16 @@ theorem hstrip_iff {n : ℕ} (nu mu : Fin n → ℤ) (b : ℕ) :
   · rw [Finset.sum_sub_distrib]
 
 theorem ext_of_lt {N n : ℕ} (mu : Fin (N + 1) → Fin n → ℤ) {i : ℕ} (h : i < N + 1) : ext mu i = mu ⟨i, h⟩ := by
-  unfold ext; rw [dif_pos h]
+  unfold ext; rw [dite_eq_left h]
 
 theorem ext_of_ge {N n : ℕ} (mu : Fin (N + 1) → Fin n → ℤ) {i : ℕ} (h : N < i) : ext mu i = 0 := by
-  unfold ext; rw [dif_neg (by omega)]
+  unfold ext; rw [dite_eq_right (by omega)]
 
 theorem isV_of_lt {N : ℕ} (LL : Letters (Fin N)) {i : ℕ} (h : i < N) : isV LL i = LL.vec ⟨i, h⟩ := by
-  unfold isV; rw [dif_pos h]
+  unfold isV; rw [dite_eq_left h]
 
 theorem Bn_of_lt {N : ℕ} (B : Fin N → ℕ) {i : ℕ} (h : i < N) : Bn B i = B ⟨i, h⟩ := by
-  unfold Bn; rw [dif_pos h]
+  unfold Bn; rw [dite_eq_left h]
 
 theorem res_ext {N n : ℕ} (mu : Fin (N + 1) → Fin n → ℤ) : res N (ext mu) = mu := by
   funext i

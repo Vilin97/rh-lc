@@ -78,7 +78,7 @@ theorem wPiRep : Ad3.K.GL2LocalData.WPiRep := by
     funext x
     change piG χ σ (muE E χ) (lamE E χ η) c h Φ x = _
     unfold piG
-    rw [dif_pos hh]
+    rw [dite_eq_left hh]
     rfl
   set k : ℂ := ((c t : ℂˣ) : ℂ) * (((modulus (h.val).det : ℝ) : ℂ) ^ (1 / 2 : ℂ)) with hk
   set Ψ : E → ℂ := fun y => Φ (y * (t : E)) with hΨdef
@@ -135,6 +135,6 @@ theorem wPiRep : Ad3.K.GL2LocalData.WPiRep := by
       rw [Units.val_mul, map_mul, hs, Units.val_mul, Matrix.det_mul, mul_assoc, mul_comm (h.val).det, hn, mul_one]
     change Wc χ σ (muE E χ) (lamE E χ η) c Φ (g * h) = Wc χ σ (muE E χ) (lamE E χ η) c _ g
     unfold Wc
-    rw [dif_neg hg', dif_neg hg]
+    rw [dite_eq_right hg', dite_eq_right hg]
 
 end GlobalTheory.CompanionTheory.WeilPiRep

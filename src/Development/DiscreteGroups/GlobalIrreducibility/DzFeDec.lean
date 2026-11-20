@@ -142,6 +142,6 @@ theorem isY_phi {j : ℕ} (hj : j < m) (p : (SIdx m → ZMod g) × (ZMod g)ˣ ×
       have h2 : ¬ (finRotate (m + 1)).symm k < i := fun h => by
         have : (((finRotate (m + 1)).symm k : Fin (m + 1)) : ℕ) < i := h
         omega
-      rw [if_neg h1, dif_neg h2, if_neg e]
+      rw [if_neg h1, dite_eq_right h2, if_neg e]
 
 end DiscreteGroups.sglob.DzFe

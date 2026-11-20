@@ -336,7 +336,7 @@ theorem GlobalTheory.Mass.classMass_lattice_eq_genus_mass {F E : Type} [Field F]
       rintro N ⟨hN', h⟩
       obtain ⟨c, rfl⟩ := (Set.Finite.mem_toFinset _).1 hN'
       rw [← (hmk c.out ⟨g, hg⟩).2 h, DoubleCoset.out_eq']
-  rw [Formalism.HermitianLatticesTheory.mass, dif_pos hex]
+  rw [Formalism.HermitianLatticesTheory.mass, dite_eq_left hex]
   obtain ⟨h1, h2⟩ := hex.choose_spec
   set s := hex.choose
   choose g hg hgN using fun N : s => hsur N (h1 N N.2)

@@ -69,7 +69,7 @@ theorem openAtlas_mass {D : ℕ} (Ω : TopologicalSpace.Opens (Fin D → ℂ)) (
       (volume.restrict ((openAtlas Ω hΩ).chart j).target) :=
     ((openAtlas Ω hΩ).chart j).continuousOn_symm.aemeasurable
       ((openAtlas Ω hΩ).chart j).open_target.measurableSet
-  rw [maMeasure, dif_pos hne, Measure.finsetSum_apply, Fintype.sum_subsingleton _ j,
+  rw [maMeasure, dite_eq_left hne, Measure.finsetSum_apply, Fintype.sum_subsingleton _ j,
     Measure.map_apply_of_aemeasurable (hmeas.mono_ac (withDensity_absolutelyContinuous _ _))
       MeasurableSet.univ,
     Set.preimage_univ, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ, hT]

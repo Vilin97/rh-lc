@@ -58,7 +58,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.hodge_comp_cover_cm_signs : To
     rcases hsm with rfl | rfl
     · have h1 : ∀ τ (k : Fin D.p), HodgeCpt.rootIdx D (τ, Fin.castAdd D.q k) = ⟨.inl τ, k⟩ := fun τ k => by
         unfold HodgeCpt.rootIdx
-        rw [dif_pos (show ((Fin.castAdd D.q k : Fin _) : ℕ) < D.p from k.2)]
+        rw [dite_eq_left (show ((Fin.castAdd D.q k : Fin _) : ℕ) < D.p from k.2)]
         rfl
       refine ⟨_, _, Lat.tens_isDegOn _ _ _ _ _ _ _ _ _ _ _ (fun τ => Lat.tens_isDegOn _ _ _ _ _ _ _ _ _ _ _
         (fun k => hgr _ _ (h1 τ k)) _) _, ?_⟩
@@ -69,7 +69,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.hodge_comp_cover_cm_signs : To
       simp [HodgeCpt.rootSgn]
     · have h1 : ∀ τ (k : Fin D.q), HodgeCpt.rootIdx D (τ, Fin.natAdd D.p k.rev) = ⟨.inr τ, k⟩ := fun τ k => by
         unfold HodgeCpt.rootIdx
-        rw [dif_neg (by simp)]
+        rw [dite_eq_right (by simp)]
         congr 1
         apply Fin.ext
         have := k.2

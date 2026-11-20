@@ -35,7 +35,7 @@ theorem phi_surj {j : ℕ} (_hj : j < m) (y : Gn g (m + 1)) (hy : IsY j (y : Mt 
           rw [hσ]
           intro h'
           exact e (Fin.ext (by omega))
-        rw [if_neg e2, if_neg e', dif_neg hlk]
+        rw [if_neg e2, if_neg e', dite_eq_right hlk]
     · have hlk : l < k := not_le.1 hkl
       simp only [Um, Matrix.of_apply, if_neg (ne_of_lt hlk), dif_pos hlk, hNdef]
   set U : Gn g (m + 1) := umGL N with hUdef

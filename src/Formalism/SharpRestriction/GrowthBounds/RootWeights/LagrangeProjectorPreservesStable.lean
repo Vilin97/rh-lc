@@ -61,7 +61,7 @@ theorem lagrange_factor_fixes_weight [CharZero K] (E : GLOps n K V) (mu nu : Fin
 theorem lagrange_factor_kills_other (E : GLOps n K V) {mu nu : Fin n → ℤ} (h : nu ≠ mu) {x : V} (hx : x ∈ weightSp E nu) :
     lagrangeFactor E mu nu x = 0 := by
   unfold lagrangeFactor
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   set a := Classical.choose (Function.ne_iff.1 h)
   simp only [LinearMap.smul_apply, LinearMap.sub_apply, Module.End.one_apply]
   rw [(mem_weightSpace_iff_diagonal E nu x).1 hx a, sub_self, smul_zero]

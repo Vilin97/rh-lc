@@ -21,7 +21,7 @@ theorem extW_mk {n : ℕ} (f : ℕ → ℤ) (m : ℕ) :
 
 theorem extW_ge {n : ℕ} (la : Fin n → ℤ) {m : ℕ} (h : n ≤ m) : extW la m = 0 := by
   unfold extW
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem extW_inj {n : ℕ} {a b : Fin n → ℤ} (h : ∀ m, m < n → extW a m = extW b m) : a = b := by
   funext m

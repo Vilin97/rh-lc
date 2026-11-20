@@ -92,7 +92,7 @@ theorem dl_unit_of_head {g : SplitG M.L} (hs : M.split = some g) (H : HermSp M V
     IsUnit (H.Dl f f' r) := by
   have hDl : H.Dl f f' r = ((H.Zhat f f').submatrix Fin.castSucc Fin.castSucc).det := by
     unfold HermSp.Dl
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
     rfl
   obtain ⟨h1, h2⟩ := isUnit_comp g hu
   rw [(head_zz_comp hs (H.Zhat f f') T T').1] at h1

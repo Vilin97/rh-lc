@@ -56,7 +56,7 @@ theorem residue_coe {F : Type} [Field F] {K : Type} {ι : K → Type} {Ω : Type
     IndefiniteRowSideFullHecke.Kleiman2.residue F y c p (a : Ω) =
       algebraMap (chartRingOver F y c ⧸ p) (IndefiniteRowSideFullHecke.Kleiman2.ResField F y c p) (Ideal.Quotient.mk p a) := by
   unfold IndefiniteRowSideFullHecke.Kleiman2.residue
-  rw [dif_pos a.2]
+  rw [dite_eq_left a.2]
 
 theorem mIdealOver_oneBlock_eq {S : Type} [CommRing S] {Ω' : Type} [Field Ω'] [Algebra S Ω'] {N : ℕ}
     (z : Fin (N + 1) → Ω') :

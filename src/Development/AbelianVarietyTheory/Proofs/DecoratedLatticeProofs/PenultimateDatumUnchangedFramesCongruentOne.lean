@@ -27,7 +27,7 @@ theorem resX_extE {n : ℕ} (c : ℕ) (κ : (Fin n → E) ≃ₗ[E] (Fin n → E
 theorem atNL_inX {n : ℕ} (c : ℕ) (w : Fin n → E) : atNL E (n + c) n (Loc.inX E n c w) = 0 := by
   unfold atNL
   split_ifs with h
-  · rw [LinearMap.proj_apply, inX_apply, dif_neg (lt_irrefl n)]
+  · rw [LinearMap.proj_apply, inX_apply, dite_eq_right (lt_irrefl n)]
   · rfl
 
 theorem atNL_extE {n : ℕ} (c : ℕ) (κ : (Fin n → E) ≃ₗ[E] (Fin n → E)) (v : Fin (n + c) → E) :

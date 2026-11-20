@@ -29,7 +29,7 @@ theorem valR_spMap_field (f : K →+* F) (x : Sp K ⟶ X) (U : X.Opens) (a : Γ(
     valR (spMap f ≫ x) U a = f (valR x U a) := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
   · exact valR_spMap_comp f x U h a
-  · rw [valR, valR, dif_neg h, dif_neg (mt (le_spMap_iff f x U).1 h), map_zero]
+  · rw [valR, valR, dite_eq_right h, dite_eq_right (mt (le_spMap_iff f x U).1 h), map_zero]
 
 theorem le_wchart {R : Type} [CommRing R] {L : LB Z} {q : Y ⟶ Z} {x : Sp R ⟶ Y} {j : L.ι}
     (h : ⊤ ≤ (x ≫ q) ⁻¹ᵁ L.U j) : ⊤ ≤ x ⁻¹ᵁ LB.wchart L (fun _ : Fin 1 => q) (fun _ => j) :=

@@ -101,7 +101,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.RD_k.locOp_mM (hT : _root_.Pos
       rw [dif_pos h]
       exact (R.stepM w hT h.2.choose a h.1 h.2.choose_spec).choose_spec.1
     · dsimp only
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       exact one_ne_zero
   · have h : IsUnit a.det ∧ ∃ y : GR d.n, mR y = mLoc a := ⟨ha, y, hy⟩
     have hy0 : h.2.choose = y := hinj _ _ (h.2.choose_spec.trans hy.symm)

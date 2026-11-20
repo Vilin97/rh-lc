@@ -155,7 +155,7 @@ theorem MixedDiffConst.proof (h1 : HilbDegreeBound.Statement.{u})
     have hex : ∃ c, ∀ᶠ m in atTop, mixedDiff bs (hilbFn I) m = c := ⟨_, hc'⟩
     have hval : intNum F I bs = mixedDiff bs (hilbFn I) m0 := by
       unfold intNum eventualValue
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
       obtain ⟨m, hm1, hm2⟩ := (hex.choose_spec.and hc').exists
       rw [← hm1, hm2]
     filter_upwards [hc'] with m hm

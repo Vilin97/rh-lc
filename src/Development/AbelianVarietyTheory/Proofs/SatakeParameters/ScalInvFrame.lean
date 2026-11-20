@@ -15,7 +15,7 @@ theorem scal_inv_frame : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos 
     rfl
   have hu : ∀ v, IsUnit (fd.frM j La v).det := fun v => by rw [hdet v]; exact hMu.map (ρ v)
   have hfr : ∀ v, ((frGL fd j La v : GL _ _) : Matrix (Fin ((X.Pj j).m + 1)) (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v)) = fd.frM j La v := by
-    intro v; unfold frGL; rw [dif_pos (hu v)]; rfl
+    intro v; unfold frGL; rw [dite_eq_left (hu v)]; rfl
   have hB : ∀ v s, tw X Kc v s ((BOf fd j La v : GL _ _) : Matrix (Fin ((X.Pj j).m + 1)) (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v)).det =
       (tw X Kc v s (ρ v (M : Matrix (Fin n) (Fin n) D.host.E).det))⁻¹ := by
     intro v s

@@ -273,9 +273,9 @@ theorem divCycle_congr_of_sub_mem {K : Type*} {ι : K → Type*} {R : Type*} [Co
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hc : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W
   · have hc' : W ∈ (P ⊔ Ideal.span {s'}).minimalPrimes ∧ IsRelevant W := e ▸ hc
-    rw [dif_pos hc, dif_pos hc', e]
+    rw [dite_eq_left hc, dite_eq_left hc', e]
   · have hc' : ¬ (W ∈ (P ⊔ Ideal.span {s'}).minimalPrimes ∧ IsRelevant W) := e ▸ hc
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 theorem cutIdentityRightSide_congr_of_sub_mem {K : Type*} [DecidableEq K] {ι : K → Type*} {O : Type*} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (b : K → ℤ)

@@ -89,7 +89,7 @@ theorem zhatTr_carrierOf (e : InfinitePlace D.host.E ≃ D.what₂.Tau) (he : Pl
     · rw [Fin.snoc_castSucc]
       have hl : Bridge.lam (fun a => cTor (gg : ℝ) D.R.rS a) 1 (Fin.castSucc i) = κ ^ (D.R.rS - i.val) := by
         unfold Bridge.lam
-        rw [dif_pos (show ((Fin.castSucc i : Fin (D.R.rS + 1)) : ℕ) < D.R.rS from i.2)]
+        rw [dite_eq_left (show ((Fin.castSucc i : Fin (D.R.rS + 1)) : ℕ) < D.R.rS from i.2)]
         simp [cTor, hκ]
       rw [hl, star_pow]
       have hcv' : cv (Fin.castSucc i) = cv ⟨i.val, by omega⟩ := rfl

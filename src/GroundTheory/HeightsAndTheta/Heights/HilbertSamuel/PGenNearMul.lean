@@ -207,8 +207,8 @@ theorem cechD_zero_apply_uniform (I : KH.Cell K ι 1) :
     by unfold KH.faceSign; exact neg_one_pow_eq_or ℤ _, fun N _ _ f => ?_⟩
   change (∑ k : K, ∑ i ∈ I.1 k, _ :
     KH.CechC S ι N 0 →ₗ[MRingOver S ι] LocalizedModule (KH.cellMon S I.1) N) f = _
-  rw [Finset.sum_eq_single k₀, Finset.sum_eq_add_of_mem x y hx hy hxy, dif_pos (hface x hx),
-    dif_pos (hface y hy)]
+  rw [Finset.sum_eq_single k₀, Finset.sum_eq_add_of_mem x y hx hy hxy, dite_eq_left (hface x hx),
+    dite_eq_left (hface y hy)]
   · rw [hsign, LinearMap.add_apply]
     change KH.faceSign I.1 k₀ x • (KH.cellRes S N _ I.1 (f _)) +
       (-KH.faceSign I.1 k₀ x) • (KH.cellRes S N _ I.1 (f _)) = _

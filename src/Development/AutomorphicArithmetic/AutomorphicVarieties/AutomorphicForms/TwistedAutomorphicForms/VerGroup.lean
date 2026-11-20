@@ -21,7 +21,7 @@ theorem UpperTheory.V.Af.Tw.verGroup :
   let pre : Γ → H := fun γ => if h : γ ∈ R then (MonoidHom.mem_range.mp h).choose else 1
   have hpre : ∀ γ, γ ∈ R → r (pre γ) = γ := fun γ h => by
     dsimp only [pre]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact (MonoidHom.mem_range.mp h).choose_spec
   let k : Γ → B := fun γ => κ (pre γ)
   have kr : ∀ s, k (r s) = κ s := fun s => by

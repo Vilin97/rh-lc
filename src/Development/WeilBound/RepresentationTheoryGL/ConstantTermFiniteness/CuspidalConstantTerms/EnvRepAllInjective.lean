@@ -140,7 +140,7 @@ theorem envRepAll_injective (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[
 
   have hcomm : ∀ τ τ', τ ≠ τ' → ∀ X Y, Commute (ρ τ X) (ρ τ' Y) := fun τ τ' h X Y => by
     have h1 : ρ τ X * ρ τ' Y - ρ τ' Y * ρ τ X = 0 := by
-      simp only [ρ]; rw [← Ring.lie_def, ← LieHom.map_lie, DirectSum.lie_of, dif_neg h, map_zero]
+      simp only [ρ]; rw [← Ring.lie_def, ← LieHom.map_lie, DirectSum.lie_of, dite_eq_right h, map_zero]
     exact sub_eq_zero.1 h1
   have hbr : ∀ p q, e p * e q - e q * e p ∈ Submodule.span ℂ (Set.range e) := by
     rintro ⟨τ, a, b⟩ ⟨τ', c, d⟩

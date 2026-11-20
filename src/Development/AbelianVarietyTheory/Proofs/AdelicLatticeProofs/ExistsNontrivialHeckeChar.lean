@@ -292,7 +292,7 @@ theorem exists_of_principal (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) [IsPrinc
   have hex : ∃ x, IsUnifIdele σ P x := by
     by_contra hc
     have := GlobalTheory.CMPrimeIdele.chiAt_one F E σ hσ P
-    rw [chiAt, dif_neg fun h => hc h.2] at this
+    rw [chiAt, dite_eq_right fun h => hc h.2] at this
     exact zero_ne_one this
   have harch : ∀ {e f z : AE F E} {x : AE F E}, IsPrimeIdem σ P e f → x = e * z + (1 - e) →
       θ x = 1 ∧ θ (cA σ x) = 1 := by
@@ -348,7 +348,7 @@ theorem exists_of_principal (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) [IsPrinc
     congr 1
     field_simp
   have hc : chiAt σ χ P = ((χ hex.choose : Circle) : ℂ) := by
-    rw [chiAt, dif_pos ⟨hunr, hex⟩]
+    rw [chiAt, dite_eq_left ⟨hunr, hex⟩]
   refine ⟨χ, hχ, hχF, fun h => hval _ hex.choose_spec (by rw [h]; rfl), P, ?_, ?_⟩
   · rw [hc]; exact Circle.coe_ne_zero _
   · rw [hc]; exact fun h => hval _ hex.choose_spec (Circle.ext h)

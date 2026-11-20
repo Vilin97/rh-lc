@@ -149,7 +149,7 @@ theorem twist_integral (hI : PtsIntegrableStatement) (hD : PtsIndepStatement)
     intro K' _ ι' _ P Φ M B t h1 h2 h3 h4 h5
     have hex : ∃ Φ : (((k : K') → ι' k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ), IsGoodProj P Φ := ⟨Φ, h2⟩
     unfold ptsIntegral
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hD K' ι' P e _ Φ M B t h1 hex.choose_spec h2 h3 h4 h5
   rw [atOf hQ' hΨ hL' hA' hs', atOf hQ gp hL hA hs, atOf hQ gm hLc hAc hsc]
   have sp := GlobalTheory.T.twist_height_integral_decomposition K ι p Q e Ψ (fun j => twLine p (L j)) (twLine p A) L A s (vPlus p) hp hQ hQ' hΨ hL' hA' hs'

@@ -25,7 +25,7 @@ theorem aPl_eq_aPlusQ (D : D7) (i : Fin D.R.m) (τ : D.what₂.Tau) (n : ℕ) (h
     rfl
   have h2 : DV.eQ D ((i : ℕ) + 1) τ = (D.hc τ).e i := by
     unfold DV.eQ
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     rfl
   rw [GlobalTheory.CoefMapRecord.aPl_cast D i τ n hn, DV.aPlusQ_eq, h1, h2]
   push_cast
@@ -36,9 +36,9 @@ theorem aMi_eq_aMinusQ (D : D7) (i : Fin D.R.m) (τ : D.what₂.Tau) (q n c : �
   have hi := i.2
   have h2 : DV.eQ D ((i : ℕ) + 1) τ = (D.hc τ).e i := by
     unfold DV.eQ
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     rfl
-  rw [GlobalTheory.CoefMapRecord.aMi_cast D i τ q n c hq hn, DV.aMinusQ, dif_pos (by omega), h2]
+  rw [GlobalTheory.CoefMapRecord.aMi_cast D i τ q n c hq hn, DV.aMinusQ, dite_eq_left (by omega), h2]
   ring
 
 theorem wtOf_kapTop : ∀ D : D7, DV.KapDef D → ∀ i : Fin D.R.m,

@@ -361,7 +361,7 @@ theorem xiStd_eq_const_mul_locXi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.t
         ((Formalism.L2.Col.frsF I.sel (I.tup (W.P.I.tup t)) (J.A.p0 ((a.G n).s + 1) (J.ι _ α)).1.1 P).symm
           (Formalism.L2.Col.repY (J.A.p0 ((a.G n).s + 1) (J.ι _ α)).1.2)) := by
     unfold locXi
-    rw [dif_neg (by omega), dif_neg (by omega), dif_pos hs]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dif_pos hs]
     rfl
   rw [hx]
   clear hx

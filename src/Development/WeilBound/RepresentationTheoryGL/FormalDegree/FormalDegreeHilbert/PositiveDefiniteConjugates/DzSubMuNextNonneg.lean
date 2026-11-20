@@ -49,7 +49,7 @@ theorem one_le_lead_exp {ε : Fin n → Bool} {X : Matrix (Fin n) (Fin n) ℂ} (
   have hpos : 0 < (lead i (NormedSpace.exp X)).re := by
     have hsub := (ReciprocityTheory.ChartRestriction.DS.S7.exp_noncompactPart_posDef hX).submatrix (Fin.castLE_injective hi)
     show 0 < (if h : i ≤ n then ((NormedSpace.exp X).submatrix (Fin.castLE h) (Fin.castLE h)).det else 0).re
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     exact (Complex.pos_iff.1 hsub.det_pos).1
   exact (Real.log_nonneg_iff hpos).1 h0
 
@@ -78,7 +78,7 @@ theorem phiLe : PhiLe := by
     have hp := Complex.pos_iff.1 hPD.det_pos
     show (if h : j ≤ n then ((NormedSpace.exp Y).submatrix (Fin.castLE h) (Fin.castLE h)).det else 0) =
       (((if h : j ≤ n then ((NormedSpace.exp Y).submatrix (Fin.castLE h) (Fin.castLE h)).det else 0).re : ℝ) : ℂ)
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     apply Complex.ext
     · simp
     · simp [← hp.2]

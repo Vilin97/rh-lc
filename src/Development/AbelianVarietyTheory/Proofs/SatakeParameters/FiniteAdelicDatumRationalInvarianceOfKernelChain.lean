@@ -52,7 +52,7 @@ theorem ratLaw_of_tie : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU 
   have a1 := hAw i hi β β' x₁ x₁' x₁ x₁' _ _ _ _ hq hq' hE1.1.choose_spec hE1.2.choose_spec (fun _ _ => ⟨rfl, rfl⟩)
   have a0 := hAw i hi β β' x x' x x' _ _ _ _ hp hp' hE0.1.choose_spec hE0.2.choose_spec (fun _ _ => ⟨rfl, rfl⟩)
   unfold xiAd
-  rw [dif_pos hE1, dif_pos hE0, a1, a0, GlobalTheory.T.orthonormalChange_intertwines_rationalIsometries A dtU a hP hTie i hi γ γ' g g' hg hg' z]
+  rw [dite_eq_left hE1, dite_eq_left hE0, a1, a0, GlobalTheory.T.orthonormalChange_intertwines_rationalIsometries A dtU a hP hTie i hi γ γ' g g' hg hg' z]
   rw [xiPt_smul A dtU a hP hTie i hi β β' x x' p p' hp hp' g g']
 
 end GlobalTheory.RatPt

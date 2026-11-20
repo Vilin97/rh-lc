@@ -790,7 +790,7 @@ theorem splitTheta_fFun_frameFirstBlock_mul (μ : Measure (GL A' k)) [μ.IsHaarM
       (ν (gdet h) : ℂ) * apow (gdet h) ((Fintype.card D : ℂ) / 2) * smallF μ ν Ψ (Y0 k σ * h.val) := by
   have hX : ∃ h' : GL D k, X0 k σ * (invT h).val = X0 k σ * (invT h').val := ⟨h, rfl⟩
   obtain ⟨C, h1, h2⟩ := exists_secondBlock_of_frameFirstBlock_eq σ hX.choose_spec.symm
-  rw [fFun, dif_pos hX, h1, h2, ← smallF_mul_left μ ν Ψ C (Y0 k σ * h.val), map_mul, apow_mul, Units.val_mul]
+  rw [fFun, dite_eq_left hX, h1, h2, ← smallF_mul_left μ ν Ψ C (Y0 k σ * h.val), map_mul, apow_mul, Units.val_mul]
   ring
 
 open Classical in

@@ -168,15 +168,15 @@ theorem skew (S : ι → Prop) [DecidablePred S] (g : (ι → E) → ι → E) (
   show x i + g x i = (if h : S i then (G (fun j : {i // ¬ S i} => x j) + fun j : Subtype S => x j) ⟨i, h⟩
     else (fun j : {i // ¬ S i} => x j) ⟨i, h⟩)
   by_cases h : S i
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     have hx : g (Φ.symm (0, fun j : {i // ¬ S i} => x j)) = g x := by
       apply hdep
       intro j hj
       show (if h' : S j then (0 : Subtype S → E) ⟨j, h'⟩ else (fun j : {i // ¬ S i} => x j) ⟨j, h'⟩) = x j
-      rw [dif_neg hj]
+      rw [dite_eq_right hj]
     show x i + g x i = g (Φ.symm (0, fun j : {i // ¬ S i} => x j)) i + x i
     rw [hx, add_comm]
-  · rw [dif_neg h, hsupp x i h, add_zero]
+  · rw [dite_eq_right h, hsupp x i h, add_zero]
 
 theorem measurePreserving_of_card (ρ : ι → ℕ) (N : ℕ) : ∀ (g : (ι → E) → ι → E), Measurable g →
     (∀ i x x', (∀ j, ρ j < ρ i → x j = x' j) → g x i = g x' i) →
@@ -909,7 +909,7 @@ theorem prodEquiv [TopologicalSpace K] [IsTopologicalRing K] [SecondCountableTop
       first
         | simp [splitEquiv, q.2]
         | (show (if h : Q₁ q.1 then Sum.inl ⟨q.1, h⟩ else Sum.inr ⟨q.1, _⟩) = Sum.inl q
-           rw [dif_pos q.2])
+           rw [dite_eq_left q.2])
     rw [hs]
     try rfl
   have hres2 : res h₂ (m (x, y)) = y := by
@@ -921,7 +921,7 @@ theorem prodEquiv [TopologicalSpace K] [IsTopologicalRing K] [SecondCountableTop
       first
         | simp [splitEquiv, hn]
         | (show (if h : Q₁ q.1 then Sum.inl ⟨q.1, h⟩ else Sum.inr ⟨q.1, _⟩) = Sum.inr q
-           rw [dif_neg hn])
+           rw [dite_eq_right hn])
     rw [hs]
     try rfl
   have hx : (m.trans e) (x, y) = T (m (x, y)) := by
@@ -1410,12 +1410,12 @@ theorem GG_eq_phi (M : Model F E) {m : ℕ} (w : Pt E (m + 1)) (c : M.Cls m)
   · have h1 := hi.2 hI
     have hI' : IsInt M.R (((p.1 : GL (Fin (tr w).1.sum) E) : Matrix (Fin (tr w).1.sum) (Fin (tr w).1.sum) E) *
       pt (tr w).1 (tr w).2 * ((p.2 : GL (Fin (tr w).1.sum) E) : Matrix (Fin (tr w).1.sum) (Fin (tr w).1.sum) E)) := hI
-    rw [GG, dif_pos ⟨h1, isUnit_det_sub w p⟩, phi, if_pos hI']
+    rw [GG, dite_eq_left ⟨h1, isUnit_det_sub w p⟩, phi, if_pos hI']
     congr 2
     exact Nat.card_congr ((isoEquiv M _ _).trans eq)
   · have hI' : ¬ IsInt M.R (((p.1 : GL (Fin (tr w).1.sum) E) : Matrix (Fin (tr w).1.sum) (Fin (tr w).1.sum) E) *
       pt (tr w).1 (tr w).2 * ((p.2 : GL (Fin (tr w).1.sum) E) : Matrix (Fin (tr w).1.sum) (Fin (tr w).1.sum) E)) := hI
-    rw [GG, dif_neg (fun h => hI (hi.1 h.1)), phi, if_neg hI', zero_mul]
+    rw [GG, dite_eq_right (fun h => hI (hi.1 h.1)), phi, if_neg hI', zero_mul]
 
 theorem BB_eq (M : Model F E) {m : ℕ} (w : Pt E (m + 1))
     (μ₁ : Measure (lowW E (tr w).1 (tr w).2)) (μ₂ : Measure (upUniG E (tr w).1.sum))

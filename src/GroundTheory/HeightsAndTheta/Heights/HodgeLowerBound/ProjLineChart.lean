@@ -98,7 +98,7 @@ theorem geomDeg_eq_integral (A : HermLine (PBlk 2)) :
     have hv : (Fin.cons 1 y' : Fin (1 + 1) → ℂ) ≠ 0 := fun h => one_ne_zero (congrFun h 0)
     exact lineLift_mem ((L.map_ne_zero_iff).mpr hv)
   unfold geomDeg ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   unfold ptsIntegralAt
   congr 1
   funext y

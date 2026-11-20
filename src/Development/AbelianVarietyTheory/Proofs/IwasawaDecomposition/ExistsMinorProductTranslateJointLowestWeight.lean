@@ -26,7 +26,7 @@ def revTail (m p : ℕ) : Equiv.Perm (Fin m) :=
       by_cases h : (a : ℕ) < p
       · simp [h]
       · simp only [h, dite_false]
-        rw [dif_neg (by simp)]
+        rw [dite_eq_right (by simp)]
         ext
         simp only
         omega)

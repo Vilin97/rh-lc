@@ -29,7 +29,7 @@ theorem lin_lam (s : TT Y u u') : Formalism.HermitianLatticesTheory.gmap s.lin s
 theorem frame_eq (s : TT Y u u') :
     s.frame = Formalism.L2.SG.Saturated.mapL s.lin (lin_isom s) (lf D (X.Fu u')) := by
   unfold GTerm.frame mapLF
-  rw [dif_pos (lin_isom s)]
+  rw [dite_eq_left (lin_isom s)]
   rfl
 
 theorem frame_apply (s : TT Y u u') (a : Fin (D.R.rS + 1)) :

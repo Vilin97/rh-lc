@@ -111,7 +111,7 @@ def expLift (X : Mat p q) : cover p q :=
   if h : X ∈ upq p q then ⟨(expGL X, expHalf X), expGL_mem h, expHalf_sq X⟩ else 1
 
 theorem expLift_val {X : Mat p q} (h : X ∈ upq p q) : (expLift X).1 = (expGL X, expHalf X) := by
-  rw [expLift, dif_pos h]
+  rw [expLift, dite_eq_left h]
 
 def grpOf (p q : ℕ) (ν : Measure (cover p q)) [ν.IsHaarMeasure] : GrpData p q where
   G := cover p q

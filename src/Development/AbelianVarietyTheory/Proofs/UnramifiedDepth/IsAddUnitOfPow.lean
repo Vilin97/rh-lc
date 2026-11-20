@@ -59,7 +59,7 @@ theorem exists_extension : ∀ (M M' : Type) [AddCommMonoid M] [AddCommMonoid M'
   have key : ∀ u : AddUnits M,
       (if h : IsAddUnit u.val then Additive.toMul (κ h.addUnit) else 1) = Additive.toMul (κ u) := by
     intro u
-    rw [dif_pos u.isAddUnit]
+    rw [dite_eq_left u.isAddUnit]
     congr 2
     ext
     exact IsAddUnit.addUnit_spec _

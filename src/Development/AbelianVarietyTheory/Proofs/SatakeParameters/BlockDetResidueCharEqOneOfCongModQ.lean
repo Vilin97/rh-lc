@@ -66,7 +66,7 @@ theorem lamQB_eq_one_of_cong : ∀ {E K : Type} [Field E] [NumberField E] [StarR
     have e2 : D s t = g (Pi.single ⟨kj + t.1, ht⟩ 1) ⟨kj + s.1, hs⟩ := by
       rw [hD, Matrix.of_apply, e1]
       unfold Loc.atN
-      rw [dif_pos hs]
+      rw [dite_eq_left hs]
     obtain ⟨h1, h2⟩ := entry_cong P g hg ⟨kj + s.1, hs⟩ ⟨kj + t.1, ht⟩
     rw [e2]
     refine ⟨h1, ?_⟩
@@ -80,7 +80,7 @@ theorem lamQB_eq_one_of_cong : ∀ {E K : Type} [Field E] [NumberField E] [StarR
     rw [this, Matrix.det_one]
   unfold LocE.unitV
   have hu : IsUnit (redP P D.det) := by rw [hdet]; exact isUnit_one
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have : hu.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, hdet]; rfl)
   rw [this, map_one, Units.val_one, inv_one]
 

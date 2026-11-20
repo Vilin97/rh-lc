@@ -13,7 +13,7 @@ variable {p : ℕ} {G : Formalism.MainNotions.G.GAtP p} (Fl : Formalism.MainNoti
 
 theorem ne_lamI_last (s : Fin (G.P.n' v)) : lamI (G.P.lam0 v) s (G.P.m + 1) = G.P.lam0 v s (Fin.last G.P.m) := by
   unfold lamI
-  rw [dif_pos ⟨by omega, le_rfl⟩]
+  rw [dite_eq_left ⟨by omega, le_rfl⟩]
   rfl
 
 theorem ne_lamI_le (s : Fin (G.P.n' v)) (a : ℕ) (hm : 2 ≤ G.P.m) (hb : s ∈ Fl.TT v → 0 ≤ Fl.b v s) :
@@ -21,7 +21,7 @@ theorem ne_lamI_le (s : Fin (G.P.n' v)) (a : ℕ) (hm : 2 ≤ G.P.m) (hb : s ∈
   have hc : (0 : ℤ) ≤ Fl.c := Int.natCast_nonneg _
   unfold lamI
   by_cases h : 1 ≤ a ∧ a ≤ G.P.m + 1
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     by_cases hs : s ∈ Fl.TT v
     · obtain ⟨h1, h2, h3⟩ := (Fl.base v s).1 hs
       by_cases ha : a = 1
@@ -40,7 +40,7 @@ theorem ne_lamI_le (s : Fin (G.P.n' v)) (a : ℕ) (hm : 2 ≤ G.P.m) (hb : s ∈
     · rw [if_neg (fun h' => hs h'.1)]
       have := (abs_le.1 ((Fl.base v s).2 hs ⟨a - 1, by omega⟩)).2
       omega
-  · rw [dif_neg h, if_neg (fun h' => h ⟨by omega, by omega⟩)]
+  · rw [dite_eq_right h, if_neg (fun h' => h ⟨by omega, by omega⟩)]
     omega
 
 end Fl

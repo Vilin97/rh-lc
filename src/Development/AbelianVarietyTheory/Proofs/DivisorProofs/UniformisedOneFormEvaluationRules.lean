@@ -75,7 +75,7 @@ theorem exists_isEv (u : HolUnif A L g) (U : A.left.Opens) {z : Fin g → ℂ} (
 theorem isEv_evForm (u : HolUnif A L g) (U : A.left.Opens) {z : Fin g → ℂ} (hz : z ∈ pre u.ex U) :
     IsEv u.ex U z (evForm u.ex U z) := by
   have h := exists_isEv u U hz
-  rw [evForm, dif_pos h]
+  rw [evForm, dite_eq_left h]
   exact h.choose_spec
 
 theorem evForm_rules : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ (U : A.left.Opens),

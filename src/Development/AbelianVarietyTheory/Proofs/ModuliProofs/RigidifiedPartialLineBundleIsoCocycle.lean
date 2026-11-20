@@ -19,7 +19,7 @@ private theorem gm_res_eq_gm {X Z : Scheme.{0}} (f : Z ⟶ X) (z : Z) {U V : X.O
       f.app U ≫ Z.presheaf.germ (f ⁻¹ᵁ U) z (hle hz) := by
     rw [← Scheme.Hom.germ_stalkMap, ← Scheme.Hom.germ_stalkMap, ← Category.assoc, TopCat.Presheaf.germ_res]
   unfold gm
-  rw [dif_pos hz, dif_pos (hle hz)]
+  rw [dite_eq_left hz, dite_eq_left (hle hz)]
   ext
   simp only [MonoidHom.comp_apply, Units.coe_map]
   unfold res pullU
@@ -56,7 +56,7 @@ private theorem algebraMap_OmS_eq_algebraMap_comp {G : Type*} [CommGroup G] (A B
 private theorem gm_val_eq_germ_app' {X Z : Scheme.{0}} (g : Z ⟶ X) (z : Z) (U : X.Opens) (hz : g z ∈ U)
     (u : Γ(X, U)ˣ) : ((gm g z U u : Z.presheaf.stalk z)) = Z.presheaf.germ (g ⁻¹ᵁ U) z hz (g.app U u.val) := by
   unfold gm
-  rw [dif_pos hz]
+  rw [dite_eq_left hz]
   rfl
 
 private theorem gm_id_val_eq_germ' {X : Scheme.{0}} (z : X) (U : X.Opens) (hz : z ∈ U)

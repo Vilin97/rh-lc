@@ -264,9 +264,9 @@ private theorem dite_update_eq_update_dite {ι : Type} [DecidableEq ι] {X : ι 
       simp
     · have h1 : (⟨v, hv⟩ : T) ≠ i := fun h => hvi (by rw [← h])
       have h2 : v ≠ ⟨i, hT i.2⟩ := fun h => hvi (by rw [h])
-      rw [dif_pos hv, Function.update_of_ne h1, Function.update_of_ne h2, dif_pos hv]
+      rw [dite_eq_left hv, Function.update_of_ne h1, Function.update_of_ne h2, dite_eq_left hv]
   · have h2 : v ≠ ⟨i, hT i.2⟩ := fun h => hv (by rw [h]; exact i.2)
-    rw [dif_neg hv, Function.update_of_ne h2, dif_neg hv]
+    rw [dite_eq_right hv, Function.update_of_ne h2, dite_eq_right hv]
 
 theorem exists_ext {ι : Type} [DecidableEq ι] {X : ι → Type} [∀ i, AddCommGroup (X i)] [∀ i, Module ℂ (X i)]
     (T T₁ : Finset ι) (hT : T ⊆ T₁) (s : ∀ i, X i) :
@@ -288,7 +288,7 @@ theorem exists_ext {ι : Type} [DecidableEq ι] {X : ι → Type} [∀ i, AddCom
   congr 1
   funext v
   by_cases hv : (v : ι) ∈ T
-  · rw [dif_pos hv]
-  · rw [dif_neg hv, hu v hv]
+  · rw [dite_eq_left hv]
+  · rw [dite_eq_right hv, hu v hv]
 
 end GlobalTheory.ThK.Dbl.Dens

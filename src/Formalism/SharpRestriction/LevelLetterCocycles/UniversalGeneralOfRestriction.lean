@@ -598,14 +598,14 @@ theorem cmpD_comb (T : LocLat G Qp LL O) {d : ℕ} (x : Fin d → W.DD T) (hx : 
   have hmem : ∑ j, o j • x j ∈ W.N T :=
     Submodule.sum_mem _ fun j _ => (W.N T).smul_of_tower_mem (o j) (hx j)
   unfold Formalism.MainNotions.ArcLiftingSetup.cmpD
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   have e : (⟨∑ j, o j • x j, hmem⟩ : ↥(W.N T)) = ∑ j, o j • (⟨x j, hx j⟩ : ↥(W.N T)) := by
     ext
     simp
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [W.cmp_smul, dif_pos (hx j)]
+  rw [W.cmp_smul, dite_eq_left (hx j)]
 
 theorem dv_change (T : LocLat G Qp LL O) (e : ℕ) {d d' : ℕ} (b : Fin d → W.DD T)
     (hb : ∀ j, b j ∈ W.N T) (g : Fin d' → Fin d → O) (k : Fin d') :

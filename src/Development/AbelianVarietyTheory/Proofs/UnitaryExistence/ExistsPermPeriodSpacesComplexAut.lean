@@ -55,7 +55,7 @@ theorem ringHom_ext {l : Level H} (hA : l.A = 1) {f f' : KA l →+* ℂ} (h : f 
 theorem valAt'_top {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (f : Γ(X, ⊤)) :
     valAt' x ⊤ f = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom (x.appTop.hom f) := by
   unfold valAt'
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   unfold valAt
   rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
   rfl

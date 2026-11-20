@@ -78,10 +78,10 @@ theorem loc_ex (hM : M.OK) (H : Formalism.MainNotions.S.Loc.HermSp M V) (r k : �
   · simp only [CoordExist.hf_basis]
     have h1 : H.Dl P.A.f P.B.f (r + 1) =
         lead (Matrix.of fun a c => H.h (P.B.f c) (P.A.f a)) (Fin.last (r + 1)) := by
-      unfold Formalism.MainNotions.S.Loc.HermSp.Dl; rw [dif_pos le_rfl]; rfl
+      unfold Formalism.MainNotions.S.Loc.HermSp.Dl; rw [dite_eq_left le_rfl]; rfl
     have h2 : H.Dl P.A.f P.B.f r =
         lead (Matrix.of fun a c => H.h (P.B.f c) (P.A.f a)) (Fin.last r).castSucc := by
-      unfold Formalism.MainNotions.S.Loc.HermSp.Dl; rw [dif_pos (Nat.le_succ r)]; rfl
+      unfold Formalism.MainNotions.S.Loc.HermSp.Dl; rw [dite_eq_left (Nat.le_succ r)]; rfl
     rw [← h1, ← h2]
     exact hG
   · obtain ⟨g, hg⟩ := Option.isSome_iff_exists.1 h

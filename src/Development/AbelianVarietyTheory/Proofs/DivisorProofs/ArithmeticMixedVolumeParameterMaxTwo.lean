@@ -86,7 +86,7 @@ theorem expo_lift2 (w : Sym E →₀ ℤ) : expo Dw (w.mapDomain lift2) = expo D
 theorem parOf_of_hasPar {R : ℝ} {w : Sym E →₀ ℤ} (h : HasPar R w) (hw : w ≠ 0) : parOf w = some R := by
   have hn : w.support.Nonempty := Finsupp.support_nonempty_iff.2 hw
   unfold parOf
-  rw [dif_pos hn]
+  rw [dite_eq_left hn]
   exact h _ hn.choose_spec
 
 theorem hasPar_lift2 {R : ℝ} {w : Sym E →₀ ℤ} (h : HasPar R w) : HasPar (max R 2) (w.mapDomain lift2) := by

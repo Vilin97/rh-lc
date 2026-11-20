@@ -216,7 +216,7 @@ theorem _root_.GlobalTheory.MomOne.kapFrame : ∀ (q : ℕ) [Fact q.Prime] (lam 
   have heps_conj : ‖ι (starRingEnd ℂ eps)‖ ≤ (q : ℝ) ^ (-(m : ℤ)) := by
     have h := hidem.2.2
     unfold _root_.Formalism.L2.Ker.JMB.lamA at h
-    rw [dif_pos (halg _ (hO_conj _ hepsO))] at h
+    rw [dite_eq_left (halg _ (hO_conj _ hepsO))] at h
     rw [hlam ⟨_, halg _ (hO_conj _ hepsO)⟩]
     exact h
   have hdi : ∀ i, s₀ * a i ∣ s := fun i =>

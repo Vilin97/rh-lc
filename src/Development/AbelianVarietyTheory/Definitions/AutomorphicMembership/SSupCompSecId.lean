@@ -230,13 +230,13 @@ theorem over_induces {cts : Ats S κ} {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D 
 
 theorem isBCAt_bcAt (ct : At S κ p) (Z : CodeAt S κ) : IsBCAt ct Z (bcAt ct Z) := by
   have h := BCEx.exists_isBCAt D A N j S κ p ct Z
-  rw [bcAt, dif_pos h]
+  rw [bcAt, dite_eq_left h]
   exact h.choose_spec
 
 theorem bcAt_eq_blowUp (ct : At S κ p) (Z : CodeAt S κ) (J : ct.Idl ct.Xm)
     (hJ : ∀ Z', IsBCAt ct Z Z' ↔ IsNBlow ct.Xm J Z') : bcAt ct Z = ct.blowUp ct.Xm J := by
   have h := BCEx.exists_isBCAt D A N j S κ p ct Z
-  rw [bcAt, dif_pos h]
+  rw [bcAt, dite_eq_left h]
   exact choose_eq_blowUp ct Z _ J h hJ
 
 variable (F : StFam S κ) (cts : Ats S κ)

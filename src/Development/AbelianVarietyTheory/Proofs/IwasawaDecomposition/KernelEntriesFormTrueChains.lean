@@ -153,7 +153,7 @@ theorem deX_cols (D : D7) {k : Type} [CommRing k] (N : ℕ) (nu : Bool × HH D �
 
 theorem lamC_coe {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (x : Qbar) : lamC lam (x : ℂ) = lam x := by
   unfold lamC
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
 
 theorem lamC_jetC (D : D7) {N N' p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (cD : D.what₂.Tau → ℂ) (hc : ∀ τ, cD τ ∈ Qbar)
     (G : VC D N N' → ℂ) (m : DVar D.what₂.Tau N N' →₀ ℕ) (hm : jetC cD G m ∈ Qbar) :

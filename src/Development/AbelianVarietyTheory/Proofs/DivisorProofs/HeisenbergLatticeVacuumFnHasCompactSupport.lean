@@ -32,7 +32,7 @@ theorem vacFn_hasCompactSupport_of_isCompact : ∀ {F : Type} [Field F] [NumberF
   refine HasCompactSupport.intro hK ?_
   intro x hx
   unfold vacFn
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨u, hu, rfl⟩
   exact hx ⟨u, hu, rfl⟩
 

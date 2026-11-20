@@ -55,7 +55,7 @@ private theorem twTr_line (ρ : Representation ℂ G V) (K : Subgroup G) (f : G 
     ext y
     simp [LinearMap.restrict_apply, hall y.1 y.2]
   haveI : Module.Finite ℂ (fixed ρ K) := Module.finite_of_finrank_pos (by omega)
-  rw [twTr, dif_pos hmem, hr, map_smul, LinearMap.trace_id, h1]
+  rw [twTr, dite_eq_left hmem, hr, map_smul, LinearMap.trace_id, h1]
   simp
 
 private theorem twTr_ind (ρ : Representation ℂ G V) (K : Subgroup G) (h1 : Module.finrank ℂ (fixed ρ K) = 1)

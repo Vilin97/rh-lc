@@ -395,7 +395,7 @@ theorem toFun_sec (W : Submodule ℂ (Kinf E N → ℂ)) (hW : FiniteDimensional
     (g : GA E N) {y : Mat N} (hy : y ∈ GLs N) (u : UN N) :
     toFun W v (sec W hW v φ hs hφ g y) u = Bridge.along v g φ (y * u.1) := by
   unfold sec
-  rw [dif_pos hy]
+  rw [dite_eq_left hy]
   rfl
 
 theorem sec_mem_CE (W : Submodule ℂ (Kinf E N → ℂ)) (hW : FiniteDimensional ℂ W) (v : InfinitePlace E)

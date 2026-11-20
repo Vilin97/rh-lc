@@ -327,7 +327,7 @@ theorem exists_splits (h : Alt c) {L A : AddSubgroup W} (hLA : L ≤ A) (hL : �
   have hg' : ∀ p, g (f p) = p.2 := fun p => DFunLike.congr_fun hg p
   refine ⟨fun x => if hx : x ∈ A then ((g ⟨⟨x, hx⟩, 0⟩).toMul : ℂ) else 1, ⟨fun a ha => ?_, fun a ha a' ha' => ?_⟩, fun x hx => ?_⟩
   · simp [ha]
-  · rw [dif_pos ha, dif_pos ha', dif_pos (A.add_mem ha ha')]
+  · rw [dite_eq_left ha, dite_eq_left ha', dite_eq_left (A.add_mem ha ha')]
     have h1 : (⟨⟨a, ha⟩, 0⟩ + ⟨⟨a', ha'⟩, 0⟩ : Tw b hb) = f (0, b ⟨a, ha⟩ ⟨a', ha'⟩) + ⟨⟨a + a', A.add_mem ha ha'⟩, 0⟩ :=
       Tw.ext (Subtype.ext (zero_add _).symm) (by
         show 0 + 0 + b ⟨a, ha⟩ ⟨a', ha'⟩ = b ⟨a, ha⟩ ⟨a', ha'⟩ + 0 + b 0 _
@@ -335,7 +335,7 @@ theorem exists_splits (h : Alt c) {L A : AddSubgroup W} (hLA : L ≤ A) (hL : �
     have h2 := congrArg (fun t => ((g t).toMul : ℂ)) h1
     simpa only [map_add (f := _), toMul_add, Units.val_mul, hg', hbv] using h2
   · beta_reduce
-    rw [dif_pos (hLA hx)]
+    rw [dite_eq_left (hLA hx)]
     exact congrArg (fun t : Additive ℂˣ => (t.toMul : ℂ)) (hg' (⟨x, hx⟩, 0))
 
 def transl (c : W → W → ℂ) (x : W) : Module.End ℂ (W → ℂ) where

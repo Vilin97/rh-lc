@@ -32,7 +32,7 @@ theorem kap_gm (σ : Z ⟶ Y) (r : Y ⟶ X) (z : Z) (U : X.Opens) (a : Γ(X, U)�
     rw [gm_val r (σ z) U h]
     exact Scheme.Hom.germ_stalkMap_apply σ (r ⁻¹ᵁ U) z h _
   · have h' : ¬ (σ ≫ r) z ∈ U := h
-    rw [gm, gm, dif_neg h, dif_neg h']
+    rw [gm, gm, dite_eq_right h, dite_eq_right h']
     exact map_one _
 
 theorem kap_injective (σ : Z ⟶ Y) [Flat σ] (z : Z) : Function.Injective (kap σ z) := by

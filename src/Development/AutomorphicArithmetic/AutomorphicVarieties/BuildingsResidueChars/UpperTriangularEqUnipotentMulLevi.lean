@@ -76,7 +76,7 @@ private theorem unip_val {R : Type} [CommRing R] {r s : ℕ} (Y : Matrix (Fin r)
     | right d =>
       have h : ((Fin.castAdd s a : Fin (r + s)) : ℕ) < r ∧ r ≤ ((Fin.natAdd r d : Fin (r + s)) : ℕ) := by
         simp
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       simp [Matrix.reindex_apply, Matrix.one_apply, cn_ne]
   | right b =>
     have : ¬ (((Fin.natAdd r b : Fin (r + s)) : ℕ) < r) := by simp

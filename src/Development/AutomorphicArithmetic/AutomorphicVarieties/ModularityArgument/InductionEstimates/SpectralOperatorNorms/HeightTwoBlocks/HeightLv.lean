@@ -74,7 +74,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.ctBd :
       refine integral_congr_ae (Eventually.of_forall fun X => ?_)
       have h : unipGL X * (g : AdelicGLn.AdelicGL K (2 + 2)) ∈ normOneGL K (2 + 2) := (nn X * g).2
       beta_reduce
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     obtain ⟨R, hR⟩ := exists_height_le_of_isCompact (hD.image continuous_subtype_val)
     obtain ⟨C₁, hC₁⟩ := h₁ M

@@ -52,7 +52,7 @@ theorem finsum_cosets_eq {G W : Type} [Group G] [AddCommGroup W] (J U : Subgroup
     by_contra hn
     apply hc
     simp only [φ]
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨x, hx, rfl⟩
     exact hn ⟨x, hx, rfl⟩
   have hψ : Function.support ψ ⊆ (fun x : G => (x : G ⧸ U)) '' Dset := by
@@ -60,7 +60,7 @@ theorem finsum_cosets_eq {G W : Type} [Group G] [AddCommGroup W] (J U : Subgroup
     by_contra hn
     apply hc
     simp only [ψ]
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨x, hx, rfl⟩
     exact hn ⟨x, hx, rfl⟩
   rw [← Set.indicator_eq_self.2 hφ, ← Set.indicator_eq_self.2 hψ, ← finsum_mem_def, ← finsum_mem_def]
@@ -117,7 +117,7 @@ theorem heckeD_eq_sum (J : Subgroup (GAf L n)) (Dset : Set (GAf L n))
     by_contra hn
     apply hcc
     dsimp only
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨x, hx, rfl⟩
     exact hn ⟨x, hx, rfl⟩
   simp only [NG.heckeD]

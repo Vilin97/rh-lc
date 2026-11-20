@@ -32,7 +32,7 @@ theorem flagPt_step (M : FlagModel y Ψ N j) (F : FrameData ι Ψ N M.Ω M.blk) 
     flagPt M F b h ⟨k, m⟩ = ∑ I, valAt M.x (F.u ⟨k, m⟩ I) b * minorIJ (h p.1) I (stepCols N j p.2) := by
   have hk : ¬ ∀ p', M.blk p' ≠ some k := fun h' => h' p hp
   simp only [flagPt]
-  rw [dif_neg hk]
+  rw [dite_eq_right hk]
   have key : ∀ p' : Ψ × Fin N, M.blk p' = some k →
       (∑ I, valAt M.x (F.u ⟨k, m⟩ I) b * minorIJ (h p'.1) I (stepCols N j p'.2))
         = ∑ I, valAt M.x (F.u ⟨k, m⟩ I) b * minorIJ (h p.1) I (stepCols N j p.2) := by

@@ -58,7 +58,7 @@ theorem rr_rep_spec (h : rr_FD μ Γ D) (y : G) :
   have hex : ∃ γ ∈ (Γ : Set G), γ * y ∈ D := h.cov y
   refine ⟨hex.choose, hex.choose_spec.1, ?_, hex.choose_spec.2⟩
   unfold rr_rep
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
 
 theorem rr_rep_eq (h : rr_FD μ Γ D) {y : G} (hy : y ∉ rr_N Γ D) {γ : G} (hγ : γ ∈ Γ) (hD : γ * y ∈ D) :
     rr_rep (Γ : Set G) D y = γ * y := by

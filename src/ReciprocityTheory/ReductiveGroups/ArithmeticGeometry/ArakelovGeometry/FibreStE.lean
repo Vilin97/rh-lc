@@ -13,7 +13,7 @@ theorem fnTrace_coe (x : ι → Ω) (e : Fin (D + 1) → ι) (s : Lx x e) :
       ((Algebra.trace (fnField (x ∘ e)) (Lx x e) s : fnField (x ∘ e)) : Ω) := by
   have hs : (s : Ω) ∈ fnField x := (IntermediateField.mem_extendScalars _).mp s.2
   unfold fnTrace
-  rw [dif_pos hs]
+  rw [dite_eq_left hs]
 
 theorem exists_gen (x : ι → Ω) (e : Fin (D + 1) → ι) (h : IsProjFrame x e) :
     ∃ G : Gen x e, G.P.natDegree = projDeg x e ∧

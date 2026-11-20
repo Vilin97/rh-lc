@@ -69,7 +69,7 @@ theorem resid_at_w : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.
     exact this
   · refine Finset.sum_congr rfl fun i _ => ?_
     by_cases hi : i.1 + 1 < D.R.k
-    · rw [dif_pos hi, dif_pos hi]
+    · rw [dite_eq_left hi, dite_eq_left hi]
       by_cases hw : SymFrame.EwAt X w
       · have hs : side X w = true := by simp [side, hw]
         rw [if_pos hs, hφ]
@@ -96,6 +96,6 @@ theorem resid_at_w : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.
         show hA X.B.I (X.bwd i) (X.B.I.fmat k *ᵥ X.bw ⟨i.1 + 1, hi⟩) ∈ wInt X w
         rw [e]
         exact (wInt X w).smul_mem (⟨_, hint⟩ : Formalism.MainNotions.S.IntAf X.B.I.F X.B.I.E) hew
-    · rw [dif_neg hi, dif_neg hi, map_zero]
+    · rw [dite_eq_right hi, dite_eq_right hi, map_zero]
 
 end GlobalTheory.Mem.SymChar

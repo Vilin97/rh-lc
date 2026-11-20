@@ -244,13 +244,13 @@ theorem lst_succ (K : ℕ) (a : Fin K) (y : Fin K → ℝ) (t : ℝ) :
   unfold Lst
   rw [List.ofFn_succ]
   congr 1
-  · rw [dif_pos (by omega)]
+  · rw [dite_eq_left (by omega)]
     have e : (⟨(a : ℕ) + 1 - 1 - ((0 : Fin ((a : ℕ) + 1)) : ℕ), by omega⟩ : Fin K) = a := Fin.ext (by simp)
     rw [e, Function.update_self]
   · congr 1
     funext i
     have hi := i.isLt
-    rw [dif_pos (by simp; omega), dif_pos (by omega)]
+    rw [dite_eq_left (by simp; omega), dite_eq_left (by omega)]
     have e : (⟨(a : ℕ) + 1 - 1 - (i.succ : ℕ), by simp; omega⟩ : Fin K) = ⟨(a : ℕ) - 1 - i, by omega⟩ :=
       Fin.ext (by simp; omega)
     rw [e, Function.update_of_ne]
@@ -263,7 +263,7 @@ theorem lst_full (K : ℕ) (z : Fin K → ℝ) : Lst K K z = List.ofFn fun b => 
   unfold Lst
   congr 1
   funext b
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   congr 1
   ext
   simp [Fin.val_rev]

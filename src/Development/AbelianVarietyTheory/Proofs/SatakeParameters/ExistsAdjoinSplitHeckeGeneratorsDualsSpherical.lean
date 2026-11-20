@@ -53,7 +53,7 @@ theorem good_gen {x : Module.End ℂ M} (hx : x ∈ gens V P π) : x ∈ Algebra
 
 theorem good_nonlab {d : List ℤ} (h : ¬ IsLab V P d) : Good V P π (Finsupp.single d 1) := by
   refine ⟨0, Subalgebra.zero_mem _, fun u _ => ?_⟩
-  rw [GlobalTheory.SphLabelOps.opOf_single, Hk3.rep, dif_neg h, Finset.sum_empty, LinearMap.zero_apply]
+  rw [GlobalTheory.SphLabelOps.opOf_single, Hk3.rep, dite_eq_right h, Finset.sum_empty, LinearMap.zero_apply]
 
 theorem fixed_opOf (c : List ℤ →₀ ℂ) {u : M} (hu : ∀ k ∈ hyp V P, π k u = u) : ∀ k ∈ hyp V P, π k (opOf π P c u) = opOf π P c u :=
   (GlobalTheory.SphLabelOps.label_operators V P).2.1 c M π u hu

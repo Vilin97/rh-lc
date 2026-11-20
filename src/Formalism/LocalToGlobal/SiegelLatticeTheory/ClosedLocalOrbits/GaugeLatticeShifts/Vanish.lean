@@ -232,7 +232,7 @@ theorem ooFundIndepC_of (hN : NLamNinf) (hC : ChiTrivialC) : OOFundIndepC := by
   have hex : ∃ Ω, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (ROinf t) Ω := hF t
   have hΩ' : Formalism.L2.SG.HidaSetting.IsSFund X.B.I (ROinf t) (FundOf t) := by
     unfold FundOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   haveI := ROsub_countable X (X.Fu u) (X.Fu u') t.lam t.lam' t.lin
   simp only [OOt, OO]
@@ -520,7 +520,7 @@ theorem ooVanish_of (hA : AvgCore) (hU : GinfUnimod) (hN : NLamNinf) (hC : ChiTr
   · simp only [OOt, OO, FundOf, dif_neg hex, Measure.restrict_empty, integral_zero_measure]
   have hΩ : IsSF (ROsub X (X.Fu u) (X.Fu u') t.lam t.lam' t.lin : Set X.B.I.Ginf) (FundOf t) := by
     unfold FundOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   have hΓR : ROsub X (X.Fu u) (X.Fu u') t.lam t.lam' t.lin ≤ Rsub hG t := by
     intro s hs

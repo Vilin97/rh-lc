@@ -91,7 +91,7 @@ theorem zip_given (W : G.Weil) (t : T) (ρ : G.RealVec) (q : ∀ j : ℕ, PolF D
   congr 1
   funext i
   show W.fock (.chi i 0) (W.cosVec i (Φ i)) (if h : (i : ℕ) < D.R.m then ρ ⟨i, h⟩ else 0) = W.datum ρ Φ i
-  rw [dif_pos i.2]
+  rw [dite_eq_left i.2]
   rfl
 
 end GlobalTheory.FlipStart

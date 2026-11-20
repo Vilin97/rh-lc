@@ -36,7 +36,7 @@ theorem Xsp_mapLF' {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace
     (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) :
     Xsp (mapLF γ F) = (Xsp F).map (γ : S.V →ₗ[E] S.V) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   show Submodule.span E (Set.range fun a => γ (F.fl.e a)) =
     (Submodule.span E (Set.range F.fl.e)).map (γ : S.V →ₗ[E] S.V)
   rw [Submodule.map_span, ← Set.range_comp]

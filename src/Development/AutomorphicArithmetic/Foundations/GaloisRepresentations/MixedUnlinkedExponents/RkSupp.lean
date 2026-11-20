@@ -18,7 +18,7 @@ private theorem chs_single {k : Type} [Field k] [ValuativeRel k] [TopologicalSpa
     obtain ⟨hζ, e⟩ := hex.choose_spec
     exact (IrrGL.ofChar_inj.1 e).symm
   unfold chs
-  rw [← Multiset.cons_zero (IrrGL.ofChar ξ hξ), Multiset.filterMap_cons_some _ _ _ (b := ξ) (by rw [dif_pos hex, hc])]
+  rw [← Multiset.cons_zero (IrrGL.ofChar ξ hξ), Multiset.filterMap_cons_some _ _ _ (b := ξ) (by rw [dite_eq_left hex, hc])]
   simp
 
 theorem UpperTheory.Gal.GamX.rkSupp :

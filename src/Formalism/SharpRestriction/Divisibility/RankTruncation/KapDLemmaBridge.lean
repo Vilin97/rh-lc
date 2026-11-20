@@ -26,7 +26,7 @@ theorem kappa_bound_of_prop (hc : DProp) : ∃ C : ℝ, ∀ (D : D7) (L : SizeDa
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hK'.1 i]
       unfold DV.aPlusQ DV.eQ aPlusC
-      rw [dif_pos (show 1 ≤ j ∧ j ≤ D.R.m from ⟨hj1, hj2⟩)]
+      rw [dite_eq_left (show 1 ≤ j ∧ j ≤ D.R.m from ⟨hj1, hj2⟩)]
       rfl
     have e2 : (((∑ a, D.what₂.kaSmall j τ a : ℤ)) : ℚ) =
         -∑ c : Fin (D.R.m - j), aMinusC D.R.m D.R.t j (D.hc τ).b ((D.hc τ).e ⟨j - 1, hjm⟩) c := by
@@ -35,10 +35,10 @@ theorem kappa_bound_of_prop (hc : DProp) : ∃ C : ℝ, ∀ (D : D7) (L : SizeDa
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [hK'.2 c]
       unfold DV.aMinusQ DV.eQ aMinusC
-      rw [dif_pos (show 1 ≤ j ∧ j ≤ D.R.m from ⟨hj1, hj2⟩)]
+      rw [dite_eq_left (show 1 ≤ j ∧ j ≤ D.R.m from ⟨hj1, hj2⟩)]
     have ew : wj D j τ = (((D.hc τ).e ⟨j - 1, hjm⟩ : ℚ) : ℝ) := by
       unfold wj
-      rw [dif_pos hjm]
+      rw [dite_eq_left hjm]
     have eZ : (((((∑ a, D.what₂.kaBig j τ a) - ∑ a, D.what₂.kaSmall j τ a : ℤ)) : ℝ)) =
         ((((∑ i : Fin (D.R.k + j - 1), aPlusC D.R.k D.R.m D.R.t j (D.hc τ).v (D.hc τ).b ((D.hc τ).e ⟨j - 1, hjm⟩) i) +
           ∑ c : Fin (D.R.m - j), aMinusC D.R.m D.R.t j (D.hc τ).b ((D.hc τ).e ⟨j - 1, hjm⟩) c : ℚ)) : ℝ) := by

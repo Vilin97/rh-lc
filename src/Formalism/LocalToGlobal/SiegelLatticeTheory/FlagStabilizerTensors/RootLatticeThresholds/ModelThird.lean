@@ -84,12 +84,12 @@ theorem low_R_mono (hd : ∀ a, d a ≠ 0) (x' : Formalism.FourierDecayAlt.C2.Ls
     · have h3 := key.1 h2
       have hsw : sw pN ⟨(i, (wPt pN) b), h2⟩ = ⟨(b, (wPt pN) i), h3⟩ :=
         Subtype.ext (Prod.ext (wPt_invol pN b) rfl)
-      rw [dif_pos h2, dif_pos h3]
+      rw [dite_eq_left h2, dite_eq_left h3]
       simp only [Rm]
       rw [hsw, wPt_invol]
       field_simp [hd b]
     · have h3 : ¬ ((wPt pN) i < b ∧ (wPt pN).symm b < (wPt pN).symm ((wPt pN) i)) := fun h => h2 (key.2 h)
-      rw [dif_neg h2, dif_neg h3]
+      rw [dite_eq_right h2, dite_eq_right h3]
       simp
 
 theorem mono_mul_inv (hd : ∀ a, d a ≠ 0) :

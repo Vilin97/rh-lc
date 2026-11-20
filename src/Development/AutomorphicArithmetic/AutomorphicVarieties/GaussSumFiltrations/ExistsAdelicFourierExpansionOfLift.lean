@@ -217,7 +217,7 @@ theorem coefAt_eq_coef (hΨ : Sys k Ψ) (ha : ∀ y, HasQ ((((absF y ^ ((k : ℝ
       rw [Units.val_mul, map_mul, map_mul, hv, hm.2 w, ← hY.2 w, ← map_mul, ← map_mul, Units.inv_mul, map_one, map_one]
     rw [mul_inv_cancel_left] at hu
     rw [coefAt_of_genD hm, hcY, ← hu, hr, Units.val_mk0]
-  · rw [coefAt, dif_neg h]
+  · rw [coefAt, dite_eq_right h]
     by_contra hne
     exact h (coef_dual hΨ ha y ξ h0 (Ne.symm hne))
 

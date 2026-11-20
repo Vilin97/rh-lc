@@ -37,9 +37,9 @@ variable (d : Dat D u) (hb : d.Base)
 def vol (j : ℕ) : Vol (d.st j).V :=
   if h : j < D.R.m then ⟨(d.st j).ν, (d.st j).fd, (hb.st j h).haar, (hb.st j h).fund⟩ else (GlobalTheory.Unf.Inhab.nonempty_vol _).some
 
-theorem vol_μ {j : ℕ} (h : j < D.R.m) : (vol d hb j).μ = (d.st j).ν := by rw [vol, dif_pos h]
+theorem vol_μ {j : ℕ} (h : j < D.R.m) : (vol d hb j).μ = (d.st j).ν := by rw [vol, dite_eq_left h]
 
-theorem vol_F {j : ℕ} (h : j < D.R.m) : (vol d hb j).𝓕 = (d.st j).fd := by rw [vol, dif_pos h]
+theorem vol_F {j : ℕ} (h : j < D.R.m) : (vol d hb j).𝓕 = (d.st j).fd := by rw [vol, dite_eq_left h]
 
 @[reducible] def comm : Comm D where
   θ := d.c.θ
@@ -184,7 +184,7 @@ theorem perX (h : d.PerLast) (ho : d.TopOnto) : PerX fun _ : Unit => tup d hb :=
   rw [Fintype.sum_unique, trc_one, one_mul]
   refine e.trans ?_
   dsimp only
-  rw [dif_pos hF]
+  rw [dite_eq_left hF]
 
 theorem valLastX (h : d.ValLastS) : ValLastX fun _ : Unit => tup d hb := by
   intro j hj P₁ P₂

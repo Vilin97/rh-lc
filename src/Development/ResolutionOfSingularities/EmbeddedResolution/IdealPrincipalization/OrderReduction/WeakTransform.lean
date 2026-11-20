@@ -242,7 +242,7 @@ theorem existsMaxContactControlledTransforms_of_comapLeControlled (h : MaxContac
         @idealSheafColon (u.schemeAt (i + 1)) (hN (i + 1) hi')
           ((strictTransformMaxContactIdeal u hN i).comap (u.transitionMapSucc i))
           (Blowup.exceptionalIdeal (u.transitionMapSucc i) (u.center i)) := by
-      rw [strictTransformMaxContactIdeal_succ, dif_pos hi']
+      rw [strictTransformMaxContactIdeal_succ, dite_eq_left hi']
     rw [hc]
     exact (hcart i hi).mul_idealSheafColon hI
   have main : ∀ i : ℕ, (hi : i ≤ u.length) → strictTransformMaxContactIdeal u hN i ≤ maxContactIdealAt u i hi := by

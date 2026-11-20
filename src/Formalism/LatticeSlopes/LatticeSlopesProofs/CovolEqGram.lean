@@ -49,7 +49,7 @@ theorem det_gram_basis_eq {E : Type*} [NormedAddCommGroup E] [InnerProductSpace 
 theorem covol_eq_gram : CovolEqGram := by
   intro E _ _ _ L hL ι _ _ b
   unfold covol
-  rw [dif_pos hL]
+  rw [dite_eq_left hL]
   congr 1
   exact det_gram_basis_eq L (Module.finBasis ℤ L) b
 

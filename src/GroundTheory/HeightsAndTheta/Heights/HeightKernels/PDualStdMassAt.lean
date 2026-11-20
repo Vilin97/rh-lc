@@ -71,7 +71,7 @@ theorem sheetDensity_eq (hOn : DualPtsOnPlane.Statement) {D : ℕ} {F : HermLatt
     sheetDensity (dualIdeal b) (dualProj b hb) (fun _ z => Real.log ((dualLine F b hb).h z))
       (fun _ => 1) y w = maDensity (fun _ : Fin D => gbPot) y := by
   unfold sheetDensity
-  rw [dif_pos h, one_mul]
+  rw [dite_eq_left h, one_mul]
   apply maDensity_congr_of_eventuallyEq
   intro j
   filter_upwards [h.choose_spec.2] with y' hy'

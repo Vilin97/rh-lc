@@ -189,7 +189,7 @@ theorem exists_sum_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.
         simp only [σ, map_sub, map_sum, map_mul, Formalism.L2.DIV.resS_oToS, hrep]
       rw [sub_eq_zero, apply_ite (resS D.host.F PP), map_one, map_zero, ← h1]
       refine Finset.sum_congr rfl fun m _ => ?_
-      rw [hAb, topL, dif_pos ⟨(Fin.castLE hr m).2, k.2⟩, redM, dif_pos (ht _ _)]
+      rw [hAb, topL, dite_eq_left ⟨(Fin.castLE hr m).2, k.2⟩, redM, dite_eq_left (ht _ _)]
       rfl
     have h2 := hres σ hσ
     convert h2 using 2

@@ -133,7 +133,7 @@ theorem coordHerm_map_diag (σ : E →ₐ[F] E) (hσ : HeckeCharacterZeroLocus.S
   have hcond : Function.Injective φ ∧ ∀ s, MeasurableSet s → NullMeasurableSet (φ '' s) P := by
     by_contra hc
     have h0 : GlobalTheory.CompanionTheory.SW.coordHerm R σ b lam n = 0 := by
-      rw [hν, Measure.comap, dif_neg hc]
+      rw [hν, Measure.comap, dite_eq_right hc]
     have := isOpen_univ.measure_pos (GlobalTheory.CompanionTheory.SW.coordHerm R σ b lam n) Set.univ_nonempty
     simp [h0] at this
   let D1 : (Fin n → R) ≃ᵐ (Fin n → R) :=

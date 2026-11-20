@@ -196,7 +196,7 @@ private theorem jE_apply_sigma_add (S : SegData s) (f : Fin S.t → ℕ) (i : Fi
   have hi := i.2
   unfold SegData.t at hi
   unfold jE
-  rw [dif_pos (show S.sigma ≤ S.sigma + i.val ∧ S.sigma + i.val < s from ⟨by omega, by omega⟩)]
+  rw [dite_eq_left (show S.sigma ≤ S.sigma + i.val ∧ S.sigma + i.val < s from ⟨by omega, by omega⟩)]
   congr 1
   ext
   simp

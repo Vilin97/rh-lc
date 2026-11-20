@@ -15,7 +15,7 @@ variable {g : ℕ} [Fact g.Prime]
 
 theorem blk_eq_par {a b : ℕ} (x : Gn g a) (y : Gn g b) : blk a b (a + b) x y = par finSumFinEquiv x 0 y := by
   refine Supp.ext_entN fun i j hi hj => ?_
-  rw [ParInd.blk_val, entN, dif_pos ⟨hi, hj⟩, ParInd.dg]
+  rw [ParInd.blk_val, entN, dite_eq_left ⟨hi, hj⟩, ParInd.dg]
   dsimp only
   by_cases h1 : i < a <;> by_cases h2 : j < a
   · rw [(Supp.entN_par _ _ _ i j).1 h1 h2, if_pos ⟨h1, h2⟩]

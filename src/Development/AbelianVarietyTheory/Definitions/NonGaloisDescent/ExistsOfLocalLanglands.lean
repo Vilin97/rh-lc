@@ -94,7 +94,7 @@ def condAbs (ψ : AddChar k Circle) : ℝ := if h : ∃ c, HasConductor ψ c the
 
 theorem condAbs_eq {c : kˣ} (hc : HasConductor ψ c) : condAbs ψ = nabs k c := by
   have h : ∃ c, HasConductor ψ c := ⟨c, hc⟩
-  rw [condAbs, dif_pos h, cond_eq h.choose_spec hc]
+  rw [condAbs, dite_eq_left h, cond_eq h.choose_spec hc]
 
 theorem condAbs_pos (ψ : AddChar k Circle) : 0 < condAbs ψ := by
   unfold condAbs; split_ifs

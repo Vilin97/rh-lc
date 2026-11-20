@@ -48,7 +48,7 @@ theorem loc_omF (x : (hX.atlas σ).Pt) :
       fun v => (ofValues (extTrace (midIn (hseq hX σ h H fl) (frameAt fl x.pt) x.1.1) v) : Alt D) := by
   filter_upwards [(isOpen_chartSet (hseq hX σ h H fl) (frameAt fl x.pt) x.1.1).mem_nhds (crd_mem hX σ h H fl x)] with v hv
   have hv1 : v ∈ ((hX.atlas σ).e x.1.1).target := hv.1
-  rw [HolAtlas.loc, dif_pos hv1]
+  rw [HolAtlas.loc, dite_eq_left hv1]
   set y : (hX.atlas σ).Pt := ⟨(x.1.1, ((hX.atlas σ).e x.1.1).symm v), ((hX.atlas σ).e x.1.1).map_target hv1⟩ with hy
   have hb : v ∈ chartSet (hseq hX σ h H fl) (frameAt fl y.pt) x.1.1 := ⟨hv1, mem_frameAt fl y.pt⟩
   have e1 : y.crd = v := ((hX.atlas σ).e x.1.1).right_inv hv1

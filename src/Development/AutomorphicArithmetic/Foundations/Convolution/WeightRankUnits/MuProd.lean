@@ -10,7 +10,7 @@ private theorem muAt_unit {E : Type} [Field E] [NumberField E] [IsCMField E] (μ
     UpperTheory.ConvolutionTheory.G2.muAt μ u (k : E) = ((μ.locK u k : ℂˣ) : ℂ) := by
   have h : algebraMap E (u.adicCompletion E) (k : E) ≠ 0 := by
     simpa using k.ne_zero
-  rw [UpperTheory.ConvolutionTheory.G2.muAt, dif_pos h, HChar.locK, MonoidHom.comp_apply]
+  rw [UpperTheory.ConvolutionTheory.G2.muAt, dite_eq_left h, HChar.locK, MonoidHom.comp_apply]
   have hu : Units.mk0 (algebraMap E (u.adicCompletion E) (k : E)) h = atFin u k := Units.ext rfl
   rw [hu]
 

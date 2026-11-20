@@ -49,7 +49,7 @@ theorem planeMat_mul_planeCoef {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ 
     rw [Matrix.submatrix_mul_equiv _ _ _ (finSumFinEquiv.trans (finCongr hr)).symm, planeMat_eq_frame, h1]
     rfl
   have hC : planeCoef H = Q := by
-    rw [planeCoef, dif_pos hr, Matrix.inv_eq_right_inv hM]
+    rw [planeCoef, dite_eq_left hr, Matrix.inv_eq_right_inv hM]
     ext i j
     simp
   rw [hC, planeMat_eq_frame, h1]

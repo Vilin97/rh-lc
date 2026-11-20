@@ -82,7 +82,7 @@ theorem abs_at (hσ : IsCMExt F E σ) (hw : IsInertAt F E v w) {h : w.under (�
   have e' : toCompl h u.1 = y := e
   have h0 : Valued.v y.1 ≠ 0 := (map_ne_zero _).2 y.ne_zero
   have h1 : Valued.v y.1 = WithZero.exp (-ordL y.1) := by
-    rw [ordL, dif_neg h0, neg_neg]; exact (WithZero.coe_unzero h0).symm
+    rw [ordL, dite_eq_right h0, neg_neg]; exact (WithZero.coe_unzero h0).symm
   have n0 : Algebra.norm (Fv F v) u.1 ≠ 0 := (u.isUnit.map _).ne_zero
   have h2 : Valued.v (Algebra.norm (Fv F v) u.1) = WithZero.exp (-(2 * ordL y.1)) := by
     have h3 := congrArg (toCompl h) (GlobalTheory.Doubling.algebraMap_norm_eq hσ u.1)

@@ -403,11 +403,11 @@ theorem datum_eq (R : RealDat D A Ks) (i : Fin D.R.m) (hr : (Wc D i).rank ≤ (V
         rw [zpow_neg_one, Units.val_inv_eq_inv_val]
         congr 3
         exact Units.ext (congrArg Matrix.det (rL PP.1))
-      · rw [dif_neg h, dif_neg fun h' => h fun PP hPP => by rw [← rL]; exact (h' PP hPP).2]
+      · rw [dite_eq_right h, dite_eq_right fun h' => h fun PP hPP => by rw [← rL]; exact (h' PP hPP).2]
   · rw [if_neg hI]
     split_ifs with hI'
     · unfold omegaQ
-      rw [dif_neg, mul_zero]
+      rw [dite_eq_right, mul_zero]
       intro h
       refine hI fun a b => ?_
       by_cases ha : a.val < (Wc D i).rank

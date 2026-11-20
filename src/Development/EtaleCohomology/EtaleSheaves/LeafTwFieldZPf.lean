@@ -37,7 +37,7 @@ theorem ex_spec (j : ℤ) (ζ ξ : Prim q K) (u : (ZMod q)ˣ) (h : ξ.1 = ζ.1 ^
     ex j ζ ξ = ((u ^ j : (ZMod q)ˣ) : ZMod q) := by
   have he : ∃ u : (ZMod q)ˣ, ξ.1 = ζ.1 ^ (u : ZMod q).val := ⟨u, h⟩
   unfold ex
-  rw [dif_pos he, unit_unique ζ (he.choose_spec.symm.trans h)]
+  rw [dite_eq_left he, unit_unique ζ (he.choose_spec.symm.trans h)]
 
 def Φ (j : ℤ) (ζ : Prim q K) : (Prim q K →₀ ULift.{1} (ZMod q)) →ₗ[ULift.{1} (ZMod q)] ULift.{1} (ZMod q) :=
   Finsupp.linearCombination (ULift.{1} (ZMod q)) (fun ξ => ULift.up (ex j ζ ξ))

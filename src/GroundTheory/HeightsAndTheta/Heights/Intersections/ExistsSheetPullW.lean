@@ -228,7 +228,7 @@ theorem pullbackDensity_holds.proof : pullbackDensity_holds.Statement := by
   obtain ⟨γ, hγ, hval⟩ := pullbackDensity_holds.exists_sheet_pullW R Ψ hv hP L L' A A' s hL hLL' hAA' hs x hx.2
   rw [show pullQ R v Ψ x = y from hx.1] at hγ hval
   unfold sheetDensity
-  rw [dif_pos ⟨γ, hγ⟩]
+  rw [dite_eq_left ⟨γ, hγ⟩]
   exact ((hind _ _ _ (Exists.choose_spec
     (⟨γ, hγ⟩ : ∃ γ, IsSheet (imageZ v P') Ψ y (pullW R v Ψ x) γ)) hγ).trans hval).symm
 

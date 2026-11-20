@@ -16,7 +16,7 @@ theorem al_le_rowLen_sub {D : D7} (L : SizeData₂ D) (u : D.what₂.Word) (j : 
   obtain ⟨e1, -⟩ := GlobalTheory.TopRows.nuRow_tauPl_of_isTopPl L u j hj (false, t) hz
   have hwe : wPl D (j + 1) (false, t) = (((D.hcW u (tauPl D (false, t))).e ⟨j, hj⟩ : ℚ) : ℝ) := by
     unfold wPl wj
-    rw [dif_pos (by simpa using hj), D.hcW_e]
+    rw [dite_eq_left (by simpa using hj), D.hcW_e]
     rfl
   obtain ⟨-, h4⟩ := L.cloud_u u (tauPl D (false, t)) ⟨1, by omega⟩ le_rfl (by show 1 + 1 < D.R.k; omega)
   have hk' : (5 : ℝ) ≤ D.R.k := by exact_mod_cast hk

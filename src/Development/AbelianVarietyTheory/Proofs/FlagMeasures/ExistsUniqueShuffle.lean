@@ -18,7 +18,7 @@ theorem pm_eq_mono (σ : Equiv.Perm (Fin n)) : (pm g σ : Mt g n) = mono (σ, fu
     rw [mul_mono]
     simp [mono, Matrix.one_apply]
   unfold pm toG
-  rw [hm, dif_pos hu]
+  rw [hm, dite_eq_left hu]
   rfl
 
 theorem isUniUp_iff (u : Gn g n) : IsUniUp (u : Mt g n) ↔ u ∈ unip (ZMod g) n :=

@@ -98,7 +98,7 @@ theorem blk_eq (h : LocWord) (hF : F.Struct) (i : F₀.C.ι) (ws : List (List (F
     simp only [prs, ls, List.map_cons, List.map_flatten, List.map_map, Function.comp_def, List.map_append, List.map_replicate]
     rfl
   have e3 : prodL F.d (ls F ws) (F₀.C.a i) = (prs.map Prod.snd).foldr LM.mul (F.d.eL _) := by
-    rw [e2, prodL, dif_pos (F₀.C.le i)]
+    rw [e2, prodL, dite_eq_left (F₀.C.le i)]
   have e4 : tw F i ws = BGen.wd (prs.map Prod.fst) (F.t₂ i) := by rw [e1]; rfl
   have R := adelRep2 (S := F₀.Sec) (B := F.B i) (Equiv.refl _) F₀.hSec (FrameOk.wirtinger_sub F) (fun w _ => O.1 w) (F₀.u₁ _) (F₀.u₂ _)
     (F₀.A i).Ta (F₀.A i).Tb F.d.one (F.d.eL _) (F.d.eL _) (F.t₂ i) (L (.inr (.inl ()))).1 (L (.inr (.inl ()))).1

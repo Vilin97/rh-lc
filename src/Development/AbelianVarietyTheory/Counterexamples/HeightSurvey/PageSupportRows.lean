@@ -58,7 +58,7 @@ theorem row_DF {large₂ : SizeData₂ D} {X : PJ D B P j} {CK C1 A1 : ℝ} {ka 
   have h1 := hL.2.1 τ i
   rw [if_neg (by omega)] at h1
   unfold gapZ at h1
-  rw [dif_neg (by omega)] at h1
+  rw [dite_eq_right (by omega)] at h1
   have h2 := hlast τ i hi
   have h3 : 2 * T ^ 2 ≤ ka.aP τ i := by
     have : (2 * (T : ℝ) ^ 2) ≤ (ka.aP τ i : ℝ) := by linarith

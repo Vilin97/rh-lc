@@ -134,10 +134,10 @@ def cofanProj (k : κ) : c.pt ⟶ F k :=
   Cofan.IsColimit.desc hc fun j => if h : j = k then eqToHom (congrArg F h) else 0
 
 theorem inj_cofanProj (k : κ) : c.inj k ≫ cofanProj hc k = 𝟙 _ := by
-  rw [cofanProj, Cofan.IsColimit.fac, dif_pos rfl, eqToHom_refl]
+  rw [cofanProj, Cofan.IsColimit.fac, dite_eq_left rfl, eqToHom_refl]
 
 theorem inj_cofanProj_of_ne {j k : κ} (h : j ≠ k) : c.inj j ≫ cofanProj hc k = 0 := by
-  rw [cofanProj, Cofan.IsColimit.fac, dif_neg h]
+  rw [cofanProj, Cofan.IsColimit.fac, dite_eq_right h]
 
 theorem inj_comp_sum_cofanProj {T : Finset κ} {j : κ} (hj : j ∈ T) :
     c.inj j ≫ ∑ k ∈ T, cofanProj hc k ≫ c.inj k = c.inj j := by
@@ -194,7 +194,7 @@ theorem cohOn.directSumMap_injective : Function.Injective (cohOn.directSumMap c 
     by_cases h : k = j
     · subst h
       rw [inj_cofanProj, cohOn.map_id, DirectSum.component.lof_self, LinearMap.id_apply]
-    · rw [inj_cofanProj_of_ne hc h, cohOn.map_zero_hom, DirectSum.component.of, dif_neg h,
+    · rw [inj_cofanProj_of_ne hc h, cohOn.map_zero_hom, DirectSum.component.of, dite_eq_right h,
         LinearMap.zero_apply]
   intro x y hxy
   refine DirectSum.ext_component R fun j => ?_

@@ -11,7 +11,7 @@ theorem ratio_eq {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V] {f g :
     (hg : g ≠ 0) (hf : f = a • g) : ratio f g = a := by
   unfold ratio
   have h : ∃ a : Ω, f = a • g := ⟨a, hf⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact smul_left_injective Ω hg (h.choose_spec.symm.trans hf)
 
 theorem wt_cancel {a b c : WithTop ℤ} (hb : b ≠ ⊤) (h : a + b = c + b) : a = c := by

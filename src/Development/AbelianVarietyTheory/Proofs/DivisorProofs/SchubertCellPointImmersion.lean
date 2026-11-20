@@ -105,7 +105,7 @@ theorem exists_X_eq_plVec [Finite κ] (w : ι → Equiv.Perm (Fin N)) (x : CellV
     simp only [one_apply, (Fin.castLE_injective _).eq_iff]) fun c => lowMat a l (a k) i (Fin.castLE (l k).is_le c)
   refine Eq.trans (Eq.trans ?_ hd.symm) ?_
   · change _ = lowMat a l (a k) i j
-    rw [lowMat, of_apply, dif_pos ⟨k₀, hk₀, h₁, h₂⟩]
+    rw [lowMat, of_apply, dite_eq_left ⟨k₀, hk₀, h₁, h₂⟩]
   · congr 1
     refine Matrix.ext fun s t => ?_
     by_cases hs : s = ⟨j, hj⟩

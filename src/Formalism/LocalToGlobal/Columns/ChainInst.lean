@@ -262,7 +262,7 @@ theorem redP_add_natCast_mul (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) {a d : E}
           Ideal.Quotient.mk P.asIdeal s * c = Ideal.Quotient.mk P.asIdeal r := by
         rintro ⟨c, r, s, hs, h1, -⟩
         exact hb ⟨r, s, hs, h1⟩
-      rw [redP, dif_neg hn]
+      rw [redP, dite_eq_right hn]
     rw [hz _ ha', hz _ ha]
 
 theorem ciIntAt_add_iff {a d : E} (hd : IntAt P d) : IntAt P (a + d) ↔ IntAt P a := ⟨fun h => by simpa using ciIntAt_sub h hd, fun h => h.add hd⟩
@@ -344,7 +344,7 @@ theorem ciSq_sq (hPr : Pr.Ok) (hCh : Ch.Ok) {P : HeightOneSpectrum (𝓞 X.E)} (
   have hqp := ciQOf_prime hPr hP
   have hfin : Finite (𝓞 X.E ⧸ P.asIdeal) := ciFinite hqp.ne_zero
   unfold ciSq
-  rw [dif_pos ⟨hP, hfin⟩]
+  rw [dite_eq_left ⟨hP, hfin⟩]
   let _ : Fintype (𝓞 X.E ⧸ P.asIdeal) := Fintype.ofFinite _
   let _ := Ideal.Quotient.field P.asIdeal
   have hcard : Fintype.card (𝓞 X.E ⧸ P.asIdeal) = qOf P := by rw [← Nat.card_eq_fintype_card, ciCard]
@@ -391,7 +391,7 @@ theorem ciCst_ok (hPr : Pr.Ok) (hCh : Ch.Ok) {SB : Finset (HeightOneSpectrum (�
     unfold ciPsi
     rw [mul_inv_cancel₀ hq0, if_pos ciIntAt_one, redP_one]
     unfold psi0P
-    rw [dif_pos (hSB P.1 P.2)]
+    rw [dite_eq_left (hSB P.1 P.2)]
     have hqp := ciQOf_prime hPr (hSB P.1 P.2)
     have := ciFinite (w := P.1) hqp.ne_zero
     exact ciAddChar_one_ne hqp (ciCard P.1) _ (hCh.psi_zero_nontrivial_character _)
@@ -416,7 +416,7 @@ theorem ciInX_apply {n c : ℕ} (x : Fin n → E) (l : Fin (n + c)) :
   · rfl
 
 theorem ciInX_castAdd {n c : ℕ} (x : Fin n → E) (l : Fin n) : Loc.inX E n c x (Fin.castAdd c l) = x l := by
-  rw [ciInX_apply, dif_pos (by simp)]
+  rw [ciInX_apply, dite_eq_left (by simp)]
   rfl
 
 theorem ciFPos {k₀ c n l : ℕ} (hfr : c = 0 ∨ k₀ = n) (hl : l < n + c) : LocE.fPos k₀ c n l = l := by
@@ -443,14 +443,14 @@ theorem ciInX_single_mem_flagG {k₀ n c s : ℕ} (hfr : c = 0 ∨ k₀ = n) (l'
   intro m
   rw [ciInX_apply]
   by_cases hm : m.1 < n
-  · rw [dif_pos hm]
+  · rw [dite_eq_left hm]
     by_cases he : (⟨m.1, hm⟩ : Fin n) = l'
     · have hml : m.1 = l'.1 := by rw [← he]
       rw [he, Pi.single_eq_same, ciScE_lt _ hm, ciFPos hfr m.2, if_neg (by omega)]
       simpa using (ciIntAt_one (P := P))
     · rw [Pi.single_eq_of_ne he, mul_zero]
       exact ciIntAt_zero
-  · rw [dif_neg hm, mul_zero]
+  · rw [dite_eq_right hm, mul_zero]
     exact ciIntAt_zero
 
 theorem ciJG_stab {k₀ r0 t n c : ℕ} {r : Sp E (n + c) ≃ₗ[E] Sp E (n + c)} (hr : r ∈ LocE.JG P q k₀ r0 t n c) {s : ℕ}
@@ -484,11 +484,11 @@ theorem ciJG_diag (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0
     rw [ciInX_apply]
     unfold Loc.eN
     by_cases hm : m.1 < n
-    · rw [dif_pos hm]
+    · rw [dite_eq_left hm]
       by_cases he : (⟨m.1, hm⟩ : Fin n) = l
       · rw [he, Pi.single_eq_same, if_pos (by rw [← he])]
       · rw [Pi.single_eq_of_ne he, if_neg (fun h => he (Fin.ext h))]
-    · rw [dif_neg hm, if_neg (by omega)]
+    · rw [dite_eq_right hm, if_neg (by omega)]
   rw [hb, hg, ← map_sub, ciMem_flagG] at hm
   have h3 := hm (Fin.castAdd c l)
   rw [ciInX_castAdd] at h3
@@ -509,9 +509,9 @@ theorem ciMem_lamY {n c : ℕ} (ex : ℕ → ℕ) (x : Sp E n) :
   · intro h m
     rw [ciInX_apply]
     by_cases hm : m.1 < n
-    · rw [dif_pos hm, ciScE_lt _ hm, zpow_zero, inv_one, one_mul]
+    · rw [dite_eq_left hm, ciScE_lt _ hm, zpow_zero, inv_one, one_mul]
       exact h _
-    · rw [dif_neg hm, mul_zero]
+    · rw [dite_eq_right hm, mul_zero]
       exact ciIntAt_zero
 
 theorem ciPrX_le {k₀ r0 t n c : ℕ} :
@@ -670,7 +670,7 @@ theorem ciExtM_inX {n c : ℕ} (A : Matrix (Fin n) (Fin n) E) (x : Fin n → E) 
   · rw [ciExtM_castAdd, ciInX_castAdd]
     simp only [ciInX_castAdd]
     rfl
-  · rw [ciExtM_natAdd, ciInX_apply, ciInX_apply, dif_neg (by simp), dif_neg (by simp)]
+  · rw [ciExtM_natAdd, ciInX_apply, ciInX_apply, dite_eq_right (by simp), dite_eq_right (by simp)]
 
 theorem ciExtM_fix {n c : ℕ} (A : Matrix (Fin n) (Fin n) E) (v : Sp E (n + c)) (hv : ∀ l : Fin n, v (Fin.castAdd c l) = 0) :
     (ciExtM c A).mulVec v = v := by
@@ -759,11 +759,11 @@ theorem ciBvecG {k₀ n c : ℕ} (hfr : c = 0 ∨ k₀ = n) (l : Fin n) :
   rw [ciInX_apply]
   unfold Loc.eN
   by_cases hm : m.1 < n
-  · rw [dif_pos hm]
+  · rw [dite_eq_left hm]
     by_cases he : (⟨m.1, hm⟩ : Fin n) = l
     · rw [he, Pi.single_eq_same, if_pos (by rw [← he])]
     · rw [Pi.single_eq_of_ne he, if_neg (fun h => he (Fin.ext h))]
-  · rw [dif_neg hm, if_neg (by omega)]
+  · rw [dite_eq_right hm, if_neg (by omega)]
 
 theorem ciGrp_mem (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) {k₀ r0 t n c a : ℕ} {bl : List ℕ}
     (hfr : c = 0 ∨ k₀ = n) (hr0 : r0 ≤ n + c) (hsa : ∀ s, s < r0 → s < n → s < a)
@@ -834,7 +834,7 @@ theorem ciGrp_mem (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) {k₀ r0 t n c a
             by_cases hl : l = ⟨s, hsn⟩
             · rw [hl, Pi.single_eq_same]; exact ciIntAt_sub (hGi _ _) ciIntAt_one
             · rw [Pi.single_eq_of_ne hl, sub_zero]; exact hGi _ _
-        · rw [ciInX_apply, dif_neg (by simp), mul_zero]
+        · rw [ciInX_apply, dite_eq_right (by simp), mul_zero]
           exact ciIntAt_zero
       · have hfix : ciEquiv (ciExtM c G) (ciExtM c G⁻¹) hE1 hE2 (LocE.bvecG E q k₀ n c s) = LocE.bvecG E q k₀ n c s := by
           rw [ciEquiv_apply, ciExtM_fix]
@@ -932,7 +932,7 @@ theorem entry_block_vanishing {k₀ n c : ℕ} (hfr : c = 0 ∨ k₀ = n) (ex ex
   unfold LocE.entB
   rw [ciFIdx hfr (show p < n + c by omega), ciFIdx hfr (show n < n + c by omega), LinearEquiv.coe_coe, hr.1.2.1]
   unfold Loc.atN Loc.eN
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   simp only
   rw [if_neg (by omega), zero_mul]
 
@@ -1003,7 +1003,7 @@ theorem ciSupSum {κ : Type} [CommRing κ] {n a : ℕ} {S : Finset ℕ} (M : Mat
   rw [← Fin.sum_univ_eq_sum_range (fun i => if h : i + 1 < n ∧ i + 1 < a ∧ i ∈ S then M ⟨i, by omega⟩ ⟨i + 1, h.1⟩ else 0) n]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : i.1 + 1 < n ∧ i.1 + 1 < a ∧ i.1 ∈ S
-  · rw [dif_pos h, Finset.sum_eq_single (⟨i.1 + 1, h.1⟩ : Fin n)]
+  · rw [dite_eq_left h, Finset.sum_eq_single (⟨i.1 + 1, h.1⟩ : Fin n)]
     · rw [if_pos ⟨rfl, h.2.1, h.2.2⟩]
     · intro j _ hj
       rw [if_neg]
@@ -1011,7 +1011,7 @@ theorem ciSupSum {κ : Type} [CommRing κ] {n a : ℕ} {S : Finset ℕ} (M : Mat
       exact hj (Fin.ext hc.1.symm)
     · intro hc
       exact absurd (Finset.mem_univ _) hc
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [if_neg]
     rintro ⟨h1, h2, h3⟩
@@ -1030,11 +1030,11 @@ theorem ciPsi_zero {SB : Finset (HeightOneSpectrum (𝓞 X.E))} (P : SB) : ciPsi
 
 theorem ciPsi0P (w : Pr.vGs) : psi0P Ch w.1 = Ch.psi0 w := by
   unfold psi0P
-  rw [dif_pos w.2]
+  rw [dite_eq_left w.2]
 
 theorem ciChiP (w : Pr.vGs) : chiP Ch w.1 = extChi fun s => Ch.chi s w := by
   unfold chiP
-  rw [dif_pos w.2]
+  rw [dite_eq_left w.2]
   rfl
 
 theorem character_first_level_group (hX : X.Ok) (hPr : Pr.Ok) (w : Pr.vGs) (hw : w.1 ∈ rowSG Pr sel (mu0 X.F X.E X.K S))
@@ -1084,10 +1084,10 @@ theorem character_first_level_group (hX : X.Ok) (hPr : Pr.Ok) (w : Pr.vGs) (hw :
   refine Finset.sum_congr rfl fun i hi => ?_
   simp only [Finset.mem_range, Examples₂.exampleRanks_N_formula] at hi
   by_cases h7 : i < 7
-  · rw [dif_pos ⟨by simp [Examples₂.exampleRanks_N_formula]; omega, by simp; omega, by simp [SX]; omega⟩,
+  · rw [dite_eq_left ⟨by simp [Examples₂.exampleRanks_N_formula]; omega, by simp; omega, by simp [SX]; omega⟩,
       ciEntB_X hfr0 _ _ hrg (show i < Examples₂.R0.N 0 by simp [Examples₂.exampleRanks_N_formula]; omega) (show i + 1 < Examples₂.R0.N 0 by simp [Examples₂.exampleRanks_N_formula]; omega)]
     exact ciEntry hred _ _
-  · rw [dif_neg (by simp [Examples₂.exampleRanks_N_formula]; omega), show i = Examples₂.R0.N 0 - 1 by simp [Examples₂.exampleRanks_N_formula]; omega,
+  · rw [dite_eq_right (by simp [Examples₂.exampleRanks_N_formula]; omega), show i = Examples₂.R0.N 0 - 1 by simp [Examples₂.exampleRanks_N_formula]; omega,
       show Examples₂.R0.N 0 - 1 + 1 = Examples₂.R0.N 0 from rfl, entry_block_vanishing hfr0 _ _ hr.1 (by simp [Examples₂.exampleRanks_N_formula]) (by decide), redP_zero]
 
 end Chr
@@ -1155,11 +1155,11 @@ theorem character_second_level_group (hX : X.Ok) (hPr : Pr.Ok) (w : Pr.vGs) (hw 
     rw [redP_sum _ _ hint, ← Finset.sum_range_add_sum_Ico _ (show Examples₂.R0.r - 1 ≤ Examples₂.R0.N 1 by decide)]
     rw [Finset.sum_eq_zero (s := Finset.Ico (Examples₂.R0.r - 1) (Examples₂.R0.N 1)) (fun i hi => by
       simp only [Finset.mem_Ico, show Examples₂.R0.r - 1 = 8 from rfl] at hi
-      rw [dif_neg (by simp; omega)]), add_zero]
+      rw [dite_eq_right (by simp; omega)]), add_zero]
     congr 1
     refine Finset.sum_congr rfl fun i hi => ?_
     simp only [Finset.mem_range, show Examples₂.R0.r - 1 = 8 from rfl] at hi
-    rw [dif_pos ⟨by simp [Examples₂.exampleRanks_N_formula]; omega, by simp; omega, by simp [SX]; omega⟩, hM i (i + 1) (by omega) (by omega)]
+    rw [dite_eq_left ⟨by simp [Examples₂.exampleRanks_N_formula]; omega, by simp; omega, by simp [SX]; omega⟩, hM i (i + 1) (by omega) (by omega)]
     exact ciEntry hred _ _
   ·
     simp only [List.replicate, List.length_singleton, Finset.range_one, Finset.prod_singleton, zero_mul, add_zero]
@@ -1183,7 +1183,7 @@ theorem character_second_level_group (hX : X.Ok) (hPr : Pr.Ok) (w : Pr.vGs) (hw 
       rfl
     have hU : IsUnit (redP w.1 D.det) := by rw [hdet]; exact Units.isUnit _
     unfold LocE.unitV
-    rw [dif_pos hU]
+    rw [dite_eq_left hU]
     congr 2
     exact Units.ext (by rw [IsUnit.unit_spec, hdet]; rfl)
 
@@ -1205,10 +1205,10 @@ theorem ciUnitV_congr (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a a' : E} (h : r
     LocE.unitV χ a' = LocE.unitV χ a := by
   unfold LocE.unitV
   by_cases hu : IsUnit (redP P a)
-  · rw [dif_pos hu, dif_pos (h ▸ hu)]
+  · rw [dite_eq_left hu, dite_eq_left (h ▸ hu)]
     congr 2
     exact Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, h])
-  · rw [dif_neg hu, dif_neg (fun h' => hu (h ▸ h'))]
+  · rw [dite_eq_right hu, dite_eq_right (fun h' => hu (h ▸ h'))]
 
 theorem ciLamGv_congr (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {r t j a : ℕ} (M M' : ℕ → ℕ → E)
     (hr : r - 1 < a) (hja : r + j * t ≤ a)
@@ -1334,12 +1334,12 @@ theorem ciEntB_join {k₀ n' c' n c : ℕ} (hk : k₀ = n') (hc' : c' = 1) (hc :
   subst hk hc' hc
   unfold LocE.entB joinCol atNL
   rw [ciFIdx (Or.inr rfl) (show p' < k₀ + 1 by omega), ciFIdx (Or.inl rfl) (show p < n + 0 by omega), ciScE_lt _ hp,
-    dif_pos (show k₀ < k₀ + 1 by omega)]
+    dite_eq_left (show k₀ < k₀ + 1 by omega)]
   simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearMap.funLeft_apply, LinearMap.proj_apply]
   rw [ciAtN_inX hp]
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   by_cases h : p' < k₀
-  · rw [dif_pos h, ciScE_lt _ h, sub_zero, zpow_zero, mul_one]
+  · rw [dite_eq_left h, ciScE_lt _ h, sub_zero, zpow_zero, mul_one]
     have e1 : (LinearMap.funLeft E E (Fin.castAdd 1)) (Loc.eN E (k₀ + 1) p') = (Pi.single ⟨p', h⟩ 1 : Fin k₀ → E) := by
       funext i
       show Loc.eN E (k₀ + 1) p' (Fin.castAdd 1 i) = _
@@ -1354,7 +1354,7 @@ theorem ciEntB_join {k₀ n' c' n c : ℕ} (hk : k₀ = n') (hc' : c' = 1) (hc :
     rw [e1, e2, zero_mul, add_zero]
   · have hpk : p' = k₀ := by omega
     subst hpk
-    rw [dif_neg (lt_irrefl _)]
+    rw [dite_eq_right (lt_irrefl _)]
     have e1 : (LinearMap.funLeft E E (Fin.castAdd 1)) (Loc.eN E (p' + 1) p') = (0 : Fin p' → E) := by
       funext i
       show Loc.eN E (p' + 1) p' (Fin.castAdd 1 i) = 0
@@ -1383,7 +1383,7 @@ theorem ciQE_one {X : Fields} (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneS
     ext v
     simp [Qprime]
   unfold QE
-  rw [dif_pos (by rw [h]; exact Set.finite_empty)]
+  rw [dite_eq_left (by rw [h]; exact Set.finite_empty)]
   simp [h]
 
 variable {X : Fields} {Pr : Primes X} (Ch : Chars X Pr Examples₂.R0.m)
@@ -1452,7 +1452,7 @@ theorem ciPsiSupp (_hX : X.Ok) (_hPr : Pr.Ok) (al : (ciIdx Ch (QE sel ((mu0 X.F 
     show PsiAt Ch sel (mu0 X.F X.E X.K S) (ciCst Ch (rowSG Pr sel (mu0 X.F X.E X.K S)) mq) 0 P 1 x₀ y' = 0
     rw [hcK, h0, mul_zero]
   have h1 := ciPhiG_int _ _ _ (joinCol x₀ y') hne' i.1 (Examples₂.R0.N 0) (Nat.lt_of_lt_of_le i.2 (Nat.le_add_right _ _)) (by decide)
-  rw [ciEntB_join0 _ x₀ y' i.2 (le_refl _), dif_neg (lt_irrefl _)] at h1
+  rw [ciEntB_join0 _ x₀ y' i.2 (le_refl _), dite_eq_right (lt_irrefl _)] at h1
   exact h1
 
 theorem ciPsiSuppX (_hX : X.Ok) (_hPr : Pr.Ok) (al : (ciIdx Ch (QE sel ((mu0 X.F X.E X.K S : Tup X.F X.E X.K S) : Chr X.F X.E X.K))).β 0)
@@ -1472,7 +1472,7 @@ theorem ciPsiSuppX (_hX : X.Ok) (_hPr : Pr.Ok) (al : (ciIdx Ch (QE sel ((mu0 X.F
     rw [hcK, h0, mul_zero]
   have hs8 : s.1 < Examples₂.R0.r + (0 + 1 - 1) * Examples₂.R0.t := by have := s.2; simp [Examples₂.exampleRanks_N_formula] at this ⊢; omega
   have h1 := ciPhiG_int _ _ _ (joinCol x₀ y') hne' l.1 s.1 (Nat.lt_of_lt_of_le l.2 (Nat.le_add_right _ _)) hs8
-  rw [ciEntB_join0 _ x₀ y' l.2 s.2.le, dif_pos s.2] at h1
+  rw [ciEntB_join0 _ x₀ y' l.2 s.2.le, dite_eq_left s.2] at h1
   exact (ciIntAt_q (q := qOf P.1)).mul h1
 
 open Classical in
@@ -1499,9 +1499,9 @@ theorem ciPsiInv (hX : X.Ok) (hPr : Pr.Ok) (al : (ciIdx Ch (QE sel ((mu0 X.F X.E
   have hp8 : p' ≤ Examples₂.R0.N 0 := by omega
   rw [ciEntB_join0 _ x₀ (y' + z) hp24 hp8, ciEntB_join0 _ x₀ y' hp24 hp8]
   by_cases h8 : p' < Examples₂.R0.N 0
-  · rw [dif_pos h8, dif_pos h8]
+  · rw [dite_eq_left h8, dite_eq_left h8]
     exact ⟨0, ciIntAt_zero, by rw [mul_zero, add_zero]⟩
-  · rw [dif_neg h8, dif_neg h8]
+  · rw [dite_eq_right h8, dite_eq_right h8]
     have h1 := hz ⟨p, hp24⟩
     rw [if_pos hG, pow_zero, inv_one, one_mul] at h1
     exact ⟨z ⟨p, hp24⟩, h1, by rw [Pi.add_apply, mul_add]⟩
@@ -1530,12 +1530,12 @@ theorem ciPsiInvX (hX : X.Ok) (hPr : Pr.Ok) (al : (ciIdx Ch (QE sel ((mu0 X.F X.
   have hp8 : p' ≤ Examples₂.R0.N 0 := by omega
   rw [ciEntB_join0 _ (x₀ + z) y' hp24 hp8, ciEntB_join0 _ x₀ y' hp24 hp8]
   by_cases h8 : p' < Examples₂.R0.N 0
-  · rw [dif_pos h8, dif_pos h8]
+  · rw [dite_eq_left h8, dite_eq_left h8]
     have h1 := hz ⟨p', h8⟩ ⟨p, hp24⟩
     rw [show (ciCst Ch (rowSG Pr sel (mu0 X.F X.E X.K S)) mq).B = 1 from rfl, pow_one] at h1
     refine ⟨_, h1, ?_⟩
     rw [LinearMap.add_apply, Pi.add_apply, ← mul_assoc, mul_inv_cancel₀ hq0, one_mul]
-  · rw [dif_neg h8, dif_neg h8]
+  · rw [dite_eq_right h8, dite_eq_right h8]
     exact ⟨0, ciIntAt_zero, by rw [mul_zero, add_zero]⟩
 
 end PsiInst
@@ -1565,11 +1565,11 @@ theorem ciMuq_tie {m : ℕ} (G : ChGlob X m) (ξ : Chr X.F X.E X.K) {SB : Finset
   have hq0 : (qOf P.1 : X.E) ≠ 0 := by rw [← hqu]; exact qu.ne_zero
   have e : qu = ciQU P.1 := by
     unfold ciQU
-    rw [dif_pos hq0]
+    rw [dite_eq_left hq0]
     exact Units.ext (by rw [Units.val_mk0, hqu])
   have hd : ∃ (hi : i < m) (y : X.K), G.σ₀ y = ((((G.mu0 ⟨i, hi⟩).locK P.1 (ciQU P.1)) : ℂˣ) : ℂ)⁻¹ := ⟨h, hval ⟨i, h⟩ P.1 hP⟩
   unfold ciMuq ciMuqG
-  rw [Nat.add_sub_cancel, dif_pos hd, map_mul, hd.choose_spec.choose_spec, e]
+  rw [Nat.add_sub_cancel, dite_eq_left hd, map_mul, hd.choose_spec.choose_spec, e]
 
 variable {R : Ranks} (Ch : Chars X Pr R.m)
 
@@ -1587,7 +1587,7 @@ theorem ciCst_weil (hX : X.Ok) (hPr : Pr.Ok) {SB : Finset (HeightOneSpectrum (�
   rw [if_pos ha]
   have hpsi : psi0P Ch P.1 = Ch.psi0 ⟨P.1, hSB P.1 P.2⟩ := by
     unfold psi0P
-    rw [dif_pos (hSB P.1 P.2)]
+    rw [dite_eq_left (hSB P.1 P.2)]
   rw [hpsi]
   apply hW
   have e1 : xi0 * ((qOf P.1 : X.E) * a) - (b : X.E) = (qOf P.1 : X.E) * (xi0 * a - (b : X.E) / (qOf P.1 : X.E)) := by
@@ -1683,7 +1683,7 @@ theorem ChIdx.Ok.chars_weilTied (hX : X.Ok) (hPr : Pr.Ok) {sel : HeightOneSpectr
   have e : psi0P Ch P.1 (redP P.1 (algebraMap (𝓞 X.E) X.E y)) = Ch.psi0 w (Ideal.Quotient.mk w.1.asIdeal y) := by
     show psi0P Ch w.1 (redP w.1 (algebraMap (𝓞 X.E) X.E y)) = _
     unfold psi0P
-    rw [dif_pos w.2, reduction_coe]
+    rw [dite_eq_left w.2, reduction_coe]
   rw [e] at h2
   exact h2
 

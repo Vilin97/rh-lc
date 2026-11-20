@@ -157,7 +157,7 @@ theorem tailOf_eq (u : D.what₂.Word) (j : SmT (pk W).MX →ₗ[ℂ] (FrP D →
     (hψ : ∀ c, (W.R.T.tw.pt.val u μ h).eW ((D.PTw u μ).lowerMap ((D.PTw u μ).evz ψ)) c ∈ LinearMap.range j) :
     tailOf W u j x μ ψ f = (D.PTw u μ).Ptil ψ ((D.eMtTw u μ).symm G) := by
   have hx : ∃ G, Reads W u j x μ G f := ⟨G, hG⟩
-  rw [tailOf, dif_pos hx, dif_neg h]
+  rw [tailOf, dif_pos hx, dite_eq_right h]
   exact ReadsG.period_eq _ _ j x (hx.choose_spec.2 h) (hG.2 h) _ hψ
 
 theorem not_topReadAt_zero (u : D.what₂.Word) (x : GA D D.sp.X') : ¬ TopReadAt W u 0 x := fun h => not_isJ_zero _ h.1

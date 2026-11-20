@@ -23,7 +23,7 @@ theorem trOn_map (j : X →ₗ[ℂ] V) (hj : Function.Injective j) (M : Submodul
 theorem trOn_of_not_finite (M : Submodule ℂ V) (L : V →ₗ[ℂ] V) (h : ¬ Module.Finite ℂ M) : trOn M L = 0 := by
   unfold trOn
   split_ifs with hL
-  · rw [LinearMap.trace, dif_neg]
+  · rw [LinearMap.trace, dite_eq_right]
     · rfl
     · rintro ⟨s, ⟨b⟩⟩
       exact h (Module.Finite.of_basis b)
@@ -148,7 +148,7 @@ theorem exists_factor (σ : Representation ℂ H W) [σ.IsIrreducible] (τ : Rep
   let sU : ι → (fixed σ K →ₗ[ℂ] fixed τ K) := fun i => (s i).toLinearMap.restrict fun v hv => map_fixed _ K hv
   let pU : ι → (fixed τ K →ₗ[ℂ] fixed σ K) := fun i => (p i).toLinearMap.restrict fun v hv => map_fixed _ K hv
   unfold trOn
-  rw [dif_pos hY, dif_pos ha]
+  rw [dite_eq_left hY, dite_eq_left ha]
   have h1 : (A ∘ₗ B.toLinearMap).restrict hY = ∑ i, ∑ j, b i j • (sU j ∘ₗ (a.restrict ha ∘ₗ pU i)) := by
     refine LinearMap.ext fun y => Subtype.ext ?_
     change A (B.toLinearMap y.1) = _

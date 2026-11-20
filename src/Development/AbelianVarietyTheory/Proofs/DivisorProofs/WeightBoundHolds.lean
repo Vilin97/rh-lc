@@ -29,7 +29,7 @@ theorem anchor_real (τ : Psi p.T.Q.H) (t : D.what₂.Tau) (ht : τ.1 = DV.tauEm
     have := D.R.m_add_three_le_k
     rw [dat_p]; omega
   unfold anchor
-  rw [dif_pos h, laOf_real p i τ t ht]
+  rw [dite_eq_left h, laOf_real p i τ t ht]
 
 theorem uW_real (τ : Psi p.T.Q.H) (t : D.what₂.Tau) (ht : τ.1 = DV.tauEmb D t) (n : Fin ((dat p i).p + (dat p i).q)) :
     (uW p i τ n : ℝ) = entR D i t n - entR D i t (D.R.k - 1 - 1) := by

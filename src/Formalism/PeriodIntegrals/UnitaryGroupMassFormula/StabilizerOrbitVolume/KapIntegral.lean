@@ -90,10 +90,10 @@ lemma kap_integral [DecidableEq ι] (hfin : ∀ i, m i (L i) ≠ ⊤) (hT : Tail
     congr 1
     · rw [Finset.filter_mem_eq_inter, Finset.inter_eq_right.mpr hST, ← Finset.prod_coe_sort S]
       refine Finset.prod_congr rfl (fun i _ => ?_)
-      rw [eS_symm_apply, dif_pos i.2]
+      rw [eS_symm_apply, dite_eq_left i.2]
     · rw [← Finset.prod_subtype_eq_prod_filter]
       refine Finset.prod_congr rfl (fun j _ => ?_)
-      rw [eS_symm_apply, dif_neg j.2]
+      rw [eS_symm_apply, dite_eq_right j.2]
   have hR : Integrable (fun y : (∀ i : {i // i ∈ S}, W i) => ∏ i : {i // i ∈ S}, g i.1 (y i))
       (Rm m L S) := by
     unfold Rm; exact Integrable.fintype_prod_dep (fun i => (hg i.1).restrict)

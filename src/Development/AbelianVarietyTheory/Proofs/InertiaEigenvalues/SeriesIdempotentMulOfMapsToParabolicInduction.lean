@@ -29,7 +29,7 @@ theorem blk_eq_par (x : Gn g a) (y : Gn g b) : blk a b (a + b) x y = par finSumF
   show toG _ = _
   rw [hM]
   unfold toG
-  rw [dif_pos (Units.isUnit _)]
+  rw [dite_eq_left (Units.isUnit _)]
   exact Units.ext (IsUnit.unit_spec _)
 
 theorem exists_eq_par (u : Gn g (a + b)) (h0 : InPar a (u : Mt g (a + b))) (h1 : tl a (u : Mt g (a + b)) = 1)

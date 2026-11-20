@@ -133,14 +133,14 @@ private theorem card_solutions_mul_involution_eq_pow {H K : Type} [Finite H] [Fi
             else c h / (g ⟨ι h, hlt h hh⟩).1, fun h => by
           by_cases hh : h < ι h
           · dsimp only
-            rw [dif_pos hh, dif_neg (hnlt h hh)]
+            rw [dite_eq_left hh, dif_neg (hnlt h hh)]
             have hg := (g ⟨h, hh⟩).2
             have hs : (⟨ι (ι h), hlt (ι h) (hnlt h hh)⟩ : {h : H // h < ι h}) = ⟨h, hh⟩ :=
               Subtype.ext (hι h)
             rw [hs, hcι]
             field_simp
           · dsimp only
-            rw [dif_neg hh, dif_pos (hlt h hh)]
+            rw [dif_neg hh, dite_eq_left (hlt h hh)]
             have hg := (g ⟨ι h, hlt h hh⟩).2
             field_simp⟩
         left_inv := fun f => by

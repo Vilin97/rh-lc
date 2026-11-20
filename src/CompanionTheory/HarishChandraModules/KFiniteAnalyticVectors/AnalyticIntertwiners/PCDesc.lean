@@ -164,7 +164,7 @@ theorem sigC_eq {j : ℕ} {z : T.G} (hz : T.cov z = 1 ∧ T.sq z = -1) (hP : πU
     (x : T.G) : sigC πU j (rx (covC T x)) = ((((T.sq x : ℂˣ) : ℂ))⁻¹ ^ j) • πU.π x := by
   have hex : ∃ y : T.G, rx (covC T y) = rx (covC T x) := ⟨x, rfl⟩
   have hl : rx (covC T (liftC (T := T) (rx (covC T x)))) = rx (covC T x) := by
-    unfold liftC; rw [dif_pos hex]; exact hex.choose_spec
+    unfold liftC; rw [dite_eq_left hex]; exact hex.choose_spec
   have hc : T.cov (liftC (T := T) (rx (covC T x))) = T.cov x := Units.ext (rx_injC hl)
   unfold sigC
   rw [if_pos hex]

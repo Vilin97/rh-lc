@@ -136,7 +136,7 @@ theorem dEll_eq_ell (z' : Fin (2 * r + k + 1) → ℂ) (X : B.Mat k r) (hr : 1 �
   unfold C3.dEll ell
   rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (⟨r - 1, by omega⟩ : Fin r)),
     ← Finset.sum_erase_add _ _ (Finset.mem_univ (⟨r - 1, by omega⟩ : Fin r))]
-  rw [dif_neg (by simp; omega), dif_neg (by simp; omega), add_zero]
+  rw [dite_eq_right (by simp; omega), dite_eq_right (by simp; omega), add_zero]
   congr 1
   apply Finset.sum_congr rfl
   intro a ha
@@ -145,7 +145,7 @@ theorem dEll_eq_ell (z' : Fin (2 * r + k + 1) → ℂ) (X : B.Mat k r) (hr : 1 �
     have := a.isLt
     have : a.val ≠ r - 1 := fun e => ha' (Fin.ext e)
     omega
-  rw [dif_pos this, dif_pos this]
+  rw [dite_eq_left this, dite_eq_left this]
 
 open Formalism.FourierDecayAlt.Q.QRR in
 theorem pat_inNp {l : Fin r} {X : B.Mat k r} (hX : Pat k r l X) : ∀ a b, ¬ C3.InNp k r a b → X a b = 0 := by

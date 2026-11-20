@@ -148,7 +148,7 @@ private theorem twTr_eq (ρ : Representation ℂ G V) (K I : Subgroup G) (x : G)
     rw [levOp_eq ρ K I x hx f hf ⟨v, hv⟩]
     exact Submodule.smul_mem _ _ (hk ρ I x ⟨v, hv⟩).2
   unfold twTr
-  rw [dif_pos hst, trace_move (fixed_eq ρ I) _ hst (((I.relIndex K : ℕ) : ℂ)⁻¹ • hk ρ I x)
+  rw [dite_eq_left hst, trace_move (fixed_eq ρ I) _ hst (((I.relIndex K : ℕ) : ℂ)⁻¹ • hk ρ I x)
     fun v => levOp_eq ρ K I x hx f hf v, map_smul, smul_eq_mul]
 
 end Abs

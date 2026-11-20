@@ -56,7 +56,7 @@ theorem modu_finite (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum 
   rw [e1, e2, Measure.real, ← distribHaarChar_mul, ENNReal.toReal_mul, ENNReal.coe_toReal, card_residue,
     Fintype.card_unit, pow_one] at h
   have h2 := mul_right_cancel₀ (ENNReal.toReal_ne_zero.2 ⟨h0, h1⟩) h
-  rw [modu, dif_pos hu, h2, FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv]
+  rw [modu, dite_eq_left hu, h2, FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv]
   push_cast
   congr 1
   conv_lhs => rw [← WithZero.coe_unzero hv]
@@ -101,7 +101,7 @@ theorem modu_infinite (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (x 
           (continuous_apply w) }
   have h := GlobalTheory.JR.ModuleNorm.distribHaarChar_transport e hx.unit
     (Units.map (r : Ainf F →* (InfinitePlace F → ℝ)) hx.unit) (fun y => map_mul r x y)
-  rw [modu, dif_pos hx, ← h, distribHaarChar_pi_real]
+  rw [modu, dite_eq_left hx, ← h, distribHaarChar_pi_real]
   refine Finset.prod_congr rfl fun w _ => ?_
   rw [← Real.norm_eq_abs]
   exact (InfinitePlace.Completion.isometry_extensionEmbeddingOfIsReal

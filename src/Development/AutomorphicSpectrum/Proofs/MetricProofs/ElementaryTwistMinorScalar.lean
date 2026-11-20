@@ -18,7 +18,7 @@ theorem minorIJ_image_of_tri {R : Type} [CommRing R] (M : Matrix (Fin N) (Fin N)
     minorIJ M (S.image σ) S = ∏ c ∈ S, M (σ c) c := by
   have e : (S.image σ).card = S.card := Finset.card_image_of_injOn hσ.injOn
   unfold minorIJ
-  rw [dif_pos e]
+  rw [dite_eq_left e]
   have hf : (fun i => σ (S.orderEmbOfFin rfl i)) = ⇑((S.image σ).orderEmbOfFin e) := by
     apply Finset.orderEmbOfFin_unique e
     · intro i

@@ -60,7 +60,7 @@ theorem factor_of_fix (i : ℕ) {j j' : ℕ} {Λ : LevFam X.E X.K (R.N j) Pr.vGs
       have hr : redP P.1 (1 : X.E) = 1 := reduction_coe P.1 1
       have hu : IsUnit (redP P.1 (1 : X.E)) := hr ▸ isUnit_one
       unfold rhoS LocE.unitV
-      rw [dif_pos hu, show hu.unit = 1 from Units.ext hr, map_one, Units.val_one]
+      rw [dite_eq_left hu, show hu.unit = 1 from Units.ext hr, map_one, Units.val_one]
     rw [h3, one_mul, Pi.inv_apply, rhoT_inv, ← GlobalTheory.MatLaw.muAt_det (cst := cst), h2]
   · rw [ea', ea]
     change _ * (Λ.chr 1 * Θ.chr 1)⁻¹ = _

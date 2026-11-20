@@ -26,12 +26,12 @@ theorem T'_eq (E : Spc) (k : ℕ) (s : ℤ) (φ : ((chains S).obj E).X (-(k : �
     obtain rfl : k' = k := by omega
     simp [HomologicalComplex.XIsoOfEq_rfl]
   unfold T'
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   exact key _ _
 
 theorem T'_pos (E : Spc) (p s : ℤ) (hp : 0 < p) : T' T0 E p s = 0 := by
   unfold T'
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem T'_comp_d (E : Spc) (p s t : ℤ) (φ : ((chains S).obj E).X p ⟶ I.X s)
     (hd : ∀ (P : PSh) (s t : ℤ) (φ : (free S).obj P ⟶ I.X s), T0 P t (φ ≫ I.d s t) = T0 P s φ ≫ J.d s t) :

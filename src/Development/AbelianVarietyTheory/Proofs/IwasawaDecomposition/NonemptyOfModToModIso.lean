@@ -53,7 +53,7 @@ theorem nonempty_ofMod_toMod_iso : ∀ (E : Type) [Field E] [NumberField E] [IsC
   obtain ⟨a', m', ψ, hψ⟩ := exists_epi_twist_free Z.I.subschemeι (kernel φ)
   have h : ∃ S : Z.Sh, Nonempty (S.toMod ≅ F) :=
     ⟨⟨a, m, a', m', ψ ≫ kernel.ι φ⟩, nonempty_cokernel_iso φ ψ⟩
-  rw [Mdl.ofMod, dif_pos h]
+  rw [Mdl.ofMod, dite_eq_left h]
   exact h.choose_spec
 
 end GlobalTheory.ModelPresentation

@@ -38,7 +38,7 @@ omit [NumberField E] in
 theorem extGL_val (f : GL (Fin a) (Cinf E) → ℂ) (y : GL (Fin a) (Cinf E)) : extGL f (toL y.val) = f y := by
   have h : IsUnit (Matrix.of (toL y.val)) := y.isUnit
   have e : h.unit = y := Units.ext h.unit_spec
-  rw [extGL, dif_pos h, e]
+  rw [extGL, dite_eq_left h, e]
 
 theorem extGL_eventuallyEq {f : GL (Fin a) (Cinf E) → ℂ} {F : Lie E a → ℂ} (h : ∀ y, f y = F (toL y.val))
     {x : Lie E a} (hx : x ∈ invSet E a) : extGL f =ᶠ[𝓝 x] F :=

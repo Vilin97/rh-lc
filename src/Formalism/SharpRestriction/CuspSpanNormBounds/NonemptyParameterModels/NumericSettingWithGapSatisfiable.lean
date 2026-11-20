@@ -178,11 +178,11 @@ theorem obj_cayleyU_rows (D : Formalism.BasicNotions.D7) : ∃ P, IsCayleyU D.R.
 
 lemma obj_lamSH_lo (R : Formalism.BasicNotions.Ranks) (P : Formalism.BasicNotions.HCParam R) (i : Fin (2 * R.rS + R.k + 1)) (h : i.val < R.k - 1) :
     lamSH R P i = (P.v ⟨i.val, h⟩ : ℝ) := by
-  unfold lamSH lamS; simp only [Fin.val_cast]; rw [dif_pos h]
+  unfold lamSH lamS; simp only [Fin.val_cast]; rw [dite_eq_left h]
 
 lemma obj_lamSH_hi (R : Formalism.BasicNotions.Ranks) (P : Formalism.BasicNotions.HCParam R) (i : Fin (2 * R.rS + R.k + 1)) (h : ¬ i.val < R.k - 1)
     (h' : i.val - (R.k - 1) < R.m) : lamSH R P i = -(P.b ⟨i.val - (R.k - 1), h'⟩ : ℝ) := by
-  unfold lamSH lamS; simp only [Fin.val_cast]; rw [dif_neg h, dif_pos h']
+  unfold lamSH lamS; simp only [Fin.val_cast]; rw [dite_eq_right h, dite_eq_left h']
 
 lemma obj_m_eq (R : Formalism.BasicNotions.Ranks) : R.m = 2 * R.rS + 2 := by
   obtain ⟨t, ht⟩ := R.m_even

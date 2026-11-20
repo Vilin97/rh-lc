@@ -120,12 +120,12 @@ theorem exists_select (D : D7) : ∃ a : Formalism.L2.Theta.AE D, a * a = a ∧ 
       · rw [mul_comm]; exact h.choose_spec.pl_mul
       · exact zero_mul _)
   refine ⟨a, h1, h2, fun v ε h => ?_, fun e he => ?_⟩
-  · rw [eq_single h.1, h3, dif_neg]
+  · rw [eq_single h.1, h3, dite_eq_right]
     rintro ⟨e, he⟩
     exact h.2 ⟨e, (isSplitIdem_iff e).2 ⟨v, he⟩, by rw [eq_single h.1, he.2.2]⟩
   · obtain ⟨v, he⟩ := (isSplitIdem_iff e).1 he
     have h : ∃ e, SplitAt D v e := ⟨e, he⟩
-    rw [he.2.2, h3, dif_pos h]
+    rw [he.2.2, h3, dite_eq_left h]
     exact (h.choose_spec.unique he).imp Eq.symm Eq.symm
 
 theorem char_norm {D : D7} {χ : (Formalism.L2.Theta.AE D)ˣ →* Circle} {n : ℕ} (h : ResEta D χ n)

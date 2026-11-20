@@ -310,11 +310,11 @@ def sumL (g : Sp E n →ₗ[E] Sp E n) (t : E) : Sp E N →ₗ[E] Sp E N :=
 
 theorem prH_sumL (g : Sp E n →ₗ[E] Sp E n) (t : E) (x : Sp E N) : prH E hN (sumL hN g t x) = g (prH E hN x) := by
   funext i
-  rw [prH_apply, sumL, LinearMap.pi_apply, dif_pos (show (Br.iC hN i).1 < n from i.2)]
+  rw [prH_apply, sumL, LinearMap.pi_apply, dite_eq_left (show (Br.iC hN i).1 < n from i.2)]
   rfl
 
 theorem sumL_last (g : Sp E n →ₗ[E] Sp E n) (t : E) (x : Sp E N) : sumL hN g t x (Br.iL hN) = t * x (Br.iL hN) := by
-  rw [sumL, LinearMap.pi_apply, dif_neg (show ¬ (Br.iL hN).1 < n from lt_irrefl n)]
+  rw [sumL, LinearMap.pi_apply, dite_eq_right (show ¬ (Br.iL hN).1 < n from lt_irrefl n)]
   rfl
 
 def sumE (g : Sp E n ≃ₗ[E] Sp E n) (t : Eˣ) : Sp E N ≃ₗ[E] Sp E N :=

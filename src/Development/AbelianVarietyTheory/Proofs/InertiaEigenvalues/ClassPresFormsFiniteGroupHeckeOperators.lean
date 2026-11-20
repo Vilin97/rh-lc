@@ -59,7 +59,7 @@ def heckeRaw (P : ClassPres ι S σ ρ J χ) (hχ : ∀ k, ∃ b : K, σ b = (χ
   hDC i hi := (hok i hi).2.2
   op_eq i hi f := by
     unfold opRaw
-    rw [dif_pos hi, ext_trE]
+    rw [dite_eq_left hi, ext_trE]
     rfl
 
 end Raw

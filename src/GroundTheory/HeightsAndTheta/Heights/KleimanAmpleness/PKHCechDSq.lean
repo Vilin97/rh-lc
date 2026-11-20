@@ -177,7 +177,7 @@ theorem cechD_apply (n : ℕ) (φ : KH.CechC S ι M n) (I : KH.Cell K ι (n + 1)
     rw [dif_pos h, if_pos h']
     exact congrArg (KH.faceSign I.1 k i • ·) (key _ _ e h)
   · have h' : ¬((∀ l, (rem I.1 ⟨k, i⟩ l).Nonempty) ∧ ∑ l, ((rem I.1 ⟨k, i⟩ l).card - 1) = n) := e ▸ h
-    rw [dif_neg h, if_neg h']
+    rw [dite_eq_right h, if_neg h']
     rfl
 
 theorem val_cechD (n : ℕ) (φ : KH.CechC S ι M n) (X : ∀ k, Finset (ι k))

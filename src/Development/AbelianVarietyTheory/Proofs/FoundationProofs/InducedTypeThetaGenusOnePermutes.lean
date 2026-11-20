@@ -59,7 +59,7 @@ theorem permutes (D : D7) : EmbeddingPermutesTypes D := fun M ρ hK hM => by
     rwa [embT, Equiv.apply_symm_apply, emb_apply, Subgroup.coe_one, sigmaOf_one] at this
   let ψ : D.host.E →+* ℂ := (ρ : M →+* ℂ).comp (D.host.φ₀.codRestrict M h0)
   have hψ : ∀ x, cj M ρ (D.host.φ₀ x) = ψ x := fun x => by
-    rw [cj, TaylorLogMetric.liftM, dif_pos (h0 x)]
+    rw [cj, TaylorLogMetric.liftM, dite_eq_left (h0 x)]
     rfl
   obtain ⟨g, hg⟩ := (factEmb D.R D.host).1.2 ψ
   have hgP : g ∈ D.R.Psi := by

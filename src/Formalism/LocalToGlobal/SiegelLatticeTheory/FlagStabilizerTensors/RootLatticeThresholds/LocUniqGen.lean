@@ -81,7 +81,7 @@ theorem WB_cM {V : Type} [Zero V] (hF : IsFrameJ ε e f wf z0) (hCP : CayPair ε
           rw [hQ, Matrix.conjTranspose_one, Matrix.one_mul, Matrix.mul_one, hx]
       _ = Hpk k r := hCP.cay
   unfold WB
-  rw [dif_pos hmem, gam_cM]
+  rw [dite_eq_left hmem, gam_cM]
 
 end Gen
 
@@ -121,7 +121,7 @@ theorem WB_continuousOn {V : Type} [TopologicalSpace V] [Zero V] (hF : IsFrameJ 
   have hr : ∀ p : UH (Hpk k r), WB hF hCP W p.1 = W (gam hF hCP p.1 p.2) := by
     intro p
     unfold WB
-    rw [dif_pos p.2]
+    rw [dite_eq_left p.2]
   have hc : Continuous (fun p : UH (Hpk k r) => WB hF hCP W p.1) := by
     have hf : (fun p : UH (Hpk k r) => WB hF hCP W p.1) = fun p => W (gam hF hCP p.1 p.2) := funext hr
     rw [hf]

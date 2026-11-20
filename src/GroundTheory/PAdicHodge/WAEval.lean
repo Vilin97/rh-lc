@@ -842,7 +842,7 @@ def iotaTildeFun (x : (𝓣).RobbaTilde) : 𝔹 :=
 theorem iotaTildeFun_ofRad (hρ : (p : ℝ)⁻¹ < ρ) (y : (𝓣).RobbaExt ρ) :
     iotaTildeFun p ((𝓣).ofRad ρ y) = iota p hρ y := by
   have h : InDom ((𝓣).ofRad ρ y) := ⟨ρ, hρ, y, rfl⟩
-  rw [iotaTildeFun, dif_pos h]
+  rw [iotaTildeFun, dite_eq_left h]
   exact iota_eq_of_ofRad_eq _ _ h.choose_spec.2.choose_spec
 
 theorem iotaTildeFun_one : iotaTildeFun p 1 = 1 := by

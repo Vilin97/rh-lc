@@ -53,7 +53,7 @@ theorem phiU_of (ρ : J' →* ℂˣ) (x : Matrix (Fin a ⊕ Fin t) (Fin a) F) (k
   have h : (∃ k : J', ((k : GL (Fin a) F) : Matrix (Fin a) (Fin a) F) = toRows₁ x) ∧
       toRows₂ x ∈ IIset O ϖ := ⟨⟨k, hk⟩, hx⟩
   unfold phiU
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hc := Classical.choose_spec h.1
   have hck : Classical.choose h.1 = k := Subtype.ext (Units.ext (hc.trans hk.symm))
   rw [hck]

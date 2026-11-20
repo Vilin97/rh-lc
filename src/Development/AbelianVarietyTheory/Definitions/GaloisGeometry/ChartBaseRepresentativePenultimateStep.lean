@@ -43,7 +43,7 @@ theorem muOf_det (j : ℕ) (y : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm
     fin_cases j
     exact hc
   unfold muOf
-  rw [dif_pos h, e]
+  rw [dite_eq_left h, e]
 
 section Gen
 
@@ -132,7 +132,7 @@ end Gen
 
 theorem chartBaseRepresentative_penultimate_step (β : (St (t.m2 + 1) (cpl_lt t μ).le).Ch) (P : SB t μ) : y0At A (t.m2 + 1) (cpl_lt t μ).le β P = A.y0 β P := by
   unfold y0At
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 theorem cosetOf_rep (H : AdTie A dtU a) (c : (D.chTw u μ).cls (t.m2 + 1)) :
     cosetOf A (t.m2 + 1) (cpl_lt t μ).le ((St _ (cpl_lt t μ).le).chOf c) (A.pt _ (cpl_lt t μ).le c) = A.yb c := by
@@ -210,7 +210,7 @@ theorem adLawAt_of_clauses (Hp : AdPins A dtU) (H : AdTie A dtU a) (hE : PtEx A 
   away i hi β β' x x' x₁ x₁' hx := by
     funext z
     unfold xiAd
-    rw [dif_pos ⟨hE _ _ β x₁, hE _ _ β' x₁'⟩, dif_pos ⟨hE _ _ β x, hE _ _ β' x'⟩]
+    rw [dite_eq_left ⟨hE _ _ β x₁, hE _ _ β' x₁'⟩, dite_eq_left ⟨hE _ _ β x, hE _ _ β' x'⟩]
     rw [hA i hi β β' x x' x₁ x₁' _ _ _ _ (hE _ _ β x).choose_spec (hE _ _ β' x').choose_spec
       (hE _ _ β x₁).choose_spec (hE _ _ β' x₁').choose_spec hx]
   loc i hi β β' x x' := (hS i hi β β' x x').1

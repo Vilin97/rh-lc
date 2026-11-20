@@ -77,11 +77,11 @@ theorem parOf_sym {O : Type} [CommRing O] {β : O →+* c.F} {Z : ReciprocityThe
   unfold parOf
   by_cases h : w.support.Nonempty
   · have h' : (w.mapDomain T.sym).support.Nonempty := hs ▸ h.image _
-    rw [dif_pos h, dif_pos h', hw _ h.choose_spec]
+    rw [dite_eq_left h, dite_eq_left h', hw _ h.choose_spec]
     obtain ⟨a, ha, e⟩ := Finset.mem_image.1 (hs.le h'.choose_spec)
     rw [← e]
     exact hw a ha
-  · rw [dif_neg h, dif_neg fun h' => h (Finset.image_nonempty.1 (hs ▸ h'))]
+  · rw [dite_eq_right h, dite_eq_right fun h' => h (Finset.image_nonempty.1 (hs ▸ h'))]
 
 end Free
 

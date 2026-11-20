@@ -65,7 +65,7 @@ theorem DivPushForwardLocal.proof (h1 : DivCycleMinimal.Statement.{u})
     have hdc : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ) =
         ((multAt (contractPrime j P' ⊔ Ideal.span {a}) W).toNat : ℤ) := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hmin, hW.relevant⟩]
+      rw [dite_eq_left ⟨hmin, hW.relevant⟩]
     rw [hMN, hdc]
     rw [hN, hrk, ← hcone] at key
     obtain ⟨m, hm⟩ := ENat.ne_top_iff_exists.mp hfinm
@@ -76,7 +76,7 @@ theorem DivPushForwardLocal.proof (h1 : DivCycleMinimal.Statement.{u})
     rfl
   · have hR : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ) = 0 := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h, -⟩
       exact hPW h.1.2
     rw [hR, mul_zero]

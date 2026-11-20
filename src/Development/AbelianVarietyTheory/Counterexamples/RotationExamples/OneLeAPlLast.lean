@@ -21,7 +21,7 @@ theorem lab_fixed (ρ : D.what₂.Tau) : lab D.what₂.embLL ρ = ρ := by
   have h : ∃ τ, labE D.what₂.embLL τ = tauE D ρ ∨ labE D.what₂.embLL τ = (starRingEnd ℂ).comp (tauE D ρ) :=
     ⟨ρ, Or.inl (labE_fixed ρ)⟩
   unfold lab
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hs := h.choose_spec
   generalize h.choose = τ at hs
   rw [labE_fixed] at hs
@@ -43,7 +43,7 @@ theorem one_le_aPl_last (i : Fin D.R.m) (τ : D.what₂.Tau) :
   have hk := D.R.m_add_three_le_k
   have hi := i.2
   unfold aPl Formalism.L2.NTheta.lamAt
-  rw [if_pos (by omega), dif_neg (by omega), dif_pos (by omega)]
+  rw [if_pos (by omega), dite_eq_right (by omega), dite_eq_left (by omega)]
   have e : (⟨D.R.k + i - 1 - (D.R.k - 1), by omega⟩ : Fin D.R.m) = i := Fin.ext (by simp; omega)
   rw [e]
   have g := (D.hc τ).gap_be i

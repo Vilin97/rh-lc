@@ -383,7 +383,7 @@ theorem exists_locId_host {R : Ranks} {H : Host R} {p : ℕ} [hp : Fact p.Prime]
   let i : H.E →+* Qn p n := i₀.comp (γ : H.E →+* H.E)
   have hi : Good (plc i) i := good_aut hi₀ γ fun _ => rfl
   have hκ : ∀ x, κ (i x) = lamV lam (H.φ₀ x) := fun x => by
-    rw [lamV, dif_pos (hmem x)]
+    rw [lamV, dite_eq_left (hmem x)]
     exact (hγ x).symm
   let rp : Fin (nOrb (zPsi R.toFrame h)) → R.GG := fun v => (orbRep (zPsi R.toFrame h) v : R.Psi)
   let pl : Fin (nOrb (zPsi R.toFrame h)) ≃ {v : HeightOneSpectrum (𝓞 H.F) // ((p : ℕ) : 𝓞 H.F) ∈ v.asIdeal} :=

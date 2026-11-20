@@ -53,12 +53,12 @@ theorem valAt'_appLE (pt : Sp ℂ ⟶ Y) (h : Y ⟶ X') (U : X'.Opens) (W : Y.Op
   unfold valAt'
   by_cases hp : ⊤ ≤ pt ⁻¹ᵁ W
   · have hp' : ⊤ ≤ (pt ≫ h) ⁻¹ᵁ U := fun z hz => le (hp hz)
-    rw [dif_pos hp, dif_pos hp']
+    rw [dite_eq_left hp, dite_eq_left hp']
     unfold valAt
     congr 1
     rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
   · have hp' : ¬ ⊤ ≤ (pt ≫ h) ⁻¹ᵁ U := fun k => hp fun z hz => ge (k hz)
-    rw [dif_neg hp, dif_neg hp']
+    rw [dite_eq_right hp, dite_eq_right hp']
 
 theorem exists_sec_same_values : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (y : Sp ℂ ⟶ Xo.X) (s : (Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom y)).Sec), ∃ s' : LB.Sec (PPx y), ∀ j (pt : Sp ℂ ⟶ Gx y) (x : Sp ℂ ⟶ pullback Xo.univ.t.G.hom y), x ≫ pullback.fst _ _ = pt ≫ gxFst y → x ≫ pullback.snd _ _ = 𝟙 _ → pt ≫ gxSnd y = 𝟙 _ → valAt' pt ((PPx y).U (fun _ => j)) (s'.f (fun _ => j)) = valAt' x ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom y)).U (fun _ => j)) (s.f (fun _ => j)) := by
   intro E _ _ _ H Dw l Xo y s

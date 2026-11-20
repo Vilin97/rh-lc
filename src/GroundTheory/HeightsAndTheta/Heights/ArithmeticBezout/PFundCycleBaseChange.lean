@@ -38,7 +38,7 @@ theorem localMult_map_of_flat {A B : Type*} [CommRing A] [CommRing B] [Algebra A
   rw [Module.length_eq_one (R := Localization.AtPrime W')
     (M := Localization.AtPrime W' ⧸ IsLocalRing.maximalIdeal (Localization.AtPrime W')), mul_one] at key
   unfold localMult
-  rw [dif_pos ‹W'.IsPrime›, dif_pos ‹W.IsPrime›, key]
+  rw [dite_eq_left ‹W'.IsPrime›, dite_eq_left ‹W.IsPrime›, key]
 
 section MinimalPrimes
 

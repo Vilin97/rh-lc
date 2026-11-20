@@ -39,4 +39,4 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.trLevel :
       Submodule.coe_inclusion]
     rw [GlobalTheory.TwTrLevel.avgOp_fix ρ K₁ K₂ _ w.2]
   unfold twTr
-  rw [dif_pos c₂, dif_pos c₁, e₂, e₁, LinearMap.trace_comp_comm']
+  rw [dite_eq_left c₂, dite_eq_left c₁, e₂, e₁, LinearMap.trace_comp_comm']

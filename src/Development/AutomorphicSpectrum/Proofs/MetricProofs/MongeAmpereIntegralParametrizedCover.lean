@@ -141,7 +141,7 @@ theorem integrableOn_hasSum_paramCover : ∀ (e : ℕ) (X : Type) [TopologicalSp
   have hne : Nonempty (ChartPartition A) := existsPartition A
   have hm : mInt A P g = ∑ j, ∫ y in (A.chart j).target,
       hne.some.χ j ((A.chart j).symm y) * g ((A.chart j).symm y) * locDens A P j y := by
-    rw [mInt, dif_pos hne, integralWith]
+    rw [mInt, dite_eq_left hne, integralWith]
   have hj := fun j => chartTerm_hasSum A V B Φ P g hne.some hc hC2 hg j
   have hpt : ∀ n z, g (Φ n z) * paramDens P (Φ n) z =
       ∑ j, hne.some.χ j (Φ n z) * g (Φ n z) * paramDens P (Φ n) z := by

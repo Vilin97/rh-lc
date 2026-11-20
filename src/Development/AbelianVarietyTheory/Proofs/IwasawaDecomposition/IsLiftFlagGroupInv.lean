@@ -58,7 +58,7 @@ theorem integral_act (hμ : μ.IsHaarMeasure) (h𝓕 : IsFundamentalDomain (GQ V
     rw [← h2]
     refine integral_congr_ae (.of_forall fun x => ?_)
     show star (actG0 V β L g φ x) * ψ x = star (φ (x * hk.choose)) * actG0 V β L g⁻¹ ψ (x * hk.choose)
-    rw [h1, levChi_inv hκ, mul_inv_cancel_right, actG0, dif_pos hk, star_mul']
+    rw [h1, levChi_inv hκ, mul_inv_cancel_right, actG0, dite_eq_left hk, star_mul']
     ring
   · have hk' : ¬ ∃ κ, IsLevelLift V β L g⁻¹ κ := fun ⟨κ, h⟩ => hk ⟨κ⁻¹, by simpa using isLiftFlagGroup_inv h⟩
     simp [actG0, dif_neg hk, dif_neg hk']

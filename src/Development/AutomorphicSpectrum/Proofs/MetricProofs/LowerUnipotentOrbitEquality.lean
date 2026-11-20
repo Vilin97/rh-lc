@@ -17,7 +17,7 @@ variable {N : ℕ}
 theorem minor_self_of_lowerUni {L : Matrix (Fin N) (Fin N) ℂ} (hL : IsLowerUni L) (C : Finset (Fin N)) :
     minorIJ L C C = 1 := by
   unfold minorIJ
-  rw [dif_pos rfl, Matrix.det_of_lowerTriangular]
+  rw [dite_eq_left rfl, Matrix.det_of_lowerTriangular]
   · exact Finset.prod_eq_one fun i _ => hL.1 _
   · intro a b hab
     exact hL.2 _ _ ((C.orderEmbOfFin rfl).strictMono hab)
@@ -30,7 +30,7 @@ theorem minor_insert_of_lowerUni {L : Matrix (Fin N) (Fin N) ℂ} (hL : IsLowerU
     have := Finset.card_pos.2 ⟨s, hs⟩
     omega
   unfold minorIJ
-  rw [dif_pos hcard]
+  rw [dite_eq_left hcard]
   set e := C.orderEmbOfFin rfl with he
   have hmem : ∀ i, e i ∈ C := fun i => Finset.orderEmbOfFin_mem C rfl i
   obtain ⟨m, hm⟩ : ∃ m, e m = s := by

@@ -277,7 +277,7 @@ theorem twistK :
   have hnb : ¬ bad s := by
     intro hb
     have hex : ∃ s, bad s := ⟨s, hb⟩
-    rw [dif_pos hex] at hne
+    rw [dite_eq_left hex] at hne
     exact hne (huniq _ _ hb (Classical.choose_spec hex))
   have hM : 0 < m₀ * s := Nat.mul_pos hm (by omega)
   have h8M : 8 ∣ m₀ * s := dvd_mul_of_dvd_left h8 s

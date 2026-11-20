@@ -333,7 +333,7 @@ theorem coefX_mapFlag (F : FlagG S r T) (y : S.V) (a : Fin r) :
     rw [this, mem_map_apply]
   unfold FlagG.coefX
   by_cases h : y ∈ Submodule.span E (Set.range F.e)
-  · rw [dif_pos ((hsp y).2 h), dif_pos h]
+  · rw [dite_eq_left ((hsp y).2 h), dite_eq_left h]
     congr 1
     apply LinearIndependent.repr_eq
     have e1 := F.e_indep.linearCombination_repr ⟨y, h⟩
@@ -341,7 +341,7 @@ theorem coefX_mapFlag (F : FlagG S r T) (y : S.V) (a : Fin r) :
     have : (mapFlag β hβ F).e = (β : S.V →ₗ[E] S.V) ∘ F.e := rfl
     rw [this, ← Finsupp.apply_linearCombination, e1]
     rfl
-  · rw [dif_neg (fun h' => h ((hsp y).1 h')), dif_neg h]
+  · rw [dite_eq_right (fun h' => h ((hsp y).1 h')), dite_eq_right h]
 
 theorem ell_mapFlag (F : FlagG S r T) (Y : S.V →ₗ[E] S.V) :
     (mapFlag β hβ F).ell (conjL β Y) = F.ell Y := by

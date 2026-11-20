@@ -131,7 +131,7 @@ theorem exists_holomorphic_chart :
     Spec.map (CommRingCat.ofHom e : Γ(X, U) ⟶ CommRingCat.of ℂ) ≫ hU.fromSpec
   have hptU : ∀ e, ⊤ ≤ pt e ⁻¹ᵁ U := fun e p _ => hU.range_fromSpec.le ⟨_, rfl⟩
   have hptv : ∀ e f, valAt' (pt e) U f = e f := fun e f => by
-    rw [valAt', dif_pos (hptU e)]
+    rw [valAt', dite_eq_left (hptU e)]
     exact congrArg (fun ψ => ψ.hom f)
       (AffinePointValues.appLE_specMap_fromSpec hU (CommRingCat.ofHom e) (hptU e))
   have hpts : ∀ e, pt e ≫ s = spMap (e.comp c) := fun e => by

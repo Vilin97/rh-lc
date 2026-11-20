@@ -206,10 +206,10 @@ theorem gpsi_add (β a b : ℂ) : G.psi β (a + b) = G.psi β a * G.psi β b := 
   rw [← Complex.exp_add, mul_add, Complex.add_re, Complex.ofReal_add, mul_add]
 
 theorem cornerA_zero {p : ℕ} (a : Fin 0 → Fin p → ℂ) : U.cornerA a = 0 := by
-  unfold U.cornerA; rw [dif_neg (fun h => absurd h.1 (lt_irrefl 0))]
+  unfold U.cornerA; rw [dite_eq_right (fun h => absurd h.1 (lt_irrefl 0))]
 
 theorem cornerB_zero {p : ℕ} (b : Fin p → Fin 0 → ℂ) : U.cornerB b = 0 := by
-  unfold U.cornerB; rw [dif_neg (fun h => absurd h.1 (lt_irrefl 0))]
+  unfold U.cornerB; rw [dite_eq_right (fun h => absurd h.1 (lt_irrefl 0))]
 
 theorem of_levMt (x : Mt k ρ) : (Matrix.of (Formalism.FourierDecayAlt.P.PBM.levMt p ρ rfl x) : B.Mat k (p + ρ)) =
     U.embG k p ρ (Matrix.of x) := by

@@ -107,7 +107,7 @@ theorem fdcGood_unique {ε : Fin n → Bool} {μ : Fin n → ℝ} {h : ℝ} (hμ
 theorem fdcD_eq {ε : Fin n → Bool} {μ : Fin n → ℝ} {h : ℝ} (hμ : IsHCParam μ) (hg : GapAtLeast ε μ h)
     (hh : thrStar ε + 1 < h) {d : ℝ} (hd : FdcGood ε μ d) : fdcD ε μ = d := by
   have hex : ∃ d, FdcGood ε μ d := ⟨d, hd⟩
-  rw [fdcD, dif_pos hex]
+  rw [fdcD, dite_eq_left hex]
   exact fdcGood_unique hμ hg hh hex.choose_spec hd
 
 theorem fdcGood_of_isDS {ε : Fin n → Bool} {μ : Fin n → ℝ} {H : Type} [NormedAddCommGroup H]

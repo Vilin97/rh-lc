@@ -41,7 +41,7 @@ theorem ratPosDens_eq {J : Ideal (MvPolynomial (Fin n) ℂ)} {p : Fin d → MvPo
       ⟨U, hU, by rw [hR]; exact hy.1, hsd, by rw [hR], hsec, W,
         hW.mem_nhds (hEW hy.2), fun x' hx' _ _ => (hWs x' hx').2.2.symm⟩
     have hex : ∃ s', RatChart.IsRatSheetAt J p q (s y) s' := ⟨s, hsh⟩
-    rw [finsum_eq_single _ (s y) ?_, finsum_eq_if, if_pos hfib, dif_pos hex]
+    rw [finsum_eq_single _ (s y) ?_, finsum_eq_if, if_pos hfib, dite_eq_left hex]
     · have hev : hex.choose =ᶠ[𝓝 y] s := by
         obtain ⟨U₁, hU₁, hxU₁, hsd₁, hsx₁, hsec₁, -⟩ := hex.choose_spec
         rw [hR] at hxU₁ hsx₁

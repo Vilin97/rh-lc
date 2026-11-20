@@ -41,7 +41,7 @@ theorem res_twist_spec : ∀ {D : D7} {N : NData D.R D.host D.what₂} {X : NTw 
         refine MonoidHom.mem_ker.2 (Multiplicative.toAdd.injective ?_)
         rw [coord_apply Y i (admissibleConjugatePairPlaces X i Q M) M hP, MonoidHom.mem_ker.1 hg]
         rfl
-      · rw [coord, dif_neg hP]
+      · rw [coord, dite_eq_right hP]
         simp
     have e1 : (univOf Y i (admissibleConjugatePairPlaces X i Q M) M ρ.rc).delQ (half (ρ.ch i) (admissibleConjugatePairPlaces X i Q M)) y = Multiplicative.ofAdd fun P : ↥(half (ρ.ch i) (admissibleConjugatePairPlaces X i Q M)) => Multiplicative.toAdd (coord Y i (admissibleConjugatePairPlaces X i Q M) M P.1 σ) := by
       change Multiplicative.ofAdd (fun PP : ↥(half (ρ.ch i) (admissibleConjugatePairPlaces X i Q M)) => Multiplicative.toAdd (ρ.rc.pull (coord Y i (admissibleConjugatePairPlaces X i Q M) M PP.1) y)) = _

@@ -69,7 +69,7 @@ theorem dy_eq_zero (M : FlagModel y Ψ N j) (p : Ψ × Fin N) (k : K)
   have h1 : ¬ ∀ p', M.blk p' ≠ some k := fun h => hk ⟨⟨k, Or.inl h⟩, rfl⟩
   have h2 : M.blk p ≠ some k := fun h => hk ⟨⟨k, Or.inr h⟩, rfl⟩
   unfold FlagModel.dy
-  rw [dif_neg h1, if_neg h2]
+  rw [dite_eq_right h1, if_neg h2]
 
 theorem step_member (hR : RegGlobalStatement) (hP : PullbackStatement) [Fintype Ψ] [DecidableEq Ψ]
     (M : FlagModel y Ψ N j) {n e : ℕ} (BM : BaseMetric M n) (R : AnLogRes (mCoordIdeal y) ⊤ e)

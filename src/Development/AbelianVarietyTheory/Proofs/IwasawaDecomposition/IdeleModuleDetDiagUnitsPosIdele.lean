@@ -34,7 +34,7 @@ theorem posIdele_exp (u : ℝ) :
     rw [← coe_infiniteProj, infiniteProj_posIdele]
     show (InfinitePlace.Completion.ringEquivComplexOfIsComplex hc) (posRealElem w _) = _
     unfold posRealElem
-    rw [dif_neg hw, RingEquiv.apply_symm_apply]
+    rw [dite_eq_right hw, RingEquiv.apply_symm_apply]
     simp [InfinitePlace.mult, hw, Real.sqrt_sq (Real.exp_pos u).le, expU, Complex.ofReal_exp]
   · change ((posIdele _ _ : IdeleGroup E) : AdeleRing (𝓞 E) E).2 = (1 : Af E) - 0 + 0
     rw [sub_zero, add_zero]

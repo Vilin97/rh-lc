@@ -64,7 +64,7 @@ def coefAct (γ : Matrix (Fin n) (Fin n) E) : CoefSp Dw c n ha d →ₗ[c.F] Coe
 theorem coefAct_coe (g : GL (Fin n) E) :
     coefAct Dw c n ha d (g : Matrix (Fin n) (Fin n) E) = coefRep Dw c n ha d g := by
   unfold coefAct
-  rw [dif_pos g.isUnit, IsUnit.unit_of_val_units]
+  rw [dite_eq_left g.isUnit, IsUnit.unit_of_val_units]
 
 def vacChar (γ : Matrix (Fin n) (Fin n) E) : c.F := ∏ τ : Psi H, embPsi c τ γ.det ^ (-(d τ))
 

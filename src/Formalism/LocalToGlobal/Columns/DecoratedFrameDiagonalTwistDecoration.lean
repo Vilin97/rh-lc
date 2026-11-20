@@ -37,10 +37,10 @@ def DecoF.mv (p : DecoF E n ST SG Q) (d' : DecoSet E n ST SG) : DecoF E n ST SG 
   if h : DecoSet.SameOn Q p.deco d' then p.repl d' h else p
 
 theorem DecoF.mv_pos {p : DecoF E n ST SG Q} {d' : DecoSet E n ST SG} (h : DecoSet.SameOn Q p.deco d') : p.mv d' = p.repl d' h := by
-  unfold DecoF.mv; rw [dif_pos h]
+  unfold DecoF.mv; rw [dite_eq_left h]
 
 theorem DecoF.mv_neg {p : DecoF E n ST SG Q} {d' : DecoSet E n ST SG} (h : ¬ DecoSet.SameOn Q p.deco d') : p.mv d' = p := by
-  unfold DecoF.mv; rw [dif_neg h]
+  unfold DecoF.mv; rw [dite_eq_right h]
 
 theorem DecoF.mv_deco {p : DecoF E n ST SG Q} {d' : DecoSet E n ST SG} (h : DecoSet.SameOn Q p.deco d') : (p.mv d').deco = d' := by
   rw [DecoF.mv_pos h]; rfl

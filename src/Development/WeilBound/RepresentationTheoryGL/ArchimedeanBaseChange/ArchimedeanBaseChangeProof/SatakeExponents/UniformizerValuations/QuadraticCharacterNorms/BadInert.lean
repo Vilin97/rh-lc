@@ -110,7 +110,7 @@ theorem badInert2 (h2 : M2) : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hM := h2 E hE w hw n a (n - a) m (Nat.add_sub_cancel' ha) hm
   have e : fixFn n a w μ m KB = fun y => ((KB.relIndex (KL n w) : ℕ) : ℂ) * MB.pairIndicatorMatch n a (n - a) w m y := by
     unfold fixFn
-    rw [dif_pos ha, if_neg hw]
+    rw [dite_eq_left ha, if_neg hw]
   rw [e, BadInertP.bad_inert_pair_indicator_eq]
   exact ⟨_, ⟨_, _, rfl, GlobalTheory.BCT.StTwLevel.lev_level hw a m, GlobalTheory.BCT.StTwLevel.lev_level hw (n - a) m⟩,
     BadInertP.hecke_phi hw a (n - a) m ((KB.relIndex (KL n w) : ℕ) : ℂ)

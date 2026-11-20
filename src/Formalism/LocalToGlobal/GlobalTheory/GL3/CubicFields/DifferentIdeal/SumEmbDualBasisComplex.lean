@@ -8,7 +8,7 @@ open NumberField Classical
 open scoped Pointwise
 
 theorem liftM_coe_of_mem (M : IntermediateField ℚ ℂ) {x : ℂ} (h : x ∈ M) : ((liftM M x : M) : ℂ) = x := by
-  rw [liftM, dif_pos h]
+  rw [liftM, dite_eq_left h]
 
 theorem sum_emb_eq_trace_complex (K E : Type) [Field K] [Field E] [NumberField K] [NumberField E] [Algebra K E]
     (φ₀ : K →+* ℂ) (ι : Type) [Fintype ι]

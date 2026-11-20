@@ -76,7 +76,7 @@ theorem brS_omp_e (a : Fin r) : brS S (omp F F') (F.e a) = 0 := by
 
 theorem det_eq_Dl : (Zhat F F').det = Dl F F' (r + 1) := by
   unfold Dl leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem pairing_omegaPrime_z : brS S (omp F F') F.z = Dl F F' (r + 1) := by
@@ -86,7 +86,7 @@ theorem pairing_omegaPrime_z : brS S (omp F F') F.z = Dl F F' (r + 1) := by
 theorem adj_last_eq_Dl : (Zhat F F').adjugate (Fin.last r) (Fin.last r) = Dl F F' r := by
   rw [Matrix.adjugate_fin_succ_eq_det_submatrix]
   unfold Dl leadMinorE
-  rw [dif_pos (Nat.le_succ r), Fin.succAbove_last]
+  rw [dite_eq_left (Nat.le_succ r), Fin.succAbove_last]
   have hp : ((-1 : E) ^ ((Fin.last r : ℕ) + (Fin.last r : ℕ))) = 1 := by
     rw [← two_mul, pow_mul]; simp
   rw [hp, one_mul]

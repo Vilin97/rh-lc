@@ -48,7 +48,7 @@ theorem vLayerMap_spec (h : K ≤ L) [(subG p K L).Normal] (x : (layer p K L).V)
         map_zero' := rfl
         map_add' := fun _ _ => rfl }, fun x => vOn_spec p L _⟩
   unfold vLayerMap
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec x
 
 theorem vLayerMap_toLayer (h : K ≤ L) [(subG p K L).Normal] (x : multOf p L) :

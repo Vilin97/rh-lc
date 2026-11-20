@@ -239,7 +239,7 @@ def unitVal (U : X.Opens) : Γ(X, U)ˣ →* X.functionFieldˣ :=
 
 theorem val_unitVal {U : X.Opens} (h : genericPoint X ∈ U) (a : Γ(X, U)ˣ) :
     (unitVal U a).val = X.presheaf.germ U _ h a.val := by
-  rw [unitVal, dif_pos h]
+  rw [unitVal, dite_eq_left h]
   rfl
 
 theorem unitVal_res {U V : X.Opens} (hle : V ≤ U) (h : genericPoint X ∈ V) (a : Γ(X, U)ˣ) :

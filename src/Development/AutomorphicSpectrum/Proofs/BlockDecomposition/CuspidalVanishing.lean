@@ -134,41 +134,41 @@ theorem extHom_mem_unip {s s' : ℕ} (b : ι → Fin s) (c : Fin s) (β : ι →
     exact extHom_blockUT b c β hv.1.2
   · rw [extHom_apply]
     by_cases h : b i = c ∧ b j = c
-    · rw [dif_pos h, hv.2 _ _ ((rankMap_eq _ _ _).mpr hij)]
+    · rw [dite_eq_left h, hv.2 _ _ ((rankMap_eq _ _ _).mpr hij)]
       simp [Subtype.ext_iff]
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
 
 theorem extHom_off {s : ℕ} (b : ι → Fin s) (c : Fin s) (v : GL {i // b i = c} K) (i j : ι)
     (hij : b i ≠ b j) : (extHom b c v : Matrix ι ι K) i j = 0 := by
-  rw [extHom_apply, dif_neg (fun h => hij (h.1.trans h.2.symm)),
+  rw [extHom_apply, dite_eq_right (fun h => hij (h.1.trans h.2.symm)),
     if_neg (fun e => hij (congrArg b e))]
 
 theorem blkGL_mul {s : ℕ} (b : ι → Fin s) (c : Fin s) {g e : GL ι K} (hg : g ∈ parab K b)
     (he : e ∈ parab K b) : blkGL b c (g * e) = blkGL b c g * blkGL b c e := by
   simp only [blkGL]
-  rw [dif_pos hg, dif_pos he, dif_pos (mul_mem hg he)]
+  rw [dite_eq_left hg, dite_eq_left he, dite_eq_left (mul_mem hg he)]
   exact levi_mul b c ⟨g, hg⟩ ⟨e, he⟩
 
 theorem blkGL_extHom_self {s : ℕ} (b : ι → Fin s) (c : Fin s) (v : GL {i // b i = c} K)
     (hp : extHom b c v ∈ parab K b) : blkGL b c (extHom b c v) = v := by
   simp only [blkGL]
-  rw [dif_pos hp]
+  rw [dite_eq_left hp]
   apply Units.ext
   refine Matrix.ext ?_
   rintro ⟨i, hi⟩ ⟨j, hj⟩
   change (extHom b c v : Matrix ι ι K) i j = _
-  rw [extHom_apply, dif_pos ⟨hi, hj⟩]
+  rw [extHom_apply, dite_eq_left ⟨hi, hj⟩]
 
 theorem blkGL_extHom_ne {s : ℕ} (b : ι → Fin s) {c c' : Fin s} (hc : c' ≠ c)
     (v : GL {i // b i = c} K) (hp : extHom b c v ∈ parab K b) :
     blkGL b c' (extHom b c v) = 1 := by
   simp only [blkGL]
-  rw [dif_pos hp]
+  rw [dite_eq_left hp]
   apply Units.ext
   refine Matrix.ext ?_
   rintro ⟨i, hi⟩ ⟨j, hj⟩
   change (extHom b c v : Matrix ι ι K) i j = (1 : Matrix {i // b i = c'} {i // b i = c'} K) ⟨i, hi⟩ ⟨j, hj⟩
-  rw [extHom_apply, dif_neg (fun h => hc (hi.symm.trans h.1)), Matrix.one_apply]
+  rw [extHom_apply, dite_eq_right (fun h => hc (hi.symm.trans h.1)), Matrix.one_apply]
   simp [Subtype.ext_iff]
 
 theorem vanish {s s' : ℕ} (b : ι → Fin s) (β : ι → Fin s')

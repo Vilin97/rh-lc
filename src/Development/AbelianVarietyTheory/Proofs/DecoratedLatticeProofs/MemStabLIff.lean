@@ -93,7 +93,7 @@ theorem entB_eq {k₀ n c p p' : ℕ} (hk : k₀ ≤ n) (hp : p < n + c) (hp' : 
   unfold LocE.entB
   rw [eN_eq (fIdx_lt hk hp')]
   unfold Loc.atN
-  rw [dif_pos (fIdx_lt hk hp)]
+  rw [dite_eq_left (fIdx_lt hk hp)]
   rfl
 
 theorem bas_mem (hq0 : (q : E) ≠ 0) {n c : ℕ} (l' : Fin (n + c)) :

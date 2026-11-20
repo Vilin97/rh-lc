@@ -78,7 +78,7 @@ theorem IsValueAt.unique {a : Ω} {v v' : ℂ} (hz : z ∈ mcPts (mCoordIdeal y)
 theorem valAt_eq {a : Ω} {v : ℂ} (hz : z ∈ mcPts (mCoordIdeal y)) (h : IsValueAt y a z v) :
     valAt y a z = v := by
   have hr : RegularAt y a z := ⟨v, h⟩
-  rw [valAt, dif_pos hr]
+  rw [valAt, dite_eq_left hr]
   exact IsValueAt.unique hz hr.choose_spec h
 
 theorem RegularAt.isValueAt {a : Ω} (hz : z ∈ mcPts (mCoordIdeal y)) (h : RegularAt y a z) :

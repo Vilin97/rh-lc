@@ -31,7 +31,7 @@ theorem aux (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (P : Pin hL 
   obtain ⟨L, hLift, hCL⟩ := hC i
   have e : (P.M.loc i).real (D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v z) F) =
       actSum D L (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v z) ((P.M.loc i).real F) := by
-    rw [NTypes.onMt, dif_pos hcen]; exact hCL ⟨_, hcen⟩ F
+    rw [NTypes.onMt, dite_eq_left hcen]; exact hCL ⟨_, hcen⟩ F
   have hne' : actSum D L (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v z) ((P.M.loc i).real F) ≠ 0 := by
     rw [← e]; intro h0; apply hne; exact (P.M.loc i).real_inj (h0.trans (map_zero _).symm)
   let g : GL (Fin D.R.r) (ZMod (D.host.g k)) → G0g D.nd := fun h =>

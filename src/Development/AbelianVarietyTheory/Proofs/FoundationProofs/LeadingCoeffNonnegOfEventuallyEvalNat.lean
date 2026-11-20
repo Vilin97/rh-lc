@@ -164,13 +164,13 @@ theorem isHilbertPoly_idealHilbertPoly [Finite ι] {I : Ideal (MvPolynomial ι k
   cases nonempty_fintype ι
   have h : ∃ P, IsHilbertPoly (quotPiece I) P :=
     (exists_isHilbertPoly_quotPiece hI).imp fun _ h => h.1
-  rw [idealHilbertPoly, dif_pos h]
+  rw [idealHilbertPoly, dite_eq_left h]
   exact h.choose_spec
 
 theorem IsHilbertPoly.idealHilbertPoly_eq {I : Ideal (MvPolynomial ι k)} {P : ℚ[X]}
     (hP : IsHilbertPoly (quotPiece I) P) : idealHilbertPoly I = P := by
   have h : ∃ P, IsHilbertPoly (quotPiece I) P := ⟨P, hP⟩
-  rw [idealHilbertPoly, dif_pos h]
+  rw [idealHilbertPoly, dite_eq_left h]
   exact h.choose_spec.unique hP
 
 theorem eventually_finrank_quotPiece [Finite ι] {I : Ideal (MvPolynomial ι k)}

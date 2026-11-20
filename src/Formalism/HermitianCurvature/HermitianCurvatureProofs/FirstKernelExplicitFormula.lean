@@ -251,24 +251,24 @@ theorem sec_sLow (hN : N = m + 1) (A : Matrix (Fin m) (Fin m) K) (b a : Fin m �
     rw [eN_inr]
     omega
   simp only [Fintype.univ_unit, Finset.sum_singleton]
-  rw [dif_neg hinr, add_zero, ← Finset.sum_add_distrib]
+  rw [dite_eq_right hinr, add_zero, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro i _
   have hi := i.isLt
   have hlt : ((eN hN (Sum.inl i) : Fin N) : ℕ) + 1 < N := by
     rw [eN_inl]
     omega
-  rw [dif_pos hlt]
+  rw [dite_eq_left hlt]
   by_cases h : i.val + 1 < m
   · have e : (⟨((eN hN (Sum.inl i) : Fin N) : ℕ) + 1, hlt⟩ : Fin N) = eN hN (Sum.inl ⟨i.val + 1, h⟩) := by
       ext
       simp [eN_inl]
-    rw [e, blkM_ll, dif_pos h, if_neg (by omega), add_zero]
+    rw [e, blkM_ll, dite_eq_left h, if_neg (by omega), add_zero]
   · have e : (⟨((eN hN (Sum.inl i) : Fin N) : ℕ) + 1, hlt⟩ : Fin N) = eN hN (Sum.inr ()) := by
       ext
       simp only [eN_inl, eN_inr]
       omega
-    rw [e, blkM_rl, dif_neg h, if_pos (by omega), zero_add]
+    rw [e, blkM_rl, dite_eq_right h, if_pos (by omega), zero_add]
 
 theorem sec_sUp (hN : N = m + 1) (A : Matrix (Fin m) (Fin m) K) (b a : Fin m → K) (d : K) :
     sUp (blkM hN A b a d) = sUp A + lastE b := by
@@ -278,24 +278,24 @@ theorem sec_sUp (hN : N = m + 1) (A : Matrix (Fin m) (Fin m) K) (b a : Fin m →
     rw [eN_inr]
     omega
   simp only [Fintype.univ_unit, Finset.sum_singleton]
-  rw [dif_neg hinr, add_zero, ← Finset.sum_add_distrib]
+  rw [dite_eq_right hinr, add_zero, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro i _
   have hi := i.isLt
   have hlt : ((eN hN (Sum.inl i) : Fin N) : ℕ) + 1 < N := by
     rw [eN_inl]
     omega
-  rw [dif_pos hlt]
+  rw [dite_eq_left hlt]
   by_cases h : i.val + 1 < m
   · have e : (⟨((eN hN (Sum.inl i) : Fin N) : ℕ) + 1, hlt⟩ : Fin N) = eN hN (Sum.inl ⟨i.val + 1, h⟩) := by
       ext
       simp [eN_inl]
-    rw [e, blkM_ll, dif_pos h, if_neg (by omega), add_zero]
+    rw [e, blkM_ll, dite_eq_left h, if_neg (by omega), add_zero]
   · have e : (⟨((eN hN (Sum.inl i) : Fin N) : ℕ) + 1, hlt⟩ : Fin N) = eN hN (Sum.inr ()) := by
       ext
       simp only [eN_inl, eN_inr]
       omega
-    rw [e, blkM_lr, dif_neg h, if_pos (by omega), zero_add]
+    rw [e, blkM_lr, dite_eq_right h, if_pos (by omega), zero_add]
 
 theorem sec_lastE_vecMul {v : Matrix (Fin m) (Fin m) K} (hv : IsLowUni v) (ξ : Fin m → K) :
     lastE (ξ ᵥ* v) = lastE ξ := by

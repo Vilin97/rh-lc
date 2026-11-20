@@ -218,7 +218,7 @@ theorem fixedLine_proof_A : FixedLine := by
       · have hlast : (⟨i.1 + 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp; omega)
         have hds : lam.w (Fin.last n) = lam.detShift := by
           unfold DomWeight.detShift
-          rw [dif_pos (by omega)]
+          rw [dite_eq_left (by omega)]
           congr 1
         rw [hlast, hds]
         omega

@@ -125,16 +125,16 @@ theorem BlockGenFinite.proof (hR : BlockRatioAlg.Statement) : BlockGenFinite.Sta
     · exact hcz ⟨k', h⟩
   · rw [hbuild]
     by_cases h : p'.1 ∈ Set.range κ
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       dsimp only
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       obtain ⟨p, rfl⟩ := hv.2.2.2 p' h
       rw [show h.choose = p.1 from hv.1 (h.choose_spec.trans (hv.2.2.1 p)),
         show (hv.2.2.2 (v p) h).choose = p from hv.2.1 (hv.2.2.2 (v p) h).choose_spec]
       exact hzd' p
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       dsimp only
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       have hc' := hcz ⟨p'.1, h⟩
       dsimp only at hc'
       field_simp [hc']

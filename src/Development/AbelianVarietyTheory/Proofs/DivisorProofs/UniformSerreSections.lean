@@ -29,7 +29,7 @@ noncomputable def liftFun (I : Ideal R) (e : ℕ) (r : R) : reesAlgebra I :=
     · exact zero_mem _)⟩ else 0
 
 theorem liftFun_zero (e : ℕ) : liftFun I e 0 = 0 := by
-  unfold liftFun; rw [dif_pos (zero_mem _)]; ext1; simp
+  unfold liftFun; rw [dite_eq_left (zero_mem _)]; ext1; simp
 
 noncomputable def lift (I : Ideal R) (e : ℕ) (P : MvPolynomial σ R) : MvPolynomial σ (reesAlgebra I) :=
   ∑ m ∈ P.support, monomial m (liftFun I e (AddMonoidAlgebra.coeff P m))
@@ -47,7 +47,7 @@ theorem comp_lift (e e' : ℕ) (P : MvPolynomial σ R) (hP : ∀ m, AddMonoidAlg
     comp e' (lift I e P) = if e' = e then P else 0 := by
   ext m
   rw [coeff_comp, coeff_lift]
-  unfold liftFun; rw [dif_pos (hP m)]
+  unfold liftFun; rw [dite_eq_left (hP m)]
   show (Polynomial.monomial e (AddMonoidAlgebra.coeff P m)).coeff e' = _
   rw [Polynomial.coeff_monomial]
   by_cases h : e' = e

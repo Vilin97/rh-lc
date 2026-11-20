@@ -47,7 +47,7 @@ theorem rows_Zr_spec {C' Cl Cg cb Cu cT CT C0 A c : ℝ} (hH : Cnt.Hyp D large�
     ZEquiv (termGramMatrix X t) (termReducedGramMatrix Y hH hHH t) ∧ wordPairGramGood X u u' large₂ c (termReducedGramMatrix Y hH hHH t) := by
   have h := Classical.choose_spec (rows_reduced_exists Y hH hHH t hG hrel)
   have e : termReducedGramMatrix Y hH hHH t = Classical.choose (rows_reduced_exists Y hH hHH t hG hrel) := by
-    unfold termReducedGramMatrix; rw [dif_pos ⟨hG, hrel⟩]
+    unfold termReducedGramMatrix; rw [dite_eq_left ⟨hG, hrel⟩]
   rw [e]
   exact ⟨h.1, t, hG, hrel, h.1, h.2⟩
 

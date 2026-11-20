@@ -70,7 +70,7 @@ theorem substVar_one (p : D.what₂.Tau → ℕ) :
   · have h3 : p τ + ((i : ℕ) - p τ) < m := by omega
     simp only [substVar, hx, zMinusS, zMinus, varF, e, dif_neg, not_false_eq_true, transpose_one, Matrix.map_one,
       map_zero, map_one, Matrix.one_mul, Matrix.mul_one, Matrix.of_apply]
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     congr 1
     simp only [Prod.mk.injEq, Fin.ext_iff, true_and, and_true]
     omega

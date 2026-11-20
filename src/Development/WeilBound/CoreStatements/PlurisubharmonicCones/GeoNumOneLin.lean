@@ -27,7 +27,7 @@ theorem geoNum_one_lin (W : Ideal (MRing J)) :
             (multAt (W ⊔ Ideal.span {(X ⟨k, (h k).choose⟩ : MRing J)}) V : ℤ) *
               geoNum 0 V (Fin.init fun _ : Fin 1 => a)
         else 0) = _
-      rw [dif_pos hW]
+      rw [dite_eq_left hW]
       simp only [hg0]
   · refine ⟨fun _ => 0, fun _ => le_rfl, fun a => (dif_neg hW).trans ?_⟩
     simp

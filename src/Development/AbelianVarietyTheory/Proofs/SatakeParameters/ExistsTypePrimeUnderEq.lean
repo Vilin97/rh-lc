@@ -26,7 +26,7 @@ theorem mem_divs_iff {A : Type} [CommRing A] [IsDedekindDomain A] {a : A} (ha : 
     refine (Ideal.finite_factors h0).subset fun v hv => ?_
     exact Ideal.dvd_span_singleton.2 hv
   unfold divs
-  rw [dif_pos hfin, Set.Finite.mem_toFinset]
+  rw [dite_eq_left hfin, Set.Finite.mem_toFinset]
   rfl
 
 def conjPrime (X : Fields) (P : HeightOneSpectrum (𝓞 X.E)) : HeightOneSpectrum (𝓞 X.E) where

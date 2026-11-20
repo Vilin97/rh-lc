@@ -147,7 +147,7 @@ theorem tl_eq (M : Mt g (a + b)) : tl a M = (sp M).toBlocks₁₁ := by
   have hi := i.2
   have hj := j.2
   simp only [tl, entN, sp, Matrix.toBlocks₁₁, Matrix.of_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_left]
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   rfl
 
 theorem br_eq (M : Mt g (a + b)) : br a b M = (sp M).toBlocks₂₂ := by
@@ -155,7 +155,7 @@ theorem br_eq (M : Mt g (a + b)) : br a b M = (sp M).toBlocks₂₂ := by
   have hi := i.2
   have hj := j.2
   simp only [br, entN, sp, Matrix.toBlocks₂₂, Matrix.of_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_right]
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   rfl
 
 theorem inPar_iff (M : Mt g (a + b)) : InPar a M ↔ (sp M).toBlocks₂₁ = 0 := by
@@ -184,7 +184,7 @@ theorem sp_blk (x : Gn g a) (y : Gn g b) :
     exact (Matrix.isUnits_det_units x).mul (Matrix.isUnits_det_units y)
   rw [← h1]
   change sp (toG M : Mt g (a + b)) = _
-  rw [toG, dif_pos h2]
+  rw [toG, dite_eq_left h2]
   rfl
 
 theorem blk_mul (x x' : Gn g a) (y y' : Gn g b) :

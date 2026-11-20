@@ -122,7 +122,7 @@ def lft (W : Y.Opens) (T : Thick L) (f : Γ(Y, W)) : T.B :=
 
 theorem lft_spec {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f : Γ(Y, W)) :
     Ideal.Quotient.mk T.J (lft 𝔭 W T f) = ev 𝔭 T h f := by
-  rw [lft, dif_pos h]
+  rw [lft, dite_eq_left h]
   exact Function.surjInv_eq _ _
 
 def IsLift (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d → ∀ T : Thick L, T.B) : Prop :=

@@ -50,7 +50,7 @@ private theorem intLift_coe (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)
     (y : v.adicCompletionIntegers (maximalRealSubfield L)) :
     NX.intLift v (y : v.adicCompletion (maximalRealSubfield L)) = y := by
   unfold NX.intLift
-  rw [dif_pos y.2]
+  rw [dite_eq_left y.2]
 
 private theorem sum_top {R : Type} [CommRing R] {n r : ℕ} (h : r ≤ n) (X : Matrix (Fin n) (Fin n) R) :
     (∑ a : Fin n, ∑ b : Fin n, if a.val + 1 = b.val ∧ b.val < r then X a b else 0) = NX.supSum r (NX.topR h X) := by
@@ -158,7 +158,7 @@ theorem _root_.GlobalTheory.T.complex_typePlaceCharacter_eq_superdiag_addChar_mu
   obtain ⟨h1, h2, h3, y, hy, hry⟩ := GlobalTheory.XUniRead.loc_read s (n := D.R.nV) (Nat.le_add_right D.R.r D.R.t : D.R.r ≤ D.R.nV)
     (D.host.g_prime kv0.1) red x hx
   unfold NX.gVal
-  erw [dif_pos h2]
+  erw [dite_eq_left h2]
   rw [map_mul, hτ, he, hξ _ h2 uu (huu.trans h3.symm)]
   congr 1
   generalize hM : NX.redMat s.v red (NX.topR (Nat.le_add_right D.R.r D.R.t : D.R.r ≤ D.R.nV) x.val) = M
@@ -176,7 +176,7 @@ theorem _root_.GlobalTheory.T.complex_typePlaceCharacter_eq_superdiag_addChar_mu
     · rw [hu1 kv hkv]; exact ⟨Matrix.blockTriangular_one, fun a => Matrix.one_apply_eq a⟩
   have hm : u ∈ D.nexp.U := by rw [X.U_eq]; exact hm'
   unfold NX.psiUTot
-  rw [dif_pos hm, hpsi u hm hm', he, psiUOf_apply, Fintype.prod_eq_single kv0 (fun kv hkv => by
+  rw [dite_eq_left hm, hpsi u hm hm', he, psiUOf_apply, Fintype.prod_eq_single kv0 (fun kv hkv => by
     rw [hu1 kv hkv, NX.supSum_one, mul_zero, ofAdd_zero, map_one]), hu0, ← hy]
   by_cases hr : 2 ≤ D.R.r
   · rw [hψ₀ hr y, hry]

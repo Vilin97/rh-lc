@@ -91,14 +91,14 @@ theorem exists_onMt (D : D7) (μ j) (k : Fin 2) (v : D.nd.PlG k) (F : D.what₂.
     ∃ f, D.ntypes.onMt μ j (atPlace D k v (D.ntypes.eSer k f)) F ≠ 0 := by
   obtain ⟨f, hf⟩ := exists_acts D (D.ntypes.cenMt μ j) k v F hF
   refine ⟨f, ?_⟩
-  rw [NTypes.onMt, dif_pos (atPlace_central D k v _ (D.ntypes.eSer_central k f))]
+  rw [NTypes.onMt, dite_eq_left (atPlace_central D k v _ (D.ntypes.eSer_central k f))]
   exact hf
 
 theorem exists_onAmb (D : D7) (μ) (k : Fin 2) (v : D.nd.PlG k) (F : D.what₂.Amb μ) (hF : F ≠ 0) :
     ∃ f, D.ntypes.onAmb μ (atPlace D k v (D.ntypes.eSer k f)) F ≠ 0 := by
   obtain ⟨f, hf⟩ := exists_acts D (D.ntypes.cenAmb μ) k v F hF
   refine ⟨f, ?_⟩
-  rw [NTypes.onAmb, dif_pos (atPlace_central D k v _ (D.ntypes.eSer_central k f))]
+  rw [NTypes.onAmb, dite_eq_left (atPlace_central D k v _ (D.ntypes.eSer_central k f))]
   exact hf
 
 private theorem exists_equiv_monicOf_of_perm {K : Type} [Field K] (N : ℕ) (π : Equiv.Perm K[X])

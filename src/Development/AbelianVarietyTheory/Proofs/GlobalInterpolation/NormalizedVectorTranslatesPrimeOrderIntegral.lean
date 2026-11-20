@@ -59,7 +59,7 @@ theorem transPrime_int : (∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (
     obtain ⟨h1, h2⟩ := hc k
     have e : lamC lam (c k) = ι (c k) := by
       unfold lamC
-      rw [dif_pos h1]
+      rw [dite_eq_left h1]
       rfl
     rw [← e]
     exact h2

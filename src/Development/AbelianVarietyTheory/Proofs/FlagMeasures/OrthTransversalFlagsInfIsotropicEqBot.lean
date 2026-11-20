@@ -35,11 +35,11 @@ theorem gflag_eq_zero {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') (c : Fin 
     simpa [Zhat, brS, FlagG.fvec] using this
   obtain ⟨a0, ha0⟩ := Function.ne_iff.1 hc
   have d1 : Dl F F' r = 0 := by
-    rw [Dl, leadMinorE, dif_pos (Nat.le_succ r), ← Matrix.exists_vecMul_eq_zero_iff]
+    rw [Dl, leadMinorE, dite_eq_left (Nat.le_succ r), ← Matrix.exists_vecMul_eq_zero_iff]
     refine ⟨fun a => star (c a), fun e => ha0 (star_eq_zero.1 (congrFun e a0)), funext fun b => ?_⟩
     exact hz (Fin.castLE (Nat.le_succ r) b)
   have d2 : Dl F F' (r + 1) = 0 := by
-    rw [Dl, leadMinorE, dif_pos le_rfl, ← Matrix.exists_vecMul_eq_zero_iff]
+    rw [Dl, leadMinorE, dite_eq_left le_rfl, ← Matrix.exists_vecMul_eq_zero_iff]
     refine ⟨Fin.snoc (α := fun _ => E) (fun a => star (c a)) 0, fun e => ha0 ?_, funext fun b => ?_⟩
     · simpa using congrFun e a0.castSucc
     · simpa [Matrix.vecMul, dotProduct, Fin.sum_univ_castSucc] using hz b

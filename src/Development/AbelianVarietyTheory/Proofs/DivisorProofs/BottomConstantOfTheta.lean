@@ -48,9 +48,9 @@ theorem lamC_div_norm {p : ℕ} [Fact p.Prime] {u₁ u₂ : ℂ} (h₁ : u₁ �
   have e : (⟨u₁ / u₂, h3⟩ : Qbar) = ⟨u₁, h₁⟩ / ⟨u₂, h₂⟩ := rfl
   have a := n₁ lam
   have b := n₂ lam
-  rw [lamC, dif_pos h₁] at a
-  rw [lamC, dif_pos h₂] at b
-  rw [lamC, dif_pos h3, e, map_div₀, norm_div, a, b, div_one]
+  rw [lamC, dite_eq_left h₁] at a
+  rw [lamC, dite_eq_left h₂] at b
+  rw [lamC, dite_eq_left h3, e, map_div₀, norm_div, a, b, div_one]
 
 end GlobalTheory.SqTop.BotConstPf
 

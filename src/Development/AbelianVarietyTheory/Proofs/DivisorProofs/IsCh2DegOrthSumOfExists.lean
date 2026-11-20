@@ -214,7 +214,7 @@ theorem form_orthSum_app {A B : X.Modules} (α : A ⟶ E₁ ⊞ E₂) (β : B �
 
 theorem isIso_incl {E : X.Modules} {N : ℕ} (fl : Vert.Flag E N) {a b : Fin (N + 1)} (h)
     (e : (b : ℕ) = a) : IsIso (fl.incl a b h) := by
-  rw [Vert.Flag.incl, dif_pos e]
+  rw [Vert.Flag.incl, dite_eq_left e]
   infer_instance
 
 theorem isIso_desc {A B C D : X.Modules} (f : A ⟶ C) (g : B ⟶ D) [IsIso f] [IsIso g] :

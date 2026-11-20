@@ -66,9 +66,9 @@ theorem eid (hC : CupLaws) (hS : Slant) (P : HTPre l K) {M : Model l K} (hM : M.
     exact hk
   · have hk : ∀ {i : ℕ} (X : M.T i), kap hC P x φ' X = 0 := by
       intro i X
-      rw [kap, Fx, dif_neg (fun h => hlt (by omega)), map_zero, smul_zero]
+      rw [kap, Fx, dite_eq_right (fun h => hlt (by omega)), map_zero, smul_zero]
     have hg : Gx hC x ψ = 0 := by
-      rw [Gx, dif_neg (by omega)]
+      rw [Gx, dite_eq_right (by omega)]
     simp only [hk, hg, zero_mul, map_zero, mul_zero, dite_eq_ite, ite_self, Finset.sum_const_zero, add_zero]
 
 end CrystallineSemistableComparison.Onto

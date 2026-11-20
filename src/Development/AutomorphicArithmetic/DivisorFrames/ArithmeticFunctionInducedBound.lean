@@ -232,7 +232,7 @@ theorem UpperTheory.arithmetic_function_induced_bound :
         obtain ⟨Z, i, hi, hZ, hAl, e₁, e₂⟩ := GlobalTheory.T.exists_integral_subscheme_prime_fibre _ Q.X Q.p _ Q.ar p z (hpos z hz)
         have hex : ∃ a, IsDeg p (fun j => (L' (ν j)).B) z a := ⟨_, Z, i, hi, hZ, hAl, e₁, e₂, rfl⟩
         obtain ⟨Z', i', hi', hZ', hAl', e₁', e₂', e₃⟩ := hex.choose_spec
-        exact ⟨hp, Z', i', hi', hZ', hAl', e₁', e₂', by rw [pdeg, dif_pos hex, e₃]⟩
+        exact ⟨hp, Z', i', hi', hZ', hAl', e₁', e₂', by rw [pdeg, dite_eq_left hex, e₃]⟩
     have := hn ι L' Ψ hΦ (Fin.cons (Pi.single i₀ 1 - Pi.single i₁ 1) fun j => Pi.single (ν j) 1)
     have e₂ : lin (Pi.single i₀ 1 - Pi.single i₁ 1 : ι → ℝ) = X i₀ - X i₁ := by
       rw [← TrivFlag.lin_single, ← TrivFlag.lin_single]

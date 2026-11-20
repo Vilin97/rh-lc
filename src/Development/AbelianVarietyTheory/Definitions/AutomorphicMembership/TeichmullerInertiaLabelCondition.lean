@@ -426,7 +426,7 @@ theorem lab_monic (τ : Fbar g →* ℂ) (γ : G E Ω) (x : WD h) : (lab τ γ x
 
 theorem map_rootsBar_lab (H : TeichmullerInertiaLabelCondition A w τ γ) (x : WD h) :
     (rootsBar (lab τ γ x)).map τ = tameEig x γ := by
-  rw [lab, dif_pos H]
+  rw [lab, dite_eq_left H]
   exact (existsUnique_lab H x).choose_spec.1.2
 
 theorem lab_eq_iff (H : TeichmullerInertiaLabelCondition A w τ γ) (x : WD h) {f : (ZMod g)[X]} :

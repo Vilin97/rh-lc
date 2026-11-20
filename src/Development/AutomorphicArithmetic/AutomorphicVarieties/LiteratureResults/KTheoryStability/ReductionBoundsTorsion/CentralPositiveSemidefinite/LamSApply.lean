@@ -36,14 +36,14 @@ private theorem lamS_log (u : (𝓞 L)ˣ) :
   rw [lamS_apply]
   by_cases h : w = w₀
   · subst h
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
     have hs := sum_logEmbedding_component (K := L) u
     have : (∑ w' : {w : InfinitePlace L // w ≠ w₀}, logEmbedding L (Additive.ofMul u) w') =
         -(mult (w₀ : InfinitePlace L) : ℝ) * Real.log (w₀ ((u : 𝓞 L) : L)) := by
       convert hs
     rw [this]
     field_simp [mult_ne L w₀]
-  · rw [dif_neg h, logEmbedding_component]
+  · rw [dite_eq_right h, logEmbedding_component]
     field_simp [mult_ne L w]
 
 private theorem span_fund :
@@ -88,7 +88,7 @@ theorem span_units : ∃ l : List (𝓞 L)ˣ, ∀ t : InfinitePlace L → ℝ,
     rw [lamS_apply]
     by_cases h : w = w₀
     · subst h
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       have hsum : (∑ w : InfinitePlace L, (mult w : ℝ) * (t w - c)) = 0 := by
         simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul]
         change _ - M * c = 0
@@ -100,7 +100,7 @@ theorem span_units : ∃ l : List (𝓞 L)ˣ, ∀ t : InfinitePlace L → ℝ,
       rw [this]
       simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, mul_one]
       field_simp [mult_ne L w₀]
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       simp only [t', Pi.sub_apply, Pi.smul_apply, smul_eq_mul, mul_one]
       field_simp [mult_ne L w]
   have : t = lamS L t' + c • (fun _ => (1 : ℝ)) := by rw [h2]; abel

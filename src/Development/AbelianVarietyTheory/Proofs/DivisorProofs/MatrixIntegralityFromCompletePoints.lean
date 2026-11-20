@@ -17,7 +17,7 @@ namespace GlobalTheory.TriFrame.Near
 
 theorem valF_eq {F : Type} [Field F] {X : Scheme.{0}} (w : Sp F ⟶ X) {U : X.Opens} (h : ⊤ ≤ w ⁻¹ᵁ U)
     (a : Γ(X, U)) : valF w U a = ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom.comp (w.appLE U ⊤ h).hom) a := by
-  rw [valF, dif_pos h]; rfl
+  rw [valF, dite_eq_left h]; rfl
 
 theorem valF_fromSpecStalk {X : Scheme.{0}} {x : X} {F : Type} [Field F] (f : X.presheaf.stalk x →+* F)
     {U : X.Opens} (hx : x ∈ U) (t : Γ(X, U)) :

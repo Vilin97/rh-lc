@@ -95,7 +95,7 @@ theorem multAt_map (e : ∀ k, ι k ≃ Fin (n k + 1)) (J V : Ideal (MRing ι)) 
     rw [dif_pos hV, dif_pos hV']
     exact congrArg ENat.toNat (length_localizedModule_quotient_map (ren e) J V)
   · have hV' : ¬ (V.map (ren e)).IsPrime := fun h' => hV ((isPrime_map_ringEquiv_iff (ren e) V).1 h')
-    rw [dif_neg hV, dif_neg hV']
+    rw [dite_eq_right hV, dite_eq_right hV']
 
 theorem length_chart_map (e : ∀ k, ι k ≃ Fin (n k + 1)) (V : Ideal (MRing ι)) (c : ∀ k, ι k) :
     Module.length ℤ (MRing (blockIdx n) ⧸ (V.map (ren e) ⊔

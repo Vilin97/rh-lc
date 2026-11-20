@@ -275,7 +275,7 @@ theorem recov_eq {ι Q K : Type} [Field K] (φ : ι → (K →+* ℂ)) (v0 : ι)
     (ha : ∀ v, x v q = φ v a) : recov φ x q = a := by
   unfold recov
   have hex : ∃ a : K, ∀ v, x v q = φ v a := ⟨a, ha⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact (φ v0).injective ((hex.choose_spec v0).symm.trans (ha v0))
 
 theorem recov_congr {ι Q K : Type} [Field K] (φ : ι → (K →+* ℂ)) (x x' : ι → Q → ℂ) (q : Q)

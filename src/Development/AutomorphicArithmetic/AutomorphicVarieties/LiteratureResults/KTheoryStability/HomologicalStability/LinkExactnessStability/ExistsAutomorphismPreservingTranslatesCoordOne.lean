@@ -41,7 +41,7 @@ theorem unimodular_to_coord_one : ∀ (R : Type) [CommRing R] (s : ℕ), StableR
       · intro b _ hb; rw [if_neg]; intro e; apply hb; ext; exact e
       · simp
     · apply Finset.sum_eq_zero; intro b _; rw [if_neg]; intro e; apply hk; rw [← e]; exact b.2
-  have htlow : t ∈ low R n := fun k hk => by rw [htapp, dif_neg (by omega)]
+  have htlow : t ∈ low R n := fun k hk => by rw [htapp, dite_eq_right (by omega)]
   have htlow' : t ∈ low R (n + 1) := fun k hk => htlow k (by omega)
   have hht : h t = 0 := by
     rw [hh]
@@ -52,14 +52,14 @@ theorem unimodular_to_coord_one : ∀ (R : Type) [CommRing R] (s : ℕ), StableR
       rw [← Finsupp.smul_single_one, map_smul, smul_eq_mul]
     have h2 : ∑ i : Fin n, a i * t i = ∑ j : Fin n, t' j * a j := by
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [htapp, dif_pos j.2, mul_comm]
+      rw [htapp, dite_eq_left j.2, mul_comm]
     rw [h1, h2, sub_self]
   obtain ⟨ψ1, hψ1, hψ1l, hψ1a⟩ := GlobalTheory.T.exists_transvection_preserving_low_and_aff R (n + 1) h t htlow' hht
   have hv' : ∀ i : Fin n, ψ1 v i = v i + t' i * h v := by
     intro i
-    rw [hψ1, Finsupp.add_apply, Finsupp.smul_apply, htapp, dif_pos i.2, smul_eq_mul, mul_comm]
+    rw [hψ1, Finsupp.add_apply, Finsupp.smul_apply, htapp, dite_eq_left i.2, smul_eq_mul, mul_comm]
   have hv'n : ψ1 v n = v n := by
-    rw [hψ1, Finsupp.add_apply, Finsupp.smul_apply, htapp, dif_neg (lt_irrefl n), smul_zero, add_zero]
+    rw [hψ1, Finsupp.add_apply, Finsupp.smul_apply, htapp, dite_eq_right (lt_irrefl n), smul_zero, add_zero]
   have hmem : (1 - v n) ∈ Ideal.span (Set.range fun i : Fin n => v i + t' i * h v) := by
     rw [ht']; trivial
   obtain ⟨c, hc⟩ := (Ideal.mem_span_range_iff_exists_fun).1 hmem

@@ -43,7 +43,7 @@ def evalPt' (x : Sp R ⟶ X) (U : X.Opens) (f : Γ(X, U)) : R :=
 theorem evalPt'_eq (x : Sp R ⟶ X) {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     evalPt' x U f = evalPt x U h f := by
   unfold evalPt'
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 private theorem preimage_whole_comp_of_preimage_whole {Z W V : Scheme.{0}} (f : Z ⟶ W) (x : W ⟶ V) {U : V.Opens}
     (h : ⊤ ≤ x ⁻¹ᵁ U) : ⊤ ≤ (f ≫ x) ⁻¹ᵁ U := by

@@ -10,7 +10,7 @@ theorem qD_sub (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω →+* ℂ) (a b 
     fun _ _ _ => rfl
   have hsc : ∀ (ψ : HahnSeries ℚ Ω) (r : ℚ), (scale (a / d) ψ).coeff (a / d * r) = ψ.coeff r := by
     intro ψ r
-    rw [scale, dif_pos hk]
+    rw [scale, dite_eq_left hk]
     exact HahnSeries.embDomain_coeff (f := (OrderIso.mulLeft₀ (a / d) hk).toOrderEmbedding) (a := r)
   rw [HahnSeries.C_mul_eq_smul]
   ext s

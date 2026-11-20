@@ -139,7 +139,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 theorem inv_last (A : Matrix (Fin (r + 1)) (Fin (r + 1)) E) :
     A⁻¹ (Fin.last r) (Fin.last r) = leadMinorE A r / A.det := by
   rw [Matrix.inv_def, Matrix.smul_apply, PI.UnitaryGroupMassFormula.BetaLUniq.GN.adj_last, smul_eq_mul, Ring.inverse_eq_inv',
-    leadMinorE, dif_pos (Nat.le_succ r)]
+    leadMinorE, dite_eq_left (Nat.le_succ r)]
   have ecs : (Fin.castLE (Nat.le_succ r) : Fin r → Fin (r + 1)) = Fin.castSucc := funext fun i => Fin.ext rfl
   rw [ecs, div_eq_inv_mul]
 

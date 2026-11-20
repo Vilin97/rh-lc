@@ -62,7 +62,7 @@ theorem ordL_eq_of_v {x : w.adicCompletion E} {m : ℤ} (h : Valued.v x = WithZe
     rw [WithZero.coe_unzero, h]
     rfl
   unfold ordL
-  rw [dif_neg hx, e]
+  rw [dite_eq_right hx, e]
   simp
 
 theorem v_zpow_eq (hu : IsUnifV E w ϖ) (m : ℤ) : Valued.v (ϖ ^ m) = WithZero.exp (-m) := by

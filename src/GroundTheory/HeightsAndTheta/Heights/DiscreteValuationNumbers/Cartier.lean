@@ -91,13 +91,13 @@ theorem divCycle_eq_of_mul_sub_mem {P : Ideal (ReciprocityTheory.ChartRestrictio
   by_cases hf : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
   · have hg : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W :=
       ⟨mem_minimalPrimes_of_mul_mem hu hv h1 h2 hf.1, hf.2⟩
-    rw [dif_pos hf, dif_pos hg]
+    rw [dite_eq_left hf, dite_eq_left hg]
     have : W.IsPrime := hf.1.1.1
     unfold multAt
     rw [length_localized_eq_of_mul_mem hu hv h1 h2]
   · have hg : ¬ (W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W) := fun hg =>
       hf ⟨mem_minimalPrimes_of_mul_mem hv hu h2 h1 hg.1, hg.2⟩
-    rw [dif_neg hf, dif_neg hg]
+    rw [dite_eq_right hf, dite_eq_right hg]
 
 theorem le_and_isRelevant_of_divCycle_ne_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
     {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by

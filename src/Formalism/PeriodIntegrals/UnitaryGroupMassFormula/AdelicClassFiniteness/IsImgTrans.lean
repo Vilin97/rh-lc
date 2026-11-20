@@ -56,7 +56,7 @@ theorem stGenusOf : StGenusOf := by
   have hrep : ∀ M₀, (∃ y, Λ y = M₀) → Λ (rep M₀) = M₀ := by
     intro M₀ h
     show Λ (dite _ _ _) = M₀
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact Classical.choose_spec h
   refine ⟨T.image rep, fun x => ?_⟩
   obtain ⟨hfg, hspan, hsd⟩ := hΛ1 x

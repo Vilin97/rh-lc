@@ -82,7 +82,7 @@ theorem det_lowW {p : ℕ} (σ : Equiv.Perm (Fin p)) (v : U.LW σ → ℂ) : (U.
   · intro a b hab
     simp only [U.lowW, Matrix.add_apply, Matrix.one_apply, Matrix.of_apply]
     have hab' : a < b := hab
-    rw [if_neg (ne_of_lt hab'), dif_neg (fun h => absurd h.1 (not_lt.mpr hab'.le)), add_zero]
+    rw [if_neg (ne_of_lt hab'), dite_eq_right (fun h => absurd h.1 (not_lt.mpr hab'.le)), add_zero]
 
 theorem zxH_det (h : C.LPt) (j : ℕ) (hh : D.IsLocPt h j) (v : XH h) :
     (zxH h j hh.2 v).det = (U.hMat (D.ptPerm h) (D.ptDiag h)).det := by

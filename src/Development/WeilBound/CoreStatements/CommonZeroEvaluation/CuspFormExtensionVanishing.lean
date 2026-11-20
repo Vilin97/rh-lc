@@ -21,7 +21,7 @@ theorem evR_eq_of_sec₀_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {
   by_cases ht : Tested y
   swap
   · unfold evR evalAt
-    rw [dif_neg ht, dif_neg ht]
+    rw [dite_eq_right ht, dite_eq_right ht]
   have key : ∀ a : Rul Xo c, evR Xo c (idem Z * a) y = evR Xo c a y := fun a => by
     have e : evR Xo c (idem Z * a) y = evR Xo c (idem Z) y * evR Xo c a y :=
       evalAt_mul (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) (idem Z) a y

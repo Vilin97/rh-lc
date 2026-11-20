@@ -86,7 +86,7 @@ section Main
 variable {E k : Type} [Field E] [Field k]
 
 theorem atN_val {N : ℕ} (v : Fin N → E) (i : Fin N) : Loc.atN v i.val = v i := by
-  unfold Loc.atN; rw [dif_pos i.isLt]
+  unfold Loc.atN; rw [dite_eq_left i.isLt]
 
 theorem eN_val {N : ℕ} (i : Fin N) : Loc.eN E N i.val = Pi.single i 1 := by
   funext l; unfold Loc.eN; rw [Pi.single_apply]; simp [Fin.ext_iff]

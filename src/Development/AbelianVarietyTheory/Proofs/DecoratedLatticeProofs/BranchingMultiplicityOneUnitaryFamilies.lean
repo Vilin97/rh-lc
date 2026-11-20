@@ -118,7 +118,7 @@ def actL {N : ℕ} (lam : DomWeight N) (c : ℤ) (g : Matrix (Fin N) (Fin N) ℂ
 
 theorem actL_apply {N : ℕ} (lam : DomWeight N) (c : ℤ) (g : Matrix (Fin N) (Fin N) ℂ) (hg : IsUnit g.det)
     (f : delSq ℂ N lam) : (actL lam c g f).1 = g.det ^ c • Formalism.GradedWeylDivisibility.rowAct ℂ g f.1 := by
-  rw [actL, dif_pos (fun f hf => rowAct_mem lam g hg f hf)]
+  rw [actL, dite_eq_left (fun f hf => rowAct_mem lam g hg f hf)]
   rfl
 
 theorem span_map_mult_one {V W : ι → Type} [∀ τ, AddCommGroup (V τ)] [∀ τ, Module ℂ (V τ)]

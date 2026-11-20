@@ -19,7 +19,7 @@ theorem VeroneseChi.proof (hB : VeroneseMonoBasis.Statement) (hG : VeroneseGramM
   have h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix (Veronese.Idx D)) ℚ), IsSecBasis (Veronese.x D) n p.2 :=
     ⟨⟨_, bM⟩, hM⟩
   unfold Veronese.chi
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hp := h.choose_spec
   generalize h.choose = p at hp ⊢
   obtain ⟨r', b'⟩ := p

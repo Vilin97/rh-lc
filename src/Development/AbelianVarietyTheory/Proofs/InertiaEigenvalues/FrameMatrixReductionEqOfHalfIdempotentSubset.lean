@@ -45,7 +45,7 @@ theorem subring_hom_dite_sub_mul_eq_of_kernel {R k : Type} [CommRing R] [CommRin
     (hc : c ∈ O) (h0 : f ⟨c, hc⟩ = 0) [Decidable (x - c * x ∈ O)] [Decidable (x ∈ O)] :
     (if h : x - c * x ∈ O then f ⟨x - c * x, h⟩ else 0) = if h : x ∈ O then f ⟨x, h⟩ else 0 := by
   have hm : x - c * x ∈ O := sub_mem hx (mul_mem hc hx)
-  rw [dif_pos hm, dif_pos hx]
+  rw [dite_eq_left hm, dite_eq_left hx]
   have e : (⟨x - c * x, hm⟩ : O) = ⟨x, hx⟩ - ⟨c, hc⟩ * ⟨x, hx⟩ := rfl
   rw [e, map_sub, map_mul, h0, zero_mul, sub_zero]
 

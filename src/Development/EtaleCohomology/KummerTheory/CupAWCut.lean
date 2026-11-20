@@ -22,7 +22,7 @@ theorem ev_delta {m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains R).obj E) I n
     rw [ev_delta_succ hm α p s t hs]
     congr 2
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [ev0, dif_pos]
+    rw [ev0, dite_eq_left]
 
 def pr (μ : Pair I J K) (α : Cochain ((chains R).obj E) I n) (β : Cochain ((chains R).obj E) J m) (w : ℤ) (U : Scheme.{0})
     (p q : ℕ) (y : Sx E p U) (z : Sx E q U) : Sec (K.X w) U :=
@@ -33,7 +33,7 @@ variable (μ : Pair I J K) (α : Cochain ((chains R).obj E) I n) (β : Cochain (
 theorem mul_ev {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) + n = s) (ht : -(q : ℤ) + m = t) (y : Sx E p U)
     (z : Sx E q U) : μ.mul U s t w h (ev α p s hs U y) (ev β q t ht U z) = pr μ α β w U p q y z := by
   subst hs ht
-  rw [pr, dif_pos h]
+  rw [pr, dite_eq_left h]
 
 theorem mul_bd_left {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) + (n + 1) = s) (ht : -(q : ℤ) + m = t) (y : Sx E p U)
     (z : Sx E q U) : μ.mul U s t w h (bd (ev0 α s U) p y) (ev β q t ht U z) = bd (fun a y => pr μ α β w U a q y z) p y := by
@@ -43,7 +43,7 @@ theorem mul_bd_left {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) +
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [bd, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [ev0, dif_pos (by omega), mul_ev]
+    rw [ev0, dite_eq_left (by omega), mul_ev]
 
 theorem mul_bd_right {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) + n = s) (ht : -(q : ℤ) + (m + 1) = t) (y : Sx E p U)
     (z : Sx E q U) : μ.mul U s t w h (ev α p s hs U y) (bd (ev0 β t U) q z) = bd (fun b z => pr μ α β w U p b y z) q z := by
@@ -53,7 +53,7 @@ theorem mul_bd_right {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) 
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [bd, map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [ev0, dif_pos (by omega), mul_ev]
+    rw [ev0, dite_eq_left (by omega), mul_ev]
 
 theorem d_pr {w : ℤ} {p q : ℕ} (h : (-(p : ℤ) + n) + (-(q : ℤ) + m) = w) (y : Sx E p U) (z : Sx E q U) :
     Sec.map (K.d w (w + 1)) (pr μ α β w U p q y z) =
@@ -61,7 +61,7 @@ theorem d_pr {w : ℤ} {p q : ℕ} (h : (-(p : ℤ) + n) + (-(q : ℤ) + m) = w)
         (((n + 1).negOnePow : ℤˣ) : ℤ) • bd (fun a y => pr μ α β (w + 1) U a q y z) p y) +
       (((-(p : ℤ) + n).negOnePow : ℤˣ) : ℤ) • (pr μ α (δ m (m + 1) β) (w + 1) U p q y z -
         (((m + 1).negOnePow : ℤˣ) : ℤ) • bd (fun b z => pr μ α β (w + 1) U p b y z) q z) := by
-  rw [pr, dif_pos h, μ.leibniz, Units.smul_def]
+  rw [pr, dite_eq_left h, μ.leibniz, Units.smul_def]
   congr 1
   · rw [← mul_ev μ (δ n (n + 1) α) β (s := -(p : ℤ) + n + 1) (t := -(q : ℤ) + m) (by omega) (by omega) rfl,
       ev_delta rfl α p _ _ rfl, ← mul_bd_left μ α β (s := -(p : ℤ) + n + 1) (t := -(q : ℤ) + m) (by omega) (by omega) rfl,
@@ -83,7 +83,7 @@ theorem leibniz : LateralTheory.EtaleFoundations.cupflip_aw_leibniz := by
   obtain ⟨w, rfl⟩ : ∃ w, w' = w + 1 := ⟨w' - 1, by omega⟩
   have hw : -(M : ℤ) + k = w := by omega
   have hb : bd (ev0 γ (w + 1) U) M x = _ :=
-    (bd_congr (fun N y e => by rw [ev0, dif_pos (by omega), aw_eq h]) x).trans
+    (bd_congr (fun N y e => by rw [ev0, dite_eq_left (by omega), aw_eq h]) x).trans
       (bd_aw (pr μ α β (w + 1) U) (fun p => (((m * p).negOnePow : ℤˣ) : ℤ))
         (fun p => ((m.negOnePow * (m * p).negOnePow : ℤˣ) : ℤ)) (fun p => by
           push_cast

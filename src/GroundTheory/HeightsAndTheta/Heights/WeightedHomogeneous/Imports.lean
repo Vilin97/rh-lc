@@ -38,11 +38,11 @@ theorem GeometricArithmeticNumbers.proof (hF : WeightedDegree.Statement) (hZ : F
       exact hdim
     have hm : Geo.multAt (ι := blockIdx n) (P.ideal ⊔ Ideal.span {C (p : ℤ)}) W =
         (NumbersDVR.multAt (P.ideal ⊔ Ideal.span {C (p : ℤ)}) W).toNat := by
-      rw [Geo.multAt, dif_pos hWp]
+      rw [Geo.multAt, dite_eq_left hWp]
       rfl
-    rw [NumbersDVR.divCycle, dif_pos hW', hm,
+    rw [NumbersDVR.divCycle, dite_eq_left hW', hm,
       Bridge.intNum_map_eq_geoNum p D W hMP hpW hdimW a]
   · have hW' : ¬(W ∈ (P.ideal ⊔ Ideal.span {C (p : ℤ)}).minimalPrimes ∧ NumbersDVR.IsRelevant W) := hW
-    rw [Set.indicator_of_notMem hW, NumbersDVR.divCycle, dif_neg hW', zero_mul]
+    rw [Set.indicator_of_notMem hW, NumbersDVR.divCycle, dite_eq_right hW', zero_mul]
 
 end GroundTheory.Heights₂.Heights

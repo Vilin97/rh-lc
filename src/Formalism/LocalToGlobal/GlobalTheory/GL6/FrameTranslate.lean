@@ -109,7 +109,7 @@ theorem rnd_fillG_eq (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
   have hx : ∃ p : {γ : GL (Fin n) E // γ ∈ UJ (σ : E →+* E) J} × S.U,
       x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) p.1.1 * x0.1 * p.2.1 := ⟨p, hp⟩
   unfold rndFillG
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   have hq := Classical.choose_spec hx
   have hu := rnd_uniq S x0 hs (Classical.choose hx).1.2 p.1.2 (k := (Classical.choose hx).2) (l := p.2)
     (by rw [← hq, ← hp])
@@ -164,7 +164,7 @@ theorem rnd_fill_mem (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
       have : x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ⁻¹ * x'.1 * κ.1⁻¹ := by rw [hx, map_inv]; group
       rw [this, hp, map_mul, map_inv, Subgroup.coe_mul, InvMemClass.coe_inv]; group
     unfold rndFillG
-    rw [dif_neg h1, dif_neg h2, mul_zero]
+    rw [dite_eq_right h1, dite_eq_right h2, mul_zero]
 
 theorem rnd_fill (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
     (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x))

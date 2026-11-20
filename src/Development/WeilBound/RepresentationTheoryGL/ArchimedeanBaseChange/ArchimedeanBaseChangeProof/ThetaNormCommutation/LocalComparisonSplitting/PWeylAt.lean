@@ -52,7 +52,7 @@ theorem weylAt_holds : WeylAt := by
     simp only [Units.val_mk0]
   have hex : ∃ g : GL (Fin n) ℂ, g.val.charpoly = (diagonal γ).charpoly := ⟨D, by rw [hD]⟩
   unfold chAt
-  rw [dif_pos hex, GlobalTheory.ContraChar.trace_sqRep_eq_of_charpoly_eq l _ D (hex.choose_spec.trans (by rw [hD])),
+  rw [dite_eq_left hex, GlobalTheory.ContraChar.trace_sqRep_eq_of_charpoly_eq l _ D (hex.choose_spec.trans (by rw [hD])),
     GlobalTheory.ContraChar.trace_sqRep_diag l D γ hD, weylat_weylChar_eq_gtChar l γ h0 hinj]
 
 end PositivityTheory.Rg.BcB.G8

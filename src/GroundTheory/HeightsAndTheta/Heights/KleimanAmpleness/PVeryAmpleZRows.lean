@@ -21,7 +21,7 @@ def onSet {i : ℕ} (s : Cech.Cochain (fun _ : Cell U => V) i) (A : Finset (Fin 
 theorem onSet_idx {i : ℕ} (s : Cech.Cochain (fun _ : Cell U => V) i) (I : Cech.Idx U i) :
     onSet s I.1.1 = s I := by
   unfold onSet
-  rw [dif_pos ⟨I.2, I.1.2.2⟩]
+  rw [dite_eq_left ⟨I.2, I.1.2.2⟩]
 
 theorem d_eq {i : ℕ} (s : Cech.Cochain (fun _ : Cell U => V) i) (K : Cech.Idx U (i + 1)) :
     Cech.d (fun _ : Cell U => V) (Cech.idRes R V U) i s K =

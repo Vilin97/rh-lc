@@ -242,13 +242,13 @@ def kO (g : G ℚ Ω) : c.O :=
 theorem kO_res (x : G K' Ω) : ((kO K' κ c hc (resQ K' x) : c.O) : Qbar l) = κ x := by
   have h : ∃ y, resQ K' y = resQ K' x := ⟨x, rfl⟩
   unfold kO
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   show (κ h.choose : Qbar l) = κ x
   rw [res_inj K' h.choose_spec]
 
 theorem kO_off (g : G ℚ Ω) (hg : ¬ ∃ x, resQ K' x = g) : kO K' κ c hc g = 1 := by
   unfold kO
-  rw [dif_neg hg]
+  rw [dite_eq_right hg]
 
 def PP (e : ℤ) (A : ValuationSubring Ω) : Prop :=
   ∀ h : G K' Ω, resQ K' h ∈ Ine (F := ℚ) A → κ h = cycBar K' Ω l h ^ e

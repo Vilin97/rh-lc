@@ -29,7 +29,7 @@ theorem main : ∀ {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} 
     intro a b
     have := hL a b
     by_cases hab : a.val < r ∧ b.val < r
-    · rw [dif_pos hab, hone] at this
+    · rw [dite_eq_left hab, hone] at this
       refine ⟨?_, fun h' => absurd hab h'⟩
       convert this using 3
       rw [Matrix.sub_apply, Matrix.one_apply]
@@ -37,7 +37,7 @@ theorem main : ∀ {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} 
       · subst e; simp
       · have e' : (⟨a.val, hab.1⟩ : Fin r) ≠ ⟨b.val, hab.2⟩ := fun h2 => e (Fin.ext (by simpa using congrArg Fin.val h2))
         rw [if_neg e, if_neg e']
-    · rw [dif_neg hab] at this
+    · rw [dite_eq_right hab] at this
       refine ⟨?_, fun _ => this⟩
       rw [Matrix.sub_apply, this, Matrix.one_apply]
       simp

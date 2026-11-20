@@ -193,7 +193,7 @@ theorem coe_parabolicCoord_symm_single (t : ParabolicIndex n β) :
   · obtain ⟨h1, h2⟩ := hij
     have ht : (⟨(i, j), h1 ▸ h2 ▸ t.2⟩ : ParabolicIndex n β) = t := by
       ext <;> simp [← h1, ← h2]
-    rw [dif_pos (h1 ▸ h2 ▸ t.2), if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
+    rw [dite_eq_left (h1 ▸ h2 ▸ t.2), if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
   · rw [if_neg hij]
     split_ifs with h
     · rfl
@@ -432,7 +432,7 @@ theorem coe_unipotentCoord_symm_single (t : UnipotentIndex n β) :
     have hlt : β i < β j := h1 ▸ h2 ▸ t.2
     have ht : (⟨(i, j), hlt⟩ : UnipotentIndex n β) = t := by
       ext <;> simp [← h1, ← h2]
-    rw [dif_pos hlt, if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
+    rw [dite_eq_left hlt, if_pos ⟨h1, h2⟩, ht, Pi.single_eq_same]
   · rw [if_neg hij]
     split_ifs with h
     · rw [Pi.single_apply, if_neg]

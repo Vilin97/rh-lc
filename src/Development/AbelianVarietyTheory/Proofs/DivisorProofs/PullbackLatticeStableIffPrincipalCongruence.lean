@@ -46,7 +46,7 @@ theorem pullLat_stable_iff_cong : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     rw [hval, het] at h1
     have hv0 : Valued.v et ≠ 0 := (Valuation.ne_zero_iff _).2 het0
     unfold ordL at h1
-    rw [dif_neg hv0] at h1
+    rw [dite_eq_right hv0] at h1
     rw [← WithZero.coe_unzero hv0, WithZero.exp]
     congr 1
     apply Multiplicative.toAdd.injective

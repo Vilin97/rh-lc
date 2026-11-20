@@ -49,14 +49,14 @@ lemma exists_col {n : ℕ} (B : Matrix (Fin n) (Fin n) ℂ)
       simp only [Matrix.mulVec, dotProduct, hS, Matrix.submatrix_apply] at this
       rw [← this]
       refine Finset.sum_congr rfl fun c _ => ?_
-      rw [dif_pos c.2]
+      rw [dite_eq_left c.2]
     have h2 : ∑ c : {c : Fin n // ¬ c < j}, B a c.1 *
         (if h : c.1 < j then w ⟨c.1, h⟩ else if c.1 = j then 1 else 0) = B a j := by
       rw [Finset.sum_eq_single (⟨j, lt_irrefl j⟩ : {c : Fin n // ¬ c < j})]
       · simp
       · intro c _ hc
         have : c.1 ≠ j := fun h => hc (Subtype.ext h)
-        rw [dif_neg c.2, if_neg this, mul_zero]
+        rw [dite_eq_right c.2, if_neg this, mul_zero]
       · simp
     rw [h1, h2]
     ring

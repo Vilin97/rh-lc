@@ -33,7 +33,7 @@ theorem omegaG_of_empty {a b : ℕ} (L : LevDat D.host.E ℂ a) (hL : L.Pg = ∅
   have h2 : ∀ g : L.P.H, L.P.chi g = 1 := fun g => by
     rw [show g = 1 from Subtype.ext (h1 _), map_one]
   unfold omegaG
-  rw [dif_pos ⟨fun PP h => absurd h (hn PP), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
+  rw [dite_eq_left ⟨fun PP h => absurd h (hn PP), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
     by rw [h1 (fun PP => _)]; exact L.P.H.one_mem⟩, h2, Fintype.prod_empty, Fintype.prod_empty]
   simp
 

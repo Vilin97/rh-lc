@@ -294,7 +294,7 @@ omit [NumberField K] in
 theorem infinitePlaceMeasure_of_isComplex {w : InfinitePlace K} (hw : w.IsComplex) :
     infinitePlaceMeasure w =
       Measure.map (isometryEquivComplexOfIsComplex hw).symm ((2 : ℝ≥0∞) • volume) := by
-  rw [infinitePlaceMeasure, dif_neg (not_isReal_iff_isComplex.2 hw)]
+  rw [infinitePlaceMeasure, dite_eq_right (not_isReal_iff_isComplex.2 hw)]
 
 instance isAddHaarMeasure_infinitePlaceMeasure (w : InfinitePlace K) :
     (infinitePlaceMeasure w).IsAddHaarMeasure := by

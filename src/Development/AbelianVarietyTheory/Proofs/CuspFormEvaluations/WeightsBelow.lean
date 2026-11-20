@@ -90,7 +90,7 @@ theorem weights_below : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliInte
     intro τ i hi
     have e := hLP τ i
     unfold gapZ at e
-    rw [dif_neg (by omega), if_neg (by omega)] at e
+    rw [dite_eq_right (by omega), if_neg (by omega)] at e
     unfold Tp at e
     have hb : (0 : ℤ) < ((Tn + WeightFamilies.dimY D j + 2 : ℕ) : ℤ) := by positivity
     rw [Int.fdiv_eq_ediv, if_pos (Or.inl hb.le), sub_zero] at e

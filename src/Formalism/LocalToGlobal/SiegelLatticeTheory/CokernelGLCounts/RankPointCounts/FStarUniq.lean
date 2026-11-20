@@ -118,13 +118,13 @@ theorem det_swap {K : Type*} [Field K] (n : ℕ) :
 
 theorem leadMinorE_full (D : Formalism.BasicNotions.D7) (Z : MatZ D) : leadMinorE Z (D.R.rS + 1) = Z.det := by
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem leadMinorE_r (D : Formalism.BasicNotions.D7) (Z : MatZ D) :
     leadMinorE Z D.R.rS = Z.adjugate (Fin.last D.R.rS) (Fin.last D.R.rS) := by
   unfold leadMinorE
-  rw [dif_pos (Nat.le_succ _), adjugate_last]
+  rw [dite_eq_left (Nat.le_succ _), adjugate_last]
   congr 1
 
 theorem detGa' (D : Formalism.BasicNotions.D7) (T T' : D.host.E) (Z : MatZ D) :

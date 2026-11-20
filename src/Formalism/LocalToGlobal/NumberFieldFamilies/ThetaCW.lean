@@ -114,7 +114,7 @@ def swapC (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (Φ : schC ψ V W) : sc
 theorem swapC_apply (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (hne : V.rank ≠ W.rank) (Φ : schC ψ V W) (x : WA V W) :
     (swapC ψ V W Φ).1 x.transpose = Φ.1 x := by
   unfold swapC
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
   rfl
 
 def admitted (V W : HSp D) (χ χ' : chrA D) : Prop := ResEta D χ.1 V.rank ∧ ResEta D χ'.1 W.rank
@@ -244,7 +244,7 @@ theorem thC_apply (G : FormGaps D) (Om : WeilC ψ) (petF : HSp D → ℝ) {V W :
     (x : GA D W) : (thC G Om petF V W χ χ' Φ F).1 x =
       (petCOf D petF (petRC D) V : ℂ) * ∫ g in 𝓕, (Om.om V W χ χ' (g, x) Φ).1 0 * F.1.1 g ∂μ := by
   unfold thC
-  rw [dif_pos h, LinearMap.mk₂_apply, thFun_apply, intC_eq G.volEx G.volU hV hp]
+  rw [dite_eq_left h, LinearMap.mk₂_apply, thFun_apply, intC_eq G.volEx G.volU hV hp]
   · rfl
   · intro γ hγ g
     rw [kerC_left (Om.weil V W χ χ' h) Φ hγ, ((mem_afC G.add).1 F.1.2).left γ hγ]
@@ -279,13 +279,13 @@ def cptC (V : HSp D) (τ : D.what₂.Tau) :
 theorem cptC_gram (V : HSp D) (hV : V.SigOK) (τ : D.what₂.Tau) :
     (cptC V τ)ᴴ * Formalism.UG.Jpq (V.sig (tauE D τ)).1 (V.sig (tauE D τ)).2 * cptC V τ = gramAt D V τ := by
   unfold cptC
-  rw [dif_pos hV]
+  rw [dite_eq_left hV]
   exact (cpt_bas_ex V hV τ).choose_spec.1
 
 theorem cptC_bas (V : HSp D) (hV : V.SigOK) (τ : D.what₂.Tau) (a : Fin (V.sig (tauE D τ)).1 ⊕ Fin (V.sig (tauE D τ)).2)
     (i j : Fin V.rank) : (cptC V τ * (basC V).map (tauE D τ)) a i ≠ 0 → (cptC V τ * (basC V).map (tauE D τ)) a j ≠ 0 → i = j := by
   unfold cptC
-  rw [dif_pos hV]
+  rw [dite_eq_left hV]
   exact (cpt_bas_ex V hV τ).choose_spec.2 a i j
 
 def kfinC (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) : Submodule ℂ (schC ψ V W) :=

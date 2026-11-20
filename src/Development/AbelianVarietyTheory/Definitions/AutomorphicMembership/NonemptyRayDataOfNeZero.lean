@@ -156,7 +156,7 @@ def rcl (M : ℕ) (I : Ideal (𝓞 K)) : (rayCon K M).Quotient :=
   if h : I ∈ primeTo K M then (rayCon K M).mk' ⟨I, h⟩ else 1
 
 theorem rcl_of {M : ℕ} {I : Ideal (𝓞 K)} (h : I ∈ primeTo K M) : rcl M I = (rayCon K M).mk' ⟨I, h⟩ := by
-  rw [rcl, dif_pos h]
+  rw [rcl, dite_eq_left h]
 
 theorem rcl_mul {M : ℕ} {I J : Ideal (𝓞 K)} (h1 : I ∈ primeTo K M) (h2 : J ∈ primeTo K M) :
     rcl M (I * J) = rcl M I * rcl M J := by

@@ -32,7 +32,7 @@ theorem liftGroupForms_eq_extended_rationalForms_companion (x : TwIn ex) : Forma
   have := eq_of_heq (key _ μ (x.Y.tupTie μ hμ) hμ rfl v)
   rw [this]
   unfold twPOf
-  rw [dif_pos hμ]
+  rw [dite_eq_left hμ]
   rfl
 
 set_option maxHeartbeats 2000000 in

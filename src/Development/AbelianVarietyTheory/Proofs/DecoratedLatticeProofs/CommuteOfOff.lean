@@ -215,7 +215,7 @@ theorem mem_lev_iff (hI : I.Ok) (hTw : I.IsTw) (hPr : (B.primes X).Ok) (u : B.Wo
       unfold cosetIn
       rw [h3, h4]
       unfold frsF
-      rw [dif_neg hP, dif_neg hP, hfr]
+      rw [dite_eq_right hP, dite_eq_right hP, hfr]
 
 end GlobalTheory.PenLevTyp
 

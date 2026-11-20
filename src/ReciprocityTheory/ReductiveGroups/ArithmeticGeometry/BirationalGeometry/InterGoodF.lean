@@ -111,10 +111,10 @@ theorem weight_sWt_apply {r : ℕ} (n : (Fin r ⊕ {k // k ≠ k0}) →₀ ℕ) 
     simp [sWt, oneK]
   · by_cases h : k = k0
     · subst h
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       refine Finset.sum_eq_zero fun k' _ => ?_
       simp [sWt, Finsupp.single_apply, k'.2]
-    · rw [dif_neg h, Finset.sum_eq_single ⟨k, h⟩]
+    · rw [dite_eq_right h, Finset.sum_eq_single ⟨k, h⟩]
       · simp [sWt]
       · intro k' _ hk'
         have : k'.1 ≠ k := fun e => hk' (Subtype.ext e)
@@ -126,8 +126,8 @@ theorem inr_eq_of_weight_eq {r : ℕ} {n n0 : (Fin r ⊕ {k // k ≠ k0}) →₀
     n (Sum.inr k') = n0 (Sum.inr k') := by
   have h0 : Finsupp.weight (sWt k0 r) n k0 = Finsupp.weight (sWt k0 r) n0 k0 := by rw [h]
   have h1 : Finsupp.weight (sWt k0 r) n k'.1 = Finsupp.weight (sWt k0 r) n0 k'.1 := by rw [h]
-  rw [weight_sWt_apply, weight_sWt_apply, dif_pos rfl, dif_pos rfl] at h0
-  rw [weight_sWt_apply, weight_sWt_apply, dif_neg k'.2, dif_neg k'.2, Subtype.coe_eta] at h1
+  rw [weight_sWt_apply, weight_sWt_apply, dite_eq_left rfl, dite_eq_left rfl] at h0
+  rw [weight_sWt_apply, weight_sWt_apply, dite_eq_right k'.2, dite_eq_right k'.2, Subtype.coe_eta] at h1
   omega
 
 theorem aeval_sumElim_factor {S : Type*} [CommRing S] [Algebra ℚ S] {r : ℕ}

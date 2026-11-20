@@ -155,7 +155,7 @@ theorem twLamQB_one (hq : ((qOf P : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : ((qOf P
     have e2 : D s t = ((toGLm E N y : GL (Fin N) E) : Matrix (Fin N) (Fin N) E) ⟨kj + s.1, hs⟩ ⟨kj + t.1, ht⟩ := by
       rw [qsp_toGLm_apply, hD, Matrix.of_apply, e1]
       unfold Loc.atN
-      rw [dif_pos hs]
+      rw [dite_eq_left hs]
       rfl
     obtain ⟨h1, h2⟩ := qth_red_entry P (qOf P) hq0 hq hy ⟨kj + s.1, hs⟩ ⟨kj + t.1, ht⟩
     rw [e2]
@@ -170,7 +170,7 @@ theorem twLamQB_one (hq : ((qOf P : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : ((qOf P
     rw [this, Matrix.det_one]
   unfold LocE.unitV
   have hu : IsUnit (redP P D.det) := by rw [hdet]; exact isUnit_one
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have : hu.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, hdet]; rfl)
   rw [this, map_one, Units.val_one, inv_one]
 

@@ -1778,7 +1778,7 @@ theorem center_smul_mem_Mtilde (D : D7) (h1 : CentralElementPreserves D) (E : Mo
   have h3 := h1 μ (c • ⟨E, hE⟩) hc x hx
   rw [map_smul, LinearMap.smul_apply] at h3
   unfold NTypes.onAmb
-  rw [dif_pos hE]
+  rw [dite_eq_left hE]
   exact h3
 
 theorem idempotentIntegral_of (D : D7) (h1 : CentralElementPreserves D) (h2 : CentralIdempotentIntegralAlt D) : IdempotentIntegral D := by
@@ -1806,7 +1806,7 @@ theorem center_smul_mem_lattice (h1 : CentralElementPreservesSide S) (E : Monoid
 
 theorem idempotentIntegral_side_of (h1 : CentralElementPreservesSide S) (h2 : CentralIdempotentIntegralAlt D) : S.AIntegral := by
   intro μ x hx
-  rw [S.eOp_tie μ, dif_pos h2.1]
+  rw [S.eOp_tie μ, dite_eq_left h2.1]
   exact center_smul_mem_lattice S h1 _ h2.1 _ h2.2 μ x hx
 
 end SideAI
@@ -2106,7 +2106,7 @@ variable (D : D7)
 
 theorem wSz_eq_wj (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (τ : D.what₂.Tau) : wSz D j τ = wj D j τ := by
   unfold wSz wj
-  rw [dif_pos ⟨h1, h2⟩, dif_pos (by omega : j - 1 < D.R.m)]
+  rw [dite_eq_left ⟨h1, h2⟩, dite_eq_left (by omega : j - 1 < D.R.m)]
 
 theorem two_le_b (L : SizeData₂ D) : 2 ≤ L.sc.b := by
   have h1 : 1 ≤ L.sc.L := Real.one_le_rpow L.sc.one_lt_alt.le L.sc.eps_pos.le
@@ -2664,7 +2664,7 @@ theorem jivF {CJ A : ℝ}
   refine ⟨fun x i => if h' : ExponentChoiceBounds (Fm.D x i) (Fm.L x i) CJ A then h'.choose else ⟨fun _ _ => 0⟩, x0, fun x hx h1 i => ?_⟩
   have h' := h x hx h1 i
   show admJ (Fm.D x i) (Fm.L x i) (dite _ _ _) CJ A ∧ ExponentBoundIV (Fm.D x i) (dite _ _ _)
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 theorem on4ivF (he : 0 < eps) (ZF : ∀ x (_ : Fm.x1 < x) (i : Fm.Ix x), JumpSetsAlt.Prov (Fm.D x i))

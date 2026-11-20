@@ -100,7 +100,7 @@ lemma goodRowsProjector_apply_eq_sum (k r' : ℕ) (i : Fin (2 * (1 + r') + k + 1
 
 lemma liftVec_last (k r' : ℕ) (y : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' y (lastI k r') = 0 := by
   unfold liftVec lastI
-  rw [dif_neg (by simp only []; omega)]
+  rw [dite_eq_right (by simp only []; omega)]
 
 lemma sum_lift (k r' : ℕ) (F : Fin (2 * (1 + r') + k + 1) → ℂ)
     (h : ∀ p, ¬ (1 ≤ p.val ∧ p.val < 2 * r' + k + 1 + 1) → F p = 0) :
@@ -126,13 +126,13 @@ lemma liftVec_levPos (k r' : ℕ) (y : Fin (2 * r' + k + 1) → ℂ) (j : Fin (2
     liftVec k 1 r' y (levPos k 1 r' j) = y j := by
   have := j.isLt
   unfold liftVec levPos
-  rw [dif_pos (by simp only []; omega)]
+  rw [dite_eq_left (by simp only []; omega)]
   congr 1
 
 lemma liftVec_out (k r' : ℕ) (y : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (1 + r') + k + 1))
     (hp : ¬ (1 ≤ p.val ∧ p.val < 2 * r' + k + 1 + 1)) : liftVec k 1 r' y p = 0 := by
   unfold liftVec
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 lemma Hpk_levPos (k r' : ℕ) (i j : Fin (2 * r' + k + 1)) :
     Hpk k (1 + r') (levPos k 1 r' i) (levPos k 1 r' j) = Hpk k r' i j := by

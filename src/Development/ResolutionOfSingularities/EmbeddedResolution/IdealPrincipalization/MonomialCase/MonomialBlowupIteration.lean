@@ -81,7 +81,7 @@ theorem blowupAtCenter_eq_append (hinv : ComapIsoInvariance.{u}) (s : MarkedBlow
     (h : IsAdmissibleCenter s) :
     blowupAtCenter hinv s = s.append (monomialBlowupStep s h) hinv := by
   unfold blowupAtCenter monomialBlowupStep
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem blowupAtCenter_length (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E)
     (h : IsAdmissibleCenter s) :
@@ -101,7 +101,7 @@ theorem isStationaryAt_iff_not_isAdmissibleCenter (hinv : ComapIsoInvariance.{u}
     show (blowupAtCenter hinv (monomialBlowupIterate hinv s n)).length
         = (monomialBlowupIterate hinv s n).length
     unfold blowupAtCenter
-    rw [dif_neg h]
+    rw [dite_eq_right h]
 
 theorem blowupAtCenter_schemeAt_succ (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E)
     (h : IsAdmissibleCenter s) :
@@ -270,7 +270,7 @@ private theorem blowupAtCenter_schemeAt_of_le {p : X ⟶ Spec (CommRingCat.of k)
     exact MarkedBlowupSequenceData.append_schemeAt_of_le_length d (MarkedBlowupSequenceData.monomialBlowupStep d h) hinv hi
   · have hs : MarkedBlowupSequenceData.blowupAtCenter hinv d = d := by
       unfold MarkedBlowupSequenceData.blowupAtCenter
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     rw [hs]
 
 private theorem length_le_blowupAtCenter_length {p : X ⟶ Spec (CommRingCat.of k)}
@@ -282,7 +282,7 @@ private theorem length_le_blowupAtCenter_length {p : X ⟶ Spec (CommRingCat.of 
     omega
   · have hs : MarkedBlowupSequenceData.blowupAtCenter hinv d = d := by
       unfold MarkedBlowupSequenceData.blowupAtCenter
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     exact le_of_eq (by rw [hs])
 
 private theorem monomialBlowupIterate_length_le_and_schemeAt_eq {p : X ⟶ Spec (CommRingCat.of k)}
@@ -356,7 +356,7 @@ private theorem isPrefix_monomialBlowupIterate_succ {p : X ⟶ Spec (CommRingCat
   · have hs : MarkedBlowupSequenceData.blowupAtCenter hinv (MarkedBlowupSequenceData.monomialBlowupIterate hinv s j)
         = MarkedBlowupSequenceData.monomialBlowupIterate hinv s j := by
       unfold MarkedBlowupSequenceData.blowupAtCenter
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     rw [MarkedBlowupSequenceData.monomialBlowupIterate_succ, hs]
     exact MarkedBlowupSequenceData.IsPrefix.refl _
 
@@ -565,7 +565,7 @@ private theorem blowupAtCenter_center_of_lt {p : X ⟶ Spec (CommRingCat.of k)}
       (MarkedBlowupSequenceData.blowupAtCenter_eq_append hinv d h) e
   · have hs : MarkedBlowupSequenceData.blowupAtCenter hinv d = d := by
       unfold MarkedBlowupSequenceData.blowupAtCenter
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     have key : ∀ D : MarkedBlowupSequenceData p I m E, D = d →
         ∀ eD : D.obj i = d.obj i, D.center i = (d.center i).comap (eqToHom eD) := by
       rintro D rfl eD

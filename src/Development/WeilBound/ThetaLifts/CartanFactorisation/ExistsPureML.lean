@@ -111,7 +111,7 @@ theorem pure_ext {w : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hw : Std w) (T : F
     finprod_mem_union' disjoint_compl_right (hf.inter_of_right _) (hf.inter_of_right _), finprod_mem_coe_finset,
     ← Finset.prod_coe_sort T]
   congr 1
-  · exact Finset.prod_congr rfl fun v _ => by unfold ext; rw [dif_pos v.2]
+  · exact Finset.prod_congr rfl fun v _ => by unfold ext; rw [dite_eq_left v.2]
   · exact finprod_congr fun v => finprod_congr fun hv => by rw [ext_off w T ψ v hv]
 
 theorem exists_pureML {w : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hw : Std w) (T : Finset (Pl F)) :

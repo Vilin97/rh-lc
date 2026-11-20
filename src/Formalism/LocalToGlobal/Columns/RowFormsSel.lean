@@ -36,7 +36,7 @@ theorem rf_tup_fin : (Qprime (mu : Chr X.F X.E X.K)).Finite :=
 theorem mem_QE (P : HeightOneSpectrum (𝓞 X.E)) :
     P ∈ QE sel (mu : Chr X.F X.E X.K) ↔ ∃ v ∈ Qprime (mu : Chr X.F X.E X.K), sel v = P := by
   unfold QE
-  rw [dif_pos (rf_tup_fin mu)]
+  rw [dite_eq_left (rf_tup_fin mu)]
   simp only [Finset.mem_image, Set.Finite.mem_toFinset]
 
 variable {sel}

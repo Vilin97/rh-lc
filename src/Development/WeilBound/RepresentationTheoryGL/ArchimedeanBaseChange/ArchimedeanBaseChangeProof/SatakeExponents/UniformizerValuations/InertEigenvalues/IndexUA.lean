@@ -59,7 +59,7 @@ theorem wexp_castLE {n : ℕ} (l : Fin (n / 2) → ℤ) (i : Fin (n / 2)) :
     wexp n l (Fin.castLE (Nat.div_le_self n 2) i) = l i := by
   delta wexp
   beta_reduce
-  rw [dif_pos (by rw [Fin.val_castLE]; exact i.2)]
+  rw [dite_eq_left (by rw [Fin.val_castLE]; exact i.2)]
   rfl
 
 theorem wexp_nonneg {n : ℕ} {l : Fin (n / 2) → ℤ} (hl : Cone l) {i j : Fin n} (h : i < j) :

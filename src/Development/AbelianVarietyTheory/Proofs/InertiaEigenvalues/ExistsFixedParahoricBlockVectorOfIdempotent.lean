@@ -164,17 +164,17 @@ theorem exists_of_isLiftN {p : ℕ} {g : GL (Fin r) (ZMod p)} {h : GL (Fin (r + 
     ext (a | a) (b | b)
     · rw [bl_apply, ee_inl, ee_inl, fromBlocks_apply₁₁]
     · have := H (Fin.castAdd t a) (Fin.natAdd r b)
-      rw [dif_neg (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
+      rw [dite_eq_right (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
       have hne : Fin.castAdd t a ≠ Fin.natAdd r b := fun e => by
         have := congrArg Fin.val e; simp at this; omega
       simp [bl_apply, ee_inl, ee_inr, this, hne]
     · have := H (Fin.natAdd r a) (Fin.castAdd t b)
-      rw [dif_neg (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
+      rw [dite_eq_right (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
       have hne : Fin.natAdd r a ≠ Fin.castAdd t b := fun e => by
         have := congrArg Fin.val e; simp at this; omega
       simp [bl_apply, ee_inl, ee_inr, this, hne]
     · have := H (Fin.natAdd r a) (Fin.natAdd r b)
-      rw [dif_neg (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
+      rw [dite_eq_right (by simp only [Fin.coe_castAdd, Fin.coe_natAdd]; omega)] at this
       simp [bl_apply, ee_inr, this, Matrix.one_apply]
   have hdet : IsUnit M.det := by
     have h1 : IsUnit (bl F r t h).val.det := (Matrix.isUnit_iff_isUnit_det _).1 (bl F r t h).isUnit
@@ -182,7 +182,7 @@ theorem exists_of_isLiftN {p : ℕ} {g : GL (Fin r) (ZMod p)} {h : GL (Fin (r + 
   refine ⟨Matrix.nonsingInvUnit M hdet, eq_of_bl ?_, fun a b => ?_⟩
   · rw [dg_bl, hΦ]; rfl
   · have := H (Fin.castAdd t a) (Fin.castAdd t b)
-    rw [dif_pos (show ((Fin.castAdd t a : Fin (r + t)) : ℕ) < r ∧ ((Fin.castAdd t b : Fin (r + t)) : ℕ) < r
+    rw [dite_eq_left (show ((Fin.castAdd t a : Fin (r + t)) : ℕ) < r ∧ ((Fin.castAdd t b : Fin (r + t)) : ℕ) < r
       from ⟨a.isLt, b.isLt⟩)] at this
     exact this
 

@@ -37,7 +37,7 @@ def labOf (Z : ReadL R F X0 Y) (hH : Holds R F) (σ : D.what₂.FT) : A3.fam3.ba
 
 theorem overIx_labOf (Z : ReadL R F X0 Y) (hH : Holds R F) (σ : D.what₂.FT) (h : ∃ c, Bl.OverIx Z σ c) :
     Bl.OverIx Z σ (labOf Z hH σ) := by
-  rw [labOf, dif_pos h]
+  rw [labOf, dite_eq_left h]
   exact h.choose_spec
 
 open Classical in
@@ -51,7 +51,7 @@ def logLamOf (Z : ReadL R F X0 Y) (hH : Holds R F) (j : ℕ) (σ : D.what₂.FT)
 theorem lamAre_of_eq (Z : ReadL R F X0 Y) (hH : Holds R F) (Xd : DivX D) (hX : Xd.logLam = logLamOf Z hH) : Bl.LamAre Z Xd := by
   refine ⟨labOf Z hH, overIx_labOf Z hH, fun i σ e he => ?_⟩
   have h : (i : ℕ) + 1 - 1 < D.R.m := i.2
-  rw [hX, logLamOf, if_neg he, dif_pos h]
+  rw [hX, logLamOf, if_neg he, dite_eq_left h]
   exact ⟨fun h0 => if_neg h0, fun h0 => if_pos h0⟩
 
 def x0 (Z : ReadL R F X0 Y) (hP : Pins R F cG) (hH : Holds R F) : DivX D where

@@ -62,12 +62,12 @@ theorem val_of_cXiAt {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.
     · refine ⟨hx, ?_⟩
       rw [← hv]
       show _ = (if h' : (dict₂ h).2 ∈ (U₂.X (dict₂ h).1).dom then toC (evR d.Xo₂ d.c₂ d.cδ (U₂.un _ ⟨_, h'⟩)) else 0)
-      rw [dif_pos hx]
+      rw [dite_eq_left hx]
     · exfalso
       apply hc0
       rw [← hv]
       show (if h' : (dict₂ h).2 ∈ (U₂.X (dict₂ h).1).dom then toC (evR d.Xo₂ d.c₂ d.cδ (U₂.un _ ⟨_, h'⟩)) else 0) = 0
-      rw [dif_neg hx]
+      rw [dite_eq_right hx]
   choose hdom val₀ using val₀
   refine ⟨fun y => ?_, ⟨U₂.un _ ⟨_, hdom 1⟩⟩⟩
   obtain ⟨h, hh⟩ := GlobalTheory.TwistTie.exists_dict_over V U₂ dict₂ ι e₀ F ik φ th x₀ hσ hA hpq hU hW hD hι hth

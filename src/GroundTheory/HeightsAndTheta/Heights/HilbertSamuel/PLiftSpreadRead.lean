@@ -65,11 +65,11 @@ variable {y}
 theorem evL_mk {T : Submonoid (MRingOver ℚ ι)} (hT : ∀ t ∈ T, aeval y t ≠ 0)
     (m : MRingOver ℚ ι ⧸ KH.genIdeal y) (t : T) :
     evL y T (LocalizedModule.mk m t) = evQ y m / aeval y (t : MRingOver ℚ ι) := by
-  rw [evL, dif_pos hT, LocalizedModule.liftOn_mk]
+  rw [evL, dite_eq_left hT, LocalizedModule.liftOn_mk]
 
 theorem evL_of_not {T : Submonoid (MRingOver ℚ ι)} (hT : ¬ ∀ t ∈ T, aeval y t ≠ 0)
     (x : LocalizedModule T (MRingOver ℚ ι ⧸ KH.genIdeal y)) : evL y T x = 0 := by
-  rw [evL, dif_neg hT]
+  rw [evL, dite_eq_right hT]
 
 def evLHom {T : Submonoid (MRingOver ℚ ι)} (hT : ∀ t ∈ T, aeval y t ≠ 0) :
     LocalizedModule T (MRingOver ℚ ι ⧸ KH.genIdeal y) →+* Ω where
@@ -297,7 +297,7 @@ theorem val_faces (z : KH.CechC ℚ ι (MRingOver ℚ ι ⧸ KH.genIdeal y) 0)
     simp only [LinearMap.sum_apply]
     rw [Finset.sum_eq_single k0]
     · rw [Finset.sum_eq_add_of_mem i1 i2 hi1 hi2 (ne_of_lt hlt)]
-      · rw [dif_pos (hface i1 hi1), dif_pos (hface i2 hi2)]
+      · rw [dite_eq_left (hface i1 hi1), dite_eq_left (hface i2 hi2)]
         rfl
       · intro i hi hne'
         rw [hI] at hi

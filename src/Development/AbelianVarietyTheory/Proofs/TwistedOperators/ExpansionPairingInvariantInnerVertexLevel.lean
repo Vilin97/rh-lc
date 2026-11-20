@@ -25,8 +25,8 @@ theorem colMapV_congr (S : GridChoice W U) (t : T)
       fockComp W S.N.frC (.top t j) (v' ⟨j, hj⟩) (x' j * S.N.u _) (x' (j + 1) * S.N.u _) else 0) := by
     funext j
     by_cases hj : j < D.R.m
-    · rw [dif_pos hj, dif_pos hj, h j hj]
-    · rw [dif_neg hj, dif_neg hj]
+    · rw [dite_eq_left hj, dite_eq_left hj, h j hj]
+    · rw [dite_eq_right hj, dite_eq_right hj]
   unfold colMapV
   rw [e]
 

@@ -265,7 +265,7 @@ theorem hasPeterssonInner_unique (M : DSModel V S) (μ : Measure (GA D V)) (𝓕
 
 theorem ipM_spec (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (T T' : MMap M)
     (h : ∃ c, IsMultIP M μ 𝓕 T T' c) : IsMultIP M μ 𝓕 T T' (ipM M μ 𝓕 T T') := by
-  rw [ipM, dif_pos h]
+  rw [ipM, dite_eq_left h]
   exact h.choose_spec
 
 variable (V) in

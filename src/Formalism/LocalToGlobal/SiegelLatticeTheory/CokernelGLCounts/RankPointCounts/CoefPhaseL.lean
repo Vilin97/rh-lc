@@ -132,7 +132,7 @@ theorem phL_of_dec (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep) 
   unfold phL
   rw [hw₀]
   try dsimp only
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   congr 2
   have hmat := modShift_holds δ T T' p w w₀ hw₀
   have e1 := zAt_eq hmat hex.choose

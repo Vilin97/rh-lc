@@ -43,14 +43,14 @@ theorem liftDegAll_of (hLF : LeftFubiniLemmas.LeftFubini) (hNF : LeftFubiniLemma
   · intro a₀ q ha₀
     rw [hxi a₀ q (by rw [hsz]; exact ha₀)]
     by_cases hq : q.val < D.ptSize h + s
-    · rw [dif_pos (by rw [hsz]; exact hq), if_pos hq]
+    · rw [dite_eq_left (by rw [hsz]; exact hq), if_pos hq]
       exact hmat_zb h s τ hl a₀.val q.val _ _
-    · rw [dif_neg (by rw [hsz]; exact hq), if_neg hq]
+    · rw [dite_eq_right (by rw [hsz]; exact hq), if_neg hq]
   · intro a₀ q ha₀
     rw [hy a₀ q (by rw [hsz]; exact ha₀)]
     by_cases hq : P.r + P.k < q.val ∧ 2 * P.r + P.k - q.val < D.ptSize h + s
-    · rw [dif_pos (by rw [hsz]; exact hq), if_pos hq, hmat_zb h s τ hl a₀.val _ _ _]
-    · rw [dif_neg (by rw [hsz]; exact hq), if_neg hq]
+    · rw [dite_eq_left (by rw [hsz]; exact hq), if_pos hq, hmat_zb h s τ hl a₀.val _ _ _]
+    · rw [dite_eq_right (by rw [hsz]; exact hq), if_neg hq]
   · intro w e
     refine ⟨fun x hxG hxD => uwG_mem (E := Wq →L[ℂ] Wp) p.T.base.z p.T.base.z' j hj hF.1 w e x hxD hxG, ?_⟩
     obtain ⟨R, hR⟩ := hF.2.1

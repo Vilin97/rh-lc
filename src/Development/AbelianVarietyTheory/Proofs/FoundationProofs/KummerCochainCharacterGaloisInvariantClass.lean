@@ -13,7 +13,7 @@ theorem kum_eq_of_apply {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] {N : �
   haveI : NeZero N := ⟨hN.ne'⟩
   have hex : ∃ j : ZMod N, g θ = ζ ^ j.val * θ := ⟨i, hg⟩
   unfold kum
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have h1 := hex.choose_spec
   have h2 : ζ ^ i.val = ζ ^ hex.choose.val := mul_right_cancel₀ hθ (hg.symm.trans h1)
   have h3 := (hζ.pow_inj (ZMod.val_lt _) (ZMod.val_lt _)) h2

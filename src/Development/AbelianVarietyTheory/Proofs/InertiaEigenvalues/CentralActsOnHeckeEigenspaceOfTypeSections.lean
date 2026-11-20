@@ -91,14 +91,14 @@ theorem onMt_add (i : D.nd.Loc) {a b : MonoidAlgebra ℂ (G0g D.nd)}
     D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (a + b) =
       D.ntypes.onMt (D.nd.mu i) (D.nd.j i) a + D.ntypes.onMt (D.nd.mu i) (D.nd.j i) b := by
   unfold NTypes.onMt
-  rw [dif_pos ha, dif_pos hb, dif_pos (add_mem ha hb), ← map_add (f := _)]
+  rw [dite_eq_left ha, dite_eq_left hb, dite_eq_left (add_mem ha hb), ← map_add (f := _)]
   rfl
 
 theorem onMt_smul (i : D.nd.Loc) (c : ℂ) {a : MonoidAlgebra ℂ (G0g D.nd)}
     (ha : a ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))) :
     D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (c • a) = c • D.ntypes.onMt (D.nd.mu i) (D.nd.j i) a := by
   unfold NTypes.onMt
-  rw [dif_pos ha, dif_pos (Subalgebra.smul_mem _ ha c), ← map_smul]
+  rw [dite_eq_left ha, dite_eq_left (Subalgebra.smul_mem _ ha c), ← map_smul]
   rfl
 
 theorem onMt_typeSum (hC : OnMtPreservesTypeV D) (i : D.nd.Loc) (z : MonoidAlgebra ℂ (G0g D.nd))

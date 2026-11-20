@@ -381,7 +381,7 @@ theorem deg_eq [FiniteDimensional K V]
   refine finsum_congr fun i => ?_
   have hex : ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, IsLatOf C i b (L i) := ⟨_, h i⟩
   have : IsLatOf C i (locBasis C i (L i)) (L i) := by
-    rw [locBasis, dif_pos hex]; exact hex.choose_spec
+    rw [locBasis, dite_eq_left hex]; exact hex.choose_spec
   rw [← Module.Basis.det_mul_det _ (b i), map_mul, v_det C (h i) this, mul_one]
 
 theorem deg_const [FiniteDimensional K V] (b : Module.Basis (Fin (Module.finrank K V)) K V) :

@@ -90,10 +90,10 @@ theorem ctM_eq (M : ∀ v : Pl, LM c v) (Sv : Finset Pl) (m : Pl →₀ ℤ) (u 
       ∏ v ∈ Sv, (M v).ct (if h : v ∈ Sv then u ⟨v, h⟩ else 1) := by
     symm
     refine Finset.prod_subset Finset.subset_union_right fun v _ hv => ?_
-    rw [dif_neg hv, ct_one]
+    rw [dite_eq_right hv, ct_one]
   rw [h2, ← Finset.prod_coe_sort]
   refine Finset.prod_congr rfl fun v _ => ?_
-  rw [dif_pos v.2]
+  rw [dite_eq_left v.2]
 
 instance finiteU (v : Pl) : IsFiniteMeasure ((multHaar (Qv v)).restrict (unQ v)) :=
   ⟨by rw [Measure.restrict_apply_univ, multHaar_unQ]; simp⟩

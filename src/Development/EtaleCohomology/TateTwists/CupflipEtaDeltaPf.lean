@@ -85,25 +85,25 @@ theorem d_Fm {I J K : Cx R} (μ : Pair I J K) {E : Spc} {n m : ℤ} (α : Cocycl
       ((((-(p : ℤ) + n) + m).negOnePow : ℤˣ) : ℤ) • bd (fun q z' => Fm μ α.1 β.1 U t p q y z') r z := by
   by_cases h : (-(p : ℤ) + n) + (-(r : ℤ) + m) = s
   · have e : Fm μ α.1 β.1 U s p r y z = μ.mul U _ _ s h (ev α.1 p _ rfl U y) (ev β.1 r _ rfl U z) := by
-      unfold Fm; rw [dif_pos h]
+      unfold Fm; rw [dite_eq_left h]
     rw [e, leib' μ U _ _ s (-(p : ℤ) + n + 1) (-(r : ℤ) + m + 1) t h rfl rfl hst,
       d_ev α p _ _ rfl rfl, d_ev β r _ _ rfl rfl, mul_zsmul_left, mul_zsmul_right, mul_bd_left, mul_bd_right,
       Units.smul_def, smul_smul, ← Units.val_mul, ← Int.negOnePow_add]
     congr 2
     · refine bd_congr (fun q y' hq => ?_) y
       unfold Fm
-      rw [dif_pos (by omega), dif_pos (by omega)]
+      rw [dite_eq_left (by omega), dite_eq_left (by omega)]
       exact mul_congr μ U α.1 β.1 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     · refine bd_congr (fun q z' hq => ?_) z
       unfold Fm
-      rw [dif_pos (by omega), dif_pos (by omega)]
+      rw [dite_eq_left (by omega), dite_eq_left (by omega)]
       exact mul_congr μ U α.1 β.1 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-  · have e : Fm μ α.1 β.1 U s p r y z = 0 := by unfold Fm; rw [dif_neg h]
+  · have e : Fm μ α.1 β.1 U s p r y z = 0 := by unfold Fm; rw [dite_eq_right h]
     have h0 := secmap_zsmul (K.d s t) (0 : ℤ) (0 : Sec (K.X s) U)
     rw [zero_smul, zero_smul] at h0
     rw [e, h0]
-    rw [bd_congr (g := fun _ _ => (0 : Sec (K.X t) U)) (fun q y' hq => by unfold Fm; rw [dif_neg (by omega)]) y,
-      bd_congr (g := fun _ _ => (0 : Sec (K.X t) U)) (fun q z' hq => by unfold Fm; rw [dif_neg (by omega)]) z,
+    rw [bd_congr (g := fun _ _ => (0 : Sec (K.X t) U)) (fun q y' hq => by unfold Fm; rw [dite_eq_right (by omega)]) y,
+      bd_congr (g := fun _ _ => (0 : Sec (K.X t) U)) (fun q z' hq => by unfold Fm; rw [dite_eq_right (by omega)]) z,
       bd_zero', bd_zero', smul_zero, smul_zero, add_zero]
 
 theorem secmap_add' {F G : Shv R} (φ : F ⟶ G) {U : Scheme.{0}} (a b : Sec F U) :

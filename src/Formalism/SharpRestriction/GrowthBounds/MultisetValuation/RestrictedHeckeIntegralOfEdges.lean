@@ -100,7 +100,7 @@ theorem Ar_lift_le (h : Std p n' k1 t m c r TT a b lam0 w) (j i : ℕ) (hj : j +
       rw [if_pos he]
       show liftWt t k1 (lam0 s) (fun l => w l s) (j + 1) x = _
       unfold liftWt
-      rw [dif_pos (by omega : x.val < k1 + 1)]
+      rw [dite_eq_left (by omega : x.val < k1 + 1)]
       exact (lamI_fin lam0 s ⟨x.val, by omega⟩).symm
   · refine Finset.sum_le_sum fun s hs => ?_
     rw [mem_filter] at hs

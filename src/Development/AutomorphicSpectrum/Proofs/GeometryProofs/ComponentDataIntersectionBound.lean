@@ -148,7 +148,7 @@ theorem phMu_eq (Or : CptOrigin Y S₀ Dc Hd) {z : Spec (CommRingCat.of ℂ) ⟶
   have hF : muMetric Hd w₀ = ‖valAt Dc.y d.u w‖ * (∏ k, ‖w₀ ⟨k, d.c k⟩‖ ^ Hd.aMu k) *
       ∏ τ, Real.sqrt (Γ₁ τ).det.re := by
     unfold muMetric
-    rw [dif_pos hne, n₀, hind]
+    rw [dite_eq_left hne, n₀, hind]
     show ‖valAt Dc.y d.u w₀‖ * _ * _ = _
     rw [hu₀]
   have hA : 0 < ‖valAt Dc.y d.u w‖ := norm_pos_iff.2 hu.1

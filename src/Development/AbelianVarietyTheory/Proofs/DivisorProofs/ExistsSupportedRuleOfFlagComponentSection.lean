@@ -124,7 +124,7 @@ theorem exists_suppOn_sec₀_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     by_cases hT : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) y
     · rw [FlagCover.evR_toRule _ y hT, hv]
     · unfold evR evalAt
-      rw [dif_neg hT]
+      rw [dite_eq_right hT]
   · show H0.pull (inc₀ X Z) le_rfl ((secOf X e) ((secOf X e).symm m')) = m
     rw [LinearEquiv.apply_symm_apply]
     exact h₁

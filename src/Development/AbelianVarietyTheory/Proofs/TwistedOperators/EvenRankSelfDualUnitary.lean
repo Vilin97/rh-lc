@@ -303,7 +303,7 @@ theorem iop_pull_rat : GlobalTheory.FunPr.Hypotheses₂ → (∀ D, GlobalTheory
     h1 ℂ σ fun τ => ⟨(norm_det_complex _ A').1, (norm_det_complex _ A).2⟩
   refine ⟨ε, ⟨(hc (algebraMap Qbar ℂ)).1, fun σ => (hc σ).2⟩, fun q _ a1 a2 a3 a4 lam => ?_, h2⟩
   obtain ⟨h3, h4⟩ := h1 ℂ_[q] lam fun τ => ⟨(norm_det_padic _ A' a2 a4).1, (norm_det_padic _ A a1 a3).2⟩
-  rw [lamC, dif_pos h3]
+  rw [lamC, dite_eq_left h3]
   exact h4
 
 end GlobalTheory.RatMoveIop

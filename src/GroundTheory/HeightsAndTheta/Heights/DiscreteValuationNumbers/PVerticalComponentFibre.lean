@@ -50,7 +50,7 @@ theorem VerticalComponentFibre.proof (h : FibreVarieties.Statement.{0}) :
 
   have hdiv : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) ≠ 0 := by
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_pos ⟨hmin, hrel⟩]
+    rw [dite_eq_left ⟨hmin, hrel⟩]
     have hm : IsLocalRing.maximalIdeal (Localization.AtPrime W) ∈
         ((P ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}).map
           (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (Localization.AtPrime W))).minimalPrimes := by

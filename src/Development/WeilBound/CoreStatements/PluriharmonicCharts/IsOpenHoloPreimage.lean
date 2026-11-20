@@ -106,7 +106,7 @@ theorem sum_dy (M : FlagModel y Ψ N j) (p : Ψ × Fin N) (L : K → ℝ) :
   congr 1
   · have e : ∀ k : {k // ¬ ∀ p', M.blk p' ≠ some k}, (M.dy p k.1 : ℝ) * L k.1 = if M.blk p = some k.1 then L k.1 else 0 :=
       fun k => by
-        rw [FlagModel.dy, dif_neg k.2]
+        rw [FlagModel.dy, dite_eq_right k.2]
         split_ifs <;> simp
     simp only [e]
     cases hp : M.blk p with
@@ -240,7 +240,7 @@ theorem met (CR : CovReal FA Cv) {z : (Σ k, ι' k) → ℂ} (hz : z ∈ mcPts (
       · exact inv_ne_zero (hch _)
       · cases M'.blk p <;> simp [hc]
     · dsimp only
-      rw [dif_neg fun h => h p h1, h2]
+      rw [dite_eq_right fun h => h p h1, h2]
       rfl
   have ow : SameOrbit (fun q => e q.1 * img Cv F' F z q) (img Cv F' F z) := ⟨e, he, rfl⟩
   have owb : SameOrbit (basePart M.blk fun q => e q.1 * img Cv F' F z q) (basePart M'.blk z ∘ Cv.v) := by

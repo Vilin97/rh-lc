@@ -574,7 +574,7 @@ theorem sum_root {M : Type} [AddCommMonoid M] (f : Pos n → M) (P : Prop) [Deci
     (h : P → x < y) :
     ∑ j : Pos n, (if P ∧ j.1 = (x, y) then f j else 0) = if hP : P then f ⟨(x, y), h hP⟩ else 0 := by
   by_cases hP : P
-  · rw [dif_pos hP, Finset.sum_eq_single ⟨(x, y), h hP⟩]
+  · rw [dite_eq_left hP, Finset.sum_eq_single ⟨(x, y), h hP⟩]
     · simp [hP]
     · intro j _ hj
       refine if_neg fun e => hj (Subtype.ext e.2)
@@ -627,9 +627,9 @@ theorem struct_id {lev : Fin n → ℕ} (hlev : Monotone lev) {p q : Fin n} (hpq
     simp only [e1]
     rw [this]
     by_cases hbc : b = c
-    · rw [dif_pos hbc, if_pos hbc, cU, if_pos (by show lev a < lev d; rw [hbc] at hI'; omega)]
+    · rw [dite_eq_left hbc, if_pos hbc, cU, if_pos (by show lev a < lev d; rw [hbc] at hI'; omega)]
       simp [adC]
-    · rw [dif_neg hbc, if_neg hbc]
+    · rw [dite_eq_right hbc, if_neg hbc]
   have R1 : ∑ j, tU lev ⟨(a, b), hab⟩ j ⟨(e, f), hef⟩ * cU lev p q ⟨(c, d), hcd⟩ j =
       (if q = c ∧ b = p ∧ e = a ∧ f = d then 1 else 0) - (if d = p ∧ b = c ∧ e = a ∧ f = q then 1 else 0) := by
     have := sum_cU hlev hpq (fun j => tU lev ⟨(a, b), hab⟩ j ⟨(e, f), hef⟩) ⟨(c, d), hcd⟩ hJ
@@ -639,18 +639,18 @@ theorem struct_id {lev : Fin n → ℕ} (hlev : Monotone lev) {p q : Fin n} (hpq
     congr 1
     · by_cases hq : q = c
       · have hU : lev p < lev d := by rw [hpq, hq]; exact hJ'
-        rw [dif_pos hq, tU]
+        rw [dite_eq_left hq, tU]
         by_cases h : b = p ∧ e = a ∧ f = d
         · rw [if_pos ⟨hI, hU, h.1, h.2.1, h.2.2⟩, if_pos ⟨hq, h⟩]
         · rw [if_neg fun h' => h ⟨h'.2.2.1, h'.2.2.2.1, h'.2.2.2.2⟩, if_neg fun h' => h h'.2]
-      · rw [dif_neg hq, if_neg fun h => hq h.1]
+      · rw [dite_eq_right hq, if_neg fun h => hq h.1]
     · by_cases hd : d = p
       · have hU : lev c < lev q := by rw [← hpq, ← hd]; exact hJ'
-        rw [dif_pos hd, tU]
+        rw [dite_eq_left hd, tU]
         by_cases h : b = c ∧ e = a ∧ f = q
         · rw [if_pos ⟨hI, hU, h.1, h.2.1, h.2.2⟩, if_pos ⟨hd, h⟩]
         · rw [if_neg fun h' => h ⟨h'.2.2.1, h'.2.2.2.1, h'.2.2.2.2⟩, if_neg fun h' => h h'.2]
-      · rw [dif_neg hd, if_neg fun h => hd h.1]
+      · rw [dite_eq_right hd, if_neg fun h => hd h.1]
   have R2 : ∑ i, tU lev i ⟨(c, d), hcd⟩ ⟨(e, f), hef⟩ * cU lev p q ⟨(a, b), hab⟩ i =
       (if q = a ∧ b = c ∧ e = p ∧ f = d then 1 else 0) - (if b = p ∧ q = c ∧ e = a ∧ f = d then 1 else 0) := by
     have := sum_cU hlev hpq (fun i => tU lev i ⟨(c, d), hcd⟩ ⟨(e, f), hef⟩) ⟨(a, b), hab⟩ hI
@@ -660,18 +660,18 @@ theorem struct_id {lev : Fin n → ℕ} (hlev : Monotone lev) {p q : Fin n} (hpq
     congr 1
     · by_cases hq : q = a
       · have hU : lev p < lev b := by rw [hpq, hq]; exact hI'
-        rw [dif_pos hq, tU]
+        rw [dite_eq_left hq, tU]
         by_cases h : b = c ∧ e = p ∧ f = d
         · rw [if_pos ⟨hU, hJ, h.1, h.2.1, h.2.2⟩, if_pos ⟨hq, h⟩]
         · rw [if_neg fun h' => h ⟨h'.2.2.1, h'.2.2.2.1, h'.2.2.2.2⟩, if_neg fun h' => h h'.2]
-      · rw [dif_neg hq, if_neg fun h => hq h.1]
+      · rw [dite_eq_right hq, if_neg fun h => hq h.1]
     · by_cases hb : b = p
       · have hU : lev a < lev q := by rw [← hpq, ← hb]; exact hI'
-        rw [dif_pos hb, tU]
+        rw [dite_eq_left hb, tU]
         by_cases h : q = c ∧ e = a ∧ f = d
         · rw [if_pos ⟨hU, hJ, h.1, h.2.1, h.2.2⟩, if_pos ⟨hb, h⟩]
         · rw [if_neg fun h' => h ⟨h'.2.2.1, h'.2.2.2.1, h'.2.2.2.2⟩, if_neg fun h' => h h'.2]
-      · rw [dif_neg hb, if_neg fun h => hb h.1]
+      · rw [dite_eq_right hb, if_neg fun h => hb h.1]
   rw [L, R1, R2]
   by_cases h1 : b = c
   · subst h1

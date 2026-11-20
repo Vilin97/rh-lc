@@ -112,7 +112,7 @@ def ext (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (φ : Pt k r i D → E)
 
 lemma ext_at {φ : Pt k r i D → E} {g : Mx k r} (hg : g ∈ Glev k r i ∩ D) : ext k r i D φ g = φ ⟨g, hg⟩ := by
   unfold ext
-  rw [dif_pos hg]
+  rw [dite_eq_left hg]
 
 lemma lev_congr (hD : IsOpen D) {f f' : Mx k r → E} (h : ∀ g ∈ Glev k r i ∩ D, f g = f' g)
     (hf : SmoothLev k r i D f) : SmoothLev k r i D f' := by

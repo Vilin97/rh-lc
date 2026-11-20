@@ -116,7 +116,7 @@ theorem key (b₀ U : Matrix (Fin N) (Fin N) ℂ) (hb : b₀.BlockTriangular id)
       Matrix.mul_nonsing_inv_cancel_right _ _ hd] at h1
     funext p
     have := h1 (show id p.1.1 < id p.1.2 from p.2)
-    rw [zMat_apply, dif_pos p.2] at this
+    rw [zMat_apply, dite_eq_left p.2] at this
     exact this
 
 noncomputable def FF (M : Fin N → Fin N → ℂ) : Fin N → Fin N → ℂ :=

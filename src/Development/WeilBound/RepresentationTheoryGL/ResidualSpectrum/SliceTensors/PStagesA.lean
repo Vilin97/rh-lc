@@ -55,7 +55,7 @@ theorem unip_col (x : BlockIx (r + s) r → R) (i : Fin (r + s)) (k : Fin r) :
   rw [Matrix.add_apply]
   have h0 : nilM x i (Fin.castAdd s k) = 0 := by
     simp only [nilM, Matrix.of_apply, Fin.coe_castAdd]
-    rw [dif_neg]
+    rw [dite_eq_right]
     intro h
     exact absurd h.2 (not_le.2 k.isLt)
   rw [h0, add_zero]
@@ -67,7 +67,7 @@ theorem unip_row (x : BlockIx (r + s) r → R) (k : Fin s) (j : Fin (r + s)) :
   rw [Matrix.add_apply]
   have h0 : nilM x (Fin.natAdd r k) j = 0 := by
     simp only [nilM, Matrix.of_apply, Fin.coe_natAdd]
-    rw [dif_neg]
+    rw [dite_eq_right]
     intro h
     omega
   rw [h0, add_zero]

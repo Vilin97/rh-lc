@@ -276,7 +276,7 @@ private theorem blk_left (n : ℕ) (w : Pl E) (x : GLw 0 w) (g : GLw n w) (X : M
     simp only [Matrix.reindex_apply, Matrix.submatrix_apply, he, Matrix.fromBlocks_apply₂₂]
   unfold blk
   simp only [hM]
-  rw [dif_pos g.isUnit]
+  rw [dite_eq_left g.isUnit]
   exact Units.ext rfl
 
 private theorem blk_right (n : ℕ) (w : Pl E) (g : GLw n w) (x : GLw 0 w) (X : Matrix (Fin n) (Fin 0) (w.adicCompletion E)) :
@@ -294,7 +294,7 @@ private theorem blk_right (n : ℕ) (w : Pl E) (g : GLw n w) (x : GLw 0 w) (X : 
     simp only [Matrix.reindex_apply, Matrix.submatrix_apply, he, Matrix.fromBlocks_apply₁₁]
   unfold blk
   simp only [hM]
-  rw [dif_pos g.isUnit]
+  rw [dite_eq_left g.isUnit]
   exact Units.ext rfl
 
 private theorem ctMu_swap (n : ℕ) (w : Pl E) (χ : (w.adicCompletion E)ˣ →* ℂˣ) (f : UL n w → ℂ) (x x' : GLw 0 w)

@@ -24,7 +24,7 @@ theorem val_eq {p : ℕ} (c : CC F p) (s : {s : Finset κ // s.card = p + 1}) (b
   unfold val
   obtain ⟨s, hs⟩ := s
   have hsub : s ⊆ sub b := sub_subset f
-  rw [dif_pos (⟨hs, hsub⟩ : s.card = p + 1 ∧ s ⊆ sub b)]
+  rw [dite_eq_left (⟨hs, hsub⟩ : s.card = p + 1 ∧ s ⊆ sub b)]
   exact congrArg (fun φ => mp F φ (c ⟨s, hs⟩)) (Subsingleton.elim _ _)
 
 theorem mp_val {p : ℕ} (c : CC F p) (s : Finset κ) {b d : (NE κ)ᵒᵖ} (g : b ⟶ d)

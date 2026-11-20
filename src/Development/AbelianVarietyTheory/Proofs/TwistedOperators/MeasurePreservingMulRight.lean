@@ -99,7 +99,7 @@ theorem realAll_spec (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin V.ra
     (hM : ∀ ρ, M ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D V ρ)) : IsRealAll θ V M (realAll θ V M) := by
   have h := exists_isRealAll hθ M hM
   unfold realAll
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem realAll_eq (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ}

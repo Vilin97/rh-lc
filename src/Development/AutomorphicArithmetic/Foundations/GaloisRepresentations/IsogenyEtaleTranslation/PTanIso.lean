@@ -61,10 +61,10 @@ private theorem valR_comp_eq_valR_app {X W : Scheme} (x : Sp ℂ ⟶ X) (f : X �
   unfold valR
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (f ⁻¹ᵁ V)
   · have h' : ⊤ ≤ (x ≫ f) ⁻¹ᵁ V := h
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     simp [Scheme.Hom.comp_appLE]
   · have h' : ¬ ⊤ ≤ (x ≫ f) ⁻¹ᵁ V := h
-    rw [dif_neg h', dif_neg h]
+    rw [dite_eq_right h', dite_eq_right h]
 
 private theorem preimage_le_preimage_preimage_of_comm_iso {Y Y' Z Z' : Scheme} (eY : Y ≅ Y') (eZ : Z ≅ Z') (c : Y ⟶ Z)
     (c' : Y' ⟶ Z') (hc : c ≫ eZ.hom = eY.hom ≫ c') (U' : Z'.Opens) (V' : Y'.Opens)

@@ -159,7 +159,7 @@ theorem MinorInt_holds : Formalism.MainNotions.KTwoMinorIntegrality.MinorInt := 
   have he' : ∀ a, (X.fl' t).fl.e a ∈ X.abelian₂ t := e_mem_lam D (X.abelian₂ t) (X.fl' t) hOK.2
   have hl' : l ≤ D.R.rS + 1 := by omega
   unfold Dl leadMinorE
-  rw [dif_pos hl']
+  rw [dite_eq_left hl']
   apply det_isIntegral
   intro i j
   have hi : Fin.castLE hl' i = Fin.castSucc ⟨i, by omega⟩ := Fin.ext rfl

@@ -246,7 +246,7 @@ theorem sum_super_eq {A : Type} [AddCommMonoid A] {n : ℕ} (f : Fin n → Fin n
       intro h
       exact hb (Fin.ext h.symm)
     · simp
-  · rw [dif_neg hi]
+  · rw [dite_eq_right hi]
     symm
     refine Finset.sum_eq_zero fun y _ => ?_
     rw [if_neg]

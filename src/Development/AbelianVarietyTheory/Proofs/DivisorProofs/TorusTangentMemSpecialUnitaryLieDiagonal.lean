@@ -16,9 +16,9 @@ theorem torusDer_sum_angles (φ : Fin (r - 1) → ℝ) : ∑ a : Fin r, angles �
   | succ n =>
     rw [Fin.sum_univ_castSucc]
     have h1 : ∀ i : Fin n, angles φ i.castSucc = φ ⟨i, by simp⟩ := by
-      intro i; unfold angles; rw [dif_pos (by simp)]; rfl
+      intro i; unfold angles; rw [dite_eq_left (by simp)]; rfl
     have h2 : angles φ (Fin.last n) = -∑ k, φ k := by
-      unfold angles; rw [dif_neg (by simp)]
+      unfold angles; rw [dite_eq_right (by simp)]
     rw [h2, Finset.sum_congr rfl fun i _ => h1 i]
     rw [add_neg_eq_zero]
     exact Fintype.sum_equiv (finCongr (by simp)) _ _ (fun i => rfl)

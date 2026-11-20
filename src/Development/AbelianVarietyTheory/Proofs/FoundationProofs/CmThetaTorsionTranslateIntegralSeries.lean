@@ -60,7 +60,7 @@ theorem transl_holds : ∀ D : D7, GL3Theta.transl D := by
     exact fun h => ht.1 ((hlat'.sg_eq_zero t).1 h)
   have hcne : cval g t ≠ 0 := by
     unfold cval lamC
-    rw [dif_pos hq]
+    rw [dite_eq_left hq]
     exact (map_ne_zero g.lam).2 fun h => hne (congrArg Subtype.val h)
   have hc1 : ‖cval g t‖ = 1 := by
     simp only [logc, ht.1, if_false] at hM

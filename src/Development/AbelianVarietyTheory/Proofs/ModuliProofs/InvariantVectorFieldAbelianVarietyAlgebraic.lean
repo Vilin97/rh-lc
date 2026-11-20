@@ -40,12 +40,12 @@ private theorem valAt'_app' {X Z : Scheme.{0}} (y : Sp ℂ ⟶ X) (τ : X ⟶ Z)
   unfold valAt'
   by_cases h : ⊤ ≤ y ⁻¹ᵁ τ ⁻¹ᵁ O
   · have h' : ⊤ ≤ (y ≫ τ) ⁻¹ᵁ O := h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     unfold valAt
     rw [Scheme.Hom.comp_appLE]
     rfl
   · have h' : ¬ ⊤ ≤ (y ≫ τ) ⁻¹ᵁ O := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 private theorem comp_mul_monObj {X Y M : Over (Sp ℂ)} [MonObj M] (f : X ⟶ Y) (g h : Y ⟶ M) :
     f ≫ (g * h) = (f ≫ g) * (f ≫ h) :=

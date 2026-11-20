@@ -61,7 +61,7 @@ theorem wtAllZ_of_borChart (h : BorChart pts mapR borR) (e : Jx → ℤ) {f : Ru
     (y y' : pts S) (hy : FromTest pts mapR y) (hy' : FromTest pts mapR y') (hb : borR t y y') :
     evalAt pts mapR f y' = ((∏ i, t i ^ e i : Sˣ) : S) * evalAt pts mapR f y := by
   unfold evalAt
-  rw [dif_pos hy, dif_pos hy']
+  rw [dite_eq_left hy, dite_eq_left hy']
   apply eq_of_locM (K := K)
   intro m hm
   obtain ⟨A, u, c, c', B, uB, uB', tB, π, π', cB, hc, hc', hπ, hπ', hbB, e1, e2, e3⟩ := h S t y y' hb m

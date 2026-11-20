@@ -121,7 +121,7 @@ theorem exists_extension (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[ℚ] ℂ
       (algebraicClosure M ℂ).algebraMap_mem (⟨x, hx⟩ : M)
     refine ⟨hx', ?_⟩
     unfold TaylorLogMetric.liftM
-    rw [dif_pos hx', dif_pos hx, ← hφ]
+    rw [dite_eq_left hx', dite_eq_left hx, ← hφ]
     rfl
 
 theorem exists_point : ∀ D : D7, t0Ex D := by

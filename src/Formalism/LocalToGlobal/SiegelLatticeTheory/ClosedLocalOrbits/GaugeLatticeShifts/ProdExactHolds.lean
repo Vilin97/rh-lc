@@ -146,7 +146,7 @@ theorem ProdExact_holds : Formalism.L2.SG.Pf.NcReal.ProdExact := by
     rfl
   have hex := StepReal_holds D X u u' 1 one_pos c hc
   have hh : HasDiag X u u' 1 c (hOf X u u' 1 c) := by
-    unfold hOf; rw [dif_pos hex]; exact hex.choose_spec
+    unfold hOf; rw [dite_eq_left hex]; exact hex.choose_spec
   have hdc := fun v => Formalism.L2.SG.RealObj.InfCut.UnitaryIsometries.DiagDCLoc_holds _ _ _ _ _ _ _ _ _ 1 (frameLoc_X X u u' v) (c v)
     (hcv v) (hs v (c v)) (hOf X u u' 1 c v) (hss v (c v) (hcv v)) (hh v)
   choose t ht t' ht' htt using hdc

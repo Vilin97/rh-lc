@@ -1085,7 +1085,7 @@ theorem ioAt_of_conj_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
     rcases hc ℓ with ⟨h1, h2, h3⟩ | ⟨h1, h2, h3⟩
     · refine Or.inl ⟨h1, ?_⟩
       show ((arr (T.Q.Dw ((i : ℕ) + 1)).q (c ℓ) : Fin _) : ℕ) = _
-      rw [arr, dif_neg (by omega)]
+      rw [arr, dite_eq_right (by omega)]
       show (c ℓ : ℕ) - _ = _
       omega
     · refine Or.inr ⟨h1, ?_⟩

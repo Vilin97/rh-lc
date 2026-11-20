@@ -130,9 +130,9 @@ theorem exists_cons {n ρ : ℕ} (hn : 1 + ρ = n) (c : Fin n → ℂ) :
   refine ⟨c ⟨0, by omega⟩, fun i => c ⟨i.val + 1, by omega⟩, funext fun l => ?_⟩
   unfold consC
   by_cases h : l.val = 0
-  · rw [dif_pos (by simpa using h)]
+  · rw [dite_eq_left (by simpa using h)]
     exact congrArg c (Fin.ext h)
-  · rw [dif_neg (by simpa using h)]
+  · rw [dite_eq_right (by simpa using h)]
     exact congrArg c (Fin.ext (by simp; omega))
 
 theorem omX_cons {n ρ : ℕ} (hn : 1 + ρ = n) {t : ℂ} {c : Fin ρ → ℂ}

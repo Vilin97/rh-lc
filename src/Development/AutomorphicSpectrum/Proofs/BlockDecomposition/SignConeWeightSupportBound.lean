@@ -85,15 +85,15 @@ noncomputable def hi (S : Finset (Fin m → SignType)) : Fin m → SignType :=
   if h : S.Nonempty then (S.exists_max_image rk h).choose else 0
 
 theorem lo_mem {S : Finset (Fin m → SignType)} (h : S.Nonempty) : lo S ∈ S := by
-  rw [lo, dif_pos h]; exact (S.exists_min_image rk h).choose_spec.1
+  rw [lo, dite_eq_left h]; exact (S.exists_min_image rk h).choose_spec.1
 
 theorem hi_mem {S : Finset (Fin m → SignType)} (h : S.Nonempty) : hi S ∈ S := by
-  rw [hi, dif_pos h]; exact (S.exists_max_image rk h).choose_spec.1
+  rw [hi, dite_eq_left h]; exact (S.exists_max_image rk h).choose_spec.1
 
 theorem lo_sle {S : Finset (Fin m → SignType)} (h : S.Nonempty)
     (hc : IsChain SLe (↑S : Set (Fin m → SignType))) {x} (hx : x ∈ S) : SLe (lo S) x := by
   have hmin : rk (lo S) ≤ rk x := by
-    rw [lo, dif_pos h]; exact (S.exists_min_image rk h).choose_spec.2 x hx
+    rw [lo, dite_eq_left h]; exact (S.exists_min_image rk h).choose_spec.2 x hx
   by_cases hne : lo S = x
   · rw [hne]; exact sle_refl x
   · rcases hc (Finset.mem_coe.mpr (lo_mem h)) (Finset.mem_coe.mpr hx) hne with h' | h'
@@ -103,7 +103,7 @@ theorem lo_sle {S : Finset (Fin m → SignType)} (h : S.Nonempty)
 theorem sle_hi {S : Finset (Fin m → SignType)} (h : S.Nonempty)
     (hc : IsChain SLe (↑S : Set (Fin m → SignType))) {x} (hx : x ∈ S) : SLe x (hi S) := by
   have hmax : rk x ≤ rk (hi S) := by
-    rw [hi, dif_pos h]; exact (S.exists_max_image rk h).choose_spec.2 x hx
+    rw [hi, dite_eq_left h]; exact (S.exists_max_image rk h).choose_spec.2 x hx
   by_cases hne : hi S = x
   · rw [hne]; exact sle_refl x
   · rcases hc (Finset.mem_coe.mpr (hi_mem h)) (Finset.mem_coe.mpr hx) hne with h' | h'

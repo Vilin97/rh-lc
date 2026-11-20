@@ -10,7 +10,7 @@ theorem valuation_sub_lt_of_redThrough_eq {Ω : Type} [Field Ω] (A : ValuationS
     (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar g) {x y : Ω} (hx : x ∈ A) (hy : y ∈ A)
     (h : redThrough A κ x = redThrough A κ y) : A.valuation (x - y) < 1 := by
   unfold redThrough at h
-  rw [dif_pos hx, dif_pos hy] at h
+  rw [dite_eq_left hx, dite_eq_left hy] at h
   have h1 := κ.injective h
   have h2 : (⟨x, hx⟩ : A) - ⟨y, hy⟩ ∈ IsLocalRing.maximalIdeal A := by
     rw [← IsLocalRing.residue_eq_zero_iff, map_sub, h1, sub_self]

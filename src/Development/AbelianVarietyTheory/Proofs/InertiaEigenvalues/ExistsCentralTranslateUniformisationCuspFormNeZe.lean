@@ -89,7 +89,7 @@ theorem rel_of_dict {D : D7} (T : Core D) (hM : LawsM T) {j : ℕ} (hj : InR D j
   · refine Finset.sum_eq_zero fun i _ => ?_
     have e : rdU (T.U j σ) (fs i) k x = 0 := by
       show (if h : x ∈ ((T.U j σ).X k).dom then _ else 0) = 0
-      rw [dif_neg hx]
+      rw [dite_eq_right hx]
     rw [e, mul_zero]
   obtain ⟨g0, γ, hγ, b, hb, hg0⟩ := hD.2.2.2.2.1 k x hx
   obtain ⟨γ0, hγ0, hrel⟩ := h g0
@@ -157,7 +157,7 @@ theorem eq_zero_of_rdU {D : D7} (T : Core D) (hM : LawsM T) {j : ℕ} (hj : InR 
       ⟨p, AlgHom.id _ _, y, ReciprocityTheory.ChartRestriction.G.PullbackSections.frMap_refl y⟩
     show _ = evalAt (K := c'.F) (fun S _ _ => FrPt (T.Q.Xo j) c' S) (fun φ y z => FrMap φ y z) f' y
     unfold evalAt
-    rw [dif_pos hft]
+    rw [dite_eq_left hft]
     exact hf'.1 _ _ _ _ _ hft.choose_spec.choose_spec.choose_spec
   rw [hv, hBC p.R hA y]
   have hadd : ∀ g g' : T.R j, evR (T.Q.Xo j) T.Q.c (g + g') (y.res hle hA) =

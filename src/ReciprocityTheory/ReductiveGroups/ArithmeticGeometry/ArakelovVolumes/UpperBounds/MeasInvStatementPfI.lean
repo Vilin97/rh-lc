@@ -60,7 +60,7 @@ lemma mem_CmatSet_iff_Cy (β : X.Ψ → Matrix (Fin r) (Fin r) ℂ) (hβ : ∀ �
     intro τ a b h
     have h' : b < a := h
     simp only [Umat, Matrix.of_apply]
-    rw [dif_neg (not_not.2 h')]
+    rw [dite_eq_right (not_not.2 h')]
   have hP : ∀ τ, (β τ * Umat y τ).BlockTriangular id := fun τ => (hβ τ).mul (hU τ)
   simp only [Cy, CmatSet, Set.mem_setOf_eq]
   constructor
@@ -120,14 +120,14 @@ lemma UF_mem {y : UpI X.Ψ r → ℂ} (hy : ∀ τ b, y (dI τ b) ≠ 0) : UF X 
     intro a b h
     have h' : b < a := h
     simp only [Umat, Matrix.of_apply]
-    rw [dif_neg (not_not.2 h')]
+    rw [dite_eq_right (not_not.2 h')]
   refine ⟨?_, fun a c h => hU h⟩
   show (Umat y τ).det ≠ 0
   rw [Matrix.det_of_upperTriangular hU]
   refine Finset.prod_ne_zero_iff.2 fun a _ => ?_
   have e : Umat y τ a a = y (dI τ a) := by
     unfold Umat dI
-    rw [Matrix.of_apply, dif_pos (lt_irrefl a)]
+    rw [Matrix.of_apply, dite_eq_left (lt_irrefl a)]
   rw [e]
   exact hy τ a
 

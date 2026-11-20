@@ -161,7 +161,7 @@ theorem rrTop_cont (P : M.Par) (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq �
       have l1 := isLocPt_app hh1 hm hcc.1 hsz
       have l2 := isLocPt_app hh2 hm hcc.2 hsz'
       unfold KB.Pl.RR D.RRplace
-      rw [dif_pos ⟨l1, l2⟩, dif_neg (by omega), if_pos rfl]
+      rw [dite_eq_left ⟨l1, l2⟩, dite_eq_right (by omega), if_pos rfl]
       rfl
     by_cases hw0 : w = []
     · refine (hsV_continuousOn P p F hF h h' hh1 hh2 m hm hsz hsz').congr fun cc hcc => ?_
@@ -217,7 +217,7 @@ theorem rrBelow_cont (P : M.Par) (p : KB.Pl P Wp Wq) (χ : ℝ → ℝ) (ε : �
       have l1 := isLocPt_app hh1 hm hcc.1 hsz
       have l2 := isLocPt_app hh2 hm hcc.2 hsz'
       unfold KB.Pl.RR D.RRplace
-      rw [dif_pos ⟨l1, l2⟩, dif_pos hi]
+      rw [dite_eq_left ⟨l1, l2⟩, dite_eq_left hi]
       rfl
     rintro ⟨c0, c0'⟩ ⟨hc0, hc0'⟩
     obtain ⟨ε1, hε1, H1⟩ := hS hh1 c0 hc0

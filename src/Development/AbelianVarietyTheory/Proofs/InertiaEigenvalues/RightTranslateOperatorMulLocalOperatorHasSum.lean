@@ -62,7 +62,7 @@ theorem rightTranslatePairingOperator_spec {R : RealDat D A Ks} {i : Fin D.R.m} 
     (hγ : γ ∈ GfC (Wc D i)) : ∀ x y, trPair R i γ x y = ⟪x, Bop R i γ y⟫_ℂ := by
   have hex := hTL.2.2.1 γ hγ
   unfold Bop
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec.2
 
 theorem rightTranslatePairingOperator_eq_of_forms {R : RealDat D A Ks} {i : Fin D.R.m} (hTL : TransLaws R i) {γ : GA D (Wc D i)}
@@ -144,10 +144,10 @@ theorem eq_trivialLevelCoset_iff_representative_mem {R : RealDat D A Ks} {i : Fi
   rw [placeSupportedLevelCoset_eq_iff, mul_one, inv_mem_iff]
 
 theorem chosenFinitePlaceIdempotent_spec {v : HeightOneSpectrum (𝓞 D.host.F)} (h : ∃ f, IsFinIdem D v f) : IsFinIdem D v (fid D v) := by
-  unfold fid; rw [dif_pos h]; exact h.choose_spec
+  unfold fid; rw [dite_eq_left h]; exact h.choose_spec
 
 theorem chosenFinitePlaceIdempotent_eq_zero_of_not_exists {v : HeightOneSpectrum (𝓞 D.host.F)} (h : ¬ ∃ f, IsFinIdem D v f) : fid D v = 0 := by
-  unfold fid; rw [dif_neg h]
+  unfold fid; rw [dite_eq_right h]
 
 def dcSetoid (R : RealDat D A Ks) (i : Fin D.R.m) (v : HeightOneSpectrum (𝓞 D.host.F)) : Setoid (LX R i v) where
   r x y := ∃ k₁ ∈ {k | k ∈ levW R i ∧ SuppF (Wc D i) (fid D v) k}, ∃ k₂ ∈ {k | k ∈ levW R i ∧ SuppF (Wc D i) (fid D v) k},

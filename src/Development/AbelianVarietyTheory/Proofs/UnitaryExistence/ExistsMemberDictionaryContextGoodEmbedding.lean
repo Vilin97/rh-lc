@@ -90,7 +90,7 @@ theorem exists_ctx : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.
     obtain ⟨C, hC, h, -⟩ := key
       (fun τ => if h : τ ∈ (M.X k).Ψ then ((M.X k).signature ⟨τ, h⟩).choose else 1) fun τ hτ => by
         have h := ((hM.type k).2 τ).2 hτ
-        rw [dif_pos h, ← (hW k).1, ← (hM.type k).1]
+        rw [dite_eq_left h, ← (hW k).1, ← (hM.type k).1]
         exact ((M.X k).signature ⟨τ, h⟩).choose_spec.2
     exact ⟨C, hC, h⟩
   · rw [(hC.modelW k).2]

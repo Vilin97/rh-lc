@@ -77,7 +77,7 @@ theorem thetaOf_gen (L : GlobalTheory.GLq.LabelDatum p) {d : ℕ} (hd : 0 < d) {
   have hfin : IsOfFinOrder (L.gen d) := by
     rw [← orderOf_pos_iff, L.gen_order d hd]; exact hp
   unfold GlobalTheory.GLq.thetaOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have h1 := hfin.pow_eq_pow_iff_modEq.1 h.choose_spec
   rw [L.gen_order d hd] at h1
   exact (pow_eq_pow_of_modEq h1 (by rw [← map_pow, hx, map_one])).symm

@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.GLq.LabelDet.det_inPar (a b : ℕ) (M : _root_.Globa
       have hi := i.isLt
       have hj := j.isLt
       unfold _root_.Formalism.MainNotions.ArithmeticCylinders.entN
-      rw [dif_pos ⟨by omega, by omega⟩]
+      rw [dite_eq_left ⟨by omega, by omega⟩]
       rfl
     · simp
     · exact h _ _ (by simp) (by simp)
@@ -77,7 +77,7 @@ variable {g : ℕ} [hg : Fact g.Prime] in
 theorem _root_.GlobalTheory.GLq.LabelDet.det_toG {n : ℕ} (M : _root_.GlobalTheory.GLq.Mt g n) (h : M.det ≠ 0) :
     ((Matrix.GeneralLinearGroup.det (_root_.GlobalTheory.GLq.toG M) : (ZMod g)ˣ) : ZMod g) = M.det := by
   unfold _root_.GlobalTheory.GLq.toG
-  rw [dif_pos ((Matrix.isUnit_iff_isUnit_det M).mpr (isUnit_iff_ne_zero.mpr h))]
+  rw [dite_eq_left ((Matrix.isUnit_iff_isUnit_det M).mpr (isUnit_iff_ne_zero.mpr h))]
   simp [Matrix.GeneralLinearGroup.val_det_apply]
 
 open Polynomial in
@@ -104,7 +104,7 @@ open scoped Classical ComplexOrder in
 variable {g : ℕ} [hg : Fact g.Prime] in
 theorem _root_.GlobalTheory.GLq.LabelDet.toG_one {n : ℕ} : _root_.GlobalTheory.GLq.toG (1 : _root_.GlobalTheory.GLq.Mt g n) = 1 := by
   unfold _root_.GlobalTheory.GLq.toG
-  rw [dif_pos isUnit_one]
+  rw [dite_eq_left isUnit_one]
   exact Units.ext (by simp)
 
 theorem inPar_one (a n : ℕ) : InPar a (1 : Mt g n) := fun i j h1 h2 =>

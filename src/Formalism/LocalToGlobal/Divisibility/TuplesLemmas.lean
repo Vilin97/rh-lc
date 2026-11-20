@@ -24,14 +24,14 @@ theorem mem_tupGrp {S : Set ℕ} (ξ : Chr F E L) : ξ ∈ tupGrp F E L S ↔
 
 theorem tilde_norm_quotient (σ : E →ₐ[F] E) (ξ : Chr F E L) (h : (h90 σ).ker ≤ ξ.ker) (x : (AfE F E)ˣ) :
     tilde σ ξ ⟨h90 σ x, x, rfl⟩ = ξ x := by
-  rw [tilde, dif_pos h]
+  rw [tilde, dite_eq_left h]
   exact MonoidHom.liftOfRightInverse_comp_apply _ _ _ _ x
 
 theorem detTw_of_det (σ : E →ₐ[F] E) (ξ : Chr F E L) (h : (h90 σ).ker ≤ ξ.ker) {n : ℕ}
     (g : GL (Fin n) (AfE F E)) (x : (AfE F E)ˣ) (hx : h90 σ x = Matrix.GeneralLinearGroup.det g) :
     detTw σ ξ g = ξ x := by
   have hm : Matrix.GeneralLinearGroup.det g ∈ (h90 σ).range := ⟨x, hx⟩
-  rw [detTw, dif_pos hm, ← tilde_norm_quotient σ ξ h x]
+  rw [detTw, dite_eq_left hm, ← tilde_norm_quotient σ ξ h x]
   congr 1
   exact Subtype.ext hx.symm
 

@@ -95,6 +95,6 @@ theorem UpperTheory.Gal.Mod.hopOp :
   have hex : ∃ T, IsCorrOp l (H.sΩ Ω g) (H.tΩ Ω g) T := ⟨T, hT⟩
   have e1 := hOp l cc rfl hlZ T hT
   have e2 := hOp l cc rfl hlZ _ hex.choose_spec
-  have hh : hop l H Ω g = hex.choose := by unfold hop; rw [dif_pos hex]
+  have hh : hop l H Ω g = hex.choose := by unfold hop; rw [dite_eq_left hex]
   rw [hh, e2]
   exact e1.symm

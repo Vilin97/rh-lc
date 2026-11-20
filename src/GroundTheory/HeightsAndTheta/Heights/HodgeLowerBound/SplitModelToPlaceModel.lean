@@ -56,7 +56,7 @@ theorem gramMatrix_change_of_frame (hA : HermMetric y W Xo χ) (hXo : Xo ⊆ mcP
       (fun p q => (hS p q).isValueAt hzP))
   have hcompat := hA.compat hex.choose l z hz hd0 hd T hTe (HermMetricEq.valM y T z)
     (fun p q => HermMetricEq.isValueAt_iff.2 ((hT p q).isValueAt hzP))
-  rw [gramMatrixInFamily, dif_pos hex, dif_pos hS', hchoose, hTS, hcompat]
+  rw [gramMatrixInFamily, dite_eq_left hex, dite_eq_left hS', hchoose, hTS, hcompat]
   simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
 
 def SmoothAlongHolo (hA : HermMetric y W Xo χ) : Prop :=

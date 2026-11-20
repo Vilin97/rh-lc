@@ -618,7 +618,7 @@ def frameRat (L : LB X) (i₀ : L.ι) (h₀ : genericPoint X ∈ L.U i₀) (i : 
 theorem val_frameRat (i₀ : L.ι) (h₀ : genericPoint X ∈ L.U i₀) (i : L.ι)
     (h : genericPoint X ∈ L.U i) :
     (frameRat L i₀ h₀ i : X.functionField) = fnOf _ (memInf h h₀) (L.g i i₀ : Γ(X, L.U i ⊓ L.U i₀)) := by
-  rw [frameRat, dif_pos h]
+  rw [frameRat, dite_eq_left h]
   rfl
 
 private theorem units_val_res_eq_resG {U V : X.Opens} (e : V ≤ U) (u : Γ(X, U)ˣ) :

@@ -76,7 +76,7 @@ theorem evalAt_of_mapR {K : Type} [Field K]
     (hz : mapR φ y z) : evalAt pts mapR f z = φ (f p y) := by
   have hT : FromTest pts mapR z := ⟨p, φ, y, hz⟩
   unfold evalAt
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   exact (hW f hf S p _ φ _ y _ z hz hT.choose_spec.choose_spec.choose_spec).symm
 
 end ComplexTransfer

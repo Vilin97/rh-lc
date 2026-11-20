@@ -32,7 +32,7 @@ theorem secOf_mk (T : Set G) (hT : Set.InjOn (fun x => (QuotientGroup.mk x : Quo
     (hx : x ∈ T) : secOf g T (QuotientGroup.mk x) = x := by
   have h : ∃ y ∈ T, (QuotientGroup.mk y : Quo g) = QuotientGroup.mk x := ⟨x, hx, rfl⟩
   unfold secOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact hT h.choose_spec.1 hx h.choose_spec.2
 
 def orbFun (T : Set G) (x : Σ _ : Fin (Nat.card (Quo g)), Fin (orderOf g)) : G :=
@@ -126,7 +126,7 @@ def hOf : R.MA :=
   if h : p.Coprime H.condN then (H.art (ZMod.unitOfCoprime p h)).2 else 1
 
 theorem hOf_of_coprime (h : p.Coprime H.condN) : hOf H p = (H.art (ZMod.unitOfCoprime p h)).2 := by
-  rw [hOf, dif_pos h]
+  rw [hOf, dite_eq_left h]
 
 theorem unit_eq_neg_one (x : ℤˣ) (h : (x : ℤ) ≠ 1) : x = -1 := by
   rcases Int.units_eq_one_or x with hx | hx

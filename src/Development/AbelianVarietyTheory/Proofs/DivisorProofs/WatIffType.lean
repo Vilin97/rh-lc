@@ -33,7 +33,7 @@ theorem exists_lift (R : RealDat D A Ks) (hg : R.models_gW) (i : Fin D.R.m) (σ 
     ext v h
     show actG0 _ _ _ _ _ h = 0
     unfold actG0
-    rw [dif_neg hk]
+    rw [dite_eq_right hk]
     rfl
   have : R.gW i σ g⁻¹ (R.gW i σ g x) = x := by
     rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]

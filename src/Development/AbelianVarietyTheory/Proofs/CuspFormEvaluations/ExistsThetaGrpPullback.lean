@@ -21,7 +21,7 @@ private theorem gm_res_eq_gm {X Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) {U V : X.O
     congr 1
     exact TopCat.Presheaf.germ_res _ _ _ _
   unfold gm res pullU
-  rw [dif_pos hz, dif_pos (hle hz)]
+  rw [dite_eq_left hz, dite_eq_left (hle hz)]
   ext
   simp only [MonoidHom.comp_apply, Units.coe_map, MonoidHom.coe_coe]
   exact congrArg (fun φ => φ.hom (a : Γ(X, U))) key

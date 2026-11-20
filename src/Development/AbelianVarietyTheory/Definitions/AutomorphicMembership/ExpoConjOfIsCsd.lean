@@ -65,11 +65,11 @@ theorem det_unip {R : Type} [CommRing R] {r : ℕ} (x : BlockIx a r → R) : Gen
   rw [Matrix.det_of_isUpperTriangular]
   · refine Finset.prod_eq_one fun i _ => ?_
     simp only [nilM, Matrix.add_apply, Matrix.one_apply_eq, Matrix.of_apply]
-    rw [dif_neg (fun h => by omega), add_zero]
+    rw [dite_eq_right (fun h => by omega), add_zero]
   · intro i j hij
     have hij' : (j : ℕ) < i := hij
     simp only [nilM, Matrix.add_apply, Matrix.of_apply]
-    rw [dif_neg (fun h => by omega), add_zero, Matrix.one_apply_ne (fun h => by rw [h] at hij'; omega)]
+    rw [dite_eq_right (fun h => by omega), add_zero, Matrix.one_apply_ne (fun h => by rw [h] at hij'; omega)]
 
 def ratN (E : Type) [Field E] [NumberField E] (a r : ℕ) : AddSubgroup (BlockIx a r → Ad E) :=
   (AddMonoidHom.compLeft (algebraMap E (Ad E)).toAddMonoidHom (BlockIx a r)).range

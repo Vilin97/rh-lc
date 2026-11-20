@@ -100,7 +100,7 @@ theorem aPlusQ_last (D : D7) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (τ : D
   have hg := (D.hc τ).gap_be ⟨j - 1, by omega⟩
   rw [aPlusQ_eq, hc]
   unfold sigPar eQ
-  rw [dif_neg hi, dif_pos hb, dif_pos ⟨h1, h2⟩]
+  rw [dite_eq_right hi, dite_eq_left hb, dite_eq_left ⟨h1, h2⟩]
   have : (⟨D.R.k + j - 1 - 1 - (D.R.k - 1), hb⟩ : Fin D.R.m) = ⟨j - 1, by omega⟩ := Fin.ext hidx
   rw [this]
   linarith
@@ -110,7 +110,7 @@ theorem aMinusQ_last (D : D7) (j : ℕ) (h1 : 1 ≤ j) (h2 : j < D.R.m) (τ : D.
   have hg := (D.hc τ).gap_eb ⟨j - 1, by omega⟩ (by show j - 1 + 1 < D.R.m; omega)
   have hidx : (⟨j - 1 + 1, by omega⟩ : Fin D.R.m) = ⟨j + 0, by omega⟩ := Fin.ext (by show j - 1 + 1 = j + 0; omega)
   unfold aMinusQ eQ
-  rw [dif_pos (by omega : j + 0 < D.R.m), dif_pos ⟨h1, h2.le⟩]
+  rw [dite_eq_left (by omega : j + 0 < D.R.m), dite_eq_left ⟨h1, h2.le⟩]
   rw [hidx] at hg
   push_cast
   linarith

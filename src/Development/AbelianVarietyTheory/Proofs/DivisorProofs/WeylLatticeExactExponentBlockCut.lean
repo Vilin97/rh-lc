@@ -30,7 +30,7 @@ namespace GlobalTheory.LeviCut
 theorem eV_coe {N : ℕ} (ν : Fin N → ℕ) (a b : Fin N) (x : dualWeyl ℚ N N ν) :
     (eV N ν a b x : MvPolynomial (Fin N × Fin N) ℚ) = LR.der N N a b x := by
   unfold eV
-  rw [dif_pos ⟨a.2, b.2⟩]
+  rw [dite_eq_left ⟨a.2, b.2⟩]
   rfl
 
 theorem cut_incl (hG : GridInv) (hA : AdjBdd) (hS : GridScalar) (hI : GridInt) (hN : NablaGl) (hB : NablaBdd)

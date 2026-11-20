@@ -17,7 +17,7 @@ theorem latAt_eCls0 (hI : I.Ok) (l : I.Laws) (u : B.Word) (a : I.ι) (c : (I.stp
     I.latAt u a 0 (I.eCls0 l u a c) = I.latAt u I.mu0 0 c := by
   have e : I.eCls0 l u a c = I.cl0 u a (l.idx0 a).some c := rfl
   unfold TC.latAt
-  rw [dif_pos (Nat.zero_le _), dif_pos (Nat.zero_le _), e, ClsZero.stepZero_corresponding_representatives_same_deco hI]
+  rw [dite_eq_left (Nat.zero_le _), dite_eq_left (Nat.zero_le _), e, ClsZero.stepZero_corresponding_representatives_same_deco hI]
 
 theorem range_eCls0 (hI : I.Ok) (l : I.Laws) (u : B.Word) (a : I.ι) (c : (I.stp u I.mu0 0).Cl)
     (γ : GL (Fin (B.R.N 0)) B.host.E) :

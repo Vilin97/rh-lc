@@ -80,7 +80,7 @@ theorem finite_plancherel_schrodinger_intertwiner :
     apply hSB
     · intro t ht
       by_contra hmem
-      exact ht (by rw [hind, dif_neg hmem])
+      exact ht (by rw [hind, dite_eq_right hmem])
     · intro t u hu
       have hnu : Fintype.card G • u ∈ Λc := Λc.nsmul_mem hu _
       by_cases ht : t ∈ Λc
@@ -89,9 +89,9 @@ theorem finite_plancherel_schrodinger_intertwiner :
           have : (⟨t + Fintype.card G • u, ht'⟩ : Λc) = ⟨t, ht⟩ + Fintype.card G • ⟨u, hu⟩ :=
             Subtype.ext (by simp)
           rw [this, map_add (f := _), map_nsmul, card_nsmul_eq_zero, add_zero]
-        rw [hind, hind, dif_pos ht, dif_pos ht', he]
+        rw [hind, hind, dite_eq_left ht, dite_eq_left ht', he]
       · have ht' : t + Fintype.card G • u ∉ Λc := fun h => ht (by simpa using Λc.sub_mem h hnu)
-        rw [hind, hind, dif_neg ht, dif_neg ht']
+        rw [hind, hind, dite_eq_right ht, dite_eq_right ht']
   have hmodg : ∀ y, Hd y → (∀ k : Λc, red k = 0 → ψ (B k y) = 1) → ∀ c,
       hs y (g c) = χ y c • g c := by
     intro y hHd hy c
@@ -99,11 +99,11 @@ theorem finite_plancherel_schrodinger_intertwiner :
     congr 1
     rw [hind]
     by_cases ht : t ∈ Λc
-    · rw [dif_pos ht]
+    · rw [dite_eq_left ht]
       by_cases hr : red ⟨t, ht⟩ = c
       · rw [if_pos hr, mul_one, mul_one, ← hr]; exact hχ y hy ⟨t, ht⟩
       · rw [if_neg hr]; simp
-    · rw [dif_neg ht]; simp
+    · rw [dite_eq_right ht]; simp
   have htrg : ∀ c, hs (rep c) (g c) = g 0 := by
     intro c
     rw [hg, hg, ← htr (ind c) (hSBind c) (rep c) (rep c).2]
@@ -115,10 +115,10 @@ theorem finite_plancherel_schrodinger_intertwiner :
       have he : red ⟨t + rep c, ht'⟩ = red ⟨t, ht⟩ + c := by
         have : (⟨t + rep c, ht'⟩ : Λc) = ⟨t, ht⟩ + rep c := Subtype.ext (by simp)
         rw [this, map_add (f := _), hrep]
-      rw [dif_pos ht, dif_pos ht', he]
+      rw [dite_eq_left ht, dite_eq_left ht', he]
       simp
     · have ht' : t + (rep c : X) ∉ Λc := fun h => ht (by simpa using Λc.sub_mem h (rep c).2)
-      rw [dif_neg ht, dif_neg ht']
+      rw [dite_eq_right ht, dite_eq_right ht']
   have hTh0 : Th 0 := by simpa using hThlin (-1) f₀ f₀ hThf₀ hThf₀
   have hThsmul : ∀ a f, Th f → Th (a • f) := fun a f hf => by simpa using hThlin a f 0 hf hTh0
   have hhs0 : ∀ w, hs w 0 = 0 := fun w => by simpa using hslin w 1 0 0

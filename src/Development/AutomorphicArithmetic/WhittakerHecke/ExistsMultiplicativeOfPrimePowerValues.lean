@@ -21,7 +21,7 @@ theorem UpperTheory.exists_multiplicative_of_prime_power_values :
     have h : ∃ w : H.P ℚ, normV w = normV v := ⟨v, rfl⟩
     have h2 : h.choose = v := hinj _ _ h.choose_spec
     simp only [f]
-    rw [dif_pos h, h2]
+    rw [dite_eq_left h, h2]
   refine ⟨fun n => n.factorization.prod f, by simp, ?_, ?_⟩
   · intro m n hm hn hmn
     show (m * n).factorization.prod f = m.factorization.prod f * n.factorization.prod f

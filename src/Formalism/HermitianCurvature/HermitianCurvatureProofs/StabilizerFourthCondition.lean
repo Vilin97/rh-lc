@@ -142,7 +142,7 @@ theorem relevant_pair_criterion : C2.RelevantPair := by
       rw [Finset.sum_eq_single (w b)]
       · by_cases hq : (w a).val = (w b).val + 1
         · have h : (w b).val + 1 < m := hq ▸ (w a).isLt
-          rw [dif_pos h, if_pos hq]
+          rw [dite_eq_left h, if_pos hq]
           simp [C2.Eij, Matrix.add_apply, Matrix.one_apply, Fin.ext_iff, hq]
         · rw [if_neg hq]
           split_ifs with h
@@ -160,7 +160,7 @@ theorem relevant_pair_criterion : C2.RelevantPair := by
       rw [Finset.sum_eq_single a]
       · by_cases hq : b.val = a.val + 1
         · have h : a.val + 1 < m := hq ▸ b.isLt
-          rw [dif_pos h, if_pos hq]
+          rw [dite_eq_left h, if_pos hq]
           simp [C2.Eij, Matrix.add_apply, Matrix.one_apply, Fin.ext_iff, hq]
         · rw [if_neg hq]
           split_ifs with h

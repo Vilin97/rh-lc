@@ -617,9 +617,9 @@ theorem chiAt_eq (χ : UnitaryHeckeChar E) (P : HeightOneSpectrum (𝓞 E)) :
   · have hc : IsUnramAt σ (pull F χ) P ∧ ∃ x, IsUnifIdele σ P x :=
       ⟨(isUnramAt_iff h χ P).2 hχ, exists_isUnifIdele h P⟩
     obtain ⟨ϖ, hϖ, -, e⟩ := (isUnifIdele_iff h P _).1 hc.2.choose_spec
-    rw [chiAt, dif_pos hc, χ.valueAt_eq hχ hϖ]
+    rw [chiAt, dite_eq_left hc, χ.valueAt_eq hχ hϖ]
     exact congrArg (fun y => ((χ.toHom y : Circle) : ℂ)) e
-  · rw [chiAt, dif_neg fun hc => hχ ((isUnramAt_iff h χ P).1 hc.1), χ.valueAt_of_ramified hχ]
+  · rw [chiAt, dite_eq_right fun hc => hχ ((isUnramAt_iff h χ P).1 hc.1), χ.valueAt_of_ramified hχ]
 
 theorem lfac_eq (χ : UnitaryHeckeChar E) (P : HeightOneSpectrum (𝓞 E)) (s : ℂ) :
     lfac σ (pull F χ) P s = χ.eulerFactor P s := by

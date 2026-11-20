@@ -86,7 +86,7 @@ theorem GlobalTheory.AdForm.rdS_val : ∀ (D : D7) (θ : InfFam D), IsInfFam θ 
     rw [Matrix.det_mul, Matrix.det_mul]
     exact ((Matrix.isUnit_det_of_left_inverse (atInf_mul_inv hex.choose.2.1 τ)).mul (infM_unit θ V hn g τ)).mul (y.2 τ)
   unfold rdS
-  rw [dif_pos hex, atFr, dif_pos hfr]
+  rw [dite_eq_left hex, atFr, dite_eq_left hfr]
   have law := hΨ hex.choose.2.1 hp.1 (yc hex.choose.1) x hex.choose.2.2 (Units.ext (hx.trans hp.2)) y' ⟨_, hfr⟩ (by
     intro τ
     show y'.1 τ = _

@@ -61,7 +61,7 @@ theorem _root_.GlobalTheory.LetterMap.num_algebraMap {Dw : _root_.ReciprocityThe
   have hex : ∃ Q, algebraMap (MvPolynomial (_root_.Formalism.L2.Pj.ArcLt Dw) (LaurentSeries K₁)) (_root_.Formalism.L2.Pj.ArcS Dw K₁) Q =
       algebraMap _ (_root_.Formalism.L2.Pj.ArcS Dw K₁) P := ⟨P, rfl⟩
   unfold _root_.Formalism.L2.Pj.QAt.arcNum
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hinj hex.choose_spec
 
 theorem map_arcDet (Dw : Datum H) {K L : Type} [Field K] [Field L] (f : K →+* L) :

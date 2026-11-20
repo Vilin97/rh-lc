@@ -646,7 +646,7 @@ theorem rows_ch_eq (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (τ : D.what₂.Ta
   have h1 := d_norm_Dmin Y hrd t τ (D.R.rS + 1) le_rfl
   have h2 := d_norm_Dmin Y hrd t τ D.R.rS (Nat.le_succ _)
   unfold DminN at h1 h2
-  rw [dif_pos (by omega)] at h1 h2
+  rw [dite_eq_left (by omega)] at h1 h2
   have h1' : ‖Formalism.QuantumDeterminants.Dmin D.R.k D.R.rS (Y.W τ).z (Y.W τ).z' (Y.γ t τ) (Fin.last (D.R.rS + 1))‖ =
       absDl D (ZhatL (X.fl t) (X.fl' t)) (D.R.rS + 1) τ := h1
   unfold chV Lat.ch Formalism.QuantumDeterminants.zeta
@@ -769,7 +769,7 @@ theorem rowsT_shV_pos (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (hG : D.s.Gterm
   have h2 := d_norm_Dmin Y hrd t τ D.R.rS (Nat.le_succ _)
   have hD' : 0 < absDl D (termGramMatrix X t) D.R.rS τ := by rw [← h2]; exact norm_pos_iff.2 hD
   unfold DminN at h1 h2
-  rw [dif_pos (by omega)] at h1 h2
+  rw [dite_eq_left (by omega)] at h1 h2
   have h1' : ‖Formalism.QuantumDeterminants.Dmin D.R.k D.R.rS (Y.W τ).z (Y.W τ).z' (Y.γ t τ) (Fin.last (D.R.rS + 1))‖ =
       absDl D (ZhatL (X.fl t) (X.fl' t)) (D.R.rS + 1) τ := h1
   have hT := rowsT_Tr_pos D u
@@ -929,7 +929,7 @@ theorem rowsT_nu_eq (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (hG : D.s.Gterm t
   unfold nuV
   rw [h2, d_Gf_eq Y hrd t τ]
   unfold DminN at h1 h2
-  rw [dif_pos (by omega)] at h1 h2
+  rw [dite_eq_left (by omega)] at h1 h2
   have h1' : ‖Formalism.QuantumDeterminants.Dmin D.R.k D.R.rS (Y.W τ).z (Y.W τ).z' (Y.γ t τ) (Fin.last (D.R.rS + 1))‖ =
       absDl D (ZhatL (X.fl t) (X.fl' t)) (D.R.rS + 1) τ := h1
   have hT := rowsT_Tr_pos D u

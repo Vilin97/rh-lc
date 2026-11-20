@@ -30,7 +30,7 @@ theorem mem_of_pv_ne_zero {n d : ℕ} {Bf : fullRk k n d →ₗ[ℂ] fullRk k n 
     B₁.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d ∧
       B₂.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d := by
   by_contra hn
-  exact h (by rw [pv, dif_neg hn])
+  exact h (by rw [pv, dite_eq_right hn])
 
 theorem exists_pos_sum {ι : Type} (s : Finset ι) (hs : s.Nonempty) (f : ι → ℂ) (c : ℂ)
     (hf : ∀ i ∈ s, ∃ r : ℝ, 0 < r ∧ f i = r * c) : ∃ P : ℝ, 0 < P ∧ ∑ i ∈ s, f i = P * c := by

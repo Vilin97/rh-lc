@@ -70,7 +70,7 @@ theorem rat_eq_germ {Z : Scheme.{0}} [IsIntegral Z] (φ : Z ⟶ PSpace ℂ d) (k
     (hk : genericPoint Z ∈ φ ⁻¹ᵁ chart d k) :
     rat φ k l = φ.stalkMap (genericPoint Z) ((PSpace ℂ d).presheaf.germ (chart d k) _ hk (ratioSec d k l)) := by
   unfold rat
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   exact (Scheme.Hom.germ_stalkMap_apply φ _ _ hk _).symm
 
 end Overlap

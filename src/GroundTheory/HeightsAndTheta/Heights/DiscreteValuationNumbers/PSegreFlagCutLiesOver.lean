@@ -45,7 +45,7 @@ theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A
   have hrat := congrFun (ratDiv_eq_of_sub_mem hsP hhP hlP hμP hdiff) W
   have hμ0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt) μ) W : ℤ) = 0 := by
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨h', -⟩
     exact hμW (h'.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self μ)))
   have hl0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt) l) W : ℤ) ≠ 0 := by

@@ -132,7 +132,7 @@ theorem KtopLoc_last_one (M : Model F E) (τ : E) {r : ℕ} {w w' : Pt E (r + 1)
   have H : LastOne w := ⟨(h, t), hw⟩
   have H' : LastOne w' := ⟨(h', t'), hw'⟩
   unfold KtopLoc
-  rw [dif_pos H, dif_pos H', key hw H, key hw' H']
+  rw [dite_eq_left H, dite_eq_left H', key hw H, key hw' H']
 
 theorem KtopLoc_mixed (M : Model F E) (τ : E) {r : ℕ} {w w' : Pt E (r + 1)} (h : ¬ (LastOne w ↔ LastOne w')) :
     KtopLoc M τ w w' = 0 := by
@@ -142,7 +142,7 @@ theorem KtopLoc_mixed (M : Model F E) (τ : E) {r : ℕ} {w w' : Pt E (r + 1)} (
 theorem KtopLoc_not_last_one (M : Model F E) (τ : E) {r : ℕ} {w w' : Pt E (r + 1)} (h : ¬ LastOne w)
     (h' : ¬ LastOne w') : KtopLoc M τ w w' = dLoc M τ w * M.Kk (r + 1) w w' * conj (dLoc M τ w') := by
   unfold KtopLoc
-  rw [dif_neg h, if_neg h']
+  rw [dite_eq_right h, if_neg h']
 end Local
 
 namespace ModFam
@@ -261,7 +261,7 @@ def tmodU (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t : Eˣ) : (X.A
 @[simp] theorem coe_tmodU (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t : Eˣ) :
     ((X.tmodU ν s p t : (X.A p).Epˣ) : (X.A p).Ep) = X.tmod ν s p t := by
   unfold tmodU
-  rw [dif_pos (X.isUnit_tmod ν s p t), IsUnit.unit_spec]
+  rw [dite_eq_left (X.isUnit_tmod ν s p t), IsUnit.unit_spec]
 
 theorem coe_tmodU_inv (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t : Eˣ) :
     (((X.tmodU ν s p t)⁻¹ : (X.A p).Epˣ) : (X.A p).Ep) = X.xmod ν s p (t : E)⁻¹ :=

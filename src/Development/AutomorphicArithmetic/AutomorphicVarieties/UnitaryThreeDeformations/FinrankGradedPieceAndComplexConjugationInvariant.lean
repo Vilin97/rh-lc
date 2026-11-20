@@ -21,7 +21,7 @@ private noncomputable def gbEquiv (k : Type) [Field k] (j : ℤ) :
   right_inv f := by
     ext ⟨⟨a, b⟩, h⟩
     show (if h : wt a b = j then f ⟨(a, b), h⟩ else 0) = _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
 
 private theorem card_wt (j : ℤ) : Fintype.card {p : Fin 3 × Fin 3 // wt p.1 p.2 = j} = (3 - |j|).toNat := by
   rcases (show j ≤ -3 ∨ j = -2 ∨ j = -1 ∨ j = 0 ∨ j = 1 ∨ j = 2 ∨ 3 ≤ j by omega)

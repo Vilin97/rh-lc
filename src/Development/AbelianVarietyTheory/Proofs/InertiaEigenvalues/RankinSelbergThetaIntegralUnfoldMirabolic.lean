@@ -32,7 +32,7 @@ theorem continuousOn_secInv {n : ℕ} :
   refine Units.continuous_iff.2 ⟨?_, ?_⟩
   · have h1 : ∀ y : ↥{y : Fin n → Cinf E | IsUnit (secRow y).det},
         ((secInv y.1 : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E)) = (secRow y.1)⁻¹ := fun y => by
-      rw [secInv, dif_pos (show IsUnit (secRow y.1).det from y.2), Matrix.coe_units_inv]
+      rw [secInv, dite_eq_left (show IsUnit (secRow y.1).det from y.2), Matrix.coe_units_inv]
       rfl
     have hc : Continuous fun y : ↥{y : Fin n → Cinf E | IsUnit (secRow y).det} => secRow y.1 :=
       continuous_secRow.comp continuous_subtype_val
@@ -48,7 +48,7 @@ theorem continuousOn_secInv {n : ℕ} :
     exact h1 z
   · have h1 : ∀ y : ↥{y : Fin n → Cinf E | IsUnit (secRow y).det},
         (((secInv y.1)⁻¹ : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E)) = secRow y.1 := fun y => by
-      rw [secInv, dif_pos (show IsUnit (secRow y.1).det from y.2), inv_inv]
+      rw [secInv, dite_eq_left (show IsUnit (secRow y.1).det from y.2), inv_inv]
       rfl
     convert (continuous_secRow.comp continuous_subtype_val :
       Continuous fun z : ↥{y : Fin n → Cinf E | IsUnit (secRow y).det} => secRow z.1) using 1
@@ -90,7 +90,7 @@ theorem measurable_mulSec :
     funext g
     have hg : ¬ IsUnit (secRow fun i => pInf E (GlobalTheory.ZEul.lastRow g.1 i)).det := g.2
     show g.1 * infGL E (m + 1) (secInv fun i => pInf E (GlobalTheory.ZEul.lastRow g.1 i)) = g.1
-    rw [secInv, dif_neg hg, map_one, mul_one]
+    rw [secInv, dite_eq_right hg, map_one, mul_one]
 
 theorem measurable_integrand {φ φ' : GA E (m + 1) → ℂ} (hφ : Measurable φ) (hφ' : Measurable φ')
     {Φ : (Fin (m + 1) → Cinf E) → ℂ} (hΦ : Continuous Φ) (N : ℕ) (x : ℝ) :

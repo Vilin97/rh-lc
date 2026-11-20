@@ -129,7 +129,7 @@ theorem exists_isFundamentalDomain_of_isCompact [MeasurableSpace G] [BorelSpace 
     obtain ⟨n, hn, hnc⟩ := List.getElem_of_mem (Finset.mem_toList.mpr hct)
     refine ⟨n, γ, hγ, ?_⟩
     show γ * x ∈ (if h : n < l.length then V (l.get ⟨n, h⟩) else ∅)
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     have hget : l.get ⟨n, hn⟩ = c := hnc
     rw [hget]
     exact hcV'

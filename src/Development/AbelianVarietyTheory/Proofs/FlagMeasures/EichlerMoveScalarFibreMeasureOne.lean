@@ -26,7 +26,7 @@ theorem cint_coset {W : Type} [AddCommGroup W] (A : AddSubgroup W) (P : W → Pr
         exact hw (by simp [ind, h])
       rw [Set.mem_singleton_iff, eq_comm, QuotientAddGroup.eq, neg_add_eq_sub]
       exact (hP w).1 h1
-  rw [cint, dif_pos hN]
+  rw [cint, dite_eq_left hN]
   obtain ⟨hle, hidx, -, -⟩ := hN.choose_spec
   generalize hN.choose = B at hle hidx
   let g : A ⧸ B.addSubgroupOf A → W ⧸ B := fun x =>

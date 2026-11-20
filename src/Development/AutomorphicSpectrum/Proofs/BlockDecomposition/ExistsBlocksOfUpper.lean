@@ -63,7 +63,7 @@ theorem iwasawa_parabolic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       rw [hY]; exact (c⁻¹).isUnit
     apply Units.ext
     simp only [blk]
-    rw [dif_pos hU, IsUnit.unit_spec]
+    rw [dite_eq_left hU, IsUnit.unit_spec]
     exact hY
   refine ⟨(m₁, m₂), Y, _, inv_mem hk, ?_⟩
   rw [hblk, ← inv_inv g, hg, _root_.mul_inv_rev]

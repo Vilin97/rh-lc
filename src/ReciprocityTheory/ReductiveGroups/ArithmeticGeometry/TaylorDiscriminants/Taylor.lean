@@ -52,7 +52,7 @@ theorem cml_perm {l l' : List V} (p : l.Perm l') :
           · obtain ⟨j, rfl⟩ : ∃ j, i = l₀.length + (j + 2) := ⟨i - (l₀.length + 2), by omega⟩
             simp [List.getElem_append]
       · have hk' : ¬ (l₀ ++ x :: y :: k).length = n := by simpa using hk
-        rw [dif_neg hk, dif_neg hk']
+        rw [dite_eq_right hk, dite_eq_right hk']
     | trans _ _ ih₁ ih₂ => intro l₀; exact (ih₁ l₀).trans (ih₂ l₀)
   intro h h'
   have e := key []

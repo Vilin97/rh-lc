@@ -54,7 +54,7 @@ theorem jPred_iff (kk s : ℕ) {N g : ℕ} (hN : N = kk + 2 * s + 1) (M : Matrix
         split_ifs at hbi with h1 h2 <;> omega
       have h5 := hz i.val hi1.1 hi1.2
       unfold entN at h5
-      rw [dif_pos ⟨i.isLt, by omega⟩] at h5
+      rw [dite_eq_left ⟨i.isLt, by omega⟩] at h5
       have hj' : j = ⟨s + kk, by omega⟩ := Fin.ext hj
       rw [hj']
       exact h5
@@ -65,7 +65,7 @@ theorem jPred_iff (kk s : ℕ) {N g : ℕ} (hN : N = kk + 2 * s + 1) (M : Matrix
       · exact h1 a b h
       · exact h3 a b h.symm hba
     · unfold entN
-      rw [dif_pos ⟨by omega, by omega⟩]
+      rw [dite_eq_left ⟨by omega, by omega⟩]
       refine h4 _ _ rfl ?_ ?_
       · intro h
         have := congrArg Fin.val h

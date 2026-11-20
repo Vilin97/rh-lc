@@ -107,7 +107,7 @@ lemma step (k r' : ℕ) (hk : 1 ≤ k)
       ENNReal.ofReal (vHalf k (1 + r') (g * Matrix.of κ * ιLev k 1 r' (Matrix.of y))) ^ 2) hm2.aemeasurable
   have he : fvec k (1 + r') (isoVec k (1 + r')) ⟨0, Nat.succ_pos _⟩ = e0 k r' := by
     unfold fvec
-    rw [dif_pos (show (0 : ℕ) < 1 + r' by omega)]
+    rw [dite_eq_left (show (0 : ℕ) < 1 + r' by omega)]
     rfl
   obtain ⟨h1, h2⟩ := col_facts k (1 + r') hk ⟨0, Nat.succ_pos _⟩
   rw [he] at h1 h2

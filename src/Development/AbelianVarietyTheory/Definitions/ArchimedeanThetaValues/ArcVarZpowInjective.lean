@@ -348,7 +348,7 @@ theorem valF_gv_unitOn {F : Type} [Field F] {V : (Sp F).Opens} (hV : V = ⊤) (a
     valF (𝟙 (Sp F)) V (gv (unitOn a) V).val = a := by
   subst hV
   have h : (⊤ : (Sp F).Opens) ≤ (𝟙 (Sp F) : Sp F ⟶ Sp F) ⁻¹ᵁ ⊤ := le_rfl
-  rw [valF, dif_pos h, gv, res_self]
+  rw [valF, dite_eq_left h, gv, res_self]
   have e : Scheme.Hom.appLE (𝟙 (Sp F)) ⊤ ⊤ h = 𝟙 _ := by
     rw [Scheme.Hom.appLE, Scheme.Hom.id_app]
     erw [Category.id_comp]
@@ -358,7 +358,7 @@ theorem valF_gv_unitOn {F : Type} [Field F] {V : (Sp F).Opens} (hV : V = ⊤) (a
 
 theorem valF_one {F : Type} [Field F] {Y : Scheme.{0}} (x : Sp F ⟶ Y) {U : Y.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) :
     valF x U 1 = 1 := by
-  rw [valF, dif_pos h, map_one, map_one]
+  rw [valF, dite_eq_left h, map_one, map_one]
 
 theorem genRel_baseIso_iff {F : Type} [Field F] {J : Type} [Fintype J]
     {pt : J → (Sp F ⟶ (toricPre K' X q').P.A.left)} {pt₀ : J → (Sp F ⟶ (toricPre K X q).P.A.left)} {ε : J → ℤ}

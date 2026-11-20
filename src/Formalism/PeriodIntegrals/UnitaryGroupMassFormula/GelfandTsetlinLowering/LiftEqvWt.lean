@@ -211,7 +211,7 @@ theorem equivariant_partial_weight : EqvRowWt := by
   | last =>
     have := equivariant_last_degree_coeff lam mu φ hφ s hs m hm
     unfold liftWt
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
     show rowDeg m (Fin.last n) = (wsum lam - wsum mu - lam.detShift).toNat
     omega
   | cast i =>

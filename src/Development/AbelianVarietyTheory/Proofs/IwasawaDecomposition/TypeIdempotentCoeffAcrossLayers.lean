@@ -242,10 +242,10 @@ theorem exists_nStage_grpTrue (hG : GlobalTheory.Published.GreenCuspidal) (B : B
   have hTe : T.e0 = T₀.e0 := rfl
   have htie : T.IdempotentMatchesAction := by
     refine ⟨fun μ => ?_, fun μ j => ?_⟩
-    · rw [hTe, NTypes.onAmb, dif_pos hc]
+    · rw [hTe, NTypes.onAmb, dite_eq_left hc]
       change W.eOp μ = algebraMap ℂ _ (ω _)
       rw [h0, map_zero, hOp]
-    · rw [hTe, NTypes.onMt, dif_pos hc]
+    · rw [hTe, NTypes.onMt, dite_eq_left hc]
       change W.eMt μ j = algebraMap ℂ _ (ω _)
       rw [h0, map_zero, hMt]
   have hy : ∀ x, ∃ y : ↥B.LL0, B.embLL (y : B.LL) = T.e0.coeff x := fun x => by

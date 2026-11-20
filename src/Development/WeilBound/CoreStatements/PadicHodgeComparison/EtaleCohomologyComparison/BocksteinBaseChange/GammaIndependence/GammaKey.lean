@@ -37,7 +37,7 @@ variable (hF : R.Facts) (β : BMap G D) (κ : PMap G D)
 
 theorem gamma_key {M : Model l K} {a : D.Ch M} (hM : G M) {j : ℕ} {c : R.A} {x : (D.H a).N j} {y : (D.A a).N j}
     (h : β.β a j x = c • y) (φ : Module.Dual K (HdR M.q j)) : κ.κ a j x φ = R.i c * gamma hF β κ a j y φ := by
-  rw [gamma, dif_pos hM]
+  rw [gamma, dite_eq_left hM]
   exact Gam.hom_key _ _ _ _ _ _ h φ
 
 theorem gamma_key' {M : Model l K} {a : D.Ch M} (hM : G M) {j : ℕ} (y : (D.A a).N j) (φ : Module.Dual K (HdR M.q j)) :

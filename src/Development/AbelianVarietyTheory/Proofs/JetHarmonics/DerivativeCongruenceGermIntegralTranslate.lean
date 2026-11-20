@@ -29,7 +29,7 @@ open GlobalTheory.JetSer (fnVal IsSer1)
 theorem gs_comp_eq_constVal {A : Type} [CommRing A] {X Z : Scheme.{0}} (e : Z ⟶ Spec (CommRingCat.of A))
     (p : Spec (CommRingCat.of A) ⟶ X) (U : X.Opens) (h : ⊤ ≤ p ⁻¹ᵁ U) (a : Γ(X, U)) (z : Z) :
     gs (e ≫ p) z U a = constVal e z (fnVal p U a) := by
-  rw [fnVal, dif_pos h, constVal]
+  rw [fnVal, dite_eq_left h, constVal]
   have i : ∀ b, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom b) = b :=
     fun b => congrArg (fun q => q.hom b) (Scheme.ΓSpecIso (CommRingCat.of A)).hom_inv_id
   rw [i]

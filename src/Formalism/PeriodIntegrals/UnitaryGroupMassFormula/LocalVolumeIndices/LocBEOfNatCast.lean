@@ -59,7 +59,7 @@ def locG (a : Af I.F) (x : I.Gf) : I.Gf :=
 
 theorem LocB_fmat (a : Af I.F) (ha : a * a = a) (x : I.Gf) :
     I.fmat (locG I a x) = locM (eOf I a) (I.fmat x) := by
-  rw [locG, dif_pos ha]
+  rw [locG, dite_eq_left ha]
   exact Loc_locGL_val _ _ _
 
 theorem LocB_ext (x y : I.Gf) (h : I.fmat x = I.fmat y) : x = y := Subtype.ext (Units.ext h)

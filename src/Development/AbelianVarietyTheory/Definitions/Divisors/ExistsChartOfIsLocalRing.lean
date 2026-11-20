@@ -311,13 +311,13 @@ def rdet {n n' : ℕ} (A : Matrix (Fin n) (Fin n') R) : R :=
   if h : n = n' then (A.submatrix id (Fin.cast h)).det else 1
 
 theorem rdet_self {n : ℕ} (A : Matrix (Fin n) (Fin n) R) : rdet A = A.det := by
-  rw [rdet, dif_pos rfl]; rfl
+  rw [rdet, dite_eq_left rfl]; rfl
 
 theorem map_rdet (φ : R →+* R') {n n' : ℕ} (A : Matrix (Fin n) (Fin n') R) : φ (rdet A) = rdet (A.map φ) := by
   by_cases h : n = n'
   · subst h
     rw [rdet_self, rdet_self, RingHom.map_det]; rfl
-  · rw [rdet, rdet, dif_neg h, dif_neg h, map_one]
+  · rw [rdet, rdet, dite_eq_right h, dite_eq_right h, map_one]
 
 variable {N : Type} [AddCommGroup N] [Module R N]
 

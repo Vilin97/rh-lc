@@ -242,7 +242,7 @@ def toUJ (ε : Fin n → Bool) (M : Matrix (Fin n) (Fin n) ℂ) : Formalism.REAL
 
 theorem toUJ_uMat {ε : Fin n → Bool} {M : Matrix (Fin n) (Fin n) ℂ} (h : ∃ g : Formalism.REAL.UJ ε, uMat g = M) :
     uMat (toUJ ε M) = M := by
-  unfold toUJ; rw [dif_pos h]; exact h.choose_spec
+  unfold toUJ; rw [dite_eq_left h]; exact h.choose_spec
 
 def GaugeCV (ε : Fin n → Bool) : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∀ (U : Set (EuclideanSpace ℝ (Fin (dimL ε)))) (Θ : EuclideanSpace ℝ (Fin (dimL ε)) → MP n),

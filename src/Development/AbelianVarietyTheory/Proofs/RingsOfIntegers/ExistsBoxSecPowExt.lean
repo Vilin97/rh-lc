@@ -22,7 +22,7 @@ variable {X Y Z : Scheme.{0}}
 private theorem gm_inv' {Y Z : Scheme.{0}} (r : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : r z ∈ U) (a : Γ(Y, U)ˣ) :
     gm r z U a⁻¹ = (gm r z U a)⁻¹ := by
   unfold gm
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact map_inv _ a
 
 private theorem gm_res' {Y Z : Scheme.{0}} (r : Z ⟶ Y) (z : Z) {U V : Y.Opens} (hle : V ≤ U) (h : r z ∈ V)

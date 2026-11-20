@@ -29,7 +29,7 @@ lemma ql_E_fill (lo : ℤ) (N : ℕ) (f : Fin N → Finset (Fin n)) : ql_E lo N 
   funext j
   have := j.2
   simp only [ql_E, ql_fill]
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   congr 1
   ext
   show (lo + 1 + (j : ℕ) - lo - 1).toNat = j

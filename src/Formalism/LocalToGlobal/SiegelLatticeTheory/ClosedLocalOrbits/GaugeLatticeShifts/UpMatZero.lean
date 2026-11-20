@@ -64,6 +64,6 @@ theorem mulU_zero {r : ℕ} (y : UC r) : mulU y 0 = y := by
   simp only [mulU]
   rw [upMat_zero, Matrix.mul_one]
   simp only [upMat, Matrix.of_apply]
-  rw [if_neg (ne_of_lt p.2), dif_pos p.2]
+  rw [if_neg (ne_of_lt p.2), dite_eq_left p.2]
 
 end Formalism.L2.SG.RealObj.InfCut.JacobianCoordinates.JL

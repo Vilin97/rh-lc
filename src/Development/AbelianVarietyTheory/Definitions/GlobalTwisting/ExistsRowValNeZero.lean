@@ -118,7 +118,7 @@ def reRows {C : Cols B} (W : RowsRest B C) (M : ∀ μ, Rows.OLat B.O (B.embLL.c
       if h : μ = C.mu0 then (C.mem u).P.PtilCol (W.eMu u φ).1 ((e0 u).symm (cast (congrArg W.Amb h) F))
       else (C.PTw u μ).PtilCol (C.e0Tw u μ (W.eMu u φ).1) ((eT u μ).symm F)
     perCol_base_eq_PtilCol := fun u φ F => by
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       rfl
     perCol_tie := fun u μ h φ F => dif_neg h }
 

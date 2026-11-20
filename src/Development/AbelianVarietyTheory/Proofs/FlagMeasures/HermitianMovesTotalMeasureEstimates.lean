@@ -28,7 +28,7 @@ theorem cint_zero (A : AddSubgroup W) : cint A (fun _ => (0 : ℂ)) = 0 := by
 
 theorem nice_of_ne (A : AddSubgroup W) (φ : W → ℂ) (h : cint A φ ≠ 0) : Nice A φ := by
   by_contra hn
-  exact h (by unfold cint; rw [dif_neg hn])
+  exact h (by unfold cint; rw [dite_eq_right hn])
 
 theorem fine_mul {A B : AddSubgroup W} {P : W → Prop} (h : Fine A (ind P) B) (g : W → ℂ)
     (hg : ∀ w, P w → ∀ b ∈ B, g (w + b) = g w) : Fine A (fun w => ind P w * g w) B := by
@@ -219,7 +219,7 @@ theorem total_moves : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpac
       (fun w => ind (S.Mv (j + 1) d Λ) w * S.chiM j d Λ w.1 w.2.1) = _ := t3
     have hw : S.IsTermW d Λ (S.wit d Λ).1 (S.wit d Λ).2 := by
       unfold Frames.wit
-      rw [dif_pos hT]
+      rw [dite_eq_left hT]
       exact hT.choose_spec
     have hqa : (0 : ℝ) ≤ (S.q : ℝ) ^ S.a := by positivity
     rcases hqa.eq_or_lt with h0 | h0

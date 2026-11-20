@@ -18,7 +18,7 @@ theorem v_eq_ord {x : L} (hx : x ≠ 0) : Valued.v x =
     ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold ordL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   simp
 
 theorem ord_mul {x y : L} (hx : x ≠ 0) (hy : y ≠ 0) : ordL (x * y) = ordL x + ordL y := by

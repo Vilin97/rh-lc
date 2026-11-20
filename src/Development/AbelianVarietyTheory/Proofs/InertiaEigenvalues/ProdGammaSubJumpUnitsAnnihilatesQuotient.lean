@@ -166,7 +166,7 @@ theorem Ex_eq (C : LocCmpT l P AI H F) (h : Good K s LL) (T : Lt K LL) (i : Let 
     (z : (H.W K s LL h).DD T) (hz : (H.W K s LL h).Q ^ y • z ∈ (H.W K s LL h).N T) :
     Ex C h T i ζ y z = ex C h T i ζ ⟨_, hz⟩ := by
   unfold Ex
-  rw [dif_pos hz]
+  rw [dite_eq_left hz]
 
 def SubF (H : LocHW l P) (h : Good K s LL) (T : Lt K LL) (i : Let K) (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) (k : ℤ) :
     Submodule ↥LL.1 (T.V ⊗[ℚ_[l]] P.R.B) :=

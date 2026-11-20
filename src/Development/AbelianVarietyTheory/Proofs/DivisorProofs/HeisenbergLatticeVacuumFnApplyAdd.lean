@@ -28,7 +28,7 @@ theorem GlobalTheory.HeisLatVac.vacFn_apply_add : ∀ {K κ : Type} [CommRing K]
   intro K κ _ _ _ ψ₀ Λ χ x₀ hcoc hχ0 u hu
   have hex : ∃ v ∈ Λ, x₀ + u.1 = x₀ + v.1 := ⟨u, hu, rfl⟩
   unfold GlobalTheory.HeisLatVac.vacFn
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hspec := hex.choose_spec
   generalize hex.choose = u' at hspec ⊢
   obtain ⟨hu', heq⟩ := hspec

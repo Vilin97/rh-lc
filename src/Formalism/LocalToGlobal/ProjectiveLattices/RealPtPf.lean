@@ -94,7 +94,7 @@ theorem evR_eq_of_map {j : ℕ}
     evR (T.Q.Xo j) T.Q.c f w = φ (f p y) := by
   have hT : FromTest (K := T.Q.c.F) (fun S _ _ => FrPt (T.Q.Xo j) T.Q.c S) (fun φ y z => FrMap φ y z) w := ⟨p, φ, y, h⟩
   unfold evR evalAt
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   exact hWD f hf S _ _ _ _ _ _ w hT.choose_spec.choose_spec.choose_spec h
 
 def RealPtNZSt (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c) {ka wL wF : WeightFamilies.Wt D j}

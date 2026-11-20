@@ -100,7 +100,7 @@ theorem pr_inc_self (i : I) (m : ℕ) (y : (P i).cech.X m) : pr P i m (inc P i m
 theorem pr_inc_ne {i j : I} (e : j ≠ i) (m : ℕ) (y : (P j).cech.X m) : pr P i m (inc P j m y) = 0 := by
   funext t
   change DirectSum.component K I (fun j => (P j).M (ent t)) i (DirectSum.lof K I (fun j => (P j).M (ent t)) j (y t)) = 0
-  rw [DirectSum.component.of, dif_neg e]
+  rw [DirectSum.component.of, dite_eq_right e]
 
 open Classical in
 theorem decomp [Fintype ι] {m : ℕ} (z : (sumPM P).cech.X m) :

@@ -116,7 +116,7 @@ theorem hasymp_base {p : ℕ} (hp : p.Prime) {L : ℝ} (hL : L = Real.log p) {W 
   refine ⟨a₁, 0, le_refl 0, fun a ha => ?_⟩
   have hgeo : geoNum 0 W (fun _ k => (a k : ℤ)) =
       ((Module.length ℤ (MRing ι ⧸ dehomI W i)).toNat : ℤ) := by
-    rw [geoNum, dif_pos hWr]
+    rw [geoNum, dite_eq_left hWr]
     rfl
   have hc : (Nat.card (mPiece W a) : ℝ) =
       (p : ℝ) ^ (Module.length ℤ (MRing ι ⧸ dehomI W i)).toNat := by

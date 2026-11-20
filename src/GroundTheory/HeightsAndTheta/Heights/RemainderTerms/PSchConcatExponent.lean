@@ -60,13 +60,13 @@ theorem SchConcatExponent.proof : SchConcatExponent.Statement := by
     simp only [Schur.padPartition, smallBlockOf]
     by_cases h : (p : ℕ) < a
     · have hn : ¬ ((q : ℕ) < r) := by rw [hv, if_pos h]; omega
-      rw [dif_pos h, dif_neg hn]
+      rw [dite_eq_left h, dite_eq_right hn]
       simp only [Sum.elim_inr]
       rw [hv, if_pos h]
       omega
     · have h' : (p : ℕ) - a < r := by omega
       have hn : (q : ℕ) < r := by rw [hv, if_neg h]; exact h'
-      rw [dif_neg h, dif_pos hn]
+      rw [dite_eq_right h, dite_eq_left hn]
       simp only [Sum.elim_inl]
       have hqe : (⟨q, hn⟩ : Fin r) = ⟨(p : ℕ) - a, h'⟩ := Fin.ext (by rw [hv, if_neg h])
       rw [hqe, hv, if_neg h]

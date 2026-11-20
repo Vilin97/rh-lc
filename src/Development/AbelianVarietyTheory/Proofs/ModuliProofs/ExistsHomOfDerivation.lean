@@ -94,7 +94,7 @@ theorem res_app {Z X : Scheme.{0}} (f : Z ⟶ X) {U V : X.Opens} (h : V ≤ U) (
 theorem pbT_eq_app {Z X : Scheme.{0}} (f : Z ⟶ X) {U : X.Opens} (a : Γ(X, U)) :
     pbT f a (f ⁻¹ᵁ U) = (f.app U).hom a := by
   unfold pbT
-  rw [dif_pos le_rfl, Scheme.Hom.appLE_eq_app]
+  rw [dite_eq_left le_rfl, Scheme.Hom.appLE_eq_app]
 
 section Main
 variable {K : Type} [Field K] {Y Y' : Scheme.{0}} {q : Y ⟶ Sp K} (π : Y' ⟶ Sp (DualNumber K)) (ρ : Y' ⟶ Y)
@@ -143,7 +143,7 @@ theorem psi_nat (hd : LocDerK q p m D ⊤ d) (W W' : X.Opens) (h : W' ≤ W) (f 
       constFn π (ρ ⁻¹ᵁ m ⁻¹ᵁ W') DualNumber.eps * (ρ.app (m ⁻¹ᵁ W')).hom (d W' (resG X h f)) =
       resG Y' (ρ.preimage_mono h1) ((ρ.app (m ⁻¹ᵁ W)).hom ((m.app W).hom f) +
       constFn π (ρ ⁻¹ᵁ m ⁻¹ᵁ W) DualNumber.eps * (ρ.app (m ⁻¹ᵁ W)).hom (d W f)) := by
-    rw [hd.res W W' h le_top, rsT, dif_pos h1, res_app, res_app, res_app, map_add (f := _), map_mul, res_constFn]
+    rw [hd.res W W' h le_top, rsT, dite_eq_left h1, res_app, res_app, res_app, map_add (f := _), map_mul, res_constFn]
   exact h2
 
 theorem psi_nil (hd : LocDerK q p m D ⊤ d) (W : X.Opens) (f : Γ(X, W)) :

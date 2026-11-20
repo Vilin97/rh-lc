@@ -41,7 +41,7 @@ theorem valAt_spMap_comp (ψ : K →+* K) (y : Sp K ⟶ Z) (f : Z.functionField)
       (Scheme.stalkClosedPointTo y ≫ CommRingCat.ofHom ψ) ?_ a
     rw [Spec.map_comp, Category.assoc, Scheme.Spec_stalkClosedPointTo_fromSpecStalk]
   · have h' : ¬ RegAt (below (spMap ψ ≫ y)) f := by rwa [below_spMap_comp]
-    rw [valAt, dif_neg h', valAt, dif_neg h, map_zero]
+    rw [valAt, dite_eq_right h', valAt, dite_eq_right h, map_zero]
 
 end Values
 

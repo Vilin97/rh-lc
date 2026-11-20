@@ -164,7 +164,7 @@ def model (n : C.Tup → ℕ) (D : ℕ)
   eMu := eM
   eMt0 := e0
   perCol_base_eq_PtilCol u φ F := by
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
     rfl
   Bu_linL _ F := ⟨fun φ ψ => by simp [Finset.sum_add_distrib, add_mul],
     fun a φ => by simp [← Finset.mul_sum, mul_assoc]⟩

@@ -304,7 +304,7 @@ theorem toL2_finset_sum_of_memLp {ε : Fin n → Bool} {ι : Type*} (s : Finset 
       (hH : MemLp (fun g : Formalism.REAL.UJ ε => H (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε)),
       toL2 ε H = hH.toLp _ := fun H hH => by
     unfold toL2
-    rw [dif_pos hH]
+    rw [dite_eq_left hH]
   induction s using Finset.induction_on with
   | empty =>
     simp only [Finset.sum_empty]

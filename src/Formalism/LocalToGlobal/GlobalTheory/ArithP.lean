@@ -270,7 +270,7 @@ theorem finite_over (S : Finset ℕ) : {w : HeightOneSpectrum (𝓞 K) | pOf w �
 theorem mem_supp (N : NumDatum) (Lv : Lev N) (w : HeightOneSpectrum (𝓞 K)) :
     w ∈ supp N Lv K ↔ pOf w ∈ suppP N Lv := by
   unfold supp
-  rw [dif_pos (finite_over _), Set.Finite.mem_toFinset]
+  rw [dite_eq_left (finite_over _), Set.Finite.mem_toFinset]
   rfl
 
 end Support

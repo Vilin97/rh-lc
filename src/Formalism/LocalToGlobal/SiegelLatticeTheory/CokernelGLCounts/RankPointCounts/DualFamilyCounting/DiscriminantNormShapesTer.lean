@@ -46,7 +46,7 @@ theorem gQ_mul_diagQ {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) 
   funext j
   by_cases h : a j ∈ 𝔭
   · simp [h]
-  · rw [dif_neg h, if_neg h, sub_zero]
+  · rw [dite_eq_right h, if_neg h, sub_zero]
     exact (exists_inv_unit (K := K) h𝔭 h k).choose_spec
 
 theorem diag_comm {R : Type*} [CommRing R] {n : Type*} [Fintype n] [DecidableEq n] (d d' : n → R) :

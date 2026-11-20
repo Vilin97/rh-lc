@@ -31,7 +31,7 @@ theorem evR_of_geo {K L : Type} [Field K] [Algebra c.F K] [Field L] [Algebra c.F
     intro T _ _ p ψ u z hz
     have hft : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨p, ψ, u, hz⟩
     unfold evR evalAt
-    rw [dif_pos hft]
+    rw [dite_eq_left hft]
     exact hWD f hf.1 T _ p _ ψ _ u z hft.choose_spec.choose_spec.choose_spec hz
   obtain ⟨p, ψ, u, hu⟩ := hA K y
   have e1 : evR Xo c f y' = φ (evR Xo c f y) := by

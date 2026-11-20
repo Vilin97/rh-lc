@@ -179,7 +179,7 @@ theorem alcoveAt_of_sizes {a : ℝ} (h : Sizes Pr W a) (hj : j ≤ R.m) : Alcove
   intro τ s t
   have h1 := h.two_spread_lt u j hj τ
   have h0 := R.N_pos j
-  rw [DomWeight.spread, dif_pos h0] at h1
+  rw [DomWeight.spread, dite_eq_left h0] at h1
   have h2 : (W.lamTrue u j τ).w s ≤ (W.lamTrue u j τ).w ⟨0, h0⟩ := (W.lamTrue u j τ).anti (Nat.zero_le _)
   have h3 : (W.lamTrue u j τ).w ⟨R.N j - 1, by omega⟩ ≤ (W.lamTrue u j τ).w t :=
     (W.lamTrue u j τ).anti (show t.1 ≤ R.N j - 1 by have := t.2; omega)

@@ -72,7 +72,7 @@ theorem repN_eq_globLat (hc : CMData X.F X.E) (u : Pr.Word) (j : ℕ) (hS : Deco
   show ((stepGSD W Λ u j).outSec.rep cl).1.N = _
   rw [← h1]
   unfold decoOf
-  rw [dif_pos hok]
+  rw [dite_eq_left hok]
   rfl
 
 theorem carries_rep (hc : CMData X.F X.E) (u : Pr.Word) (j : ℕ) (hS : DecoPtSurj hc (R.N j) (Pr.vT u) Pr.vGs)

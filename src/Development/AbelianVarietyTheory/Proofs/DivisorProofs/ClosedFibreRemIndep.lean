@@ -192,7 +192,7 @@ theorem rem_indep (hdd : ∀ a, IsField ⊤ (dd a)) (hB : IsBasic Y h) {K : Type
     rw [hc, hΘ, constFn, map_zero, map_zero]
   have hd : ∀ x, (b.app _).hom (dl W x) = π (h.d i _ ((Y.q.left.app W).hom x)) := fun x => by
     have := desc _ a b w i W hW x
-    rw [pbT, pbT, dif_pos le_rfl, dif_pos hle] at this
+    rw [pbT, pbT, dite_eq_left le_rfl, dite_eq_left hle] at this
     rw [Scheme.Hom.app_eq_appLE b]
     exact this
   refine GlobalTheory.FunDescent.app_injective b _ ?_

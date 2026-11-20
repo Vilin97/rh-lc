@@ -27,7 +27,7 @@ theorem lastPos_wtA_of_pins : ∀ (D : D7) (Q : Par D), Q.Pins → ∀ j, InR D 
     hw t _ (by show (D.R.sigW j).1 - 1 + 1 = _; omega)
   have h2 : ext0 (w.aP t) ((D.R.sigW j).1 - 1) = w.aP t ⟨(D.R.sigW j).1 - 1, by omega⟩ := by
     unfold ext0
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   unfold wtA
   classical
   refine lt_of_lt_of_le ?_ (Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ t))

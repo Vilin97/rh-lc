@@ -20,7 +20,7 @@ theorem stg_eq (ν : Fin (N + 1) → Fin r → ℤ) (i : ℕ) (h : i < N + 1) : 
 theorem Kcol_succ (ν : Fin (N + 1) → Fin r → ℤ) (c : ℤ) (j : ℕ) (h : j < N) :
     Kcol R ν c (j + 1) =
       colStep c (colH (stg ν j) c) (colH (stg ν (j + 1)) c) (letVec R ⟨j, h⟩) (Kcol R ν c j) := by
-  rw [Kcol, dif_pos h, stg_eq ν j (by omega), stg_eq ν (j + 1) (by omega)]
+  rw [Kcol, dite_eq_left h, stg_eq ν j (by omega), stg_eq ν (j + 1) (by omega)]
 
 def offN (n0 : ℕ) : Set (Fin N × Fin r) := {v | n0 ≤ v.1.val ∧ v.2.val + (v.1.val - n0) + 1 ≠ r}
 

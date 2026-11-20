@@ -51,7 +51,7 @@ private theorem setTies_deg_succ_pos_eq_of_strictMono {N : ℕ} (LL : GM.M.Lette
   have hc : Classical.choose hex = i := hT.injective (by have := Classical.choose_spec hex; omega)
   show (if h' : ∃ j : Fin T.t, T.pos j + 1 = T.pos i + 1 then n (Classical.choose h')
     else LL.deg ⟨T.pos i + 1, h⟩) = n i
-  rw [dif_pos hex, hc]
+  rw [dite_eq_left hex, hc]
 
 set_option maxHeartbeats 400000 in
 
@@ -113,7 +113,7 @@ theorem restTMHyp_of {CYb Cde Ck CD Cb Cc : ℝ} (hH : flipOneThree.HI C0 CYb Cd
       omega
     · show (if h : (i : ℕ) < (X.S C0 CE1 CE2).t then
           2 * ((uTop (X.S C0 CE1 CE2) ⟨i, h⟩ : Fin X.s) : ℕ) + 1 else 2 * X.s + 1) = M.T.pos i + 1
-      rw [dif_pos (show (i : ℕ) < (X.S C0 CE1 CE2).t from i.isLt)]
+      rw [dite_eq_left (show (i : ℕ) < (X.S C0 CE1 CE2).t from i.isLt)]
       rfl
   · intro y
     rfl
@@ -123,12 +123,12 @@ theorem restTMHyp_of {CYb Cde Ck CD Cb Cc : ℝ} (hH : flipOneThree.HI C0 CYb Cd
       refine ⟨⟨k, hk⟩, ?_⟩
       show (if h : (k : ℕ) < (X.S C0 CE1 CE2).t then
           2 * ((uTop (X.S C0 CE1 CE2) ⟨k, h⟩ : Fin X.s) : ℕ) + 1 else 2 * X.s + 1) = _
-      rw [dif_pos hk]
+      rw [dite_eq_left hk]
       rfl
     · left
       show (if h : (k : ℕ) < (X.S C0 CE1 CE2).t then
           2 * ((uTop (X.S C0 CE1 CE2) ⟨k, h⟩ : Fin X.s) : ℕ) + 1 else 2 * X.s + 1) = _
-      rw [dif_neg hk]
+      rw [dite_eq_right hk]
       rfl
   · show (1 : ℝ) ≤ X.L.a
     exact_mod_cast hS5

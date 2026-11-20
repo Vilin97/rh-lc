@@ -26,16 +26,16 @@ theorem GlobalTheory.RowEx.dat_choice_exists : GlobalTheory.RowEx.ExField → �
   · intro P f _ _ Ξ z hz
     by_cases h : Ξ.Finite
     · dsimp only at hz
-      rw [dif_pos h] at hz
+      rw [dite_eq_left h] at hz
       exact (Classical.choose_spec (hF P f Ξ h)).1 z hz
     · dsimp only at hz
-      rw [dif_neg h] at hz
+      rw [dite_eq_right h] at hz
       simp at hz
   · intro B f T _ hH _ _ w Z hX Wt z L hL hS
     obtain ⟨hq, hC, hfin, hmem⟩ := GlobalTheory.RowEx.twisted_data_off_base_level B f T w Z hX Wt z
     have hS2 := hH.2
     dsimp only at hS2
-    rw [dif_pos hfin] at hS2
+    rw [dite_eq_left hfin] at hS2
     rw [hL]
     exact (Classical.choose_spec (hF B.toPre f (T.set f) hfin)).2 (w.st Z) f rfl HEq.rfl L hL _ _ _ _ _ _ _ hS hC hq
       (fun t => ⟨_, hmem t, HEq.rfl⟩) (fun y hy => hS2 y hy)

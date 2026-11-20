@@ -66,7 +66,7 @@ theorem segment_chain_degree_even (p : ℕ) (S : SegData s) (aTop : Fin s → �
   have h3 : topOf x h1 = i := Fin.ext (by show (x : ℕ) / 2 = i.val; omega)
   unfold segChain
   dsimp only
-  rw [dif_neg h1, if_pos h2, h3]
+  rw [dite_eq_right h1, if_pos h2, h3]
 
 theorem chain_deg_E (p : ℕ) (S : SegData s) (aTop : Fin s → ℕ) (b : SegBlock s r) (x : Fin (2 * s + 1)) (i : Fin s)
     (hx : x.val = 2 * i.val + 1) : (segChain p S aTop b).deg x =
@@ -76,13 +76,13 @@ theorem chain_deg_E (p : ℕ) (S : SegData s) (aTop : Fin s → ℕ) (b : SegBlo
   have h3 : topOf x h1 = i := Fin.ext (by show (x : ℕ) / 2 = i.val; omega)
   unfold segChain
   dsimp only
-  rw [dif_neg h1, if_neg h2, h3]
+  rw [dite_eq_right h1, if_neg h2, h3]
 
 theorem chain_deg_U (p : ℕ) (S : SegData s) (aTop : Fin s → ℕ) (b : SegBlock s r) (x : Fin (2 * s + 1))
     (hx : x.val = 2 * s) : (segChain p S aTop b).deg x = b.oPlus := by
   unfold segChain
   dsimp only
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
 
 theorem jE_S (S : SegData s) (jl : Fin S.t → ℕ) {i : ℕ} (h : i < S.sigma) : jE S jl i = 0 := by
   unfold jE
@@ -105,7 +105,7 @@ theorem level_bounds (p : ℕ) (S : SegData s) (aTop : Fin s → ℕ) (aPlus : �
     have hl := h1 ⟨i.val - S.sigma, hit⟩
     have eA : jE S jl i.val = jl ⟨i.val - S.sigma, hit⟩ := by
       unfold jE
-      rw [dif_pos ⟨hi, i.2⟩]
+      rw [dite_eq_left ⟨hi, i.2⟩]
     have k1 : (blockData p S aTop aPlus m b).LL.deg ((blockData p S aTop aPlus m b).letterAt
         ((blockData p S aTop aPlus m b).T.pos ⟨i.val - S.sigma, hit⟩)) = b.o i := by
       have e : (blockData p S aTop aPlus m b).letterAt ((blockData p S aTop aPlus m b).T.pos
@@ -190,7 +190,7 @@ theorem jE_at (S : SegData s) (jl : Fin S.t → ℕ) (l : Fin S.t) : jE S jl (S.
   have hl := l.2
   unfold SegData.t at hl
   unfold jE
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   congr 1
   apply Fin.ext
   show S.sigma + l.val - S.sigma = l.val

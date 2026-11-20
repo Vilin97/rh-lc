@@ -44,7 +44,7 @@ theorem heckeD_add (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) 
     by_contra hn
     apply hcc
     dsimp only
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨x, hx, rfl⟩
     exact hn ⟨x, hx, rfl⟩
   rw [Pi.add_apply]

@@ -52,12 +52,12 @@ private theorem embWb_apply_of_mem_block (X : Matrix (Fin (k + 1)) (Fin (k + 1))
     (hi : r ≤ i.val ∧ i.val ≤ r + k) (hj : r ≤ j.val ∧ j.val ≤ r + k) :
     embWb k r X i j = X ⟨i.val - r, by omega⟩ ⟨j.val - r, by omega⟩ := by
   simp only [embWb]
-  rw [dif_pos ⟨hi, hj⟩]
+  rw [dite_eq_left ⟨hi, hj⟩]
 
 private theorem embWb_apply_of_left_not_mem_block (X : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) {i j : Fin (2 * r + k + 1)}
     (hi : ¬ (r ≤ i.val ∧ i.val ≤ r + k)) : embWb k r X i j = if i = j then 1 else 0 := by
   simp only [embWb]
-  rw [dif_neg (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hi h.1)]
+  rw [dite_eq_right (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hi h.1)]
   by_cases h : i = j
   · rw [if_pos (show i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k) from ⟨h, hi⟩), if_pos h]
   · rw [if_neg (show ¬ (i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k)) from fun h' => h h'.1), if_neg h]
@@ -65,7 +65,7 @@ private theorem embWb_apply_of_left_not_mem_block (X : Matrix (Fin (k + 1)) (Fin
 private theorem embWb_apply_of_right_not_mem_block (X : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) {i j : Fin (2 * r + k + 1)}
     (hj : ¬ (r ≤ j.val ∧ j.val ≤ r + k)) : embWb k r X i j = if i = j then 1 else 0 := by
   simp only [embWb]
-  rw [dif_neg (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hj h.2)]
+  rw [dite_eq_right (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hj h.2)]
   by_cases h : i = j
   · rw [if_pos (show i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k) from ⟨h, by rw [h]; exact hj⟩), if_pos h]
   · rw [if_neg (show ¬ (i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k)) from fun h' => h h'.1), if_neg h]
@@ -132,7 +132,7 @@ private theorem embWb_apply_eq_ite_of_left_index_not_isW {i : Fin (2 * r + k + 1
     embWb k r γ i j = if i = j then 1 else 0 := by
   have hi' : ¬ (r ≤ i.val ∧ i.val ≤ r + k) := hi
   simp only [embWb]
-  rw [dif_neg (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hi' h.1)]
+  rw [dite_eq_right (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hi' h.1)]
   by_cases h : i = j
   · rw [if_pos (show i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k) from ⟨h, hi'⟩), if_pos h]
   · rw [if_neg (show ¬ (i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k)) from fun h' => h h'.1), if_neg h]
@@ -141,7 +141,7 @@ private theorem embWb_apply_eq_ite_of_right_index_not_isW {j : Fin (2 * r + k + 
     embWb k r γ i j = if i = j then 1 else 0 := by
   have hj' : ¬ (r ≤ j.val ∧ j.val ≤ r + k) := hj
   simp only [embWb]
-  rw [dif_neg (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hj' h.2)]
+  rw [dite_eq_right (show ¬ ((r ≤ i.val ∧ i.val ≤ r + k) ∧ (r ≤ j.val ∧ j.val ≤ r + k)) from fun h => hj' h.2)]
   by_cases h : i = j
   · rw [if_pos (show i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k) from ⟨h, by rw [h]; exact hj'⟩), if_pos h]
   · rw [if_neg (show ¬ (i = j ∧ ¬ (r ≤ i.val ∧ i.val ≤ r + k)) from fun h' => h h'.1), if_neg h]

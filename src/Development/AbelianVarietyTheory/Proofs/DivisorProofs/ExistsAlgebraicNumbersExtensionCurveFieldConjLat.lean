@@ -28,7 +28,7 @@ theorem exists_extension_of_le (M : IntermediateField ℚ ℂ) (hle : M ≤ Qbar
   refine ⟨φ, fun x hx => ?_⟩
   rw [← hφ]
   unfold TaylorLogMetric.liftM
-  rw [dif_pos hx, dif_pos (hle hx)]
+  rw [dite_eq_left hx, dite_eq_left (hle hx)]
   rfl
 
 theorem fld_le (D : D7) (hI : GlobalTheory.NormSum.Inp D) (δ t0 : ℂ) (hc : Crv D D.host.ccK δ)
@@ -59,7 +59,7 @@ theorem exists_extension_conj : ∀ (D : D7), GlobalTheory.NormSum.Inp D → ∀
   · unfold Formalism.MainNotions.StandardLatticesGL3.cj
     rw [h _ (GlobalTheory.KerConjMean.embLL_mem D δ t0 x), ← hρ x]
     unfold TaylorLogMetric.liftM
-    rw [dif_pos (GlobalTheory.KerConjMean.embLL_mem D δ t0 x)]
+    rw [dite_eq_left (GlobalTheory.KerConjMean.embLL_mem D δ t0 x)]
   · have h2 : g2 (lamOf D D.host.ccK δ) ∈ GlobalTheory.KerConjMean.fld D δ t0 :=
       IntermediateField.subset_adjoin ℚ _ (Or.inr (by simp))
     have h3 : g3 (lamOf D D.host.ccK δ) ∈ GlobalTheory.KerConjMean.fld D δ t0 :=

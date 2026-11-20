@@ -160,13 +160,13 @@ theorem sheetSum_graphProj (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (F
   have hiff : (∃ s, IsSheetAt (graphIdeal J p) (graphProj A) (graphPt p x) s) ↔ ∃ s, IsSheetAt J A x s :=
     ⟨fun ⟨_, h⟩ => ⟨_, isSheetAt_init h⟩, fun ⟨_, h⟩ => ⟨_, isSheetAt_graph h⟩⟩
   by_cases h : ∃ s, IsSheetAt J A x s
-  · rw [dif_pos (hiff.2 h), dif_pos h]
+  · rw [dite_eq_left (hiff.2 h), dite_eq_left h]
     have hE := sheet_eventuallyEq (hiff.2 h).choose_spec (isSheetAt_graph (p := p) h.choose_spec)
     rw [graphProj_mulVec_graphPt, hx.2] at hE
     dsimp only
     rw [maDens_congr_sheet Φ hE]
     rfl
-  · rw [dif_neg (mt hiff.1 h), dif_neg h]
+  · rw [dite_eq_right (mt hiff.1 h), dite_eq_right h]
 
 theorem chartDens_graphProj (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin e) (Fin n) ℂ)
     (p : MvPolynomial (Fin n) ℂ) (F : (Fin (n + 1) → ℂ) → ℝ) (Φ : Fin e → (Fin (n + 1) → ℂ) → ℝ) :
@@ -199,8 +199,8 @@ theorem VarIntGraphInt.proof (hI : IntegralIndep.Statement) : VarIntGraphInt.Sta
   unfold varInt
   by_cases hJA : ∃ A : Matrix (Fin e) (Fin n) ℂ, IsFiniteProjection J A
   swap
-  · rw [dif_neg (mt hex.1 hJA), dif_neg hJA]
-  rw [dif_pos (hex.2 hJA), dif_pos hJA, chartInt, chartInt, ← chartDens_graphProj]
+  · rw [dite_eq_right (mt hex.1 hJA), dite_eq_right hJA]
+  rw [dite_eq_left (hex.2 hJA), dite_eq_left hJA, chartInt, chartInt, ← chartDens_graphProj]
   have hA := isFiniteProjection_graphProj p hJA.choose_spec
   have hB := (hex.2 hJA).choose_spec
   obtain ⟨U, hU, hZU, hFU⟩ := hF

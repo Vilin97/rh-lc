@@ -505,7 +505,7 @@ theorem ratio_single_mul {Ω W : Type} [Field Ω] (G : W) (a : Ω) {b : Ω} (hb 
       (AddMonoidAlgebra.single G b) * b := by
   have h : ∃ r : Ω, (AddMonoidAlgebra.single G a : AddMonoidAlgebra Ω W) = r • AddMonoidAlgebra.single G b :=
     ⟨a / b, by rw [AddMonoidAlgebra.smul_single', div_mul_cancel₀ _ hb]⟩
-  rw [ReciprocityTheory.ChartRestriction.G.T0.ratio, dif_pos h]
+  rw [ReciprocityTheory.ChartRestriction.G.T0.ratio, dite_eq_left h]
   have h1 := h.choose_spec
   generalize h.choose = r at h1 ⊢
   rw [AddMonoidAlgebra.smul_single'] at h1

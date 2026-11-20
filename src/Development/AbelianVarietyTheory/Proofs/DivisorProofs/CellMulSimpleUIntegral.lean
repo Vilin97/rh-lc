@@ -173,7 +173,7 @@ theorem simpleU_hyps (k : Fin (n / 2)) (w' : Equiv.Perm (Fin n)) (hw : ∀ i : F
       have h2 := simpleU_pair_inversion k hk a c hac h'
       rw [Fin.lt_def] at hbc
       omega
-  · have hP : partnerU k = (lo k).rev := by unfold partnerU; rw [dif_neg hk]
+  · have hP : partnerU k = (lo k).rev := by unfold partnerU; rw [dite_eq_right hk]
     rw [hP, hw, Fin.lt_def, Fin.val_rev] at hlt
     have hA : ∀ a : Fin n, a.val = k.val → (w' a).val = (w' (lo k)).val := fun a ha => by
       rw [show a = lo k from Fin.ext (by simp [ha])]

@@ -72,7 +72,7 @@ theorem exists_dual_sep {G : Type} [AddCommGroup G] {χ : G → G → ℂ} (h : 
     have hex : ∃ u : W, ∃ v ∈ L₀, M • (u : G) = ((⟨r, hr⟩ : R) : G) + (M * M) • v := ⟨u, v, hv, e⟩
     refine ⟨⟨r, hr⟩, ?_⟩
     dsimp only [g]
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     obtain ⟨v', hv', e'⟩ := hex.choose_spec
     exact sameR _ _ r v' v hv' hv e' e
 

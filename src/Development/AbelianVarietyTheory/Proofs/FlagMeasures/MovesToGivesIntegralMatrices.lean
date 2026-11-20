@@ -98,7 +98,7 @@ theorem upUni_mul {N : ℕ} {U W : Matrix (Fin N) (Fin N) E} (hU0 : ∀ a b, b <
 theorem frame_mapLF (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) (b : Fin (r + 1)) :
     frame (mapLF γ F) b = γ (frame F b) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   induction b using Fin.lastCases with
   | last => simp [frame, FlagG.fvec, mapFlag]
   | cast k => simp [frame, FlagG.fvec, mapFlag]

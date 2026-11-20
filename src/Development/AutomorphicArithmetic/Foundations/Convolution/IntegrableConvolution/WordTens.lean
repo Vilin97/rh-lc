@@ -29,7 +29,7 @@ private theorem conv_apply (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β
     γ.continuous γ.hasCompactSupport
   have hex : ∃ δ : TI K n, ∀ g, δ g = ∫ x, β x * γ (x⁻¹ * g) ∂ν := ⟨⟨⟨cv ν β γ, hb.1⟩, hb.2.1⟩, fun _ => rfl⟩
   unfold GM.conv
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec g
 
 variable [IsTotallyComplex K]

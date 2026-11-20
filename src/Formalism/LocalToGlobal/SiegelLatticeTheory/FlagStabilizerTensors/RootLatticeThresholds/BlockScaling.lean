@@ -328,7 +328,7 @@ theorem measPinAt_of (sc : ℝ) (hsc : 0 < sc) (i0 i0' : ∀ _ : InfinitePlace X
       have ha : q.1.1.val < D.R.rS := by have := Fin.lt_def.1 hq.1; have := q.1.2.isLt; omega
       simp only [Function.comp_apply, Formalism.MainNotions.S.rootCoords, Equiv.apply_symm_apply]
       unfold Formalism.MainNotions.S.flagMat
-      rw [dif_pos ha]
+      rw [dite_eq_left ha]
       erw [Formalism.L2.SG.BlockScaling.conj_trG hT'.1 hT'.2.1]
       have hcoe : Formalism.MainNotions.S.uMat ((h' v)⁻¹ * ((gamW X u u' w v)⁻¹ * y * gamW X u u' w v) * h' v) =
           (Formalism.MainNotions.S.uMat (h' v))⁻¹ * Formalism.MainNotions.S.uMat ((gamW X u u' w v)⁻¹ * y * gamW X u u' w v) * Formalism.MainNotions.S.uMat (h' v) := by

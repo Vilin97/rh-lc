@@ -230,12 +230,12 @@ private theorem cont_iy : ContinuousOn iy {0}ᶜ := by
     exact continuous_subtype_val.inv₀ fun y => y.2
   refine ((TR.continuous_infId ℚ).comp h).congr fun y => ?_
   change _ = iy y.1
-  rw [iy, dif_neg (show (y : ℝ) ≠ 0 from y.2)]
+  rw [iy, dite_eq_right (show (y : ℝ) ≠ 0 from y.2)]
   rfl
 
 private theorem re_iy {y : ℝ} (hy : y ≠ 0) : re (iy y : A ℚ) = y := by
   have h : ∀ x, TR.pInf ℚ (TR.sInf ℚ x) = x := fun x => (TR.infEq ℚ).symm_apply_apply x
-  rw [re, iy, dif_neg hy]
+  rw [re, iy, dite_eq_right hy]
   change TR.pInf ℚ (1 - TR.sInf ℚ 1 + TR.sInf ℚ _) _ = y
   simp [h]
 

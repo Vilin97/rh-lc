@@ -89,5 +89,5 @@ theorem UpperTheory.V.AlgebraTools.hkDdSpec :
     · exact absurd e h2.ne'
   obtain ⟨y, hy⟩ := hd
   have h : ∃ y, De R n * y = alt x := ⟨y, hy.symm⟩
-  rw [dd, dif_pos h]
+  rw [dd, dite_eq_left h]
   exact h.choose_spec

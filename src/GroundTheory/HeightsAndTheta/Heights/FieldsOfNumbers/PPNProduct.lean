@@ -96,7 +96,7 @@ theorem eventualValue_eq {f : (Option K → ℤ) → ℤ} {c : ℤ} (hf : ∀ᶠ
     eventualValue f = c := by
   have h : ∃ c, ∀ᶠ m in atTop, f m = c := ⟨c, hf⟩
   unfold eventualValue
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨m, h1, h2⟩ := (h.choose_spec.and hf).exists
   exact h1.symm.trans h2
 

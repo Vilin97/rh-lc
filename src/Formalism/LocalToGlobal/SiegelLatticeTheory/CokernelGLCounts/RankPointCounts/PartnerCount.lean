@@ -706,7 +706,7 @@ theorem clsOf_orb {p : PlF D} {Y Y' l ρ l' ρ' : MatP D p} (hl : TieN.IntLow (M
     congr 1
   · have hc' : ¬ ((∀ a b, (Y' + cornE p s) a b ∈ (M p).R) ∧ IsUnit (Y' + cornE p s).det) := by
       rintro ⟨h1', h2'⟩; exact hc ⟨hint.1 h1', hdet ▸ h2'⟩
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 end ClsOrb
 

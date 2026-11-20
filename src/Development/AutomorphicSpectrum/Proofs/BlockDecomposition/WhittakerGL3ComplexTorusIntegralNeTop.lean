@@ -23,7 +23,7 @@ theorem extC_val (W : GL (Fin 3) ℂ → ℂ) (g : GL (Fin 3) ℂ) :
   have hd : (Matrix.of (Matrix.of.symm g.val)).det ≠ 0 := by
     simpa using (Matrix.GeneralLinearGroup.det g).ne_zero
   unfold extC
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   congr 1
   apply Units.ext
   simp

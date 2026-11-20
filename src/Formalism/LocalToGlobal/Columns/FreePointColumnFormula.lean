@@ -168,11 +168,11 @@ theorem free_point_later_column (y : HomE E n' n) (t : Loc.FC n' (c + 1) n c →
   have hf : ¬ Loc.IsFree n' n c l.1 s'.1 := by
     unfold Loc.IsFree
     omega
-  rw [free_point_column_formula, dif_neg hf]
+  rw [free_point_column_formula, dite_eq_right hf]
   unfold PI.UnfoldEquiv.UnitaryGroupMassFormula.base
   by_cases h1 : s'.1 < n'
-  · rw [dif_pos h1, dif_neg (by omega), if_neg (by omega)]
-  · rw [dif_neg h1]
+  · rw [dite_eq_left h1, dite_eq_right (by omega), if_neg (by omega)]
+  · rw [dite_eq_right h1]
     by_cases h2 : s'.1 = n' + (l.1 - n)
     · rw [if_pos h2, if_pos (by omega)]
     · rw [if_neg h2, if_neg (by omega)]
@@ -193,10 +193,10 @@ theorem clS_comp {r : Sp E (n' + (c + 1)) ≃ₗ[E] Sp E (n' + (c + 1))} {g : Sp
     split_ifs with hf
     · rfl
     · have hsl := s.2
-      rw [clS_entry _ hr s (by omega) l, free_point_column_formula, dif_neg hf]
+      rw [clS_entry _ hr s (by omega) l, free_point_column_formula, dite_eq_right hf]
       have hb : PI.UnfoldEquiv.UnitaryGroupMassFormula.base y l s = PI.UnfoldEquiv.UnitaryGroupMassFormula.base (y ∘ₗ g.toLinearMap) l s := by
         unfold PI.UnfoldEquiv.UnitaryGroupMassFormula.base
-        rw [dif_neg hs, dif_neg hs]
+        rw [dite_eq_right hs, dite_eq_right hs]
       rw [hb, add_eq_left]
       refine Finset.sum_eq_zero fun s' _ => ?_
       split_ifs with h1
@@ -225,7 +225,7 @@ theorem clS_chArg {r : Sp E (n' + (c + 1)) ≃ₗ[E] Sp E (n' + (c + 1))} (hr : 
   have e1 : Loc.eN E (n' + (c + 1)) (n' + i + 1) = Pi.single (⟨n' + i + 1, hs⟩ : Fin (n' + (c + 1))) 1 :=
     (clS_single_eN (E := E) (⟨n' + i + 1, hs⟩ : Fin (n' + (c + 1)))).symm
   unfold Loc.atN
-  rw [dif_pos hl, dif_pos hl, dif_pos hs0, e1, clS_entry _ hr ⟨n' + i + 1, hs⟩ (by show n' ≤ n' + i + 1; omega) ⟨n + i, hl⟩]
+  rw [dite_eq_left hl, dite_eq_left hl, dite_eq_left hs0, e1, clS_entry _ hr ⟨n' + i + 1, hs⟩ (by show n' ≤ n' + i + 1; omega) ⟨n + i, hl⟩]
   congr 1
   have e2 : ∀ s' : Fin (n' + (c + 1)), (if s'.1 < (⟨n' + i + 1, hs⟩ : Fin (n' + (c + 1))).1 then
       r (Pi.single ⟨n' + i + 1, hs⟩ 1) s' * Loc.xx1 y t (Pi.single s' 1) ⟨n + i, hl⟩ else 0) =
@@ -293,7 +293,7 @@ def clS_phi (y : HomE E n' n) (r : Sp E (n' + (c + 1)) ≃ₗ[E] Sp E (n' + (c +
 theorem clS_T_eq {r : Sp E (n' + (c + 1)) ≃ₗ[E] Sp E (n' + (c + 1))} (hr : Loc.R1cond E n' (c + 1) r) (y : HomE E n' n)
     (t : Loc.FC n' (c + 1) n c → E) (p : Loc.FC n' (c + 1) n c) : freeCoordinatesTransform y r t p = t p + clS_phi y r t p := by
   unfold freeCoordinatesTransform clS_phi
-  rw [clS_entry _ hr p.1.2 p.2.1 p.1.1, free_point_column_formula, dif_pos p.2]
+  rw [clS_entry _ hr p.1.2 p.2.1 p.1.1, free_point_column_formula, dite_eq_left p.2]
 
 theorem clS_M_bd {a e : ℕ} {y : HomE E n' n} (hy : ∀ s l, IntAt P ((q : E) ^ a * y (Pi.single s 1) l)) {t : Loc.FC n' (c + 1) n c → E}
     {σ : ℕ} (ht : ∀ p : Loc.FC n' (c + 1) n c, p.1.2.1 - n' < σ → IntAt P ((q : E) ^ (a + (p.1.2.1 - n' + 1) * e) * t p))
@@ -450,7 +450,7 @@ theorem clS_rp_spec (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) :
     clS_rp P q A B v ∈ LocE.valsQ E q A B ∧ IntAt P ((v - clS_rp P q A B v) / (q : E) ^ B) := by
   have h := clS_rep hq hu hp hcard A B v hv
   unfold clS_rp
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem clS_bd_of_congr (hq0 : (q : E) ≠ 0) {m B : ℕ} {v u : E} (hv : IntAt P ((q : E) ^ m * v)) (h : IntAt P ((v - u) / (q : E) ^ B)) :
@@ -532,7 +532,7 @@ theorem clS_cov (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : �
         have hT : ∀ p, IntAt P ((q : E) ^ a * freeCoordinatesTransform y r t p) := by
           intro p
           have h1 := hsupp _ hΨ p.1.2 p.1.1
-          rwa [free_point_column_formula, dif_pos p.2] at h1
+          rwa [free_point_column_formula, dite_eq_left p.2] at h1
         have key : ∀ N : ℕ, ∀ p : Loc.FC n' (c + 1) n c, p.1.2.1 - n' ≤ N → IntAt P ((q : E) ^ (a + (p.1.2.1 - n' + 1) * e) * t p) := by
           intro N
           induction N with
@@ -552,7 +552,7 @@ theorem clS_cov (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : �
         refine Finset.mem_filter.2 ⟨hu', fun p => ?_⟩
         have hΨ : Ψ (Loc.xx1 (y ∘ₗ g.toLinearMap) u) ≠ 0 := left_ne_zero_of_mul h
         have h1 := hsupp _ hΨ p.1.2 p.1.1
-        rw [free_point_column_formula, dif_pos p.2] at h1
+        rw [free_point_column_formula, dite_eq_left p.2] at h1
         exact clS_bd_mono h1 (Nat.le_add_right _ _)
       ·
         intro t ht

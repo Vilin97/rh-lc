@@ -18,7 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
 
 theorem til_tmv_padL_cs (n : ℕ) {R : Type} [CommRing R] (φ : E →+* R) (a b : Fin n) :
     ((LinearMap.toMatrix' (padL E n (n + 1))).map φ) a.castSucc b = if a = b then 1 else 0 := by
-  rw [Matrix.map_apply, LinearMap.toMatrix'_apply, padL_apply, dif_pos (by simp), Pi.single_apply]
+  rw [Matrix.map_apply, LinearMap.toMatrix'_apply, padL_apply, dite_eq_left (by simp), Pi.single_apply]
   have e : (⟨(a.castSucc : ℕ), by simp⟩ : Fin n) = a := Fin.ext rfl
   rw [e]
   split_ifs
@@ -27,7 +27,7 @@ theorem til_tmv_padL_cs (n : ℕ) {R : Type} [CommRing R] (φ : E →+* R) (a b 
 
 theorem til_tmv_padL_last (n : ℕ) {R : Type} [CommRing R] (φ : E →+* R) (b : Fin n) :
     ((LinearMap.toMatrix' (padL E n (n + 1))).map φ) (Fin.last n) b = 0 := by
-  rw [Matrix.map_apply, LinearMap.toMatrix'_apply, padL_apply, dif_neg (by simp), map_zero]
+  rw [Matrix.map_apply, LinearMap.toMatrix'_apply, padL_apply, dite_eq_right (by simp), map_zero]
 
 theorem til_tmv_move (hc : CMData F E) {N n : ℕ} (hN : N = n + 1) [NeZero N] [NeZero n] (ST SG : Finset (Pl E))
     (H : Subgroup (GLG E N SG)) (c₀ : DiaG E ST) {pi : 𝓞 E} (h0 : pi ≠ 0)
@@ -101,7 +101,7 @@ theorem til_tmv_diaT (hPr : Pr.Ok) (u : Pr.Word) (P : Pr.vT u) :
   have hu : IsUnit (Ideal.Quotient.mk P.1.asIdeal (X.conjO (Pr.piT u))) :=
     (mk_ne_zero (conj_piT_notMem hPr u P)).isUnit
   unfold diaT
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   rfl
 
 theorem til_tmv_colDia (hPr : Pr.Ok) (R : Ranks) (u : Pr.Word) (P : Pr.vT u) :

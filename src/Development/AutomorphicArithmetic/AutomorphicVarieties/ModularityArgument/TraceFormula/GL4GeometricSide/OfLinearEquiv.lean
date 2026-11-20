@@ -77,7 +77,7 @@ private theorem tr_inv [Group G] [IsTopologicalGroup G] [CompactSpace G] [Measur
   simp only [LinearMap.comp_apply, LinearMap.mulRight_apply] at h4
   rw [← h4, ← LinearMap.trace_restrict_eq_of_forall_mem I (Q * F) h3]
   unfold trOn
-  rw [dif_pos hF]
+  rw [dite_eq_left hF]
   congr 1
   refine LinearMap.ext fun t => Subtype.ext ?_
   exact (h2 _ (hF t t.2)).symm
@@ -89,7 +89,7 @@ private theorem trOn_map' {M N : Type} [AddCommGroup M] [Module ℂ M] [AddCommG
     rintro _ ⟨x, hx, rfl⟩
     exact ⟨f x, hf x hx, (h x).symm⟩
   unfold trOn
-  rw [dif_pos hg, dif_pos hf, ← LinearMap.trace_conj' (f.restrict hf) (Submodule.equivMapOfInjective j hj S)]
+  rw [dite_eq_left hg, dite_eq_left hf, ← LinearMap.trace_conj' (f.restrict hf) (Submodule.equivMapOfInjective j hj S)]
   congr 1
   refine LinearMap.ext fun y => ?_
   obtain ⟨x, rfl⟩ := (Submodule.equivMapOfInjective j hj S).surjective y
@@ -236,5 +236,5 @@ theorem UpperTheory.V.Z.GSp4Splitting.avgTr :
       ← fin_case ν σ' (fun v w => hσ.cont v.1 w.1) E T (P.restrict fun x _ => hPS x) (A.restrict hAS) hT
         (fun v w => hP v.1 w.1) hA']
     unfold trOn
-    rw [dif_pos hPA]
+    rw [dite_eq_left hPA]
     rfl

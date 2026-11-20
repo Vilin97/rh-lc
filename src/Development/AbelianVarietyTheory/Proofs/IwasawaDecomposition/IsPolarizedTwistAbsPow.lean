@@ -107,7 +107,7 @@ theorem loc_of_isAbsPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : Heig
     resCard_eq_normV, GlobalTheory.SmGL.SphCompletion.ord_completion]
   have h0 : Valued.v (x : w.adicCompletion E) ≠ 0 := by simp
   have e : Formalism.UG.ordV E w x = -WithZero.log (Valued.v (x : w.adicCompletion E)) := by
-    rw [Formalism.UG.ordV, dif_neg h0]
+    rw [Formalism.UG.ordV, dite_eq_right h0]
     conv_rhs => rw [← WithZero.coe_unzero h0]
     rfl
   rw [e, ← Complex.ofReal_cpow (by positivity), ← Real.rpow_intCast, ← Real.rpow_mul (by positivity),

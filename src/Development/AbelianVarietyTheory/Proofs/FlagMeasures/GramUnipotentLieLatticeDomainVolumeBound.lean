@@ -501,21 +501,21 @@ theorem eqMat_injective (hU : IsUpUni U) (hR : ∀ q ∈ R, q.1 < q.2)
   have hxs : StrUp x := by
     intro i j hji
     simp only [x]
-    rw [dif_neg]
+    rw [dite_eq_right]
     intro hm
     simp only [coRoots, Finset.mem_filter] at hm
     exact absurd hm.2.1 (not_lt.2 hji)
   have hxR : (fun q : R => x q.1.1 q.1.2) = 0 := by
     funext q
     simp only [x, Pi.zero_apply]
-    rw [dif_neg]
+    rw [dite_eq_right]
     intro hm
     simp only [coRoots, Finset.mem_filter] at hm
     exact hm.2.2 q.2
   have hxC : (fun q : coRoots R => x q.1.1 q.1.2) = u := by
     funext q
     simp only [x]
-    rw [dif_pos q.2]
+    rw [dite_eq_left q.2]
   have hmem : x ∈ lieU Z := by
     rw [mem_lieU_iff hR hxs, hxR, hxC, Matrix.mulVec_zero, zero_add]
     exact h0

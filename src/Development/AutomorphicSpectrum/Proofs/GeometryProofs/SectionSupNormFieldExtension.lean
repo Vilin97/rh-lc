@@ -26,7 +26,7 @@ variable {X X' : Scheme.{0}} {L : LB X} {L' : LB X'} {F : X' ⟶ X}
 
 theorem toStk_valF_fn {Ω : Type} [Field Ω] {Y : Scheme.{0}} (x : Sp Ω ⟶ Y) (U : Y.Opens) (z : Sp Ω) (h : x z ∈ U)
     (a : Γ(Y, U)) : toStk z (valF x U a) = gs x z U a := by
-  rw [valF, dif_pos ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
+  rw [valF, dite_eq_left ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
   show ((Sp Ω).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of Ω)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of Ω)).hom.hom _)) = _
   rw [Iso.hom_inv_id_apply]

@@ -74,7 +74,7 @@ theorem extYg_smul (hPr : Pr.Ok) (hpi : ∀ w : SG', Pr.piT u ∉ w.1.asIdeal) (
         d.1.til (ST := Pr.vT u) (Pr.piT u) := by
       show (DecoSet.til (ST := Pr.vT u) (Pr.piT u) d).1 = _
       unfold DecoSet.til
-      rw [dif_pos hok]
+      rw [dite_eq_left hok]
     rw [e]
     show Deco.act (extE s.1.1) (extG s.2.1) _ = _
     rw [← Deco.til_act, hsd]

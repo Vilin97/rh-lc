@@ -14,7 +14,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem eq_of_toSub_eq {G : Type} [Group G] {H : Subgroup G} {g h : G} (hg : g ∈ H) (hh : h ∈ H)
     (e : toSub H g = toSub H h) : g = h := by
   unfold toSub at e
-  rw [dif_pos hg, dif_pos hh] at e
+  rw [dite_eq_left hg, dite_eq_left hh] at e
   exact congrArg Subtype.val e
 
 theorem under_conjSrc (w : Pl E) :
@@ -33,7 +33,7 @@ theorem ext_cj (w : Pl E) (a : Af E) : ∀ (v : Pl E) (_ : v = w) (f : v.adicCom
   rintro v rfl f hf h
   have hex : ∃ s : v.adicCompletion E →+* v.adicCompletion E, Continuous s ∧
       ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨f, hf, h⟩
-  have hcj : cj v = hex.choose := by unfold cj; rw [dif_pos hex]
+  have hcj : cj v = hex.choose := by unfold cj; rw [dite_eq_left hex]
   rw [hcj]
   exact congrFun ((HeightOneSpectrum.denseRange_algebraMap (K := E) v).equalizer hf hex.choose_spec.1
     (funext fun k => (h k).trans (hex.choose_spec.2 k).symm)) _

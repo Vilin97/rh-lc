@@ -127,7 +127,7 @@ def mulPw (s : LB.Sec (pw L n)) (l l' : ℤ) (V : X.Opens) :
 
 theorem co_mulPw (s : LB.Sec (pw L n)) (h : l' = l + n) (x : SecOn (pw L l) V) (k : L.ι) :
     co (mulPw s l l' V x) k = rs X inf_le_right (sf s k) * co x k := by
-  rw [mulPw, dif_pos h]; rfl
+  rw [mulPw, dite_eq_left h]; rfl
 
 theorem mulPw_restrict (s : LB.Sec (pw L n)) (h : W ≤ V) (x : SecOn (pw L l) V) :
     mulPw s l l' W (SecOn.restrict _ h x) = SecOn.restrict _ h (mulPw s l l' V x) := by

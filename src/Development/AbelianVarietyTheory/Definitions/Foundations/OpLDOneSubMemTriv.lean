@@ -169,7 +169,7 @@ theorem toGQ_sl (γ : SL(2, ℤ)) : toGQ (γ : Matrix (Fin 2) (Fin 2) ℤ) = ofS
     rw [Matrix.SpecialLinearGroup.det_coe]
     exact one_pos
   unfold toGQ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   apply Subtype.ext
   apply Units.ext
   rfl

@@ -235,7 +235,7 @@ theorem chi_eq_chiTop (hc : R.grp_chiW) (i : Fin D.R.m) : (R.FW i).chi = chiTop 
   have h1 : ChiIs R i (R.FW i).chi := fun g => (hc i g).trans (Units.coe_prod _ _).symm
   have h2 : ChiIs R i (chiTop R i) := by
     have hex : ∃ chi, ChiIs R i chi := ⟨_, h1⟩
-    rw [chiTop, dif_pos hex]
+    rw [chiTop, dite_eq_left hex]
     exact hex.choose_spec
   exact MonoidHom.ext fun g => Units.ext (D.what₂.embLL.injective ((h1 g).trans (h2 g).symm))
 
@@ -291,7 +291,7 @@ theorem exists_lift_actW (he : R.models_HW) (hw : R.models_gW) {i : Fin D.R.m} {
   · refine ⟨hk.choose, hk.choose_spec, fun x v h => ?_⟩
     show actG0 (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG g) (x v) h = _
     unfold actG0
-    rw [dif_pos hk]
+    rw [dite_eq_left hk]
     simp only [levChi_flag_datWp, inv_one, one_mul]
   · refine absurd (subsingleton_of_forall_eq 0 fun x => ?_) hn
     have h1 : (R.HW i σ).e (R.gW i σ g (R.gW i σ g⁻¹ x)) = 0 := by

@@ -32,7 +32,7 @@ theorem mem_Xflag_mapLF {E : Type} [Field E] [NumberField E] [StarRing E] {S : H
     (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) (j : ℕ) (x : S.V) :
     x ∈ Xflag (mapLF γ F) j ↔ γ.symm x ∈ Xflag F j := by
   unfold Xflag mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   exact mem_Xa_mapFlag γ hγ F.fl j x
 
 variable {D : D7} {X : HidaSetting D} (Y : Full X) {u u' : D.what₂.Word}

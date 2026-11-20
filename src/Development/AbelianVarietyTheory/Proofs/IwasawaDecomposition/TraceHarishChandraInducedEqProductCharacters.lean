@@ -42,8 +42,8 @@ theorem trace_hcRep_eq_hcL : ∀ (g : ℕ) [Fact g.Prime] (r s : ℕ) (b : Fin r
     unfold GlobalTheory.BI.ext0
     beta_reduce
     by_cases h : y⁻¹ * x * y ∈ parab (ZMod g) b
-    · rw [dif_pos h, if_pos h]
-    · rw [dif_neg h, if_neg h]
+    · rw [dite_eq_left h, if_pos h]
+    · rw [dite_eq_right h, if_neg h]
   · intro q hq
     obtain ⟨c, -, rfl⟩ := List.mem_map.1 hq
     intro y z
@@ -54,7 +54,7 @@ theorem trace_hcRep_eq_hcL : ∀ (g : ℕ) [Fact g.Prime] (r s : ℕ) (b : Fin r
     simp only [List.mem_finRange, true_implies]
     exact ⟨fun h i k hik => h hik, fun h i k hik => h i k hik⟩
   · intro y hy
-    rw [dif_pos hy, (hσ4 _).2, ← Fin.prod_univ_def]
+    rw [dite_eq_left hy, (hσ4 _).2, ← Fin.prod_univ_def]
     show LinearMap.trace ℂ _ (PiTensorProduct.map fun c => (lam c).ρ (levi (ZMod g) b c ⟨y, hy⟩)) = _
     rw [PI.SerBridgeGLW.trace_piTensorMap]
     refine Finset.prod_congr rfl fun c _ => ?_

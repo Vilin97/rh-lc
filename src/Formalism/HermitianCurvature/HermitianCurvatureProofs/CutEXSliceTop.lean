@@ -86,7 +86,7 @@ theorem slice_gen (P : M.Par) (p : KB.Pl P Wp Wq) (G : B.Mat P.k P.r → (Wq →
   · simp only [PBQ.ellH, ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply]
     simp only [SliceIntegralLemmas.psiH] at H1i
     exact H1i
-  · rw [hcf, D.sliceAt, dif_pos hjr]
+  · rw [hcf, D.sliceAt, dite_eq_left hjr]
     simp only [PBQ.ellH, ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply]
     exact H1e
 

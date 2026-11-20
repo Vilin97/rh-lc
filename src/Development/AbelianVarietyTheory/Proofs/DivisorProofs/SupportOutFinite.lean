@@ -179,7 +179,7 @@ theorem twTr_level (ρ : Representation ℂ G V) (K K₀ K'' : Subgroup G) (F : 
   have h0 : ∀ v ∈ fixed ρ K₀, levOp ρ K K₀ F LinearMap.id v ∈ fixed ρ K₀ :=
     fun v hv => levOp_mem_fixed ρ K K₀ K₀ F hF hK₀o le_rfl v hv
   unfold twTr
-  rw [dif_pos h'', dif_pos h0]
+  rw [dite_eq_left h'', dite_eq_left h0]
   let Pr : fixed ρ K'' →ₗ[ℂ] fixed ρ K₀ :=
     (P.domRestrict (fixed ρ K'')).codRestrict (fixed ρ K₀) (fun v => hPfix v.1 v.2)
   let ι : fixed ρ K₀ →ₗ[ℂ] fixed ρ K'' := Submodule.inclusion hVle

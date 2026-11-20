@@ -91,7 +91,7 @@ theorem multAt_map (φ : MRingOver F ι ≃+* MRingOver F ι') (V W : Ideal (MRi
         (W.map (φ : MRingOver F ι →+* MRingOver F ι')) =
       multAt (V ⊔ Ideal.span {f}) W := by
   have hW' : (W.map (φ : MRingOver F ι →+* MRingOver F ι')).IsPrime := isPrime_map φ W
-  rw [multAt, multAt, dif_pos hW, dif_pos hW']
+  rw [multAt, multAt, dite_eq_left hW, dite_eq_left hW']
   exact congrArg ENat.toNat (length_map φ V W hVW f)
 
 theorem isRelevant_iff (W : Ideal (MRingOver F ι)) :

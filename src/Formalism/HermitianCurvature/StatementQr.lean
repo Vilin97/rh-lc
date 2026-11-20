@@ -149,7 +149,7 @@ def opV (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (T : (Mx k r → E) →
 
 theorem opV_apply (hD : IsOpen D) {T : (Mx k r → E) → Mx k r → E} (hT : Qx2.Good k r i D T) (φ : SV k r i D E)
     {g : Mx k r} (hg : g ∈ Glev k r i ∩ D) : (opV k r i D T φ).1 g = T φ.1 g := by
-  rw [opV, dif_pos (show IsOpen D ∧ Qx2.Good k r i D T from ⟨hD, hT⟩)]
+  rw [opV, dite_eq_left (show IsOpen D ∧ Qx2.Good k r i D T from ⟨hD, hT⟩)]
   exact cutF_of_mem hg
 
 def EV (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (E : Type) [NormedAddCommGroup E] [NormedSpace ℂ E]

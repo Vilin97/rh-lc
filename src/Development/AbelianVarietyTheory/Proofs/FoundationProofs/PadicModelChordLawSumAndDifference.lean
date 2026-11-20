@@ -33,7 +33,7 @@ variable {p : ℕ} [Fact p.Prime]
 
 theorem lamC_coe' (lam : Qbar →+* ℂ_[p]) (x : Qbar) : lamC lam (x : ℂ) = lam x := by
   unfold lamC
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
 
 theorem W_a₁ (g : GL3Theta.G1 p) : g.W.a₁ = ((g.C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * (2 * g.C.s) := by
   simp [GL3Theta.G1.W, wModel, WeierstrassCurve.variableChange_a₁]

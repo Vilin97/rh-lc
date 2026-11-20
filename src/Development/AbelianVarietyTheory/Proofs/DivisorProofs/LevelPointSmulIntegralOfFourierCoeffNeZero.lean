@@ -60,7 +60,7 @@ theorem subring_reduction_add_mul_killed {S k : Type} [CommRing S] [CommRing k] 
     (c : O) (hc : f c = 0) :
     (if h : x + (c : S) * y ∈ O then f ⟨x + (c : S) * y, h⟩ else 0) = if h : x ∈ O then f ⟨x, h⟩ else 0 := by
   have hmem : x + (c : S) * y ∈ O := add_mem hx (mul_mem c.2 hy)
-  rw [dif_pos hmem, dif_pos hx]
+  rw [dite_eq_left hmem, dite_eq_left hx]
   have : (⟨_, hmem⟩ : O) = ⟨x, hx⟩ + c * ⟨y, hy⟩ := rfl
   rw [this, map_add (f := _), map_mul, hc, zero_mul, add_zero]
 

@@ -35,8 +35,8 @@ theorem clT_extEnt {n c : ℕ} (κ₁ : Sp E n ≃ₗ[E] Sp E n) {l s : ℕ} (hl
     rw [ciEN hsn, LinearEquiv.coe_coe, clL_ext_inX, ocbS_atN_of_lt _ hl, ciInX_apply]
     by_cases hln : l < n
     · have hlc : LocE.scE n (fun i => i + 1) l = 0 := by unfold LocE.scE; rw [if_pos hln]
-      rw [dif_pos hln, if_pos ⟨hln, hsn⟩, hsc, hlc, sub_zero, zpow_zero, mul_one, ocbS_eN_single hsn, ocbS_atN_of_lt _ hln]
-    · rw [dif_neg hln, zero_mul, redP_zero, if_neg (fun h => hln h.1), if_neg (by omega)]
+      rw [dite_eq_left hln, if_pos ⟨hln, hsn⟩, hsc, hlc, sub_zero, zpow_zero, mul_one, ocbS_eN_single hsn, ocbS_atN_of_lt _ hln]
+    · rw [dite_eq_right hln, zero_mul, redP_zero, if_neg (fun h => hln h.1), if_neg (by omega)]
   · rw [LinearEquiv.coe_coe, clX_ext_eN κ₁ (by omega), ocbS_atN_of_lt _ hl]
     by_cases hls : l = s
     · subst hls
@@ -153,13 +153,13 @@ theorem clT_xiTgtLaw (σ : X.K →+* ℂ) {m2 i : ℕ} (hB : OcbBase Ch sel mu c
     funext m
     by_cases hm : m.1 < R.N (i + 1)
     · obtain ⟨l', rfl⟩ : ∃ l' : Fin (R.N (i + 1)), m = Fin.castAdd (cOf R (i + 1)) l' := ⟨⟨m.1, hm⟩, Fin.ext rfl⟩
-      rw [hact, clT_inX_apply, dif_pos (by simp), residue_linearEquiv_apply_eq_sum gbar x]
+      rw [hact, clT_inX_apply, dite_eq_left (by simp), residue_linearEquiv_apply_eq_sum gbar x]
       refine Finset.sum_congr rfl fun m' _ => ?_
-      rw [clT_inX_apply, dif_pos (by simp), hgent]
+      rw [clT_inX_apply, dite_eq_left (by simp), hgent]
       rfl
     · obtain ⟨j, rfl⟩ : ∃ j : Fin (cOf R (i + 1)), m = Fin.natAdd (R.N (i + 1)) j :=
         ⟨⟨m.1 - R.N (i + 1), by omega⟩, Fin.ext (by simp; omega)⟩
-      rw [hfix, clT_inX_apply, clT_inX_apply, dif_neg (by simp), dif_neg (by simp)]
+      rw [hfix, clT_inX_apply, clT_inX_apply, dite_eq_right (by simp), dite_eq_right (by simp)]
 
   rw [hPhi, ← clL_ext_symm]
   have hgl : ∀ v ∈ stdAt X.E (R.N (i + 1)) P.1, κ'.symm v ∈ stdAt X.E (R.N (i + 1)) P.1 :=

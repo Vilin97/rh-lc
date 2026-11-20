@@ -256,7 +256,7 @@ theorem degree_of_local (local_term : ∀ (B : Type) [Fintype B] (J : B → Type
     obtain ⟨c, hc⟩ := hw k
     exact ⟨c, fun h => hc ((X_mem_iff w k c).1 h)⟩
   show geoNum (0 + 1) (mCoordIdeal w) (fun _ => a) = _
-  rw [geoNum, dif_pos hrel, coordDeg]
+  rw [geoNum, dite_eq_left hrel, coordDeg]
   refine Finset.sum_congr rfl fun k _ => ?_
   have hck : w ⟨k, (hrel k).choose⟩ ≠ 0 := fun h => (hrel k).choose_spec ((X_mem_iff w k _).2 h)
   rw [block_sum (local_term B J p K) (exists_centre B J p K) w hbir hw hfin hprod k _ hck, ← finsum_comp_equiv e]

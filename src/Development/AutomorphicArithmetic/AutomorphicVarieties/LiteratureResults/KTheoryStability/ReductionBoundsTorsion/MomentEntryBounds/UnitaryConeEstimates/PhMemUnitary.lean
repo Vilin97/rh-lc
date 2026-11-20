@@ -86,7 +86,7 @@ theorem ph_posIdele {w : InfinitePlace L} (hw : w.IsComplex) (r : Fin N → ℝ)
       InfinitePlace.mult_isComplex ⟨w, hw⟩]
     have hnr : ¬ w.IsReal := InfinitePlace.not_isReal_iff_isComplex.mpr hw
     unfold GroundTheory.Global.posRealElem
-    rw [dif_neg hnr, RingEquiv.apply_symm_apply, Real.sqrt_sq (hr i).le]
+    rw [dite_eq_right hnr, RingEquiv.apply_symm_apply, Real.sqrt_sq (hr i).le]
   · rw [diagonal_apply_ne _ h, diagonal_apply_ne _ h]
     show Completion.ringEquivComplexOfIsComplex hw 0 = 0
     exact map_zero _

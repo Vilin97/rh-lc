@@ -90,9 +90,9 @@ theorem conv_of (Dv : InertDatum L n v w) (U : Subgroup (GAf L n))
     show (∑ᶠ c : GAf L n ⧸ U, _) = _
     rw [finsum_eq_of_support_subset_range he]
     · refine finsum_congr fun d => ?_
-      rw [dif_pos (heT d)]
+      rw [dite_eq_left (heT d)]
       have hv : Dv.hval H (Dv.loc (heT d).choose) = H d.out := by
-        rw [InertDatum.hval, dif_pos (hA _)]
+        rw [InertDatum.hval, dite_eq_left (hA _)]
         exact eq_of_coset hH (by rw [QuotientGroup.out_eq']; exact hρ2 d)
       rw [hv]
     · intro c hc
@@ -104,7 +104,7 @@ theorem conv_of (Dv : InertDatum L n v w) (U : Subgroup (GAf L n))
         rw [← hxc]
         refine (hR _ _ (hs1 _) hx).2 ?_
         rw [hs2, QuotientGroup.out_eq']
-      · rw [dif_neg hT] at hc
+      · rw [dite_eq_right hT] at hc
         exact absurd rfl hc
 
   have hRi : ∀ (H : GU Dv.σw n → ℂ), H ∈ Hecke ℂ K → ∀ (a : GU Dv.σw n) (c : K), H (a * c) = H a :=

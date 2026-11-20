@@ -53,7 +53,7 @@ theorem wchoice : Ad3.K.GL2LocalData.WChoice := by
   have hcu : ((c u : ℂˣ) : ℂ) * (((c u)⁻¹ : ℂˣ) : ℂ) = 1 := by
     rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
   show Wc χ σ (muE E χ) (lamE E χ η) c Φ g = _
-  rw [Wc, dif_pos h, hfun, rW_const_mul, hu, map_mul, Units.val_mul]
+  rw [Wc, dite_eq_left h, hfun, rW_const_mul, hu, map_mul, Units.val_mul]
   linear_combination (-(((c h.choose : ℂˣ) : ℂ) * (((modulus (g.val).det : ℝ) : ℂ) ^ (1 / 2 : ℂ)) *
       rW χ σ (muE E χ) (lamE E χ η) (g.val 0 0 / (g.val).det) (g.val 0 1)
         (g.val 1 0 / (g.val).det) (g.val 1 1) (fun x => Φ (x * (h.choose : E))) 1)) * hcu

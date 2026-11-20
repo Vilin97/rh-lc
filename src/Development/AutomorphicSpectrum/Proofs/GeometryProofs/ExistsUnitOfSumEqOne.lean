@@ -221,7 +221,7 @@ theorem genU_one (Ω : Type) [Field Ω] {S : Type} (r : S → ℕ) (s : S) (l : 
 theorem genU_gen (Ω : Type) [Field Ω] {S : Type} (r : S → ℕ) (q : GenIx r) :
     genU Ω r q.1 q.2.1.1 q.2.1.2 = algebraMap (MvPolynomial (GenIx r) Ω) (GenField Ω r) (MvPolynomial.X q) := by
   unfold genU
-  rw [dif_pos q.2.2]
+  rw [dite_eq_left q.2.2]
   rfl
 
 theorem genU_indep (Ω : Type) [Field Ω] {S : Type} (r : S → ℕ) :

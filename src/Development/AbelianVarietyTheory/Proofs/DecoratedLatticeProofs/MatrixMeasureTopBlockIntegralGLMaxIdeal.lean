@@ -161,7 +161,7 @@ theorem GlobalTheory.RectBlockVolume.vol_topBlock_KO : ∀ (k : Type) [Field k] 
     have htop : topL r (GlobalTheory.RectBlockVolume.reidx r a' b' y) = y.toBlocks₁₁ := by
       ext i j
       simp only [topL]
-      rw [dif_pos ⟨by omega, by omega⟩]
+      rw [dite_eq_left ⟨by omega, by omega⟩]
       have e1 : (⟨i.val, by omega⟩ : Fin (r + b')) = finSumFinEquiv (Sum.inl i) := Fin.ext (by simp)
       have e2 : (⟨j.val, by omega⟩ : Fin (r + a')) = finSumFinEquiv (Sum.inl j) := Fin.ext (by simp)
       rw [e1, e2, GlobalTheory.RectBlockVolume.reidx_apply]

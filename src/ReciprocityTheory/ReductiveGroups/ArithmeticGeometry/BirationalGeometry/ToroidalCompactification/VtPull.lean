@@ -125,7 +125,7 @@ theorem pullRel_of {L : LB A.left} {a : ℤ} {T T' : Over S} {h : T' ⊗ A ⟶ T
       | exact hz1
       | simpa using hz1
   unfold gs
-  rw [dif_pos hz, dif_pos hz2]
+  rw [dite_eq_left hz, dite_eq_left hz2]
   have k1 := congrArg (fun g => g.hom (((T' ⊗ A).left.presheaf.map
     (homOfLE (chart_le_res A L h hh a j)).op).hom ((h.left.app _).hom (s.f j))))
     (Scheme.Hom.germ_stalkMap r _ z hz)

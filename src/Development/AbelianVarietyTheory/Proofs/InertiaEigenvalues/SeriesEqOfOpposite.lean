@@ -48,7 +48,7 @@ theorem blk_eq (x : Gn g k) (y : Gn g l) : blk k l (k + l) x y = par finSumFinEq
       simp [entN]
     · simp [entN]
   unfold blk
-  rw [h, toG, dif_pos (Units.isUnit _), IsUnit.unit_of_val_units]
+  rw [h, toG, dite_eq_left (Units.isUnit _), IsUnit.unit_of_val_units]
 
 theorem eq_par (z : Gn g (k + l)) (h0 : InPar k (z : Mt g (k + l))) (h1 : tl k (z : Mt g (k + l)) = 1)
     (h2 : br k l (z : Mt g (k + l)) = 1) : ∃ B, z = par finSumFinEquiv 1 B 1 := by
@@ -56,13 +56,13 @@ theorem eq_par (z : Gn g (k + l)) (h0 : InPar k (z : Mt g (k + l))) (h1 : tl k (
     intro M i j
     have hi := i.2
     have hj := j.2
-    rw [tl, entN, dif_pos ⟨by omega, by omega⟩]
+    rw [tl, entN, dite_eq_left ⟨by omega, by omega⟩]
     rfl
   have e2 : ∀ (M : Mt g (k + l)) (i j : Fin l), br k l M i j = M (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inr j)) := by
     intro M i j
     have hi := i.2
     have hj := j.2
-    rw [br, entN, dif_pos ⟨by omega, by omega⟩]
+    rw [br, entN, dite_eq_left ⟨by omega, by omega⟩]
     rfl
   refine ⟨Matrix.of fun i j => (z : Mt g (k + l)) (finSumFinEquiv (.inl i)) (finSumFinEquiv (.inr j)), ?_⟩
   apply Units.ext

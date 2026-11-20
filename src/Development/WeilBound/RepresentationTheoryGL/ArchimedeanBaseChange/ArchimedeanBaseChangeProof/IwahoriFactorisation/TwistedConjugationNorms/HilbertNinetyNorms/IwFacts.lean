@@ -267,7 +267,7 @@ theorem unif_val_lt_one (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (hϖ : ordL (ϖ
     Valued.v (ϖ : w.adicCompletion E) < 1 := by
   have h0 : Valued.v (ϖ : w.adicCompletion E) ≠ 0 := by simp
   unfold ordL at hϖ
-  rw [dif_neg h0] at hϖ
+  rw [dite_eq_right h0] at hϖ
   have hu : WithZero.unzero h0 = Multiplicative.ofAdd (-1 : ℤ) := by
     apply Multiplicative.toAdd.injective
     simp only [toAdd_ofAdd]

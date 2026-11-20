@@ -114,7 +114,7 @@ theorem trueWt_step : ∀ (D : D7) (u : D.what₂.Word) (C : ColumnChain D.R D.w
       have p := hpos τ
       dsimp only
       omega
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       have e : (lamTG M (i + 1) τ).w r - (lamTG M (i + 1) τ).detShift = 0 := by
         have : (((lamTG M (i + 1) τ).w r - (lamTG M (i + 1) τ).detShift : ℤ) : ℚ) = ((0 : ℤ) : ℚ) := by
           push_cast

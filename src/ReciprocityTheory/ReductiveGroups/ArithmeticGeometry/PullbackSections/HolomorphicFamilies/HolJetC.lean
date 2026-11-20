@@ -16,11 +16,11 @@ theorem valAt'_comp (x : Sp ℂ ⟶ Y) (φ : Y ⟶ Y') (U : Y'.Opens) (f : Γ(Y'
   unfold valAt'
   have e : x ⁻¹ᵁ φ ⁻¹ᵁ U = (x ≫ φ) ⁻¹ᵁ U := rfl
   by_cases h : ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U
-  · rw [dif_pos (e ▸ h), dif_pos h]
+  · rw [dite_eq_left (e ▸ h), dite_eq_left h]
     unfold valAt
     rw [Scheme.Hom.comp_appLE]
     rfl
-  · rw [dif_neg (e ▸ h), dif_neg h]
+  · rw [dite_eq_right (e ▸ h), dite_eq_right h]
 
 theorem isHolFam_comp (e : (Fin g → ℂ) → (Sp ℂ ⟶ Y)) (hol : IsHolFam e) (φ : Y ⟶ Y') :
     IsHolFam (fun z => e z ≫ φ) := by

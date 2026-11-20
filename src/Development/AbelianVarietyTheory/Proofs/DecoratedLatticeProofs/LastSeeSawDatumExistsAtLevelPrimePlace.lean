@@ -117,7 +117,7 @@ theorem lastDatum : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
     intro h
     have hev : Q.ev 0 = 0 := by
       unfold Pair.ev
-      rw [dif_pos Q.lat.zero_mem]
+      rw [dite_eq_left Q.lat.zero_mem]
       exact map_zero Q.fn
     have h0 := congrFun h 0
     simp only [charInd, vecInd, hev, neg_zero, AddChar.map_zero_eq_one, Q.lat.zero_mem, if_true, mul_one,

@@ -44,7 +44,7 @@ theorem redAt_eq {f s : Poly k N} {e : ℕ} (hf : f.IsHomogeneous e) (hs : s.IsH
   have hex : ∃ (p : Poly k N × Poly k N) (e : ℕ), p.1.IsHomogeneous e ∧ p.2.IsHomogeneous e ∧
       aeval y p.2 ≠ 0 ∧ aeval x f / aeval x s = aeval x p.1 / aeval x p.2 :=
     ⟨(f, s), e, hf, hs, h, rfl⟩
-  rw [redAt, dif_pos hex]
+  rw [redAt, dite_eq_left hex]
   obtain ⟨e', hf', hs', h', heq⟩ := hex.choose_spec
   have hx := aeval_ne_zero_of_primeOf_le hsp hs h
   have hx' := aeval_ne_zero_of_primeOf_le hsp hs' h'

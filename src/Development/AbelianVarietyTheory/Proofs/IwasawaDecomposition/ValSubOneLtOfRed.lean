@@ -107,7 +107,7 @@ theorem val_sub_one_lt_of_red {Ω : Type} [Field Ω] {A : ValuationSubring Ω} {
     (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar l) {x : Ω} (hx : x ∈ A) (h : redThrough A κ x = 1) :
     A.valuation (x - 1) < 1 := by
   unfold redThrough at h
-  rw [dif_pos hx] at h
+  rw [dite_eq_left hx] at h
   have h1 : IsLocalRing.residue A ⟨x, hx⟩ = IsLocalRing.residue A 1 := κ.injective (by rw [h, map_one, map_one])
   have h2 : (⟨x, hx⟩ : A) - 1 ∈ IsLocalRing.maximalIdeal A := Ideal.Quotient.eq.1 h1
   have h3 := (A.valuation_lt_one_iff _).1 h2

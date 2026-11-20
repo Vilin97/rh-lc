@@ -19,7 +19,7 @@ theorem h_omP_omP (f f' : Fin (r + 1) → V) (T' : F) (hF' : Formalism.MainNotio
       funext a
       rfl
     have h2 : H.Dl f f' r = ((H.Zhat f f').submatrix Fin.castSucc Fin.castSucc).det := by
-      rw [Formalism.MainNotions.S.Loc.HermSp.Dl, dif_pos (Nat.le_succ r), hcast]
+      rw [Formalism.MainNotions.S.Loc.HermSp.Dl, dite_eq_left (Nat.le_succ r), hcast]
     rw [← h2, hD0, mul_zero]
   have hterm : ∀ b b', (H.Zhat f f').adjugate b (Fin.last r) *
       (M.L.cj ((H.Zhat f f').adjugate b' (Fin.last r)) * H.h (f' b) (f' b')) = 0 := by

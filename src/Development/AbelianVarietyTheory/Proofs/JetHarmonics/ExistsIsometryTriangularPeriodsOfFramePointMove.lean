@@ -73,10 +73,10 @@ theorem exists_isometry_tri_of_frMove : ∀ (E : Type) [Field E] [NumberField E]
     rw [← a1, hh, Finset.sum_range]
     refine (apply_of_cols e h.toLinearMap (fun τ i j => cf τ i j) hcol (P v) τ ⟨i, hi⟩).trans
       (Finset.sum_congr rfl fun j _ => ?_)
-    rw [hP, Equiv.apply_symm_apply, dif_pos ⟨hi, j.2⟩]
+    rw [hP, Equiv.apply_symm_apply, dite_eq_left ⟨hi, j.2⟩]
     rfl
   · beta_reduce
-    rw [dif_pos ⟨i.2, i.2⟩]
+    rw [dite_eq_left ⟨i.2, i.2⟩]
     exact congrArg _ (hcf1 τ i)
 
 end GlobalTheory.LevelCusp

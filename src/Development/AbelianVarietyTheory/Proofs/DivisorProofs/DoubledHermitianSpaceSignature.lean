@@ -60,7 +60,7 @@ theorem exists_isHerm_dbl : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     exact GlobalTheory.DblUnfoldCont.isCartan_dbl _ _ (hW.cartan w)
   · intro v
     show IsSplitBasis (B.τ v) (sumLat finSumFinEquiv W.L W.L) (if h : (v : Pl F) ∈ B.P then (hex ⟨v, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (hex v).choose_spec
 
 end GlobalTheory.DblHerm

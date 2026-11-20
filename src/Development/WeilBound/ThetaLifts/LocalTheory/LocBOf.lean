@@ -128,7 +128,7 @@ theorem locB_of (H : Hyp) (J : Hyp2) (hC : ConeFacB) (hS : StdB) : LocB' := by
   have std' : ∀ v ∈ X.T, ∃ φ ∈ SB _, ∃ φ' ∈ SB _, Rf.p v φ = Rf.p' v φ' ∧ Rf₁.p v (ev v φ) ≠ 0 ∧
       Rf₁.p' v (Λ v φ') = wT B X s (-(((a - (b + 2)) / 2 : ℕ) : ℤ)) v • Rf₁.p v (ev v φ) := fun v hv => by
     obtain ⟨φ, hφ, φ', hφ', x, y, z⟩ := std v hv
-    exact ⟨φ, hφ, φ', hφ', x, y, by rw [(hΛ v _ hφ').1, wT, dif_pos (t.chars.sub hv)]; exact z⟩
+    exact ⟨φ, hφ, φ', hφ', x, y, by rw [(hΛ v _ hφ').1, wT, dite_eq_left (t.chars.sub hv)]; exact z⟩
   haveI := m₁.real.nontriv
   have pt₁ : Pt B G.M (fun _ => SB _) R₁.p Rf₁.p ei ev := by
     refine pt_of ?_ X.T (fun v hv => ?_) fun v hv => ⟨vac_sb t.geo.hM v, by rw [(h2 v).1]; exact (m₁.fin.sph v hv).2⟩

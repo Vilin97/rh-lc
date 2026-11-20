@@ -31,7 +31,7 @@ theorem fin_preF (PV : principalLevelFrame.RowPsi V n) (k : Bridge.Gf V) :
     obtain ⟨h, rfl⟩ := PV.onto κ hκ
     exact ⟨h, Subtype.ext e⟩
   unfold preF
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem preF_fin (PV : principalLevelFrame.RowPsi V n) (x : Formalism.AUTREP.GAf D.host.E n) :

@@ -61,7 +61,7 @@ theorem adjoin_top (I : Type) [Fintype I] (n : ℕ) (J : JetRing ℂ I n) :
         simp at this; omega
       have hmul := J.mul ⟨Pi.single i 1, by simp⟩ ν'
       have hle : ∑ l, ((Pi.single i 1 : I → ℕ) + ν'.1) l ≤ n + 1 := by rw [← hsum]; exact ν.2
-      rw [dif_pos hle] at hmul
+      rw [dite_eq_left hle] at hmul
       have hprod : ∏ l, (((Pi.single i 1 : I → ℕ) l + ν'.1 l).choose ((Pi.single i 1 : I → ℕ) l)) = ν.1 i := by
         rw [Finset.prod_eq_single i]
         · simp [ν']; omega

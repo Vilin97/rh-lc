@@ -454,7 +454,7 @@ theorem real_state (pin : ColPin w) {Fm : ∀ i, principalLevelFrame.RowPsi (Vc 
         (tAll w.I μ) := by
       refine (P.q.mL μ _).trans ?_
       unfold mLU
-      rw [dif_pos ⟨by omega, i.2⟩]
+      rw [dite_eq_left ⟨by omega, i.2⟩]
       rfl
     obtain ⟨e, li, span, lat⟩ := tie_cast hm (P.q.p.tL μ ((i : ℕ) + 1))
     obtain ⟨m, h1⟩ := all_read (w.st x.o.Z) w.I P.hX w.ok ⟨pin.vals, pin.roots⟩ x.fits.grpAt hL P.z.Xg P.z.tr μ μ i (hF i) e li span lat

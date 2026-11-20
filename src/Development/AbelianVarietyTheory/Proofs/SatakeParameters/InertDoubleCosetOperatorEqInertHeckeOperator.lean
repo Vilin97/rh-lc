@@ -123,14 +123,14 @@ theorem dcOp_eq_heckeFunI : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
       Dv.hval (Formalism.UG.dosetInd ℂ (Formalism.UG.KU Dv.σw n) ⟨Dv.loc a, h1 a⟩) (Dv.loc x) = 1 := by
     intro x hx hp
     unfold Formalism.AUTREP.InertDatum.hval
-    rw [dif_pos (h1 x)]
+    rw [dite_eq_left (h1 x)]
     exact Formalism.UG.P.dosetInd_of_mem ℂ _ _ _ ((mem_dc_iff Dv h1 h2 h3 h4 ha hx).2 hp)
   have hv0 : ∀ x : GAf L n, TrivOutside {v} x →
       Dv.hval (Formalism.UG.dosetInd ℂ (Formalism.UG.KU Dv.σw n) ⟨Dv.loc a, h1 a⟩) (Dv.loc x) ≠ 0 →
       ∃ k₁ ∈ K, ∃ k₂ ∈ K, x = k₁ * a * k₂ := by
     intro x hx h0
     unfold Formalism.AUTREP.InertDatum.hval at h0
-    rw [dif_pos (h1 x)] at h0
+    rw [dite_eq_left (h1 x)] at h0
     refine (mem_dc_iff Dv h1 h2 h3 h4 ha hx).1 ?_
     by_contra hn
     exact h0 (Formalism.UG.P.dosetInd_of_not_mem ℂ _ _ _ hn)
@@ -142,7 +142,7 @@ theorem dcOp_eq_heckeFunI : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
     · refine Finset.sum_congr rfl fun γ hγ => ?_
       have hc : ∃ x : GAf L n, (x : GAf L n ⧸ Umax L n) = (γ : GAf L n ⧸ Umax L n) ∧ TrivOutside {v} x :=
         ⟨γ, rfl, tR γ hγ⟩
-      rw [dif_pos hc]
+      rw [dite_eq_left hc]
       obtain ⟨e, hxt⟩ := hc.choose_spec
       have hU : γ⁻¹ * hc.choose ∈ Umax L n := QuotientGroup.eq.1 e.symm
       have hT : TrivOutside {v} (γ⁻¹ * hc.choose) :=
@@ -164,7 +164,7 @@ theorem dcOp_eq_heckeFunI : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
   · intro c hc0
     rw [Function.mem_support] at hc0
     by_cases hc : ∃ x : GAf L n, (x : GAf L n ⧸ Umax L n) = c ∧ TrivOutside {v} x
-    · rw [dif_pos hc] at hc0
+    · rw [dite_eq_left hc] at hc0
       obtain ⟨e, hxt⟩ := hc.choose_spec
       have h0 : Dv.hval (Formalism.UG.dosetInd ℂ (Formalism.UG.KU Dv.σw n) ⟨Dv.loc a, h1 a⟩) (Dv.loc hc.choose) ≠ 0 := by
         intro h0; rw [h0, zero_smul] at hc0; exact hc0 rfl

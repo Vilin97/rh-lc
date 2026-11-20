@@ -57,7 +57,7 @@ theorem valAt_eq {y : (Σ k, ι k) → Ω} {s : Ω} {z : (Σ k, ι k) → ℂ}
     (hz : z ∈ mcPts (mCoordIdeal y)) {v : ℂ} (hv : IsValueAt y s z v) : valAt y s z = v := by
   classical
   have h : ∃ v, IsValueAt y s z v := ⟨v, hv⟩
-  rw [valAt, dif_pos h]
+  rw [valAt, dite_eq_left h]
   exact isValueAt_unique hz h.choose_spec hv
 
 def chartMono (y : (Σ k, ι k) → Ω) (c : (k : K) → ι k) (a : K → ℤ) : Ω :=

@@ -101,15 +101,15 @@ termination_by (1 - p).toNat + (1 - q).toNat
 decreasing_by all_goals omega
 
 theorem tateCup_of_nonpos {p : ℤ} (q : ℤ) (hp : p ≤ 0) : tateCup (k := k) (G := G) p q = tateCupL (tateCup (p + 1) q) := by
-  rw [tateCup, dif_pos hp]
+  rw [tateCup, dite_eq_left hp]
 
 theorem tateCup_of_pos_of_nonpos {p q : ℤ} (hp : 0 < p) (hq : q ≤ 0) :
     tateCup (k := k) (G := G) p q = tateCupR (tateCup p (q + 1)) := by
-  rw [tateCup, dif_neg (by omega), dif_pos hq]
+  rw [tateCup, dite_eq_right (by omega), dite_eq_left hq]
 
 theorem tateCup_of_pos {p q : ℤ} (hp : 0 < p) (hq : 0 < q) :
     tateCup (k := k) (G := G) p q = tateCupBase p q (by omega) (by omega) := by
-  rw [tateCup, dif_neg (by omega), dif_neg (by omega)]
+  rw [tateCup, dite_eq_right (by omega), dite_eq_right (by omega)]
 
 theorem tateLeftIso_hom (A B : Rep.{u} k G) (r : ℤ) :
     (tateLeftIso A B r).hom = tδ (augSES_tensorRight_shortExact A B) r (r + 1) rfl := rfl

@@ -65,7 +65,7 @@ theorem isProjVarF_specialIdeal (hDim : ComponentDim.Statement.{u}) {ϖ : O} (h�
     (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W) : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (specialIdeal W) d := by
   have hmin : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hW (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg h])
+    exact hW (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right h])
   have hWp : W.IsPrime := hmin.1.1.1
   have hWh : IsMultiHomogIdeal W :=
     (Objects.isMultiHomogIdeal_iff W).mpr

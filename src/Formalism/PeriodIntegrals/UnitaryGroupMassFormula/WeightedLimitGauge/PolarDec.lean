@@ -56,7 +56,7 @@ theorem uwb_emb {p : Mat k r} (hp : p ∈ UWb k r) :
     rw [MB.mulVec_bvec, MB.bvec_apply] at h1
     rw [h1]
     unfold embWb
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
     by_cases hij : i = j
     · subst hij; rw [if_pos rfl, if_pos ⟨rfl, by omega⟩]
     · rw [if_neg hij, if_neg (fun h => hij h.1)]
@@ -93,7 +93,7 @@ theorem uwb_emb {p : Mat k r} (hp : p ∈ UWb k r) :
       rw [MB.mulVec_bvec] at hw
       rw [hw]
       unfold embWb
-      rw [dif_neg (by omega), if_neg (fun h => by have := congrArg Fin.val h.1; simp only [wI] at this; omega)]
+      rw [dite_eq_right (by omega), if_neg (fun h => by have := congrArg Fin.val h.1; simp only [wI] at this; omega)]
     · push Not at hi
       obtain ⟨i', rfl⟩ : ∃ i' : Fin (k + 1), wI k r i' = i :=
         ⟨⟨i.val - r, by omega⟩, by apply Fin.ext; simp only [wI]; omega⟩

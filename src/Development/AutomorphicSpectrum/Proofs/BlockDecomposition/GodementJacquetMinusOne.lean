@@ -115,7 +115,7 @@ theorem hr_val {r : Fin 2 → F} (h : r 1 ≠ 0) :
   have hd : (!![(r 1)⁻¹, 0; r 0, r 1] : Matrix (Fin 2) (Fin 2) F).det ≠ 0 := by
     simp [Matrix.det_fin_two, h]
   unfold hr
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 theorem g_val (x : F) (y : Fˣ) {r : Fin 2 → F} (h : r 1 ≠ 0) :
@@ -164,9 +164,9 @@ theorem integrand_eq (f : GL (Fin 2) F → ℝ≥0∞) {r : Fin 2 → F} (h : r 
         f (uni2 x * dg2 (Units.mk0 y (fun e => h' (Or.inl e))) 1 * hr r) *
           ENNReal.ofReal ((modulus y : ℝ) ^ (-2 : ℤ)) := by
   by_cases hy : y = 0
-  · rw [dif_pos (Or.inl hy), hy, Function.extend_apply' _ _ _ (ent_not_range x h)]
+  · rw [dite_eq_left (Or.inl hy), hy, Function.extend_apply' _ _ _ (ent_not_range x h)]
     rfl
-  · rw [dif_neg (not_or.2 ⟨hy, h⟩)]
+  · rw [dite_eq_right (not_or.2 ⟨hy, h⟩)]
     have := ch_g x (Units.mk0 y hy) h
     simp only [Units.val_mk0] at this
     rw [← this, (measurableEmbedding_ch (F := F)).injective.extend_apply, Pi.mul_apply, rho_g _ _ h,

@@ -129,7 +129,7 @@ theorem of_intHom_joinCol {n' c' n c : ℕ} (hc' : 1 ≤ c') {x₀ : HomE E n' n
     have h2 := h _ h1 (Fin.castAdd c l)
     have e : atNL E (n' + c') n' (Loc.inX E n' c' v) = 0 := by
       unfold atNL
-      rw [dif_pos hn, LinearMap.proj_apply, inX_apply, dif_neg (lt_irrefl _)]
+      rw [dif_pos hn, LinearMap.proj_apply, inX_apply, dite_eq_right (lt_irrefl _)]
     change IntAt P (u * Loc.inX E n c (x₀ (LinearMap.funLeft E E (Fin.castAdd c') (Loc.inX E n' c' v)) +
       atNL E (n' + c') n' (Loc.inX E n' c' v) • y) (Fin.castAdd c l)) at h2
     rwa [inX_castAdd, e, zero_smul, add_zero, LastSteps.funLeft_inX] at h2

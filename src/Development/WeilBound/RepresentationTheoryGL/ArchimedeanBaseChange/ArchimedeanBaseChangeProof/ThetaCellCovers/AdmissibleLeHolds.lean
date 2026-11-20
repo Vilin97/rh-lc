@@ -21,7 +21,7 @@ theorem admissible_le_holds : AdmLe := by
       intro hk
       have h1 := h (i.1 + k + 1)
       unfold An.sr at h1
-      rw [dif_pos ⟨by omega, by omega⟩] at h1
+      rw [dite_eq_left ⟨by omega, by omega⟩] at h1
       have h2 := ih (by omega)
       have e : (⟨i.1 + k + 1 - 1, by omega⟩ : Fin n) = ⟨i.1 + k, by omega⟩ := Fin.ext (by simp)
       rw [e] at h1

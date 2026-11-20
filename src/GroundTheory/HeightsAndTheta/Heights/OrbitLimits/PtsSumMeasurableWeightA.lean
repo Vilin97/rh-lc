@@ -68,7 +68,7 @@ theorem PtsSumMeasurableWeight.aestronglyMeasurable_fibreSum_of_lifts
       exact Set.indicator_of_mem hm _
     rw [hfv, hdens m y hm.1]
     unfold sheetDensity
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact congrArg F (hy _ _ _ hex.choose_spec hsh).symm
   have hmemF : ∀ m, y ∈ S m → σ m y ∈ (hfin y).toFinset := by
     intro m hm
@@ -106,7 +106,7 @@ theorem PtsSumMeasurableWeight.aestronglyMeasurable_fibreSum_of_lifts
       · rfl
     · have h0 : sheetDensity P Ψ φ g y w = 0 := by
         unfold sheetDensity
-        rw [dif_neg hex]
+        rw [dite_eq_right hex]
       refine Eventually.of_forall fun N => ?_
       rw [h0, hF0]
       refine (Finset.sum_eq_zero fun m _ => ?_).symm

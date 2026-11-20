@@ -153,7 +153,7 @@ theorem tauP_eq_zero_of_not_cand (a b : G.HH D → ℤ) (p : ℕ) (h : ¬ G.Cand
 
 theorem ioP_eq_zero_of_not_cand₂ (a b : G.HH D → ℤ) (p : ℕ) (h : ¬ G.Cand D L K p) : G.ioP X K a b p = 0 := by
   unfold G.ioP
-  rw [dif_neg]
+  rw [dite_eq_right]
   rw [pa_VV_empty X K a b p h]
   exact Finset.not_nonempty_empty
 
@@ -496,9 +496,9 @@ theorem pg_aL (i : Fm.Ix x) (o : Lnk.Wt Fm x i0) (hc : Lnk.Carries Fm i (Lnk.avO
   · rw [dif_pos h, dif_pos h]
     exact hc ⟨t, h⟩
   · have h' : t.val ∉ Fm.TTn x := fun hh => h ((pg_mem_TTn i t).1 hh)
-    rw [dif_neg h, dif_neg h]
+    rw [dite_eq_right h, dite_eq_right h]
     unfold Lnk.avOf Lnk.bvOf
-    rw [dif_neg h', dif_neg h']
+    rw [dite_eq_right h', dite_eq_right h']
     exact ⟨rfl, rfl⟩
 
 theorem Sig_eq (hx : Fm.x1 < x) (i : Fm.Ix x) (o : Lnk.Wt Fm x i0) (hc : Lnk.Carries Fm i (Lnk.avOf o) (Lnk.bvOf o)) (p : ℕ) :
@@ -1053,7 +1053,7 @@ theorem pd_wd (H : PtH X K Cr) :
   · have := Lnk.one_le_wAt L H.numN j hj'.1 hj'.2 _ hρ
     linarith
   · unfold LocalQuadraticParts.wAt
-    rw [dif_neg hρ]
+    rw [dite_eq_right hρ]
 
 theorem pd_fl (tie : ParTie P L K C bo Cr) :
     ∀ p ∈ PsAt L, (ldAt X K C bo).fl p ≤ flF P.C P.f P.N P.a p := by
@@ -1631,7 +1631,7 @@ theorem marg_fibre (φ : β → α) (hφ : Function.Injective φ) (T : α → Fi
       · rw [dif_pos h, Finset.mem_singleton, ← h2]
         show a t = a (φ h.choose)
         rw [h.choose_spec]
-      · rw [dif_neg h]; exact h1 t
+      · rw [dite_eq_right h]; exact h1 t
     · intro h1
       have key : ∀ i, a (φ i) = a' i := by
         intro i
@@ -1644,14 +1644,14 @@ theorem marg_fibre (φ : β → α) (hφ : Function.Injective φ) (T : α → Fi
       · obtain ⟨i, rfl⟩ := h
         rw [key]; exact ha' i
       · have h2 := h1 t
-        rwa [dif_neg h] at h2
+        rwa [dite_eq_right h] at h2
   rw [this, Fintype.card_piFinset]
   unfold margC
   apply Finset.prod_congr rfl
   intro t _
   by_cases h : ∃ i, φ i = t
   · rw [dif_pos h, if_pos h, Finset.card_singleton]
-  · rw [dif_neg h, if_neg h]
+  · rw [dite_eq_right h, if_neg h]
 
 open Classical in
 theorem marg_sum (φ : β → α) (hφ : Function.Injective φ) (T : α → Finset ℤ) (T' : β → Finset ℤ)
@@ -1850,7 +1850,7 @@ theorem pf_aO_mem (o : Lnk.Wt Fm x i0) : aO o ∈ G.box (Fm.D x i0) (G.winA (Fm.
   · rw [if_neg h]
     have h' : t.val ∉ Fm.TTn x := fun hh => h ((pf_mem_TT t).2 hh)
     unfold aO Lnk.avOf
-    rw [dif_neg h']
+    rw [dite_eq_right h']
     exact Finset.mem_singleton_self _
 
 theorem pf_bO_mem (hx : Fm.x1 < x) (o : Lnk.Wt Fm x i0) :
@@ -1868,7 +1868,7 @@ theorem pf_bO_mem (hx : Fm.x1 < x) (o : Lnk.Wt Fm x i0) :
   · rw [if_neg h]
     have h' : t.val ∉ Fm.TTn x := fun hh => h ((pf_mem_TT t).2 hh)
     unfold bO Lnk.bvOf
-    rw [dif_neg h']
+    rw [dite_eq_right h']
     exact Finset.mem_singleton_self _
 
 theorem pf_box_at {W : Finset ℤ} {a : G.HH (Fm.D x i0) → ℤ} (ha : a ∈ G.box (Fm.D x i0) W) {n : ℕ}
@@ -1921,7 +1921,7 @@ theorem pf_sum_Wt (hx : Fm.x1 < x) (F : (G.HH (Fm.D x i0) → ℤ) → (G.HH (Fm
       · rw [dif_pos h]
         show a ((Fm.D x i0).R.ofNat t.val) = a t
         rw [(Fm.D x i0).R.toFrame.ofNat_val]
-      · rw [dif_neg h, pf_box_off ha h]
+      · rw [dite_eq_right h, pf_box_off ha h]
     · funext t
       dsimp only
       unfold bO Lnk.bvOf
@@ -1929,7 +1929,7 @@ theorem pf_sum_Wt (hx : Fm.x1 < x) (F : (G.HH (Fm.D x i0) → ℤ) → (G.HH (Fm
       · rw [dif_pos h]
         show b ((Fm.D x i0).R.ofNat t.val) = b t
         rw [(Fm.D x i0).R.toFrame.ofNat_val]
-      · rw [dif_neg h, pf_box_off hb h]
+      · rw [dite_eq_right h, pf_box_off hb h]
   · intro o _
     rfl
 

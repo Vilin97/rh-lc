@@ -191,14 +191,14 @@ theorem degAt_recursion : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegr
     exact i.isClosedEmbedding.injective.comp (RatDegZeros.isIso_stalkMap_and_injective k _ (i ≫ p)).2
   set F : X → ℤ := fun w => cutMult (N.pow m).isLB s z w * degAt p N.B w n with hF
   have hmul (a) : cutMult (N.pow m).isLB s z (i a) = (divOfSec (LB.isLB_pull (N.pow m).isLB i) _ hs).mult a := by
-    rw [cutMult, dif_pos hs]
+    rw [cutMult, dite_eq_left hs]
     exact i.isClosedEmbedding.injective.extend_apply _ _ a
   have hsupp : Function.support F ⊆ Set.range (j ≫ i) := fun w hw => by
     have hw' : cutMult (N.pow m).isLB s z w * degAt p N.B w n ≠ 0 := hw
     obtain ⟨a, rfl⟩ : ∃ a, i a = w := by
       by_contra hn
       refine left_ne_zero_of_mul hw' ?_
-      rw [cutMult, dif_pos hs]
+      rw [cutMult, dite_eq_left hs]
       exact Function.extend_apply' _ _ _ hn
     have hc : CharZero (X.residueField (i a)) := by
       by_contra hc

@@ -20,10 +20,10 @@ theorem VocabDivCycle.proof : VocabDivCycle.Statement := by
   by_cases h : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s
   · have h' : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W := h
     have hW : W.IsPrime := h'.1.1.1
-    rw [if_pos h, dif_pos h', ReciprocityTheory.ChartRestriction.G.Geo.multAt, dif_pos hW]
+    rw [if_pos h, dite_eq_left h', ReciprocityTheory.ChartRestriction.G.Geo.multAt, dite_eq_left hW]
     rfl
   · have h' : ¬ (W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W) := h
-    rw [if_neg h, dif_neg h']
+    rw [if_neg h, dite_eq_right h']
     rfl
 
 end

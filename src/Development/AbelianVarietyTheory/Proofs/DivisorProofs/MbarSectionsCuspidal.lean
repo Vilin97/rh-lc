@@ -93,7 +93,7 @@ theorem rootEx_apply (τ : D.host.E →+* ℂ) (i : ℕ) (z : Letter S.Dw) :
       obtain ⟨rfl, h2⟩ := Sigma.mk.inj_iff.1 (Option.some.inj h)
       exact ⟨rfl, by simpa [Fin.ext_iff] using h2⟩
     · rintro ⟨rfl, rfl⟩
-      rw [dif_pos a.isLt]
+      rw [dite_eq_left a.isLt]
   simp only [rootEx, rootSym]
   split_ifs <;> rw [expo_single] <;> simp_all
 

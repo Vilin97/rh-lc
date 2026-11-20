@@ -203,7 +203,7 @@ theorem descend_proj
     (hF : ∀ z ∈ mcPts P, ∀ c : K → ℂ, (∀ k, c k ≠ 0) → F (torusSmul c z) = (∏ k, ‖c k‖ ^ a k) * F z)
     {w : (Σ k, ι k) → ℂ} (hw : w ∈ mcPts P) : descend P a F (proj w) = logRatio a F w := by
   have h : ∃ z ∈ mcPts P, proj z = proj w := ⟨w, hw, rfl⟩
-  rw [descend, dif_pos h]
+  rw [descend, dite_eq_left h]
   obtain ⟨hz, hzw⟩ := h.choose_spec
   obtain ⟨c, hc, e⟩ := eq_smul_of_proj_eq hw.1 hzw
   calc logRatio a F h.choose = logRatio a F (torusSmul c h.choose) := (logRatio_smul hF hz hc).symm

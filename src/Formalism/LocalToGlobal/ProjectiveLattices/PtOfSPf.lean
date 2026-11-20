@@ -96,7 +96,7 @@ theorem pos_evR (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z 
     obtain ⟨p, ψ, y', hy'⟩ := hT1
     exact ⟨p, φ.comp ψ, y', pos_frMap_trans hy' hm⟩
   unfold evR evalAt
-  rw [dif_pos hT2, dif_pos hT1]
+  rw [dite_eq_left hT2, dite_eq_left hT1]
   exact hWD f hf K₂ _ _ _ _ _ _ y₂ hT2.choose_spec.choose_spec.choose_spec
     (pos_frMap_trans hT1.choose_spec.choose_spec.choose_spec hm)
 

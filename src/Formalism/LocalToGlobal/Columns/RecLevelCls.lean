@@ -18,7 +18,7 @@ variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : 
 theorem rlc_decoOf_val {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hx : x ∈ UAd hc n) :
     (decoOf ST SG x).1 = decoRaw ST SG x := by
   unfold decoOf
-  rw [dif_pos (decorated_lattice_exists hc n ST SG x hx)]
+  rw [dite_eq_left (decorated_lattice_exists hc n ST SG x hx)]
 
 theorem rlc_smul_val (a : UF E n × H) (d : DecoSet E n ST SG) :
     (a • d).1 = d.1.act a.1.1 (a.2 : GLG E n SG) := rfl
@@ -116,7 +116,7 @@ theorem decoOf_ptOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) :
     induction q using QuotientGroup.induction_on with
     | H x => exact ⟨x, by rw [← decoPt_mk hc n ST SG x]; exact hq⟩
   unfold ptOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem adToCls_adClsOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) :

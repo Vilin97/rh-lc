@@ -301,7 +301,7 @@ theorem scaledEntry_unipotentExtension {n' n c q : ℕ} (xj : (Fin n' → E) →
   rw [coord_unipotentExtension_basisVec xj t hl hs]
   by_cases hf : Loc.IsFree n' n c l s
   · rw [dif_pos hf, dif_pos hf, (ocbS_scE_free hl hs hf).1, zpow_natCast]
-  · rw [dif_neg hf, dif_neg hf]
+  · rw [dite_eq_right hf, dite_eq_right hf]
     by_cases hs' : s < n'
     · rw [if_pos hs']
       by_cases hln : l < n
@@ -357,7 +357,7 @@ theorem firstUnfolding_eq_zero_of_not_integral {n' c' n c : ℕ} (hc' : c' = c +
     apply hx
     intro l s hl hs
     have h1 := hsupp _ hne l s (by omega) (by omega)
-    rw [scaledEntry_unipotentExtension xj t (by omega) (by omega), dif_neg (fun hf => by unfold Loc.IsFree at hf; omega),
+    rw [scaledEntry_unipotentExtension xj t (by omega) (by omega), dite_eq_right (fun hf => by unfold Loc.IsFree at hf; omega),
       if_pos hs, if_pos hl] at h1
     exact h1
   rw [h0, zero_mul]
@@ -408,7 +408,7 @@ theorem firstUnfolding_reduction_eq (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (h
         by_cases hf : Loc.IsFree n' n c l s
         · rw [dif_pos hf, mul_comm]
           exact hall ⟨(⟨l, hl⟩, ⟨s, hs⟩), hf⟩
-        · rw [dif_neg hf]
+        · rw [dite_eq_right hf]
           by_cases hs' : s < n'
           · rw [if_pos hs']
             by_cases hln : l < n
@@ -429,7 +429,7 @@ theorem firstUnfolding_reduction_eq (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (h
         by_cases hf : Loc.IsFree n' n c l s
         · rw [dif_pos hf, dif_pos hf, hρ]
           exact congrArg (redP P) (mul_comm _ _)
-        · rw [dif_neg hf, dif_neg hf]
+        · rw [dite_eq_right hf, dite_eq_right hf]
           by_cases hs' : s < n'
           · rw [if_pos hs', if_pos hs']
             by_cases hln : l < n
@@ -461,7 +461,7 @@ theorem firstUnfolding_reduction_eq (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (h
       obtain ⟨f, hf⟩ := hall
       have hW : W (fun f => r f (t f)) = 0 := by
         simp only [W]
-        rw [dif_neg]
+        rw [dite_eq_right]
         intro h
         have h1 := h f
         simp [r, hf] at h1
@@ -502,7 +502,7 @@ theorem firstUnfolding_reduction_eq (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (h
       exact Finset.prod_congr rfl fun f _ => hcardf f (ρ f)
     · intro ω _ hω
       simp only [W]
-      rw [dif_neg, zero_mul]
+      rw [dite_eq_right, zero_mul]
       intro h
       apply hω
       rw [Finset.mem_image]

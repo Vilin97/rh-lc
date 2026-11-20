@@ -18,7 +18,7 @@ theorem fnZ_const_mul (P : M.Par) (c : ℂ) (f : MA.SmQ P.r P.TT) : fnZ P (fun _
   have hmem : (fun _ : MA.Qp P.r P.TT => c) ∈ MA.smSub P.r P.TT :=
     (MA.smSub P.r P.TT).algebraMap_mem c
   unfold fnZ MA.toSm
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   apply Subtype.ext
   funext q
   simp

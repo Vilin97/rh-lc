@@ -133,7 +133,7 @@ theorem valR_scaleO (a : R) (k : ℕ) {X : Scheme.{0}} (z : Sp (EpsAlg R k) ⟶ 
   · have hx' : ⊤ ≤ (spMap ρ ≫ z) ⁻¹ᵁ U := fun p _ => hx (x := spMap ρ p) trivial
     have h3 : (spMap ρ).appLE ⊤ ⊤ le_rfl = (spMap ρ).appTop := by
       rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]; rfl
-    rw [valR, valR, dif_pos hx, dif_pos hx', ← Scheme.Hom.appLE_comp_appLE (spMap ρ) z U ⊤ ⊤ hx le_rfl, h3]
+    rw [valR, valR, dite_eq_left hx, dite_eq_left hx', ← Scheme.Hom.appLE_comp_appLE (spMap ρ) z U ⊤ ⊤ hx le_rfl, h3]
     exact congrArg (fun q => q.hom ((z.appLE U ⊤ hx).hom f)) (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom ρ))
   · have hx' : ¬ ⊤ ≤ (spMap ρ ≫ z) ⁻¹ᵁ U := by
       intro h
@@ -141,7 +141,7 @@ theorem valR_scaleO (a : R) (k : ℕ) {X : Scheme.{0}} (z : Sp (EpsAlg R k) ⟶ 
       have := h (x := p) trivial
       change z.base ((spMap ρ).base p) ∈ U at this
       rwa [scaleO_base] at this
-    rw [valR, valR, dif_neg hx, dif_neg hx', map_zero]
+    rw [valR, valR, dite_eq_right hx, dite_eq_right hx', map_zero]
 
 theorem topCoeff_mk {k : ℕ} (p : MvPolynomial (Fin k) R) :
     topCoeff R k (Ideal.Quotient.mk _ p) = AddMonoidAlgebra.coeff p (topMon k) := rfl

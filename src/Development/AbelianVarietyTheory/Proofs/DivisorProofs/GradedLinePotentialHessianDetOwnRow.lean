@@ -116,7 +116,7 @@ theorem row_levi_det_of (hR : ∀ (n : ℕ) (B : Type) [Fintype B] [DecidableEq 
         rfl
     simp only [cellPot, neg_neg]
     rw [hb, show upM (fb ε w') τ = upU (fun s => fb ε w' ⟨τ, s⟩) from rfl,
-      hQg _ (fun j hj => by rw [hf, dif_neg (ne_of_lt hj)]; simp)]
+      hQg _ (fun j hj => by rw [hf, dite_eq_right (ne_of_lt hj)]; simp)]
     simp only [hfa]
   have hR' := hR n {j : Low (m τ) // j.1.2 = i} e he Q hQpd.1 (fun v => -cellPot ε G ⟨τ, i⟩ v) w hsm.1.neg hres q hq hq0
   have hD' := hD {j : Low (m τ) // j.1.2 = i} Q (fun a => w (e a)) (fun b => star (w (e b))) q (by rw [hq]; simp only [hstar]) hq0

@@ -44,7 +44,7 @@ private theorem absV_mul_lemma (x y : Fv F v) : absV v (x * y) = absV v x * absV
     rw [map_mul]
     exact mul_ne_zero hx hy
   unfold absV
-  rw [dif_neg hx, dif_neg hy, dif_neg hxy, ← zpow_add₀ hq, ← toAdd_mul]
+  rw [dite_eq_right hx, dite_eq_right hy, dite_eq_right hxy, ← zpow_add₀ hq, ← toAdd_mul]
   congr 2
   rw [← WithZero.coe_inj, WithZero.coe_mul, WithZero.coe_unzero, WithZero.coe_unzero,
     WithZero.coe_unzero, map_mul]
@@ -54,7 +54,7 @@ private theorem absV_one_lemma_2 : absV v (1 : Fv F v) = 1 := by
     rw [map_one]
     exact one_ne_zero
   unfold absV
-  rw [dif_neg h1]
+  rw [dite_eq_right h1]
   have h2 : WithZero.unzero h1 = 1 := by
     rw [← WithZero.coe_inj, WithZero.coe_unzero, map_one, WithZero.coe_one]
   rw [h2, toAdd_one, zpow_zero]

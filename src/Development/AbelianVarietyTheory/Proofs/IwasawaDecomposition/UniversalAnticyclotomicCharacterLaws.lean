@@ -84,7 +84,7 @@ def delOf (M : ℕ) (T : Set (PlE H)) : G H.E Ω →* Multiplicative (ZMod (l ^ 
   if h : ∃ d, IsDel H cc l M T d then h.choose else 1
 
 theorem isDel_delOf {M : ℕ} {T : Set (PlE H)} (h : ∃ d, IsDel H cc l M T d) : IsDel H cc l M T (delOf H cc l M T) := by
-  rw [delOf, dif_pos h]
+  rw [delOf, dite_eq_left h]
   exact h.choose_spec
 
 theorem delOf_laws (M : ℕ) (T : Set (PlE H)) :
@@ -95,7 +95,7 @@ theorem delOf_laws (M : ℕ) (T : Set (PlE H)) :
   by_cases h : ∃ d, IsDel H cc l M T d
   · obtain ⟨h1, h2, h3, h4, -⟩ := isDel_delOf H cc l h
     exact ⟨h1, h2, h3, h4⟩
-  · rw [delOf, dif_neg h]
+  · rw [delOf, dite_eq_right h]
     refine ⟨by simp, fun _ _ _ => by simp, fun _ _ _ _ _ _ => rfl, fun _ _ _ _ _ _ => rfl⟩
 
 open Classical in

@@ -43,7 +43,7 @@ theorem ltLog_sub_eq_X (hl : 2 ≤ l) (τ : K →+* K) :
   have hpow : ∀ j, coeff ((l ^ 2) ^ j) (ltLog K l) = ((l : K) ^ j)⁻¹ := by
     intro j
     have hex : ∃ i : ℕ, (l ^ 2) ^ j = (l ^ 2) ^ i := ⟨j, rfl⟩
-    rw [Formalism.L2.Th1.CM.ltLog, PowerSeries.coeff_mk, dif_pos hex]
+    rw [Formalism.L2.Th1.CM.ltLog, PowerSeries.coeff_mk, dite_eq_left hex]
     have hf : Nat.find hex = j := (Nat.pow_right_injective hq (Nat.find_spec hex)).symm
     rw [hf]
   ext n
@@ -68,14 +68,14 @@ theorem ltLog_sub_eq_X (hl : 2 ≤ l) (τ : K →+* K) :
       rw [if_pos hd, hdiv, PowerSeries.coeff_map, hpow, hpow,
         if_neg hne, map_inv₀, map_pow, map_natCast, pow_succ (l : K) j, mul_inv]
       ring
-  · have h0 : coeff n (ltLog K l) = 0 := by rw [Formalism.L2.Th1.CM.ltLog, PowerSeries.coeff_mk, dif_neg hn]
+  · have h0 : coeff n (ltLog K l) = 0 := by rw [Formalism.L2.Th1.CM.ltLog, PowerSeries.coeff_mk, dite_eq_right hn]
     have hX : n ≠ 1 := fun h => hn ⟨0, by rw [h, pow_zero]⟩
     rw [h0, if_neg hX]
     split_ifs with hd
     · obtain ⟨m, rfl⟩ := hd
       have hm : ¬ ∃ j, m = (l ^ 2) ^ j := fun ⟨j, hj⟩ => hn ⟨j + 1, by rw [hj, pow_succ (l ^ 2) j, mul_comm]⟩
       rw [Nat.mul_div_cancel_left m (by omega), PowerSeries.coeff_map, Formalism.L2.Th1.CM.ltLog, PowerSeries.coeff_mk,
-        dif_neg hm, map_zero]
+        dite_eq_right hm, map_zero]
       simp
     · simp
 

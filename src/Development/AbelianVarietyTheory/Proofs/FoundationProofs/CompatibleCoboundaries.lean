@@ -436,7 +436,7 @@ theorem lenN_selG {O O' : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRi
   refine compat_selAll _ he _ _ _ _ _ fun v h1 => ?_
   have hv : v ∈ placesOver D.host.E (X.l i) := h1
   unfold bkG
-  rw [dif_pos hv, dif_pos hv, fracClasses_eq b φ hφ
+  rw [dite_eq_left hv, dite_eq_left hv, fracClasses_eq b φ hφ
     ((twRep φ (X.rhoS i s) (chiS i s) 1).comp (DecV N v).subtype)
     ((twRep ((algebraMap O O').comp φ) (X.rhoS i s) (chiS i s) 1).comp (DecV N v).subtype)
     (fun a g m => he a g.1 m) (exists_unit_repr_one b) _ _ ?_]

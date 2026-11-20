@@ -159,7 +159,7 @@ variable {m : ℕ} {ε : Fin m → Bool} {H : Type} [NormedAddCommGroup H] [Inne
   {σ : Matrix (Fin m) (Fin m) ℂ → (H →L[ℂ] H)} {S : Submodule ℂ H} {E : Fin m → Fin m → Module.End ℂ S}
 
 theorem ap_of_mem (T : Module.End ℂ S) {x : H} (hx : x ∈ S) : ap T x = (T ⟨x, hx⟩ : H) := by
-  unfold ap; rw [dif_pos hx]
+  unfold ap; rw [dite_eq_left hx]
 
 theorem ap_add (T₁ T₂ : Module.End ℂ S) (x : H) : ap (T₁ + T₂) x = ap T₁ x + ap T₂ x := by
   unfold ap; split_ifs <;> simp

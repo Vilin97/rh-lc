@@ -58,7 +58,7 @@ theorem antitone_of_gapGe {g : ℤ} (hg : 0 ≤ g) {la : AllWt.Weight Dw} (h : G
   have h0 : ∀ k, 0 ≤ gap (la τ) k := fun k => by
     by_cases hk : k + 1 < Dw.p + Dw.q
     · exact hg.trans (h τ k hk)
-    · rw [gap, dif_neg hk]
+    · rw [gap, dite_eq_right hk]
   have e := ofGaps_gap (la τ) a i
   have := Finset.sum_le_sum_of_subset_of_nonneg (f := gap (la τ)) (Finset.range_mono (show (a : ℕ) ≤ i from hai))
     fun k _ _ => h0 k

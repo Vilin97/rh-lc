@@ -19,7 +19,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D}
 theorem frame_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) (a : Fin (D.R.rS + 1)) : frame (mapLF γ (lf D F)) a = γ (F.fvec a) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   refine Fin.lastCases ?_ (fun i => ?_) a
   · simp [frame, FlagG.fvec, Formalism.L2.SG.TermOp.mapFlag]
   · simp [frame, FlagG.fvec, Formalism.L2.SG.TermOp.mapFlag]
@@ -27,13 +27,13 @@ theorem frame_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Form
 theorem zt_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) : (mapLF γ (lf D F)).zt = γ F.z := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
 
 theorem Xflag_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) (j : ℕ) :
     Xflag (mapLF γ (lf D F)) j = (Xflag (lf D F) j).map (γ : (VS D).V →ₗ[D.host.E] (VS D).V) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   show Submodule.span D.host.E ((fun a => γ (F.e a)) '' {i | i.1 < j}) =
     Submodule.map (γ : (VS D).V →ₗ[D.host.E] (VS D).V) (Submodule.span D.host.E (F.e '' {i | i.1 < j}))
   rw [Submodule.map_span, ← Set.image_comp]
@@ -42,7 +42,7 @@ theorem Xflag_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Form
 theorem z_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) : (mapLF γ (lf D F)).fl.z = γ F.z := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   rfl
 
 theorem one_mem_NLam {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F : LFlag (VS D) D.R.rS T) :

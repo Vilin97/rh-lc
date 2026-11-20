@@ -92,15 +92,15 @@ theorem eigComp_map {k k' V V' O : Type} [Field k] [Field k'] [AddCommGroup V] [
       exact Submodule.add_mem _ ha hb
   have h : ∃ p ∈ eigSp ρ σ, x - p ∈ ⨆ σ' ∈ {σ' : O →+* k | σ' ≠ σ}, eigSp ρ σ' := by
     by_contra hcon
-    exact hx (by rw [eigComp, dif_neg hcon])
-  have hp : eigComp ρ σ x = h.choose := by rw [eigComp, dif_pos h]
+    exact hx (by rw [eigComp, dite_eq_right hcon])
+  have hp : eigComp ρ σ x = h.choose := by rw [eigComp, dite_eq_left h]
   obtain ⟨hp₁, hp₂⟩ := h.choose_spec
   rw [← hp] at hp₁ hp₂
   have hp₃ := hsup _ hp₂
   rw [map_sub] at hp₃
   have h' : ∃ q ∈ eigSp ρ' (κ.comp σ), j x - q ∈ ⨆ τ' ∈ {τ' : O →+* k' | τ' ≠ κ.comp σ}, eigSp ρ' τ' :=
     ⟨_, hmap σ _ hp₁, hp₃⟩
-  have hq : eigComp ρ' (κ.comp σ) (j x) = h'.choose := by rw [eigComp, dif_pos h']
+  have hq : eigComp ρ' (κ.comp σ) (j x) = h'.choose := by rw [eigComp, dite_eq_left h']
   obtain ⟨hq₁, hq₂⟩ := h'.choose_spec
   rw [← hq] at hq₁ hq₂
   refine sub_eq_zero.1 (eq_zero_of_mem_eigSp_of_mem_iSup ρ' (κ.comp σ)

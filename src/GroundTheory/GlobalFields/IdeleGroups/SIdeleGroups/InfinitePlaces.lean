@@ -26,12 +26,12 @@ def infiniteAdeleAboveFun (a : (w : v.placesOver L) → w.1.Completion) (w : Inf
 omit [NumberField K] [NumberField L] in
 theorem infiniteAdeleAboveFun_apply (a : (w : v.placesOver L) → w.1.Completion)
     (w : v.placesOver L) : infiniteAdeleAboveFun v a w.1 = a w := by
-  rw [infiniteAdeleAboveFun, dif_pos w.2]
+  rw [infiniteAdeleAboveFun, dite_eq_left w.2]
 
 omit [NumberField K] [NumberField L] in
 theorem infiniteAdeleAboveFun_apply_of_not (a : (w : v.placesOver L) → w.1.Completion)
     {w : InfinitePlace L} (h : w ∉ v.placesOver L) : infiniteAdeleAboveFun v a w = 1 := by
-  rw [infiniteAdeleAboveFun, dif_neg h]
+  rw [infiniteAdeleAboveFun, dite_eq_right h]
 
 omit [NumberField K] [NumberField L] in
 theorem infiniteAdeleAboveFun_one :

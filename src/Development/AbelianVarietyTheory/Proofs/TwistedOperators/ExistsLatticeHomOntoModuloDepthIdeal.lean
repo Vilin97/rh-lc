@@ -94,7 +94,7 @@ theorem exists_onto_mod {n n' : ℕ} (hnn : n ≤ n') (Λ : Submodule (𝓞 K) (
     refine b.ext fun i => ?_
     show φ (ψ (b i)) = b i
     simp only [φ, ψ, Module.Basis.constr_basis, Fin.coe_castLE]
-    rw [dif_pos i.isLt]
+    rw [dite_eq_left i.isLt]
   have hφ : Submodule.span (𝓞 K) (Set.range b') ≤ Λ.comap (φ.restrictScalars (𝓞 K)) := by
     rw [Submodule.span_le]
     rintro _ ⟨j, rfl⟩

@@ -58,7 +58,7 @@ theorem lamQB_eq_red (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (hn : n = r + b) (
     LocE.lamQB ξ r n j.1.toLinearMap = (((lamQ ξ n r b ⟨_, h⟩)⁻¹ : Kˣ) : K) := by
   have hA : GlobalTheory.DatumLaw.IntM P n n fun p p' => Loc.atN (j.1.toLinearMap (Loc.eN E n p')) p := fun p p' hp hp' => by
     show IntAt P (Loc.atN _ _)
-    rw [GlobalTheory.LastSteps.eN_eq hp', Loc.atN, dif_pos hp]
+    rw [GlobalTheory.LastSteps.eN_eq hp', Loc.atN, dite_eq_left hp]
     exact glint_entry j _ _
   have h1 := blkDet_eq_dB (coarse r [b]) 1 r (n - r) (by omega) (fun i hi => by
     by_cases hr : i < r
@@ -66,12 +66,12 @@ theorem lamQB_eq_red (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (hn : n = r + b) (
     · rw [coarse_of_le (Nat.not_lt.1 hr), blkIdx, if_pos (by omega)]; omega) ⟨_, h⟩
     (GlobalTheory.DatumLaw.red P fun p p' => Loc.atN (j.1.toLinearMap (Loc.eN E n p')) p) (fun i l => by
       show redP P (Loc.atN _ _) = _
-      rw [GlobalTheory.LastSteps.eN_eq l.2, Loc.atN, dif_pos i.2]
+      rw [GlobalTheory.LastSteps.eN_eq l.2, Loc.atN, dite_eq_left i.2]
       rfl)
   rw [← GlobalTheory.DatumLaw.redP_dB hA (by omega) (by omega)] at h1
   rw [lamQ_apply, Units.val_inv_eq_inv_val]
   show (GlobalTheory.DatumLaw.ext0 ξ (redP P (GlobalTheory.DatumLaw.dB (fun p p' => Loc.atN (j.1.toLinearMap (Loc.eN E n p')) p) r (n - r))))⁻¹ = _
-  rw [← h1, GlobalTheory.DatumLaw.ext0, dif_pos (Units.isUnit _), IsUnit.unit_of_val_units]
+  rw [← h1, GlobalTheory.DatumLaw.ext0, dite_eq_left (Units.isUnit _), IsUnit.unit_of_val_units]
 
 end Gen
 

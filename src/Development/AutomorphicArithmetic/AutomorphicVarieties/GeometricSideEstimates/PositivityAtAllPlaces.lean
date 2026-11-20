@@ -21,7 +21,7 @@ private theorem pInf_pos {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     rw [← GroundTheory.Global.IdeleGroup.coe_infiniteProj, infiniteProj_posIdele]
     change GroundTheory.Global.posRealElem w _ = _
     unfold GroundTheory.Global.posRealElem
-    rw [dif_neg hw]
+    rw [dite_eq_right hw]
     simp [InfinitePlace.mult, hw, Real.sqrt_sq hs.le]
   change (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w))
     (((posIdele s hs : GroundTheory.Global.IdeleGroup E) : AdeleRing (𝓞 E) E).1 w) = _

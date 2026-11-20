@@ -226,13 +226,13 @@ theorem shifted_parameter_letter (u : D.what₂.Word) (τ : D.what₂.Tau) (l : 
 theorem shifted_parameter_succ (u : D.what₂.Word) (τ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k) :
     uOne D u τ (i + 1) = uS D u τ ⟨i, h⟩ := by
   unfold uOne
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   exact congrArg (uS D u τ) (Fin.ext (by simp))
 
 theorem vertex_parameter_eq (τ : D.what₂.Tau) (l : ℕ) (h : l < D.R.k - 1) :
     vOne D τ (l + 1) = (((D.hc τ).v ⟨l, h⟩ : ℚ) : ℝ) := by
   unfold vOne
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   simp
 
 theorem separating_interval_real (v Δ x y : ℝ) (hΔ : 5 ≤ Δ)

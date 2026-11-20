@@ -44,7 +44,7 @@ theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (Reciproci
   by_contra h
   apply hW
   simp only [divCycle]
-  rw [dif_neg (fun h' => h h'.1), zero_mul]
+  rw [dite_eq_right (fun h' => h h'.1), zero_mul]
 
 theorem cycList_ratDiv [Fintype K] [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
     (l : List (K → ℤ)) :

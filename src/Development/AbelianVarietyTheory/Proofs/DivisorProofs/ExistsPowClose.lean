@@ -103,7 +103,7 @@ theorem nu_arith : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.Ch
     have h2 : D.R.m - (i : ℕ) ≤ D.R.m := Nat.sub_le _ _
     have a := awayIm_unit (hC.mu0 j) ((L.C.isMu0 j).tame w) (x w) hv (Qn G t)
     have b := awayIm_unit (hC.chi _ h1 h2) (chi_levelLe G h1 h2 w) (x w)⁻¹ hv' (Qn G t)
-    have hm : muBase L (j + 1) = L.C.mu0 j := by rw [muBase, dif_pos j.2]
+    have hm : muBase L (j + 1) = L.C.mu0 j := by rw [muBase, dite_eq_left j.2]
     convert a.mul b using 1
     simp only [Grid.nu, locGrid, MonoidHom.div_apply, hL.xi_base, mul_one, hm, map_inv,
       Units.val_div_eq_div_val, Units.val_inv_eq_inv_val]

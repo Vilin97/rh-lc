@@ -35,7 +35,7 @@ theorem atN_of_mem {n c i : ℕ} {v : Fin (n + c) → k} (hv : v ∈ Ufl k n c i
   · rfl
 
 theorem atN_eN {N i : ℕ} (h : i < N) : atN (eN k N i) i = 1 := by
-  rw [atN, dif_pos h, eN_apply]
+  rw [atN, dite_eq_left h, eN_apply]
   exact if_pos rfl
 
 theorem atN_eN_ne {N i j : ℕ} (h : j ≠ i) : atN (eN k N j) i = 0 := by
@@ -66,6 +66,6 @@ theorem extractFree_fillMatrix {n' n c : ℕ} (xj : (Fin n' → k) →ₗ[k] (Fi
     fe (xx1 xj t) = t := by
   funext p
   show xx1 xj t (Pi.single p.1.2 1) p.1.1 = t p
-  rw [fillMatrix_single, dif_pos p.2]
+  rw [fillMatrix_single, dite_eq_left p.2]
 
 end PI.UnfoldEquiv.UnitaryGroupMassFormula

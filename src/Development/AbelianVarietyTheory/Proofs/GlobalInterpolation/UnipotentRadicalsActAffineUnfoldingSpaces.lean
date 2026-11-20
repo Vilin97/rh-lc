@@ -28,7 +28,7 @@ noncomputable def linPart (xj : (Fin n' → F) →ₗ[F] (Fin n → F)) :
 
 theorem unfoldingAffineLinearMap_apply_freeEntry (xj : (Fin n' → F) →ₗ[F] (Fin n → F)) (t : Loc.FC n' c' n c → F) (p : Loc.FC n' c' n c) :
     Loc.xx1 xj t (Pi.single p.1.2 1) p.1.1 = t p := by
-  rw [linearMap_unfolding_apply_single, dif_pos p.2]
+  rw [linearMap_unfolding_apply_single, dite_eq_left p.2]
 
 theorem map_Ufl {xj : (Fin n' → F) →ₗ[F] (Fin n → F)} {x : (Fin (n' + c') → F) →ₗ[F] (Fin (n + c) → F)}
     (h1 : ∀ v, x (Loc.inX F n' c' v) = Loc.inX F n c (xj v))

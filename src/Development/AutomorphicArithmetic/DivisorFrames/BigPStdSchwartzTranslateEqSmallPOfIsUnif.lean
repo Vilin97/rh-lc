@@ -73,7 +73,7 @@ private theorem bigF_change (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ
   by_cases h0 : (blk₁ (X * M)).det = 0
   · rw [hA0 _ h0, mul_zero]
     have h1 : ∀ y : GL (Fin a) k, stdA ν ϖ c a a' (g.1 * (y.1 * X) * M) = 0 := fun y => by
-      rw [has, stdA, dif_neg]
+      rw [has, stdA, dite_eq_right]
       rintro ⟨h, -⟩
       exact h (by rw [blk₁_mul, Matrix.det_mul, h0, mul_zero])
     simp [bigF, shellSum, shell, h1]
@@ -102,9 +102,9 @@ private theorem bigF_change (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ
     · have h' : (blk₁ ((g * y).val * (X * M))).det ≠ 0 ∧ IsGLO (blk₁ ((g * y).val * (X * M))) ∧
           ∀ i j, blk₂ ((g * y).val * (X * M)) i j ∈ cball (ϖ ^ c) := by
         rw [blk₁_mul, blk₂_mul, ← hg]; exact h
-      rw [stdA, dif_pos h']
+      rw [stdA, dite_eq_left h']
       congr 3
-    · rw [stdA, dif_neg]
+    · rw [stdA, dite_eq_right]
       rwa [blk₁_mul, blk₂_mul, ← hg]
 
 private theorem smallF_change (ν : kˣ →* ℂˣ) (a' d : ℕ) (Ψ : Matrix (Fin a') (Fin d) k → ℂ) (l : ℂ) (g : GL (Fin a') k)

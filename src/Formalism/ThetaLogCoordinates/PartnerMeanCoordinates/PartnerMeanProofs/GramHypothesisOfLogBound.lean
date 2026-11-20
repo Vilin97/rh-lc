@@ -155,7 +155,7 @@ theorem theoremMV7Of : TheoremMV7Of := by
       have hdA : degreeAtPosition (LL.setTies T fun i => n₀ i + dd i * (Yl i - 1)) (T.pos i) =
           (LL.setTies T fun i => n₀ i + dd i * (Yl i - 1)).deg ⟨T.pos i, h⟩ := by
         unfold degreeAtPosition
-        rw [dif_pos h]
+        rw [dite_eq_left h]
       rw [hdA] at h1
       push_cast at h1 ⊢
       have h4 := (Nat.cast_nonneg (degreeAtPosition (LL.setTies T fun i => n₀ i + dd i * (Yl i - 1)) (T.pos i + 1)) : (0 : ℝ) ≤ _)

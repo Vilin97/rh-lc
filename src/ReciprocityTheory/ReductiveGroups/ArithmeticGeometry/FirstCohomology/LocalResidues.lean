@@ -45,7 +45,7 @@ theorem gs_const {Y' : Scheme.{0}} (p : X ⟶ Spec (CommRingCat.of k)) (q : X �
       ((Scheme.ΓSpecIso (CommRingCat.of k)).hom.hom ((inv (e.app ⊤)).hom a)) = (inv (e.app ⊤)).hom a := by
     exact congrArg (fun f => f.hom ((inv (e.app ⊤)).hom a)) (Scheme.ΓSpecIso (CommRingCat.of k)).hom_inv_id
   simp only [kappa, gs, RingHom.comp_apply, h2]
-  rw [dif_pos (show q y ∈ (⊤ : Y'.Opens) from trivial)]
+  rw [dite_eq_left (show q y ∈ (⊤ : Y'.Opens) from trivial)]
   first
     | (show _ = (X.presheaf.germ _ y _).hom ((q.app ⊤).hom ((e.app ⊤).hom ((inv (e.app ⊤)).hom a)))
        rw [h1])

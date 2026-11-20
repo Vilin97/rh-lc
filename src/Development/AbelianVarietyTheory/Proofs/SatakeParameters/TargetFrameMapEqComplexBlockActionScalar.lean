@@ -21,7 +21,7 @@ theorem GlobalTheory.TwV.DelA.targetFrameMap_eq_complexBlockAction_scalar_alt : 
   have hdeg := GlobalTheory.T.realising_polynomial_blockwise_homogeneous X D pos (j + 1) (rkT X D hN) (wT X D pos j) (extNu _ ν) P R0 hP hR0
   have hphi : phi0 X D pos ι j P = MvPolynomial.map ι R0 := by
     unfold phi0
-    rw [dif_pos (rkT X D hN)]
+    rw [dite_eq_left (rkT X D hN)]
     show MvPolynomial.map ι (phiC X D pos (j + 1) (rkT X D hN) (wT X D pos j) P) = _
     rw [hRR]
   have hhom : ∀ m ∈ (MvPolynomial.map ι R0).support, ∀ τ, ¬ IsOddPos (pos.symm τ).2 →

@@ -288,7 +288,7 @@ theorem exists_matches (χ : G L Ω →* ℂˣ) (op : IsOpen (χ.ker : Set (G L 
 theorem hk_spec (χ : G L Ω →* ℂˣ) (op : IsOpen (χ.ker : Set (G L Ω))) :
     Matches χ (hk χ) ∧ ∃ N : ℕ, 0 < N ∧ hk χ ^ N = 1 := by
   have hx := exists_matches χ op
-  rw [hk, dif_pos hx]
+  rw [hk, dite_eq_left hx]
   exact hx.choose_spec
 
 section Ind
@@ -304,7 +304,7 @@ omit [NumberField L] [IsAlgClosure L Ω] in
 
 theorem extendByZero_restrict (χ : G L Ω →* ℂˣ) (τ : G L Ω) : ext0 k χ (resG k L Ω τ) = χ τ := by
   have hx : ∃ τ' : G L Ω, resG k L Ω τ' = resG k L Ω τ := ⟨τ, rfl⟩
-  rw [ext0, dif_pos hx, resG_injective k hx.choose_spec]
+  rw [ext0, dite_eq_left hx, resG_injective k hx.choose_spec]
 
 omit [NumberField L] [IsAlgClosure L Ω] in
 

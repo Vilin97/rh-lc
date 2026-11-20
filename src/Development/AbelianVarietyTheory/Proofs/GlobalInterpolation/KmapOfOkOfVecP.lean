@@ -41,10 +41,10 @@ theorem sSharp_eq (I : ChainIn X.E X.K X.Tau R) (σ : X.K →+* ℂ) (h : I.Ok) 
     (I.chain X.emb σ h hc).sSharp i τ = sS hc i τ ∧ (I.chain X.emb σ h hc).sDiv i τ = sD hc i τ := by
   constructor
   · have h1 : ((sS hc i τ : ℤ) : ℚ) = sExp' R ((hc τ).e ⟨i, hi⟩) (i + 1) := by
-      rw [sS, dif_pos hi]; exact GlobalTheory.GO.ChSrc.zOf_spec R _ ((hc τ).e_int _) _
+      rw [sS, dite_eq_left hi]; exact GlobalTheory.GO.ChSrc.zOf_spec R _ ((hc τ).e_int _) _
     exact_mod_cast ((I.chain X.emb σ h hc).sSharp_eq i hi τ).trans h1.symm
   · have h1 : ((sD hc i τ : ℤ) : ℚ) = sExp R ((hc τ).e ⟨i, hi⟩) (i + 1) := by
-      rw [sD, dif_pos hi]; exact GlobalTheory.GO.ChSrc.zOf_spec R _ ((hc τ).e_int _) _
+      rw [sD, dite_eq_left hi]; exact GlobalTheory.GO.ChSrc.zOf_spec R _ ((hc τ).e_int _) _
     exact_mod_cast ((I.chain X.emb σ h hc).sDiv_eq i hi τ).trans h1.symm
 
 theorem kmap_of_jet (I : ChainIn X.E X.K X.Tau R) (σ : X.K →+* ℂ) (h : I.Ok) (hc : X.Tau → HCParam R) {i : ℕ} (hi : i < R.m)
@@ -139,7 +139,7 @@ theorem map_kerOf (A : Amb X) {a b : ℕ} (Sa SB : Finset (HeightOneSpectrum (�
       rw [h1]
       push_cast
       simp [GlobalTheory.JetDeg.natW_cast, Finset.sum_add_distrib, mul_comm]
-    rw [Amb.jetK, desc, dif_pos h1]
+    rw [Amb.jetK, desc, dite_eq_left h1]
     exact h1.choose_spec
 
 end Poly
@@ -154,7 +154,7 @@ theorem sel_mem_QE (h : Reads σ (mu : Chr X.F X.E X.K) ξ) {P : HeightOneSpectr
     sel (P.under (𝓞 X.F)) ∈ QE sel (mu : Chr X.F X.E X.K) := by
   classical
   have hf := GlobalTheory.OpenChrRam.qprime_finite X.F X.E X.K (mu : Chr X.F X.E X.K) mu.2.1.1.1.1.2
-  rw [QE, dif_pos hf]
+  rw [QE, dite_eq_left hf]
   exact Finset.mem_image_of_mem _ (hf.mem_toFinset.2 ((GlobalTheory.Mem.ReadTwist.mem_qprime_iff h _).2 ⟨P, rfl, hP⟩))
 
 theorem locK_eq_val {L : Type} [Field L] [NumberField L] (χ : HChar L) (Q : HeightOneSpectrum (𝓞 L)) (hu : χ.UnrAt Q) (k : Lˣ)
@@ -186,7 +186,7 @@ theorem map_muAtT (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : ∀ k, Pr
     · rw [if_pos hP, hG j.1 j.2 P hP q hq', Units.val_inv_eq_inv_val, map_inv₀]
     · have hg' : ∀ k, ((Pr.g k : ℕ) : 𝓞 X.E) ∉ P.1.asIdeal := fun k =>
         GlobalTheory.ColPeriod.natCast_notMem_of_ne (hPr.g_prime k) hlp.1.1 (fun h => hlp.2 hP (h ▸ hg k)) P.1 (Ideal.absNorm_mem _)
-      rw [if_neg hP, muqT, dif_pos j.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
+      rw [if_neg hP, muqT, dite_eq_left j.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
         ht.muVal j P.1 hg', ← locK_eq_val (m0 j) P.1 ((ht.mu0 j).unr _ hg') q
           (hq' ▸ GlobalTheory.CharVal.val_natCast_of_notMem_sq (Ideal.absNorm_mem _) hlp.1.2)]
   · rw [hm]
@@ -199,8 +199,8 @@ theorem map_muAtT (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : ∀ k, Pr
         rw [show (sel (P.1.under (𝓞 X.F))).under (𝓞 X.F) = P.1.under (𝓞 X.F) from HeightOneSpectrum.ext (hsel _),
           (GlobalTheory.Mem.ReadTwist.plc_under_eq_iff (F := X.F) P.1 (hPr.g_prime k)).2 gk] at h1
         exact h1 (hg k)
-      rw [if_pos hP, GlobalTheory.NormOneUnit.locK_unr hun (hu x y c hx hc), (ht.mu0 j).atg ⟨P.1, hP⟩ x y c hx hc, chiP, dif_pos hP, chiAt, extChi,
-        dif_pos j.2, Units.val_inv_eq_inv_val, map_inv₀, inv_inv, Units.val_one, inv_one, mul_one]
+      rw [if_pos hP, GlobalTheory.NormOneUnit.locK_unr hun (hu x y c hx hc), (ht.mu0 j).atg ⟨P.1, hP⟩ x y c hx hc, chiP, dite_eq_left hP, chiAt, extChi,
+        dite_eq_left j.2, Units.val_inv_eq_inv_val, map_inv₀, inv_inv, Units.val_one, inv_one, mul_one]
     · have hg' : ∀ k, ((Pr.g k : ℕ) : 𝓞 X.E) ∉ P.1.asIdeal := fun k =>
         GlobalTheory.ColPeriod.natCast_notMem_of_ne (hPr.g_prime k) hlp.1.1 (fun h => hlp.2 hP (h ▸ hg k)) P.1 (Ideal.absNorm_mem _)
       rw [if_neg hP, GlobalTheory.NormOneUnit.locK_unr ((ht.mu0 j).unr _ hg') (hu x y c hx hc), MonoidHom.inv_apply, Units.val_inv_eq_inv_val,
@@ -224,7 +224,7 @@ theorem map_muInvDet (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hg : ∀ k,
         (HeightOneSpectrum.ext (hsel (w.under (𝓞 X.F)))) with e | e
       exacts [h1 (Finset.mem_union_right _ (e ▸ h3)), h2 (Finset.mem_union_right _ (e ▸ h3))]
     refine ⟨((ht.mu0 j).unr w hg').mul hun, ?_⟩
-    rw [mUof, dif_pos j.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
+    rw [mUof, dite_eq_left j.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
       ht.muVal j w hg', (GlobalTheory.T.tame_character_values_eq_heckeChar_local_values X.F X.E X.K σ _ ξ h hta w).1 hun, Formalism.L2.Host.HChar.val_mul, Units.val_mul, mul_inv]
 
 end Scalar

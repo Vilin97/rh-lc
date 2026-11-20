@@ -27,7 +27,7 @@ theorem parEntry_apply (X : PPos n S → R) (i j : Fin n) :
 
 theorem parEntry_apply_of_le (X : PPos n S → R) {i j : Fin n} (hij : j ≤ i) :
     parEntry X i j = 0 := by
-  rw [parEntry_apply, dif_neg]
+  rw [parEntry_apply, dite_eq_right]
   rintro ⟨s, -, h1, h2⟩
   have : (j : ℕ) ≤ i := hij
   omega
@@ -176,13 +176,13 @@ theorem parGL_singleton {R : Type*} [CommRing R] {r : ℕ} (X : UPos n r → R) 
   by_cases h : (i : ℕ) < r ∧ r ≤ (j : ℕ)
   · have h' : ∃ s ∈ ({r} : Finset ℕ), (i : ℕ) < s ∧ s ≤ (j : ℕ) :=
       ⟨r, Finset.mem_singleton_self r, h⟩
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     rfl
   · have h' : ¬ ∃ s ∈ ({r} : Finset ℕ), (i : ℕ) < s ∧ s ≤ (j : ℕ) := by
       rintro ⟨s, hs, hh⟩
       rw [Finset.mem_singleton] at hs
       exact h (hs ▸ hh)
-    rw [dif_neg h', dif_neg h]
+    rw [dite_eq_right h', dite_eq_right h]
 
 theorem constantTermPar_singleton (r : ℕ) (φ : AdelicGLn.AdelicGL K n → ℂ)
     (g : AdelicGLn.AdelicGL K n) : constantTermPar {r} φ g = constantTerm r φ g := by
@@ -236,14 +236,14 @@ theorem parGL_eq_unipGL_mul (hr : r ∈ S)
   rw [add_assoc]
   congr 1
   by_cases hP : ∃ s ∈ S, (i : ℕ) < s ∧ s ≤ (j : ℕ)
-  · rw [dif_pos hP, dif_pos hP]
+  · rw [dite_eq_left hP, dite_eq_left hP]
     by_cases hT : (i : ℕ) < r ∧ r ≤ (j : ℕ)
     · have hT' : IsTop r (⟨(i, j), hP⟩ : PPos n S) := hT
-      rw [dif_pos hT, dif_pos hT', dif_pos hT', Pi.zero_apply, zero_add]
+      rw [dite_eq_left hT, dite_eq_left hT', dite_eq_left hT', Pi.zero_apply, zero_add]
       rfl
     · have hT' : ¬ IsTop r (⟨(i, j), hP⟩ : PPos n S) := hT
-      rw [dif_neg hT, dif_neg hT', dif_neg hT', add_zero]
-  · rw [dif_neg hP, dif_neg hP, zero_add, dif_neg]
+      rw [dite_eq_right hT, dite_eq_right hT', dite_eq_right hT', add_zero]
+  · rw [dite_eq_right hP, dite_eq_right hP, zero_add, dite_eq_right]
     rintro hT
     exact hP ⟨r, hr, hT⟩
 

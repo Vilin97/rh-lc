@@ -110,7 +110,7 @@ theorem red_of_red {γ : GL (Fin r) E} {u : Fin r → Fin r → E} {k l : GL (Fi
 theorem red_of_dat (hn : r ≤ n) {y : Matrix (Fin n) (Fin r) E} (h : ‖D.dat hn y‖ = 1) :
     ∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k := by
   by_contra H
-  rw [Level.dat, dif_neg fun H' => H H'.1, norm_zero] at h
+  rw [Level.dat, dite_eq_right fun H' => H H'.1, norm_zero] at h
   exact zero_ne_one h
 
 variable {w : E} {A A' : AddSubgroup (Matrix (Fin n) (Fin r) E)}

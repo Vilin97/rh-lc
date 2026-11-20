@@ -106,7 +106,7 @@ theorem orbJ_std (hk : 1 ≤ k) (L : LocBessel k r) (ka : ℝ) (hka : 0 < ka) (h
       rw [cjI_cj hκ hτ]
     rw [hfe, OrbInt_turn L ka hc F g ν]
   unfold Formalism.FourierDecayAlt.D.orbJ
-  rw [dif_pos ⟨θ, hθ, hint⟩]
+  rw [dite_eq_left ⟨θ, hθ, hint⟩]
   have hspec := (⟨θ, hθ, hint⟩ : ∃ θ, Formalism.FourierDecayAlt.D.IsNormCut B (gStd ka g) (muStd ka μR) θ ∧
       Integrable (fun p => θ p • Formalism.FourierDecayAlt.D.orbIntegrand B (gStd ka g) (stdF L ka F) p) B.μSS).choose_spec
   generalize (⟨θ, hθ, hint⟩ : ∃ θ, Formalism.FourierDecayAlt.D.IsNormCut B (gStd ka g) (muStd ka μR) θ ∧

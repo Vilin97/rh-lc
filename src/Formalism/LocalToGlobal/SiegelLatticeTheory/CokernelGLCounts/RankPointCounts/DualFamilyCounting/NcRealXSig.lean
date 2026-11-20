@@ -205,15 +205,15 @@ theorem hJ_Qm_self (hF : IsFrameJ ε e f wf z0) (zB : Fin (2 * r + k + 1) → �
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp <;> ring
   have hc1 : ∀ j : Fin (2 * r + k + 1), (hj : j.val < r) → colQ e f wf z0 j = e ⟨j.val, hj⟩ := by
-    intro j hj; unfold colQ; rw [dif_pos hj]
+    intro j hj; unfold colQ; rw [dite_eq_left hj]
   have hc2 : ∀ j : Fin (2 * r + k + 1), (h1 : r ≤ j.val) → (h2 : j.val < r + k) →
       colQ e f wf z0 j = wf ⟨j.val - r, by omega⟩ := by
-    intro j h1 h2; unfold colQ; rw [dif_neg (by omega), dif_pos h2]
+    intro j h1 h2; unfold colQ; rw [dite_eq_right (by omega), dite_eq_left h2]
   have hc3 : ∀ j : Fin (2 * r + k + 1), j.val = r + k → colQ e f wf z0 j = z0 := by
-    intro j h; unfold colQ; rw [dif_neg (by omega), dif_neg (by omega), dif_pos h]
+    intro j h; unfold colQ; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
   have hc4 : ∀ j : Fin (2 * r + k + 1), (h : r + k < j.val) →
       colQ e f wf z0 j = f ⟨2 * r + k - j.val, by omega⟩ := by
-    intro j h; unfold colQ; rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega)]
+    intro j h; unfold colQ; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega)]
   have hQ : ∀ v : Fin (2 * r + k + 1) → ℂ, Qm e f wf z0 *ᵥ v = ∑ j, v j • colQ e f wf z0 j := by
     intro v; ext i; simp [Qm, mulVec, dotProduct, Finset.sum_apply, mul_comm]
   have hwe : ∀ c a, hJ ε (wf c) (e a) = 0 := fun c a => by rw [hs, hF.ew]; simp
@@ -249,15 +249,15 @@ theorem hJ_Qm_self (hF : IsFrameJ ε e f wf z0) (zB : Fin (2 * r + k + 1) → �
 theorem hJ_e_Qm (hF : IsFrameJ ε e f wf z0) {v : Fin (2 * r + k + 1) → ℂ} (hv : inWb k r v) (a : Fin r) :
     hJ ε (e a) (Qm e f wf z0 *ᵥ v) = 0 := by
   have hc1 : ∀ j : Fin (2 * r + k + 1), (hj : j.val < r) → colQ e f wf z0 j = e ⟨j.val, hj⟩ := by
-    intro j hj; unfold colQ; rw [dif_pos hj]
+    intro j hj; unfold colQ; rw [dite_eq_left hj]
   have hc2 : ∀ j : Fin (2 * r + k + 1), (h1 : r ≤ j.val) → (h2 : j.val < r + k) →
       colQ e f wf z0 j = wf ⟨j.val - r, by omega⟩ := by
-    intro j h1 h2; unfold colQ; rw [dif_neg (by omega), dif_pos h2]
+    intro j h1 h2; unfold colQ; rw [dite_eq_right (by omega), dite_eq_left h2]
   have hc3 : ∀ j : Fin (2 * r + k + 1), j.val = r + k → colQ e f wf z0 j = z0 := by
-    intro j h; unfold colQ; rw [dif_neg (by omega), dif_neg (by omega), dif_pos h]
+    intro j h; unfold colQ; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
   have hc4 : ∀ j : Fin (2 * r + k + 1), (h : r + k < j.val) →
       colQ e f wf z0 j = f ⟨2 * r + k - j.val, by omega⟩ := by
-    intro j h; unfold colQ; rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega)]
+    intro j h; unfold colQ; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega)]
   have hQ : ∀ v : Fin (2 * r + k + 1) → ℂ, Qm e f wf z0 *ᵥ v = ∑ j, v j • colQ e f wf z0 j := by
     intro v; ext i; simp [Qm, mulVec, dotProduct, Finset.sum_apply, mul_comm]
   rw [hQ, hJ_sum_r]

@@ -54,12 +54,12 @@ theorem twTr_conj_equiv : ∀ (G : Type) [Group G] (V V' : Type) [AddCommGroup V
   unfold twTr
   simp only [hlev]
   by_cases h : ∀ v ∈ fixed ρ K', L v ∈ fixed ρ K'
-  · rw [dif_pos (hc.2 h), dif_pos h]
+  · rw [dite_eq_left (hc.2 h), dite_eq_left h]
     let ψ := φ.ofSubmodules _ _ hmap
     have hr : (φ.conj L).restrict (hc.2 h) = ψ.conj (L.restrict h) := by
       ext ⟨v', hv'⟩
       simp [ψ, LinearEquiv.conj_apply, LinearMap.restrict_apply]
     rw [hr, LinearMap.trace_conj']
-  · rw [dif_neg (mt hc.1 h), dif_neg h]
+  · rw [dite_eq_right (mt hc.1 h), dite_eq_right h]
 
 end GlobalTheory.BCT

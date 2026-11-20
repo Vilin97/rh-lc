@@ -373,7 +373,7 @@ theorem isCuspProdChar_typeChar {s : SSParam p ℂ r} (hs : IsRegularParam s) :
     rw [h1]
     unfold ext0
     by_cases hz : y⁻¹ * x * y ∈ blockTri (κ := ZMod p) (b₀ ∘ w)
-    · rw [dif_pos hz, if_pos ((hm _).2 hz), hch]
+    · rw [dite_eq_left hz, if_pos ((hm _).2 hz), hch]
       refine Finset.prod_congr rfl fun c _ => ?_
       unfold cuspOn
       congr 1
@@ -382,7 +382,7 @@ theorem isCuspProdChar_typeChar {s : SSParam p ℂ r} (hs : IsRegularParam s) :
       simp only [e, Equiv.trans_apply, cycEquiv_apply]
       rw [← conj_permGL_apply w, Equiv.apply_symm_apply, Equiv.apply_symm_apply]
       rfl
-    · rw [dif_neg hz, if_neg (mt (hm _).1 hz)]
+    · rw [dite_eq_right hz, if_neg (mt (hm _).1 hz)]
 
 theorem isChar_of_isCuspProdChar {θ : GL (Fin r) (ZMod p) → ℂ} (h : GlobalTheory.IndefiniteRowSideFullHecke.CuspidalProductMultiplicity.IsCuspProdChar θ) : IsChar ℂ ℂ θ := by
   haveI : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩

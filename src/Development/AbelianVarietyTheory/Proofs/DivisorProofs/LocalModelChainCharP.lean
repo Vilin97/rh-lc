@@ -138,7 +138,7 @@ def valR {R : Type} [CommRing R] (w : Sp R ⟶ X) (U : X.Opens) (h : ⊤ ≤ w �
 theorem map_valR {R k : Type} [CommRing R] [Field k] (f : R →+* k) (w : Sp R ⟶ X) (U : X.Opens) (hw : ⊤ ≤ w ⁻¹ᵁ U)
     (a : Γ(X, U)) : f (valR w U hw a) = valF (spMap f ≫ w) U a := by
   have h' : ⊤ ≤ (spMap f ≫ w) ⁻¹ᵁ U := fun q _ => hw (Set.mem_univ (spMap f q))
-  rw [valF, dif_pos h']
+  rw [valF, dite_eq_left h']
   have e : (spMap f ≫ w).appLE U ⊤ h' = w.appLE U ⊤ hw ≫ (spMap f).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     exact (Scheme.Hom.appLE_comp_appLE (spMap f) w U ⊤ ⊤ hw le_rfl).symm

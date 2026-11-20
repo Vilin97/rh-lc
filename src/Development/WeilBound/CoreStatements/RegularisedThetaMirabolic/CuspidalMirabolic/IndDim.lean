@@ -37,7 +37,7 @@ def psiExt (y : mirabSub k n) : ℂ := by
 
 theorem psiExt_of_mem (u : uniSub k n) : psiExt n ψ₀ (u : mirabSub k n) = genericChar n ψ₀ u := by
   unfold psiExt
-  rw [dif_pos u.2]
+  rw [dite_eq_left u.2]
 
 theorem psiExt_mul (u : uniSub k n) (y : mirabSub k n) (hy : y ∈ uniSub k n) :
     psiExt n ψ₀ ((u : mirabSub k n) * y) = genericChar n ψ₀ u * psiExt n ψ₀ y := by

@@ -45,7 +45,7 @@ def mkUJ' (ε : Fin n → Bool) (M : Matrix (Fin n) (Fin n) ℂ) : Formalism.REA
 
 theorem mkUJ'_val (M : Matrix (Fin n) (Fin n) ℂ) (h : Formalism.REAL.inUJ ε M) :
     Formalism.MainNotions.S.uMat (mkUJ' ε M) = M := by
-  rw [mkUJ', dif_pos h]; rfl
+  rw [mkUJ', dite_eq_left h]; rfl
 
 theorem mkUJ'_coe (γ : Formalism.REAL.UJ ε) :
     mkUJ' ε (((γ : (Matrix (Fin n) (Fin n) ℂ)ˣ) : Matrix (Fin n) (Fin n) ℂ)) = γ := by

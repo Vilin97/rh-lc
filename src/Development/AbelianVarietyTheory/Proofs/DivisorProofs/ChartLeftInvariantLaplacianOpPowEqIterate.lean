@@ -38,8 +38,8 @@ theorem chart_lapOp_eqOn_invSet (φ : Sm E a) (g : GA E a) :
   have hy' : IsUnit (Matrix.of y) := hy
   have key : ∀ X : Lie E a, ((lie E a X ^ 2) φ).1 (g * infGL E a hy'.unit) =
       vecF E a X (vecF E a X (chart φ.1 g)) y := fun X => by
-    rw [← chart_lie_sq_eqOn_invSet X φ g hy, chart, dif_pos hy']
-  rw [chart, dif_pos hy']
+    rw [← chart_lie_sq_eqOn_invSet X φ g hy, chart, dite_eq_left hy']
+  rw [chart, dite_eq_left hy']
   simp only [lapOp, lapF, LinearMap.sum_apply, LinearMap.add_apply, Submodule.coe_sum, Submodule.coe_add,
     Finset.sum_apply, Pi.add_apply]
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

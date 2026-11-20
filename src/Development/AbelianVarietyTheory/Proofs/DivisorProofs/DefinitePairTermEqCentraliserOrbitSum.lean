@@ -194,7 +194,7 @@ theorem term_eq_centSum : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Glob
   have hex : ∃ dz : Gr G 1 × Gr G 1, IsNrm G 1 P.atP dz.1 dz.2 :=
     ⟨(inclG G 1 P.atP, 1), by simp [IsNrm, nrmG]⟩
   unfold DPair.term
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact termAt_eq P hm _ f (fun k hk g => by simpa using hf.2.2.1 k hk g) K' f'
     (fun k hk g => by simpa [GlobalTheory.LKCx.sigG_one] using hf'.2.2.1 k hk g) _ _ _ _ _ hex.choose_spec
 

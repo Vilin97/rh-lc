@@ -67,18 +67,18 @@ theorem valAt'_cj {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U
     valAt' (cj ≫ x) U f = star (valAt' x U f) := by
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · rw [dif_pos h, dif_pos ((top_le_invol cj_cj x U).2 h)]
+  · rw [dite_eq_left h, dite_eq_left ((top_le_invol cj_cj x U).2 h)]
     exact val_spMap _ x U h _ f
-  · rw [dif_neg h, dif_neg (fun h' => h ((top_le_invol cj_cj x U).1 h')), star_zero]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h ((top_le_invol cj_cj x U).1 h')), star_zero]
 
 theorem valAt'_comp {X Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) (ψ : Y ⟶ X) (U : X.Opens) (f : Γ(X, U)) :
     valAt' (x ≫ ψ) U f = valAt' x (ψ ⁻¹ᵁ U) ((ψ.appLE U _ le_rfl).hom f) := by
   unfold valAt'
   by_cases h : ⊤ ≤ x ⁻¹ᵁ (ψ ⁻¹ᵁ U)
-  · rw [dif_pos h, dif_pos (show ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_left h, dite_eq_left (show ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ U from h)]
     unfold valAt
     rw [appLE_comp x ψ U _ le_rfl h]
-  · rw [dif_neg h, dif_neg (show ¬ ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ U from h)]
 
 theorem top_le_pull {T X Y : Scheme.{0}} (L : LB X) (x : T ⟶ Y) (ψ : Y ⟶ X) (J : PUnit → L.ι) :
     ⊤ ≤ x ⁻¹ᵁ (L.pull ψ).U J ↔ ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ L.U (J PUnit.unit) :=
@@ -92,7 +92,7 @@ theorem valAt'_pull_g {X Y : Scheme.{0}} (L : LB X) (x : Sp ℂ ⟶ Y) (ψ : Y �
     fun y hy => ⟨mem_pull.1 hy.1, mem_pull.1 hy.2⟩
   have h' : ⊤ ≤ (x ≫ ψ) ⁻¹ᵁ (L.U (I PUnit.unit) ⊓ L.U (J PUnit.unit)) := fun t ht => le (h ht)
   unfold valAt'
-  rw [dif_pos h, dif_pos h']
+  rw [dite_eq_left h, dite_eq_left h']
   unfold valAt
   rw [appLE_comp x ψ _ _ le h h']
   congr 2

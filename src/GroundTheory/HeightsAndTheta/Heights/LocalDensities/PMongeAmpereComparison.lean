@@ -163,7 +163,7 @@ theorem maMeasure_congr_open {e : ℕ} {X : Type} [TopologicalSpace X] [Measurab
     refine setLIntegral_congr_fun hV.measurableSet fun y hy => ?_
     simp only [h j y hy.2 hy.1]
   · unfold maMeasure
-    rw [dif_neg hne, dif_neg hne]
+    rw [dite_eq_right hne, dite_eq_right hne]
 
 theorem maMeasure_compact_eq {e : ℕ} {X : Type} [TopologicalSpace X] [T2Space X]
     [MeasurableSpace X] [BorelSpace X] (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
@@ -246,7 +246,7 @@ theorem proof (h : MongeAmpereCompactChange.Statement) : MongeAmpereComparison.S
   by_cases hne : Nonempty (ChartPartition A)
   swap
   · unfold maMeasure
-    rw [dif_neg hne, dif_neg hne]
+    rw [dite_eq_right hne, dite_eq_right hne]
   have hac := projLine_continuous_of_smooth A ha
   have hbc := projLine_continuous_of_smooth A hb
   let v : ℕ → X → ℝ := fun k x => cutoff (b x - a x + (k : ℝ))

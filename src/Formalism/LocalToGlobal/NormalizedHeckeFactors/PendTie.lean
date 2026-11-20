@@ -19,7 +19,7 @@ def pickPoly (Q : K[X] → Prop) : K[X] := open Classical in if h : ∃ P, Q P t
 theorem pickPoly_spec {Q : K[X] → Prop} (h : ∃ P, Q P) : Q (pickPoly Q) := by
   classical
   unfold pickPoly
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec h
 
 theorem pickPoly_eq {Q : K[X] → Prop} {P : K[X]} (hP : Q P) (hu : ∀ P', Q P' → P' = P) : pickPoly Q = P :=

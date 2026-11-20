@@ -26,7 +26,7 @@ theorem appTop_eq_of_gm (τ₁ τ₂ : Z ⟶ Y) (c₁ c₂ : Γ(Y, ⊤)ˣ) (h : 
   unfold gm pullU at h1
   have m1 : τ₁ z ∈ (⊤ : Y.Opens) := trivial
   have m2 : τ₂ z ∈ (⊤ : Y.Opens) := trivial
-  rw [dif_pos m1, dif_pos m2] at h1
+  rw [dite_eq_left m1, dite_eq_left m2] at h1
   simp only [MonoidHom.comp_apply, Units.coe_map, MonoidHom.coe_coe] at h1
   exact h1
 
@@ -36,7 +36,7 @@ theorem gm_comp_top (r : W ⟶ Z) (τ : Z ⟶ Y) (w : W) (c : Γ(Y, ⊤)ˣ) (c' 
   unfold gm pullU
   have m1 : (r ≫ τ) w ∈ (⊤ : Y.Opens) := trivial
   have m2 : r w ∈ (⊤ : Z.Opens) := trivial
-  rw [dif_pos m1, dif_pos m2]
+  rw [dite_eq_left m1, dite_eq_left m2]
   simp only [MonoidHom.comp_apply, Units.coe_map, MonoidHom.coe_coe, Scheme.Hom.comp_app,
     CommRingCat.comp_apply]
   rw [← h]
@@ -84,7 +84,7 @@ theorem exists_ratio {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K : Type} [Finty
     unfold LB.wchart
     simp
     exact fun i => hJ (r ≫ φ i)
-  rw [dif_pos hm, dif_pos (show r z ∈ (⊤ : Y.Opens) from trivial)]
+  rw [dite_eq_left hm, dite_eq_left (show r z ∈ (⊤ : Y.Opens) from trivial)]
   apply Units.ext
   simp only [MonoidHom.coe_comp, Function.comp_apply, Units.coe_map, MonoidHom.coe_coe]
   try erw [Function.comp_apply]
@@ -99,7 +99,7 @@ theorem val_charGen {S : Scheme.{0}} (X : Type) [AddCommGroup X] (G : Over S) {L
   have hm : w z ∈ L.wchart PEmpty.elim (fun k => J (w ≫ k.elim)) := by
     unfold LB.wchart
     simp
-  rw [dif_pos hm, dif_pos (show (w ≫ (fst (splitTorus S X) G).left) z ∈
+  rw [dite_eq_left hm, dite_eq_left (show (w ≫ (fst (splitTorus S X) G).left) z ∈
     (⊤ : (splitTorus S X).left.Opens) from trivial)]
   apply Units.ext
   simp only [MonoidHom.coe_comp, Function.comp_apply, Units.coe_map, MonoidHom.coe_coe,

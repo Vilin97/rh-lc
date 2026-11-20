@@ -106,7 +106,7 @@ theorem deform : ∀ (k J I : Type) [Field k] [Fintype J] [Fintype I] (N : ℕ) 
             = w (some (i, l)) := by
           simp only [hA]
           have := hvl i l.1 hl
-          rw [dif_pos l.2] at this
+          rw [dite_eq_left l.2] at this
           exact this
         have h2 : ∑ j, y₀ j * PowerSeries.coeff 1 (GlobalTheory.PicDiv.hasse l.1 (s i j)) = 0 := by
           simp only [hB]

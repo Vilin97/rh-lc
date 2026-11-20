@@ -73,7 +73,7 @@ theorem genVal_eq_zero_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       rw [← h1]
       exact evalAt_zero _ _ y
     · unfold evR evalAt
-      rw [dif_neg ht]
+      rw [dite_eq_right ht]
   · intro hall
     rw [genVal_apply hG]
     exact hall _ _ (liesOn_genFr hG Z)

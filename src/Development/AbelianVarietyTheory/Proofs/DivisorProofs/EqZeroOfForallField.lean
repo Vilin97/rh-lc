@@ -39,7 +39,7 @@ section Values
 variable {B : Type} [CommRing B] {Y Z : Scheme.{0}}
 
 theorem valR_eq (x : Sp B ⟶ Y) {O : Y.Opens} (h : ⊤ ≤ x ⁻¹ᵁ O) (f : Γ(Y, O)) : valR x O f = evalPt x O h f := by
-  rw [valR, dif_pos h]; rfl
+  rw [valR, dite_eq_left h]; rfl
 
 theorem valR_pbT (x : Sp B ⟶ Z) (f : Z ⟶ Y) {O : Y.Opens} {O' : Z.Opens} (h : O' ≤ f ⁻¹ᵁ O) (h' : ⊤ ≤ x ⁻¹ᵁ O')
     (s : Γ(Y, O)) : valR x O' (pbT f s O') = valR (x ≫ f) O s := by

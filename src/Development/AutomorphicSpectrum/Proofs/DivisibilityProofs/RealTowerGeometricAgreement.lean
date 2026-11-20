@@ -50,7 +50,7 @@ theorem geoMono_word (hI : PB.Inputs) (M : RootModel Ψ N) {J : Ideal (MRing M.�
       have := k.2
       simp [Multiset.length_toList]
     unfold monoLines
-    rw [hms, dif_pos hk, hρ k hk]
+    rw [hms, dite_eq_left hk, hρ k hk]
     rfl
   unfold RootModel.geoMono
   rw [if_pos hdeg, hML]

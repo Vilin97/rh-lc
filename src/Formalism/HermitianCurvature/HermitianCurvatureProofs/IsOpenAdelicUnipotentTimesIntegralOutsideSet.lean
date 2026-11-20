@@ -1059,11 +1059,11 @@ lemma ell_lev (z : Fin (2 * r' + k + 1) → ℂ) (g : Mx k r') :
     · rw [e, B2x6.lev_mulVec_F, B2x6.lift_F]
   · intro a
     by_cases h : a.val + 1 < r'
-    · rw [dif_pos h, dif_pos (by simp only; omega)]
+    · rw [dite_eq_left h, dite_eq_left (by simp only; omega)]
       have e2 : eI k (1 + r') ⟨a.val + 1 + 1, by omega⟩ = lv k r' (eI k r' ⟨a.val + 1, h⟩) := (lv_eI (k := k) (⟨a.val + 1, h⟩ : Fin r')).symm
       rw [← lv_eI a]
       exact (B2x6.lev_mm g _ _).symm.trans (by rw [e2])
-    · rw [dif_neg h, dif_neg (by simp only; omega), ← lv_eI a, B2x5.lev_lift]
+    · rw [dite_eq_right h, dite_eq_right (by simp only; omega), ← lv_eI a, B2x5.lev_lift]
       exact (congrFun (B2x6.lift_res (g *ᵥ z)) (eI k r' a)).symm
 
 lemma psi_lev (z : Fin (2 * r' + k + 1) → ℂ) (c : ℂ) (g : Mx k r') :

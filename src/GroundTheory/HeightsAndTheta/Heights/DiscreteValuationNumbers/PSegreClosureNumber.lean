@@ -108,7 +108,7 @@ theorem flagHsymm_eq_rename (N n : ℕ) : ∀ (k : ℕ) (hk : k ≤ N) (c : ℕ)
       flagHsymm_eq_rename N n (k + 1) hk c, hsymm_fin_succ, map_add, map_mul, rename_X, rename_rename]
     have hv : flagVar N n k = X (Fin.castAdd n (Fin.castLE hk (Fin.last k))) := by
       unfold flagVar
-      rw [dif_pos (by omega)]
+      rw [dite_eq_left (by omega)]
       rfl
     rw [hv]
     exact add_comm _ _
@@ -228,7 +228,7 @@ theorem SegreClosureNumber.proof (hExp : PairNumberExpansionIndependence.Stateme
       intro r Bf hB Es hEs Fs hFs Q' hQ'
       have hfv : flagVar N n k = X (Fin.castAdd n ⟨k, hk⟩) := by
         unfold flagVar
-        rw [dif_pos hk]
+        rw [dite_eq_left hk]
       have hxB : (X (Fin.castAdd n ⟨k, hk⟩) * Bf : MvPolynomial (Fin (N + n)) ℤ).IsHomogeneous (r + 1) := by
         have h := (isHomogeneous_X ℤ (Fin.castAdd n ⟨k, hk⟩)).mul hB
         rwa [add_comm 1 r] at h

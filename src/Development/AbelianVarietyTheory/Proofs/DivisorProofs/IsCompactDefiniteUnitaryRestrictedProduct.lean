@@ -156,7 +156,7 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
       cLoc w (x : UA E n) ∈ Subtype.val '' C w := by
     intro x w
     have hx := GlobalTheory.BCT.ThBasic.cLoc_mem_UL hU n w (x : UA E n)
-    rw [toSub, dif_pos hx]
+    rw [toSub, dite_eq_left hx]
     constructor
     · intro h; exact ⟨_, h, rfl⟩
     · rintro ⟨k, hk, e⟩

@@ -58,7 +58,7 @@ theorem purT_eq {d : ℕ} (T : ∀ P : SP d, Tube P) (q : ℕ) [NeZero q] (P : S
   classical
   have h : q ≠ 0 ∧ IsUnit (q : Γ(P.X, ⊤)) := ⟨NeZero.ne q, hq⟩
   unfold purT
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 theorem purOf_char {d : ℕ} {P : SP d} (t : Tube P) (q : ℕ) [NeZero q] (hq : IsUnit (q : Γ(P.X, ⊤))) (n i : ℤ)

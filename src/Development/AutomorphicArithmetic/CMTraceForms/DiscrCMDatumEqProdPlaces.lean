@@ -373,7 +373,7 @@ theorem UpperTheory.discr_CMDatum_eq_prod_places :
       rw [Matrix.of_apply, Matrix.blockDiagonal'_apply]
       by_cases hij : j = i
       · subst hij
-        rw [dif_pos rfl]
+        rw [dite_eq_left rfl]
         simp only [cast_eq]
         rcases u with a | a <;> rcases c with b | b
         · rw [hγl, Matrix.fromBlocks_apply₁₁]
@@ -388,7 +388,7 @@ theorem UpperTheory.discr_CMDatum_eq_prod_places :
           simp only [ρ, Sum.elim_inr]
           rw [tauExt_comp_star_eq_tauExt_sig, UpperTheory.PlacesDiscr.sig_sig]
           rfl
-      · rw [dif_neg hij]
+      · rw [dite_eq_right hij]
         rcases u with a | a <;> rcases c with b | b
         · rw [hγl]
           exact hz2 _ i (hE i b) j hij (B j a)

@@ -247,7 +247,7 @@ private theorem step_eq {D : D7} (O : Setup D) (y : Pad.Pt O.s) {K : Type} [Fiel
     obtain ⟨_, _, _, -, -, -, -, h5, -⟩ := hT
     exact h5
   have hk : (k : ℕ) < (letters O.S.Dw).length := h5 ▸ k.2
-  rw [lnStep, dif_pos hk]
+  rw [lnStep, dite_eq_left hk]
   have hu : ∀ (x : Sp ℂ_[p] ⟶ O.s.T.Z.X) {m : ℕ} (e : m = (letters O.S.Dw).length) (u : Fin (letters O.S.Dw).length → _)
       (k : Fin m), grNorm O.s.T.Z.t x (latDR O.s.T.Z.t x) u (Fin.cast e k) =
       grNorm O.s.T.Z.t x (latDR O.s.T.Z.t x) (fun a => u (Fin.cast e a)) k := by

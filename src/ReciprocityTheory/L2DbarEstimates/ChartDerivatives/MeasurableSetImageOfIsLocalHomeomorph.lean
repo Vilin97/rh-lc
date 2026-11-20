@@ -169,7 +169,7 @@ theorem volAdditive {M : Type*} [TopologicalSpace M] [SecondCountableTopology M]
 
 theorem vol_apply {M : Type*} [TopologicalSpace M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (A : Set M) (hA : MeasurableSet A) :
     vol n z A = volFun n z A := by
-  rw [vol, dif_pos (volAdditive n z hz), Measure.ofMeasurable_apply A hA]
+  rw [vol, dite_eq_left (volAdditive n z hz), Measure.ofMeasurable_apply A hA]
 
 theorem vol_image {M : Type*} [TopologicalSpace M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (U : Set M) (hU : IsOpen U) (hinj : InjOn z U) (A : Set M) (hA : MeasurableSet A) (hAU : A ⊆ U) :
     vol n z A = volume (z '' A) := by

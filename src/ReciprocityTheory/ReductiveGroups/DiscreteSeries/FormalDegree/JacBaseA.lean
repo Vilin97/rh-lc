@@ -97,7 +97,7 @@ theorem crd_pmat {ε : Fin n → Bool} (z : PCoord ε → ℂ) : crdLin ε (pmat
   funext ab
   show pmat z ab.1.1 ab.1.2 = z ab
   simp only [pmat]
-  rw [dif_pos ab.2]
+  rw [dite_eq_left ab.2]
 
 def shcAdLin {ε : Fin n → Bool} (y : PCoord ε → ℂ) :
     Matrix (Fin n) (Fin n) ℂ →ₗ[ℝ] Matrix (Fin n) (Fin n) ℂ where

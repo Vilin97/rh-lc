@@ -156,7 +156,7 @@ theorem unitChar_pow_eq_one : ∀ {D : D7} (e : AE D) (𝔪 : Ideal (𝓞 D.host
   have hc : ((ν x0)⁻¹ : Circle) ^ m = 1 := by rw [inv_pow, ← map_pow, hk, inv_one]
   refine ⟨m, hm, ?_⟩
   unfold unitChar
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have := congrArg (fun z : Circle => (z : ℂ)) hc
   simpa using this
 

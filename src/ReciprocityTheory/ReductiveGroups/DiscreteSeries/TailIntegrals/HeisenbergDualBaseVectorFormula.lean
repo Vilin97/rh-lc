@@ -86,11 +86,11 @@ theorem herm_symm (k r : ℕ) (u w : Fin (2 * r + k + 1) → ℂ) :
 
 theorem lift_kills_first_basis (k r' : ℕ) (w : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' w (eI k (1 + r') (a0 r')) = 0 := by
   unfold liftVec
-  rw [dif_neg (by simp only [eI, a0, Fin.val_mk]; omega)]
+  rw [dite_eq_right (by simp only [eI, a0, Fin.val_mk]; omega)]
 
 theorem lift_kills_last_basis (k r' : ℕ) (w : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' w (esI k (1 + r') (a0 r')) = 0 := by
   unfold liftVec
-  rw [dif_neg (by simp only [esI, a0, Fin.val_mk]; omega)]
+  rw [dite_eq_right (by simp only [esI, a0, Fin.val_mk]; omega)]
 
 theorem isotropic_vector_ne_zero (k r' : ℕ) : eI k (1 + r') (a0 r') ≠ esI k (1 + r') (a0 r') := by
   intro h
@@ -122,7 +122,7 @@ theorem isotropic_vector_ne_zero (k r' : ℕ) : eI k (1 + r') (a0 r') ≠ esI k 
 theorem phiV_zero (k r' : ℕ) (h : 0 < 1 + r' + 1) : phiV k (1 + r') ⟨0, h⟩ = es0 k r' := by
   show (if h' : (0 : ℕ) < 1 + r' then bvec (esI k (1 + r') ⟨0, h'⟩) else epsV k (1 + r')) =
     bvec (esI k (1 + r') (a0 r'))
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 private theorem sum_herm_bvec_mul_eq_herm {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (u v : Fin n → ℂ) :
@@ -159,7 +159,7 @@ theorem heisenberg_dual_base_vector_formula (k r' : ℕ) (x : HPar k r') :
 private theorem liftVec_apply_mk_succ (k r' : ℕ) (w : Fin (2 * r' + k + 1) → ℂ) (q : Fin (2 * r' + k + 1))
     (h : (q : ℕ) + 1 < 2 * (1 + r') + k + 1) : liftVec k 1 r' w ⟨(q : ℕ) + 1, h⟩ = w q := by
   unfold liftVec
-  rw [dif_pos (by simp only [Fin.val_mk]; omega)]
+  rw [dite_eq_left (by simp only [Fin.val_mk]; omega)]
   congr 1
   all_goals (ext; simp only [Fin.val_mk]; omega)
 
@@ -175,7 +175,7 @@ private theorem star_liftVec_dotProduct_liftVec (k r' : ℕ) (a b : Fin (2 * r' 
       exact hp ⟨⟨(p : ℕ) - 1, by omega⟩, Fin.ext (by simp only [Fin.val_mk]; omega)⟩
     simp only [Pi.star_apply]
     unfold liftVec
-    rw [dif_neg hp', dif_neg hp', star_zero, zero_mul]
+    rw [dite_eq_right hp', dite_eq_right hp', star_zero, zero_mul]
   · intro q
     simp only [Pi.star_apply]
     rw [liftVec_apply_mk_succ, liftVec_apply_mk_succ]
@@ -214,14 +214,14 @@ private theorem star_phiV_dotProduct_Hpk_mulVec_eq_aF (k r' : ℕ) (hk : 1 ≤ k
   have htl := t.isLt
   unfold phiV aF
   by_cases ht : (t : ℕ) < r'
-  · rw [dif_pos ht, dif_pos ht, star_bvec_dotProduct]
+  · rw [dite_eq_left ht, dite_eq_left ht, star_bvec_dotProduct]
     show (Hpk k r' *ᵥ x) ⟨2 * r' + k - (t : ℕ), by omega⟩ = _
     rw [Hpk_mulVec_apply_eq_ite, if_pos (by simp only [Fin.val_mk]; omega)]
     congr 1
     ext
     simp only [eI, Fin.val_mk]
     omega
-  · rw [dif_neg ht, dif_neg ht]
+  · rw [dite_eq_right ht, dite_eq_right ht]
     have e1 := Hpk_mulVec_apply_wI_zero k r' hk x
     have e2 := Hpk_mulVec_apply_wI_last k r' x
     have hc : star (((Real.sqrt 2)⁻¹ : ℂ)) = cc := by
@@ -342,9 +342,9 @@ theorem pars1 (k r' : ℕ) (hk : 1 ≤ k) (y : Fin (2 * r' + k + 1) → ℂ) :
   simp only [Equiv.ofBijective_apply, Pi.star_apply]
   unfold aF aF'
   by_cases ht : (t : ℕ) < r'
-  · rw [dif_pos ht, dif_pos ht]
+  · rw [dite_eq_left ht, dite_eq_left ht]
     rfl
-  · rw [dif_neg ht, dif_neg ht]
+  · rw [dite_eq_right ht, dite_eq_right ht]
     have h0 : ix k r' (Sum.inl t) = wI k r' 0 := rankOne_base_weight_eq_cmTheta k r' t ht _
     have h1 : ix k r' (Sum.inr (Sum.inl t)) = wI k r' (Fin.last k) := wk_eq k r' t ht _
     rw [h0, h1]
@@ -365,7 +365,7 @@ theorem pars2 (k r' : ℕ) (hk : 1 ≤ k) (y : Fin (2 * r' + k + 1) → ℂ) :
   simp only [Equiv.ofBijective_apply, Pi.star_apply]
   unfold aF aF'
   by_cases ht : (t : ℕ) < r'
-  · rw [dif_pos ht, dif_pos ht]
+  · rw [dite_eq_left ht, dite_eq_left ht]
     have h1 : (Hpk k r' *ᵥ y) (ix k r' (Sum.inl t)) = y (ix k r' (Sum.inr (Sum.inl t))) :=
       hmv_out k r' y (t : ℕ) _ (Or.inl ht)
     have h2 : (Hpk k r' *ᵥ y) (ix k r' (Sum.inr (Sum.inl t))) = y (ix k r' (Sum.inl t)) := by
@@ -377,7 +377,7 @@ theorem pars2 (k r' : ℕ) (hk : 1 ≤ k) (y : Fin (2 * r' + k + 1) → ℂ) :
       omega
     rw [h1, h2]
     rfl
-  · rw [dif_neg ht, dif_neg ht]
+  · rw [dite_eq_right ht, dite_eq_right ht]
     have h0 : ix k r' (Sum.inl t) = wI k r' 0 := rankOne_base_weight_eq_cmTheta k r' t ht _
     have h1 : ix k r' (Sum.inr (Sum.inl t)) = wI k r' (Fin.last k) := wk_eq k r' t ht _
     rw [h0, h1, Hpk_mulVec_apply_wI_zero k r' hk y, Hpk_mulVec_apply_wI_last k r' y]

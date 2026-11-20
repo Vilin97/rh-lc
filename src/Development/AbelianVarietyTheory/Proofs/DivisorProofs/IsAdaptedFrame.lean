@@ -28,7 +28,7 @@ theorem indOp_apply {q : T →ₗ[ℂ] P} {L : Module.End ℂ T} (hq : Function.
     indOp q L (q t) = q (L t) := by
   have e : (q.quotKerEquivOfSurjective hq).symm (q t) = Submodule.Quotient.mk t :=
     (LinearEquiv.symm_apply_eq _).2 (by simp)
-  rw [indOp, dif_pos ⟨hq, hL⟩, LinearMap.comp_apply, LinearMap.comp_apply]
+  rw [indOp, dite_eq_left ⟨hq, hL⟩, LinearMap.comp_apply, LinearMap.comp_apply]
   simp only [LinearEquiv.coe_coe]
   rw [e]
   rfl
@@ -106,7 +106,7 @@ def fockOp (q : Tens F p₁ q₁ r s →ₗ[ℂ] P) (w : InfinitePlace F) : Mat 
 theorem fockOp_eq {q : Tens F p₁ q₁ r s →ₗ[ℂ] P} {w : InfinitePlace F} (hq : Function.Surjective q)
     (hK : ∀ Y, Keeps q (atPl w (fockAct2 p₁ q₁ r s Y))) (Y : Mat r s) :
     fockOp q w Y = indOp q (atPl w (fockAct2 p₁ q₁ r s Y)) := by
-  rw [fockOp, dif_pos ⟨hq, hK⟩]
+  rw [fockOp, dite_eq_left ⟨hq, hK⟩]
   rfl
 
 theorem fockOp_apply {q : Tens F p₁ q₁ r s →ₗ[ℂ] P} {w : InfinitePlace F} (hq : Function.Surjective q)

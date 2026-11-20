@@ -45,19 +45,19 @@ theorem glue_step {r : ℕ} (j : ℕ) (hj : j + 1 ≤ r) (c : Fin r → ℂ) (c'
   funext l
   unfold P5.glue PTie.shiftCf consC
   by_cases h1 : j + 1 ≤ l.val
-  · rw [dif_pos (show j ≤ l.val by omega), dif_pos h1]
+  · rw [dite_eq_left (show j ≤ l.val by omega), dite_eq_left h1]
     simp only [Fin.val_cast]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
     congr 1
   · by_cases h2 : j ≤ l.val
-    · rw [dif_pos h2, dif_neg h1]
+    · rw [dite_eq_left h2, dite_eq_right h1]
       simp only [Fin.val_cast]
-      rw [dif_pos (by omega)]
+      rw [dite_eq_left (by omega)]
       congr 1
       ext
       simp only
       omega
-    · rw [dif_neg h2, dif_neg h1]
+    · rw [dite_eq_right h2, dite_eq_right h1]
 
 theorem castM_iota0 {k r : ℕ} (h : 0 + (r - 0) = r) (g : B.Mat k (r - 0)) :
     D.castM h (ιLev k 0 (r - 0) g) = g := by

@@ -270,12 +270,12 @@ def formsInMem (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i +
 
 theorem formsInMem_top (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) (h : i + 1 = D.R.m) :
     formsInMem F dt i hi = formsInOne (F.val (i + 1) hi (Or.inr h)) (dt.top (i + 1) hi h) := by
-  rw [formsInMem, dif_pos h]
+  rw [formsInMem, dite_eq_left h]
 
 theorem formsInMem_mid (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) (h : i + 1 + 1 ≤ D.R.m) :
     formsInMem F dt i hi = formsInMid F (i + 1) (one_le i) h (dt.mid (i + 1) (one_le i) h) := by
   have hne : ¬ i + 1 = D.R.m := by omega
-  rw [formsInMem, dif_neg hne]
+  rw [formsInMem, dite_eq_right hne]
 
 theorem formsInMem_fin [∀ i, Finite (Ch i)] (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) :
     Finite (formsInMem F dt i hi).Ch := by

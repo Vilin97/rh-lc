@@ -180,7 +180,7 @@ def FlagCpt.detRat (J : ((FlagMod.detOm Z).pull (C.π ≫ genι Z)).ι) : C.Y.X.
 theorem FlagCpt.detRat_val {J : ((FlagMod.detOm Z).pull (C.π ≫ genι Z)).ι}
     (h : genericPoint C.Y.X ∈ ((FlagMod.detOm Z).pull (C.π ≫ genι Z)).U J) :
     (C.detRat J : C.Y.X.functionField) = (frameDet (J PUnit.unit) (top_le_gen_of_mem_pull h) C.f0)⁻¹ := by
-  rw [FlagCpt.detRat, dif_pos h, Units.val_inv_eq_inv_val, IsUnit.unit_spec]
+  rw [FlagCpt.detRat, dite_eq_left h, Units.val_inv_eq_inv_val, IsUnit.unit_spec]
 
 end Flag
 

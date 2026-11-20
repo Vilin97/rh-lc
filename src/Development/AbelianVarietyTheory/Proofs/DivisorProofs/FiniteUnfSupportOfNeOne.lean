@@ -52,7 +52,7 @@ theorem mul_stepPt_apply {b : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k} (hb : b.Bloc
       · have : ¬ (c / 2 + 1 < j.val + 1 ∨ (Even c ∧ j.val = c / 2)) := by
           split_ifs at h with he <;> rcases r with r | r <;> simp [lev, midLev, he] at h hl ⊢ <;> omega
         have h0 : stepPt x₀ e (Sum.inl s) (Sum.inr j.castSucc) = 0 := by
-          rw [stepPt, Matrix.add_apply, of_apply, dif_neg (by exact this)]; simp [basePt]
+          rw [stepPt, Matrix.add_apply, of_apply, dite_eq_right (by exact this)]; simp [basePt]
         rw [h0, mul_zero]
       · have h1 : ¬ l.val < j.val := by
           split_ifs at h with he <;> rcases r with r | r <;> simp [lev, midLev] at h hl ⊢ <;> omega

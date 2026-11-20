@@ -26,7 +26,7 @@ private theorem topL_smul_identity {R : Type} [CommRing R] {a b : ℕ} (hab : a 
       ε • (1 : Matrix (Fin a) (Fin a) R) := by
   ext i j
   unfold topL
-  rw [dif_pos ⟨lt_of_lt_of_le i.2 hab, j.2⟩]
+  rw [dite_eq_left ⟨lt_of_lt_of_le i.2 hab, j.2⟩]
   simp [Matrix.one_apply, Fin.ext_iff]
 
 theorem UpperTheory.exists_stdFst_ne_zero_of_rank_le :
@@ -75,5 +75,5 @@ theorem UpperTheory.exists_stdFst_ne_zero_of_rank_le :
   unfold GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst
   rw [hf, if_pos ⟨h1, h2, h3⟩]
   unfold GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar
-  rw [dif_pos h4]
+  rw [dite_eq_left h4]
   exact Circle.coe_ne_zero _

@@ -254,7 +254,7 @@ theorem exists_diag_riem {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ : Formalis
     dsimp only at h ⊢
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega), Formalism.L2.PjFree.perFr, dif_pos a, dif_pos hn]
-    · rw [if_pos (by omega), Formalism.L2.PjFree.perFr, dif_neg a,
+    · rw [if_pos (by omega), Formalism.L2.PjFree.perFr, dite_eq_right a,
         dif_pos (show conjEmb (Formalism.L2.PjFree.relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
       rfl
   set D := diagXi (U.X k) (W.e.trans f) with hDdef

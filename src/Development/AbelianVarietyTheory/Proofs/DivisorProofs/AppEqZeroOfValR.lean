@@ -123,7 +123,7 @@ theorem app_eq_zero_of_valR {Y Z : Scheme.{0}} (m : Y ⟶ Z) (O : Z.Opens) (f : 
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨⟨⟨Ω, hΩ⟩, hle⟩, hy'⟩
   · have h0 : ⊤ ≤ (chart Ω.1 ≫ m) ⁻¹ᵁ O := fun p hp => Ω.2 (top_le_chart Ω.1 hp)
     have h1 := h Ω.1 Ω.2
-    rw [valR, dif_pos h0, ← Scheme.Hom.appLE_comp_appLE (chart Ω.1) m O Ω.1.1 ⊤ Ω.2 (top_le_chart _), chart_appLE] at h1
+    rw [valR, dite_eq_left h0, ← Scheme.Hom.appLE_comp_appLE (chart Ω.1) m O Ω.1.1 ⊤ Ω.2 (top_le_chart _), chart_appLE] at h1
     have h2 : (m.appLE O Ω.1.1 Ω.2).hom f = 0 := by
       refine Eq.trans ?_ h1
       exact (congrArg (fun ψ => ψ.hom ((m.appLE O Ω.1.1 Ω.2).hom f)) (Scheme.ΓSpecIso Γ(Y, Ω.1.1)).inv_hom_id).symm
@@ -241,7 +241,7 @@ theorem exists_isConstK (hv : ∀ a, IsTanAtG t (chart U) (v a)) (hKS : IsKS t V
     refine ext_affineOpen U _ _ (hT.trans hΦU) hb ?_
     ext r
     have h3 := hΦ3 _ ((t.G.hom.app U.1).hom r)
-    rw [hdD, pbT, dif_pos hΦU, pbT, dif_pos (by exact le_rfl), pbT, dif_pos le_rfl, ← Scheme.Hom.app_eq_appLE ρ,
+    rw [hdD, pbT, dite_eq_left hΦU, pbT, dite_eq_left (by exact le_rfl), pbT, dite_eq_left le_rfl, ← Scheme.Hom.app_eq_appLE ρ,
       app_const _ A.hom π ρ P.w] at h3
     have h4 := congrArg (resG C hT) h3
     rw [map_add (f := _), map_mul, res_const, res_const] at h4

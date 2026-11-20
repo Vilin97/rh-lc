@@ -63,11 +63,11 @@ theorem levPos_inj (k r' : ℕ) : Function.Injective (levPos k 1 r') := by
 
 theorem lift_levPos (k r' : ℕ) (v : Fin (2 * r' + k + 1) → ℂ) (i : Fin (2 * r' + k + 1)) :
     liftVec k 1 r' v (levPos k 1 r' i) = v i := by
-  unfold liftVec; rw [dif_pos (by simp only [levPos]; omega)]; congr 1
+  unfold liftVec; rw [dite_eq_left (by simp only [levPos]; omega)]; congr 1
 
 theorem lift_zero (k r' : ℕ) (v : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (1 + r') + k + 1))
     (hp : p ∉ Set.range (levPos k 1 r')) : liftVec k 1 r' v p = 0 := by
-  simp only [liftVec]; rw [dif_neg]; rintro ⟨h1, h2⟩
+  simp only [liftVec]; rw [dite_eq_right]; rintro ⟨h1, h2⟩
   exact hp ⟨⟨p.val - 1, by omega⟩, Fin.ext (by simp [levPos]; omega)⟩
 
 theorem lift_dot (k r' : ℕ) (u v : Fin (2 * r' + k + 1) → ℂ) :

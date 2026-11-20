@@ -898,7 +898,7 @@ theorem mean_rows_eq_mean_genus : ∀ (D : D7) (u : D.what₂.Word), (Tu D u).Pr
     (fun _ => 1) (fun _ _ _ => rfl)
   have hm : ENNReal.ofReal (Formalism.HermitianLatticesTheory.mass (D.sp.X 0).hT (L0X D Λ₀ (lf D F0))) =
       ∑ L' ∈ hex.choose, ENNReal.ofReal ((Nat.card (Formalism.ThetaLiftIndependence.autL (D.sp.X 0).hT L') : ℝ))⁻¹ := by
-    rw [Formalism.HermitianLatticesTheory.mass, dif_pos hex, ENNReal.ofReal_sum_of_nonneg]
+    rw [Formalism.HermitianLatticesTheory.mass, dite_eq_left hex, ENNReal.ofReal_sum_of_nonneg]
     intro L' _
     positivity
   beta_reduce at h1 h2

@@ -72,7 +72,7 @@ variable {D : D7} {q : ℕ} [Fact q.Prime]
 
 theorem lamC_one (lam : Qbar →+* ℂ_[q]) : lamC lam 1 = 1 := by
   unfold lamC
-  rw [dif_pos (one_mem _)]
+  rw [dite_eq_left (one_mem _)]
   exact map_one lam
 
 theorem isIdem_zero_one (lam : Qbar →+* ℂ_[q]) : IsIdem D lam 0 (1 : 𝓞 D.host.K) := by

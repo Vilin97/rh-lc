@@ -35,7 +35,7 @@ private lemma db_eq_wdb_comp_chart_symm {n : ℕ} {M : Type*} [TopologicalSpace 
   have hspec := Classical.choose_spec hex
   have hE : (g ∘ (Classical.choose hex).symm) =ᶠ[nhds (z p)] (g ∘ e0.symm) :=
     (chart_symm_eventuallyEq_of_isChart z _ e0 hspec.1 he0 p hspec.2 hp).fun_comp g
-  rw [db, dif_pos hex]
+  rw [db, dite_eq_left hex]
   unfold wdb
   rw [hE.fderiv_eq]
 
@@ -46,7 +46,7 @@ private lemma d_apply_eq_wd_of_mem_source {n : ℕ} {M : Type*} [TopologicalSpac
   have hspec := Classical.choose_spec hex
   have hE : (g ∘ (Classical.choose hex).symm) =ᶠ[nhds (z p)] (g ∘ e0.symm) :=
     (chart_symm_eventuallyEq_of_isChart z _ e0 hspec.1 he0 p hspec.2 hp).fun_comp g
-  rw [d, dif_pos hex]
+  rw [d, dite_eq_left hex]
   unfold wd
   rw [hE.fderiv_eq]
 

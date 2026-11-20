@@ -200,7 +200,7 @@ theorem exists_locDer : ∀ (Y Y' : Scheme.{0}) (q : Y ⟶ Sp ℂ) (π : Y' ⟶ 
     show TrivSqZeroExt.snd ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom
       (((yt ≫ Φ).appLE W ⊤ h).hom f)) = valAt' y (m ⁻¹ᵁ W) (AB W f).2
     unfold valAt' valAt
-    rw [dif_pos h2, e1, hAB W f, map_add (f := _), map_mul, e2, e2, e3, map_add (f := _), map_mul, e4]
+    rw [dite_eq_left h2, e1, hAB W f, map_add (f := _), map_mul, e2, e2, e3, map_add (f := _), map_mul, e4]
     clear e1 e2 e3 e4 uniq hdec Aeq hAB hO hjO hpb hjρ hjπ hΦ hm
     have s1 := spec_pull (algebraMap ℂ (DualNumber ℂ)) (fun _ _ => trivial) ((y.appLE _ ⊤ h2).hom (AB W f).1)
     have s2 := spec_pull (algebraMap ℂ (DualNumber ℂ)) (fun _ _ => trivial) ((y.appLE _ ⊤ h2).hom (AB W f).2)

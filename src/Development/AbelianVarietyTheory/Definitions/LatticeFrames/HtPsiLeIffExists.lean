@@ -24,7 +24,7 @@ open Classical in
 def Psi : (D.div.Nu u).V →ₗ[D.what₂.LL] (Pt D u).V := if h : PsiRat D u then h.choose else 0
 
 theorem isPsi_Psi (h : PsiRat D u) : IsPsi D u (Psi D u) := by
-  unfold Psi; rw [dif_pos h]; exact h.choose_spec
+  unfold Psi; rw [dite_eq_left h]; exact h.choose_spec
 
 theorem IsPsi.unique {Ψ Ψ'} (h : IsPsi D u Ψ) (h' : IsPsi D u Ψ') : Ψ = Ψ' :=
   LinearMap.ext fun x => (D.fm u).ptEmb_inj ((h x).trans (h' x).symm)

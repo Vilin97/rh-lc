@@ -62,7 +62,7 @@ theorem finiteTest_eq_zero {v : HeightOneSpectrum (𝓞 K)} {x : v.adicCompletio
 theorem finiteTest_eq_zero_of_dvd {v : HeightOneSpectrum (𝓞 K)} (hv : v.asIdeal ∣ χ.conductor)
     {x : v.adicCompletion K} (hx : Valued.v x ≠ 1) : χ.finiteTest v x = 0 := by
   unfold finiteTest
-  rw [if_pos hv, dif_neg hx]
+  rw [if_pos hv, dite_eq_right hx]
 
 theorem finiteTest_eq_one {v : HeightOneSpectrum (𝓞 K)} (hv : ¬ v.asIdeal ∣ χ.conductor)
     {x : v.adicCompletion K} (hx : Valued.v x ≤ 1) : χ.finiteTest v x = 1 := by
@@ -73,7 +73,7 @@ theorem finiteTest_of_dvd {v : HeightOneSpectrum (𝓞 K)} (hv : v.asIdeal ∣ �
     (u : (v.adicCompletion K)ˣ) (hu : Valued.v (u : v.adicCompletion K) = 1) :
     χ.finiteTest v u = ((χ.localComponent v u : ℂ))⁻¹ := by
   unfold finiteTest
-  rw [if_pos hv, dif_pos hu, Circle.coe_inv]
+  rw [if_pos hv, dite_eq_left hu, Circle.coe_inv]
   congr 3
   exact Units.ext rfl
 

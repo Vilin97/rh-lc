@@ -175,7 +175,7 @@ theorem topNeighbour_mem (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q 
   have hn : (g.heckeSet Q.asIdeal n).Nonempty :=
     Set.nonempty_coe_sort.mp (Nat.card_eq_one_iff_unique.mp hc).2
   unfold decoratedNeighbourAtPrime
-  rw [dif_pos hn]
+  rw [dite_eq_left hn]
   exact hn.some_mem
 
 theorem topNeighbour_unique (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) (hST : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q)

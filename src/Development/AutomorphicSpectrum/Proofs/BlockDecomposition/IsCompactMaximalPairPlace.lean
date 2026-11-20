@@ -199,7 +199,7 @@ theorem sel_ok {U : ∀ w : Pl E, Subgroup (GLw a w × GLw b w)} {L : LM κ a b}
     · rw [if_pos hw, if_pos hw]
       have : (sel U L Q).ent P x y w = if x ⟨w, hw.1⟩ = y ⟨w, hw.1⟩ then idem (U w) else 0 := by
         unfold LM.ent
-        rw [dif_pos hw.1]
+        rw [dite_eq_left hw.1]
         simp [sel, hw.2]
       rw [this]
       split_ifs
@@ -400,7 +400,7 @@ theorem sel_self (v : Pl E) : (sel U₁ L {v}).m v = L.m v := by
 theorem ent_at (Q : Finset (Pl E)) (v : P) (X Y : ∀ w : P, κ w) :
     (sel U₁ L Q).ent P X Y v.1 = (sel U₁ L Q).m v.1 (X v) (Y v) := by
   unfold LM.ent
-  rw [dif_pos v.2]
+  rw [dite_eq_left v.2]
 
 theorem test_alt (hU₁ : IsLev U₁) (hok : L.Ok P) (hs : ∀ w, L.s w = idem (U₁ w)) (X : ∀ w : P, κ w) : IsTestP L.s := by
   have h := (sel_ok hU₁ hok ∅).1 X X

@@ -107,16 +107,16 @@ theorem LeafChern_of : LeafChern := by
   obtain ⟨a, ha⟩ := hB.2 (-cpow q (c1 q (PB.line V)) N)
   have hc0 : P.ι h 0 (mkc a 0) = 1 := by
     dsimp only [mkc]
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
     exact P.ι_one h
   have hac : ac (mkc a) = a := by
     funext j
     dsimp only [ac, mkc]
-    rw [dif_neg (by omega), dif_pos (by omega), ChernPf.cast_cast]
+    rw [dite_eq_right (by omega), dite_eq_left (by omega), ChernPf.cast_cast]
     exact cast_idx a _ _ (Fin.ext (by simp; omega)) _ _
   have hC : IsChern P h V (mkc a) := (char _ hc0).2 ⟨fun j hj => by
     dsimp only [mkc]
-    rw [dif_neg (by omega), dif_neg (by omega)], by rw [hac]; exact ha⟩
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)], by rw [hac]; exact ha⟩
   exact ⟨mkc a, hC, fun c' hc' => uniq _ _ hc' hC⟩
 
 end LateralTheory.E.D2

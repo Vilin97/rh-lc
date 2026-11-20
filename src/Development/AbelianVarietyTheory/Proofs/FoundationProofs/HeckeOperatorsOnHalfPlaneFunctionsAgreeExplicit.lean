@@ -9,7 +9,7 @@ namespace GlobalTheory.SlashUpperTriangularMatrices
 
 theorem toGL_val (g : Matrix (Fin 2) (Fin 2) ℤ) (h : g.det ≠ 0) :
     ((toGL g : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ) = (Int.castRingHom ℝ).mapMatrix g := by
-  unfold toGL; rw [dif_neg h]; rfl
+  unfold toGL; rw [dite_eq_right h]; rfl
 
 theorem slash_upper (k : ℤ) (a b d : ℤ) (ha : 0 < a) (hd : 0 < d) (f : ℍ → ℂ) (τ : ℍ) :
     (f ∣[k] toGL !![a, b; 0, d]) τ =

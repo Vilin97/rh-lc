@@ -20,7 +20,7 @@ theorem wj_eq_sz (D : D7) (j : ℕ) (ρ : D.what₂.Tau) :
 theorem sz_eq (D : D7) (j : ℕ) (ρ : D.what₂.Tau) (h : j - 1 < D.R.m) :
     Formalism.MainNotions.AdmissibleParameterJ.sz D j ρ = (D.hc ρ).e ⟨j - 1, h⟩ := by
   unfold Formalism.MainNotions.AdmissibleParameterJ.sz
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem low_abs (D : D7) (j : ℕ) (h : j - 1 < D.R.m) (up : Bool) (ρ : D.what₂.Tau) (z : ℤ)
     (hz : (z : ℚ) ∈ Formalism.MainNotions.AdmissibleParameterJ.lowT D up j ρ) :

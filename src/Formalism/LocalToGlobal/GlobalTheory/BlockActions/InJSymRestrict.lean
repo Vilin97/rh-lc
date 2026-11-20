@@ -101,8 +101,8 @@ theorem redM_entry {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (
     (a b : Fin m) (a' b' : Fin m') (h : X a b = Y a' b') : redM F v X a b = redM F v Y a' b' := by
   simp only [redM, h]
   by_cases hY : Y a' b' ∈ v.adicCompletionIntegers F
-  · rw [dif_pos (by rw [h]; exact hY), dif_pos hY]
-  · rw [dif_neg (by rw [h]; exact hY), dif_neg hY]
+  · rw [dite_eq_left (by rw [h]; exact hY), dite_eq_left hY]
+  · rw [dite_eq_right (by rw [h]; exact hY), dite_eq_right hY]
 
 set_option maxHeartbeats 4000000 in
 

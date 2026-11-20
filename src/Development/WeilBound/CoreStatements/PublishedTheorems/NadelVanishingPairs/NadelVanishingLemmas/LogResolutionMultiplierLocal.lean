@@ -104,12 +104,12 @@ theorem discrep_ratPull_fnPull {k : Type} [Field k] {X Y : Scheme.{0}} [IsIntegr
     by_cases h : ∃ a, E.IsFormOrd η a
     · have h' : ∃ a, E'.IsFormOrd (EtaleKlt.ratPull p s n η) a :=
         ⟨h.choose, (isFormOrd_iff_isFormOrd_ratPull s hb hE η _).1 h.choose_spec⟩
-      rw [dif_pos h', dif_pos h]
+      rw [dite_eq_left h', dite_eq_left h]
       exact DivOver.IsFormOrd.unique hη' h'.choose_spec
         ((isFormOrd_iff_isFormOrd_ratPull s hb hE η _).1 h.choose_spec)
     · have h' : ¬ ∃ a, E'.IsFormOrd (EtaleKlt.ratPull p s n η) a :=
         fun ⟨a, ha⟩ => h ⟨a, (isFormOrd_iff_isFormOrd_ratPull s hb hE η a).2 ha⟩
-      rw [dif_neg h', dif_neg h]
+      rw [dite_eq_right h', dite_eq_right h]
   unfold discrep
   rw [key, DivOver.Over.ord_fnPull_of_bijective k X Y p s hb E' E hE g]
 

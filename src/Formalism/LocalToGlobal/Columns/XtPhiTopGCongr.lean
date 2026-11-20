@@ -82,7 +82,7 @@ theorem xt_last_lt (R : Ranks) (j : ℕ) : R.N j - 1 < R.N j := by have := R.N_p
 
 theorem xt_atNL (j : ℕ) (a : Sp X.E (R.N j)) : atNL X.E (R.N j) (R.N j - 1) a = a ⟨R.N j - 1, xt_last_lt R j⟩ := by
   unfold atNL
-  rw [dif_pos (xt_last_lt R j)]
+  rw [dite_eq_left (xt_last_lt R j)]
   rfl
 
 theorem xt_split {P : HeightOneSpectrum (𝓞 X.E)} (j : ℕ) (a : Sp X.E (R.N j)) :

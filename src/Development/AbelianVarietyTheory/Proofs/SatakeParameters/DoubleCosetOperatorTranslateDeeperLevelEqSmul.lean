@@ -82,14 +82,14 @@ theorem finsum_translate_eq {G : Type} [Group G] (J J' : Subgroup G) (h : G)
         ∑ c ∈ S, F (φ c) := by
       refine Finset.sum_congr rfl fun c hc => ?_
       have hc' := (hS c).1 hc
-      rw [dif_pos hc']
+      rw [dite_eq_left hc']
       conv_rhs => rw [← hc'.choose_spec.2, hφ, hF]
       rw [mul_assoc]
     have e2 : (∑ d ∈ S.image φ, if hd : ∃ x ∈ {x | ∃ u ∈ J, ∃ u' ∈ J, x = u * h * u'}, (x : G ⧸ J) = d
         then f (g * hd.choose) else 0) = ∑ d ∈ S.image φ, F d := by
       refine Finset.sum_congr rfl fun d hd => ?_
       have hd' := (hT d).1 hd
-      rw [dif_pos hd']
+      rw [dite_eq_left hd']
       conv_rhs => rw [← hd'.choose_spec.2, hF]
     rw [e1, e2, Finset.sum_comp F φ, Finset.smul_sum]
     refine Finset.sum_congr rfl fun d hd => ?_

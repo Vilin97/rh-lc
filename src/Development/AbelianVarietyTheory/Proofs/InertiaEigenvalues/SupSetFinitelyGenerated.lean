@@ -264,7 +264,7 @@ theorem exists_value_ne_zero {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : R
   have hev : evR Xo c f y = f q y := by
     have hT := hL.test q.R y
     unfold evR evalAt
-    rw [dif_pos hT]
+    rw [dite_eq_left hT]
     exact (hf.1 _ _ _ _ _ hT.choose_spec.choose_spec.choose_spec).symm
   have hM : ∃ M : Ideal q.R, M.IsMaximal ∧ f q y ∉ M := by
     by_contra hcon

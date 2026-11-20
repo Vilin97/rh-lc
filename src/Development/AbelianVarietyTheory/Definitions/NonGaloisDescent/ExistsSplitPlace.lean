@@ -137,7 +137,7 @@ theorem exists_isRc (hL : GlobalTheory.Published.LocalLanglandsGL) {D : D7} (T :
     else D.naut.lpZero _, fun k v n σ π h => ?_⟩
   have h' : ∃ σ, Nonempty (π ≅ pull I k v σ) := ⟨σ, h⟩
   beta_reduce
-  rw [dif_pos h', Equiv.apply_symm_apply, cls_eq_of_iso I k v _ σ ⟨h'.choose_spec.some.symm ≪≫ h.some⟩]
+  rw [dite_eq_left h', Equiv.apply_symm_apply, cls_eq_of_iso I k v _ σ ⟨h'.choose_spec.some.symm ≪≫ h.some⟩]
 
 theorem isRc_dim {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {T : GlobalTheory.RowTie.WDTie D.nd D.naut} {I : Ident D} {rc}
     (h : IsRc hL T I rc) (k v n σ) : D.naut.lpDim (rc k v n (pull I k v σ)) = n := by

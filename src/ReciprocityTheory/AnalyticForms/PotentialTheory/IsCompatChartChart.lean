@@ -102,7 +102,7 @@ theorem pl_chart (A : FinHolAtlas (e + 1) X) (L : LocPot X) (s : X → X → ℂ
   have hc : mInt A' Φv (fun p => ρ p * ℓ p) =
       ∫ y in ψ.target, ρ (ψ.symm y) * ℓ (ψ.symm y) * locDens A' Φv j0 y := by
     unfold mInt
-    rw [dif_pos hne, mIntLocalize A' hne.some Φv hΦv' j0 (fun p => ρ p * ℓ p)
+    rw [dite_eq_left hne, mIntLocalize A' hne.some Φv hΦv' j0 (fun p => ρ p * ℓ p)
       (by rw [hj0]; exact tsupport_mul_subset_left.trans hρsupp) hmiρ, hj0]
 
   have hG1 : IntegrableOn (fun y => ρ (ψ.symm y) * ℓ (ψ.symm y) * locDens A' Φv j0 y) ψ.target := by
@@ -214,7 +214,7 @@ theorem pl_chart (A : FinHolAtlas (e + 1) X) (L : LocPot X) (s : X → X → ℂ
     · exact hΦ k
   have hf1 : ∫ y in ψ.target, w (ψ.symm y) * locDens A' Φv j0 y = mInt A' Φv w := by
     unfold mInt
-    rw [dif_pos hne, mIntLocalize A' hne.some Φv hΦv' j0 w (by rw [hj0]; exact hwsupp) hmiw, hj0]
+    rw [dite_eq_left hne, mIntLocalize A' hne.some Φv hΦv' j0 w (by rw [hj0]; exact hwsupp) hmiw, hj0]
   have hf2 : mInt A' Φv w = mInt A' (Fin.cons (LocPot.ofFun w) Φ) v :=
     (localSymm A' j0 v w (smoothOn_of_compatible hAA' isOpen_univ hv)
       (smoothOn_of_compatible hAA' isOpen_univ hws) (by rw [hj0]; exact hvs) Φ

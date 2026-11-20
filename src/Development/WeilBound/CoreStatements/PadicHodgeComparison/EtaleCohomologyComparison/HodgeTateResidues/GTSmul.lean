@@ -87,7 +87,7 @@ def hP (M : Model l K) (a n : ℕ) : M.V n →+ (Module.Dual K (Hdg M.q a n) →
 
 theorem hP_tmV {M : Model l K} (hM : M.Sm) (a n : ℕ) (z : ℚ_[l]) (u : M.T n) (φ : Module.Dual K (Hdg M.q a n)) :
     hP h1 h2 M a n (tmV M n z u) φ = qC l z * gT h1 (@γ) hM a u φ := by
-  rw [hP, dif_pos hM]
+  rw [hP, dite_eq_left hM]
   unfold hV tmV
   erw [TensorProduct.liftAddHom_tmul]
   rfl
@@ -98,7 +98,7 @@ theorem hP_toV {M : Model l K} (hM : M.Sm) (a : ℕ) {n r : ℕ} {u : M.T n} {x 
 
 theorem hP_not {M : Model l K} (hM : ¬ M.Sm) (a n : ℕ) (v : M.V n) (φ : Module.Dual K (Hdg M.q a n)) :
     hP h1 h2 M a n v φ = 0 := by
-  rw [hP, dif_neg hM]; rfl
+  rw [hP, dite_eq_right hM]; rfl
 
 include h1 h2 in
 theorem pre_of (hF : KFin) (hC : DlogClassExistsUnique) : Nonempty (HTPre l K) := ⟨{

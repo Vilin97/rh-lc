@@ -230,7 +230,7 @@ theorem isDegOn_inr (Fl : 𝔐.Flag) {a : CMType H × Fin (D.p + D.q) → K → 
   have hi : rootIdx D (τ, Fin.natAdd D.p i) = ⟨.inr τ, i.rev⟩ := by
     have h2 := i.2
     simp only [rootIdx, Fin.val_natAdd]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
     congr 1
     apply Fin.ext
     simp [Fin.val_rev]

@@ -37,7 +37,7 @@ theorem twCFin_mem {i : ℕ} {st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i
     (hf : (twCSet Ch sel mu cst st P).Finite) {D : Quotient (twSetoid (Pr := Pr) (R := R) cst.sharp (i + 1) P.1)}
     (hD : D ∈ twCSet Ch sel mu cst st P) : D ∈ twCFin Ch sel mu cst st P := by
   unfold twCFin
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   exact (Set.Finite.mem_toFinset hf).2 hD
 
 def TwNormAt {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) : Prop :=
@@ -54,13 +54,13 @@ theorem twRep_spec {i : ℕ} {st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i
 theorem twNext_h_g {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) (b : (twNext Ch sel mu cst st).β)
     (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs) : (twNext Ch sel mu cst st).h b P = 1 := by
   dsimp only [twNext]
-  rw [dif_neg (fun h => (Finset.mem_sdiff.1 h).2 hP)]
+  rw [dite_eq_right (fun h => (Finset.mem_sdiff.1 h).2 hP)]
 
 theorem twNext_h_Q {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) (b : (twNext Ch sel mu cst st).β)
     (P : twQOff (Pr := Pr) sel mu) :
     (twNext Ch sel mu cst st).h b (twRow P) = twRep Ch sel mu cst st P (b.1 P).1 := by
   dsimp only [twNext]
-  rw [dif_pos (show (twRow P).1 ∈ twQOff (Pr := Pr) sel mu from P.2)]
+  rw [dite_eq_left (show (twRow P).1 ∈ twQOff (Pr := Pr) sel mu from P.2)]
   rfl
 
 theorem twNext_spec {i : ℕ} {st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i} (hN : TwNormAt (Ch := Ch) (cst := cst) st)

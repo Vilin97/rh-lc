@@ -30,7 +30,7 @@ def kcurve (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) : ℝ → KG �
 lemma kcurve_eq (ε : Fin n → Bool) {X : Matrix (Fin n) (Fin n) ℂ} (hX : inK ε X) :
     kcurve ε X = onepCurve ε hX := by
   unfold kcurve
-  rw [dif_pos hX]
+  rw [dite_eq_left hX]
   funext t
   apply onep_KG_ext
   rw [Classical.choose_spec (exists_curve ε hX) t, toMK_onepCurve]

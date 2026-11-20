@@ -33,7 +33,7 @@ theorem absF_eq_nnnorm (x : Rv) : GroundTheory.Heights₂.Theta.IndefiniteRowSid
   · simp [GroundTheory.Heights₂.Theta.IndefiniteRowSideFullHecke.WmSys.absF, hx]
   · have hu : IsUnit x := isUnit_iff_ne_zero.2 hx
     have h := GlobalTheory.GaugeProdFormula.modu_finite F v x hx
-    rw [GlobalTheory.GaugeEx.modu, dif_pos hu] at h
+    rw [GlobalTheory.GaugeEx.modu, dite_eq_left hu] at h
     simp only [GroundTheory.Heights₂.Theta.IndefiniteRowSideFullHecke.WmSys.absF, dif_neg hx]
     apply NNReal.coe_injective
     rw [coe_nnnorm, ← h]

@@ -437,7 +437,7 @@ theorem mUof_conj {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
   have e2 := GlobalTheory.UnifConj.unifVal_conj X.F X.E X.K (mu : Chr X.F X.E X.K) _ P (conjPrime₂ P) hmu.1.1.2
     (hmu.2 _ fun hgood => hgood.2.2 (hplc ▸ hT)) hne.symm hv
   unfold mUof
-  rw [dif_pos hi, dif_pos hi, e1, e2, mul_inv]
+  rw [dite_eq_left hi, dite_eq_left hi, e1, e2, mul_inv]
 
 def EqAll : Prop :=
   ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B : Base D cc δ) (χ : TaylorLogMetric.IdE D → ℂ), TaylorLogMetric.IsCurveIdeal D cc → TaylorLogMetric.IsChi D χ → B.EqP χ

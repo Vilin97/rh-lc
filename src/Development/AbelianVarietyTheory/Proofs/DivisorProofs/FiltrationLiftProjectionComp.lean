@@ -43,13 +43,13 @@ theorem proj_liftT_app {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fintype ι] 
     (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _)) (fun z _ hz => ?_) (fun j _ => ?_)
   · intro j _ j' _ h
     simpa using h
-  · rw [hκ V f hf f' hf' c hc had z.1 (t z) (ht z), dif_neg, smul_zero]
+  · rw [hκ V f hf f' hf' c hc had z.1 (t z) (ht z), dite_eq_right, smul_zero]
     obtain ⟨⟨a, j⟩, hz'⟩ := z
     intro h
     dsimp only at h
     subst h
     exact hz ⟨j, by simp, rfl⟩
-  · rw [hκ V f hf f' hf' c hc had ⟨b, j⟩ (t ⟨⟨b, j⟩, Nat.lt_succ_self _⟩) (ht _), dif_pos rfl, ← (had b i).2 j]
+  · rw [hκ V f hf f' hf' c hc had ⟨b, j⟩ (t ⟨⟨b, j⟩, Nat.lt_succ_self _⟩) (ht _), dite_eq_left rfl, ← (had b i).2 j]
     rfl
 
 theorem liftT_comp_proj : ∀ {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fintype ι] {L : X.Modules} {E E' : ι → X.Modules}

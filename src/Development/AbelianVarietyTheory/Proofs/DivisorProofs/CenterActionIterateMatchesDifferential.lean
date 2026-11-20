@@ -35,7 +35,7 @@ def sec (ι : UJ ε →* G) (u : Matrix (Fin n) (Fin n) ℂ) : G := if h : inUJ 
 
 theorem sec_uMat (ι : UJ ε →* G) (h : UJ ε) : sec ι (uMat h) = ι h := by
   have : inUJ ε (uMat h) := h.2
-  rw [sec, dif_pos this]
+  rw [sec, dite_eq_left this]
   congr 1
   exact Subtype.ext (Units.ext rfl)
 

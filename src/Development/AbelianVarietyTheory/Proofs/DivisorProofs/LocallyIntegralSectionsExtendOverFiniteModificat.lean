@@ -28,7 +28,7 @@ private theorem secK_extend_locInt {X X' Y Z : Scheme.{0}} (L : LB X) (f : X' �
       gs p' z (LB.wchart L (K := Fin 1) (fun _ => α) j') (s.f j') := by
   have hz' : p' z ∈ LB.wchart L (K := Fin 1) (fun _ => α) j' := extLI_le_wchart L f l α e j' hz
   unfold gs
-  rw [dif_pos hz, dif_pos hz']
+  rw [dite_eq_left hz, dite_eq_left hz']
   calc _ = (p'.stalkMap z).hom (Y.presheaf.germ (l ⁻¹ᵁ LB.wchart L (K := Fin 1) (fun _ => f) j') (p' z) hz
           ((l.app (LB.wchart L (K := Fin 1) (fun _ => f) j')).hom (σ.f j'))) :=
         (Scheme.Hom.germ_stalkMap_apply p' _ z hz _).symm

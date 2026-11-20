@@ -125,7 +125,7 @@ theorem labGeoSt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
     rw [hb, Fintype.sum_sigma, Finset.sum_eq_single a]
     · refine Finset.sum_congr rfl fun i _ => ?_
       dsimp only
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       rfl
     · intro a' _ ha'
       refine Finset.sum_eq_zero fun i _ => ?_

@@ -100,7 +100,7 @@ include hfin
 
 theorem integ_eq {k : ℕ} (hk : 0 < k) {g : W → ℂ} (hg : IsInv k H g) : integ H g = avg k H g := by
   have h : ∃ k, 0 < k ∧ IsInv k H g := ⟨k, hk, hg⟩
-  rw [integ, dif_pos h]
+  rw [integ, dite_eq_left h]
   obtain ⟨hk0, hg0⟩ := h.choose_spec
   haveI := hfin _ hk0
   haveI := hfin _ hk
@@ -126,7 +126,7 @@ theorem integ_congr {g g' : W → ℂ} (h : ∀ t ∈ H, g t = g' t) : integ H g
   · have hg' : ¬ ∃ k, 0 < k ∧ IsInv k H g' := by
       rintro ⟨k, hk, hgk⟩
       exact hg ⟨k, hk, hgk.congr fun t ht => (h t ht).symm⟩
-    rw [integ, dif_neg hg, integ, dif_neg hg']
+    rw [integ, dite_eq_right hg, integ, dite_eq_right hg']
 
 omit hfin in
 theorem IsInv.add {k k' : ℕ} {g g' : W → ℂ} (hg : IsInv k H g) (hg' : IsInv k' H g') :
@@ -211,7 +211,7 @@ theorem integ_cmul' (g : W → ℂ) (c : ℂ) : integ H (fun t => c * g t) = c *
       refine hg ⟨k, hk, ?_⟩
       refine (hgk.cmul c⁻¹).congr fun t _ => ?_
       simp [hc]
-    rw [integ, dif_neg hn, integ, dif_neg hg, mul_zero]
+    rw [integ, dite_eq_right hn, integ, dite_eq_right hg, mul_zero]
 
 theorem integ_zero_of {g : W → ℂ} (h : ∀ t ∈ H, g t = 0) : integ H g = 0 := by
   have h1 : integ H g = integ H (fun t => (0 : ℂ) * (fun _ => (1 : ℂ)) t) :=

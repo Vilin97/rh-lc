@@ -83,7 +83,7 @@ theorem CurveNormalisationLength.proof (hFin : CurveNormalisationFinite.Statemen
     exact (IsLocalization.map_units (FractionRing O) (⟨f', hf⟩ : nonZeroDivisors O)).mem_nonZeroDivisors
   have hEq := hE O (curveNormalisation I q) f' (algebraMap_curveNormalisation_injective I q) hnzd
     (hQ n I q hrad hdim)
-  rw [localMult, dif_pos (isPrime_ker_eval q), length_localization_eq_length_curveLocalRing,
+  rw [localMult, dite_eq_left (isPrime_ker_eval q), length_localization_eq_length_curveLocalRing,
     ENat.natCast_toNat hfin, hEq]
   exact GroundTheory.Heights₂.Heights.Vertical.LengthDecomp.proof O (curveNormalisation I q) _ (hEq ▸ hfin)
 

@@ -34,7 +34,7 @@ theorem constVal_eq {R : Type} [CommRing R] {Z : Scheme.{0}} (π : Z ⟶ Sp R) (
 
 theorem constRing_valR {F : Type} [CommRing F] {X : Scheme.{0}} (y : Sp F ⟶ X) (V : X.Opens)
     (ht : ⊤ ≤ y ⁻¹ᵁ V) (s : Γ(X, V)) (z : Sp F) : constRing (𝟙 _) z (valR y V s) = gs y z V s := by
-  rw [← constVal_eq, constVal, valR, dif_pos ht, Iso.hom_inv_id_apply]
+  rw [← constVal_eq, constVal, valR, dite_eq_left ht, Iso.hom_inv_id_apply]
   refine (gs_res (𝟙 _) z ht trivial _).trans ((gs_pull (𝟙 _) y z V (ht trivial) s).trans ?_)
   rw [Category.id_comp]
 

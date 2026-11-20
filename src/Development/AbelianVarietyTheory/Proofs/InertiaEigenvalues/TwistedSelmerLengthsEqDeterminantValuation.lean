@@ -188,7 +188,7 @@ def intSet : Set (H1 ((Trep i s k ψ).comp (DecV N v).subtype)) :=
 
 set_option maxHeartbeats 1000000 in
 theorem bk_le : bk bkP i s k ψ v ≤ Submodule.span (X.Ok i k) (intSet bkP i s k ψ v hv) := by
-  rw [bk, dif_pos hv]
+  rw [bk, dite_eq_left hv]
   refine Submodule.span_mono ?_
   rintro x ⟨z, c, y, hc, hy, hz, rfl⟩
   let Bw := bkP.br i v hv
@@ -224,7 +224,7 @@ theorem bk_le : bk bkP i s k ψ v ≤ Submodule.span (X.Ok i k) (intSet bkP i s 
 set_option maxHeartbeats 1000000 in
 theorem le_bk (hψ : ∀ σ ∈ DecV N v, ψ σ = 1) :
     Submodule.span (X.Ok i k) (intSet bkP i s k ψ v hv) ≤ bk bkP i s k ψ v := by
-  rw [bk, dif_pos hv]
+  rw [bk, dite_eq_left hv]
   refine Submodule.span_le.2 ?_
   rintro x ⟨z, c, f, b, hc, hy, hz, rfl⟩
   obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ b
@@ -352,7 +352,7 @@ theorem length_selT {Λ : Type} [CommRing Λ] [Algebra (X.O0 i) Λ] [Module Λ (
     simp [matAct, hχ]
   · refine mem_selAll_iff _ _ h _ _ _ _ _ (fun v hv y => ?_) w
     have hv' : v ∈ placesOver D.host.E (X.l i) := hv
-    rw [le_antisymm (bk_le bkP i s k ψ v hv') (le_bk bkP i s k ψ v hv' (hψ v hv' _ (N.plOm.2 v))), bkOn, dif_pos hv']
+    rw [le_antisymm (bk_le bkP i s k ψ v hv') (le_bk bkP i s k ψ v hv' (hψ v hv' _ (N.plOm.2 v))), bkOn, dite_eq_left hv']
     refine mem_span_iff _ χ (fun c x => trH_smul _ _ _ c (χ c) (fun m => funext fun j => hχ c (m j)) x) _ _ ?_ ?_ y
     · rintro _ ⟨z, c, y, b, hc, hy, hz, rfl⟩
       exact ⟨trZ _ _ (fun g m => h (Subgroup.subtype _ g) m) z, c, y, b, hc, hy,

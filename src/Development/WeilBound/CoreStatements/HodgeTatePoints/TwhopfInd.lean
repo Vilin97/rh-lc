@@ -201,14 +201,14 @@ theorem res_ind {R T : Type} [CommRing R] [CommGroup T] (H : Subgroup T) (A : Su
       · have e : (fun h : H => f (t * H.subtype h)) = fun h => a (⟨t, ht⟩ * h) := by
           funext h
           simp only [f, Subgroup.coe_subtype]
-          rw [dif_pos (H.mul_mem ht h.2)]
+          rw [dite_eq_left (H.mul_mem ht h.2)]
           rfl
         rw [e]
         exact translate_mem R H A hA a ha ⟨t, ht⟩
       · have e : (fun h : H => f (t * H.subtype h)) = 0 := by
           funext h
           simp only [f, Subgroup.coe_subtype, Pi.zero_apply]
-          rw [dif_neg]
+          rw [dite_eq_right]
           intro hm
           exact ht (by simpa using H.mul_mem hm (H.inv_mem h.2))
         rw [e]

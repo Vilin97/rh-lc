@@ -507,7 +507,7 @@ theorem cu_rep_avoid (X : CData) (hL : (cu_mu X).IsMulLeftInvariant) (hc : cu.Co
   simp only [Set.mem_ofPred_eq, not_not] at hz
   have hex := hfd.2.1 z
   unfold AutInst.rep at hz
-  rw [dif_pos hex] at hz
+  rw [dite_eq_left hex] at hz
   exact Set.mem_biUnion hex.choose_spec.1 ⟨hz, hex.choose_spec.2⟩
 
 theorem cu_nullStep_of (X : CData) (hmul : cu.MeasMul X) (hL : (cu_mu X).IsMulLeftInvariant) (hc : cu.CountGF X)

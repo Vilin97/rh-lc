@@ -130,7 +130,7 @@ theorem realM_mt {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (W : HSp D) (h : G
   have e : θ hτ.choose = t := GlobalTheory.LettersCheck.isInfEmb_unique τ _ _ (by
     have := hθ hτ.choose
     rwa [← hτ.choose_spec] at this) ht
-  rw [realM, dif_pos hτ, ← e]
+  rw [realM, dite_eq_left hτ, ← e]
   rfl
 
 theorem finVec_congr {D : D7} (W : HSp D) (N : ℕ) (p m q : Fin W.rank → D.host.E)

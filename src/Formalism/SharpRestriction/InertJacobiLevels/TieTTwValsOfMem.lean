@@ -186,8 +186,8 @@ theorem offW_false_eq {D D' : D7} (L : SizeData₂ D) (L' : SizeData₂ D') (hR 
     by_cases h : t ∈ D.host.TT
     · rw [if_pos ⟨rfl, h⟩, if_pos ⟨rfl, hm.1 h⟩]
       exact h0
-    · have e1 : G.bL L t = 0 := by unfold G.bL; rw [dif_neg h]
-      have e2 : G.bL L' t' = 0 := by unfold G.bL; rw [dif_neg (fun h' => h (hm.2 h'))]
+    · have e1 : G.bL L t = 0 := by unfold G.bL; rw [dite_eq_right h]
+      have e2 : G.bL L' t' = 0 := by unfold G.bL; rw [dite_eq_right (fun h' => h (hm.2 h'))]
       rw [if_neg (fun h' => h h'.2), if_neg (fun h' => h (hm.2 h'.2))]
       simp only [e1, e2, Int.cast_zero] at h0
       exact h0

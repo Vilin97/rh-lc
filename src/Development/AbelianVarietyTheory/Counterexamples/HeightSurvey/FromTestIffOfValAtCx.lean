@@ -21,7 +21,7 @@ abbrev pn (σ : c.F →+* ℂ) (fσ : FrPt Xo c (CAt σ) → Ix Dw → ℝ) (e :
 
 theorem evR_of_not_ft {S : Type} [CommRing S] [Algebra c.F S] (f : Rul Xo c) (y : FrPt Xo c S) (hy : ¬ FT y) :
     evR Xo c f y = 0 := by
-  unfold evR evalAt; rw [dif_neg hy]
+  unfold evR evalAt; rw [dite_eq_right hy]
 
 theorem evR_one {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) (hy : FT y) :
     evR Xo c 1 y = 1 := evalAt_one _ _ y hy
@@ -35,7 +35,7 @@ theorem evR_map (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z 
     obtain ⟨p, ψ, y', hy'⟩ := hT1
     exact ⟨p, φ.comp ψ, y', frMap_trans (Xo := Xo) (c := c) _ _ _ ψ φ y' y₁ y₂ hy' hm⟩
   unfold evR evalAt
-  rw [dif_pos hT2, dif_pos hT1]
+  rw [dite_eq_left hT2, dite_eq_left hT1]
   exact hWD f hf K₂ _ _ _ _ _ _ y₂ hT2.choose_spec.choose_spec.choose_spec
     (frMap_trans (Xo := Xo) (c := c) _ _ _ _ φ _ y₁ y₂ hT1.choose_spec.choose_spec.choose_spec hm)
 

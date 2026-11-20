@@ -22,13 +22,13 @@ private theorem prod_two_blocks {M : Type} [CommMonoid M] {N j : ℕ} (h : j ≤
 private theorem rootIdx_low (ι : Type) {N j : ℕ} (τ : ι) (i : Fin j) (hi : (i : ℕ) < N) :
     rootIdx ι N j (τ, ⟨i, hi⟩) = ⟨(τ, true), i⟩ := by
   unfold rootIdx
-  rw [dif_pos (show ((⟨i, hi⟩ : Fin N) : ℕ) < j from i.isLt)]
+  rw [dite_eq_left (show ((⟨i, hi⟩ : Fin N) : ℕ) < j from i.isLt)]
   rfl
 
 private theorem rootIdx_high (ι : Type) {N j : ℕ} (τ : ι) (i : Fin (N - j)) (hi : j + (i : ℕ) < N) :
     rootIdx ι N j (τ, ⟨j + i, hi⟩) = ⟨(τ, false), i⟩ := by
   unfold rootIdx
-  rw [dif_neg (show ¬ ((⟨j + i, hi⟩ : Fin N) : ℕ) < j by simp)]
+  rw [dite_eq_right (show ¬ ((⟨j + i, hi⟩ : Fin N) : ℕ) < j by simp)]
   congr 1
   exact Fin.ext (by simp)
 

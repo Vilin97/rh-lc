@@ -43,7 +43,7 @@ theorem DecoSet.inertSet_finite {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (s : List 
 theorem DecoSet.mem_inertNb {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (s : List ℕ) (d e : DecoSet E n ST SG) :
     e ∈ d.inertNb P s ↔ e ∈ d.inertSet P s := by
   unfold DecoSet.inertNb
-  rw [dif_pos (DecoSet.inertSet_finite hP s d), Set.Finite.mem_toFinset]
+  rw [dite_eq_left (DecoSet.inertSet_finite hP s d), Set.Finite.mem_toFinset]
 
 theorem DecoSet.sum_inertNb_smul {M : Type} [AddCommMonoid M] (P : Ideal (𝓞 E)) (s : List ℕ)
     (g : UF E n × GLG E n SG) (d : DecoSet E n ST SG) (ψ : DecoSet E n ST SG → M) :

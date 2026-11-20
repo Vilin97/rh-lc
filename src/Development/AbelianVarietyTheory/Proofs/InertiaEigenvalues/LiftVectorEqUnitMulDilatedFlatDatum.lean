@@ -56,7 +56,7 @@ theorem redM_add (PP : Pl D.host.E) {b a : ℕ} {M N : Matrix (Fin b) (Fin a) (E
   have h2 : (M + N) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := add_mem (hM i j) (hN i j)
   rw [Matrix.add_apply]
   unfold redM
-  rw [dif_pos h2, dif_pos (hM i j), dif_pos (hN i j), ← RingHom.map_add (f := _)]
+  rw [dite_eq_left h2, dite_eq_left (hM i j), dite_eq_left (hN i j), ← RingHom.map_add (f := _)]
   rfl
 
 theorem redM_neg (PP : Pl D.host.E) {b a : ℕ} {N : Matrix (Fin b) (Fin a) (EAf D)} (hN : IsIntM N) :
@@ -65,7 +65,7 @@ theorem redM_neg (PP : Pl D.host.E) {b a : ℕ} {N : Matrix (Fin b) (Fin a) (EAf
   have h2 : (-N) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := neg_mem (hN i j)
   rw [Matrix.neg_apply]
   unfold redM
-  rw [dif_pos h2, dif_pos (hN i j), ← RingHom.map_neg]
+  rw [dite_eq_left h2, dite_eq_left (hN i j), ← RingHom.map_neg]
   rfl
 
 theorem omegaFlat_congr {a b : ℕ} (Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
@@ -75,12 +75,12 @@ theorem omegaFlat_congr {a b : ℕ} (Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : �
     forall_congr' fun PP => forall_congr' fun hPP => by rw [h PP hPP]
   unfold omegaFlat
   by_cases h1 : ∀ PP ∈ Q, IsUnit (topL r (y PP)).det
-  · rw [dif_pos h1, dif_pos (hiff.1 h1)]
+  · rw [dite_eq_left h1, dite_eq_left (hiff.1 h1)]
     refine Finset.prod_congr rfl fun PP _ => ?_
     have e : (h1 PP.1 PP.2).unit = (hiff.1 h1 PP.1 PP.2).unit :=
       Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 PP.2])
     rw [e]
-  · rw [dif_neg h1, dif_neg fun h2 => h1 (hiff.2 h2)]
+  · rw [dite_eq_right h1, dite_eq_right fun h2 => h1 (hiff.2 h2)]
 
 end GlobalTheory.LiftFlatModel
 
@@ -197,7 +197,7 @@ theorem exists_reps_pairing : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0
     GlobalTheory.T.exists_half_uniformiser_frameMatrix_prescribed_reductions D (Vc D i) (Wc D i) (R.βV i) (R.βW i) (R.Q t) eQ heQ ϖ hϖ0 (fun PP => if h : PP ∈ R.Q t then y ⟨PP, h⟩ else 0)
   have hg4 : ∀ y (PP : ↥(R.Q t)), redM PP.1 (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i)
       ((g y).map fun w => incA D (ϖ : D.host.E) * w)) = y PP := fun y PP => by
-    rw [hg3 y PP.1 PP.2, dif_pos PP.2]
+    rw [hg3 y PP.1 PP.2, dite_eq_left PP.2]
   letI : ∀ PP : Pl D.host.E, Fintype (kP PP) := fun PP => Fintype.ofFinite _
   have hmem : ∀ u ∈ Finset.univ.image g, IsHalf eQ u ∧ IsIntM (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i)
       (u.map fun w => incA D (ϖ : D.host.E) * w)) := by
@@ -285,7 +285,7 @@ theorem lift_eq_model_flat : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
     rw [if_pos ⟨hh, hi⟩]
     apply LiftFlatModel.omegaFlat_congr
     intro PP hPP
-    rw [dif_pos hPP, F2, LiftFlatModel.frMapO_neg, redM_neg _ (hRs u hu').2]
+    rw [dite_eq_left hPP, F2, LiftFlatModel.frMapO_neg, redM_neg _ (hRs u hu').2]
 
   have hA : ∀ x : WO (Vc D i) (Wc D i),
       (if IsHalf eQ (x.map fun w => incA D (ϖ : D.host.E) * w) ∧
@@ -311,7 +311,7 @@ theorem lift_eq_model_flat : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
           if_pos ⟨hmem, hhalf⟩, mul_one, hPsiNeg u huR, if_pos hx]
         apply LiftFlatModel.omegaFlat_congr
         intro PP hPP
-        rw [dif_pos hPP]
+        rw [dite_eq_left hPP]
         show _ = -(redM PP (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i) (u.map fun w => incA D (ϖ : D.host.E) * w)))
         rw [hured ⟨PP, hPP⟩, neg_neg]
       · intro u' hu' hne

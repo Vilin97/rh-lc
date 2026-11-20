@@ -261,7 +261,7 @@ theorem Rm_unitary (lam : Fin n → ℤ) (k : KU n) :
       (GlobalTheory.Branching.sqRep ℂ n (dw lam) (GlobalTheory.Branching.unitaryIncl n k)) := by
   have h : IsUnit k.1.det := (Matrix.isUnit_iff_isUnit_det _).1 (GlobalTheory.Branching.unitaryIncl n k).isUnit
   have e : Matrix.nonsingInvUnit k.1 h = GlobalTheory.Branching.unitaryIncl n k := Units.ext rfl
-  rw [Rm, dif_pos h, e]
+  rw [Rm, dite_eq_left h, e]
 
 theorem Rm_mul (lam : Fin n → ℤ) (k k' : KU n) : Rm lam (k * k').1 = Rm lam k.1 * Rm lam k'.1 := by
   rw [Rm_unitary, Rm_unitary, Rm_unitary, map_mul, map_mul, Module.End.mul_eq_comp]

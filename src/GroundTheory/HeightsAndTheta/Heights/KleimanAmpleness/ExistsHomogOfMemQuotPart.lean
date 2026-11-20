@@ -198,7 +198,7 @@ theorem evMap_mk {I : ∀ k, Finset (ι k)} (hI : Good y I) (g : MRingOver F ι)
     evMap y I (LocalizedModule.mk (Ideal.Quotient.mk (mIdealOver F y) g) t) =
       aeval y g / aeval y (t : MRingOver F ι) := by
   unfold evMap
-  rw [dif_pos hI]
+  rw [dite_eq_left hI]
   exact ev_mk y I hI _ t
 
 end Eval

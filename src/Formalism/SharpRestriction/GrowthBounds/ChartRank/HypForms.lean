@@ -65,12 +65,12 @@ theorem exists_form_of_law (S : StepLevel F E σ J T f bad) (emb : ι → E →+
     intro x γ hγ κ e y
     have h : Pd x := ⟨(⟨γ, hγ⟩, κ), e⟩
     show (if h : Pd x then (S.chi h.choose.2 : ℂ) * v (frameTranslate emb hc h.choose.1.1⁻¹ ((UJ _ _).inv_mem h.choose.1.2) y) else 0) = _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact law_wd S emb hc y0 v hv _ _ h.choose.1.2 hγ _ _ (h.choose_spec.symm.trans e) y
   have gzero : ∀ x, ¬ Pd x → ∀ y, g x y = 0 := by
     intro x h y
     show (if h : Pd x then (S.chi h.choose.2 : ℂ) * v (frameTranslate emb hc h.choose.1.1⁻¹ ((UJ _ _).inv_mem h.choose.1.2) y) else 0) = _
-    rw [dif_neg h]
+    rw [dite_eq_right h]
   refine ⟨g, Submodule.mem_inf.2 ⟨?_, ?_⟩, ?_⟩
   · intro γ' hγ' x x' κ' hx' y y' hy
     by_cases hP : Pd x

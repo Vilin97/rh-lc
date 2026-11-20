@@ -76,7 +76,7 @@ theorem exists_sec_along_iso {L : LB X} {L' : LB X'} {F : X' ⟶ X} {w : LB.Iso 
 theorem isUnit_gs_iff (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a : Γ(X, U)) :
     IsUnit (gs f y U a) ↔ f y ∈ X.basicOpen a := by
   unfold gs
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e : y ∈ f ⁻¹ᵁ X.basicOpen a ↔ y ∈ Y.basicOpen (f.app U a) := by
     rw [Scheme.preimage_basicOpen]
   exact (Y.mem_basicOpen (f.app U a) y h).symm.trans e.symm

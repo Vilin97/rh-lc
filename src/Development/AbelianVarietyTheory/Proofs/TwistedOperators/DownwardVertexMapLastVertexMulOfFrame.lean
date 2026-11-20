@@ -33,7 +33,7 @@ theorem downMap_last_mul_of_toFrame_eq : ∀ {k : Type} [Field k] [ValuativeRel 
     rw [frameGL_symm_val, submatrix_apply, frame_symm_of_zero _ (by omega), frame_symm_of_zero _ (by omega)]
     rfl
   unfold downMap
-  rw [dif_neg (by omega), dif_pos (by omega), dif_neg (by omega), dif_pos (by omega), hx]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega), dite_eq_right (by omega), dite_eq_left (by omega), hx]
   ext r q
   simp only [submatrix_apply, Matrix.mul_apply, hval]
   exact (Fintype.sum_equiv (finCongr hr) _ _ (fun p => rfl)).symm

@@ -361,10 +361,10 @@ theorem exists_reps (idx : Fin g ≃ X.Ψ × Fin r) (hs : IsSympl X bas) (he : E
         · exact zero_mem _
     refine ⟨y, hy, ⟨Matrix.of k', by ext i j; exact hk' i j, fun i => ?_⟩, fun k hk => ?_⟩
     · have := hc (Fin.castLE hn i)
-      rw [dif_pos (show ((Fin.castLE hn i : Fin n) : ℕ) < r from i.2)] at this
+      rw [dite_eq_left (show ((Fin.castLE hn i : Fin n) : ℕ) < r from i.2)] at this
       exact this
     · have := hc k
-      rwa [dif_neg (not_lt.2 hk)] at this
+      rwa [dite_eq_right (not_lt.2 hk)] at this
   choose f h1 h2 h3 using H
   refine ⟨f, h1, fun i j h => Subtype.ext (hu _ _ _ (h2 i) (red_congr (fun a => h _) (h2 j))),
     fun y hy => ?_, fun i => ?_⟩
@@ -383,7 +383,7 @@ theorem exists_reps (idx : Fin g ≃ X.Ψ × Fin r) (hs : IsSympl X bas) (he : E
       exact Submodule.smul_mem_smul
         (Ideal.Quotient.eq.1 (congrFun (congrFun (ha.trans hb.symm) j) _)) (D.β_mem j)
     · exact cong_trans (h0 k (not_lt.1 hk)) (cong_symm (h3 κ k (not_lt.1 hk)))
-  · rw [Level.dat, dif_pos ⟨⟨i, h2 i⟩, h3 i⟩]
+  · rw [Level.dat, dite_eq_left ⟨⟨i, h2 i⟩, h3 i⟩]
     exact hlam _
 
 theorem finite_J (D : Level X) : Finite D.J := by

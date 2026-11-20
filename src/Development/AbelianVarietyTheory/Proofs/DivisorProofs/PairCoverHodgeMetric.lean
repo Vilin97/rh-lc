@@ -356,7 +356,7 @@ theorem frameSecX_norm_cx : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.Cov
   set w : Pad.Sym D.host.E →₀ ℤ := Finsupp.single (ArIn.ind ∅, some R, st) 1 with hw
   have hpar : Pad.parOf w = some R := by
     have hne : w.support.Nonempty := ⟨_, Finsupp.mem_support_iff.2 (by rw [hw, Finsupp.single_eq_same]; exact one_ne_zero)⟩
-    rw [Pad.parOf, dif_pos hne, Finset.mem_singleton.1 (Finsupp.support_single_subset hne.choose_spec)]
+    rw [Pad.parOf, dite_eq_left hne, Finset.mem_singleton.1 (Finsupp.support_single_subset hne.choose_spec)]
   have hn (x : Pad.Letter O.S.Dw) : Pad.expo O.S.Dw w x = if τ = x.1 ∧ (i : ℕ) = x.2 then 1 else 0 := by
     rw [Pad.expo, hw, Finsupp.sum_single_index (by simp), hst]
     refine if_congr ?_ rfl rfl

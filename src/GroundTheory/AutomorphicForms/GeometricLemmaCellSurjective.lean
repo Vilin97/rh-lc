@@ -115,7 +115,7 @@ theorem bumpFun_eq_zero {x : GL (Fin n) F} {K : Subgroup (GL (Fin n) F)} {v : W}
     (hg : ¬ ∃ p : blockUpper F n β, ∃ k ∈ K, g = (p : GL (Fin n) F) * x * k) :
     bumpFun σ x K v g = 0 := by
   unfold bumpFun
-  rw [dif_neg hg]
+  rw [dite_eq_right hg]
 
 theorem exists_of_bumpFun_ne_zero {x : GL (Fin n) F} {K : Subgroup (GL (Fin n) F)} {v : W}
     {g : GL (Fin n) F} (hg : bumpFun σ x K v g ≠ 0) :

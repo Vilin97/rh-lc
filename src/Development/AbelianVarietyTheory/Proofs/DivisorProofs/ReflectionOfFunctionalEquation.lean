@@ -114,7 +114,7 @@ theorem locEps_mul_of_unrAt : ∀ (E : Type) [Field E] [NumberField E] (χ ξ : 
     have hz1 : w.valuation E (z : E) = 1 := (w.valuation_eq_one_iff_notMem (K := E)).2 hy
     have hz0 : (z : E) ≠ 0 := fun h => by rw [h, map_zero] at hz1; exact zero_ne_one hz1
     unfold gaussTerm
-    rw [dif_neg hz0, dif_neg hz0, hloc]
+    rw [dite_eq_right hz0, dite_eq_right hz0, hloc]
     have h1 : ξ.locK w (Units.mk0 _ hz0) = 1 := hU _ (by
       show Valued.v (((z : E) : w.adicCompletion E)) = 1
       rw [HeightOneSpectrum.valuedAdicCompletion_eq_valuation', hz1])

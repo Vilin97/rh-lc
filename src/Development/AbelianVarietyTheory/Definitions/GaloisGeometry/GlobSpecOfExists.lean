@@ -315,14 +315,14 @@ def glob (a : Y.Comp) (L : P.Tup) : S.D :=
 theorem glob_spec_of_exists (a : Y.Comp) (L : P.Tup) (h : ∃ d, Y.Aw (Y.rep a) d ∧ T.tup hn (Y.N d) = L) :
     Y.Aw (Y.rep a) (Y.glob T hn a L) ∧ T.tup hn (Y.N (Y.glob T hn a L)) = L := by
   unfold glob
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem aw_glob (a : Y.Comp) (L : P.Tup) : Y.Aw (Y.rep a) (Y.glob T hn a L) := by
   by_cases h : ∃ d, Y.Aw (Y.rep a) d ∧ T.tup hn (Y.N d) = L
   · exact (Y.glob_spec_of_exists T hn a L h).1
   · unfold glob
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     exact Y.aw_equiv.refl _
 
 open Classical in

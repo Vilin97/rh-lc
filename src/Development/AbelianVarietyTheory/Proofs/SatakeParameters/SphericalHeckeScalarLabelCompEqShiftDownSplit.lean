@@ -93,8 +93,8 @@ theorem central_shift : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), conjPl P ≠
     refine Finset.sum_congr rfl fun γ hγ => ?_
     rw [hzR γ hγ, map_mul, Module.End.mul_apply]
   · have hl' : ¬ IsLab V P (d.map fun x => x - 1) := fun h => hl (isLab_of_shift hP h)
-    have e0 : rep V P d = ∅ := by rw [Hk3.rep, dif_neg hl]
-    have e1 : rep V P (d.map fun x => x - 1) = ∅ := by rw [Hk3.rep, dif_neg hl']
+    have e0 : rep V P d = ∅ := by rw [Hk3.rep, dite_eq_right hl]
+    have e1 : rep V P (d.map fun x => x - 1) = ∅ := by rw [Hk3.rep, dite_eq_right hl']
     rw [GlobalTheory.SphLabelOps.opOf_single π d, e0, Finset.sum_empty, map_zero, GlobalTheory.SphLabelOps.opOf_single, e1,
       Finset.sum_empty]
 

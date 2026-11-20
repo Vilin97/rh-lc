@@ -75,7 +75,7 @@ theorem exists_brauerLocal_sub_globalCupClass_iChar_inl_eq_zero (x : cohomology 
   rw [map_sub, DFinsupp.sub_apply]
   by_cases hv : v.IsReal
   · apply placeInv_injective (.inl v)
-    rw [map_sub, map_zero, sub_eq_zero, placeInv_brauerLocal_globalCupClass_iChar, dif_pos hv]
+    rw [map_sub, map_zero, sub_eq_zero, placeInv_brauerLocal_globalCupClass_iChar, dite_eq_left hv]
     have hs := ha ⟨v, hv⟩
     simp only [decide_eq_true_eq] at hs
     rcases placeInv_inl_eq_zero_or_eq_half v (brauerLocal ι x (.inl v)) with h | h

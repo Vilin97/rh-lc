@@ -24,7 +24,7 @@ theorem formOrd_dForm_nonneg : ∀ {k K : Type} [Field k] [CharZero k] [Field K]
   · have hz : (E.ring.subtype a) • E.toRat n ω = 0 := by
       change (a : K) • _ = 0
       rw [h0, zero_smul]
-    rw [hz, formOrd, dif_neg]
+    rw [hz, formOrd, dite_eq_right]
     rintro ⟨b, hb⟩
     exact hb.ne_zero rfl
   · change 0 ≤ E.formOrd ((a : K) • E.toRat n ω)

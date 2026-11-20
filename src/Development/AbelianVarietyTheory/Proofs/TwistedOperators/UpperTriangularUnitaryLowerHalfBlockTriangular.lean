@@ -17,9 +17,9 @@ theorem ordL_congr_v {x y : L} (h : Valued.v x = Valued.v y) : Formalism.UG.ordL
   unfold Formalism.UG.ordL
   by_cases hx : Valued.v x = 0
   · have hy : Valued.v y = 0 := h ▸ hx
-    rw [dif_pos hx, dif_pos hy]
+    rw [dite_eq_left hx, dite_eq_left hy]
   · have hy : Valued.v y ≠ 0 := h ▸ hx
-    rw [dif_neg hx, dif_neg hy]
+    rw [dite_eq_right hx, dite_eq_right hy]
     congr 2
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, WithZero.coe_unzero, h]
@@ -98,12 +98,12 @@ theorem GlobalTheory.SphTheta.lowBlocks_borel : ∀ (L : Type) [Field L] [Valued
         rw [← Finset.sum_subset (s₁ := Finset.univ.map emb) (Finset.subset_univ _), Finset.sum_map]
         · refine Finset.sum_congr rfl fun k _ => ?_
           have hk : ((emb k : Fin (n' / 2)) : ℕ) < n / 2 := k.2
-          rw [dif_pos hk]
+          rw [dite_eq_left hk]
           show W r (Fin.castLE hle k) * t ⟨k.1, hk⟩ c = W (Fin.castLE hle ⟨r.1, hr⟩) (Fin.castLE hle k) * t k c
           rw [hr']
         · intro k _ hk
           have : ¬ (k : ℕ) < n / 2 := fun e => hk (Finset.mem_map.2 ⟨⟨k.1, e⟩, Finset.mem_univ _, Fin.ext rfl⟩)
-          rw [dif_neg this, mul_zero]
+          rw [dite_eq_right this, mul_zero]
       · refine Finset.sum_eq_zero fun k _ => ?_
         split_ifs with hk
         · rw [hWt (show k < r by rw [Fin.lt_def]; omega), zero_mul]

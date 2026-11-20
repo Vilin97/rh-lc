@@ -59,7 +59,7 @@ theorem unifEx : UnifEx := by
   refine ⟨Units.mk0 _ hne, ⟨?_, ?_⟩, ?_⟩
   · show Formalism.UG.ordL (algebraMap E (w.adicCompletion E) (algebraMap (maximalRealSubfield E) E π)) = 1
     unfold Formalism.UG.ordL
-    rw [dif_neg hv0]
+    rw [dite_eq_right hv0]
     exact neg_toAdd_unzero _ hv0 hv
   · exact cj_real w π
   · exact hv

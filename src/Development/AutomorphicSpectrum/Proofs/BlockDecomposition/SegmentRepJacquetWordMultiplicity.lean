@@ -39,7 +39,7 @@ theorem below_of_len_one {s : ℕ} (Γ : Fin s → Segment k) (h : ∀ a, (Γ a)
 theorem jmL_decWord (hJ : LSegJacquet k) (Γ : Segment k) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     {π : Representation ℂ (GL (Fin N) k) V} (hΓ : IsLSeg Γ π) : jmL (decWord Γ) π = 1 := by
   have hd : ∑ a, ((decWord Γ).get a).1 = N := (sum_decWord Γ).trans hΓ.deg_eq
-  rw [jmL, dif_pos hd]
+  rw [jmL, dite_eq_left hd]
   refine (hJ Γ π hΓ _ (decWord Γ).get hd fun a => (isCusp_decWord_get Γ a).1).1
     ⟨fun a => Segment.single _ (isCusp_decWord_get Γ a), ⟨?_, fun a => ?_⟩,
       fun a => (single_spec (isCusp_decWord_get Γ a)).2.1⟩
@@ -55,7 +55,7 @@ theorem len_eq_one (hJ : LSegJacquet k) {Δ : Segment k} {x : IrrGL k} (hx : x.I
     Δ.len = 1 := by
   have hd : ∑ a, ((decWord Δ).get a).1 = x.1 := (sum_decWord Δ).trans h.deg_eq
   have h1 := jmL_decWord hJ Δ h
-  rw [jmL, dif_pos hd, jm] at h1
+  rw [jmL, dite_eq_left hd, jm] at h1
   have hsub : IsSubquotient (piTensor fun a => ((decWord Δ).get a).rep)
       (jac (stdBlocks (fun a => ((decWord Δ).get a).1) hd) x.rep) :=
     jhMult_ne_zero_iff.1 (by rw [h1]; exact one_ne_zero)
@@ -90,7 +90,7 @@ theorem jmL_cusp_word : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSp
   intro k _ _ _ _ _ hJ Γ N V _ _ π hΓ W hW
   refine ⟨fun e => e ▸ jmL_decWord hJ Γ hΓ, fun hne => ?_⟩
   by_cases hd : ∑ a, (W.get a).1 = N
-  · rw [jmL, dif_pos hd]
+  · rw [jmL, dite_eq_left hd]
     refine (hJ Γ π hΓ _ W.get hd fun a => (hW _ (List.get_mem W a)).1).2 ?_
     rintro ⟨Γ', ⟨hs, hf⟩, hL⟩
     have hl : ∀ a, (Γ' a).len = 1 := fun a => len_eq_one hJ (hW _ (List.get_mem W a)) (hL a)
@@ -102,7 +102,7 @@ theorem jmL_cusp_word : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSp
       rw [hf, below_of_len_one Γ' hl] at h4
       exact h4
     rw [h3, decWord_get, hlen]
-  · rw [jmL, dif_neg hd]
+  · rw [jmL, dite_eq_right hd]
 
 end GlobalTheory.CompanionTheory.FineL
 

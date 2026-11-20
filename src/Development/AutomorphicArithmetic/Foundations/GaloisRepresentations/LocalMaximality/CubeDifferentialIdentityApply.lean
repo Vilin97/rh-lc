@@ -26,7 +26,7 @@ private theorem cubeDifferential_identity_apply {σ E : Type} [LinearOrder σ] [
 
 private theorem pk_mem {d : ℕ} {I : Finset (Fin (d + 1))} (h : I.Nonempty) : pk I ∈ I := by
   unfold pk
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact I.min'_mem h
 
 section

@@ -41,7 +41,7 @@ theorem pair_e0_left (v : Fin (2 * (1 + r') + k + 1) → ℂ) :
 
 theorem lift_lst (w : Fin (2 * r' + k + 1) → ℂ) : liftVec k 1 r' w (lst k r') = 0 := by
   unfold liftVec
-  rw [dif_neg]
+  rw [dite_eq_right]
   simp only [lst]
   omega
 
@@ -59,11 +59,11 @@ theorem decomp (u : Fin (2 * (1 + r') + k + 1) → ℂ) (hu : u (lst k r') = 0) 
   rw [Pi.add_apply, Pi.smul_apply, e0_eq, Pi.single_apply, smul_eq_mul]
   unfold liftVec
   by_cases h : 1 ≤ i.val ∧ i.val < 2 * r' + k + 1 + 1
-  · rw [dif_pos h, hc, if_neg (by simp only [fst, Fin.ext_iff]; omega), mul_zero, add_zero]
+  · rw [dite_eq_left h, hc, if_neg (by simp only [fst, Fin.ext_iff]; omega), mul_zero, add_zero]
     congr 1
     simp only [levPos, Fin.ext_iff]
     omega
-  · rw [dif_neg h, zero_add]
+  · rw [dite_eq_right h, zero_add]
     by_cases h0 : i = fst k r'
     · rw [if_pos h0, mul_one, h0]
     · rw [if_neg h0, mul_zero, ← hu]

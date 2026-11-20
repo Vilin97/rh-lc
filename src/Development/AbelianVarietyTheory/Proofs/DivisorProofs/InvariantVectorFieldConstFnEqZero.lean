@@ -56,7 +56,7 @@ theorem IsInv.apply_constFn {R : Type} [CommRing R] (G : Over (Sp R)) [GrpObj G]
       by_cases hO : ⊤ ≤ (g' * v').left ⁻¹ᵁ O
       · rw [GlobalTheory.ArcPts.SecValue.valR_constFn G.hom _ _ hw O hO r]
         simp [TrivSqZeroExt.algebraMap_eq_inl]
-      · rw [valR, dif_neg hO]
+      · rw [valR, dite_eq_right hO]
         rfl
     rw [h0, ← GlobalTheory.HolHom.valR_res g hle _ hgU] at hval
     rw [← GlobalTheory.DetRatio.valR_fromSpec hU ((G.left.presheaf.map (homOfLE hle).op).hom (dd O (constFn G.hom O r)))]

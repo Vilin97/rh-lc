@@ -140,8 +140,8 @@ theorem core (n q : ℕ) (y : Fin n → ℂ) (hy : star y ⬝ᵥ (sgnM n q).mulV
       (∀ a, ‖b a a‖ ≤ (1 + 2 * ∑ c, ‖y c‖ ^ 2) * (1 + t) ∧ ‖b a a‖⁻¹ ≤ (1 + 2 * ∑ c, ‖y c‖ ^ 2) * (1 + t)) ∧
       ∀ a, ‖(b.mulVec y) a‖ ^ 2 * (1 + t) ≤ ‖y a‖ ^ 2 + 1 := by
   obtain ⟨Y, hYd⟩ : ∃ Y : ℕ → ℂ, ∀ c, Y c = if h : c < n then y ⟨c, h⟩ else 0 := ⟨_, fun _ => rfl⟩
-  have hY : ∀ i : Fin n, Y i = y i := fun i => by rw [hYd, dif_pos i.isLt]
-  have hYz : ∀ c, n ≤ c → Y c = 0 := fun c hc => by rw [hYd, dif_neg (show ¬ c < n by omega)]
+  have hY : ∀ i : Fin n, Y i = y i := fun i => by rw [hYd, dite_eq_left i.isLt]
+  have hYz : ∀ c, n ≤ c → Y c = 0 := fun c hc => by rw [hYd, dite_eq_right (show ¬ c < n by omega)]
   obtain ⟨g, hgd⟩ : ∃ g : ℕ → ℝ, ∀ c, g c = ‖Y c‖ ^ 2 := ⟨_, fun _ => rfl⟩
   have hgnn : ∀ c, 0 ≤ g c := fun c => by rw [hgd]; positivity
   have hgz : ∀ c, n ≤ c → g c = 0 := fun c hc => by rw [hgd, hYz c hc]; simp

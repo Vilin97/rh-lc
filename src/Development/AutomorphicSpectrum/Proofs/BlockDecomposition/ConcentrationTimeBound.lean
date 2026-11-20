@@ -316,7 +316,7 @@ theorem rR_norm (hU : Unimod) (h : G n) (x : Lp V 2 μ) : ‖rR μ V h x‖ = �
     haveI := (hU n μ).1
     exact measurePreserving_mul_right μ h
   unfold rR
-  rw [dif_pos hmp]
+  rw [dite_eq_left hmp]
   exact (Lp.compMeasurePreservingₗᵢ ℂ (fun y : G n => y * h) hmp).norm_map x
 
 end Conc

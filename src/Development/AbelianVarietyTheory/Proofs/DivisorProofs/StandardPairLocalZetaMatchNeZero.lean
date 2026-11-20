@@ -92,14 +92,14 @@ theorem stdA_mul {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c a a' : ℕ} {X : Matrix (Fi
       have : gdet g = gdet (g * g₀) * (gdet g₀)⁻¹ := by rw [gdet_mul]; group
       rw [this, apow_mul, apow_of_valuation_eq_one hv, one_mul, apow_inv, neg_div]
     by_cases hc : ∀ i j, ((g₀⁻¹).val * blk₂ X) i j ∈ cball (ϖ ^ c)
-    · rw [if_pos hc, stdA, dif_pos ⟨hdet, hG, hcond.2 hc⟩, hu, hap, map_mul]
+    · rw [if_pos hc, stdA, dite_eq_left ⟨hdet, hG, hcond.2 hc⟩, hu, hap, map_mul]
       simp only [_root_.mul_inv_rev, Units.val_mul, mul_one]
       have h1 : ((ν (gdet g) : ℂˣ) : ℂ) * (((ν (gdet g))⁻¹ : ℂˣ) : ℂ) = 1 := by
         rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
       linear_combination ((((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) * apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2)) * h1
-    · rw [if_neg hc, stdA, dif_neg (fun H => hc (hcond.1 H.2.2))]
+    · rw [if_neg hc, stdA, dite_eq_right (fun H => hc (hcond.1 H.2.2))]
       simp
-  · rw [Set.indicator_of_notMem (by simpa using hS), stdA, dif_neg (fun H => hS ((mem_KO_iff_isGLO _).2 (hb1 ▸ H.2.1)))]
+  · rw [Set.indicator_of_notMem (by simpa using hS), stdA, dite_eq_right (fun H => hS ((mem_KO_iff_isGLO _).2 (hb1 ▸ H.2.1)))]
     simp
 
 end GlobalTheory.StdPairMatch
@@ -143,14 +143,14 @@ theorem stdB_mul {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c a a' : ℕ} {Y : Matrix (Fi
       have : gdet g = gdet (g * g₀) * (gdet g₀)⁻¹ := by rw [gdet_mul]; group
       rw [this, apow_mul, apow_of_valuation_eq_one hv, one_mul, apow_inv, neg_div]
     by_cases hc : ∀ i j, ((g₀⁻¹).val * blk₁ Y) i j ∈ cball (ϖ ^ c)
-    · rw [if_pos hc, stdB, dif_pos ⟨hdet, hG, hcond.2 hc⟩, hu, hap, map_mul]
+    · rw [if_pos hc, stdB, dite_eq_left ⟨hdet, hG, hcond.2 hc⟩, hu, hap, map_mul]
       simp only [_root_.mul_inv_rev, Units.val_mul, mul_one]
       have h1 : ((ν (gdet g) : ℂˣ) : ℂ) * (((ν (gdet g))⁻¹ : ℂˣ) : ℂ) = 1 := by
         rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
       linear_combination ((((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) * apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2)) * h1
-    · rw [if_neg hc, stdB, dif_neg (fun H => hc (hcond.1 H.2.2))]
+    · rw [if_neg hc, stdB, dite_eq_right (fun H => hc (hcond.1 H.2.2))]
       simp
-  · rw [Set.indicator_of_notMem (by simpa using hS), stdB, dif_neg (fun H => hS ((mem_KO_iff_isGLO _).2 (hb1 ▸ H.2.1)))]
+  · rw [Set.indicator_of_notMem (by simpa using hS), stdB, dite_eq_right (fun H => hS ((mem_KO_iff_isGLO _).2 (hb1 ▸ H.2.1)))]
     simp
 
 end GlobalTheory.StdPairMatch
@@ -210,7 +210,7 @@ theorem bigF_stdA {ν : kˣ →* ℂˣ} {ϖ : kˣ} (hϖ : IsUnif ϖ) (c : ℕ) {
 theorem bigF_stdA_of_det_eq_zero (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) {a a' : ℕ} {X : Matrix (Fin a) (Fin (a + a')) k}
     (hX : (blk₁ X).det = 0) : bigF (haarVol (KO k (Fin a))) ϖ ν (stdA ν ϖ c a a') X = 0 := by
   have h0 : ∀ g : Matrix (Fin a) (Fin a) k, stdA ν ϖ c a a' (g * X) = 0 := fun g => by
-    rw [stdA, dif_neg]
+    rw [stdA, dite_eq_right]
     rintro ⟨hd, -⟩
     exact hd (by rw [blk₁_mul, det_mul, hX, mul_zero])
   simp [bigF, shellSum, shell, h0]
@@ -238,7 +238,7 @@ theorem smallF_stdB {ν : kˣ →* ℂˣ} {ϖ : kˣ} (c : ℕ) {a a' : ℕ} {Y :
 theorem smallF_stdB_of_det_eq_zero (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) {a a' : ℕ} {Y : Matrix (Fin a') (Fin (a + a')) k}
     (hY : (blk₂ Y).det = 0) : smallF (haarVol (KO k (Fin a'))) ν (stdB ν ϖ c a a') Y = 0 := by
   have h0 : ∀ g : Matrix (Fin a') (Fin a') k, stdB ν ϖ c a a' (g * Y) = 0 := fun g => by
-    rw [stdB, dif_neg]
+    rw [stdB, dite_eq_right]
     rintro ⟨hd, -⟩
     exact hd (by rw [blk₂_mul, det_mul, hY, mul_zero])
   simp [smallF, h0]

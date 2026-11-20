@@ -128,7 +128,7 @@ theorem amplitude_moments_gap : GlobalTheory.GapIn.Hyp → ∀ Cg cb Cu cT CT C0
   obtain ⟨hNum, -, heps⟩ := GlobalTheory.T.momentPieriNumerics_of_sizeHyps D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w (uOne D w τ) (fun i => by
     have := i.isLt
     simp only [uOne]
-    rw [dif_pos ⟨by omega, by omega⟩]; rfl)
+    rw [dite_eq_left ⟨by omega, by omega⟩]; rfl)
 
   have hex : ∀ i, ∃ n : ℤ, lam' i = lamD D τ i + n := fun i => by
     obtain ⟨n₁, h₁⟩ := hA.1.2 i

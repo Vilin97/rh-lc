@@ -50,7 +50,7 @@ noncomputable def liftCoeff (I : Ideal R) (e : ℕ) (r : R) : reesAlgebra I :=
 
 theorem liftCoeff_zero (I : Ideal R) (e : ℕ) : liftCoeff I e 0 = 0 := by
   unfold liftCoeff
-  rw [dif_pos (zero_mem _)]
+  rw [dite_eq_left (zero_mem _)]
   apply Subtype.ext; simp
 
 noncomputable def liftE (I : Ideal R) (e : ℕ) (F : MvPolynomial σ R) :
@@ -69,7 +69,7 @@ theorem coeff_liftE (I : Ideal R) (e : ℕ) (F : MvPolynomial σ R) (m : σ →�
 theorem proj_liftE {I : Ideal R} {e : ℕ} {F : MvPolynomial σ R} (h : ∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e)
     (e' : ℕ) : proj I e' (liftE I e F) = if e' = e then F else 0 := by
   ext m
-  rw [coeff_proj, coeff_liftE, liftCoeff, dif_pos (h m)]
+  rw [coeff_proj, coeff_liftE, liftCoeff, dite_eq_left (h m)]
   simp only [Polynomial.coeff_monomial]
   by_cases h1 : e' = e
   · subst h1; simp

@@ -14,8 +14,8 @@ theorem ordL_congr {L L' : Type} [Field L] [Valued L (WithZero (Multiplicative �
     [Valued L' (WithZero (Multiplicative ℤ))] {a : L} {b : L'} (h : Valued.v a = Valued.v b) : ordL a = ordL b := by
   unfold ordL
   by_cases ha : Valued.v a = 0
-  · rw [dif_pos ha, dif_pos (h ▸ ha)]
-  · rw [dif_neg ha, dif_neg (h ▸ ha)]
+  · rw [dite_eq_left ha, dite_eq_left (h ▸ ha)]
+  · rw [dite_eq_right ha, dite_eq_right (h ▸ ha)]
     congr 2
     exact WithZero.coe_inj.1 (by rw [WithZero.coe_unzero, WithZero.coe_unzero, h])
 

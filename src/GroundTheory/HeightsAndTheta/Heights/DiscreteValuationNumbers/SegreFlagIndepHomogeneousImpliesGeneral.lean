@@ -210,7 +210,7 @@ theorem segreFlagIndep_homogeneous_implies_general (h : IndefiniteRowSideFullHec
       have hdeg : α.degree = c := by
         have := hGc (mem_support_iff.mp hα)
         rwa [Finsupp.degree_eq_weight_one]
-      rw [listNum, dif_neg, mul_zero]
+      rw [listNum, dite_eq_right, mul_zero]
       rw [List.length_append, length_monoList, hdeg]
       exact hce
     rw [hzero, hzero]

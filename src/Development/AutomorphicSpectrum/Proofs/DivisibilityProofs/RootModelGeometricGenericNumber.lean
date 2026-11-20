@@ -40,7 +40,7 @@ theorem geoMono_mapDomain_some (M : RootModel Ψ N) [DecidableEq M.K] (II : Inte
       ⟨k, by rw [hlen]; exact k.2⟩) := by
     intro k
     simp only [hLdef, monoLines]
-    rw [dif_pos (by rw [hlen]; exact k.2)]
+    rw [dite_eq_left (by rw [hlen]; exact k.2)]
   have hline : ∀ o, IsSmoothHerm (M.line 1 o) := by
     rintro (_ | r)
     · exact M.A_smooth

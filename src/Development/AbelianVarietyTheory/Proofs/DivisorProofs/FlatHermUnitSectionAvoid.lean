@@ -44,7 +44,7 @@ theorem face_cone_identity_zero {m a : ℕ} (f : (Δ m) ⟶ (Δ a)) : fc (m + 1)
   rw [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply, cv_apply]
   have h1 : ((fc (m + 1) m 0).toOrderHom j : ℕ) = j + 1 := by
     rw [fc_apply]; unfold faceFun; have := j.2; split_ifs <;> omega
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
   congr 2; apply Fin.ext; simp only [h1]; omega
 
 theorem fcs_cv {m a : ℕ} (f : (Δ (m + 1)) ⟶ (Δ a)) (k : ℕ) :
@@ -53,13 +53,13 @@ theorem fcs_cv {m a : ℕ} (f : (Δ (m + 1)) ⟶ (Δ a)) (k : ℕ) :
   rw [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply, cv_apply, cv_apply]
   have hj := j.2
   by_cases h0 : (j : ℕ) = 0
-  · rw [dif_pos h0]
+  · rw [dite_eq_left h0]
     have : ((fc (m + 2) (m + 1) (k + 1)).toOrderHom j : ℕ) = 0 := by
       rw [fc_apply]; unfold faceFun; split_ifs <;> omega
-    rw [dif_pos this]
+    rw [dite_eq_left this]
   · have h1 : ((fc (m + 2) (m + 1) (k + 1)).toOrderHom j : ℕ) ≠ 0 := by
       rw [fc_apply]; unfold faceFun; split_ifs <;> omega
-    rw [dif_neg h1, dif_neg h0, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply]
+    rw [dite_eq_right h1, dite_eq_right h0, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply]
     congr 2; apply Fin.ext
     simp only [fc_apply]; unfold faceFun; split_ifs <;> omega
 
@@ -69,7 +69,7 @@ theorem face_cone_identity_one {a : ℕ} (f : (Δ 0) ⟶ (Δ a)) : fc 1 0 1 ≫ 
   have hj := j.2
   have : ((fc 1 0 1).toOrderHom j : ℕ) = 0 := by
     rw [fc_apply]; unfold faceFun; split_ifs <;> omega
-  rw [dif_pos this]; omega
+  rw [dite_eq_left this]; omega
 
 theorem bop_comp {n m p q r s : ℕ} (α : (Δ p) ⟶ (Δ n)) (β : (Δ q) ⟶ (Δ m)) (α' : (Δ r) ⟶ (Δ p))
     (β' : (Δ s) ⟶ (Δ q)) : bop α β ≫ bop α' β' = bop (α' ≫ α) (β' ≫ β) := by

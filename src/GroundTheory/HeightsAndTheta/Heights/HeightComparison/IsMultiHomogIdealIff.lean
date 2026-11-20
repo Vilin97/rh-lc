@@ -88,7 +88,7 @@ section Cycles
 theorem multAt_eq_toNat (J W : Ideal (NumbersDVR.MRing ι R)) [W.IsPrime] :
     ReciprocityTheory.ChartRestriction.G.Geo.multAt (R := R) J W = (NumbersDVR.multAt J W).toNat := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.multAt NumbersDVR.multAt
-  rw [dif_pos ‹W.IsPrime›]
+  rw [dite_eq_left ‹W.IsPrime›]
 
 theorem divCycle_eq [Fintype K] [∀ k, Fintype (ι k)] [IsNoetherianRing R]
     (P : Ideal (NumbersDVR.MRing ι R)) (f : NumbersDVR.MRing ι R) (W : Ideal (NumbersDVR.MRing ι R)) :

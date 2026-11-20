@@ -132,20 +132,20 @@ theorem flatTensor_moveArgs_mulSingle : ∀ {k : Type} [Field k] [ValuativeRel k
     refine flatTensor_comp_of_equiv hs ψ ν F _ x (colMove j κ x) y Φ hMP (fun e => ?_) (fun e => ?_)
     · refine GlobalTheory.T.unfoldingFilledArgs_moveInnerLastColumnVertex hs j hj g x (colMove j κ x) y e (Φ e) (fun l h1 h2 => ?_) ?_ ?_
       · exact downMap_congr hs (hcol l h1 h2) fun h => hΦo e ⟨l, h⟩ h1 h2
-      · rw [downMap, dif_pos (show j < Γ.m - 1 by omega), downMap, dif_pos (show j < Γ.m - 1 by omega), hcj, hΦ0]
+      · rw [downMap, dite_eq_left (show j < Γ.m - 1 by omega), downMap, dite_eq_left (show j < Γ.m - 1 by omega), hcj, hΦ0]
         exact ((H (e ⟨j, by omega⟩) (e ⟨j + 1, by omega⟩)).1 _).symm
-      · rw [downMap, dif_pos (show j + 1 < Γ.m - 1 by omega), downMap, dif_pos (show j + 1 < Γ.m - 1 by omega),
+      · rw [downMap, dite_eq_left (show j + 1 < Γ.m - 1 by omega), downMap, dite_eq_left (show j + 1 < Γ.m - 1 by omega),
           hcj1, hΦ1]
         exact ((H (e ⟨j, by omega⟩) (e ⟨j + 1, by omega⟩)).2.1 _).symm
     · have hrow : ∀ (x : ColArgs Γ) (e : Vars Γ) r, rowVar x e (j + 1) r = ∑ l : Fin (Γ.m - 2 - (j + 1)),
           if l.val = (Γ.m - 2 - (j + 1)) / 2 then stepPt (x (j + 1)) (e ⟨j + 1, by omega⟩) (.inr l) (.inl r) else 0 :=
-        fun x e r => by rw [rowVar, dif_pos (by omega)]
+        fun x e r => by rw [rowVar, dite_eq_left (by omega)]
       refine GlobalTheory.T.fourierJacobiPhase_adjacentInnerSteps_invariant j hA x (colMove j κ x) e (Φ e) hcol (fun i h1 h2 => hΦo e i h1 h2) ?_ ?_ ?_
       · simp only [hrow, colVar]
         rw [hcj, hcj1, hΦ0, hΦ1]
         exact (H (e ⟨j, by omega⟩) (e ⟨j + 1, by omega⟩)).2.2.1
       · intro ho s
-        rw [rowVar, rowVar, dif_pos (by omega), dif_pos (by omega)]
+        rw [rowVar, rowVar, dite_eq_left (by omega), dite_eq_left (by omega)]
         refine Finset.sum_congr rfl fun l _ => ?_
         split_ifs with hl
         · rw [hcj, hΦ0]
@@ -178,7 +178,7 @@ theorem flatTensor_moveArgs_mulSingle : ∀ {k : Type} [Field k] [ValuativeRel k
     refine flatTensor_comp_of_equiv hs ψ ν F _ x (colMove j κ x) y Φ hMP (fun e => ?_) (fun e => ?_)
     · refine GlobalTheory.T.unfoldingFilledArgs_moveInnerLastColumnVertex hs j hj g x (colMove j κ x) y e (Φ e) (fun l h1 h2 => ?_) ?_ ?_
       · exact downMap_congr hs (hcol l h1 h2) fun h => hΦo e ⟨l, h⟩ h1
-      · rw [downMap, dif_pos (show j < Γ.m - 1 by omega), downMap, dif_pos (show j < Γ.m - 1 by omega), hcj, hΦ0,
+      · rw [downMap, dite_eq_left (show j < Γ.m - 1 by omega), downMap, dite_eq_left (show j < Γ.m - 1 by omega), hcj, hΦ0,
           ← H, one_mul, mul_reindex, map_inv, hf]
       · exact GlobalTheory.T.downwardVertexMap_lastVertex_mul_of_frame hs j hj hB' g κ hg' x (colMove j κ x) e (Φ e) hcj1
     · refine GlobalTheory.T.fourierJacobiPhase_lastInnerVertex_invariant j hB' κ x (colMove j κ x) e (Φ e) hcol hcj1 (fun i h1 => hΦo e i h1) ?_

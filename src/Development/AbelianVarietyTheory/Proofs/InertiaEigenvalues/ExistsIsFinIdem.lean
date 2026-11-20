@@ -93,7 +93,7 @@ theorem partsSpan : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (G : 
   intro P d B hB
   have hE : ∃ B, Hecke₂ (Wc D i) (levS _ (R.βW i) (R.datWp i R.triv))
       (levChi _ (R.βW i) (R.datWp i R.triv)) S P d B := ⟨B, hB⟩
-  rw [dif_pos hE]
+  rw [dite_eq_left hE]
   have e1 := Module.End.mem_eigenspace_iff.1 (hx ⟨(P, d, hE.choose), hE.choose_spec⟩)
   have e2 := congrArg (R.HW i (sg0 D A)).e e1
   rw [hop, map_smul] at e2

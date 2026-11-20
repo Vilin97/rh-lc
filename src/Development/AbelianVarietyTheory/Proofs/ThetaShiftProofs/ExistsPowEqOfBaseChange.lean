@@ -152,7 +152,7 @@ theorem gm_unitOn (y : Sp F) (u : Fˣ) : gm (𝟙 (Sp F)) y ⊤ (unitOn u) = sta
 
 theorem gs_eq_stalkConst (x : Sp F ⟶ X) (y : Sp F) {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     gs x y U f = stalkConst y (valF x U f) := by
-  rw [valF, dif_pos h, gs_eq x y U (h trivial)]
+  rw [valF, dite_eq_left h, gs_eq x y U (h trivial)]
   show _ = ((Sp F).presheaf.germ ⊤ y trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _))
   rw [Iso.hom_inv_id_apply]

@@ -177,7 +177,7 @@ theorem chart_schurF_eq (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → ℂ
       by rw [RingHom.mapMatrix_apply, map_Dof, hMf]; exact hDf⟩
   have hSM : IsUnit (Scof M).det :=
     det_Scof M ((Matrix.isUnit_iff_isUnit_det _).1 (Units.isUnit _)) hDM
-  rw [chart, dif_pos hx]
+  rw [chart, dite_eq_left hx]
   change schurF β b₁ χ (g * infGL E _ hx.unit) = _
   rw [schurF]
   rw [if_pos hDM, psi_split, apply_mkGL β _ hSM, apply_mkGL b₁ _ hDM, chiF]
@@ -221,7 +221,7 @@ theorem chart_schurF_zero (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → �
     have h1 : ((infGL E _ hx.unit : GA E _) : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E)).map (pInf E) = Matrix.of x :=
       (congrArg Units.val (pInf_infGL hx.unit)).trans hx.unit_spec
     rw [hMdef, Units.val_mul, Matrix.map_mul, h1]
-  rw [chart, dif_pos hx]
+  rw [chart, dite_eq_left hx]
   change schurF β b₁ χ (g * infGL E _ hx.unit) = 0
   rw [schurF]
   split_ifs with hDM
@@ -261,7 +261,7 @@ theorem contDiffOn_chart_schurF : ∀ (E : Type) [Field E] [NumberField E] [IsTo
   swap
   · refine (contDiffOn_const (c := (0 : ℂ))).congr fun x hx0 => ?_
     have hx : IsUnit (Matrix.of x) := hx0
-    rw [chart, dif_pos hx]
+    rw [chart, dite_eq_left hx]
     change schurF β b₁ χ (g * infGL E _ hx.unit) = 0
     rw [schurF, if_neg]
     intro hDM

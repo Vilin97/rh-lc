@@ -317,7 +317,7 @@ theorem coef_ybv (l : Fin r) (hl : l.val + 1 = r) {z : Fin (2 * r + k + 1) â†’ â
   unfold ybv
   have e1 : fvec k r z l.succ = z := by
     unfold fvec
-    rw [dif_neg (by simp only [Fin.val_succ]; omega)]
+    rw [dite_eq_right (by simp only [Fin.val_succ]; omega)]
   have e2 : posL k r l.succ (Fin.cast (mdim_lastL l hl) s) = wI k r s := by
     apply Fin.ext
     simp only [posL, wI, Fin.val_cast, Fin.val_succ]
@@ -329,7 +329,7 @@ theorem coef_xv (l : Fin r) (hl : l.val + 1 = r) (z' : Fin (2 * r + k + 1) â†’ â
   unfold xv
   have e1 : fvec k r z' l.succ = z' := by
     unfold fvec
-    rw [dif_neg (by simp only [Fin.val_succ]; omega)]
+    rw [dite_eq_right (by simp only [Fin.val_succ]; omega)]
   have e2 : posL k r l.succ (Fin.cast (mdim_lastL l hl) t) = wI k r t := by
     apply Fin.ext
     simp only [posL, wI, Fin.val_cast, Fin.val_succ]

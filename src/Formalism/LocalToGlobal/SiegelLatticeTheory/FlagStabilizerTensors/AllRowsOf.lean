@@ -163,7 +163,7 @@ theorem entN_mul_add {R : Type} [CommRing R] {N : ℕ} {M M' : Matrix (Fin N) (F
     rw [dif_pos ⟨j.2, h.2⟩] at h0
     simp only [Fin.eta] at h0
     rw [h0, mul_zero]
-  · rw [dif_neg h, dif_neg h, dif_neg h, add_zero]
+  · rw [dite_eq_right h, dite_eq_right h, dite_eq_right h, add_zero]
 
 theorem entN_one_ne' {R : Type} [CommRing R] {N : ℕ} {a b : ℕ} (h : a ≠ b) :
     entN (1 : Matrix (Fin N) (Fin N) R) a b = 0 := by
@@ -261,17 +261,17 @@ theorem egA_mul (a : MonoidAlgebra ℂ (G0g D.nd)) (x : X.B.I.Gf) {k : X.B.I.Gf}
     · have hE' : ∃ γ, GoodAt X (x * k) γ := by rw [hpred]; exact hE
       rw [dif_pos ⟨hxk, hE'⟩, dif_pos ⟨hx, hE⟩, choose_congr hpred hE' hE]
     · have hE' : ¬ ∃ γ, GoodAt X (x * k) γ := by rw [hpred]; exact hE
-      rw [dif_neg (fun h => hE' h.2), dif_neg (fun h => hE h.2)]
+      rw [dite_eq_right (fun h => hE' h.2), dite_eq_right (fun h => hE h.2)]
   · have hxk : x * k ∉ X.B.I.Kset := by
       intro h
       apply hx
       have := K_mul _ h (K_inv _ hk.1)
       rwa [mul_inv_cancel_right] at this
-    rw [dif_neg (fun h => hxk h.1), dif_neg (fun h => hx h.1)]
+    rw [dite_eq_right (fun h => hxk h.1), dite_eq_right (fun h => hx h.1)]
 
 theorem egA_of_not_mem (a : MonoidAlgebra ℂ (G0g D.nd)) {x : X.B.I.Gf} (hx : x ∉ X.B.I.Kset) : egA X a x = 0 := by
   unfold egA
-  rw [dif_neg (fun h => hx h.1)]
+  rw [dite_eq_right (fun h => hx h.1)]
 
 theorem eT_mul (S : Set (Tup2 D)) (x : X.B.I.Gf) {k : X.B.I.Gf} (hk : k ∈ X.B.I.Kg X.B.g) :
     eT X S (x * k) = eT X S x := by
@@ -449,7 +449,7 @@ theorem egA_univ (hK : RedKer X) (x : X.B.I.Gf) :
     · have hc : Classical.choose hE ≠ 1 := fun h : Classical.choose hE = 1 => hk ((hK x hx).1 (by rw [← h]; exact hγ))
       rw [if_neg hc, if_neg hk, zero_div]
   · unfold egA
-    rw [dif_neg (fun h => hx h.1), if_neg (fun h => hx h.1)]
+    rw [dite_eq_right (fun h => hx h.1), if_neg (fun h => hx h.1)]
 
 theorem etUniv_of (hK : RedKer X) : EtUniv X := by
   classical
@@ -1025,7 +1025,7 @@ theorem etUnip_of (k : Fin 2) (hR : RedKerP X (1 - k)) (S : Set (Tup D k)) : EtU
   unfold egA at hz
   by_cases hzK : y⁻¹ * x ∈ X.B.I.Kset ∧ ∃ γ, GoodAt X (y⁻¹ * x) γ
   swap
-  · rw [dif_neg hzK] at hz; exact absurd rfl hz
+  · rw [dite_eq_right hzK] at hz; exact absurd rfl hz
   rw [dif_pos hzK] at hz
   obtain ⟨hzK1, hzE⟩ := hzK
   have hγ := Classical.choose_spec hzE

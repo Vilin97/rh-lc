@@ -17,7 +17,7 @@ abbrev square_block_restriction (G : Matrix (Fin N) (Fin N) ℂ) (T : Finset (Fi
 theorem minorIJ_self (G : Matrix (Fin N) (Fin N) ℂ) (T : Finset (Fin N)) :
     minorIJ G T T = (square_block_restriction G T).det := by
   unfold minorIJ
-  rw [dif_pos rfl, ← Matrix.det_submatrix_equiv_self (T.orderIsoOfFin rfl).toEquiv (square_block_restriction G T)]
+  rw [dite_eq_left rfl, ← Matrix.det_submatrix_equiv_self (T.orderIsoOfFin rfl).toEquiv (square_block_restriction G T)]
   congr 1
 
 theorem det_squareBlockRestriction_ne_zero (G : Matrix (Fin N) (Fin N) ℂ) (hd : G.det ≠ 0) (T : Finset (Fin N))
@@ -71,7 +71,7 @@ theorem exists_cols (G : Matrix (Fin N) (Fin N) ℂ) (F : Set (Finset (Fin N))) 
     have h2 : ∀ x : {x // x ∈ Tb b}, G a x.1 * (if hx : x.1 ∈ Tb b then (square_block_restriction G (Tb b))⁻¹ ⟨x.1, hx⟩ ⟨b, hbTb b⟩ else 0) =
         square_block_restriction G (Tb b) ⟨a, ha⟩ x * (square_block_restriction G (Tb b))⁻¹ x ⟨b, hbTb b⟩ := by
       intro x
-      rw [dif_pos x.2]
+      rw [dite_eq_left x.2]
       rfl
     rw [Matrix.mul_apply]
     simp only [Matrix.of_apply]

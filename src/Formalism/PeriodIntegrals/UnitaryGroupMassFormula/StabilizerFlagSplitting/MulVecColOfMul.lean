@@ -127,6 +127,6 @@ lemma conj_pow {N : ℕ} (A G Gi : Matrix (Fin N) (Fin N) ℂ) (h1 : Gi * G = 1)
 
 lemma fvec_lt (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
     fvec k r z ⟨a.val, by omega⟩ = bvec (eI k r a) := by
-  unfold fvec; rw [dif_pos a.isLt]
+  unfold fvec; rw [dite_eq_left a.isLt]
 
 end PI.StabSplit

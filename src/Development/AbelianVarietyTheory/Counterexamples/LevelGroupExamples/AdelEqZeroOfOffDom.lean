@@ -20,7 +20,7 @@ theorem rdU_eq_zero (U : Unf Xo c σ r) (f : Rul Xo c) (h : ∀ k, ∀ x ∈ (U.
   · exact h k x hx
   · classical
     show (if h : x ∈ (U.X k).dom then toC (evR Xo c f (U.un k ⟨x, h⟩)) else 0) = 0
-    rw [dif_neg hx]
+    rw [dite_eq_right hx]
 
 theorem indep_one {K M : Type} [Field K] [AddCommGroup M] [Module K M] {f : M} (h : f ≠ 0) :
     LinearIndependent K (fun _ : Fin 1 => f) := linearIndependent_unique_iff.2 h
@@ -227,7 +227,7 @@ theorem zero_of_dict_off_dom (hd : ∀ g, (dict g).2 ∉ (U.X (dict g).1).dom) (
   refine rdU_eq_zero U f (h la _ hf (Filter.Eventually.of_forall fun q => ?_))
   classical
   show mu q.out * (if h : (dict q.out).2 ∈ (U.X _).dom then toC (evR Xo c f (U.un _ ⟨_, h⟩)) else 0) = 0
-  rw [dif_neg (hd _), mul_zero]
+  rw [dite_eq_right (hd _), mul_zero]
 
 end Adelic
 end GlobalTheory.OneEmbeddingProbe

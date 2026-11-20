@@ -184,7 +184,7 @@ theorem sgHC_eq {R : Ranks} (P : HCParam R) (i : Fin (R.N R.m - 1)) :
   by_cases h1 : (i : ℕ) < R.k - 1
   · rw [dif_pos h1, dif_pos h1]
     rfl
-  · rw [dif_neg h1, dif_neg h1]
+  · rw [dite_eq_right h1, dite_eq_right h1]
     have h2 : ((i : ℕ) - (R.k - 1)) / (R.t + 1) < R.m := by
       rw [Nat.div_lt_iff_lt_mul (Nat.succ_pos _)]
       have := R.two_le_m

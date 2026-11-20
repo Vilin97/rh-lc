@@ -141,7 +141,7 @@ theorem evR_frMap_of_isReduced (E : Type) [Field E] [NumberField E] [IsCMField E
     obtain ⟨p, ψ, y', hy'⟩ := hT1
     exact ⟨p, φ.comp ψ, y', frMap_trans (Xo := Xo) (c := c) _ _ _ ψ φ y' y₁ y₂ hy' hm⟩
   unfold evR evalAt
-  rw [dif_pos hT2, dif_pos hT1]
+  rw [dite_eq_left hT2, dite_eq_left hT1]
   exact hWD f hf K₂ _ _ _ _ _ _ y₂ hT2.choose_spec.choose_spec.choose_spec
     (frMap_trans (Xo := Xo) (c := c) _ _ _ _ φ _ y₁ y₂ hT1.choose_spec.choose_spec.choose_spec hm)
 

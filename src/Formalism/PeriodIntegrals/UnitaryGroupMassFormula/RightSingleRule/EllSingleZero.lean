@@ -37,9 +37,9 @@ lemma ell_single_row (z : Fin (2 * r + k + 1) → ℂ) (l : Fin r) (b : Fin (2 *
   unfold ell
   rw [Finset.sum_eq_single l]
   · by_cases h : l.val + 1 < r
-    · rw [dif_pos h, dif_pos h, Matrix.single_apply]
+    · rw [dite_eq_left h, dite_eq_left h, Matrix.single_apply]
       simp
-    · rw [dif_neg h, dif_neg h, mulVec_single']
+    · rw [dite_eq_right h, dite_eq_right h, mulVec_single']
       simp
   · intro a' _ ha'
     have hne : eI k r l ≠ eI k r a' := fun h => ha' (Fin.ext (by
@@ -47,10 +47,10 @@ lemma ell_single_row (z : Fin (2 * r + k + 1) → ℂ) (l : Fin r) (b : Fin (2 *
       simp only [eI] at h'
       omega))
     by_cases h : a'.val + 1 < r
-    · rw [dif_pos h, Matrix.single_apply, if_neg]
+    · rw [dite_eq_left h, Matrix.single_apply, if_neg]
       rintro ⟨h1, -⟩
       exact hne h1
-    · rw [dif_neg h, mulVec_single', if_neg (Ne.symm hne)]
+    · rw [dite_eq_right h, mulVec_single', if_neg (Ne.symm hne)]
   · intro h
     exact absurd (Finset.mem_univ l) h
 
@@ -212,10 +212,10 @@ lemma val_ev (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (l : Fin r) (j 
     ell_single_row]
   unfold xv fvec
   by_cases h : l.val + 1 < r
-  · rw [dif_pos h, dif_pos (show l.succ.val < r from h)]
+  · rw [dite_eq_left h, dite_eq_left (show l.succ.val < r from h)]
     simp only [bvec, Pi.single_apply]
     rfl
-  · rw [dif_neg h, dif_neg (show ¬ l.succ.val < r from h), one_mul]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ l.succ.val < r from h), one_mul]
 
 lemma val_ve (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (l : Fin r) (j : Fin (mdim k r l.succ)) :
     ell k r z (Matrix.single (posL k r l.succ j) (esI k r l) 1) +
@@ -229,7 +229,7 @@ lemma val_ve (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (l : Fin r) (j 
   rw [herm_bvec_left]
   unfold fvec
   by_cases h : l.val + 1 < r
-  · rw [dif_pos h, dif_pos (show l.succ.val < r from h)]
+  · rw [dite_eq_left h, dite_eq_left (show l.succ.val < r from h)]
     simp only [bvec, Pi.single_apply]
     split_ifs with h1 h2 h3
     all_goals first
@@ -237,7 +237,7 @@ lemma val_ve (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (l : Fin r) (j 
       | exact absurd h3 h1
       | (rw [star_one, one_mul, star_sgn])
       | simp
-  · rw [dif_neg h, dif_neg (show ¬ l.succ.val < r from h), star_mul', star_sgn, mul_comm]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ l.succ.val < r from h), star_mul', star_sgn, mul_comm]
 
 lemma val_ees (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (l : Fin r) :
     ell k r z (Matrix.single (eI k r l) (esI k r l) 1) +

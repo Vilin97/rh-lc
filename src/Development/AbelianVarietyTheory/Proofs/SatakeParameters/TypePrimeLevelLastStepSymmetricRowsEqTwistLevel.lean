@@ -12,7 +12,7 @@ theorem levGTop_rPsymF_eq_twLt : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (C
   rw [levGTop_PsymF]
   show _ = colLevSym Ch R.m w
   unfold colLevSym
-  rw [if_neg (by have := R.two_le_m; omega), dif_neg (by omega), dif_neg (by omega)]
+  rw [if_neg (by have := R.two_le_m; omega), dite_eq_right (by omega), dite_eq_right (by omega)]
   rfl
 
 end GlobalTheory

@@ -168,7 +168,7 @@ theorem co_eq (M : LieModel G ξ Li) (B : Fin r → Li) (z : Sp ℂ ⟶ X) {V : 
     (Mz : LieModel G z V) (β : Module.Basis (Fin r) ℂ V) (hβ : ∀ i u, M.ValAt z (B i) (Mz.pt u) ↔ u = β i)
     (u : V) : co M B z (Mz.pt u) = β.repr u := by
   have h : ∃ c, Co M B z (Mz.pt u) c := ⟨_, (co_iff M B z Mz β hβ u _).2 rfl⟩
-  rw [co, dif_pos h]
+  rw [co, dite_eq_left h]
   exact (co_iff M B z Mz β hβ u _).1 h.choose_spec
 
 theorem dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
@@ -245,7 +245,7 @@ theorem co_conj [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieMode
   by_cases hc : ∃ c, Co M B z v c
   · have h1 := co_map (starRingEnd ℂ) M B rfl v v' hv' hc.choose_spec
     have hc' : ∃ c, Co M B _ v' c := ⟨_, h1⟩
-    rw [co, co, dif_pos hc, dif_pos hc', co_unique hξ M B _ h hB hc'.choose_spec h1]
+    rw [co, co, dite_eq_left hc, dite_eq_left hc', co_unique hξ M B _ h hB hc'.choose_spec h1]
   · have hcc : (starRingEnd ℂ).comp (starRingEnd ℂ) = RingHom.id ℂ := RingHom.ext fun a => Complex.conj_conj a
     have hz : spMap (starRingEnd ℂ) ≫ spMap (starRingEnd ℂ) ≫ z = z := by
       rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hcc, CommRingCat.ofHom_id, Spec.map_id,
@@ -256,7 +256,7 @@ theorem co_conj [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieMode
       rw [hv', ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← dual_comp, hcc, hd,
         CommRingCat.ofHom_id, Spec.map_id, Category.id_comp]
     have hc' : ¬ ∃ c, Co M B _ v' c := fun ⟨c, h⟩ => hc ⟨_, co_map (starRingEnd ℂ) M B hz v' v hv h⟩
-    rw [co, co, dif_neg hc, dif_neg hc']
+    rw [co, co, dite_eq_right hc, dite_eq_right hc']
     simp
 
 theorem co_val [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieModel G ξ Li)

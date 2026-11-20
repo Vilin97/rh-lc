@@ -423,7 +423,7 @@ theorem toL2_congr_on_unitary_bis {F G : Matrix (Fin n) (Fin n) ℂ → ℂ} (h 
   · rw [toL2_eq_toLp_of_memLp hm, toL2_eq_toLp_of_memLp (e ▸ hm)]
     exact MemLp.toLp_congr _ _ (Filter.Eventually.of_forall fun g => congrFun e g)
   · unfold toL2
-    rw [dif_neg hm, dif_neg (e ▸ hm)]
+    rw [dite_eq_right hm, dite_eq_right (e ▸ hm)]
 
 theorem emb_of {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ)} (hR : RightOK ε X c)
     (hC : ContOK ε X c) (hL : ∀ u, LevelF ε (c u) 0) (u : X.V) (h1 : c u 1 ≠ 0) :

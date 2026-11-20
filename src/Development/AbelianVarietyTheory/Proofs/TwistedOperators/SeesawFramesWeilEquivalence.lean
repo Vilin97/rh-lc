@@ -63,7 +63,7 @@ theorem map_darbAlg_eq_top {F E : Type} [Field F] [NumberField F] [Field E] [Num
       (∀ v, φ v ∈ GlobalTheory.WeilM.SB _) → (∀ᶠ v in Filter.cofinite, φ v = M.vac v) →
       liftPure M pr pv s (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = pr f ⊗ₜ GlobalTheory.SmallThetaModules.pureT s (fun v => pv v (φ v)) := by
     unfold liftPure
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec
   have key : ∀ (x : P) (ξ : ∀ v, N v), Formalism.MainNotions.KudlaSiegelWeil.Restr s ξ →
       x ⊗ₜ[ℂ] GlobalTheory.SmallThetaModules.pureT s ξ ∈ (darbAlg M ψ τ).map (liftPure M pr pv s) := by
@@ -109,7 +109,7 @@ theorem map_thetaLift {D : D7} {m k d : ℕ} {Y : GlobalTheory.IndefiniteRowSide
     intro Ψ hΨ
     rw [hT Ψ (hS hΨ)]
     unfold thetaLift
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec Ψ hΨ
   ext x
   constructor

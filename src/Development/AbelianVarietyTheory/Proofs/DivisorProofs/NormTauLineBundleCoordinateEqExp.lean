@@ -22,7 +22,7 @@ theorem valF_id {F : Type} [Field F] (U : (Sp F).Opens) (h : ⊤ ≤ U) (f : Γ(
         (((Sp F).presheaf.map (homOfLE h).op).hom f) := by
   have h' : ⊤ ≤ (𝟙 (Sp F) : Sp F ⟶ Sp F) ⁻¹ᵁ U := h
   unfold valF
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   congr 1
 
 variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω} {ρ : S.Real}

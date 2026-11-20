@@ -40,7 +40,7 @@ theorem redThrough_eq_of_val_sub {A : ValuationSubring Ω} {l : ℕ} [Fact l.Pri
     (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar l) {z w : Ω} (hz : z ∈ A) (hw : w ∈ A)
     (h : A.valuation (z - w) < 1) : redThrough A κ z = redThrough A κ w := by
   unfold redThrough
-  rw [dif_pos hz, dif_pos hw]
+  rw [dite_eq_left hz, dite_eq_left hw]
   congr 1
   apply Ideal.Quotient.eq.2
   exact (A.valuation_lt_one_iff (⟨z, hz⟩ - ⟨w, hw⟩)).2 h
@@ -143,7 +143,7 @@ theorem GlobalTheory.tameRep_residue : ∀ (E Ω : Type) [Field E] [NumberField 
   have hred : redThrough A κ (σ y / y) = (a : Formalism.CyclotomicNorms.Fbar g) := by
     rw [redThrough_eq_of_val_sub κ (tameQuot_mem A σ hg1 hgΩ hy) haA h3]
     unfold redThrough
-    rw [dif_pos haA]
+    rw [dite_eq_left haA]
     have : (⟨(a : Ω), haA⟩ : A) = (a : A) := Subtype.ext (by simp)
     rw [this, map_natCast, map_natCast]
   have hz : ζ 1 = (a : Formalism.CyclotomicNorms.Fbar g) := by rw [← hTy, hred]

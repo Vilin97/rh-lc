@@ -34,7 +34,7 @@ theorem source_scalar_const : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg 
   have hχ : d.chi j hj.le La ≠ 0 := by unfold Dec.chi; exact Units.ne_zero _
   have hcD : ((D.chiD ((t.O u μ).dt j (clsAt X H j La.1 La.2)) : ℂˣ) : ℂ) ≠ 0 := Units.ne_zero _
   unfold dPow sPt Dec.uS kS dPow
-  rw [dif_pos hj.le, hmu j hj.le _ (d.mem j hj.le La), hgd.1]
+  rw [dite_eq_left hj.le, hmu j hj.le _ (d.mem j hj.le La), hgd.1]
   simp only []
   set n : ℤ := ((D.R.N (j + 1) / 2 : ℕ) : ℤ) with hn
   set c : ℤ := cTw D j with hc

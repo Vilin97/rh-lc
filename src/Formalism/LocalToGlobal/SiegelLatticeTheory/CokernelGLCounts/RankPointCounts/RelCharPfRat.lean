@@ -230,7 +230,7 @@ theorem ratVanish_holds : RatVanish := by
   have hisoF : ∀ a b, (VS D).hT (t.lin a) (t.lin b) = (VS D).hT a b := hiso
   set F' := mapFlag t.lin hiso (X.Fu u') with hF'
   have hfr : t.frame = ⟨F', t.lin (X.Fu u').z⟩ := by
-    unfold GTerm.frame mapLF; rw [dif_pos hiso]; rfl
+    unfold GTerm.frame mapLF; rw [dite_eq_left hiso]; rfl
   have hRF := (Formalism.L2.SG.Closed.TermFun_holds D u u' (X.Fu u) t.lam ((Yf.rowsOK u).1 t.lam t.mem)).2.2.1
   have hrel0 := (TermDef.isRel_mk D.host.F hRF ⟨t.frame, t.rep.2.2.2.2⟩).1 ht
   have hrel : Relevant D.host.F (X.Fu u) F' := by

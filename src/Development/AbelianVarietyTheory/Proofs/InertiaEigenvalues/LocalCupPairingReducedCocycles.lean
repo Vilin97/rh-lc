@@ -171,7 +171,7 @@ theorem cup_eq_zero_above : LocalTateDuality → ∀ (D : Formalism.BasicNotions
       · rw [pow_one, IsLocalRing.maximalIdeal_eq_bot, Ideal.mem_bot] at hc
         rw [hc, zero_smul]
     exact h1.comp (f := fun p : DecV N v × (Fin D.R.r → K) => ((p.1 : GE N), p.2)) (by fun_prop)
-  rw [bkOn, dif_pos hv] at hx hy
+  rw [bkOn, dite_eq_left hv] at hx hy
   have key := cup_mem_of_span _ _ μ (dotProductBilin K K) continuous_of_discreteTopology hbe hc _
     (coboundaries_le_cyclotomic_additive φ hl μ hμ) _ _ (by
       rintro _ ⟨z, c, t, b, h1, h2, h3, rfl⟩ _ ⟨z', c', t', b', h1', h2', h3', rfl⟩

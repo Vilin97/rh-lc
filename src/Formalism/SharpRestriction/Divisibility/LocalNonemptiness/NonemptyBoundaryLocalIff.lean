@@ -254,7 +254,7 @@ theorem nonempty_boundary_local_trivial_biext (D : D7) {r j p : ℕ} (L : Moduli
     trB_norm := fun y nW n a χ σ => rfl
     alp := fun n => if h : ModuliIntegralCharts.NHyp D p n then (exists_alp D p n h).choose else 0
     alp_spec := fun n h => by
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact (exists_alp D p n h).choose_spec
     th1 := th
     pbAl := pb

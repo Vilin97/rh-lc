@@ -43,7 +43,7 @@ theorem nz_map {σ : Ψ → (𝓞 E →+* ℂ)} (hσ : IsCMFam σ) (h2 : ∀ x y
     (I : Submodule (𝓞 E) Λ) : R'.nz σ (I.map α.toLinearMap) = R.nz σ I := by
   by_cases hI : I = ⊥
   · subst hI
-    rw [Submodule.map_bot, RiemLat.nz, RiemLat.nz, dif_neg, dif_neg]
+    rw [Submodule.map_bot, RiemLat.nz, RiemLat.nz, dite_eq_right, dite_eq_right]
     · rintro ⟨r, v, h1, h4, h5, -⟩
       exact h5.ne_zero ⟨0, h1⟩ (h4 _)
     · rintro ⟨r, v, h1, h4, h5, -⟩

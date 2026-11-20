@@ -81,6 +81,6 @@ theorem UpperTheory.Gal.G3.pHopEx :
   have hex : ∃ A, X.IsHop T j f A := ⟨A, hiso A m hmj had (fun x => by rw [hA, hY])⟩
   have hh : X.IsHop T j f (X.hecke T j f) := by
     unfold Tower.hecke
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   exact ⟨hh, fun A' hA' => huniq _ _ hA' hh⟩

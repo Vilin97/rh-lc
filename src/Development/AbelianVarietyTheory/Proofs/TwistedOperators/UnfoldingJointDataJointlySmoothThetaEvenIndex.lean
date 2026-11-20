@@ -71,8 +71,8 @@ theorem castSch_theta' {k n : ℕ} (e : n = D.R.m) (f : WO (G.V (.grid D.R.m k))
 theorem dite_pred {α : Type} (P : α → Prop) {c : Prop} [Decidable c] {a : c → α} {b : ¬c → α} (ha : ∀ h, P (a h))
     (hb : ∀ h, P (b h)) : P (dite c a b) := by
   by_cases h : c
-  · rw [dif_pos h]; exact ha h
-  · rw [dif_neg h]; exact hb h
+  · rw [dite_eq_left h]; exact ha h
+  · rw [dite_eq_right h]; exact hb h
 
 set_option maxHeartbeats 1000000 in
 

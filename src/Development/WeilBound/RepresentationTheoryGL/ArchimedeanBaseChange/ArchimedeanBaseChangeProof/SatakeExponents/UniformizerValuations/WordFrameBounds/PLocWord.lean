@@ -281,7 +281,7 @@ theorem locWord : LocWord := by
     simp only [LocData.B, LocData.P, Finset.mem_union] at h ⊢
     tauto)
   have hprod : prodL d ls a = (d.fixL a).mul ((ls.map (locL d a ha)).foldr LM.mul (d.eL a)) := by
-    rw [prodL, dif_pos ha]
+    rw [prodL, dite_eq_left ha]
     rfl
   refine ⟨fun p => ⟨?_, (unit_eqv d hd ha (hgL d hd ha p)).1, ?_⟩, fun w hw => ?_, fun w hw => ?_,
     fun w hw => atPlace_nil d hw ls⟩

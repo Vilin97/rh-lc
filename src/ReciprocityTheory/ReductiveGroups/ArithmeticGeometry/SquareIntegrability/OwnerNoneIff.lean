@@ -33,20 +33,20 @@ variable {bs}
 
 theorem owner_colB (hD : Disj bs) (p : Σ j : Fin nb, Fin (bs j).i) : owner bs (colB bs p) = some p := by
   have h' : ∃ q, colB bs q = colB bs p := ⟨p, rfl⟩
-  rw [owner, dif_pos h']
+  rw [owner, dite_eq_left h']
   exact congrArg some (colB_inj hD h'.choose_spec)
 
 theorem colB_of_owner {k : Fin n} {p : Σ j : Fin nb, Fin (bs j).i} (h : owner bs k = some p) :
     colB bs p = k := by
   by_cases h' : ∃ q, colB bs q = k
-  · rw [owner, dif_pos h'] at h
+  · rw [owner, dite_eq_left h'] at h
     obtain rfl := Option.some_injective _ h
     exact h'.choose_spec
-  · rw [owner, dif_neg h'] at h
+  · rw [owner, dite_eq_right h'] at h
     cases h
 
 theorem owner_eq_none {k : Fin n} (h : ∀ p, colB bs p ≠ k) : owner bs k = none := by
-  rw [owner, dif_neg (show ¬∃ q, colB bs q = k from fun ⟨q, hq⟩ => h q hq)]
+  rw [owner, dite_eq_right (show ¬∃ q, colB bs q = k from fun ⟨q, hq⟩ => h q hq)]
 
 theorem owner_none_iff (hD : Disj bs) (k : Fin n) : owner bs k = none ↔ ∀ p, colB bs p ≠ k := by
   refine ⟨fun h p hp => ?_, owner_eq_none⟩

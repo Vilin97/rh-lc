@@ -271,7 +271,7 @@ theorem prefRep_normal {G D A : Type} [Group G] [MulAction G D] [Nonempty A] (f 
     have h : Quotient.mk (MulAction.orbitRel G D) (g • q) = Quotient.mk _ q := Quotient.sound (MulAction.orbitRel_apply.2 ⟨g, rfl⟩)
     exact ⟨g • q, h, (hp _).2 (by rw [key _ h]; exact e.symm)⟩
   unfold prefRep
-  rw [dif_pos hex, (hp _).1 hex.choose_spec.2, key _ hex.choose_spec.1]
+  rw [dite_eq_left hex, (hp _).1 hex.choose_spec.2, key _ hex.choose_spec.1]
 
 end Normal
 
@@ -448,7 +448,7 @@ theorem dia_of_pt (hPr : (B.primes X).Ok) (u : B.Word) {n : ℕ} [NeZero n] {Q :
     have e : ((diaT (Pr := B.primes X) u P : (𝓞 B.fields.E ⧸ P.1.asIdeal)ˣ) : 𝓞 B.fields.E ⧸ P.1.asIdeal) =
         Ideal.Quotient.mk P.1.asIdeal (B.fields.conjO (X.piT u)) := by
       unfold diaT
-      rw [dif_pos hu]
+      rw [dite_eq_left hu]
       rfl
     rw [e]
     exact k3 P r j hr

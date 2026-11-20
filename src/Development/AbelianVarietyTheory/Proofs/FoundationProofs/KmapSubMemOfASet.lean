@@ -103,7 +103,7 @@ theorem fix_fin (X : Tower Ω ε) (f : X.K) :
     simpa [hqf] using this
   by_contra hne
   have hmem : (X.exp f).coeff (rr _ hne) ∈ E2 :=
-    Finset.mem_image.2 ⟨X.gal s f, Multiset.mem_toFinset.2 hroot, by rw [dif_neg hne]⟩
+    Finset.mem_image.2 ⟨X.gal s f, Multiset.mem_toFinset.2 hroot, by rw [dite_eq_right hne]⟩
   apply hrr _ hne
   rw [X.gal_exp]
   exact hs _ (Finset.mem_union_right _ hmem)

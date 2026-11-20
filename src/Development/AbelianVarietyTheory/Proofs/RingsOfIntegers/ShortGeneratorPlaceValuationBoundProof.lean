@@ -262,7 +262,7 @@ theorem shortBound : ShortBoundSt := by
   have hbe := hs.beta j hj w.n (h.kPsi j hj) Λ hU hTb
   have hβ : betaH (Dw := T.Q.Dw j) T.Q.c Λ ≠ 0 ∧ BetaIs (Dw := T.Q.Dw j) T.Q.c Λ (betaH (Dw := T.Q.Dw j) T.Q.c Λ) := by
     unfold betaH
-    rw [dif_pos hbe]
+    rw [dite_eq_left hbe]
     exact ⟨hbe.choose_spec.1, hbe.choose_spec.2.1⟩
   obtain ⟨ef1, ef2, ef3⟩ := GlobalTheory.PlaceInt.eF_transfer _ _ _ _ (T.Q.Xo j) T.Q.c w.n (T.dδ j w.n) Λ
   obtain ⟨T', iT, r, io₂, y₂, C, ζ, z, tp, F, hr, hiT, hfr, hio, hC, hrat, hζ, hz, hgi, htp, hF, hval⟩ :=

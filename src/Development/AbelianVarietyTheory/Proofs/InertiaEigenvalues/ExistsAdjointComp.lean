@@ -88,7 +88,7 @@ theorem actL_comp {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {L : LevDat D.h
   have e : actL V β L g₀ (fun x => l (c.ext F x)) = actG0 V β L g₀ (fun x => l (c.ext F x)) := rfl
   rw [e]
   unfold actG0
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   show _ * l (c.ext F _) = _
   rw [← h1, map_smul, Pi.smul_apply, map_smul, smul_eq_mul, inv_mul_cancel_left₀ h0]
 

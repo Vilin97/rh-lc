@@ -210,7 +210,7 @@ theorem lift_of_subsingleton (Qc K : SubSystem S x Ω) (hKQ : ∀ I, K.sub I ≤
     else 0
   have hψ : ∀ I : Cech.Idx (support x) 0, ψ I.1.1 = s I.1 - (v I : Ω) := fun I => by
     simp only [ψ]
-    rw [dif_pos ⟨I.1.2, I.2⟩]
+    rw [dite_eq_left ⟨I.1.2, I.2⟩]
   have hpair : ∀ J : Cech.Idx (support x) 1,
       ∑ j : J.1.1, Cech.sgn J.1.1 j • ψ (J.1.1.erase j) = 0 := by
     intro J

@@ -185,10 +185,10 @@ theorem riemann_eq_majorant : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by simp)]
       unfold perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by dsimp only; omega)]
       unfold perFr
-      rw [dif_neg a, dif_pos (show conjEmb (relab c σ s.1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ s.1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       rfl
   obtain ⟨h1, h2, h3⟩ := core (U.X k) x.2 (Uw.e.trans f) (fun a => (Uw.φ k a : Fin r → E)) (Uw.Pm k x)
     (fun a j => by rw [Uw.Pm_eq, hper]; rfl) (Uw.period k x).2.2.2.1 Hm hR.2.1

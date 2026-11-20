@@ -67,7 +67,7 @@ theorem i_cycle : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
   have hPW : P ≤ W := le_sup_left.trans hW.1.1.2
   obtain ⟨u, v, hu, hv, huv⟩ := h W hWp hPW hW.2
   unfold multAt
-  rw [dif_pos hWp, dif_pos hWp]
+  rw [dite_eq_left hWp, dite_eq_left hWp]
   congr 1
   rw [icyc_len, icyc_len]
   have e : Ideal.map (algebraMap (MRing ι) (Localization.AtPrime W)) (P ⊔ Ideal.span {f}) =

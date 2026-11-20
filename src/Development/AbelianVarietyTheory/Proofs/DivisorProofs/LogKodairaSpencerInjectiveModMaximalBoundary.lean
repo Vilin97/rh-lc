@@ -64,7 +64,7 @@ theorem logKS_inj_mod_boundary : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     have e := ReciprocityTheory.ChartRestriction.G.PullbackSections.germ_stalkClosedPointTo_eq ξ (genι Y ⁻¹ᵁ U.1) hxU'
     have e2 := congrArg (fun φ => φ.hom (((genι Y).app U.1).hom r)) e
     simp only [CommRingCat.hom_comp, RingHom.comp_apply] at e2
-    rw [RingHom.comp_apply, RingHom.comp_apply, e2, valR, dif_pos hU, Scheme.Hom.comp_appLE]
+    rw [RingHom.comp_apply, RingHom.comp_apply, e2, valR, dite_eq_left hU, Scheme.Hom.comp_appLE]
     rfl
   have hDR : ∀ r, DR (valR (ξ ≫ genι Y) U.1 r) = valR (ξ ≫ genι Y) U.1 (D.1 r) := by
     intro r

@@ -69,7 +69,7 @@ theorem norm_root_le {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRi
   have e : valF (spMap (intO C).subtype ≫ w) ⊤ π ^ (p - 1) =
       valF (spMap (intO C).subtype ≫ w) ⊤ (u : Γ(B.X, ⊤)) * p := by
     have h : ⊤ ≤ (spMap (intO C).subtype ≫ w) ⁻¹ᵁ ⊤ := le_top
-    rw [valF, valF, dif_pos h, dif_pos h, ← map_pow, ← map_pow, hu, map_mul, map_mul, map_natCast, map_natCast]
+    rw [valF, valF, dite_eq_left h, dite_eq_left h, ← map_pow, ← map_pow, hu, map_mul, map_mul, map_natCast, map_natCast]
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
   have hn : p - 1 ≠ 0 := Nat.sub_ne_zero_of_lt hp.one_lt
   refine le_of_pow_le_pow_left₀ hn (Real.rpow_nonneg (by linarith) _) ?_

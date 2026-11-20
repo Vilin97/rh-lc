@@ -397,7 +397,7 @@ theorem coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
   have hC'u : IsUnit C'.det := isUnit_of_mul_isUnit_right hΓu
   obtain ⟨c, hcdef, hc⟩ : ∃ c : GL (Fin (b + 2 + a')) (Fv F v), c = basGL t H' e ∧ (c : Matrix (Fin (b + 2 + a')) (Fin (b + 2 + a')) (Fv F v)) = C := by
     refine ⟨_, rfl, ?_⟩
-    rw [basGL, dif_pos (hCdef ▸ hCu)]; exact hCdef.symm
+    rw [basGL, dite_eq_left (hCdef ▸ hCu)]; exact hCdef.symm
   obtain ⟨c', hc'⟩ : ∃ c' : GL (Fin (b + 2 + a')) (Fv F v), (c' : Matrix (Fin (b + 2 + a')) (Fin (b + 2 + a')) (Fv F v)) = C' :=
     ⟨Matrix.nonsingInvUnit C' hC'u, rfl⟩
   have hx : C *ᵥ Pi.single (e i0) 1 = fun r => t (H'.x r) := by rw [hCdef]; exact basis_matrix_apply_first_vector e H' t

@@ -76,12 +76,12 @@ theorem maps_lamY_iff (hq : q ≠ 0) {k c' n' c n : ℕ} (hk' : k ≤ n') (hk : 
   · intro h p p' hp hp'
     have := h ⟨_, fIdx_lt hk hp⟩ ⟨_, fIdx_lt hk' hp'⟩
     unfold entB atN
-    rw [dif_pos (fIdx_lt hk hp)]
+    rw [dite_eq_left (fIdx_lt hk hp)]
     exact this
   · intro h l l'
     have := h _ _ (fIdx_fPos hk l.2).1 (fIdx_fPos hk' l'.2).1
     unfold entB atN at this
-    rw [(fIdx_fPos hk l.2).2, (fIdx_fPos hk' l'.2).2, dif_pos l.2] at this
+    rw [(fIdx_fPos hk l.2).2, (fIdx_fPos hk' l'.2).2, dite_eq_left l.2] at this
     exact this
 
 omit [NumberField E] [StarRing E] in

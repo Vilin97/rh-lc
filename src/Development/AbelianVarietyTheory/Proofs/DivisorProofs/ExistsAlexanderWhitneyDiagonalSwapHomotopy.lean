@@ -42,7 +42,7 @@ lemma step_spec (N : ℕ) (c : Pr N →₀ ℤ) (hc : Pr.Deg (N + 1) c)
     · obtain ⟨h1, h2⟩ := GlobalTheory.T.alexanderWhitneyDiagonal_and_swap_chain_maps N
       rw [map_sub, map_sub, h1, h2, hdbd, hd, bd_sub, sub_self]
   unfold step
-  rw [dif_pos H]
+  rw [dite_eq_left H]
   exact H.choose_spec
 
 lemma hom_spec (N : ℕ) : Pr.Deg (N + 1) (hom N) ∧ Pr.bd (Pr.d N (hom N)) = Pr.bd (Pr.aw N - Pr.wa N) := by

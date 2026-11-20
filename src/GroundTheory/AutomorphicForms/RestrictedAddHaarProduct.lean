@@ -62,13 +62,13 @@ theorem secFun_of_mem {T : Finset ι} (a : (i : T) → G i) {i : ι} (h : i ∈ 
     secFun T a i = a ⟨i, h⟩ := by
   classical
   unfold secFun
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem secFun_of_notMem {T : Finset ι} (a : (i : T) → G i) {i : ι} (h : i ∉ T) :
     secFun T a i = 0 := by
   classical
   unfold secFun
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 def sec (T : Finset ι) : ((i : T) → G i) →+ (Πʳ i, [G i, (C i : Set (G i))]) where
   toFun a := ⟨secFun T a, by
@@ -135,10 +135,10 @@ theorem isCompact_box_inter_preimage [∀ i, IsTopologicalAddGroup (G i)] [∀ i
     · rintro x ⟨hxE, hxS⟩ i -
       by_cases h : i ∈ T
       · dsimp only
-        rw [dif_pos h]
+        rw [dite_eq_left h]
         exact ⟨_, hxE, rfl⟩
       · dsimp only
-        rw [dif_neg h]
+        rw [dite_eq_right h]
         exact hxS i h
   set Z : Set (Πʳ i, [G i, (C i : Set (G i))]_[𝓟 S]) := (fun y ↦ (y : (i : ι) → G i)) ⁻¹' W with hZ
   have hZc : IsCompact Z := by

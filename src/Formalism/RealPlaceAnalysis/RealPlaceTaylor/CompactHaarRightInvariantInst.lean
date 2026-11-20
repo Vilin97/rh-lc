@@ -59,7 +59,7 @@ theorem group_exponential_facts : ExpGFacts := by
     have hk : ∀ t : ℝ, ((expK ε X t : KG ε) : UJ ε) = expG ε X t := by
       intro t
       unfold expK
-      rw [dif_pos hK]
+      rw [dite_eq_left hK]
     refine ⟨hk, ?_⟩
     apply continuous_induced_rng.2
     have h3 : (Subtype.val ∘ fun t : ℝ => expK ε X t) = fun t : ℝ => expG ε X t := funext hk

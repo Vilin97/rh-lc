@@ -156,8 +156,8 @@ theorem SectionCount.Drop.proof (hF : SectionCount.Drop.Filt.Statement.{u, w})
       rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
       by_cases hP : qq ∈ (primeOf (S := k) x ⊔ zeroIdeal (twistSys k x (b : ℤ)) β).minimalPrimes ∧
           IsSubvar x qq d
-      · rw [dif_pos hP]; rw [dif_pos hP] at hq; rw [hq]
-      · rw [dif_neg hP]; rw [dif_neg hP] at hq; rw [hq]; simp
+      · rw [dite_eq_left hP]; rw [dite_eq_left hP] at hq; rw [hq]
+      · rw [dite_eq_right hP]; rw [dite_eq_right hP] at hq; rw [hq]; simp
     rw [finsum_congr hTq, finsum_eq_sum_of_support_subset (s := Finset.univ.image pp)]
     · rw [Finset.sum_comm]
       refine Finset.sum_congr rfl (fun j _ => ?_)

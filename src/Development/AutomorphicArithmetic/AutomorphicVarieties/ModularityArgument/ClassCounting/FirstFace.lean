@@ -73,7 +73,7 @@ theorem sZc : SZc := by
   simp only [← Finset.smul_sum]
   rw [Finset.sum_fin_eq_sum_range]
   refine sum_pair _ (e + 1) fun t ht => ?_
-  rw [dif_pos (show 2 * t < 2 * e + 1 + 1 by omega), dif_pos (show 2 * t + 1 < 2 * e + 1 + 1 by omega)]
+  rw [dite_eq_left (show 2 * t < 2 * e + 1 + 1 by omega), dite_eq_left (show 2 * t + 1 < 2 * e + 1 + 1 by omega)]
   simp only [merge q e t ht]
   rw [← Equiv.sum_comp (Equiv.addRight (fun i : Fin (e + 1) => if (i : ℕ) = t then (1 : ZMod q) else
     if (i : ℕ) = t + 1 then -1 else 0)) fun j => (Finsupp.single (Fin.contractNth

@@ -169,7 +169,7 @@ theorem exists_xi {Ω : Type} [Field Ω] (A : ValuationSubring Ω) (j : Ω →+*
       have := (div_left_inj' hp0).1 h.choose_spec
       exact_mod_cast this.symm
     dsimp only
-    rw [dif_pos h, e]
+    rw [dite_eq_left h, e]
     exact hc m
 
 theorem coef_bridge {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω)

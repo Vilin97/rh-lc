@@ -129,12 +129,12 @@ theorem exists_eval_decomposition (hσ : IsSmooth σ) {m : ℕ} {R : Finset (GL 
     else 0, fun x => ?_, fun ψ hψ => ?_⟩
   · by_cases hx : x ∈ R
     · dsimp only
-      rw [dif_pos hx, mem_fixedVectors_dual]
+      rw [dite_eq_left hx, mem_fixedVectors_dual]
       intro k hk w
       simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
       rw [fixedProj_apply_act hσ hKMc hKMo hk]
     · dsimp only
-      rw [dif_neg hx]
+      rw [dite_eq_right hx]
       exact zero_mem _
   · have hval : ∀ x ∈ R, ((fixedProj σ hσ hKMc hKMo ((ψ : GL (Fin n) F → W) x) :
         fixedVectors σ KM) : W) = (ψ : GL (Fin n) F → W) x := fun x hx =>
@@ -151,7 +151,7 @@ theorem exists_eval_decomposition (hσ : IsSmooth σ) {m : ℕ} {R : Finset (GL 
       rw [hlam, hEψ, map_sum, ← Finset.sum_coe_sort R]
     refine Finset.sum_congr rfl fun x _ => ?_
     dsimp only
-    rw [dif_pos x.2]
+    rw [dite_eq_left x.2]
     simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
     rw [hval x x.2]
 

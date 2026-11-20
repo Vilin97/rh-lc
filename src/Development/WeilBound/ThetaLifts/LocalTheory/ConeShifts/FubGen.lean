@@ -213,11 +213,11 @@ def unitP {A : Type} [Ring A] [Algebra R A] (a : R) : Aˣ →* Aˣ := by
 
 theorem coe_unitP {A : Type} [Ring A] [Algebra R A] {a : R} (h : a * a = a) (x : Aˣ) :
     (unitP a x : A) = a • (x : A) + (1 - a) • (1 : A) := by
-  unfold unitP; rw [dif_pos h]; rfl
+  unfold unitP; rw [dite_eq_left h]; rfl
 
 theorem unitInvariant_continuous {A : Type} [Ring A] [Algebra R A] [TopologicalSpace A] [IsTopologicalRing A] [ContinuousConstSMul R A] {a : R}
     (h : a * a = a) : Continuous (unitP (A := A) a) := by
-  unfold unitP; rw [dif_pos h]
+  unfold unitP; rw [dite_eq_left h]
   exact Continuous.units_map _ (by show Continuous fun x : A => a • x + (1 - a) • (1 : A); fun_prop)
 
 theorem unitInvariant_comp {A : Type} [Ring A] [Algebra R A] {a b : R} (ha : a * a = a) (hb : b * b = b) (x : Aˣ) :

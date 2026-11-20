@@ -80,7 +80,7 @@ def whittakerAt (T : cuspIntertwiners μ σ) (w : H) : ℂ :=
 theorem whittakerAt_eq {T : cuspIntertwiners μ σ} {w : H} {F : normOneGL K n → ℂ}
     (h : HasContRep μ (T.1 w) F) : whittakerAt μ σ T w = whittakerOne F 1 := by
   have hex : ∃ F, HasContRep μ (T.1 w) F := ⟨F, h⟩
-  rw [whittakerAt, dif_pos hex, hex.choose_spec.unique h]
+  rw [whittakerAt, dite_eq_left hex, hex.choose_spec.unique h]
 
 def whittakerOf (T : cuspIntertwiners μ σ) : Module.Dual ℂ (smoothSpan μ σ) where
   toFun w := whittakerAt μ σ T w

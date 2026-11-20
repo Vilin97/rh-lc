@@ -60,7 +60,7 @@ def AtPtRelevantC : Prop :=
 theorem cTerm_irrel (hAt : AtPtRelevantC X Y u u') (t : Term D u u' (X.Fu u) (Y.what₂ u)) (ht : ¬ t.relevant) :
     Formalism.L2.SG.PairVal.cTerm vR t = 0 := by
   unfold Formalism.L2.SG.PairVal.cTerm
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨w, hw⟩
   exact ht (hAt t w hw)
 

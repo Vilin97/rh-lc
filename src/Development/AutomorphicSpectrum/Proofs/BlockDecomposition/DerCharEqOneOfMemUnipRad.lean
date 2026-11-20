@@ -317,21 +317,21 @@ theorem glEmbMat_block_apply {n m : ℕ} (hnm : n ≤ m) (g : Matrix (Fin n) (Fi
       else (1 : Matrix (Fin (m + 1)) (Fin (m + 1)) k) r s := by
   induction r using Fin.lastCases with
   | last =>
-    rw [dif_neg (fun h => by have := h.1; simp at this; omega)]
+    rw [dite_eq_right (fun h => by have := h.1; simp at this; omega)]
     induction s using Fin.lastCases with
     | last => rw [GlobalTheory.CompanionTheory.BZMirStep.glEmbMat_last_last, one_apply_eq]
     | cast s => rw [GlobalTheory.CompanionTheory.BZMirStep.glEmbMat_last_castSucc, one_apply_ne (Fin.castSucc_ne_last s).symm]
   | cast r =>
     induction s using Fin.lastCases with
     | last =>
-      rw [dif_neg (fun h => by have := h.2; simp at this; omega), GlobalTheory.CompanionTheory.BZMirStep.glEmbMat_castSucc_last,
+      rw [dite_eq_right (fun h => by have := h.2; simp at this; omega), GlobalTheory.CompanionTheory.BZMirStep.glEmbMat_castSucc_last,
         one_apply_ne (Fin.castSucc_ne_last r)]
     | cast s =>
       rw [GlobalTheory.CompanionTheory.BZMirStep.glEmbMat_castSucc_castSucc, hA r s]
       by_cases h : (r : ℕ) < n ∧ (s : ℕ) < n
-      · rw [dif_pos h, dif_pos (by simpa using h)]
+      · rw [dite_eq_left h, dite_eq_left (by simpa using h)]
         rfl
-      · rw [dif_neg h, dif_neg (by simpa using h)]
+      · rw [dite_eq_right h, dite_eq_right (by simpa using h)]
         simp [one_apply]
 
 theorem iotaM_apply (n : ℕ) (g : GL (Fin n) k) : ∀ (j : ℕ) (r s : Fin (n + j + 1)),
@@ -339,7 +339,7 @@ theorem iotaM_apply (n : ℕ) (g : GL (Fin n) k) : ∀ (j : ℕ) (r s : Fin (n +
       if h : (r : ℕ) < n ∧ (s : ℕ) < n then (g : Matrix (Fin n) (Fin n) k) ⟨r, h.1⟩ ⟨s, h.2⟩
       else (1 : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) r s
   | 0, r, s => glEmbMat_block_apply le_rfl (g : Matrix (Fin n) (Fin n) k) (g : Matrix (Fin n) (Fin n) k)
-      (fun r s => by rw [dif_pos ⟨r.2, s.2⟩]) r s
+      (fun r s => by rw [dite_eq_left ⟨r.2, s.2⟩]) r s
   | j + 1, r, s => glEmbMat_block_apply (by omega) (g : Matrix (Fin n) (Fin n) k) _ (iotaM_apply n g j) r s
 
 theorem iotaM_eq_emb (n j : ℕ) (g : GL (Fin n) k) :
@@ -351,11 +351,11 @@ theorem iotaM_eq_emb (n j : ℕ) (g : GL (Fin n) k) :
   obtain ⟨x, rfl⟩ := (stdSum (rfl : n + (j + 1) = n + j + 1)).surjective r
   obtain ⟨y, rfl⟩ := (stdSum (rfl : n + (j + 1) = n + j + 1)).surjective s
   rcases x with x | x <;> rcases y with y | y
-  · rw [emb_inl_inl, dif_pos (by simp)]
+  · rw [emb_inl_inl, dite_eq_left (by simp)]
     congr 1
-  · rw [emb_inl_inr, dif_neg (by simp), one_inl_inr]
-  · rw [emb_inr_inl, dif_neg (by simp), one_inr_inl]
-  · rw [emb_inr_inr, dif_neg (by simp), one_inr_inr]
+  · rw [emb_inl_inr, dite_eq_right (by simp), one_inl_inr]
+  · rw [emb_inr_inl, dite_eq_right (by simp), one_inr_inl]
+  · rw [emb_inr_inr, dite_eq_right (by simp), one_inr_inr]
     rfl
 
 end Entries

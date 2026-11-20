@@ -32,7 +32,7 @@ theorem pullUnit_spec {K : Type} [Field K] (σ : K →+* ℂ) {z : ℂ} (hz : z 
     exact hz (by rw [← hy, map_zero])
   have h' : ∃ y : Kˣ, σ y = z := ⟨Units.mk0 y hy0, hy⟩
   unfold pullUnit
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 theorem roots_of_isPrimitiveRoot {K : Type} [Field K] (σ : K →+* ℂ) {n : ℕ} (hn : n ≠ 0) {y : K}

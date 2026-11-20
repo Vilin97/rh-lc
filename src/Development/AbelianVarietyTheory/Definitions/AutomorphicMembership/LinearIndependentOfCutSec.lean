@@ -22,7 +22,7 @@ variable {K K' : Type} [Field K] [Field K'] {Z : Scheme.{0}} [IsIntegral Z] (y :
 theorem valAt_algebraMap (a : Z.presheaf.stalk (below y)) :
     valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [valAt, dif_pos h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
+  rw [valAt, dite_eq_left h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
 
 variable {y}
 
@@ -78,7 +78,7 @@ theorem valAt_comp (φ : K →+* K') (f : Z.functionField) : valAt (spMap φ ≫
     intro hU'
     exact congrArg (fun q => q.hom a) (Scheme.germ_stalkClosedPointTo_Spec_fromSpecStalk
       (Scheme.stalkClosedPointTo y ≫ CommRingCat.ofHom φ) U hU')
-  · rw [valAt, valAt, dif_neg h, dif_neg ((below_comp y φ).symm ▸ h), map_zero]
+  · rw [valAt, valAt, dite_eq_right h, dite_eq_right ((below_comp y φ).symm ▸ h), map_zero]
 
 variable {y} in
 

@@ -206,7 +206,7 @@ theorem geoMono_word (hE : ResExistsStatement) (M : GlobalTheory.CompanionTheory
       have := k.2
       simp [Multiset.length_toList]
     unfold GlobalTheory.CompanionTheory.Ar.Top.monoLines
-    rw [hms, dif_pos hk, hρ k hk]
+    rw [hms, dite_eq_left hk, hρ k hk]
     rfl
   unfold GlobalTheory.CompanionTheory.Ar.Top.RootModel.geoMono
   rw [if_pos hdeg, hnone, pow_zero, mul_one, hML]

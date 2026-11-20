@@ -243,7 +243,7 @@ theorem star_norm {K : Type} [NormedField K] [IsUltrametricDist K] (hS : StarAri
     (by
       intro s e' he'
       simp only [hi]
-      rw [dif_neg (by simpa using he')])
+      rw [dite_eq_right (by simpa using he')])
     hioff
     (by
       intro s e'

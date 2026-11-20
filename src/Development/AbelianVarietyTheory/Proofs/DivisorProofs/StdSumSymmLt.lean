@@ -22,9 +22,9 @@ theorem part1 {R : Type} [CommRing R] (n m o o' o₁ o₂ p q : ℕ) (X : Matrix
   rw [put_apply', put_apply']
   split_ifs with ha hb hb
   · rw [put_apply']
-    rw [dif_pos (by simp only; omega)]
+    rw [dite_eq_left (by simp only; omega)]
     congr 1 <;> ext <;> simp <;> omega
-  · rw [put_apply', dif_neg (by simp only; omega)]
+  · rw [put_apply', dite_eq_right (by simp only; omega)]
   · exfalso; omega
   · rfl
 

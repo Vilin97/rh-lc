@@ -163,7 +163,7 @@ theorem integral_locId_eq_unrFac : ∀ {F E : Type} [Field F] [NumberField F] [F
     show Multiplicative.ofAdd (fun w : ι => ordAt v w.1 x) = _
     congr 1
     funext w
-    rw [hx w.1 w.2, dif_pos w.2]
+    rw [hx w.1 w.2, dite_eq_left w.2]
   have hm : MeasurableSet {g : idelesAt E (evFin F v) | o g = 1} := by
     rw [hker]
     exact (isCompact_isOpen_unitsAt v).2.measurableSet

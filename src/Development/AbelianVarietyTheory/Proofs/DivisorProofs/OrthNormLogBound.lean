@@ -72,7 +72,7 @@ theorem extremal_eq (lam : DomWeight (n + 1)) (K : Type) [Field K] :
     have h2 := natW_top lam i.succ
     have h3 : nuNext lam.natW i.castSucc = lam.natW i.succ := by
       unfold nuNext
-      rw [dif_pos (by simp)]
+      rw [dite_eq_left (by simp)]
       rfl
     rw [h3]
     have h4 : lamN lam i = lam.natW i.castSucc := rfl
@@ -109,7 +109,7 @@ theorem kap_bounds (h : Br.Interlace rfl lam sg) :
 
 theorem spread_eq (lam : DomWeight (n + 1)) : lam.spread = lam.w 0 - lam.w (Fin.last n) + (n + 1 : ℕ) := by
   unfold DomWeight.spread
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   rfl
 
 theorem kap_le (h : Br.Interlace rfl lam sg) {A : ℝ} (hA : ((lam.spread : ℤ) : ℝ) ≤ A) :

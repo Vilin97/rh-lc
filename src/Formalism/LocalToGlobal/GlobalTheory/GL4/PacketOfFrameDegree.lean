@@ -63,7 +63,7 @@ theorem detShift_eq (τ : D.what₂.Tau) :
   have hn := rank_zero_pos D
   have hk := columnCount_pos D
   unfold DomWeight.detShift
-  rw [dif_pos hn]
+  rw [dite_eq_left hn]
   have := weight_eq_lamCol D u τ ⟨D.R.N 0 - 1, by omega⟩
   rw [this]
   congr 3

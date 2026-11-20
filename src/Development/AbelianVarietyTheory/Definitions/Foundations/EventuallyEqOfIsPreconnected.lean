@@ -577,7 +577,7 @@ theorem isRightDomain_contDom (hs : s₀ ∈ contDom h) : IsRightDomain (contDom
 theorem CoeffAt.laurent_eq (a : CoeffAt h s₀ n c) : laurent h s₀ n = c := by
   have hex : ∃ c, CoeffAt h s₀ n c := ⟨c, a⟩
   unfold laurent
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact CoeffAt.unique hex.choose_spec a
 
 theorem coeffAt_laurent (hs : s₀ ∈ contDom h) (n : ℤ) : CoeffAt h s₀ n (laurent h s₀ n) := by

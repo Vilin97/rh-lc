@@ -66,7 +66,7 @@ theorem extZ_val (α : glG E a → ℂ) (y : glG E a) :
     extZ α (toL y.1.val) = ((|detL (toL y.1.val)|⁻¹ : ℝ) : ℂ) * α y := by
   have h : IsUnit (Matrix.of (toL y.1.val)) := y.1.isUnit
   have e : (⟨h.unit, Subgroup.mem_top _⟩ : glG E a) = y := Subtype.ext (Units.ext h.unit_spec)
-  rw [extZ, dif_pos h, e]
+  rw [extZ, dite_eq_left h, e]
 
 theorem continuous_toL_val : Continuous fun y : glG E a => toL y.1.val :=
   (toLCLM E a).continuous.comp (Units.continuous_val.comp continuous_subtype_val)
@@ -118,7 +118,7 @@ theorem contDiffAt_extZ {α : glG E a → ℂ} (hα : (glH E a).IsSmoothFun α) 
     refine (?_ : _ = (u : Matrix (Fin a) (Fin a) (Cinf E)) * L x).trans (congrArg _ h2.symm)
     change Matrix.of x = (u : Matrix (Fin a) (Fin a) (Cinf E)) * (_ * Matrix.of x)
     rw [Units.mul_inv_cancel_left]
-  rw [extZ, dif_pos (show IsUnit (Matrix.of x) from hxi), e]
+  rw [extZ, dite_eq_left (show IsUnit (Matrix.of x) from hxi), e]
 
 theorem exists_isTest_ext : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∀ α : glG E a → ℂ,
     (glH E a).IsSmoothFun α → HasCompactSupport α → ∃ β : Lie E a → ℂ, GlobalTheory.CuspQuot.IsTest (invSet E a) β ∧

@@ -117,7 +117,7 @@ theorem avg_eigen : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
     fun z => if h : ∃ e : ℂ, L z vac = e • vac then h.choose else 1
   have hαspec : ∀ z, (∃ e : ℂ, L z vac = e • vac) → L z vac = α z • vac := fun z h => by
     show _ = (if h : ∃ e : ℂ, L z vac = e • vac then h.choose else 1) • vac
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   let c : (Fin a' × Fin (a + a') → Fv F w) × (Fin a' × Fin (a + a') → Fv F w) →
       (Fin a' × Fin (a + a') → Fv F w) × (Fin a' × Fin (a + a') → Fv F w) → ℂ :=

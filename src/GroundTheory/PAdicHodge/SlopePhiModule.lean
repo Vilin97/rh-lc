@@ -199,7 +199,7 @@ def deg (Φ : M →ₛₗ[φ] M) : ℤ :=
 theorem deg_eq (b : Basis ι R M) (Φ : M →ₛₗ[φ] M) (h : IsPhiModule Φ) :
     deg v Φ = degIn v b Φ h := by
   classical
-  rw [deg, dif_pos h]
+  rw [deg, dite_eq_left h]
   exact degIn_eq v _ _ Φ h
 
 theorem phiMatrix_smul (b : Basis ι R M) (c : R) (Φ : M →ₛₗ[φ] M) :

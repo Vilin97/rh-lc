@@ -56,7 +56,7 @@ theorem first_gap_vector_difference (N p A T D : ℕ) (c0 : ℝ) (u : Fin N → 
   unfold firstGapVector
   rw [anchored_gap _ _ _ h]
   unfold firstVectorGaps gap uMinus
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem first_gap_vector_anchored (N p A T D : ℕ) (c0 : ℝ) (u : Fin N → ℝ) (h : A < N) :
     firstGapVector N p A T D c0 u ⟨A, h⟩ = 0 := anchored_anchor _ _ h

@@ -66,7 +66,7 @@ theorem grp_eq {D : D7} {Z : LocDat D} {T T' : D.host.E} {F0 : LFlag (VS D) D.R.
 
 theorem frame_mapLF (D : D7) {T : D.host.E} (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT)
     (F : LFlag (VS D) D.R.rS T) (b : Fin (D.R.rS + 1)) : frame (mapLF γ F) b = γ (frame F b) := by
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
   induction b using Fin.lastCases with
   | last => simp [frame, FlagG.fvec, mapFlag]
   | cast b => simp [frame, FlagG.fvec, mapFlag]

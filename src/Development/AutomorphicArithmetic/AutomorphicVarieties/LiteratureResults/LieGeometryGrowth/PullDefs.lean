@@ -58,7 +58,7 @@ def toOm {q : ℕ} (z : S → V → V [⋀^Fin q]→L[ℝ] (Fin d → ℂ)) : G.
 
 theorem toOm_apply {q : ℕ} {z : S → V → V [⋀^Fin q]→L[ℝ] (Fin d → ℂ)} (h : ∀ s, ContDiffOn ℝ ∞ (z s) G.Y) (s : S) {p : V}
     (hp : p ∈ G.Y) : (toOm G z).1 s p = z s p := by
-  rw [toOm, dif_pos h]
+  rw [toOm, dite_eq_left h]
   exact Set.indicator_of_mem hp _
 
 def pbOm (W : S → V → V) {q : ℕ} (w : G.Om q) : G.Om q := toOm G fun s => pb (flow (W s) 1) (w.1 s)

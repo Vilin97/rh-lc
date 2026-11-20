@@ -231,7 +231,7 @@ theorem ip_of_support (h : IsSB φ) (k : IsSB ψ) {A B : Set (Matrix κ ι K)} {
   obtain ⟨ρ, hρ, hh⟩ : ∃ ρ : ℝ, 0 ≤ ρ ∧
       haar (fun x : Matrix κ ι K => if x ∈ A ∧ x ∈ B then (1 : ℂ) else 0) = ρ := by
     unfold GlobalTheory.SW.haar
-    rw [dif_pos hind]
+    rw [dite_eq_left hind]
     unfold GlobalTheory.SW.haarAt
     refine ⟨((hind.choose : ℝ) ^ (Module.finrank ℚ K * (Fintype.card κ * Fintype.card ι)))⁻¹ *
       ∑ᶠ q : Matrix κ ι K ⧸ perSub K κ ι hind.choose,

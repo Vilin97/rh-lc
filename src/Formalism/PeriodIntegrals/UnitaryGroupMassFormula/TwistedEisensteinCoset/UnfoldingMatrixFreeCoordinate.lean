@@ -66,7 +66,7 @@ theorem unfolding_matrix_sub {n' c' n c : ℕ} (y : (Fin n' → E) →ₗ[E] (Fi
   by_cases hs : s < n' + c'
   · rw [dif_pos hs, LinearMap.sub_apply, Pi.sub_apply, xx1_eN_apply y t hs, xx1_eN_apply y t' hs]
     split_ifs <;> first | rfl | exact sub_self _
-  · rw [dif_neg hs, gh_eN_ge (not_lt.mp hs)]
+  · rw [dite_eq_right hs, gh_eN_ge (not_lt.mp hs)]
     simp
 
 end Vec

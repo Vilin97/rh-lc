@@ -64,7 +64,7 @@ theorem pow_sep {H : Geo.Tor.Host D.host.E} {Dw : Datum H} (l : Geo.Tor.Level H)
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 this
     exact ⟨y, hy, by rw [← hxy, sub_add_cancel_right]; exact neg_mem hx⟩
   have hc : cSep l ∈ Mfr l := by
-    unfold cSep; rw [dif_pos hex]; exact hex.choose_spec.1
+    unfold cSep; rw [dite_eq_left hex]; exact hex.choose_spec.1
   have hm : s ^ j * cSep l ∈ Ideal.span {(l.M : 𝓞 D.host.E)} := by
     rw [← l.prod]; exact Ideal.mul_mem_mul hj hc
   obtain ⟨t, ht⟩ := Ideal.mem_span_singleton'.1 hm

@@ -22,18 +22,18 @@ namespace GlobalTheory.DiffCoc
 theorem rsT_rsT {Z : Scheme.{0}} {O₀ T : Z.Opens} (s : Γ(Z, O₀)) (hT : T ≤ O₀) (O : Z.Opens) (hO : O ≤ T) :
     rsT (rsT s T) O = rsT s O := by
   unfold rsT
-  rw [dif_pos hT, dif_pos hO, dif_pos (hO.trans hT)]
+  rw [dite_eq_left hT, dite_eq_left hO, dite_eq_left (hO.trans hT)]
   simp [resG]
 
 theorem rsT_add {Z : Scheme.{0}} {O₀ : Z.Opens} (s t : Γ(Z, O₀)) (O : Z.Opens) (hO : O ≤ O₀) :
     rsT (s + t) O = rsT s O + rsT t O := by
   unfold rsT
-  rw [dif_pos hO, dif_pos hO, dif_pos hO, map_add (f := _)]
+  rw [dite_eq_left hO, dite_eq_left hO, dite_eq_left hO, map_add (f := _)]
 
 theorem rsT_sub {Z : Scheme.{0}} {O₀ : Z.Opens} (s t : Γ(Z, O₀)) (O : Z.Opens) (hO : O ≤ O₀) :
     rsT (s - t) O = rsT s O - rsT t O := by
   unfold rsT
-  rw [dif_pos hO, dif_pos hO, dif_pos hO, map_sub]
+  rw [dite_eq_left hO, dite_eq_left hO, dite_eq_left hO, map_sub]
 
 theorem isLift_mono {R : Type} [CommRing R] {G : Over (Sp R)} {D : R → R} {W W' : G.left.Opens} (h : W' ≤ W)
     {d : Fld G.left} (hd : IsLift G D W d) : IsLift G D W' d :=

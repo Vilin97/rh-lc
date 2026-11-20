@@ -951,7 +951,7 @@ theorem gm_ew_zero (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.r →
     rintro ⟨⟨h1, -⟩, -⟩
     exact (h1 (s, 0) (List.mem_append_right _ (List.mem_singleton_self _))).2 rfl
   unfold TBB.Ew TBB.NP KB.Pl.RR D.RRplace
-  rw [dif_neg hn]
+  rw [dite_eq_right hn]
   simp
 
 theorem integral_five_at_place_of_parts (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (Y : Finset ℝ)

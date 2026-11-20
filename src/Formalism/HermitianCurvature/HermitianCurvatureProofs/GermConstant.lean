@@ -117,7 +117,7 @@ theorem gNSetC_main (S : C.HidaSetting E Wp Wq) [∀ x, FiniteDimensional ℂ (W
   · have hP' := isLocPt_toStd S.G.r (S.g : ℝ) hg P i hP
     have hQ' := isLocPt_toStd S.G.r (S.g : ℝ) hg Q i hQ
     unfold D.RRplace
-    rw [dif_pos ⟨hP', hQ'⟩, dif_pos hi, hcoef]
+    rw [dite_eq_left ⟨hP', hQ'⟩, dite_eq_left hi, hcoef]
     unfold KB.slv
     push_cast
     ring

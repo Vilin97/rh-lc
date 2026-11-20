@@ -289,7 +289,7 @@ theorem avgDataExists_main : AvgDataExists := by
     have hlh' : l ∈ Λ h' := by
       have := hlV.2; simp only [Set.mem_iInter] at this; exact this h' hh'
     unfold NsK
-    rw [dif_pos hu', dif_pos hu]
+    rw [dite_eq_left hu', dite_eq_left hu]
     unfold Ns
     have hz0 : ((hu.unit : Kˣ) : K) ∈ Om := by rw [IsUnit.unit_spec]; exact hz
     have hd : ((hu'.unit : Kˣ) : K) - ((hu.unit : Kˣ) : K) = l := by

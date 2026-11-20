@@ -563,7 +563,7 @@ omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] [IsAdicComplete (maximalIdea
   [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 theorem intPart_algebraMap (x : 𝒪) : intPart K (algebraMap 𝒪 K x) = x := by
   have h : algebraMap 𝒪 K x ∈ Set.range (algebraMap 𝒪 K) := ⟨x, rfl⟩
-  rw [intPart, dif_pos h]
+  rw [intPart, dite_eq_left h]
   exact IsFractionRing.injective 𝒪 K h.choose_spec
 
 open Classical in
@@ -588,7 +588,7 @@ theorem reducePoint_some_integral {x y : 𝒪}
   have hn : (curveRed W).Nonsingular (residue 𝒪 (intPart K (algebraMap 𝒪 K x)))
       (residue 𝒪 (intPart K (algebraMap 𝒪 K y))) := by
     rwa [intPart_algebraMap, intPart_algebraMap]
-  rw [reducePoint, dif_pos ⟨⟨x, rfl⟩, hn⟩, WeierstrassCurve.Affine.Point.some.injEq,
+  rw [reducePoint, dite_eq_left ⟨⟨x, rfl⟩, hn⟩, WeierstrassCurve.Affine.Point.some.injEq,
     intPart_algebraMap, intPart_algebraMap]
   exact ⟨rfl, rfl⟩
 
@@ -596,7 +596,7 @@ omit [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map (algebraMap 𝒪 K)).IsEl
   [IsFractionRing 𝒪 K] in
 theorem reducePoint_some_notMem {X Y : K} (h : (curveK K W).Nonsingular X Y)
     (hX : X ∉ Set.range (algebraMap 𝒪 K)) : reducePoint K W (.some _ _ h) = 0 := by
-  rw [reducePoint, dif_neg (fun h' => hX h'.1)]
+  rw [reducePoint, dite_eq_right (fun h' => hX h'.1)]
 
 omit [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 

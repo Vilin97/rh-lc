@@ -197,7 +197,7 @@ theorem val_eq_one_all (h2 : Module.finrank ℚ K = 2) (M : ∀ v : Pl, LM c v) 
   have hw : w.asIdeal.LiesOver v.asIdeal := ⟨rfl⟩
   refine val_eq_one h2 (M v) (hok v) κ hN ?_ w hw
   have h := DFunLike.congr_fun h0 v
-  rw [vK, dif_pos (support_finite h2 M hok κ)] at h
+  rw [vK, dite_eq_left (support_finite h2 M hok κ)] at h
   exact h
 
 theorem finite_units (h2 : Module.finrank ℚ K = 2) (hc : IsTotallyComplex K) : Finite (𝓞 K)ˣ := by

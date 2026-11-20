@@ -11,7 +11,7 @@ theorem size_thick {D : D7} (L : SizeData₂ D) (g : D.R.GG) (j : Fin D.R.m) (hT
   set ρ := D.eTau.symm ⟨plc g, plc_mem g⟩ with hρ
   have hw : wj D (j.1 + 1) ρ = (((D.hc ρ).e j : ℚ) : ℝ) := by
     have hj' : j.1 + 1 - 1 < D.R.m := by have := j.2; omega
-    rw [wj, dif_pos hj']
+    rw [wj, dite_eq_left hj']
     have : (⟨j.1 + 1 - 1, hj'⟩ : Fin D.R.m) = j := Fin.ext (by simp)
     rw [this]
   have hmem : (D.eTau ρ : D.R.GG) ∈ D.host.thickPlaces := by

@@ -118,7 +118,7 @@ theorem egA_rhoX (a : MonoidAlgebra ℂ (G0g D.nd)) (ha : ∀ γ P : G0g D.nd, a
   have h : (x : X.B.I.Gf) ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ :=
     ⟨x.2, rhoX X x, goodAt_rhoX X x⟩
   unfold egA
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   congr 1
   have hγ := Classical.choose_spec h.2
   have hP : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), ∃ P : GL (Fin D.R.r) (ZMod (D.host.g kv.1)),

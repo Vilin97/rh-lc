@@ -87,10 +87,10 @@ theorem unitV_mul {K : Type} [Field K] (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) 
     rw [dif_pos hc, dif_pos hab.1, dif_pos hab.2, ← Units.val_mul, ← map_mul]
     congr 2
     exact Units.ext (by simpa using h)
-  · rw [dif_neg hc]
+  · rw [dite_eq_right hc]
     by_cases ha : IsUnit (redP P a)
-    · rw [dif_neg (fun hb => hc (h ▸ ha.mul hb)), mul_zero]
-    · rw [dif_neg ha, zero_mul]
+    · rw [dite_eq_right (fun hb => hc (h ▸ ha.mul hb)), mul_zero]
+    · rw [dite_eq_right ha, zero_mul]
 
 def co (q k₀ n c : ℕ) (v : Sp E (n + c)) (p : ℕ) : E :=
   ((q : E) ^ scE n (fun i => i + 1) (fIdx k₀ c n p))⁻¹ * atN v (fIdx k₀ c n p)

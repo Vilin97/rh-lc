@@ -55,7 +55,7 @@ theorem fi_nonneg {ε : Fin n → Bool} (z : PCoord ε → ℂ) (i : ℕ) : 0 �
     have h := lse_one_le (wS z hi) (fun S => yS z S.1) (wS_nonneg' z hi) (lemma3b z hi) (lemma3c z hi)
     simpa only [one_mul] using h
   · unfold Fi Del
-    rw [dif_neg hi]
+    rw [dite_eq_right hi]
     simp
 
 theorem fi_lower {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i ≤ n) {ep : ℝ}

@@ -83,7 +83,7 @@ theorem tailM_spec {c : ℤ → K} {ρ₁ ρ₂ ε : ℝ} (h1 : ConvergesAt c ρ
       ‖c n‖ * ρ₁ ^ n ≤ ε ∧ ‖c n‖ * ρ₂ ^ n ≤ ε := by
   have h := exists_tail_le h1 h2 hε
   unfold tailM
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem ring_identities {I : Set ℝ} [Fact (∃ ρ ∈ I, 0 < ρ)] {A B a b f g c c' : ℤ → K}

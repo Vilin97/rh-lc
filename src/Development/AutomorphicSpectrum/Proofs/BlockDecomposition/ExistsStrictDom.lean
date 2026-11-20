@@ -51,7 +51,7 @@ theorem ordL_zpow {ϖ : L}
     rw [h1]
     exact WithZero.coe_ne_zero
   unfold ordL
-  rw [dif_neg hne]
+  rw [dite_eq_right hne]
   have key : WithZero.unzero hne = Multiplicative.ofAdd (-d) :=
     WithZero.coe_injective (by rw [WithZero.coe_unzero, h1])
   rw [key, toAdd_ofAdd, neg_neg]

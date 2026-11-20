@@ -37,7 +37,7 @@ namespace GlobalTheory.FrameBerg
 
 theorem one_le_gap_of_strictAnti {N : ℕ} {v : Fin N → ℤ} (hv : StrictAnti v) {k : ℕ} (hk : k + 1 < N) :
     1 ≤ gap v k := by
-  rw [gap, dif_pos hk]
+  rw [gap, dite_eq_left hk]
   have := hv (show (⟨k, by omega⟩ : Fin N) < ⟨k + 1, hk⟩ from Fin.mk_lt_mk.2 (Nat.lt_succ_self k))
   omega
 
@@ -60,7 +60,7 @@ theorem antitone_of_gap_nonneg {N : ℕ} {v : Fin N → ℤ} (h : ∀ k, k + 1 <
       have hc : (a : ℕ) + d < N := by omega
       have h1 := ih a ⟨(a : ℕ) + d, hc⟩ rfl
       have h2 := h ((a : ℕ) + d) (by omega)
-      rw [gap, dif_pos (by omega)] at h2
+      rw [gap, dite_eq_left (by omega)] at h2
       have e : b = ⟨(a : ℕ) + d + 1, by omega⟩ := Fin.ext (by simp only; omega)
       rw [e]
       linarith

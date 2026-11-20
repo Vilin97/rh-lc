@@ -72,7 +72,7 @@ theorem realise_commuting_family (hE2 : E2) (hTM : TensMul) (hBO : BlockOperator
     fun x => by
       have h := phiEx hBO hBW hBS hAW g X tX t₀ hok htX hXe ht₀ x
       unfold phiG
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact h.choose_spec
   letI : CommRing (ChAlg g X) := chComm g X hc hXc hXs
   have hCc : ({1} ∪ Set.range (genE g X) ∪ {XE g X} : Set (ChAlg g X)).Countable :=

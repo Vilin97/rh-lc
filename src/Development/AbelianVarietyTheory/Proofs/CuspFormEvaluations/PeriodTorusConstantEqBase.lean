@@ -51,13 +51,13 @@ def rowFn (i : Idx (dimPer X)) : X.Ψ × Fin r :=
 theorem rowFn_mem (τ : X.Ψ) (i : Fin (dimPer X τ.1)) (a : Fin r) (ha : (a : ℕ) = X.p0 + i) :
     rowFn X ⟨τ.1, i⟩ = (τ, a) := by
   unfold rowFn
-  rw [dif_pos τ.2]
+  rw [dite_eq_left τ.2]
   exact Prod.ext rfl (Fin.ext ha.symm)
 
 theorem rowFn_conj (τ : X.Ψ) (i : Fin (dimPer X (ComplexEmbedding.conjugate τ.1))) (a : Fin r)
     (ha : (a : ℕ) = X.p0 - 1 - i) : rowFn X ⟨ComplexEmbedding.conjugate τ.1, i⟩ = (τ, a) := by
   unfold rowFn
-  rw [dif_neg ((X.cmType _).mp τ.2)]
+  rw [dite_eq_right ((X.cmType _).mp τ.2)]
   exact Prod.ext (Subtype.ext (conj_conj_X _)) (Fin.ext ha.symm)
 
 theorem rowFn_bijective : Function.Bijective (rowFn X) := by

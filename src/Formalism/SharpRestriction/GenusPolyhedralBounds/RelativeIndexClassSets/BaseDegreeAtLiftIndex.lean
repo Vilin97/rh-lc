@@ -290,7 +290,7 @@ theorem ncAt_ka (τ : D.what₂.Tau) : ncAt X.ka τ = (X.kl : ℤ) + D.R.t + 1 :
     omega
   have hn : X.ka.n = D.R.nV := rfl
   unfold ncAt
-  rw [dif_pos h0, dif_neg h1,
+  rw [dite_eq_left h0, dite_eq_right h1,
     X.ka_last τ ⟨(D.R.sigW D.R.m).1 - 1, by omega⟩ (by show (D.R.sigW D.R.m).1 - 1 + 1 = _; omega),
     hn, sigW_m_fst, sigW_m_snd]
   unfold Ranks.nV

@@ -101,7 +101,7 @@ theorem _root_.GlobalTheory.HL.ContModel.cont_eq {W : Type} [AddCommGroup W]
     _root_.GlobalTheory.HL.cont W0 S =
       (((QuotientAddGroup.mk : W → W ⧸ A) '' S).ncard : ℝ) * _root_.GlobalTheory.HL.relVol W0 A := by
   have hS : _root_.GlobalTheory.HL.IsCO W0 S := ⟨A, hA⟩
-  rw [_root_.GlobalTheory.HL.cont, dif_pos hS]
+  rw [_root_.GlobalTheory.HL.cont, dite_eq_left hS]
   have hA' : _root_.GlobalTheory.HL.GoodSub W0 hS.choose S := hS.choose_spec
   have hB : (A ⊓ hS.choose).relIndex W0 ≠ 0 := AddSubgroup.relIndex_inf_ne_zero hA.1 hA'.1
   rw [_root_.GlobalTheory.HL.ContModel.relVol_of_le (inf_le_right : A ⊓ hS.choose ≤ hS.choose) hB,

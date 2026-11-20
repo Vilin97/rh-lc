@@ -202,13 +202,13 @@ theorem exists_bases (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT 
     simp only [Formalism.L2.Col.mem_starLat] at this
     exact this
   · show IsSplitBasis _ _ (if h : v.1 ∈ Bs.P then b₁ ⟨v.1, h⟩ else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact hb₁ v
   · have := GlobalTheory.T.scaledLattice_conj_directSum_trace_selfDual _ _ hV hV₁ e y
     rw [← h.JWW] at this
     exact this
   · show IsSplitBasis _ _ (if h : v.1 ∈ Bs.P then b₂ ⟨v.1, h⟩ else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact hb₂ v
 
 set_option maxHeartbeats 800000 in

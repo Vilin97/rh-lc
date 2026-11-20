@@ -52,7 +52,7 @@ theorem redM_frMapO_add {D : D7} {S T : HSp D} (βS : GL (Fin S.rank) (EAf D)) (
     simpa using this
   ext p q
   simp only [redM, e, Matrix.add_apply, Matrix.of_apply]
-  rw [dif_pos (add_mem (ha p q) (hb p q)), dif_pos (ha p q), dif_pos (hb p q), ← map_add (f := _)]
+  rw [dite_eq_left (add_mem (ha p q) (hb p q)), dite_eq_left (ha p q), dite_eq_left (hb p q), ← map_add (f := _)]
   rfl
 
 theorem datum_conj_half_fourier : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks]

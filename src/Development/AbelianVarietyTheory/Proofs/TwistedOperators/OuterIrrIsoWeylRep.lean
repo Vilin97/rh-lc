@@ -110,7 +110,7 @@ theorem hwVec_eq (n : ℕ) (hn : 0 < n) (lam : ι → ℕ → ℤ) (μ : ι → 
   unfold hwVec
   refine Finset.prod_congr rfl fun τ _ => ?_
   have hd : (μ τ).detShift = lam τ (n - 1) := by
-    rw [DomWeight.detShift, dif_pos hn]
+    rw [DomWeight.detShift, dite_eq_left hn]
     exact h τ ⟨n - 1, by omega⟩
   have hnat : ∀ i : Fin n, ((μ τ).natW i : ℤ) = lam τ i - lam τ (n - 1) := by
     intro i
@@ -137,7 +137,7 @@ theorem hwVec_eq (n : ℕ) (hn : 0 < n) (lam : ι → ℕ → ℤ) (μ : ι → 
     simp only [Fin.val_mk] at hst
     have hc : (((lam τ s - lam τ (s + 1)).toNat : ℕ) : ℤ) = lam τ s - lam τ (s + 1) :=
       Int.toNat_of_nonneg (by omega)
-    rw [Formalism.GradedWeylDivisibility.nuNext, dif_pos hs]
+    rw [Formalism.GradedWeylDivisibility.nuNext, dite_eq_left hs]
     omega
   · have ha := hnat s
     have hs' : (s : ℕ) = n - 1 := by omega
@@ -170,7 +170,7 @@ private theorem span_irr_orbit_extremal_eq_univ (n : ℕ) (μ : DomWeight n) :
   have hpad0 : (GlobalTheory.GLDuality.pad n a).detShift = 0 := by
     rw [DomWeight.detShift]
     split_ifs with hn
-    · rw [h1, DomWeight.natW, DomWeight.detShift, dif_pos hn, sub_self]
+    · rw [h1, DomWeight.natW, DomWeight.detShift, dite_eq_left hn, sub_self]
       rfl
     · rfl
   have hPQ : nablaSq ℂ n (GlobalTheory.GLDuality.pad n a) = nablaSq ℂ n μ := by
@@ -241,7 +241,7 @@ theorem outer_irr_iso_weylRep (ι : Type) [Fintype ι] [DecidableEq ι] (n : ℕ
     rw [← h2, ← h3, h1]
   have hds : ∀ τ, (μ τ).detShift = lam τ (n - 1) := by
     intro τ
-    rw [DomWeight.detShift, dif_pos hn]
+    rw [DomWeight.detShift, dite_eq_left hn]
     exact h τ ⟨n - 1, by omega⟩
   have htp : ∀ (g : UG ι n) (f : ∀ τ, nablaSq ℂ n (μ τ)),
       j (outer (fun τ => irr n (μ τ)) g (PiTensorProduct.tprod ℂ f)) =

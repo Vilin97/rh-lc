@@ -163,7 +163,7 @@ theorem clsOf_mul (X A Ai B Bi : Matrix (Fin (m + 1)) (Fin (m + 1)) E)
         rw [hXm, hYm, hfx, hinv, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hBv]
   · have hY : ¬ ((∀ a b, (A * X * B) a b ∈ Mp.R) ∧ IsUnit (A * X * B).det) :=
       fun h => hX ⟨hint.1 h.1, hdet.1 h.2⟩
-    rw [dif_neg hY, dif_neg hX]
+    rw [dite_eq_right hY, dite_eq_right hX]
 
 end ClsInv
 

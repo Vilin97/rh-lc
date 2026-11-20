@@ -188,7 +188,7 @@ theorem labE_lab_embLL (D : D7) (ρ : D.what₂.Tau) : labE D.what₂.embLL (lab
   have h : ∃ τ, labE D.what₂.embLL τ = tauE D ρ ∨ labE D.what₂.embLL τ = (starRingEnd ℂ).comp (tauE D ρ) :=
     ⟨ρ, Or.inl (labE_embLL D ρ)⟩
   unfold lab
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hs := h.choose_spec
   generalize h.choose = τ at hs
   rcases hs with hs | hs

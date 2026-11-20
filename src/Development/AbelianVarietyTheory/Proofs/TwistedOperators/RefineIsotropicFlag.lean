@@ -154,10 +154,10 @@ theorem exists_refine_isIsoFlag : ∀ {n a : ℕ} {ε : Fin n → Bool} {j : Fin
         rw [hWn]; congr 1; ext; simp; omega
       have e2 : Wn k = W (⟨k, hk⟩ : Fin a).castSucc := by
         rw [hWn]; congr 1; ext; simp; omega
-      rw [e1, e2, hstep ⟨k, hk⟩, hjn, dif_pos hk]
+      rw [e1, e2, hstep ⟨k, hk⟩, hjn, dite_eq_left hk]
     · have e : Wn (k + 1) = Wn k := by
         rw [hWn, hWn]; congr 1; ext; simp; omega
-      rw [e, hjn, dif_neg hk, Nat.add_zero]
+      rw [e, hjn, dite_eq_right hk, Nat.add_zero]
   obtain ⟨W', hW'm, hW'r, hW'p, hW'l⟩ := exists_refine_nat Wn jn P hWn0 hWnm hWns hP0 hPs a
   have hlast : W' (P a) = W (Fin.last a) := by
     rw [hW'l _ le_rfl, ← hWi (Fin.last a), Fin.val_last]

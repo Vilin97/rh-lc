@@ -183,7 +183,7 @@ theorem cjEq : CjEq := by
       ∀ x : E, s' (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨s, hc, hs⟩
   have hcj : GlobalTheory.BCT.cj w = h.choose := by
     unfold GlobalTheory.BCT.cj
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [hcj]
   have hdense : DenseRange (algebraMap E (w.adicCompletion E)) := by
     apply HeightOneSpectrum.denseRange_algebraMap

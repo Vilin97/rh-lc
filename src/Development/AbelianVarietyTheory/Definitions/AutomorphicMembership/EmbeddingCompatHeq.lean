@@ -104,10 +104,10 @@ theorem wt_wtOfN {i : ℕ} (w : WeightFamilies.Wt D i) (hp : S.Dw.p = (D.R.sigW 
   rw [Equiv.symm_apply_apply]
   simp only [GlobalTheory.AllWt.weightOf, L.ψ_val, wtA_big A, wtA_small A, wtOfN, Fin.val_cast, ext0]
   by_cases h : (a : ℕ) < (D.R.sigW i).1
-  · rw [dif_pos h, if_pos (by omega), dif_pos h]
+  · rw [dite_eq_left h, if_pos (by omega), dite_eq_left h]
   · have h' : (a : ℕ) - (D.R.sigW i).1 < (D.R.sigW i).2 := by omega
     have h'' : S.Dw.q - 1 - ((a : ℕ) - S.Dw.p) < (D.R.sigW i).2 := by omega
-    rw [dif_neg h, dif_pos h', if_neg (by omega), dif_pos h'']
+    rw [dite_eq_right h, dite_eq_left h', if_neg (by omega), dite_eq_left h'']
     congr 4
     apply Fin.ext
     simp only [Fin.val_rev]

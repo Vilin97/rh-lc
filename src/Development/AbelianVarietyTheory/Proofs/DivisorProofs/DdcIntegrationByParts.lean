@@ -77,14 +77,14 @@ theorem loc_mul (α β : A.Fld) (i : A.ι) : A.loc (α * β) i = fun v => A.loc 
 
 theorem loc_del_dbar (α : A.Fld) (i : A.ι) {v : V n} (hv : v ∈ (A.e i).target) :
     A.loc (A.del α) i v = delAt (A.loc α i) v ∧ A.loc (A.dbar α) i v = dbarAt (A.loc α i) v := by
-  constructor <;> rw [HolAtlas.loc, dif_pos hv]
+  constructor <;> rw [HolAtlas.loc, dite_eq_left hv]
   · exact congrArg (delAt (A.loc α i)) ((A.e i).right_inv hv)
   · exact congrArg (dbarAt (A.loc α i)) ((A.e i).right_inv hv)
 
 theorem loc_fn (g : M → ℝ) (i : A.ι) {v : V n} (hv : v ∈ (A.e i).target) :
     A.loc (A.fn g) i =ᶠ[𝓝 v] fun w => algebraMap ℂ (Alt n) (g ((A.e i).symm w) : ℂ) :=
   eventually_of_mem ((A.e i).open_target.mem_nhds hv) fun w hw => by
-    rw [HolAtlas.loc, dif_pos hw]
+    rw [HolAtlas.loc, dite_eq_left hw]
     rfl
 
 theorem dbar_del_fn {g : M → ℝ} (hg : A.SmoothOn Set.univ fun y => (g y : ℂ)) :

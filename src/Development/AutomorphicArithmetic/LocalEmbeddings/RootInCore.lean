@@ -138,7 +138,7 @@ theorem sum_entN {k : Type} [Field k] {r : ℕ} (M : Matrix (Fin r) (Fin r) k) :
   refine Finset.sum_subset (Finset.range_subset_range.2 (Nat.sub_le r 1)) fun x hx hx' => ?_
   simp only [Finset.mem_range] at hx hx'
   unfold entN
-  rw [dif_neg]
+  rw [dite_eq_right]
   omega
 
 theorem root_in_core {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D}

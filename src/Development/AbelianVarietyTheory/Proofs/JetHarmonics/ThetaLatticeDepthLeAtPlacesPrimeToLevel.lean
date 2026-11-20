@@ -154,7 +154,7 @@ theorem depth_le : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D 
   have hnu : nusOf (recB h.toLawsCore) w (nuWt T w) la =
       (ramOverZ la : ℝ) * nuWt T w la + (ramOverZ la : ℝ) * clOf w la := by
     unfold nusOf
-    rw [dif_neg (fun ⟨i, hi⟩ => hg i hi), ← mul_add, ← H1algLink.eWL_eq la]
+    rw [dite_eq_right (fun ⟨i, hi⟩ => hg i hi), ← mul_add, ← H1algLink.eWL_eq la]
     rfl
   refine hdep.trans ?_
   rw [hnu, add_right_comm, EReal.coe_add, EReal.coe_add]

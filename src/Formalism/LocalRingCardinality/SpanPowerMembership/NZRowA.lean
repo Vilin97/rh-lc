@@ -171,7 +171,7 @@ theorem mem_oB {O : Type} [CommRing O] (φ : O →+* ℂ) (x : V) :
     rw [show (oB b φ).gen = genB b from rfl, sum_genB b fun v => φ (if h : ∃ i, b i = v then c h.choose else 0) • v]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h : ∃ k, b k = b i := ⟨i, rfl⟩
-    rw [dif_pos h, b_inj b h.choose_spec]
+    rw [dite_eq_left h, b_inj b h.choose_spec]
 
 theorem jB_gen : ∀ v ∈ genB b, v ∈ Set.range (jB σ b) := generators_mem_range σ b
 
@@ -186,7 +186,7 @@ theorem jB_lat (x : Fin n → K) : x ∈ (stdH K n).L ↔ ∃ c : V → 𝓞 K,
     rw [sum_genB b fun v => σ (((if h : ∃ i, b i = v then c h.choose else 0 : 𝓞 K)) : K) • v, jB_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h : ∃ k, b k = b i := ⟨i, rfl⟩
-    rw [dif_pos h, b_inj b h.choose_spec, hc i]
+    rw [dite_eq_left h, b_inj b h.choose_spec, hc i]
   · rintro ⟨c, hc⟩ i
     refine ⟨c (b i), σ.injective ?_⟩
     rw [sum_genB b fun v => σ ((c v : 𝓞 K) : K) • v] at hc

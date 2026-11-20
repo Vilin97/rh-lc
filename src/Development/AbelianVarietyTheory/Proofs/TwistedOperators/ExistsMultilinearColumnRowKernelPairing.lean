@@ -40,10 +40,10 @@ theorem chain_multilinear : ∀ (m : ℕ) (A : Fin m → Type) [∀ j, AddCommGr
     show kl (fs (Fin.last m)) ∘ₗ M (Fin.init fs) = _ ∘ₗ chainTo _ m
     rw [hM]
     beta_reduce
-    rw [dif_pos (Nat.lt_succ_self m)]
+    rw [dite_eq_left (Nat.lt_succ_self m)]
     congr 1
     refine chainTo_congr m fun j hj => ?_
-    rw [dif_pos hj, dif_pos (Nat.lt_succ_of_lt hj)]
+    rw [dite_eq_left hj, dite_eq_left (Nat.lt_succ_of_lt hj)]
     rfl
 
 theorem pair_multilinear {ι κ X Y : Type} {A : ι → Type} {B : κ → Type} [∀ j, AddCommGroup (A j)] [∀ j, Module ℂ (A j)]

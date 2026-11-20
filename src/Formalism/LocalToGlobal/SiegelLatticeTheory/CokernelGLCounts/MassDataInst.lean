@@ -37,7 +37,7 @@ def typSet (g1 g2 : ℕ) : Finset (HeightOneSpectrum (𝓞 F)) :=
 theorem mem_typSet (g1 g2 : ℕ) (h1 : g1 ≠ 0) (h2 : g2 ≠ 0) (v : HeightOneSpectrum (𝓞 F)) :
     v ∈ typSet F g1 g2 ↔ IsTyped F g1 g2 v := by
   unfold typSet
-  rw [dif_pos (typed_finite F g1 g2 h1 h2), Set.Finite.mem_toFinset]
+  rw [dite_eq_left (typed_finite F g1 g2 h1 h2), Set.Finite.mem_toFinset]
   rfl
 
 abbrev TypP (g1 g2 : ℕ) : Type := ↥(typSet F g1 g2)

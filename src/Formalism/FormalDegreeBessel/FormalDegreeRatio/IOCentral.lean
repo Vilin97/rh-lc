@@ -35,7 +35,7 @@ lemma io_inUJ_mul {A B : Matrix (Fin n) (Fin n) ℂ} (hA : inUJ ε A) (hB : inUJ
 lemma ioExt_at {φ : IOPt ε → E} {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) :
     ioExt ε φ g = φ ⟨g, hg⟩ := by
   unfold ioExt
-  rw [dif_pos hg]
+  rw [dite_eq_left hg]
 
 lemma io_smooth_congr {f f' : Matrix (Fin n) (Fin n) ℂ → E} (h : ∀ g, inUJ ε g → f g = f' g)
     (hf : SmoothOnGV ε f) : SmoothOnGV ε f' := by

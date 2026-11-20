@@ -253,10 +253,10 @@ theorem eB_insEquiv (N c k : ℕ) (hk : k ≤ N) (a : Fin (N + c)) :
   unfold insEquiv
   simp only [Equiv.coe_fn_mk]
   by_cases h1 : a.val < k
-  · rw [dif_pos h1]; simp [Formalism.L2.Forms.eBf, Formalism.L2.Forms.insB, h1]
+  · rw [dite_eq_left h1]; simp [Formalism.L2.Forms.eBf, Formalism.L2.Forms.insB, h1]
   · by_cases h2 : a.val < k + c
-    · rw [dif_neg h1, dif_pos h2]; simp [Formalism.L2.Forms.eBf]; omega
-    · rw [dif_neg h1, dif_neg h2]; simp [Formalism.L2.Forms.eBf, Formalism.L2.Forms.insB]; split_ifs <;> omega
+    · rw [dite_eq_right h1, dite_eq_left h2]; simp [Formalism.L2.Forms.eBf]; omega
+    · rw [dite_eq_right h1, dite_eq_right h2]; simp [Formalism.L2.Forms.eBf, Formalism.L2.Forms.insB]; split_ifs <;> omega
 
 theorem insGL_map_eq_extMon {κ : Type} [CommRing κ] {k' : Type} [Field k'] (e : κ ≃+* k') (N c k : ℕ) (hk : k ≤ N) (M : GL (Fin N) κ) :
     ((insGL κ N c k (N + c) hk rfl M : GL (Fin (N + c)) κ) : Matrix (Fin (N + c)) (Fin (N + c)) κ).map e =

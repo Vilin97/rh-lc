@@ -32,12 +32,12 @@ def extendByZero (H : Subgroup G) (f : H → ℂ) (g : G) : ℂ :=
 theorem extendByZero_of_mem (H : Subgroup G) (f : H → ℂ) {g : G} (hg : g ∈ H) :
     extendByZero H f g = f ⟨g, hg⟩ := by
   unfold extendByZero
-  rw [dif_pos hg]
+  rw [dite_eq_left hg]
 
 theorem extendByZero_of_notMem (H : Subgroup G) (f : H → ℂ) {g : G} (hg : g ∉ H) :
     extendByZero H f g = 0 := by
   unfold extendByZero
-  rw [dif_neg hg]
+  rw [dite_eq_right hg]
 
 @[simp]
 theorem extendByZero_coe (H : Subgroup G) (f : H → ℂ) (h : H) : extendByZero H f h = f h :=

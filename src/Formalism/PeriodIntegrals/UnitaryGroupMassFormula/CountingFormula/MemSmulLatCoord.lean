@@ -85,11 +85,11 @@ theorem inP_sub_iff [IsDiscreteValuationRing 𝒪[F]] {ϖ : 𝒪[F]} (hϖ : Irre
   have e1 : resF F u = IsLocalRing.residue 𝒪[F] ⟨u, hu⟩ := by
     first
     | simp [resF, hu]
-    | (unfold resF; rw [dif_pos hu])
+    | (unfold resF; rw [dite_eq_left hu])
   have e2 : resF F w = IsLocalRing.residue 𝒪[F] ⟨w, hw⟩ := by
     first
     | simp [resF, hw]
-    | (unfold resF; rw [dif_pos hw])
+    | (unfold resF; rw [dite_eq_left hw])
   have hs : (u - w : F) = ((⟨u, hu⟩ - ⟨w, hw⟩ : 𝒪[F]) : F) := rfl
   have hm : IsLocalRing.maximalIdeal 𝒪[F] = Ideal.span {ϖ} := by
     first
@@ -137,7 +137,7 @@ theorem resF_bil {n : ℕ} (x y : Fin n → F) (hx : ∀ k, x k ∈ 𝒪[F]) (hy
     intro a ha
     first
     | simp [resF, ha]
-    | (unfold resF; rw [dif_pos ha])
+    | (unfold resF; rw [dite_eq_left ha])
   have hsum : (∑ k, ∑ l, x k * (Ph k l : F) * y l) =
       ((∑ k, ∑ l, (⟨x k, hx k⟩ : 𝒪[F]) * Ph k l * (⟨y l, hy l⟩ : 𝒪[F]) : 𝒪[F]) : F) := by
     first

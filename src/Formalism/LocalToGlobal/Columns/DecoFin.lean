@@ -839,7 +839,7 @@ theorem DecoSet.up_val (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {
     (hfx : d.1.f P x = 1) : (d.up P q x).1 = d.1.up P q x := by
   have hok : (d.1.up P q x).Ok := Deco.Ok.up d.2 P hP hq hq2 hx hfx
   unfold DecoSet.up
-  rw [dif_pos hok]
+  rw [dite_eq_left hok]
 
 theorem DecoSet.upSet_nonempty (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
     (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) : (d.upSet P q).Nonempty := by
@@ -1102,7 +1102,7 @@ theorem DecoSet.til_val (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
     (DecoSet.til (ST := ST) pi d).1 = d.1.til pi := by
   have hok : (d.1.til (ST := ST) pi).Ok := Deco.Ok.til d.2 hT hG
   unfold DecoSet.til
-  rw [dif_pos hok]
+  rw [dite_eq_left hok]
 
 end Til
 

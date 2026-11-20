@@ -27,7 +27,7 @@ theorem phi_varF_pos (C : Ctx S T) (τ : D.what₂.Tau) (b a : ℕ) (hb : b < C.
       MvPolynomial.X (C.m.e τ, Sum.inr ⟨b, hb⟩, ⟨a, ha⟩) := by
   have hr := C.hr
   have hbm : b < T.rank := by omega
-  rw [varF, dif_pos ⟨hbm, ha⟩, phi, AlgHom.comp_apply, MvPolynomial.rename_X, Ctx.toH, MvPolynomial.aeval_X]
+  rw [varF, dite_eq_left ⟨hbm, ha⟩, phi, AlgHom.comp_apply, MvPolynomial.rename_X, Ctx.toH, MvPolynomial.aeval_X]
   congr 2
   refine Prod.ext rfl (Prod.ext ?_ rfl)
   dsimp only
@@ -35,14 +35,14 @@ theorem phi_varF_pos (C : Ctx S T) (τ : D.what₂.Tau) (b a : ℕ) (hb : b < C.
   apply Fin.ext
   rw [rowIdx_inr]
   simp only [revPos]
-  rw [dif_pos ⟨hb, by omega⟩]
+  rw [dite_eq_left ⟨hb, by omega⟩]
 
 theorem phi_varF_neg (C : Ctx S T) (τ : D.what₂.Tau) (b a : ℕ) (hb : b < C.q0) (ha : a < S.rank) :
     phi C (varF τ (C.X.p0 + b) a) = MvPolynomial.C (((2 / fockScale D τ : ℝ) : ℂ)) *
       MvPolynomial.X (C.m.e τ, Sum.inl ⟨b, hb⟩, ⟨a, ha⟩) := by
   have hr := C.hr
   have hbm : C.X.p0 + b < T.rank := by omega
-  rw [varF, dif_pos ⟨hbm, ha⟩, phi, AlgHom.comp_apply, MvPolynomial.rename_X, Ctx.toH, MvPolynomial.aeval_X]
+  rw [varF, dite_eq_left ⟨hbm, ha⟩, phi, AlgHom.comp_apply, MvPolynomial.rename_X, Ctx.toH, MvPolynomial.aeval_X]
   congr 2
   refine Prod.ext rfl (Prod.ext ?_ rfl)
   dsimp only
@@ -50,7 +50,7 @@ theorem phi_varF_neg (C : Ctx S T) (τ : D.what₂.Tau) (b a : ℕ) (hb : b < C.
   apply Fin.ext
   rw [rowIdx_inl]
   simp only [revPos]
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
 
 theorem phi_minorPlus (C : Ctx S T) (hle : C.X.p0 ≤ S.rank) (τ : D.what₂.Tau) (i : Fin C.X.p0) :
     phi C (minorPlus τ (i.val + 1)) = MvPolynomial.C ((((2 / fockScale D τ : ℝ) : ℂ)) ^ (i.val + 1)) *

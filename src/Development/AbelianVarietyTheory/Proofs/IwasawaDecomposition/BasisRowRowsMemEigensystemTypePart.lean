@@ -181,7 +181,7 @@ theorem exists_isEigOf_of_vec : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (P
     have hex : ∃ B, Hecke₂ (Wc D i) (levS _ (R.βW i) (R.datWp i (R.toRealDat.levL F.lv2 false (sg0 D A3.A)))) (levChi _ (R.βW i) (R.datWp i (R.toRealDat.levL F.lv2 false (sg0 D A3.A)))) R.SF Pr d B := ⟨B, hB⟩
     have hxf := hfix Pr d B hB x hx
     dsimp only
-    rw [dif_pos hex, GlobalTheory.RowEig.heckeOperator_eq_of_spherical (Y.PW i) Pr d B hex.choose (GlobalTheory.RowEig.sph_of_full hB)
+    rw [dite_eq_left hex, GlobalTheory.RowEig.heckeOperator_eq_of_spherical (Y.PW i) Pr d B hex.choose (GlobalTheory.RowEig.sph_of_full hB)
       (GlobalTheory.RowEig.sph_of_full hex.choose_spec) x hxf]
     exact (hsc Pr d hex.choose (GlobalTheory.RowEig.sph_of_full hex.choose_spec)).choose_spec x hxS hxf
   · intro Pr d hne

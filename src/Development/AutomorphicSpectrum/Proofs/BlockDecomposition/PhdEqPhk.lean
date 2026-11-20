@@ -13,7 +13,7 @@ theorem hr_val (r : Fin 2 → F) (hv : r 1 ≠ 0) :
   have hd : (!![(r 1)⁻¹, 0; r 0, r 1] : Matrix (Fin 2) (Fin 2) F).det ≠ 0 := by
     simp [Matrix.det_fin_two, hv]
   unfold hr
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 theorem cell_val (y : Fˣ) (t : F) (r : Fin 2 → F) (hv : r 1 ≠ 0) :

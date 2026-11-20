@@ -826,7 +826,7 @@ theorem start1 : Start1 := by
   let aB : Fin 3 → ℕ → ↥Bb := fun i k => if h : a i k ∈ Bb then ⟨a i k, h⟩ else 0
   have haB : ∀ i k, k < dims n B.j i + 1 → (aB i k : Module.End ℂ X.V) = a i k := fun i k hk => by
     simp only [aB]
-    rw [dif_pos (ha i k hk)]
+    rw [dite_eq_left (ha i k hk)]
   have hcomB : ∀ i j k l, Commute (aB i k) (aB j l) := by
     intro i j k l
     simp only [aB]

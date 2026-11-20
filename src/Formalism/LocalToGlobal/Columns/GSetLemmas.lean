@@ -623,15 +623,15 @@ theorem ofNbr_adjoint (h : S.Ok) (h' : S'.Ok) (e : S.G ≃* S'.G)
     show Finsupp.indicator (nb d') (fun _ _ => T) d = _
     rw [Finsupp.indicator_apply]
     by_cases hd : d ∈ nb d'
-    · rw [dif_pos hd, if_pos hd]
-    · rw [dif_neg hd, if_neg hd]
+    · rw [dite_eq_left hd, if_pos hd]
+    · rw [dite_eq_right hd, if_neg hd]
   have hk' : ∀ d d', (ofNbr (e : S.G →* S'.G) nb' T' hn' hT').ker d d' = if d ∈ nb d' then T' else 0 := by
     intro d d'
     show Finsupp.indicator (nb' d) (fun _ _ => T') d' = _
     rw [Finsupp.indicator_apply]
     by_cases hd : d ∈ nb d'
-    · rw [dif_pos ((htr d d').mp hd), if_pos hd]
-    · rw [dif_neg (fun H => hd ((htr d d').mpr H)), if_neg hd]
+    · rw [dite_eq_left ((htr d d').mp hd), if_pos hd]
+    · rw [dite_eq_right (fun H => hd ((htr d d').mpr H)), if_neg hd]
   refine adjoint _ _ h h' e (fun _ => rfl) ?_ ?_ s s' φ ψ
   · intro d d'
     rw [hk, hk']

@@ -86,7 +86,7 @@ theorem twist_congr : ∀ (l n M : ℕ) [Fact l.Prime], l ^ n ∣ M → ∀ (γ 
 theorem toGQ_SL (γ : SL(2, ℤ)) : toGQ (γ : Matrix (Fin 2) (Fin 2) ℤ) = ofSL γ := by
   have h : 0 < (γ : Matrix (Fin 2) (Fin 2) ℤ).det := by simp
   unfold toGQ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   ext i j
   simp [ofSL]
 

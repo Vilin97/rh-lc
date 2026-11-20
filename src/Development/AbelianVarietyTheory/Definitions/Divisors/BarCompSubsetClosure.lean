@@ -73,7 +73,7 @@ theorem gap_remGaps (a : ℕ) {n : ℤ} (hn : 0 < n) (v : Fin N → ℤ) (k : �
   by_cases h : k + 1 < N
   · rw [remGaps, gap_ofGaps _ _ h, ← Int.emod_def]
     exact ⟨Int.emod_nonneg _ hn.ne', Int.emod_lt_of_pos _ hn⟩
-  · rw [gap, dif_neg h]; exact ⟨le_rfl, hn⟩
+  · rw [gap, dite_eq_right h]; exact ⟨le_rfl, hn⟩
 
 example : floorGaps 1 3 ![7, 0, -8] = ![2, 0, -2] ∧ remGaps 1 3 ![7, 0, -8] = ![1, 0, -2] ∧
     floorGaps 0 3 ![0, 1] = ![0, 1] := by decide

@@ -80,7 +80,7 @@ theorem gramOf_eq (G : EigMet Z σ') {y : CxPts (genStr Z) σ'} {τ : E →+* �
     convert isCombAtG_single Z.t _ (g.tan τ) i using 1
     funext a
     simp [Matrix.one_apply, Pi.single_apply]
-  rw [gramOf, dif_pos h, G.change y h.choose g τ, hco]
+  rw [gramOf, dite_eq_left h, G.change y h.choose g τ, hco]
   simp
 
 theorem gramOf_posDef (G : EigMet Z σ') (y : CxPts (genStr Z) σ') (τ : E →+* ℂ)
@@ -191,7 +191,7 @@ theorem lieGram_spec {σ₀ : 𝓞 F →+* ℂ} (z : CxPts q σ₀) (σ : F →+
   obtain rfl : yc = ptY hpb z := Subtype.ext hyc
   have hz : z ∈ CxPts.ptsIn q σ₀ ch.U := by have := hx; rwa [hzg] at this
   have hg' : g.v τ = uvec hpb uu ch z hz := funext hg
-  rw [lieGram, dif_pos hz, gramOf_eq (Gm _) g hg']
+  rw [lieGram, dite_eq_left hz, gramOf_eq (Gm _) g hg']
 
 theorem trEntry {r : ℕ} {σ₀ : 𝓞 F →+* ℂ} (ch ch' : Chart M r) (y : CxPts q σ₀) (hy : y ∈ CxPts.ptsIn q σ₀ ch.U)
     (hy' : y ∈ CxPts.ptsIn q σ₀ ch'.U) (x : Sp ℂ ⟶ X) (hxy : x = y.1) (hxx : ⊤ ≤ x ⁻¹ᵁ (ch.U ⊓ ch'.U))
@@ -216,7 +216,7 @@ theorem lieGram_trans (hLF : IsLieFrames Z e jB πB M (Dw.mult τ) τ dual uu) {
     lieGram hpb dual uu Gm σ₀ ch' y = HermFrame.chg (ch.tr q σ₀ ch' y) (lieGram hpb dual uu Gm σ₀ ch y) := by
   by_cases hy' : y ∈ CxPts.ptsIn q σ₀ ch'.U
   swap
-  · rw [lieGram, dif_neg hy', VB.Chart.tr_of_notMem ch ch' hy', HermFrame.chg_zero]
+  · rw [lieGram, dite_eq_right hy', VB.Chart.tr_of_notMem ch ch' hy', HermFrame.chg_zero]
   have hx : ⊤ ≤ (ptG hpb y ≫ jB) ⁻¹ᵁ ch.U := by rw [ptG_fst]; exact hy
   have hx' : ⊤ ≤ (ptG hpb y ≫ jB) ⁻¹ᵁ ch'.U := by rw [ptG_fst]; exact hy'
   have hxx : ⊤ ≤ (ptG hpb y ≫ jB) ⁻¹ᵁ (ch.U ⊓ ch'.U) := by
@@ -232,7 +232,7 @@ theorem lieGram_trans (hLF : IsLieFrames Z e jB πB M (Dw.mult τ) τ dual uu) {
   have hg₁' : g'.v τ = uvec hpb uu ch' y hy' := hg'
   have hpt : (ptY hpb y).1 ≫ genι Z = ptG hpb y ≫ πB ≫ genι Z := Category.assoc _ _ _
   have hT := ch.isUnit_tr ch' hy hy'
-  rw [lieGram, lieGram, dif_pos hy, dif_pos hy', gramOf_eq _ g hg₁, gramOf_eq _ g' hg₁']
+  rw [lieGram, lieGram, dite_eq_left hy, dite_eq_left hy', gramOf_eq _ g hg₁, gramOf_eq _ g' hg₁']
   cases dual
   · have hco : g.co g' τ = ch.tr q σ₀ ch' y := EigFrame.co_eq fun i => by
       have := hLF.2.1 ch.U ch'.U ch.e ch'.e ch.isFrame ch'.isFrame ℂ (ptG hpb y) hx hx' hxx i
@@ -267,7 +267,7 @@ theorem lieGram_conj (hLF : IsLieFrames Z e jB πB M (Dw.mult τ) τ dual uu) (h
   by_cases hy : y ∈ CxPts.ptsIn q σ₀ ch.U
   swap
   · have hy' : y' ∉ CxPts.ptsIn q σ₀' ch.U := fun h => hy ((CxPts.mem_ptsIn_iff_of_conj hyy).1 h)
-    rw [lieGram, lieGram, dif_neg hy, dif_neg hy']
+    rw [lieGram, lieGram, dite_eq_right hy, dite_eq_right hy']
     ext; simp
   have hy' : y' ∈ CxPts.ptsIn q σ₀' ch.U := (CxPts.mem_ptsIn_iff_of_conj hyy).2 hy
   have hσ : (starRingEnd ℂ).comp σ₀ = σ₀' :=
@@ -300,7 +300,7 @@ theorem lieGram_conj (hLF : IsLieFrames Z e jB πB M (Dw.mult τ) τ dual uu) (h
     rw [key _ _ hzg _ hx₂]
     exact (hLF.2.2 ch.U ch.e ch.isFrame ℂ ℂ (starRingEnd ℂ) (ptG hpb y) _ hx₂ i).symm
   have hgram := hEC _ _ (ptY hpb y) (ptY hpb y') g g' τ hφ hyc hg'
-  rw [lieGram, lieGram, dif_pos hy, dif_pos hy', gramOf_eq _ g hg₁, gramOf_eq _ g' hv, hgram]
+  rw [lieGram, lieGram, dite_eq_left hy, dite_eq_left hy', gramOf_eq _ g hg₁, gramOf_eq _ g' hv, hgram]
   cases dual
   · ext a b; simp
   · simp only [cond]; exact inv_map_conj _
@@ -312,7 +312,7 @@ def met (hVB : IsVB M (Dw.mult τ)) (hLF : IsLieFrames Z e jB πB M (Dw.mult τ)
   isVB := hVB
   G := lieGram hpb dual uu Gm σ₀
   posDef ch y hy := by
-    rw [lieGram, dif_pos hy]
+    rw [lieGram, dite_eq_left hy]
     cases dual
     exacts [(gramOf_posDef _ _ _ _).transpose, (gramOf_posDef _ _ _ _).inv]
   trans ch ch' y hy := lieGram_trans hpb dual uu Gm hLF ch ch' y hy

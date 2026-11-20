@@ -82,7 +82,7 @@ theorem memL2_of_smoothing (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulR
   have hin : ∀ y, ∫⁻ x in stdDom (latticeGL E N), ‖α y * chart φ x y‖ₑ ^ 2 ∂μ = ‖α y‖ₑ ^ 2 * I := by
     intro y
     by_cases hy : IsUnit (Matrix.of y)
-    · simp_rw [chart, dif_pos hy, enorm_mul, mul_pow]
+    · simp_rw [chart, dite_eq_left hy, enorm_mul, mul_pow]
       rw [lintegral_const_mul' _ _ (by simp), lintegral_mul_right h]
     · have : α y = 0 := image_eq_zero_of_notMem_tsupport fun h' => hy (hα.2.2 h')
       simp [this]

@@ -60,7 +60,7 @@ theorem glue_eq (he : ∀ i, IsField (V i) (e i))
     (hs : ∀ i, resG Z (inf_le_left : O ⊓ V i ≤ O) s = loc V e O f i) : glue V e O f = s := by
   obtain ⟨t, -, hu⟩ := glue_ex he hc hO f
   have h : ∃ s : Γ(Z, O), ∀ i, resG Z (inf_le_left : O ⊓ V i ≤ O) s = loc V e O f i := ⟨s, hs⟩
-  rw [glue, dif_pos h]
+  rw [glue, dite_eq_left h]
   exact (hu _ h.choose_spec).trans (hu _ hs).symm
 
 theorem res_glue (he : ∀ i, IsField (V i) (e i))

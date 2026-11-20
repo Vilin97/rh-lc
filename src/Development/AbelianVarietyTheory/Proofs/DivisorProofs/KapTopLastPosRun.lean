@@ -24,7 +24,7 @@ theorem one_le_aPl_last (D : D7) (i : Fin D.R.m) (τ : D.what₂.Tau) (p n : ℕ
   have hidx : (⟨n - (D.R.k - 1), h2⟩ : Fin D.R.m) = i := Fin.ext (by simp only; omega)
   have hlam : Formalism.L2.NTheta.lamAt (D.hc τ) n = -(D.hc τ).b i := by
     unfold Formalism.L2.NTheta.lamAt
-    rw [dif_neg h1, dif_pos h2, hidx]
+    rw [dite_eq_right h1, dite_eq_left h2, hidx]
   have hg := (D.hc τ).gap_be i
   have hq : ((D.R.k + (i : ℕ) : ℕ) : ℚ) = (n : ℚ) + 1 := by
     rw [← hn]; push_cast; ring

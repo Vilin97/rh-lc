@@ -189,7 +189,7 @@ theorem GlobalTheory.Dict.exists_components_tied : ∀ (E : Type) [Field E] [Num
     rw [e, ← Nat.cast_smul_eq_nsmul (𝓞 E)]
     exact hcg k i
   · beta_reduce
-    rw [dif_neg (not_lt.2 hj)]
+    rw [dite_eq_right (not_lt.2 hj)]
     exact zero_mem _
   · obtain ⟨hu', kk, -, hred⟩ := (Lev.mem_grp g').1 hg'
     obtain ⟨s, hs', hk, -⟩ := Lev.keeps hred

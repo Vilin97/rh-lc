@@ -197,7 +197,7 @@ theorem exists_frameShift_of_valued_points : ReciprocityTheory.ChartRestriction.
     congr 2
     refine Finset.sum_congr rfl fun i _ => ?_
     beta_reduce
-    rw [exZ_wtZ, dif_pos ⟨hv, ho⟩]
+    rw [exZ_wtZ, dite_eq_left ⟨hv, ho⟩]
   · intro Z
     obtain ⟨S, hS0, hS⟩ := GlobalTheory.T.genericFrame_integral_off_finitelyMany_functions hT E H Dw l Xo c hL.bc Y h Z
     refine ⟨S, hS0, fun v hv ho hs => ?_⟩
@@ -209,7 +209,7 @@ theorem exists_frameShift_of_valued_points : ReciprocityTheory.ChartRestriction.
     funext i
     have := hU (T Z v hv ho) _ ⟨z Z v hv ho, hL.test _ _, hint⟩ (y Z v hv ho) (t Z v hv ho) (hb Z v hv ho) i
     beta_reduce
-    rw [dif_pos ⟨hv, ho⟩]
+    rw [dite_eq_left ⟨hv, ho⟩]
     simp [vV, this]
 
 end GlobalTheory.Reg

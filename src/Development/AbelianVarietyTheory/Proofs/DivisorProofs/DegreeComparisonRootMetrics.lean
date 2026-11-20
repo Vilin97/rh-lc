@@ -166,7 +166,7 @@ theorem parOf_rootSym (a : ℕ → Bool) (R : Option ℝ) (τ : E →+* ℂ) (i 
   have key (st) (n : ℤ) (hn : n ≠ 0) : Pad.parOf (Finsupp.single (a, R, st) n : Pad.Sym E →₀ ℤ) = R := by
     have h : (Finsupp.single (a, R, st) n : Pad.Sym E →₀ ℤ).support.Nonempty :=
       Finsupp.support_nonempty_iff.2 (Finsupp.single_ne_zero.2 hn)
-    rw [Pad.parOf, dif_pos h, Finset.mem_singleton.1 (Finsupp.support_single_subset h.choose_spec)]
+    rw [Pad.parOf, dite_eq_left h, Finset.mem_singleton.1 (Finsupp.support_single_subset h.choose_spec)]
   unfold rootSym
   split_ifs <;> exact key _ _ (by norm_num)
 

@@ -49,7 +49,7 @@ theorem omegaQ_single {D : D7} {a b : ℕ} (PP : Pl D.host.E) (r : ℕ) (ξ : �
     subst hP
     exact ⟨hz, hu ▸ u.isUnit⟩
   unfold omegaQ
-  rw [dif_pos h, Finset.prod_eq_single ⟨PP, Finset.mem_singleton_self PP⟩]
+  rw [dite_eq_left h, Finset.prod_eq_single ⟨PP, Finset.mem_singleton_self PP⟩]
   · rw [_root_.zpow_neg_one]
     congr 4
     ext

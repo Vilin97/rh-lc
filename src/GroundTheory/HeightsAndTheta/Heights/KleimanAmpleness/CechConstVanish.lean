@@ -67,7 +67,7 @@ theorem term_face {n : ℕ} (f : Cell K ι n → V) (I : ∀ k, Finset (ι k)) (
       faceSign I k i • f ⟨Function.update I k ((I k).erase i), h⟩ else 0) = faceSign I k i • f T := by
   have h : (∀ l, (Function.update I k ((I k).erase i) l).Nonempty) ∧
       ∑ l, ((Function.update I k ((I k).erase i) l).card - 1) = n := by rw [hT]; exact T.2
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e : (⟨Function.update I k ((I k).erase i), h⟩ : Cell K ι n) = T := Subtype.ext hT
   rw [e]
 
@@ -78,7 +78,7 @@ theorem term_single {n : ℕ} (f : Cell K ι n → V) (I : ∀ k, Finset (ι k))
     (if h : (∀ l, (Function.update I k ((I k).erase i) l).Nonempty) ∧
         ∑ l, ((Function.update I k ((I k).erase i) l).card - 1) = n then
       faceSign I k i • f ⟨Function.update I k ((I k).erase i), h⟩ else 0) = 0 := by
-  rw [dif_neg]
+  rw [dite_eq_right]
   intro h
   have := h.1 k
   rw [Function.update_self, hI] at this

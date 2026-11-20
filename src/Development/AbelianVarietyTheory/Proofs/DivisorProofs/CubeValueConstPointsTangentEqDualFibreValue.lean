@@ -25,7 +25,7 @@ theorem valR_app (x : Sp A ⟶ Y) (q : Y ⟶ X) (W : X.Opens) (f : Γ(X, W)) :
     exact GlobalTheory.ZH.FormCount.valR_appLE x q W _ le_rfl f hx
   · have hx' : ¬ ⊤ ≤ (x ≫ q) ⁻¹ᵁ W := hx
     unfold valR
-    rw [dif_neg hx, dif_neg hx']
+    rw [dite_eq_right hx, dite_eq_right hx']
 
 theorem valR_res' (x : Sp A ⟶ X) {U V : X.Opens} (e : V ≤ U) (e' : U ≤ V) (f : Γ(X, U)) :
     valR x V (resG X e f) = valR x U f := by
@@ -33,7 +33,7 @@ theorem valR_res' (x : Sp A ⟶ X) {U V : X.Opens} (e : V ≤ U) (e' : U ≤ V) 
   · exact GlobalTheory.ZH.CrdCalc.valR_res x e h f
   · have h' : ¬ ⊤ ≤ x ⁻¹ᵁ U := fun hU => h (hU.trans (x.preimage_mono e'))
     unfold valR
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem valR_pullGen (L : LB X) {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ)
     (c : LB.Gen (LB.LinComb L φ ε)) (h : Z ⟶ Y) (x : Sp A ⟶ Z) (j : K → L.ι) :

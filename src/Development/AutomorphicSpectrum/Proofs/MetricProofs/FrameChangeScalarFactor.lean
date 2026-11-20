@@ -39,7 +39,7 @@ theorem minor_unitCols (I' C J : Finset (Fin N)) (e : I'.card = C.card) :
     minorIJ (unitCols I' C e : Matrix (Fin N) (Fin N) R) J C = if J = I' then 1 else 0 := by
   by_cases hJ : J = I'
   · subst hJ
-    rw [if_pos rfl, minorIJ, dif_pos e]
+    rw [if_pos rfl, minorIJ, dite_eq_left e]
     have : (unitCols J C e : Matrix (Fin N) (Fin N) R).submatrix (J.orderEmbOfFin e) (C.orderEmbOfFin rfl) = 1 := by
       ext s t
       rw [Matrix.submatrix_apply, unitCols_col, Matrix.one_apply]
@@ -79,7 +79,7 @@ theorem stepRows_same_side {j : ℕ} {i : Fin N} {I' : Finset (Fin N)} (h : IsSt
     omega
 
 theorem minorIJ_one_self (I : Finset (Fin N)) : minorIJ (1 : Matrix (Fin N) (Fin N) R) I I = 1 := by
-  rw [minorIJ, dif_pos rfl, Matrix.submatrix_one _ (I.orderEmbOfFin rfl).injective, Matrix.det_one]
+  rw [minorIJ, dite_eq_left rfl, Matrix.submatrix_one _ (I.orderEmbOfFin rfl).injective, Matrix.det_one]
 
 theorem detFac_one (j : ℕ) (i : Fin N) : detFac j i (1 : Matrix (Fin N) (Fin N) R) = 1 := by
   simp only [detFac, minorIJ_one_self, ite_self, mul_one]

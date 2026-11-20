@@ -102,7 +102,7 @@ theorem GlobalTheory.TwV.prod_embT_norm_one : AllSites (fun {D L hT Gi Gl Kc Dx 
   intro D _ hT _ _ _ _ _ _ u _ w hg _ _ H X _ std _ J S hPos ι hι z hz
   have hl : ∀ τ, ι (TaylorLogMetric.embT D τ z) = TaylorLogMetric.lamC S.lam (TaylorLogMetric.embT D τ z) := by
     intro τ
-    rw [TaylorLogMetric.lamC, dif_pos (embT_mem_qbar D τ z)]
+    rw [TaylorLogMetric.lamC, dite_eq_left (embT_mem_qbar D τ z)]
     exact hι ⟨_, embT_mem_qbar D τ z⟩
   rw [map_prod, norm_prod]
   simp only [hl]

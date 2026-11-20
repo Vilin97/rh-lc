@@ -30,16 +30,16 @@ theorem omegaQ_union {D : D7} {a b : ℕ} {Sa St : Finset (Pl D.host.E)} (hd : D
     intro Q
     unfold omegaQ
     by_cases h : ∀ PP ∈ Q, LowZero r (y PP) ∧ IsUnit (topL r (y PP)).det
-    · rw [dif_pos h, ← Finset.prod_attach Q g]
+    · rw [dite_eq_left h, ← Finset.prod_attach Q g]
       refine Finset.prod_congr rfl fun PP _ => ?_
       simp only [g]
-      rw [dif_pos (h PP.1 PP.2)]
-    · rw [dif_neg h]
+      rw [dite_eq_left (h PP.1 PP.2)]
+    · rw [dite_eq_right h]
       obtain ⟨PP, hPP⟩ := not_forall.1 h
       obtain ⟨hQ, hn⟩ := Classical.not_imp.1 hPP
       refine (Finset.prod_eq_zero hQ ?_).symm
       simp only [g]
-      rw [dif_neg hn]
+      rw [dite_eq_right hn]
   rw [key, key, key, Finset.prod_union hd]
 
 section

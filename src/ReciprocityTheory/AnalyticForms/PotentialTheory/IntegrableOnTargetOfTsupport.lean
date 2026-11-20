@@ -177,7 +177,7 @@ theorem mIntEq : MIntEqStatement := by
   intro e X _ _ _ A P Φ hΦ g hg
   have h : Nonempty (ChartPartition A) := ⟨P⟩
   unfold mInt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact integralWithIndep A h.some P Φ hΦ g hg
 
 end

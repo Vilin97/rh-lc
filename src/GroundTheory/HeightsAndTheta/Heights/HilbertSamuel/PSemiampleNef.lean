@@ -92,7 +92,7 @@ theorem isClosedPt_of_mem_divSupp {W : Ideal (ReciprocityTheory.ChartRestriction
   have hU'rel : IsRelevant U' := (isRelevant_comap_iff p U').mp hUrel
   have h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (W.map (red p)) (red p t)) U' : ℤ) ≠ 0 := by
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_pos ⟨hU'min, hU'rel⟩]
+    rw [dite_eq_left ⟨hU'min, hU'rel⟩]
     have hne_top := length_localizedQuot_ne_top _ U' hU'min
     have hne_zero : NumbersDVR.multAt (W.map (red p) ⊔ Ideal.span {red p t}) U' ≠ 0 := by
       unfold NumbersDVR.multAt

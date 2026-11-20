@@ -51,11 +51,11 @@ theorem xtMid (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ 
   constructor
   · intro i
     have h1 := xtTilH_be hN d hT hG w v hvD ⟨i.1, by omega⟩
-    rw [dif_pos i.2, hbe] at h1
+    rw [dite_eq_left i.2, hbe] at h1
     have h2 := congrFun hbe0 i
     exact h1.trans h2
   · have h1 := xtTilH_be hN d hT hG w v hvD ⟨n, by omega⟩
-    rw [dif_neg (lt_irrefl n), hbe] at h1
+    rw [dite_eq_right (lt_irrefl n), hbe] at h1
     rw [inv_mul_eq_div]
     exact h1
 

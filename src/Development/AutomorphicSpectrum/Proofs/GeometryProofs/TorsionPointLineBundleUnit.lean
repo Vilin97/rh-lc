@@ -29,7 +29,7 @@ theorem valF_comp_valR {O C : Type} [CommRing O] [Field C] [Algebra O C] {X : Sc
     exact (Scheme.Hom.appLE_comp_appLE (spMap (algebraMap O C)) a U ⊤ ⊤ h _).symm
   have n := congrArg (fun φ => φ.hom ((a.appLE U ⊤ h).hom f))
     (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom (algebraMap O C)))
-  rw [valF, dif_pos h', e]
+  rw [valF, dite_eq_left h', e]
   exact n
 
 theorem valR_unit {O : Type} [CommRing O] {X : Scheme.{0}} (a : Sp O ⟶ X) (U : X.Opens) (h : ⊤ ≤ a ⁻¹ᵁ U)

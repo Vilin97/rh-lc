@@ -66,19 +66,19 @@ theorem single_mem_pi_bot {κ : Type} [CommRing κ] {n : ℕ} {A : Set (Fin n)} 
 
 theorem flagV_of_lt {M : Type} [Zero M] (ρ k n : ℕ) (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n)
     (h : i.1 < ρ) : flagV ρ k n e f b z i = e ⟨i.1, h⟩ := by
-  unfold flagV; rw [dif_pos h]
+  unfold flagV; rw [dite_eq_left h]
 
 theorem flagV_of_mid {M : Type} [Zero M] (ρ k n : ℕ) (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n)
     (h1 : ρ ≤ i.1) (h2 : i.1 < ρ + k) : flagV ρ k n e f b z i = b ⟨i.1 - ρ, by omega⟩ := by
-  unfold flagV; rw [dif_neg (by omega), dif_pos h2]
+  unfold flagV; rw [dite_eq_right (by omega), dite_eq_left h2]
 
 theorem flagV_of_eq {M : Type} [Zero M] (ρ k n : ℕ) (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n)
     (h : i.1 = ρ + k) : flagV ρ k n e f b z i = z := by
-  unfold flagV; rw [dif_neg (by omega), dif_neg (by omega), dif_pos h]
+  unfold flagV; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
 
 theorem flagV_of_gt {M : Type} [Zero M] (ρ k n : ℕ) (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n)
     (h1 : ρ + k < i.1) (h2 : i.1 < 2 * ρ + k + 1) : flagV ρ k n e f b z i = f ⟨2 * ρ + k - i.1, by omega⟩ := by
-  unfold flagV; rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega), dif_pos h2]
+  unfold flagV; rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h2]
 
 theorem restrictedBlock_mem_unipSym_of_columns {κ : Type} [CommRing κ] {n r : ℕ} (ρ k : ℕ) (hr : r = n) (hle : r ≤ n) (N : GL (Fin n) κ)
     (hcol : ∀ j q : Fin n, ¬ ((j.1 = ρ + k ∧ q.1 < ρ) ∨ (j.1 ≠ ρ + k ∧ q.1 < j.1)) →
@@ -234,7 +234,7 @@ theorem redFn_mem_unipSym_of_cong : ∀ {D : D7} (g : ℕ) (e0 f0 : Fin D.R.rS �
     funext i
     obtain ⟨hm, he⟩ := hRed i j
     unfold redV
-    rw [dif_pos hm, Pi.single_apply]
+    rw [dite_eq_left hm, Pi.single_apply]
     exact he
   have hcol : ∀ j q : Fin (Yc D 0).rank, ¬ ((j.1 = D.R.rS + D.R.k ∧ q.1 < D.R.rS) ∨ (j.1 ≠ D.R.rS + D.R.k ∧ q.1 < j.1)) →
       ((redFn β PP M : GL (Fin (Yc D 0).rank) (kP PP)) : Matrix (Fin (Yc D 0).rank) (Fin (Yc D 0).rank) (kP PP)) q j =

@@ -91,7 +91,7 @@ theorem redM_uMat (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)
     rw [uMat_eq V W hV]
     exact sum_mem fun b' _ => mul_mem (hβ b b') (hi b' a)
   refine ⟨h, fun PP b a => ?_⟩
-  rw [redM, dif_pos (h b a)]
+  rw [redM, dite_eq_left (h b a)]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [← map_mul, ← map_sum]
   congr 1
@@ -112,12 +112,12 @@ theorem omega_congr {a b : ℕ} (Pg Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : �
       forall₂_congr fun PP hPP => by rw [h PP (Or.inr hPP)]
     unfold omegaQ
     by_cases c : ∀ PP ∈ Q, LowZero r (y PP) ∧ IsUnit (topL r (y PP)).det
-    · rw [dif_pos c, dif_pos (e.1 c)]
+    · rw [dite_eq_left c, dite_eq_left (e.1 c)]
       refine Finset.prod_congr rfl fun PP _ => ?_
       have : (c PP.1 PP.2).2.unit = (e.1 c PP.1 PP.2).2.unit := Units.ext (by
         rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 (Or.inr PP.2)])
       rw [this]
-    · rw [dif_neg c, dif_neg (fun c' => c (e.2 c'))]
+    · rw [dite_eq_right c, dite_eq_right (fun c' => c (e.2 c'))]
   rw [h1, h2]
 
 theorem exists_omega_field (Pg Q : Finset (Pl D.host.E)) : ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧

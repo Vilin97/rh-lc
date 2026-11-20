@@ -48,12 +48,12 @@ theorem inh_length_pow [IsDomain R] (x : R) (hx : x ≠ 0) [(Ideal.span {x}).IsP
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 theorem inh_multAt_self (W : Ideal (MRingOver R ι)) [hW : W.IsPrime] : multAt W W = 1 := by
-  rw [multAt, dif_pos hW, inh_length_locQuot, inh_length_quot_maximal]
+  rw [multAt, dite_eq_left hW, inh_length_locQuot, inh_length_quot_maximal]
   rfl
 
 theorem inh_multAt_pow [IsDomain R] (x : MRingOver R ι) (hx : x ≠ 0) [hW : (Ideal.span {x}).IsPrime]
     (m : ℕ) : multAt (Ideal.span {x ^ m}) (Ideal.span {x}) = m := by
-  rw [multAt, dif_pos hW, inh_length_locQuot, inh_length_pow x hx]
+  rw [multAt, dite_eq_left hW, inh_length_locQuot, inh_length_pow x hx]
   simp
 
 end Len

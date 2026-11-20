@@ -54,7 +54,7 @@ private theorem unip_tri (X : UPos (2 + 2) 2 → R) : (unipGL X).val.IsUpperTria
   have h : (j : ℕ) < i := hij
   have hne : i ≠ j := fun e => by subst e; omega
   simp only [coe_unipGL, unipMatrix, Matrix.add_apply, blockEntry_apply, Matrix.one_apply_ne hne, zero_add]
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 private theorem sandwich {A B : Matrix (Fin (2 + 2)) (Fin (2 + 2)) R}
     (hA : ∀ i a : Fin (2 + 2), 2 ≤ (i : ℕ) → (a : ℕ) < 2 → A i a = 0)

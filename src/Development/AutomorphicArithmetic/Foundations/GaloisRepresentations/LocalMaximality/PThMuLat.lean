@@ -74,7 +74,7 @@ theorem UpperTheory.Gal.productCup_of_system.thMuLat_of :
     unfold detC
     by_cases h : (uni I L).card = d + 1
     · classical
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       set e := (uni I L).orderEmbOfFin h with he
       have mem_e : ∀ a, e a ∈ uni I L := fun a => Finset.orderEmbOfFin_mem _ h a
       have mem_l : ∀ i : Fin (d + 1), (toLex (Sum.inl i : Fin (d + 1) ⊕ Mi d) ∈ uni I L) ↔ i ∈ I := by
@@ -157,5 +157,5 @@ theorem UpperTheory.Gal.productCup_of_system.thMuLat_of :
       beta_reduce at hdet
       refine ⟨s, hs, ?_⟩
       rw [hdet, hcard]
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact ⟨0, zero_mem _, by ring⟩

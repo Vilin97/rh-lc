@@ -26,14 +26,14 @@ variable {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z]
 theorem valAt_algebraMap (y : Sp K ⟶ Z) (a : Z.presheaf.stalk (below y)) :
     valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [valAt, dif_pos h, IsFractionRing.injective _ _ h.choose_spec]
+  rw [valAt, dite_eq_left h, IsFractionRing.injective _ _ h.choose_spec]
 
 theorem ratVal_eq_valAt {k : Type} [CommRing k] {q : Z ⟶ Sp k} {σ : k →+* ℂ} (y : CxPts q σ)
     {f : Z.functionField} (hf : RegAt (under y) f) : ratVal f y = valAt y.1 f := by
   obtain ⟨U, hU, a, rfl⟩ := hf.exists_fnOf
   have h := CxPts.mem_ptsIn.2 hU
   rw [ratVal_fnOf h, ← algebraMap_germ hU, valAt_algebraMap, CxPts.ev, valR,
-    dif_pos (show ⊤ ≤ y.1 ⁻¹ᵁ U from h)]
+    dite_eq_left (show ⊤ ≤ y.1 ⁻¹ᵁ U from h)]
   have e := congrArg (fun φ => φ.hom a) (Scheme.germ_stalkClosedPointTo y.1 U hU)
   refine Eq.trans ?_ e.symm
   simp [Scheme.Hom.appLE]

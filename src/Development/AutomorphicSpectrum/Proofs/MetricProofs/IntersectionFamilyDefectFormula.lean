@@ -222,7 +222,7 @@ theorem arInt_eq_mInt (hB : ResBridgeStatement) (hG : GoodProjExistsStatement) (
     arInt P s A L = mInt R.A (fun j => potOf R (L j)) (fun x => logNorm A s (R.lift x x)) := by
   have hex := hG K ι P e hP
   unfold arInt ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hB K ι P J e R _ L A s hP hex.choose_spec hL hA hs
 
 theorem logNorm_sub_eq {M A B : HermLine ι} {f g : MRing ι} {z : (Σ k, ι k) → ℂ}

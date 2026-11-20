@@ -43,7 +43,7 @@ theorem ptsIntegral_eq_at (hE : ResExistsStatement) (hB : ResBridgeStatement) {K
     ptsIntegral P (pot L) (logNorm A s) = ptsIntegralAt P Ψ (pot L) (logNorm A s) := by
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ), IsGoodProj P Ψ := ⟨Ψ, hΨ⟩
   unfold ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact ptsIndep_of hE hB K ι P e _ _ L A s hP hex.choose_spec hΨ hL hA hs
 
 theorem ptsIntegral_eq_mInt (hE : ResExistsStatement) (hB : ResBridgeStatement)

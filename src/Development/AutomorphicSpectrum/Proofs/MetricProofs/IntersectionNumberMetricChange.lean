@@ -22,8 +22,8 @@ theorem ptsIntegral_congr_on {e : ℕ} (P : Ideal (MRing J)) (φ : Fin e → ((�
     intro Ψ y w
     unfold sheetDensity
     by_cases hs : ∃ c, IsSheet P Ψ y w c
-    · rw [dif_pos hs, dif_pos hs, h _ hs.choose_spec.2.self_of_nhds.2.1]
-    · rw [dif_neg hs, dif_neg hs]
+    · rw [dite_eq_left hs, dite_eq_left hs, h _ hs.choose_spec.2.self_of_nhds.2.1]
+    · rw [dite_eq_right hs, dite_eq_right hs]
   unfold ptsIntegral ptsIntegralAt
   simp only [hs]
 

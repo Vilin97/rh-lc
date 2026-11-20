@@ -42,14 +42,14 @@ variable {V : HSp D} {n : ℕ}
 theorem pre_psi (Q : RowPsi V n) (z : Formalism.AUTREP.GAf D.host.E n) : pre Q (Q.ψ z) = z := by
   have h : ∃ x, Q.ψ x = Q.ψ z := ⟨z, rfl⟩
   unfold pre
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Q.inj h.choose_spec
 
 theorem psi_pre (Q : RowPsi V n) {γ : GA D V} (hγ : γ ∈ GfC V) : Q.ψ (pre Q γ) = γ := by
   obtain ⟨h, hh⟩ := Q.onto γ hγ
   have h' : ∃ x, Q.ψ x = γ := ⟨h, hh⟩
   unfold pre
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 open Classical in
@@ -166,7 +166,7 @@ theorem row_type_eig : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Ty
       (levChi _ (R.βW i0) (R.datWp i0 (R.levL F false (sg0 D A)))) SF Pr d B := ⟨B, hB⟩
     have hxf := hfix Pr d B hB x hx
     dsimp only
-    rw [dif_pos hex, heckeOperator_eq_of_spherical (PW i0) Pr d B hex.choose (sph_of_full hB) (sph_of_full hex.choose_spec) x hxf]
+    rw [dite_eq_left hex, heckeOperator_eq_of_spherical (PW i0) Pr d B hex.choose (sph_of_full hB) (sph_of_full hex.choose_spec) x hxf]
     exact (hsc Pr d hex.choose (sph_of_full hex.choose_spec)).choose_spec x hxS hxf
   · intro Pr d hne
     exact dif_neg hne

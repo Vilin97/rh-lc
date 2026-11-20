@@ -113,7 +113,7 @@ theorem actX_apply (t : T) (g : G) (hex : ∃ κ, IsLevelLift D.sp.X' R.βX (R.d
     actX R t g F h = (levChi D.sp.X' R.βX (flagL (R.datXt t)) hex.choose)⁻¹ * F (h * hex.choose) := by
   show actG0 D.sp.X' R.βX (R.datXt t) (R.eG g) F h = _
   unfold actG0
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
 
 theorem jX_act (hM : R.IsModels) (t : T) (g : G) (x : A.fam.amb.FR t) (q0 : (levEnv D.sp.X' R.βX (R.datXt t)).Q)
     (hred0 : (R.B.R t).act_tie.red q0 = g) :

@@ -29,7 +29,7 @@ theorem valR_eq_one {X : Scheme.{0}} [IsReduced X] {U : X.Opens} {K : Type} [Fie
   have h : ⊤ ≤ x ⁻¹ᵁ U := fun z _ => hx ⟨z, rfl⟩
   have h' : ⊤ ≤ x' ⁻¹ᵁ U := fun z _ => hx' ⟨z, rfl⟩
   have h0 : (x.appLE U ⊤ h).hom (f - 1) = 0 := by
-    rw [valR, dif_pos h] at hf
+    rw [valR, dite_eq_left h] at hf
     apply (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of K)).hom).1
     rw [map_sub, map_sub, map_one, map_one, map_zero]
     exact sub_eq_zero.2 hf
@@ -42,7 +42,7 @@ theorem valR_eq_one {X : Scheme.{0}} [IsReduced X] {U : X.Opens} {K : Type} [Fie
     have h4 : IsLocalRing.closedPoint K ∈ (⊤ ⊓ x ⁻¹ᵁ X.basicOpen (f - 1) : (Sp K).Opens) := ⟨trivial, h2⟩
     rw [← h3] at h4
     exact h4.elim
-  rw [sub_eq_zero.1 h1, valR, dif_pos h', map_one, map_one]
+  rw [sub_eq_zero.1 h1, valR, dite_eq_left h', map_one, map_one]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E} {D : Datum H} {l : Level H}
 

@@ -181,7 +181,7 @@ theorem dominance_of_nabla_weight (r : ℕ) (ν μ : Fin r → ℕ) (hν : Antit
   have h1 : ∀ a, rowDeg d a = μ a := fun a => by rw [← ldrow_weight_rowW, hwt]
   have h2 : ∀ a : Fin r, rowNu (r := r) ν a = ν a := fun a => by
     unfold rowNu
-    rw [dif_pos a.isLt]
+    rw [dite_eq_left a.isLt]
   simp only [h1, h2] at hdom
   exact hdom
 

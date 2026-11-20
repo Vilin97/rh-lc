@@ -97,7 +97,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.thCt :
   have hneg : ∀ ξ, n (-ξ) = (n ξ)⁻¹ := fun ξ => eq_inv_of_mul_eq_one_left (by rw [← hadd, neg_add_cancel, hn0])
   have hnP : ∀ ξ, n ξ ∈ ParΓ K 2 2 := fun ξ => (hpar _).2 fun i j hi hj => by
     change unipMatrix ξ.1 i j = 0
-    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dif_neg (by omega), Matrix.one_apply_ne (by
+    rw [unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_right (by omega), Matrix.one_apply_ne (by
       rintro rfl; omega), add_zero]
   have hinj : Function.Injective c := fun ξ η h => by
     have h1 := (hmk _ _).1 h
@@ -115,7 +115,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.thCt :
       show 2 + ((j : ℕ) - 2) = j
       have : 2 ≤ (j : ℕ) := hj
       omega)
-    rw [e1, e2, unipMatrix, Matrix.add_apply, blockEntry_apply, dif_pos ⟨hi, hj⟩, Matrix.one_apply_ne (by
+    rw [e1, e2, unipMatrix, Matrix.add_apply, blockEntry_apply, dite_eq_left ⟨hi, hj⟩, Matrix.one_apply_ne (by
       rintro rfl
       exact absurd hi (not_lt.2 hj)), zero_add] at h2
     exact h2

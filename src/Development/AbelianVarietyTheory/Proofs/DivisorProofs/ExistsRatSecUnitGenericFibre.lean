@@ -132,7 +132,7 @@ def tau (D : LB Z) (sig : (D.pull (genericι f)).Gen) (i : D.ι) : Z.functionFie
 theorem val_tau (D : LB Z) (sig : (D.pull (genericι f)).Gen) (i : D.ι)
     (h : genericPoint Z ∈ D.U i ⊓ Z.basicOpen (unifOn f ϖ)) :
     (tau f hϖ D sig i : Z.functionField) = fnOf _ h (locU f hϖ D sig i) := by
-  rw [tau, dif_pos h]; rfl
+  rw [tau, dite_eq_left h]; rfl
 
 theorem isRatSec_tau [Flat f] (D : LB Z) (sig : (D.pull (genericι f)).Gen) (hsig : sig.IsGen) :
     IsRatSec D (tau f hϖ D sig) := by

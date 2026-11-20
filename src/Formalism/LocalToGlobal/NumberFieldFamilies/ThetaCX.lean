@@ -341,7 +341,7 @@ def chrInOf (G : ChrGaps B) : ChrIn D :=
     chr_exp := fun μ j τ => by rw [chrTup_succ]; exact B.unitary_hecke_infinity_type _ (tup_unitary Tp μ j) _ (tup_inf Tp μ j) τ
     chr_res := fun μ j h1 h2 => by
       unfold chrTup
-      rw [dif_pos ⟨h1, h2⟩]
+      rw [dite_eq_left ⟨h1, h2⟩]
       refine ⟨⟨_, he⟩, fun η _ a => Circle.ext ?_⟩
       rw [pow_zero]
       exact congrArg Units.val (G.triv _ ((C.isMu0 _).triv.mul (Tp.xi_triv μ)) a)

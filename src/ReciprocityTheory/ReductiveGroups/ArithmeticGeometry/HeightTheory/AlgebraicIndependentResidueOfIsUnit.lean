@@ -226,7 +226,7 @@ theorem val_eq_zero_of_isUnit' {E : Type} [Field E] (v : AddValuation E (WithTop
 theorem scalarRatio_eq {Ω V : Type} [Field Ω] [AddCommGroup V] [Module Ω V] {f g : V} {a : Ω}
     (hg : g ≠ 0) (h : f = a • g) : ratio f g = a := by
   have he : ∃ b : Ω, f = b • g := ⟨a, h⟩
-  rw [ratio, dif_pos he]
+  rw [ratio, dite_eq_left he]
   exact smul_left_injective Ω hg (he.choose_spec.symm.trans h)
 
 theorem genericImage_base {Ω : Type} [Field Ω] {D N : ℕ} (j₀ : Fin (N + 1)) (x : Fin N → Ω)

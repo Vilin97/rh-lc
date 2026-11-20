@@ -56,7 +56,7 @@ theorem heckeD_eq_sum_of_agree {L : Type} [Field L] [NumberField L] [IsCMField L
     Finset.sum_image]
   · refine Finset.sum_congr rfl fun γ hγ => ?_
     have hc : ∃ x ∈ D, (x : GAf L n ⧸ J) = γ := ⟨γ, h1 γ hγ, rfl⟩
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     have hu : γ⁻¹ * hc.choose ∈ Umax L n :=
       (hmem γ (h1 γ hγ) _ hc.choose_spec.1).1 (QuotientGroup.eq.1 hc.choose_spec.2.symm)
     have := congrFun (hf _ hu (GlobalTheory.HeckeScalarSph.triv_mul (GlobalTheory.HeckeScalarSph.triv_inv (hD γ (h1 γ hγ)))

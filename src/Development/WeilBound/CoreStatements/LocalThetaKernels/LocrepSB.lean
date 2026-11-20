@@ -128,7 +128,7 @@ theorem mem_span_Pm (h : ∀ y, ev (ι y) = y) (hev : Continuous ev) (hι : Cont
     obtain ⟨k, _, hk⟩ := hv'
     have hex : ∃ k, F k = v := ⟨k, hk⟩
     show F (if hv : ∃ k, F k = v then hv.choose else 0) = v
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   have hφv : ∀ v ∈ Vs, φv v ∈ SB K := by
     intro v hv

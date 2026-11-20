@@ -63,7 +63,7 @@ theorem piZ_spec {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} (hZ : CR Z) (x : 
     piZ Z x ∈ Z ∧ qZ Z (piZ Z x) = qZ Z x := by
   have h := qZ_surj hZ (qZ Z x)
   unfold piZ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem piZ_mem {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} (hZ : CR Z) (x : Matrix (Fin n) (Fin n) k) :

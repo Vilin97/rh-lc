@@ -59,7 +59,7 @@ theorem natural_weight_cast_eq {κ : ℕ} (lam : DomWeight (κ + 1)) (i : Fin (�
     ((lam.natW i : ℕ) : ℤ) = plus (castW rfl lam) i := by
   have hds : lam.detShift = lam.w (Fin.last κ) := by
     unfold DomWeight.detShift
-    rw [dif_pos (Nat.succ_pos κ)]
+    rw [dite_eq_left (Nat.succ_pos κ)]
     congr 1
   have hle : lam.w (Fin.last κ) ≤ lam.w i := lam.anti (Fin.le_last i)
   simp only [DomWeight.natW, plus, castW, Fin.cast_eq_self, hds]

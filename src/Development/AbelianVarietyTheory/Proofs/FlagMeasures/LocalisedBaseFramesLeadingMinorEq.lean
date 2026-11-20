@@ -48,14 +48,14 @@ theorem leadMinor_atBase : ∀ (D : D7) (Z : LocDat D) (p : PlF D) {T T' : D.hos
       rw [← Fin.prod_univ_eq_prod_range (fun k => if k < l then g k else 1)]
       refine Finset.prod_congr rfl fun a _ => ?_
       show _ = (if a.val < l then g a.val else 1)
-      rw [hg]; dsimp only; rw [dif_pos a.isLt]
+      rw [hg]; dsimp only; rw [dite_eq_left a.isLt]
     have h2 : (∏ i : Fin l, (Z.M p).L.cj (frFac Z.δ p (Fin.castLE hl i)) * frFac Z.δ p (Fin.castLE hl i))
         = ∏ k ∈ Finset.range l, g k := by
       rw [← Fin.prod_univ_eq_prod_range g]
       refine Finset.prod_congr rfl fun i _ => ?_
       have : i.val < D.R.rS + 1 := lt_of_lt_of_le i.isLt hl
       show _ = g i.val
-      rw [hg]; dsimp only; rw [dif_pos this]; rfl
+      rw [hg]; dsimp only; rw [dite_eq_left this]; rfl
     rw [h1, h2, ← Finset.prod_filter]
     congr 1
     ext k

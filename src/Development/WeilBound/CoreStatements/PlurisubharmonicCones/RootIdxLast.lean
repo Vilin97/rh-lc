@@ -110,7 +110,7 @@ def lastRoot (D : Datum H) (a : CMType H × Fin D.q) : CMType H × Fin (D.p + D.
 
 theorem rootIdx_last (a : CMType H × Fin D.q) : HodgeCpt.rootIdx D (lastRoot D a) = ⟨.inr a.1, a.2⟩ := by
   unfold HodgeCpt.rootIdx lastRoot
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   congr 1
   apply Fin.ext
   have := a.2.2

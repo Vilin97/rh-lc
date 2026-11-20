@@ -152,7 +152,7 @@ theorem sharpWt_rat (D : D7) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.what�
   · have hb : (r.1 - D.R.k) / (D.R.t + 1) < D.R.m := by
       have := D.R.blk_lt hj.le r hr
       omega
-    rw [dif_neg hr, dif_neg hr, dif_pos hb]
+    rw [dite_eq_right hr, dite_eq_right hr, dif_pos hb]
     have hdm := Nat.div_add_mod (r.1 - D.R.k) (D.R.t + 1)
     have hrk : (r.1 : ℝ) = D.R.k + (D.R.t + 1) * (((r.1 - D.R.k) / (D.R.t + 1) : ℕ) : ℝ) + (((r.1 - D.R.k) % (D.R.t + 1) : ℕ) : ℝ) := by
       have : r.1 = D.R.k + (D.R.t + 1) * ((r.1 - D.R.k) / (D.R.t + 1)) + (r.1 - D.R.k) % (D.R.t + 1) := by omega

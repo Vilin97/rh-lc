@@ -122,7 +122,7 @@ private lemma ordL_one_twisted_operators : ordL (1 : L) = 0 := by
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, map_one, WithZero.coe_one]
   unfold ordL
-  rw [dif_neg h, hu]
+  rw [dite_eq_right h, hu]
   simp
 
 private lemma chiDeltaU_one' {n m : ℕ} (α : Fin m → ℂ) : chiDeltaU (σ := σ) (n := n) q α 1 = 1 := by

@@ -209,7 +209,7 @@ theorem kFn_eq (m₁ : IsMor (dp0 R) (A.hom ≫ 𝟙 _) (dp0 R) ((A ⊗ B).hom �
         algebraMap R D (tanVal v β) * (show D from ev a (uA m₁ x)) := by
   have h : ∃ i : trivAt (ptV v x) ⟶ thickAt B x, ∀ r, i.φ r = r := ⟨i, hi⟩
   unfold kFn
-  rw [dif_pos h, show h.choose = i from Thick.hom_ext fun r ↦ (h.choose_spec r).trans (hi r).symm]
+  rw [dite_eq_left h, show h.choose = i from Thick.hom_ext fun r ↦ (h.choose_spec r).trans (hi r).symm]
 
 end GlobalTheory.PtExt.CupA
 

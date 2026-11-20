@@ -42,20 +42,20 @@ theorem eq_blkMat_of_isBlock {N n : ℕ} (hN : N = n + 1) {kt : Matrix (Fin N) (
   ext i j
   simp only [blkMat, Matrix.of_apply]
   by_cases hi : i.1 < n <;> by_cases hj : j.1 < n
-  · rw [dif_pos hi, dif_pos hj]
+  · rw [dite_eq_left hi, dite_eq_left hj]
     have := H.1 ⟨i.1, hi⟩ ⟨j.1, hj⟩
     simpa [Formalism.L2.Col.Br.iC] using this
-  · rw [dif_pos hi, dif_neg hj]
+  · rw [dite_eq_left hi, dite_eq_right hj]
     have ej : j = Formalism.L2.Col.Br.iL hN := Fin.ext (by simp [Formalism.L2.Col.Br.iL]; omega)
     have := (H.2.1 ⟨i.1, hi⟩).1
     rw [ej]
     simpa [Formalism.L2.Col.Br.iC] using this
-  · rw [dif_neg hi, if_pos hj]
+  · rw [dite_eq_right hi, if_pos hj]
     have ei : i = Formalism.L2.Col.Br.iL hN := Fin.ext (by simp [Formalism.L2.Col.Br.iL]; omega)
     have := (H.2.1 ⟨j.1, hj⟩).2
     rw [ei]
     simpa [Formalism.L2.Col.Br.iC] using this
-  · rw [dif_neg hi, if_neg hj]
+  · rw [dite_eq_right hi, if_neg hj]
     have ei : i = Formalism.L2.Col.Br.iL hN := Fin.ext (by simp [Formalism.L2.Col.Br.iL]; omega)
     have ej : j = Formalism.L2.Col.Br.iL hN := Fin.ext (by simp [Formalism.L2.Col.Br.iL]; omega)
     rw [ei, ej]

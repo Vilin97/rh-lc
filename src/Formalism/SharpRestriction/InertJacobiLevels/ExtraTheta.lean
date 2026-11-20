@@ -27,9 +27,9 @@ theorem sum_extZ (n n' : ℕ) (hn : n ≤ n') (g : Fin n → E) :
   have h1 := Fin.sum_univ_eq_sum_range (fun i : ℕ => if h : i < n then g ⟨i, h⟩ else 0) n'
   have h2 := Fin.sum_univ_eq_sum_range (fun i : ℕ => if h : i < n then g ⟨i, h⟩ else 0) n
   rw [h1, ← Finset.sum_subset (Finset.range_subset_range.2 hn), ← h2]
-  · exact Finset.sum_congr rfl fun i _ => by rw [dif_pos i.2]
+  · exact Finset.sum_congr rfl fun i _ => by rw [dite_eq_left i.2]
   · intro i _ hi
-    rw [dif_neg (by simpa using hi)]
+    rw [dite_eq_right (by simpa using hi)]
 
 theorem extZ_form (n n' : ℕ) (hn : n ≤ n') (x y : Fin n → E) :
     diagForm n' (fun _ => false) (extZ n n' x) (extZ n n' y) = diagForm n (fun _ => false) x y := by
@@ -98,7 +98,7 @@ def tow (D : D7) (t : ℕ) : Tow D t := if h : t = D.R.t then h ▸ recTow D els
 
 theorem tow_rec (D : D7) : tow D D.R.t = recTow D := by
   unfold tow
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 def chrExp (D : D7) (j : ℕ) : D.what₂.Tau → ℚ := fun τ =>
   if h : 1 ≤ j ∧ j ≤ D.R.m then -(D.hc τ).e ⟨j - 1, by omega⟩ else 0
@@ -130,7 +130,7 @@ def thetaZero (D : D7) : ThetaX D where
   chrOf_inf := fun _ j τ => by
     show chrExp D (j.1 + 1) τ = _
     unfold chrExp
-    rw [dif_pos ⟨Nat.le_add_left _ _, j.2⟩]
+    rw [dite_eq_left ⟨Nat.le_add_left _ _, j.2⟩]
     rfl
   etaT := Multiplicative.ofAdd fun _ => 1 / 2
   etaT_inf := fun _ => Or.inl rfl

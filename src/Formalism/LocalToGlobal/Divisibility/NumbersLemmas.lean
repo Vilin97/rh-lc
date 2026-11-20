@@ -332,7 +332,7 @@ theorem sigPar_step (z : RPl N.R) (i : ℕ) (hi : i + 1 < N.R.k - 1 + N.R.m) :
   by_cases h1 : i + 1 < N.R.k - 1
   ·
     have h0 : i < N.R.k - 1 := by omega
-    rw [dif_pos h1, dif_pos h0]
+    rw [dite_eq_left h1, dite_eq_left h0]
     have a1 : (N.hc z).v ⟨i + 1, h1⟩ < (N.hc z).u ⟨i + 1, by omega⟩ := (N.hc z).u_gt_v ⟨i + 1, h1⟩
     have a2 : (N.hc z).u ⟨i + 1, by omega⟩ < (N.hc z).v ⟨i, h0⟩ := (N.hc z).v_gt_u ⟨i, h0⟩
     obtain ⟨x, hx⟩ := (N.hc z).v_int ⟨i + 1, h1⟩
@@ -344,7 +344,7 @@ theorem sigPar_step (z : RPl N.R) (i : ℕ) (hi : i + 1 < N.R.k - 1 + N.R.m) :
     exact_mod_cast this
   · by_cases h0 : i < N.R.k - 1
     ·
-      rw [dif_neg h1, dif_pos h0, dif_pos (show i + 1 - (N.R.k - 1) < N.R.m by omega)]
+      rw [dite_eq_right h1, dite_eq_left h0, dite_eq_left (show i + 1 - (N.R.k - 1) < N.R.m by omega)]
       have hb0 : (N.hc z).b ⟨i + 1 - (N.R.k - 1), by omega⟩ = (N.hc z).b ⟨0, by omega⟩ :=
         congrArg (N.hc z).b (Fin.ext (show i + 1 - (N.R.k - 1) = 0 by omega))
       have a1 : -(N.hc z).b ⟨0, by omega⟩ < (N.hc z).u ⟨N.R.k - 1, by omega⟩ :=
@@ -363,7 +363,7 @@ theorem sigPar_step (z : RPl N.R) (i : ℕ) (hi : i + 1 < N.R.k - 1 + N.R.m) :
       exact_mod_cast this
     ·
       have hl : i - (N.R.k - 1) < N.R.m := by omega
-      rw [dif_neg h1, dif_neg h0, dif_pos (show i + 1 - (N.R.k - 1) < N.R.m by omega), dif_pos hl]
+      rw [dite_eq_right h1, dite_eq_right h0, dite_eq_left (show i + 1 - (N.R.k - 1) < N.R.m by omega), dite_eq_left hl]
       have g1 := (N.hc z).gap_be ⟨i - (N.R.k - 1), hl⟩
       have g2 : ((N.R.t : ℚ) + 3) / 2 ≤ (N.hc z).b ⟨i - (N.R.k - 1) + 1, by omega⟩ -
           (N.hc z).e ⟨i - (N.R.k - 1), hl⟩ :=
@@ -399,12 +399,12 @@ theorem aPlus_last (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ N.R.m) (z : RPl N.R) :
   have hjm : j - 1 < N.R.m := by omega
   have hs : N.sigPar z (N.R.k - 1 + (j - 1)) = -(N.hc z).b ⟨j - 1, hjm⟩ := by
     unfold NumDatum.sigPar
-    rw [dif_neg (show ¬ (N.R.k - 1 + (j - 1) < N.R.k - 1) by omega),
-      dif_pos (show N.R.k - 1 + (j - 1) - (N.R.k - 1) < N.R.m by omega)]
+    rw [dite_eq_right (show ¬ (N.R.k - 1 + (j - 1) < N.R.k - 1) by omega),
+      dite_eq_left (show N.R.k - 1 + (j - 1) - (N.R.k - 1) < N.R.m by omega)]
     exact congrArg (fun x => -(N.hc z).b x) (Fin.ext (show N.R.k - 1 + (j - 1) - (N.R.k - 1) = j - 1 by omega))
   have he : N.eQ j z = (N.hc z).e ⟨j - 1, hjm⟩ := by
     unfold NumDatum.eQ
-    rw [dif_pos ⟨h1, h2⟩]
+    rw [dite_eq_left ⟨h1, h2⟩]
   have g := (N.hc z).gap_be ⟨j - 1, hjm⟩
   unfold NumDatum.aPlus
   rw [hi, hs, he, hnV, hic]
@@ -427,7 +427,7 @@ theorem aMinus_step (j : ℕ) (z : RPl N.R) (c : ℕ) (hc : c + 1 < (N.R.sigW j)
   have hm' : j + c < N.R.m := by omega
   have ht : (0 : ℚ) ≤ N.R.t := Nat.cast_nonneg _
   unfold NumDatum.aMinus
-  rw [dif_pos hm, dif_pos hm']
+  rw [dite_eq_left hm, dite_eq_left hm']
   have g1 := (N.hc z).gap_be ⟨j + c, hm'⟩
   have g2 : ((N.R.t : ℚ) + 3) / 2 ≤ (N.hc z).b ⟨j + (c + 1), hm⟩ - (N.hc z).e ⟨j + c, hm'⟩ :=
     (N.hc z).gap_eb ⟨j + c, hm'⟩ (by show j + c + 1 < N.R.m; omega)
@@ -439,14 +439,14 @@ theorem aMinus_zero (j : ℕ) (h1 : 1 ≤ j) (z : RPl N.R) (hq : 0 < (N.R.sigW j
   have hm' : j + 0 < N.R.m := by omega
   have he : N.eQ j z = (N.hc z).e ⟨j - 1, by omega⟩ := by
     unfold NumDatum.eQ
-    rw [dif_pos ⟨h1, hjm.le⟩]
+    rw [dite_eq_left ⟨h1, hjm.le⟩]
   have g : ((N.R.t : ℚ) + 3) / 2 ≤ (N.hc z).b ⟨j - 1 + 1, by omega⟩ - (N.hc z).e ⟨j - 1, by omega⟩ :=
     (N.hc z).gap_eb ⟨j - 1, by omega⟩ (by show j - 1 + 1 < N.R.m; omega)
   have hb : (N.hc z).b ⟨j - 1 + 1, by omega⟩ = (N.hc z).b ⟨j + 0, hm'⟩ :=
     congrArg (N.hc z).b (Fin.ext (show j - 1 + 1 = j + 0 by omega))
   rw [hb] at g
   unfold NumDatum.aMinus
-  rw [dif_pos hm', he]
+  rw [dite_eq_left hm', he]
   push_cast
   linarith
 
@@ -545,7 +545,7 @@ end NumDatum
 theorem hFrob_five (e : ℕ) : hFrob e 5 = 1 := by
   have hc : Nat.Coprime 5 (2 ^ (e + 2)) := Nat.Coprime.pow_right _ (by norm_num)
   unfold hFrob
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   have hu : ZMod.unitOfCoprime 5 hc = Formalism.TwoAdicCyclotomicDecomposition.u5 (e + 2) := rfl
   rw [hu, ← iotaH_one, iotaHInv_iotaH]
 
@@ -562,7 +562,7 @@ theorem hFrobMul : HFrobMul := by
   have hcb := coprime_of_odd e hb
   have hcab := coprime_of_odd e (ha.mul hb)
   unfold hFrob
-  rw [dif_pos hcab, dif_pos hca, dif_pos hcb]
+  rw [dite_eq_left hcab, dite_eq_left hca, dite_eq_left hcb]
   have hu : ZMod.unitOfCoprime (a * b) hcab = ZMod.unitOfCoprime a hca * ZMod.unitOfCoprime b hcb := by
     ext
     simp
@@ -578,7 +578,7 @@ theorem hFrobZero : HFrobZero := by
   have cp := coprime_of_odd e hp
   have h0 : iotaH e 0 = 1 := by unfold iotaH; simp
   unfold hFrob
-  rw [dif_pos cp]
+  rw [dite_eq_left cp]
   constructor
   · intro h
     have h1 : hcl e (ZMod.unitOfCoprime p cp) = hcl e 1 := by
@@ -655,7 +655,7 @@ theorem hP_eq_ofRecord {p : ℕ} (hp : p.Prime) (hN : ¬ p ∣ D.host.condN) :
   have hc : Nat.Coprime p D.host.condN := hp.coprime_iff_not_dvd.2 hN
   rw [hP_eq_art D hp hc]
   unfold NumDatum.hP
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 theorem hP_eq_hFrob {p : ℕ} (hp : p.Prime) (hN : ¬ p ∣ D.host.condN) :
     iotaHInv D.R.e (D.R.hH (D.R.iota (Formalism.MainNotions.G.hP D p))) = hFrob D.R.e p := by
@@ -666,16 +666,16 @@ theorem hP_eq_hFrob {p : ℕ} (hp : p.Prime) (hN : ¬ p ∣ D.host.condN) :
     rw [ZMod.coe_unitOfCoprime, ZMod.coe_unitOfCoprime, ZMod.val_natCast, ZMod.natCast_eq_natCast_iff]
     exact ((Nat.mod_modEq _ _).of_dvd hd).symm)
   unfold hFrob
-  rw [dif_pos hc2, hP_eq_art D hp hc, Formalism.HC.Frame.iota_iotaInv, h1]
+  rw [dite_eq_left hc2, hP_eq_art D hp hc, Formalism.HC.Frame.iota_iotaInv, h1]
 
 theorem ofRecord_cls (p : ℕ) : (ofRecord D L Del h0).cls p = D.host.cls p := rfl
 
 theorem ofRecord_w {j : ℕ} (hj : 1 ≤ j) (z : Bool × HH D) : (ofRecord D L Del h0).w j z = wPl D j z := by
   unfold NumDatum.w NumDatum.eQ wPl wj
   by_cases h : j ≤ D.R.m
-  · rw [dif_pos (show 1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m from ⟨hj, h⟩), dif_pos (show j - 1 < D.R.m by omega)]
-  · rw [dif_neg (show ¬ (1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m) from fun h' => h h'.2),
-      dif_neg (show ¬ (j - 1 < D.R.m) by omega)]
+  · rw [dite_eq_left (show 1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m from ⟨hj, h⟩), dite_eq_left (show j - 1 < D.R.m by omega)]
+  · rw [dite_eq_right (show ¬ (1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m) from fun h' => h h'.2),
+      dite_eq_right (show ¬ (j - 1 < D.R.m) by omega)]
     simp
 
 variable {p : ℕ} (hh : Formalism.MainNotions.G.hP D p = (ofRecord D L Del h0).hP p)
@@ -797,12 +797,12 @@ theorem ofRecord_uW (hDel : D.s.Del = (Del : ℚ)) (u : D.what₂.Word) (z : Boo
   have hk : 5 ≤ D.R.k := by have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega
   unfold NumDatum.uW
   by_cases h : 1 ≤ i.1 ∧ i.1 + 1 < D.R.k
-  · rw [dif_pos (show 1 ≤ i.1 ∧ i.1 + 1 < (ofRecord D L Del h0).R.k from h)]
+  · rw [dite_eq_left (show 1 ≤ i.1 ∧ i.1 + 1 < (ofRecord D L Del h0).R.k from h)]
     have key := D.s.u_letter u (tauPl D z) (i.1 - 1) (by omega)
     have hi : (⟨i.1 - 1 + 1, by omega⟩ : Fin D.R.k) = i := Fin.ext (by show i.1 - 1 + 1 = i.1; omega)
     rw [hi] at key
     rw [key, D.hcW_v, hDel]
-  · rw [dif_neg (show ¬ (1 ≤ i.1 ∧ i.1 + 1 < (ofRecord D L Del h0).R.k) from h)]
+  · rw [dite_eq_right (show ¬ (1 ≤ i.1 ∧ i.1 + 1 < (ofRecord D L Del h0).R.k) from h)]
     have hi : i.1 = 0 ∨ i.1 = D.R.k - 1 := by have := i.2; omega
     rcases hi with hi | hi
     · have e : i = ⟨0, by omega⟩ := Fin.ext hi
@@ -817,14 +817,14 @@ theorem ofRecord_nu (hDel : D.s.Del = (Del : ℚ)) (u : D.what₂.Word) (j : ℕ
   have hs : (ofRecord D L Del h0).srcPar (letterOf D L Del h0 u) z i = DV.srcPar D u (tauPl D z) i := by
     unfold NumDatum.srcPar DV.srcPar
     by_cases h : i < D.R.k
-    · rw [dif_pos (show i < (ofRecord D L Del h0).R.k from h), dif_pos h]
+    · rw [dite_eq_left (show i < (ofRecord D L Del h0).R.k from h), dite_eq_left h]
       exact ofRecord_uW D L Del h0 hDel u z ⟨i, h⟩
-    · rw [dif_neg (show ¬ i < (ofRecord D L Del h0).R.k from h), dif_neg h, D.hcW_e]
+    · rw [dite_eq_right (show ¬ i < (ofRecord D L Del h0).R.k from h), dite_eq_right h, D.hcW_e]
   have he : (((ofRecord D L Del h0).eQ j z : ℚ) : ℝ) = DV.wSz D j (tauPl D z) := by
     unfold NumDatum.eQ DV.wSz
     by_cases h : 1 ≤ j ∧ j ≤ D.R.m
-    · rw [dif_pos (show 1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m from h), dif_pos h]
-    · rw [dif_neg (show ¬ (1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m) from h), dif_neg h]
+    · rw [dite_eq_left (show 1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m from h), dite_eq_left h]
+    · rw [dite_eq_right (show ¬ (1 ≤ j ∧ j ≤ (ofRecord D L Del h0).R.m) from h), dite_eq_right h]
       simp
   unfold NumDatum.nu DV.nuRow
   rw [← he, ← hs]
@@ -1088,7 +1088,7 @@ theorem ex_aPlus_last (z : RPl numEx.R) : numEx.aPlus 1 z 7 = 1 := by
 
 theorem ex_aMinus (z : RPl numEx.R) : numEx.aMinus 1 z 0 = 1 := by
   unfold NumDatum.aMinus
-  rw [dif_pos (show 1 + 0 < numEx.R.m by decide)]
+  rw [dite_eq_left (show 1 + 0 < numEx.R.m by decide)]
   change (109 : ℚ) - numEx.eQ 1 z - ((numEx.R.t : ℚ) + 1 + 2 * ((0 : ℕ) : ℚ)) / 2 = 1
   rw [example_exponent_first, numEx_t_eq_fifteen]
   norm_num
@@ -1098,7 +1098,7 @@ theorem ex_nu_first (δ : Code numEx) (z : RPl numEx.R) : numEx.nu δ 1 z 0 = 14
   have h' : ¬ (1 ≤ (⟨0, h⟩ : Fin numEx.R.k).1 ∧ (⟨0, h⟩ : Fin numEx.R.k).1 + 1 < numEx.R.k) := by
     rintro ⟨a, -⟩; exact absurd a (by norm_num)
   unfold NumDatum.nu NumDatum.srcPar NumDatum.uW
-  rw [dif_pos h, dif_neg h', example_exponent_first]
+  rw [dite_eq_left h, dite_eq_right h', example_exponent_first]
   have e1 : (numEx.hc z).u ⟨0, h⟩ = 113 / 2 := rfl
   rw [e1, example_rank_first, example_rank_second]
   norm_num
@@ -1109,7 +1109,7 @@ theorem ex_nu_second (δ : Code numEx) (z : RPl numEx.R) :
   have h' : 1 ≤ (⟨1, h⟩ : Fin numEx.R.k).1 ∧ (⟨1, h⟩ : Fin numEx.R.k).1 + 1 < numEx.R.k :=
     ⟨le_rfl, by show 1 + 1 < 8; norm_num⟩
   unfold NumDatum.nu NumDatum.srcPar NumDatum.uW
-  rw [dif_pos h, dif_pos h', example_exponent_first]
+  rw [dite_eq_left h, dite_eq_left h', example_exponent_first]
   have e1 : (numEx.hc z).v ⟨(⟨1, h⟩ : Fin numEx.R.k).1 - 1, by show 1 - 1 < 8 - 1; norm_num⟩ = 24 := rfl
   rw [e1, example_rank_first, example_rank_second, ex_Del]
   by_cases hδ : δ ⟨0, by show 0 < 8 - 2; norm_num⟩ = true

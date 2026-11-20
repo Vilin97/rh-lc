@@ -124,7 +124,7 @@ theorem vq_spec {a : E} (ha : a ≠ 0) : ∃ w : E, a = (qOf P : E) ^ vq P a * w
     obtain ⟨e, w, h1, h2, h3, h4⟩ := hN.2.2.1 E P hp hq a ha
     exact ⟨e, w, h1, h2, h3, h4⟩
   unfold vq
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem vq_eq {a w : E} {e : ℤ} (h : a = (qOf P : E) ^ e * w) (hw : UnitAt P w) : vq P a = e := by

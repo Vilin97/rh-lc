@@ -40,7 +40,7 @@ theorem ipM_smul (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V))
       rw [e] at this
       exact h ⟨_, this⟩
     unfold ipM
-    rw [dif_neg h, dif_neg h', mul_zero]
+    rw [dite_eq_right h, dite_eq_right h', mul_zero]
 
 theorem mmap_eq_zero (M : DSModel V S) (hv : ¬ ∃ v : M.Vec, ∏ τ, ⟪(v τ : M.H τ), (v τ : M.H τ)⟫_ℂ ≠ 0) (T : MMap M) :
     T = 0 := by

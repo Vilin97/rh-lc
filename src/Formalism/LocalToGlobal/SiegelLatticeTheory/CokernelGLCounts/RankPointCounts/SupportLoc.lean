@@ -263,7 +263,7 @@ theorem det_uLow {n : ℕ} (x : Loc.IL n → E) : (Loc.uLow x).det = 1 := by
     intro i j hij
     have hij' : i < j := hij
     simp only [Loc.uLow]
-    rw [if_neg (ne_of_lt hij'), dif_neg (lt_asymm hij')]
+    rw [if_neg (ne_of_lt hij'), dite_eq_right (lt_asymm hij')]
   rw [Matrix.det_of_lowerTriangular _ hlt]
   simp [Loc.uLow]
 
@@ -272,7 +272,7 @@ theorem det_uUp {n : ℕ} (w : Loc.Pt E n) (y : Loc.IN w → E) : (Loc.uUp w y).
     intro i j hij
     have hij' : j < i := hij
     simp only [Loc.uUp]
-    rw [if_neg (ne_of_gt hij'), dif_neg (fun h => lt_asymm hij' h.1)]
+    rw [if_neg (ne_of_gt hij'), dite_eq_right (fun h => lt_asymm hij' h.1)]
   rw [Matrix.det_of_upperTriangular hut]
   simp [Loc.uUp]
 
@@ -424,13 +424,13 @@ theorem amat_eq (δ : ∀ p, (D.s.atP p).Fp) (T T' : ℕ) (p : PlF D) (w : Point
 
 theorem dmin_top (w : Point D.host.E (D.R.rS + 1)) : Dmin w (D.R.rS + 1) = (ptMat w).det := by
   unfold Dmin
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   rfl
 
 theorem dmin_r (w : Point D.host.E (D.R.rS + 1)) :
     Dmin w D.R.rS = ((ptMat w).submatrix Fin.castSucc Fin.castSucc).det := by
   unfold Dmin
-  rw [dif_pos (Nat.le_succ _)]
+  rw [dite_eq_left (Nat.le_succ _)]
   rfl
 
 theorem det_amat (δ : ∀ p, (D.s.atP p).Fp) (T T' : ℕ) (p : PlF D) (w : Point D.host.E (D.R.rS + 1))

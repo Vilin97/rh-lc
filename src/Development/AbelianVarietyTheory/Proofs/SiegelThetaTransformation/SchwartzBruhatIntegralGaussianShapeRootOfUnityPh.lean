@@ -105,7 +105,7 @@ theorem ph_haar_of_shape : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [Decidab
   obtain ⟨hsb, c, a, S, f, hc, hf, hφx⟩ := hφ
   have hR := hsb.choose_spec
   unfold haar
-  rw [dif_pos hsb]
+  rw [dite_eq_left hsb]
   unfold haarAt
   refine Ph.mul ?_ (ph_finsum_quotient (perSub ℚ κ ι hsb.choose) S φ f c a
     (GlobalTheory.SW.HaarLevel.periodic hR.2) (GlobalTheory.SW.HaarLevel.finite_support hR.1 hR.2) hc hf hφx)

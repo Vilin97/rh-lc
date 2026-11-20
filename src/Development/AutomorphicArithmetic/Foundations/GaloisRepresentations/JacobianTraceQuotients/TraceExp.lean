@@ -75,7 +75,7 @@ theorem UpperTheory.Gal.Join.traceExp :
         simp }
   obtain ⟨E, h1, h2⟩ := exists_eigenchars (T := T) _ P R rfl
   refine ⟨E, fun t => ?_, fun μ => ?_⟩
-  · rw [trIn, dif_pos (hP t)]
+  · rw [trIn, dite_eq_left (hP t)]
     exact h1 t
   · rw [h2]
     constructor

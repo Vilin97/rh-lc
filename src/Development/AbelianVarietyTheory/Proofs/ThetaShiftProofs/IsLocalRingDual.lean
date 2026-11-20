@@ -22,11 +22,11 @@ theorem valR_spMap (ρ : A →+* B) (x : Sp A ⟶ X) (U : X.Opens) (hx : ⊤ ≤
   have hx' : ⊤ ≤ (spMap ρ ≫ x) ⁻¹ᵁ U := fun p _ => hx (x := spMap ρ p) trivial
   have h3 : (spMap ρ).appLE ⊤ ⊤ le_rfl = (spMap ρ).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]; rfl
-  rw [valR, valR, dif_pos hx, dif_pos hx', ← Scheme.Hom.appLE_comp_appLE (spMap ρ) x U ⊤ ⊤ hx le_rfl, h3]
+  rw [valR, valR, dite_eq_left hx, dite_eq_left hx', ← Scheme.Hom.appLE_comp_appLE (spMap ρ) x U ⊤ ⊤ hx le_rfl, h3]
   exact congrArg (fun q => q.hom ((x.appLE U ⊤ hx).hom f)) (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom ρ))
 
 theorem isUnit_valR (x : Sp A ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)ˣ) : IsUnit (valR x U f.val) := by
-  rw [valR, dif_pos hx]
+  rw [valR, dite_eq_left hx]
   exact (f.isUnit.map _).map _
 
 theorem gm_spMap (ρ : A →+* B) (x : Sp A ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x ⁻¹ᵁ U) (z : Sp B) (f : Γ(X, U)ˣ) :
@@ -37,7 +37,7 @@ theorem gm_spMap (ρ : A →+* B) (x : Sp A ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x
 theorem valR_id_top (c : Γ(Sp A, ⊤)) : valR (𝟙 (Sp A)) ⊤ c = (Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c := by
   have h : (𝟙 (Sp A) : Sp A ⟶ Sp A).appLE ⊤ ⊤ le_top = 𝟙 _ := by
     simp [Scheme.Hom.appLE]
-  rw [valR, dif_pos (show ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ ⊤ from le_top)]
+  rw [valR, dite_eq_left (show ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ ⊤ from le_top)]
   show (Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom (((𝟙 (Sp A) : Sp A ⟶ Sp A).appLE ⊤ ⊤ le_top).hom _) = _
   rw [h]; rfl
 

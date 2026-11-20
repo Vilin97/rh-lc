@@ -119,7 +119,7 @@ theorem exists_lamC_eq {l : ℕ} [Fact l.Prime] (σ : K →+* ℂ) (φ : K →+*
       @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨lam.toRingHom, fun x => ?_⟩
   unfold lamC
-  rw [dif_pos (hmem x)]
+  rw [dite_eq_left (hmem x)]
   exact lam.commutes x
 
 theorem norm_prime_padicComplex (l : ℕ) [Fact l.Prime] : ‖(l : ℂ_[l])‖ = (l : ℝ)⁻¹ := by

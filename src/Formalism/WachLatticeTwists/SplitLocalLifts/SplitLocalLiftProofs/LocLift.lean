@@ -43,10 +43,10 @@ theorem colK : StatColK := by
   refine ⟨fun a g => if h : g ∈ Dl then inc ((Kz a : Dl → P) ⟨g, h⟩) else 0, Kz, ?_, hKz1, ?_⟩
   · intro a g
     dsimp only
-    rw [dif_pos g.2]
+    rw [dite_eq_left g.2]
   · intro a g hg
     dsimp only
-    rw [dif_pos hg, ← hev, hKz2 a ⟨g, hg⟩, hκ a ⟨g, hg⟩]
+    rw [dite_eq_left hg, ← hev, hKz2 a ⟨g, hg⟩, hκ a ⟨g, hg⟩]
 
 theorem colk : StatColk := by
   intro O A T' G _ _ _ _ _ P _ _ _ _ M _ _ _ r χ E δO Dl inc ev hE hM hev hs Hf₁ Hf₂ ℓ e' u uz huz hmem hL
@@ -55,7 +55,7 @@ theorem colk : StatColk := by
   refine ⟨fun g => if h : g ∈ Dl then inc ((kz : Dl → P) ⟨g, h⟩) else 0, kz, ?_, hk1, ?_, ?_⟩
   · intro g
     dsimp only
-    rw [dif_pos g.2]
+    rw [dite_eq_left g.2]
   · intro g
     dsimp only
     split_ifs with h
@@ -63,7 +63,7 @@ theorem colk : StatColk := by
     · exact ⟨0, (zero_mul E).symm⟩
   · intro g hg m
     dsimp only
-    rw [dif_pos hg, hM, hk2 ⟨g, hg⟩, Submodule.coe_smul, huz ⟨g, hg⟩, smul_eq_mul, mul_assoc]
+    rw [dite_eq_left hg, hM, hk2 ⟨g, hg⟩, Submodule.coe_smul, huz ⟨g, hg⟩, smul_eq_mul, mul_assoc]
 
 theorem colFun : StatColFun := by
   intro O A T' G _ _ _ _ _ P _ _ _ _ V _ _ r χ Dl inc Hf₁ Lf H K Kz hK hKz s
@@ -94,7 +94,7 @@ theorem rowIm : StatRowIm := by
     refine ⟨(a : Dw → T₁), a.2, ha, ?_⟩
     have hm : (fun g => π ((a : Dw → T₁) g)) ∈ coZ1s ρ₂ := (cocycles1MapOfEquivariant ρ₁ ρ₂ π hπ a).2
     unfold clsOf
-    rw [dif_pos hm]
+    rw [dite_eq_left hm]
     rfl
   · rintro x ⟨y, hy, rfl⟩
     exact hFun y hy

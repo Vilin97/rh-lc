@@ -77,7 +77,7 @@ theorem parOf_rootSym (a : ℕ → Bool) (R : Option ℝ) (τ : E →+* ℂ) (i 
     have hne : (Finsupp.single s n).support.Nonempty := by
       rw [Finsupp.support_single_ne_zero _ hn]
       exact Finset.singleton_nonempty _
-    rw [parOf, dif_pos hne]
+    rw [parOf, dite_eq_left hne]
     have : hne.choose = s := Finset.mem_singleton.1 (Finsupp.support_single_subset hne.choose_spec)
     rw [this, hs]
   rw [rootSym]

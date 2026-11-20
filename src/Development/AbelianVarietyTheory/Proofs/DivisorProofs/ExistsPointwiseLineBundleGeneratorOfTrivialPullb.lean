@@ -21,7 +21,7 @@ theorem le_pull_chart {X Y : Scheme.{0}} (L : LB X) (q : Y ⟶ X) {D : Type} [Co
 theorem evU_mul {Y : Scheme.{0}} {D : Type} [CommRing D] (x : Sp D ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
     (a b : Γ(Y, U)) : evU x U (a * b) = evU x U a * evU x U b := by
   unfold evU
-  rw [dif_pos h, dif_pos h, dif_pos h, map_mul]
+  rw [dite_eq_left h, dite_eq_left h, dite_eq_left h, map_mul]
 
 theorem exists_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (L : LB X.left), L.IsLB →
     ∀ q : Y ⟶ X, GlobalTheory.AbLaw.Triv (L.pull q.left) → ∃ t, IsPtGen L q t := by
@@ -32,7 +32,7 @@ theorem exists_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (L : LB
     have hz := le_pull_chart L q.left z.left i hi
     show IsUnit (evU _ _ _)
     unfold evU
-    rw [dif_pos hz]
+    rw [dite_eq_left hz]
     exact (s.s _).isUnit.map _
   · intro E _ _ E' _ _ ψ z i hi
     have hz := le_pull_chart L q.left z.left i hi
@@ -55,9 +55,9 @@ theorem exists_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (L : LB
     have e3 : evU z.left _ ((L.pull q.left).g (fun _ ↦ i) (fun _ ↦ j)).val =
         evU (z ≫ q).left (L.U i ⊓ L.U j) (L.g i j).val := by
       unfold evU
-      rw [dif_pos hV]
+      rw [dite_eq_left hV]
       have hij' : ⊤ ≤ (z ≫ q).left ⁻¹ᵁ (L.U i ⊓ L.U j) := hij
-      rw [dif_pos hij']
+      rw [dite_eq_left hij']
       exact (evalAt_pull_g L q.left z.left (fun _ ↦ i) (fun _ ↦ j) hij hV).symm
     rw [e1, e2, e3] at e
     exact e

@@ -23,14 +23,14 @@ theorem perFr_pure_of_data (Y : FD.Data E r) (x : FD.Frame Y.Ψ r) (hx : x ∈ Y
       (Y.p0 ≤ (j : ℕ) → τ ∉ Y.Ψ → i < Y.p0 → perFr Y x (a • lam j) τ i = 0) := by
   refine ⟨fun hj hτ => ?_, fun hj hτ hi => ?_⟩
   · unfold perFr
-    rw [dif_pos hτ]
+    rw [dite_eq_left hτ]
     split_ifs with h
     · refine GlobalTheory.PurePer.inv_mulVec_eq_zero Y.p0_le _ (hx ⟨τ, hτ⟩).1 ?_ _ (by simp)
       rw [hsp ⟨τ, hτ⟩, GlobalTheory.PurePer.emb_smul']
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨j, hj⟩, rfl⟩)
     · rfl
   · unfold perFr
-    rw [dif_neg hτ]
+    rw [dite_eq_right hτ]
     split_ifs with h' h
     · have hm : FD.col (FD.mat x ⟨conjEmb τ, h'⟩) ⟨Y.p0 - 1 - i, h⟩ ∈
           Submodule.span ℂ (Set.range fun a : Fin Y.p0 =>

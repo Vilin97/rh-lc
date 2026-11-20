@@ -72,7 +72,7 @@ theorem fFun_comp_mul {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
       have := congrArg (· * ((invT H)⁻¹).val) hh
       simp only [Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one] at this
       rw [this, map_mul, map_inv, Units.val_mul]
-    rw [fFun, dif_neg hX, fFun, dif_neg hX', mul_zero]
+    rw [fFun, dite_eq_right hX, fFun, dite_eq_right hX', mul_zero]
 
 theorem phiA_blockSubst : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     [MeasurableSpace k] [BorelSpace k]

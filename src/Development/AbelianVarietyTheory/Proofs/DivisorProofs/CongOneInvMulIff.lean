@@ -101,7 +101,7 @@ theorem sub_mem_of_red_eq (h𝔪 : 𝔪 ≠ ⊥) {x y : AE D} (hx : x ∈ OhE D)
   have ex := exists_rep h𝔪 hx
   have ey := exists_rep h𝔪 hy
   unfold red at h
-  rw [dif_pos ex, dif_pos ey, Ideal.Quotient.eq] at h
+  rw [dite_eq_left ex, dite_eq_left ey, Ideal.Quotient.eq] at h
   have := add_mem (sub_mem ex.choose_spec ey.choose_spec) (inc_sub_mem h)
   convert this using 1
   ring

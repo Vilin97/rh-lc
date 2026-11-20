@@ -235,7 +235,7 @@ theorem pullback_generator_of_psi_weight (hG : GlobalFnsSt) {V : Type} [CommRing
     rw [Category.id_comp] at h1
     have hg : gs (𝟙 _) y ⊤ (gF D.toPre F (1 : F)) = 1 := by
       unfold gs
-      rw [dif_pos (by simp)]
+      rw [dite_eq_left (by simp)]
       simp only [map_one]
     rw [h1, hg, _root_.one_mul]
 

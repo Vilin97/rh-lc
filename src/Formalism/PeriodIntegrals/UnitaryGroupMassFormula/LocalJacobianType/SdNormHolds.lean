@@ -36,7 +36,7 @@ theorem sdNorm_holds : SdNorm (E := E) ψ v := by
       refine ⟨Real.sqrt (a / d), Real.sqrt_pos.2 (div_pos ha hd), fun ι _ => ?_⟩
       have hex := exists_sd (E := E) v ψ hK hnt ι
       have hs : sdE (E := E) ψ v ι = hex.choose := by
-        rw [sdE_eq, dif_pos hex]
+        rw [sdE_eq, dite_eq_left hex]
       have hμ := hex.choose_spec
       have := hμ.1
       refine ⟨by rw [hs]; exact hμ.1, ?_⟩
@@ -62,9 +62,9 @@ theorem sdNorm_holds : SdNorm (E := E) ψ v := by
     · left
       push Not at hnt
       intro ι _ _
-      rw [sdE_eq, dif_neg (no_sd_triv (E := E) v ψ ι hnt)]
+      rw [sdE_eq, dite_eq_right (no_sd_triv (E := E) v ψ ι hnt)]
   · left
     intro ι _ _
-    rw [sdE_eq, dif_neg (no_sd_noKer (E := E) v ψ ι hK)]
+    rw [sdE_eq, dite_eq_right (no_sd_noKer (E := E) v ψ ι hK)]
 
 end PI.UnitaryGroupMassFormula.LocJacTyp.Sd

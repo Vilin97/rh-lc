@@ -67,7 +67,7 @@ theorem cycM_spec (M : ℕ) (s : Ω ≃ₐ[ℚ] Ω)
     ∀ z : Ω, z ^ M = 1 → s z = z ^ (cycM M s : ZMod M).val := by
   classical
   unfold cycM
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem repM_spec (M : ℕ) (y : (ZMod M)ˣ)

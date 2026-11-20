@@ -74,7 +74,7 @@ theorem prod_split_conjugate_embeddings {R : (E →+* ℂ) → (E →+* ℂ)} (h
 theorem borel_diagonal_positive (X : Data E r) (b : Frame X.Ψ r) (τ' : E →+* ℂ) (h : τ' ∈ X.Ψ) (i : ℕ)
     (hi : X.p0 + i < r) : bdiag X b τ' i = b ⟨τ', h⟩ ⟨X.p0 + i, hi⟩ ⟨X.p0 + i, hi⟩ := by
   unfold bdiag
-  rw [dif_pos h, dif_pos hi]
+  rw [dite_eq_left h, dite_eq_left hi]
 
 theorem borel_diagonal_negative (X : Data E r) (b : Frame X.Ψ r) (τ' : E →+* ℂ) (h : τ' ∈ X.Ψ) (i : ℕ)
     (hi : X.p0 - 1 - i < r) :
@@ -86,7 +86,7 @@ theorem borel_diagonal_negative (X : Data E r) (b : Frame X.Ψ r) (τ' : E →+*
     rw [conjEmb_conjEmb_generic_regularity]
     exact h
   unfold bdiag
-  rw [dif_neg hn, dif_pos hc, dif_pos hi]
+  rw [dite_eq_right hn, dite_eq_left hc, dite_eq_left hi]
   have : (⟨conjEmb (conjEmb τ'), hc⟩ : X.Ψ) = ⟨τ', h⟩ := Subtype.ext (conjEmb_conjEmb_generic_regularity τ')
   rw [this]
 

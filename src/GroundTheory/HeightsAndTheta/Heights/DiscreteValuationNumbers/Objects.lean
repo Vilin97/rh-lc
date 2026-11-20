@@ -143,7 +143,7 @@ omit [DecidableEq K] in
 theorem divCycle_one {R : Type*} [CommRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
     divCycle P 1 W = 0 := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨h, -⟩
   have hW : W.IsPrime := h.1.1
   have : P ⊔ Ideal.span {(1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} = ⊤ := by

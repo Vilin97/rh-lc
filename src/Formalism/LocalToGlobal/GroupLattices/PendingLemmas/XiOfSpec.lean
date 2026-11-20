@@ -29,7 +29,7 @@ def xiOf (v : X.Pl) (j : ℕ) : XiTy X Kc v j := by
   classical exact if h : XiEx X Kc ThF v j then Classical.choose h else fun _ => 0
 
 theorem xiOf_spec {v : X.Pl} {j : ℕ} (h : XiEx X Kc ThF v j) : IsXi X Kc ThF v j (xiOf X Kc ThF v j) := by
-  rw [xiOf, dif_pos h]
+  rw [xiOf, dite_eq_left h]
   exact Classical.choose_spec h
 
 end Formalism.L2.G.Pend

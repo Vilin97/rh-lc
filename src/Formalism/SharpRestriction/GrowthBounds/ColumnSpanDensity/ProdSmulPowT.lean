@@ -56,7 +56,7 @@ theorem prodTopsT (G : TT → MvPolynomial (Fin k × Fin n) K) :
   rw [← Finset.prod_subset (Finset.subset_univ TT)]
   · rw [← Finset.prod_coe_sort TT]
     refine Finset.prod_congr rfl fun s _ => ?_
-    rw [dif_pos s.2]
+    rw [dite_eq_left s.2]
     rfl
   · intro s _ hs
     rw [dif_neg hs, map_one]
@@ -147,7 +147,7 @@ theorem prMem (pr : TT → MvPolynomial (Bool × (Fin k × Fin n)) K →ₗ[K] M
       c • pr ⟨s, h⟩ (∏ b, blockEmb K b (F (⟨s, h⟩, b))) else 1, fun s => ?_, rfl⟩
     dsimp only
     by_cases h : s ∈ TT
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       exact h1 ⟨s, h⟩ _ (Submodule.subset_span ⟨fun b => F (⟨s, h⟩, b), fun b => hF _, rfl⟩)
     · rw [dif_neg h]
       exact h0 s h

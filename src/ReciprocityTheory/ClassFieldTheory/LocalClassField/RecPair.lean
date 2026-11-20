@@ -66,7 +66,7 @@ theorem IsPairClass.unique {a : Kˣ} {χ : charGrp (GK p K)} {c c' : Br p K}
 theorem isPairClass_pairBr (a : Kˣ) (χ : charGrp (GK p K)) :
     IsPairClass p K (ofK p K (Additive.ofMul a)) χ (pairBr p K a χ) := by
   unfold pairBr
-  rw [dif_pos (exists_isPairClass a χ)]
+  rw [dite_eq_left (exists_isPairClass a χ)]
   exact (exists_isPairClass a χ).choose_spec
 
 theorem pairBr_mul (a b : Kˣ) (χ : charGrp (GK p K)) :

@@ -51,7 +51,7 @@ theorem gmap_inv_of' {a : S.V ≃ₗ[E] S.V} {L L' : Submodule (𝓞 E) S.V} (h 
 theorem xflag_mapLF' {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) (j : ℕ) :
     Xflag (mapLF γ F) j = (Xflag F j).map (γ : S.V →ₗ[E] S.V) := by
   unfold Xflag mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   show (mapFlag γ hγ F.fl).Xa j = _
   unfold FlagG.Xa mapFlag
   try simp only [Submodule.map_span, Set.image_image]
@@ -60,7 +60,7 @@ theorem xflag_mapLF' {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.He
 theorem z_mapLF' {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) :
     (mapLF γ F).fl.z = γ F.fl.z := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   try rfl
 
 theorem isPair_quot' {T T' : E} (Λ Λ' : Submodule (𝓞 E) S.V) (g : ℕ) (F : LFlag S r T) (F' : LFlag S r T')

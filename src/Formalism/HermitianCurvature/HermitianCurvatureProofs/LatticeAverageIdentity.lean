@@ -1184,7 +1184,7 @@ theorem shf_sUp (ξ β : Fin n → K) (hξ : ∀ j : Fin n, k < j.val → ξ j =
   unfold sUp
   rw [Finset.sum_eq_single r]
   · have h : r.val + 1 < n := by rw [hr, ← hc]; exact c.2
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have e : (⟨r.val + 1, h⟩ : Fin n) = c := Fin.ext (by simp [hr, hc])
     rw [e]
     have hne : r ≠ c := by
@@ -1194,7 +1194,7 @@ theorem shf_sUp (ξ β : Fin n → K) (hξ : ∀ j : Fin n, k < j.val → ξ j =
     rw [Matrix.add_apply, Matrix.one_apply_ne hne, zero_add, vecMulVec_apply]
   · intro j _ hj
     by_cases h : j.val + 1 < n
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       have hne : j ≠ ⟨j.val + 1, h⟩ := by
         intro h'
         have := congrArg Fin.val h'
@@ -1205,7 +1205,7 @@ theorem shf_sUp (ξ β : Fin n → K) (hξ : ∀ j : Fin n, k < j.val → ξ j =
         · exact absurd (Fin.ext (h1.trans hr.symm)) hj
         · rw [hξ j h1, zero_mul]
       rw [Matrix.add_apply, Matrix.one_apply_ne hne, zero_add, vecMulVec_apply, h0]
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
   · simp
 
 theorem shf_mul (Z₀ p : Matrix (Fin n) (Fin n) K) (hd : IsUnit Z₀.det) (m : Fin n → R)

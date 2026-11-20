@@ -55,7 +55,7 @@ theorem mvPt_spec (hT : ActTotal pts actR) (g : G) {S : Type} [CommRing S] [Alge
     actR g y (mvPt pts actR g y) := by
   have h := hT g S y
   unfold mvPt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 variable (pts actR)

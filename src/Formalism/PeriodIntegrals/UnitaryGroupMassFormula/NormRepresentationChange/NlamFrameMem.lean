@@ -114,7 +114,7 @@ theorem stepExp (D : D7) : StepExp D := by
       have hc : (if h : (i.castSucc : Fin (D.R.rS + 1)).val < D.R.rS then
           G.fl.coefX (n (frame G b) - frame G b) ⟨(i.castSucc : Fin (D.R.rS + 1)).val, h⟩ else 0) =
             G.fl.coefX (n (frame G b) - frame G b) i := by
-        rw [dif_pos (by simp)]
+        rw [dite_eq_left (by simp)]
         rfl
       simp only [fmat, hc, add_smul, frame_castSucc]
     have h2 : fmat D G n (Fin.last _) b = if Fin.last _ = b then 1 else 0 := by

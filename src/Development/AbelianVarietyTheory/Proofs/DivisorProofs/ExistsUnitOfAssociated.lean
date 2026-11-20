@@ -44,7 +44,7 @@ theorem mk_unit_mul {A : Type} [CommRing A] (u : Aˣ) (a : A) : Associates.mk (u
 theorem cl_eq (s : L.Sec) (r : Z ⟶ X) (z : Z) {a : L.ι} (ha : r z ∈ L.U a) :
     cl s r z = Associates.mk (gs r z (L.U a) (s.f a)) := by
   have h : ∃ a, r z ∈ L.U a := ⟨a, ha⟩
-  rw [cl, dif_pos h, gs_trans s r z h.choose_spec ha, mk_unit_mul]
+  rw [cl, dite_eq_left h, gs_trans s r z h.choose_spec ha, mk_unit_mul]
 
 theorem gs_pow (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) (a : Γ(X, U)) (n : ℕ) :
     gs r z U (a ^ n) = gs r z U a ^ n := by simp only [gs_eq r z U h, map_pow]

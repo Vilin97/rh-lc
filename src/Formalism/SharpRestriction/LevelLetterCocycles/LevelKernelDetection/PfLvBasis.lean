@@ -245,7 +245,7 @@ theorem lvBasis_lamOf_val {c : ZMod n} {ell : ℕ}
   have h' := lvBasis_φpow_letter _ ell (lvBasis_cmp_e_letter hBasis hBasis_e k)
   rw [sub_add_cancel] at h'
   unfold lamOf
-  rw [dif_pos (lvBasis_e_mem hBasis hBasis_e k), dif_pos h']
+  rw [dite_eq_left (lvBasis_e_mem hBasis hBasis_e k), dite_eq_left h']
 
 end abelian₂
 

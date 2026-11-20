@@ -87,7 +87,7 @@ theorem oneChartAtlas_mInt (hΩ : IsOpen Ω) [Nonempty Ω] (Φ : Fin D → LocPo
          show _ ⊆ (inclChart hΩ).source
          rw [inclChart_source]; exact Set.subset_univ _
        sum_eq_one := fun _ => by show ∑ _j : Fin 1, (1 : ℝ) = 1; simp }⟩
-  rw [mInt, dif_pos hne, integralWith]
+  rw [mInt, dite_eq_left hne, integralWith]
   have hχ : ∀ j x, hne.some.χ j x = 1 := by
     intro j x
     have h := hne.some.sum_eq_one x

@@ -38,7 +38,7 @@ theorem delta_eq_one {n : ℕ} (G : Grp k n) (g : GL (Fin n) k) {β : Type} [Lin
 
 theorem chk_one (μ : kˣ →* ℂˣ) : Grp.chk μ (1 : k) = 1 := by
   unfold Grp.chk
-  rw [dif_neg one_ne_zero]
+  rw [dite_eq_right one_ne_zero]
   have h : Units.mk0 (1 : k) one_ne_zero = 1 := Units.ext rfl
   rw [h, map_one, Units.val_one]
 

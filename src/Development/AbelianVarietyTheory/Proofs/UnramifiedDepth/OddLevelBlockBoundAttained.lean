@@ -44,7 +44,7 @@ omit [∀ g, Fintype (I g)] in
 theorem rename_minor {n N : ℕ} (hN : n ≤ N) (g : Fin 2) (en : Fin N → I g) :
     MvPolynomial.rename (fun x : Fin n × Fin N => (x.1, (⟨g, en x.2⟩ : WV I))) (minorK K n N n) =
       letterDet K g fun c => en (Fin.castLE hN c) := by
-  rw [minorK, dif_pos ⟨le_rfl, hN⟩, AlgHom.map_det, letterDet]
+  rw [minorK, dite_eq_left ⟨le_rfl, hN⟩, AlgHom.map_det, letterDet]
   congr 1
   refine Matrix.ext fun b c => ?_
   simp

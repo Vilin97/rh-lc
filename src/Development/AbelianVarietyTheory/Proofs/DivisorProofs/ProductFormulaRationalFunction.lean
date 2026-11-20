@@ -206,7 +206,7 @@ theorem GlobalTheory.HtAdd.ProdFormulaPts.main : ∀ (F : Type) [Field F] [Numbe
       fun v => Real.log (HeightOneSpectrum.adicAbv F v (Algebra.norm F ((Y.X.residue x).hom a₀))) := by
     funext v
     have hne : Nonempty (Ext v) := (ExtConj.main F).1 v
-    rw [dif_pos hne]
+    rw [dite_eq_left hne]
     refine (finsum_pts Y.str x φ₀ hφ₀ (algebraMap F (AlgebraicClosure F))
       (fun c => Real.log (hne.some.w c)) a₀).trans ?_
     refine (finsum_log (algebraMap F (AlgebraicClosure F)) hne.some.w.toMonoidWithZeroHom

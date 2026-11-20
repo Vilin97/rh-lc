@@ -87,7 +87,7 @@ theorem isAtTau_kAt (hθ : IsInfFam θ) (τ : D.what₂.Tau) {e : Fin V.rank →
         rw [conjTranspose_one, Matrix.one_mul, Matrix.mul_one])
   have hex : ∃ x, IsAtTau θ V τ (P⁻¹ * Formalism.REAL.toMK k * P) x :=
     ⟨g, hg, by rw [h1, Function.update_self], fun τ' c => by rw [h1, Function.update_of_ne c]⟩
-  rw [kAt, atTau, dif_pos hex]
+  rw [kAt, atTau, dite_eq_left hex]
   exact hex.choose_spec
 
 theorem hasTypeAt_of_map (τ : D.what₂.Tau) (e : Fin V.rank → Bool) (P : Matrix (Fin V.rank) (Fin V.rank) ℂ) {W : Type}

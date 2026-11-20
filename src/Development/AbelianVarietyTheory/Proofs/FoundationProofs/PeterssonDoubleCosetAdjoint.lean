@@ -18,7 +18,7 @@ lemma toG_val (δ : M2) (hδ : δ.det ≠ 0) :
     (toG δ : Matrix (Fin 2) (Fin 2) ℝ) = (Int.castRingHom ℝ).mapMatrix δ := by
   have hd : ((Int.castRingHom ℝ).mapMatrix δ).det ≠ 0 := by
     rw [← RingHom.map_det]; simpa using hδ
-  rw [toG, dif_pos hd]; rfl
+  rw [toG, dite_eq_left hd]; rfl
 
 lemma toG_det (δ : M2) (hδ : 0 < δ.det) : 0 < (toG δ).det.val := by
   rw [Matrix.GeneralLinearGroup.val_det_apply, toG_val δ hδ.ne', ← RingHom.map_det]

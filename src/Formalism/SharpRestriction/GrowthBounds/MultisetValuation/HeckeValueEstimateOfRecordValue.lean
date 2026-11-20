@@ -15,7 +15,7 @@ theorem lamI_fin (lam0 : Fin n' → Fin (k1 + 1) → ℤ) (s : Fin n') (i : Fin 
     lamI lam0 s (i.val + 1) = lam0 s i := by
   have hi := i.isLt
   unfold lamI
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   exact congrArg (lam0 s) (Fin.ext (by simp))
 
 theorem sum_head (lam0 : Fin n' → Fin (k1 + 1) → ℤ) (s : Fin n') (r : ℕ) (hr : r ≤ k1 + 1) :
@@ -102,7 +102,7 @@ def KkR (h3b : ∀ j < X.mm, ∀ F ∈ X.FQ j, X.Kz j F ∈ X.FQ (j + 1)) (j : �
 
 theorem KkR_coe (h3b : ∀ j < X.mm, ∀ F ∈ X.FQ j, X.Kz j F ∈ X.FQ (j + 1)) {j : ℕ} (hj : j < X.mm)
     (F : X.FQ j) : ((KkR X h3b j F : X.FQ (j + 1)) : X.Fm (j + 1)) = X.Kz j F := by
-  rw [KkR, dif_pos hj]
+  rw [KkR, dite_eq_left hj]
   rfl
 
 theorem Kc_coe (h3b : ∀ j < X.mm, ∀ F ∈ X.FQ j, X.Kz j F ∈ X.FQ (j + 1)) (j : ℕ) (hj : j ≤ X.mm)

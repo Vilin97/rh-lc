@@ -99,7 +99,7 @@ theorem tup_mem_tuOf {U : Set I.ι} {a : I.ι} : I.tup a ∈ tuOf I U ↔ a ∈ 
 theorem ixOf_eq {U : Set I.ι} {t : TupU I U} {a : I.ι} (h : I.tup a = t.1) : ixOf I U t = a := by
   have h' : ∃ a, I.tup a = t.1 := ⟨a, h⟩
   unfold ixOf
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact I.tup_inj (h'.choose_spec.trans h.symm)
 
 theorem tup_ixOf {U : Set I.ι} (t : TupU I U) : I.tup (ixOf I U t) = t.1 := by
@@ -160,17 +160,17 @@ theorem embLL_xiValOf (a : I.ι) (P : HeightOneSpectrum (𝓞 B.fields.E))
   have h' : ∃ z : B.LLˣ, ∃ b, I.tup b = I.tup a ∧ B.embLL (z : B.LL) = (((I.xi b).val P : ℂˣ) : ℂ) :=
     ⟨Units.mk0 z hz0, a, rfl, hz⟩
   unfold xiValOf
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   obtain ⟨b, hb, e⟩ := h'.choose_spec
   rw [e, I.tup_inj hb]
 
 theorem psiC_of_mem {PP : Pl B.host.E} (h : PP ∈ (B.primes px).vGs) : psiC I PP = I.Ch.psi0 ⟨PP, h⟩ := by
   unfold psiC
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem psiC_of_notMem {PP : Pl B.host.E} (h : PP ∉ (B.primes px).vGs) : psiC I PP = 1 := by
   unfold psiC
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem ValsIn.embLL_xiValOf {I : ColIn B px} (h : ValsIn I) (a : I.ι) (P : HeightOneSpectrum (𝓞 B.fields.E))
     (hP : (I.xi a).UnrAt P) : B.embLL (xiValOf I (I.tup a) P : B.LL) = (((I.xi a).val P : ℂˣ) : ℂ) :=

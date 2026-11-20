@@ -302,7 +302,7 @@ theorem zeOf_eq {R : Ranks} (Dd : Rows.Data R) (u : Dd.Word) (μ : Dd.Tup) (c : 
     have hex : ∃ z : Dd.LLˣ, ZeFact Dd u μ (Dd.embLL (z : Dd.LL)) :=
       ⟨Units.mk0 z hz0, by simpa [hz'] using h⟩
     unfold zeVal
-    rw [if_neg hμ, dif_pos hex]
+    rw [if_neg hμ, dite_eq_left hex]
     exact hex.choose_spec.unique h
 
 end GlobalTheory.Mem.R3.Rw.NumDef
@@ -329,7 +329,7 @@ theorem periodAgainstColumnForm_referenceTuple_eq (p : PkB B C G) (e : PerD p) (
     perOf p e W₀ u C.mu0 φ F = (C.mem u).P.PtilCol ((W₀.eMu u φ : (C.mem u).A.Mram) :
       (C.mem u).C.cls 0 → (C.mem u).C.Y 0 → ℂ) ((e.e0 u).symm F) := by
   unfold perOf
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
   rfl
 
 theorem perOf_linL (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C) (u : B.Word) (F : (p.sA true C.mu0).A.T) :

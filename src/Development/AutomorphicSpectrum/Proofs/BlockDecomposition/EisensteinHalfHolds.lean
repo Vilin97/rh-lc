@@ -30,7 +30,7 @@ theorem eisHalf : EisHalf := by
       (↑(v z) : GlobalTheory.ThK.Dbl.G2 σ Y → ℂ) x = Ê z x := by
     intro z hz x
     simp only [v]
-    rw [dif_pos hz]
+    rw [dite_eq_left hz]
   refine ⟨t, v, fun z hz x => by rw [hv z hz x]; exact hsum' z hz x, ?_⟩
   have hS : IsOpen {z : ℂ | t < z.re} := isOpen_lt continuous_const Complex.continuous_re
   apply GlobalTheory.CompanionTheory.WeakHolo.wholo_growForms v hS

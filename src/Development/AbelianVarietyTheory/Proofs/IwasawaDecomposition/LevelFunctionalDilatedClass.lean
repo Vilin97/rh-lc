@@ -35,7 +35,7 @@ theorem fv_mk (h : A.Ok T) (P : ST) (c : S.Cl) (x : A.N c.1 (S.rep c)) :
         map_add' := fun x y => h.f_add _ _ P x x.2 y y.2
         map_smul' := fun a x => h.f_smul _ _ P a x x.2 }
   unfold TDat.fv
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec x
 
 theorem exists_act_equiv (h : A.Ok T) (b : S.β) (g : S.G b) (d : S.D b) (M : Submodule (𝓞 E) (Fin n → E))

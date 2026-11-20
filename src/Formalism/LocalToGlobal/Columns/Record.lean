@@ -544,7 +544,7 @@ theorem te_ne (d : DecoSet E n ST SG) (P : ST) {q : 𝓞 E} (hq : q ∈ P.1.asId
     d.te P q ≠ 0 := by
   have hm : q • d.e1 P ∈ d.1.kerAt P := d.2.smul_mem_kerAt P hq (d.first_raising_mem_equivariant P)
   unfold te
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   intro h0
   have h1 : q • d.e1 P ∈ P.1.asIdeal • d.1.kerAt P := by
     have := (Submodule.Quotient.mk_eq_zero _).1 h0
@@ -578,7 +578,7 @@ theorem modP.ext_spec (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (
     Ideal.Quotient.mk P.asIdeal s * modP.ext P M g y = g (modP.mk P M ⟨s • y, hy⟩) := by
   have hex : ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • y ∈ M := ⟨s, hs, hy⟩
   unfold modP.ext
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have htP : hex.choose ∉ P.asIdeal := hex.choose_spec.1
   have htM : hex.choose • y ∈ M := hex.choose_spec.2
   have key : Ideal.Quotient.mk P.asIdeal hex.choose * g (modP.mk P M ⟨s • y, hy⟩) =
@@ -632,7 +632,7 @@ theorem modP.ext_funAt (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) 
   off := by
     intro x hx
     unfold modP.ext
-    rw [dif_neg fun h => hx ((mem_locP P M x).2 h)]
+    rw [dite_eq_right fun h => hx ((mem_locP P M x).2 h)]
 
 namespace DecoSet
 
@@ -673,7 +673,7 @@ theorem dnL_val (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {g : Mod
       obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ z
       exact ⟨x.1, Submodule.mem_sup_left x.2, by rw [modP.ext_of_mem]; exact hz⟩
   unfold dnL DecoSet.dn
-  rw [dif_pos hok]
+  rw [dite_eq_left hok]
 
 end DecoSet
 
@@ -905,13 +905,13 @@ theorem rec_norm_tilde {ξ : Formalism.L2.DIV.Chr X.F X.E X.K} (σ₀ : X.K →+
   by_cases h : (Formalism.L2.DIV.h90 σ).ker ≤ ξ.ker
   · have e : Formalism.L2.DIV.tilde σ ξ ((Formalism.L2.DIV.h90 σ).rangeRestrict x) = ξ x := by
       unfold Formalism.L2.DIV.tilde
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       exact MonoidHom.liftOfRightInverse_comp_apply _ _ _ _ x
     rw [← hx, e]
     exact hξ x
   · have e : Formalism.L2.DIV.tilde σ ξ z = 1 := by
       unfold Formalism.L2.DIV.tilde
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       rfl
     rw [e]
     simp
@@ -1181,7 +1181,7 @@ def recChain (hX : X.Ok) (σ₀ : X.K →+* ℂ) (G : ChainGlob W σ₀) (u : Pr
     obtain ⟨a, ha⟩ := (rec_sInt R (W.hc u τ) ⟨i, h⟩).2
     have e : (RowPar.of (W.hc u τ)).eAt i = (W.hc u τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sSharpC
     rw [e]
@@ -1192,7 +1192,7 @@ def recChain (hX : X.Ok) (σ₀ : X.K →+* ℂ) (G : ChainGlob W σ₀) (u : Pr
     obtain ⟨a, ha⟩ := (rec_sInt R (W.hc u τ) ⟨i, h⟩).1
     have e : (RowPar.of (W.hc u τ)).eAt i = (W.hc u τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sDivC
     rw [e]
@@ -1781,7 +1781,7 @@ def recChainF (hc : X.Tau → HCParam R) (F : ℕ → GFam X.K) (hF : ∀ j, (F 
     obtain ⟨a, ha⟩ := (rec_sInt R (hc τ) ⟨i, h⟩).2
     have e : (RowPar.of (hc τ)).eAt i = (hc τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sSharpH
     rw [e]
@@ -1792,7 +1792,7 @@ def recChainF (hc : X.Tau → HCParam R) (F : ℕ → GFam X.K) (hF : ∀ j, (F 
     obtain ⟨a, ha⟩ := (rec_sInt R (hc τ) ⟨i, h⟩).1
     have e : (RowPar.of (hc τ)).eAt i = (hc τ).e ⟨i, h⟩ := by
       unfold RowPar.eAt
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     unfold sDivH
     rw [e]

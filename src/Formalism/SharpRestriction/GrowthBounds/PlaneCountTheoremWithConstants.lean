@@ -218,7 +218,7 @@ theorem fl_le_flG (L : SizeData₂ D) (C : ℝ) (p : ℕ) (hp : p.Prime) :
 
 theorem aL_top (L : SizeData₂ D) (t : D.host.TT) : aL L (t : HH D) = L.aT t := by
   unfold aL
-  rw [dif_pos t.2]
+  rw [dite_eq_left t.2]
 
 theorem ask_eq_askP (X : Inst D L) (p : ℕ) (hp : p.Prime)
     (hw : ∀ j (t : D.host.TT) e, L.wPart j t p e = fill X (bL L) j (partner D p t e)) (j : ℕ) (t : D.host.TT) :
@@ -379,7 +379,7 @@ theorem fill_nonneg (X : Inst D L) (j : ℕ) (z : Bool × HH D) : 0 ≤ fill X (
     have h1 := (X.off_top j z ht).1
     have h2 : L.sc.b' ≤ (bL L z.2 : ℝ) := by
       unfold bL
-      rw [dif_pos ht.2]
+      rw [dite_eq_left ht.2]
       exact L.bT_ge _
     have h3 : 0 ≤ L.sc.b' / L.sc.x := div_nonneg hb hx.le
     linarith
@@ -433,7 +433,7 @@ theorem svBound_of (X : Inst D L) (K : Consts) (hK : K.Nonneg) (P : ParameterCho
 
   have hal : ∀ s ∈ topsOn X p t0, 0 ≤ al L (aL L) s ∧ al L (aL L) s ≤ 6 / 5 * L.sc.a := by
     intro s hs
-    have h1 : aL L s = L.aT ⟨s, hTT s hs⟩ := by unfold aL; rw [dif_pos (hTT s hs)]
+    have h1 : aL L s = L.aT ⟨s, hTT s hs⟩ := by unfold aL; rw [dite_eq_left (hTT s hs)]
     obtain ⟨h2, h3⟩ := L.aT_win ⟨s, hTT s hs⟩
     have h4 : L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2)) ≤ L.sc.a / 5 := by
       apply div_le_div_of_nonneg_left (by linarith) (by norm_num)
@@ -733,7 +733,7 @@ theorem linkG_at_core (X : Inst D L) (Y : LatInst D) (K : Consts) (hK : K.Nonneg
     · have ht0 : L.tau w = 0 := by rw [htau]; unfold tauP; rw [if_pos hV]
       have hi0 : L.io w = 0 := by
         rw [hio]; unfold ioP
-        rw [dif_neg (by rw [hV]; exact Finset.not_nonempty_empty)]
+        rw [dite_eq_right (by rw [hV]; exact Finset.not_nonempty_empty)]
       have hl0 := hlat0 w u hV hw
       refine ⟨?_, ?_, fun _ => ⟨ht0, hi0, hl0⟩⟩
       · rw [ht0]
@@ -782,7 +782,7 @@ theorem linkG_at_core (X : Inst D L) (Y : LatInst D) (K : Consts) (hK : K.Nonneg
       rw [ask_eq_askP X _ hp hwp j t]
       have haw : ∀ s ∈ D.host.TT, (aL L s : ℝ) ≤ 2 * L.sc.a := by
         intro s hs
-        have h1 : aL L s = L.aT ⟨s, hs⟩ := by unfold aL; rw [dif_pos hs]
+        have h1 : aL L s = L.aT ⟨s, hs⟩ := by unfold aL; rw [dite_eq_left hs]
         obtain ⟨_, h2⟩ := L.aT_win ⟨s, hs⟩
         have h3 : L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2)) ≤ L.sc.a := by
           have ha := sc_one_lt_a L.sc
@@ -797,7 +797,7 @@ theorem linkG_at_core (X : Inst D L) (Y : LatInst D) (K : Consts) (hK : K.Nonneg
         linarith
       have hbw : ∀ s ∈ D.host.TT, (0 : ℝ) ≤ (bL L s : ℝ) := by
         intro s hs
-        have h1 : bL L s = L.bT ⟨s, hs⟩ := by unfold bL; rw [dif_pos hs]
+        have h1 : bL L s = L.bT ⟨s, hs⟩ := by unfold bL; rw [dite_eq_left hs]
         rw [h1]
         exact le_trans (sc_b'_nonneg L.sc) (L.bT_ge ⟨s, hs⟩)
       have hPG := (h0 (aL L) (bL L) haw hbw _ hp hin' j hj t.1 t.2).1
@@ -1654,8 +1654,8 @@ theorem windows_of (K : Consts) (P : ParameterChoice' D L) (hLa : La K L.sc = L.
     ∀ s ∈ topsPos D p t0, wPos D p t0 (aL L) s ∈ winA D L.sc ∧ wPos D p t0 (bL L) s ∈ winB D K L.sc := by
   intro s hs
   have hT : t0 + (s : ℕ) • hP D p ∈ D.host.TT := (Finset.mem_filter.1 hs).2
-  have ha : wPos D p t0 (aL L) s = L.aT ⟨_, hT⟩ := by unfold wPos aL; rw [dif_pos hT]
-  have hb : wPos D p t0 (bL L) s = L.bT ⟨_, hT⟩ := by unfold wPos bL; rw [dif_pos hT]
+  have ha : wPos D p t0 (aL L) s = L.aT ⟨_, hT⟩ := by unfold wPos aL; rw [dite_eq_left hT]
+  have hb : wPos D p t0 (bL L) s = L.bT ⟨_, hT⟩ := by unfold wPos bL; rw [dite_eq_left hT]
   rw [ha, hb]
   obtain ⟨a1, a2⟩ := L.aT_win ⟨_, hT⟩
   have b1 := L.bT_ge ⟨_, hT⟩

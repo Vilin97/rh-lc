@@ -9,7 +9,7 @@ open Formalism.MainNotions.G Formalism.MainNotions.flipOneThree Formalism.Counti
 
 theorem midOf_zero (r : ℕ) : midOf (0 : Fin (r + 1 + 1)) = none := by
   unfold midOf
-  rw [dif_neg]
+  rw [dite_eq_right]
   simp
 
 theorem subY_X_zero (A : Type) [CommRing A] (r : ℕ) (a : Fin (r + 1 + 1)) : subY A r (X (a, 0)) = X (a, 0) := by

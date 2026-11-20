@@ -177,11 +177,11 @@ theorem cuspA_wtOf {T : Core D} (h : LawsM T) {j : ℕ} (hj : InR D j) {a : (D.h
   by_cases hτ : InPsi T.Q.H τ
   · obtain ⟨t, rfl⟩ := (h1 τ).1 hτ
     rw [Datum.mult, if_pos (show _ = _ from hτ), hp] at hi
-    rw [(h3 t i).1, ext0, dif_pos hi]
+    rw [(h3 t i).1, ext0, dite_eq_left hi]
     rfl
   · obtain ⟨t, rfl⟩ := (h2 τ).1 hτ
     rw [Datum.mult, if_neg (show ¬ _ = _ from hτ), hq] at hi
-    rw [(h3 t i).2, ext0, dif_pos hi]
+    rw [(h3 t i).2, ext0, dite_eq_left hi]
     rfl
 
 end Weights

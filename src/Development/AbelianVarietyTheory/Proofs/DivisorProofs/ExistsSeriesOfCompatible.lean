@@ -80,7 +80,7 @@ theorem exists_series_of_compatible : ∀ (p : ℕ) (O σ : Type) [CommRing O] [
   let Q : MvPowerSeries σ O := fun α => if hα : α.degree < N then q α hα else 0
   have hQ : ∀ α (hα : α.degree < N), coeff α Q = q α hα := fun α hα => by
     show (if hα : α.degree < N then q α hα else 0) = q α hα
-    rw [dif_pos hα]
+    rw [dite_eq_left hα]
   let R := μ - h (m + N + n) - (p : O) ^ m • Q
   have hR : ∀ α : σ →₀ ℕ, α.degree < N → coeff α R = 0 := by
     intro α hα

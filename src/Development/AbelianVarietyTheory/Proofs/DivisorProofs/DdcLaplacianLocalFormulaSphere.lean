@@ -15,13 +15,13 @@ namespace GlobalTheory.BcUnique
 theorem loc_ddc_fn {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) (g : M → ℝ) (i : A.ι) {x : V n}
     (hx : x ∈ (A.e i).target) {u : V n → ℝ} (hu : ContDiffAt ℝ 2 u x) (h : ∀ v, g ((A.e i).symm v) = u v) :
     A.loc (A.ddc (A.fn g)) i x = ofValues (ddc u x) := by
-  rw [HolAtlas.loc, dif_pos hx, ← delAt_dbarAt_fun hu]
+  rw [HolAtlas.loc, dite_eq_left hx, ← delAt_dbarAt_fun hu]
   have e : (A.e i) ((A.e i).symm x) = x := (A.e i).right_inv hx
   refine (GlobalTheory.SecForm.DdcGerm.ddc_eq_of_eventuallyEq A _ _ (fun x => algebraMap ℂ (Alt n) (u x)) ?_).trans ?_
   · change A.loc (A.fn g) i =ᶠ[𝓝 ((A.e i) ((A.e i).symm x))] _
     rw [e]
     filter_upwards [(A.e i).open_target.mem_nhds hx] with w hw
-    rw [HolAtlas.loc, dif_pos hw, ← h w]
+    rw [HolAtlas.loc, dite_eq_left hw, ← h w]
     rfl
   · change kappa • delAt _ ((A.e i) ((A.e i).symm x)) = _
     rw [e]

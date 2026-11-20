@@ -70,7 +70,7 @@ def repE (A : W →L[ℂ] W) : W ≃L[ℂ] W := by
 
 theorem repE_coe (A : W →L[ℂ] W) (hA : ∀ v, ‖A v‖ = ‖v‖) : ((repE A : W ≃L[ℂ] W) : W →L[ℂ] W) = A := by
   unfold repE
-  rw [dif_pos hA]
+  rw [dite_eq_left hA]
   ext v
   rfl
 

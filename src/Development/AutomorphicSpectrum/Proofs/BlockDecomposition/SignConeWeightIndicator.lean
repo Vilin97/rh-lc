@@ -48,7 +48,7 @@ theorem sum_chains_eq_zero (R : V → V → Prop) (hr : ∀ x, R x x) (ht : ∀ 
         Classical.choose (exists_least R hr ht U h.1 h.2) else es,
       fun U hU hcU => by
         beta_reduce
-        rw [dif_pos ⟨hU, hcU⟩]
+        rw [dite_eq_left ⟨hU, hcU⟩]
         exact Classical.choose_spec (exists_least R hr ht U hU hcU)⟩
   obtain ⟨U, hU⟩ : ∃ U : Finset V → Finset V, ∀ s, U s = s.filter (fun x => ¬ R x es) :=
     ⟨_, fun _ => rfl⟩

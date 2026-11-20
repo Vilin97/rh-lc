@@ -31,7 +31,7 @@ theorem valR_eq_jet {g : ℕ} {X : Scheme.{0}} {e : (Fin g → ℂ) → (Sp ℂ 
   ext
   · rw [fst_jet, ← hd.1]
     exact (FormalValue.valR_spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom v U hU f).symm
-  · rw [snd_jet, ← hd.2 U hU f, valR, dif_pos hU]
+  · rw [snd_jet, ← hd.2 U hU f, valR, dite_eq_left hU]
 
 theorem frameProd_mul {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {n : ℕ} (u : HolUnif A L n) (j : ℕ)
     (c z : Fin n → ℂ) (k : Fin 4 → L.ι) (hk : ∀ i, ⊤ ≤ (u.ex (![c + z, c, z, 0] i)).left ⁻¹ᵁ L.U (k i)) :

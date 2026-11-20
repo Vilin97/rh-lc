@@ -49,10 +49,10 @@ theorem ut_of_mem {A : Matrix (Fin r) (Fin r) ℂ} (hA : A ∈ C2.UTset r) : G.u
   ext i j
   simp only [G.upper, G.strictUpper, StabilizerDisintegration.utc, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply]
   rcases lt_trichotomy i j with h | h | h
-  · rw [if_neg (ne_of_lt h), dif_pos h, zero_add]
+  · rw [if_neg (ne_of_lt h), dite_eq_left h, zero_add]
   · subst h
-    rw [if_pos rfl, dif_neg (lt_irrefl _), add_zero, hA.2 i]
-  · rw [if_neg (ne_of_gt h), dif_neg (not_lt.2 h.le), add_zero, hA.1 i j h]
+    rw [if_pos rfl, dite_eq_right (lt_irrefl _), add_zero, hA.2 i]
+  · rw [if_neg (ne_of_gt h), dite_eq_right (not_lt.2 h.le), add_zero, hA.1 i j h]
 
 theorem ut_inv_mem {A : Matrix (Fin r) (Fin r) ℂ} (hA : A ∈ C2.UTset r) : A⁻¹ ∈ C2.UTset r := by
   have hT : Matrix.BlockTriangular A id := fun i j hij => hA.1 i j hij

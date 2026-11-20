@@ -65,7 +65,7 @@ theorem half_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)
     have key := (GlobalTheory.T.idempotentSum_integral_div_uniformisers_iff_reduction_zero D Q es (fun _ => ϖ) hes hc hQ' (a * M i j) hN' (hNe i j)).1
       (by rw [hinv]; exact hI i j) PP hPP
     unfold redM
-    rw [dif_pos (hN i j), Matrix.zero_apply]
+    rw [dite_eq_left (hN i j), Matrix.zero_apply]
     convert key using 3
     rw [Matrix.smul_apply, smul_eq_mul]
   · rintro ⟨hN, hR⟩ i j
@@ -75,7 +75,7 @@ theorem half_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)
       (fun PP hPP => by
         have h3 := congrFun (congrFun (hR PP hPP) i) j
         unfold redM at h3
-        rw [dif_pos (hN i j), Matrix.zero_apply] at h3
+        rw [dite_eq_left (hN i j), Matrix.zero_apply] at h3
         convert h3 using 3
         rw [Matrix.smul_apply, smul_eq_mul])
     have e1 := hinv i j

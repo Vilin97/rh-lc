@@ -73,7 +73,7 @@ theorem normVanish_of_parts (h1 : lineVanishStatement) (h2 : esymmZeroStatement)
       simp [norm_smul, mul_pow, norm_pow, mul_comm]
   have hmem : u x ∈ fiberVals n z u (z x) := by
     unfold fiberVals
-    rw [dif_pos (hfin (z x))]
+    rw [dite_eq_left (hfin (z x))]
     exact Multiset.mem_map.mpr ⟨x, by simp, rfl⟩
   exact h2 _ key (u x) hmem
 

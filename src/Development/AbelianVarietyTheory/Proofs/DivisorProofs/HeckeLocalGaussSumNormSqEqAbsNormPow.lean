@@ -87,7 +87,7 @@ theorem gaussSumAt_normSq (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (a : �
   have hG : gaussSumAt χ w a c = ∑ u : (𝓞 E ⧸ P ^ a)ˣ, (((χb u)⁻¹ : ℂˣ) : ℂ) * ψb (u : 𝓞 E ⧸ P ^ a) := by
     rw [gaussSumAt, finsum_eq_sum_of_fintype]
     refine Finset.sum_congr rfl fun u _ => ?_
-    rw [gaussTerm, dif_neg (hne0 _ (hout u))]
+    rw [gaussTerm, dite_eq_right (hne0 _ (hout u))]
     rfl
   have hM : ∀ q : 𝓞 E ⧸ P ^ a, IsUnit q ↔ q ∉ P.map (Ideal.Quotient.mk (P ^ a)) := fun q => by
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective q

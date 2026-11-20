@@ -32,7 +32,7 @@ theorem iwAbs_mul_left_of_eq_one {G : Type} [Group G] {P : Subgroup G} {δ : P �
       rintro ⟨p', k, hk, e⟩
       exact hg ⟨p⁻¹ * p', k, hk, by rw [Subgroup.coe_mul, Subgroup.coe_inv, mul_assoc, ← e, inv_mul_cancel_left]⟩
     unfold Doubling.iwAbs
-    rw [dif_neg hg, dif_neg hg']
+    rw [dite_eq_right hg, dite_eq_right hg']
 
 theorem below_invSV {k : ℕ} (π : Equiv.Perm (Fin k)) (ε : Fin k → SignTypeˣ) {a b : SV k} (h : Below a b) :
     Below (invSV π ε a) (invSV π ε b) := fun i hi => congrArg _ (h _ (right_ne_zero_of_mul hi))

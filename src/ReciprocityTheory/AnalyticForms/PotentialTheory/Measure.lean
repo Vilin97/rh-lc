@@ -165,7 +165,7 @@ theorem mIntMeasure : MIntMeasureStatement := by
   rw [MeasureTheory.integral_finsetSum_measure (fun j _ => (h1 j).1),
     MeasureTheory.integral_finsetSum_measure (fun j _ => (h2 j).1), ← Finset.sum_sub_distrib]
   unfold mInt
-  rw [dif_pos hP]
+  rw [dite_eq_left hP]
   unfold integralWith
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [(h1 j).2, (h2 j).2, ← integral_sub (integrableOn_part A hP.some Φ hΦ 1 j g hg hgi)

@@ -79,9 +79,9 @@ theorem lastCases_mk {n : ℕ} (x : Fin n → k) (r : ℕ) (hr : r < n + 1) :
     (Fin.lastCases (0 : k) x (⟨r, hr⟩ : Fin (n + 1)) : k) = if h : r < n then x ⟨r, h⟩ else 0 := by
   by_cases h : r < n
   · have e : (⟨r, hr⟩ : Fin (n + 1)) = Fin.castSucc ⟨r, h⟩ := rfl
-    rw [e, Fin.lastCases_castSucc, dif_pos h]
+    rw [e, Fin.lastCases_castSucc, dite_eq_left h]
   · have e : (⟨r, hr⟩ : Fin (n + 1)) = Fin.last n := by ext; simp; omega
-    rw [e, Fin.lastCases_last, dif_neg h]
+    rw [e, Fin.lastCases_last, dite_eq_right h]
 
 theorem colEl_val (m N : ℕ) (h : m + 2 ≤ N) (x : Fin (m + 1) → k) (r c : Fin N) :
     ((colEl k m N h x : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) r c =
@@ -265,16 +265,16 @@ theorem colEl_mem (m N : ℕ) (h : m + 2 ≤ N) (x : Fin (m + 1) → k) : colEl 
   · have hij' : (j : ℕ) < i := hij
     rw [colEl_val, if_neg (by rw [Fin.ext_iff]; omega)]
     by_cases e1 : (i : ℕ) < m + 1
-    · rw [dif_pos e1, if_neg (by omega), add_zero]
-    · rw [dif_neg e1, add_zero]
+    · rw [dite_eq_left e1, if_neg (by omega), add_zero]
+    · rw [dite_eq_right e1, add_zero]
   · rw [colEl_val, if_pos rfl]
     by_cases e1 : (i : ℕ) < m + 1
-    · rw [dif_pos e1, if_neg (by omega), add_zero]
-    · rw [dif_neg e1, add_zero]
+    · rw [dite_eq_left e1, if_neg (by omega), add_zero]
+    · rw [dite_eq_right e1, add_zero]
   · rw [colEl_val]
     by_cases e1 : (i : ℕ) < m + 1
-    · rw [dif_pos e1, if_neg (show ¬ (j : ℕ) = m + 1 by omega), add_zero]
-    · rw [dif_neg e1, add_zero]
+    · rw [dite_eq_left e1, if_neg (show ¬ (j : ℕ) = m + 1 by omega), add_zero]
+    · rw [dite_eq_right e1, add_zero]
 
 theorem lvlChar_apply (ψ : AddChar k Circle) (N n : ℕ) (u : derUnip k N n) :
     lvlChar k ψ N n u = Circle.toUnits (ψ (∑ p : Fin N × Fin N with (p.2 : ℕ) = p.1 + 1 ∧ n - 1 ≤ (p.1 : ℕ),
@@ -293,7 +293,7 @@ theorem lvlChar_colEl (ψ : AddChar k Circle) (m N : ℕ) (h : m + 2 ≤ N) (x :
   rw [lvlChar_apply]
   congr 2
   rw [Finset.sum_eq_single ((⟨m, by omega⟩ : Fin N), (⟨m + 1, by omega⟩ : Fin N))]
-  · rw [colEl_val, if_neg (by rw [Fin.ext_iff]; simp), dif_pos (by simp), if_pos rfl, zero_add]
+  · rw [colEl_val, if_neg (by rw [Fin.ext_iff]; simp), dite_eq_left (by simp), if_pos rfl, zero_add]
     rfl
   · intro p hp hne
     rw [Finset.mem_filter] at hp
@@ -303,7 +303,7 @@ theorem lvlChar_colEl (ψ : AddChar k Circle) (m N : ℕ) (h : m + 2 ≤ N) (x :
     · exfalso
       apply hne
       ext <;> simp <;> omega
-    · rw [dif_neg e1, add_zero]
+    · rw [dite_eq_right e1, add_zero]
   · intro hn
     exfalso
     apply hn
@@ -339,8 +339,8 @@ theorem blkAt_val_out (n N : ℕ) (h : n ≤ N) (g : GL (Fin n) k) (r l : Fin N)
   rw [blkAt_val]
   by_cases hr : (r : ℕ) < n
   · have hl : ¬ (l : ℕ) < n := by omega
-    rw [dif_pos hr, dif_neg hl, if_neg (by rw [Fin.ext_iff]; omega)]
-  · rw [dif_neg hr]
+    rw [dite_eq_left hr, dite_eq_right hl, if_neg (by rw [Fin.ext_iff]; omega)]
+  · rw [dite_eq_right hr]
 
 theorem conj_derUnip (m N : ℕ) (h' : m + 1 ≤ N) (g : GL (Fin (m + 1)) k) (u : GL (Fin N) k)
     (hu : u ∈ derUnip k N (m + 2)) :

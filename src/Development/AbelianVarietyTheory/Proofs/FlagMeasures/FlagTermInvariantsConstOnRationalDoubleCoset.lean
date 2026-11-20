@@ -29,18 +29,18 @@ theorem mem_orth_iff' {U : Submodule E S.V} {v : S.V} : v ∈ orth S U ↔ ∀ x
 
 theorem frame_mapLF {T : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T)
     (a : Fin (r + 1)) : frame (mapLF γ F) a = γ (frame F a) := by
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
   induction a using Fin.lastCases with
   | last => simp [frame, FlagG.fvec, mapFlag]
   | cast i => simp [frame, FlagG.fvec, mapFlag]
 
 theorem zt_mapLF {T : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) :
     (mapLF γ F).zt = γ F.zt := by
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
 
 theorem Xflag_mapLF {T : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) (j : ℕ) :
     Xflag (mapLF γ F) j = (Xflag F j).map (γ : S.V →ₗ[E] S.V) := by
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
   show Submodule.span E ((fun a => γ (F.fl.e a)) '' {i | i.1 < j}) =
     (Submodule.span E (F.fl.e '' {i | i.1 < j})).map (γ : S.V →ₗ[E] S.V)
   rw [Submodule.map_span, Set.image_image]
@@ -48,7 +48,7 @@ theorem Xflag_mapLF {T : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.Her
 
 theorem Xsp_mapLF {T : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : LFlag S r T) :
     Xsp (mapLF γ F) = (Xsp F).map (γ : S.V →ₗ[E] S.V) := by
-  unfold mapLF; rw [dif_pos hγ]
+  unfold mapLF; rw [dite_eq_left hγ]
   show Submodule.span E (Set.range fun a => γ (F.fl.e a)) =
     (Submodule.span E (Set.range F.fl.e)).map (γ : S.V →ₗ[E] S.V)
   rw [Submodule.map_span, ← Set.range_comp]
@@ -202,7 +202,7 @@ theorem pt_eq (t₀ t : TauC Y u u') (hrl : t.relevant ↔ t₀.relevant) (hat :
       rintro ⟨w, hw, hr⟩
       exact hx ⟨w, (hat w).1 hw, hrl.1 hr⟩
     unfold Formalism.L2.SG.PairVal.ptOf
-    rw [dif_neg hx, dif_neg hx']
+    rw [dite_eq_right hx, dite_eq_right hx']
 
 end GlobalTheory.HL.CosetConst
 

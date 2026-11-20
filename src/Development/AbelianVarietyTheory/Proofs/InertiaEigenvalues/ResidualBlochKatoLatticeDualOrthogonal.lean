@@ -163,7 +163,7 @@ theorem bkOn_orthogonal : LocalTateDuality → ∀ (D : Formalism.BasicNotions.D
     · simp_rw [hρ _]; exact GlobalTheory.PrimeToInertia.continuous_Tdual i s
     · rw [pow_one, IsLocalRing.maximalIdeal_eq_bot, Ideal.mem_bot] at hx
       rw [hx, zero_smul]
-  rw [bkOn, dif_pos hv] at hx hy
+  rw [bkOn, dite_eq_left hv] at hx hy
   refine cupCob_of_span (ρ := (red i K (Tgl i s)).comp (DecV N v).subtype)
     (ρ' := (red i K ρ).comp (DecV N v).subtype) (P := dotProductBilin K K) (fun g a b => red_dot s hρ g.1 a b)
     (hc.comp (f := fun p : DecV N v × (Fin D.R.r → K) => ((p.1 : GE N), p.2)) (by fun_prop))

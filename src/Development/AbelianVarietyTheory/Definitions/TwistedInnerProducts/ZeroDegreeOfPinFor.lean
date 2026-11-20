@@ -99,7 +99,7 @@ theorem pinFor_baseChange (hL : Rl.toRealDat.toLevCh.Is A3.A.μ0) (hF : Rl.toRea
   refine ⟨fun _ _ _ => 1, fun i j b h1 h2 k P x hP hsp hk => ?_⟩
   have e := hkFR_congr S i j b (hs j h1 h2) (hs' j h1 h2) k P
     (reads_unique Rl cG S Y hL hF hU hW hf hf' j h1 h2 k P hsp (hC i P hP hsp) hk)
-  rw [← e, baseChangeOps, dif_pos ⟨h1, h2⟩, LinearEquiv.conj_apply_apply, LinearEquiv.apply_symm_apply,
+  rw [← e, baseChangeOps, dite_eq_left ⟨h1, h2⟩, LinearEquiv.conj_apply_apply, LinearEquiv.apply_symm_apply,
     LinearEquiv.symm_symm, Units.val_one, map_one, one_pow, one_smul]
 
 theorem exists_pinFor (hL : Rl.toRealDat.toLevCh.Is A3.A.μ0) (hF : Rl.toRealDat.IsFam) (hU : Rl.toRealDat.LUnif)

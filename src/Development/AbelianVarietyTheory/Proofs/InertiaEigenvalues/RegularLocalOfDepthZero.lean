@@ -125,7 +125,7 @@ theorem act_lift {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     exact val_int_le i hi ((k⁻¹).val a b)
   have h2 : MaxM (h.val - K.val) := fun a b => by
     have e1 := hh a b
-    rw [dif_pos ⟨a.2, b.2⟩] at e1
+    rw [dite_eq_left ⟨a.2, b.2⟩] at e1
     have e2 := val_int_lt hw i hi ((((red g n k).val a b).val : ℤ_[g]) - k.val a b) (by
       rw [map_sub, map_natCast, ZMod.natCast_zmod_val, sub_eq_zero]; rfl)
     have e3 := Valuation.map_add_lt _ e1 e2
@@ -147,7 +147,7 @@ theorem mem_principalCongruenceFixed_of_levelOne {n : ℕ} {V : Type} [AddCommGr
     x ∈ fixK1 (π.comp (Matrix.GeneralLinearGroup.map i.toRingHom)) := by
   refine (Model.mem_principalCongruenceFixedVectors_iff _ _).2 fun k hk => ?_
   have := act_lift hw i hi π hx k 1 (fun a b => by
-    rw [dif_pos ⟨a.2, b.2⟩, hk]
+    rw [dite_eq_left ⟨a.2, b.2⟩, hk]
     by_cases hab : a = b
     · subst hab; simp [ZMod.val_one]
     · simp [Matrix.one_apply_ne hab])

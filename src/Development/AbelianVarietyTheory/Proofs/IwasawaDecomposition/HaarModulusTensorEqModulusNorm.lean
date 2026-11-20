@@ -37,7 +37,7 @@ theorem modu_eq_modu_norm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       star_mul := fun x y => by rw [map_mul, mul_comm]
       star_add := fun x y => map_add _ x y }
   haveI : ContinuousStar (R ⊗[F] E) := ⟨GlobalTheory.AdelicUnitaryTop.continuous_sigR R σ⟩
-  rw [modu, modu, dif_pos hu, dif_pos hku]
+  rw [modu, modu, dite_eq_left hu, dite_eq_left hku]
   exact GlobalTheory.JR.ModuleNorm.distribHaarChar_eq_norm R (R ⊗[F] E) b.equivFun.symm
     (IsModuleTopology.continuous_of_linearMap b.equivFun.symm.toLinearMap)
     (IsModuleTopology.continuous_of_linearMap b.equivFun.toLinearMap) hu.unit hku.unit hk

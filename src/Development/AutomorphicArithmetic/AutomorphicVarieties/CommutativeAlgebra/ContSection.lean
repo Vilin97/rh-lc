@@ -131,7 +131,7 @@ theorem UpperTheory.V.Alg.cont_section :
     have h : ∃ e, e ∈ W.part j ∧ Ideal.Quotient.mk (maximalIdeal R' ^ (max N0 N1)) (p e) =
         Ideal.Quotient.mk _ (x g) := ⟨e, he, by rw [← hpe]; rfl⟩
     simp only [base]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     refine ⟨h.choose_spec.1, ?_⟩
     rw [← Ideal.Quotient.eq]
     exact h.choose_spec.2.symm

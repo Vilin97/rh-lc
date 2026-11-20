@@ -103,7 +103,7 @@ theorem typeVec_iff {W : Type} [AddCommGroup W] [Module ℂ W] (π : Representat
   obtain ⟨h1, ℓ, hℓ, h0⟩ := h
   refine ⟨fun h hh => h1 h (GlobalTheory.StepData.mem_KOne.2 fun a b => ?_), ℓ, fun g a b => ?_, h0⟩
   · simpa [Matrix.one_apply] using hh a b
-  · rw [dif_pos ⟨a.2, b.2⟩]
+  · rw [dite_eq_left ⟨a.2, b.2⟩]
     exact hℓ g a b
 
 theorem split_local (hP : GlobalTheory.NRows.Hypotheses₂) (hp : resCard F = p) (L : GlobalTheory.GLq.LabelDatum p) {χ : Fˣ →* ℂˣ}

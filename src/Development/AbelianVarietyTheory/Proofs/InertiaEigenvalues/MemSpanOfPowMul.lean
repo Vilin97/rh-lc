@@ -68,7 +68,7 @@ variable (O) in
 def hatR (f : K⟦X⟧) : Ahat O K l e := if h : f ∈ Rpi O K l e then toHat O K l e ⟨f, h⟩ else 0
 
 theorem hatR_of_mem {f : K⟦X⟧} (h : f ∈ Rpi O K l e) : hatR O f = toHat O K l e ⟨f, h⟩ := by
-  rw [hatR, dif_pos h]
+  rw [hatR, dite_eq_left h]
 
 def YD (v : Vec K a ι) : ι → OD l O := fun i => ϖ.iD t K (fun τ => hatR O (v τ i))
 

@@ -106,7 +106,7 @@ theorem link_adapted_step : ∀ (X : Scheme.{0}) [IsIntegral X] (p k a N : ℕ) 
     · have hu := KEY x hx i hn
       have hy : (M x)⁻¹ i j ≠ 0 := fun h0 => hu.ne_zero (by rw [h0, zero_div])
       dsimp only
-      rw [dif_neg hy]
+      rw [dite_eq_right hy]
       convert hu using 1
       simp only [Units.val_mk0]
       field_simp
@@ -122,7 +122,7 @@ theorem link_adapted_step : ∀ (X : Scheme.{0}) [IsIntegral X] (p k a N : ℕ) 
         (f := (M x)⁻¹ i j / (η z i.castSucc : X.functionField)) (by field_simp; try ring)
       have hyx : (M x)⁻¹ i j ≠ 0 := fun h0 => hyx' (by rw [h0, zero_div])
       try beta_reduce
-      rw [dif_neg hyx, dif_neg hyz]
+      rw [dite_eq_right hyx, dite_eq_right hyz]
       simp only [Units.val_mk0]
       have key : ((M x)⁻¹ i j / (c x i : X.functionField) / ((M z)⁻¹ i j / (c z i : X.functionField)) - 1) / ((η z i.succ : X.functionField) / η z i.castSucc) =
           ((M x)⁻¹ i j - (c x i : X.functionField) / c z i * (M z)⁻¹ i j) / η z i.succ *

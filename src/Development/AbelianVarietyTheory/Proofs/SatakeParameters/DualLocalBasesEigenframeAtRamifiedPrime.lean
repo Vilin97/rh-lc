@@ -35,7 +35,7 @@ theorem tauEmb_eq_iota : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lm : TaylorLogMe
   have halg : TaylorLogMetric.embT D τ y ∈ TaylorLogMetric.Qbar :=
     mem_algebraicClosure_iff.2 ((Algebra.IsAlgebraic.isAlgebraic (R := ℚ) y).algHom (TaylorLogMetric.embT D τ).toRatAlgHom)
   unfold TaylorLogMetric.tauEmb TaylorLogMetric.lamC
-  rw [dif_pos halg, ← hι]
+  rw [dite_eq_left halg, ← hι]
 
 theorem outer_mem_YYl : ∀ (D : D7) (N N' : ℕ) (L₁ : Submodule (𝓞 D.host.E) (Fin N → D.host.E)) (L₁' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)) (a : D.host.E) (u : Fin N' → D.host.E) (w : Fin N → D.host.E), a ∈ D.host.AA0 → u ∈ L₁' → (∀ x ∈ L₁, ∃ o : 𝓞 D.host.E, (o : D.host.E) = ∑ j, w j * x j) → (Matrix.of fun i k => a * u i * w k : Matrix (Fin N') (Fin N) D.host.E) ∈ TaylorLogMetric.YYl D L₁ L₁' := by
   intro D N N' L₁ L₁' a u w ha hu hw

@@ -60,7 +60,7 @@ theorem isONFr_frMove {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (W : HSp D) (
     show (Matrix.reindex (finCongr rfl) (finCongr rfl) (realM θ (Formalism.L2.Theta.mt W u) τ.1) * mat x τ :
       Matrix (Fin W.rank) (Fin W.rank) ℂ) = _
     unfold realM
-    rw [dif_pos hτ]
+    rw [dite_eq_left hτ]
     simp
   have hu : (compAt θ hτ.choose (Formalism.L2.Theta.mt W u))ᴴ * gramAt D W hτ.choose *
       compAt θ hτ.choose (Formalism.L2.Theta.mt W u) = gramAt D W hτ.choose :=

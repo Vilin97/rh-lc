@@ -78,10 +78,10 @@ def liftZ (x : LatticeCohomology L') : ↥(latticeCocycles L') :=
   if h : x ∈ latticeFiniteCohomology PD L' then ((mem_H1fT_iff PD x).1 h).choose else 0
 
 theorem liftZ_mem {x : LatticeCohomology L'} (h : x ∈ latticeFiniteCohomology PD L') : ((liftZ PD x : ↥(latticeCocycles L')) : G → V') ∈ latticeFiniteCocycles PD L' := by
-  unfold liftZ; rw [dif_pos h]; exact ((mem_H1fT_iff PD x).1 h).choose_spec.1
+  unfold liftZ; rw [dite_eq_left h]; exact ((mem_H1fT_iff PD x).1 h).choose_spec.1
 
 theorem liftZ_cls {x : LatticeCohomology L'} (h : x ∈ latticeFiniteCohomology PD L') : clsZ L' (liftZ PD x) = x := by
-  unfold liftZ; rw [dif_pos h]; exact ((mem_H1fT_iff PD x).1 h).choose_spec.2
+  unfold liftZ; rw [dite_eq_left h]; exact ((mem_H1fT_iff PD x).1 h).choose_spec.2
 
 def liftS (A : Finset (LatticeCohomology L')) : Finset (G → V') := A.image fun x => ((liftZ PD x : ↥(latticeCocycles L')) : G → V')
 

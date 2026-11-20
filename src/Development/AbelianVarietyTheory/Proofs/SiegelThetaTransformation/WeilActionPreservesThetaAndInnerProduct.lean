@@ -119,7 +119,7 @@ theorem wG_eq (hs : IsSympl X bas) {γ : GL (Fin r) E} (hγ : IsUn X γ) {φ ψ 
   have he : ∃ ψ : TF n g, IsSB ψ ∧ ∀ x ∈ X.dom, thA X bas idx ψ (lact γ x) = thA X bas idx φ x :=
     ⟨ψ, hψ, h⟩
   obtain ⟨x, hx⟩ := exists_mem_dom X
-  rw [wG, dif_pos he]
+  rw [wG, dite_eq_left he]
   exact eq_of_thA_eq idx hs (hγ.lact_mem hx) he.choose_spec.1 hψ
     ((he.choose_spec.2 x hx).trans (h x hx).symm)
 

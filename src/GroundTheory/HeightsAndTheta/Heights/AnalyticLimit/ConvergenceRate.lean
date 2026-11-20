@@ -128,7 +128,7 @@ theorem abs_mInt_le (A : FinHolAtlas D X) (Φ : Fin D → LocPot X) (hΦ : ∀ i
     fun j => (h1 j).1.add_measure (h2 j).1
   have hm : mInt A Φ f = ∑ j, (∫ x, f x ∂chartPartMeasure A (existsPartition A).some Φ 1 j -
       ∫ x, f x ∂chartPartMeasure A (existsPartition A).some Φ (-1) j) := by
-    rw [mInt, dif_pos (existsPartition A)]
+    rw [mInt, dite_eq_left (existsPartition A)]
     unfold integralWith
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [(h1 j).2, (h2 j).2, ← integral_sub

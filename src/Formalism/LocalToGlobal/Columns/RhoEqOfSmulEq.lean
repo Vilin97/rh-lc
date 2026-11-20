@@ -344,8 +344,8 @@ def ofNbr (tr : S'.G →* S.G) (nb : S'.D → Finset S.D) (T : S.V →ₗ[K] S'.
       rw [← hT, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
     rw [Finsupp.indicator_apply, Finsupp.indicator_apply]
     by_cases e : d ∈ nb d'
-    · rw [dif_pos e, dif_pos ((hn g d' d).mpr e), hc]
-    · rw [dif_neg e, dif_neg (fun e' => e ((hn g d' d).mp e'))]
+    · rw [dite_eq_left e, dite_eq_left ((hn g d' d).mpr e), hc]
+    · rw [dite_eq_right e, dite_eq_right (fun e' => e ((hn g d' d).mp e'))]
       simp
 
 theorem ofNbr_op_apply (tr : S'.G →* S.G) (nb : S'.D → Finset S.D) (T : S.V →ₗ[K] S'.V)

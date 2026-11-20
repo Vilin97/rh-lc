@@ -61,16 +61,16 @@ theorem j_rat_k (L : _root_.PositivityTheory.SiegelWeilFormula.LD_k d) {p : G2 �
   dsimp only [M]
   by_cases hu : ∃ u', Sum.map L.em L.em u' = u
   · by_cases hv : ∃ v', Sum.map L.em L.em v' = v
-    · rw [dif_pos hu, dif_pos hv]
+    · rw [dite_eq_left hu, dite_eq_left hv]
       have h1 := congrFun (congrFun (L.j_in p) hu.choose) hv.choose
       simp only [Matrix.submatrix_apply, hu.choose_spec, hv.choose_spec] at h1
       rw [h1, hL]
       rfl
-    · rw [dif_pos hu, dif_neg hv]
+    · rw [dite_eq_left hu, dite_eq_right hv]
       have hv' := (_root_.PositivityTheory.SiegelWeilFormula.Act.C1.range_or_k L v).resolve_left hv
       rw [(L.j_out p _ hv' u).2]
       simp [Matrix.one_apply, apply_ite]
-  · rw [dif_neg hu]
+  · rw [dite_eq_right hu]
     have hu' := (_root_.PositivityTheory.SiegelWeilFormula.Act.C1.range_or_k L u).resolve_left hu
     rw [(L.j_out p _ hu' v).1]
     simp [Matrix.one_apply, apply_ite]

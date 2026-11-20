@@ -20,7 +20,7 @@ theorem hasInfChar_of_isRegAlg {E : Type} [Field E] [NumberField E] [IsCMField E
   by_contra hn
   have hn' : ¬ ∃ m, (CG.mk π).HasInfChar τ m := hn
   have h1 := (hr τ).1
-  rw [CG.infChar, dif_neg hn'] at h1
+  rw [CG.infChar, dite_eq_right hn'] at h1
   rw [Multiset.nodup_iff_count_le_one] at h1
   have h2 := h1 0
   rw [Multiset.count_replicate_self] at h2

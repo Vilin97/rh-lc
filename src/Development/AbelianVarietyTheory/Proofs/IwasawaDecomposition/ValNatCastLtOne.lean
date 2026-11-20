@@ -33,7 +33,7 @@ theorem redM_eq_one {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (p : ℕ) (hv : (
     split_ifs <;> simp
   have hm : M r c ∈ v.adicCompletionIntegers F := e' ▸ u.2
   unfold redM
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   have : (⟨M r c, hm⟩ : v.adicCompletionIntegers F) = u := Subtype.ext e'
   rw [this, hu, map_add (f := _), map_mul, hp, zero_mul, add_zero, Matrix.one_apply]
   split_ifs <;> simp

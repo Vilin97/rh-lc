@@ -931,7 +931,7 @@ theorem jr_eq (l : K.Col i dc) :
           (KDim.repW i dc ρ π (K.colIdx i dc l) (KDim.col_over i dc l))) := by
   show KHf.jK i dc ρ π (K.colIdx i dc l) = _
   unfold KHf.jK
-  rw [dif_pos (KDim.col_over i dc l)]
+  rw [dite_eq_left (KDim.col_over i dc l)]
   rfl
 
 def DimV (l : K.Col i dc) : Prop :=

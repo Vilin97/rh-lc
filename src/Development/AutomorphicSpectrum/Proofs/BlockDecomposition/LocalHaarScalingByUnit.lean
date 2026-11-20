@@ -14,12 +14,12 @@ theorem nnnorm_eq_distribHaarChar (F : Type) [Field F] [NumberField F]
   have hn : (n : Fv F v) ≠ 0 := n.ne_zero
   have hva : Valued.v (n : Fv F v) ≠ 0 := (Valuation.ne_zero_iff _).2 hn
   have h := PI.UnitaryGroupMassFormula.LocJacTyp.BM.modF_Fv v (n : Fv F v) hn
-  rw [PI.NglqJacSplitW.modF, dif_neg hn] at h
+  rw [PI.NglqJacSplitW.modF, dite_eq_right hn] at h
   have hu : Units.mk0 (n : Fv F v) hn = n := by ext; rfl
   rw [hu] at h
   have habs : PI.LocJacTyp.absV v (n : Fv F v) = ‖(n : Fv F v)‖ := by
     unfold PI.LocJacTyp.absV
-    rw [dif_neg hva, NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hva]
+    rw [dite_eq_right hva, NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hva]
     push_cast
     rfl
   rw [habs, ← coe_nnnorm, ENNReal.ofReal_coe_nnreal] at h

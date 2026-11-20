@@ -348,7 +348,7 @@ lemma unitOf_eq_val {S : Type} [CommRing S] [Algebra R₀ S] {z : sp (R₀ := R�
     (unitOf (O := R₀) (w ≫ χ.χ N) : S) = val χ z := by
   have h : ∃ N : ℕ, z ^ (p ^ N) = 1 :=
     ⟨N, by rw [← hw, ← MonObj.comp_pow, torsionι_pow, MonObj.comp_one]⟩
-  rw [val, dif_pos h, comp_χ_eq χ w (torsionLift z h.choose_spec) (by rw [hw, torsionLift_ι])]
+  rw [val, dite_eq_left h, comp_χ_eq χ w (torsionLift z h.choose_spec) (by rw [hw, torsionLift_ι])]
 
 lemma map_val {S S' : Type} [CommRing S] [Algebra R₀ S] [CommRing S'] [Algebra R₀ S']
     (φ : S →ₐ[R₀] S') {z : sp (R₀ := R₀) S ⟶ G} (h : ∃ N : ℕ, z ^ (p ^ N) = 1) :

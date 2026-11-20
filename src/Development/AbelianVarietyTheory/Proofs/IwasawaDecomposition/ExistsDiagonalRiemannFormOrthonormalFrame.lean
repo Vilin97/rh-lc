@@ -59,9 +59,9 @@ theorem exists_diag_im {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ : Formalism.
     obtain ⟨⟨τ, hτ⟩, ⟨n, hn⟩⟩ := t
     dsimp only at h ⊢
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
-    · rw [if_neg (by omega), Formalism.L2.PjFree.perFr, dif_pos a, dif_pos hn]
-    · rw [if_pos (by omega), Formalism.L2.PjFree.perFr, dif_neg a,
-        dif_pos (show conjEmb (Formalism.L2.PjFree.relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
+    · rw [if_neg (by omega), Formalism.L2.PjFree.perFr, dite_eq_left a, dite_eq_left hn]
+    · rw [if_pos (by omega), Formalism.L2.PjFree.perFr, dite_eq_right a,
+        dite_eq_left (show conjEmb (Formalism.L2.PjFree.relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       rfl
   refine ⟨diagXi (U.X k) (W.e.trans f), fun τ j => ?_, fun v w => ?_⟩
   · rw [diagXi, Equiv.trans_apply, Equiv.apply_symm_apply]

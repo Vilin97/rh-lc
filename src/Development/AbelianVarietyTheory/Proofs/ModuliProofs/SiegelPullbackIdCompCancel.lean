@@ -26,7 +26,7 @@ theorem iso_pull {X Y : Scheme.{0}} {L M : LB X} (d : Y ⟶ X) (h : LBIso L M) :
 private theorem gm_res_eq_gm {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) {U V : X.Opens} (h : V ≤ U) (hy : f y ∈ V)
     (x : Γ(X, U)ˣ) : gm f y V (res h x) = gm f y U x := by
   unfold gm
-  rw [dif_pos hy, dif_pos (h hy)]
+  rw [dite_eq_left hy, dite_eq_left (h hy)]
   simp only [MonoidHom.comp_apply]
   rw [pullU_res₂]
   ext

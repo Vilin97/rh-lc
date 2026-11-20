@@ -129,8 +129,8 @@ theorem law_superdiag {F : Type} [Field F] (A : Matrix (Fin k) (Fin k) F) (hkm :
     intro i j
     simp only [hG, embM, Matrix.of_apply]
     by_cases h : (i : ℕ) < k ∧ (j : ℕ) < k
-    · rw [dif_pos h, dif_pos h]
-    · rw [dif_neg h, dif_neg h]
+    · rw [dite_eq_left h, dite_eq_left h]
+    · rw [dite_eq_right h, dite_eq_right h]
       split_ifs with h1
       · rw [Matrix.one_apply_ne]
         intro e; rw [e] at h1; omega
@@ -138,7 +138,7 @@ theorem law_superdiag {F : Type} [Field F] (A : Matrix (Fin k) (Fin k) F) (hkm :
   have e2 : ∀ i j : Fin k, (if (j : ℕ) = i + 1 then A i j else 0) = G i j := by
     intro i j
     simp only [hG]
-    rw [dif_pos ⟨i.2, j.2⟩]
+    rw [dite_eq_left ⟨i.2, j.2⟩]
   unfold Whittaker.superdiagSum
   simp_rw [e1, e2]
   have h3 : ∀ n, (∑ i : Fin n, ∑ j : Fin n, G i j) = ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, G i j := by
@@ -152,13 +152,13 @@ theorem law_superdiag {F : Type} [Field F] (A : Matrix (Fin k) (Fin k) F) (hkm :
     refine (Finset.sum_subset (Finset.range_mono hkm) fun j _ hj => ?_).symm
     simp only [Finset.mem_range] at hj
     simp only [hG]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
   simp_rw [h4]
   refine (Finset.sum_subset (Finset.range_mono hkm) fun i _ hi => ?_).symm
   simp only [Finset.mem_range] at hi
   refine Finset.sum_eq_zero fun j _ => ?_
   simp only [hG]
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem law (hG0 : jumpWindows.G0) (hK5e : CornerEmbedding) (hK5a : TransformsEmbedding) (hK7 : K7) (hK8a : LocalHeckeAlgebra) (hk : 1 ≤ k) (hkm : k < m)
     {ψ : AddChar (Ad E) ℂ} (hψ : StdPsi ψ) {S : Finset (Pl E)} (hS : ∀ w, w ∉ S → Cond ψ w)

@@ -286,12 +286,12 @@ def unifVal (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : Lˣ :=
 theorem unifVal_of (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) (h : ∃ u, IsUnifIdele (F := F) P u) :
     unifVal ξ P = ξ h.choose ∧ IsUnifIdele P h.choose := by
   refine ⟨?_, h.choose_spec⟩
-  rw [unifVal, dif_pos h]
+  rw [unifVal, dite_eq_left h]
 
 theorem tilde_character_norm_quotient (σ : E →ₐ[F] E) (ξ : Chr F E L) (hξ : (h90 σ).ker ≤ ξ.ker) (u : (AfE F E)ˣ) :
     tilde σ ξ ((h90 σ).rangeRestrict u) = ξ u := by
   unfold tilde
-  rw [dif_pos hξ]
+  rw [dite_eq_left hξ]
   first
     | exact MonoidHom.liftOfRightInverse_comp_apply _ _ _ _ u
     | exact MonoidHom.liftOfSurjective_comp_apply _ _ _ u
@@ -302,7 +302,7 @@ theorem det_twist_of_norm_quotient (σ : E →ₐ[F] E) (ξ : Chr F E L) (hξ : 
     detTw σ ξ g = ξ u := by
   have hmem : Matrix.GeneralLinearGroup.det g ∈ (h90 σ).range := ⟨u, hg.symm⟩
   unfold detTw
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   have hsub : (⟨_, hmem⟩ : (h90 σ).range) = (h90 σ).rangeRestrict u := Subtype.ext hg
   rw [hsub, tilde_character_norm_quotient σ ξ hξ u]
 

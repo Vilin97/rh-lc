@@ -79,7 +79,7 @@ theorem chiW_mul_pf (w : InfinitePlace F) : ∀ z z' : ℂ, z ≠ 0 → z' ≠ 0
   have h2 := KC.uW_isUnit d w hz'
   have h3 := KC.uW_isUnit d w (mul_ne_zero hz hz')
   unfold SD.chiW
-  rw [dif_pos h3, dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h3, dite_eq_left h1, dite_eq_left h2]
   have : h3.unit = h1.unit * h2.unit := Units.ext (by simp [KC.uW_mul])
   rw [this, map_mul, Circle.coe_mul]
 
@@ -100,7 +100,7 @@ theorem chiW_cont_pf (w : InfinitePlace F) : ContinuousOn (d.chiW w) {z : ℂ | 
     funext z
     rw [Set.domRestrict_apply]
     unfold SD.chiW
-    rw [dif_pos (KC.uW_isUnit d w z.2)]
+    rw [dite_eq_left (KC.uW_isUnit d w z.2)]
   rw [e]
   exact continuous_subtype_val.comp (d.ok.hecke.1.comp hU)
 
@@ -133,7 +133,7 @@ theorem chiW_pos_pf (w : InfinitePlace F) : ∀ r : ℝ, 0 < r → d.chiW w (r :
   have hres := d.ok.res a
   rw [if_pos (Subgroup.mem_sup_right (MonoidHom.mem_range.mpr ⟨u, rfl⟩))] at hres
   unfold SD.chiW
-  rw [dif_pos (KC.uW_isUnit d w hr0), ← ha]
+  rw [dite_eq_left (KC.uW_isUnit d w hr0), ← ha]
   exact hres
 
 end SD

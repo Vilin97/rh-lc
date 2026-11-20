@@ -18,7 +18,7 @@ theorem plk_smul {S ι : Type} [CommRing S] {M k : ℕ} (γ : S) (c : ι → Fin
 
 theorem valF_unit_ne {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
     (f : Γ(X, U)ˣ) : valF x U f.val ≠ 0 := by
-  rw [valF, dif_pos h]
+  rw [valF, dite_eq_left h]
   exact ((f.isUnit.map _).map _).ne_zero
 
 theorem top_le_pre {A : Type} [CommRing A] {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U) (φ : Γ(X, U) →+* A) :

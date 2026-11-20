@@ -50,19 +50,19 @@ theorem toSub_mul_left_eq {w : Pl E} {U : Subgroup (UL n w)} (g : UL n w → ℂ
     (a : UL n w) (ha : a ∈ U) (y : GLw n w) : g (toSub (UL n w) (a.1 * y)) = g (toSub (UL n w) y) := by
   unfold toSub
   by_cases hy : y ∈ UL n w
-  · rw [dif_pos (mul_mem a.2 hy), dif_pos hy, ← hg a ha ⟨y, hy⟩]
+  · rw [dite_eq_left (mul_mem a.2 hy), dite_eq_left hy, ← hg a ha ⟨y, hy⟩]
     rfl
   · have : a.1 * y ∉ UL n w := fun h => hy (by simpa using mul_mem (inv_mem a.2) h)
-    rw [dif_neg this, dif_neg hy]
+    rw [dite_eq_right this, dite_eq_right hy]
 
 theorem toSub_mul_right_eq {w : Pl E} {U : Subgroup (UL n w)} (g : UL n w → ℂ) (hg : ∀ k ∈ U, ∀ x, g (x * k) = g x)
     (a : UL n w) (ha : a ∈ U) (y : GLw n w) : g (toSub (UL n w) (y * a.1)) = g (toSub (UL n w) y) := by
   unfold toSub
   by_cases hy : y ∈ UL n w
-  · rw [dif_pos (mul_mem hy a.2), dif_pos hy, ← hg a ha ⟨y, hy⟩]
+  · rw [dite_eq_left (mul_mem hy a.2), dite_eq_left hy, ← hg a ha ⟨y, hy⟩]
     rfl
   · have : y * a.1 ∉ UL n w := fun h => hy (by simpa using mul_mem h (inv_mem a.2))
-    rw [dif_neg this, dif_neg hy]
+    rw [dite_eq_right this, dite_eq_right hy]
 
 theorem mem_globLev_iff (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (k : finU E n) :
     k ∈ globLev S K' ↔ ∀ w ∈ S, ∃ a ∈ K' w, (a : GLw n w) = cLoc w k.1 := by

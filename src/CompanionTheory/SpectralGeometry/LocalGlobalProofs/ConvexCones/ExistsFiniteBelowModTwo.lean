@@ -60,7 +60,7 @@ theorem exists_finite_below_mod_two {X : Type} [AddCommGroup X] [Module.Finite �
     exact ⟨w, hw, hwv⟩
   have hpick : red (pick (red y) v) = red y ∧ f (pick (red y) v) = v := by
     dsimp only [pick]
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   refine ⟨pick (red y) v, Set.mem_iUnion.mpr ⟨red y, v, hvM, rfl⟩, hred y _ hpick.1, ?_⟩
   rw [hpick.2]

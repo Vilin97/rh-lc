@@ -68,7 +68,7 @@ theorem GlobalTheory.StdPairZetaB.smallF_stdB : ∀ {k : Type} [Field k] [Valuat
   refine ⟨fun Y hY => ?_, fun Y g₂ hg₂ => ?_⟩
   · have h0 : ∀ g : GL (Fin a') k, stdB ν ϖ c a a' (g.val * Y) = 0 := fun g => by
       unfold stdB
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h0, -⟩
       apply h0
       rw [blk₂_mul_left, Matrix.det_mul, hY, mul_zero]
@@ -105,7 +105,7 @@ theorem GlobalTheory.StdPairZetaB.smallF_stdB : ∀ {k : Type} [Field k] [Valuat
               ∀ i j, blk₁ (g.val * Y) i j ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c) := by
             rw [e₂, e₁]
             exact ⟨(g * g₂).det_ne_zero, hG, cball_mul_left hG.1 hP⟩
-          rw [dif_pos hcond, hC, Set.indicator_of_mem (show ((g₂⁻¹).val * blk₁ Y) ∈
+          rw [dite_eq_left hcond, hC, Set.indicator_of_mem (show ((g₂⁻¹).val * blk₁ Y) ∈
             {M : Matrix (Fin a') (Fin a) k | ∀ i j, M i j ∈ cball (ϖ ^ c)} from hP), Pi.one_apply, mul_one, hap]
           have hu : Units.mk0 _ hcond.1 = gdet g * gdet g₂ := Units.ext (by
             rw [Units.val_mk0, Units.val_mul, Matrix.GeneralLinearGroup.val_det_apply,
@@ -121,12 +121,12 @@ theorem GlobalTheory.StdPairZetaB.smallF_stdB : ∀ {k : Type} [Field k] [Valuat
             have hinv := (mem_KO_iff (g * g₂)).1 hκ
             have := cball_mul_left hinv.2 h3
             rwa [e₁, ← Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mul] at this
-          rw [dif_neg hcond, hC, Set.indicator_of_notMem (show ((g₂⁻¹).val * blk₁ Y) ∉
+          rw [dite_eq_right hcond, hC, Set.indicator_of_notMem (show ((g₂⁻¹).val * blk₁ Y) ∉
             {M : Matrix (Fin a') (Fin a) k | ∀ i j, M i j ∈ cball (ϖ ^ c)} from hP)]
           simp
       · rw [Set.indicator_of_notMem hg]
         unfold stdB
-        rw [dif_neg, zero_mul, zero_mul]
+        rw [dite_eq_right, zero_mul, zero_mul]
         rintro ⟨-, h2, -⟩
         apply hg
         show g * g₂ ∈ KO k (Fin a')

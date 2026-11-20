@@ -103,7 +103,7 @@ private theorem lgOf_inr_eq_inl {F : Type} [Field F] [NumberField F] {e : F ≃+
     refine congrArg₂ (· + ·) rfl (congrArg₂ (· * ·) rfl ?_)
     exact lnStep_frame _ _ hp (norm_p_lt_one _ _) _ hv _ k z hk
   · unfold lgOf
-    rw [dif_neg hp, dif_neg hp]
+    rw [dite_eq_right hp, dite_eq_right hp]
 
 end General
 

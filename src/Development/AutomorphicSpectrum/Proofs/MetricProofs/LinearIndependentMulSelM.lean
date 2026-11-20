@@ -23,7 +23,7 @@ theorem selM_conjTranspose_mul_mul (A : Matrix (Fin N) (Fin N) ℂ) (S : Finset 
 
 theorem det_selM (A : Matrix (Fin N) (Fin N) ℂ) (S : Finset (Fin N)) :
     ((selM S)ᴴ * A * selM S).det = minorIJ A S S := by
-  rw [selM_conjTranspose_mul_mul, minorIJ, dif_pos rfl]
+  rw [selM_conjTranspose_mul_mul, minorIJ, dite_eq_left rfl]
 
 theorem selM_transpose (S : Finset (Fin N)) (b : Fin S.card) :
     (selM S)ᵀ b = Pi.basisFun ℂ (Fin N) (S.orderEmbOfFin rfl b) := by
@@ -50,7 +50,7 @@ theorem linearIndependent_mul_selM {h : Matrix (Fin N) (Fin N) ℂ} (hd : h.det 
 
 theorem minor_pos {G : Matrix (Fin N) (Fin N) ℂ} (hG : G.PosDef) (S : Finset (Fin N)) :
     0 < minorIJ G S S := by
-  rw [minorIJ, dif_pos rfl]
+  rw [minorIJ, dite_eq_left rfl]
   exact (hG.submatrix (S.orderEmbOfFin rfl).injective).det_pos
 
 theorem log_re_mul {a b : ℂ} (ha : 0 < a) (hb : 0 < b) :

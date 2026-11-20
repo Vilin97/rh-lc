@@ -97,10 +97,10 @@ private theorem mem_spanS_iff_smul_add_mem_spanS_ne {ι : Type} [Fintype ι] [De
       · exact hd _
     · rw [Fintype.sum_eq_add_sum_subtype_ne _ i₀]
       dsimp only
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [dif_neg i.2]
+      rw [dite_eq_right i.2]
 
 theorem core_of_split (hs : h.IsSymm) (hd : ∀ x, h x x = 0 → x = 0) (hsp : SplitAt S π h) :
     ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι], Fintype.card ι ≤ n →

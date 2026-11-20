@@ -140,7 +140,7 @@ theorem psi_Y0_mul (hf : f ∈ GlobalTheory.FullRankCoinv.indSp k n d ν) {κ : 
   simp
 
 theorem psi_eq_zero {Y : Matrix (Fin n) (Fin d) k} (h : ¬ ∃ κ ∈ KO k (Fin d), Y = Yo * κ.val) : psi f Y = 0 := by
-  rw [psi, dif_neg h]
+  rw [psi, dite_eq_right h]
 
 theorem integral_of_mul_Y0 (hnd : n ≤ d) {A : Matrix (Fin n) (Fin n) k} {M : Matrix (Fin d) (Fin d) k}
     (h : A * Yo = Yo * M) (hM : ∀ i j, M i j ∈ 𝒪[k]) : ∀ i j, A i j ∈ 𝒪[k] := by

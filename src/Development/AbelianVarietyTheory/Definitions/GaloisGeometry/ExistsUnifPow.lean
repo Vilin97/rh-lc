@@ -52,7 +52,7 @@ theorem fillRec (ex : Extra D L hT Gi Gl Kc Dx cX) : ∀ u w hg, FillTie hT u w 
   have h1 := ex.fills_all u w hg v s (b + 1) (Finset.mem_Icc.2 ⟨by omega, by omega⟩)
   have h2 : wj D (b + 1) (hT.gat_pos u w hg ⟨v, s⟩) = (((D.hcW u (hT.gat_pos u w hg ⟨v, s⟩)).e ⟨b, hb⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (show b + 1 - 1 < D.R.m by simpa using hb), D.hcW_e]
+    rw [dite_eq_left (show b + 1 - 1 < D.R.m by simpa using hb), D.hcW_e]
     rfl
   rw [h2] at h1
   have e : ((((Gl.Fl u w hg).w v (b + 1) s : ℤ) : ℚ) : ℝ) =

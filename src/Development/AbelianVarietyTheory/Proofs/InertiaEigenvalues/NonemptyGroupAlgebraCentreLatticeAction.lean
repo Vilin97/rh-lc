@@ -39,7 +39,7 @@ theorem onMt_of_mem (μ : D.what₂.Tup) (j : ℕ) (z : MonoidAlgebra ℂ (G0g D
     (h : z ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))) :
     D.ntypes.onMt μ j z = D.ntypes.cenMt μ j ⟨z, h⟩ := by
   unfold Formalism.BasicNotions.NTypes.onMt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 abbrev CenR (D : D7) (i : D.nd.Loc) : Subalgebra (D.nd.O i) (MonoidAlgebra (D.nd.O i) (G0g D.nd)) :=
   Subalgebra.center (D.nd.O i) (MonoidAlgebra (D.nd.O i) (G0g D.nd))

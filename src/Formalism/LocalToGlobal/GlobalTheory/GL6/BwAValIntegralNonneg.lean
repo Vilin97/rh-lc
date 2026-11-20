@@ -528,7 +528,7 @@ theorem bwA_diag_gen {K : Type} [Field K] {r n : ℕ} (hn : n ≤ r) (ν : Fin n
   have hle := bwA_rowDeg_le hn ν hν g hmem m hm j
   rw [bwA_rowDeg_eq_weight] at hle
   have hnu : Formalism.GradedWeylDivisibility.rowNu (r := r) ν ⟨0, by have := j.2; omega⟩ = ν ⟨0, hn0⟩ := by
-    unfold Formalism.GradedWeylDivisibility.rowNu; rw [dif_pos hn0]
+    unfold Formalism.GradedWeylDivisibility.rowNu; rw [dite_eq_left hn0]
   rw [hnu] at hle
   refine ⟨μN j, hle, ?_⟩
   rw [hdw, hprod, smul_smul]

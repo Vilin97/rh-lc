@@ -34,7 +34,7 @@ open Classical in
 def mx (m : Kˣ → M) (x : K) : M := if h : x = 0 then 1 else m (Units.mk0 x h)
 
 lemma mx_ne (m : Kˣ → M) {x : K} (hx : x ≠ 0) : mx m x = m (Units.mk0 x hx) := by
-  unfold mx; rw [dif_neg hx]
+  unfold mx; rw [dite_eq_right hx]
 
 lemma mx_unit (m : Kˣ → M) (s : Kˣ) : mx m (s : K) = m s := by
   rw [mx_ne m s.ne_zero, Units.mk0_val]

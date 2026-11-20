@@ -52,10 +52,10 @@ theorem differentiable_uni_apply {m : ℕ} (k c : Fin m) :
     Differentiable ℂ fun x : Low m → ℂ => uni x k c := by
   by_cases h : c < k
   · have : (fun y : Low m → ℂ => uni y k c) = fun y => y ⟨(k, c), h⟩ := by
-      funext y; rw [← uniR_eq_uni, uniR_apply, dif_pos h]
+      funext y; rw [← uniR_eq_uni, uniR_apply, dite_eq_left h]
     rw [this]; fun_prop
   · have : (fun y : Low m → ℂ => uni y k c) = fun _ => if k = c then (1 : ℂ) else 0 := by
-      funext y; rw [← uniR_eq_uni, uniR_apply, dif_neg h]
+      funext y; rw [← uniR_eq_uni, uniR_apply, dite_eq_right h]
     rw [this]; exact differentiable_const _
 
 theorem exists_lu_differentiable : ∀ (m : ℕ) (g : Matrix (Fin m) (Fin m) ℂ), ∃ (φ : (Low m → ℂ) → Low m → ℂ) (B : (Low m → ℂ) → Matrix (Fin m) (Fin m) ℂ), ∀ x : Low m → ℂ, (∀ l : Fin (m + 1), ((g * uni x).submatrix (Fin.castLE l.is_le) (Fin.castLE l.is_le)).det ≠ 0) → (B x).BlockTriangular id ∧ IsUnit (B x).det ∧ g * uni x = uni (φ x) * B x ∧ DifferentiableAt ℂ φ x ∧ ∀ a c, DifferentiableAt ℂ (fun y => B y a c) x := by

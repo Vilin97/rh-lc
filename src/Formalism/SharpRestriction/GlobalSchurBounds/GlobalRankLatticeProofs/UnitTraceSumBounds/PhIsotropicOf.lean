@@ -64,7 +64,7 @@ theorem okpNeg_holds (D : D7) : OkpNeg D := by
   have hQ : (-1 : ℂ) ∈ Qbar := neg_mem (one_mem _)
   have hl : lamC lam (-1 : ℂ) = -1 := by
     unfold lamC
-    rw [dif_pos hQ]
+    rw [dite_eq_left hQ]
     have e : (⟨-1, hQ⟩ : Qbar) = -1 := Subtype.ext (by first | rfl | simp | norm_num)
     rw [e, map_neg, map_one]
   have hc : D.host.conj (-1 : D.host.E) = -1 := by simp
@@ -81,7 +81,7 @@ theorem okpTwo_holds (D : D7) : OkpTwo D := by
       | (have h := add_mem (one_mem Qbar) (one_mem Qbar); rwa [one_add_one_eq_two] at h)
   have hl : lamC lam (2 : ℂ) = 2 := by
     unfold lamC
-    rw [dif_pos hQ]
+    rw [dite_eq_left hQ]
     have e : (⟨2, hQ⟩ : Qbar) = 1 + 1 := Subtype.ext (by
       first
         | (show (2 : ℂ) = ((1 : Qbar) : ℂ) + ((1 : Qbar) : ℂ); norm_num)

@@ -84,7 +84,7 @@ theorem field_weil_action_unipotent (χ : AddChar F Circle) (σ : E ≃ₐ[F] E)
   unfold GL2LocalData.piG
   by_cases h : ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det
   · have h' : ∃ t : Eˣ, Algebra.norm F (t : E) = ((uni2 x * g).val).det := by rwa [hdet]
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     have hch : h'.choose = h.choose := GlobalTheory.CompanionTheory.WeilPsi.choose_congr (by simp only [hdet]) h' h
     have hsplit : (g.val 0 0 + x * g.val 1 0) / (g.val).det =
         g.val 0 0 / (g.val).det + x * (g.val 1 0 / (g.val).det) := by
@@ -92,7 +92,7 @@ theorem field_weil_action_unipotent (χ : AddChar F Circle) (σ : E ≃ₐ[F] E)
     rw [hch, hdet, e00, e01, e10, e11, hsplit, rW_shift χ σ μE lam _ _ _ _ x (corner g)]
     ring
   · have h' : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = ((uni2 x * g).val).det := by rwa [hdet]
-    rw [dif_neg h', dif_neg h, mul_zero]
+    rw [dite_eq_right h', dite_eq_right h, mul_zero]
 
 end Local
 
@@ -168,7 +168,7 @@ theorem real_weil_action_unipotent (cf : ℂˣ → ℂ) (x : ℝ) (g : GL (Fin 2
   unfold piRc
   by_cases h : 0 < (g.val).det
   · have h' : 0 < ((uni2 x * g).val).det := hdet ▸ h
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     simp only [hdet]
     have e00 : (uni2 x * g).val 0 0 = g.val 0 0 + x * g.val 1 0 := by rw [hv]; simp
     have e01 : (uni2 x * g).val 0 1 = g.val 0 1 + x * g.val 1 1 := by rw [hv]; simp
@@ -191,7 +191,7 @@ theorem real_weil_action_unipotent (cf : ℂˣ → ℂ) (x : ℝ) (g : GL (Fin 2
     rw [e00, e01, e10, e11, hsplit, rWR_shift _ _ _ _ x hc0]
     ring
   · have h' : ¬ 0 < ((uni2 x * g).val).det := hdet ▸ h
-    rw [dif_neg h', dif_neg h, mul_zero]
+    rw [dite_eq_right h', dite_eq_right h, mul_zero]
 
 end Real
 

@@ -56,7 +56,7 @@ theorem UnitaryCovolume.proof : UnitaryCovolume.Statement := by
     push_cast
     field_simp
   unfold FullerData.nz HermDatum.nz
-  rw [dif_pos hnz]
+  rw [dite_eq_left hnz]
   exact key _ _ hnz.choose_spec.choose_spec
 
 end GroundTheory.Heights₂.Heights.NineStatements

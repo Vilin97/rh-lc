@@ -165,11 +165,11 @@ private def sgm (E : KMod n) (g : Matrix (Fin n) (Fin n) ℂ) : E.V →L[ℂ] E.
 
 private theorem sgm_coe (E : KMod n) (k : UK n) : sgm E k.1 = E.ρ k := by
   simp only [sgm]
-  rw [dif_pos k.2]
+  rw [dite_eq_left k.2]
 
 private theorem sgm_zero (E : KMod n) {g : Matrix (Fin n) (Fin n) ℂ} (hg : g ∉ UU n) : sgm E g = 0 := by
   simp only [sgm]
-  rw [dif_neg (fun h => hg (mem_UU.2 h))]
+  rw [dite_eq_right (fun h => hg (mem_UU.2 h))]
 
 private theorem sgm_rep (E : KMod n) : PI.UpqRep.IsURepOn (UU n) (sgm E) := by
   refine ⟨⟨?_, fun a ha b hb => ?_⟩, fun g hg v => ?_, fun v => ?_⟩

@@ -288,7 +288,7 @@ theorem UpperTheory.Reformulated.B.trace_eq_twisted_trace_of_fixed.trc_eq :
     push_cast
     field_simp
   unfold UpperTheory.Reformulated.B.trace_eq_twisted_trace_of_fixed.twTr
-  rw [dif_pos h2, dif_pos h3, ← UpperTheory.Reformulated.B.trace_eq_twisted_trace_of_fixed.trace_le hle _ h1]
+  rw [dite_eq_left h2, dite_eq_left h3, ← UpperTheory.Reformulated.B.trace_eq_twisted_trace_of_fixed.trace_le hle _ h1]
   congr 1
   ext v
   exact (h4 v v.2).symm

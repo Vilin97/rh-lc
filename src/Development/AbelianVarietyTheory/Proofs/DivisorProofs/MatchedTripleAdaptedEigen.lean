@@ -573,7 +573,7 @@ theorem thetaKer_le : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
       · exact hπSB v _ (hs _)
       · exact hπSB v _ (hvac v)
     · filter_upwards [hev, T.eventually_cofinite_notMem] with v hv hT
-      rw [dif_neg hT, hv]
+      rw [dite_eq_right hT, hv]
     · rw [hπ1]
       split_ifs <;> exact hπS _
   have hk1 : ∀ x ∈ G.M'.Pol B.ψ B.emb, ∀ s : ∀ v : T, (Fin a' × Fin (a + a') → Fv F v) → ℂ,
@@ -588,9 +588,9 @@ theorem thetaKer_le : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
     by_cases hv : v = B.v₁
     · subst hv
       refine killOne hKP F E σ B a a' G X om om' R Rf hM N hN _ _ hx (hext s hs).1 (hext s hs).2.1 (hext s hs).2.2 ?_
-      rw [dif_pos hvT, hπ1, hπp]; exact hp
+      rw [dite_eq_left hvT, hπ1, hπp]; exact hp
     · refine killFin hKP F E σ B a a' G X om om' R Rf hM N hN hI _ _ hx (hext s hs).1 (hext s hs).2.1 (hext s hs).2.2 v hv ?_
-      rw [dif_pos hvT, hπne v hv]; exact hp
+      rw [dite_eq_left hvT, hπne v hv]; exact hp
   have key := GlobalTheory.descend_multilinear_mod T (SInf F (Fin a' × Fin (a + a'))) R.Pi ((Fin a' × Fin (a + a') → AF F) → ℂ)
     (fun v : T => (Fin a' × Fin (a + a') → Fv F v) → ℂ) (fun v : T => Rf.Pi v) (G.M'.Pol B.ψ B.emb)
     (fun v => SB _) N R.p' (fun v => Rf.p' v) Ψ hM.real.quot'.onto (fun v => hM.fin.onto' v) hk1 hk2 m' f'

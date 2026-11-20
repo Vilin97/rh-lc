@@ -150,7 +150,7 @@ private theorem stalkMap_gs_eq_gs_comp {X Y Z : Scheme.{0}} (τ : Z ⟶ Y) (q : 
   · exact stalkMap_gs τ q z W hm a
   · have hm' : (τ ≫ q) z ∉ W := by simpa using hm
     unfold gs
-    rw [dif_neg hm, dif_neg hm', map_zero]
+    rw [dite_eq_right hm, dite_eq_right hm', map_zero]
 
 private theorem cst_mul_rings_of_integers {V : Type} [CommRing V] {Z : Scheme.{0}} (q : Z ⟶ Sp V) (z : Z) (a b : V) :
     cst q z (a * b) = cst q z a * cst q z b := by

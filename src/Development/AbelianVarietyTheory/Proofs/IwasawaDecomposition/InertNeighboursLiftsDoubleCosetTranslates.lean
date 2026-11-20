@@ -279,7 +279,7 @@ theorem decoOf_val {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     (hc : CMData F E) {n : ℕ} [NeZero n] (ST SG : Finset (Pl E)) {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)}
     (hx : x ∈ UAd hc n) : (decoOf ST SG x).1 = decoRaw ST SG x := by
   unfold decoOf
-  rw [dif_pos (decorated_lattice_exists hc n ST SG x hx)]
+  rw [dite_eq_left (decorated_lattice_exists hc n ST SG x hx)]
 
 theorem sum_reps [NeZero V.rank] (hβ : IsBaseFrame V 1 Λ 1) (hP : IsPrimeIdem Q e e)
     (hc : c ∈ St (1 : GL (Fin V.rank) (Lev.EAf D)))

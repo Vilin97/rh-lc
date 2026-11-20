@@ -18,7 +18,7 @@ theorem quotOp_mk (N : Submodule ℂ V) (f : Module.End ℂ V) (h : ∀ x ∈ N,
     quotOp N f (N.mkQ x) = N.mkQ (f x) := by
   have h' : N ≤ N.comap f := fun x hx => h x hx
   unfold quotOp
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   simp
 
 theorem quotOp_mul (N : Submodule ℂ V) (f₁ f₂ : Module.End ℂ V) (h₁ : ∀ x ∈ N, f₁ x ∈ N)

@@ -228,7 +228,7 @@ theorem xiRed_ne_zero (kv : Σ k : Fin 2, D.nd.PlG k) : xiRed D kv ≠ 0 := by
   have hP := xiRed_cond D kv
   have hx : xiRed D kv = hP.choose := by
     unfold Formalism.L2.NX.xiRed
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
   obtain ⟨a, c, hc, hac, hmem⟩ := hP.choose_spec
   rw [← hx, h0, ZMod.val_zero, Nat.cast_zero, zero_mul, zero_sub] at hmem
   have ha : a ∈ (pG D kv).asIdeal := by simpa using (pG D kv).asIdeal.neg_mem hmem
@@ -250,7 +250,7 @@ theorem xiRed_isXiRes (kv : Σ k : Fin 2, D.nd.PlG k) : IsXiRes D kv (xiRed D kv
   have hP := xiRed_cond D kv
   have hx : xiRed D kv = hP.choose := by
     unfold Formalism.L2.NX.xiRed
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
   rw [hx]
   exact hP.choose_spec
 

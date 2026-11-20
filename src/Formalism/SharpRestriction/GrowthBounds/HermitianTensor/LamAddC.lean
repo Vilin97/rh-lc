@@ -47,7 +47,7 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
   have hmidOf_midI : ∀ j : Fin r, midOf (midI r j) = some j := by
     intro j
     unfold midOf midI
-    rw [dif_pos (by first | (simp [Fin.val_succ]; done) | (simp [Fin.val_succ]; omega))]
+    rw [dite_eq_left (by first | (simp [Fin.val_succ]; done) | (simp [Fin.val_succ]; omega))]
     exact congrArg some (Fin.ext (by simp [Fin.val_succ]))
   have hsome : ∀ (t : Fin (r + 1 + 1)) (j : Fin r), midOf t = some j → t = midI r j := by
     intro t j h
@@ -63,7 +63,7 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
     cases h
   have h00 : midOf (0 : Fin (r + 1 + 1)) = none := by
     unfold midOf
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
   have hth0 : ∀ a, th K r b (X (a, 0)) = X (a, 0) := by
     intro a
     simp [th, Formalism.MainNotions.flipOneThree.Pf.subY, h00]

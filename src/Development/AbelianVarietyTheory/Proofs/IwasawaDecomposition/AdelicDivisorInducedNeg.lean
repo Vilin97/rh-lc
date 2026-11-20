@@ -81,7 +81,7 @@ theorem lgOf_neg (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) (ε : E
     rw [Finsupp.sum_neg_index (fun _ => by simp)]
     simp [Finsupp.sum, Finset.sum_neg_distrib]
   unfold lgOf
-  rw [dif_pos hp, dif_pos hp]
+  rw [dite_eq_left hp, dite_eq_left hp]
   dsimp only
   rw [key]
   set b := below y.1 with hb

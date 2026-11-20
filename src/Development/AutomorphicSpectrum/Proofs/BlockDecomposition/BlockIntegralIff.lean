@@ -24,7 +24,7 @@ theorem blk_val_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {n a b : �
       ((Matrix.isUnit_iff_isUnit_det _).1 m.2.isUnit)
   unfold blk
   simp only
-  rw [dif_pos hU]
+  rw [dite_eq_left hU]
   rfl
 
 theorem isInt_blk_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n a b : ℕ) (h : a + b = n) (w : Pl E) (m : GLw a w × GLw b w) (X : Matrix (Fin a) (Fin b) (w.adicCompletion E)), IsInt w (blk h w m X).val ↔ IsInt w m.1.val ∧ IsInt w m.2.val ∧ IsInt w (m.1.val * X) := by

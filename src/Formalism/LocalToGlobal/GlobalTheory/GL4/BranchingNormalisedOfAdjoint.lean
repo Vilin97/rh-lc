@@ -21,7 +21,7 @@ theorem natW_anti {N : ℕ} (lam : DomWeight N) : Antitone lam.natW := by
 
 theorem detShift_last {n : ℕ} (lt : DomWeight (n + 1)) (h0 : lt.w (Fin.last n) = 0) : lt.detShift = 0 := by
   unfold DomWeight.detShift
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   have : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp)
   rw [this, h0]
 
@@ -74,7 +74,7 @@ theorem sgNat_eq {n : ℕ} (lt : DomWeight (n + 1)) (sg : DomWeight n) (h0 : lt.
   have h2 := detShift_nonneg lt sg h0 hI
   have h3 : sg.detShift ≤ sg.w i := by
     unfold DomWeight.detShift
-    rw [dif_pos (Fin.pos i)]
+    rw [dite_eq_left (Fin.pos i)]
     exact sg.anti (by rw [Fin.le_def]; simp; omega)
   unfold sgNat DomWeight.natW
   omega
@@ -160,7 +160,7 @@ theorem initMinor_ne_zero {r n s : ℕ} (I : Fin s → Fin r) (hI : Function.Inj
     ext p q
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, eval_X, e, Fin.coe_castLE,
       Matrix.one_apply]
-    rw [dif_pos q.isLt]
+    rw [dite_eq_left q.isLt]
     by_cases hpq : p = q
     · subst hpq
       simp

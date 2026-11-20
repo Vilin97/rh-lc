@@ -71,7 +71,7 @@ theorem mem_sup_of_balanced
       have hex : ∃ w' : HeightOneSpectrum (𝓞 L), w'.under (𝓞 F) = w.under (𝓞 F) := ⟨w, rfl⟩
       have hm : m (w.under (𝓞 F)) = -WithZero.log (valAt w a) := by
         simp only [m]
-        rw [dif_pos hex, ha w hex.choose hex.choose_spec]
+        rw [dite_eq_left hex, ha w hex.choose hex.choose_spec]
       rw [hm]
       simp only [smul_eq_mul, mul_neg, neg_neg, mul_one]
       exact WithZero.exp_log (valAt_ne_zero w a)

@@ -71,7 +71,7 @@ theorem up_mem_latO_iff {S T : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin S.ra
   unfold IsIntM
   refine ⟨fun h a b => ?_, fun h a b => ?_⟩
   · have := (mem_OA_iff _).1 (h a b) w
-    rw [hval, dif_pos rfl] at this
+    rw [hval, dite_eq_left rfl] at this
     rw [Valuation.mem_integer_iff, (Good.isEquiv_Kw w).le_one_iff_le_one]
     exact this
   · refine (mem_OA_iff _).2 fun Q => ?_

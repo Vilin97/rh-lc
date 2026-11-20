@@ -7,7 +7,7 @@ open NumberField MvPolynomial
 theorem ratio_self {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module Ω V] {f : V} (hf : f ≠ 0) :
     ratio (Ω := Ω) f f = 1 := by
   have h : ∃ a : Ω, f = a • f := ⟨1, (one_smul _ _).symm⟩
-  rw [ratio, dif_pos h]
+  rw [ratio, dite_eq_left h]
   have hc := h.choose_spec
   have h0 : (h.choose - 1) • f = 0 := by rw [sub_smul, ← hc, one_smul, sub_self]
   rcases smul_eq_zero.mp h0 with h1 | h1

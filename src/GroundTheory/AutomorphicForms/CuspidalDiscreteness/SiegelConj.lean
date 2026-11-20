@@ -102,7 +102,7 @@ theorem conj_blockEntry_apply_eq_zero {r : ℕ} {b : AdelicGLn.AdelicGL K n} (hb
   · rw [hb1 hmj, mul_zero]
   by_cases hli : l < i
   · rw [hb' hli, zero_mul, zero_mul]
-  rw [blockEntry_apply, dif_neg, mul_zero, zero_mul]
+  rw [blockEntry_apply, dite_eq_right, mul_zero, zero_mul]
   intro h
   apply hij
   have h1 : (i : ℕ) ≤ l := not_lt.1 hli

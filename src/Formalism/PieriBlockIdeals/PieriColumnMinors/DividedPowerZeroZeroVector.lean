@@ -791,7 +791,7 @@ theorem peelBound : PeelBound := by
       rw [← ldrow_weight_rowW, hwt] at hdom
       have hnu : rowNu (r := 1 + q) (blockWt 1 q w lam2) (Fin.castAdd q (0 : Fin 1)) = w := by
         unfold rowNu
-        rw [dif_pos (Fin.castAdd q (0 : Fin 1)).isLt]
+        rw [dite_eq_left (Fin.castAdd q (0 : Fin 1)).isLt]
         exact Fin.append_left _ _ 0
       rw [hnu] at hdom
       exact hμ hdom

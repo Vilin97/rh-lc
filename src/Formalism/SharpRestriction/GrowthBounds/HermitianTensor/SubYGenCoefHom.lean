@@ -30,7 +30,7 @@ theorem midOf_midI (r : ℕ) (j : Fin r) : midOf (midI r j) = some j := by
   have hv := midI_val r j
   have hj := j.isLt
   unfold midOf
-  rw [dif_pos (by rw [hv]; exact ⟨Nat.succ_pos _, by omega⟩)]
+  rw [dite_eq_left (by rw [hv]; exact ⟨Nat.succ_pos _, by omega⟩)]
   congr 1
 
 theorem midOf_cases {r : ℕ} (t : Fin (r + 1 + 1)) :
@@ -44,7 +44,7 @@ theorem midOf_cases {r : ℕ} (t : Fin (r + 1 + 1)) :
     dsimp only
     omega
   · right
-    refine ⟨by unfold midOf; rw [dif_neg h], ?_⟩
+    refine ⟨by unfold midOf; rw [dite_eq_right h], ?_⟩
     by_cases h0 : t.val = 0
     · left
       exact Fin.ext (by simp [h0])

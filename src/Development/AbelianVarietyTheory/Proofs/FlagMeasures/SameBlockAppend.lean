@@ -49,10 +49,10 @@ theorem det_snoc_eq {m : ℕ} (h : Pt E m) (t : Eˣ) (s : ℕ+) :
         Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
         Matrix.fromBlocks_apply₂₂, Matrix.smul_apply, Matrix.zero_apply, smul_eq_mul] <;>
       have hi := i.isLt <;> have hj := j.isLt
-    · rw [dif_pos ⟨hi, hj⟩]
-    · rw [dif_neg (by omega), if_neg (by omega)]
-    · rw [dif_neg (by omega), if_neg (by omega)]
-    · rw [dif_neg (by omega)]
+    · rw [dite_eq_left ⟨hi, hj⟩]
+    · rw [dite_eq_right (by omega), if_neg (by omega)]
+    · rw [dite_eq_right (by omega), if_neg (by omega)]
+    · rw [dite_eq_right (by omega)]
       simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
         Option.mem_def, Option.some.injEq, Fin.revPerm_apply]
       by_cases hij : Fin.rev i = j

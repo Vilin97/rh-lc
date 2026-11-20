@@ -29,7 +29,7 @@ noncomputable def zwPoint (z w : K) : V.toAffine.Point :=
 
 theorem zwPoint_of {z w : K} (h : zwPoly V z w = 0) (hw : w ≠ 0) :
     zwPoint V z w = Point.mk (equation_of_zwPoly V h hw) := by
-  rw [zwPoint, dif_pos ⟨h, hw⟩]
+  rw [zwPoint, dite_eq_left ⟨h, hw⟩]
 
 theorem secant_spec [DecidableEq K] [Infinite K] {z₁ w₁ z₂ w₂ l n b z₃ w₃ : K}
     (h₁ : zwPoly V z₁ w₁ = 0) (h₂ : zwPoly V z₂ w₂ = 0) (hw₁ : w₁ ≠ 0) (hw₂ : w₂ ≠ 0)

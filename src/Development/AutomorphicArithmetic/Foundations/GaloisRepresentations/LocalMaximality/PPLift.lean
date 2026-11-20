@@ -325,7 +325,7 @@ private lemma col_cycle (hMu : ThMu) (hMuLat : ThMuLat) (hWd : WdUni) {d : ℕ} 
     · have hL' : L.card ≠ d := fun h => hL (by rw [h])
       have h0 : detC T.rowMu (uni {pk I} L) = 0 := by
         unfold detC
-        rw [dif_neg]
+        rw [dite_eq_right]
         rw [hcard]
         omega
       rw [h0, map_zero]
@@ -345,11 +345,11 @@ theorem UpperTheory.Gal.productCup_of_system.pLift_of :
   intro hMu hMuLat hKap hActs hLat hGood hSys hWd F K _ _ _ _ _ _ d x hcov a I J hI hJ w hw
   have hi : pk I ∈ I := by
     unfold pk
-    rw [dif_pos hI]
+    rw [dite_eq_left hI]
     exact Finset.min'_mem I hI
   have hj : pk J ∈ J := by
     unfold pk
-    rw [dif_pos hJ]
+    rw [dite_eq_left hJ]
     exact Finset.min'_mem J hJ
   obtain ⟨-, hPg, hmono⟩ := hGood F K d x hcov a
   obtain ⟨g, hg, w', hw', rfl⟩ := split_form x hcov a hmono I J (pk J) hj w hw

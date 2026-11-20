@@ -86,7 +86,7 @@ theorem edge (S : Type) [CommRing S] {Ω : Type} [Field Ω] [Algebra S Ω] (y : 
   · intro l _ hl
     rw [LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun j hj => ?_
-    rw [dif_neg]
+    rw [dite_eq_right]
     · rfl
     rintro ⟨hn, -⟩
     have h2 := hn l
@@ -109,7 +109,7 @@ theorem edge (S : Type) [CommRing S] {Ω : Type} [Field Ω] [Algebra S Ω] (y : 
     · exact absurd rfl hj2.2
   · intro h; exact absurd (show i ∈ J k by rw [hJk]; simp) h
   · intro h; exact absurd (show i' ∈ J k by rw [hJk]; simp) h
-  rw [dif_pos (hfa ▸ (pt (Function.update d k i')).2), dif_pos (hfb ▸ (pt (Function.update d k i)).2)] at h0
+  rw [dite_eq_left (hfa ▸ (pt (Function.update d k i')).2), dite_eq_left (hfb ▸ (pt (Function.update d k i)).2)] at h0
   simp only [LinearMap.smul_apply] at h0
   erw [LinearMap.proj_apply, LinearMap.proj_apply] at h0
   have e1 : ∀ h, s ⟨Function.update J k ((J k).erase i), h⟩ = s (pt (Function.update d k i')) :=

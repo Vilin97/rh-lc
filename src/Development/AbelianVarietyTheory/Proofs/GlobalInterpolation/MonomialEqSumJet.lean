@@ -20,7 +20,7 @@ theorem embT_injective : Function.Injective (TaylorLogMetric.embT D) := by
   exact congrArg (fun f : D.host.E →+* ℂ => f x) h
 
 theorem lamC_injOn {x y : ℂ} (hx : x ∈ TaylorLogMetric.Qbar) (hy : y ∈ TaylorLogMetric.Qbar) (h : TaylorLogMetric.lamC lam x = TaylorLogMetric.lamC lam y) : x = y := by
-  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, dif_pos hx, dif_pos hy] at h
+  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, dite_eq_left hx, dite_eq_left hy] at h
   exact congrArg Subtype.val (lam.injective h)
 
 theorem emb_mem {A : Type} [Field A] [NumberField A] (f : A →+* ℂ) (x : A) : f x ∈ TaylorLogMetric.Qbar :=
@@ -28,7 +28,7 @@ theorem emb_mem {A : Type} [Field A] [NumberField A] (f : A →+* ℂ) (x : A) :
 
 theorem lamC_add {x y : ℂ} (hx : x ∈ TaylorLogMetric.Qbar) (hy : y ∈ TaylorLogMetric.Qbar) :
     TaylorLogMetric.lamC lam (x + y) = TaylorLogMetric.lamC lam x + TaylorLogMetric.lamC lam y := by
-  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, TaylorLogMetric.lamC, dif_pos hx, dif_pos hy, dif_pos (add_mem hx hy), ← map_add (f := _)]
+  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, TaylorLogMetric.lamC, dite_eq_left hx, dite_eq_left hy, dite_eq_left (add_mem hx hy), ← map_add (f := _)]
   rfl
 
 theorem lamC_sum {ι : Type} (s : Finset ι) (f : ι → ℂ) (hf : ∀ i, f i ∈ TaylorLogMetric.Qbar) :
@@ -36,7 +36,7 @@ theorem lamC_sum {ι : Type} (s : Finset ι) (f : ι → ℂ) (hf : ∀ i, f i �
   classical
   induction s using Finset.induction_on with
   | empty =>
-    rw [Finset.sum_empty, Finset.sum_empty, TaylorLogMetric.lamC, dif_pos (zero_mem _)]
+    rw [Finset.sum_empty, Finset.sum_empty, TaylorLogMetric.lamC, dite_eq_left (zero_mem _)]
     exact map_zero lam
   | insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.sum_insert ha, lamC_add lam (hf a) (sum_mem fun i _ => hf i), ih]

@@ -325,7 +325,7 @@ theorem colPar : ∀ (D : D7) (j : ℕ) (hj : j < D.R.m) (τ : D.what₂.Tau) (n
          omega)
   · intro b hb
     simp only [ν]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
   · intro a
     have e1 := hν (Fin.castLE (by omega) a) a.2
     rw [GlobalTheory.LastStepParam.lowK_allPos, e1, hz a]
@@ -338,8 +338,8 @@ theorem colPar : ∀ (D : D7) (j : ℕ) (hj : j < D.R.m) (τ : D.what₂.Tau) (n
     · rw [dif_pos hb, hz, hν b hb]
       push_cast
       linarith [hpR, htR]
-    · have h0 : ν b = 0 := by simp only [ν]; rw [dif_neg hb]
-      rw [dif_neg hb, h0, Nat.cast_sub (by omega)]
+    · have h0 : ν b = 0 := by simp only [ν]; rw [dite_eq_right hb]
+      rw [dite_eq_right hb, h0, Nat.cast_sub (by omega)]
       push_cast
       linarith [hpR, htR]
 

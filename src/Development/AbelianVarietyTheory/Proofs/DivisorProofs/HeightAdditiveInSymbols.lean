@@ -175,7 +175,7 @@ theorem fs_line : ∀ (D : D7) (O : Setup D) (A : SlopeTestRemainingChoices O.Y)
         simp [lnStep, hk, hg]
     · have h3 : ∀ y : AlgPt (O.var c), (adlOf (O.Φ.C c) (O.met.hm c) w).lg v hne.some y = 0 := fun y => by
         change lgOf Y w v hne.some y = 0
-        rw [lgOf, dif_neg hp]
+        rw [lgOf, dite_eq_right hp]
       simp [h3]
   · have hI := (hR.mdl ∅ c).line_spec ∅ (Finset.Subset.refl _) st hs
     rw [hind] at hI

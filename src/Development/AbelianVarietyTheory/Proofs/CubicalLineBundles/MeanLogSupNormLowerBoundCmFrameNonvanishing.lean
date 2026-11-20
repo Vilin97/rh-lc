@@ -62,7 +62,7 @@ theorem meanLogSup_lowerBound : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     apply hne
     change (if h : x₀.1 ∈ ((U c.F.val.toRingHom).X k).dom then
       toC (evR Xo c F ((U c.F.val.toRingHom).un k ⟨x₀.1, h⟩)) else 0) = 0
-    rw [dif_pos x₀.2]
+    rw [dite_eq_left x₀.2]
     exact h0
   have hG0 : G ≠ 0 := (GlobalTheory.T.framePolynomial_equivariant_and_ne_zero E H Dw l Xo c z.K z.y a n F hFs G hG).2 _ σ₁ _ hx hev
   have hloc := GlobalTheory.T.localLowerBound_cmPoint_framePolynomial_every_prime E H Dw l Xo c z _ La hz a n F hFs hint G hG

@@ -29,7 +29,7 @@ theorem cst_one' (q : Z ⟶ Sp R) (z : Z) : cst q z 1 = 1 := by
   unfold cst
   rw [map_one]
   unfold gs
-  rw [dif_pos (by simp), map_one, map_one]
+  rw [dite_eq_left (by simp), map_one, map_one]
 
 theorem gs_scal (p : Y ⟶ Sp R) (r : Z ⟶ Y) (z : Z) (W : Y.Opens) (hz : r z ∈ W) (a : R) :
     gs r z W (resTop W (scal p a)) = cst (r ≫ p) z a := by

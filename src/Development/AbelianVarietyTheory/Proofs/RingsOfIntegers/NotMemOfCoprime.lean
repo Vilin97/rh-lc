@@ -67,7 +67,7 @@ theorem vLa_betaH {D : D7} (T : Full D) (hF : LawsFull T) (j : ℕ) (hj : InR D 
   have h := hF.sh.beta j hj n (hF.p.kPsi j hj) Λ hU hT
   refine vLa_beta (Dw := T.Q.Dw j) T.Q.c Λ la hA _ ?_
   unfold betaH
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec.2.1
 
 end GlobalTheory.ShortUnits

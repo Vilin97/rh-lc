@@ -167,7 +167,7 @@ theorem val_eq [CharZero C] (hL : Fin 2 → ZMod d → ZMod d → MvPowerSeries 
     ((isExp_mvExp (y ρ)).subst fun x : I g => (⟨g, x⟩ : WV I)).subst
       fun w : WV I => ((ρ, w) : Fin n × WV I)
   refine (h1.jet _).trans ?_
-  rw [map_pow, MvPolynomial.eval_rename, minorK, dif_pos ⟨le_rfl, hn⟩, RingHom.map_det]
+  rw [map_pow, MvPolynomial.eval_rename, minorK, dite_eq_left ⟨le_rfl, hn⟩, RingHom.map_det]
   congr 2
   ext ρ c
   simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, MvPolynomial.eval_X,

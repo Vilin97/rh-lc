@@ -83,7 +83,7 @@ theorem regPowT : RegPowT := by
   swap
   · exact absurd (dif_neg hA) h1
   unfold entT at h1
-  rw [dif_pos hA] at h1
+  rw [dite_eq_left hA] at h1
   obtain ⟨j, -, hj⟩ := Finset.exists_ne_zero_of_sum_ne_zero h1
   have hd2 : dcos (n - a) w (tdiag (d.ϖ w) (restr (x' j) _ hA.2.2.2.2)) y.2 ≠ 0 := right_ne_zero_of_mul hj
   have hd1 : dcos a w (tdiag (d.ϖ w) (restr (x' j) _ hA.2.2.2.1)) y.1 ≠ 0 := right_ne_zero_of_mul (left_ne_zero_of_mul hj)

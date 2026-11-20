@@ -17,7 +17,7 @@ theorem finsum_subtype_dite {α : Type} [Fintype α] (p : α → Prop) (f : {x /
   have h1 : ∑ i : {x // ¬ p x}, (if h : p i.1 then f ⟨i.1, h⟩ else 0) = 0 :=
     Finset.sum_eq_zero fun i _ => dif_neg i.2
   rw [h1, add_zero]
-  exact Finset.sum_congr rfl fun i _ => by rw [dif_pos i.2]
+  exact Finset.sum_congr rfl fun i _ => by rw [dite_eq_left i.2]
 
 open Classical in
 

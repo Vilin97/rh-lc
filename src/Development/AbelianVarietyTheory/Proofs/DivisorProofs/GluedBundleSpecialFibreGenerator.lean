@@ -61,7 +61,7 @@ theorem gU_ratioProp {p : ℕ} [Fact p.Prime] {X : Scheme.{0}} {Xw : X.Opens}
     {K : (Sp 𝓞_ℂ_[p] ⟶ X) → Set ℂ_[p]} (h : ∀ x : X, UnitChartAt p Xw K x) (x y : X)
     (hR : ∃ u, RatioProp h x y u) : RatioProp h x y (gU h x y) := by
   unfold gU
-  rw [dif_pos hR]
+  rw [dite_eq_left hR]
   exact hR.choose_spec
 
 theorem glueLB_reducedSpecial_gen : ∀ (F : Type) [Field F] (V : ValuationSubring F) [IsDiscreteValuationRing V] (p : ℕ) [Fact p.Prime], (p : F) ∈ V.nonunits → ∀ (X : Scheme.{0}) (s : X ⟶ Sp V) (Xw : X.Opens) (K : (Sp 𝓞_ℂ_[p] ⟶ X) → Set ℂ_[p]) (h : ∀ x : X, UnitChartAt p Xw K x), (∀ x y : X, ∃ u, RatioProp h x y u) → ∃ t : ((glueLB h).pull (GlobalTheory.IndefiniteRowSideFullHecke.SpecialFibreUnits.reducedSpecialι s)).Gen, t.IsGen := by

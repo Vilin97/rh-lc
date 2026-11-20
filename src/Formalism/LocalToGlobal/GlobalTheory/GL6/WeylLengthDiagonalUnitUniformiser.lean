@@ -501,7 +501,7 @@ theorem dominant_natWeight_antitone {N : ℕ} (lam : DomWeight N) : Antitone lam
 
 theorem rowNu_self_alt {N : ℕ} (ν : Fin N → ℕ) (a : Fin N) : Formalism.GradedWeylDivisibility.rowNu (r := N) ν a = ν a := by
   unfold Formalism.GradedWeylDivisibility.rowNu
-  rw [dif_pos a.isLt]
+  rw [dite_eq_left a.isLt]
 
 theorem dominant_natWeight_sum {N : ℕ} (lam : DomWeight N) :
     ((∑ a, lam.natW a : ℕ) : ℤ) = ∑ a, lam.w a - N * lam.detShift := by

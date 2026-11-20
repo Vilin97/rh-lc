@@ -143,8 +143,8 @@ theorem cmpD_sum {T : LocLat G Qp LL O} {d : ℕ} (y : Fin d → W.DD T) (hy : �
     cmpD W T (∑ m, y m) = ∑ m, cmpD W T (y m) := by
   unfold cmpD
   have hs : ∑ m, y m ∈ W.N T := Submodule.sum_mem _ (fun m _ => hy m)
-  rw [dif_pos hs]
-  conv_rhs => arg 2; ext m; rw [dif_pos (hy m)]
+  rw [dite_eq_left hs]
+  conv_rhs => arg 2; ext m; rw [dite_eq_left (hy m)]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← map_sum]
   congr 1
@@ -176,7 +176,7 @@ theorem cmpD_smul_letter {T : LocLat G Qp LL O} {i : ZMod n} (a : LetA O n) {y :
     apply Subtype.ext
     simp only [Submodule.coe_add, Submodule.coe_smul_of_tower]
     exact hid
-  rw [cmpD, dif_pos hay, he, map_add (f := _), W.cmp_smul, W.cmp_π, add_zero, cmpD, dif_pos hyN]
+  rw [cmpD, dite_eq_left hay, he, map_add (f := _), W.cmp_smul, W.cmp_π, add_zero, cmpD, dite_eq_left hyN]
 
 end TypesD
 

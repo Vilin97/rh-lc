@@ -41,7 +41,7 @@ theorem lift_agree {R : Type} [CommRing R] {G : Over (Sp R)} {n : ℕ} {X : Sche
   have hi' : O ≤ h.W i' := hO.trans inf_le_right
   have hle : O ≤ m ⁻¹ᵁ (L.U (h.j i) ⊓ L.U (h.j i')) := fun p hp => ⟨h.le i (hi hp), h.le i' (hi' hp)⟩
   have hg : IsUnit (pbT m (L.g (h.j i) (h.j i')).val O) := by
-    rw [pbT, dif_pos hle]
+    rw [pbT, dite_eq_left hle]
     exact (Units.isUnit _).map _
   have e₁ := congrArg π (h.glue 1 i i' O hO f)
   have e₀ := congrArg π (h.glue 1 i i' O hO 1)

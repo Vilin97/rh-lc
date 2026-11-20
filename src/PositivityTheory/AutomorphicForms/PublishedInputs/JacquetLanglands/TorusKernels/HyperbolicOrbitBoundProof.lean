@@ -17,7 +17,7 @@ def Fx {I : Type} (f : X I → ℂ) (w : I → ℂ) : ℂ :=
 
 theorem Fx_eq {I : Type} (f : X I → ℂ) {w : I → ℂ} (h : ∀ v, (w v).im ≠ 0) :
     Fx f w = f (fun v => ⟨w v, h v⟩) := by
-  rw [Fx, dif_pos h]
+  rw [Fx, dite_eq_left h]
 
 theorem Fx_val {I : Type} (f : X I → ℂ) (z : X I) : Fx f (fun v => (z v).1) = f z :=
   Fx_eq f (fun v => (z v).2)
@@ -56,7 +56,7 @@ theorem analytic_Fx (hO : Osg) {I : Type} [Fintype I] (f : X I → ℂ) (hf : Se
       · simpa [Function.update_of_ne huv] using hw' u
     rw [Fx_eq f hu]
     unfold ext1
-    rw [dif_pos ht']
+    rw [dite_eq_left ht']
     congr 1
     funext u
     apply Subtype.ext

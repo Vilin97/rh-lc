@@ -293,7 +293,7 @@ theorem isBe_unique {𝔞 : Ideal (𝓞 E)} (h0 : 𝔞 ≠ ⊥) {β β' : c.F} (
 theorem isBeLat_betaH (Λ : Lat E n) (h : ∃ β, IsBeLat Dw c Λ β) :
     IsBeLat Dw c Λ (betaH (Dw := Dw) c (toGen Λ)) := by
   have h' := h.imp fun β => (beta_iff Dw c Λ β).2
-  rw [betaH, dif_pos h']
+  rw [betaH, dite_eq_left h']
   exact (beta_iff Dw c Λ _).1 h'.choose_spec
 
 theorem betaH_eq (hK : ReflexLe Dw c) (Λ : Lat E n) :

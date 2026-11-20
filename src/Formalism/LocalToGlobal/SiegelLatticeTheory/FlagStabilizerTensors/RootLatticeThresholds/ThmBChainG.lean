@@ -42,7 +42,7 @@ theorem jointAmplitudeRotated_generic (Y : Full X) (u : D.what₂.Word) (large�
     rw [one_div_mul_cancel hfc.ne', Real.rpow_one]
   refine ⟨gamP C u u w', fun _ => th, fun τ => (ENNReal.ofReal th)⁻¹ • nu1P C u u w' τ, fun τ => ?_, ?_⟩
   · have hnu : ∃ ν₁, RMeas D (locW C u u τ) (gamP C u u w' τ) 1 ν₁ := hM w' hb hrep τ
-    have hnuP : nu1P C u u w' τ = hnu.choose := by unfold nu1P; rw [dif_pos hnu]
+    have hnuP : nu1P C u u w' τ = hnu.choose := by unfold nu1P; rw [dite_eq_left hnu]
     refine ⟨hR w' hb hrep τ, hT w' hb hJ', ?_⟩
     obtain ⟨p, μR, hR1, hQ⟩ := hnu.choose_spec
     refine ⟨p, μR, hR1, ?_⟩

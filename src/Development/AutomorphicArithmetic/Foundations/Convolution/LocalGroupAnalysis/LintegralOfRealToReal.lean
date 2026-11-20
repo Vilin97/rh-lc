@@ -95,7 +95,7 @@ theorem UpperTheory.ConvolutionTheory.G.isUnit_last_join :
   intro X G T _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ μ _ ν _ _ u i hu hi Φ ρ hΦ hinv hn hfin
   have hex : ∃ ρ, IsNormAlong u (fun t => u (i t)) ν ρ := ⟨ρ, hn⟩
   unfold quotInt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have h0 := hex.choose_spec
   set ρ₀ := hex.choose
   have ha : Measurable (fun x => ρ (u x)) := hn.1.comp hu

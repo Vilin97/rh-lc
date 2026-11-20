@@ -29,7 +29,7 @@ theorem trace_infl (p : parab K b) :
   unfold hcFun infl
   rw [PI.SerBridgeGLW.trace_piTensorMap]
   refine Finset.prod_congr rfl fun c _ => ?_
-  rw [blkGL, dif_pos p.2]
+  rw [blkGL, dite_eq_left p.2]
   rfl
 
 theorem character_hcRep :
@@ -77,7 +77,7 @@ theorem isClassOn_hcFun :
   intro x hx h hh
   have hm : x * h * x⁻¹ ∈ parab K b := (parab K b).mul_mem ((parab K b).mul_mem hx hh) ((parab K b).inv_mem hx)
   refine Finset.prod_congr rfl fun c _ => ?_
-  rw [blkGL, blkGL, dif_pos hm, dif_pos hh]
+  rw [blkGL, blkGL, dite_eq_left hm, dite_eq_left hh]
   have e : (⟨x * h * x⁻¹, hm⟩ : parab K b) = ⟨x, hx⟩ * ⟨h, hh⟩ * (⟨x, hx⟩ : parab K b)⁻¹ := rfl
   have e' : levi K b c ⟨x * h * x⁻¹, hm⟩ =
       leviHom b c ⟨x, hx⟩ * leviHom b c ⟨h, hh⟩ * (leviHom b c ⟨x, hx⟩)⁻¹ := by

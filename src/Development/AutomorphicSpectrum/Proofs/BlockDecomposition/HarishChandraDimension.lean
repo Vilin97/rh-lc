@@ -10,7 +10,7 @@ theorem blkGL_one_eq {K : Type} [Field K] [Fintype K] [DecidableEq K] {ι : Type
     [DecidableEq ι] {s : ℕ} (b : ι → Fin s) (c : Fin s) :
     blkGL b c (1 : GL ι K) = 1 := by
   unfold blkGL
-  rw [dif_pos (one_mem _)]
+  rw [dite_eq_left (one_mem _)]
   apply Units.ext
   show Formalism.IrreducibleCountingLemmas.TYPES.blk K b c ((1 : GL ι K) : Matrix ι ι K) = 1
   ext i j

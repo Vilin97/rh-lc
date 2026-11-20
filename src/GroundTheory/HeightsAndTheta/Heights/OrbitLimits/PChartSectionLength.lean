@@ -35,7 +35,7 @@ theorem localMult_map_intCast_complex {τ : Type} [Fintype τ] (J W : Ideal (MvP
 theorem multAt_eq_localMult {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (J W : Ideal (MRing ι))
     [W.IsPrime] : multAt J W = localMult J W := by
   unfold multAt localMult
-  rw [dif_pos ‹_›, dif_pos ‹_›, ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient]
+  rw [dite_eq_left ‹_›, dite_eq_left ‹_›, ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient]
 
 theorem ChartSectionLength.proof (hComp : ChartConeComponent.Statement) (hLen : ChartConeLength.Statement) :
     ChartSectionLength.Statement := by

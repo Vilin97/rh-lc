@@ -128,7 +128,7 @@ example {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchime
     {ψ : AddChar k Circle} {c : kˣ} (hψ : HasConductor ψ c) {χ : kˣ →* ℂˣ} (hχ : IsUnram χ) :
     tateEps ψ χ = ((χ c)⁻¹ : ℂˣ) := by
   have hx : ∃ e, IsTateEps ψ χ e := ⟨_, isTateEps_of_isUnram hψ hχ⟩
-  rw [tateEps, dif_pos hx]
+  rw [tateEps, dite_eq_left hx]
   exact hx.choose_spec.unique (isTateEps_of_isUnram hψ hχ)
 
 example (l l' : List (BTerm h ψ)) : val (l ++ l') = val l * val l' := by simp [val]

@@ -33,7 +33,7 @@ noncomputable def lT (x : H) : ℂ := if hx : IsSm σ x then l ⟨x, hx⟩ else 
 variable {σ l}
 
 theorem lT_of {x : H} (hx : IsSm σ x) : lT σ l x = l ⟨x, hx⟩ := by
-  rw [lT, dif_pos hx]
+  rw [lT, dite_eq_left hx]
 
 theorem lT_add {x y : H} (hx : IsSm σ x) (hy : IsSm σ y) :
     lT σ l (x + y) = lT σ l x + lT σ l y := by

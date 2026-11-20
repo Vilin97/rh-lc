@@ -90,7 +90,7 @@ def dil (B : Eu l →L[ℝ] Eu l) : Sch l →L[ℂ] Sch l :=
   if h : IsUnit B then compCLMOfContinuousLinearEquiv ℂ (ContinuousLinearEquiv.ofUnit h.unit) else 0
 
 theorem dil_apply {B : Eu l →L[ℝ] Eu l} (h : IsUnit B) (f : Sch l) (x : Eu l) : dil B f x = f (B x) := by
-  rw [dil, dif_pos h]
+  rw [dil, dite_eq_left h]
   rfl
 
 theorem dil_one : dil (1 : Eu l →L[ℝ] Eu l) = 1 := by

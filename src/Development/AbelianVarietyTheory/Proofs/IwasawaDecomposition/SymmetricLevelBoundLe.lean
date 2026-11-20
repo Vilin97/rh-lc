@@ -82,11 +82,11 @@ theorem inJSym_of_prX (hq : q ≠ 0) (hP : (q : 𝓞 E) ∈ P.asIdeal) {k rS r t
   have h7 : mat ρ i.1 j.1 = g (Pi.single j 1) i := by
     have h8 : eN E (n + 0) j.1 = Loc.inX E n 0 (Pi.single j 1) := by
       funext l
-      rw [CongLevel.inX_apply, dif_pos (show l.1 < n from l.2)]
+      rw [CongLevel.inX_apply, dite_eq_left (show l.1 < n from l.2)]
       unfold Loc.eN
       simp [Pi.single_apply, Fin.ext_iff]
     unfold mat atN
-    rw [dif_pos (show i.1 < n + 0 from i.2), h8, hx, CongLevel.inX_apply, dif_pos i.2]
+    rw [dite_eq_left (show i.1 < n + 0 from i.2), h8, hx, CongLevel.inX_apply, dite_eq_left i.2]
   rw [Matrix.map_apply, h7]
   exact congrArg e h6.symm
 

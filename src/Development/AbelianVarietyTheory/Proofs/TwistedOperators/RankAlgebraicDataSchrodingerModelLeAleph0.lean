@@ -96,9 +96,9 @@ theorem pure_mem_span_gens (hM : M.IsGood ψ) (i : Module.Basis.ofVectorSpaceInd
           GlobalTheory.WeilM.SB (Fin n × Fin d → Fv F v)) : (Fin n × Fin d → Fv F v) → ℂ) else M.vac v) = φ := by
       funext v
       by_cases h : v ∈ T
-      · rw [dif_pos h]
+      · rw [dite_eq_left h]
         exact (hj v h).symm
-      · rw [dif_neg h]
+      · rw [dite_eq_right h]
         exact (hoff v (Finset.notMem_empty v) h).symm
     exact Submodule.subset_span ⟨⟨T, i, fun v => j v.1 v.2⟩, congrArg (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure
       ((Module.Basis.ofVectorSpace ℂ (M.Pol ψ emb) i : M.Pol ψ emb) : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d))) hfun⟩

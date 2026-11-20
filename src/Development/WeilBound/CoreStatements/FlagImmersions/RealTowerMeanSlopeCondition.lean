@@ -114,7 +114,7 @@ theorem comp_psh {D : ℕ} (S : PB.AnSys D (Option (Ψ × Fin N))) (k : ℕ) (hk
         have hne : (p.2 : ℕ) + 1 ≠ N := fun h => ha ⟨p, rfl, h⟩
         have := p.2.isLt
         omega
-      rw [dif_pos hlt]
+      rw [dite_eq_left hlt]
       have := hdom p.1 p.2 ⟨(p.2 : ℕ) + 1, hlt⟩ (by
         show (p.2 : ℕ) ≤ (p.2 : ℕ) + 1
         omega)

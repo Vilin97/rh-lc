@@ -214,7 +214,7 @@ theorem dfc_high (P : ParameterChoice' D L) (X : Inst D L) (K : Consts) {a b : H
     intro j; unfold gainP; rw [if_pos (Or.inr hpX)]
   have ht : tauP X K a b p = 0 := by unfold tauP; rw [if_pos hVV]
   have hi : ioP X K a b p = 0 := by
-    unfold ioP; rw [dif_neg (by rw [hVV]; simp)]
+    unfold ioP; rw [dite_eq_right (by rw [hVV]; simp)]
   unfold Dfc
   rw [ht, hi]
   simp only [hg, Finset.sum_const_zero, sub_zero]

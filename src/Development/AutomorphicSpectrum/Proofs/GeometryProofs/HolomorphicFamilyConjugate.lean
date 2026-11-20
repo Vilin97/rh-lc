@@ -31,13 +31,13 @@ theorem valAt'_spMap_comp {X : Scheme.{0}} (σ : ℂ →+* ℂ) (x : Sp ℂ ⟶ 
   unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt'
   by_cases hx : ⊤ ≤ x ⁻¹ᵁ U
   · have hc : ⊤ ≤ (spMap σ ≫ x) ⁻¹ᵁ U := (top_le_spMap_comp_iff σ x U).2 hx
-    rw [dif_pos hc, dif_pos hx]
+    rw [dite_eq_left hc, dite_eq_left hx]
     unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt
     rw [← Scheme.Hom.appLE_comp_appLE (spMap σ) x U ⊤ ⊤ hx (by simp)]
     rw [CommRingCat.hom_comp, RingHom.comp_apply]
     exact gammaSpecIso_appLE_spMap_apply _ σ _
   · have hc : ¬ ⊤ ≤ (spMap σ ≫ x) ⁻¹ᵁ U := fun h => hx ((top_le_spMap_comp_iff σ x U).1 h)
-    rw [dif_neg hc, dif_neg hx, map_zero]
+    rw [dite_eq_right hc, dite_eq_right hx, map_zero]
 
 private theorem differentiableOn_conj_comp_star {m : ℕ} {g : (Fin m → ℂ) → ℂ} {S : Set (Fin m → ℂ)}
     (hg : DifferentiableOn ℂ g S) :

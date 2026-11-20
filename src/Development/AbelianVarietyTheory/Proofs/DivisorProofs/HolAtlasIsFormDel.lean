@@ -63,7 +63,7 @@ theorem del_compat {α : A.Fld} (hα : A.IsForm α) (x x' : A.Pt) (h : x.pt = x'
     let p' : A.Pt := ⟨(x'.1.1, x.ch.symm w), hw.2⟩
     have hc := hα.compat p p' rfl
     have hp : p.crd = w := x.ch.right_inv hw.1
-    rw [HolAtlas.loc, dif_pos hw.1]
+    rw [HolAtlas.loc, dite_eq_left hw.1]
     refine hc.trans ?_
     rw [hp, ← A.loc_crd α p']
     rfl

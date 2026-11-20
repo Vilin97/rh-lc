@@ -28,7 +28,7 @@ theorem forestLift_edge {G : Type} [Group G] {r : ℕ} (Ed : Fin r → Fin r →
   have hex : ∃ i, Ed i j := ⟨i, h⟩
   have hc : Classical.choose hex = i := huniq _ _ _ (Classical.choose_spec hex) h
   have e : forestLift Ed hlt w j = forestLift Ed hlt w i * w i j := by
-    rw [forestLift, dif_pos hex, hc]
+    rw [forestLift, dite_eq_left hex, hc]
   rw [e, inv_mul_cancel_left]
 
 theorem symEdge_lt {r : ℕ} (ρ k : ℕ) : ∀ i j : Fin r, symEdge ρ k i j → i < j := by

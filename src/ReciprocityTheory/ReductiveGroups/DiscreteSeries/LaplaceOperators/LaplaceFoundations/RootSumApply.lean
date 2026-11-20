@@ -31,7 +31,7 @@ theorem wt_full (hε : ∀ a : Fin (2 * r + k + 1), a.val < k → ε a = true) {
       (∑ a, Λ a * th2 θ a) + ∑ q, μ q * th1 θ q := by
     have e : ∑ q, μ q * th1 θ q = ∑ a : Fin (2 * r + k + 1), (if h : a.val < k then μ ⟨a.val, h⟩ * θ a else 0) := by
       rw [sumF' (k := k) (r := r) (fun a : Fin (2 * r + k + 1) => if h : a.val < k then μ ⟨a.val, h⟩ * θ a else 0)
-        (fun p hp => by rw [dif_neg hp])]
+        (fun p hp => by rw [dite_eq_right hp])]
       refine Finset.sum_congr rfl fun q _ => ?_
       have hq : (fI k r q).val < k := q.2
       rw [dif_pos hq]

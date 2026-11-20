@@ -42,7 +42,7 @@ theorem marg_fibre (φ : β → α) (hφ : Function.Injective φ) (T : α → Fi
           rwa [hx.choose_spec] at this
         · exact ht
       · have ht := h (φ i)
-        rw [dif_pos (⟨i, rfl⟩ : ∃ j, φ j = φ i), Finset.mem_singleton] at ht
+        rw [dite_eq_left (⟨i, rfl⟩ : ∃ j, φ j = φ i), Finset.mem_singleton] at ht
         show a (φ i) = a' i
         rw [ht]
         exact congrArg a' (hφ (Exists.choose_spec (⟨i, rfl⟩ : ∃ j, φ j = φ i)))

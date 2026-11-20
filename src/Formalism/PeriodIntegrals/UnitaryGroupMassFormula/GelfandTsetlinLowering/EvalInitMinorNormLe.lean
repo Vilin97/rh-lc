@@ -182,19 +182,19 @@ theorem xi_unitri {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg : DomWeigh
       rw [dif_pos hb, dif_pos ha]
       exact hlow _ _ (Fin.mk_lt_mk.mpr hab')
     · have hbN := b.isLt
-      rw [dif_neg hb, if_pos (by omega)]
+      rw [dite_eq_right hb, if_pos (by omega)]
   have hcol : ∀ b : Fin N, b.1 ≠ n → G b ⟨n, by omega⟩ = 0 := by
     intro b hb
     have hbN := b.isLt
     have hb' : b.1 < n := by omega
-    rw [hGdef, XiA.embGL_apply, dif_pos hb', dif_neg (lt_irrefl n)]
+    rw [hGdef, XiA.embGL_apply, dif_pos hb', dite_eq_right (lt_irrefl n)]
   have hdg : ∀ a : Fin N, G a a = 1 := by
     intro a
     rw [hGdef, XiA.embGL_apply]
     by_cases ha : a.1 < n
     · rw [dif_pos ha, dif_pos ha]
       exact hdiag ⟨a.1, ha⟩
-    · rw [dif_neg ha, if_neg ha]
+    · rw [dite_eq_right ha, if_neg ha]
   have hgood : XiA.GoodG n h G := by
     unfold XiA.GoodG
     exact ⟨hlowG, hcol⟩

@@ -28,7 +28,7 @@ theorem sum_coef_mul_le {ι : Type} [Fintype ι] {N : ℕ} (u : ι → Fin N →
     by_cases hi : (i : ℕ) + 1 < N
     · have h1 : 0 ≤ coef u τ i := coef_nonneg (fun τ a b hab => hu τ a b hab) τ hi
       have h2 : coef u τ i ≤ 2 * ‖u‖ := by
-        rw [coef, dif_pos hi]
+        rw [coef, dite_eq_left hi]
         have := hab τ i
         have := hab τ ⟨i + 1, hi⟩
         have := le_abs_self (u τ i)

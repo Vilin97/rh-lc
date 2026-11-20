@@ -72,7 +72,7 @@ theorem twistPrimes_trivialTuple_empty_target : QE sel ((mu0 X.F X.E X.K S : Tup
     simp [Qprime]
   show QE sel (1 : Chr X.F X.E X.K) = ∅
   unfold QE
-  rw [dif_pos (by rw [h]; exact Set.finite_empty)]
+  rw [dite_eq_left (by rw [h]; exact Set.finite_empty)]
   simp [h]
 
 theorem target_not_mem_qe (P : HeightOneSpectrum (𝓞 X.E)) :

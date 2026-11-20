@@ -99,7 +99,7 @@ theorem posAt_of_cpt (hA : P5.ThmPActual) (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ)
     exact Formalism.FourierDecayAlt.P.TBBx5.form_re_nonneg p
       (Formalism.FourierDecayAlt.P.TBBx5.formNonneg_of hA (Formalism.FourierDecayAlt.P.pb_formPos : PBL.FormPos) p) j hj w hw.1 hε _ hnv
   · unfold KB.Pl.RR D.RRplace
-    rw [dif_neg (fun h1 => hh h1.1)]
+    rw [dite_eq_right (fun h1 => hh h1.1)]
     simp
 
 def GermCut (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (χ : ℝ → ℝ) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (Y : Finset ℝ)

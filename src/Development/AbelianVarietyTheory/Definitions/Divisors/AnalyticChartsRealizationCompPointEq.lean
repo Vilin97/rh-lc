@@ -173,7 +173,7 @@ theorem isHolTo_affine {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {T 
 theorem valAt'_spMap {R : Type} [CommRing R] (ψ : R →+* ℂ) (t : R) :
     valAt' (spMap ψ) ⊤ ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom t) = ψ t := by
   have h : ⊤ ≤ (spMap ψ) ⁻¹ᵁ ⊤ := le_top
-  rw [valAt', dif_pos h, valAt]
+  rw [valAt', dite_eq_left h, valAt]
   have e : (spMap ψ).appLE ⊤ ⊤ h = (spMap ψ).appTop := (spMap ψ).appLE_eq_app
   have n := congrArg (fun φ ↦ φ.hom t) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom ψ))
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at n

@@ -51,7 +51,7 @@ noncomputable def ordProj (I : Ideal R) (U : Module.End R M) : Module.End R M :=
 theorem isOrdProj_ordProj {I : Ideal R} {U : Module.End R M} (h : ∃ e, IsOrdProj I U e) :
     IsOrdProj I U (ordProj I U) := by
   unfold ordProj
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 variable (M) in

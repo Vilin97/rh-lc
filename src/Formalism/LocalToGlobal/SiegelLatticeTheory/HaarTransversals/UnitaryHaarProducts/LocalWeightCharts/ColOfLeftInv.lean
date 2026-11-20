@@ -196,10 +196,10 @@ theorem ellA_mul (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z)
     (hg : col k r g) (hh : col k r h) (a : Fin r) : ellA k r z (g * h) a = ellA k r z g a + ellA k r z h a := by
   unfold ellA
   by_cases ha : a.val + 1 < r
-  · rw [dif_pos ha, dif_pos ha, dif_pos ha]
+  · rw [dite_eq_left ha, dite_eq_left ha, dite_eq_left ha]
     exact mul_apply_add hg hh _ _ (by simp only [eI]; omega) (by simp only [eI]; omega)
       (by simp only [eI]; omega) (by simp only [eI]; omega)
-  · rw [dif_neg ha, dif_neg ha, dif_neg ha]
+  · rw [dite_eq_right ha, dite_eq_right ha, dite_eq_right ha]
     simp only [Matrix.mulVec, dotProduct]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl

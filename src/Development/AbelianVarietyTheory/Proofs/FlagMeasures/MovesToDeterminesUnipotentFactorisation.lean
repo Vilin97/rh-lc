@@ -19,7 +19,7 @@ theorem frame_mapLF {D : D7} {T : D.host.E} (γ : (VS D).V ≃ₗ[D.host.E] (VS 
     (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (F : LFlag (VS D) D.R.rS T) (b : Fin (D.R.rS + 1)) :
     frame (mapLF γ F) b = γ (frame F b) := by
   unfold mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
   induction b using Fin.lastCases with
   | last => simp [frame, FlagG.fvec, mapFlag]
   | cast i => simp [frame, FlagG.fvec, mapFlag]

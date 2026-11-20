@@ -68,7 +68,7 @@ theorem exists_gauge : ∀ (R : Type) [CommRing R] [IsDomain R] (Q : DegPre R) (
           gs b z (LB.wchart Q.P.L (![Y.q.left, Tx.left ≫ Y.q.left] : Fin 2 → (Y.H.left ⟶ Q.P.A.left)) j)
             (e.s j).val := by
       intro b hb z
-      rw [valR, dif_pos hb, Iso.hom_inv_id_apply, rsT, dif_pos hV']
+      rw [valR, dite_eq_left hb, Iso.hom_inv_id_apply, rsT, dite_eq_left hV']
       refine (gs_res (𝟙 _) z hb trivial _).trans ((gs_pull (𝟙 _) b z _ (hb trivial) _).trans ?_)
       rw [Category.id_comp]
       exact gs_res b z hV (hb trivial) _

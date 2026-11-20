@@ -37,7 +37,7 @@ theorem exists_split_finiteAdele {κ : Type} [Finite κ] (a : κ → Af F) :
   let s : (∀ v : S, v.1.adicCompletion F) → Af F := fun y =>
     ⟨fun v => if h : v ∈ S then y ⟨v, h⟩ else 0, by
       filter_upwards [hS.compl_mem_cofinite] with v hv
-      rw [dif_neg hv]
+      rw [dite_eq_right hv]
       exact zero_mem _⟩
   have hs : ∀ y, p (s y) = y := fun y => funext fun v => dif_pos v.2
   have hs1 : ∀ v, s 1 v = if v ∈ S then 1 else 0 := fun v => by

@@ -38,7 +38,7 @@ theorem ell_eq (z : Fin (2 * r + k + 1) → ℂ) (g : B.Mat k r) : ell k r z g =
   simp only [Fin.val_last, lt_self_iff_false, dite_false, add_zero, Fin.val_castSucc]
   refine Finset.sum_congr rfl fun a _ => ?_
   have ha : a.val + 1 < r + 1 := by omega
-  rw [dif_pos ha]
+  rw [dite_eq_left ha]
   simp only [C2.uMap, Fin.val_castSucc, a.isLt, dite_true]
   rw [herm_hpk_bvec_esI]
   simp only [fvec]

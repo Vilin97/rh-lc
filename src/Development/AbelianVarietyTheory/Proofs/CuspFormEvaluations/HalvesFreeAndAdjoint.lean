@@ -154,7 +154,7 @@ theorem cHalf_spec (I : Ideal (𝓞 E)) (hI : I ⊔ I.map (H.bar : 𝓞 E →+* 
     have h2 : c - 1 = -a := by rw [← hac]; ring
     rw [h2]; exact neg_mem ha
   unfold cHalf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem ef_swap (x y : Dw.La) : Dw.EF y x = -Dw.EF x y := by

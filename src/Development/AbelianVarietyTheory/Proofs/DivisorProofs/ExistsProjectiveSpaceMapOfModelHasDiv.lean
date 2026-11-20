@@ -59,7 +59,7 @@ variable {M} in
 
 theorem valF_fnOf {V : M.Z.Opens} {x : Ω} (h : ∃ f : Γ(M.Z, V), valF M.pt V f = x) :
     valF M.pt V (fnOf M V x) = x := by
-  rw [fnOf, dif_pos h]
+  rw [fnOf, dite_eq_left h]
   exact h.choose_spec
 
 def ratioFn (i j : Fin (n + 1)) : Γ(M.Z, dOpen M c i) := fnOf M (dOpen M c i) (c j / c i)
@@ -111,7 +111,7 @@ variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {M : RatModel o Ω
 
 theorem appLE_eq_fnOn {X : Scheme.{0}} (x : Sp Ω ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     (x.appLE U ⊤ h).hom f = fnOn ⊤ (valF x U f) := by
-  rw [valF, dif_pos h, fnOn, RingHom.comp_apply, resG_self]
+  rw [valF, dite_eq_left h, fnOn, RingHom.comp_apply, resG_self]
   simp
 
 theorem pt_comp_toHom (hd : M.HasDiv c) (hc : Ideal.span (Set.range c) = ⊤) :

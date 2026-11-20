@@ -23,9 +23,9 @@ private theorem stdB_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace 
           ∀ i j, Y i (Fin.castAdd a' j) ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c)
   · rw [if_pos h]
     by_cases h2 : (GlobalTheory.StdPairCone.blk₂ Y).det ≠ 0 ∧ ValuativeRel.valuation k (GlobalTheory.StdPairCone.blk₂ Y).det = 1
-    · rw [dif_pos h2, dif_pos ⟨h2.1, ⟨fun i j => h.1 _ _, h2.2⟩, h.2⟩]
-    · rw [dif_neg h2, dif_neg fun h3 => h2 ⟨h3.1, h3.2.1.2⟩]
-  · rw [if_neg h, dif_neg]
+    · rw [dite_eq_left h2, dite_eq_left ⟨h2.1, ⟨fun i j => h.1 _ _, h2.2⟩, h.2⟩]
+    · rw [dite_eq_right h2, dite_eq_right fun h3 => h2 ⟨h3.1, h3.2.1.2⟩]
+  · rw [if_neg h, dite_eq_right]
     rintro ⟨-, h1, h2⟩
     refine h ⟨fun i j => ?_, h2⟩
     refine Fin.addCases (fun j => ?_) (fun j => h1.1 i j) j
@@ -156,7 +156,7 @@ theorem UpperTheory.exists_gl_stdSnd_eq_product_local :
       funext i j
       have hj : a + j.1 < WW.rank := hr ▸ Nat.add_lt_add_left j.2 a
       unfold GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.rightBlock
-      rw [dif_pos hj]
+      rw [dite_eq_left hj]
       rfl
     rw [if_pos ⟨hy, h⟩, UpperTheory.unitChar_idempotentSum_eq_prod_over_splitPlaces D e₀ S hS P t hP ht ν _ _ (by rw [hb]; exact fun i j => h.1 _ _)]
     refine Finset.prod_congr rfl fun v _ => ?_

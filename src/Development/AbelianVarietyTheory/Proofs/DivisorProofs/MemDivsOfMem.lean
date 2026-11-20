@@ -64,7 +64,7 @@ theorem mem_divs_of_mem {A : Type} [CommRing A] [IsDedekindDomain A] {a : A} (ha
     refine h1.subset fun Q hQ => ?_
     exact Ideal.dvd_span_singleton.2 hQ
   unfold divs
-  rw [dif_pos hfin, Set.Finite.mem_toFinset]
+  rw [dite_eq_left hfin, Set.Finite.mem_toFinset]
   exact h
 
 theorem g_notMem {X : Fields} {Pr : Primes X} (h : Pr.Ok) (P : HeightOneSpectrum (𝓞 X.E)) (h1 : P ∉ Pr.vGs)

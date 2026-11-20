@@ -150,7 +150,7 @@ theorem resCyc_eq (hq : IsAmb q) {B : LB Y} (hB : B.IsLB) (t : B.Sec) {j : B.ι}
   have hk := ker_stalkMap_clo Y z w p hz
   let e : (Y.presheaf.stalk (cloι z w) ⧸ p.asIdeal) ≃+* (clo z).presheaf.stalk w :=
     (Ideal.quotEquivOfEq hk.symm).trans (RingHom.quotientKerEquivOfSurjective ((cloι z).stalkMap_surjective w))
-  rw [resCyc, dif_pos h, finsum_eq_single _ w fun w' hw' => by
+  rw [resCyc, dite_eq_left h, finsum_eq_single _ w fun w' hw' => by
     rw [Set.indicator_of_notMem (s := {cloι z w}) (a := cloι z w')
       (fun e => hw' ((cloι z).isClosedEmbedding.injective (Set.mem_singleton_iff.1 e))), mul_zero],
     Set.indicator_of_mem (Set.mem_singleton _), Pi.one_apply, mul_one,

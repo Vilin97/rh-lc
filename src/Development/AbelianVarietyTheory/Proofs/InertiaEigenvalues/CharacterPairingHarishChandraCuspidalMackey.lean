@@ -109,7 +109,7 @@ theorem hcL_single (d : ℕ) (χ : Gn g d → ℂ) (hχ : IsClass χ) : hcL [⟨
       funext i j; exact entN_fin' _ i j
     rw [this]
     unfold toG
-    rw [dif_pos (Units.isUnit y)]
+    rw [dite_eq_left (Units.isUnit y)]
     exact Units.ext rfl
   unfold hcT
   have hcard : (Finset.univ.filter fun p : Gn g d => InPar d (p : Mt g d)) = Finset.univ :=

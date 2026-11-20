@@ -694,13 +694,13 @@ theorem wedgeOrd_ne_bot_iff {n : ℕ} {φ : CoefHom c io K₀} {y : IntFr Xo c T
     wedgeOrd Φ n φ y s ≠ ⊥ ↔ ∃! w, IsWedgeOrd Φ n φ y s w := by
   refine ⟨fun h => by_contra fun h' => h (dif_neg h'), fun h => ?_⟩
   obtain ⟨o, d, -, e⟩ := h.choose_spec.1
-  rw [wedgeOrd, dif_pos h, e]
+  rw [wedgeOrd, dite_eq_left h, e]
   exact nval_ne_bot _ _
 
 theorem wedgeOrd_eq {n : ℕ} {φ : CoefHom c io K₀} {y : IntFr Xo c T io} {s : ι → RulK Xo c K₀}
     (h : wedgeOrd Φ n φ y s ≠ ⊥) {w : EReal} (hw : IsWedgeOrd Φ n φ y s w) : wedgeOrd Φ n φ y s = w := by
   have h' := wedgeOrd_ne_bot_iff.1 h
-  rw [wedgeOrd, dif_pos h']
+  rw [wedgeOrd, dite_eq_left h']
   exact h'.unique h'.choose_spec.1 hw
 
 theorem nval_sign_mul (n : ℕ) (u : ℤˣ) (x : T.Fr) : nval T.V n (((u : ℤ) : T.Fr) * x) = nval T.V n x := by

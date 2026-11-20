@@ -276,7 +276,7 @@ theorem GlobalTheory.CompanionTheory.Ar.Top.eff_lat : ∀ II : IntersectionSyste
     obtain ⟨hm, hle⟩ := len_le_of_rel hgP (mon_not_mem hWp hcW u) hrel hWmin
     refine ⟨⟨hm, hrel'⟩, ?_⟩
     unfold multAt
-    rw [dif_pos hWp, dif_pos hWp]
+    rw [dite_eq_left hWp, dite_eq_left hWp]
     exact hle
   have cmp : (∑ᶠ (W) (_ : W ∈ divSupp (mCoordIdeal y) h ∧ IsHorizontal W),
         (multAt (mCoordIdeal y ⊔ Ideal.span {h}) W : ℝ) *

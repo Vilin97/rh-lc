@@ -59,7 +59,7 @@ theorem fFun_renumber (μ : Measure (GL A' k)) [μ.IsHaarMeasure] (σ σ' : A �
     field_simp
   · have hX' : ¬ ∃ h : GL C k, X = X0 k σ * (invT h).val := fun H =>
       hX ((rank_eq_card_iff_exists_frameMatrixFirstColumnBlock σ' X).1 ((rank_eq_card_iff_exists_frameMatrixFirstColumnBlock σ X).2 H))
-    rw [fFun, dif_neg hX, fFun, dif_neg hX', mul_zero]
+    rw [fFun, dite_eq_right hX, fFun, dite_eq_right hX', mul_zero]
 
 end GlobalTheory.ColumnRenumber
 

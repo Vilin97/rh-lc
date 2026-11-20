@@ -101,7 +101,7 @@ theorem onV_embH {E : Type} [Field E] [NumberField E] [StarRing E] {ι : Type} [
     onV emb δ Ξ (embH emb δ z) = Ξ z := by
   have h : ∃ x, embH emb δ x = embH emb δ z := ⟨z, rfl⟩
   unfold onV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact congrArg Ξ (Formalism.L2.Ker.embH_inj emb hδ h.choose_spec)
 
 theorem mem_BC {E : Type} [Field E] [NumberField E] [StarRing E] {ι : Type} [Fintype ι] {a b : ℕ}

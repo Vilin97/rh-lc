@@ -288,8 +288,8 @@ lemma bs_extM_conj {n : ℕ} (g : Matrix (Fin n) (Fin n) ℂ) :
   ext a b
   simp only [Matrix.conjTranspose_apply, extM, Matrix.of_apply]
   by_cases h : a.val < n ∧ b.val < n
-  · rw [dif_pos h, dif_pos ⟨h.2, h.1⟩]
-  · rw [dif_neg h, dif_neg (fun h' => h ⟨h'.2, h'.1⟩)]
+  · rw [dite_eq_left h, dite_eq_left ⟨h.2, h.1⟩]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h ⟨h'.2, h'.1⟩)]
     by_cases e : a = b
     · subst e; simp
     · rw [if_neg e, if_neg (Ne.symm e)]; simp

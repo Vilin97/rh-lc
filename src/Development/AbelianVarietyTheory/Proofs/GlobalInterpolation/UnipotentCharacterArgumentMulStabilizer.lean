@@ -107,7 +107,7 @@ theorem inX_apply (x : Fin n → F) (l : Fin (n + c)) : Loc.inX F n c x l = if h
 theorem mem_Ufl {i : ℕ} {v : Fin (n + c) → F} : v ∈ Loc.Ufl F n c i ↔ ∀ l : Fin (n + c), ¬ l.1 < n + i → v l = 0 := Iff.rfl
 
 theorem inX_mem_Ufl (i : ℕ) (x : Fin n → F) : Loc.inX F n c x ∈ Loc.Ufl F n c i :=
-  mem_Ufl.2 fun l hl => by rw [inX_apply, dif_neg (by omega)]
+  mem_Ufl.2 fun l hl => by rw [inX_apply, dite_eq_right (by omega)]
 
 theorem Ufl_mono {i j : ℕ} (h : i ≤ j) : Loc.Ufl F n c i ≤ Loc.Ufl F n c j :=
   fun _ hv => mem_Ufl.2 fun l hl => mem_Ufl.1 hv l (by omega)
@@ -118,7 +118,7 @@ theorem eN_mem_Ufl {i s : ℕ} (h : s < n + i) : Loc.eN F (n + c) s ∈ Loc.Ufl 
     rw [if_neg (by omega)]
 
 theorem inX_castAdd (x : Fin n → F) (a : Fin n) : Loc.inX F n c x (Fin.castAdd c a) = x a := by
-  rw [inX_apply, dif_pos (by simp)]
+  rw [inX_apply, dite_eq_left (by simp)]
   rfl
 
 theorem inX_of_mem_Ufl {v : Fin (n + c) → F} (hv : v ∈ Loc.Ufl F n c 0) :
@@ -171,7 +171,7 @@ theorem atN_of_R1cond {r : (Fin (n + c) → F) ≃ₗ[F] (Fin (n + c) → F)} (h
     simp only [Pi.sub_apply, Pi.smul_apply, Loc.eN, smul_eq_mul]
     split_ifs with h
     · unfold Loc.atN
-      rw [dif_pos (h ▸ l.2), mul_one, sub_eq_zero]
+      rw [dite_eq_left (h ▸ l.2), mul_one, sub_eq_zero]
       congr 1
       exact Fin.ext h
     · rw [mem_Ufl.1 hv l (by omega)]
@@ -228,7 +228,7 @@ theorem unfoldingAffinePointMap_apply_inclusion {n' c' : ℕ} (xj : (Fin n' → 
       · rfl
     funext l
     change Loc.xx1 xj t (Loc.inX F n' c' (Pi.single a 1)) l = Loc.inX F n c (xj (Pi.single a 1)) l
-    rw [e, linearMap_unfolding_apply_single, dif_neg (fun h => by have := h.1; have := a.2; simp at *; omega), dif_pos (by simp), inX_apply]
+    rw [e, linearMap_unfolding_apply_single, dite_eq_right (fun h => by have := h.1; have := a.2; simp at *; omega), dite_eq_left (by simp), inX_apply]
     rfl
   exact LinearMap.congr_fun this v
 

@@ -108,7 +108,7 @@ theorem actCompat_of_match (hL : Laws) (hL2 : Laws2) {E : Type} [Field E] [Numbe
         have e : (lift (𝟙 (TF (R := M.W) C)) (νW.eA 1)).left ≫ (snd (TF (R := M.W) C) DW.P.A).left = (νW.eA 1).left := by
           rw [← Over.comp_left, lift_snd]
         exact (congrArg (fun t => t p ∈ DW.P.L.U (νW.J (νW.eA 1).left)) e).mpr this
-    rw [g₄, valF, dif_pos hU]
+    rw [g₄, valF, dite_eq_left hU]
     exact (((Units.isUnit _).map _).map _).ne_zero
   have key : ∀ (s t : A.N.A) (p q : C), p * (wv s * wv y' * wv (y * t)) = q * (wv (s * y') * wv y * wv t) →
       p * (J.h s * J.h y' * J.h (y * t) : Cˣ) = q * (J.h (s * y') * J.h y * J.h t : Cˣ) := fun s t p q h => by

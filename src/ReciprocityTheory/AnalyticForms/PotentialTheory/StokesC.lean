@@ -122,7 +122,7 @@ theorem st_mInt_eq_chart [CompactSpace X] [T2Space X] (A : FinHolAtlas e X)
     (hg : Continuous g) (hgs : tsupport g ⊆ (A.chart j).source) :
     mInt A Ψ g = ∫ y in (A.chart j).target, g ((A.chart j).symm y) * locDens A Ψ j y := by
   unfold mInt
-  rw [dif_pos (existsPartition A)]
+  rw [dite_eq_left (existsPartition A)]
   exact mIntLocalize A _ Ψ hΨ j g hgs (mIntegrableCont A Ψ hΨ g hg)
 
 theorem st_mInt_eq_piece [CompactSpace X] [T2Space X] (A : FinHolAtlas e X)

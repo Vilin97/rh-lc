@@ -313,12 +313,12 @@ theorem deriv_prod_sub (hc : Continuous ψ) (h1 : ψ ≠ 1) (hL : GlobalTheory.R
   refine subsingleton_of_filt h0 hl' fun i hi => ?_
   have hp := hpc i hi
   by_cases hcond : i ≤ r ∧ ℓ - i ≤ t
-  · rw [dif_pos hcond] at hp
+  · rw [dite_eq_left hcond] at hp
     obtain ⟨hsz, ⟨E⟩⟩ := hp
     have := piece_sub ψ π₁ π₂ T₁ T₂ ℓ i n hcond hsz (by omega)
     have := E.toLinearEquiv.toEquiv.subsingleton
     exact le_antisymm le_of_subsingleton_subQuot (hF (Nat.le_succ i))
-  · rw [dif_neg hcond] at hp
+  · rw [dite_eq_right hcond] at hp
     exact hp
 
 theorem piece_iso {r t h₁ n : ℕ} (π₁ : GRep k r) (π₂ : GRep k t) (hh₁ : h₁ ≤ r) (m : ℕ) (hmt : m ≤ t)
@@ -395,17 +395,17 @@ theorem topProd_of : DerivTop k → DerivPos k → GlobalTheory.RgGu.Leib.Leibni
     intro i hi hne
     have hp := hpc i hi
     by_cases hcond : i ≤ r ∧ h₁ + h₂ - i ≤ t
-    · rw [dif_pos hcond] at hp
+    · rw [dite_eq_left hcond] at hp
       obtain ⟨hsz, ⟨E⟩⟩ := hp
       have := piece_sub ψ π₁ π₂ T₁ T₂ (h₁ + h₂) i _ hcond hsz (by omega)
       have := E.toLinearEquiv.toEquiv.subsingleton
       exact le_antisymm le_of_subsingleton_subQuot (hF (Nat.le_succ i))
-    · rw [dif_neg hcond] at hp
+    · rw [dite_eq_right hcond] at hp
       exact hp
   obtain ⟨hA, hB⟩ := filt_single (by omega : h₁ ≤ h₁ + h₂) h0 hl key
   obtain ⟨E1⟩ := equiv_subQuot hA hB
   have hp := hpc h₁ (by omega)
-  rw [dif_pos (⟨hh₁, hh₂⟩ : h₁ ≤ r ∧ h₁ + h₂ - h₁ ≤ t)] at hp
+  rw [dite_eq_left (⟨hh₁, hh₂⟩ : h₁ ≤ r ∧ h₁ + h₂ - h₁ ≤ t)] at hp
   obtain ⟨hsz, ⟨E2⟩⟩ := hp
   have i3 := piece_iso ψ π₁ π₂ hh₁ (h₁ + h₂ - h₁) hh₂ hsz (((h₁ + h₂ : ℕ) : ℝ)) (by rw [hm]; push_cast; ring)
   obtain ⟨E3⟩ := GlobalTheory.CompanionTheory.LeibOrd.giso_trans ⟨E1.trans E2⟩ i3

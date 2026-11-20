@@ -156,7 +156,7 @@ private theorem valAt'_comp' {Y X : Scheme.{0}} (y : Sp ℂ ⟶ Y) (m : Y ⟶ X)
       | simp [Scheme.comp_appLE]
       | simp [Scheme.Hom.comp_appLE]
   · have hy' : ¬ ⊤ ≤ y ⁻¹ᵁ (m ⁻¹ᵁ W) := hy
-    rw [valAt', dif_neg hy, valAt', dif_neg hy']
+    rw [valAt', dite_eq_right hy, valAt', dite_eq_right hy']
 
 private theorem valAt'_resG_of_top_le {X : Scheme.{0}} (x : Sp ℂ ⟶ X) {U V : X.Opens} (h : V ≤ U) (hx : ⊤ ≤ x ⁻¹ᵁ V)
     (a : Γ(X, U)) : valAt' x V (resG X h a) = valAt' x U a := by

@@ -48,7 +48,7 @@ theorem cellFun_eq (hS4 : ∀ y ∈ S, ∀ a, valuation k (((y : GL (Fin m) k) :
     (p : parab k (eOne m)) {y : GL (Fin m) k} (hy : y ∈ S) :
     cellFun S ((p : GL (Fin m) k) * wRev k m * y) = dl p := by
   have h : InCell S ((p : GL (Fin m) k) * wRev k m * y) := ⟨p, y, hy, rfl⟩
-  rw [cellFun, dif_pos h]
+  rw [cellFun, dite_eq_left h]
   obtain ⟨y', hy', e⟩ := h.choose_spec
   set p' := h.choose
   let q : parab k (eOne m) := p'⁻¹ * p

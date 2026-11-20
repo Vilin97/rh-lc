@@ -27,7 +27,7 @@ theorem valT_comp {T : Type} [CommRing T] {X Y : Scheme.{0}} (w : Sp T ⟶ X) (�
   by_cases h : ⊤ ≤ w ⁻¹ᵁ (φ ⁻¹ᵁ U)
   · rw [dif_pos h, dif_pos (show ⊤ ≤ (w ≫ φ) ⁻¹ᵁ U from h)]
     rfl
-  · rw [dif_neg h, dif_neg (show ¬ ⊤ ≤ (w ≫ φ) ⁻¹ᵁ U from h)]
+  · rw [dite_eq_right h, dite_eq_right (show ¬ ⊤ ≤ (w ≫ φ) ⁻¹ᵁ U from h)]
 
 variable {A : Over (Sp ℂ)} [GrpObj A]
 

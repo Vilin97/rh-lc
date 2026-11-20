@@ -95,7 +95,7 @@ private theorem cut_card (A X : Type) [CommRing A] [CommRing X] [Algebra A X] {n
       invFun := fun f => ⟨⟨Matrix.of fun i j =>
           if h : (i : ℕ) < a ∧ ¬ (j : ℕ) < a then f (⟨i, h.1⟩, ⟨j, h.2⟩) else 0,
           (mem_od _).2 (fun i j hij => by
-            rw [Matrix.of_apply, dif_neg]
+            rw [Matrix.of_apply, dite_eq_right]
             rintro ⟨h1, h2⟩
             exact h2 (hij.1 h1))⟩,
         (cut_eq _).2 (fun i j hi => by simp [hi])⟩
@@ -271,7 +271,7 @@ theorem UpperTheory.V.Pa.B2.odHalf :
         · right; left
           have hij : x.ty v i = x.ty v j := by rw [← h1, h2, decide_eq_decide.mpr hkm]
           show (if hh : j < i ∧ x.ty v j ≠ x.ty v i then t ⟨(j, i), hh⟩ else 0) = 0
-          rw [dif_neg]
+          rw [dite_eq_right]
           exact fun hh => hh.2 hij.symm
         · right; right
           exact hwi0 j m h2
@@ -286,7 +286,7 @@ theorem UpperTheory.V.Pa.B2.odHalf :
         (x.wiX X v * x.wX X v) * Y * (x.wiX X v * x.wX X v) by simp only [Matrix.mul_assoc],
       w_wi, Matrix.one_mul, Matrix.mul_one]
     show (if hh : p.1.1 < p.1.2 ∧ x.ty v p.1.1 ≠ x.ty v p.1.2 then t ⟨(p.1.1, p.1.2), hh⟩ else 0) = t p
-    rw [dif_pos p.2]
+    rw [dite_eq_left p.2]
   have hker : ∀ m, D.π (inV G v) m = 0 ↔ gmap m = 0 := by
     intro m
     refine (hO.kerV v m).trans ?_

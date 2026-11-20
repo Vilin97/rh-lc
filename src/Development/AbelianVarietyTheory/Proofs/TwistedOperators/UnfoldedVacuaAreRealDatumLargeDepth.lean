@@ -120,7 +120,7 @@ theorem vacReal_of_shape (hsh : ShapeAt ch) : VacReal ch := by
   have hpi : ∀ k, p k ∈ GinfC _ := hp.1
   unfold conAt
   by_cases h0 : j + 2 * 0 + 2 = D.R.m
-  · rw [dif_pos h0]
+  · rw [dite_eq_left h0]
     have hb1 : b (j + 1) = 1 := hb.2.2 (j + 1) (by omega) fun h => by
       have := (mem_idx.1 h).2
       omega
@@ -147,8 +147,8 @@ theorem vacReal_of_shape (hsh : ShapeAt ch) : VacReal ch := by
         (fun x _ => ⟨(hs x).2.2.1.tame, LL j, LZ, (hs x).1, hLZ, (hs x).2.1, orth_cast ch (hor x) _, (hs x).2.2.2.2.1 rfl⟩)
         _ _ f₁ f₂
   · have h1 : j + 2 * ((D.R.m - 4 - j) / 2 + 1) + 2 = D.R.m := by omega
-    rw [dif_neg h0]
-    erw [dif_pos h1]
+    rw [dite_eq_right h0]
+    erw [dite_eq_left h1]
     have hs := hall t M hM j _ h1 (GlobalTheory.Unf.Inhab.nonempty_volN _).some
     have hs' := hall t M hM (j + 1 + 1) ((D.R.m - 4 - j) / 2) (by omega) (GlobalTheory.Unf.Inhab.nonempty_volN _).some
     have had := fun x => (hs' x).2.2.2.1 (j + 1) rfl (by omega)

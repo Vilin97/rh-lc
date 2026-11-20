@@ -72,7 +72,7 @@ theorem lamZ_eq_hc (u : Pr.Word) (τ : X.Tau) (i : Fin (kap R + 1)) :
     unfold lamZ castW
     rw [Wts.lamTrue_zero, Wts.lamN_eq W u (Nat.zero_le _) τ]
     have hi' : (Fin.cast (kap_succ R) i).1 < R.k := hi
-    rw [dif_pos hi']
+    rw [dite_eq_left hi']
     rfl
   have h2 : (((lamZ W u τ i : ℤ) : ℚ) : ℝ) =
       (((W.hc u τ).u (kIdx i) - (((R.k : ℚ) - 1) / 2 - (i.1 : ℚ)) : ℚ) : ℝ) := by rw [h1]

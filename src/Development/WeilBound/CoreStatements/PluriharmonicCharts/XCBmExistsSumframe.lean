@@ -20,7 +20,7 @@ theorem PositivityTheory.Xgp.isFrameAt_comap_gbS : ∀ (E : Type) [Field E] [Num
   have hd : ∀ a b, tie.omFrame F τ a (dualFam tie F τ b) = if a = b then 1 else 0 := by
     have hex' : ∃ v : Fin D.q → 𝔐.Vgen (.inr τ), ∀ a b, tie.omFrame F τ a (v b) = if a = b then 1 else 0 := hex
     unfold dualFam
-    rw [dif_pos hex']
+    rw [dite_eq_left hex']
     exact hex'.choose_spec
   have hO := hall _ hd
   have e : (fun i => (gbS tie F τ i : 𝔐.Li)) =

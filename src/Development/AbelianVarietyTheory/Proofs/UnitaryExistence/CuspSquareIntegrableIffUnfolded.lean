@@ -37,7 +37,7 @@ def archHom (V : HSp D) (τ : D.host.E →+* ℂ) : GA D V →* Matrix (Fin V.ra
 theorem archHom_eq (V : HSp D) {τ : D.host.E →+* ℂ} {θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ}
     (h : Formalism.MainNotions.StandardLattice.IsInfEmb τ θ) (g : GA D V) : archHom V τ g = Pj.archM V θ g := by
   have h' : ∃ θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ, Formalism.MainNotions.StandardLattice.IsInfEmb τ θ := ⟨θ, h⟩
-  rw [archHom, dif_pos h', GlobalTheory.LettersCheck.isInfEmb_unique τ _ θ h'.choose_spec h]
+  rw [archHom, dite_eq_left h', GlobalTheory.LettersCheck.isInfEmb_unique τ _ θ h'.choose_spec h]
   rfl
 
 theorem isHermitian_gram (V : HSp D) (τ : D.host.E →+* ℂ) : (V.gram.map τ).IsHermitian := by

@@ -113,7 +113,7 @@ private theorem derOp_fn_eq_deriv_kcurve (ε : Fin n → Bool) (m : Fin n → �
     exact h3.deriv.symm
   · have hk : kcurve ε X = fun _ => 1 := by
       unfold kcurve
-      rw [dif_neg hX]
+      rw [dite_eq_right hX]
     simp [derOp, hk]
 
 theorem derOp_fn (ε : Fin n → Bool) (m : Fin n → ℤ) {X : Matrix (Fin n) (Fin n) ℂ} (hX : inK ε X) (f : MV ε m)

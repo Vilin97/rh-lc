@@ -37,7 +37,7 @@ variable {𝒜} in
 theorem IsHilbertPoly.gradedQuotHilbertPoly_eq {J : Ideal T} {P : ℚ[X]}
     (hP : IsHilbertPoly (gradedQuotPiece 𝒜 J) P) : gradedQuotHilbertPoly 𝒜 J = P := by
   have h : ∃ P, IsHilbertPoly (gradedQuotPiece 𝒜 J) P := ⟨P, hP⟩
-  rw [gradedQuotHilbertPoly, dif_pos h]
+  rw [gradedQuotHilbertPoly, dite_eq_left h]
   exact h.choose_spec.unique hP
 
 namespace GradedBezout

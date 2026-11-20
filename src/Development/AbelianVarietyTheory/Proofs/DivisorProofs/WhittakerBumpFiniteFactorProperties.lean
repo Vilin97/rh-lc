@@ -18,7 +18,7 @@ theorem bumpFin_eq (hK : ∀ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n),
   have h : ∃ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n), u⁻¹ * g ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n :=
     ⟨u, hu, hg⟩
   unfold bumpFin
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨hu', hg'⟩ := h.choose_spec
   set u' := h.choose
   have hw : u⁻¹ * u' ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n) := mul_mem (inv_mem hu) hu'
@@ -36,7 +36,7 @@ theorem bumpFin_zero_of_not {E : Type} [Field E] [NumberField E] [IsTotallyCompl
     {g : GL (Fin n) (Af E)}
     (h : ¬ ∃ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n), u⁻¹ * g ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n) :
     bumpFin g = 0 := by
-  unfold bumpFin; rw [dif_neg h]
+  unfold bumpFin; rw [dite_eq_right h]
 
 theorem bumpFin_props : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ),
     (∀ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n), u ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n →

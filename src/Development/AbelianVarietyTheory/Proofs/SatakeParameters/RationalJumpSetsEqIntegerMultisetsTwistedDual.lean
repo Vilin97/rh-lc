@@ -20,7 +20,7 @@ theorem rat_jump_sets_eq_int_multisets : ∀ (D : D7) (i : D.nd.Loc) (ρ : D.wha
   have hsz : LJ.sz D (D.nd.j i) ρ = (D.hc ρ).e (liftIdx D i) := by
     have := D.nd.j_range i
     unfold LJ.sz liftIdx
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   have hc0 : LJ.c0 D = ((D.R.t : ℚ) - 1) / 2 := rfl
   obtain ⟨h2, h1⟩ := jumps_rat (D.hc ρ) (liftIdx D i) up a
   rw [hP, hs, h1, h2]

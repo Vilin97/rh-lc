@@ -54,8 +54,8 @@ theorem sum_trunc {E : Type} [AddCommGroup E] [Module ℂ E] {Q o : ℕ} (x : �
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1
   by_cases h1 : i < o + 1
-  · rw [dif_pos h1]
-  · rw [dif_neg h1]
+  · rw [dite_eq_left h1]
+  · rw [dite_eq_right h1]
     split_ifs with h2
     · exact hv ⟨i, h2⟩ (by simp only; omega)
     · rfl
@@ -205,10 +205,10 @@ theorem nfTieGen_of (hK : GCore) : NFTieGen := by
     · have e1 : p.V (B.opApply (Lq qq) F) γ = if h : (qq : ℕ) < Q' + 1 then v ⟨qq, h⟩ else 0 := by
         split_ifs with h
         · exact PBE.vecV_congrGPos _ _ _ _ fun g hg => by
-            rw [nf_scoef_unique p w a hSq hS' F hF g (by rw [nfLeib_domL_eq]; exact hg) qq, dif_pos (by omega)]
+            rw [nf_scoef_unique p w a hSq hS' F hF g (by rw [nfLeib_domL_eq]; exact hg) qq, dite_eq_left (by omega)]
         · rw [← hz]
           exact PBE.vecV_congrGPos _ _ _ _ fun g hg => by
-            rw [nf_scoef_unique p w a hSq hS' F hF g (by rw [nfLeib_domL_eq]; exact hg) qq, dif_neg (by omega)]
+            rw [nf_scoef_unique p w a hSq hS' F hF g (by rw [nfLeib_domL_eq]; exact hg) qq, dite_eq_right (by omega)]
       have e2 := hlam _ (fun j : Fin (o + 1) => if h : (j : ℕ) < Q' + 1 then v ⟨j, h⟩ else 0) ⟨qq, hqo⟩
       simp only [hVv] at e2
       rw [e1, e2, tc_hsVec_sum]

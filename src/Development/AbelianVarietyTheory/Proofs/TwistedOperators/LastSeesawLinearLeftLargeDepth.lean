@@ -54,7 +54,7 @@ theorem conAt_last_lin (hM : M.Is t) (P : PolDown G) (h : Pts G) (Φ : SchDown G
   subst ha
   have h0 : k + 2 * 0 + 2 = D.R.m := by omega
   unfold conAt
-  rw [dif_pos h0, dif_pos h0, dif_pos h0]
+  rw [dite_eq_left h0, dite_eq_left h0, dite_eq_left h0]
   have hne : (⟨k + 1, by omega⟩ : Fin D.R.m) ≠ ⟨k, hk⟩ := fun e => by simp at e
   simp only [fockD, Function.update_self, Function.update_of_ne hne]
   have hf : W.fock (.mu t D.R.m k) (c • φ + φ') (P ⟨k, hk⟩) =

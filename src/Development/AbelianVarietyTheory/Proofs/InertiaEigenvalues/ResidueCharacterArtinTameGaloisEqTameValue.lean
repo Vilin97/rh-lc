@@ -147,7 +147,7 @@ theorem tameVal_eq_of_tameRep : ∀ {E Ω : Type} [Field E] [NumberField E] [Fie
   intro σ u hu hσ
   obtain ⟨a, ha⟩ := GlobalTheory.TamePowTeich.exists_zeta_pow_close P A0 ζ0 hA0 hζ0prim u e hu
   have hex : ∃ σ : Formalism.ConjugateSelfDual.G E Ω, Formalism.L2.NX.TameRep P e σ u := ⟨σ, hσ⟩
-  rw [Formalism.L2.NX.tameVal, dif_pos hex, hK _ u a hex.choose_spec ha, hK σ u a hσ ha]
+  rw [Formalism.L2.NX.tameVal, dite_eq_left hex, hK _ u a hex.choose_spec ha, hK σ u a hσ ha]
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 

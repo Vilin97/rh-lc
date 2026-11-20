@@ -156,7 +156,7 @@ theorem psiF_fac (r : Res l K) {N : ℕ} (F : Fac r N) {C₀ : Type} [CommRing C
   refine ⟨fun s f => if hf : GMod.Fn (per l K) (M.HA true).toGMod j f then (hE f hf).choose (b s) else 0, ?_, ?_⟩
   · intro f hf s σ
     dsimp only
-    rw [dif_pos hf]
+    rw [dite_eq_left hf]
     refine Psi.E_fix k ι ((per l K).σ σ) (hF r F M j f) _ (hE f hf).choose_spec.1 (fun w => ?_) (fun y => ?_) (b s)
     · rw [hk, hιc, ← hR.i_σ, hσw]
     · change (per l K).σ σ (f (F.β M j ((1 : AW r) ⊗ₜ y))) = f (F.β M j ((1 : AW r) ⊗ₜ y))
@@ -181,7 +181,7 @@ theorem psiF_fac (r : Res l K) {N : ℕ} (F : Fac r N) {C₀ : Type} [CommRing C
     have hG' : f (F.β M j (F.α M j x)) = _ := hG
     rw [h2, hG', Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
-    rw [dif_pos hf, psiF_apply, map_mul, map_pow]
+    rw [dite_eq_left hf, psiF_apply, map_mul, map_pow]
     exact (mul_assoc _ _ _).symm
 
 theorem fmap_of (r : Res l K) (Amp : ∀ M : Model l K, E.LineData M.X → Prop) (N : ℕ) (F : Fac r N)

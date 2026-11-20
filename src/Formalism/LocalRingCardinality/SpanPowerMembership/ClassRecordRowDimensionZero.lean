@@ -109,9 +109,9 @@ abbrev chain3 : ColumnChain R Tau hc where
   rho'_norm := fun _ _ _ => norm_one
   unf := fun _ _ _ => 0
   sSharp := fun i τ => if h : i < R.m then (sInt R (hc τ) ⟨i, h⟩).2.choose else 0
-  sSharp_eq := fun i h τ => by rw [dif_pos h]; exact (sInt R (hc τ) ⟨i, h⟩).2.choose_spec.symm
+  sSharp_eq := fun i h τ => by rw [dite_eq_left h]; exact (sInt R (hc τ) ⟨i, h⟩).2.choose_spec.symm
   sDiv := fun i τ => if h : i < R.m then (sInt R (hc τ) ⟨i, h⟩).1.choose else 0
-  sDiv_eq := fun i h τ => by rw [dif_pos h]; exact (sInt R (hc τ) ⟨i, h⟩).1.choose_spec.symm
+  sDiv_eq := fun i h τ => by rw [dite_eq_left h]; exact (sInt R (hc τ) ⟨i, h⟩).1.choose_spec.symm
 
 instance (i : ℕ) : IsEmpty ((chain3 hc K).Y i) := ⟨fun c => Empty.elim c⟩
 

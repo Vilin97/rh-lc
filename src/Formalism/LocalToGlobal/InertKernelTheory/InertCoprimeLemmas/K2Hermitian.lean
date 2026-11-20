@@ -178,7 +178,7 @@ theorem kapOf_bij {p : ℕ} [Fact p.Prime] (X : Sys p) {T : Type} (pos : (Σ v :
 theorem frGL_val {p : ℕ} [Fact p.Prime] {X : Sys p} {D : D7} (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (hFr : FrInv fd) (j : ℕ)
     (La : X.Lt j) (v : X.Pl) : ((frGL fd j La v : GL _ _) : Matrix _ _ _) = fd.frM j La v := by
   unfold frGL
-  rw [dif_pos (hFr j La v)]
+  rw [dite_eq_left (hFr j La v)]
   rfl
 
 theorem subBG_diag {p : ℕ} [Fact p.Prime] {X : Sys p} {D : D7} (E : Formalism.L2.G.Pend.CEmb X.G)

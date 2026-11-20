@@ -174,7 +174,7 @@ theorem mir_emb {m n : ℕ} (hkm : n + 1 ≤ m) (ι : GA E (n + 1) →* GA E m) 
   obtain ⟨q, rfl⟩ := hs x fun i c h => hx i c (by omega)
   refine ⟨q, fun i c h => ?_, rfl⟩
   have h1 := hx (Fin.castLE hkm i) (Fin.castLE hkm c) (by simpa using h)
-  rw [hι, embM, Matrix.of_apply, dif_pos ⟨i.2, c.2⟩] at h1
+  rw [hι, embM, Matrix.of_apply, dite_eq_left ⟨i.2, c.2⟩] at h1
   convert h1 using 1 <;> first | rfl | (rw [Matrix.one_apply, Matrix.one_apply]; simp only [Fin.ext_iff, Fin.val_castLE])
 
 theorem blkU_zero' {a j : ℕ} : (blkU (0 : UnipotentBlockColumnIndex a j j → Ad E) : GA E a) = 1 := posU_zero _

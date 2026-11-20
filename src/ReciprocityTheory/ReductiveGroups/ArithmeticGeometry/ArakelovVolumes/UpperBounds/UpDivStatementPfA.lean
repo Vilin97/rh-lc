@@ -88,7 +88,7 @@ theorem skoda_open (hU : IsOpen U) (S : EtaleStein n U) (hz : S.z = Subtype.val)
     refine (hD.congr_of_eventuallyEq ?_).differentiableWithinAt
     filter_upwards [e.open_target.mem_nhds hyt] with w hw
     have hwU : w ∈ U := htgt e he hw
-    rw [dif_pos hwU]
+    rw [dite_eq_left hwU]
     show hh i ⟨w, hwU⟩ = hh i (e.symm w)
     congr 1
     exact Subtype.ext (chart_z_symm n Subtype.val e he w hw).symm

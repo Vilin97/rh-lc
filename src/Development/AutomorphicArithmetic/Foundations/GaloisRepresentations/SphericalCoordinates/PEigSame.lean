@@ -67,7 +67,7 @@ private theorem eigL_eq {y : GlobalTheory.LKCx.grp G β} {z : Fin G.n → ℂ} {
     GlobalTheory.RootSumWeights.eigL G v β y z = e := by
   have hf : GlobalTheory.LKCx.FixL G v β y z := ⟨e, h⟩
   unfold GlobalTheory.RootSumWeights.eigL
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   have hs := hf.choose_spec
   exact smul_left_injective ℂ hz (hs.symm.trans h)
 

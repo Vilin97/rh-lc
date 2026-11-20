@@ -184,7 +184,7 @@ theorem pairAt_mulOp (μ : Measure (Mt k r)) (l : Fin r) (s : ℂ) (Wv : Module.
 theorem glue_succ_update (l : Fin r) (c : Fin r → ℂ) (t : ℂ) (c' : Cf r l.succ) :
     glue l.succ (Function.update c l t) c' l = t := by
   simp only [glue]
-  rw [dif_neg (by rw [Fin.val_succ]; omega)]
+  rw [dite_eq_right (by rw [Fin.val_succ]; omega)]
   simp
 
 theorem form_mulOp (μ : Measure (Mt k r)) (l : Fin r) (s : ℂ) (Wv Wv' : Module.End ℂ (RadSp k r z z' π π'))

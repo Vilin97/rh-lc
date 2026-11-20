@@ -179,7 +179,7 @@ example {A D D' : Type} [Fintype A] [DecidableEq A] (ξ : kˣ →* ℂˣ) :
     rintro (i | i) (j | j)
     · exact one_int i j
     all_goals exact zero_mem _
-  rw [datum, dif_pos h]
+  rw [datum, dite_eq_left h]
   have : Units.mk0 _ h.det_ne = 1 := by ext; simp
   simp [this]
 

@@ -164,7 +164,7 @@ theorem exists_finite_cones : ∀ (O : Type) [CommRing O] (bar : O → O) (φ : 
     · refine Set.mem_biUnion (x := μ') ⟨Set.mem_biUnion hx' ?_, hμ'1⟩ fun cl => ?_
       · show μ' ∈ Fμ ⟨m, fun j => pull e.toLinearMap (γ j)⟩
         simp only [Fμ]
-        rw [dif_pos (show IsCone bar φ (fun j => pull e.toLinearMap (γ j)) ∧ _ from ⟨hc', hd'⟩)]
+        rw [dite_eq_left (show IsCone bar φ (fun j => pull e.toLinearMap (γ j)) ∧ _ from ⟨hc', hd'⟩)]
         exact (hfin ⟨m, fun j => pull e.toLinearMap (γ j)⟩ ⟨hc', hd'⟩).choose_spec (pull e.toLinearMap b) k cf hk hcf
           hkb' μ' hμ'1 hμ'2
       · obtain ⟨d, hd⟩ := hμ'3 cl

@@ -31,12 +31,12 @@ theorem int_mul (O : Subring R) (ρ : O →+* k) (z : Matrix (Fin b) (Fin b) O) 
   have lhs : (Matrix.of fun i j => if h : (z.map O.subtype * M.map O.subtype * y.map O.subtype) i j ∈ O then
       ρ ⟨(z.map O.subtype * M.map O.subtype * y.map O.subtype) i j, h⟩ else 0) = (z * M * y).map ρ := by
     ext i j
-    rw [Matrix.of_apply, dif_pos (mem i j), Matrix.map_apply]
+    rw [Matrix.of_apply, dite_eq_left (mem i j), Matrix.map_apply]
     congr 1
     exact Subtype.ext (congrFun (congrFun key i) j)
   have mid : (Matrix.of fun i j => if h : M.map O.subtype i j ∈ O then ρ ⟨M.map O.subtype i j, h⟩ else 0) = M.map ρ := by
     ext i j
-    rw [Matrix.of_apply, dif_pos (h i j)]
+    rw [Matrix.of_apply, dite_eq_left (h i j)]
     rfl
   rw [lhs, mid, Matrix.map_mul, Matrix.map_mul]
 

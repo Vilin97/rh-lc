@@ -125,7 +125,7 @@ theorem GlobalTheory.RowShape.rowN_monoAt : Big fun {D} {Γ} _ _ {Pl0 T} {A} {Ks
     (h : D.R.m - 1 - n = 2 * σ) v, GlobalTheory.FinPl.MonoAt (rowJac ch.G n hn σ h) (GlobalTheory.RowShape.rowN ch.G n) (ch.G.Λ (.top n)) v := by
   refine ⟨0, fun _ _ _ => ⟨0, fun D _ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F _ ch _ _ => ?_⟩⟩
   intro n hn σ h v
-  rw [GlobalTheory.RowShape.rowN, dif_pos hn]
+  rw [GlobalTheory.RowShape.rowN, dite_eq_left hn]
   exact GlobalTheory.RowShape.MonoRow.monoAt_jacDec _ h _ _ v
 
 end

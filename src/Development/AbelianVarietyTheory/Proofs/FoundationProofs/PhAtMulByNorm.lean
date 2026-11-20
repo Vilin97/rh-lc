@@ -66,7 +66,7 @@ theorem atU_prod' (g : GL3Theta.G1 p) {ι : Type} (s : Finset ι) {F : ι → �
     obtain ⟨h1, h2⟩ := (GlobalTheory.SerTransport.transport p g).2.1 1 (one_mem _)
     simp only [Finset.prod_empty]
     refine ⟨h1, ?_⟩
-    rw [h2, lamC, dif_pos (one_mem _)]
+    rw [h2, lamC, dite_eq_left (one_mem _)]
     exact congrArg C (map_one g.lam)
   | insert a s ha ih =>
     simp only [Finset.prod_insert ha]

@@ -36,11 +36,11 @@ theorem exists_pass_rat (p : ChPt (R := R) sel mu u j) (g : UF X.E (R.N j)) :
         simp
       refine ⟨κ0⁻¹, ?_, by rw [map_inv, hr, inv_one], fun h => absurd hP h⟩
       unfold frsF
-      rw [dif_pos hP, dif_pos hP, inv_inv]
+      rw [dite_eq_left hP, dite_eq_left hP, inv_inv]
       exact h1.trans (mul_assoc _ _ _)
     · refine ⟨1, ?_, map_one _, fun _ => rfl⟩
       unfold frsF
-      rw [dif_neg hP, dif_neg hP]
+      rw [dite_eq_right hP, dite_eq_right hP]
       show g.1 * _ * (((1 : GLQ X.E (R.N j) (QE sel (mu : Chr X.F X.E X.K))) _)⁻¹).1 = _
       simp [mul_assoc]
       rfl
@@ -181,7 +181,7 @@ theorem xiPt_cpl_smul : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU 
     intro P l
     have e : y0At A (t.m2 + 1) hi β' P = A.y0 β' P := by
       unfold y0At
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
     rw [e]
     exact GlobalTheory.TwU.BaseCosetInt.baseCosetRep_integral_after_scaling_at_bad_prime D L hT Gi Gl Kc Y cX ex t u μ St A dtU a hPins hTie β' P l
   have hY : cosetOf A (t.m2 + 1) hi β' p' ∈ ybSet t.sel (t.tup μ) (t.cst μ) p'.deco.1.N := coset_mem_ybSet p' _ hy0
@@ -206,7 +206,7 @@ theorem xiPt_cpl_smul : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU 
   rw [Finset.prod_eq_one fun P _ => hprod P, mul_one] at law
   simp only [Finset.prod_const_one, inv_one, mul_one, Units.val_one, one_mul] at law
   unfold xiPt
-  rw [dif_neg (lt_irrefl _), if_pos rfl, dif_neg (lt_irrefl _), if_pos rfl, hC]
+  rw [dite_eq_right (lt_irrefl _), if_pos rfl, dite_eq_right (lt_irrefl _), if_pos rfl, hC]
   exact law
 
 end Main

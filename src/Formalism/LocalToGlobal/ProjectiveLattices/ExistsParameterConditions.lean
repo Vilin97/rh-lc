@@ -223,7 +223,7 @@ theorem exists_par_pins (D : D7) (hB : UnramBridge) (hF : OFull D) (hz : OZeta D
   refine ⟨Q, ⟨rfl, rfl, rfl, tauEmb_sqrt D⟩, levelG_M D hU, eOf_spec D hF, fun j hj => ?_⟩
   show IsDatW D j (datumAtLift D hU hDat j)
   unfold datumAtLift
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   exact isDatW_datumOf D hU j _ _
 
 theorem exists_parameter_conditions (D : D7) (hF : OFull D) (hz : OZeta D)

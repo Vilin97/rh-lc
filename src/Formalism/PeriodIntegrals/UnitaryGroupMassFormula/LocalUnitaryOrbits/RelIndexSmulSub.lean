@@ -97,7 +97,7 @@ theorem exists_unit_pow {ϖ : Fv F v} (hϖ : IsUnif v ϖ) {d : Fv F v} (hd0 : d 
   · exact mul_ne_zero (inv_ne_zero hϖk) hd0
   · rw [← mul_assoc, mul_inv_cancel₀ hϖk, one_mul]
   · unfold absV
-    rw [dif_neg hv]
+    rw [dite_eq_right hv]
     unfold qv
     congr 1
     rw [hk]

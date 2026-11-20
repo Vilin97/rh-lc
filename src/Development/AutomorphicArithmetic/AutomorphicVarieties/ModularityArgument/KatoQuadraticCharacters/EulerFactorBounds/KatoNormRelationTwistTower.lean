@@ -448,7 +448,7 @@ private theorem main (hA : SApi) (hC : SCohApi) (hX : SXiCoh) (hD : SXiDist) (hS
     have hu : IsUnit (l : ZMod p) := by
       rw [← hνp]
       exact Units.isUnit _
-    rw [inv1, dif_pos hu, inv_inj]
+    rw [inv1, dite_eq_left hu, inv_inj]
     exact Units.ext (by rw [IsUnit.unit_spec, hνp])
   have htt : ((inv1 p l ^ (2 * (r + 1 + n)), (1 : (ZMod (l ^ r))ˣ)) : (ZMod p)ˣ × (ZMod (l ^ r))ˣ) * (rdH l n r N p ν) ^ 2 =
       (inv1 p l ^ (2 * (r + n)), 1) := by

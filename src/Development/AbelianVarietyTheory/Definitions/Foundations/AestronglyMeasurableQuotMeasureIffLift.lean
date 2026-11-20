@@ -667,7 +667,7 @@ theorem leftInv_of_isAutFun {φ : GA D V → ℂ} (h : IsAutFun V φ) : LeftInv 
 
 theorem isVolPair_volPair (h : ∃ p : Measure (GA D V) × Set (GA D V), IsVolPair D V p.1 p.2) :
     IsVolPair D V (volPair V).1 (volPair V).2 := by
-  rw [volPair, dif_pos h]; exact h.choose_spec
+  rw [volPair, dite_eq_left h]; exact h.choose_spec
 
 theorem muQ_eq (h : ∃ p : Measure (GA D V) × Set (GA D V), IsVolPair D V p.1 p.2) :
     muQ V = autMeasure V (volPair V).1 :=

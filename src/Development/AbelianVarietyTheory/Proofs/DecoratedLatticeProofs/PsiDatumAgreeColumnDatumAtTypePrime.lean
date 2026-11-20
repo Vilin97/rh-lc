@@ -69,7 +69,7 @@ theorem locChar_one_ne {K : Type} [Field K] (cq : K) (χ : (𝓞 E ⧸ P.asIdeal
   unfold LocE.locChar
   rw [valuation_one₂, zpow_zero, zpow_zero, one_mul, div_one]
   unfold LocE.unitV
-  rw [dif_pos (by rw [reduction_one']; exact isUnit_one)]
+  rw [dite_eq_left (by rw [reduction_one']; exact isUnit_one)]
   exact Units.ne_zero _
 
 end Red
@@ -117,7 +117,7 @@ theorem withCol_toLoc {E k : Type} [Field E] [NumberField E] [StarRing E]
     have h2 : atNL E (n' + (0 + 1)) n' (Pi.single (Fin.castAdd (0 + 1) (e' j)) 1) = 0 := by
       have hj := (e' j).isLt
       unfold atNL
-      rw [dif_pos (by omega)]
+      rw [dite_eq_left (by omega)]
       simp only [LinearMap.coe_proj, Function.eval, Pi.single_apply, Fin.ext_iff, Fin.val_castAdd]
       rw [if_neg (by omega)]
     rw [h1, h2, zero_mul, add_zero]
@@ -131,7 +131,7 @@ theorem withCol_toLoc {E k : Type} [Field E] [NumberField E] [StarRing E]
       rw [if_neg (by omega)]
     have h2 : atNL E (n' + (0 + 1)) n' (Pi.single (Fin.natAdd n' (finCongr (rfl : 0 + 1 = 0 + 1) j)) 1) = 1 := by
       unfold atNL
-      rw [dif_pos (by omega)]
+      rw [dite_eq_left (by omega)]
       simp only [LinearMap.coe_proj, Function.eval, Pi.single_apply, Fin.ext_iff, Fin.val_natAdd]
       rw [if_pos (by omega)]
     rw [h1, map_zero, Pi.zero_apply, h2, one_mul]

@@ -317,7 +317,7 @@ variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u u' : D.what
 theorem isPtRep_gamW {w : Point D.host.E (D.R.rS + 1)} (h : ∃ γ, IsPtRep X u u' w γ) :
     IsPtRep X u u' w (gamW X u u' w) := by
   unfold gamW
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem pt_eq_of_rep {w w' : Point D.host.E (D.R.rS + 1)} {γ : X.B.I.Ginf} (h : IsPtRep X u u' w γ)

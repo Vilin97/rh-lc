@@ -365,7 +365,7 @@ theorem typ_rho_succ (P : M.Par) (ρ : M.Ty P) (j : Fin (P.k - 1)) :
     M.rho P ρ ((j : ℕ) + 1) = P.lo ((j : ℕ) + 1) + ((ρ j : ℕ) : ℝ) := by
   have hj := j.isLt
   unfold M.rho
-  rw [dif_pos (show 1 ≤ (j : ℕ) + 1 ∧ (j : ℕ) + 1 ≤ P.k - 1 by omega)]
+  rw [dite_eq_left (show 1 ≤ (j : ℕ) + 1 ∧ (j : ℕ) + 1 ≤ P.k - 1 by omega)]
   all_goals first | rfl | simp
 
 private theorem u_add_le_u_of_ok {Q : M.Par} (h : Q.OK) {i : ℕ} (hi1 : 1 ≤ i) :
@@ -643,7 +643,7 @@ theorem vecw_vec_intertwine (S : B.RealPlaceData k r Wp Wq) {ν' : Fin (2 * r + 
     rw [hfix] at h1
     exact h1
   · unfold D.vecV
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     ext v
     simp
 
@@ -882,7 +882,7 @@ theorem vecw_rho_eq {Q : M.Par} (π : M.Ty Q) {i : ℕ} (hi : i ∈ Icc 1 (Q.k -
     simp only [e] at this
     omega
   · unfold M.rho
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
 
 theorem vecw_lo_le_hi {Q : M.Par} (h : Q.OK) {i : ℕ} (hi : i ∈ Icc 1 (Q.k - 1)) : Q.lo i ≤ Q.hi i := by
   exact h.gap i hi

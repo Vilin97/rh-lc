@@ -79,7 +79,7 @@ theorem refKEquiv_of_mat {i : ℕ} (hi : i < m2)
     congr 1
     funext x
     unfold XiRef
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
   rw [e, e, liftQ_oneG, liftQ_oneG]
   have h := hM i hi (oneAl Λ sel mu m2 i (by omega)) (oneAl Λ sel mu m2 (i + 1) (by omega)) (oneG Λ sel mu g) (oneG Λ sel mu g')
     (liftQ hQ p) (liftQ hQ p')
@@ -165,7 +165,7 @@ theorem referenceKernelEquiv_of_lastComponent (hX : X.Ok) (hPr : Pr.Ok) (hF : Fi
     congr 1
     funext x
     unfold XiRef
-    rw [dif_neg (lt_irrefl _), dif_pos rfl]
+    rw [dite_eq_right (lt_irrefl _), dite_eq_left rfl]
     rfl
   rw [e, e, lastVectorLine_equivariant hF, liftQ_oneG, liftQ_oneG]
   have h := h1 (oneAl Λ sel mu m2 m2 (by omega)) (oneG Λ sel mu g) (oneG Λ sel mu g') (liftQ hQ p) (liftQ hQ p') (p'.1.y0 R.k) (hmem p')
@@ -187,7 +187,7 @@ theorem refKEquiv_above {i : ℕ} (hi : m2 + 1 < i) : RefKEquiv W Λ Ch sel mu c
     unfold refK
     refine kerOf_zero _ _ _ _ _ _ _ _ _ fun x => ?_
     unfold XiRef
-    rw [dif_neg (by omega), dif_neg (by omega), if_neg (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), if_neg (by omega)]
   rw [e, e]
   ext x
   exact (map_zero (formRho (colVal W u (i + 1) (Pr.vT u) Pr.vGs) (Λ (i + 1)) g')).symm ▸ rfl

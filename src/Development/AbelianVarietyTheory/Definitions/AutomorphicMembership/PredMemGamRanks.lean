@@ -371,18 +371,18 @@ theorem gamOrd_finite (hE : PosStar E) (R : Ranks) : (gamOrd E R).Finite :=
 theorem dvd_DGam (hE : PosStar E) (R : Ranks) (hn : n ∈ gamRanks R) {N : Submodule (𝓞 E) (Sp E n)}
     (h1 : Submodule.IsLattice E N) (h2 : Formalism.HermitianLatticesTheory.IsUnimodular (hStd E n) N) : Nat.card (autO N) ∣ DGam E R := by
   unfold DGam
-  rw [dif_pos (gamOrd_finite hE R)]
+  rw [dite_eq_left (gamOrd_finite hE R)]
   exact Finset.dvd_lcm (f := id) ((Set.Finite.mem_toFinset _).2 (Set.mem_biUnion hn ⟨N, h1, h2, rfl⟩))
 
 theorem DGam_dvd (hE : PosStar E) (R : Ranks) {M : ℕ} (h : ∀ a ∈ gamOrd E R, a ∣ M) : DGam E R ∣ M := by
   unfold DGam
-  rw [dif_pos (gamOrd_finite hE R)]
+  rw [dite_eq_left (gamOrd_finite hE R)]
   exact Finset.lcm_dvd fun a ha => h a ((Set.Finite.mem_toFinset _).1 ha)
 
 theorem DGam_pos (hE : PosStar E) (R : Ranks) : 0 < DGam E R := by
   apply Nat.pos_of_ne_zero
   unfold DGam
-  rw [dif_pos (gamOrd_finite hE R), Ne, Finset.lcm_eq_zero_iff]
+  rw [dite_eq_left (gamOrd_finite hE R), Ne, Finset.lcm_eq_zero_iff]
   rintro ⟨a, ha, h0⟩
   obtain ⟨n, -, N, h1, -, rfl⟩ := Set.mem_iUnion₂.1 ((Set.Finite.mem_toFinset _).1 ha)
   haveI := autO_finite hE h1
@@ -457,9 +457,9 @@ def unf (i : ℕ) (c : (I.S i).Cl) (c' : (I.S (i + 1)).Cl) : (Fr emb σ (R.N i) 
   rho'_norm := h.rho'_norm
   unf := I.unf emb σ
   sSharp i τ := if hi : i < R.m then ⌊(hc τ).e ⟨i, hi⟩ - (R.N (i + 1) : ℚ) / 2⌋ else 0
-  sSharp_eq i hi τ := by rw [dif_pos hi]; exact floor_sub_half _ _ _
+  sSharp_eq i hi τ := by rw [dite_eq_left hi]; exact floor_sub_half _ _ _
   sDiv i τ := if hi : i < R.m then ⌊(hc τ).e ⟨i, hi⟩ - (R.N i : ℚ) / 2⌋ else 0
-  sDiv_eq i hi τ := by rw [dif_pos hi]; exact floor_sub_half _ _ _
+  sDiv_eq i hi τ := by rw [dite_eq_left hi]; exact floor_sub_half _ _ _
 
 end ChainIn
 

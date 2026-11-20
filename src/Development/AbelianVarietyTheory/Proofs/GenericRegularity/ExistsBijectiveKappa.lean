@@ -59,7 +59,7 @@ theorem rdU_eq_of_reads (U : Unf Xo c σ r) (h : GenFrEx Xo c) (k : U.Comp)
     hL.wt u n f hf (CAt σ) t _ _ (hL.test _ _) (hL.test _ _) hb
   have h4 : rdU U f k x = toC (evR Xo c f (U.un k x)) := by
     simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk]
-    rw [dif_pos x.2]
+    rw [dite_eq_left x.2]
   rw [h4, ← h1, h2]
   rfl
 

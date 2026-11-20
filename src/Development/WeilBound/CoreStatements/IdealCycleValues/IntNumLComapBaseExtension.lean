@@ -39,7 +39,7 @@ theorem eventualValue_mul {c : ℤ} (hc : c ≠ 0) {f g : (K → ℤ) → ℤ}
       refine hg ⟨v / c, ?_⟩
       filter_upwards [h, hv] with m h1 h2
       rw [← h2, h1, Int.mul_ediv_cancel_left _ hc]
-    rw [eventualValue, eventualValue, dif_neg hg, dif_neg hf, mul_zero]
+    rw [eventualValue, eventualValue, dite_eq_right hg, dite_eq_right hf, mul_zero]
 
 end Eventual
 

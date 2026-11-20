@@ -30,7 +30,7 @@ theorem detOn_pos_of_left_inv {f g : Matrix (Fin n) (Fin n) ℂ} (hgf : g * f = 
     rw [Matrix.toLin'_apply]
     exact hV y hy
   unfold detOn
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   refine norm_pos_iff.mpr fun h0 => ?_
   obtain ⟨x, hx, hx0⟩ := SetLike.exists_of_lt (LinearMap.bot_lt_ker_of_det_eq_zero h0)
   have h1 : f *ᵥ (x : Fin n → ℂ) = 0 := by

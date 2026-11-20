@@ -61,7 +61,7 @@ theorem blkS_act (c' : Fin D.R.t) (a : Dd.R') (m : blockRestrictedRepresentation
     a • m = (Dd.ρπ a (Fin.natAdd D.R.r c') (Fin.natAdd D.R.r c')) • m := by
   have hb : RepresentationBoundsCohomology.blk D.R (Fin.natAdd D.R.r c') = c'.succ := by
     simp only [Formalism.MainNotions.N.RepresentationBoundsCohomology.blk, Formalism.MainNotions.N.RepresentationBoundsCohomology.blkG]
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
     ext
     simp
   have hu : ∀ y : {x : Fin D.R.nV // RepresentationBoundsCohomology.blk D.R x = c'.succ}, y = ⟨Fin.natAdd D.R.r c', hb⟩ :=

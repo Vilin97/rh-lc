@@ -32,22 +32,22 @@ theorem joinCol_source (hc : c' = 1) (r : Sp E (n' + c') ≃ₗ[E] Sp E (n' + c'
     funext l
     rw [Pi.add_apply, CongLevel.inX_apply, Pi.smul_apply, Loc.eN, smul_eq_mul]
     by_cases hl : l.1 < n'
-    · rw [dif_pos hl, if_neg hl.ne, mul_zero, add_zero]
+    · rw [dite_eq_left hl, if_neg hl.ne, mul_zero, add_zero]
       rfl
     · obtain rfl : l = Fin.last n' := Fin.ext (by have := l.2; rw [Fin.val_last]; omega)
-      rw [dif_neg hl, if_pos (Fin.val_last _), mul_one, zero_add]
+      rw [dite_eq_right hl, if_pos (Fin.val_last _), mul_one, zero_add]
   have e1 : r v = Loc.inX E n' 1 (g (LinearMap.funLeft E E (Fin.castAdd 1) v)) + v (Fin.last n') • Loc.eN E (n' + 1) n' := by
     conv_lhs => rw [e]
     rw [map_add (f := _), map_smul, h, hr.2.1]
   have e2 : LinearMap.funLeft E E (Fin.castAdd 1) (r v) = g (LinearMap.funLeft E E (Fin.castAdd 1) v) := by
     funext l
     rw [LinearMap.funLeft_apply, e1, Pi.add_apply, CongLevel.inX_apply, Pi.smul_apply, Loc.eN, smul_eq_mul,
-      dif_pos (show (Fin.castAdd 1 l).1 < n' from l.2), if_neg (show (Fin.castAdd 1 l).1 ≠ n' from l.2.ne), mul_zero, add_zero]
+      dite_eq_left (show (Fin.castAdd 1 l).1 < n' from l.2), if_neg (show (Fin.castAdd 1 l).1 ≠ n' from l.2.ne), mul_zero, add_zero]
     rfl
   have e3 : atNL E (n' + 1) n' (r v) = atNL E (n' + 1) n' v := by
     unfold atNL
-    rw [dif_pos (Nat.lt_succ_self _), LinearMap.proj_apply, LinearMap.proj_apply, e1, Pi.add_apply, CongLevel.inX_apply,
-      Pi.smul_apply, Loc.eN, smul_eq_mul, dif_neg (lt_irrefl _), if_pos rfl, mul_one, zero_add]
+    rw [dite_eq_left (Nat.lt_succ_self _), LinearMap.proj_apply, LinearMap.proj_apply, e1, Pi.add_apply, CongLevel.inX_apply,
+      Pi.smul_apply, Loc.eN, smul_eq_mul, dite_eq_right (lt_irrefl _), if_pos rfl, mul_one, zero_add]
     rfl
   unfold joinCol
   simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearEquiv.coe_coe]

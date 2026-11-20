@@ -131,7 +131,7 @@ theorem card_stepCols (r : Ψ × Fin (p + q)) :
   by_cases hc : (r.2 : ℕ) < p
   · have hs : stepOf Ψ p q r = ⟨Sum.inl r.1, ⟨r.2, by simp [rk]; omega⟩⟩ := by
       unfold stepOf
-      rw [dif_pos hc]
+      rw [dite_eq_left hc]
     have hc' : (r.2 : ℕ) + 1 ≤ p := hc
     rw [hs]
     simp only [if_pos hc']
@@ -139,7 +139,7 @@ theorem card_stepCols (r : Ψ × Fin (p + q)) :
     omega
   · have hs : stepOf Ψ p q r = ⟨Sum.inr r.1, ⟨r.2 - p, by simp [rk]; omega⟩⟩ := by
       unfold stepOf
-      rw [dif_neg hc]
+      rw [dite_eq_right hc]
     have hc' : ¬ ((r.2 : ℕ) + 1 ≤ p) := by omega
     rw [hs]
     simp only [if_neg hc']
@@ -157,7 +157,7 @@ theorem stepRows_pos (r : Ψ × Fin (p + q)) {I : Finset (Fin (p + q))} (h : IsS
   by_cases hc : (r.2 : ℕ) < p
   · have hs : stepOf Ψ p q r = ⟨Sum.inl r.1, ⟨r.2, by simp [rk]; omega⟩⟩ := by
       unfold stepOf
-      rw [dif_pos hc]
+      rw [dite_eq_left hc]
     have hc' : (r.2 : ℕ) + 1 ≤ p := hc
     rw [if_pos hc'] at hmem
     simp only [wIdx, Finset.mem_filter, Finset.mem_univ, true_and] at hmem
@@ -169,7 +169,7 @@ theorem stepRows_pos (r : Ψ × Fin (p + q)) {I : Finset (Fin (p + q))} (h : IsS
     omega
   · have hs : stepOf Ψ p q r = ⟨Sum.inr r.1, ⟨r.2 - p, by simp [rk]; omega⟩⟩ := by
       unfold stepOf
-      rw [dif_neg hc]
+      rw [dite_eq_right hc]
     have hc' : ¬ ((r.2 : ℕ) + 1 ≤ p) := by omega
     rw [if_neg hc'] at hmem
     simp only [omIdx, Finset.mem_filter, Finset.mem_univ, true_and] at hmem

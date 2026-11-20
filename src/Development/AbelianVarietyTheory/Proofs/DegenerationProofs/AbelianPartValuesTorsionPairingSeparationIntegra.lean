@@ -115,7 +115,7 @@ theorem norm_valF {X : Scheme.{0}} (x : Sp S ⟶ X) (U : X.Opens) (a : Γ(X, U))
       Category.assoc]
     rfl
   have e' : valF (spMap S.subtype ≫ x) U a = S.subtype u.val := by
-    rw [valF, dif_pos h', hu]
+    rw [valF, dite_eq_left h', hu]
     exact congrArg (fun g => g.hom a) e
   have m : ‖S.subtype u.val‖ * ‖S.subtype u.inv‖ = 1 := by
     rw [← norm_mul, ← map_mul]

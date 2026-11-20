@@ -35,7 +35,7 @@ theorem absHalf_det_div_eq_deltaHalf : ∀ (E : Type) [Field E] [NumberField E] 
       -((b : ℤ) * WithZero.log (Valued.v (d1 : w.adicCompletion E)) - (a : ℤ) * WithZero.log (Valued.v (d2 : w.adicCompletion E))) := by
     have hv : Valued.v ((d1 : w.adicCompletion E) ^ b / (d2 : w.adicCompletion E) ^ a) ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
     unfold ordL
-    rw [dif_neg hv, WithZero.toAdd_unzero_eq_log, map_div₀, map_pow, map_pow,
+    rw [dite_eq_right hv, WithZero.toAdd_unzero_eq_log, map_div₀, map_pow, map_pow,
       WithZero.log_div (pow_ne_zero _ hv1) (pow_ne_zero _ hv2), WithZero.log_pow, WithZero.log_pow]
     simp
   rw [hord, neg_neg]

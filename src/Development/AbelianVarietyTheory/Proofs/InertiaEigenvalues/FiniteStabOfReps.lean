@@ -40,7 +40,7 @@ theorem lamExt_mul (x : Hf) (k : J) : lamExt J lam (x * k) = lamExt J lam x * (l
   by_cases hx : x ∈ J
   · have hxk : x * (k : Hf) ∈ J := J.mul_mem hx k.2
     unfold lamExt
-    rw [dif_pos hxk, dif_pos hx, ← Units.val_mul, ← map_mul]
+    rw [dite_eq_left hxk, dite_eq_left hx, ← Units.val_mul, ← map_mul]
     rfl
   · have hxk : x * (k : Hf) ∉ J := fun hm => hx (by simpa using J.mul_mem hm (J.inv_mem k.2))
     rw [lamExt_of_not_mem J lam hx, lamExt_of_not_mem J lam hxk, zero_mul]

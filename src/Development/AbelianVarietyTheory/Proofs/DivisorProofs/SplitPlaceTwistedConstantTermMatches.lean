@@ -200,7 +200,7 @@ theorem topEquivC_apply {G : Type} [Group G] [TopologicalSpace G] (H : Subgroup 
 
 theorem toSub_top {G : Type} [Group G] (H : Subgroup G) (hH : H = ⊤) (x : H) : toSub H (x : G) = x := by
   apply Subtype.ext
-  rw [toSub, dif_pos x.2]
+  rw [toSub, dite_eq_left x.2]
 
 theorem twOrb_top : ∀ {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] (H : Subgroup G), H = ⊤ →
     ∀ (K : Subgroup H) (δ : H) (f : H → ℂ),
@@ -224,18 +224,18 @@ theorem isHecke_top : ∀ {G : Type} [Group G] [TopologicalSpace G] [IsTopologic
     congr 1
     apply e.injective
     show ((toSub H y : H) : G) = e (e.symm y)
-    rw [ContinuousMulEquiv.apply_symm_apply, toSub, dif_pos (hall _)]
+    rw [ContinuousMulEquiv.apply_symm_apply, toSub, dite_eq_left (hall _)]
   have hmap : ((K'.map H.subtype : Subgroup G) : Set G) = e.toHomeomorph '' (K' : Set H) := by
     rw [Subgroup.coe_map]
     rfl
   have hmul : ∀ (k : H) (y : G), toSub H ((k : G) * y) = k * toSub H y := by
     intro k y
     apply Subtype.ext
-    rw [Subgroup.coe_mul, toSub, toSub, dif_pos (hall _), dif_pos (hall _)]
+    rw [Subgroup.coe_mul, toSub, toSub, dite_eq_left (hall _), dite_eq_left (hall _)]
   have hmul' : ∀ (k : H) (y : G), toSub H (y * (k : G)) = toSub H y * k := by
     intro k y
     apply Subtype.ext
-    rw [Subgroup.coe_mul, toSub, toSub, dif_pos (hall _), dif_pos (hall _)]
+    rw [Subgroup.coe_mul, toSub, toSub, dite_eq_left (hall _), dite_eq_left (hall _)]
   refine ⟨?_, ?_, ?_⟩
   · rw [hmap]
     exact e.toHomeomorph.isOpenMap _ hK'
@@ -258,7 +258,7 @@ theorem blk_zero_charpoly (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
     exact ((Matrix.isUnit_iff_isUnit_det _).mp m.1.isUnit).mul ((Matrix.isUnit_iff_isUnit_det _).mp m.2.isUnit)
   unfold blk
   simp only []
-  rw [dif_pos hU, IsUnit.unit_spec, Matrix.charpoly_reindex, Matrix.mul_zero, Matrix.charpoly_fromBlocks_zero₁₂]
+  rw [dite_eq_left hU, IsUnit.unit_spec, Matrix.charpoly_reindex, Matrix.mul_zero, Matrix.charpoly_fromBlocks_zero₁₂]
 
 theorem det_of_charpoly {k : Type} [Field k] {a : ℕ} (x : GL (Fin a) k) {Q : k[X]} (h : x.val.charpoly = Q) :
     x.val.det = (-1) ^ a * Q.coeff 0 := by
@@ -276,7 +276,7 @@ theorem charpoly_conj' {k : Type} [Field k] {a : ℕ} (g x : GL (Fin a) k) :
   rw [Units.val_mul, Units.val_mul, Matrix.coe_units_inv, Matrix.charpoly_units_conj']
 
 theorem toSub_val {G : Type} [Group G] {H : Subgroup G} {g : G} (h : g ∈ H) : (toSub H g : G) = g := by
-  rw [toSub, dif_pos h]
+  rw [toSub, dite_eq_left h]
 
 theorem det_conj' {k : Type} [Field k] {a : ℕ} (u v : GL (Fin a) k) :
     GeneralLinearGroup.det (u⁻¹ * v * u) = GeneralLinearGroup.det v := by
@@ -381,7 +381,7 @@ theorem match_ctMu_of_isSplitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCM
         GeneralLinearGroup.det x₂ ^ a) : ℂ) * absHalf w (resultant Q₁ Q₂ ^ 2 / (x₁.val.det ^ (n - a) * x₂.val.det ^ a)) := by
       unfold delta
       simp only [if_pos hw]
-      rw [dif_pos hne, hu, hdd]
+      rw [dite_eq_left hne, hu, hdd]
     have hct : ctMu (Nat.add_sub_cancel' ha) w μ f = fun y =>
         (μ ((-1) ^ (a * (n - a)) * GeneralLinearGroup.det y.1 ^ (n - a) * GeneralLinearGroup.det y.2 ^ a) : ℂ) *
           ct (Nat.add_sub_cancel' ha) w (fun y => f (toSub (UL n w) y)) y := rfl

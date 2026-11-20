@@ -201,7 +201,7 @@ theorem VertFactorPos.proof : VertFactorPos.Statement := by
   intro II Ψ _ K _ ι _ Ω _ _ E _ _ D p hp z hz
   have hex : ∃ c : (k : K) → ι k, ∀ k, z ⟨k, c k⟩ ≠ 0 :=
     ⟨fun k => (hz.1 k).choose, fun k => (hz.1 k).choose_spec⟩
-  rw [ComponentData.vertFactor, dif_pos hex]
+  rw [ComponentData.vertFactor, dite_eq_left hex]
   obtain ⟨v, hv0, hv⟩ := exists_value hz (D.S_prime p hp).ne_zero (D.vertical p hp) hex.choose
     hex.choose_spec
   rw [valAt_eq hz hv]

@@ -27,7 +27,7 @@ theorem _root_.GlobalTheory.DoubledFlag.sum_eq_dimN_and_layerProd_eq : ∀ (n a 
       induction m with
       | zero => simp [hν0]
       | succ m ih =>
-        rw [Finset.sum_range_succ, ← ih (by omega), dif_pos (by omega)]
+        rw [Finset.sum_range_succ, ← ih (by omega), dite_eq_left (by omega)]
         exact hν ⟨m, by omega⟩
     rw [h1 a le_rfl, ← Fin.sum_univ_eq_sum_range (fun i => if h : i < a then j ⟨i, h⟩ else 0)]
     simp

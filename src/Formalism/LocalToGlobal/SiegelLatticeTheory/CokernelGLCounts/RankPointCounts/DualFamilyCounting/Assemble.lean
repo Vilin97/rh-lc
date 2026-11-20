@@ -71,7 +71,7 @@ theorem cOne_spec (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
   rw [he, Finset.prod_empty, mul_one] at h1
   have hex : ∃ c : ℝ, 0 < c ∧ MassConst K F 1 c := ⟨c₁, hc₁, h1⟩
   unfold cOne
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in

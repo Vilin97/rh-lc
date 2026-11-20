@@ -83,7 +83,7 @@ theorem phiOf_spec (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam 
     phiOf μ T ∈ homDS M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) ∧ Represents μ (phiOf μ T) T := by
   have h : ∃ Φ, Φ ∈ homDS M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) ∧ Represents μ Φ T :=
     (GlobalTheory.CuspIntertwiner.existsUnique_intertwiner hP D θ hθ V S M μ T hT).exists
-  rw [phiOf, dif_pos h]
+  rw [phiOf, dite_eq_left h]
   exact h.choose_spec
 
 theorem phiOf_eq (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) {T : MMap M} (hT : T ∈ allMaps θ M)

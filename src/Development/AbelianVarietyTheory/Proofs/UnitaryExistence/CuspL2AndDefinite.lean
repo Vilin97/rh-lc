@@ -171,7 +171,7 @@ theorem quotSupp_of (V : HSp D) (hV : FinVol V) (hP : ∃ p : Measure (GA D V) �
   intro φ hc hL hae g0
   have hvp : IsVolPair D V (volPair V).1 (volPair V).2 := by
     unfold volPair
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact hP.choose_spec
   haveI := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA D.sp.cm.sig V.gram
   haveI := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.borelHA D.sp.cm.sig V.gram

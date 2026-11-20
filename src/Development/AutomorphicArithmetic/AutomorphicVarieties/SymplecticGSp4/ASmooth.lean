@@ -697,7 +697,7 @@ private theorem iota {τ : Type} [Fintype τ] [DecidableEq τ] (wt : τ → ℤ 
       rw [hιsk, Finsupp.smul_apply, smul_eq_mul]
       have hib : i.1 ≠ b := i.2
       by_cases ht : t = b
-      · rw [dif_pos ht, Finset.sum_eq_single i]
+      · rw [dite_eq_left ht, Finset.sum_eq_single i]
         · by_cases h1 : (wt i.1).1 = 1
           · simp [v, h1, Finsupp.single_apply, hib, ht]
           · simp [v, h1, Finsupp.single_apply, hib, ht]

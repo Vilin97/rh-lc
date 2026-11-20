@@ -191,7 +191,7 @@ def deltaFun (K : Subgroup (GL (Fin m) k)) (g : GL (Fin m) k) : ℂ :=
 theorem deltaFun_mul {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) {u κ : GL (Fin m) k}
     (hu : u ∈ unipB k (Fin m)) (hκ : κ ∈ K) : deltaFun ψ K (u * κ) = (ψ (superDiag u) : ℂ) := by
   have h : ∃ u' ∈ unipB k (Fin m), ∃ κ' ∈ K, u * κ = u' * κ' := ⟨u, hu, κ, hκ, rfl⟩
-  rw [deltaFun, dif_pos h]
+  rw [deltaFun, dite_eq_left h]
   obtain ⟨hu', κ', hκ', e⟩ := h.choose_spec
   set u' := h.choose
   have e2 : u'⁻¹ * u = κ' * κ⁻¹ := by
@@ -203,7 +203,7 @@ theorem deltaFun_mul {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) {u κ : GL (
 
 theorem deltaFun_eq_zero {K : Subgroup (GL (Fin m) k)} {g : GL (Fin m) k}
     (h : ¬ ∃ u ∈ unipB k (Fin m), ∃ κ ∈ K, g = u * κ) : deltaFun ψ K g = 0 := by
-  rw [deltaFun, dif_neg h]
+  rw [deltaFun, dite_eq_right h]
 
 theorem deltaFun_right {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) (g : GL (Fin m) k) {κ : GL (Fin m) k}
     (hκ : κ ∈ K) : deltaFun ψ K (g * κ) = deltaFun ψ K g := by
@@ -237,7 +237,7 @@ def delta (K : Subgroup (GL (Fin m) k)) : WT (m := m) ψ :=
 
 theorem coe_delta {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) :
     (delta ψ K : GL (Fin m) k → ℂ) = deltaFun ψ K := by
-  rw [delta, dif_pos hK]
+  rw [delta, dite_eq_left hK]
 
 theorem delta_mul {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) {u κ : GL (Fin m) k}
     (hu : u ∈ unipB k (Fin m)) (hκ : κ ∈ K) : (delta ψ K : GL (Fin m) k → ℂ) (u * κ) = (ψ (superDiag u) : ℂ) := by
@@ -247,7 +247,7 @@ theorem delta_eq_zero {K : Subgroup (GL (Fin m) k)} {g : GL (Fin m) k}
     (h : ¬ ∃ u ∈ unipB k (Fin m), ∃ κ ∈ K, g = u * κ) : (delta ψ K : GL (Fin m) k → ℂ) g = 0 := by
   by_cases hK : Good ψ K
   · rw [coe_delta hK, deltaFun_eq_zero h]
-  · rw [delta, dif_neg hK]
+  · rw [delta, dite_eq_right hK]
     rfl
 
 theorem rhoW_delta {K : Subgroup (GL (Fin m) k)} {κ : GL (Fin m) k} (hκ : κ ∈ K) :
@@ -255,7 +255,7 @@ theorem rhoW_delta {K : Subgroup (GL (Fin m) k)} {κ : GL (Fin m) k} (hκ : κ �
   by_cases hK : Good ψ K
   · refine Subtype.ext (funext fun g => ?_)
     rw [rhoW_apply, coe_delta hK, deltaFun_right hK g hκ]
-  · rw [delta, dif_neg hK, map_zero]
+  · rw [delta, dite_eq_right hK, map_zero]
 
 theorem apply_mul_of_fixed {x : WT (m := m) ψ} {κ : GL (Fin m) k} (h : rhoW ψ κ x = x) (g : GL (Fin m) k) :
     (x : GL (Fin m) k → ℂ) (g * κ) = (x : GL (Fin m) k → ℂ) g := by

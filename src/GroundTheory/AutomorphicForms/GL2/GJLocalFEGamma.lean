@@ -83,7 +83,7 @@ theorem isGammaFactor_gammaFactor [π.IsIrreducible] (hπ : IsAdmissible π)
   have hex : ∃ γ : RatFunc ℂ, IsGammaFactor F π (Measure.haar : Measure (GL (Fin n) F)) ψ γ :=
     ⟨γ, hH⟩
   have hg : gammaFactor F π ψ = γ := by
-    rw [gammaFactor, dif_pos hex]
+    rw [gammaFactor, dite_eq_left hex]
     exact IsGammaFactor.unique hπ hex.choose_spec hH
   rw [hg]
   exact hγ

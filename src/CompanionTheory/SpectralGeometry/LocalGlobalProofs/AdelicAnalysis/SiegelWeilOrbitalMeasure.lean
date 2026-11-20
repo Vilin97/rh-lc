@@ -282,7 +282,7 @@ theorem push_inv (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) {M : ℕ} (J : Matr
       rw [(hcomp n h X).1, hh₀]
     · show actW (Fv F v.1) σ J (g v) (projV v.1 (projFin X)) =
         projV v.1 (projFin (actW (AF F) σ J h X))
-      rw [(hcomp n h X).2 v.1, hhS v.1 v.2, dif_pos v.2]
+      rw [(hcomp n h X).2 v.1, hhS v.1 v.2, dite_eq_left v.2]
   rw [e, ← Measure.map_map hpr (hf h), hres]
 
 theorem local_pack (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)

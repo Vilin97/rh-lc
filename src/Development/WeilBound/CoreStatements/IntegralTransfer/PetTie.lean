@@ -105,7 +105,7 @@ theorem fund_chosen (X : Data E r) : IsOrth X (x0F X) ∧ IsFundSet X (x0F X) (D
   have ho : IsOrth X (x0F X) := fun τ => (X.signature τ).choose_spec.2
   have h := GlobalTheory.MetricWeightTest.exists_fundSet_orth X ho
   unfold Deg.fundF Deg.covol
-  rw [dif_pos h, dif_pos h]
+  rw [dite_eq_left h, dite_eq_left h]
   exact ⟨ho, h.choose_spec, rfl⟩
 
 end FD

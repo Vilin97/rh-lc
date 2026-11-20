@@ -81,7 +81,7 @@ theorem isConj_complexConjAt [IsGalois K L] {w : InfinitePlace L}
     (hv : (w.comap (algebraMap K L)).IsReal) :
     ComplexEmbedding.IsConj w.embedding (complexConjAt K w) := by
   have h := exists_isConj_of_isReal_comap hv
-  rw [complexConjAt, dif_pos h]
+  rw [complexConjAt, dite_eq_left h]
   exact h.choose_spec
 
 theorem complexConjAt_mul_self [IsGalois K L] {w : InfinitePlace L}

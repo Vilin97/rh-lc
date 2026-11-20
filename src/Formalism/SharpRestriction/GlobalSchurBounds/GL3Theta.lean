@@ -977,7 +977,7 @@ theorem TwistedThetaTheorem.rec {D : D7} {C : ℝ} {X : Ideal (𝓞 D.host.K) �
     ⟨fun 𝔞 => if h𝔞 : ∃ x, idl x = 𝔞 then ((chiQ D h𝔞.choose : ℂˣ) : ℂ) else 0, fun x => by
       have hex : ∃ y, idl y = idl x := ⟨x, rfl⟩
       dsimp only
-      rw [dif_pos hex, hinj hex.choose_spec]⟩
+      rw [dite_eq_left hex, hinj hex.choose_spec]⟩
   have hC : IsChi D χ := by
     simp only [IsChi]
     refine ⟨fun 𝔞 𝔟 ha hb => ?_, fun z => ?_⟩

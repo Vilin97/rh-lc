@@ -101,7 +101,7 @@ private theorem mk_mul_reduction_eq_mk {P : HeightOneSpectrum (𝓞 E)} {a : E} 
       Ideal.Quotient.mk P.asIdeal s * c = Ideal.Quotient.mk P.asIdeal r :=
     ⟨b * Ideal.Quotient.mk P.asIdeal r, r, s, hs, hrs, by rw [← mul_assoc, hb, one_mul]⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨r', s', hs', hrs', hc⟩ := hex.choose_spec
   have key : s * r' = s' * r := by
     apply IsFractionRing.injective (𝓞 E) E

@@ -242,7 +242,7 @@ theorem locLen_quot_eq_zero {R : Type*} [CommRing R] (m : Ideal R) [m.IsPrime] {
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self a)
   have hsub : Subsingleton (LocalizedModule m.primeCompl (R ⧸ Ideal.span {a})) :=
     ⟨fun u v => by rw [key u, key v]⟩
-  rw [locLen, dif_pos ‹m.IsPrime›, Module.length_eq_zero_iff.mpr hsub]
+  rw [locLen, dite_eq_left ‹m.IsPrime›, Module.length_eq_zero_iff.mpr hsub]
   rfl
 
 end VerticalPointSurjective

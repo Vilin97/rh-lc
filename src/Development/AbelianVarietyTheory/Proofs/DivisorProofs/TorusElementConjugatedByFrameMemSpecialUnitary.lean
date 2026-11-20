@@ -12,9 +12,9 @@ theorem sum_angles {r : ℕ} (φ : Fin (r - 1) → ℝ) : ∑ a : Fin r, angles 
   | succ n =>
     rw [Fin.sum_univ_castSucc]
     have h1 : ∀ i : Fin n, angles φ (Fin.castSucc i) = φ ⟨i, by simpa using i.isLt⟩ := by
-      intro i; unfold angles; rw [dif_pos (by simpa using i.isLt)]; rfl
+      intro i; unfold angles; rw [dite_eq_left (by simpa using i.isLt)]; rfl
     have h2 : angles φ (Fin.last n) = -∑ k, φ k := by
-      unfold angles; rw [dif_neg (by simp)]
+      unfold angles; rw [dite_eq_right (by simp)]
     rw [h2, Finset.sum_congr rfl (fun i _ => h1 i)]
     simp
 

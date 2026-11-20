@@ -111,10 +111,10 @@ theorem unitChar_eq_prod (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl 
     refine (map_prod Circle.coeHom _ _).trans (Finset.prod_congr rfl fun w _ => ?_)
     rw [unitInd, dif_pos (h w.1 w.2)]
     rfl
-  · rw [unitChar, dif_neg fun ⟨x, hx⟩ => h fun w hw => unit_of_isUnitDet he hx hw (hN w hw)]
+  · rw [unitChar, dite_eq_right fun ⟨x, hx⟩ => h fun w hw => unit_of_isUnitDet he hx hw (hN w hw)]
     push Not at h
     obtain ⟨w, hw, h⟩ := h
-    exact (Finset.prod_eq_zero hw (by rw [unitInd, dif_neg fun h' => h h'.1 h'.2])).symm
+    exact (Finset.prod_eq_zero hw (by rw [unitInd, dite_eq_right fun h' => h h'.1 h'.2])).symm
 
 theorem mem_cball_iff (w : Pl D.host.E) (c : ℕ) (y : Kw w) :
     y ∈ cball (unifAt w ^ c) ↔ Valued.v y ≤ WithZero.exp (-(c : ℤ)) := by
@@ -174,7 +174,7 @@ theorem stdA_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNo
     · rw [← hM']
       exact h1.2.1.1 j i
     · exact e4 _ (e3.1 h1.2.2 _ _ (by simp))
-  · rw [unitInd, dif_neg]
+  · rw [unitInd, dite_eq_right]
     intro h3
     refine h1 ⟨e2 ▸ h3.1, ⟨fun i j => ?_, e2 ▸ h3.2⟩, e3.2 h2.2⟩
     rw [blk₁, of_apply, hM']

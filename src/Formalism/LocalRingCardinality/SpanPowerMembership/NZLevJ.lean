@@ -69,7 +69,7 @@ include v0 in
 theorem value_standardTuple : valE P hp (standardTuple P) = EV P := by
   classical
   unfold valE
-  rw [dif_pos (standardTuple_isLattice P)]
+  rw [dite_eq_left (standardTuple_isLattice P)]
   have := wd P hp v0 (gOf P hp (standardTuple P) (standardTuple_isLattice P)) 1 (by rw [gOf_spec, jd_smul_one])
   rw [this, map_one, Units.val_one, one_smul, jd_actX_one, LinearMap.id_apply]
 
@@ -80,17 +80,17 @@ theorem valE_smul (γ : (levB P hp).Γ) (L : P.Tup) :
   unfold valE
   by_cases hL : P.IsLatTup L
   · have hL' : P.IsLatTup ((levB P hp).smul γ L) := (Formalism.MainNotions.G.Inhab.isLatTup_smul_iff P (levB P hp) γ L).mpr hL
-    rw [dif_pos hL', dif_pos hL]
+    rw [dite_eq_left hL', dite_eq_left hL]
     rw [wd P hp v0 (gOf P hp _ hL') (γ * gOf P hp L hL) (by rw [gOf_spec, jd_smul_mul, gOf_spec])]
     rw [map_mul, Units.val_mul, jd_actX_mul, LinearMap.comp_apply, mul_smul, LinearMap.map_smul_of_tower]
   · have hL' : ¬ P.IsLatTup ((levB P hp).smul γ L) := fun h =>
       hL ((Formalism.MainNotions.G.Inhab.isLatTup_smul_iff P (levB P hp) γ L).mp h)
-    rw [dif_neg hL', dif_neg hL, map_zero, smul_zero]
+    rw [dite_eq_right hL', dite_eq_right hL, map_zero, smul_zero]
 
 theorem valE_mem (L : P.Tup) (hL : P.IsLatTup L) : valE P hp L ∈ P.HtupW L := by
   classical
   unfold valE
-  rw [dif_pos hL]
+  rw [dite_eq_left hL]
   have h1 := Formalism.L2.G.Cmp.equivSys_HtupW (gatU P hp) () (gOf P hp L hL) (standardTuple P) (standardTuple_isLattice P) (EV P) (EV_mem P)
   have h2 : (gatU P hp).P.HtupW (((gatU P hp).lev ()).smul (gOf P hp L hL) (standardTuple P)) = P.HtupW L := by
     show P.HtupW ((levB P hp).smul (gOf P hp L hL) (standardTuple P)) = _

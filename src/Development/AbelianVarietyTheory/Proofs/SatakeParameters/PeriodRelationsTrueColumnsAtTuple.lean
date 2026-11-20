@@ -207,7 +207,7 @@ theorem tiesAt_true : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX
           have hmem : I.sel v ∈ I.Q a := by
             classical
             unfold ColIn.Q QE
-            rw [dif_pos hfin]
+            rw [dite_eq_left hfin]
             convert Finset.mem_image_of_mem I.sel (hfin.mem_toFinset.2 hv)
           have hu := (GlobalTheory.Mem.ReadTwist.plc_under_eq_iff (F := B.host.F) (I.sel v) (Formalism.L2.DIV.plc_prime' v)).1
           rw [GlobalTheory.Mem.LevTwist.under_sel h v] at hu

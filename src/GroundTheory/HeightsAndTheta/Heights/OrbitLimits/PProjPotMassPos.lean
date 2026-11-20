@@ -75,7 +75,7 @@ theorem ProjPotMassPos.of_found (hD : ProjPotDens.Statement) : ProjPotMassPos.St
         fun h => hyC h.2), Set.indicator_of_notMem hyC, zero_mul]
   have hPn : Nonempty (ChartPartition BV) := existsPartition BV
   unfold mInt
-  rw [dif_pos hPn]
+  rw [dite_eq_left hPn]
   unfold integralWith
   set χ := hPn.some
   have hnn : ∀ i, ∀ y ∈ (BV.chart i).target, 0 ≤ χ.χ i ((BV.chart i).symm y) *

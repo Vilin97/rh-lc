@@ -60,7 +60,7 @@ theorem c_ptsat : SheetIndepStatement → ∀ (K : Type) [Fintype K] (ι : K →
   unfold sheetDensity
   by_cases h1 : ∃ γ, IsSheet P Ψ' y w γ
   · have h2 : ∃ γ, IsSheet P Ψ (star y) (star w) γ := ⟨_, ptsat_sheet h h1.choose_spec⟩
-    rw [dif_pos h1, dif_pos h2, hy _ _ _ h2.choose_spec (ptsat_sheet h h1.choose_spec),
+    rw [dite_eq_left h1, dite_eq_left h2, hy _ _ _ h2.choose_spec (ptsat_sheet h h1.choose_spec),
       (GlobalTheory.T.complex_conjugation_herm_compat K ι).2.2.2.1]
     have h3 := c_madens e (fun j y' => pot L j ((star ∘ h1.choose ∘ star) y')) y
     congr 1
@@ -74,6 +74,6 @@ theorem c_ptsat : SheetIndepStatement → ∀ (K : Type) [Fintype K] (ι : K →
       rfl
   · have h2 : ¬ ∃ γ, IsSheet P Ψ (star y) (star w) γ := fun ⟨γ, hγ⟩ =>
       h1 ⟨_, by simpa only [star_star] using ptsat_sheet (ptsat_symm h) hγ⟩
-    rw [dif_neg h1, dif_neg h2]
+    rw [dite_eq_right h1, dite_eq_right h2]
 
 end PositivityTheory.UnitarySelfGeneration

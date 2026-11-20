@@ -36,7 +36,7 @@ theorem rotR_val (θ : ℝ) :
     have := Real.sin_sq_add_cos_sq θ
     nlinarith
   unfold rotR
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 def dd (ε : Bool) : ℝ := if ε then -1 else 1

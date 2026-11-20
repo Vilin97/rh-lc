@@ -168,7 +168,7 @@ theorem embT_mem (τ : D.what₂.Tau) (x : D.host.E) : embT D τ x ∈ Qbar :=
 
 theorem lam_mk {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (a : ℂ) (h : a ∈ Qbar) :
     lam ⟨a, h⟩ = lamC lam a := by
-  unfold lamC; rw [dif_pos h]
+  unfold lamC; rw [dite_eq_left h]
 
 end Main
 

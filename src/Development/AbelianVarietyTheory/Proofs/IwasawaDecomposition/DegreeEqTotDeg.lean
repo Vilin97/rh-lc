@@ -277,7 +277,7 @@ theorem gens_algebraic (P : Pre) (χ : HChar P.host.E) (Ξ : Set (HChar P.host.E
 theorem allSet_subset (P : Pre) (χ : HChar P.host.E) {Ξ : Set (HChar P.host.E)} (h : Ξ.Finite) {K : Subfield ℂ}
     (hK : ∀ z ∈ gens P χ Ξ, z ∈ K) : allSet P χ Ξ ⊆ K := by
   have h1 := finAlg_allSet P χ h
-  rw [gens, dif_pos h1] at hK
+  rw [gens, dite_eq_left h1] at hK
   exact h1.choose_spec.2.trans (Subfield.closure_le.2 hK)
 
 theorem exists_jetsIn (hL : StagesInhab.HasLetters B.toPre) {I : ColIn B X} (h : I.Ok)

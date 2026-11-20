@@ -123,8 +123,8 @@ theorem opE_submatrix [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle)
       rcases r with r | r <;> rcases s with s | s <;> rfl
     simp only [affPt, submatrix_apply, Matrix.add_apply, hb, of_apply, h2]
     by_cases h : Free p (r, s)
-    · rw [dif_pos h, dif_pos ((hf r s).1 h)]; rfl
-    · rw [dif_neg h, dif_neg fun H => h ((hf r s).2 H)]
+    · rw [dite_eq_left h, dite_eq_left ((hf r s).1 h)]; rfl
+    · rw [dite_eq_right h, dite_eq_right fun H => h ((hf r s).2 H)]
   unfold opE
   rw [← (measurePreserving_piCongrLeft (fun _ => ν) σ.symm).integral_comp']
   simp only [← h1]

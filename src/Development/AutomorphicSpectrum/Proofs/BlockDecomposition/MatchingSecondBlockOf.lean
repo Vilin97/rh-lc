@@ -342,12 +342,12 @@ theorem qT_eq (s : Finset (Fin (n / 2))) :
   unfold LocData.qT MT.entT
   by_cases h : LocData.admitted n a s
   · have h' : MT.admitted n a s := ⟨h.1.1, h.1.2.1, h.1.2.2, h.2.1, h.2.2⟩
-    rw [dif_pos h, dif_pos h', Finsupp.sum, Finset.mul_sum, ← Finset.sum_coe_sort (d.c w).support]
+    rw [dite_eq_left h, dite_eq_left h', Finsupp.sum, Finset.mul_sum, ← Finset.sum_coe_sort (d.c w).support]
     refine Finset.sum_congr rfl fun j _ => ?_
     unfold Tail.dc2
     ring
   · have h' : ¬ MT.admitted n a s := fun h' => h ⟨⟨h'.1, h'.2.1, h'.2.2.1⟩, h'.2.2.2.1, h'.2.2.2.2⟩
-    rw [dif_neg h, dif_neg h', mul_zero]
+    rw [dite_eq_right h, dite_eq_right h', mul_zero]
 
 theorem mpow_scale {b : ℕ} (r : ℂ) (u : GLw a w × GLw b w → ℂ) (k : ℕ) :
     MT.mpow w (fun y => r * u y) k = fun y => r ^ k * MT.mpow w u k y := by

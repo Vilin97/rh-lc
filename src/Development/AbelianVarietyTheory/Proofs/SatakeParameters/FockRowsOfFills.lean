@@ -20,9 +20,9 @@ theorem fock_rows_of_fills : ∀ (D : D7) (u : D.what₂.Word) (w : D.what₂.pl
   by_cases h1 : r < D.R.k
   · rw [if_pos (by omega), if_pos (show r < D.R.N i by simp [Ranks.N]; omega)]
     unfold FormalGroupSystem.lamI
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     unfold DV.nuRow DV.srcPar
-    rw [dif_pos h1, hwS]
+    rw [dite_eq_left h1, hwS]
     have hl : (((D.gat u w hg).P.lam0 v s ⟨r + 1 - 1, by omega⟩ : ℤ) : ℚ) =
         (D.hcW u (hT.gat_pos u w hg ⟨v, s⟩)).u ⟨r, h1⟩ - ((D.R.k : ℚ) - 1) / 2 + r := by
       rw [hT.gat_lam, (D.fm u).lam_eq 0 (Nat.zero_le _)]
@@ -46,9 +46,9 @@ theorem fock_rows_of_fills : ∀ (D : D7) (u : D.what₂.Word) (w : D.what₂.pl
         rw [Nat.div_lt_iff_lt_mul ht1]; exact h2
       rw [if_pos (by omega), if_pos (by omega)]
       unfold DV.nuRow DV.srcPar
-      rw [dif_neg h1]
+      rw [dite_eq_right h1]
       simp only [Nat.add_sub_cancel_left]
-      rw [dif_pos (by omega), hwS]
+      rw [dite_eq_left (by omega), hwS]
       have hr : q = q / (D.R.t + 1) * (D.R.t + 1) + q % (D.R.t + 1) := by
         have := Nat.div_add_mod q (D.R.t + 1); rw [mul_comm] at this; omega
       have hrR : (q : ℝ) = ((q / (D.R.t + 1) : ℕ) : ℝ) * ((D.R.t : ℝ) + 1) + ((q % (D.R.t + 1) : ℕ) : ℝ) := by

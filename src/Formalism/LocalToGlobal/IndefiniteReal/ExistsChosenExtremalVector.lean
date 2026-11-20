@@ -278,7 +278,7 @@ def v0 (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : (R.MW i σ).Vec :=
 theorem extremal_vector_is_chosen (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (h : LowSm (R.MW i σ)) : IsChosenExtremalVector R i σ (v0 R i σ) := by
   have h' := exists_chosen_extremal_vector R i σ h
   unfold v0
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.choose_spec
 
 theorem IsChosenExtremalVector.norm {i : Fin D.R.m} {σ : D.what₂.LL →+* ℂ} {v : (R.MW i σ).Vec} (h : IsChosenExtremalVector R i σ v) (τ : D.what₂.Tau) :

@@ -149,7 +149,7 @@ theorem exists_mem_slab (hS : ∀ t, splitCentre E N t = An.tor E fun _ => t) (h
     · have hN : 0 < N := by omega
       have hi' : i = ⟨N - 1, by omega⟩ := Fin.ext (by simp only; omega)
       rw [hi']
-      have hmN : m = ⌊x ⟨N - 1, by omega⟩⌋ := by rw [hm, dif_pos hN]
+      have hmN : m = ⌊x ⟨N - 1, by omega⟩⌋ := by rw [hm, dite_eq_left hN]
       have hc' : c = -(⌊x ⟨N - 1, by omega⟩⌋ : ℝ) := by rw [hc, hmN]; push_cast; ring
       rw [hc']
       constructor

@@ -90,7 +90,7 @@ theorem theoremB_of_admitted : ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D
   have hlw : ∀ w ∈ dc.row, TruncatedSeriesCountingIdentities.lenW i (ρ i) π dc lenRow (fun _ => 0) w = lenRow w := by
     intro w _
     unfold TruncatedSeriesCountingIdentities.lenW
-    rw [dif_neg (by simp [hcol])]
+    rw [dite_eq_right (by simp [hcol])]
   rw [hcol] at key
   simp only [Finset.union_empty] at key
   rw [Finset.sum_congr rfl hlw] at key

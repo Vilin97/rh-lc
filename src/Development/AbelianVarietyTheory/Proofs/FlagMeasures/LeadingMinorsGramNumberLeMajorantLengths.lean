@@ -97,7 +97,7 @@ theorem norm_Dmin_le (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) {γ x : Ma
     have hb : b.val < r := lt_of_lt_of_le b.isLt hl
     rw [Matrix.of_apply, EuclideanSpace.inner_toLp_toLp, dotProduct_comm, Matrix.submatrix_apply, Zhat,
       ← herm_mulVec (hinv _ hγx).2, Matrix.mulVec_mulVec, Matrix.mul_inv_rev, Matrix.mul_assoc,
-      Matrix.nonsing_inv_mul _ (hinv _ hγ).1, Matrix.mul_one, fvec, fvec, dif_pos (by exact hb), dif_pos (by exact ha)]
+      Matrix.nonsing_inv_mul _ (hinv _ hγ).1, Matrix.mul_one, fvec, fvec, dite_eq_left (by exact hb), dite_eq_left (by exact ha)]
     rfl
   rw [e]
   refine h.trans ?_

@@ -75,7 +75,7 @@ def toU (H : IsLieData σ j s) (a : 𝔸) : uGrp H :=
   if h : σ a * a = 1 then ⟨⟨a, σ a, mul_anti_of_unitary h, h⟩, h⟩ else 1
 
 theorem toU_val (H : IsLieData σ j s) {a : 𝔸} (h : σ a * a = 1) : ((toU H a).1 : 𝔸) = a := by
-  rw [toU, dif_pos h]
+  rw [toU, dite_eq_left h]
 
 theorem toU_coe (H : IsLieData σ j s) (k : uGrp H) : toU H (k.1 : 𝔸) = k :=
   Subtype.ext (Units.ext (toU_val H k.2))

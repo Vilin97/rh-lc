@@ -134,7 +134,7 @@ theorem sPicMk_single_eq_sPicGen (v : {v : HeightOneSpectrum (𝓞 F) // v ∉ S
   classical
   have hex : ∃ u : {v : HeightOneSpectrum (𝓞 F) // v ∉ S},
       ClassGroup.mk0 (primeNZD u.1) = ClassGroup.mk0 (primeNZD v.1) := ⟨v, rfl⟩
-  rw [sPicGen, dif_pos hex]
+  rw [sPicGen, dite_eq_left hex]
   obtain ⟨x, hx⟩ := exists_ordAt_eq_of_mk0_eq hex.choose_spec.symm
   rw [← sub_eq_zero, ← map_sub]
   refine (QuotientAddGroup.eq_zero_iff _).2 ⟨Additive.ofMul x, ?_⟩

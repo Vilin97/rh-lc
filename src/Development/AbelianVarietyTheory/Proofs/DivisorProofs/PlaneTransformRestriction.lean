@@ -29,7 +29,7 @@ theorem planeCoef_mul_planeMat {n n₁ : ℕ} (H : Plane E n n₁) (hr : n₁ + 
     (hs : Function.Surjective (planeMat H).mulVec) : planeCoef H * planeMat H = 1 := by
   classical
   unfold planeCoef
-  rw [dif_pos hr]
+  rw [dite_eq_left hr]
   set e : Fin n₁ ⊕ Fin 2 ≃ Fin n := finSumFinEquiv.trans (finCongr hr) with he
   set P := (planeMat H).submatrix id e.symm with hPdef
   have hP : IsUnit P := by

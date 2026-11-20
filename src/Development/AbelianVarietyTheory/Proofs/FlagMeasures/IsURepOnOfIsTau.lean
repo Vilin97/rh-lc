@@ -63,7 +63,7 @@ lemma norm_Phi_le {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ} {h : ℝ
     congr 1
     have hi : (Fin.castSucc i).val + 1 < m + 1 := by simp
     unfold sInt
-    rw [dif_pos hi]
+    rw [dite_eq_left hi]
     push_cast
     rw [muInt_cast hlam, muInt_cast hlam]
     unfold Formalism.QuantumDeterminants.rhoStd

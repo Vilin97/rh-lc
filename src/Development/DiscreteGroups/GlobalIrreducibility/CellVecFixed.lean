@@ -36,7 +36,7 @@ theorem cellFun_wRev (hS2 : S ≤ KO k (Fin m))
   split_ifs with hK
   · have e : wRev k m * c⁻¹ = (((1 : parab k (eOne m)) : GL (Fin m) k)) * wRev k m * c⁻¹ := by simp
     rw [e, cellFun_eq hS4 1 (hS1 (inv_mem hK)), dl_one, Units.val_one]
-  · rw [cellFun, dif_neg]
+  · rw [cellFun, dite_eq_right]
     rintro ⟨p, y, hy, e⟩
     apply hK
     have hy' : y = (wRev k m * (p : GL (Fin m) k)⁻¹ * wRev k m) * c⁻¹ :=

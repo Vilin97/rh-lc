@@ -102,7 +102,7 @@ theorem toNat_eq {lam ν : DomWeight a} {lam' : DomWeight b} {s' s : ℤ} (h : I
   have h5 := h.2.1 i
   unfold lastEntry
   unfold DomWeight.detShift at h1 ⊢
-  rw [dif_pos ha] at h1 ⊢
+  rw [dite_eq_left ha] at h1 ⊢
   omega
 
 theorem natW_eq_rowNu (hab : a ≤ b) {lam ν : DomWeight a} {lam' : DomWeight b} {s' s : ℤ}

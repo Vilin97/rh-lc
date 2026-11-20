@@ -143,7 +143,7 @@ theorem cc_lt_one : cc < 1 := by
 theorem ordL_eq {a : L} {A : Multiplicative ℤ} (h : Valued.v a = (A : WithZero (Multiplicative ℤ))) :
     ordL a = -Multiplicative.toAdd A := by
   have h0 : Valued.v a ≠ 0 := by rw [h]; exact WithZero.coe_ne_zero
-  rw [ordL, dif_neg h0]
+  rw [ordL, dite_eq_right h0]
   congr 2
   apply WithZero.coe_injective
   rw [WithZero.coe_unzero, h]

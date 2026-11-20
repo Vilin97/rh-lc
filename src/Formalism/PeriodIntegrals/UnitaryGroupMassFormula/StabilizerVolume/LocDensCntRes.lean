@@ -64,7 +64,7 @@ theorem appr_spec {x : Fv F v} (hx : x ∈ v.adicCompletionIntegers F) :
     Valued.v (x - iO v (appr v x)) < 1 := by
   have h := exists_appr v hx
   unfold appr
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def red (x : Fv F v) : 𝓞 F ⧸ v.asIdeal := Ideal.Quotient.mk _ (appr v x)

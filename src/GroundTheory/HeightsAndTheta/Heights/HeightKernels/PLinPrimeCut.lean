@@ -305,7 +305,7 @@ theorem main {n : ℕ} (α : T → k) (M : T → Fin (n + 2) → k) (hα : Submo
     · rintro rfl
       exact ⟨hMin, hRel⟩
   · unfold multAt
-    rw [dif_pos hWprime]
+    rw [dite_eq_left hWprime]
     have := hWprime
     have hsimple : IsSimpleModule (Localization.AtPrime W) (LocalizedModule W.primeCompl (MRing (stackedBlocks T) ⧸ J)) := by
       rw [isSimpleModule_iff_toSpanSingleton_surjective]

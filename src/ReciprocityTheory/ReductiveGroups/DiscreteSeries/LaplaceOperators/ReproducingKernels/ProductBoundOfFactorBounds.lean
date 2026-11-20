@@ -122,10 +122,10 @@ theorem psiGen_cont (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (c : Fin r →
     by_cases h : a.val + 1 < r
     · have e : (fun M : Mat k r => Formalism.MainNotions.S.ellA k r z M a) =
           fun M : Mat k r => M (eI k r a) (eI k r ⟨a.val + 1, h⟩) :=
-        funext fun M => by unfold Formalism.MainNotions.S.ellA; rw [dif_pos h]
+        funext fun M => by unfold Formalism.MainNotions.S.ellA; rw [dite_eq_left h]
       rw [e]; exact continuous_id.matrix_elem _ _
     · have e : (fun M : Mat k r => Formalism.MainNotions.S.ellA k r z M a) = fun M : Mat k r => ∑ j, M (eI k r a) j * z j :=
-        funext fun M => by unfold Formalism.MainNotions.S.ellA; rw [dif_neg h]; rfl
+        funext fun M => by unfold Formalism.MainNotions.S.ellA; rw [dite_eq_right h]; rfl
       rw [e]; exact continuous_finsetSum _ fun j _ => (continuous_id.matrix_elem _ _).mul continuous_const
   unfold Formalism.MainNotions.S.psiGen
   exact Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp

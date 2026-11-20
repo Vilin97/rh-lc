@@ -43,7 +43,7 @@ theorem actW_apply {i : Fin D.R.m} {σ : D.what₂.LL →+* ℂ} {g : G}
     (h : GA D (Wc D i)) : actW R i σ g x v h = x v (h * hk.choose) := by
   show Lev.actG0 (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG g) (x v) h = _
   unfold Lev.actG0
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   simp only [levChi_flag, inv_one, one_mul]
 
 theorem actW_mem (hθ : IsInfFam R.θ) {i : Fin D.R.m} {σ : D.what₂.LL →+* ℂ} (g : G) {x : MMap (R.MW i σ)}
@@ -73,7 +73,7 @@ theorem chiIs_of_values {i : Fin D.R.m} (h1 : ∀ g, ∃ a, D.what₂.embLL a = 
   have hex : ∃ chi, ChiIs R i chi :=
     ⟨MonoidHom.mk' (fun g => Units.mk0 (a g) (hne g)) fun g g' => Units.ext (D.what₂.embLL.injective (by
       simp only [Units.val_mk0, Units.val_mul, map_mul, ha, chiC_mul])), ha⟩
-  rw [chiTop, dif_pos hex]
+  rw [chiTop, dite_eq_left hex]
   exact hex.choose_spec
 
 theorem coe_chiC (i : Fin D.R.m) (g : G) : (chiC R i g : ℂ) =

@@ -114,7 +114,7 @@ theorem evR_map (h : EvLaws Xo c) {f : Rul Xo c}
   have h2 := frMap_trans _ _ _ _ φ _ _ _ h1 hyz
   have hz : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) z := ⟨_, _, _, h2⟩
   unfold evR evalAt
-  rw [dif_pos hy, dif_pos hz]
+  rw [dite_eq_left hy, dite_eq_left hz]
   exact h.wd f hf T _ _ _ (φ.comp _) _ _ z hz.choose_spec.choose_spec.choose_spec h2
 
 theorem evR_mem_R (h : EvLaws Xo c) (P : PChart Xo c β) {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : Rul Xo c}

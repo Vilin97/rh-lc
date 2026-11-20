@@ -416,7 +416,7 @@ theorem isMultiplicityInner_mul_inner {V : HSp D} {Sp : D.what₂.Tau → SPar} 
     rw [← h]
     refine ipM_spec M μ 𝓕 _ _ ?_
     by_contra hn
-    exact mul_ne_zero hd hxy ((h x y).symm.trans (by rw [ipM, dif_neg hn]))
+    exact mul_ne_zero hd hxy ((h x y).symm.trans (by rw [ipM, dite_eq_right hn]))
   by_cases hxy : ⟪x, y⟫_ℂ = 0
   swap
   · exact key x y hxy

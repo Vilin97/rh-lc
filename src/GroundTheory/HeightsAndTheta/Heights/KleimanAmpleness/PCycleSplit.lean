@@ -145,10 +145,10 @@ theorem CycleSplit.proof (hF : CycleSplit.Filt.Statement.{u, w}) (hCu : CycleSpl
     by_cases hsv : IsSubvar x (pp j) 1
     · have hm := hmin j hsv
       have : (pp j).IsPrime := (hpp j).1
-      rw [dif_pos ⟨hm, hsv⟩, nsmul_eq_mul]
+      rw [dite_eq_left ⟨hm, hsv⟩, nsmul_eq_mul]
       simp only [v, if_pos hsv]
       rw [← hcount (pp j) hm, ENat.toNat_natCast]
-    · rw [dif_neg fun h => hsv h.2]
+    · rw [dite_eq_right fun h => hsv h.2]
       simp only [v, if_neg hsv, smul_zero]
   · intro G hG
     rw [Function.mem_support] at hG

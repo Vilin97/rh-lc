@@ -270,7 +270,7 @@ theorem card_ssIdx_eq {D : D7} (u : D.what₂.Word) (τ : D.what₂.Tau) :
   refine key _ _ (Formalism.L2.Col.rankN_zero D.R) fun i hi => ?_
   have hi0 : i < D.R.N 0 := by rw [Formalism.L2.Col.rankN_zero]; exact hi
   have h := (D.fm u).lam_eq 0 (Nat.zero_le _) τ ⟨i, hi0⟩
-  rw [dif_pos hi] at h
+  rw [dite_eq_left hi] at h
   unfold hcToWeightQ rhoVec at h
   have h' : ((((D.fm u).lam 0 τ).w ⟨i, hi0⟩ : ℤ) : ℝ) =
       (((D.hcW u τ).u ⟨i, hi⟩ : ℚ) : ℝ) - (((D.R.k : ℝ) - 1) / 2 - (i : ℝ)) := by
@@ -278,7 +278,7 @@ theorem card_ssIdx_eq {D : D7} (u : D.what₂.Word) (τ : D.what₂.Tau) :
     push_cast at h2
     exact h2
   unfold Formalism.L2.Col.wSeq StandardLattice.uN
-  rw [dif_pos hi0, dif_pos hi, h']
+  rw [dite_eq_left hi0, dite_eq_left hi, h']
   ring
 
 theorem mu0Tie_of_sym {D : D7} (C : ColsTiedSym D) (u : D.what₂.Word) : StandardLattice.Mu0Tie D u := by

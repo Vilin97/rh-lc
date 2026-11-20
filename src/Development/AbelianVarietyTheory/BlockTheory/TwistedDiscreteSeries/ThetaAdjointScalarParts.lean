@@ -51,7 +51,7 @@ theorem gap {Rk : Ranks} (h : HCParam Rk) (j : Fin Rk.m) {n : ℕ} (hn : n < Rk.
   have val : ∀ (c : ℕ) (hc : c < Rk.m), Formalism.L2.NTheta.lamAt h (Rk.k - 1 + c) = -h.b ⟨c, hc⟩ := by
     intro c hc
     unfold Formalism.L2.NTheta.lamAt
-    rw [dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_left (by omega)]
     simp
   unfold Ranks.r at hn mono
   by_cases hle : n ≤ Rk.k - 1 + j

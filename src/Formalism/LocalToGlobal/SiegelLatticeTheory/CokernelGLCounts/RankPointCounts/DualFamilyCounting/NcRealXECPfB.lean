@@ -120,7 +120,7 @@ theorem psiC_sub (t t' : (CI k r → ℂ) × (Fin r → ℝ)) (c : CI k r)
     have sk := cK_skew t.1 t.2 a b
     have sk' := cK_skew t'.1 t'.2 a b
     have hx : ∀ x : CI k r → ℂ, ∀ s, cK x s a b = x (Sum.inr (Sum.inr ⟨(a, b), h⟩)) := by
-      intro x s; unfold cK; rw [dif_pos h]
+      intro x s; unfold cK; rw [dite_eq_left h]
     show kof _ a b - kof _ a b = _
     rw [← hx t.1 t.2, ← hx t'.1 t'.2]
     simp only [kof]
@@ -140,7 +140,7 @@ theorem psiR_sub (t t' : (CI k r → ℂ) × (Fin r → ℝ)) (a : Fin r)
   have e1 := entry_of_fil hE (i := eI k r a) (j := esI k r a) (by rw [dg_eI, dg_esI]; omega)
   simp only [Matrix.sub_apply, Lm_es] at e1
   have hk : ∀ (x : CI k r → ℂ) (s : Fin r → ℝ), cK x s a a = (s a : ℂ) * Complex.I := by
-    intro x s; unfold cK; rw [dif_neg (lt_irrefl a), dif_neg (lt_irrefl a)]
+    intro x s; unfold cK; rw [dite_eq_right (lt_irrefl a), dite_eq_right (lt_irrefl a)]
   rw [hk, hk] at e1
   have := congrArg Complex.im (hm.trans e1)
   simp only [Complex.sub_im, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re,

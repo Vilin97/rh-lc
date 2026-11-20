@@ -25,7 +25,7 @@ theorem extNorm_eq_nat_log_le_bound : ∀ (K : Type) [Field K] [StarRing K] [Cha
       rw [Int.natCast_floor_eq_floor hR0]
       exact Int.le_floor.mpr h
     unfold DomWeight.natW DomWeight.detShift
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     omega
   choose s hs0 hs1 hs2 using fun τ => GlobalTheory.T.fockNorm_extremal_vector_eq_bounded_nat n (lam τ) ⌊R⌋₊ (hw τ)
   refine ⟨∏ τ, s τ, Finset.prod_pos fun τ _ => hs0 τ, ?_, ?_⟩

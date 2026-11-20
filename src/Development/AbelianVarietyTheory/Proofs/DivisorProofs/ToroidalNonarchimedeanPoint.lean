@@ -126,7 +126,7 @@ theorem grCond_tanMat_of_inGr : ∀ {E : Type} [Field E] [NumberField E] [IsCMFi
         refine ⟨fun s => if h : s.1 = ρ i then b (Fin.cast (congrArg r h) s.2) else 0,
           fun s hs => dif_neg hs, ?_⟩
         rw [sum_sigma_block _ (ρ i) fun s hs => by simp only [dif_neg hs, zero_smul], hb']
-        exact Finset.sum_congr rfl fun j _ => by dsimp only; rw [dif_pos rfl]; rfl
+        exact Finset.sum_congr rfl fun j _ => by dsimp only; rw [dite_eq_left rfl]; rfl
       choose e he1 he2 using hexp
       let V : Fin m → TanM x Z.t.G := fun i => LieMet.tanOf (hv i).2.1
       refine ⟨∑ i, e i, fun s hs => ?_, ?_⟩

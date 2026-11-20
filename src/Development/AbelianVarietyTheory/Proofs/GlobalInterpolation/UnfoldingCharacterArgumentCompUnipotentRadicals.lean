@@ -52,7 +52,7 @@ theorem sub_atN_mem {i : ℕ} {v : Fin (n + c) → F} (hv : v ∈ Loc.Ufl F n c 
       exact l.2
     have ha : Loc.atN v (n + i) = v l := by
       unfold Loc.atN
-      rw [dif_pos hlt]
+      rw [dite_eq_left hlt]
       congr 1
       exact Fin.ext he.symm
     rw [ha]
@@ -89,7 +89,7 @@ theorem map_mem_Ufl {xj : (Fin n' → F) →ₗ[F] (Fin n → F)} {x : (Fin (n' 
     apply mem_Ufl_iff_forall_not_lt_eq_zero.2
     intro l hl
     simp only [Loc.inX, LinearMap.pi_apply]
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
     rfl
   | succ s ih =>
     intro v hv

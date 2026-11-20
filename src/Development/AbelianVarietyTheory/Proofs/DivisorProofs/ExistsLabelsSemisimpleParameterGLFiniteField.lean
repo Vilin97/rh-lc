@@ -30,7 +30,7 @@ theorem exists_labelsChar_of_pos (L : GlobalTheory.GLq.LabelDatum p) {d : ℕ} (
   obtain ⟨n, -, hn⟩ := hprim.eq_pow_of_pow_eq_one hu
   have hex : ∃ n : ℕ, ((u : (Fbar p)ˣ) : Fbar p) = L.gen d ^ n := ⟨n, hn.symm⟩
   unfold GlobalTheory.GLq.thetaOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have e : u = γ ^ hex.choose := Subtype.ext (Units.ext (by simpa [γ] using hex.choose_spec))
   rw [map_pow, hk, ← Units.val_pow_eq_pow_val, ← map_pow, ← e]
 

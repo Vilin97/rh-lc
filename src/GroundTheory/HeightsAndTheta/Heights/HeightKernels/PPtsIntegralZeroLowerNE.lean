@@ -133,7 +133,7 @@ theorem density_ge {W : Ideal (MRing ι)} {Ψ : (((k : K) → ι k) → ℂ) →
     ⟨fun _ => z, rfl, Filter.Eventually.of_forall fun y' =>
       ⟨differentiableAt_const _, hz, by rw [Subsingleton.elim y' y]; exact hΨz⟩⟩
   unfold sheetDensity
-  rw [dif_pos hex, maDensity_zero, mul_one]
+  rw [dite_eq_left hex, maDensity_zero, mul_one]
   exact hc _ hex.choose_spec.2.self_of_nhds.2.1
 
 end PtsIntegralZeroLowerNEAux
@@ -146,7 +146,7 @@ theorem PtsIntegralZeroLowerNE.proof : PtsIntegralZeroLowerNE.Statement := by
   obtain ⟨Ψ0, hΨ0⟩ := exists_goodProj hfin
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (0 + 1) → ℂ), IsGoodProj W Ψ := ⟨Ψ0, hΨ0⟩
   unfold ptsIntegral
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hΨ : IsGoodProj W hex.choose := hex.choose_spec
   let y : Fin 0 → ℂ := fun i => i.elim0
   unfold ptsIntegralAt

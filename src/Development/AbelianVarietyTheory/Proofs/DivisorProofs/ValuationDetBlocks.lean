@@ -137,7 +137,7 @@ theorem colDatum_eq {X : Matrix (Fin n) D k} {u : GL (Fin n) k} (hu : u ∈ KO k
   have h : StdSupp ϖ c (Xᵀ.submatrix σ id) :=
     ⟨fun i j => by rw [e]; exact (mem_KO_iff_det.1 hu).1 j i, by rw [e, det_transpose]; exact (mem_KO_iff_det.1 hu).2,
       fun i j => h₂ j i⟩
-  rw [colDatum, stdDatum, dif_pos h]
+  rw [colDatum, stdDatum, dite_eq_left h]
   congr 3
   exact Units.ext (by simp [e])
 

@@ -26,7 +26,7 @@ theorem killVars_X_of_mem {S : Set σ} {x : σ} (hx : x ∈ S) :
     killVars R S (X x) = 0 := by
   have : x ∉ Set.range (Subtype.val : {x : σ // x ∉ S} → σ) := by simpa using hx
   simp only [killVars, killCompl, aeval_X]
-  rw [dif_neg this]
+  rw [dite_eq_right this]
 
 theorem killVars_C (S : Set σ) (r : R) : killVars R S (C r) = C r :=
   (killVars R S).commutes r

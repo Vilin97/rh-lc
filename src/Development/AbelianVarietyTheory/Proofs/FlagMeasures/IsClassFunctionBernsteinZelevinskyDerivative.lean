@@ -47,7 +47,7 @@ theorem tl_blocks (A : Mt g a) (B : Matrix (Fin a) (Fin b) (ZMod g)) (C : Matrix
   ext i j
   have hi := i.2
   have hj := j.2
-  rw [tl, entN, dif_pos ⟨by omega, by omega⟩]
+  rw [tl, entN, dite_eq_left ⟨by omega, by omega⟩]
   change blocks A B C D (Fin.castAdd b i) (Fin.castAdd b j) = _
   simp [blocks]
 
@@ -56,7 +56,7 @@ theorem br_blocks (A : Mt g a) (B : Matrix (Fin a) (Fin b) (ZMod g)) (C : Matrix
   ext i j
   have hi := i.2
   have hj := j.2
-  rw [br, entN, dif_pos ⟨by omega, by omega⟩]
+  rw [br, entN, dite_eq_left ⟨by omega, by omega⟩]
   change blocks A B C D (Fin.natAdd a i) (Fin.natAdd a j) = _
   simp [blocks]
 

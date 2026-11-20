@@ -147,11 +147,11 @@ theorem sM_e (hk : m + 1 < a) : sM hk (Pi.single (t0 hk) (1 : F)) = 1 := by
     funext j
     simp only [extR, Matrix.one_apply]
     by_cases hj : (j : ℕ) < m + 1
-    · rw [dif_pos hj, Pi.single_apply]
+    · rw [dite_eq_left hj, Pi.single_apply]
       congr 1
       simp only [t0, Subtype.ext_iff, Prod.ext_iff, Fin.ext_iff, and_true, eq_iff_iff]
       omega
-    · rw [dif_neg hj, if_neg]
+    · rw [dite_eq_right hj, if_neg]
       intro e
       rw [← e] at hj
       simp at hj
@@ -170,7 +170,7 @@ theorem blk_sM (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m + 1
         intro e
         rw [← e] at hj
         simp at hj
-      rw [hi, Matrix.updateRow_self, extR, dif_neg hj, Matrix.one_apply_ne hmj]
+      rw [hi, Matrix.updateRow_self, extR, dite_eq_right hj, Matrix.one_apply_ne hmj]
     · rw [Matrix.updateRow_ne hi]
   · simp [sM, hξ]
 
@@ -186,9 +186,9 @@ theorem mir_mul (hk : m + 1 < a) (h : GL (Fin a) F) (hh : GlobalTheory (m + 1) h
       · have hi' : i = ⟨m, by omega⟩ := Fin.ext him
         rw [hM, sM_val hk _ hξ, sMat, hi', Matrix.updateRow_self, extR]
         by_cases hl : (l : ℕ) < m + 1
-        · rw [dif_pos hl]
+        · rw [dite_eq_left hl]
           rfl
-        · rw [dif_neg hl]
+        · rw [dite_eq_right hl]
           rw [hh _ _ (Or.inr (by omega)), Matrix.one_apply_ne]
           intro e
           rw [← e] at hl

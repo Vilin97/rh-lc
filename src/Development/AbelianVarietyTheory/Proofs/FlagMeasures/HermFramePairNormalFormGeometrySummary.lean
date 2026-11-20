@@ -980,7 +980,7 @@ theorem _root_.GlobalTheory.DegCnt.NF.geometry : ∀ (K V : Type) [Field K]
     apply N.F.hT
     rw [N.hT, hT0, Nat.cast_zero]
   · unfold _root_.GlobalTheory.DegCnt.NF.nD
-    rw [dif_pos (N.j_le.trans (Nat.le_succ r))]
+    rw [dite_eq_left (N.j_le.trans (Nat.le_succ r))]
     have hI : (Ideal.absNorm N.𝔡 : ℝ) ≠ 0 := by
       exact_mod_cast mt Ideal.absNorm_eq_zero_iff.1 N.𝔡_ne
     refine mul_ne_zero ?_ ?_

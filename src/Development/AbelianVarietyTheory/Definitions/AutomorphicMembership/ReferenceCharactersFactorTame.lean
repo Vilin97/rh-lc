@@ -50,13 +50,13 @@ def ptFr (p : DecoF E n ST SG Q) (P : HeightOneSpectrum (𝓞 E)) : Sp E n ≃�
 
 theorem isLiftFr_ptFr (p : DecoF E n ST SG Q) (w : SG) : IsLiftFr p.deco.1 w (ptFr p w.1) := by
   unfold ptFr
-  rw [dif_pos w.2]
+  rw [dite_eq_left w.2]
   exact TopStep.liftFr_spec p.deco.2 w
 
 theorem ptFr_of_mem (p : DecoF E n ST SG Q) {P : HeightOneSpectrum (𝓞 E)} (h : P ∉ SG) (h' : P ∈ Q) :
     ptFr p P = p.fr ⟨P, h'⟩ := by
   unfold ptFr
-  rw [dif_neg h, dif_pos h']
+  rw [dite_eq_right h, dite_eq_left h']
 
 theorem isFr_ptFr (p : DecoF E n ST SG Q) (P : HeightOneSpectrum (𝓞 E)) : IsFr P p.deco.1.N (ptFr p P) := by
   by_cases h : P ∈ SG
@@ -65,7 +65,7 @@ theorem isFr_ptFr (p : DecoF E n ST SG Q) (P : HeightOneSpectrum (𝓞 E)) : IsF
   · rw [ptFr_of_mem p h h']
     exact p.2 ⟨P, h'⟩
   · unfold ptFr
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
     exact isFr_latFr P p.deco.2.lat
 
 theorem ptFr_congr {ST' : Finset (HeightOneSpectrum (𝓞 E))} {p : DecoF E n ST SG Q} {p' : DecoF E n ST' SG Q}
@@ -80,7 +80,7 @@ theorem frsF_eq_ptFr {X : Fields} {Pr : Primes X} {R : Ranks}
   unfold frsF
   split_ifs with h
   · unfold ptFr
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   · exact (ptFr_of_mem p h _).symm
 
 def extTo (SQ : Finset (HeightOneSpectrum (𝓞 E))) (p : DecoF E n ST SG Q) : DecoF E n ST SG SQ :=

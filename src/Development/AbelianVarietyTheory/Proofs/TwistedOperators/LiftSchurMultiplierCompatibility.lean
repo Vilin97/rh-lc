@@ -180,7 +180,7 @@ theorem determinantBlock_eq_one_of_rank_le {κ : Type} [CommRing κ] {n r : ℕ}
   · apply Units.ext
     rw [diag_block_det_val 1 hx, Matrix.det_isEmpty, Units.val_one]
   · unfold dBlk ext1
-    rw [dif_neg hx]
+    rw [dite_eq_right hx]
 
 theorem rank_zero_le : (Yc D 0).rank ≤ D.R.r := by
   rw [D.sp.Y_rank _ (min_le_right _ _)]

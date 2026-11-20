@@ -216,7 +216,7 @@ theorem cayR_eq (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) (g : Formalism
       Formalism.REAL.inUJ ε ((2 + unrealify x) * (2 - unrealify x)⁻¹) := by
     rw [h]; exact ⟨(g : (Matrix (Fin n) (Fin n) ℂ)ˣ).isUnit, g.2⟩
   unfold cayR
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   apply Subtype.ext; apply Units.ext
   rw [IsUnit.unit_spec]; exact h
 

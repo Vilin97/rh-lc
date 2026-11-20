@@ -93,7 +93,7 @@ def divD (j : ℕ) : DA X Kc j →ₗ[X.G.Kf] DA X Kc j :=
 theorem divD_mul (j : ℕ) (h : Function.Injective (LinearMap.mulLeft X.G.Kf (denD X Kc j))) (P : DA X Kc j) :
     divD X Kc j (denD X Kc j * P) = P := by
   unfold divD
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact LinearMap.congr_fun (Classical.choose_spec (LinearMap.exists_leftInverse_of_injective
     (LinearMap.mulLeft X.G.Kf (denD X Kc j)) (LinearMap.ker_eq_bot.2 h))) P
 

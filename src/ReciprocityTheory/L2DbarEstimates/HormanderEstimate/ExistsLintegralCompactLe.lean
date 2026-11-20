@@ -76,7 +76,7 @@ private theorem db_eq_wdb_of_mem_chart_source (n : ℕ) {M : Type*} [Topological
     (hx : x ∈ e.source) : db n z j f x = wdb n j (f ∘ e.symm) (z x) := by
   have hex : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source := ⟨e, he, hx⟩
   unfold db
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hspec := Classical.choose_spec hex
   have heq : (f ∘ (Classical.choose hex).symm) =ᶠ[𝓝 (z x)] (f ∘ e.symm) :=
     (chart_symm_eventuallyEq_of_mem_sources n z hspec.1 he hspec.2 hx).fun_comp f

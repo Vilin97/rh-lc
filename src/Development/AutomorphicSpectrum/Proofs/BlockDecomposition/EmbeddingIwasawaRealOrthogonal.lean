@@ -31,7 +31,7 @@ theorem emR_coe (h : GL (Fin 2) ℝ) :
     intro hh
     apply h0
     linarith
-  rw [GL2LocalData.emR, dif_pos hd]
+  rw [GL2LocalData.emR, dite_eq_left hd]
   rfl
 
 theorem emR_iwasawa : ∀ (a b : ℝˣ) (k : GL (Fin 2) ℝ), k.val * k.valᵀ = 1 →

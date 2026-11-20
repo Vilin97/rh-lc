@@ -200,7 +200,7 @@ theorem del_eq_zero_of_lt [Infinite k] (hp : IsProjOver S.str) (hb : S.BasePoint
   have h1 := (hf.zero_iff_of_isAlgClosed S.isHomogeneous_imageIdeal fun p => algebraMap k Ω (u p)).2
     ⟨S.coords x, hb.coords_ne_zero x, fun g hg => S.eval₂_coords_eq_zero x hg, fun i => by
       have h2 := hc ⟨i, by omega⟩
-      rw [dif_pos i.2, ← hx, ← S.val_ne_zero_iff, not_not, S.val_comb] at h2
+      rw [dite_eq_left i.2, ← hx, ← S.val_ne_zero_iff, not_not, S.val_comb] at h2
       exact h2⟩
   exact hu ((map_eq_zero (algebraMap k Ω)).1 ((aeval_algebraMap_apply Ω u f).symm.trans h1))
 

@@ -60,7 +60,7 @@ theorem exists_sub_unitsToIdeles_iChar_inl_eq_zero (y : cohomology (limitRep K) 
   change _ - brauerLocal ι (globalCupClass (iChar K) a) (.inl v) = 0
   by_cases hv : v.IsReal
   · apply placeInv_injective (.inl v)
-    rw [map_sub, map_zero, sub_eq_zero, placeInv_brauerLocal_globalCupClass_iChar, dif_pos hv]
+    rw [map_sub, map_zero, sub_eq_zero, placeInv_brauerLocal_globalCupClass_iChar, dite_eq_left hv]
     have hs := ha ⟨v, hv⟩
     simp only [decide_eq_true_eq] at hs
     rcases placeInv_inl_eq_zero_or_eq_half v (idelesLimitCohomologyEquiv ι (by norm_num : 1 ≤ 2) y (.inl v))

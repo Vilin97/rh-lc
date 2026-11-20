@@ -222,7 +222,7 @@ include hI
 
 theorem kaB_wmap (q : ℕ) {x : Vsp X.dim} (hx : x ∈ Ip X I) : kaB X I q (wmap (IR I) x) = (X.eps x : ℂ) ^ q := by
   have h : ∃ x' ∈ Ip X I, wmap (IR I) x' = wmap (IR I) x := ⟨x, hx, rfl⟩
-  rw [kaB, dif_pos h]
+  rw [kaB, dite_eq_left h]
   have hs := h.choose_spec
   have hp : p2 (IR I) h.choose = p2 (IR I) x := by
     rw [← jj_wmap' (hK_of hI), ← jj_wmap' (hK_of hI) x, hs.2]

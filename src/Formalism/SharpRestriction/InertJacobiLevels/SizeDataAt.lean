@@ -218,7 +218,7 @@ theorem sizeDataAt : SizeDataAt := by
     intro j h1 h2 τ
     have h : j - 1 < D.R.m := by omega
     unfold wj
-    rw [dif_pos h, hF.he]
+    rw [dite_eq_left h, hF.he]
     obtain h3 | h3 : j - 1 = 0 ∨ j - 1 = 1 := by omega
     all_goals
       simp only [h3]

@@ -107,7 +107,7 @@ theorem avg_spec (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) →
       ((p.2.card : ℂ)⁻¹) • ∑ t ∈ p.2, (starRingEnd ℂ ((ψ (ξ ⬝ᵥ t) : Circle) : ℂ)) • π (colEl k m N h t) v := by
   have hd : ∃ p, AvgData ψ h π ξ A v p := avgData_exists ψ h π hψ hπ ξ A hA v
   refine ⟨hd.choose, hd.choose_spec, ?_⟩
-  rw [avg, dif_pos hd]
+  rw [avg, dite_eq_left hd]
 
 theorem avg_eigen (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) → k) (A : AddSubgroup (Fin (m + 1) → k))
     (hA : IsLat A) (v : V) (y : Fin (m + 1) → k) (hy : y ∈ A) :

@@ -78,7 +78,7 @@ theorem PtsIntegralSegreChartProj.proof (hFin : SegreChartProjFinite.Statement)
   have hvar : ∀ J ∈ segreChartComponents P σ i, varInt J (e + 1) G Φ = ∫ y, chartDens J A G' Φ' y := by
     intro J hJ
     have hex : ∃ A₁ : Matrix (Fin (e + 1)) (Fin m) ℂ, IsFiniteProjection J A₁ := ⟨A, hfin J hJ⟩
-    rw [varInt, dif_pos hex, chartInt, hcong J hJ]
+    rw [varInt, dite_eq_left hex, chartInt, hcong J hJ]
     exact (IntegralIndep.full m (e + 1) J A hex.choose G' Φ' (hprime J hJ) (hdim J hJ) (hfin J hJ)
       hex.choose_spec hmeas (hsm J hJ) (habs J hJ)).2.symm
   rw [Finset.sum_congr rfl hvar, ← integral_finsetSum _ hint]

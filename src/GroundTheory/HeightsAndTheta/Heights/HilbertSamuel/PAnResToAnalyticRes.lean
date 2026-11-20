@@ -456,7 +456,7 @@ theorem chi_eq (n : ℕ) :
   unfold resChi chi
   by_cases h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d.x n p.2
   swap
-  · rw [dif_neg h, dif_neg h]
+  · rw [dite_eq_right h, dite_eq_right h]
   rw [dif_pos h, dif_pos h]
   have hp := h.choose_spec
   generalize h.choose = p at hp ⊢

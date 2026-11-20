@@ -8,7 +8,7 @@ private theorem absHalf_eq_sqrt {E : Type} [Field E] [NumberField E] [IsCMField 
     (x : u.adicCompletion E) (hx : x ≠ 0) : absHalf u x = ((Real.sqrt ‖x‖ : ℝ) : ℂ) := by
   have hv : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold absHalf
-  rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, Formalism.UG.ordL, dif_neg hv, neg_neg]
+  rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, Formalism.UG.ordL, dite_eq_right hv, neg_neg]
   simp [Formalism.UG.qV]
 
 theorem UpperTheory.ConvolutionTheory.G2.absProd :

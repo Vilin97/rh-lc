@@ -50,7 +50,7 @@ theorem fbr_phi {ε : Fin n → Bool} {lam : Fin n → ℝ} {μ : Fin n → ℤ}
   have hdet : lead n E = 1 := by
     have h1 : E.det = 1 := by rw [hE, fbr_det_conj, fbr_det_exp_pmat]
     unfold lead
-    rw [dif_pos le_rfl]
+    rw [dite_eq_left le_rfl]
     convert h1 using 2
     ext a b
     rfl
@@ -96,7 +96,7 @@ theorem fbr_phi {ε : Fin n → Bool} {lam : Fin n → ℝ} {μ : Fin n → ℤ}
     refine sum_subset (range_subset_range.mpr (Nat.sub_le n 1)) ?_
     intro i hi hi'
     simp only [mem_range] at hi hi'
-    have hs : sCoef lam i = 0 := by simp only [sCoef]; rw [dif_neg (by omega)]
+    have hs : sCoef lam i = 0 := by simp only [sCoef]; rw [dite_eq_right (by omega)]
     simp [hg, hs]
   rw [hsub, Ph, ← sum_neg_distrib]
   rfl

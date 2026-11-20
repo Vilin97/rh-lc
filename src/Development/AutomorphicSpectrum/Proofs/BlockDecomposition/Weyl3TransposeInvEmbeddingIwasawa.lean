@@ -26,7 +26,7 @@ theorem emR_coe (h : GL (Fin 2) ℝ) : (GL2LocalData.emR h).val =
       simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.det_fin_two, Fin.succAbove]
     rw [h1]
     exact ((Matrix.isUnit_iff_isUnit_det _).1 h.isUnit).ne_zero
-  rw [GL2LocalData.emR, dif_pos hd]
+  rw [GL2LocalData.emR, dite_eq_left hd]
   rfl
 
 theorem emR_mul (g h : GL (Fin 2) ℝ) : GL2LocalData.emR (g * h) = GL2LocalData.emR g * GL2LocalData.emR h := by

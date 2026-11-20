@@ -22,10 +22,10 @@ theorem sum_dite_col {d j : ℕ} (hj : j < d) (r : Fin j → K) (M : Matrix (Fin
     rw [Finset.sum_eq_single ⟨j, hj⟩]
     · by_cases h : (i : ℕ) < j
       · rw [dif_pos ⟨rfl, h⟩, dif_pos h]
-      · rw [dif_neg (fun h' => h h'.2), dif_neg h, zero_mul]
+      · rw [dite_eq_right (fun h' => h h'.2), dite_eq_right h, zero_mul]
     · intro l _ hl
       have hl' : ¬ ((l : ℕ) = j ∧ (i : ℕ) < j) := fun h => hl (Fin.ext h.1)
-      rw [dif_neg hl', zero_mul]
+      rw [dite_eq_right hl', zero_mul]
     · intro h
       exact absurd (Finset.mem_univ _) h
   simp only [inner]
@@ -44,7 +44,7 @@ theorem sum_dite_col {d j : ℕ} (hj : j < d) (r : Fin j → K) (M : Matrix (Fin
       intro h
       apply hi
       exact Finset.mem_map.mpr ⟨⟨i, h⟩, Finset.mem_univ _, Fin.ext rfl⟩
-    rw [dif_neg hij]
+    rw [dite_eq_right hij]
 
 theorem patChar_colGeR {d j : ℕ} (hj : j < d) (r : Fin j → K) (ψ₀ : AddChar K ℂ) (u : GL (Fin d) K) :
     patChar (colGeR K d j r) ψ₀ u =

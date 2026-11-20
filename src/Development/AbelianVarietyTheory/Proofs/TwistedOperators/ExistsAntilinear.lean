@@ -53,7 +53,7 @@ theorem lab_conj {D : D7} (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : l
     funext τ
     rw [labE_conj, conj_comp_eq_iff, conj_comp_eq_iff, ← (conj_comp_eq_iff (tauE D ρ) _).1 rfl, or_comm]
   unfold lab
-  rw [dif_pos (exists_label _ ρ), dif_pos (exists_label σ ρ)]
+  rw [dite_eq_left (exists_label _ ρ), dite_eq_left (exists_label σ ρ)]
   congr 1
 
 theorem evEx_conj {K C H H' Y : Type} [Field K] [AddCommGroup C] [Module K C] [AddCommGroup H] [Module ℂ H]

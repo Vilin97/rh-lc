@@ -18,7 +18,7 @@ theorem divCycle_support_finite {F : Type u} [Field F] {K : Type} [Fintype K] [D
   by_contra h
   apply hW
   simp only [divCycle]
-  rw [dif_neg (fun h' => h h'.1)]
+  rw [dite_eq_right (fun h' => h h'.1)]
 
 theorem cycEval_ratDiv {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K]
     {ι : K → Type} [∀ k, Fintype (ι k)] (N : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → ℤ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))

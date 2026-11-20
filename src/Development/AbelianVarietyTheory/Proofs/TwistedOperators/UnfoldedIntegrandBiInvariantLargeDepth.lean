@@ -109,7 +109,7 @@ theorem conAt_move (t : T) {M : Vol ch.G} (hM : M.Is t) {j : ℕ} (hj : j ∈ id
   funext j'
   unfold conAt
   by_cases h0 : j' + 2 * 0 + 2 = D.R.m
-  · rw [dif_pos h0, dif_pos h0]
+  · rw [dite_eq_left h0, dite_eq_left h0]
     have hne1 : j' + 1 ≠ j := by omega
     have hne2 : j' + 1 + 1 ≠ j := by omega
     have hmv : mvD ch t j k Φ ⟨j' + 1, by omega⟩ = Φ ⟨j' + 1, by omega⟩ := by
@@ -123,7 +123,7 @@ theorem conAt_move (t : T) {M : Vol ch.G} (hM : M.Is t) {j : ℕ} (hj : j ∈ id
     have e := om_move ch t hk hΦ P j' (by omega) (h j') 1
     rw [Pi.mulSingle_eq_of_ne hne1, one_mul] at e
     exact e
-  rw [dif_neg h0, dif_neg h0]
+  rw [dite_eq_right h0, dite_eq_right h0]
   by_cases h1 : j' + 2 * ((D.R.m - 4 - j') / 2 + 1) + 2 = D.R.m
   · refine dite_congr rfl (fun h1' => ?_) (fun _ => rfl)
     have e1 := om_move ch t hk hΦ P j' (by omega) (h j') (h (j' + 1))

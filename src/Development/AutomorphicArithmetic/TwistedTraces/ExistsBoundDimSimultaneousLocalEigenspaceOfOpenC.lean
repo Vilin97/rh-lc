@@ -78,7 +78,7 @@ private theorem dep_extend {ι α : Type*} {β : α → Type*} (w : ι → α) (
   refine ⟨fun v => if h : ∃ i, w i = v then h.choose_spec ▸ ψ h.choose else d v, fun i => ?_, fun v hv => ?_⟩
   · have h : ∃ j, w j = w i := ⟨i, rfl⟩
     dsimp only
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     have e : h.choose = i := hw h.choose_spec
     generalize h.choose_spec = hs
     revert hs

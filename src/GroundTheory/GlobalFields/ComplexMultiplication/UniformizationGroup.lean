@@ -51,12 +51,12 @@ def toPoint (z : ℂ) : (weierstrassCurve L).toAffine.Point :=
     .some (℘[L] z) (℘'[L] z / 2) (equation_iff_nonsingular.1 (equation_weierstrassP L h))
 
 lemma toPoint_of_mem {z : ℂ} (h : z ∈ L.lattice) : toPoint L z = 0 := by
-  rw [toPoint, dif_pos h]
+  rw [toPoint, dite_eq_left h]
 
 lemma toPoint_of_notMem {z : ℂ} (h : z ∉ L.lattice) :
     toPoint L z = .some (℘[L] z) (℘'[L] z / 2)
       (equation_iff_nonsingular.1 (equation_weierstrassP L h)) := by
-  rw [toPoint, dif_neg h]
+  rw [toPoint, dite_eq_right h]
 
 lemma point_some_congr {x y x' y' : ℂ} {h : (weierstrassCurve L).toAffine.Nonsingular x y}
     {h' : (weierstrassCurve L).toAffine.Nonsingular x' y'} (hx : x = x') (hy : y = y') :

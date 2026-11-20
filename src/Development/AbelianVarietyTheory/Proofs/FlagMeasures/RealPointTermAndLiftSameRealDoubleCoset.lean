@@ -164,13 +164,13 @@ theorem dcoset : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (hF : FinX Y) (hI
   have hex := frameLiftEx_holds hI u u' t
   have hL : IsFrameLift hI t (linOf hI t) := by
     unfold linOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   obtain ⟨hgI, hge, hgz⟩ := hL
   have hexg := Formalism.L2.SG.Pf.ratPt_holds D X (linOf hI t) hgI
   have hxg : RatLink X (ptR hI t) (linOf hI t) := by
     unfold ptR
-    rw [dif_pos hexg]
+    rw [dite_eq_left hexg]
     exact hexg.choose_spec
   obtain ⟨n, hn, m, hm, hfr, -⟩ := dc_repF s hst
   obtain ⟨xn, hxn⟩ := Formalism.L2.SG.Pf.ratPt_holds D X n hn.1.1

@@ -73,7 +73,7 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
           obtain ⟨n, hn⟩ := hsat hkpos q hq
           exact ⟨_, huW' n, hn⟩)
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hmin, hWrel⟩, hmult]
+      rw [dite_eq_left ⟨hmin, hWrel⟩, hmult]
       rfl
     · by_contra hne
       have hmin : W ∈ (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ⊔ Ideal.span {l}).minimalPrimes := by
@@ -93,7 +93,7 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
         exact hc ⟨hkpos, (eq_of_lt_of_le_of_mem_minimalPrimes hmin hPQ' hQW).symm⟩
   · have h0 : ∀ z, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) z) W : ℤ) = 0 := fun z => by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h', hr⟩
       exact hWc ⟨h'.1.1, hr, le_sup_left.trans h'.1.2⟩
     have hWQ : ¬ (0 < k ∧ W = pointIdeal O (flagClosurePt y w e φ φ' t k)) := by

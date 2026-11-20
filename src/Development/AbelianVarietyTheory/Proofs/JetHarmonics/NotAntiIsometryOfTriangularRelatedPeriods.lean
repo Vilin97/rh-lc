@@ -65,7 +65,7 @@ private theorem hermC_col_emb_eq_of_not_mem_Ψ (X : _root_.ReciprocityTheory.Cha
       _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ X.Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.col (_root_.ReciprocityTheory.ChartRestriction.G.FD.mat x ⟨τ, hτ⟩) ⟨X.p0 - 1 - i, hi⟩) (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ v) := by
   subst hστ
   unfold _root_.Formalism.L2.PjFree.perFr
-  rw [dif_neg hσ, dif_pos hτ, dif_pos hi]
+  rw [dite_eq_right hσ, dite_eq_left hτ, dite_eq_left hi]
 
 open NumberField AlgebraicGeometry CategoryTheory in
 open scoped Matrix in

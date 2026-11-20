@@ -40,7 +40,7 @@ theorem locChar_ne_zero : ∀ (E : Type) [Field E] [NumberField E] (K : Type) [F
   have h : IsUnit (redP P (a / (qOf P : E) ^ LocE.vP P (qOf P) a)) :=
     Classical.epsilon_spec (exists_isUnit_reduction_div_pow hP ha)
   unfold LocE.locChar LocE.unitV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact mul_ne_zero (zpow_ne_zero _ hcq) (Units.ne_zero _)
 
 end GlobalTheory.Proof.localCharacter_ne_zero_of_ne_zero

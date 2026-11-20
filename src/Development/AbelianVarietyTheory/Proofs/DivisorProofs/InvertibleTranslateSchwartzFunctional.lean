@@ -251,7 +251,7 @@ theorem exists_entry [Zero R] (Z : Matrix (Fin (b + 2)) (Fin (a + (b + 2))) R)
     · exact Fin.ext h2.2.2
   · by_contra hz
     obtain ⟨r, c, hrc⟩ := hn i j hz
-    rw [insS_apply, if_neg h1, dif_neg h2] at hrc
+    rw [insS_apply, if_neg h1, dite_eq_right h2] at hrc
     exact hrc rfl
 
 end Coord

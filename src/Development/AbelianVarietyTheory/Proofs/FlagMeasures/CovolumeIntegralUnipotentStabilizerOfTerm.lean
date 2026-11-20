@@ -164,7 +164,7 @@ theorem minor_pt_le {N : ℕ} (p : Point K N) (t : ℕ) (I J : Fin t → Fin N) 
   refine h.trans (le_of_eq (Finset.prod_congr rfl fun l hl => ?_))
   have hl' : l + 1 ≤ N := Finset.mem_range.1 hl
   unfold leadMinorE
-  rw [dif_pos hl']
+  rw [dite_eq_left hl']
   rfl
 
 end Pt

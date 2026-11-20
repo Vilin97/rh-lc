@@ -74,9 +74,9 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
     have h2 := congrFun h1 j
     rw [hDv] at h2
     by_cases h : (j : ℕ) < n
-    · rw [dif_pos h] at h2
+    · rw [dite_eq_left h] at h2
       exact ⟨h, (Q⁻¹ *ᵥ t) ⟨j, h⟩, by simpa using h2⟩
-    · rw [dif_neg h] at h2
+    · rw [dite_eq_right h] at h2
       have h3 : c = 0 := by simpa using h2.symm
       exact absurd h3 hc
   choose hlt b hb using hdiv
@@ -103,7 +103,7 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
       rw [Ideal.mem_span_singleton']
       refine ⟨(Q⁻¹ *ᵥ t) ⟨j, hlt j⟩, ?_⟩
       simp only [LinearEquiv.coe_coe, matEquiv_apply, Matrix.mulVecLin_apply]
-      rw [← hPQ, hDv, dif_pos (hlt j), mul_comm]
+      rw [← hPQ, hDv, dite_eq_left (hlt j), mul_comm]
     · intro hx
       have hx' : ∀ j, ∃ s, s * a j = x j := fun j =>
         Ideal.mem_span_singleton'.mp (hx j (Set.mem_univ _))
@@ -112,9 +112,9 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
         LinearMap.mem_range.mpr ⟨_, rfl⟩, ?_⟩
       simp only [LinearEquiv.coe_coe, matEquiv_apply]
       funext j
-      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hDv, dif_pos (hlt j)]
+      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hDv, dite_eq_left (hlt j)]
       show a j * (if h : (j : ℕ) < d then s ⟨j, h⟩ else 0) = x j
-      rw [dif_pos j.isLt, mul_comm]
+      rw [dite_eq_left j.isLt, mul_comm]
       exact hs j
   have hT : ∀ x : Fin d → R, (P * A * Q)ᵀ *ᵥ x = Qᵀ *ᵥ (Aᵀ *ᵥ (Pᵀ *ᵥ x)) := by
     intro x
@@ -133,7 +133,7 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
     · rintro ⟨z, hz⟩ j -
       have h1 : (P * A * Q)ᵀ *ᵥ x = c • (Qᵀ *ᵥ z) := by rw [hT, hz, Matrix.mulVec_smul]
       have h2 := congrFun h1 ⟨j, hlt j⟩
-      rw [hDt, dif_pos j.isLt, Pi.smul_apply, smul_eq_mul] at h2
+      rw [hDt, dite_eq_left j.isLt, Pi.smul_apply, smul_eq_mul] at h2
       rw [Ideal.mem_span_singleton']
       refine ⟨(Qᵀ *ᵥ z) ⟨j, hlt j⟩, hcancel j _ _ ?_⟩
       rw [mul_comm ((Qᵀ *ᵥ z) _) (b j), ← mul_assoc, hb j]
@@ -147,9 +147,9 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
         funext k
         rw [hDt, Pi.smul_apply, smul_eq_mul]
         by_cases h : (k : ℕ) < d
-        · rw [dif_pos h, dif_pos h, ← hs ⟨k, h⟩, ← hb ⟨k, h⟩]
+        · rw [dite_eq_left h, dite_eq_left h, ← hs ⟨k, h⟩, ← hb ⟨k, h⟩]
           ring
-        · rw [dif_neg h, dif_neg h, mul_zero]
+        · rw [dite_eq_right h, dite_eq_right h, mul_zero]
       refine ⟨(Q⁻¹)ᵀ *ᵥ (fun k : Fin n => if h : (k : ℕ) < d then s ⟨k, h⟩ else 0), ?_⟩
       calc Aᵀ *ᵥ (Pᵀ *ᵥ x) = (Q⁻¹)ᵀ *ᵥ ((P * A * Q)ᵀ *ᵥ x) := by
             rw [hT, Matrix.mulVec_mulVec (M := (Q⁻¹)ᵀ) (N := Qᵀ), ← Matrix.transpose_mul,

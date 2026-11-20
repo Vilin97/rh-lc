@@ -106,9 +106,9 @@ theorem DecoSet.smul_mem_inertNb_iff {P : Ideal (𝓞 E)} {s : List ℕ} (a : UF
     rw [DecoSet.inertSet_smul]
     exact Set.finite_image_iff (MulAction.injective a).injOn
   by_cases h : (d.inertSet P s).Finite
-  · rw [dif_pos (hfin.2 h), dif_pos h, Set.Finite.mem_toFinset, Set.Finite.mem_toFinset]
+  · rw [dite_eq_left (hfin.2 h), dite_eq_left h, Set.Finite.mem_toFinset, Set.Finite.mem_toFinset]
     exact DecoSet.smul_mem_inertSet_iff a
-  · rw [dif_neg (mt hfin.1 h), dif_neg h]
+  · rw [dite_eq_right (mt hfin.1 h), dite_eq_right h]
     simp
 
 end InertNbr

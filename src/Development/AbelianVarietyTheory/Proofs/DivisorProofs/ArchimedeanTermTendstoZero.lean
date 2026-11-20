@@ -387,7 +387,7 @@ theorem mem_nonzeroLocus_of_cuts (hC : I.Cuts s z e) {v : (Scheme.IdealSheafData
     rw [redι_clo]
     exact hC.1
   refine (hC.2 (redι (clo z) v) ?_).2.2 ((redι (clo z)).residueFieldMap v).hom.charZero hb
-  rw [cutMult, dif_pos hs, (redι (clo z)).isClosedEmbedding.injective.extend_apply]
+  rw [cutMult, dite_eq_left hs, (redι (clo z)).isClosedEmbedding.injective.extend_apply]
   exact SecCycle.mult_divOfSec_ne_zero _ _ hs h1 fun h => hv ((Cartier.nonzeroLocus_secPull s _).le h)
 
 theorem tendsto_densInt (hL : AnalyticLogResolution) (hD : AnalyticSetDimension) {Y : Scheme.{0}} [IsIntegral Y] (i : Y ⟶ M.B)

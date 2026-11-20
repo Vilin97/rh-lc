@@ -82,7 +82,7 @@ theorem evC_hom [Fintype σ] (a : σ → MvPowerSeries τ V) (ha : ∀ j, consta
   have hs : HasSubst a := hasSubst_of_constantCoeff_zero ha
   have h : ∃ ψ : MvPowerSeries σ V →ₐ[V] MvPowerSeries τ V, ∀ j, ψ (MvPowerSeries.X j) = a j :=
     ⟨substAlgHom hs, fun j => substAlgHom_X hs j⟩
-  exact ⟨h.choose, h.choose_spec, fun f => by unfold evC; rw [dif_pos h]⟩
+  exact ⟨h.choose, h.choose_spec, fun f => by unfold evC; rw [dite_eq_left h]⟩
 
 theorem const_evC [Fintype σ] (a : σ → MvPowerSeries τ V) (ha : ∀ j, constantCoeff (a j) = 0)
     (f : MvPowerSeries σ V) : constantCoeff (evC a f) = constantCoeff f := by

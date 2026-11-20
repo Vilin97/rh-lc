@@ -48,8 +48,8 @@ theorem transpose_embGL {n : ℕ} (g : GL (Fin n) ℂ) :
   rw [Matrix.transpose_apply, embGL_apply]
   simp only [Formalism.BranchingDeterminantCap.extM, Matrix.of_apply, Matrix.transpose_apply]
   by_cases h : a.val < n ∧ b.val < n
-  · rw [dif_pos h, dif_pos h.symm]
-  · rw [dif_neg h, dif_neg (fun h' => h h'.symm)]
+  · rw [dite_eq_left h, dite_eq_left h.symm]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h h'.symm)]
     simp only [eq_comm]
 
 theorem exists_intertwining_ne_zero : ∀ (n N : ℕ) (h : n + 1 = N) (lam : DomWeight N) (mu : DomWeight n), Interlace h lam mu → ∃ φ : (smallRep (MonoidHom.id (GL (Fin n) ℂ)) mu).IntertwiningMap (resRep (MonoidHom.id (GL (Fin n) ℂ)) h lam), φ ≠ 0 := by

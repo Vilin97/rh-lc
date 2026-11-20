@@ -68,12 +68,12 @@ theorem uB_pos (S : C.HidaSetting E Wp Wq) (p : ∀ v, KB.Pl (D.parOf S v) (Wp (
     (hj : j ≤ S.G.r) (w : List C.Letter) (h : C.LPt) (hh : D.IsLocPt h j) :
     uB S p F v ε j hj w h = (((√(nnS S h) / bS S h : ℝ) : ℂ)) •
       KB.slv (p v).T (F v ε) j hj w (stdS S h) ((stdS_size S h).trans hh.2) := by
-  unfold uB; rw [dif_pos hh]
+  unfold uB; rw [dite_eq_left hh]
 
 theorem uB_neg (S : C.HidaSetting E Wp Wq) (p : ∀ v, KB.Pl (D.parOf S v) (Wp (S.pl v)) (Wq (S.pl v)))
     (F : ∀ v : Fin S.f, ℝ → B.Mat S.G.k S.G.r → (Wq (S.pl v) →L[ℂ] Wp (S.pl v))) (v : Fin S.f) (ε : ℝ) (j : ℕ)
     (hj : j ≤ S.G.r) (w : List C.Letter) (h : C.LPt) (hh : ¬ D.IsLocPt h j) : uB S p F v ε j hj w h = 0 := by
-  unfold uB; rw [dif_neg hh]
+  unfold uB; rw [dite_eq_right hh]
 
 theorem waveG_smul' {k ρ : ℕ} {Wp' Wq' : Type} [NormedAddCommGroup Wp'] [InnerProductSpace ℂ Wp']
     [NormedAddCommGroup Wq'] [InnerProductSpace ℂ Wq'] (Bs : B.RealPlaceData k ρ Wp' Wq') (s : ℂ) (w : List C.Letter)

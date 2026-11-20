@@ -20,7 +20,7 @@ theorem idealCycle_support_finite {R : Type*} [CommRing R] {K : Type*} {ι : K �
   by_contra hmin
   apply hW
   unfold idealCycle
-  rw [dif_neg]
+  rw [dite_eq_right]
   exact fun h => hmin h.1
 
 theorem finsum_mul_finsum_comm {α β : Type*} (a : α → ℤ) (c : α → β → ℤ) (n : β → ℤ)

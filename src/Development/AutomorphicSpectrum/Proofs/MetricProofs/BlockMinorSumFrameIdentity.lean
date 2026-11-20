@@ -57,7 +57,7 @@ theorem minorIJ_moveMat (I C I' : Finset (Fin N)) (e : I.card = C.card) :
   · subst hI
     rw [if_pos rfl]
     unfold minorIJ
-    rw [dif_pos e]
+    rw [dite_eq_left e]
     have : (moveMat R I' C e).submatrix (I'.orderEmbOfFin e) (C.orderEmbOfFin rfl) = 1 := by
       ext s t
       rw [Matrix.submatrix_apply, moveMat_apply, Matrix.one_apply]

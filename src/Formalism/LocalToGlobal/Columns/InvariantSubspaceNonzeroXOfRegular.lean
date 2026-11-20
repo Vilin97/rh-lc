@@ -74,7 +74,7 @@ theorem trRep_asAlgebraHom_ne_zero_of_mul_v0eZ_ne_zero (hj : Function.Injective 
       rw [h0, mul_zero, zero_smul]
       show (formGSD C Λ).orbFun d v _ = 0
       unfold GSD.orbFun
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨⟨γ, h⟩, hg⟩
       obtain ⟨h', e1, -⟩ := Λ.normBy (ι u) (fun w => hι u w) h
       apply hu

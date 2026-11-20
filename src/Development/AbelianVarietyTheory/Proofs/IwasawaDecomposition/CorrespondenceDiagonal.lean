@@ -341,7 +341,7 @@ theorem isDiag_diagCl : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       exact (w x).2
     · rw [← prod.comp_lift]
       infer_instance
-  rw [diagCl, dif_pos hex]
+  rw [diagCl, dite_eq_left hex]
   exact hex.choose_spec
 
 end GlobalTheory.LocM.Diag

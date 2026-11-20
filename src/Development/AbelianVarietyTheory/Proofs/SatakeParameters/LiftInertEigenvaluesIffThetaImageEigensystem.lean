@@ -48,7 +48,7 @@ theorem labIn_tyOf {n : ℕ} {e : List ℤ} (h : ∃ y, Formalism.L2.Col.InertTy
     Formalism.L2.Col.InertTypeOk n (tyOf n e) ∧ e = GlobalTheory.Hk3.labIn n (tyOf n e) := by
   have hs : tyOf n e = h.choose := by
     simp only [tyOf]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [hs]
   exact h.choose_spec
 

@@ -282,7 +282,7 @@ def sizeDataAt0 (D : D7) (hR : D.R = R0) (hTT : D.host.TT = ∅)
     intro j h1 h2 τ
     have h : j - 1 < D.R.m := by omega
     unfold wj
-    rw [dif_pos h, he]
+    rw [dite_eq_left h, he]
     have h3 : ((j - 1 : ℕ) : ℝ) ≤ 1 := by exact_mod_cast (by omega : j - 1 ≤ 1)
     have h4 : (0 : ℝ) ≤ ((j - 1 : ℕ) : ℝ) := by positivity
     push_cast

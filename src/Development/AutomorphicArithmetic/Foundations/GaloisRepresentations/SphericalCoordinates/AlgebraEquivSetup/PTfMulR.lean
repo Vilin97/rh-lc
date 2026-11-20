@@ -9,11 +9,11 @@ private theorem tyFn_mul_of_mem {M : Type} [Group M] (J : Subgroup M) (ψ : J �
   unfold tyFn
   by_cases hb : b ∈ J
   · have hab : a * b ∈ J := J.mul_mem ha hb
-    rw [dif_pos ha, dif_pos hb, dif_pos hab]
+    rw [dite_eq_left ha, dite_eq_left hb, dite_eq_left hab]
     have e : (⟨a * b, hab⟩ : J) = ⟨a, ha⟩ * ⟨b, hb⟩ := rfl
     rw [e, map_mul, mul_inv, Units.val_mul, mul_comm]
   · have hab : a * b ∉ J := fun h => hb (by simpa using J.mul_mem (J.inv_mem ha) h)
-    rw [dif_neg hb, dif_neg hab, mul_zero]
+    rw [dite_eq_right hb, dite_eq_right hab, mul_zero]
 
 private theorem mem_doubleCoset_loc_mul_of_mem_of_pr_eq_one {X M' : Type} [Group X] [Group M'] (L' : Loc X M') (K : Subgroup X)
     (Kw : Subgroup M') (hF : L'.Fact K Kw)

@@ -74,10 +74,10 @@ theorem embM_levi_apply (n : ℕ) : ∀ (j : ℕ) (g : GL (Fin n) k) (a b : Fin 
   | j + 1, g, a, b => by
     refine (glEmbMat_apply (n + j + 1) _ a b).trans ?_
     by_cases h : (a : ℕ) < n + j + 1 ∧ (b : ℕ) < n + j + 1
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       exact embM_levi_apply n j g ⟨a, h.1⟩ ⟨b, h.2⟩
     · have h2 : ¬ ((a : ℕ) < n ∧ (b : ℕ) < n) := by omega
-      rw [dif_neg h, dif_neg h2]
+      rw [dite_eq_right h, dite_eq_right h2]
 
 abbrev dd (n t : ℕ) : Fin 2 → ℕ := ![n, t]
 
@@ -111,20 +111,20 @@ theorem embM_eq_leviEmb (n j : ℕ) (g : GL (Fin n) k) :
       have hln : (l : ℕ) < n := l.2
       have hs : Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g 0 = g :=
         Pi.mulSingle_eq_same _ _
-      rw [leviEmb_apply_same, dif_pos (by omega)]
+      rw [leviEmb_apply_same, dite_eq_left (by omega)]
       refine Eq.trans ?_ (congrArg (fun X : GL (Fin n) k => (X : Matrix (Fin n) (Fin n) k) i l) hs).symm
       exact congrArg₂ (fun a b => (g : Matrix (Fin n) (Fin n) k) a b) (Fin.ext hi) (Fin.ext hl)
     · have hl : (e ⟨1, l⟩ : ℕ) = n + l := std_val1 n (j + 1) _ (dd_sum n j) l
-      rw [leviEmb_apply_ne k e _ (by decide), dif_neg (by omega), if_neg (by omega)]
+      rw [leviEmb_apply_ne k e _ (by decide), dite_eq_right (by omega), if_neg (by omega)]
   · have hi : (e ⟨1, i⟩ : ℕ) = n + i := std_val1 n (j + 1) _ (dd_sum n j) i
     obtain rfl | rfl : y = 0 ∨ y = 1 := by omega
     · have hl : (e ⟨0, l⟩ : ℕ) = l := std_val0 n (j + 1) _ (dd_sum n j) l
       have hln : (l : ℕ) < n := l.2
-      rw [leviEmb_apply_ne k e _ (by decide), dif_neg (by omega), if_neg (by omega)]
+      rw [leviEmb_apply_ne k e _ (by decide), dite_eq_right (by omega), if_neg (by omega)]
     · have hl : (e ⟨1, l⟩ : ℕ) = n + l := std_val1 n (j + 1) _ (dd_sum n j) l
       have hs : Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g 1 = 1 :=
         Pi.mulSingle_eq_of_ne (by decide) _
-      rw [leviEmb_apply_same, dif_neg (by omega)]
+      rw [leviEmb_apply_same, dite_eq_right (by omega)]
       refine Eq.trans ?_ (congrArg (fun X : GL (Fin (dd n (j + 1) 1)) k =>
         (X : Matrix (Fin (dd n (j + 1) 1)) (Fin (dd n (j + 1) 1)) k) i l) hs).symm
       show _ = (1 : Matrix (Fin (dd n (j + 1) 1)) (Fin (dd n (j + 1) 1)) k) i l

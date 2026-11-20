@@ -69,7 +69,7 @@ theorem rhoX_spec (x : C2.Lstidx w → ℂ) :
   have e1 : rhoX S γ w x = h.choose := by
     show Formalism.FourierDecayAlt.D.rhoOfU S γ (Dx2.Rad.low w x)ᴴ = _
     unfold Formalism.FourierDecayAlt.D.rhoOfU
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [e1, UC.lowS_eq_low]
   exact h.choose_spec
 

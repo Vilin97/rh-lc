@@ -140,7 +140,7 @@ theorem hasInfChar_of_isRegAlg {a : ℕ} (ha : 2 ≤ a) {π : CG E a} (h : π.Is
   · obtain ⟨m, hm⟩ := hm
     rwa [hm.infChar_eq]
   · have h1 := (h τ).1
-    rw [CG.infChar, dif_neg hm] at h1
+    rw [CG.infChar, dite_eq_right hm] at h1
     obtain ⟨b, rfl⟩ : ∃ b, a = b + 2 := ⟨a - 2, by omega⟩
     simp [Multiset.replicate_succ] at h1
 

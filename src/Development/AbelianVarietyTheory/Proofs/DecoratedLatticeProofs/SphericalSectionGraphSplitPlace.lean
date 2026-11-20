@@ -26,7 +26,7 @@ theorem locChar_eq_val_zpow {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     locChar χ w y = val χ w ^ ordL y.1 := by
   have hy : Valued.v y.1 ≠ 0 := by simp
   have h0 : Valued.v y.1 = WithZero.exp (-ordL y.1) := by
-    rw [ordL, dif_neg hy, neg_neg]
+    rw [ordL, dite_eq_right hy, neg_neg]
     exact (WithZero.coe_unzero hy).symm
   have h1 : IsUnitAt w (y * (atFin w (unif w)) ^ (-ordL y.1)) := by
     have := unif_spec w

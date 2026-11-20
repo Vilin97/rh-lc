@@ -43,7 +43,7 @@ theorem ip_eq_mul_integral_val : GlobalTheory.Published.CuspRapidDecay → ∀ (
       refine Finset.prod_eq_one fun ρ _ => ?_
       rw [inner_self_eq_norm_sq_to_K, hv ρ]
       norm_num
-    rw [hip, ipAt, hQc, ipM, dif_pos hex]
+    rw [hip, ipAt, hQc, ipM, dite_eq_left hex]
     unfold val
     rw [hv1, hprod, mul_one]
   by_cases h0 : 0 ≤ Q

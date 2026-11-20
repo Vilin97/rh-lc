@@ -104,7 +104,7 @@ theorem cO_mem (hR : RedData ϖ k r n b Λ) (x : V) (j : Fin n) : cO hR x j ∈ 
 
 theorem cO_sum (hR : RedData ϖ k r n b Λ) {x : V} (hx : x ∈ Λ) : x = ∑ j, cO hR x j • b j := by
   unfold cO
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact (Classical.choose_spec (hR.crd x hx)).2
 
 theorem cO_eq (hR : RedData ϖ k r n b Λ) {x : V} (hx : x ∈ Λ) (c : Fin n → E)

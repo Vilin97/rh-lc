@@ -228,7 +228,7 @@ theorem gqD (D : Dat Δ) (hD : D.Ok) (ι : DX Δ →* DA Δ) (hι : IsIotaD ι) 
   · have hms : ms τ = mass hex.choose (scalE τ)
         ((rpg (fun v : Pl F => (Etau (Kv v) (cv v τ))ˣ) fun v => Cu (Ov v) (cv v τ)).box
           fun v => Cint (Ov v) (cv v τ)) := by
-      rw [ms, dif_pos hex]
+      rw [ms, dite_eq_left hex]
     have hb1 : ∀ v ∉ D.Sg ∪ hSbfin.toFinset, b v = 1 := by
       intro v hv
       obtain ⟨hvSg, hKD, hunit, hint⟩ := hnotS v hv

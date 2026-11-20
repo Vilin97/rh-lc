@@ -73,7 +73,7 @@ private theorem fZ_eq (V : Lev k) (ω : kˣ →* ℂˣ) (hω : ∀ u ∈ V.H, ω
     {d : Fin n → kˣ} (hd : SDom d) {z : kˣ} {g : GL (Fin n) k} (h : (S[n] z)⁻¹ * g ∈ V.DC d) :
     V.fZ ω d g = (((ω z)⁻¹ : ℂˣ) : ℂ) := by
   have hex : ∃ z : kˣ, (S[n] z)⁻¹ * g ∈ V.DC d := ⟨z, h⟩
-  rw [Lev.fZ, dif_pos hex]
+  rw [Lev.fZ, dite_eq_left hex]
   have hc := hex.choose_spec
   generalize hex.choose = c at hc ⊢
   have h1 : z / c ∈ V.H := H_of_mem V hn hd h (g := (S[n] z)⁻¹ * g) (by

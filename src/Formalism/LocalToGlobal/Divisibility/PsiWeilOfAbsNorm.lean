@@ -137,7 +137,7 @@ theorem exists_psiWeil {Pg : Finset (Pl D.host.E)} (pl : (Σ k : Fin 2, D.nd.PlG
   have hkv : pl.symm ⟨(pl kv).1, hmem⟩ = kv := by simp
   have hspec := psiAt_spec D pl res hζ he (pl.symm ⟨(pl kv).1, hmem⟩) (pl kv).1 (by simp) c b hb
   unfold psiOfRoots
-  rw [dif_pos hmem, hspec, hkv]
+  rw [dite_eq_left hmem, hspec, hkv]
 
 def XiOneClass : Prop :=
   ∀ k : Fin 2, ∃ b : ℤ, ¬ (D.host.g k : ℤ) ∣ b ∧ ∀ v : D.nd.PlG k, xiBar D (D.naut.plGw k v) = (b : kP (D.naut.plGw k v))

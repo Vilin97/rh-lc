@@ -84,7 +84,7 @@ theorem chern_frame_closed : ∀ {M : Type} [TopologicalSpace M] {n : ℕ} (A : 
   have hloc : ∀ i a, ∀ v ∈ (A.e i).target ∩ (A.e i).symm ⁻¹' U a,
       A.loc P i v = (chernAt (fun w => G a ((A.e i).symm w)) v j : Alt n) := by
     intro i a v hv
-    rw [HolAtlas.loc, dif_pos hv.1, hP a ⟨(i, (A.e i).symm v), (A.e i).map_target hv.1⟩ hv.2]
+    rw [HolAtlas.loc, dite_eq_left hv.1, hP a ⟨(i, (A.e i).symm v), (A.e i).map_target hv.1⟩ hv.2]
     show ((chernAt (fun w => G a ((A.e i).symm w)) ((A.e i) ((A.e i).symm v)) j : Ev n) : Alt n) = _
     rw [(A.e i).right_inv hv.1]
   have hgerm : ∀ i a v, v ∈ (A.e i).target ∩ (A.e i).symm ⁻¹' U a →

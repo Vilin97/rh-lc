@@ -52,24 +52,24 @@ theorem perFr_of_mat (X X' : Data E r) (hΨ : ∀ τ, τ ∈ X.Ψ ↔ τ ∈ X'.
     funext k; simp [Data.emb, Matrix.mulVec, dotProduct, map_sum, map_mul]
   unfold perFr
   by_cases h1 : τ ∈ X.Ψ
-  · rw [dif_pos h1, dif_pos ((hΨ _).1 h1)]
+  · rw [dite_eq_left h1, dite_eq_left ((hΨ _).1 h1)]
     by_cases h2 : X.p0 + i < r
-    · rw [dif_pos h2, dif_pos (hp ▸ h2), hx τ h1, he, Matrix.mul_inv_rev, Matrix.mulVec_mulVec,
+    · rw [dite_eq_left h2, dite_eq_left (hp ▸ h2), hx τ h1, he, Matrix.mul_inv_rev, Matrix.mulVec_mulVec,
         Matrix.nonsing_inv_mul_cancel_right _ _ (hu _)]
       simp only [hp]
-    · rw [dif_neg h2, dif_neg (hp ▸ h2)]
-  · rw [dif_neg h1, dif_neg (fun h' => h1 ((hΨ _).2 h'))]
+    · rw [dite_eq_right h2, dite_eq_right (hp ▸ h2)]
+  · rw [dite_eq_right h1, dite_eq_right (fun h' => h1 ((hΨ _).2 h'))]
     by_cases h3 : conjEmb τ ∈ X.Ψ
-    · rw [dif_pos h3, dif_pos ((hΨ _).1 h3)]
+    · rw [dite_eq_left h3, dite_eq_left ((hΨ _).1 h3)]
       by_cases h2 : X.p0 - 1 - i < r
-      · rw [dif_pos h2, dif_pos (hp ▸ h2), hx _ h3, he]
+      · rw [dite_eq_left h2, dite_eq_left (hp ▸ h2), hx _ h3, he]
         have hc : ReciprocityTheory.ChartRestriction.G.FD.col (N.map (conjEmb τ) * mat x' ⟨conjEmb τ, (hΨ _).1 h3⟩) ⟨X.p0 - 1 - i, h2⟩ =
             N.map (conjEmb τ) *ᵥ ReciprocityTheory.ChartRestriction.G.FD.col (mat x' ⟨conjEmb τ, (hΨ _).1 h3⟩) ⟨X.p0 - 1 - i, h2⟩ := by
           funext a; simp [ReciprocityTheory.ChartRestriction.G.FD.col, Matrix.mul_apply, Matrix.mulVec, dotProduct]
         rw [hc, hermC_mulVec _ _ _ hNu, hG]
         simp only [hp]
-      · rw [dif_neg h2, dif_neg (hp ▸ h2)]
-    · rw [dif_neg h3, dif_neg (fun h' => h3 ((hΨ _).2 h'))]
+      · rw [dite_eq_right h2, dite_eq_right (hp ▸ h2)]
+    · rw [dite_eq_right h3, dite_eq_right (fun h' => h3 ((hΨ _).2 h'))]
 
 end General
 

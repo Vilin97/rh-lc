@@ -291,7 +291,7 @@ theorem multAt_comap (J W : Ideal (MRingOver F ι)) [hW : W.IsPrime] :
       multAt J W := by
   have hW' : (W.comap (blockLinSubst e A).toRingHom).IsPrime := Ideal.comap_isPrime _ _
   unfold multAt
-  rw [dif_pos hW', dif_pos hW]
+  rw [dite_eq_left hW', dite_eq_left hW]
   congr 1
   refine GroundTheory.Heights₂.Heights.NumbersDVR.length_localizedModule_eq_of_surjective
     (blockLinSubst e A).toRingHom (surj hA) W _ rfl _ _ (quotEquiv hA J).toRingEquiv.toAddEquiv

@@ -135,7 +135,7 @@ lemma mjg_pb (Z : X.Coord) (τ : X.Ψ) (δ : Fin X.p0 → ℂ) :
     simp at this
     omega
   have hlt : X.p0 ≤ X.p0 + (m : ℕ) ∧ ((Fin.castLE X.p0_le c : Fin r) : ℕ) < X.p0 := ⟨by omega, by simp⟩
-  rw [if_neg hne, dif_pos hlt, zero_add, mul_comm]
+  rw [if_neg hne, dite_eq_left hlt, zero_add, mul_comm]
   congr 2 <;> ext <;> simp
 
 lemma mj_sum_colP (x : Frame X.Ψ r) (Z : X.Coord) (τ : X.Ψ) (δ : Fin X.p0 → ℂ) :

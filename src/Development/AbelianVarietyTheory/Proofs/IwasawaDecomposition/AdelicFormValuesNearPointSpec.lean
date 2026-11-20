@@ -38,7 +38,7 @@ theorem val_self {ι : Type} [Fintype ι] (S : StepLevel F E σ J T f bad) (emb 
     (x η : GA σ J) (hη : AtV v η) : valAt v p g x (p (x * η)) = g (x * η) := by
   have h : ∃ η', AtV v η' ∧ p (x * η') = p (x * η) := ⟨η, hη, rfl⟩
   unfold valAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨h1, h2⟩ := h.choose_spec
   generalize h.choose = η0 at h1 h2
   have e : x * η = x * η0 * (η0⁻¹ * η) := by group
@@ -61,12 +61,12 @@ theorem valAt_spec : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
         refine h ⟨η⁻¹ * η', atV_mul (atV_inv hη) h1, ?_⟩
         rw [← h2]; congr 1; group
       unfold valAt
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
   · have hδv : AtV v δ := hδ.1
     by_cases h : ∃ η', AtV v η' ∧ p (x * η') = q
     · have hR : valAt v p (fun y => g (y * δ)) x q = g (x * h.choose * δ) := by
         unfold valAt
-        rw [dif_pos h]
+        rw [dite_eq_left h]
       obtain ⟨h1, h2⟩ := h.choose_spec
       rw [hR]
       generalize h.choose = η0 at h1 h2
@@ -81,6 +81,6 @@ theorem valAt_spec : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
         rw [Pr.dil_dil, Pr.dil_dil, inv_mul_cancel₀ ha, Pr.dil_one, Pr.dil_one] at h4
         exact h4.symm
       unfold valAt
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.LevelHecke.ValAt

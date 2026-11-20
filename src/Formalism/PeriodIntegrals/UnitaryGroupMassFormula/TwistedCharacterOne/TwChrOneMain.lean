@@ -33,7 +33,7 @@ theorem twChrOne_main : PI.TwChrOne.TwChrOne := by
     rw [chi_eq r hJ]
     refine inv_ne_zero ?_
     unfold LocE.unitV
-    rw [dif_pos (unit_of r hJ)]
+    rw [dite_eq_left (unit_of r hJ)]
     exact Units.ne_zero _
   · have hJ := memJ r hr
     have hJ' := memJ r' hr'

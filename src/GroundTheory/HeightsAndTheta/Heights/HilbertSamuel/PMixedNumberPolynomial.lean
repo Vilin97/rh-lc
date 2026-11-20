@@ -51,7 +51,7 @@ theorem eventualValue_of_eventually {f : (K → ℤ) → ℤ} {c : ℤ} (h : ∀
     eventualValue f = c := by
   have hex : ∃ c, ∀ᶠ m in atTop, f m = c := ⟨c, h⟩
   unfold eventualValue
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨m, hm1, hm2⟩ := (hex.choose_spec.and h).exists
   exact hm1.symm.trans hm2
 

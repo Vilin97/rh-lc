@@ -57,7 +57,7 @@ theorem GlobalTheory.BotFormula.bottom_big : GlobalTheory.FunPr.Hypotheses₂ �
     rw [mul_inv_cancel₀ hu] at h1
     have h2 : lamC lam (1 : ℂ) = 1 := by
       unfold lamC
-      rw [dif_pos (one_mem Qbar)]
+      rw [dite_eq_left (one_mem Qbar)]
       exact (congrArg lam (Subtype.ext rfl : (⟨1, one_mem Qbar⟩ : Qbar) = 1)).trans (map_one lam)
     rw [h2] at h1
     have h3 := congrArg norm h1

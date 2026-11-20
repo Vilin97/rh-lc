@@ -143,7 +143,7 @@ theorem coordMap_pos (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ)) (y 
     coordMap X e y ⟨τ.1, a⟩ = pr X e y τ ⟨a.1, lt_pos X τ.2 a⟩ := by
   show coord X e y ⟨τ.1, a⟩ = _
   unfold coord
-  rw [dif_pos τ.2]
+  rw [dite_eq_left τ.2]
 
 theorem coordMap_neg (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ)) (y : X.Ψ → Fin r → ℂ) (τ : X.Ψ)
     (a : Fin (dimOf X (ComplexEmbedding.conjugate τ.1))) :
@@ -151,7 +151,7 @@ theorem coordMap_neg (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ)) (y 
       - conj (pr X e y τ ⟨X.p0 + a.1, lt_neg X ((X.cmType _).mp τ.2) a⟩) := by
   show coord X e y ⟨ComplexEmbedding.conjugate τ.1, a⟩ = _
   unfold coord
-  rw [dif_neg ((X.cmType _).mp τ.2)]
+  rw [dite_eq_right ((X.cmType _).mp τ.2)]
   have : (⟨ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ.1),
       conj_mem X ((X.cmType _).mp τ.2)⟩ : X.Ψ) = τ := Subtype.ext (conj_conj_X _)
   simp only [this]
@@ -263,7 +263,7 @@ private theorem coord_eq_pr_of_mem_psi (X : _root_.ReciprocityTheory.ChartRestri
     _root_.GlobalTheory.TorusCoord.coord X e y ⟨τ.1, a⟩ =
       _root_.GlobalTheory.TorusCoord.pr X e y τ ⟨a.1, _root_.GlobalTheory.TorusCoord.lt_pos X τ.2 a⟩ := by
   unfold _root_.GlobalTheory.TorusCoord.coord
-  rw [dif_pos τ.2]
+  rw [dite_eq_left τ.2]
 
 open NumberField in
 open scoped ComplexConjugate in
@@ -277,7 +277,7 @@ private theorem coord_conjugate_eq_neg_conj_pr (X : _root_.ReciprocityTheory.Cha
   have hτ : (⟨ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ.1),
       _root_.GlobalTheory.TorusCoord.conj_mem X h⟩ : X.Ψ) = τ := Subtype.ext (_root_.ReciprocityTheory.ChartRestriction.G.I2.TorusAtDataPf.conj_conj_X _)
   unfold _root_.GlobalTheory.TorusCoord.coord
-  rw [dif_neg h, hτ]
+  rw [dite_eq_right h, hτ]
 
 open NumberField in
 open scoped ComplexConjugate in

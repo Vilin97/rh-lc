@@ -1696,7 +1696,7 @@ lemma bTop_le (τ : D.what₂.Tau) : (D.fm u).bTop τ ≤ (Wt D u τ : ℤ) := b
   have hk : 2 ≤ D.R.N 0 := two_le_N D.R 0
   have h := entry_le (u := u) τ ⟨D.R.N 0 - 1, by omega⟩ (by show D.R.N 0 - 1 ≠ 0; omega)
   unfold MemberForms.bTop DomWeight.detShift
-  rw [dif_pos (D.R.N_pos 0)]
+  rw [dite_eq_left (D.R.N_pos 0)]
   have h2 : -(((D.fm u).lam 0 τ).w ⟨D.R.N 0 - 1, by omega⟩) ≤
       ((((D.fm u).lam 0 τ).w ⟨D.R.N 0 - 1, by omega⟩).natAbs : ℤ) := by
     rw [Int.natCast_natAbs]; exact neg_le_abs _

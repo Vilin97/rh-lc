@@ -57,7 +57,7 @@ theorem frsF_smul {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j)
         (((g.2.1 : GLG X.E (R.N j) Pr.vGs) ⟨P.1, hP⟩)⁻¹ : GL _ _).1.mulVec (redV P.1 x) := by
   have e : (g • p).deco = ((g.1, (g.2.1 : GLG X.E (R.N j) Pr.vGs)) : UF X.E (R.N j) × GLG X.E (R.N j) Pr.vGs) • p.deco := rfl
   unfold frsF
-  rw [dif_pos hP, dif_pos hP, e]
+  rw [dite_eq_left hP, dite_eq_left hP, e]
   exact liftFr_smul p.deco (g.1, (g.2.1 : GLG X.E (R.N j) Pr.vGs)) ⟨P.1, hP⟩
 
 end Chain

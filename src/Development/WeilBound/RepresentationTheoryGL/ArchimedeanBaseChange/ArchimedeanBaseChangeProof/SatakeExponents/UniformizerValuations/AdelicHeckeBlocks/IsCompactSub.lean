@@ -322,7 +322,7 @@ theorem main (h2 : HintProd) (h3 : Slots) {S : Set (Pl E)} (a : ℕ) (ha : a ≤
       | inl u =>
         show (d.eL a).ent d.P x y u.1 = idem (d.lev a u.1)
         unfold LM.ent
-        rw [dif_neg (show u.1 ∉ d.P from hi)]
+        rw [dite_eq_right (show u.1 ∉ d.P from hi)]
         rfl
       | inr u => rfl
     have hPf : ∀ᶠ w in cofinite, w ∉ d.P :=
@@ -335,7 +335,7 @@ theorem main (h2 : HintProd) (h3 : Slots) {S : Set (Pl E)} (a : ℕ) (ha : a ≤
         (Slot.cp a (n - a) (Sum.inl ⟨w.1, hPS w.2⟩ : Slot S) h) = 0 := by
       show (d.eL a).ent d.P x y w.1 _ = 0
       unfold LM.ent
-      rw [dif_pos w.2]
+      rw [dite_eq_left w.2]
       simp [LocData.eL, LocData.diag, hw]
       rfl
     rw [finprod_eq_zero (fun i : Slot S => sf ((d.eL a).ent d.P x y) (d.eL a).t i (Slot.cp a (n - a) i h))

@@ -24,7 +24,7 @@ private theorem one_le_coheight (B : Vert.Model O) {ζ : B.X} (h : ζ ∉ B.gen)
 
 private theorem pdeg_eq_zero (p : ℕ) [Fact p.Prime] (B : Vert.Model O) (L : Fin B.relDim → LB B.X) {ζ : B.X}
     (h : ζ ∉ B.gen) (h1 : Order.coheight ζ ≠ 1) : pdeg p L ζ = 0 := by
-  rw [pdeg, dif_neg]
+  rw [pdeg, dite_eq_right]
   rintro ⟨a, Z, i, _, _, _, hz, hd, -⟩
   have h2 : (2 : ℕ∞) ≤ Order.coheight ζ :=
     Order.add_one_le_of_lt (lt_of_le_of_ne (one_le_coheight B h) h1.symm)

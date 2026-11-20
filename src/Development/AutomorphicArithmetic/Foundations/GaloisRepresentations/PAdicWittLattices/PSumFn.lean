@@ -21,7 +21,7 @@ private theorem pl_left {B : Scheme.{0}} {G : Type} [Group G] (X : Tower B G) {F
       (fun u hu => (X.K j).mul_mem ((X.K j).mul_mem hk hu) ((X.K j).inv_mem hk)) a.1 a.2,
       X.tr_self j k _ _ hk, Category.comp_id]
   unfold Tower.pl
-  rw [dif_pos a, dif_pos hh]
+  rw [dite_eq_left a, dite_eq_left hh]
   simp only [e]
 
 theorem UpperTheory.Gal.G3.pSumFn :

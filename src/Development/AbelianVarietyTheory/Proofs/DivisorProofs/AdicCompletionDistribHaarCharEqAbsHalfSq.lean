@@ -15,7 +15,7 @@ theorem ordL_eq_ord {E : Type} [Field E] [NumberField E] (w : Pl E) {x : w.adicC
   have h2 := GroundTheory.Global.valued_eq_exp_neg_ord hx
   have hv : Valued.v x ≠ 0 := (Valued.v).ne_zero_iff.2 hx
   unfold ordL
-  rw [dif_neg hv]
+  rw [dite_eq_right hv]
   have : WithZero.unzero hv = Multiplicative.ofAdd (-GroundTheory.LocalField.ord x) := by
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, h2]

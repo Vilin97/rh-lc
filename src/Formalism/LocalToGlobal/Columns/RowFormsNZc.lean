@@ -106,7 +106,7 @@ theorem nz_tel (ν : Fin n → ℕ) (hν : Antitone ν) (b : Fin n) :
       rw [hfil, Finset.sum_insert hnot, ih ⟨b.val + 1, hb⟩ (by simp only; omega)]
       have h1 : nuNext ν b = ν ⟨b.val + 1, hb⟩ := by
         unfold nuNext
-        rw [dif_pos hb]
+        rw [dite_eq_left hb]
       have h2 : ν ⟨b.val + 1, hb⟩ ≤ ν b := hν (by rw [Fin.le_def]; simp)
       rw [h1]
       omega
@@ -117,7 +117,7 @@ theorem nz_tel (ν : Fin n → ℕ) (hν : Antitone ν) (b : Fin n) :
         omega
       have h1 : nuNext ν b = 0 := by
         unfold nuNext
-        rw [dif_neg hb]
+        rw [dite_eq_right hb]
       rw [hfil, Finset.sum_singleton, h1, Nat.sub_zero]
 
 theorem nz_hw_swap (ν : Fin n → ℕ) (hν : Antitone ν) {a b : Fin n} (hab : a < b) (h : ν a = ν b) :
@@ -141,7 +141,7 @@ theorem nz_hw_swap (ν : Fin n → ℕ) (hν : Antitone ν) {a b : Fin n} (hab :
           omega
         have e1 : nuNext ν i = ν ⟨i.val + 1, hib⟩ := by
           unfold nuNext
-          rw [dif_pos hib]
+          rw [dite_eq_left hib]
         have e2 : ν i ≤ ν a := hν (not_lt.mp hai)
         have e3 : ν b ≤ ν ⟨i.val + 1, hib⟩ := hν (by rw [Fin.le_def] at hbi ⊢; simp only; omega)
         have e4 : ν i - nuNext ν i = 0 := by rw [e1]; omega
@@ -165,7 +165,7 @@ theorem nz_sqAct_swap (lam : DomWeight n) {a b : Fin n} (hab : a < b) (h : lam.w
   have hge : ∀ x : Fin n, lam.detShift ≤ lam.w x := by
     intro x
     unfold DomWeight.detShift
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
     exact lam.anti (by rw [Fin.le_def]; have := x.2; simp only; omega)
   have hnat : ∀ x : Fin n, ((lam.natW x : ℕ) : ℤ) = lam.w x - lam.detShift := by
     intro x

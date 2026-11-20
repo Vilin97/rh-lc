@@ -76,9 +76,9 @@ theorem rdS_inj (θ : InfFam D) (V : HSp D) {n : ℕ} (hn : V.rank = n) {T f : �
     show A τ * ((A τ)⁻¹ * z.1 τ) = _
     rw [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ (hAu τ), Matrix.one_mul]
   unfold rdS at key
-  rw [dif_pos hex, dif_pos hex] at key
+  rw [dite_eq_left hex, dite_eq_left hex] at key
   dsimp only at key
-  rw [hz, atFr, atFr, dif_pos z.2, dif_pos z.2, hc] at key
+  rw [hz, atFr, atFr, dite_eq_left z.2, dite_eq_left z.2, hc] at key
   exact mul_left_cancel₀ (Units.ne_zero _) key
 
 theorem chart0_inj {u : D.what₂.Word} (F : Forms0 D u) (θ : InfFam D) (ψ ψ' : (D.mem u).C.cls 0 → (D.mem u).C.Y 0 → ℂ)

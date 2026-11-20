@@ -107,7 +107,7 @@ theorem induced_grLB (C : FlagCpt Z e) (N : GlobalTheory.TrueGeo.Model C.Y) (τ 
     have hn : (cond dual (-1) 1 : ℤ) ≠ 0 := by cases dual <;> simp
     have h : w.support.Nonempty := hw ▸ Finsupp.support_nonempty_iff.2 (Finsupp.single_ne_zero.2 hn)
     have h' := h.choose_spec
-    rw [parOf, dif_pos h]
+    rw [parOf, dite_eq_left h]
     generalize h.choose = a at h'
     rw [← hw] at h'
     rw [Finset.mem_singleton.1 (Finsupp.support_single_subset h')]

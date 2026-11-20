@@ -38,7 +38,7 @@ theorem floorGaps_sub_le {N : ℕ} (a : ℕ) (m : ℤ) (v : Fin N → ℤ) (hv :
   have hk' := Finset.mem_Ico.1 hk
   have hN : k + 1 < N := by have := j.2; omega
   have h0 : 0 ≤ gap v k := by
-    rw [gap, dif_pos hN]
+    rw [gap, dite_eq_left hN]
     have := hv (show (⟨k, by omega⟩ : Fin N) ≤ ⟨k + 1, hN⟩ from Fin.mk_le_mk.2 (by omega))
     omega
   exact Int.ediv_le_self _ h0

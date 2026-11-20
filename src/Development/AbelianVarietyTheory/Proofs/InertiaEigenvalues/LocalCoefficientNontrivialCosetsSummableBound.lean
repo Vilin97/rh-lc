@@ -57,7 +57,7 @@ theorem acoef_small : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Typ
     by_cases hex : ∃ f, IsFinIdem D v f
     · have hf : IsFinIdem D v (fid D v) := by
         unfold fid
-        rw [dif_pos hex]
+        rw [dite_eq_left hex]
         exact hex.choose_spec
       have hinj : Function.Injective (rep : LX R i v → GA D (Wc D i)) := fun x y h =>
         lx_eq_of_rep_rel (by rw [h, inv_mul_cancel]; exact (levW R i).one_mem)
@@ -73,7 +73,7 @@ theorem acoef_small : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Typ
         rw [lx_eq_of_rep_rel h]
     · have hf : fid D v = 0 := by
         unfold fid
-        rw [dif_neg hex]
+        rw [dite_eq_right hex]
       have hC0 : C = ∅ := by
         refine Finset.eq_empty_of_forall_notMem fun x hx => ?_
         have h1 : rep x = 1 := eq_one_of_suppF_zero (hf ▸ rep_suppF x)

@@ -96,7 +96,7 @@ theorem adms_gl (v : HeightOneSpectrum (𝓞 F)) (M : GL (Fin n) (v.adicCompleti
         (v.adicCompletionIntegers F) ⧸ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F)) := by
     intro p' q'
     simp only [redM]
-    rw [dif_pos (hA p' q')]
+    rw [dite_eq_left (hA p' q')]
     rfl
   exact ⟨fun hqp => by rw [hred]; exact (hU p q).1 hqp, by rw [hred]; exact (hU p p).2⟩
 

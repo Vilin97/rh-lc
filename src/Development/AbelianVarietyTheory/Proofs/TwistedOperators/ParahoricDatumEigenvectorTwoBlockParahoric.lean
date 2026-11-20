@@ -148,7 +148,7 @@ theorem om_datum : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k
       refine tame_eq hξ (by rw [Units.val_mul, map_mul, Units.val_mk0, hx.2.1, one_mul]; exact h11) ?_
       rw [Units.val_mul, Units.val_mk0, Units.val_mk0]
       exact hc
-    rw [dif_pos hs, dif_pos hx, t1, t2, map_mul, map_mul]
+    rw [dite_eq_left hs, dite_eq_left hx, t1, t2, map_mul, map_mul]
     simp only [Units.val_mul, _root_.mul_inv_rev, Units.val_inv_eq_inv_val]
     have a1 : (ξ u : ℂ) ≠ 0 := Units.ne_zero _
     field_simp
@@ -156,6 +156,6 @@ theorem om_datum : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k
       have := (inSupp_mul hs (inv_mem hj)).1
       rw [Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.mul_one] at this
       exact hx this
-    rw [dif_neg hs, dif_neg hx, mul_zero, mul_zero]
+    rw [dite_eq_right hs, dite_eq_right hx, mul_zero, mul_zero]
 
 end GlobalTheory.DatumEigen

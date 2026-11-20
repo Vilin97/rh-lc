@@ -421,11 +421,11 @@ noncomputable def homComp (R : isogHom E' E'') (Q : isogHom E E') : isogHom E E'
 
 theorem homComp_of_isGenPt (R : isogHom E' E'') (Q : isogHom E E') (h : IsGenPt E' Q.1) :
     (homComp R Q).1 = Point.map (genEval E' Q.1 h) R.1 := by
-  rw [homComp, dif_pos h]
+  rw [homComp, dite_eq_left h]
 
 theorem homComp_of_not_isGenPt (R : isogHom E' E'') (Q : isogHom E E') (h : ¬ IsGenPt E' Q.1) :
     homComp R Q = 0 := by
-  rw [homComp, dif_neg h]
+  rw [homComp, dite_eq_right h]
 
 theorem eq_zero_of_not_isGenPt (Q : isogHom E E') (h : ¬ IsGenPt E' Q.1) : Q = 0 := by
   rcases mem_isogHom_iff.mp Q.2 with h0 | h1

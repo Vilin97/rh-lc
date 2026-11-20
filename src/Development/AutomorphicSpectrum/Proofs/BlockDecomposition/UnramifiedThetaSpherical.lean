@@ -198,7 +198,7 @@ theorem inert_sph (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
           rw [Units.val_mul, Matrix.det_mul]
         rw [ht', hs, hd] at hmul
         exact mul_right_cancel₀ (hs ▸ hs0) hmul
-      rw [GL2LocalData.Wc, GL2LocalData.Wc, dif_neg hg, dif_neg hg']
+      rw [GL2LocalData.Wc, GL2LocalData.Wc, dite_eq_right hg, dite_eq_right hg']
   · rw [Wc_eq hc hform 1 1 (by simp)]
     have hn : GL2LocalData.nsg E (1 : F) = 1 := by
       rw [GL2LocalData.nsg, if_pos ⟨1, by simp⟩]

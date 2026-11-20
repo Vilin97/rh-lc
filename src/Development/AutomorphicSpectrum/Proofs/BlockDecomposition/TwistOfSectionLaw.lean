@@ -54,10 +54,10 @@ lemma sec_twist (h : IsCh Γ ⊤ c₀) (ρ : K →* (W →L[ℂ] W)) (P : Subgro
     sec K P (c * c₀) ρ g = c₀ g • sec K P c (twRep h K ρ) g := by
   unfold sec
   by_cases hk : ∃ k : K, g * (k : G)⁻¹ ∈ P
-  · rw [dif_pos hk, dif_pos hk, twRep_apply, Pi.mul_apply, Subgroup.coe_inv, ch_mul h g, smul_smul, smul_smul]
+  · rw [dite_eq_left hk, dite_eq_left hk, twRep_apply, Pi.mul_apply, Subgroup.coe_inv, ch_mul h g, smul_smul, smul_smul]
     congr 1
     ring
-  · rw [dif_neg hk, dif_neg hk, smul_zero]
+  · rw [dite_eq_right hk, dite_eq_right hk, smul_zero]
 
 lemma eis_twist (h : IsCh Γ ⊤ c₀) (ρ : K →* (W →L[ℂ] W)) (P : Subgroup G) (c : G → ℂ) (Λ : G → ℂ)
     (g : G) (w : W) :

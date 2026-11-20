@@ -14,7 +14,7 @@ theorem upper_minor_identity : C2.MinorU := by
   have hIc : (C2.iSet m (a.val + 1)).card = a.val + 1 := c2x3_iSet_card ham
   have hCc : (insert b (C2.iSet m a.val)).card = a.val + 1 := card_ins b hab (by omega)
   unfold C2.minorS
-  rw [dif_pos (hRc.trans hIc.symm), dif_pos (hRc.trans hCc.symm)]
+  rw [dite_eq_left (hRc.trans hIc.symm), dite_eq_left (hRc.trans hCc.symm)]
   set eR := (C2.wSet w (a.val + 1)).orderEmbOfFin rfl with heR
   set eI := (C2.iSet m (a.val + 1)).orderEmbOfFin (hRc.trans hIc.symm).symm with heI
   set eC := (insert b (C2.iSet m a.val)).orderEmbOfFin (hRc.trans hCc.symm).symm with heC
@@ -39,14 +39,14 @@ theorem upper_minor_identity : C2.MinorU := by
     · have ht0 : a.val < (C2.wSet w (a.val + 1)).card := by omega
       rw [Finset.prod_eq_single ⟨a.val, ht0⟩]
       · simp only [Matrix.submatrix_apply]
-        rw [hC, dif_neg (lt_irrefl _)]
+        rw [hC, dite_eq_right (lt_irrefl _)]
         congr 1
         exact Fin.ext (hI _)
       · intro t _ ht
         have htv : t.val < a.val := by
           have := t.isLt; have : t.val ≠ a.val := fun e => ht (Fin.ext e); omega
         simp only [Matrix.submatrix_apply]
-        rw [hC, dif_pos htv]
+        rw [hC, dite_eq_left htv]
         have : eI t = ⟨t.val, by omega⟩ := Fin.ext (hI t)
         rw [this]; exact hu.2 _
       · simp
@@ -54,7 +54,7 @@ theorem upper_minor_identity : C2.MinorU := by
       simp only [id] at hst
       simp only [Matrix.submatrix_apply]
       have hsv : s.val < a.val := by have := t.isLt; rw [Fin.lt_def] at hst; omega
-      rw [hC, dif_pos hsv]
+      rw [hC, dite_eq_left hsv]
       apply hu.1
       rw [Fin.lt_def, hI]; simp only; rw [Fin.lt_def] at hst; exact hst
   rw [hdu]

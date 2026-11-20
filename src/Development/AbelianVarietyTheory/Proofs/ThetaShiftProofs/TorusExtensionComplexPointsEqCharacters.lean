@@ -21,7 +21,7 @@ theorem fn_ext_val {U : (Sp ℂ).Opens} {a b : Γ(Sp ℂ, U)}
   by_cases hU : ⊤ ≤ (𝟙 (Sp ℂ)) ⁻¹ᵁ U
   · have e := h hU
     obtain rfl : U = ⊤ := top_le_iff.1 hU
-    rw [valAt', valAt', dif_pos hU, dif_pos hU, valAt, valAt] at e
+    rw [valAt', valAt', dite_eq_left hU, dite_eq_left hU, valAt, valAt] at e
     have e' := (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom).1 e
     have r : ∀ a : Γ(Sp ℂ, ⊤), ((𝟙 (Sp ℂ) : Sp ℂ ⟶ Sp ℂ).appLE ⊤ ⊤ hU).hom a = a := fun a =>
       congrArg (fun q => q.hom a) ((Sp ℂ).presheaf.map_id (Opposite.op ⊤))

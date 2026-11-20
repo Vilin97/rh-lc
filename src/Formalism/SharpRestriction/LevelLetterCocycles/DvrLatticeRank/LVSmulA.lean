@@ -26,7 +26,7 @@ def LV (K : ℕ) (x : W.DD T) : T.V ⊗[Qp] BdR :=
 theorem LV_eq (K : ℕ) (x : W.DD T) (h : W.Q ^ K • W.φD T x ∈ W.N T) :
     LV W T c ζ K x = W.levN T c ζ ⟨_, h⟩ K := by
   unfold LV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem LV_add (K : ℕ) (x y : W.DD T) (hx : W.Q ^ K • W.φD T x ∈ W.N T)
     (hy : W.Q ^ K • W.φD T y ∈ W.N T) : LV W T c ζ K (x + y) = LV W T c ζ K x + LV W T c ζ K y := by
@@ -80,7 +80,7 @@ theorem levN_val (hp4 : Formalism.MainNotions.DeltaInvariantLattices.p4 W Pt T) 
   classical
   have hex : ∃ k, W.Q ^ k • W.φD T x ∈ W.N T := ⟨k, hk⟩
   unfold valAt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hk0 : Nat.find hex ≤ k := Nat.find_min' hex hk
   have hk0m := Nat.find_spec hex
   have hv : ∀ j : ℤ, j < (Nat.find hex : ℤ) → W.levN T c ζ ⟨_, hk0m⟩ j = 0 :=

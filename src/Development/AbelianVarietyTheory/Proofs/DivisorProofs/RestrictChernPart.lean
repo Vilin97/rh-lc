@@ -166,7 +166,7 @@ theorem chernInt_eq_mInt (h : φ.IsCInf) (hA : IsAlgAtlas A) {f : CxPts p σ →
   rw [Weight.chernInt, Measure.restrict_univ, Measure.restrict_univ, chernPart_eq_sum h hA P,
     chernPart_eq_sum h hA P, integral_finsetSum_measure fun j _ => (h1 _ j).1,
     integral_finsetSum_measure fun j _ => (h1 _ j).1, ← Finset.sum_sub_distrib, mInt,
-    dif_pos (existsPartition A), integralWith]
+    dite_eq_left (existsPartition A), integralWith]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [(h1 _ j).2, (h1 _ j).2, ← integral_sub (h2 _ j) (h2 _ j)]
   refine integral_congr_ae (ae_of_all _ fun y => ?_)

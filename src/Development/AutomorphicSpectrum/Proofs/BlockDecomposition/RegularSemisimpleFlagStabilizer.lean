@@ -224,7 +224,7 @@ theorem stab_iff (A : Matrix (Fin n) (Fin n) E) (X : Matrix (Fin n) (Fin r) E) (
       _ = ∑ u : {l : Fin r // l ≤ j}, X a u.1 * (if h : u.1 ≤ j then C ⟨u.1, h⟩ ⟨l, hl⟩ else 0) := by
         simp only [Matrix.mul_apply, Pj, Matrix.submatrix_apply, id]
         refine Finset.sum_congr rfl fun u _ => ?_
-        rw [dif_pos u.2]
+        rw [dite_eq_left u.2]
       _ = _ := h2.symm
 
 theorem exists_sel (X : Matrix (Fin n) (Fin r) E) {i a : Fin r} (h : i ≤ a) :

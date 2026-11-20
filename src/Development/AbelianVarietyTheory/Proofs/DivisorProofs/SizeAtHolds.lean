@@ -117,7 +117,7 @@ theorem hc_bounds (P : ParameterChoice' D L) (hS : SizesAt L) (hx : L.sc.x ≤ L
     nlinarith
   have hwj : wj D (l.1 + 1) τ = (((D.hc τ).e l : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (by simp)]
+    rw [dite_eq_left (by simp)]
     rfl
   have hbT : ∀ t, (L.bT t : ℝ) ≤ 2 * L.sc.b' := fun t => by
     have h1 := P.bT_le t

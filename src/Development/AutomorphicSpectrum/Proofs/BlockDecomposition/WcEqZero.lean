@@ -29,12 +29,12 @@ theorem Wc_eq_wS (χ : AddChar F Circle) (σ : E ≃ₐ[F] E) (μ : Measure E) (
     (g : GL (Fin 2) F) (h : ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det) :
     GL2LocalData.Wc χ σ μ lam c Φ g = wS χ σ μ lam c Φ g h.choose := by
   unfold GL2LocalData.Wc wS
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem Wc_eq_zero (χ : AddChar F Circle) (σ : E ≃ₐ[F] E) (μ : Measure E) (lam : ℂ) (c : Eˣ →* ℂˣ) (Φ : E → ℂ)
     (g : GL (Fin 2) F) (h : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det) :
     GL2LocalData.Wc χ σ μ lam c Φ g = 0 := by
   unfold GL2LocalData.Wc
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 end GlobalTheory.CompanionTheory.WcB

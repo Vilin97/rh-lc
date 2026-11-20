@@ -18,7 +18,7 @@ theorem BlowUpFibreDegree.proof (ha : HomLocRingLocal.Statement.{u}) (hb : DivCy
   intro O _ _ _ ϖ hϖ K _ _ ι _ J _ P n hP N u hu hu' c x hx hxP W hϖW hdiv
   have hsupp : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hdiv (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg h])
+    exact hdiv (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right h])
   have hWp : W.IsPrime := hsupp.1.1.1
   have := hP.multiProj.isPrime
   obtain ⟨i, hi⟩ := powMonomial_not_mem hWp hsupp.2 c
@@ -45,7 +45,7 @@ theorem BlowUpFibreDegree.proof (ha : HomLocRingLocal.Statement.{u}) (hb : DivCy
   have hmult := hb O K ι P hP.multiProj c x hx hxP W hsupp.1 hsupp.2 _ hg hi hz
   have hdivW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) = ((multAt (P ⊔ Ideal.span {x}) W).toNat : ℤ) := by
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_pos hsupp]
+    rw [dite_eq_left hsupp]
   have := Fintype.ofFinite {𝔫 : Ideal B // 𝔫.IsMaximal}
 
   have hterm : ∀ 𝔫 : {𝔫 : Ideal B // 𝔫.IsMaximal},
@@ -75,7 +75,7 @@ theorem BlowUpFibreDegree.proof (ha : HomLocRingLocal.Statement.{u}) (hb : DivCy
       · rw [if_pos hc', if_neg hp]
         have h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) = 0 := by
           unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-          rw [dif_neg]
+          rw [dite_eq_right]
           exact fun h => hp ⟨h.1, h.2, hc'⟩
         rw [h0, zero_mul]
     · rw [if_neg hc', if_neg (fun h => hc' h.2.2)]

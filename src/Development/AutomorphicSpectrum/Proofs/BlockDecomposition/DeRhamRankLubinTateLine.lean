@@ -176,7 +176,7 @@ theorem genCoord_orbit (ψ : ↥(GK K) →* (↥LL.1)ˣ) {σ₀ : ↥LL.1 →ₐ
     genCoord P ψ σ₀ u (gc g σ₀) =
       algebraMap (Om l) P.R.BdR (gc g σ₀ ((ψ g : (↥LL.1)ˣ) : ↥LL.1)) * P.actQdR (g : GQ l) u := by
   have h : ∃ g' : ↥(GK K), gc g' σ₀ = gc g σ₀ := ⟨g, rfl⟩
-  rw [genCoord, dif_pos h]
+  rw [genCoord, dite_eq_left h]
   have hs := h.choose_spec
   obtain ⟨k, hk⟩ : ∃ k, h.choose = g * k := ⟨g⁻¹ * h.choose, by group⟩
   rw [hk] at hs ⊢

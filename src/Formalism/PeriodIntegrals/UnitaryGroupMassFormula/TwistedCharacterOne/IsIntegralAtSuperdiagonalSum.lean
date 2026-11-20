@@ -27,7 +27,7 @@ lemma reduction_spec {a : E} {r s : 𝓞 E} (hs : s ∉ P.asIdeal)
     ⟨Ideal.Quotient.mk P.asIdeal r * (Ideal.Quotient.mk P.asIdeal s)⁻¹, r, s, hs, h, by
       rw [mul_comm, mul_assoc, inv_mul_cancel₀ (mk_ne P hs), mul_one]⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨r', s', hs', h', hc⟩ := hex.choose_spec
   have hx : s * r' = s' * r := by
     apply IsFractionRing.injective (𝓞 E) E
@@ -206,7 +206,7 @@ lemma dI_inj : Function.Injective (dI kj N c) := by
 
 lemma atN_dI (v : Sp E (N + c)) (s : Fin (N - kj)) : Loc.atN v (kj + s.1) = v (dI kj N c s) := by
   unfold Loc.atN
-  rw [dif_pos (by have := s.2; omega)]
+  rw [dite_eq_left (by have := s.2; omega)]
   rfl
 
 lemma Mb_mul_of {r g h : Sp E (N + c) ≃ₗ[E] Sp E (N + c)}
@@ -283,9 +283,9 @@ lemma inX_eN {j : ℕ} (hj : j < N) : Loc.inX E N c (Loc.eN E N j) = Loc.eN E (N
   funext l
   simp only [Loc.inX, LinearMap.pi_apply]
   by_cases hl : l.1 < N
-  · rw [dif_pos hl]
+  · rw [dite_eq_left hl]
     rfl
-  · rw [dif_neg hl, LinearMap.zero_apply]
+  · rw [dite_eq_right hl, LinearMap.zero_apply]
     unfold Loc.eN
     rw [if_neg (by omega)]
 
@@ -296,7 +296,7 @@ lemma unitV_mul (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a b d : E} (ha : IsUni
     LocE.unitV ξ d = LocE.unitV ξ a * LocE.unitV ξ b := by
   have hd' : IsUnit (redP P d) := hd ▸ ha.mul hb
   unfold LocE.unitV
-  rw [dif_pos hd', dif_pos ha, dif_pos hb]
+  rw [dite_eq_left hd', dite_eq_left ha, dite_eq_left hb]
   have hu : hd'.unit = ha.unit * hb.unit := Units.ext (by simp [hd])
   rw [hu, map_mul, Units.val_mul]
 

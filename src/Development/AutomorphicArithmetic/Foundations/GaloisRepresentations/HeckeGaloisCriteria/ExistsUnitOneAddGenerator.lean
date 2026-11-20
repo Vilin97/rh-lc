@@ -53,7 +53,7 @@ theorem exists_unit_one_add_generator (D : D7) (hCen : GlobalTheory.Pass.Central
   refine ⟨z, fun F => ?_⟩
   rw [hz]
   unfold NTypes.onMt
-  rw [dif_pos (Subalgebra.smul_mem _ hcen _), dif_pos hcen, ← LinearMap.smul_apply, ← map_smul]
+  rw [dite_eq_left (Subalgebra.smul_mem _ hcen _), dite_eq_left hcen, ← LinearMap.smul_apply, ← map_smul]
   rfl
 
 theorem exists_tuple (D : D7) (μ : D.what₂.Tup) (j : ℕ) (F : D.what₂.Mt μ j) (hF : D.ntypes.onMt μ j D.ntypes.e0 F ≠ 0) :
@@ -120,7 +120,7 @@ theorem exists_type (D : D7) (P : PairedCharacterCondition.Pend D) (i : D.nd.Loc
     apply hτ
     rw [if_neg hlab, GlobalTheory.CutAtGood.atPlace_zero]
     unfold NTypes.onMt
-    rw [dif_pos (Subalgebra.zero_mem _)]
+    rw [dite_eq_left (Subalgebra.zero_mem _)]
     have e0 : (⟨0, Subalgebra.zero_mem _⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) = 0 := rfl
     rw [e0, map_zero]
     rfl

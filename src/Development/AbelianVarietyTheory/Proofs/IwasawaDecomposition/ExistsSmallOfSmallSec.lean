@@ -17,7 +17,7 @@ variable {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z)
 theorem valAt_algebraMap (a : Z.presheaf.stalk (below y)) :
     TrueGeo.valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [TrueGeo.valAt, dif_pos h]
+  rw [TrueGeo.valAt, dite_eq_left h]
   congr 1
   exact IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec
 
@@ -41,7 +41,7 @@ theorem top_le_of_below {U : Z.Opens} (hy : below y ∈ U) : ⊤ ≤ y ⁻¹ᵁ 
 
 theorem valAt_fnOf {U : Z.Opens} (hy : below y ∈ U) (h : genericPoint Z ∈ U) (a : Γ(Z, U)) :
     TrueGeo.valAt y (fnOf U h a) = valR y U a := by
-  rw [← algebraMap_germ hy, valAt_algebraMap, valR, dif_pos (top_le_of_below y hy)]
+  rw [← algebraMap_germ hy, valAt_algebraMap, valR, dite_eq_left (top_le_of_below y hy)]
   have := congrArg (fun φ => φ.hom a) (Scheme.germ_stalkClosedPointTo y U hy)
   exact this
 
@@ -50,7 +50,7 @@ end Val
 theorem valR_spMap_comp {R K : Type} [CommRing R] [CommRing K] (φ : R →+* K) {X : Scheme.{0}}
     (x : Sp R ⟶ X) {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)) :
     valR (spMap φ ≫ x) U a = φ (valR x U a) := by
-  rw [← valR_appLE (spMap φ) x h le_top, valR, dif_pos (show ⊤ ≤ spMap φ ⁻¹ᵁ ⊤ from le_top), valR, dif_pos h]
+  rw [← valR_appLE (spMap φ) x h le_top, valR, dite_eq_left (show ⊤ ≤ spMap φ ⁻¹ᵁ ⊤ from le_top), valR, dite_eq_left h]
   have := congrArg (fun ψ => ψ.hom ((x.appLE U ⊤ h).hom a))
     (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom φ))
   refine Eq.trans ?_ this

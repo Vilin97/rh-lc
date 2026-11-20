@@ -28,7 +28,7 @@ theorem lamQB_empty {K : Type} [Field K] (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ
   have h1 : redP P (1 : E) = 1 := by simpa using reduction_coe P 1
   rw [Matrix.det_isEmpty]
   unfold LocE.unitV
-  rw [dif_pos (by rw [h1]; exact isUnit_one)]
+  rw [dite_eq_left (by rw [h1]; exact isUnit_one)]
   have : ∀ hu : IsUnit (redP P (1 : E)), hu.unit = 1 := fun hu => Units.ext (by simp [h1])
   rw [this, map_one]
   simp

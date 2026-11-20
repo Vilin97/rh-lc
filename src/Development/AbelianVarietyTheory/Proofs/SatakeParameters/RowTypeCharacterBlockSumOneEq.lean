@@ -12,7 +12,7 @@ variable {E : Type} [Field E]
 
 theorem atN_sumE_last {n : ℕ} (j : Sp E n ≃ₗ[E] Sp E n) (t : ℕ) :
     Loc.atN ((sumE (rfl : n + 1 = n + 1) j 1) (Loc.eN E (n + 1) t)) n = if n = t then 1 else 0 := by
-  rw [Loc.atN, dif_pos (Nat.lt_succ_self n)]
+  rw [Loc.atN, dite_eq_left (Nat.lt_succ_self n)]
   have h := sumE_last (rfl : n + 1 = n + 1) j 1 (Loc.eN E (n + 1) t)
   have e : (⟨n, Nat.lt_succ_self n⟩ : Fin (n + 1)) = Br.iL (rfl : n + 1 = n + 1) := rfl
   rw [e, h, Units.val_one, one_mul]
@@ -20,7 +20,7 @@ theorem atN_sumE_last {n : ℕ} (j : Sp E n ≃ₗ[E] Sp E n) (t : ℕ) :
 
 theorem atN_sumE_up {n : ℕ} (j : Sp E n ≃ₗ[E] Sp E n) (t s : ℕ) (hs : s < n) :
     Loc.atN ((sumE (rfl : n + 1 = n + 1) j 1) (Loc.eN E (n + 1) t)) s = Loc.atN (j (Loc.eN E n t)) s := by
-  rw [Loc.atN, dif_pos (by omega), Loc.atN, dif_pos hs]
+  rw [Loc.atN, dite_eq_left (by omega), Loc.atN, dite_eq_left hs]
   have h := congrFun (prH_sumE (rfl : n + 1 = n + 1) j 1 (Loc.eN E (n + 1) t)) ⟨s, hs⟩
   have e1 : prH E (rfl : n + 1 = n + 1) (Loc.eN E (n + 1) t) = Loc.eN E n t := by
     funext i

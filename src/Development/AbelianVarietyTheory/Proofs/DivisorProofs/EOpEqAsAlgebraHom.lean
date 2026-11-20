@@ -206,7 +206,7 @@ theorem exists_lift (R : RealDat D A Ks) (hU : R.LUnif) (i : Fin D.R.m) (σ : D.
     ext v h
     show _ * actG0 _ _ _ _ _ h = 0
     unfold actG0
-    rw [dif_neg hk]
+    rw [dite_eq_right hk]
     simp
   have h1 : x ∈ Submodule.span ℂ (Set.range ((R.FW i).j σ)) := (hU i σ).2.1 ▸ Submodule.mem_top
   have h2 : Submodule.span ℂ (Set.range ((R.FW i).j σ)) = ⊥ := by

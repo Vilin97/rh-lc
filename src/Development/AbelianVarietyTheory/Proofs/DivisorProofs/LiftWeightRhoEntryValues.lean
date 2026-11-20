@@ -93,7 +93,7 @@ theorem valsAt_of_isLamPrime : ∀ {D : Formalism.BasicNotions.D7} (L : Formalis
       push_cast at hq he ⊢
       linarith
     have hwj : wj D ((j : ℕ) + 1) τ = (((D.hc τ).e ⟨(j : ℕ) + 1 - 1, hj.2⟩ : ℚ) : ℝ) := by
-      unfold wj; rw [dif_pos hj.2]
+      unfold wj; rw [dite_eq_left hj.2]
     have := congrArg (Rat.cast : ℚ → ℝ) hQ
     rw [hwj]
     push_cast at this ⊢

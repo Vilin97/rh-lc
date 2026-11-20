@@ -78,13 +78,13 @@ theorem VarMassNearSmall.proof (hCMC : ChartMassCompact.Statement) : VarMassNear
   swap
   · refine ⟨Set.univ, isOpen_univ, Set.subset_univ _, fun χ _ _ _ => ?_⟩
     unfold varInt
-    rw [dif_neg hA, abs_zero]
+    rw [dite_eq_right hA, abs_zero]
     exact hδ.le
   set A := hA.choose with hAdef
   have hAf : IsFiniteProjection W A := hA.choose_spec
   have hvar : ∀ g, varInt W d g φ = ∫ y, chartDens W A g φ y := fun g => by
     unfold varInt chartInt
-    rw [dif_pos hA]
+    rw [dite_eq_left hA]
   have hfin : ∀ y, (fibre W A y).Finite := fun y => (FibreBound.proof n d W A hW hdim hAf y).2.1
   have hS : IsClosed (zeroSet I) := SheetSumMeasurable.isClosed_zeroSet I
   set U : ℕ → Set (Fin n → ℂ) := fun k => Metric.thickening (1 / ((k : ℝ) + 1)) (zeroSet I) with hU

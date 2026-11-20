@@ -26,7 +26,7 @@ theorem blk_val_det {E : Type} [Field E] [NumberField E] [IsCMField E] {n a b : 
       (Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val)) :=
     (Matrix.isUnit_iff_isUnit_det _).2 (hdet ▸ h1.mul h2)
   simp only [blk]
-  rw [dif_pos hu, IsUnit.unit_spec]
+  rw [dite_eq_left hu, IsUnit.unit_spec]
   exact hdet
 
 theorem ordL_blk_det : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n a b : ℕ) (h : a + b = n) (w : Pl E)

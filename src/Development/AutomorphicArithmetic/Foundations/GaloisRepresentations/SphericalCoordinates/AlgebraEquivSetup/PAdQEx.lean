@@ -71,13 +71,13 @@ private noncomputable def gL {p : ℕ} (b : AfP p) (w : HeightOneSpectrum ℤ) :
 
 private theorem gL_pos {p : ℕ} (b : AfP p) (v : AwayP p) : gL b v.1 = (eL v.1).symm (AfP.eval v b) := by
   unfold gL
-  rw [dif_pos v.2]
+  rw [dite_eq_left v.2]
   rfl
 
 private theorem gL_neg {p : ℕ} (b : AfP p) (w : HeightOneSpectrum ℤ)
     (h : ¬ w.asIdeal ≠ Ideal.span {(p : ℤ)}) : gL b w = 0 := by
   unfold gL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 private theorem afP_ev {p : ℕ} (b : AfP p) :
     ∀ᶠ v : AwayP p in Filter.cofinite, AfP.eval v b ∈ v.1.adicCompletionIntegers ℚ := b.2

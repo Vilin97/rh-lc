@@ -45,7 +45,7 @@ open GlobalTheory.MBLow.JetUniq
 
 theorem fnOf_valR_id {K : Type} [Field K] (f : Γ(Sp K, ⊤)) : GlobalTheory.Ex.fnOf (valR (𝟙 (Sp K)) ⊤ f) = f := by
   have h : ⊤ ≤ (𝟙 (Sp K)) ⁻¹ᵁ ⊤ := fun _ _ => trivial
-  rw [valR, dif_pos h]
+  rw [valR, dite_eq_left h]
   simp [GlobalTheory.Ex.fnOf, Scheme.Hom.appLE]
   rfl
 

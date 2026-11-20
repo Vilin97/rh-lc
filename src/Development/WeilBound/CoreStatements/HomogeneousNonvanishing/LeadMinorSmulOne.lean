@@ -111,10 +111,10 @@ theorem letters (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
   rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
   · rw [if_neg (by simp)]
     unfold perFr
-    rw [dif_pos a, dif_pos hn]
+    rw [dite_eq_left a, dite_eq_left hn]
   · rw [if_pos (by dsimp only; omega)]
     unfold perFr
-    rw [dif_neg a, dif_pos (show conjEmb (relab c σ s.1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
+    rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ s.1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
     rfl
 
 theorem hm_diag (hσ : GoodEmb c σ) (hU : IsUnf U) {k : U.Comp} {x : (U.X k).dom} (W : PullbackSections.UnfAt U k x)
@@ -208,7 +208,7 @@ theorem move (hσ : GoodEmb c σ) (hU : IsUnf U) {k : U.Comp} (x : (U.X k).dom) 
 theorem leadMinor_smul_one {n : ℕ} (κ : ℝ) (m : ℕ) (hm : m ≤ n) :
     GlobalTheory.CompanionTheory.Ar.leadMinor ((κ : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ)) m = κ ^ m := by
   unfold GlobalTheory.CompanionTheory.Ar.leadMinor
-  rw [dif_pos hm, Matrix.submatrix_smul, Pi.smul_apply, Pi.smul_apply,
+  rw [dite_eq_left hm, Matrix.submatrix_smul, Pi.smul_apply, Pi.smul_apply,
     Matrix.submatrix_one _ (Fin.castLE_injective hm), Matrix.det_smul, Matrix.det_one, Fintype.card_fin, _root_.mul_one,
     ← Complex.ofReal_pow, Complex.ofReal_re]
 

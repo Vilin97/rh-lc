@@ -126,7 +126,7 @@ theorem eq_of_coeffs {p n : ℕ} {φ ψ : KosC S ι V R p n} (h : ∀ I, coeffs 
   funext J I
   have := congrFun (h I) J.1
   unfold coeffs at this
-  rw [dif_pos J.2, dif_pos J.2] at this
+  rw [dite_eq_left J.2, dite_eq_left J.2] at this
   exact this
 
 theorem coeffs_zero {p n : ℕ} (I : KH.Cell K ι n) : coeffs (0 : KosC S ι V R p n) I = fun _ => 0 := by

@@ -28,7 +28,7 @@ theorem exists_selector (R : Type) [CommRing R] (hj : j ≤ N) (i : Fin N) {I' :
       exact ⟨fun _ => h2, fun _ => h1⟩
   · by_cases e : I = I'
     · subst e
-      rw [if_pos rfl, minorIJ, dif_pos hI.1]
+      rw [if_pos rfl, minorIJ, dite_eq_left hI.1]
       refine Eq.trans (congrArg Matrix.det ?_) Matrix.det_one
       ext s t
       simp only [Matrix.submatrix_apply, Matrix.of_apply, Matrix.one_apply, EmbeddingLike.apply_eq_iff_eq]
@@ -73,7 +73,7 @@ theorem gram_minor {G h g : Matrix (Fin N) (Fin N) ℂ} {C : Finset (Fin N)} {a 
   simpa only [Complex.re_ofReal_mul] using congrArg Complex.re h1
 
 theorem minor_pos {G : Matrix (Fin N) (Fin N) ℂ} (hG : G.PosDef) (C : Finset (Fin N)) : 0 < minorIJ G C C := by
-  rw [minorIJ, dif_pos rfl]
+  rw [minorIJ, dite_eq_left rfl]
   exact (hG.submatrix (C.orderEmbOfFin rfl).injective).det_pos
 
 theorem detFac_pos {G : Matrix (Fin N) (Fin N) ℂ} (hG : G.PosDef) (i : Fin N) : 0 < (detFac j i G).re := by

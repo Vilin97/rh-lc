@@ -83,7 +83,7 @@ theorem germ_radial_part_eq_of_local_picture (L : Lev) (hw : RadialOperatorsWell
   have h : ∃ J, J ∈ L.KKop ∧ ∃ U : Set (Fin (L.r + 1) → ℂ), IsOpen U ∧ x ∈ U ∧ U ⊆ L.BD ∧ ∀ y ∈ U, φ y = L.B J y :=
     ⟨J, hJ, U, hU, hx, hUB, hφ⟩
   unfold germRadialPart
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨hJ', U', hU', hx', hUB', hφ'⟩ := h.choose_spec
   exact hw Y a b _ hJ' _ hJ (U' ∩ U) (hU'.inter hU) (fun y hy => hUB hy.2)
     (fun y hy => (hφ' y hy.1).symm.trans (hφ y hy.2)) x ⟨hx', hx⟩
@@ -102,7 +102,7 @@ theorem germ_radial_part_local (L : Lev) (hw : RadialOperatorsWellDefinedOnGerms
       exact h ⟨J, hJ, U ∩ V, hU.inter hV, ⟨hxU, hx⟩, fun y hy => hUB hy.1,
         fun y hy => (hφψ y hy.2).trans (hψ y hy.1)⟩
     unfold germRadialPart
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem radial_part_exists_iff_well_defined (L : Lev) : (∃ R, L.IsRadQQ R) ↔ RadialOperatorsWellDefinedOnGerms L := by
   constructor
@@ -263,7 +263,7 @@ theorem upper_block_of_blockW_eq (k0 r : ℕ) (h : Matrix (Fin (k0 + 1)) (Fin (k
       (⟨(wI (k0 + 1) r a.castSucc).val - r, p⟩ : Fin (k0 + 1)) = a :=
     fun a p => Fin.ext (by simp [wI])
   unfold upperBlockOfMatrix Formalism.MainNotions.S.blockW
-  rw [dif_pos (h1 i), dif_pos (h1 j), e, e]
+  rw [dite_eq_left (h1 i), dite_eq_left (h1 j), e, e]
 
 def levelFromCompactRepresentations (k0 r : ℕ) (Hp Hq : Type) [NormedAddCommGroup Hp] [InnerProductSpace ℂ Hp] [FiniteDimensional ℂ Hp]
     [NormedAddCommGroup Hq] [InnerProductSpace ℂ Hq] [FiniteDimensional ℂ Hq]
@@ -460,7 +460,7 @@ theorem upper_block_restrict_down_eq (i r' : ℕ) (h : i + r' = r) (g : Mat k0 r
     fun a p => Fin.ext (by simp only [wI, Fin.val_castSucc]; omega)
   unfold upperBlockOfMatrix ιLev
   simp only [Fin.val_cast]
-  rw [dif_pos (h1 a), dif_pos (h1 b), e, e]
+  rw [dite_eq_left (h1 a), dite_eq_left (h1 b), e, e]
 
 theorem level_from_reps_restrict_down (i r' : ℕ) (h : i + r' = r) :
     (levelFromCompactRepresentations k0 r Hp Hq σ σ').down i r' h = levelFromCompactRepresentations k0 r' Hp Hq σ σ' := by
@@ -509,7 +509,7 @@ theorem upper_block_lift_rank_eq (g : Mat k0 r) : upperBlockOfMatrix k0 (r + 1) 
     fun a p => Fin.ext (by simp only [wI, Fin.val_castSucc]; omega)
   unfold upperBlockOfMatrix ι1 ιLev
   simp only [Fin.val_cast]
-  rw [dif_pos (h1 a), dif_pos (h1 b), e, e]
+  rw [dite_eq_left (h1 a), dite_eq_left (h1 b), e, e]
 
 theorem level_from_reps_lift_rank : (levelFromCompactRepresentations k0 r Hp Hq σ σ').up (fun g => σ (upperBlockOfMatrix k0 (r + 1) g)) (fun g => σ' (upperBlockOfMatrix k0 (r + 1) g)) =
     levelFromCompactRepresentations k0 (r + 1) Hp Hq σ σ' := by

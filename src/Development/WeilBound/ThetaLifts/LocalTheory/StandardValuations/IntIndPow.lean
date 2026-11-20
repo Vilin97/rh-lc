@@ -19,7 +19,7 @@ def dl (ν : kˣ →* ℂˣ) (x : k) : ℂ :=
 variable {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c : ℕ}
 
 theorem dl_unit (u : kˣ) (hu : valuation k (u : k) = 1) : dl ν u = (((ν u)⁻¹ : ℂˣ) : ℂ) := by
-  rw [dl, dif_pos ⟨u.ne_zero, hu⟩, Units.mk0_val]
+  rw [dl, dite_eq_left ⟨u.ne_zero, hu⟩, Units.mk0_val]
 
 theorem dl_of_ne {x : k} (h : valuation k x ≠ 1) : dl ν x = 0 := dif_neg fun h' => h h'.2
 
@@ -248,6 +248,6 @@ theorem gI_gauss (hm : IsVol m) (hψ : IsPsi ψ) (hϖ : IsUnif ϖ) (hc : 1 ≤ c
   · intro u _
     have h1 := (hu u.1).1 u.isUnit
     have h2 : ((Quotient.out u.1 : 𝒪[k]) : k) ≠ 0 := by intro h; simp [h] at h1
-    rw [dif_neg h2, dl, dif_pos ⟨h2, h1⟩, div_eq_inv_mul]
+    rw [dif_neg h2, dl, dite_eq_left ⟨h2, h1⟩, div_eq_inv_mul]
 
 end PositivityTheory.ThKG.Std

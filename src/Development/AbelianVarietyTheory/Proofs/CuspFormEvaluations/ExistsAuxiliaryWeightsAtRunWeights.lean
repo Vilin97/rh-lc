@@ -73,7 +73,7 @@ theorem exists_block {p : ℕ} (a l f : Fin p → ℕ) (T Dm r T' : ℕ) (hT' : 
     have hk := gap_key (gapZ a i) (gapZ l i) T' r (by omega) (by positivity)
       (by exact_mod_cast hgap i h) (hL i h)
     unfold gapZ at hk
-    rw [dif_pos h, dif_pos h, hT'z] at hk
+    rw [dite_eq_left h, dite_eq_left h, hT'z] at hk
     nlinarith
   · intro i h
     have := hlast i h
@@ -141,7 +141,7 @@ theorem exists_auxiliaryWeights_at_runWeights : ∀ (D : D7) (B : WeightFamilies
       have hl := hLP τ i
       rw [if_neg hn] at hl
       unfold gapZ at hl
-      rw [dif_neg hn] at hl
+      rw [dite_eq_right hn] at hl
       have hk := le_mul_fdiv_sub_of_sq_le (ka.aP τ i) (((WeightFamilies.dimY D j : ℤ) + 2) * nW + 2 * D.R.r) Tn
         (WeightFamilies.dimY D j) (by positivity) h40z (by exact_mod_cast hcT) (hbigP τ i hi)
       have e : (ka.aP τ i : ℤ) - ((WeightFamilies.dimY D j : ℤ) + 2) * nW - 2 * D.R.r =
@@ -162,7 +162,7 @@ theorem exists_auxiliaryWeights_at_runWeights : ∀ (D : D7) (B : WeightFamilies
       have hl := hLM τ i
       rw [if_neg hn] at hl
       unfold gapZ at hl
-      rw [dif_neg hn] at hl
+      rw [dite_eq_right hn] at hl
       have hk := le_mul_fdiv_sub_of_sq_le (ka.aM τ i) 0 Tn (WeightFamilies.dimY D j) (by positivity) h40z
         (by positivity) (hbigM τ i hi)
       rw [sub_zero] at hk

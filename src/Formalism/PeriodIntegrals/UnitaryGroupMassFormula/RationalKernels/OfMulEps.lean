@@ -24,7 +24,7 @@ lemma of_mul_eps (P : Pair K G) (h : P.H) :
   refine Fintype.sum_equiv (Equiv.mulLeft (h : G)) _ _ fun x => ?_
   by_cases hx : x ∈ P.H
   · have hhx : (Equiv.mulLeft (h : G)) x ∈ P.H := P.H.mul_mem h.2 hx
-    rw [dif_pos hx, dif_pos hhx, mul_smul_comm, smul_smul, ← map_mul (MonoidAlgebra.of K G)]
+    rw [dite_eq_left hx, dite_eq_left hhx, mul_smul_comm, smul_smul, ← map_mul (MonoidAlgebra.of K G)]
     congr 1
     have e : P.chi ⟨(Equiv.mulLeft (h : G)) x, hhx⟩ = P.chi h * P.chi ⟨x, hx⟩ := by
       rw [← map_mul]; rfl
@@ -34,7 +34,7 @@ lemma of_mul_eps (P : Pair K G) (h : P.H) :
   · have hhx : (Equiv.mulLeft (h : G)) x ∉ P.H := fun hm => hx (by
       have := P.H.mul_mem (P.H.inv_mem h.2) hm
       simpa using this)
-    rw [dif_neg hx, dif_neg hhx, mul_zero, smul_zero]
+    rw [dite_eq_right hx, dite_eq_right hhx, mul_zero, smul_zero]
 
 variable (M : GMap K σ G T EE ρE)
 

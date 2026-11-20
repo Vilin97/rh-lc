@@ -129,7 +129,7 @@ include hn hneg in
 theorem raw_line_self_pairing (hc : c % 2 = 1) (pz : E) (T : ℕ) (hpz : star pz * pz = (T : E)) :
     Examples₂.diagForm n neg (rawZ n a c pz) (rawZ n a c pz) = -(T : E) := by
   have hz : ixZ a c < n := by unfold ixZ; omega
-  rw [rawZ, diag_sv, dif_pos ⟨rfl, hz⟩, sign_at_line_index n a c neg hn hneg hz, ← hpz]
+  rw [rawZ, diag_sv, dite_eq_left ⟨rfl, hz⟩, sign_at_line_index n a c neg hn hneg hz, ← hpz]
   ring
 
 include hn in
@@ -138,9 +138,9 @@ theorem raw_zE (hc : c % 2 = 1) (pz lam : E) {i : ℕ} (hi : i < c / 2) :
   have h1 : ixZ a c ≠ ixPos a i := by unfold ixZ ixPos; omega
   have h2 : ixZ a c ≠ ixNeg a c i := by unfold ixZ ixNeg; omega
   have k1 : Examples₂.diagForm n neg (rawZ n a c pz) (sv n (ixPos a i) 1) = 0 := by
-    rw [rawZ, diag_sv, dif_neg (fun h => h1 h.1)]
+    rw [rawZ, diag_sv, dite_eq_right (fun h => h1 h.1)]
   have k2 : Examples₂.diagForm n neg (rawZ n a c pz) (sv n (ixNeg a c i) 1) = 0 := by
-    rw [rawZ, diag_sv, dif_neg (fun h => h2 h.1)]
+    rw [rawZ, diag_sv, dite_eq_right (fun h => h2 h.1)]
   constructor
   · simp only [rawE, map_add (f := _), k1, k2, add_zero]
   · simp only [rawEv, map_smul, map_sub, k1, k2, sub_zero, smul_zero]
@@ -642,7 +642,7 @@ theorem betaYOf_val {D : D7} (βY : ∀ j, GL (Fin (Yc D j).rank) (EAf D)) (j : 
       (βY j).val ⟨r.val, by have := r.isLt; simp only [Yc, Nat.min_eq_left h]; exact this⟩
         ⟨c.val, by have := c.isLt; simp only [Yc, Nat.min_eq_left h]; exact this⟩ := by
   unfold Seed.Frm.betaYOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact gl_cast_val (D := D) j (min j D.R.m) (Nat.min_eq_left h) (βY j) _ r c
 
 open Classical in
@@ -727,12 +727,12 @@ theorem frame0_eq {D : D7} {pz lam : D.host.E} (hF : DiagonalEntries D pz lam) (
     omega
   unfold frame0
   by_cases hlt : i < D.R.rS
-  · rw [dif_pos hlt, hF.hypE i hlt r]
+  · rw [dite_eq_left hlt, hF.hypE i hlt r]
     have hs : scJ D 0 i = 1 := by simp only [scJ]; rw [if_neg (by omega)]
     rw [hs, one_mul, adapted_vector_index_eq_basis _ _ _ _ _ (by omega)]
     simp only [eN, ixPos, ixNeg, hN, hc, sv, svN]
     congr 2
-  · rw [dif_neg hlt]
+  · rw [dite_eq_right hlt]
     by_cases heq : i = D.R.rS
     · subst heq
       rw [if_pos rfl, hF.zm r]
@@ -745,7 +745,7 @@ theorem frame0_eq {D : D7} {pz lam : D.host.E} (hF : DiagonalEntries D pz lam) (
         have := D.R.two_le_m
         simp only [Ranks.rS] at h1 ⊢
         omega
-      rw [dif_pos hl, map_smul, Finsupp.smul_apply, hF.hypF _ hl r]
+      rw [dite_eq_left hl, map_smul, Finsupp.smul_apply, hF.hypF _ hl r]
       have hs : scJ D 0 i = -(D.sp.T : D.host.E) := by unfold scJ; rw [if_pos ⟨rfl, by omega⟩]
       have hcc : D.R.m - 1 - 0 - 1 - i = 2 * D.R.rS - i := by
         obtain ⟨a, ha⟩ := D.R.m_even

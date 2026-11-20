@@ -187,11 +187,11 @@ theorem varIntegral_eq_of_le {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ))
   · have h' : ∃ A : Matrix (Fin d) (Fin n) ℂ, IsFiniteProj J A := by
       obtain ⟨A, hA⟩ := h
       exact ⟨A, (isFiniteProj_iff_of_le hJ).mpr hA⟩
-    rw [dif_pos h, dif_pos h', projInt_eq, choose_congr hp h' h]
+    rw [dite_eq_left h, dite_eq_left h', projInt_eq, choose_congr hp h' h]
   · have h' : ¬ ∃ A : Matrix (Fin d) (Fin n) ℂ, IsFiniteProj J A := by
       rintro ⟨A, hA⟩
       exact h ⟨A, (isFiniteProj_iff_of_le hJ).mp hA⟩
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem slice_integral_eq {n e : ℕ} (h : HermNorm n) {J : Ideal (MvPolynomial (Fin n) ℂ)}
     {ℓ : Fin n → ℂ} (g : (Fin n → ℂ) → ℝ) (hJ : IsAffVariety J (e + 1)) (hH : IsHomogIdeal J)

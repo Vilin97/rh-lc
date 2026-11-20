@@ -395,7 +395,7 @@ theorem stmt6G (D : Formalism.BasicNotions.D7) (L : SizeData₂ D) (X : Inst D L
       rw [if_pos hE]
     have hio : ioP X K (aL L) (bL L) (D.what₂.places.resChar w) = 0 := by
       unfold ioP
-      rw [dif_neg]
+      rw [dite_eq_right]
       rw [hE]
       simp
     have hNP : NP X Y K u w hg = (D.gat u w hg).M ⊓ Y.Vram u w hg := by
@@ -470,7 +470,7 @@ theorem stmt6G (D : Formalism.BasicNotions.D7) (L : SizeData₂ D) (X : Inst D L
           (Formalism.MainNotions.G.VV X K (aL L) (bL L) (D.what₂.places.resChar w)).sup' hne
             (fun t0 => Formalism.MainNotions.G.Sv X K (aL L) (bL L) (D.what₂.places.resChar w) t0) := by
       unfold ioP
-      rw [dif_pos hne]
+      rw [dite_eq_left hne]
     have hsup : (((Formalism.MainNotions.G.VV X K (aL L) (bL L) (D.what₂.places.resChar w)).sup
         (fun t0 => ⌈Formalism.MainNotions.G.Sv X K (aL L) (bL L) (D.what₂.places.resChar w) t0⌉.toNat) : ℕ) : ℝ) ≤
         (Formalism.MainNotions.G.VV X K (aL L) (bL L) (D.what₂.places.resChar w)).sup' hne

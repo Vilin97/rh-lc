@@ -235,7 +235,7 @@ theorem isWord_letters (D : D7) (u : D.what₂.Word) : Sz.IsWord D.R.k (letters 
   · unfold letters
     split_ifs <;> simp
   · unfold letters
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
 
 theorem cfg_v (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) {i : ℕ} (h1 : 1 ≤ i) (h2 : i ≤ D.R.k - 1) :
     (cfg D u τ).v i = vOne D τ i := by
@@ -252,7 +252,7 @@ theorem cfg_v (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) {i : ℕ} (h1 :
       simp only [D.hcW_v] at h4
       have h5 : vOne D τ i - vOne D τ (i + 1) = 4 * (D.s.Del : ℝ) := by
         unfold vOne
-        rw [dif_pos ⟨h1, by omega⟩, dif_pos ⟨by omega, by omega⟩]
+        rw [dite_eq_left ⟨h1, by omega⟩, dite_eq_left ⟨by omega, by omega⟩]
         have e : (⟨i + 1 - 1, by omega⟩ : Fin (D.R.k - 1)) = ⟨i - 1 + 1, by omega⟩ := Fin.ext (by simp only; omega)
         rw [e]
         exact_mod_cast h4
@@ -271,14 +271,14 @@ theorem cfg_lam (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) :
   unfold lamSH lamS Sz.Cfg.lam
   simp only [Fin.val_cast]
   by_cases h : i.val < D.R.k - 1
-  · rw [dif_pos h, if_pos (show i.val + 1 < (cfg D u τ).k from (by omega : i.val + 1 < D.R.k)), cfg_v D u τ (by omega) (by omega)]
+  · rw [dite_eq_left h, if_pos (show i.val + 1 < (cfg D u τ).k from (by omega : i.val + 1 < D.R.k)), cfg_v D u τ (by omega) (by omega)]
     unfold vOne
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     rfl
-  · rw [dif_neg h, dif_pos (by omega), if_neg (show ¬ i.val + 1 < (cfg D u τ).k from (by omega : ¬ i.val + 1 < D.R.k))]
+  · rw [dite_eq_right h, dite_eq_left (by omega), if_neg (show ¬ i.val + 1 < (cfg D u τ).k from (by omega : ¬ i.val + 1 < D.R.k))]
     show _ = -bOne D τ (i.val + 1 + 1 - D.R.k)
     unfold bOne
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     congr 3
     simp only [Fin.mk.injEq]
     omega
@@ -291,7 +291,7 @@ theorem cfg_u (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau)
   have hi := i.2
   have e : uS D u τ i = uOne D u τ (i.val + 1) := by
     unfold uOne
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     rfl
   unfold Sz.Cfg.u
   by_cases h1 : i.val + 1 = 1
@@ -304,7 +304,7 @@ theorem cfg_u (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau)
     · rw [if_pos (by simpa [cfg] using ht)]
       show _ = - -uOne D D.u₀ τ D.R.k
       unfold uOne uS
-      rw [neg_neg, dif_pos ⟨by omega, le_rfl⟩, dif_pos ⟨by omega, le_rfl⟩, D.hcW_last u τ (by omega),
+      rw [neg_neg, dite_eq_left ⟨by omega, le_rfl⟩, dite_eq_left ⟨by omega, le_rfl⟩, D.hcW_last u τ (by omega),
         D.hcW_last D.u₀ τ (by omega)]
     · rw [if_neg (by simpa [cfg] using ht)]
       exact hl ht
@@ -314,7 +314,7 @@ theorem cfg_u (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau)
     have e2 : (⟨i.val - 1 + 1, by omega⟩ : Fin D.R.k) = i := Fin.ext (by simp only; omega)
     rw [e2] at h3
     unfold uS vOne letters
-    rw [h3, dif_pos ⟨by omega, by omega⟩, dif_pos ⟨by omega, by omega⟩]
+    rw [h3, dite_eq_left ⟨by omega, by omega⟩, dite_eq_left ⟨by omega, by omega⟩]
     split_ifs <;> simp [cfg]
 
 theorem vv_eq (hE : GlobalTheory.Published.DiscreteSeriesUpqExists) (hF : GlobalTheory.Published.FormalDegreeCompactDual) (D : D7)
@@ -460,7 +460,7 @@ theorem tcrit_low (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 :
         have h1 := large₂.top_b τ t (by omega) ht
         have h2 := large₂.bT_ge t
         have h3 : B = (((D.hc τ).b ⟨0, by omega⟩ : ℚ) : ℝ) := by
-          rw [hBdef]; unfold bOne; rw [dif_pos ⟨le_rfl, by omega⟩]
+          rw [hBdef]; unfold bOne; rw [dite_eq_left ⟨le_rfl, by omega⟩]
         linarith
       have hbB : large₂.sc.b ≤ B ^ 2 := (Real.sqrt_le_left (by linarith)).1 (hb'.trans hBt)
       have hu1 : uOne D u τ 1 ≤ B ^ 3 := by
@@ -468,7 +468,7 @@ theorem tcrit_low (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 :
         have h2 := (large₂.aT_win t).2
         have h3 : uOne D u τ 1 = (((D.hc τ).u ⟨0, by omega⟩ : ℚ) : ℝ) := by
           unfold uOne uS
-          rw [dif_pos ⟨le_rfl, by omega⟩, ← D.hcW_first u τ (by omega)]
+          rw [dite_eq_left ⟨le_rfl, by omega⟩, ← D.hcW_first u τ (by omega)]
         have hx1 := large₂.sc.one_lt_alt
         have h4 : large₂.sc.a ≤ D.R.k * B ^ 2 := by
           unfold Scale.a

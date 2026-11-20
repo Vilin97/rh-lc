@@ -178,7 +178,7 @@ theorem isRestrGroup (a b : ℕ) :
 theorem cjv_spec (hC : CjEx) (v : PlF E) (x : Af E) :
     projv v (conjFin (IsCMField.complexConj E).toRingEquiv x) = cjv v (projv v x) := by
   have h := hC E v
-  rw [cjv, dif_pos h]
+  rw [cjv, dite_eq_left h]
   exact h.choose_spec.2 x
 
 theorem pn_thF (hC : CjEx) (n : ℕ) (v : PlF E) (x : GL (Fin n) (Af E)) :

@@ -83,7 +83,7 @@ theorem log_brBd_sq_le : ∀ {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg
 
   have hsp : lam.spread = lam.w 0 - lam.w (Fin.last n) + ((n + 1 : ℕ) : ℤ) := by
     unfold DomWeight.spread
-    rw [dif_pos (Nat.succ_pos n)]
+    rw [dite_eq_left (Nat.succ_pos n)]
     rfl
   have h0 := abs_le.mp (hw 0)
   have hl := abs_le.mp (hw (Fin.last n))

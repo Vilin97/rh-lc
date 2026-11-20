@@ -28,7 +28,7 @@ theorem detOn_conjTranspose : ∀ (n : ℕ) (g : Matrix (Fin n) (Fin n) ℂ) (V 
   have hg' : ∀ y ∈ V, Matrix.toLin' g y ∈ V := by simpa [Matrix.toLin'_apply] using hg
   have hgh' : ∀ y ∈ V, Matrix.toLin' gᴴ y ∈ V := by simpa [Matrix.toLin'_apply] using hgh
   unfold GlobalTheory.FlagMeas.detOn
-  rw [dif_pos hgh', dif_pos hg']
+  rw [dite_eq_left hgh', dite_eq_left hg']
   set f := (Matrix.toLin' g).restrict hg'
   set f' := (Matrix.toLin' gᴴ).restrict hgh'
   let b := Module.finBasis ℂ V

@@ -38,7 +38,7 @@ theorem whittaker_eq_partialCoeff_zero {ϕ : AdelicGLn.AdelicGL K n → ℂ} (h�
   have hext : ∀ Z : GePos n 0 → 𝔸[K], extGe Z = E Z := by
     intro Z
     funext p
-    rw [extGe, dif_pos (Nat.zero_le _)]
+    rw [extGe, dite_eq_left (Nat.zero_le _)]
     simp [E, MeasurableEquiv.piCongrLeft, Equiv.piCongrLeft, gePosZeroEquiv]
   have hpre : E ⁻¹' vecDomain K (Pos n) = vecDomain K (GePos n 0) := by
     ext Z
@@ -186,7 +186,7 @@ theorem partialCoeff_eq_nestedWhittaker {ϕ : AdelicGLn.AdelicGL K n → ℂ} (h
       have hlt : m + 1 < n := by omega
       rw [nestedWhittaker]
       dsimp only
-      rw [dif_pos hlt, ← (hasSum_partialCoeff_cusp_cosets hϕ hk0 hlt g).tsum_eq, ih hk0 hlt.le]
+      rw [dite_eq_left hlt, ← (hasSum_partialCoeff_cusp_cosets hϕ hk0 hlt g).tsum_eq, ih hk0 hlt.le]
 
 theorem eq_nestedWhittaker {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : ϕ ∈ cuspForms K n) (hn : 0 < n)
     (g : AdelicGLn.AdelicGL K n) : ϕ g = nestedWhittaker ϕ n g := by

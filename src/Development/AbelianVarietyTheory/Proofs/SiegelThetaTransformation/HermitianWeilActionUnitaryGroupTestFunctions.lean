@@ -131,7 +131,7 @@ theorem weil_spec (hΨ : IsType Ψ) (hn : Even n) {γ : M2 E N} (hγ : γ ∈ UU
     IsSB (weil Ψ γ φ) ∧ TransH Ψ γ φ (weil Ψ γ φ) := by
   obtain ⟨W, hW⟩ := exists_op hΨ hn hγ
   have h : ∃ ψ, IsSB ψ ∧ TransH Ψ γ φ ψ := ⟨W φ, (hW φ hφ).1, (hW φ hφ).2.1⟩
-  rw [weil, dif_pos h]
+  rw [weil, dite_eq_left h]
   exact h.choose_spec
 
 end WeilAct

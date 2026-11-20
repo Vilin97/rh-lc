@@ -24,7 +24,7 @@ theorem sum_mem_X (F : FlagG S r T) (c : Fin r → E) :
 
 theorem coefX_sum (F : FlagG S r T) (c : Fin r → E) (i : Fin r) : F.coefX (∑ j, c j • F.e j) i = c i := by
   unfold FlagG.coefX
-  rw [dif_pos (sum_mem_X F c)]
+  rw [dite_eq_left (sum_mem_X F c)]
   rw [F.e_indep.repr_eq (l := Finsupp.equivFunOnFinite.symm c) (x := ⟨_, sum_mem_X F c⟩)
     (by simp [Finsupp.linearCombination_apply, Finsupp.sum_fintype])]
   simp
@@ -56,7 +56,7 @@ theorem coefX_transport (F₁ : FlagG S r T) (F₂ : FlagG S r T') (g : S.V ≃�
       rw [this]
       exact sum_mem_X F₁ c
     unfold FlagG.coefX
-    rw [dif_neg hgv, dif_neg hv]
+    rw [dite_eq_right hgv, dite_eq_right hv]
 
 theorem ell_transport (F₁ : FlagG S r T) (F₂ : FlagG S r T') (g : S.V ≃ₗ[E] S.V)
     (hf : ∀ a, F₂.fvec a = g (F₁.fvec a)) (Y : S.V →ₗ[E] S.V) : F₂.ell (cg g Y) = F₁.ell Y := by

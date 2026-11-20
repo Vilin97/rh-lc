@@ -295,7 +295,7 @@ theorem deg_snoc (h : HermFam K V) (E : Submodule (𝓞 K) V) {r : ℕ} (v : Fin
     push_cast; ring
   rw [arakelovDegree_eq_degreeOfFamily h hE hv', arakelovDegree_eq_degreeOfFamily h hE'fg hu]
   unfold degreeOfFamily lineHt idealLog
-  rw [dif_pos hex, ← ha_def, ← hU'_def, ← hU_def, hidx, Nat.cast_mul,
+  rw [dite_eq_left hex, ← ha_def, ← hU'_def, ← hU_def, hidx, Nat.cast_mul,
     Real.log_mul (by exact_mod_cast hne1) (by exact_mod_cast hne)]
   simp only [hkey, Finset.sum_add_distrib, ← Finset.mul_sum]
   ring

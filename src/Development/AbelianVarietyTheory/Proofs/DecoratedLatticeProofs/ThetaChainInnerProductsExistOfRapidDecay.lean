@@ -140,7 +140,7 @@ theorem metEx : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, MetEx D :=
           (PiTensorProduct.lift.symm (x : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)))
           (ipM s.M s.ν s.fd (PiTensorProduct.lift.symm (y : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)))
             (PiTensorProduct.lift.symm (x : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)))) := by
-        rw [ipM, dif_pos hex]
+        rw [ipM, dite_eq_left hex]
         exact hex.choose_spec
       obtain ⟨h1, h2⟩ := hc v' v
       have e : (fun g => (x : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)) (PiTensorProduct.tprod ℂ v) g *

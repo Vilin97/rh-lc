@@ -190,7 +190,7 @@ theorem onV_emb (hδ : A.δ ≠ 0) [Nonempty X.Tau] (Ξ : HomE X.E a b → ℂ) 
     onV (X.embC A.σ₀) A.δ Ξ (emb A x) = Ξ x := by
   have h : ∃ y, embH (X.embC A.σ₀) A.δ y = emb A x := ⟨x, rfl⟩
   unfold onV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact congrArg Ξ (embH_injective _ hδ h.choose_spec)
 
 theorem onV_leftE (hδ : A.δ ≠ 0) [Nonempty X.Tau] (g : Sp X.E b ≃ₗ[X.E] Sp X.E b) {Ξ : HomE X.E a b → ℂ} {k : ℂ}
@@ -204,7 +204,7 @@ theorem onV_leftE (hδ : A.δ ≠ 0) [Nonempty X.Tau] (g : Sp X.E b ≃ₗ[X.E] 
       rintro ⟨y, hy⟩
       exact h ⟨_, (leftV_emb A _ y).symm.trans ((congrArg _ hy).trans ((leftE A a g).left_inv v))⟩
     unfold onV
-    rw [dif_neg h, dif_neg h2, mul_zero]
+    rw [dite_eq_right h, dite_eq_right h2, mul_zero]
 
 theorem coc_smul (hconj : ∀ τ x, X.embC A.σ₀ τ (star x) = starRingEnd ℂ (X.embC A.σ₀ τ x)) (r : X.E) (x y : HomE X.E a b) :
     coc A (r • x) y = coc A x (star r • y) := by

@@ -92,7 +92,7 @@ lemma coeff_kappa (A : Module.End K ↥(homogeneousSubmodule (Fin k) K d)) (m g 
   · rw [mem_antidiag_iff] at h
     have h0 : mono K k d g = 0 := by
       unfold mono
-      rw [dif_neg h]
+      rw [dite_eq_right h]
     rw [h0, map_zero]
     simp
 

@@ -51,7 +51,7 @@ theorem exists_of_balanced
   have hm : ∀ w : HeightOneSpectrum (𝓞 L), m (w.under (𝓞 F)) = -WithZero.log (valAt w a) := fun w => by
     have hex : ∃ w' : HeightOneSpectrum (𝓞 L), w'.under (𝓞 F) = w.under (𝓞 F) := ⟨w, rfl⟩
     simp only [m]
-    rw [dif_pos hex, ha w hex.choose hex.choose_spec]
+    rw [dite_eq_left hex, ha w hex.choose hex.choose_spec]
   have hval : ∀ w, valAt w b = valAt w a := fun w => by
     have h1 : ∀ v, v ≠ w.under (𝓞 F) → valAt w (locF (L := L) F v (unif v) ^ m v) = 1 := fun v hv => by
       rw [map_zpow, valAt_locF, if_neg hv.symm, one_zpow]

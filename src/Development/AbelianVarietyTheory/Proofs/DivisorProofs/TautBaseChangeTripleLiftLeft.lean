@@ -192,7 +192,7 @@ theorem Jd_eq {Tt : Over (Sp (MvPowerSeries (Fin N) W))} (z : Tt.left) (J : (Tt.
     Jd T N z J (ψ ≫ pullback.fst T.B.hom (fC N)) = J ψ PUnit.unit := by
   have hχ : (ψ ≫ pullback.fst T.B.hom (fC N)) ≫ T.B.hom = Tt.hom ≫ fC N := by
     rw [Category.assoc, (cart T N).1.w, ← Category.assoc, hψ]
-  rw [Jd, dif_pos hχ]
+  rw [Jd, dite_eq_left hχ]
   congr 1
   exact (cart T N).1.hom_ext ((cart T N).1.lift_fst _ _ _) (((cart T N).1.lift_snd _ _ _).trans hψ.symm)
 
@@ -201,12 +201,12 @@ theorem Jd_good {Tt : Over (Sp (MvPowerSeries (Fin N) W))} {z : Tt.left} {J : (T
   intro χ
   by_cases hχ : χ ≫ T.B.hom = Tt.hom ≫ fC N
   · have := mem_pull.1 (hJ ((cart T N).1.lift χ Tt.hom hχ))
-    rw [Jd, dif_pos hχ]
+    rw [Jd, dite_eq_left hχ]
     have h2 : ((cart T N).1.lift χ Tt.hom hχ ≫ pullback.fst T.B.hom (fC N)) z ∈
         T.M.L.U (J ((cart T N).1.lift χ Tt.hom hχ) PUnit.unit) := this
     rw [(cart T N).1.lift_fst χ Tt.hom hχ] at h2
     exact h2
-  · rw [Jd, dif_neg hχ]
+  · rw [Jd, dite_eq_right hχ]
     exact (exists_chart T.M.isLB (χ z)).choose_spec
 
 theorem val_pullAlong {Tt : Over (Sp (MvPowerSeries (Fin N) W))} {Y₀ Y : Scheme.{0}} {K : Type} [Fintype K]

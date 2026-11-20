@@ -57,7 +57,7 @@ def descend (φ : G D.host.E Ω →* A) : Gab D.host.E Ω →* A :=
 
 theorem descend_toAb {φ : G D.host.E Ω →* A} (h : IsOpen (φ.ker : Set (G D.host.E Ω))) (σ : G D.host.E Ω) :
     descend φ (toAb D.host.E Ω σ) = φ σ := by
-  rw [descend, dif_pos (Subgroup.topologicalClosure_minimal _ (Abelianization.commutator_subset_ker φ)
+  rw [descend, dite_eq_left (Subgroup.topologicalClosure_minimal _ (Abelianization.commutator_subset_ker φ)
     (Subgroup.isClosed_of_isOpen _ h))]
   rfl
 
@@ -186,7 +186,7 @@ def coord (P : Pl D.host.E) : G D.host.E N.Om →* Multiplicative (ZMod (X.l i ^
 
 theorem coord_apply {P : Pl D.host.E} (h : P ∈ Q) (σ : G D.host.E N.Om) :
     Multiplicative.toAdd (coord Y i Q M P σ) = Multiplicative.toAdd (Y.delU i Q M σ) ⟨P, h⟩ := by
-  rw [coord, dif_pos h]
+  rw [coord, dite_eq_left h]
   rfl
 
 def univOf (a : Recip D N.Om) : UnivTwist D (ZMod (X.l i ^ M)) :=
@@ -211,7 +211,7 @@ theorem spread_apply (x : ↥(half ch (admissibleConjugatePairPlaces X i Q M)) �
 theorem spread_of_not_mem (x : ↥(half ch (admissibleConjugatePairPlaces X i Q M)) → ZMod (X.l i ^ M)) (v : ↥Q) (hv : v.1 ∉ admissibleConjugatePairPlaces X i Q M) :
     spread Y i Q M ch x v = 0 := by
   refine Finset.sum_eq_zero fun P _ => ?_
-  rw [weight, if_neg fun e : v.1 = P.1 => hv (e ▸ (mem_half.1 P.2).1), dif_neg fun h => hv h.1, zero_mul]
+  rw [weight, if_neg fun e : v.1 = P.1 => hv (e ▸ (mem_half.1 P.2).1), dite_eq_right fun h => hv h.1, zero_mul]
 
 variable {ch}
 
@@ -220,7 +220,7 @@ theorem spread_of_mem (hch : IsChoice ch) (x : ↥(half ch (admissibleConjugateP
   rw [spread_apply, Finset.sum_eq_single ⟨v.1, hv⟩, weight, if_pos rfl, one_mul]
   · intro P _ hP
     have hne : v.1 ≠ P.1 := fun e => hP (Subtype.ext e.symm)
-    rw [weight, if_neg hne, dif_neg fun h => (hch.pair _ _ h.2 hne.symm).1 (mem_half.1 P.2).2 (mem_half.1 hv).2, zero_mul]
+    rw [weight, if_neg hne, dite_eq_right fun h => (hch.pair _ _ h.2 hne.symm).1 (mem_half.1 P.2).2 (mem_half.1 hv).2, zero_mul]
   · exact fun h => absurd (Finset.mem_univ _) h
 
 theorem spread_coord (hch : IsChoice ch) (σ : G D.host.E N.Om) (v : ↥Q) :
@@ -236,14 +236,14 @@ theorem spread_coord (hch : IsChoice ch) (σ : G D.host.E N.Om) (v : ↥Q) :
         exact hc ((hch.pair _ _ hP hne).2 h)
       have hPa := conj_mem_admissibleConjugatePairPlaces hv hP
       have hP' := GlobalTheory.GalChar.isConjPl_symm hP
-      rw [spread_apply, Finset.sum_eq_single ⟨P, mem_half.2 ⟨hPa, hPc⟩⟩, weight, if_neg hne, dif_pos ⟨hv, hP'⟩,
+      rw [spread_apply, Finset.sum_eq_single ⟨P, mem_half.2 ⟨hPa, hPc⟩⟩, weight, if_neg hne, dite_eq_left ⟨hv, hP'⟩,
         coord_apply _ _ _ _ hv, coord_apply _ _ _ _ hPa]
       · exact ((Y.delU_conj i _ M P hPa v.1 hv hP').choose_spec σ).symm
       · intro P' _ h'
-        rw [weight, if_neg fun e : v.1 = P'.1 => hc (e ▸ (mem_half.1 P'.2).2), dif_neg fun h => h' (Subtype.ext
+        rw [weight, if_neg fun e : v.1 = P'.1 => hc (e ▸ (mem_half.1 P'.2).2), dite_eq_right fun h => h' (Subtype.ext
           (GlobalTheory.GalChar.isConjPl_unique (GlobalTheory.GalChar.isConjPl_symm h.2) hP)), zero_mul]
       · exact fun h => absurd (Finset.mem_univ _) h
-  · rw [spread_of_not_mem Y i Q M ch _ v hv, coord, dif_neg hv]
+  · rw [spread_of_not_mem Y i Q M ch _ v hv, coord, dite_eq_right hv]
     rfl
 
 end Univ

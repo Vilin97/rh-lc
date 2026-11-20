@@ -125,13 +125,13 @@ theorem self_sum {T : E} (F : FlagG S r T) (c : Fin (r + 1) → E) (a : Fin (r +
 theorem Dl_succ {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') :
     Dl F F' (r + 1) = det (Zhat F F') := by
   unfold Dl leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   rfl
 
 theorem Dl_r {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') :
     Dl F F' r = det ((Zhat F F').submatrix Fin.castSucc Fin.castSucc) := by
   unfold Dl leadMinorE
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   rfl
 
 theorem coeffs_zero {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') (c c' : Fin (r + 1) → E)

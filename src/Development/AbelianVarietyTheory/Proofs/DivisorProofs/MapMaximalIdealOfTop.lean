@@ -137,7 +137,7 @@ theorem exists_functional_prod (e : ℕ) (I : (Fin e → ι) → ℝ) (hI : ∀ 
     rw [coe_basisMonomials]
     exact (monomial_sum_one _ _).symm
   have h : ∃ a' : Fin e → ι, ∑ j, Finsupp.single (a' j) 1 = ∑ j, Finsupp.single (a j) 1 := ⟨a, rfl⟩
-  rw [e₁, Module.Basis.constr_basis, dif_pos h]
+  rw [e₁, Module.Basis.constr_basis, dite_eq_left h]
   have hc (c : ι) : Fintype.card {j // h.choose j = c} = Fintype.card {j // a j = c} := by
     have := DFunLike.congr_fun h.choose_spec c
     simp only [Finsupp.finsetSum_apply, Finsupp.single_apply] at this
@@ -329,7 +329,7 @@ theorem val_recursion : ArCalc → ∀ (k : Type) [CommRing k] (X : Scheme.{0}) 
     rwa [redι_clo, (htop z).1]
   have hii := i.isClosedEmbedding.injective
   have hmul (a) : cutMult (N.pow m).isLB s z (i a) = (divOfSec (LB.isLB_pull (N.pow m).isLB i) _ hW).mult a := by
-    rw [cutMult, dif_pos (show _ ∈ Out.nonzeroLocus (GlobalTheory.ZM.RepBC.secPull (N.pow m).B i s) from hW)]
+    rw [cutMult, dite_eq_left (show _ ∈ Out.nonzeroLocus (GlobalTheory.ZM.RepBC.secPull (N.pow m).B i s) from hW)]
     exact hii.extend_apply _ _ a
   have hfinW := (divOfSec (LB.isLB_pull (N.pow m).isLB i) _ hW).finite_support_mult
   have hfin : (Function.support (cutMult (N.pow m).isLB s z)).Finite := (hfinW.image i).subset fun w hw => by

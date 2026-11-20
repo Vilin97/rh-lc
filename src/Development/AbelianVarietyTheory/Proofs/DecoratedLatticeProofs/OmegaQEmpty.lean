@@ -19,7 +19,7 @@ namespace GlobalTheory.ChainOnto.StepLevLaw
 theorem omegaQ_empty {D : D7} {a b : ℕ} (r : ℕ) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) (k : ℤ)
     (y : ∀ PP : Pl D.host.E, Matrix (Fin b) (Fin a) (kP PP)) : omegaQ ∅ r ξ k y = 1 := by
   unfold omegaQ
-  rw [dif_pos (fun PP hP => absurd hP (Finset.notMem_empty PP))]
+  rw [dite_eq_left (fun PP hP => absurd hP (Finset.notMem_empty PP))]
   simp
 
 set_option maxHeartbeats 1000000 in

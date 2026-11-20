@@ -41,7 +41,7 @@ theorem img_base {M : FlagModel y Ψ N j} {M' : FlagModel y' Ψ N j} (Cv : FlagC
   funext q
   obtain ⟨⟨k, hk⟩, m⟩ := q
   simp only [basePart, img, Function.comp]
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
 
 theorem img_step {M : FlagModel y Ψ N j} {M' : FlagModel y' Ψ N j} (Cv : FlagCover M' M)
     (F' : FrameData ι' Ψ N M'.Ω M'.blk) (F : FrameData ι Ψ N M.Ω M.blk) (z : (Σ k, ι' k) → ℂ)

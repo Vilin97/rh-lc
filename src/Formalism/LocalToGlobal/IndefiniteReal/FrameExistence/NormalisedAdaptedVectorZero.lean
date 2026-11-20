@@ -198,12 +198,12 @@ theorem normalised_adapted_vector_zero (e ev : ∀ j : ℕ, ℕ → Fin (D.sp.Y 
     simp [patchE, baseHyperbolicVector, h]
   · rw [if_pos (by omega : i ≤ D.R.rS), if_neg (by omega : ¬ i < (D.R.m - 1 - 0) / 2),
       if_pos (⟨hm, by omega⟩ : (D.R.m - 1 - 0) % 2 = 1 ∧ i = (D.R.m - 1 - 0) / 2),
-      dif_neg (by omega : ¬ i < D.R.rS), if_pos h]
+      dite_eq_right (by omega : ¬ i < D.R.rS), if_pos h]
     simp [patchZ, baseLineVector]
   · have hk : D.R.m - 1 - 0 - 1 - i = 2 * D.R.rS - i := by omega
     have h4 : 2 * D.R.rS - i < D.R.rS := by omega
     rw [if_neg (by omega : ¬ i ≤ D.R.rS), if_neg (by omega : ¬ i < (D.R.m - 1 - 0) / 2),
-      if_neg (by rintro ⟨-, hc⟩; omega), dif_neg (by omega : ¬ i < D.R.rS), if_neg (by omega : ¬ i = D.R.rS),
+      if_neg (by rintro ⟨-, hc⟩; omega), dite_eq_right (by omega : ¬ i < D.R.rS), if_neg (by omega : ¬ i = D.R.rS),
       dif_pos h4, hk]
     simp [patchEv, baseDualHyperbolicVector, h4]
 

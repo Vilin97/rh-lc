@@ -76,7 +76,7 @@ theorem chiFac_unit (χ : TaylorLogMetric.IdE D → ℂ) (hχ : TaylorLogMetric.
     ‖ι (Base.chiFac χ N N' L L')‖ = 1 := by
   obtain ⟨hq, hn⟩ := Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC.chiFacUnit χ hχ p ((ι : ℂ →+* ℂ_[p]).comp (algebraMap TaylorLogMetric.Qbar ℂ)) N N' L L' hA h1 h2
   unfold TaylorLogMetric.lamC at hn
-  rw [dif_pos hq] at hn
+  rw [dite_eq_left hq] at hn
   exact hn
 
 end Formalism.L2.Ker.KS

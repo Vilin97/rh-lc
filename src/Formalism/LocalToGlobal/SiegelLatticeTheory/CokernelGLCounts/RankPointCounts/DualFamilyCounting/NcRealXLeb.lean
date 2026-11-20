@@ -257,7 +257,7 @@ theorem kapL_eq {z : Fin (2 * r + k + 1) → ℂ} {T : ℝ} (hF : IsFrameJ ε e 
     have ha := a.isLt
     have hv : (esI k r a).val = 2 * r + k - a.val := rfl
     unfold colQ
-    rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega)]
     congr 1
     all_goals (apply Fin.ext; show 2 * r + k - (esI k r a).val = a.val; omega)
   have cW : ∀ j : Fin k, colQ e f w (z0v T z) (wI k r (Fin.castSucc j)) = w j := by
@@ -265,13 +265,13 @@ theorem kapL_eq {z : Fin (2 * r + k + 1) → ℂ} {T : ℝ} (hF : IsFrameJ ε e 
     have hj := j.isLt
     have hv : (wI k r (Fin.castSucc j)).val = r + j.val := rfl
     unfold colQ
-    rw [dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dif_pos (by omega)]
     congr 1
     all_goals (apply Fin.ext; show (wI k r (Fin.castSucc j)).val - r = j.val; omega)
   have cZ : colQ e f w (z0v T z) (wI k r (Fin.last k)) = z0v T z := by
     have hv : (wI k r (Fin.last k)).val = r + k := rfl
     unfold colQ
-    rw [dif_neg (by omega), dif_neg (by omega), dif_pos hv]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dif_pos hv]
   have hX : xL ε e f g = WlocSk.NB.bA M := by
     funext b a
     show hJ ε (f b) (uMat g *ᵥ e a) = M (eI k r b) (eI k r a)

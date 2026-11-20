@@ -78,7 +78,7 @@ theorem Dm_eq (l : Fin (r + 2)) : P.Dm l = S.D l := by
     ext a b
     simp only [HermSp.Zhat, Frames.Zh, Matrix.of_apply, c.f_eq, c.f'_eq, c.h_eq]
   unfold LocNG.FPair.Dm HermSp.Dl Frames.D lead
-  rw [dif_pos (Nat.lt_succ_iff.mp l.2), hZ]
+  rw [dite_eq_left (Nat.lt_succ_iff.mp l.2), hZ]
 
 theorem Gv_eq : P.Gv = S.G := by
   have h1 := Dm_eq c (Fin.last (r + 1))

@@ -26,7 +26,7 @@ theorem exists_top_extension (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[ℚ]
   have hx0 : x ∈ M₀ := IntermediateField.subset_adjoin ℚ _ ⟨hx, hxM⟩
   have h := hσ ⟨x, hx0⟩
   unfold cj TaylorLogMetric.liftM
-  rw [dif_pos IntermediateField.mem_top, dif_pos hxM]
+  rw [dite_eq_left IntermediateField.mem_top, dite_eq_left hxM]
   exact h
 
 theorem ee_add (s t : ℝ) : ee (s + t) = ee s * ee t := by
@@ -94,7 +94,7 @@ theorem phase_top (D : D7) (hS : galStar D) (hW : WeilPairingGaloisAlt D) (cc : 
     have h0 : gl3FieldFirst Λ 0 0 = 0 := by simp [gl3FieldFirst]
     rw [h0, ee_zero]
     unfold cj TaylorLogMetric.liftM
-    rw [dif_pos IntermediateField.mem_top]
+    rw [dite_eq_left IntermediateField.mem_top]
     exact map_one ρ
   have hnat : ∀ (A : AddSubgroup ℂ) (n : ℕ), ∀ l ∈ A, (n : ℂ) * l ∈ A := fun A n l hl => by
     rw [← nsmul_eq_mul]

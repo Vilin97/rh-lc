@@ -244,7 +244,7 @@ theorem isTermW_smul (h : S.GLV) (hh : h ∈ S.St) (d : S.Datum) (Λ : Submodule
 theorem wit_spec (d : S.Datum) (Λ : Submodule L.O S.V) (H : S.IsTerm d Λ) :
     S.IsTermW d Λ (S.wit d Λ).1 (S.wit d Λ).2 := by
   unfold Frames.wit
-  rw [dif_pos H]
+  rw [dite_eq_left H]
   exact Exists.choose_spec H
 
 theorem tauRel_map (h : S.GLV) (hh : h ∈ S.St) (d : S.Datum) (Λ : Submodule L.O S.V)

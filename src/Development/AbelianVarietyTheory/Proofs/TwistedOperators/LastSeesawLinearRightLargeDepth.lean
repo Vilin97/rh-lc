@@ -39,7 +39,7 @@ theorem lastLin_one (ch : Choice R) : LastLin ch 1 := by
   obtain rfl : a = ⟨j + 1, hlt⟩ := Fin.ext ha
   have hne : (⟨j, by omega⟩ : Fin D.R.m) ≠ ⟨j + 1, hlt⟩ := fun e => by simp [Fin.ext_iff] at e
   unfold conAt
-  rw [dif_pos h0, dif_pos h0, dif_pos h0]
+  rw [dite_eq_left h0, dite_eq_left h0, dite_eq_left h0]
   simp only [fockD, Function.update_of_ne hne, Function.update_self]
   have hlin : ch.W.fock (.mu t D.R.m (j + 1)) (c • φ + φ') (P ⟨j + 1, hlt⟩) =
       c • ch.W.fock (.mu t D.R.m (j + 1)) φ (P ⟨j + 1, hlt⟩) + ch.W.fock (.mu t D.R.m (j + 1)) φ' (P ⟨j + 1, hlt⟩) := by

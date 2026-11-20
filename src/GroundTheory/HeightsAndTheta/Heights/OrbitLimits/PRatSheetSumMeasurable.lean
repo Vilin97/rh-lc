@@ -119,7 +119,7 @@ theorem RatSheetSumMeasurable.proof : RatSheetSumMeasurable.Statement := by
       t x = Φ (g x) (ReciprocityTheory.AnForm.maDens (fun k' => φ k' ∘ σ (e k)) (RatChart.ratMap p q x)) := by
     intro k x hx
     have hsh := (hWsh (e k) x (hEW k hx)).2
-    rw [htdef, dif_pos ⟨_, hsh⟩]
+    rw [htdef, dite_eq_left ⟨_, hsh⟩]
     exact RatSheetSumMeasurable.term_eq Φ g φ hsh _
 
   set σ' : ℕ → (Fin d → ℂ) → Fin n → ℂ := fun k => (U (e k)).piecewise (σ (e k)) fun _ => 0
@@ -186,7 +186,7 @@ theorem RatSheetSumMeasurable.proof : RatSheetSumMeasurable.Statement := by
       rw [Finset.sum_eq_single_of_mem k0 (Finset.mem_range.2 hN), Set.indicator_of_mem hk0]
       intro k _ hk
       exact Set.indicator_of_notMem (fun hxk => hk (hEdisj k k0 x hxk hk0)) _
-    · have htx : t x = 0 := by rw [htdef, dif_neg hx]
+    · have htx : t x = 0 := by rw [htdef, dite_eq_right hx]
       refine Eventually.of_forall fun N => ?_
       rw [htx]
       refine (Finset.sum_eq_zero fun k _ => ?_).symm

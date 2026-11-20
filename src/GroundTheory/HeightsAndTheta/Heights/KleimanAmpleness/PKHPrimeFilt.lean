@@ -197,7 +197,7 @@ theorem next_spec [IsNoetherianRing S] (hgr : IsMGraded S ι 𝓜) {A : Submodul
     (colon A (next ι 𝓜 A).1).IsPrime ∧
       (colon A (next ι 𝓜 A).1).IsHomogeneous (weightedHomogeneousSubmodule S (blockWeight ι)) := by
   unfold next
-  rw [dif_pos ⟨hgr, hA, hne⟩]
+  rw [dite_eq_left ⟨hgr, hA, hne⟩]
   exact (Classical.choose_spec (exists_prime_colon hgr hA hne)).2
 
 def seq [IsNoetherianRing S] : ℕ → Submodule (MRingOver S ι) M

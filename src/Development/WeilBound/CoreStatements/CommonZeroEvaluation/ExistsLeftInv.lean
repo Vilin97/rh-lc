@@ -324,7 +324,7 @@ def ext (h : S) (χ₀ : Localization.Away h →+* K) (ψ' : S →+* K) : Locali
 
 theorem ext_comp {h : S} (χ₀ : Localization.Away h →+* K) {ψ' : S →+* K} (hh : ψ' h ≠ 0) :
     (ext h χ₀ ψ').comp (algebraMap S _) = ψ' := by
-  rw [ext, dif_neg hh]
+  rw [ext, dite_eq_right hh]
   exact IsLocalization.Away.lift_comp h _
 
 theorem tend_ext {h : S} (hh : ψ h ≠ 0) {χ₀ : Localization.Away h →+* K} (h0 : χ₀.comp (algebraMap S _) = ψ)

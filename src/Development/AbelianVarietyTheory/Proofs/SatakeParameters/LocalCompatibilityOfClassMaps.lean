@@ -195,7 +195,7 @@ theorem compAt (hPr : GlobalTheory.NRows.Hypotheses₂) (hL : GlobalTheory.Publi
   obtain ⟨L, hLift, hCL⟩ := hCen i
   have e0 : (P.M.loc i).real (D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v a) F) =
       actSum D L (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v a) ((P.M.loc i).real F) := by
-    rw [NTypes.onMt, dif_pos hcz]; exact hCL ⟨_, hcz⟩ F
+    rw [NTypes.onMt, dite_eq_left hcz]; exact hCL ⟨_, hcz⟩ F
   let g : GL (Fin D.R.r) (ZMod (D.host.g k)) → G0g D.nd := fun h =>
     Pi.mulSingle (M := fun kv : (Σ k : Fin 2, D.nd.PlG k) => GL (Fin D.R.r) (ZMod (D.host.g kv.1))) ⟨k, v⟩ h
   have hsum : actSum D L (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v a) ((P.M.loc i).real F) =

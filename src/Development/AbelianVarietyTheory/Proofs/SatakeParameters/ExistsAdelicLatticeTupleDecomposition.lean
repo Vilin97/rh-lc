@@ -15,7 +15,7 @@ theorem dec_exists : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X}
     by_cases h : ((sysS H X std).Pj j).IsLatTup La.2
     · rw [dif_pos h]
       exact (Classical.choose_spec (hD j hj La h).2.1).1
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact Subgroup.one_mem _
   · intro j hj La h
     simp only [dif_pos h]

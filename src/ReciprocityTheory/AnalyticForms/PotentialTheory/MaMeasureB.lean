@@ -20,14 +20,14 @@ theorem maMeasure_eq_sum {e : ℕ} {X : Type} [TopologicalSpace X] [MeasurableSp
     (A : FinHolAtlas e X) (Φ : Fin e → LocPot X) (hne : Nonempty (ChartPartition A)) :
     maMeasure A Φ = ∑ j, chartMeasure A hne.some Φ j := by
   unfold maMeasure
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
   rfl
 
 theorem mInt_eq_integralWith {e : ℕ} {X : Type} [TopologicalSpace X]
     (A : FinHolAtlas e X) (Φ : Fin e → LocPot X) (hne : Nonempty (ChartPartition A))
     (g : X → ℝ) : mInt A Φ g = integralWith A hne.some Φ g := by
   unfold mInt
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
 
 theorem map_withDensity_integrable_integral {e : ℕ} {X : Type} [TopologicalSpace X]
     [MeasurableSpace X] [BorelSpace X] {T : Set (Fin e → ℂ)} (hT : IsOpen T)
@@ -174,10 +174,10 @@ theorem maMeasure_forward (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
     ring
   · have h0 : maMeasure A Φ = 0 := by
       unfold maMeasure
-      rw [dif_neg hne]
+      rw [dite_eq_right hne]
     have h0' : mInt A Φ g = 0 := by
       unfold mInt
-      rw [dif_neg hne]
+      rw [dite_eq_right hne]
     rw [h0, h0']
     simp
 

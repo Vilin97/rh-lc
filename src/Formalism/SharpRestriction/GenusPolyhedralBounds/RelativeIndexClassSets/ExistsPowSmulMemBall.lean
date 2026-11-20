@@ -177,7 +177,7 @@ theorem ordAt_indep (h : IsUnif A ϖ) {x : A} {n m : ℕ} (hn : ϖ ^ n • x ∈
 theorem ord_eq (h : IsUnif A ϖ) {x : A} {n : ℕ} (hn : ϖ ^ n • x ∈ As O A) :
     ord ϖ ζ x = ordAt ϖ ζ n ⟨ϖ ^ n • x, hn⟩ := by
   have hex : ∃ n : ℕ, ϖ ^ n • x ∈ As O A := ⟨n, hn⟩
-  rw [ord, dif_pos hex]
+  rw [ord, dite_eq_left hex]
   exact ordAt_indep ζ h _ _
 
 theorem ord_of_mem (h : IsUnif A ϖ) {x : A} (hx : x ∈ As O A) :

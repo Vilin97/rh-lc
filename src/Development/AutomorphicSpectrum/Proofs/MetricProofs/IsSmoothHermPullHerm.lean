@@ -48,7 +48,7 @@ theorem exists_stepLine : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, F
     · exact ⟨⟨k, Or.inl h⟩, rfl⟩
     · by_cases h' : M.blk p = some k
       · exact ⟨⟨k, Or.inr h'⟩, rfl⟩
-      · exact absurd (show M.dy p k = 0 by unfold FlagModel.dy; rw [dif_neg h, if_neg h']) hk
+      · exact absurd (show M.dy p k = 0 by unfold FlagModel.dy; rw [dite_eq_right h, if_neg h']) hk
   refine ⟨(fsHerm ι (M.dy p)).tensor (pullHerm (isBlockMap_stepV M p) B), ?_, ?_, ?_, ?_⟩
   · show M.dy p + pullDeg _ B.a = M.dy p
     rw [hB, pullDeg_zero, add_zero]

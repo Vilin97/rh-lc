@@ -33,14 +33,14 @@ theorem exists_pmat {ε : Fin n → Bool} {X : Matrix (Fin n) (Fin n) ℂ} (hX :
   ext a b
   simp only [pmat]
   by_cases h1 : b < a ∧ ε a ≠ ε b
-  · rw [dif_pos h1]
-  · rw [dif_neg h1]
+  · rw [dite_eq_left h1]
+  · rw [dite_eq_right h1]
     by_cases h2 : a < b ∧ ε b ≠ ε a
-    · rw [dif_pos h2]
+    · rw [dite_eq_left h2]
       have := congrFun (congrFun hH a) b
       simp only [Matrix.conjTranspose_apply] at this
       exact this
-    · rw [dif_neg h2]
+    · rw [dite_eq_right h2]
       by_cases he : ε a = ε b
       · exact (inP_entry_zero hX he).symm
       · have hab : a = b := by

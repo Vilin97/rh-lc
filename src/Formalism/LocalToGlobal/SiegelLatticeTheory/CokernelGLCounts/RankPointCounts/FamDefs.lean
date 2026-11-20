@@ -134,7 +134,7 @@ theorem orbitFamilyIdentity_at_volume {Cl Nu : Type} {TS : Set (TauC Y u u')} {c
     (h : ∃ v, OrbitFamilyIdentityAt Fm v) : OrbitFamilyIdentityAt Fm Fm.V0 := by
 
   obtain ⟨_, _, _, _, _, _, hV, _⟩ := hT
-  rw [hV, dif_pos h]
+  rw [hV, dite_eq_left h]
   exact h.choose_spec
 
 end Glob

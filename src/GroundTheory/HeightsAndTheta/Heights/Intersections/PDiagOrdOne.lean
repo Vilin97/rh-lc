@@ -165,7 +165,7 @@ theorem DiagOrdOne.proof (hF : DiagFormDiv.Statement) : DiagOrdOne.Statement := 
       exact hhom m _ ((isMultiHomog_iff_weighted _ m).2 (weightedHomogeneousComponent_isWeightedHomogeneous m d))
         (component_mem_ker _ hd m)
   unfold multAt
-  rw [dif_pos hΔp, length_eq_one_of_sat _ Δ hJ hsat]
+  rw [dite_eq_left hΔp, length_eq_one_of_sat _ Δ hJ hsat]
   rfl
 
 end

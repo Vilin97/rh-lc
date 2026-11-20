@@ -203,7 +203,7 @@ theorem use₇ (hB : WuBessel C) (u u' : D.what₂.Word)
       (RelPtR.zhatO_gamP C u u' w hw τ)
   have h1 : RMeas D (locW C u u' τ) (JointAmplitudePoints.gamP C u u' w τ) 1 (JointAmplitudePoints.nu1P C u u' w τ) := by
     unfold JointAmplitudePoints.nu1P
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   obtain ⟨p, μ₁, hr1, hq1⟩ := h1
   rw [ENNReal.ofReal_one, one_smul] at hq1

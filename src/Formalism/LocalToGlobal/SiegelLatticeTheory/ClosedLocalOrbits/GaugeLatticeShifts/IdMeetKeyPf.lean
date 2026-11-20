@@ -31,7 +31,7 @@ theorem isId_rat {u : D.what₂.Word} {what₂ : Finset (Submodule (𝓞 D.host.
   have hfr : t.frame.fl = mapFlag t.rep.1.2 t.rep.2.2.1 (lf D (X.Fu u)).fl := by
     show (mapLF t.rep.1.2 (lf D (X.Fu u))).fl = _
     unfold mapLF
-    rw [dif_pos t.rep.2.2.1]
+    rw [dite_eq_left t.rep.2.2.1]
     try rfl
   refine ⟨fun a => ?_, ?_⟩
   · have h := hS.1 a

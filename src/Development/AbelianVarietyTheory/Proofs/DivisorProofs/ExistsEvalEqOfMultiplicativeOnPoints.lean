@@ -88,7 +88,7 @@ private lemma exists_eq_one_and_eq_zero_of_ne_algHom {C V : Type} [Field C] [Com
         RingHom.id_apply, smul_eq_mul]
       exact inv_mul_cancel₀ (sub_ne_zero.mpr (hsep z' h).choose_spec)
     · simp only [u]
-      rw [dif_neg h, map_one]
+      rw [dite_eq_right h, map_one]
   have hu' : ∀ z', z' ≠ z → z' (u z') = 0 := by
     intro z' h
     simp only [u]

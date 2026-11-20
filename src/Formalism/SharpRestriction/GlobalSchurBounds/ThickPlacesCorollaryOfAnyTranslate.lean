@@ -448,11 +448,11 @@ theorem line_param_apply (D : D7) (ρ : D.what₂.Tau) (a : Fin (D.R.k - 1 + D.R
   | left i =>
     have hi : (Fin.castAdd D.R.m i).val = i.val := rfl
     unfold rowLam Formalism.LogVandermondeBounds.StandardLattice.rowPar vN
-    rw [Fin.append_left, hi, if_pos i.2, dif_pos i.2]
+    rw [Fin.append_left, hi, if_pos i.2, dite_eq_left i.2]
   | right j =>
     have hj : (Fin.natAdd (D.R.k - 1) j).val = D.R.k - 1 + j.val := rfl
     unfold rowLam Formalism.LogVandermondeBounds.StandardLattice.rowPar bN
-    rw [Fin.append_right, hj, if_neg (by omega), Nat.add_sub_cancel_left, dif_pos j.2]
+    rw [Fin.append_right, hj, if_neg (by omega), Nat.add_sub_cancel_left, dite_eq_left j.2]
 
 theorem line_sign_apply (D : D7) (a : Fin (D.R.k - 1 + D.R.m)) :
     rowSgn D a = Formalism.LogVandermondeBounds.StandardLattice.plusSign D.R.k a.val := by
@@ -669,9 +669,9 @@ theorem param_vector_eq_line_param (D : D7) (ρ : D.what₂.Tau) :
   unfold lamSH lamS Formalism.LogVandermondeBounds.StandardLattice.rowPar vN bN
   simp only [Fin.val_cast]
   by_cases h : i.val < D.R.k - 1
-  · rw [dif_pos h, if_pos h, dif_pos h]
+  · rw [dite_eq_left h, if_pos h, dite_eq_left h]
   · have h' : i.val - (D.R.k - 1) < D.R.m := by omega
-    rw [dif_neg h, if_neg h, dif_pos h', dif_pos h']
+    rw [dite_eq_right h, if_neg h, dite_eq_left h', dite_eq_left h']
 
 theorem sign_vector_eq_line_sign (D : D7) : epsSH D.R = fun i => rowSgn D (Fin.cast (rank_dimension_identity D.R) i) := by
   funext i
@@ -823,7 +823,7 @@ theorem log_vandermonde_variation_generic (k : ℕ) (hk : 2 ≤ k) (Δ : ℝ) (u
   exact this
 
 theorem column_param_apply (D : D7) (u : D.what₂.Word) (ρ : D.what₂.Tau) (i : Fin D.R.k) : uColR D u ρ i = uN D u ρ i.val := by
-  unfold uColR uN; rw [dif_pos i.2]
+  unfold uColR uN; rw [dite_eq_left i.2]
 
 theorem column_param_strictAnti (D : D7) (u : D.what₂.Word) (ρ : D.what₂.Tau) : StrictAnti (uColR D u ρ) := by
   apply strictAnti_of_succ_lt_alt
@@ -1913,12 +1913,12 @@ theorem place_data_under_section_B (D : D7) (sc : Scale) (C0 Δ : ℝ) (w : ℕ 
     have h2 := (D.hcW u ρ).v_gt_u ⟨i, hi⟩
     rw [D.hcW_v] at h1 h2
     unfold uN vN
-    rw [dif_pos (by omega : i < D.R.k), dif_pos (by omega : i + 1 < D.R.k), dif_pos hi]
+    rw [dite_eq_left (by omega : i < D.R.k), dite_eq_left (by omega : i + 1 < D.R.k), dite_eq_left hi]
     exact ⟨by exact_mod_cast h1, by exact_mod_cast h2⟩
   · have h1 := (D.hcW u ρ).u_last_gt (by omega) (by omega)
     rw [D.hcW_b] at h1
     unfold uN bN
-    rw [dif_pos (by omega : D.R.k - 1 < D.R.k), dif_pos (by omega : 0 < D.R.m)]
+    rw [dite_eq_left (by omega : D.R.k - 1 < D.R.k), dite_eq_left (by omega : 0 < D.R.m)]
     exact_mod_cast h1
   · by_cases ht : IsTop D ρ
     · exact Or.inl (h11 u ρ ht)
@@ -1931,7 +1931,7 @@ theorem place_data_under_section_B (D : D7) (sc : Scale) (C0 Δ : ℝ) (w : ℕ 
       have ht : (0 : ℚ) ≤ D.R.t := by positivity
       linarith
     unfold bN
-    rw [dif_pos hj, dif_pos (by omega : j < D.R.m)]
+    rw [dite_eq_left hj, dite_eq_left (by omega : j < D.R.m)]
     exact_mod_cast g3
 
 end Formalism.MainNotions.StandardLattice

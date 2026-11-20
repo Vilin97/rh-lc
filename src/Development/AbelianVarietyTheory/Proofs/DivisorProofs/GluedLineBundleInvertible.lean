@@ -64,7 +64,7 @@ theorem glueLB_isLB : ∀ (p : ℕ) [Fact p.Prime] (X : Scheme.{0}) (Xw : X.Open
   intro p _ X Xw K h hI hw hle hex
   have hP : ((Xp X p : X.Opens) : Set X).Nonempty := hw.mono hle
   have hR : ∀ x y, RatioProp h x y (gU h x y) := fun x y => by
-    unfold gU; rw [dif_pos (hex x y)]; exact (hex x y).choose_spec
+    unfold gU; rw [dite_eq_left (hex x y)]; exact (hex x y).choose_spec
   refine ⟨?_, fun (i : X) => ?_, fun (i j k : X) => ?_⟩
   · rw [eq_top_iff]
     intro x _

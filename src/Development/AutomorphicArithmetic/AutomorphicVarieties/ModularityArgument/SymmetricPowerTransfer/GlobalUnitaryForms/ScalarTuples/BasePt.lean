@@ -71,7 +71,7 @@ private theorem unit_om {K : Type} [Field K] (τ : K) :
     rw [e]
     exact one_ne_zero
   unfold toUnit
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   rfl
 
 private theorem jstd_tr {K : Type} [Field K] (τ : K) : (jstd τ ω).trace = τ := by

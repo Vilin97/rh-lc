@@ -121,7 +121,7 @@ theorem hasArcData_arc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
         (qkExt_of_genRel P hϖ (dvd_of_dvd P hϖ (Nat.dvd_lcm_right l.M l.A) hdiv) F _ q₀ q hext hqy hgen) hx
     · obtain rfl := eq_of_heq hp
       have hext' : QkExt (algebraMap (FractionRing T.V) F) (eta0 P hϖ Y y m hdiv hL v) q₀ := hext
-      rw [eta0, dif_pos hv] at hext'
+      rw [eta0, dite_eq_left hv] at hext'
       exact (hL.2 v hv).choose_spec F yF hyF q x
         (qkExt_of_genRel P hϖ (dvd_of_dvd P hϖ (Nat.dvd_lcm_left l.M l.A) hdiv) F _ q₀ q hext' hqy hgen) hx
 

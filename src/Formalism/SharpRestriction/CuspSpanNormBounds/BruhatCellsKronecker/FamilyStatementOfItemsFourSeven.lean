@@ -857,7 +857,7 @@ theorem minor_factor_le_size_volume {k r : ℕ} (H : ℝ) (z z' : Fin (2 * r + k
   · rw [dif_pos h]
     exact single_le_finset_prod Finset.univ (fun l : Fin (r + 2) => max 1 (‖Dmin k r z z' γ l‖ / H))
       (fun _ _ => le_max_left _ _) ⟨l, h⟩ (Finset.mem_univ _)
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     simp only [norm_zero, zero_div]
     rw [max_eq_left zero_le_one]
     exact one_le_size_volume H z z' γ

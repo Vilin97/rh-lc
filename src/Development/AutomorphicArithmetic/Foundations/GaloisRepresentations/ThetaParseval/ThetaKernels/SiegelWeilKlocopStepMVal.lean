@@ -58,7 +58,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.RD_k.chi_det (t : GL (Fin d.n)
     rw [← e]
     exact (Matrix.GeneralLinearGroup.det t).isUnit.map (RingHom.id _) |>.map (RingHom.id _) |> fun h => by
       simpa [Matrix.GeneralLinearGroup.val_det_apply] using h
-  rw [_root_.PositivityTheory.SiegelWeilFormula.SD_k.chiW, dif_pos hu]
+  rw [_root_.PositivityTheory.SiegelWeilFormula.SD_k.chiW, dite_eq_left hu]
   have : hu.unit = Matrix.GeneralLinearGroup.det t :=
     Units.ext (by rw [IsUnit.unit_spec, Matrix.GeneralLinearGroup.val_det_apply, e])
   rw [this]

@@ -120,7 +120,7 @@ private lemma cint_eq_finsum_div_relIndex_of_fine {A B : AddSubgroup W} {φ : W 
     _root_.GlobalTheory.IdxInt.cint A φ = (∑ᶠ c : W ⧸ B, φ (Quotient.out c)) / (B.relIndex A : ℂ) := by
   have hnice : _root_.GlobalTheory.IdxInt.Nice A φ := ⟨B, hB⟩
   unfold _root_.GlobalTheory.IdxInt.cint
-  rw [dif_pos hnice, finsum_out_div_relIndex_eq_inf_of_fine hnice.choose_spec hB,
+  rw [dite_eq_left hnice, finsum_out_div_relIndex_eq_inf_of_fine hnice.choose_spec hB,
     finsum_out_div_relIndex_eq_inf_of_fine hB hnice.choose_spec, inf_comm]
 
 open scoped Pointwise Classical in
@@ -168,7 +168,7 @@ theorem _root_.GlobalTheory.IdxInt.Transport.cint_map_and_change : ∀ {W : Type
       rw [cint_eq_finsum_div_relIndex_of_fine hB, cint_eq_finsum_div_relIndex_of_fine (Fine_map_addEquiv_and_finsum_eq e hB).1,
         (Fine_map_addEquiv_and_finsum_eq e hB).2, AddSubgroup.relIndex_map_map_of_injective _ _ e.injective]
     · unfold _root_.GlobalTheory.IdxInt.cint
-      rw [dif_neg hN, dif_neg (hiff.not.mpr hN)]
+      rw [dite_eq_right hN, dite_eq_right (hiff.not.mpr hN)]
   · have hiff : _root_.GlobalTheory.IdxInt.Nice A φ ↔ _root_.GlobalTheory.IdxInt.Nice A' φ := by
       constructor
       · rintro ⟨B, hB⟩
@@ -194,7 +194,7 @@ theorem _root_.GlobalTheory.IdxInt.Transport.cint_map_and_change : ∀ {W : Type
       push_cast
       field_simp
     · unfold _root_.GlobalTheory.IdxInt.cint
-      rw [dif_neg hN, dif_neg (hiff.not.mp hN)]
+      rw [dite_eq_right hN, dite_eq_right (hiff.not.mp hN)]
       simp
 
 end GlobalTheory.IdxInt.Transport

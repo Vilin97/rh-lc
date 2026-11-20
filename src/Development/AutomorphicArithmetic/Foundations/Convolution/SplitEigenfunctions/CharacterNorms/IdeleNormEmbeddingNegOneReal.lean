@@ -102,11 +102,11 @@ theorem psi_bI (v : ℝ) : ψ (-(bI v)) = Complex.exp (2 * Real.pi * Complex.I *
   simp
 
 theorem iy_coe {y : ℝ} (h : y ≠ 0) : ((iy y : (A ℚ)ˣ) : A ℚ) = 1 - TR.sInf ℚ 1 + TR.sInf ℚ fun _ => y := by
-  rw [iy, dif_neg h]
+  rw [iy, dite_eq_right h]
   rfl
 
 theorem iy_inv_coe {y : ℝ} (h : y ≠ 0) : (((iy y)⁻¹ : (A ℚ)ˣ) : A ℚ) = 1 - TR.sInf ℚ 1 + TR.sInf ℚ fun _ => y⁻¹ := by
-  rw [iy, dif_neg h]
+  rw [iy, dite_eq_right h]
   rfl
 
 theorem iy_one : iy 1 = 1 := by

@@ -117,7 +117,7 @@ private theorem trOn_map (S : Submodule ℂ F) {f : Module.End ℂ U} {g : Modul
       exact ⟨g x, H x hx, h x⟩
   unfold trOn
   by_cases H : ∀ x ∈ S, g x ∈ S
-  · rw [dif_pos H, dif_pos (hiff.2 H),
+  · rw [dite_eq_left H, dite_eq_left (hiff.2 H),
       ← LinearMap.trace_conj' _ (Submodule.equivMapOfInjective F.subtype F.injective_subtype S).symm]
     congr 1
     ext x
@@ -125,13 +125,13 @@ private theorem trOn_map (S : Submodule ℂ F) {f : Module.End ℂ U} {g : Modul
     have : (f.restrict (hiff.2 H)) (Submodule.equivMapOfInjective F.subtype F.injective_subtype S x) =
         Submodule.equivMapOfInjective F.subtype F.injective_subtype S (g.restrict H x) := Subtype.ext (h x).symm
     rw [this, LinearEquiv.symm_apply_apply]
-  · rw [dif_neg H, dif_neg fun H' => H (hiff.1 H')]
+  · rw [dite_eq_right H, dite_eq_right fun H' => H (hiff.1 H')]
 
 private theorem trOn_self {f : Module.End ℂ U} {g : Module.End ℂ F}
     (h : ∀ x, (g x : U) = f x) : trOn F f = LinearMap.trace ℂ F g := by
   have H : ∀ x ∈ F, f x ∈ F := fun x hx => h ⟨x, hx⟩ ▸ (g ⟨x, hx⟩).2
   unfold trOn
-  rw [dif_pos H]
+  rw [dite_eq_left H]
   congr 1
   ext x
   exact (h x).symm

@@ -42,7 +42,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem chs_cons (ξ : kˣ →* ℂˣ) (h : IsSmoothChar ξ) (s : Multiset (IrrGL k)) : chs (IrrGL.ofChar ξ h ::ₘ s) = ξ ::ₘ chs s := by
   have e : ∃ ζ : kˣ →* ℂˣ, ∃ hζ, IrrGL.ofChar ξ h = IrrGL.ofChar ζ hζ := ⟨ξ, h, rfl⟩
   refine Multiset.filterMap_cons_some _ _ _ ?_
-  rw [dif_pos e]
+  rw [dite_eq_left e]
   obtain ⟨_, h2⟩ := e.choose_spec
   exact congrArg some (IrrGL.ofChar_inj.1 h2).symm
 
@@ -85,7 +85,7 @@ theorem eq_of_chs {s t : Multiset (IrrGL k)} (hs : ∀ y ∈ s, ∃ ξ : kˣ →
     | cons a s ih =>
       intro H
       obtain ⟨ξ, hξ, rfl⟩ := H a (Multiset.mem_cons_self _ _)
-      rw [chs_cons, Multiset.map_cons, dif_pos hξ, ← ih fun y hy => H y (Multiset.mem_cons_of_mem hy)]
+      rw [chs_cons, Multiset.map_cons, dite_eq_left hξ, ← ih fun y hy => H y (Multiset.mem_cons_of_mem hy)]
   rw [key s hs, key t ht, h]
 
 end

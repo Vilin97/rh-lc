@@ -21,7 +21,7 @@ theorem cls_base (J : PrimeTo qq) : cls qq (base qq (cls qq J)) = cls qq J := by
   classical
   have h : ∃ I : PrimeTo qq, cls qq I = cls qq J := ⟨J, rfl⟩
   unfold base
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem principal (J : PrimeTo qq) : ∃ m : 𝓞 K0,

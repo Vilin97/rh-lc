@@ -14,13 +14,13 @@ noncomputable def homDeg (Q : isogHom E E') : ℤ :=
   open Classical in if h : Q = 0 then 0 else ((isogOfHom Q h).degree : ℤ)
 
 theorem homDeg_toHom (φ : Isogeny E E') : homDeg φ.toHom = φ.degree := by
-  rw [homDeg, dif_neg φ.toHom_ne_zero]
+  rw [homDeg, dite_eq_right φ.toHom_ne_zero]
   rfl
 
-theorem homDeg_zero : homDeg (0 : isogHom E E') = 0 := by rw [homDeg, dif_pos rfl]
+theorem homDeg_zero : homDeg (0 : isogHom E E') = 0 := by rw [homDeg, dite_eq_left rfl]
 
 theorem homDeg_pos {Q : isogHom E E'} (hQ : Q ≠ 0) : 0 < homDeg Q := by
-  rw [homDeg, dif_neg hQ]
+  rw [homDeg, dite_eq_right hQ]
   exact_mod_cast (isogOfHom Q hQ).degree_pos
 
 theorem mulIsogeny_toHom (n : ℤ) (hn : n ≠ 0) :

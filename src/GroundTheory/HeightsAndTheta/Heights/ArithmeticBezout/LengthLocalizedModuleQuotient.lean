@@ -80,10 +80,10 @@ theorem localMult_map_equiv {A B : Type*} [CommRing A] [CommRing B] (Ψ : A ≃+
             (algebraMap B (Localization.AtPrime (W.map (Ψ : A →+* B))))) :=
       Module.length_eq_of_surjective (by exact Ideal.Quotient.mk_surjective)
     unfold localMult
-    rw [dif_pos hW', dif_pos hW, e1, e2, length_self_eq_of_ringEquiv τ]
+    rw [dite_eq_left hW', dite_eq_left hW, e1, e2, length_self_eq_of_ringEquiv τ]
   · have hW' : ¬ (W.map (Ψ : A →+* B)).IsPrime := fun h => hW (hWc ▸ Ideal.comap_isPrime _ _)
     unfold localMult
-    rw [dif_neg hW', dif_neg hW]
+    rw [dite_eq_right hW', dite_eq_right hW]
 
 variable {n : ℕ}
 
@@ -169,10 +169,10 @@ theorem localMult_map_eq_multAt (K W : Ideal (MRing (PBlk n))) :
   rw [localMult_map_equiv]
   unfold localMult ReciprocityTheory.ChartRestriction.G.Geo.multAt
   by_cases hW : W.IsPrime
-  · rw [dif_pos hW, dif_pos hW]
+  · rw [dite_eq_left hW, dite_eq_left hW]
     haveI := hW
     rw [length_localizedModule_quotient]
-  · rw [dif_neg hW, dif_neg hW]
+  · rw [dite_eq_right hW, dite_eq_right hW]
 
 theorem finIdeal_comap_C (P : Ideal (MRing (PBlk n))) :
     (IndefiniteRowSideFullHecke.ArithBezout.finIdeal P).comap (C : ℤ →+* MvPolynomial (Fin n) ℤ) =

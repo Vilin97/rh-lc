@@ -55,13 +55,13 @@ def finiteAdeleAboveFun (a : (w : PlacesOver L v) → w.1.adicCompletion L)
 omit [NumberField K] in
 theorem finiteAdeleAboveFun_apply (a : (w : PlacesOver L v) → w.1.adicCompletion L)
     (w : PlacesOver L v) : finiteAdeleAboveFun v a w.1 = a w := by
-  rw [finiteAdeleAboveFun, dif_pos w.2]
+  rw [finiteAdeleAboveFun, dite_eq_left w.2]
 
 omit [NumberField K] in
 theorem finiteAdeleAboveFun_apply_of_not (a : (w : PlacesOver L v) → w.1.adicCompletion L)
     {w : HeightOneSpectrum (𝓞 L)} (h : ¬ w.asIdeal.LiesOver v.asIdeal) :
     finiteAdeleAboveFun v a w = 1 := by
-  rw [finiteAdeleAboveFun, dif_neg h]
+  rw [finiteAdeleAboveFun, dite_eq_right h]
 
 theorem finiteAdeleAboveFun_eventually (a : (w : PlacesOver L v) → w.1.adicCompletion L) :
     ∀ᶠ w in Filter.cofinite, finiteAdeleAboveFun v a w ∈ w.adicCompletionIntegers L := by

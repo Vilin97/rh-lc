@@ -36,7 +36,7 @@ theorem GlobalTheory.LevGeo.laws_of_coreJ : ∀ (D : D7) (T : CoreJ D) (j : ℕ)
   · intro σ hσ
     obtain ⟨th, hr, hinf, hdu⟩ := hT.dictU j hj σ hσ
     obtain ⟨Kf', hr', h1, h2, h3⟩ := dict_transport (hT.spaceW j hj σ hσ) (T.dict j σ) (coreDict T.toCore j σ)
-      (fun g h' => by unfold coreDict; rw [dif_pos h']) (T.Kf j σ) th hr _
+      (fun g h' => by unfold coreDict; rw [dite_eq_left h']) (T.Kf j σ) th hr _
       (hL.1 ▸ hT.levelK j hj σ hσ) hdu (hT.muUnit j hj σ hσ).2.2.2
     exact ⟨Kf', th, hr', h1, hinf, h2, h3⟩
   · intro σ hσ
@@ -55,4 +55,4 @@ theorem GlobalTheory.LevGeo.laws_of_coreJ : ∀ (D : D7) (T : CoreJ D) (j : ℕ)
       intro d hdd
       obtain rfl : d = _ := funext fun g => hdd g rfl
       rfl
-    exact key _ (hT.spaceW j hj _ hg) _ (fun g h' => by unfold coreDict; rw [dif_pos h'])
+    exact key _ (hT.spaceW j hj _ hg) _ (fun g h' => by unfold coreDict; rw [dite_eq_left h'])

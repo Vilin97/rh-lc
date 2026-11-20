@@ -187,7 +187,7 @@ theorem isHerm_spaceW : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G
     rw [e]
     exact GlobalTheory.TripleSpaceW.isCartan_map_conj (W.cart_is _ hX (τf w))
   · show GlobalTheory.AdelicU.IsSplitBasis (B.τ v) _ (if h : v.1 ∈ B.P then bas0 ⟨v.1, h⟩ else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact hbas0 v
 
 end GlobalTheory.FunObj

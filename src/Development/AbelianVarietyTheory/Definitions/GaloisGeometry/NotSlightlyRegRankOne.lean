@@ -19,7 +19,7 @@ theorem triv_oddOr : OddOrSlightlyReg (CuspSub.triv E (le_refl 1)) ∧ ¬ Slight
 theorem not_slightlyReg_of_not_hasInfChar (π : CuspSub E a) (ha : 2 ≤ a) (h : ∀ τ m, ¬ (CG.mk π).HasInfChar τ m) : ¬ SlightlyReg π := by
   rintro ⟨τ, z, hz, hs, -⟩
   have e : (CG.mk π).infChar τ = Multiset.replicate a 0 := by
-    unfold CG.infChar; rw [dif_neg (by simpa using h τ)]
+    unfold CG.infChar; rw [dite_eq_right (by simpa using h τ)]
   rw [e] at hz
   have h0 : z ⟨0, by omega⟩ ∈ Finset.univ.val.map z := Multiset.mem_map_of_mem _ (Finset.mem_univ_val _)
   have h1 : z ⟨1, by omega⟩ ∈ Finset.univ.val.map z := Multiset.mem_map_of_mem _ (Finset.mem_univ_val _)
@@ -41,7 +41,7 @@ theorem slightlyReg_twist_of (π : CuspSub E a) (χ : HChar E) (h : SlightlyReg 
     · simp; linarith
   · exfalso
     have e : (CG.mk π).infChar τ = Multiset.replicate a 0 := by
-      unfold CG.infChar; rw [dif_neg hm]
+      unfold CG.infChar; rw [dite_eq_right hm]
     rw [e] at hz
     have h0 : z i ∈ Finset.univ.val.map z := Multiset.mem_map_of_mem _ (Finset.mem_univ_val _)
     have h1 : z j ∈ Finset.univ.val.map z := Multiset.mem_map_of_mem _ (Finset.mem_univ_val _)

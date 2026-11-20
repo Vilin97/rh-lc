@@ -46,7 +46,7 @@ theorem cfg_q (D : D7) (u u' : D.what₂.Word) (τ : D.what₂.Tau)
     intro w
     rw [cfg_u D w τ (h5 w) (i.1 + 1) (by omega) (by omega)]
     unfold uOne
-    rw [dif_pos (show 1 ≤ i.1 + 1 ∧ i.1 + 1 ≤ D.R.k by omega)]
+    rw [dite_eq_left (show 1 ≤ i.1 + 1 ∧ i.1 + 1 ≤ D.R.k by omega)]
     rfl
   rw [hu u, hu u']
 

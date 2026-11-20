@@ -414,11 +414,11 @@ theorem stabTriv_of (hτ : ∀ τ : E →+* ℂ, τ.comp (P.σ : E →+* E) = (s
   obtain ⟨v1, hv1⟩ := exists_place F (P.gp 1) (hg 1)
   have hU0 : P.Uloc S v0 = P.iwPre v0 (S 0 v0 hv0).φ := by
     unfold Uloc
-    rw [if_neg (fun h => not_both v0 _ _ (hT 0) h hv0), dif_pos hv0]
+    rw [if_neg (fun h => not_both v0 _ _ (hT 0) h hv0), dite_eq_left hv0]
   have hU1 : P.Uloc S v1 = P.iwPre v1 (S 1 v1 hv1).φ := by
     unfold Uloc
     rw [if_neg (fun h => not_both v1 _ _ (hT 1) h hv1),
-      dif_neg (fun h => not_both v1 _ _ ((Nat.coprime_primes (hg 0) (hg 1)).2 hne) h hv1), dif_pos hv1]
+      dite_eq_right (fun h => not_both v1 _ _ ((Nat.coprime_primes (hg 0) (hg 1)).2 hne) h hv1), dite_eq_left hv1]
   obtain ⟨N0, hN0⟩ := P.gpow S _ (hg 0) v0 hv0 _ hU0 y γ hmem hfin
   obtain ⟨N1, hN1⟩ := P.gpow S _ (hg 1) v1 hv1 _ hU1 y γ hmem hfin
   have d0 : orderOf γ ∣ P.gp 0 ^ N0 := orderOf_dvd_of_pow_eq_one hN0

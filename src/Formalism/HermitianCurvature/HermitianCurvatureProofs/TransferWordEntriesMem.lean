@@ -88,14 +88,14 @@ theorem tprod_mem (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (𝒜 : StarS
   | zero =>
     intro i hi _ a b
     unfold tprod
-    rw [dif_neg (by omega), Matrix.one_apply]
+    rw [dite_eq_right (by omega), Matrix.one_apply]
     split_ifs
     · exact one_mem _
     · exact zero_mem _
   | succ n ih =>
     intro i hi hS a b
     unfold tprod
-    rw [dif_pos (by omega), Matrix.mul_apply]
+    rw [dite_eq_left (by omega), Matrix.mul_apply]
     refine sum_mem fun e _ => mul_mem (ih (i + 1) (by omega) (fun l hl => hS l (by omega)) a e) ?_
     obtain ⟨hp, hc, hci⟩ := hS ⟨i, by omega⟩ le_rfl
     have h00 : algebraMap ℂ _ Y + L.p ⟨i, by omega⟩ ∈ 𝒜 := add_mem (𝒜.algebraMap_mem Y) hp

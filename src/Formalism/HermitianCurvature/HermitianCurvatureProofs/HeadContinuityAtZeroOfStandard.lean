@@ -42,7 +42,7 @@ theorem rr_top_re_nonneg (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ
     (h : C.LPt) (hi : P.r < i) : 0 ≤ (p.RR F i w h h).re := by
   unfold KB.Pl.RR D.RRplace
   by_cases h1 : D.IsLocPt h i ∧ D.IsLocPt h i
-  · rw [dif_pos h1, dif_neg (by omega)]
+  · rw [dite_eq_left h1, dite_eq_right (by omega)]
     by_cases h2 : i = P.r + 1
     · rw [if_pos h2]
       by_cases h3 : w = []
@@ -58,7 +58,7 @@ theorem rr_top_re_nonneg (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ
         exact mul_nonneg (mul_self_nonneg _) (hsInner_self_re_nonneg _)
     · rw [if_neg h2]
       simp
-  · rw [dif_neg h1]
+  · rw [dite_eq_right h1]
     simp
 
 theorem posAt_of_forms (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (Y : Finset ℝ) (N : ℕ)
@@ -93,12 +93,12 @@ theorem posAt_of_module (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.
     simp [D.cutF]
   unfold KB.Pl.RR D.RRplace
   by_cases h1 : D.IsLocPt h j ∧ D.IsLocPt h j
-  · rw [dif_pos h1, dif_pos hj]
+  · rw [dite_eq_left h1, dite_eq_left hj]
     have hS' := hS 1 one_pos j hj w ⟨hw, hN⟩ h h1.1
     rw [hcut] at hS'
     have hx := (hM ⟨j, by omega⟩ w ⟨hw, hN⟩).2 _ (Submodule.mem_pi.2 fun a _ => hS' a)
     exact (Complex.le_def.1 hx).1
-  · rw [dif_neg h1]
+  · rw [dite_eq_right h1]
     simp
 
 theorem posAt_of_thmP (hTP : P5.ThmPActual) (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp))
@@ -125,14 +125,14 @@ theorem posAt_of_thmP (hTP : P5.ThmPActual) (p : KB.Pl P Wp Wq) (nn : ℝ → �
   intro j w h hj hw hN
   unfold KB.Pl.RR D.RRplace
   by_cases h1 : D.IsLocPt h j ∧ D.IsLocPt h j
-  · rw [dif_pos h1, dif_pos hj]
+  · rw [dite_eq_left h1, dite_eq_left hj]
     have hmem : ∀ a, KB.slv p.T F j hj w h h1.1.2 a ∈ KK ⟨j, by omega⟩ := by
       intro a
       obtain ⟨ε, hε, hCk, hCC, hG⟩ := hslice j hj w hw hN h h1.1 a
       exact hK ⟨j, by omega⟩ _ ε hε hCC hCk hG
     have hx := (hM ⟨j, by omega⟩ w ⟨hw, hN⟩).2 _ (Submodule.mem_pi.2 fun a _ => hmem a)
     exact (Complex.le_def.1 hx).1
-  · rw [dif_neg h1]
+  · rw [dite_eq_right h1]
     simp
 
 theorem head_continuity_at_zero_of_standard (hPS : KB.PStd) (hTP : P5.ThmPActual) (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ)
@@ -213,7 +213,7 @@ theorem ew_zero_nil (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (G : B.Mat P.k P.r �
 theorem rr_zero_nil (p : KB.Pl P Wp Wq) (G : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) :
     p.RR G 0 [] [] [] = B.beta p.T.base G G := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos ⟨⟨by simp, rfl⟩, ⟨by simp, rfl⟩⟩, dif_pos (Nat.zero_le _)]
+  rw [dite_eq_left ⟨⟨by simp, rfl⟩, ⟨by simp, rfl⟩⟩, dite_eq_left (Nat.zero_le _)]
   unfold D.formLev
   have hx : ∀ a : Wd.Ix (Fin ([] : List C.Letter).length),
       D.castF (k := P.k) (a := P.r - 0) (b := P.r) (by simp)

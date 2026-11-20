@@ -82,7 +82,7 @@ theorem linPart_mulVec (p : ℕ) (h : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k)
   have h1 : (linPart p h).mulVec e a = ∑ b : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs}, F b.1 := by
     simp only [Matrix.mulVec, dotProduct, linPart, Matrix.of_apply, F]
     refine Finset.sum_congr rfl fun b _ => ?_
-    rw [dif_pos b.2]
+    rw [dite_eq_left b.2]
   have h2 : ∑ b : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs}, F b.1 = ∑ b, F b := by
     rw [← Finset.sum_subtype (Finset.univ.filter fun b => Free p b) (by simp) F]
     refine Finset.sum_filter_of_ne fun b _ hb => ?_

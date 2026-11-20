@@ -52,7 +52,7 @@ theorem colK_update (S : GridChoice W U) {t : T} (v : ∀ a, FactorFn G t a) (x 
   funext j
   by_cases hj : j = j₀.1
   · subst hj
-    rw [Function.update_self, dif_pos j₀.2]
+    rw [Function.update_self, dite_eq_left j₀.2]
     show kkV S (.top t j₀.1) (Function.update v (.inl j₀) F (.inl j₀)) _ _ = _
     rw [Function.update_self]
   · rw [Function.update_of_ne hj]
@@ -70,7 +70,7 @@ theorem rowK_update (S : GridChoice W U) {t : T} (v : ∀ a, FactorFn G t a) (y 
   funext i
   by_cases hi : i = i₀.1
   · subst hi
-    rw [Function.update_self, dif_pos i₀.2]
+    rw [Function.update_self, dite_eq_left i₀.2]
     show kkV S (.chi i₀.1 D.R.m) (Function.update v (.inr i₀) F (.inr i₀)) _ _ = _
     rw [Function.update_self]
   · rw [Function.update_of_ne hi]

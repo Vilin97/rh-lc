@@ -44,7 +44,7 @@ theorem bkOf_spec {B : Base} {C : Cols B} (W : RowsRest B C) {m : ℕ} (c : Fin 
     W.Bu u (GlobalTheory.Mem.ramForm W u φ) (GlobalTheory.Mem.coordForm B.embLL c x) = B.embLL (bkOf W c u φ x) := by
   classical
   unfold bkOf
-  rw [dif_pos H]
+  rw [dite_eq_left H]
   exact (H u φ x).choose_spec.symm
 
 end GlobalTheory.Mem.R3.Rw

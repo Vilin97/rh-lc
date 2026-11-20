@@ -91,10 +91,10 @@ theorem integral_dbar_fn_mul_eq_zero : ∀ {M : Type} [TopologicalSpace M] [Comp
   have hloc : A.loc (A.dbar (A.fn χ * γ)) i = dbarAt F := by
     funext v
     by_cases ht : v ∈ (A.e i).target
-    · rw [HolAtlas.loc, dif_pos ht]
+    · rw [HolAtlas.loc, dite_eq_left ht]
       simp only [HolAtlas.dbar, Pt.crd, Pt.ch, (A.e i).right_inv ht]
       rfl
-    · rw [HolAtlas.loc, dif_neg ht, dbarAt_eq_zero_of_eventually (hF0 v fun h => ht (hBt h))]
+    · rw [HolAtlas.loc, dite_eq_right ht, dbarAt_eq_zero_of_eventually (hF0 v fun h => ht (hBt h))]
   rw [hloc]
   exact GlobalTheory.T.integral_re_topDegreeDensity_dbar_eq_zero F hFC hFs
 

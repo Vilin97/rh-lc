@@ -32,7 +32,7 @@ theorem resRep_spec {L : Type} [Field L] [NumberField L] [IsCMField L] (s : Reci
       Ideal.Quotient.mk s.w.asIdeal (NX.resRep s s.w x) = Ideal.Quotient.mk s.w.asIdeal u := by
   have hex : ∃ u : 𝓞 L, u ∉ s.w.asIdeal ∧ Valued.v (s.i (u : L) - x) < 1 := ⟨u, hu, hux⟩
   unfold NX.resRep
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨h1, h2⟩ := hex.choose_spec
   refine ⟨h1, Ideal.Quotient.eq.2 ?_⟩
   show _ ∈ s.ideal
@@ -65,7 +65,7 @@ theorem psiU_prod (i : D.ntw.Tw) (b : Bool)
       · subst h; rw [Pi.mulSingle_eq_same]; exact hu' kv'
       · rw [Pi.mulSingle_eq_of_ne h]; exact ⟨Matrix.blockTriangular_one, fun a => by simp⟩
     unfold NX.psiUTot
-    rw [dif_pos hmem, hθ ⟨_, hmem⟩, NX.stdVal, Finset.prod_eq_single kv]
+    rw [dite_eq_left hmem, hθ ⟨_, hmem⟩, NX.stdVal, Finset.prod_eq_single kv]
     · simp only [Pi.mulSingle_eq_same]
     · intro kv' _ hne
       simp only [Pi.mulSingle_eq_of_ne hne, Units.val_one, NX.supSum_one, ofAdd_zero, map_one]

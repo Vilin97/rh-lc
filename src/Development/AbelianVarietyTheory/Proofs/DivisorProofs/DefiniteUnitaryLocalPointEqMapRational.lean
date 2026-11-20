@@ -20,7 +20,7 @@ theorem cj_algebraMap {E : Type} [Field E] [NumberField E] [IsCMField E] (w : Pl
   have hex := key _ ((GlobalTheory.ConjAtPlace.conjSrc_eq_iff w).2 hw) (GlobalTheory.CuspRep.conjLoc (GlobalTheory.SplitPts.conjE E) w)
     (GlobalTheory.CuspRep.conjLoc_spec _ w).1 (GlobalTheory.CuspRep.conjLoc_spec _ w).2.1
   unfold cj
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec.2 x
 
 theorem map_mem_UL {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (γ : UE E n) (w : Pl E) :
@@ -43,6 +43,6 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     ((locPt w γ : UL n w) : GLw n w) = Matrix.GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) (γ : GL (Fin n) E) := by
   intro E _ _ _ _ n γ w
   unfold locPt toSub
-  rw [dif_pos (map_mem_UL γ w)]
+  rw [dite_eq_left (map_mem_UL γ w)]
 
 end GlobalTheory.BCT.LocVal

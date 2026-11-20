@@ -66,7 +66,7 @@ theorem ptOfList_of {i : ℕ} {x : TB.Pt D.host.E} (hx : Formalism.L2.S.IsPtL (s
 theorem ptOfList_none {i : ℕ} {x : TB.Pt D.host.E} (hx : ¬ Formalism.L2.S.IsPtL (signPt D.R.rS x) i) :
     ptOfList i x = none := by
   unfold ptOfList
-  rw [dif_neg hx]
+  rw [dite_eq_right hx]
 
 def sgn (D : Formalism.BasicNotions.D7) (i : ℕ) : D.host.E := (-1) ^ (D.R.rS + 1 - i)
 
@@ -711,7 +711,7 @@ theorem kglob_join {M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep} 
     rw [locK_cast M δ T T' p hi W W']
     rw [dfac_join M δ T T' p hi hs2 _ w.1 t hc, dfac_join M δ T T' p hi hs2 _ w'.1 t' hc']
     ring
-  · rw [dif_neg hi]
+  · rw [dite_eq_right hi]
     refine finprod_congr fun p => ?_
     simp only [dph, show ¬ (m + s = D.R.rS + 1 ∧ s = 2) from fun h => hi h.1, if_false, map_one, one_mul]
 
@@ -902,7 +902,7 @@ theorem krOf_head {δ : ∀ p : PlF D, (D.s.atP p).Fp}
       have a1 := phi_pos (isPtL_of_ptOfList hw)
       have a2 := phi_pos (isPtL_of_ptOfList hw')
       exact mul_ne_zero (by exact_mod_cast a1.ne') (by exact_mod_cast a2.ne')
-    rw [hK, div_mul_cancel₀ _ hpos, Kglob, dif_neg (by omega)]
+    rw [hK, div_mul_cancel₀ _ hpos, Kglob, dite_eq_right (by omega)]
 
 end Kern
 

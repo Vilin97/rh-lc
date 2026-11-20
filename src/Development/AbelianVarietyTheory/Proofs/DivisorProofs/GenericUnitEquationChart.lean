@@ -130,7 +130,7 @@ theorem hodge_root_norm_model : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A 
       have hmg : GlobalTheory.PointChern.modelGram A.H S.Dw (z v) τ = reindex (finCongr (hmW τr).symm) (finCongr (hmW τr).symm)
           (1 - (z v ⟨τ, hin τr⟩).map (starRingEnd ℂ) * (z v ⟨τ, hin τr⟩)ᵀ)⁻¹ := by
         unfold GlobalTheory.PointChern.modelGram
-        rw [dif_pos (show τ (A.H.rt : D.host.E) = A.H.rt0 from hin τr)]
+        rw [dite_eq_left (show τ (A.H.rt : D.host.E) = A.H.rt0 from hin τr)]
       have h := hgr f hmap τ
       rw [hmg] at h
       exact grSq_wLine_of (hmW τr) hp hq _ _ _ _ _ h L.2
@@ -155,7 +155,7 @@ theorem hodge_root_norm_model : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A 
           reindex (finCongr (hmO τr).symm) (finCongr (hmO τr).symm)
             (1 - (z v ⟨τ, hin τr⟩)ᴴ * z v ⟨τ, hin τr⟩)⁻¹ := by
         unfold GlobalTheory.PointChern.modelGram
-        rw [dif_neg (show ¬ conjEmb τ (A.H.rt : D.host.E) = A.H.rt0 from hout τr), dif_pos h', hψ]
+        rw [dite_eq_right (show ¬ conjEmb τ (A.H.rt : D.host.E) = A.H.rt0 from hout τr), dite_eq_left h', hψ]
       have h := hgr f hmap (conjEmb τ)
       rw [hmg] at h
       congr 1

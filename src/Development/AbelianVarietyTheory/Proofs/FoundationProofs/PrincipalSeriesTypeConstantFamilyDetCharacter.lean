@@ -45,14 +45,14 @@ theorem const_family (n : ℕ) (χ : kˣ →* ℂˣ) :
       have h1 : ∀ i : Fin n, ev (χ / nxt (fun _ : Fin (n+1) => χ) i.castSucc) (minor g i.castSucc) = 1 := by
         intro i
         have : nxt (fun _ : Fin (n+1) => χ) i.castSucc = χ := by
-          unfold nxt; rw [dif_pos (by simp)]
+          unfold nxt; rw [dite_eq_left (by simp)]
         rw [this, div_self']; exact ev_one' _
       have h2 : nxt (fun _ : Fin (n+1) => χ) (Fin.last n) = 1 := by
-        unfold nxt; rw [dif_neg (by simp)]
+        unfold nxt; rw [dite_eq_right (by simp)]
       simp only [h1, Finset.prod_const_one, one_mul, h2, div_one, minor_last]
       have hv := valuation_det_of_mem_KO' hg
       unfold ev
-      rw [dif_pos hv, detChar_apply]
+      rw [dite_eq_left hv, detChar_apply]
       congr 2
       ext; simp
 

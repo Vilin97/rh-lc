@@ -300,7 +300,7 @@ theorem cuspidal_closed_stable : ∀ B : RowsAut, ∃ S : Submodule ℂ (B.I.L2 
     have hex : ∃ γ ∈ B.I.GFset, γ * y ∈ B.fund := B.fund_spec.2.1 y
     have hrep : B.I.rep B.fund y = hex.choose * y := by
       unfold Formalism.MainNotions.S.AutInst.rep
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
     have hmem : hex.choose ∈ Γ := by
       rw [← SetLike.mem_coe, hΓset]
       exact hex.choose_spec.1

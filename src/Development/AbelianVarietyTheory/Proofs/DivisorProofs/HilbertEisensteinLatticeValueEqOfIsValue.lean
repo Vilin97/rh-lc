@@ -46,7 +46,7 @@ theorem _root_.GlobalTheory.HilbFam.gval_eq_of_isGVal : ∀ (F : Type) [Field F]
     _root_.GlobalTheory.HilbFam.IsGVal k L b a G → _root_.GlobalTheory.HilbFam.gval k L b a = G := by
   intro F _ _ _ k L b a G hG
   have h : ∃ G, _root_.GlobalTheory.HilbFam.IsGVal k L b a G := ⟨G, hG⟩
-  rw [_root_.GlobalTheory.HilbFam.gval, dif_pos h]
+  rw [_root_.GlobalTheory.HilbFam.gval, dite_eq_left h]
   exact isGVal_unique' h.choose_spec hG
 
 end GlobalTheory.HilbFam

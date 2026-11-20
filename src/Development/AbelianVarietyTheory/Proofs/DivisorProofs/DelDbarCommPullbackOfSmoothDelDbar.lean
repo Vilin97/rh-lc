@@ -24,7 +24,7 @@ theorem loc_pullback_eq {f : M' → M} {α : A.Fld} (hf : A.IsHolo A' f) (hα : 
     ((A.e i).open_source.preimage hf.1), fun v hv => ?_⟩
   have hs : (A'.e j).symm v ∈ (A'.e j).source := (A'.e j).map_target hv.1
   have hτ : (A.e i ∘ f ∘ (A'.e j).symm) v ∈ (A.e i).target := (A.e i).map_source hv.2
-  rw [HolAtlas.loc, dif_pos hv.1, HolAtlas.loc, dif_pos hτ,
+  rw [HolAtlas.loc, dite_eq_left hv.1, HolAtlas.loc, dite_eq_left hτ,
     GlobalTheory.T.holAtlas_pullback_eq_chart_expression M M' n n' A A' f α hf hα ⟨(j, (A'.e j).symm v), hs⟩ i hv.2]
   have hc : (A'.e j) ((A'.e j).symm v) = v := (A'.e j).right_inv hv.1
   simp only [Pt.crd, Pt.ch, Pt.pt, hc]

@@ -237,7 +237,7 @@ theorem nFCoreNC_of_cut (hL : NFLeibV) (hT : NFTieHatC) (hH : NFHatProdKBS) (hN 
       rw [hcong (fun g => (((fun _ : ℝ => (0 : ℝ)) (Gf P.k P.r p.T.base.z p.T.base.z' g) : ℝ) : ℂ) • f g)]
       · rw [vector_multiplication_holds Wp Wq P p (fun _ : ℝ => (0 : ℝ)) f γ hl hG]; simp
       · intro g hg
-        rw [nf_scoef_unique p w e hS hS' _ hF' g (hdom g hg) qq, dif_neg hqQ]
+        rw [nf_scoef_unique p w e hS hS' _ hF' g (hdom g hg) qq, dite_eq_right hqQ]
         simp
     have hz : B.hsVec (0 : Wq →L[ℂ] Wp) = 0 := by unfold B.hsVec; ext i; simp
     rw [h0, ContinuousLinearMap.comp_zero, hz, norm_zero]
@@ -249,7 +249,7 @@ theorem nFCoreNC_of_cut (hL : NFLeibV) (hT : NFTieHatC) (hH : NFHatProdKBS) (hN 
     · rw [nf_vExtract p w e L' CcL hLe f A₀ p₀ hf hcc0 hthrL γ hl hG qq']
       congr 1
     · intro g hg
-      rw [nf_scoef_unique p w e hS hS' _ hF' g (hdom g hg) qq, dif_pos hqQ]
+      rw [nf_scoef_unique p w e hS hS' _ hF' g (hdom g hg) qq, dite_eq_left hqQ]
 
   let Λ : (Wq →L[ℂ] Wp) →ₗ[ℂ] PiLp 2 (fun _ : Fin (Module.finrank ℂ Wq) => Wp) :=
     { toFun := fun Y => B.hsVec ((p.TP.E ρ).comp Y)

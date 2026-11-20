@@ -106,7 +106,7 @@ theorem unit_iff (R : RealPoints θ V) (u : AlgInf V) :
 theorem secInf_spec (R : RealPoints θ V) {u : AlgInf V} (hu : sigInf V u * u = 1) :
     secInf θ V u ∈ GinfC V ∧ ∀ τ, infMat D.sp.cm.sig V.gram (θ τ) (secInf θ V u) = u τ := by
   have h := R.2.1 u ((unit_iff R u).1 hu)
-  rw [secInf, dif_pos h]
+  rw [secInf, dite_eq_left h]
   exact h.choose_spec
 
 theorem isLieData (R : RealPoints θ V) : IsLieData (sigInf V) (jInf V) (secInf θ V) := by
@@ -171,7 +171,7 @@ theorem oneP_eq (R : RealPoints θ V) (τ : D.what₂.Tau) (X : LieAt V τ) (t :
     · rw [h0.2]; simp [atPlace]
     · rw [h0.2]; simp [atPlace, Pi.single_eq_of_ne h]
   have h : ∃ x, IsAtTau θ V τ (NormedSpace.exp (t • X.1)) x := ⟨_, h1⟩
-  rw [oneP, atTau, dif_pos h]
+  rw [oneP, atTau, dite_eq_left h]
   refine R.2.2.1 _ h.choose_spec.1 _ h1.1 fun τ' => ?_
   by_cases c : τ' = τ
   · subst c; rw [h.choose_spec.2.1, h1.2.1]

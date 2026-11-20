@@ -92,7 +92,7 @@ theorem nfib_normUnits {f : E → ℂ}
     (hinv : ∀ (x : E) (u : Eˣ), Algebra.norm F (u : E) = 1 → f (x * u) = f x) (x : Eˣ) :
     nfib E f (normUnits F E x) = f x := by
   have h : ∃ t : Eˣ, Algebra.norm F (t : E) = (normUnits F E x : Fˣ) := ⟨x, rfl⟩
-  rw [nfib, dif_pos h]
+  rw [nfib, dite_eq_left h]
   have hs : normUnits F E h.choose = normUnits F E x := Units.ext h.choose_spec
   have hu : Algebra.norm F (((h.choose⁻¹ * x : Eˣ)) : E) = 1 := by
     have h1 : normUnits F E (h.choose⁻¹ * x) = 1 := by

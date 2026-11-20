@@ -81,7 +81,7 @@ theorem baseFrame_last (p : KB.Pl P Wp Wq) (ν'r : Fin (2 * (P.r - P.r) + P.k + 
     ext i j
     rw [Formalism.FourierDecayAlt.P.PBI.m0R, ← hm]
     simp only [D.castM, Matrix.reindex_apply, Matrix.submatrix_apply, ιLev]
-    rw [dif_pos (by simp; omega), dif_pos (by simp; omega)]
+    rw [dite_eq_left (by simp; omega), dite_eq_left (by simp; omega)]
     congr 1 <;> ext <;> simp
   rw [e1, e2]
   exact (Formalism.FourierDecayAlt.P.PBI.levFrame_nuR p).2.2

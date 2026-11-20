@@ -22,7 +22,7 @@ theorem sum_pullMat_subBG_reframe : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (X : S
       ((Algebra.IsAlgebraic.isAlgebraic (R := ℚ) q).algHom (TaylorLogMetric.embT D τ).toRatAlgHom)
     have h2 := hL (pos.symm τ).1 (pos.symm τ).2 q
     simp only [Sigma.eta, Equiv.apply_symm_apply] at h2
-    rw [← h2]; unfold TaylorLogMetric.lamC; rw [dif_pos halg]; exact hι ⟨_, halg⟩
+    rw [← h2]; unfold TaylorLogMetric.lamC; rw [dite_eq_left halg]; exact hι ⟨_, halg⟩
   have hinv : ∀ {n : ℕ} (v : X.Pl) (A : Matrix (Fin n) (Fin n) D.host.E) (M : Matrix (Fin n) (Fin n) (X.G.P.Qq v)),
       A * star A = 1 → ((star A).map (ρ v) * M)⁻¹ = M⁻¹ * A.map (ρ v) := by
     intro n v A M h

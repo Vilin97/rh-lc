@@ -36,7 +36,7 @@ private theorem pol_tw (s : Multiset (IrrGL k)) (χ θ : kˣ →* ℂˣ) (hχ : 
   · have h' : ∃ ζ : kˣ →* ℂˣ, (∃ hζ, y.tw χ hχ = IrrGL.ofChar ζ hζ) ∧ IsUnram (ζ * θ) := by
       obtain ⟨ξ, ⟨hξ, e⟩, hu⟩ := h
       exact ⟨ξ * χ, (tw_eq_iff y χ _ hχ).2 ⟨ξ, hξ, e, rfl⟩, by rwa [mul_assoc]⟩
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     obtain ⟨ξ, hξ, e, e'⟩ := (tw_eq_iff y χ _ hχ).1 h'.choose_spec.1
     obtain ⟨hξ', e''⟩ := h.choose_spec.1
     have : ξ = h.choose := IrrGL.ofChar_inj.1 (e.symm.trans e'')
@@ -45,7 +45,7 @@ private theorem pol_tw (s : Multiset (IrrGL k)) (χ θ : kˣ →* ℂˣ) (hχ : 
       rintro ⟨ζ, hζ, hu⟩
       obtain ⟨ξ, hξ, e, rfl⟩ := (tw_eq_iff y χ _ hχ).1 hζ
       exact h ⟨ξ, ⟨hξ, e⟩, by rwa [← mul_assoc]⟩
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 private theorem chars_tw (s : Multiset (IrrGL k)) (χ ζ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     ζ ∈ chars (s.map (·.tw χ hχ)) ↔ ∃ ξ ∈ chars s, ζ = ξ * χ := by

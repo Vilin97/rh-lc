@@ -219,7 +219,7 @@ theorem level_eq_of_reord {T : Type} (Lc : LevCh D T) (P P' : LevelP Lc.Pg D.R.r
         rw [← hkey]
         exact fun h => hg ((hH _).2 h)
       unfold ext1
-      rw [dif_neg hg, dif_neg hg']
+      rw [dite_eq_right hg, dite_eq_right hg']
 
 end Main
 

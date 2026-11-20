@@ -31,7 +31,7 @@ theorem descend_actL (D : D7) (T : TwR D.LL0 D.nd) (S : RatDat D.ntw) (In : RatI
     (g : G0g D.nd) (x : S.WL j) :
     Φ (actL D S j g x) = actGT D T S In.rho In.chi i j b g (Φ x) := by
   have hcR : cR D S In.chi j (S.eG.symm g) = chiL S j (In.chi j h1 h2) (S.eG.symm g) := by
-    unfold cR; rw [dif_pos ⟨h1, h2⟩]
+    unfold cR; rw [dite_eq_left ⟨h1, h2⟩]
   change _ = ((readK D T i b (cR D S In.chi j (S.eG.symm g)))⁻¹ •
     Module.End.baseChangeHom S.Ks (KT D T i b) ↥(WKr D S j) (rhoR D S In.rho j (S.eG.symm g))) (Φ x)
   rw [hcR]

@@ -24,7 +24,7 @@ theorem shearGL_mulVec {n : ℕ} (b : Fin (n + 1) → k) (h : 1 + b (Fin.last n)
   have e : ((shearGL n b : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) =
       1 + vecMulVec (eLast k n) b := by
     unfold shearGL
-    rw [dif_pos (isUnit_one_add b h)]
+    rw [dite_eq_left (isUnit_one_add b h)]
     rfl
   rw [e, add_mulVec, one_mulVec, vecMulVec_mulVec, op_smul_eq_smul]
 

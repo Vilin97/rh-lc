@@ -918,7 +918,7 @@ theorem numO : NumO X := by
     exact h
   have h1 : cMu X j v s = X.G.P.lam0 v s 0 + X.w v (j + 1) s := by
     unfold cMu Sys.nuv nu lamI
-    rw [if_pos ⟨le_refl 1, by omega⟩, dif_pos ⟨le_refl 1, by omega⟩]
+    rw [if_pos ⟨le_refl 1, by omega⟩, dite_eq_left ⟨le_refl 1, by omega⟩]
     rfl
   have h2 : eJ X j v s = -X.G.P.lam0 v s 0 := by
     cases j with
@@ -932,7 +932,7 @@ theorem numO : NumO X := by
       rw [if_neg hne, Fin.rev_last]
       show -liftWt X.Fl.t X.G.P.m (X.G.P.lam0 v s) (fun i => X.Fl.w v i s) (j + 1) 0 = _
       unfold liftWt
-      rw [dif_pos (by simp)]
+      rw [dite_eq_left (by simp)]
       rfl
   rw [h1, h2]
   ring
@@ -951,7 +951,7 @@ theorem numE : NumE X := by
       have hN : NN X.G.P.m X.t 0 = X.G.P.m + 1 := by unfold NN; omega
       rw [hN]
       unfold Sys.nuv nu lamI
-      rw [if_pos ⟨by omega, le_refl _⟩, dif_pos ⟨by omega, le_refl _⟩]
+      rw [if_pos ⟨by omega, le_refl _⟩, dite_eq_left ⟨by omega, le_refl _⟩]
       rfl
     have h2 : eJ X 0 v s = X.G.P.lam0 v s (Fin.last _) := by
       show lamAt _ s _ = _
@@ -978,7 +978,7 @@ theorem numE : NumE X := by
       rw [if_pos hev]
       show liftWt X.Fl.t X.G.P.m (X.G.P.lam0 v s) (fun i => X.Fl.w v i s) (j + 1) (Fin.last _) = _
       unfold liftWt
-      rw [dif_neg (by simp only [Fin.val_last]; omega)]
+      rw [dite_eq_right (by simp only [Fin.val_last]; omega)]
       simp only [Fin.val_last]
       rw [show X.G.P.m + (j + 1) * (X.Fl.t + 1) - (X.G.P.m + 1) = (j + 1) * (X.Fl.t + 1) - 1 by omega, succ_mul_succ_sub_one_div_succ]
     have h3 : X.Fl.w v (j + 1) s ≤ X.Fl.w v (j + 1 + 1) s := X.Fl.w_mono v s (j + 1) (by omega)

@@ -44,7 +44,7 @@ theorem divCycle_eq_ite {P : Ideal (MRing ι)} [P.IsPrime] {s u : MRing ι} (hu 
         (Ideal.mul_mem_right u _ (Ideal.mem_span_singleton_self s))) P).trans hQ.2
     · have hnle : ¬ P ⊔ Ideal.span {s} ≤ W := fun h => hsW (h (Ideal.mem_sup_right (Ideal.subset_span rfl)))
       unfold multAt
-      rw [dif_pos hWp, Module.length_eq_zero_iff.mpr
+      rw [dite_eq_left hWp, Module.length_eq_zero_iff.mpr
         (NumbersDVR.localizedQuot_subsingleton_of_not_le _ W hnle)]
       rfl
   · rw [if_neg hW]

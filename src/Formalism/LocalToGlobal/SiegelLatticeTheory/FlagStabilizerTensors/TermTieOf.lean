@@ -286,7 +286,7 @@ theorem pt_cellC (hAt : ∀ u u', AtSome Y u u') {u u' : D.what₂.Word} (t : D.
   rw [hI.ptOf t]
   show IsInCell _ (Formalism.L2.SG.PairVal.ptOf (tc hI t))
   unfold Formalism.L2.SG.PairVal.ptOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨h2, -⟩ := hex.choose_spec
   generalize hex.choose = w0 at h2 ⊢
   unfold TermDef.Term.atPt at h2
@@ -476,7 +476,7 @@ theorem ptOfConvC (u u' : D.what₂.Word) : Formalism.L2.SG.Pf.AtPt.PtOfConv D u
   rw [hI.ptOf γ]
   show Formalism.MainNotions.S.LocalSplitGroups.Gpt _ _ (Formalism.L2.SG.PairVal.ptOf (tc hI γ)) = 0
   unfold Formalism.L2.SG.PairVal.ptOf
-  rw [dif_neg]
+  rw [dite_eq_right]
   · exact Formalism.L2.SG.PairVal.Gpt_junkPoint_eq_zero D u u'
   · rintro ⟨w, hw, hrel⟩
     apply hγ
@@ -780,18 +780,18 @@ theorem gval_of_isIdF (hTs : star T = T) (Λ : Submodule (𝓞 E) S.V) (F : LFla
       exact F.fl.z_norm
     have hD1 : Formalism.MainNotions.S.Dl F.fl F'.fl (0 + 1) = -T := by
       unfold Formalism.MainNotions.S.Dl Formalism.MainNotions.S.leadMinorE
-      rw [dif_pos le_rfl]
+      rw [dite_eq_left le_rfl]
       exact (Matrix.det_fin_one _).trans hZ
     have hD0 : Formalism.MainNotions.S.Dl F.fl F'.fl 0 = 1 := by
       unfold Formalism.MainNotions.S.Dl Formalism.MainNotions.S.leadMinorE
-      rw [dif_pos (Nat.zero_le _), Matrix.det_isEmpty]
+      rw [dite_eq_left (Nat.zero_le _), Matrix.det_isEmpty]
     unfold Formalism.MainNotions.S.Gflag
     rw [hD1, hD0, hT', star_neg, hTs, star_one]
     ring
   · have hD : ∀ l, (hl : l ≤ r + 1) → r ≤ l → Formalism.MainNotions.S.Dl F.fl F'.fl l = 0 := by
       intro l hl hrl
       unfold Formalism.MainNotions.S.Dl Formalism.MainNotions.S.leadMinorE
-      rw [dif_pos hl]
+      rw [dite_eq_left hl]
       apply Matrix.det_eq_zero_of_column_eq_zero (⟨0, by omega⟩ : Fin l)
       intro i
       simp only [Matrix.submatrix_apply]

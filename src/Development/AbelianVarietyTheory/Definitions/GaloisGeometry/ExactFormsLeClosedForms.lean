@@ -283,7 +283,7 @@ theorem isForm_zFld : (std 1).IsForm zFld := by
   have hs (x x' : (std 1).Pt) (h : x.pt = x'.pt) : x = x' := Subtype.ext (Prod.ext rfl h)
   refine ⟨fun i S => ?_, fun x x' h => ?_⟩
   · have e : (fun v => (bas 1).repr ((std 1).loc zFld i v) S) = fun v => v 0 * (bas 1).repr 1 S := funext fun v => by
-      rw [loc, dif_pos (show v ∈ ((std 1).e i).target from Set.mem_univ v)]
+      rw [loc, dite_eq_left (show v ∈ ((std 1).e i).target from Set.mem_univ v)]
       unfold zFld
       rw [Algebra.algebraMap_eq_smul_one, map_smul, Finsupp.smul_apply, smul_eq_mul]
       rfl
@@ -293,7 +293,7 @@ theorem isForm_zFld : (std 1).IsForm zFld := by
 
 theorem dExt_zFld (x : (std 1).Pt) : (std 1).dExt zFld x = dz 0 := by
   have hl : (std 1).loc zFld x.1.1 = fun v => (EuclideanSpace.proj (0 : Fin 1) : V 1 →L[ℂ] ℂ) v • bas 1 ∅ := funext fun v => by
-    rw [loc, dif_pos (show v ∈ ((std 1).e x.1.1).target from Set.mem_univ v)]
+    rw [loc, dite_eq_left (show v ∈ ((std 1).e x.1.1).target from Set.mem_univ v)]
     unfold zFld
     rw [Algebra.algebraMap_eq_smul_one, bas_empty]
     rfl

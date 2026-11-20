@@ -35,7 +35,7 @@ private theorem gm_res_toroidal_compactification {X Y : Scheme.{0}} (f : Y ⟶ X
     congr 1
     exact TopCat.Presheaf.germ_res _ _ _ _
   unfold gm
-  rw [dif_pos hy, dif_pos hU]
+  rw [dite_eq_left hy, dite_eq_left hU]
   apply Units.ext
   exact congrArg (fun φ => φ.hom (x : Γ(X, U))) e
 

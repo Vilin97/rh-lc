@@ -29,7 +29,7 @@ theorem UpperTheory.V.Hi.deformationRing_to_heckeAlgebra_surjective :
         rw [← map_natCast (algebraMap c.O T), ← map_mul, hu, map_one]
       have e := JEx.heckePol_coeff n (normV w.1)
         (fun j => if h : 0 < j ∧ j - 1 < n then gen (.inl (w, ⟨j - 1, h.2⟩)) else 1) (k + 1) k.2
-      rw [← h1 w P σ hP hσ, dif_pos ⟨Nat.succ_pos _, k.2⟩] at e
+      rw [← h1 w P σ hP hσ, dite_eq_left ⟨Nat.succ_pos _, k.2⟩] at e
       have e2 : (D₀.map f.toRingHom).chi (MonoidAlgebra.single (H.prj σ⁻¹) 1) =
           (D₀.chi (MonoidAlgebra.single (H.prj σ⁻¹) 1)).map f.toRingHom := by
         rw [← (AlgebraTools.Det.mapApi D₀ _).1]

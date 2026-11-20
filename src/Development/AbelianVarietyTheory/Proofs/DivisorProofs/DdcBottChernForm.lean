@@ -67,7 +67,7 @@ theorem extTrace_mid_indep (T : HermSeq A r s) (a b : T.κ) (i : A.ι) {v : V n}
 
 theorem loc_bcFld (T : HermSeq A r s) {a : T.κ} {i : A.ι} {v : V n} (hv : v ∈ chartDom T a i) :
     A.loc (bcFld T) i v = (ofValues (extTrace (fun w => T.mid a ((A.e i).symm w)) v) : Alt n) := by
-  rw [HolAtlas.loc, dif_pos hv.1]
+  rw [HolAtlas.loc, dite_eq_left hv.1]
   have hc : (A.e i) ((A.e i).symm v) = v := (A.e i).right_inv hv.1
   change (ofValues (extTrace (fun w => T.mid (T.cover ((A.e i).symm v)).choose ((A.e i).symm w))
     ((A.e i) ((A.e i).symm v))) : Alt n) = _

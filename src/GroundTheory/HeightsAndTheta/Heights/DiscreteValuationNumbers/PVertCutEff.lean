@@ -72,7 +72,7 @@ theorem VertCutEff.proof (h1 : VNumCut.Statement.{u}) (h2 : DivisorIdealCycle.St
           (Q.mul_mem_left x (hQ.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self v)))))⟩ hQW⟩
     have hpos : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P v) W : ℤ) ≠ 0 := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hWv, hrel⟩]
+      rw [dite_eq_left ⟨hWv, hrel⟩]
       have hne := length_localizedQuot_ne_top (P ⊔ Ideal.span {v}) W hWv
       have hnz : multAt (P ⊔ Ideal.span {v}) W ≠ 0 := by
         unfold multAt
@@ -87,7 +87,7 @@ theorem VertCutEff.proof (h1 : VNumCut.Statement.{u}) (h2 : DivisorIdealCycle.St
       exact_mod_cast htn
     have hu0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) W : ℤ) = 0 := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨h, -⟩
       exact huW (h.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self u)))
     have e1 := congrFun (DivCycleMul.proof O K ι P u f hP huP hV.num_not_mem) W

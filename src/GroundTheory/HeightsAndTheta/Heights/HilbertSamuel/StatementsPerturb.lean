@@ -108,7 +108,7 @@ theorem AmpleOfGenTwist.hyps_inhabited :
         simp only [Function.update_self] at hj
         exact Finset.mem_of_mem_erase hj
       unfold KH.cellRes
-      rw [dif_pos hle]
+      rw [dite_eq_left hle]
       have h1 : (1 : LocalizedModule (KH.cellMon ℚ (Function.update J default ((J default).erase i)))
           (MRingOver ℚ (GlobalTheory (Fin 2)) ⧸ (⊥ : Ideal (MRingOver ℚ (GlobalTheory (Fin 2)))))) =
           LocalizedModule.mkLinearMap _ _ 1 := by
@@ -134,7 +134,7 @@ theorem AmpleOfGenTwist.hyps_inhabited :
         (Function.update J default ((J default).erase i) default).card - 1 = 0 := fun i =>
       ⟨(hcond i).1, by simpa using (hcond i).2⟩
     rw [Finset.sum_congr hJd (fun _ _ => rfl), Fin.sum_univ_two]
-    erw [dif_pos (hc' 0), dif_pos (hc' 1)]
+    erw [dite_eq_left (hc' 0), dite_eq_left (hc' 1)]
     have hs0 : KH.faceSign J default (0 : Fin 2) = 1 := by
       simp [KH.faceSign, hJd]
     have hs1 : KH.faceSign J default (1 : Fin 2) = -1 := by

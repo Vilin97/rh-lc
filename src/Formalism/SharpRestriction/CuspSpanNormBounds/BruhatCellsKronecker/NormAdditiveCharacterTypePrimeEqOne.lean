@@ -278,11 +278,11 @@ theorem gram_det_eq (P : FPair H r) (hs : M.split = none) :
     rfl
   have e1 : P.Dm (r + 1) = Zh.det := by
     unfold FPair.Dm HermSp.Dl
-    rw [dif_pos le_rfl]
+    rw [dite_eq_left le_rfl]
     rfl
   have e2 : P.Dm r = (Zh.submatrix Fin.castSucc Fin.castSucc).det := by
     unfold FPair.Dm HermSp.Dl
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
     rfl
   rw [d1, d2]
   unfold FPair.Gv HermSp.Gdet HermSp.normE

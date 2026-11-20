@@ -43,7 +43,7 @@ theorem tieDel_all_steps : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv 
   have hQ : K2.SharpQ t ex.tw u μ j x (K2.qOf t ex.tw u μ j x) := by
     have hex := J.sharp j hj x
     unfold K2.qOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact Classical.choose_spec hex
   set cc := clsAt X H j La.1 La.2 with hcc
   set κ := clsAt X H (j + 1) c' L' with hκ

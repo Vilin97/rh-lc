@@ -62,7 +62,7 @@ theorem unipotentHat_normalizes_W (a : G0 X.E Pr.vGs R.r) (w : rowSG Pr sel mu) 
   by_cases hw : w.1 ∈ Pr.vGs
   · have e : (wmTy sel mu (rKg X Pr R)).inv w = ⟨⊥, 1⟩ := by
       unfold LevFam.inv Lev.inv wmTy LevFam.glue
-      rw [dif_pos hw]
+      rw [dite_eq_left hw]
       show ({ H := ⊥, lam := (1⁻¹)⁻¹ } : Lev (𝓞 X.E ⧸ (w : HeightOneSpectrum (𝓞 X.E)).asIdeal) X.K R.r) = ⟨⊥, 1⟩
       congr 1
     rw [e]
@@ -71,7 +71,7 @@ theorem unipotentHat_normalizes_W (a : G0 X.E Pr.vGs R.r) (w : rowSG Pr sel mu) 
     rw [Subgroup.mem_bot.mp h.2, mul_one, one_mul]
   · have e : (wmTy sel mu (rKg X Pr R)).inv w = ⟨⊤, 1⟩ := by
       unfold LevFam.inv Lev.inv wmTy LevFam.glue
-      rw [dif_neg hw]
+      rw [dite_eq_right hw]
       show ({ H := ⊤, lam := 1⁻¹ } : Lev (𝓞 X.E ⧸ (w : HeightOneSpectrum (𝓞 X.E)).asIdeal) X.K R.r) = ⟨⊤, 1⟩
       congr 1
     rw [e]

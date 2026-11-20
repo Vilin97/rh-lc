@@ -67,7 +67,7 @@ theorem covol_pos_of_discrete {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (L : Submodule ℤ E) [DiscreteTopology L] :
     0 < covol L := by
   classical
-  rw [covol, dif_pos (inferInstance : DiscreteTopology L)]
+  rw [covol, dite_eq_left (inferInstance : DiscreteTopology L)]
   exact Real.sqrt_pos.mpr (det_gram_basis_pos L _)
 
 theorem norm_sum_smul_le_of_int {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]

@@ -45,7 +45,7 @@ theorem waveOut_pairAt_self (μ : Measure (Mt k r)) {W : Module.End ℂ (RadSp k
 theorem waveOut_glue (l : Fin r) (c : Fin r → ℂ) (t : ℂ) (c' : Cf r l.succ) :
     glue l.succ (Function.update c l t) c' l = t := by
   unfold glue
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   first
   | exact Function.update_self l t c
   | simp

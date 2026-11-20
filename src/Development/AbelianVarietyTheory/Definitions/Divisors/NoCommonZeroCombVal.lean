@@ -132,10 +132,10 @@ private theorem ev_app_pullback_eq_ev {k₁ : Type} [CommRing k₁] {Y₁ : Sche
   rw [hm]
   by_cases h : ⊤ ≤ (z₁.1 ≫ g) ⁻¹ᵁ W₁
   · have h' : ⊤ ≤ z₁.1 ⁻¹ᵁ (g ⁻¹ᵁ W₁) := h
-    rw [dif_pos h, dif_pos h', Scheme.Hom.comp_appLE]
+    rw [dite_eq_left h, dite_eq_left h', Scheme.Hom.comp_appLE]
     rfl
   · have h' : ¬ ⊤ ≤ z₁.1 ⁻¹ᵁ (g ⁻¹ᵁ W₁) := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem gv_linComb (hm : ∀ a, (m a).1 = z.1 ≫ f a) {ε : κ → ℤ} {j j' : κ → B.ι}
     (h : z ∈ ptsIn p' σ' ((LB.LinComb B f ε).U j)) (h' : z ∈ ptsIn p' σ' ((LB.LinComb B f ε).U j')) :

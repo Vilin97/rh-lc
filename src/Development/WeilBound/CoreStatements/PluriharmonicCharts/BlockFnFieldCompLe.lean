@@ -83,7 +83,7 @@ theorem ptOf_step (M : FlagModel y Ψ N j) (ψ : M.Ω →+* L) (G : Ψ → Matri
   have h : ¬ ∀ p, M.blk p ≠ some k := fun h => h p hp
   have e : stepOf M k h = p := M.blk_inj _ _ k (blk_stepOf M k h) hp
   show (if h : ∀ p, M.blk p ≠ some k then _ else _) = _
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   simp only [e]
 
 def IsGenLow {Ω : Type} [Field Ω] (ψ : Ω →+* L) (j : ℕ) (G : Ψ → Matrix (Fin N) (Fin N) L) : Prop :=

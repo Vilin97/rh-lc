@@ -28,7 +28,7 @@ theorem levelFam_open_compact (T : TypeDataG V) (U : AuxiliaryPlaceHermitianSpac
     exact ⟨U.frame.isOpen_iwahori, U.frame.isCompact_iwahori⟩
   by_cases hv : v ∈ T.S
   · have e : levelFam T U v = kerSub T ⟨v, hv⟩ := by
-      rw [levelFam, Function.update_of_ne hu, dif_pos hv]
+      rw [levelFam, Function.update_of_ne hu, dite_eq_left hv]
     rw [e]
     have ho : IsOpen (kerSub T ⟨v, hv⟩ : Set (GLoc D.sp.cm.sig V.gram v)) := by
       rw [kerSub, Subgroup.coe_map]

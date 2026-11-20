@@ -256,7 +256,7 @@ theorem ComponentResFibreSum.proof (h₁ : ComponentResBadNull.Statement) (hA : 
   rw [show resProj R Ψ x = y from hx.1] at hγ hval
   have hex : ∃ γ, IsSheet P Ψ y (resW R Ψ x) γ := ⟨γ, hγ⟩
   unfold sheetDensity
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hc := hex.choose_spec
 
   have hmem : hex.choose y ∈ mcPts P ∩ zeroLocus ℂ W := by

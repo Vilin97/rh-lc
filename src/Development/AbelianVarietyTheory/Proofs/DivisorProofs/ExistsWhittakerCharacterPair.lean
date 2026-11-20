@@ -42,11 +42,11 @@ theorem edgeSum_supEdge_eq (M : GL (Fin r) κ) :
     unfold Formalism.MainNotions.ArithmeticCylinders.entN
     by_cases hi : i.val + 1 < r
     · rw [Finset.sum_eq_single ⟨i.val + 1, hi⟩]
-      · rw [if_pos (show supEdge i ⟨i.val + 1, hi⟩ from rfl), dif_pos ⟨i.isLt, hi⟩]
+      · rw [if_pos (show supEdge i ⟨i.val + 1, hi⟩ from rfl), dite_eq_left ⟨i.isLt, hi⟩]
       · intro j _ hj
         rw [if_neg (show ¬ supEdge i j from fun e => hj (Fin.ext e))]
       · intro h; exact absurd (Finset.mem_univ _) h
-    · rw [dif_neg (by omega)]
+    · rw [dite_eq_right (by omega)]
       refine Finset.sum_eq_zero fun j _ => ?_
       rw [if_neg (show ¬ supEdge i j from fun e => by
         have := j.isLt
@@ -61,7 +61,7 @@ theorem edgeSum_supEdge_eq (M : GL (Fin r) κ) :
     rw [Finset.sum_range_succ, Nat.add_sub_cancel]
     have : Formalism.MainNotions.ArithmeticCylinders.entN (M : Matrix (Fin (s + 1)) (Fin (s + 1)) κ) s (s + 1) = 0 := by
       unfold Formalism.MainNotions.ArithmeticCylinders.entN
-      rw [dif_neg (by omega)]
+      rw [dite_eq_right (by omega)]
     rw [this, add_zero]
 
 theorem entN_map (f : κ ≃+* κ') (M : GL (Fin r) κ) (a b : ℕ) :

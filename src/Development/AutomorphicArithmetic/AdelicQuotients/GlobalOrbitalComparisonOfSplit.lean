@@ -100,7 +100,7 @@ theorem UpperTheory.globalOrbitalComparison_of_split :
     have hx : (fun x : G1 E n => ext0 (avg Φ) ((x : GA E n)⁻¹ * AdelicGLn.diagonal E n δ *
         mapGL n (galAd σ) (x : GA E n))) = fun x => FE σ δ Φ (eE (x, 1)) := by
       funext x
-      rw [h1, ext0, dif_pos (hm x)]
+      rw [h1, ext0, dite_eq_left (hm x)]
       rfl
     rw [hx]
     have hmeas : Measurable fun x : G1 E n => FE σ δ Φ (eE (x, 1)) := by

@@ -57,7 +57,7 @@ theorem exists_functional_ne (hψ : ∀ x : ℤ_[g], ψ (i (x : ℚ_[g])) = ψ�
   have hd := supp_const i hi hψ h0 τ hτ π φ hφ L hL _ d hx'
   have hdc : d = fun _ => (if h : 0 < n then d ⟨0, h⟩ else 0) := by
     funext j
-    rw [dif_pos (Fin.pos j)]
+    rw [dite_eq_left (Fin.pos j)]
     exact hd j _
   rw [hdc] at hx'
   refine ⟨L.comp (π (Iwasawa.torusPow (w.adicCompletion E) n (fun _ => (if h : 0 < n then d ⟨0, h⟩ else 0)))),

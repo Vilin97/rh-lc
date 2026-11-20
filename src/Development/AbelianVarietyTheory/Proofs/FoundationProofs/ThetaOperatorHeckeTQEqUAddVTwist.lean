@@ -20,12 +20,12 @@ namespace GlobalTheory.HeckeTh
 
 theorem toGQ_coe (γ : SL(2, ℤ)) : toGQ (γ : Matrix (Fin 2) (Fin 2) ℤ) = ofSL γ := by
   have h : (0:ℤ) < (γ : Matrix (Fin 2) (Fin 2) ℤ).det := by rw [γ.det_coe]; exact one_pos
-  unfold toGQ; rw [dif_pos h]
+  unfold toGQ; rw [dite_eq_left h]
   apply Subtype.ext; apply Units.ext
   simp [ofSL, Matrix.SpecialLinearGroup.toGLPos]
 
 theorem ent_toGQ (m : Matrix (Fin 2) (Fin 2) ℤ) (h : 0 < m.det) (i j : Fin 2) : ent (toGQ m) i j = (m i j : ℚ) := by
-  unfold ent toGQ; rw [dif_pos h]; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero]
+  unfold ent toGQ; rw [dite_eq_left h]; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero]
 
 theorem exists_inv (q c : ℕ) (hc : 0 < c) (h : Nat.Coprime q c) : ∃ (a : ℕ) (t : ℤ), (a : ℤ) * q - t * c = 1 := by
   have hg := Nat.gcd_eq_gcd_ab q c

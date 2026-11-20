@@ -79,7 +79,7 @@ def extLE (a b : ℕ) : (Fin a → E) →ₗ[E] (Fin b → E) where
 
 theorem extLE_of_le (a b : ℕ) (x : Fin a → E) (i : Fin b) (h : a ≤ (i : ℕ)) : extLE a b x i = 0 := by
   simp only [extLE, LinearMap.coe_mk, AddHom.coe_mk]
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 theorem extLE_isom (a b : ℕ) (hab : a ≤ b) (neg : Fin a → Bool) (neg' : Fin b → Bool)
     (hneg : ∀ i : Fin a, neg' ⟨i, lt_of_lt_of_le i.isLt hab⟩ = neg i) (x y : Fin a → E) :

@@ -78,7 +78,7 @@ theorem continuous_strN {m g : ℕ} : Continuous (strN (m := m) (g := g)) := by
 theorem twistFactor_of_mem' {E : Type} {g : ℕ} {M M' : Submodule ℤ (Fl g)}
     (χ : AddChar (M' ⧸ M.submoduleOf M') ℂ) (j : Fl g → Pt E g → ℂ) {l : Fl g} (hl : l ∈ M')
     (P : Pt E g) : twistFactor M M' χ j l P = χ (Submodule.Quotient.mk ⟨l, hl⟩) * j l P := by
-  unfold twistFactor; rw [dif_pos hl]
+  unfold twistFactor; rw [dite_eq_left hl]
 
 theorem twistFactor_of_mem {E : Type} {g : ℕ} {M M' : Submodule ℤ (Fl g)} (hle : M ≤ M')
     (χ : AddChar (M' ⧸ M.submoduleOf M') ℂ) (j : Fl g → Pt E g → ℂ) {l : Fl g} (hl : l ∈ M)

@@ -48,7 +48,7 @@ theorem sheetDensity_eq (P : Ideal (Geo.MRing ι))
     refine ⟨fun _ ↦ z, rfl, Filter.Eventually.of_forall fun y' ↦ ⟨differentiableAt_const _, hz, ?_⟩⟩
     rw [Subsingleton.elim y' y]
     exact hΨ
-  rw [Geo.sheetDensity, dif_pos hex]
+  rw [Geo.sheetDensity, dite_eq_left hex]
   obtain ⟨hseg, hev⟩ := hex.choose_spec
   have hmem : hex.choose y ∈ Geo.mcPts P := hev.self_of_nhds.2.1
   obtain ⟨c, hc, hcz⟩ := Geo.sameOrbit_of_segre (z := z) hmem.1 1 one_ne_zero (by rw [one_smul, hseg])
@@ -162,7 +162,7 @@ theorem homogProof : HomogStatement := by
   intro K _ _ ι _ P g hP hfin hg
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (0 + 1) → ℂ), Geo.IsGoodProj P Ψ :=
     exists_isGoodProj P hfin
-  rw [Geo.ptsIntegral, dif_pos hex]
+  rw [Geo.ptsIntegral, dite_eq_left hex]
   exact ptsIntegralAt_eq P hP g hg _ hex.choose_spec
 
 example : Geo.IsMultiHomogIdeal (ι := blockIdx (fun _ : Unit ↦ 1)) (orbitIdeal samplePoint) ∧

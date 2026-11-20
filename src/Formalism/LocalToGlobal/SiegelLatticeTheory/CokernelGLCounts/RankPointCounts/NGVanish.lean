@@ -44,7 +44,7 @@ theorem stepTermVanish_of_form (h : FormNGC) : StepTermVanish := by
   have hex : ∃ w' : Point D.host.E (D.R.rS + 1), toPts w' = ptPN t ∧ ∃ g, Formalism.L2.SG.RealObj.IsPtRep X u u' w' g :=
     ⟨w, hw, hrep⟩
   unfold J2of at hJ
-  rw [dif_pos hex] at hJ
+  rw [dite_eq_left hex] at hJ
   have hJw : Jw Y u u' ν hex.choose = 0 :=
     hsEmb_eq_zero _ (norm_eq_zero.1 (pow_eq_zero_iff two_ne_zero |>.1 hJ))
   obtain ⟨c, A, B, hO⟩ := hform hex.choose hex.choose_spec.1 hex.choose_spec.2

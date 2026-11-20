@@ -24,7 +24,7 @@ theorem infOf_eq {τ : E →+* ℂ} {x : Σ M : ℕ, Submodule ℂ (Sm E M)} (h0
     (h : HasInfCharGL x.2 τ m) : infOf τ x = m := by
   have hex : ∃ m, HasInfCharGL x.2 τ m := ⟨m, h⟩
   unfold infOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact GlobalTheory.BcSpehProof.hasInfCharGL_unique h0 hex.choose_spec h
 
 theorem sum_m {n : ℕ} (P : Pre E n) (τ : E →+* ℂ) : ∑ i, P.m i τ = ((parts P).map (infOf τ)).sum := by

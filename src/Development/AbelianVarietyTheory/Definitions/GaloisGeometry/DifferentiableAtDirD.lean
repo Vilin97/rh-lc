@@ -450,7 +450,7 @@ variable (A) in
 theorem loc_op_eventuallyEq (T : (V n → Alt n) → V n → Alt n) (α : A.Fld) (x : A.Pt) :
     A.loc (fun y => T (A.loc α y.1.1) y.crd) x.1.1 =ᶠ[𝓝 x.crd] T (A.loc α x.1.1) := by
   filter_upwards [GlobLin.target_mem_nhds A x] with v hv
-  rw [loc, dif_pos hv]
+  rw [loc, dite_eq_left hv]
   exact congrArg (T _) ((A.e x.1.1).right_inv hv)
 
 theorem del_dbar_sq {α : A.Fld} (hα : A.IsForm α) :

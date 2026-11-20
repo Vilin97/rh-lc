@@ -227,7 +227,7 @@ theorem term_eq {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((k : K) → 
         exact h
   have hex : ∃ γ, IsSheet P Ψ y w γ := ⟨_, hγ'⟩
   unfold sheetDensity
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   set γ := hex.choose with hγ_def
   have hγ : IsSheet P Ψ y w γ := hex.choose_spec
   have hγan := ReciprocityTheory.ChartRestriction.G.Geo.sheet_analyticAt ReciprocityTheory.ChartRestriction.G.Geo.osgood hγ
@@ -369,7 +369,7 @@ theorem PtsSegreChartFibreSum.proof (h₁ : SegreChartZeroSet.Statement) (h₂ :
         refine Finset.sum_congr rfl fun J hJ => ?_
         simp only [chartDens, sheetSum]
         refine finsum_mem_congr rfl fun x hx => ?_
-        rw [dif_pos (hy1 J hJ x hx)]
+        rw [dite_eq_left (hy1 J hJ x hx)]
         exact (term_eq hMH hPp hL hg hΨ0 hsub hcov hJ hx (fun J' hJ' h => hy2 J hJ J' hJ' h x hx)
           (hy1 J hJ x hx)).symm
 

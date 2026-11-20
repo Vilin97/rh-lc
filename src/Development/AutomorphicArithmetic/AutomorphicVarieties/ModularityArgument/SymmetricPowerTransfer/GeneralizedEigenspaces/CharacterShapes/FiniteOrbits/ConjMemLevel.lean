@@ -53,10 +53,10 @@ theorem UpperTheory.V.Z.Sym.So.extF :
   have Φ_spec : ∀ (γ : Γ) (s : S) (u : G), u ∈ U → Φ (ι γ * s * u) = W γ (ψ s) := by
     intro γ s u hu
     have h : P (ι γ * s * u) := (hP _).2 ⟨γ, s, u, hu, rfl⟩
-    rw [hΦ, dif_pos h]
+    rw [hΦ, dite_eq_left h]
     obtain ⟨u0, hu0, e⟩ := ((hP _).1 h).choose_spec.choose_spec
     exact wd _ _ _ _ _ _ hu0 hu e.symm
-  have Φ_neg : ∀ g, ¬ P g → Φ g = 0 := fun g h => by rw [hΦ, dif_neg h]
+  have Φ_neg : ∀ g, ¬ P g → Φ g = 0 := fun g h => by rw [hΦ, dite_eq_right h]
   have hUinv : ∀ u ∈ U, ∀ g : G, Φ (g * u) = Φ g := by
     intro u hu g
     by_cases hg : P g

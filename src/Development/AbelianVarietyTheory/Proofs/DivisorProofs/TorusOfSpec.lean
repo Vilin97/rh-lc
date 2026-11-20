@@ -42,7 +42,7 @@ theorem torusOf_spec (w : Pl E) {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheor
     (ha : ∀ y, ψ ((a : B.A) * y) = g.val *ᵥ ψ y) : torusOf w B ψ g = a := by
   have h : ∃ a : B.Aˣ, ∀ y, ψ ((a : B.A) * y) = g.val *ᵥ ψ y := ⟨a, ha⟩
   unfold torusOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   apply Units.ext
   have h1 := h.choose_spec 1
   have h2 := ha 1

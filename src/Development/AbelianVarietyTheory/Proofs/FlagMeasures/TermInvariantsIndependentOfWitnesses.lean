@@ -240,7 +240,7 @@ theorem witness_independence : ∀ {F : Type} [Field F] [ValuativeRel F] [Topolo
   intro F _ _ _ _ _ E _ _ _ L r k S d Λ n n' H
   have hT : S.IsTerm d Λ := ⟨(n, n'), H⟩
   have K : S.IsTermW d Λ (S.wit d Λ).1 (S.wit d Λ).2 := by
-    rw [Frames.wit, dif_pos hT]
+    rw [Frames.wit, dite_eq_left hT]
     exact hT.choose_spec
   obtain ⟨c1, w1⟩ := compare S H K
   obtain ⟨c2, -⟩ := compare S K H

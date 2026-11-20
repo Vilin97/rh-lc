@@ -274,7 +274,7 @@ theorem weight_one_based_eq (lam : Fin n → ℝ) (X km : Matrix (Fin n) (Fin n)
   have e1 : Formalism.NuclearRankWeightBounds.D.lead (km.conjTranspose * NormedSpace.exp X * km) (1 + i.val) =
       leadMinor (km.conjTranspose * NormedSpace.exp X * km) (i.val + 1) (by omega) := by
     unfold Formalism.NuclearRankWeightBounds.D.lead leadMinor
-    rw [dif_pos h1]
+    rw [dite_eq_left h1]
     have gen : ∀ (a b : ℕ) (hab : a = b) (ha : a ≤ n) (hb : b ≤ n) (M : Matrix (Fin n) (Fin n) ℂ),
         (M.submatrix (Fin.castLE ha) (Fin.castLE ha)).det = (M.submatrix (Fin.castLE hb) (Fin.castLE hb)).det := by
       intro a b hab ha hb M
@@ -283,12 +283,12 @@ theorem weight_one_based_eq (lam : Fin n → ℝ) (X km : Matrix (Fin n) (Fin n)
     exact gen _ _ (by omega) _ _ _
   have e2 : oneBasedParam lam (1 + i.val) = lam ⟨i.val, by omega⟩ := by
     unfold oneBasedParam
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     congr 1
     exact Fin.ext (by simp)
   have e3 : oneBasedParam lam (1 + i.val + 1) = lam ⟨i.val + 1, by omega⟩ := by
     unfold oneBasedParam
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     congr 1
     exact Fin.ext (by simp; omega)
   rw [e1, e2, e3]
@@ -335,7 +335,7 @@ variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [
 theorem one_based_param_succ (lam : Fin n → ℝ) (a : Fin n) : oneBasedParam lam (a.val + 1) = lam a := by
   unfold oneBasedParam
   have h : a.val + 1 - 1 < n := by simpa using a.isLt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact congrArg lam (Fin.ext (by simp))
 
 theorem compact_block_diagonal (ε : Fin n → Bool) (g : Matrix (Fin n) (Fin n) ℂ) (hg : g ∈ Formalism.REAL.Kset ε) (a b : Fin n)

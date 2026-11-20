@@ -66,14 +66,14 @@ theorem opVec_wI (p : (Fin k → ℂ) × ℂ) (m : Fin (k + 1)) : opVec k r p (w
   have := m.isLt
   unfold opVec toW wI
   by_cases h : m.val < k
-  · rw [dif_pos (by simp only; omega), dif_pos h]
+  · rw [dite_eq_left (by simp only; omega), dite_eq_left h]
     exact congrArg p.1 (Fin.ext (by simp))
-  · rw [dif_neg (by simp only; omega), dif_neg h, if_pos (by simp only; omega)]
+  · rw [dite_eq_right (by simp only; omega), dite_eq_right h, if_pos (by simp only; omega)]
 
 theorem opVec_inWb (p : (Fin k → ℂ) × ℂ) : inWb k r (opVec k r p) := by
   intro i hi
   unfold opVec
-  rw [dif_neg (by omega), if_neg (by omega)]
+  rw [dite_eq_right (by omega), if_neg (by omega)]
 
 theorem opCo_opVec (p : (Fin k → ℂ) × ℂ) : opCo k r (opVec k r p) = p := by
   refine Eq.trans ?_ (ofW_toW p)

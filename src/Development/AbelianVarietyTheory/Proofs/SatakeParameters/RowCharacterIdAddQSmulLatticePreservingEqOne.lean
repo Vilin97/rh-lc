@@ -20,7 +20,7 @@ theorem unitV_det_eq_one (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {t : ℕ} (A :
   have hd : redP P A.det = 1 := by rw [(det_int hA).2, h1, Matrix.det_one]
   have hu : IsUnit (redP P A.det) := hd ▸ isUnit_one
   unfold LocE.unitV
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   have : hu.unit = 1 := Units.ext (by simp [hd])
   rw [this, map_one, Units.val_one]
 
@@ -110,7 +110,7 @@ theorem entB_one_add_q {k₀ n c : ℕ} (hk : k₀ ≤ n) (ex : ℕ → ℕ) (y 
       (((qOf P : ℕ) : E) ^ LocE.scE n ex (LocE.fIdx k₀ c n p') *
         y (Loc.eN E (n + c) (LocE.fIdx k₀ c n p')) ⟨_, hfl⟩)) := by
     unfold LocE.entB Loc.atN
-    rw [dif_pos hfl, LinearMap.add_apply, LinearMap.id_apply, LinearMap.smul_apply, Pi.add_apply, Pi.smul_apply,
+    rw [dite_eq_left hfl, LinearMap.add_apply, LinearMap.id_apply, LinearMap.smul_apply, Pi.add_apply, Pi.smul_apply,
       smul_eq_mul]
     by_cases hpp : p = p'
     · subst hpp

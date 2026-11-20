@@ -26,26 +26,26 @@ theorem fl_e (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n) (a : Fin
     flagV ρ k n e f b z i = e a := by
   have := a.2
   unfold flagV
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   exact congrArg e (Fin.ext h)
 
 theorem fl_b (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n) (a : Fin k) (h : i.1 = ρ + a.1) :
     flagV ρ k n e f b z i = b a := by
   have := a.2
   unfold flagV
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   exact congrArg b (Fin.ext (by simp only; omega))
 
 theorem symmetricFlagBasisVectors_apply_centre (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n) (h : i.1 = ρ + k) :
     flagV ρ k n e f b z i = z := by
   unfold flagV
-  rw [dif_neg (by omega), dif_neg (by omega), dif_pos h]
+  rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
 
 theorem fl_f (e f : Fin ρ → M) (b : Fin k → M) (z : M) (i : Fin n) (a : Fin ρ) (h : i.1 + a.1 = 2 * ρ + k) :
     flagV ρ k n e f b z i = f a := by
   have := a.2
   unfold flagV
-  rw [dif_neg (by omega), dif_neg (by omega), dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left (by omega)]
   exact congrArg f (Fin.ext (by simp only; omega))
 
 theorem img_e (hn : n = 2 * ρ + k + 1) (e f : Fin ρ → M) (b : Fin k → M) (z : M) {m : ℕ} (hm : m ≤ ρ) :

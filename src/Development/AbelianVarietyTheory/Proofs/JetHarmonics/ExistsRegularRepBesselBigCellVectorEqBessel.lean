@@ -29,7 +29,7 @@ theorem exists_regular_rep_vec_bigPt_eq_bessel :
     exact Finset.prod_ne_zero_iff.2 fun a _ => hd _
   · show D.vecV p.T.base p.ν' p.m₀ F (Formalism.FourierDecayAlt.P.PBJ.bigPt d) = _
     unfold D.vecV
-    rw [dif_pos ⟨hl, hG'⟩, dif_pos h']
+    rw [dite_eq_left ⟨hl, hG'⟩, dite_eq_left h']
     have hw : (hl.2 ▸ D.ptPerm (Formalism.FourierDecayAlt.P.PBJ.bigPt d) : Equiv.Perm (Fin (P.r + 1))) = 1 :=
       Formalism.FourierDecayAlt.P.PBM.cast_perm_eq_one _ _ (Formalism.FourierDecayAlt.P.PBM.ptPerm_bigPt d hd)
     obtain ⟨hmono, hnz⟩ := Formalism.FourierDecayAlt.P.Dx2.VV.ptMatN_monoP' (Formalism.FourierDecayAlt.P.PBJ.bigPt d) (P.r + 1) hl.2 hl.1

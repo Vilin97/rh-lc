@@ -201,7 +201,7 @@ theorem galE_of_lift (h : IsLayer (e + 2) q d ζ a b) {σ : hostE ζ a b ≃ₐ[
   unfold hPart
   have hex : ∃ u : (ZMod (2 ^ (e + 2)))ˣ, ((σ (thE ζ a b) : hostE ζ a b) : L) =
       ζ ^ (u : ZMod (2 ^ (e + 2))).val + ζ⁻¹ ^ (u : ZMod (2 ^ (e + 2))).val := ⟨_, hθ⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hcl_eq_of_pow_add_inv_pow_eq h.1 _ _ ((Classical.choose_spec hex).symm.trans hθ)
 
 theorem galE_aE (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)

@@ -186,7 +186,7 @@ theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT :
   have htil : DecoSet.tilH (ST := ST) rfl pi d = ⟨d.1.til (ST := ST) pi, hOk⟩ := by
     show DecoSet.til (ST := ST) pi d = _
     unfold DecoSet.til
-    rw [dif_pos hOk]
+    rw [dite_eq_left hOk]
   rw [htil]
   show v ∈ localization₂ w.asIdeal (tilN d.1.N) ↔ _
   rw [mem_localization_tilN]
@@ -204,7 +204,7 @@ theorem xtTilH_be (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : 
   have htil : DecoSet.tilH (ST := ST) rfl pi d = ⟨d.1.til (ST := ST) pi, hOk⟩ := by
     show DecoSet.til (ST := ST) pi d = _
     unfold DecoSet.til
-    rw [dif_pos hOk]
+    rw [dite_eq_left hOk]
   rw [htil] at hv ⊢
   have hv' : v ∈ localization₂ w.1.asIdeal (tilN d.1.N) := hv
   show (if v ∈ localization₂ w.1.asIdeal (tilN d.1.N) then

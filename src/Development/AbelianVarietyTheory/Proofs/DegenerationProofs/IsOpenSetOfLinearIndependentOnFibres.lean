@@ -108,7 +108,7 @@ theorem evalHom_appLE (h : Sp K ⟶ P) (U : P.Opens) (hU : ⊤ ≤ h ⁻¹ᵁ U)
     (hV : U ≤ π ⁻¹ᵁ V) (a : Γ(G, V)) :
     evalHom h U hU (π.appLE V U hV a) = valF (h ≫ π) V a := by
   have hle : ⊤ ≤ (h ≫ π) ⁻¹ᵁ V := fun y hy => hV (hU hy)
-  rw [valF, dif_pos hle, ← Scheme.Hom.appLE_comp_appLE h π V U ⊤ hV hU]
+  rw [valF, dite_eq_left hle, ← Scheme.Hom.appLE_comp_appLE h π V U ⊤ hV hU]
   rfl
 
 theorem isOpen_setOf_linearIndependent_on_fibres :

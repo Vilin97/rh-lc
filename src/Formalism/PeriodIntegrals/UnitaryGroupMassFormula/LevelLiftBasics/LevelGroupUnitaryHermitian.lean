@@ -18,27 +18,27 @@ theorem ιLev_apply_in (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1))
   have h1 : i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i := by omega
   have h2 : i ≤ q.val ∧ q.val < 2 * r' + k + 1 + i := by omega
   simp only [ιLev]
-  rw [dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h1, dite_eq_left h2]
   congr 1 <;> apply Fin.ext <;> simp only [Fin.val_mk] <;> omega
 
 theorem ιLev_apply_out (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ)
     (p q : Fin (2 * (i + r') + k + 1)) (hp : ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) :
     ιLev k i r' g p q = if p = q then 1 else 0 := by
   simp only [ιLev]
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 theorem ιLev_apply_in_out (g : Matrix (Fin (2 * r' + k + 1)) (Fin (2 * r' + k + 1)) ℂ)
     (p q : Fin (2 * (i + r') + k + 1)) (hp : i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)
     (hq : ¬ (i ≤ q.val ∧ q.val < 2 * r' + k + 1 + i)) : ιLev k i r' g p q = 0 := by
   simp only [ιLev]
-  rw [dif_pos hp, dif_neg hq]
+  rw [dite_eq_left hp, dite_eq_right hq]
 
 theorem liftVec_apply_in (v : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (i + r') + k + 1))
     (a : Fin (2 * r' + k + 1)) (hp : p.val = a.val + i) : liftVec k i r' v p = v a := by
   have ha := a.isLt
   have h1 : i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i := by omega
   simp only [liftVec]
-  rw [dif_pos h1]
+  rw [dite_eq_left h1]
   congr 1
   apply Fin.ext
   simp only [Fin.val_mk]
@@ -47,7 +47,7 @@ theorem liftVec_apply_in (v : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (i + r
 theorem liftVec_apply_out (v : Fin (2 * r' + k + 1) → ℂ) (p : Fin (2 * (i + r') + k + 1))
     (hp : ¬ (i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) : liftVec k i r' v p = 0 := by
   simp only [liftVec]
-  rw [dif_neg hp]
+  rw [dite_eq_right hp]
 
 theorem bvec_lift (a : Fin (2 * r' + k + 1)) (q : Fin (2 * (i + r') + k + 1)) (hq : q.val = a.val + i) :
     liftVec k i r' (bvec a) = bvec q := by

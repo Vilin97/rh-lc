@@ -17,12 +17,12 @@ theorem PluckerFrameChange.proof : PluckerFrameChange.Statement := by
       ∑ s : GroundTheory.PAdicHodge.KSubset N l,
         (V.submatrix id s.emb).det *
           ((g.submatrix id (I.orderEmbOfFin hI)).submatrix s.emb id).det := by
-    rw [pluckerCoord, dif_pos hI, hmul, GroundTheory.PAdicHodge.det_mul_eq_sum_minors]
+    rw [pluckerCoord, dite_eq_left hI, hmul, GroundTheory.PAdicHodge.det_mul_eq_sum_minors]
   rw [hL, Finset.sum_subtype (Finset.powersetCard l (Finset.univ : Finset (Fin N)))
     (p := fun J : Finset (Fin N) => J.card = l) (fun J => Finset.mem_powersetCard_univ)]
   refine Finset.sum_congr rfl fun s _ => ?_
   have h2 : s.1.card = l ∧ I.card = l := ⟨s.2, hI⟩
-  rw [pluckerCoord, dif_pos s.2, minorOn, dif_pos h2]
+  rw [pluckerCoord, dite_eq_left s.2, minorOn, dite_eq_left h2]
   rfl
 
 end GroundTheory.Heights₂.Heights.FlagBundles

@@ -51,7 +51,7 @@ theorem colUz : ∀ l (g : decs D.host.E (Aw i dc) (colIdx i dc l)),
   intro l g
   first
   | (show Dd.δO * KFin.uCol i dc l g = Dd.δO * KFin.u i dc l g
-     rw [KFin.u, dif_pos (show ((g : GE D.nd)) ∈ KFin.Γc i dc l from g.2)])
+     rw [KFin.u, dite_eq_left (show ((g : GE D.nd)) ∈ KFin.Γc i dc l from g.2)])
   | (simp [KFin.uz, KFin.uzOf, KFin.u, g.2])
 
 theorem colUnr (hA : EmbeddingTypes.UnramifiedTrivialH1f i dc) : KHf.UnrFin i dc Dd.δO (KFin.uz i dc Dd.δO) :=

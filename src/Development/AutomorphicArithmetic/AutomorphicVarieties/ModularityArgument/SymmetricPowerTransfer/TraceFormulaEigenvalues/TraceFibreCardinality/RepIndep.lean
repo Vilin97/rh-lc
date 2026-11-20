@@ -74,7 +74,7 @@ theorem rSpec : RSpec := by
   intro Γ G V _ _ _ _ B s f hf φ
   have h : ∃ L : Module.End ℂ B.Forms, ∀ φ, (L φ).1 = s.opF f φ.1 := ⟨opL hf, fun _ => rfl⟩
   unfold Base.Tw.R
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec φ
 
 end UpperTheory.V.Z.Sym.Tf

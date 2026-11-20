@@ -381,7 +381,7 @@ theorem gS_ne : ((gS D : ℕ) : D.host.E) ≠ 0 :=
 theorem Xsp_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) :
     Xsp (mapLF γ (lf D F)) = (Xsp (lf D F)).map (γ : (VS D).V →ₗ[D.host.E] (VS D).V) := by
-  rw [mapLF, dif_pos hγ]
+  rw [mapLF, dite_eq_left hγ]
   show Submodule.span _ (Set.range fun a => γ ((lf D F).fl.e a)) =
     (Submodule.span _ (Set.range (lf D F).fl.e)).map _
   rw [Submodule.map_span, ← Set.range_comp]
@@ -389,7 +389,7 @@ theorem Xsp_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formal
 
 theorem e_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F : FlagG (VS D) D.R.rS T) (a : Fin D.R.rS) : (mapLF γ (lf D F)).fl.e a = γ (F.e a) := by
-  rw [mapLF, dif_pos hγ]
+  rw [mapLF, dite_eq_left hγ]
   rfl
 
 theorem split_mapLF (Y : Full X) {u' : D.what₂.Word} {Λ' : Submodule (𝓞 D.host.E) (VS D).V} (hΛ' : Λ' ∈ Y.what₂ u')

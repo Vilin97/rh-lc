@@ -156,7 +156,7 @@ theorem infAt_unip_eq_zero (w : InfinitePlace K) (r : ℕ) (X : UPos n r → �
   have h1 : a ≠ b := fun e => h (Or.inl e)
   have h2 : ¬ ((a : ℕ) < r ∧ r ≤ (b : ℕ)) := fun e => h (Or.inr e)
   rw [infAt_apply, coe_unipGL, unipMatrix, Matrix.add_apply, Matrix.one_apply_ne h1, blockEntry_apply,
-    dif_neg h2, add_zero]
+    dite_eq_right h2, add_zero]
   rfl
 
 theorem infAt_unip_inv_eq_zero (w : InfinitePlace K) (r : ℕ) (X : UPos n r → 𝔸[K]) (a b : Fin n)
@@ -165,7 +165,7 @@ theorem infAt_unip_inv_eq_zero (w : InfinitePlace K) (r : ℕ) (X : UPos n r →
   have h1 : a ≠ b := fun e => h (Or.inl e)
   have h2 : ¬ ((a : ℕ) < r ∧ r ≤ (b : ℕ)) := fun e => h (Or.inr e)
   rw [infAt_apply, coe_unipGL_inv, unipMatrix, Matrix.add_apply, Matrix.one_apply_ne h1, blockEntry_apply,
-    dif_neg h2, add_zero]
+    dite_eq_right h2, add_zero]
   rfl
 
 theorem exists_inf_bound (r : ℕ) {D : Set (UPos n r → 𝔸[K])} {Q : Set (AdelicGLn.AdelicGL K n)}

@@ -56,7 +56,7 @@ theorem regularityDehomogenization_holds.proof (h₁ : GroundTheory.Heights₂.H
     rw [(Algebra.TensorProduct.quotIdealMapEquivTensorQuot B (Ideal.span {x})).toLinearEquiv.length_eq,
       IsLocalRing.length_baseChange, hm, hres, mul_one]
   unfold multAt
-  rw [dif_pos hWp, h₁ (MRing ι) P W s (coneLocRing P W hPW) inferInstance, hspan, locIdeal_eq_span hyO,
+  rw [dite_eq_left hWp, h₁ (MRing ι) P W s (coneLocRing P W hPW) inferInstance, hspan, locIdeal_eq_span hyO,
     key (locRing P W) (coneLocRing P W hPW) hmax]
 
 end

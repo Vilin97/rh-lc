@@ -64,7 +64,7 @@ theorem jtPin_of (hA : AmpFibreConst Y) : JtPin hF hI (termTieOf W hI H A hV) :=
   have h : ∃ s' : TT Y u u', s'.toTerm = tc hI t := ⟨s, hs⟩
   show hsNormSq (JtOf hI t) = ampL s ^ 2
   unfold JtOf
-  rw [dif_pos h, ← Formalism.L2.SG.PackageTie.norm_hsEmb_sq]
+  rw [dite_eq_left h, ← Formalism.L2.SG.PackageTie.norm_hsEmb_sq]
   have e := hA u u' (tc hI t) ⟨h.choose, h.choose_spec⟩ ⟨s, hs⟩
   unfold ampL at e ⊢
   rw [e]

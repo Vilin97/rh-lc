@@ -181,7 +181,7 @@ theorem exists_side (hF : o.Fits) (m : Moved o) {n : ℕ} (c : Module.Basis (Fin
   let eR₀ : Gc B w.px ≃* G0g (w.D o.Z).nd := m.z.R.eG.trans m.z.cG
   have hc : (w.D o.Z).ntypes.e0 ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g (w.D o.Z).nd)) := hF.grpAt.cen
   refine ⟨⟨fun μ => (q.p.sA false μ).act.comp (Bare.cenPull eR₀), fun μ => ?_, fun eR hR μ a a' ha x => ?_, RR, h1, j, h2, h3⟩, ε, h4⟩
-  · rw [dif_pos hc]
+  · rw [dite_eq_left hc]
     exact Bare.e_eq_act (m.t.tA false μ) (m.t.lawsA false μ) (Bare.cenPull eR₀ ⟨_, hc⟩) fun g =>
       (m.z.good.2 g).trans (Bare.coeff_cenPull eR₀ ⟨_, hc⟩ g).symm
   · have he : eR₀ = eR := eq_of_stdIso m eR hR

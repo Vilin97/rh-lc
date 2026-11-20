@@ -27,12 +27,12 @@ theorem valR_congr {B : Type} [CommRing B] {X X' : Scheme.{0}} {x : Sp B ⟶ X} 
     (h : ∀ z, x' z ∈ U' → gs x z U a = gs x' z U' a') : valR x U a = valR x' U' a' := by
   by_cases h' : ⊤ ≤ x' ⁻¹ᵁ U'
   · have h₀ : ⊤ ≤ x ⁻¹ᵁ U := fun z hz => (hU z).1 (h' hz)
-    rw [valR, valR, dif_pos h', dif_pos h₀]
+    rw [valR, valR, dite_eq_left h', dite_eq_left h₀]
     refine congrArg _ (fn_ext fun z hz => ?_)
     rw [gs_appLE' _ _ _ _ _ _ hz, gs_appLE' _ _ _ _ _ _ hz, Category.id_comp, Category.id_comp]
     exact h z (h' hz)
   · have h₀ : ¬ ⊤ ≤ x ⁻¹ᵁ U := fun e => h' fun z hz => (hU z).2 (e hz)
-    rw [valR, valR, dif_neg h', dif_neg h₀]
+    rw [valR, valR, dite_eq_right h', dite_eq_right h₀]
 
 theorem val_rigT' {S : Scheme.{0}} (A : Over S) [GrpObj A] (L : LB A.left) (rig : LB.Gen (L.pull (eSec A)))
     (T : Over S) (k : ℤ) {Z : Scheme.{0}} (r : Z ⟶ T.left) (z : Z) (J : (Z ⟶ A.left) → L.ι) (hJ : Good L z J) :

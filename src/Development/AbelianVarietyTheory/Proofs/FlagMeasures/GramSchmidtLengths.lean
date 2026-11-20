@@ -120,7 +120,7 @@ theorem gramSchmidt_lengths : ∀ (k r : ℕ) (z : (Fin (2 * r + k + 1) → ℂ)
   have hlA : ∀ a : Fin r, lA k r z x a.castSucc = ‖InnerProductSpace.gramSchmidt ℂ F a‖ := by
     intro a
     have hf : Formalism.QuantumDeterminants.fvec k r z a.castSucc = e a := by
-      rw [Formalism.QuantumDeterminants.fvec, dif_pos (show (a.castSucc : Fin (r + 1)).val < r from a.isLt)]
+      rw [Formalism.QuantumDeterminants.fvec, dite_eq_left (show (a.castSucc : Fin (r + 1)).val < r from a.isLt)]
       rfl
     have hspan : Submodule.span ℂ (F '' Set.Iio a) = (Submodule.span ℂ (e '' Set.Iio a)).map L := by
       rw [Submodule.map_span, Set.image_image]

@@ -157,7 +157,7 @@ theorem idxDMat_of (hJ : IdxDJacE) : IdxDMat := by
     have hmem : epsX X e * (CO.map (IntAf X.B.I.F X.B.I.E).subtype) i j ∈ IntAf X.B.I.F X.B.I.E :=
       (eO * wO * CO i j).2
     unfold resT
-    rw [dif_pos hmem]
+    rw [dite_eq_left hmem]
     have : (⟨epsX X e * (CO.map (IntAf X.B.I.F X.B.I.E).subtype) i j, hmem⟩ : IntAf X.B.I.F X.B.I.E) =
         eO * wO * Mo i j := by
       rw [← hent i j]; rfl

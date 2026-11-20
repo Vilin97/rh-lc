@@ -15,12 +15,12 @@ theorem minorIJ_eq_det (h : Matrix (Fin N) (Fin N) R) (I J : Finset (Fin N)) (k 
     (hJ : J.card = k) : minorIJ h I J = (h.submatrix (I.orderEmbOfFin hI) (J.orderEmbOfFin hJ)).det := by
   subst hJ
   unfold minorIJ
-  rw [dif_pos hI]
+  rw [dite_eq_left hI]
 
 theorem minorIJ_of_card_ne (h : Matrix (Fin N) (Fin N) R) {I J : Finset (Fin N)} (e : I.card ≠ J.card) :
     minorIJ h I J = 0 := by
   unfold minorIJ
-  rw [dif_neg e]
+  rw [dite_eq_right e]
 
 theorem minorIJ_mul_of_card (T h : Matrix (Fin N) (Fin N) R) (I J : Finset (Fin N)) (k : ℕ) (hI : I.card = k)
     (hJ : J.card = k) :

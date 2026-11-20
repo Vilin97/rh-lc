@@ -31,6 +31,6 @@ theorem pen_locFac : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC 
     exact fun b => GlobalTheory.SeeSaw.StdMatch.twSt_h _ _ _ _ _ _ b P hPv
   rw [← hmatch t J hJ α γ P hP z]
   unfold GlobalTheory.QTw.locXi
-  rw [dif_neg (by omega), dif_pos (by omega), hh]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega), hh]
 
 end GlobalTheory.Fam.PenLoc

@@ -26,7 +26,7 @@ theorem em_coe (h : GL (Fin 2) F) : (GL2LocalData.em h).val =
     rw [det_blk]
     exact ((Matrix.isUnit_iff_isUnit_det _).1 h.isUnit).ne_zero
   unfold GL2LocalData.em
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   rfl
 
 theorem em_mul (g h : GL (Fin 2) F) : GL2LocalData.em (g * h) = GL2LocalData.em g * GL2LocalData.em h := by

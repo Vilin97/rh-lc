@@ -76,7 +76,7 @@ theorem ptAway_mat : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =
   have hL := t.idx_ok μ
   funext z
   unfold xiPt
-  rw [dif_pos him, dif_pos him]
+  rw [dite_eq_left him, dite_eq_left him]
   unfold XiEntry
   refine congrArg₂ (· * ·) ?_ ?_
   · have eA := fun P : t.Pr.vT (t.word u) => decoAtT_eq A dtU a H T i _ β x x₁ p p₁ h1 h3 P

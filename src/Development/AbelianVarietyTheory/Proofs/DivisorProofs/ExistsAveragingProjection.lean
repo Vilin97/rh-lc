@@ -204,7 +204,7 @@ theorem avg_pair {x y : V} (hx : (stab π L x).FiniteIndex) (hy : (stab π L y).
   have hf : ∀ q : L ⧸ N, f (r q) = r q⁻¹ := by
     intro q
     simp only [f, r, Subtype.coe_eta, QuotientGroup.out_eq']
-    rw [dif_pos (q.out).2]
+    rw [dite_eq_left (q.out).2]
   have hmem : ∀ g, g ∈ s ↔ ∃ q, r q = g := by
     intro g; simp [s]
   refine ⟨s, f, ?_, ?_, hsum x hNx, hsum y hNy, ?_, ?_⟩

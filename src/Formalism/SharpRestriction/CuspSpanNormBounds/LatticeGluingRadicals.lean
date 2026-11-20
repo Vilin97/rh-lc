@@ -444,7 +444,7 @@ theorem discriminant_eq_det_lift_alt {T T' : E} (F : LFlag S r T) (F' : LFlag S 
 theorem a_Dr {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') :
     Dr F F' = ((ZhatL F F').submatrix Fin.castSucc Fin.castSucc).det := by
   simp only [Formalism.MainNotions.S.Dl, Formalism.MainNotions.S.leadMinorE]
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   rfl
 
 theorem a_gram_det {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') :
@@ -903,14 +903,14 @@ theorem b_Zhat_apply {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') (a b : Fin
 theorem discriminant_eq_det_lift {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') : Dr1 F F' = (ZhatL F F').det := by
   show Formalism.MainNotions.S.leadMinorE (ZhatL F F') (r + 1) = _
   unfold Formalism.MainNotions.S.leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem b_Dr {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') :
     Dr F F' = ((ZhatL F F').submatrix Fin.castSucc Fin.castSucc).det := by
   show Formalism.MainNotions.S.leadMinorE (ZhatL F F') r = _
   unfold Formalism.MainNotions.S.leadMinorE
-  rw [dif_pos (Nat.le_succ r)]
+  rw [dite_eq_left (Nat.le_succ r)]
   congr 1
 
 theorem b_frame_last {T : E} (F : LFlag S r T) : frame F (Fin.last r) = F.fl.z := by
@@ -6867,7 +6867,7 @@ theorem j_del_eq {A : Submodule (𝓞 E) (Fin e → E)} {a} (ha : j_IsBasisOf A 
     j_del A = |(Module.finBasis ℚ (Fin e → E)).det a| := by
   have h : ∃ a, j_IsBasisOf A a := ⟨a, ha⟩
   unfold j_del
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have := j_del_mul (le_refl A) ha (Classical.choose_spec h)
   rw [this, AddSubgroup.relIndex_self]
   simp

@@ -329,7 +329,7 @@ theorem fixK_or (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[ℚ] ℂ) (hM : �
       exact h
     have h2 : ρ' (σM a) = σ a := DFunLike.congr_fun this a
     unfold cj TaylorLogMetric.liftM
-    rw [dif_pos (hm a)]
+    rw [dite_eq_left (hm a)]
     exact h2
   have h1 : ρ (σM b) ^ 2 = σ b ^ 2 := (hall ((ρ : M →+* ℂ).comp σM)).trans (hall σ).symm
   rcases sq_eq_sq_iff_eq_or_eq_neg.1 h1 with h | h
@@ -350,7 +350,7 @@ theorem exists_periodPair_lamConj {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (hc : 
     have : liftM M (g2 (lamOf D cc δ)) ^ 3 - 27 * liftM M (g3 (lamOf D cc δ)) ^ 2 = 1 := by
       apply Subtype.ext
       unfold TaylorLogMetric.liftM
-      rw [dif_pos h2, dif_pos h3]
+      rw [dite_eq_left h2, dite_eq_left h3]
       exact hΔ
     have h := congrArg ρ this
     rw [map_sub, map_mul, map_pow, map_pow, map_ofNat, map_one] at h

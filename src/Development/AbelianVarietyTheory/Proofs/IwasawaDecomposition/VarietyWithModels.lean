@@ -92,7 +92,7 @@ theorem atSpace_datum (F : ShimFam D G Lev) (w : Dat D Lev) (h : w.Indef) :
     rintro w' h' rfl
     rfl
   unfold atSpace
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact key _ _ (dat_ext D _ _ hex.choose_spec.1 hex.choose_spec.2.1)
 
 theorem atSpace_cases (F : ShimFam D G Lev) (S : letI := D.host.cmStar; HSpace D.host.E)
@@ -105,7 +105,7 @@ theorem atSpace_cases (F : ShimFam D G Lev) (S : letI := D.host.cmStar; HSpace D
     exact Or.inl ⟨w, h, rfl, rfl, atSpace_datum F w h⟩
   · right
     unfold atSpace
-    rw [dif_neg hex]
+    rw [dite_eq_right hex]
 
 theorem atSpace_N (F : ShimFam D G Lev) (S : letI := D.host.cmStar; HSpace D.host.E) (κ : Lev)
     (h2 : letI := D.host.cmStar; 2 ≤ S.rank) :

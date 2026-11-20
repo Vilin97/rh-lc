@@ -55,7 +55,7 @@ theorem ns : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (Y
     rintro v rfl f hf hext
     have hex : ∃ s : v.adicCompletion E →+* v.adicCompletion E, Continuous s ∧
         ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨f, hf, hext⟩
-    have hcj : cj v = hex.choose := by unfold cj; rw [dif_pos hex]
+    have hcj : cj v = hex.choose := by unfold cj; rw [dite_eq_left hex]
     have hfs : (f : v.adicCompletion E → v.adicCompletion E) = hex.choose :=
       (HeightOneSpectrum.denseRange_algebraMap (K := E) v).equalizer hf hex.choose_spec.1
         (funext fun k => (hext k).trans (hex.choose_spec.2 k).symm)
@@ -151,4 +151,4 @@ theorem GlobalTheory.BCT.exists_finU_of_loc : ∀ (E : Type) [Field E] [NumberFi
   show toSub (UL n w) (cLoc w ⟨finGL E n k, GlobalTheory.SplitPts.finGL_mem_UA k hk'⟩) = y w
   rw [GlobalTheory.SplitPts.cLoc_finGL, hk, hz_in w hw]
   unfold toSub
-  rw [dif_pos (y w).2]
+  rw [dite_eq_left (y w).2]

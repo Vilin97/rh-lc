@@ -55,7 +55,7 @@ theorem oddZ (m : ℕ) (lam : Fin (m + 1) → ℤ) (hlam : Antitone lam) (hodd :
 
 theorem detShift_eq {m : ℕ} (lam : DomWeight (m + 1)) : lam.detShift = lam.w (Fin.last m) := by
   unfold DomWeight.detShift
-  rw [dif_pos (Nat.succ_pos m)]
+  rw [dite_eq_left (Nat.succ_pos m)]
   rfl
 
 theorem natW_eq {m : ℕ} (lam : DomWeight (m + 1)) : lam.natW = nuOf lam.w := by

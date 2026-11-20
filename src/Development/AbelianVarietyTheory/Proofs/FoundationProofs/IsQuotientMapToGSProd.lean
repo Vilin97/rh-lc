@@ -25,7 +25,7 @@ variable {c}
 
 theorem crd_of_mem {n : ℕ} (i : Ix c) {x : Qbar l} (hx : x ∈ c.O) :
     crd c n i x = PadicInt.toZModPow n ((bas c).repr ⟨x, hx⟩ i) := by
-  unfold crd; rw [dif_pos hx]
+  unfold crd; rw [dite_eq_left hx]
 
 theorem crd_add {n : ℕ} (i : Ix c) {x y : Qbar l} (hx : x ∈ c.O) (hy : y ∈ c.O) :
     crd c n i (x + y) = crd c n i x + crd c n i y := by

@@ -26,7 +26,7 @@ theorem dualPick_dot {m : Type} [Fintype m] [DecidableEq m] (g : m → k) (hg : 
     push_neg at h'
     exact hg (funext h')
   unfold dualPick
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   simp only [single_dotProduct]
   exact inv_mul_cancel₀ h.choose_spec
 

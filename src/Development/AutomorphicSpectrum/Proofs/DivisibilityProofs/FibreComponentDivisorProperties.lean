@@ -128,7 +128,7 @@ theorem facts_of_divCycle_ne_zero {K : Type} {ι : K → Type} {R : Type} [CommR
   by_contra hc
   apply h
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-  rw [dif_neg hc]
+  rw [dite_eq_right hc]
 
 theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → (∀ W, IsFibreComp P W ↔ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) ≠ 0) ∧ (∀ (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f a → f ∉ P → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W → IsFibreComp P W) ∧ ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsVerticalDivisor P ϖ b f g → ∀ W, ratDiv P f g W ≠ 0 → IsFibreComp P W := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP
@@ -162,7 +162,7 @@ theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuati
       obtain ⟨hWmin, hWrel⟩ := hF
       haveI : W.IsPrime := hWmin.1.1
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hWmin, hWrel⟩]
+      rw [dite_eq_left ⟨hWmin, hWrel⟩]
       exact Nat.cast_ne_zero.mpr (length_toNat_ne_zero hWmin)
     · intro hW
       obtain ⟨hWmin, hWrel⟩ := facts_of_divCycle_ne_zero hW

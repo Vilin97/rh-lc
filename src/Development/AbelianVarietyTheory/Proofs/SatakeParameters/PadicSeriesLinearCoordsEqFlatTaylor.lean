@@ -73,7 +73,7 @@ theorem bridge : ∀ (D : D7) (X : Fields) (s : Seam D X) (N N' : ℕ) (p : ℕ)
     rw [coeff_map, coeff_taylorMv_flatV D X s N N' G hG m]
     change TaylorLogMetric.lamC lm (TaylorLogMetric.taylor D G _) = _
     unfold TaylorLogMetric.lamC
-    rw [dif_pos (hC _)]
+    rw [dite_eq_left (hC _)]
     exact (hι ⟨_, hC _⟩).symm
   rw [hP]
   unfold TaylorLogMetric.atLin Formalism.L2.Th1.G.linSub

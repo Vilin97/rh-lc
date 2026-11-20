@@ -70,7 +70,7 @@ theorem invBr_layerInf (hK : FiniteDimensional ℚ_[p] K) (x : (urT p K).H 2) :
     show invUr p K (e.symm (e x)) = _
     rw [LinearEquiv.symm_apply_apply]
   unfold invBr
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec x
 
 theorem invBr_bijective (hK : FiniteDimensional ℚ_[p] K) : Bijective (invBr p K) := by

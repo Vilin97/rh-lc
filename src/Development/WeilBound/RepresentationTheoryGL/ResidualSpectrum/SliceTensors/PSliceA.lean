@@ -113,7 +113,7 @@ theorem A_lev_tor {r s : ℕ} (x : Fin r → ℝ) (y : Fin s → ℝ) :
     · subst h1
       have ha : ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl a) : Fin (r + s)) : ℕ) < r := by
         rw [A_stdSum_inl]; exact a.2
-      rw [if_pos rfl, if_pos rfl, dif_pos ha]
+      rw [if_pos rfl, if_pos rfl, dite_eq_left ha]
       congr 3
     · rw [if_neg h1, if_neg h1]
   · simp [A_coe_tor, hinj.eq_iff]
@@ -123,7 +123,7 @@ theorem A_lev_tor {r s : ℕ} (x : Fin r → ℝ) (y : Fin s → ℝ) :
     · subst h1
       have hb : ¬ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr b) : Fin (r + s)) : ℕ) < r := by
         rw [A_stdSum_inr]; omega
-      rw [if_pos rfl, if_pos rfl, dif_neg hb]
+      rw [if_pos rfl, if_pos rfl, dite_eq_right hb]
       congr 3
       refine congrArg y (Fin.ext ?_)
       simp only [A_stdSum_inr]
@@ -220,14 +220,14 @@ theorem lev_unipGL_left (r s r₁ : ℕ) (h : r₁ < r) (A : UPos r r₁ → Ad 
     · have h' : ∃ s' ∈ ({r₁, r} : Finset ℕ), ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl a) : Fin (r + s)) : ℕ) < s' ∧
           s' ≤ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl c) : Fin (r + s)) : ℕ) :=
         ⟨r₁, by simp, by rw [A_stdSum_inl]; exact hb.1, by rw [A_stdSum_inl]; exact hb.2⟩
-      rw [dif_pos hb, dif_pos h', joinPos, dif_neg]
+      rw [dite_eq_left hb, dite_eq_left h', joinPos, dite_eq_right]
       · rfl
       · intro ht
         have := ht.2
         change r ≤ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl c) : Fin (r + s)) : ℕ) at this
         rw [A_stdSum_inl] at this
         omega
-    · rw [dif_neg hb, dif_neg]
+    · rw [dite_eq_right hb, dite_eq_right]
       rintro ⟨s', hs', h1, h2⟩
       rw [A_stdSum_inl] at h1 h2
       simp only [Finset.mem_insert, Finset.mem_singleton] at hs'
@@ -237,7 +237,7 @@ theorem lev_unipGL_left (r s r₁ : ℕ) (h : r₁ < r) (A : UPos r r₁ → Ad 
   · rw [fromBlocks_apply₁₂]
     simp only [reduceCtorEq, if_false, Matrix.zero_apply, zero_add]
     split_ifs with h'
-    · rw [joinPos, dif_pos]
+    · rw [joinPos, dite_eq_left]
       · rfl
       · change ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl a) : Fin (r + s)) : ℕ) < r ∧
           r ≤ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr d) : Fin (r + s)) : ℕ)
@@ -246,14 +246,14 @@ theorem lev_unipGL_left (r s r₁ : ℕ) (h : r₁ < r) (A : UPos r r₁ → Ad 
     · rfl
   · rw [fromBlocks_apply₂₁]
     simp only [reduceCtorEq, if_false, Matrix.zero_apply, zero_add]
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨s', hs', h1, h2⟩
     rw [A_stdSum_inr, A_stdSum_inl] at *
     simp only [Finset.mem_insert, Finset.mem_singleton] at hs'
     omega
   · rw [fromBlocks_apply₂₂]
     simp only [Sum.inr.injEq]
-    rw [dif_neg, add_zero, Units.val_one, Matrix.one_apply]
+    rw [dite_eq_right, add_zero, Units.val_one, Matrix.one_apply]
     rintro ⟨s', hs', h1, h2⟩
     simp only [A_stdSum_inr] at h1 h2
     simp only [Finset.mem_insert, Finset.mem_singleton] at hs'
@@ -288,7 +288,7 @@ theorem lev_unipGL_right (r s r₂ : ℕ) (h : 0 < r₂) (A : UPos s r₂ → Ad
   rcases p with a | b <;> rcases q with c | d
   · rw [fromBlocks_apply₁₁]
     simp only [Sum.inl.injEq]
-    rw [dif_neg, add_zero, Units.val_one, Matrix.one_apply]
+    rw [dite_eq_right, add_zero, Units.val_one, Matrix.one_apply]
     rintro ⟨s', hs', h1, h2⟩
     simp only [A_stdSum_inl] at h1 h2
     simp only [Finset.mem_insert, Finset.mem_singleton] at hs'
@@ -297,7 +297,7 @@ theorem lev_unipGL_right (r s r₂ : ℕ) (h : 0 < r₂) (A : UPos s r₂ → Ad
   · rw [fromBlocks_apply₁₂]
     simp only [reduceCtorEq, if_false, Matrix.zero_apply, zero_add]
     split_ifs with h'
-    · rw [joinPos, dif_pos]
+    · rw [joinPos, dite_eq_left]
       · rfl
       · change ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inl a) : Fin (r + s)) : ℕ) < r ∧
           r ≤ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr d) : Fin (r + s)) : ℕ)
@@ -306,7 +306,7 @@ theorem lev_unipGL_right (r s r₂ : ℕ) (h : 0 < r₂) (A : UPos s r₂ → Ad
     · rfl
   · rw [fromBlocks_apply₂₁]
     simp only [reduceCtorEq, if_false, Matrix.zero_apply, zero_add]
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨s', hs', h1, h2⟩
     simp only [A_stdSum_inr, A_stdSum_inl] at h1 h2
     have := c.2
@@ -318,14 +318,14 @@ theorem lev_unipGL_right (r s r₂ : ℕ) (h : 0 < r₂) (A : UPos s r₂ → Ad
     · have h' : ∃ s' ∈ ({r, r + r₂} : Finset ℕ), ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr b) : Fin (r + s)) : ℕ) < s' ∧
           s' ≤ ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr d) : Fin (r + s)) : ℕ) :=
         ⟨r + r₂, by simp, by rw [A_stdSum_inr]; omega, by rw [A_stdSum_inr]; omega⟩
-      rw [dif_pos hb, dif_pos h', joinPos, dif_neg]
+      rw [dite_eq_left hb, dite_eq_left h', joinPos, dite_eq_right]
       · refine congrArg A (Subtype.ext (Prod.ext (Fin.ext ?_) (Fin.ext ?_))) <;> simp [eR, A_stdSum_inr]
       · intro ht
         have := ht.1
         change ((GlobalTheory.SmGL.stdSum (rfl : r + s = r + s) (Sum.inr b) : Fin (r + s)) : ℕ) < r at this
         rw [A_stdSum_inr] at this
         omega
-    · rw [dif_neg hb, dif_neg]
+    · rw [dite_eq_right hb, dite_eq_right]
       rintro ⟨s', hs', h1, h2⟩
       simp only [A_stdSum_inr] at h1 h2
       simp only [Finset.mem_insert, Finset.mem_singleton] at hs'

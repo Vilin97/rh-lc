@@ -56,7 +56,7 @@ theorem gglob_of_cell {T T' : ℕ} (F : LFlag (VS D) D.R.rS (T : D.host.E)) (F' 
   have hE : ∀ (l : ℕ) (hl : l ≤ D.R.rS + 1), leadMinorE (Zhat F.fl F'.fl) l = leadMinorK (ZhatL F F') l hl := by
     intro l hl
     unfold leadMinorE leadMinorK
-    rw [dif_pos hl]
+    rw [dite_eq_left hl]
   rw [hE _ le_rfl, hE _ (Nat.le_succ _)]
 
 theorem det_isIntegral {n : ℕ} (M : Matrix (Fin n) (Fin n) D.host.E) (hM : ∀ i j, IsIntegral ℤ (M i j)) :

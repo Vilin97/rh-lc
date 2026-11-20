@@ -10,7 +10,7 @@ theorem toG_map {F : Type} [Field F] (t : F →+* F) {m : ℕ} (M : Matrix (Fin 
     toG (M.map t) = gal t m (toG M) := by
   have h' : IsUnit (M.map t) := by simpa using h.map (t.mapMatrix)
   unfold toG
-  rw [dif_pos h', dif_pos h]
+  rw [dite_eq_left h', dite_eq_left h]
   ext i j
   simp [gal]
 

@@ -70,8 +70,8 @@ theorem lnPush : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Rec
   rw [T.emb_rt τ]
   by_cases hk : k < Dw.mult τ
   · have hk' : k < Dw.mult (T.emb τ) := T.mult_emb τ ▸ hk
-    rw [dif_pos hk', dif_pos hk, key hk hk']
+    rw [dite_eq_left hk', dite_eq_left hk, key hk hk']
   · have hk' : ¬ k < Dw.mult (T.emb τ) := T.mult_emb τ ▸ hk
-    rw [dif_neg hk', dif_neg hk]
+    rw [dite_eq_right hk', dite_eq_right hk]
 
 end GlobalTheory.ShFam.GalCarry.LnPushProof

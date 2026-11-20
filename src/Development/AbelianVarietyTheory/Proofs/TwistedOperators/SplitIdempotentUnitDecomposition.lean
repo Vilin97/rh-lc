@@ -46,7 +46,7 @@ theorem values_of_rel (D : D7) (z : ℂ) (K : ℕ) (b : D.host.Eˣ) (m : D.what�
       rw [map_inv₀, norm_inv] at j2
       have h0 : 0 < ‖ψ b‖ := norm_pos_iff.2 ((map_ne_zero _).2 b.ne_zero)
       exact le_antisymm j1 ((inv_le_one₀ h0).1 j2)
-    rw [Formalism.MainNotions.TaylorLogMetric.lamC, dif_pos hz]
+    rw [Formalism.MainNotions.TaylorLogMetric.lamC, dite_eq_left hz]
     refine H _ lam fun τ => ?_
     exact (key (lam.comp τ)).trans
       (key ((lam.comp τ).comp (IsCMField.complexConj D.host.E : D.host.E →+* D.host.E))).symm

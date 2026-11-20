@@ -157,7 +157,7 @@ def regZ (hS : IsSmU ν) (hν : IsUnram ν) (z : ℂ) (φ : Matrix (Fin n) (Fin 
 
 theorem regZ_eq (hS : IsSmU ν) (hν : IsUnram ν) (z : ℂ) {φ : Matrix (Fin n) (Fin n) k → ℂ}
     (hφ : φ ∈ SB (Matrix (Fin n) (Fin n) k)) {r : Comb k n} (hr : IsRep ν φ r) : regZ hS hν z φ = r.ev ν z := by
-  rw [regZ, dif_pos hφ]
+  rw [regZ, dite_eq_left hφ]
   exact rep_unique hS hν (Classical.choose_spec (exists_rep hS hν hφ)) hr z
 
 theorem regZ_isEqv (hS : IsSmU ν) (hν : IsUnram ν) (z : ℂ) : IsEqv ν z (regZ (n := n) hS hν z) := by

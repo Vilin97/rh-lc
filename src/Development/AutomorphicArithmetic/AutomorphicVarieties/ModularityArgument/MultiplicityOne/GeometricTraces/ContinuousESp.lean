@@ -112,7 +112,7 @@ private theorem dite_tr (A B : V →ₗ[ℂ] V) (P Q : Submodule ℂ V) (hPQ : P
     ext x
     exact hop x.1 x.2
   · have h' : ¬ ∀ v ∈ P, B v ∈ P := fun hb => h fun v hv => (hop v hv).symm ▸ hb v hv
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 private theorem twTr_tr (e : G ≃* H) (ρ : Representation ℂ H V) (K L : Subgroup H) (f : H → ℂ)
     (hr : ∀ k ∈ L, ∀ x, f (x * k) = f x) (hfin : (Function.support fun q : H ⧸ L => f q.out).Finite) :

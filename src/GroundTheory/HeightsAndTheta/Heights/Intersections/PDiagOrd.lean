@@ -22,7 +22,7 @@ variable {K : Type} {ι : K → Type}
 theorem multAt_eq_zero_of_not_le {J W : Ideal (MRing ι)} (hW : W.IsPrime) (h : ¬ J ≤ W) : multAt J W = 0 := by
   have := hW
   unfold multAt
-  rw [dif_pos hW, Module.length_eq_zero_iff.mpr (NumbersDVR.localizedQuot_subsingleton_of_not_le _ W h)]
+  rw [dite_eq_left hW, Module.length_eq_zero_iff.mpr (NumbersDVR.localizedQuot_subsingleton_of_not_le _ W h)]
   rfl
 
 theorem multAt_sup_span_eq {P W : Ideal (MRing ι)} [P.IsPrime] (hW : W.IsPrime) (hPW : P ≤ W)
@@ -47,7 +47,7 @@ theorem multAt_sup_span_eq {P W : Ideal (MRing ι)} [P.IsPrime] (hW : W.IsPrime)
       rw [e]
       exact Ideal.sub_mem _ (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)) (Ideal.mem_sup_left hm)
   unfold multAt
-  rw [dif_pos hW, dif_pos hW, ← hlen (s := g) hu, heq, hlen hv]
+  rw [dite_eq_left hW, dite_eq_left hW, ← hlen (s := g) hu, heq, hlen hv]
 
 end Orders
 

@@ -50,7 +50,7 @@ theorem P_smul (hP : IsPeriod D ty P) {b : Bool} (a : PureType.lat hP (sgnRt H b
   rw [Pi.smul_apply, smul_eq_mul, hP.1]
   by_cases hi : ty i (H.rt : E) = sgnRt H b
   · have hex : ∃ i, ty i (H.rt : E) = sgnRt H b := ⟨i, hi⟩
-    rw [kap, dif_pos hex, ty_eq_of_rt (hi.trans hex.choose_spec.symm) α]
+    rw [kap, dite_eq_left hex, ty_eq_of_rt (hi.trans hex.choose_spec.symm) α]
   · have h0 : P (a : D.La) i = 0 := a.2 i hi
     rw [h0, mul_zero, mul_zero]
 

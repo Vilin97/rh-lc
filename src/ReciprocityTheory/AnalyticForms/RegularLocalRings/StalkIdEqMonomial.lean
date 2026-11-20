@@ -181,7 +181,7 @@ by
         (m i : ℕ∞) := by
       rw [hGη, hγu]; exact hordS
     unfold ordAlong
-    rw [dif_pos hirr, ← hη, hlen]
+    rw [dite_eq_left hirr, ← hη, hlen]
     exact ENat.toNat_natCast (m i)
   rw [hGy, hγu]
   have hprod : ∏ i ∈ J, f' i ^ m i = ∏ i ∈ J, f' i ^ ordAlong G (σ i) :=

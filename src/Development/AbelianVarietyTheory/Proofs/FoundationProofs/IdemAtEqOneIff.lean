@@ -160,7 +160,7 @@ theorem exists_flatRule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   refine ⟨f, f', hm, inv_mem_secZ_on hm i1 i2, funext fun p => funext fun y => (hf p y).1, i1, i2,
     fun S _ _ y z g a ht hz hc => ?_⟩
   unfold evR evalAt
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
   exact (hf _ _).2 S _ y z g a ht.choose_spec.choose_spec.choose_spec hz hc
 
 end GlobalTheory.FlatLine.Definite

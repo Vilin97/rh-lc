@@ -51,7 +51,7 @@ theorem coe_evAt (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C]
     (w : Sp ↥(intO C) ⟶ X) {U : X.Opens} (hw : ⊤ ≤ w ⁻¹ᵁ U) (a : Γ(X, U)) :
     (evAt w hw a : C) = valF (spMap (intO C).subtype ≫ w) U a := by
   have h' : ⊤ ≤ (spMap (intO C).subtype ≫ w) ⁻¹ᵁ U := fun q _ => hw (Set.mem_univ (spMap (intO C).subtype q))
-  rw [valF, dif_pos h']
+  rw [valF, dite_eq_left h']
   have e : (spMap (intO C).subtype ≫ w).appLE U ⊤ h' = w.appLE U ⊤ hw ≫ (spMap (intO C).subtype).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     exact (Scheme.Hom.appLE_comp_appLE (spMap (intO C).subtype) w U ⊤ ⊤ hw le_rfl).symm
@@ -142,8 +142,8 @@ theorem valF_coef {k : Type} [Field k] (x : Sp k ⟶ X) (ψ : F' ⟶ F) {V V' U 
       simp only [map_sum, resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       ← IsFrame.repr_resM, resM_resM]
   · have hU' : ¬ ⊤ ≤ x ⁻¹ᵁ (V ⊓ U) := fun h => hU fun q hq => ⟨hx hq, (h hq).2⟩
-    rw [valF, dif_neg hU]
-    exact (Finset.sum_eq_zero fun m _ => by rw [valF.eq_1 x (V ⊓ U), dif_neg hU', mul_zero]).symm
+    rw [valF, dite_eq_right hU]
+    exact (Finset.sum_eq_zero fun m _ => by rw [valF.eq_1 x (V ⊓ U), dite_eq_right hU', mul_zero]).symm
 
 theorem norm_iff [F.IsQuasicoherent] [F'.IsQuasicoherent] (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C]
     (w : Sp ↥(intO C) ⟶ X) (ψ : F' ⟶ F) {ρ : F ⟶ Q} (h0 : ψ ≫ ρ = 0) [Epi ρ]

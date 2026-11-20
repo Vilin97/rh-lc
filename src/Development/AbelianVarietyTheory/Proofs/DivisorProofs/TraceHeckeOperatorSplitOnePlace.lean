@@ -81,7 +81,7 @@ theorem trOn_hop_peel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], 
     rw [globFn_eq hU hg.2 hw]
     have h1 : cLoc w x.1.1 = 1 := congrArg Subtype.val (MonoidHom.mem_ker.1 x.2)
     congr 1
-    · rw [Subgroup.coe_mul, map_mul, hιw, h1, mul_one, toSub, dif_pos h.2]
+    · rw [Subgroup.coe_mul, map_mul, hιw, h1, mul_one, toSub, dite_eq_left h.2]
     · refine finprod_mem_congr rfl fun u hu => ?_
       rw [hgf u hu.2, Subgroup.coe_mul, map_mul, hιu h u hu.1 hu.2, one_mul]
   have hF := hsplit f hf fun _ _ => rfl

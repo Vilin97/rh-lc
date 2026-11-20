@@ -42,11 +42,11 @@ namespace GlobalTheory.ModuPiLocal
 
 theorem modu_sPart : ∀ (F : Type) [Field F] [NumberField F] (S : Finset (HeightOneSpectrum (𝓞 F))) (x : SPart F S), IsUnit x → (modu (SPart F S) x : ℝ) = ∏ v : S, ‖x v‖ := by
   intro F _ _ S x hx
-  rw [modu, dif_pos hx, distribHaarChar_pi (fun v : S => Fv F v.1), NNReal.coe_prod]
+  rw [modu, dite_eq_left hx, distribHaarChar_pi (fun v : S => Fv F v.1), NNReal.coe_prod]
   refine Finset.prod_congr rfl fun v _ => ?_
   have hv : IsUnit (x v) := (Pi.isUnit_iff.1 hx) v
   have h := GlobalTheory.GaugeProdFormula.modu_finite F v.1 (x v) hv.ne_zero
-  rw [modu, dif_pos hv] at h
+  rw [modu, dite_eq_left hv] at h
   rw [← h]
   congr 2
   ext

@@ -30,7 +30,7 @@ lemma pOfB_inP (ε : Fin n → Bool) (B : Pt ε → Qt ε → ℂ) : inP ε (pOf
 
 lemma toM_toUJ {m : Matrix (Fin n) (Fin n) ℂ} (h : inUJ ε m) : toM (toUJ ε m) = m := by
   unfold toUJ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 lemma norm_le_sqrt_hs_pOfB (B : Pt ε → Qt ε → ℂ) : ‖B‖ ≤ Real.sqrt (hs (pOfB ε B)) := by
   refine (pi_norm_le_iff_of_nonneg (Real.sqrt_nonneg _)).2 fun a =>

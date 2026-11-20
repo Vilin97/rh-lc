@@ -535,7 +535,7 @@ theorem rootLetter_ge {r : Rt D.what₂.Tau O.N} (h : ¬ (r.2 : ℕ) < O.j) :
     ((rootLetter O.S r).1, ((rootLetter O.S r).2 : ℕ)) = (conjEmb (tauEmb D r.1), O.S.Dw.p + O.S.Dw.q - 1 - (r.2 : ℕ)) := by
   have hq := O.S.rank_eq
   unfold rootLetter
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   simp only [Prod.mk.injEq, true_and]
   omega
 

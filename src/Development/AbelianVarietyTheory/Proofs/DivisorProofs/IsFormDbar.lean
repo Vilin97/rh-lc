@@ -53,7 +53,7 @@ theorem isForm_dbar {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
     (h : A.IsForm α) : A.IsForm (A.dbar α) := by
   have hloc : ∀ i, ∀ v ∈ (A.e i).target, A.loc (A.dbar α) i v = dbarAt (A.loc α i) v := by
     intro i v hv
-    rw [HolAtlas.loc, dif_pos hv]
+    rw [HolAtlas.loc, dite_eq_left hv]
     show dbarAt (A.loc α i) ((A.e i) ((A.e i).symm v)) = _
     rw [(A.e i).right_inv hv]
   refine ⟨fun i S => ?_, fun x x' hxx' => ?_⟩
@@ -74,7 +74,7 @@ theorem isForm_dbar {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
     have key : ∀ v ∈ x.ch.target ∩ x.ch.symm ⁻¹' x'.ch.source,
         A.loc α x.1.1 v = pull (fderiv ℂ (x'.ch ∘ x.ch.symm) v) (A.loc α x'.1.1 ((x'.ch ∘ x.ch.symm) v)) := by
       intro v hv
-      rw [HolAtlas.loc, dif_pos hv.1]
+      rw [HolAtlas.loc, dite_eq_left hv.1]
       have := h.compat ⟨(x.1.1, x.ch.symm v), x.ch.map_target hv.1⟩ ⟨(x'.1.1, x.ch.symm v), hv.2⟩ rfl
       have e2 : x.ch (x.ch.symm v) = v := x.ch.right_inv hv.1
       simp only [HolAtlas.Pt.crd, HolAtlas.Pt.ch, HolAtlas.Pt.pt] at this

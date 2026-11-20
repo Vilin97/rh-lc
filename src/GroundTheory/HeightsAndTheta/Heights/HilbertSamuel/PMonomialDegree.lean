@@ -241,7 +241,7 @@ theorem chi_coord {x : Ix (Fin (D + 1)) → Ω} (hx : coordIdeal ℤ x = ⊥) (n
   have h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix (Fin (D + 1))) ℚ), IsSecBasis x n p.2 :=
     ⟨⟨_, monoForm D n⟩, hM⟩
   unfold chi
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hp := h.choose_spec
   generalize h.choose = p at hp ⊢
   obtain ⟨r', b'⟩ := p

@@ -160,13 +160,13 @@ omit [IsTotallyComplex E] in
 theorem fSr_of_mem (S : Finset (Pl E)) (p : (v : S) → v.1.adicCompletion E) {w : Pl E} (h : w ∈ S) :
     fSr S p w = p ⟨w, h⟩ := by
   classical
-  unfold fSr; rw [dif_pos h]
+  unfold fSr; rw [dite_eq_left h]
 
 omit [IsTotallyComplex E] in
 theorem fSr_of_not_mem (S : Finset (Pl E)) (p : (v : S) → v.1.adicCompletion E) {w : Pl E} (h : w ∉ S) :
     fSr S p w = 0 := by
   classical
-  unfold fSr; rw [dif_neg h]
+  unfold fSr; rw [dite_eq_right h]
 
 omit [IsTotallyComplex E] in
 theorem fSr_mul (S : Finset (Pl E)) (p q : (v : S) → v.1.adicCompletion E) : fSr S (p * q) = fSr S p * fSr S q := by

@@ -190,7 +190,7 @@ theorem _root_.GlobalTheory.T.moved_vacuum_has_algebraic_root : _root_.GlobalThe
   have h2 : (opp p c) ^ m = 1 := by rw [← map_pow, h1, map_one]
   have h3 := mem_algebraic_of_root_of_unity hm h2
   refine ⟨opp p c, ⟨h3, fun σ => norm_root_of_unity_eq_one σ hm h2 h3⟩, fun q _ lam => ?_, fun k => ?_⟩
-  · rw [lamC, dif_pos h3]
+  · rw [lamC, dite_eq_left h3]
     exact norm_root_of_unity_eq_one lam hm h2 h3
   · have hs : srcLat ch.S.toGridChoice p x y = stdL D _ := by
       cases p

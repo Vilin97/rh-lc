@@ -221,5 +221,5 @@ theorem GlobalTheory.GaussDiv.gauss_dvd_pow : ∀ {F : Type} [Field F] [NumberFi
   refine Finset.sum_congr rfl fun y _ => ?_
   have hr := rep_ne_zero hϖ hc1 y
   unfold rep at hr
-  rw [dif_neg hr, one_mul]
+  rw [dite_eq_right hr, one_mul]
   rfl

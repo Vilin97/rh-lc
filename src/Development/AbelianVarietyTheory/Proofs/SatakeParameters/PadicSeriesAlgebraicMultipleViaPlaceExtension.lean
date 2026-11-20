@@ -49,7 +49,7 @@ theorem padicSeries_const_mul : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam : Tay
   show TaylorLogMetric.lamC lam (TaylorLogMetric.taylor D (fun z => s * K z) α) = _
   rw [taylor_mul, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_map]
   unfold TaylorLogMetric.lamC
-  rw [dif_pos hmem, ← hι ⟨_, hmem⟩]
+  rw [dite_eq_left hmem, ← hι ⟨_, hmem⟩]
   show ι (s * TaylorLogMetric.taylor D K α) = _
   rw [hKt, ← mul_assoc, map_mul]
   rfl

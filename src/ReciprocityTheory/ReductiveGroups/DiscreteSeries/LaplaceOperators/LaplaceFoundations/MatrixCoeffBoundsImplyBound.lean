@@ -84,7 +84,7 @@ theorem matrixCoeffBounds_imply_bound : MatrixCoeffBoundsImplyBound := by
     { toFun := fun X => ((actM (smE ε σ) X ⟨w, hw⟩ : smD ε σ) : H)
       map_add' := fun X X' => by simp [actM, add_smul, sum_add_distrib]
       map_smul' := fun c X => by simp [actM, smul_sum, smul_smul] }
-  have hφ : ∀ X, phiW ε σ w X = φ X := fun X => by rw [phiW, dif_pos hw]; rfl
+  have hφ : ∀ X, phiW ε σ w X = φ X := fun X => by rw [phiW, dite_eq_left hw]; rfl
   let dl : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] ℂ :=
     { toFun := fun X => trace (dMat d * X)
       map_add' := fun X X' => by rw [Matrix.mul_add, trace_add]

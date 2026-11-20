@@ -112,7 +112,7 @@ theorem cenInt_of_allT {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
   refine ⟨y, hy, ?_⟩
   rw [hyx]
   unfold NTypes.onMt
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 end GlobalTheory.CenIntAtLoc
 

@@ -223,7 +223,7 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
       have hc : ∀ a : Fin S.card, c (top a, b) = -(Matrix.vecMul (v b) M⁻¹) a := by
         intro a
         simp only [c]
-        rw [dif_pos (show ((top a : Fin p) : ℕ) < S.card from a.isLt)]
+        rw [dite_eq_left (show ((top a : Fin p) : ℕ) < S.card from a.isLt)]
         rfl
       simp only [hc, neg_mul, Finset.sum_neg_distrib]
       have := hsum b i

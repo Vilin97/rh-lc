@@ -104,15 +104,15 @@ theorem BCMult.intersectionNumber_baseChange : BCMult.Statement := by
     · have hm : Wa ∈ (Z ⊔ Ideal.span {sC s}).minimalPrimes :=
         ⟨⟨‹Wa.IsPrime›, hZW⟩, fun Q hQ hQW =>
           hWaMin.2 ⟨hQ.1, (sup_le_sup_right hZ.1.2 _).trans hQ.2⟩ hQW⟩
-      rw [dif_pos ⟨hm, hrel⟩]
-    · rw [dif_neg (fun h => hZW h.1.1.2)]
+      rw [dite_eq_left ⟨hm, hrel⟩]
+    · rw [dite_eq_right (fun h => hZW h.1.1.2)]
       unfold NumbersDVR.multAt
       rw [Module.length_eq_zero_iff.mpr (NumbersDVR.localizedQuot_subsingleton_of_not_le _ Wa hZW)]
       rfl
   have hL : NumbersDVR.divCycle P0 s W =
       ((NumbersDVR.multAt (P0 ⊔ Ideal.span {s}) W).toNat : ℤ) := by
     unfold NumbersDVR.divCycle
-    rw [dif_pos (show W ∈ (P0 ⊔ Ideal.span {s}).minimalPrimes ∧ NumbersDVR.IsRelevant W from hW)]
+    rw [dite_eq_left (show W ∈ (P0 ⊔ Ideal.span {s}).minimalPrimes ∧ NumbersDVR.IsRelevant W from hW)]
   have hM : (extC P0).minimalPrimes.Finite := Ideal.finite_minimalPrimes_of_isNoetherianRing _ _
   rw [hL, finsum_mem_congr rfl hterm, h1, h2]
   rw [h2] at hfin

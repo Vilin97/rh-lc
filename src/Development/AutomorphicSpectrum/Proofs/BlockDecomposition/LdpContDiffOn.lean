@@ -52,7 +52,7 @@ theorem toL_congr {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [M
   · exact (isRep_toL (isRep_congr e (toL_coe hm))).symm
   · have hm' : ¬ MemLp (fun y : G n => h y.val) 2 μ := this ▸ hm
     unfold toL
-    rw [dif_neg hm, dif_neg hm']
+    rw [dite_eq_right hm, dite_eq_right hm']
 
 theorem cvl_eq (hu : Unimod) {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (φ : Mat n → ℂ) {f : Mat n → V}

@@ -127,8 +127,8 @@ theorem jointAmplitudeFactorization_of_inj (Y : Full X) (u u' : D.what₂.Word) 
         Formalism.MainNotions.S.Pv.Frames.turnPt p = ptLoc D τ w' := hR w' hb hrep τ
     have hnu : ∃ ν₁, RMeas D (locW C u u' τ) (gamP C u u' w' τ) 1 ν₁ := hM w' hb hrep τ
     have hp := hpt.choose_spec
-    have hptP : ptP C u u' w' τ = hpt.choose := by unfold ptP; rw [dif_pos hpt]
-    have hnuP : nu1P C u u' w' τ = hnu.choose := by unfold nu1P; rw [dif_pos hnu]
+    have hptP : ptP C u u' w' τ = hpt.choose := by unfold ptP; rw [dite_eq_left hpt]
+    have hnuP : nu1P C u u' w' τ = hnu.choose := by unfold nu1P; rw [dite_eq_left hnu]
     refine ⟨?_, hT w' hb hJ', ?_, ?_⟩
     · rw [hptP]; exact hp.1
     · obtain ⟨p, μR, hR1, hQ⟩ := hnu.choose_spec

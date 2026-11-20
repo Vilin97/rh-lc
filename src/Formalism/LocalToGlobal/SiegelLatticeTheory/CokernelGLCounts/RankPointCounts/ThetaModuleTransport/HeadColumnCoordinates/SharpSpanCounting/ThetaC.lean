@@ -103,7 +103,7 @@ theorem R_eq_O (hs : M.split = none) : M.R = M.L.O := by
 theorem dl_full (H : HermSp M V) {r : ℕ} (f f' : Fin (r + 1) → V) :
     H.Dl f f' (r + 1) = (H.Zhat f f').det := by
   unfold HermSp.Dl
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   congr 1
 
 theorem gramC_eq (H : HermSp M V) {r : ℕ} (f f' : Fin (r + 1) → V) (T T' : F)

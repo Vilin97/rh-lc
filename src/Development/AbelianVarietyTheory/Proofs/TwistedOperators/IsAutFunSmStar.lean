@@ -136,7 +136,7 @@ def secM (hJ : IsUnit J.det) (a : MAlg n) : UG J :=
   if h : a.mat ∈ Formalism.QuantumDeterminants.UH J then ⟨(isUnit_of_UH hJ h).unit, h⟩ else 1
 
 theorem secM_val (hJ : IsUnit J.det) {a : MAlg n} (h : a.mat ∈ Formalism.QuantumDeterminants.UH J) : (secM hJ a).1.1 = a.mat := by
-  rw [secM, dif_pos h]; rfl
+  rw [secM, dite_eq_left h]; rfl
 
 theorem unit_iffM (h : IsUnit J.det) (u : MAlg n) : sigM J u * u = 1 ↔ u.mat ∈ Formalism.QuantumDeterminants.UH J := by
   change J⁻¹ * u.matᴴ * J * u.mat = 1 ↔ u.matᴴ * J * u.mat = J

@@ -122,10 +122,10 @@ theorem divCycle_eq_of_sub_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hW : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W
   · have hW' : W ∈ (P ⊔ Ideal.span {y}).minimalPrimes ∧ IsRelevant W := hI ▸ hW
-    rw [dif_pos hW, dif_pos hW']
+    rw [dite_eq_left hW, dite_eq_left hW']
     simp only [hI]
   · have hW' : ¬ (W ∈ (P ⊔ Ideal.span {y}).minimalPrimes ∧ IsRelevant W) := hI ▸ hW
-    rw [dif_neg hW, dif_neg hW']
+    rw [dite_eq_right hW, dite_eq_right hW']
 
 end Helpers
 

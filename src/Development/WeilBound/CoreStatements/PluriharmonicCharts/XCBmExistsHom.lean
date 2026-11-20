@@ -176,7 +176,7 @@ theorem dualFam_spec (tie : FlagTie M 𝔐) {F : FrameData ι (CMType H) (D.p + 
     ∀ a b, tie.omFrame F τ a (dualFam tie F τ b) = if a = b then 1 else 0 := by
   have h := (omBundle_dualFrame 𝔐 τ _ (tie.frames_centre hw hF gd τ).2).1
   unfold dualFam
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def Gr (tie : FlagTie M 𝔐) (F : FrameData ι (CMType H) (D.p + D.q) M.Ω M.blk) (τ : CMType H)

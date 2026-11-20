@@ -259,7 +259,7 @@ theorem exists_bas {D : D7} (B : Base D.host.F D.host.E) {n : ℕ} (Λ : Submodu
     GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) Λ (GlobalTheory.AdelicU.isCMExt_host D)
   refine ⟨fun v => if h : v ∈ B.P then (hex ⟨v, h⟩).choose else 1, fun v => ?_⟩
   show GlobalTheory.AdelicU.IsSplitBasis (B.τ v) Λ (if h : v.1 ∈ B.P then (hex ⟨v, h⟩).choose else 1)
-  rw [dif_pos v.2]
+  rw [dite_eq_left v.2]
   exact (hex v).choose_spec
 
 theorem exists_isHerm {D : D7} (B : Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau)

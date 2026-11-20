@@ -69,7 +69,7 @@ theorem resq_spec (i : ZMod n) {g : LetA O n} (hg : g ∈ W.AΔ) :
     (by rw [← mul_assoc, letE_idem]))
   refine ⟨g', hg', ?_⟩
   unfold resq
-  rw [dif_pos hg]
+  rw [dite_eq_left hg]
   exact he
 
 include hAq hqc in

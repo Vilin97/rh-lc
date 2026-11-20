@@ -51,7 +51,7 @@ theorem arithOf_heq {φ φ' : Formalism.HC.Frame} (H : Formalism.HC.HostRaw φ) 
   refine cftData_congr hN hq hd _ _ (fun p h1 h2 => ?_)
   have h3 := congrFun ha p
   unfold artNum at h3
-  rw [dif_pos h1, dif_pos h2, Prod.mk.injEq] at h3
+  rw [dite_eq_left h1, dite_eq_left h2, Prod.mk.injEq] at h3
   have h4 := Formalism.HC.Frame.A.val_injective _ h3.2
   show Multiplicative.ofAdd ((Multiplicative.toAdd (Formalism.LFunctionChainParameters.LHost.sgn2 (H.art _).1.2),
       Multiplicative.toAdd (Formalism.LFunctionChainParameters.LHost.sgn2 (H.art _).1.1)),
@@ -411,14 +411,14 @@ theorem w_tie (u0 : M.e.A) (j : Fin M.m) (g : E0 × M.e.A) (τ : (Fm.D x (M.pt u
   have hc : hex.choose = τ :=
     (Fm.D x (M.pt u0)).eTau.injective (Subtype.ext (gcode_injective _ (hex.choose_spec.trans h.symm)))
   unfold w
-  rw [dif_pos hex, hc]
+  rw [dite_eq_left hex, hc]
 
 theorem w_off (u0 : M.e.A) (j : Fin M.m) (g : E0 × M.e.A)
     (h : ¬ ∃ τ : (Fm.D x (M.pt u0)).what₂.Tau,
       gcode _ (((Fm.D x (M.pt u0)).eTau τ : (Fm.D x (M.pt u0)).R.Psi) : (Fm.D x (M.pt u0)).R.GG) = mcode M.e g) :
     M.w u0 j g = 1 := by
   unfold w
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem w_plMap (u0 : M.e.A) (j : Fin M.m) (τ : (Fm.D x (M.pt u0)).what₂.Tau) :
     M.w u0 j (plMap (Fm.D x (M.pt u0)) M.e τ) = wj (Fm.D x (M.pt u0)) (j.val + 1) τ :=

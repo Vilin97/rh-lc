@@ -81,7 +81,7 @@ theorem gramAt_eq (D : ComponentData II Ψ K ι Ω E) (τ : Ψ) {z : (Σ k, ι k
     exact LowerBoundFree.valAt_eq hzP (HermMetricEq.isValueAt_iff.2 (hTSz p q))
   have hcomp := (D.h τ).compat hex.choose l z hzX hd0 hd T hTe (HermMetricEq.valM D.y T z)
     (fun p q => HermMetricEq.isValueAt_iff.2 (hTz p q))
-  rw [LowerBoundFree.gramAt, dif_pos hex, dif_pos hS', hvals, hcomp, Matrix.conjTranspose_mul]
+  rw [LowerBoundFree.gramAt, dite_eq_left hex, dite_eq_left hS', hvals, hcomp, Matrix.conjTranspose_mul]
   simp only [Matrix.mul_assoc]
 
 theorem gramAt_torusSmul (D : ComponentData II Ψ K ι Ω E) (τ : Ψ) {w : (Σ k, ι k) → ℂ} (hw : w ∈ D.Xo)
@@ -163,7 +163,7 @@ theorem proof (D : ComponentData II Ψ K ι Ω E) (H : HodgeData D) (hI : MuFram
   obtain ⟨d', hdd'⟩ := exists_datum_smul D H hw hs hzs hz d
   have hpos := datum_norm_pos D H hw d'
   have hM : muMetric H w = d'.norm := by
-    rw [muMetric, dif_pos ⟨d'⟩]
+    rw [muMetric, dite_eq_left ⟨d'⟩]
     exact hI w hw _ d'
   have hR := refNorm_pos H.aMu hwP.1
   have hRz : refNorm H.aMu z = (∏ k, ‖s k‖ ^ H.aMu k) * refNorm H.aMu w := by

@@ -266,23 +266,23 @@ theorem exists_ext_of_reps : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalT
     intro j d h
     obtain rfl : d = G.s - j := by omega
     unfold eLT
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact combOf_spec _ _ _ _ _
   ·
     intro j d H α γ
     obtain rfl : d = G.s - (j + 1) := by omega
     unfold dLT
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact combOf_spec _ _ _ _ _
   ·
     intro α y
     unfold dLT
-    rw [dif_neg (by omega), dif_pos rfl]
+    rw [dite_eq_right (by omega), dite_eq_left rfl]
     exact combOf_spec _ _ _ _ _
   ·
     intro y u
     unfold dLT
-    rw [dif_neg (by omega), dif_neg (by omega), dif_pos rfl]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left rfl]
     exact combOf_spec _ _ _ _ _
   ·
     intro j ρ hρ d h α
@@ -311,7 +311,7 @@ theorem exists_ext_of_reps : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalT
         rw [hP]
         exact id
       unfold epsT
-      rw [if_neg hj0, dif_pos (by omega), dif_pos H]
+      rw [if_neg hj0, dite_eq_left (by omega), dite_eq_left H]
   ·
     intro α
     unfold epsT
@@ -320,23 +320,23 @@ theorem exists_ext_of_reps : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalT
     intro j d h
     obtain rfl : d = G.s + 1 - j := by omega
     unfold idxT
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   ·
     unfold idxT
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
   ·
     intro j d h α
     obtain rfl : d = G.s - j := by omega
     unfold wtT
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   ·
     intro y
     unfold wtT
-    rw [dif_neg (by omega), dif_pos rfl]
+    rw [dite_eq_right (by omega), dite_eq_left rfl]
   ·
     intro u
     unfold wtT
-    rw [dif_neg (by omega), dif_neg (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]
   ·
     rintro (x | o)
     · exact absurd rfl x.2

@@ -165,7 +165,7 @@ theorem UpperTheory.V.ZK.Cl.cMu :
     intro x hx σ j
     have h := L0 x hx σ j
     show ResF r (σ (x j)) (if h : ∃ u, ResF r (σ (x j)) u then h.choose else 0)
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   let T : GLoc F J b → (Gal(F/L) × J → k) → (Gal(F/L) × J → k) := fun g v => rd ((g : GG L F J) (lf v))
   have P3 : ∀ (g : GLoc F J b) (x : J → F) (v : Gal(F/L) × J → k), InLoc b x → RedV L r x v →

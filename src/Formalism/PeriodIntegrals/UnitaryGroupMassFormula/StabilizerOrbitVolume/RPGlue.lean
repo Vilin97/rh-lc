@@ -105,11 +105,11 @@ theorem measurable_finAd (i : Fin a) (j : Fin M) (k : Fin d) :
     · funext v
       rw [Set.piecewise_eq_of_mem _ _ _ hp]
       simp only [Function.comp, coeA]
-      rw [finAd, dif_pos hp, evalV_mkAf]
+      rw [finAd, dite_eq_left hp, evalV_mkAf]
     · funext v
       rw [Set.piecewise_eq_of_notMem _ _ _ hp]
       simp only [Function.comp, coeA, Pi.zero_apply]
-      rw [finAd, dif_neg hp, map_zero]
+      rw [finAd, dite_eq_right hp, map_zero]
   rw [e]
   refine Measurable.piecewise (measurableSet_good b) ?_ measurable_const
   exact Measurable.of_eval fun v => (continuous_crd b (Fv F v) k).measurable.comp
@@ -157,7 +157,7 @@ theorem glue_spec (p : (Fin a → Fin M → Ainf F ⊗[F] E) ×
       crd b (Fv F v) (p.2 v i j) k
     rw [crd_map, crd_map, crd_glue]
     show evalV F v (finAd b p i j k) = _
-    rw [finAd, dif_pos hp, evalV_mkAf]
+    rw [finAd, dite_eq_left hp, evalV_mkAf]
 
 end RestrictedProductGluing
 

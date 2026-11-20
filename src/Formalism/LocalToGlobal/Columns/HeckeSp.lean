@@ -841,9 +841,9 @@ theorem DecoSet.smul_mem_heckeNb_iff {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n 
     exact Set.finite_image_iff (MulAction.injective a).injOn
   unfold DecoSet.heckeNb
   by_cases h : (d.heckeSet P i).Finite
-  · rw [dif_pos h, dif_pos (hfin.2 h), Set.Finite.mem_toFinset, Set.Finite.mem_toFinset]
+  · rw [dite_eq_left h, dite_eq_left (hfin.2 h), Set.Finite.mem_toFinset, Set.Finite.mem_toFinset]
     exact DecoSet.smul_mem_heckeSet_iff a
-  · rw [dif_neg h, dif_neg (fun h' => h (hfin.1 h'))]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h (hfin.1 h'))]
     simp
 
 end NbrAct
@@ -983,7 +983,7 @@ theorem DecoSet.heckeSet_finite {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (hP' : con
 theorem DecoSet.mem_heckeNb {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (hP' : conjIdeal (K := E) P ≠ ⊥) (i : ℕ)
     (d e : DecoSet E n ST SG) : e ∈ d.heckeNb P i ↔ e ∈ d.heckeSet P i := by
   unfold DecoSet.heckeNb
-  rw [dif_pos (DecoSet.heckeSet_finite hP hP' i d), Set.Finite.mem_toFinset]
+  rw [dite_eq_left (DecoSet.heckeSet_finite hP hP' i d), Set.Finite.mem_toFinset]
 
 theorem DecoSet.heckeSet_zero (P : Ideal (𝓞 E)) (d : DecoSet E n ST SG) : d.heckeSet P 0 = {d} := by
   ext e
@@ -1213,11 +1213,11 @@ theorem redMap_surjective (Q : HeightOneSpectrum (𝓞 E)) {n i : ℕ} (h : i �
   · rw [mem_stdLat]
     intro j
     by_cases hj : j.1 < i
-    · exact ⟨r ⟨j.1, hj⟩, by rw [dif_pos hj]⟩
-    · exact ⟨0, by rw [dif_neg hj, map_zero]⟩
+    · exact ⟨r ⟨j.1, hj⟩, by rw [dite_eq_left hj]⟩
+    · exact ⟨0, by rw [dite_eq_right hj, map_zero]⟩
   · funext k
     change redP Q (if hj : (Fin.castLE h k).1 < i then algebraMap (𝓞 E) E (r ⟨(Fin.castLE h k).1, hj⟩) else 0) = c k
-    rw [dif_pos (by simp), reduction_coe]
+    rw [dite_eq_left (by simp), reduction_coe]
     exact hr k
 
 theorem DecoSet.heckeSet_base_nonempty [NeZero n] (P : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ P ≠ P)

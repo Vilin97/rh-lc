@@ -160,16 +160,16 @@ theorem rp_eq_blockW (m : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ
   ext i j
   unfold blockW
   by_cases hi : r ≤ i.val ∧ i.val < r + k
-  · rw [dif_pos hi]
+  · rw [dite_eq_left hi]
     by_cases hj : r ≤ j.val ∧ j.val < r + k
-    · rw [dif_pos hj]
+    · rw [dite_eq_left hj]
       have e1 : rp_ι k r ⟨i.val - r, by omega⟩ = i := Fin.ext (by simp only [rp_ι]; omega)
       have e2 : rp_ι k r ⟨j.val - r, by omega⟩ = j := Fin.ext (by simp only [rp_ι]; omega)
       simp only [rp_blk, e1, e2]
-    · rw [dif_neg hj, (h j hj).2 i, if_neg]
+    · rw [dite_eq_right hj, (h j hj).2 i, if_neg]
       rintro rfl
       exact hj hi
-  · rw [dif_neg hi, (h i hi).1 j]
+  · rw [dite_eq_right hi, (h i hi).1 j]
 
 theorem rp_sum (f : Fin (2 * r + k + 1) → ℂ) (h : ∀ l, ¬ rp_Mid k r l → f l = 0) :
     ∑ l, f l = ∑ i, f (rp_ι k r i) := by

@@ -48,7 +48,7 @@ private theorem valAt'_constFn_of_comp_eq_id {X : Scheme.{0}} (x : Sp ℂ ⟶ X)
       x.appLE U ⊤ h ≫ (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom = 𝟙 _ := by
     rw [Scheme.Hom.appLE_comp_appLE_assoc]
     exact key _ _ hp
-  rw [valAt', dif_pos h]
+  rw [valAt', dite_eq_left h]
   exact congrArg (fun φ => φ.hom a) hcomp
 
 theorem dirDeriv_constFn {U : A.left.Opens} (h : ⊤ ≤ (u.ex 0).left ⁻¹ᵁ U) (w : Fin g → ℂ) (a : ℂ) :

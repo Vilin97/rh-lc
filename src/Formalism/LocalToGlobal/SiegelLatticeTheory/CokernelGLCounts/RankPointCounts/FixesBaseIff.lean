@@ -27,7 +27,7 @@ def piG (πa : UP p →* UP p) (x : GG p) : GG p :=
   if h : x ∈ UP p then ((piU p πa ⟨x, h⟩ : UP p) : GG p) else 1
 
 theorem piG_of (πa : UP p →* UP p) (x : UP p) : piG p πa x = ((piU p πa x : UP p) : GG p) := by
-  unfold piG; rw [dif_pos x.2]
+  unfold piG; rw [dite_eq_left x.2]
 
 theorem mem_StP_iff (x : GG p) :
     x ∈ StP M δ u u' w p ↔ x ∈ UP p ∧ x • Y0 M δ u u' w p = Y0 M δ u u' w p :=

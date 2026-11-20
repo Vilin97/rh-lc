@@ -52,7 +52,7 @@ theorem diag_lift : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpect
     by_cases hM : M a b ∈ v.adicCompletionIntegers F
     · have hP : ((((e a)⁻¹ : (v.adicCompletion F)ˣ) : v.adicCompletion F) * M a b) * ((e b : (v.adicCompletion F)ˣ) : v.adicCompletion F) ∈ v.adicCompletionIntegers F :=
         mul_mem (mul_mem (he' a) hM) (he b)
-      rw [dif_pos (key ▸ hP), dif_pos hM, ← hw' a, ← hw b, ← map_mul, ← map_mul]
+      rw [dite_eq_left (key ▸ hP), dite_eq_left hM, ← hw' a, ← hw b, ← map_mul, ← map_mul]
       congr 1
     · have hP : ((((e a)⁻¹ : (v.adicCompletion F)ˣ) : v.adicCompletion F) * M a b) * ((e b : (v.adicCompletion F)ˣ) : v.adicCompletion F) ∉ v.adicCompletionIntegers F := by
         intro hP
@@ -61,7 +61,7 @@ theorem diag_lift : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpect
         have e1 : ((e a : (v.adicCompletion F)ˣ) : v.adicCompletion F) * ((((e a)⁻¹ : (v.adicCompletion F)ˣ) : v.adicCompletion F) * M a b * ((e b : (v.adicCompletion F)ˣ) : v.adicCompletion F)) * (((e b)⁻¹ : (v.adicCompletion F)ˣ) : v.adicCompletion F) = M a b := by
           simp [mul_assoc]
         rwa [e1] at this
-      rw [dif_neg (key ▸ hP), dif_neg hM]; simp
+      rw [dite_eq_right (key ▸ hP), dite_eq_right hM]; simp
 
 end GlobalTheory.St.G.Match
 

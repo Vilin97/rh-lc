@@ -214,7 +214,7 @@ theorem hval_tH (D : D7) (t : G.HH D) : hval D.R.toFrame (tH D t) = t.val := rfl
 theorem wj_eq_wSz (D : D7) (j : Fin D.R.m) (τ : D.what₂.Tau) : wj D (j.val + 1) τ = DV.wSz D (j.val + 1) τ := by
   unfold wj DV.wSz
   have hj := j.isLt
-  rw [dif_pos (by omega : j.val + 1 - 1 < D.R.m), dif_pos (⟨by omega, by omega⟩ : 1 ≤ j.val + 1 ∧ j.val + 1 ≤ D.R.m)]
+  rw [dite_eq_left (by omega : j.val + 1 - 1 < D.R.m), dite_eq_left (⟨by omega, by omega⟩ : 1 ≤ j.val + 1 ∧ j.val + 1 ≤ D.R.m)]
 
 def AskRec_at {D : D7} (L : SizeData₂ D) : Prop :=
   (∑ j ∈ SizeData₂.lifts D, ∑ t : D.host.TT,
@@ -231,7 +231,7 @@ theorem reads_w {D : D7} {L : SizeData₂ D} {TT : Finset D.R.A} {a : D.R.A → 
     exact congrArg (mcode D.R.toFrame) ((tE D).apply_symm_apply x)
   rw [hr.hw j x _ hc, wj_eq_wSz]
   unfold wM LocalQuadraticParts.wAt
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
 
 theorem askIs_of {D : D7} (L : SizeData₂ D) (hpos : ∀ j : Fin D.R.m, ∀ ρ ∈ D.R.Psi, 0 < LocalQuadraticParts.wAt D (j.val + 1) ρ)
     (hrec : AskRec_at L) : AskIs L (LocalQuadraticParts.ASK L) := by
@@ -326,7 +326,7 @@ theorem frob_mem (p : ℕ) (hp : p.Prime) : frob D p ∈ G.frobSet D p := by
     ⟨σ0, P, hP, hL, ((fieldFacts D p hp P hP hL σ0).2).2 (by
       rw [hσ0, Equiv.apply_symm_apply, sub_self]; exact AddSubgroup.zero_mem _)⟩
   unfold frob
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨P', hP', hL', hF⟩ := hex.choose_spec
   exact ⟨P', hP', hL', hex.choose, hF, rfl⟩
 
@@ -425,12 +425,12 @@ theorem one_le_wj (hN : NumN_at L) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (
 
 theorem wj_eq_wSz' (D : D7) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (τ : D.what₂.Tau) : wj D j τ = DV.wSz D j τ := by
   unfold wj DV.wSz
-  rw [dif_pos (by omega : j - 1 < D.R.m), dif_pos (⟨h1, h2⟩ : 1 ≤ j ∧ j ≤ D.R.m)]
+  rw [dite_eq_left (by omega : j - 1 < D.R.m), dite_eq_left (⟨h1, h2⟩ : 1 ≤ j ∧ j ≤ D.R.m)]
 
 theorem wAt_eq (D : D7) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (ρ : D.R.GG) (hρ : ρ ∈ D.R.Psi) :
     LocalQuadraticParts.wAt D j ρ = wj D j (D.eTau.symm ⟨ρ, hρ⟩) := by
   unfold LocalQuadraticParts.wAt
-  rw [dif_pos hρ, wj_eq_wSz' D j h1 h2]
+  rw [dite_eq_left hρ, wj_eq_wSz' D j h1 h2]
 
 theorem one_le_wAt (hN : NumN_at L) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (ρ : D.R.GG) (hρ : ρ ∈ D.R.Psi) :
     1 ≤ LocalQuadraticParts.wAt D j ρ := by

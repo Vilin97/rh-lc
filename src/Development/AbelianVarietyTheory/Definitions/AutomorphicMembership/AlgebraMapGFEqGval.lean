@@ -60,7 +60,7 @@ theorem zhatL_eq (F : LFlag S r T) (F' : LFlag S r T') : Formalism.MainNotions.S
 theorem gvalL_eq (F : LFlag S r T) (F' : LFlag S r T') :
     Formalism.MainNotions.S.Lat.Gval F F' = Gq (starRingEnd E) T T' (Formalism.MainNotions.S.Lat.ZhatL F F') := by
   rw [Formalism.MainNotions.S.Lat.Gval, Formalism.MainNotions.S.Gflag, Formalism.MainNotions.S.Dl, Formalism.MainNotions.S.Dl, Formalism.MainNotions.S.leadMinorE, Formalism.MainNotions.S.leadMinorE,
-    dif_pos le_rfl, dif_pos (Nat.le_succ r)]
+    dite_eq_left le_rfl, dite_eq_left (Nat.le_succ r)]
   rfl
 
 omit [NumberField E] [StarRing E] in
@@ -149,7 +149,7 @@ end RecTerm
 
 theorem gpt_eq (T T' : ℕ) (w : Formalism.MainNotions.S.Point D.host.E (D.R.rS + 1)) :
     Formalism.MainNotions.S.LocalSplitGroups.Gpt T T' w = Gq (starRingEnd D.host.E) (T : D.host.E) (T' : D.host.E) (ptMat w) := by
-  rw [Formalism.MainNotions.S.LocalSplitGroups.Gpt, Formalism.MainNotions.S.LocalSplitGroups.Dmin, Formalism.MainNotions.S.LocalSplitGroups.Dmin, dif_pos le_rfl, dif_pos (Nat.le_succ _), D.conjF_eq,
+  rw [Formalism.MainNotions.S.LocalSplitGroups.Gpt, Formalism.MainNotions.S.LocalSplitGroups.Dmin, Formalism.MainNotions.S.LocalSplitGroups.Dmin, dite_eq_left le_rfl, dite_eq_left (Nat.le_succ _), D.conjF_eq,
     D.conjF_eq, ← bridge_star_holds D.R D.host, ← bridge_star_holds D.R D.host]
   rfl
 

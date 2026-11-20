@@ -97,7 +97,7 @@ variable {D : D7}
 theorem realM_tauE (θ : InfFam D) {m n : ℕ} (w : Mx D m n) (ρ : D.what₂.Tau) :
     realM θ w (tauE D ρ) = compAt θ ρ w := by
   have h : ∃ ρ', tauE D ρ = tauE D ρ' := ⟨ρ, rfl⟩
-  rw [realM, dif_pos h, ← GlobalTheory.PointAtPlace.tauE_injective h.choose_spec]
+  rw [realM, dite_eq_left h, ← GlobalTheory.PointAtPlace.tauE_injective h.choose_spec]
 
 theorem realM_add (θ : InfFam D) {m n : ℕ} (v w : Mx D m n) (τ : D.host.E →+* ℂ) :
     realM θ (v + w) τ = realM θ v τ + realM θ w τ := by

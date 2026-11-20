@@ -28,7 +28,7 @@ theorem GlobalTheory.LevProd.level_eq_up_inf : ∀ {B : GlobalTheory.Mem.Base} {
   have hUp : GlobalTheory.LevProd.Up a j hj = GlobalTheory.LevProd.relax J j hj α := by
     have hex : ∃ t, ∃ J : QJ a t, J.Reads ∧ Nonempty (J.Ch j) := ⟨t, J, hJ, ⟨α⟩⟩
     unfold GlobalTheory.LevProd.Up
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact le_antisymm (hle _ _ hex.choose_spec.choose_spec.1 _ _ _ hJ α) (hle _ _ hJ α _ _ hex.choose_spec.choose_spec.1 _)
   rw [hUp]
   have hN : (GlobalTheory.FinPl.grpAt ((I.rec7 l Z).sp.X j) (GlobalTheory.LevProd.twAt J)).Normal := by

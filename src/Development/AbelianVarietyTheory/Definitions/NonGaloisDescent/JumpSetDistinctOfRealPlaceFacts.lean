@@ -105,7 +105,7 @@ theorem hc_low_neg (jj : Fin R.m) (i : Fin R.m) (h : jj.1 < i.1) : ((R.t : ℚ) 
 end HC
 
 theorem sz_eq (j : ℕ) (ρ : D.what₂.Tau) (h : j - 1 < D.R.m) : sz D j ρ = (D.hc ρ).e ⟨j - 1, h⟩ := by
-  unfold sz; rw [dif_pos h]
+  unfold sz; rw [dite_eq_left h]
 
 theorem wj_eq (j : ℕ) (ρ : D.what₂.Tau) : wj D j ρ = ((sz D j ρ : ℚ) : ℝ) := by
   unfold wj sz; split_ifs <;> simp

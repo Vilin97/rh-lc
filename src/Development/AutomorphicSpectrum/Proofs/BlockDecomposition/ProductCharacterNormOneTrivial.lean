@@ -37,7 +37,7 @@ theorem character_norm_one_split_datum {K : Type} [Field K] [NumberField K] (h2 
     have hk1 : k1 (LM.sp w₁ w₂ Φ : LM c v) κ = u := by
       have : e1 (LM.sp w₁ w₂ Φ : LM c v) (κ : K) = dg1 v w₁ (κ : K) := rfl
       unfold k1
-      rw [dif_neg (by rw [this]; exact h0)]
+      rw [dite_eq_right (by rw [this]; exact h0)]
       exact Units.ext rfl
     have hu2 : ((u⁻¹ : (Qv v)ˣ) : Qv v) = dg1 v w₂ (κ : K) := by
       apply Units.inv_eq_of_mul_eq_one_right

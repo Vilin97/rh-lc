@@ -15,7 +15,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem class_of_finite_length {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     {π : Representation ℂ (GL (Fin N) k) V} (h : HasFiniteLength π) : cl0 π = clsGL π h := by
-  rw [cl0, dif_pos h]
+  rw [cl0, dite_eq_left h]
 
 theorem class_congr_iso {N : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {π : Representation ℂ (GL (Fin N) k) V} {τ : Representation ℂ (GL (Fin N) k) W} (φ : π.Equiv τ) :
@@ -24,7 +24,7 @@ theorem class_congr_iso {N : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [
   · have h' : HasFiniteLength τ := h.of_equiv φ
     rw [class_of_finite_length h, class_of_finite_length h', clsGL_congr φ h h']
   · have h' : ¬ HasFiniteLength τ := fun h' => h (h'.of_equiv φ.symm)
-    rw [cl0, cl0, dif_neg h, dif_neg h']
+    rw [cl0, cl0, dite_eq_right h, dite_eq_right h']
 
 theorem class_chosen_rep_basis (x : IrrGL k) : cl0 x.rep = sg x := by
   rw [class_of_finite_length x.2.rep.hasFiniteLength]

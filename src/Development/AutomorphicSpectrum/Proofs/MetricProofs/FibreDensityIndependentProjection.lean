@@ -81,7 +81,7 @@ theorem setSheetDensity_eq {S : Set ((Σ k, ι k) → ℂ)} (hS0 : BlockNonzero 
   have hex : ∃ γ', IsSetSheet S Ψ y w γ' := ⟨γ, hsh⟩
   have han : AnalyticOnNhd ℂ γ U := analyticOnNhd_of_diffOn hU fun y hy => (hγ y hy).1
   unfold setSheetDensity
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hc := hex.choose_spec
   set γc := hex.choose
   have hcont : ContinuousAt (fun y' => (y', segre (γc y'))) y :=

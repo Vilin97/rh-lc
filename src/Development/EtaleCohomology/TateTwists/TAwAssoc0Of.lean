@@ -54,7 +54,7 @@ theorem t_aw_assoc0_of (hev : EtaleCochainEvaluationLinear) (hsub : EtaleSimplex
           have hp := p.is_lt
           have hq := q.is_lt
           simp only [Φ]
-          rw [dif_pos (by omega), Units.smul_def, Units.smul_def, bil_zsmul_left, smul_smul,
+          rw [dite_eq_left (by omega), Units.smul_def, Units.smul_def, bil_zsmul_left, smul_smul,
             hsg _ _ (m * ((p : ℕ) : ℤ) + k * (((p : ℕ) : ℤ) + (((q : ℕ) - (p : ℕ) : ℕ) : ℤ)))
               (by push_cast [Nat.cast_sub (show (p : ℕ) ≤ q by omega)]; ring)]
           congr 1
@@ -78,7 +78,7 @@ theorem t_aw_assoc0_of (hev : EtaleCochainEvaluationLinear) (hsub : EtaleSimplex
           have hp := p.is_lt
           have hr := r.is_lt
           simp only [Φ]
-          rw [dif_pos (by omega), Units.smul_def, Units.smul_def, map_zsmul, smul_smul,
+          rw [dite_eq_left (by omega), Units.smul_def, Units.smul_def, map_zsmul, smul_smul,
             hsg _ _ (m * ((p : ℕ) : ℤ) + k * (((p : ℕ) : ℤ) + ((r : ℕ) : ℤ))) (by subst h3; ring)]
           rw [(hsub z).1 p (N - p) 0 r, (hsub z).1 p (N - p) r (N - p - r)]
           simp only [Nat.add_zero]

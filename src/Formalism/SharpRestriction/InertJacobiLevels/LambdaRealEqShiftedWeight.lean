@@ -17,7 +17,7 @@ def wZof (D : D7) (τ : D.what₂.Tau) (j : ℕ) : ℤ := ⌊xG D τ j⌋
 theorem wj_eq (τ : D.what₂.Tau) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) :
     wj D j τ = (((D.hc τ).e ⟨j - 1, by omega⟩ : ℚ) : ℝ) := by
   unfold wj
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
 
 theorem kaJ_int (D : D7) (j : ℕ) (_h1 : 1 ≤ j) : ∃ z : ℤ, G.kaJ D j = z := by
   obtain ⟨a, ha⟩ := D.R.k_even
@@ -81,7 +81,7 @@ theorem lambda_real_eq_shifted_weight (u : D.what₂.Word) (w : D.what₂.places
   rw [hT.gat_lam u w hg v s i]
   have h := (D.fm u).lam_eq 0 (Nat.zero_le _) (hT.gat_pos u w hg ⟨v, s⟩)
     ⟨i.1, by simp only [Ranks.N]; omega⟩
-  rw [dif_pos hi] at h
+  rw [dite_eq_left hi] at h
   have h' := congrArg (fun q : ℚ => (q : ℝ)) h
   simp only [hcToWeightQ, rhoVec] at h'
   push_cast at h'

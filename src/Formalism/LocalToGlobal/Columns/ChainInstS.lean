@@ -64,7 +64,7 @@ theorem JGsym_entry (hq0 : (q : E) ≠ 0) {k₀ rS r t n c : ℕ} (hk : k₀ ≤
   have hat : Loc.atN (κ.toLinearMap (Loc.eN E (n + c) (LocE.fIdx k₀ c n p'))) (LocE.fIdx k₀ c n p) =
       κ (Loc.eN E (n + c) (LocE.fIdx k₀ c n p')) ⟨LocE.fIdx k₀ c n p, symFIdx_lt hk hp⟩ := by
     unfold Loc.atN
-    rw [dif_pos (symFIdx_lt hk hp)]
+    rw [dite_eq_left (symFIdx_lt hk hp)]
     rfl
   unfold LocE.entB
   rw [hat]
@@ -145,7 +145,7 @@ theorem symEntB_join_col (q : ℕ) {k₀ n' c' n c : ℕ} (hc' : c' = 1) (hc : c
     omega
   have f2 : LocE.fIdx k₀ 0 n p = p := ciFIdx (Or.inl rfl) (by omega)
   unfold LocE.entB joinCol atNL
-  rw [f1, f2, ciScE_lt _ hp, dif_pos (show n' < n' + 1 by omega)]
+  rw [f1, f2, ciScE_lt _ hp, dite_eq_left (show n' < n' + 1 by omega)]
   simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearMap.proj_apply]
   rw [ciAtN_inX hp]
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]

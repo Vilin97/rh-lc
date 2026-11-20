@@ -85,7 +85,7 @@ theorem valued_uniformizerPower_completion_eq_exp_neg {E : Type} [Field E] [Numb
     have h1 : algebraMap K.O K.E t = 0 := e.injective (h.trans (map_zero e).symm)
     exact IsFractionRing.injective K.O K.E (h1.trans (map_zero _).symm)
   have hv : Valued.v (e (algebraMap K.O K.E t)) ≠ 0 := (Valuation.ne_zero_iff _).mpr hne
-  rw [hval, ordL, dif_neg hv] at hk
+  rw [hval, ordL, dite_eq_right hv] at hk
   rw [← WithZero.coe_unzero hv, WithZero.exp]
   congr 1
   rw [← ofAdd_toAdd (WithZero.unzero hv)]

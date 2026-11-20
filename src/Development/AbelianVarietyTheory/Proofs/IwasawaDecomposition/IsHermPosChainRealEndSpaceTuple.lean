@@ -160,7 +160,7 @@ theorem ipVia_apply {H N : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H
   classical
   have h : e a ∈ LinearMap.range e ∧ e b ∈ LinearMap.range e := ⟨⟨a, rfl⟩, ⟨b, rfl⟩⟩
   unfold ipVia
-  rw [dif_pos h, he h.1.choose_spec, he h.2.choose_spec]
+  rw [dite_eq_left h, he h.1.choose_spec, he h.2.choose_spec]
 
 theorem isHermPos_ipVia {H N : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H]
     [AddCommGroup N] [Module ℂ N] (e : H →ₗ[ℂ] N) (he : Function.Injective e) :

@@ -58,7 +58,7 @@ theorem pure_cancel {κ : Type} [Fintype κ] {w : ∀ v : Pl F, (κ → Fv F v) 
 theorem opF_eq {κ : Type} [Fintype κ] {T} {φ φ₁ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB _) (h₁ : φ₁ ∈ SB _) (h : Acts (evFin F v) T φ φ₁) :
     opF v T φ = φ₁ := by
   have ex : ∃ φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) T φ φ₁ := ⟨φ₁, h₁, h⟩
-  rw [opF, dif_pos ex]
+  rw [opF, dite_eq_left ex]
   exact action_uniqueness F κ v T φ hφ _ _ ex.choose_spec.2 h
 
 def dm {k : Type} [Field k] (Y Z : Matrix (Fin n) (Fin d) k) : k := ofM Y ⬝ᵥ ofM Z

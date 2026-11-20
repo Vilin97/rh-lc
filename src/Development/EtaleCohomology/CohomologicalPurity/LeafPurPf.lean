@@ -38,7 +38,7 @@ theorem purT_bij {d : ℕ} (T : ∀ P : SP d, Tube P) (q : ℕ) [NeZero q] (P : 
   classical
   have h : q ≠ 0 ∧ IsUnit (q : Γ(P.X, ⊤)) := ⟨NeZero.ne q, hq⟩
   unfold purT
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   refine bij_comp (bij_comp (AddEquiv.bijective _) ?_) (bij_comp (AddEquiv.bijective _) (((T P).ok q hq).2.1 i n))
   exact ((T P).ok q hq).2.2.2 n i
 

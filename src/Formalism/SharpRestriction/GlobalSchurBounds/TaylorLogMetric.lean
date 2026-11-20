@@ -81,7 +81,7 @@ theorem chiRec_idl (D : D7) (idl : D.Dt ⧸ D.UO → IdE D) (h : Function.Inject
     chiRec D idl (idl x) = ((chiQ D x : ℂˣ) : ℂ) := by
   have hx : ∃ y, idl y = idl x := ⟨x, rfl⟩
   unfold chiRec
-  rw [dif_pos hx, h hx.choose_spec]
+  rw [dite_eq_left hx, h hx.choose_spec]
 
 def DualB (D : D7) {N : ℕ} (P : D.what₂.Tau → Matrix (Fin N) (Fin N) D.host.E) : Prop :=
   ∀ τ, ((P (tauSg D τ)).map D.host.conj).transpose * P τ = 1

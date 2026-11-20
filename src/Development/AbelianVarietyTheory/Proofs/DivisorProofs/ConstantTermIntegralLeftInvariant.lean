@@ -55,13 +55,13 @@ theorem nilM_conjN {m n : Matrix (Fin a) (Fin a) R} (hm : IsBlockSL2Embedding r 
   ext i j
   by_cases h : (i : ℕ) < r ∧ r ≤ (j : ℕ)
   · simp only [nilM, Matrix.of_apply, dif_pos h]; rfl
-  · rw [nilM, Matrix.of_apply, dif_neg h, Matrix.mul_apply]
+  · rw [nilM, Matrix.of_apply, dite_eq_right h, Matrix.mul_apply]
     refine (Finset.sum_eq_zero fun k _ => ?_).symm
     rcases hn k j with h1 | h1
     · rw [Matrix.mul_apply, Finset.sum_eq_zero, zero_mul]
       intro l _
       rcases hm i l with h2 | h2
-      · rw [nilM, Matrix.of_apply, dif_neg (fun h' => h (by omega)), mul_zero]
+      · rw [nilM, Matrix.of_apply, dite_eq_right (fun h' => h (by omega)), mul_zero]
       · rw [h2, zero_mul]
     · rw [h1, mul_zero]
 

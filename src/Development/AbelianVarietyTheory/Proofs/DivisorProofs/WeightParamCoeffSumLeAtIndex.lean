@@ -299,7 +299,7 @@ theorem sum_abs_wt_le_point {PP C A M : ℝ} (hS : SizeAt p i PP C) (hH : HostNu
       laOf (dat p i) (wtA (p.κ i)) (p.κ i).n τ ⟨P.a, ha⟩ := by
     intro τ
     have h1 : D.R.k - 1 - 1 < (dat p i).p + (dat p i).q := by rw [hN, hr]; omega
-    rw [anchor, dif_pos h1]
+    rw [anchor, dite_eq_left h1]
     exact congrArg _ (Fin.ext (by show D.R.k - 1 - 1 = D.R.k - 2; omega))
   have hs := sum_abs_wt_le P ha hj (laOf (dat p i) (wtA (p.κ i)) (p.κ i).n) _ rfl hw
   refine hs.trans ?_

@@ -50,7 +50,7 @@ def torepSig {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (g : M
 lemma torepSig_of_mem {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) {g : Matrix (Fin n) (Fin n) ℂ}
     (hg : g ∈ Kset ε) : torepSig T g = T.op (torepK ε hg) := by
   unfold torepSig
-  rw [dif_pos hg]
+  rw [dite_eq_left hg]
 
 lemma torepSig_toMK {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (k : KG ε) :
     torepSig T (toMK k) = T.op k := by

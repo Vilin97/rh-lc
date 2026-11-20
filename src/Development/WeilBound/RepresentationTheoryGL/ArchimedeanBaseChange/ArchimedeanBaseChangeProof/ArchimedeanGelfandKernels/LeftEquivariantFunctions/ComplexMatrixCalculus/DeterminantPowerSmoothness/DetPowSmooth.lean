@@ -23,13 +23,13 @@ theorem nsiu_mul (x y : Mat n) (hx : IsUnit x.det) (hy : IsUnit y.det) (hxy : Is
 theorem rm_one (lam : Fin n → ℤ) : Rm lam (1 : Mat n) = 1 := by
   have h : IsUnit (1 : Mat n).det := by simp
   unfold Rm
-  rw [dif_pos h, nsiu_one, map_one, LinearMap.toMatrix_one]
+  rw [dite_eq_left h, nsiu_one, map_one, LinearMap.toMatrix_one]
 
 theorem rm_mul (lam : Fin n → ℤ) (x y : Mat n) (hx : IsUnit x.det) (hy : IsUnit y.det) :
     Rm lam (x * y) = Rm lam x * Rm lam y := by
   have hxy : IsUnit (x * y).det := by rw [Matrix.det_mul]; exact hx.mul hy
   unfold Rm
-  rw [dif_pos hxy, dif_pos hx, dif_pos hy, nsiu_mul x y hx hy hxy, map_mul, LinearMap.toMatrix_mul]
+  rw [dite_eq_left hxy, dite_eq_left hx, dite_eq_left hy, nsiu_mul x y hx hy hxy, map_mul, LinearMap.toMatrix_mul]
 
 theorem rowAct_smooth (f : MvPolynomial (Fin n × Fin n) ℂ) :
     ∀ ℓ : MvPolynomial (Fin n × Fin n) ℂ →ₗ[ℂ] ℂ,
@@ -73,7 +73,7 @@ theorem extL_spec (lam : Fin n → ℤ) (i : Jd n lam) (f : Formalism.BasicNotio
 theorem rm_entry (lam : Fin n → ℤ) (x : Mat n) (hx : IsUnit x.det) (i j : Jd n lam) :
     Rm lam x i j = x.det ^ (dw lam).detShift * extL lam i (Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) xᵀ ((wb lam j : _) : MvPolynomial (Fin n × Fin n) ℂ)) := by
   unfold Rm
-  rw [dif_pos hx, LinearMap.toMatrix_apply, ← extL_spec, GlobalTheory.Branching.sqRep_coe]
+  rw [dite_eq_left hx, LinearMap.toMatrix_apply, ← extL_spec, GlobalTheory.Branching.sqRep_coe]
   unfold Formalism.BasicNotions.sqAct Formalism.BasicNotions.detPow
   rw [map_smul, smul_eq_mul, Units.val_zpow_eq_zpow_val, Matrix.GeneralLinearGroup.val_det_apply]
   rfl

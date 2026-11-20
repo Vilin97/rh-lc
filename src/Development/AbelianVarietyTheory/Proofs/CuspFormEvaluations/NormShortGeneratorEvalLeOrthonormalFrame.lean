@@ -190,7 +190,7 @@ theorem norm_evR_le : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt
     exact isSB_smul _ hv'.1
   have hβa : ‖σ (betaH (Dw := Dw) c Λ)‖ ^ 2 =
       (((stdL E n).toAddSubgroup.relIndex Λ.La.toAddSubgroup) : ℝ) ^ r := by
-    rw [← index_Ln Λ hstd, hr, betaH, dif_pos hβ]
+    rw [← index_Ln Λ hstd, hr, betaH, dite_eq_left hβ]
     exact hβ.choose_spec.2.2 σ
   rw [sum_coeff_rename] at hcore
   have hc2 := fun y => (le_div_iff₀ hJ).2 (hcore y)

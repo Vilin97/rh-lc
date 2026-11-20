@@ -412,7 +412,7 @@ theorem repFn_eq {F : Type} [Field F] {y : Sp F ⟶ Xo.XF c} {v : Vecs y D.p} {w
     (h : IsGen Z τ a b y v w r) : repFn Z τ a b F y v w = r := by
   have hex : ∃ r, IsGen Z τ a b y v w r := ⟨r, h⟩
   unfold repFn
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact isGen_unique hβ hτ hg hex.choose_spec h
 
 theorem exists_isGen {F : Type} [Field F] {βF : c.F →+* F} {y : Sp F ⟶ Xo.XF c} {v : Vecs y D.p}

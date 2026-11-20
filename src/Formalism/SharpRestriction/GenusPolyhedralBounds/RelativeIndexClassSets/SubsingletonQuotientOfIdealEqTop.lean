@@ -852,7 +852,7 @@ theorem sep_of_setCn {large₂ : SizeData₂ D} {j : ℕ} (τ0 : D.what₂.Tau) 
   have g := hL.2.1 τ0 (lastP D j)
   rw [if_neg hlast] at g
   unfold gapZ at g
-  rw [dif_neg hlast] at g
+  rw [dite_eq_right hlast] at g
   have f := hF.2.1 τ0 (lastP D j)
   rw [hL.1, hF.1]
   have hT' : (0 : ℤ) < (Tp D j T : ℤ) := by unfold Tp; positivity

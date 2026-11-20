@@ -50,7 +50,7 @@ theorem gaussSumAt_unr_mul {χ ξ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h
   have hz0 : ((Quotient.out (y : 𝓞 E ⧸ w.asIdeal ^ a) : 𝓞 E) : E) ≠ 0 := fun h => by
     rw [h, map_zero] at hy1
     exact zero_ne_one hy1
-  rw [gaussTerm, gaussTerm, dif_neg hz0, dif_neg hz0]
+  rw [gaussTerm, gaussTerm, dite_eq_right hz0, dite_eq_right hz0]
   have h1 : χ.locK w (Units.mk0 _ hz0) = 1 := by
     refine hχ _ ?_
     show Valued.v (((atFin w (Units.mk0 _ hz0)) : (w.adicCompletion E)ˣ) : w.adicCompletion E) = 1
@@ -89,7 +89,7 @@ theorem exists_gaussSumAt_dvd {K : Type} [Field K] [NumberField K] (σ : K →+*
     have hz0 : (z : E) ≠ 0 := fun h => by
       rw [h, map_zero] at hy1
       exact zero_ne_one hy1
-    rw [gaussTerm, dif_neg hz0]
+    rw [gaussTerm, dite_eq_right hz0]
     obtain ⟨x1, hx1⟩ := hξK (Units.mk0 _ hz0)⁻¹
     have hp : psiAt w (algebraMap E (w.adicCompletion E) ((z : E) / c)) ^ q = 1 := by
       rw [← psiAt_natMul]

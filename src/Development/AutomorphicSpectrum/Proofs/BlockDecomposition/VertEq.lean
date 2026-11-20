@@ -83,7 +83,7 @@ theorem key (p : ℕ) [Fact p.Prime] {m : ℕ} {n : Fin (m + 1) → ℕ} (a : Fi
       funext i
       refine Fin.cases rfl (fun _ => rfl) i
     rw [e0] at e
-    rw [topSelf_def, e, geoNum, dif_pos hrel]
+    rw [topSelf_def, e, geoNum, dite_eq_left hrel]
     refine Finset.sum_congr rfl fun k _ => ?_
     refine congrArg (a k * ·) ?_
     have hl := (hrel k).choose_spec

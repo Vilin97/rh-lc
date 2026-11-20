@@ -41,7 +41,7 @@ theorem unipotent_pluckerCoord_eq {R : Type} [CommRing R] {N : ℕ} (a : LowerPa
     (Finset.orderEmbOfFin_unique hc (leadCols_mem m l) (leadCols_strictMono m l h)).symm
   have hlm : l.val < m.val := h
   unfold pluckerCoord
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   set M := (firstRows (unipotentMatrix a) (l.val + 1) l.isLt).submatrix id
     ((insert m (Finset.Iio l)).orderEmbOfFin hc) with hM
   have hentry : ∀ i j : Fin (l.val + 1),
@@ -54,7 +54,7 @@ theorem unipotent_pluckerCoord_eq {R : Type} [CommRing R] {N : ℕ} (a : LowerPa
     rw [hentry]
     have hj : j.val < l.val := by have := i.isLt; omega
     simp only [unipotentMatrix, leadCols, hj, dite_true, Matrix.of_apply]
-    rw [dif_neg, if_neg]
+    rw [dite_eq_right, if_neg]
     · intro he; have := congrArg Fin.val he; simp at this; omega
     · intro hlt; have := Fin.lt_def.1 hlt; simp at this; omega
   rw [Matrix.det_of_isUpperTriangular htri, Fin.prod_univ_castSucc]
@@ -63,7 +63,7 @@ theorem unipotent_pluckerCoord_eq {R : Type} [CommRing R] {N : ℕ} (a : LowerPa
     rw [hentry]
     have hi : (i.castSucc : Fin (l.val + 1)).val < l.val := by simp
     simp only [unipotentMatrix, leadCols, hi, dite_true, Matrix.of_apply]
-    rw [dif_neg, if_pos]
+    rw [dite_eq_right, if_pos]
     · ext; simp
     · intro hlt; have := Fin.lt_def.1 hlt; simp at this
   have hlast : M (Fin.last l.val) (Fin.last l.val) = a ⟨(m, l), h⟩ := by
@@ -71,7 +71,7 @@ theorem unipotent_pluckerCoord_eq {R : Type} [CommRing R] {N : ℕ} (a : LowerPa
     have hl : ¬ (Fin.last l.val).val < l.val := by simp
     have hcast : (Fin.castLE l.isLt (Fin.last l.val) : Fin N) = l := by ext; simp
     simp only [unipotentMatrix, leadCols, hl, dite_false, Matrix.of_apply, hcast]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [Finset.prod_eq_one (fun i _ => hone i), hlast, one_mul]
 
 theorem unipotent_pluckerCoord_adjoin (R : Type) [CommRing R] (N : ℕ) :

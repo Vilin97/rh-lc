@@ -375,7 +375,7 @@ theorem rows_add_le (z : Fin p × Fin m → σ) (hz : Function.Injective z)
   have := (Finset.sum_eq_zero_iff_of_nonneg fun i _ => mul_nonneg (hA0 i) (hB0 i)).1 h0
     ⟨p - 1, by omega⟩ (Finset.mem_univ _)
   simp only [hA, hB] at this
-  rw [dif_pos (by omega), dif_pos (by omega)] at this
+  rw [dite_eq_left (by omega), dite_eq_left (by omega)] at this
   exact absurd this (mul_pos (by exact_mod_cast ha0 _) (by exact_mod_cast hb0 _)).ne'
 
 theorem exists_support_length (a : Fin k → ℕ) (ha : Antitone a) :

@@ -181,9 +181,9 @@ theorem proof (hrec : IntersectionRecursion.Statement.{u}) : HilbertIncrement.St
         q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} := Ideal.annihilator_quotient
     by_cases hc : IsMultiProjPrime W ∧ q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} ≤ W ∧
         ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
-    · rw [dif_pos hc, dif_pos (by rw [hann]; exact hc)]
+    · rw [dite_eq_left hc, dite_eq_left (by rw [hann]; exact hc)]
       rfl
-    · rw [dif_neg hc, dif_neg (by rw [hann]; exact hc)]
+    · rw [dite_eq_right hc, dite_eq_right (by rw [hann]; exact hc)]
   rw [h1, h2]
   simpa using hbd a ha
 

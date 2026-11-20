@@ -30,7 +30,7 @@ theorem normal_rep {G D A : Type} [Group G] [MulAction G D] (f : D → A) (pref 
       rw [h1]
       exact hg.symm
     unfold GlobalTheory.Mem.Col2.prefRep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     obtain ⟨g, hg⟩ : ∃ g : G, g • q = hex.choose := Quotient.exact hex.choose_spec.1
     have h3 := (h _).1 hex.choose_spec.2
     rw [h3, ← hg, h1]
@@ -146,7 +146,7 @@ theorem mem_cosetIn_smul (g : FrmG Λ Θ) (p p' : PtAt R sel mu cst u j)
   have hf : ∀ y, (frsF sel mu p'.1.1 P).symm (g.1.1 y) = κ.1 ((frsF sel mu p.1.1 P).symm y) := fun y => by
     rw [LinearEquiv.symm_apply_eq, e1]
     unfold frsF
-    rw [dif_neg hP, dif_neg hP]
+    rw [dite_eq_right hP, dite_eq_right hP]
     show _ = g.1.1 (p.1.1.fr ⟨P.1, hQ⟩ (κ.1.symm (κ.1 ((p.1.1.fr ⟨P.1, hQ⟩).symm y))))
     rw [LinearEquiv.symm_apply_apply, LinearEquiv.apply_symm_apply]
   simp only [cosetIn, Set.mem_setOf_eq, e2]
@@ -329,7 +329,7 @@ theorem repY_mem (hI : I.Ok) (hA : A.Is) (hj : j + 1 = B.R.m) (β : Ch j) (hk : 
   have hl : TopStep.IsLiftFr (A.p0 j β).1.1.deco.1 ⟨P.1, hP⟩ f := by
     rw [hf]
     unfold frsF
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact TopStep.liftFr_spec (A.p0 j β).1.1.deco.2 _
   have hs : ∀ z, f z ∈ stdAt B.fields.E (B.R.N j) P.1 ↔ z ∈ stdAt B.fields.E (B.R.N j) P.1 := fun z => by
     have := hl.1 z; rwa [Deco.at, hN] at this

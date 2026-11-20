@@ -118,10 +118,10 @@ theorem exists_chart : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (f : X ⟶ S
     exact congrArg Subtype.val this
   · intro i
     by_cases hi : algebraMap Γ(X, U) K (sf i) = 0
-    · rw [dif_pos hi, dif_pos hi]
+    · rw [dite_eq_left hi, dite_eq_left hi]
       simp only [Units.val_one, one_mul, Option.elim_some]
       rw [het ⟨i, hi⟩, resG_comp]
-    · rw [dif_neg hi, dif_neg hi]
+    · rw [dite_eq_right hi, dite_eq_right hi]
       simp only [IsUnit.unit_spec, Option.elim_none, mul_one]
       rw [resG_comp]
 

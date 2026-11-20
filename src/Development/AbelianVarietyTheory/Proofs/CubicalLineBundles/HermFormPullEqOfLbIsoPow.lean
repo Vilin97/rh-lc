@@ -18,7 +18,7 @@ def unitVal {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) : Γ(X, U)ˣ →* ℂˣ :=
 
 lemma valAt'_eq_unitVal {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)ˣ) :
     valAt' x U f.val = unitVal x h f := by
-  rw [valAt', dif_pos h]; rfl
+  rw [valAt', dite_eq_left h]; rfl
 
 lemma unitVal_res {U V : X.Opens} (hVU : V ≤ U) (h : ⊤ ≤ x ⁻¹ᵁ V) (h' : ⊤ ≤ x ⁻¹ᵁ U)
     (f : Γ(X, U)ˣ) : unitVal x h (res hVU f) = unitVal x h' f := by

@@ -1217,7 +1217,7 @@ theorem sum_weight_eq_colAbs (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) 
 theorem detShift_eq_lamCol_last (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) :
     ((((D.fm u).lam 0 τ).detShift : ℤ) : ℝ) = (lamCol D u τ (D.R.k - 1) : ℝ) := by
   unfold DomWeight.detShift
-  rw [dif_pos (rank_zero_pos D), weight_eq_lamCol]
+  rw [dite_eq_left (rank_zero_pos D), weight_eq_lamCol]
   simp only [Ranks.N_zero]
 
 theorem colSlopeEq_of_abs (h : ColSlopeAbs) (D : D7) : ColSlopeEq D := by

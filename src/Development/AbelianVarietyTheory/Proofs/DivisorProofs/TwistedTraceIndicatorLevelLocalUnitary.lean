@@ -15,7 +15,7 @@ theorem trace_eq_zero_of_finrank_eq_zero (W : Type) [AddCommGroup W] [Module ℂ
   · haveI : Subsingleton W := Module.finrank_zero_iff.1 h
     rw [show L = 0 from LinearMap.ext fun x => Subsingleton.elim _ _, map_zero]
   · unfold LinearMap.trace
-    rw [dif_neg]
+    rw [dite_eq_right]
     · simp
     · rintro ⟨s, ⟨b⟩⟩
       exact hW (Module.Finite.of_basis b)

@@ -92,7 +92,7 @@ theorem sum_sr (ℓ : Fin n → ℝ) (hn : 0 < n) :
     rw [Finset.mem_range] at hk
     rw [sr_eq ℓ (by omega) (by omega), Nat.add_sub_cancel]
   rw [Finset.sum_congr rfl h1, Finset.sum_range_sub']
-  rw [ext0, ext0, dif_pos (by omega), dif_pos (by omega)]
+  rw [ext0, ext0, dite_eq_left (by omega), dite_eq_left (by omega)]
   rfl
 
 theorem coord_bound (ℓ : Fin n → ℝ) (hn : 0 < n) (t₀ S : ℝ) (ht : ∀ r, -t₀ ≤ PositivityTheory.Rg.Rs.An.sr ℓ r)

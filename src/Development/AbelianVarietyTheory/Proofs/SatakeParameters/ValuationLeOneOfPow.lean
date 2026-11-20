@@ -132,7 +132,7 @@ theorem frsF_mem' {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : ro
     (x : Sp X.E (R.N j)) : frsF sel mu p P x ∈ localization₂ P.1.asIdeal p.deco.1.N ↔ x ∈ stdAt X.E (R.N j) P.1 := by
   classical
   unfold frsF
-  rw [dif_neg hP]
+  rw [dite_eq_right hP]
   have h : ∀ Q : QE sel (mu : Chr X.F X.E X.K), p.fr Q x ∈ localization₂ Q.1.asIdeal p.deco.1.N ↔ x ∈ stdAt X.E (R.N j) Q.1 :=
     fun Q => p.2 Q x
   exact h ⟨P.1, (Finset.mem_union.mp P.2).resolve_left hP⟩

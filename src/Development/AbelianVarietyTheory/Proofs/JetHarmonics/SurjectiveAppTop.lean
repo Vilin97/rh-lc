@@ -137,7 +137,7 @@ theorem gs_eq_germ_fnVal {A : Type} [CommRing A] {X : Scheme.{0}} (r : Spec (Com
     (h : ⊤ ≤ r ⁻¹ᵁ U) (a : Γ(X, U)) (z : Spec (CommRingCat.of A)) :
     gs r z U a = ((Spec (CommRingCat.of A)).presheaf.germ ⊤ z trivial).hom
       ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom (fnVal r U a)) := by
-  rw [gs_eq r z U (h trivial), fnVal, dif_pos h]
+  rw [gs_eq r z U (h trivial), fnVal, dite_eq_left h]
   have e : ∀ b, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom b) = b :=
     fun b => congrArg (fun q => q.hom b) (Scheme.ΓSpecIso (CommRingCat.of A)).hom_inv_id
   rw [e]

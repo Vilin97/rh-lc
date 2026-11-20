@@ -57,7 +57,7 @@ theorem thetaInt_smul {θ : InfFam D} {V : HSp D} (ω : G D n →* Module.End �
 
 theorem phiS_of_mem {θ : InfFam D} (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) (c : ℝ) (Ψ : Mx D m n → ℂ)
     (P : PX m n) (h : tens θ τ fr (fP c P) Ψ ∈ schwartzA θ m n) : phiS θ τ fr c Ψ P = ⟨_, h⟩ := by
-  unfold phiS; rw [dif_pos h]
+  unfold phiS; rw [dite_eq_left h]
 
 theorem tens_add_smul {θ : InfFam D} (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) (c : ℝ) (Ψ : Mx D m n → ℂ)
     (A B : PX m n) (r : ℂ) :

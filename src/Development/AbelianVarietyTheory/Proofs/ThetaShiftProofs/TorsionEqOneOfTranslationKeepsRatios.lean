@@ -344,7 +344,7 @@ section Points
 
 theorem toStk_valF_gs {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (z : Sp F) (h : x z ∈ U)
     (a : Γ(X, U)) : toStk z (valF x U a) = gs x z U a := by
-  rw [valF, dif_pos ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
+  rw [valF, dite_eq_left ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
   show ((Sp F).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _)) = _
   rw [Iso.hom_inv_id_apply]

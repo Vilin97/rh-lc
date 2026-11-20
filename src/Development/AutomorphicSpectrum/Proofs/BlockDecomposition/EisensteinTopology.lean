@@ -17,7 +17,7 @@ theorem ext_mul_eq {G : Type} [Group G] (K P : Subgroup G) (f : G → ℝ)
     {p k : G} (hp : p ∈ P) (hk : k ∈ K) : ext K P f (p * k) = f p := by
   unfold ext
   have h : ∃ k' : K, p * k * (k' : G)⁻¹ ∈ P := ⟨⟨k, hk⟩, by simpa using hp⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have h1 := h.choose_spec
   have hm : k * (h.choose : G)⁻¹ ∈ P := by
     have := P.mul_mem (P.inv_mem hp) h1

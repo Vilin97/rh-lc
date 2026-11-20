@@ -90,11 +90,11 @@ theorem seam_coords : ∀ {D : D7} {X : Fields} (s : Seam D X), s.Ok → ∀ (δ
     unfold onV
     by_cases h' : ∃ x, embH (fun τ : D.what₂.Tau => TaylorLogMetric.embT D τ) δ x = v
     · have h := hex.2 h'
-      rw [dif_pos h, dif_pos h']
+      rw [dite_eq_left h, dite_eq_left h']
       congr 1
       apply embH_injective (X.embC s.σ₀) hδ
       rw [h.choose_spec, (hcomp _ v).2 h'.choose_spec]
     · have h : ¬ ∃ y, embH (X.embC s.σ₀) δ y = fun τ => v (s.iT τ) := fun h => h' (hex.1 h)
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.TwU.SeamEmb

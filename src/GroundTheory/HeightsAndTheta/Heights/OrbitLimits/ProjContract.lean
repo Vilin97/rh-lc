@@ -50,7 +50,7 @@ theorem isIntersectionTheory (I : AI.I1.IFamily F ι) (hI : AI.I1.IsFieldInterse
     have h3 := (FieldNumbers.IntNumBase.full F K ι P hP h0).2
     have h4 : FieldNumbers.resDeg P = Module.finrank F
         (@FieldNumbers.homFracDegZero _ _ _ _ _ P hP.isPrime) := by
-      rw [FieldNumbers.resDeg, dif_pos hP.isPrime]
+      rw [FieldNumbers.resDeg, dite_eq_left hP.isPrime]
     rw [h1, ← h2, h3, h4]
   cut P n hP hn bf bg f g hf hg hfP hgP bs := by
     have hd := (FieldNumbers.relDim_eq_iff_hasRelDim P (n + 1)).mp hn

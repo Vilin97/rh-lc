@@ -94,7 +94,7 @@ theorem UpperTheory.Gal.Join.twExp :
       ext y
       rfl
     unfold trIn
-    rw [dif_pos hst, hfeq, hzero]
+    rw [dite_eq_left hst, hfeq, hzero]
   obtain ⟨χ, hχ, hN⟩ := hex
   have hNst : ∀ t, ∀ y ∈ N χ, r t y ∈ N χ := by
     intro t y hy

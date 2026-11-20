@@ -10,7 +10,7 @@ open AlgebraicGeometry CategoryTheory NumberField ReciprocityTheory.ChartRestric
 theorem valAt'_spMap {A : Type} [CommRing A] (ψ : A →+* ℂ) (a : A) :
     valAt' (spMap ψ) ⊤ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv a) = ψ a := by
   unfold valAt'
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   unfold valAt
   have h1 : (spMap ψ).appLE ⊤ ⊤ (by simp) = (spMap ψ).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
@@ -28,7 +28,7 @@ private lemma app_lemma_0 {A : Type} [CommRing A] (ψ : A →+* ℂ) (a : A) :
     (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom ((spMap ψ).appTop ((Scheme.ΓSpecIso (CommRingCat.of A)).inv a)) = ψ a := by
   have h0 := valAt'_spMap ψ a
   unfold valAt' at h0
-  rw [dif_pos (by simp)] at h0
+  rw [dite_eq_left (by simp)] at h0
   unfold valAt at h0
   have h1 : (spMap ψ).appLE ⊤ ⊤ (by simp) = (spMap ψ).appTop := by
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
@@ -42,7 +42,7 @@ private lemma vEq_lemma {A : Type} [CommRing A] (ψ : A →+* ℂ) {V : (Sp A).O
     (e : ⊤ ≤ spMap ψ ⁻¹ᵁ V) (s : Γ(Sp A, V)) :
     valAt' (spMap ψ) V s = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom ((spMap ψ).appLE V ⊤ e s) := by
   unfold valAt'
-  rw [dif_pos e]
+  rw [dite_eq_left e]
   rfl
 
 private lemma preMono_lemma_8 {A : Type} [CommRing A] (ψ : A →+* ℂ) {V W : (Sp A).Opens} (hVW : V ≤ W) :

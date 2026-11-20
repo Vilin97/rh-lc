@@ -24,7 +24,7 @@ theorem sum_ebox (f : ι → ℕ → ℝ) (hf : ∀ i, f i 0 = 1) (s : Finset ι
   rw [Finsupp.prod_of_support_subset _ (Finsupp.support_indicator_subset s g) _ (fun i _ => hf i),
     ← Finset.prod_attach s]
   refine Finset.prod_congr rfl fun i _ => ?_
-  rw [Finsupp.indicator_apply, dif_pos i.2]
+  rw [Finsupp.indicator_apply, dite_eq_left i.2]
 
 theorem mem_ebox_support {v w : ι →₀ ℕ} : v ∈ ebox w.support w ↔ v ≤ w := by
   rw [mem_ebox, Finsupp.le_def]

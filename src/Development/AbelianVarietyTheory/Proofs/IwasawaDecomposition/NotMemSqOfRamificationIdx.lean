@@ -440,7 +440,7 @@ theorem exists_twDat_stagesOn (X : Stages) (f : Fr X.B.toPre) (pl : Finset ℕ) 
       IsPsi (H := X.toD7.host) (X.toD7.ntw.l i) (Q i) (settingChar ha A Q k ψ ι i) ∧
       (settingChar ha A Q k ψ ι i).OrderDvd (X.toD7.ntw.l i ^ k i) ∧
       Chr.IsTwist X.toD7.host (offSet X.B.toPre) (settingChar ha A Q k ψ ι i) := fun i hi => by
-    rw [settingChar, dif_pos hi]
+    rw [settingChar, dite_eq_left hi]
     exact pickChar_spec ha hi (ι i) fun p hp => hA i p (Or.inl hp)
   have h2 : ∀ w ∈ Wt,
       TwProp X.B.toPre (X.B.places.resChar w) (k (s w)) (Q (s w)) (settingChar ha A Q k ψ ι (s w)) := fun w hw => by

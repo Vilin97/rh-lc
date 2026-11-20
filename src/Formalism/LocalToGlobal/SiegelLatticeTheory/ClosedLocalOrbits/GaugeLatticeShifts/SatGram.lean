@@ -826,7 +826,7 @@ theorem card_typ (hN : GCount X) (i : Fin 2) :
       Formalism.L2.SG.TypedSets.IsTyped X.B.I.F (D.host.g 0) (D.host.g 1) v := by
     intro v
     unfold Formalism.L2.SG.TypedSets.typSet
-    rw [dif_pos hfin, Set.Finite.mem_toFinset]
+    rw [dite_eq_left hfin, Set.Finite.mem_toFinset]
     rfl
   have hinj : ∀ a b : Fin 2, D.host.g a = D.host.g b → a = b := by
     intro a b h

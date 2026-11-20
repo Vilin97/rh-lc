@@ -118,14 +118,14 @@ theorem decl (h : Canon L HW R X) (hJ : AdmissibleParameterJ.ConclusionJa D) (i 
   have he : epJ D = hJ.choose := epJ_eq hJ
   have hc : GlobalTheory.IndefiniteRowSideFullHecke.SplitPlaceTypes.SplitRowPrime D.host (D.nd.l i) ∧ ∃ dc : TruncatedSeriesCountingIdentities.Decl D i, EmbeddingTypes.hypDecl i dc (epJ D) :=
     ⟨hsp, by rw [he]; exact hex⟩
-  rw [h.dc i (not_inert hs), dcOf, dif_pos hc, ← he]
+  rw [h.dc i (not_inert hs), dcOf, dite_eq_left hc, ← he]
   exact hc.2.choose_spec
 
 theorem col_empty (h : Canon L HW R X) (i : D.nd.Loc)
     (hn : ¬ GlobalTheory.IndefiniteRowSideFullHecke.SplitPlaceTypes.SplitRowPrime D.host (D.nd.l i)) : (X.dc i).col = ∅ := by
   by_cases hi : TwistedPlaces.InertK D (D.nd.l i)
   · exact h.data.col i hi
-  · rw [h.dc i hi, dcOf, dif_neg (fun c => hn c.1)]
+  · rw [h.dc i hi, dcOf, dite_eq_right (fun c => hn c.1)]
     rfl
 
 theorem cLL_le (L : SizeData₂ D) (i : D.nd.Loc) (u : HeightOneSpectrum (𝓞 D.host.E)) (U : Finset ℤ) (U' : Set ℤ)

@@ -291,7 +291,7 @@ private theorem loc_two {K : Type} [Field K] [CharZero K] (τ : K)
     · have e := hf t ((hN t).mpr ht) 1
       rwa [mul_one] at e
     · have hex : ∃ y : Kˣ, hs D (y : K) ≠ 1 := ⟨t, ht⟩
-      rw [hb, dif_pos hex]
+      rw [hb, dite_eq_left hex]
       have hc : hs D ((hex.choose : Kˣ) : K) ≠ 1 := hex.choose_spec
       have hmem : t * hex.choose⁻¹ ∈ NE τ := by
         rw [hN, hm, (hv t).resolve_left ht, hinv _ hc]
@@ -307,7 +307,7 @@ private theorem loc_two {K : Type} [Field K] [CharZero K] (τ : K)
     rw [finsum_congr e, T1]
     split_ifs with hex
     · rfl
-    · rw [hb, dif_neg hex, add_zero]
+    · rw [hb, dite_eq_right hex, add_zero]
   · have e : ∀ q : Kˣ ⧸ NE τ, hs D ((q.out : Kˣ) : K) * f q.out =
         if hs D ((q.out : Kˣ) : K) = 1 then f 1 else -b := by
       intro q
@@ -319,7 +319,7 @@ private theorem loc_two {K : Type} [Field K] [CharZero K] (τ : K)
     rw [finsum_congr e, T2]
     split_ifs with hex
     · ring
-    · rw [hb, dif_neg hex]
+    · rw [hb, dite_eq_right hex]
       ring
 
 open Classical in
@@ -455,11 +455,11 @@ theorem sumT : SumT := by
       refine ⟨fun v => if h : v ∈ s then (hE v h).choose else 1, fun v => ?_⟩
       beta_reduce
       by_cases hv : v ∈ s
-      · rw [if_pos hv, dif_pos hv]
+      · rw [if_pos hv, dite_eq_left hv]
         have hc := (hE v hv).choose_spec
         rw [hDv]
         exact (hs_cases _ _).resolve_left hc
-      · rw [if_neg hv, dif_neg hv, Units.val_one, hs_iff]
+      · rw [if_neg hv, dite_eq_right hv, Units.val_one, hs_iff]
         exact ⟨1, 0, by ring⟩
     have hfin : {v | hs (cv v (τ ^ 2 - 4)) ((y v : (Kv v)ˣ) : Kv v) ≠ 1}.Finite := by
       apply s.finite_toSet.subset
@@ -488,7 +488,7 @@ theorem sumT : SumT := by
       · rw [if_neg hv]
         exact ⟨fun h => absurd rfl h, fun h => absurd h hv⟩
   have hb0 : ∀ v, ¬ (∃ y : (Kv v)ˣ, hs (cv v τ ^ 2 - 4) (y : Kv v) ≠ 1) → b v = 0 :=
-    fun v h => by rw [hbdef, dif_neg h]
+    fun v h => by rw [hbdef, dite_eq_right h]
   have hSg : ∀ g, ∀ v ∈ S g, v ∉ D.Sg := fun g v hv hvs => (hS g v).mp hv (hsplit v hvs _)
   obtain ⟨A1, A2⟩ := abs_sum D.Sg (fun g : Fˣ ⧸ NE τ => TPos ((g.out : Fˣ) : F)) S
     (fun v => ∃ y : (Kv v)ˣ, hs (cv v τ ^ 2 - 4) (y : Kv v) ≠ 1) (fun v => f v 1) b hab hb0 inj hSg ev surj

@@ -97,7 +97,7 @@ theorem unifIdele_exists_chiAt : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   refine ⟨hex, ?_, ?_⟩
   · intro hun x hx
     have hc : IsUnramAt σ χ P ∧ ∃ x, IsUnifIdele σ P x := ⟨hun, hex⟩
-    rw [chiAt, dif_pos hc]
+    rw [chiAt, dite_eq_left hc]
     have hy := hc.2.choose_spec
     set y := hc.2.choose
     obtain ⟨e', f', p', hχ⟩ := hun

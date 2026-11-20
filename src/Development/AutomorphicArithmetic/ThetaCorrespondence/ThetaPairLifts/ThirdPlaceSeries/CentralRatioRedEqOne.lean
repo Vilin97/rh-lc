@@ -33,7 +33,7 @@ theorem centralRatio_red_eq_one_alt : ∀ {D : D7} {L : SizeData₂ D} {hT : Gat
   by_cases hS : Formalism.IndefR.Lev.finE (Yc D 0) (show GA D (Yc D 0) from z) ∈ Formalism.L2.DIV.St (W.Q.Rl.βY 0)
   swap
   · unfold Formalism.L2.DIV.redFn Formalism.L2.DIV.ext1
-    rw [dif_neg hS]
+    rw [dite_eq_right hS]
   rcases Nat.eq_zero_or_pos (Yc D 0).rank with h0 | hpos
   · apply Units.ext; ext i; exact absurd i.2 (by omega)
   obtain ⟨c, hc⟩ := GlobalTheory.T.center_adelicUnitaryGroup_finitePart_scalar (Yc D 0) (show GA D (Yc D 0) from z) hzc hzf

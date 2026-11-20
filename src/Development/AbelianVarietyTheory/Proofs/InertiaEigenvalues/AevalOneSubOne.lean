@@ -190,8 +190,8 @@ theorem det_factor {ch : Set (PlE D.host)} {sg : Bool} (hrel : Rel Y i j b ch sg
       rw [hχ, hχ']
       refine Finset.prod_congr rfl fun q' _ => ?_
       by_cases h1 : P q' ∈ (Q.erase (P' q)).erase Pb
-      · rw [dif_pos h1, dif_pos (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase h1))]
-      · rw [dif_neg h1, hJ₀ q' fun h => h1 ((hQ'.mem_iff hA.2.1 q').2 (Finset.mem_union_right _ h))]
+      · rw [dite_eq_left h1, dite_eq_left (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase h1))]
+      · rw [dite_eq_right h1, hJ₀ q' fun h => h1 ((hQ'.mem_iff hA.2.1 q').2 (Finset.mem_union_right _ h))]
         simp
     have hy : psiAt sg χ' (Y.delU i ((Q.erase (P' q)).erase Pb) M (σ q)) =
         sgnProd sg u fun q' => Multiplicative.toAdd (d (P q') (σ q)) := by
@@ -199,9 +199,9 @@ theorem det_factor {ch : Set (PlE D.host)} {sg : Bool} (hrel : Rel Y i j b ch sg
           ∏ q', u q' ^ (Multiplicative.toAdd (d (P q') (σ q))).val := by
         refine (hχ' (Multiplicative.toAdd _)).trans (Finset.prod_congr rfl fun q' _ => ?_)
         by_cases h1 : P q' ∈ (Q.erase (P' q)).erase Pb
-        · rw [dif_pos h1, ← hd _ hQ'.conjCl _ h1]
+        · rw [dite_eq_left h1, ← hd _ hQ'.conjCl _ h1]
           rfl
-        · rw [dif_neg h1, hJ₀ q' fun h => h1 ((hQ'.mem_iff hA.2.1 q').2 (Finset.mem_union_right _ h)), one_pow]
+        · rw [dite_eq_right h1, hJ₀ q' fun h => h1 ((hQ'.mem_iff hA.2.1 q').2 (Finset.mem_union_right _ h)), one_pow]
       cases sg <;> simp [psiAt, sgnProd, this]
     have hstep := Coord.step (fun m hm => ht m _ (hidx m hm)) (fun m hm => hAc m _ (hidx m hm))
       (fun a => hrel M d Q (e a) hd a1 a2 (a3.mono_right (hlev a)) a4 (P' q) Pb hm1 (hQ.conjCl _ hm1 _ hPb)
@@ -449,7 +449,7 @@ theorem propABCD_of_rel : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.h
   · intro k u χ hu hχ hne T hT hw
     have hχ' : IsChi P Q u χ := fun y => by
       rw [hχ]
-      exact Finset.prod_congr rfl fun q _ => by rw [dif_pos]
+      exact Finset.prod_congr rfl fun q _ => by rw [dite_eq_left]
     have : Module.Finite (X.O i) (X.Ok i k) := X.Ok_fin i k
     have : FaithfulSMul (X.O i) (X.Ok i k) := (faithfulSMul_iff_algebraMap_injective _ _).2 (X.Ok_inj i k)
     have : IsLocalHom (algebraMap (X.O i) (X.Ok i k)) := Algebra.IsIntegral.isLocalHom _ _

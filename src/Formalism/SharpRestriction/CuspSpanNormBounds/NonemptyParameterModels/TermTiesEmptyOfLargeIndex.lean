@@ -628,7 +628,7 @@ theorem zero_of_gram_point_exists (D : D7) (u u' : D.what₂.Word) :
     ring
   refine ⟨tie_diagPt f hf, ?_⟩
   unfold Gpt Dmin
-  rw [dif_pos le_rfl, dif_pos (Nat.le_succ _), tie_diagPt_mat, hA, hB, D.conjF_eq, D.conjF_eq, map_one, hxx]
+  rw [dite_eq_left le_rfl, dite_eq_left (Nat.le_succ _), tie_diagPt_mat, hA, hB, D.conjF_eq, D.conjF_eq, map_one, hxx]
   ring
 
 end Pt0

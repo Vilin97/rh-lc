@@ -37,7 +37,7 @@ theorem heckeTrace_zero (ι : Γ →* H) (K : Subgroup H) (ξ : Representation �
   have hT : h.choose = 0 := by
     apply LinearMap.ext; intro φ; apply Subtype.ext; funext g
     rw [h.choose_spec φ g]; simp
-  rw [heckeTrace, dif_pos h, hT, map_zero]
+  rw [heckeTrace, dite_eq_left h, hT, map_zero]
 
 end HeckeTraceForms
 

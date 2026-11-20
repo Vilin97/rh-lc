@@ -38,7 +38,7 @@ theorem rrk_kap_coe (X : CData) {x : X.I.GA} (h : MemLp (fun y => ker2 X x y) 2 
     ((rrk_kap X x : X.L2) : X.I.GA → ℂ) =ᵐ[(X.I.muA X.μf).restrict X.fund] fun y => star (ker2 X x y) := by
   have h' : MemLp (fun y => star (ker2 X x y)) 2 ((X.I.muA X.μf).restrict X.fund) := h.star
   unfold rrk_kap
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   exact h'.coeFn_toLp
 
 theorem kernel_diagonal_of_L2_unfold_idempotent (X : CData) (hH : X.μf.IsHaarMeasure) (h1 : KernelL2RowsColumns X) (h2 : KerUnfold X) (h3 : KerIdem X) :

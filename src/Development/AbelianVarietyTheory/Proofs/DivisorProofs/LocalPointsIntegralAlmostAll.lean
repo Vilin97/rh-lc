@@ -35,7 +35,7 @@ theorem map_mem_UL (hU : Unr E) (w : Pl E) (γ : UE E n) :
 
 theorem locPt_val (hU : Unr E) (w : Pl E) (γ : UE E n) :
     (locPt w γ).1 = GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ.1 := by
-  rw [locPt, toSub, dif_pos (map_mem_UL hU w γ)]
+  rw [locPt, toSub, dite_eq_left (map_mem_UL hU w γ)]
 
 theorem eventually_valuation_le_one (x : E) :
     ∀ᶠ w in (cofinite : Filter (Pl E)), w.valuation E x ≤ 1 := by

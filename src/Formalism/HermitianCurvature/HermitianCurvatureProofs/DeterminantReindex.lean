@@ -54,7 +54,7 @@ lemma prod_emb {m k n : ℕ} (hkn : k = n) (d : Fin m → ℂ) (e : Fin k → Fi
   rw [← Fin.prod_univ_eq_prod_range (fun j => if h : j < m then d ⟨j, h⟩ else 1)]
   refine Finset.prod_congr rfl (fun t _ => ?_)
   have hlt : t.val < m := by have := (e t).isLt; rw [he] at this; exact this
-  rw [dif_pos hlt]; congr 1; exact Fin.ext (he t)
+  rw [dite_eq_left hlt]; congr 1; exact Fin.ext (he t)
 
 end DeterminantReindex
 

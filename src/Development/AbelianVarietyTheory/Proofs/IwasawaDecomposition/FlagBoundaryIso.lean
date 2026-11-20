@@ -23,7 +23,7 @@ def pullEqns (J : PUnit.{1} → B.ι) : X.functionFieldˣ :=
 
 theorem pullEqns_eq (J : PUnit.{1} → B.ι) {y : X} (hy : f y ∈ B.U (J PUnit.unit)) :
     pullEqns B f h J = pullEqn B f h _ hy := by
-  rw [pullEqns, dif_pos ⟨y, hy⟩]
+  rw [pullEqns, dite_eq_left ⟨y, hy⟩]
   rfl
 
 theorem val_pullEqn (i : B.ι) {y : X} (hy : f y ∈ B.U i) (hg : f (genericPoint X) ∈ B.U i) :

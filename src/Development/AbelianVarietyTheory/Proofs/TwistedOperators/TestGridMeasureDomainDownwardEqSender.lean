@@ -92,7 +92,7 @@ theorem meas_down : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Ty
           (lev D.sp.cm (Yc D (j + 1)).gram (R.βY (j + 1)) (R.datYt t (j + 1) R.triv)) := levCol_lt R.toLevCh t h
       have e0 : G.meas t 0 (j + 1) = Node.MeasDat.cast (nodeY_eq_chainVertexAtRowZero_of_lt R h) ⟨R.νY t (j + 1), R.fdY t (j + 1)⟩ := by
         show meas0 R t j = _
-        rw [meas0, dif_pos h]
+        rw [meas0, dite_eq_left h]
       rw [e0]
       rcases Nat.lt_or_ge (j + 1 + 1) D.R.m with h' | h'
       · have hc := hmod.νY t (j + 1) h'
@@ -110,7 +110,7 @@ theorem meas_down : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Ty
       have hK : HEq (levJ G' t (.grid 0 (j + 1))) (lev D.sp.cm D.sp.X'.gram R.βX (R.datXt t)) := levCol_top R.toLevCh t h
       have e0 : G.meas t 0 (j + 1) = Node.MeasDat.cast (nodeX_eq_chainVertexAtRowZero_of_ge R h) ⟨R.νX t, R.fdX t⟩ := by
         show meas0 R t j = _
-        rw [meas0, dif_neg h]
+        rw [meas0, dite_eq_right h]
       rw [e0]
       have hc := hmod.νX t
       rw [if_pos (show (GlobalTheory.ChiGrid.Node.grid 0 (j + 1)).neg D.R.m = 0 by simp only [GlobalTheory.ChiGrid.Node.neg]; omega)] at hAt

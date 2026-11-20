@@ -38,9 +38,9 @@ theorem mem_span_of_coeff {R : Type*} [CommRing R] (F : PowerSeries R) (t : R) (
   ext m
   rw [map_add (f := _), coeff_mul_C, coeff_mul_X_pow', coeff_mk]
   by_cases hm : m < B'
-  · rw [dif_pos hm, if_neg (by omega), add_zero, mul_comm]
+  · rw [dite_eq_left hm, if_neg (by omega), add_zero, mul_comm]
     exact ((h m hm).choose_spec).symm
-  · rw [dif_neg hm, zero_mul, zero_add, if_pos (by omega), coeff_mk, Nat.sub_add_cancel (by omega)]
+  · rw [dite_eq_right hm, zero_mul, zero_add, if_pos (by omega), coeff_mk, Nat.sub_add_cancel (by omega)]
 
 section Dv
 variable (W : LocWach PD LL O v n)

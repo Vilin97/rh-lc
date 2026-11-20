@@ -136,13 +136,13 @@ theorem ortho (k r : ℕ) (hk : 1 ≤ k) (i j : Fin (r + 1)) :
   · rw [dif_pos hi, dif_pos hj, star_bvec, dotProduct_bvec]
     simp only [bvec_apply_eq_ite_val, esI, Fin.ext_iff, Fin.val_mk]
     split_ifs <;> first | rfl | (exfalso; omega)
-  · rw [dif_pos hi, dif_neg hj, star_bvec, bvec_dotProduct, if_neg (fun (e : i = j) => hj (e ▸ hi))]
+  · rw [dif_pos hi, dite_eq_right hj, star_bvec, bvec_dotProduct, if_neg (fun (e : i = j) => hj (e ▸ hi))]
     simp only [epsV_apply_eq, bvec_apply_eq_ite_val, wI, esI, Fin.val_mk, Fin.val_zero, Fin.val_last]
     split_ifs <;> first | (exfalso; omega) | simp
-  · rw [dif_neg hi, dif_pos hj, dotProduct_bvec, if_neg (fun (e : i = j) => hi (e ▸ hj))]
+  · rw [dite_eq_right hi, dif_pos hj, dotProduct_bvec, if_neg (fun (e : i = j) => hi (e ▸ hj))]
     simp only [Pi.star_apply, epsV_apply_eq, bvec_apply_eq_ite_val, wI, esI, Fin.val_mk, Fin.val_zero, Fin.val_last]
     split_ifs <;> first | (exfalso; omega) | simp
-  · rw [dif_neg hi, dif_neg hj, if_pos (Fin.ext (by omega))]
+  · rw [dite_eq_right hi, dite_eq_right hj, if_pos (Fin.ext (by omega))]
     have hv : (wI k r 0).val ≠ (wI k r (Fin.last k)).val := by
       simp only [wI, Fin.val_mk, Fin.val_zero, Fin.val_last]
       omega

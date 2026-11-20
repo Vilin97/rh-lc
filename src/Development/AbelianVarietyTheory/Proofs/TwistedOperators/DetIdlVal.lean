@@ -24,7 +24,7 @@ open Classical in
 
 theorem detIdl_val {e : AE D} (he : e * e = e) (V : HSp D) (g : GA D V) :
     ((detIdl e V g : (AE D)ˣ) : AE D) = e * (Formalism.L2.Theta.mt V g).det + (1 - e) := by
-  rw [detIdl, dif_pos he]; rfl
+  rw [detIdl, dite_eq_left he]; rfl
 
 def splitScal (G : GridData L sc) (p : Pair T) (w : Pl D.host.E) (g : GA D (G.pS p)) (h : GA D (G.pT p)) : ℂ :=
   ((splitFacO (G.chrS p) (G.chrT p) (detIdl (idemAt w) (G.pS p) g) (detIdl (idemAt w) (G.pT p) h) : Circle) : ℂ)

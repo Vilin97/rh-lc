@@ -127,7 +127,7 @@ theorem finrank_funField_pt (hrel : ∃ i, (X i : Poly k N) ∉ pp) :
       simp only [AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, map_div₀, hΦ, aeval_pt_oneBlock]
       rfl
   unfold FieldNumbers.resDeg
-  rw [dif_pos (inferInstance : P.IsPrime), ← hmap]
+  rw [dite_eq_left (inferInstance : P.IsPrime), ← hmap]
   exact ((FieldNumbers.homFracDegZero P).equivMap _).toLinearEquiv.finrank_eq.symm
 
 end InterNumPointDeg

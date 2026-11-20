@@ -26,7 +26,7 @@ theorem qpIs_qpSet : ∀ {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f
   refine Iff.trans (and_congr_right fun _ => exists_congr fun P => and_congr_right fun _ => not_congr (hx P)) ?_
   show (p.Prime ∧ ∃ P, (p : 𝓞 B.fields.E) ∈ P.asIdeal ∧ ¬ (w.I.xi a).UnrAt P) ↔
     p.Prime ∧ ∃ P ∈ Formalism.L2.Col.QE w.I.sel (w.I.tup a : Formalism.L2.DIV.Chr _ _ _), (p : 𝓞 B.fields.E) ∈ P.asIdeal
-  rw [Formalism.L2.Col.QE, dif_pos hf]
+  rw [Formalism.L2.Col.QE, dite_eq_left hf]
   refine and_congr_right fun _ => ⟨?_, ?_⟩
   · rintro ⟨P, hp, hP⟩
     refine ⟨w.I.sel (P.under (𝓞 B.fields.F)),

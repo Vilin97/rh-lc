@@ -84,7 +84,7 @@ theorem cmp_of_isCocycle (hW : ⨆ i, W i = ⊤) {c : ∀ i i' : J, Γ(Z, W i �
     (hc : IsCocycle W c) :
     cmp s W hW c = (resEquiv s W hW).symm (H1.mk _ ⟨fc s W c, fc_mem s W hc⟩) := by
   unfold cmp
-  rw [dif_pos (fc_mem s W hc)]
+  rw [dite_eq_left (fc_mem s W hc)]
 
 theorem restrict_cmp (hW : ⨆ i, W i = ⊤) {c : ∀ i i' : J, Γ(Z, W i ⊓ W i')}
     (hc : IsCocycle W c) :

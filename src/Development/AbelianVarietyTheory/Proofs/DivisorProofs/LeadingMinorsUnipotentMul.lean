@@ -28,11 +28,11 @@ theorem lu_minor_gen {R : Type} [CommRing R] {m l : ℕ} (n : Low m → R) (M : 
   have hU : ((uniR n).submatrix e e).det = 1 := by
     rw [Matrix.det_of_lowerTriangular]
     · refine Finset.prod_eq_one fun i _ => ?_
-      rw [Matrix.submatrix_apply, uniR_apply, dif_neg (lt_irrefl _), if_pos rfl]
+      rw [Matrix.submatrix_apply, uniR_apply, dite_eq_right (lt_irrefl _), if_pos rfl]
     · intro i j hij
       have hij' : i < j := hij
       have h2 : e i < e j := hmono hij'
-      rw [Matrix.submatrix_apply, uniR_apply, dif_neg (not_lt.mpr h2.le), if_neg h2.ne]
+      rw [Matrix.submatrix_apply, uniR_apply, dite_eq_right (not_lt.mpr h2.le), if_neg h2.ne]
   rw [hsplit, Matrix.det_mul, hU, one_mul]
 
 theorem det_leading_uniR_mul : ∀ (R : Type) [CommRing R] (m : ℕ) (n : Low m → R) (M : Matrix (Fin m) (Fin m) R), M.BlockTriangular id → ∀ l : Fin (m + 1), ((uniR n * M).submatrix (Fin.castLE l.is_le) (Fin.castLE l.is_le)).det = (M.submatrix (Fin.castLE l.is_le) (Fin.castLE l.is_le)).det := by

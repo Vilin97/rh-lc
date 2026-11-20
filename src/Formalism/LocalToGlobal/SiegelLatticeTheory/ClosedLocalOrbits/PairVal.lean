@@ -237,7 +237,7 @@ def ptOf (t : Term D u u' F0 what₂) : Point D.host.E (D.R.rS + 1) :=
 
 theorem ptOf_spec (t : Term D u u' F0 what₂) (h : ∃ w, t.atPt w ∧ t.relevant) : t.atPt (ptOf t) := by
   unfold ptOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec.1
 
 theorem ptOf_GPoint_iff (hA : ∀ t : Term D u u' F0 what₂, t.G ≠ 0 → t.relevant → ∃ w, t.atPt w)
@@ -254,7 +254,7 @@ theorem ptOf_GPoint_iff (hA : ∀ t : Term D u u' F0 what₂, t.G ≠ 0 → t.re
     · exfalso
       apply hne
       unfold ptOf
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       exact Gpt_junkPoint_eq_zero D u u'
 
 def cTerm (vR : Term D u u' F0 what₂ → ℝ) (t : Term D u u' F0 what₂) : ℂ :=
@@ -264,7 +264,7 @@ theorem cTerm_of_atPt (vR : Term D u u' F0 what₂ → ℝ) (t : Term D u u' F0 
     (hw : t.atPt w) (hU : ∀ w', t.atPt w' → w' = w) : cTerm vR t = cAt vR t w := by
   have h : ∃ w, t.atPt w := ⟨w, hw⟩
   unfold cTerm
-  rw [dif_pos h, hU _ h.choose_spec]
+  rw [dite_eq_left h, hU _ h.choose_spec]
 
 variable (D u u' F0 what₂)
 
@@ -306,7 +306,7 @@ def CdScaleExists : Prop := ∀ n (ε : Fin n → Bool), ∃ c : NNReal, 0 < c �
 theorem cdScaleOf_tie (h : CdScaleExists D) (n : ℕ) (ε : Fin n → Bool) :
     0 < cdScaleOf D n ε ∧ CdTieAt D n ε (cdScaleOf D n ε) := by
   unfold cdScaleOf
-  rw [dif_pos (h n ε)]
+  rw [dite_eq_left (h n ε)]
   exact (h n ε).choose_spec
 
 theorem cdScaleExists_of_tie (h : Formalism.BasicNotions.cdScaleTie D) : CdScaleExists D := by

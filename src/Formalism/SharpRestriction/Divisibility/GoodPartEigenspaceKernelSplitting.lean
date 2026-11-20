@@ -438,7 +438,7 @@ theorem logLamC_cOf {D : D7} {Z : DivX D} (E : EigIdx D Z) (j : ℕ) (hj : j ∈
     (hπ : D.what₂.isot j π ≠ ⊥) (s : D.what₂.LL →+* ℂ) : DV.logLamC E j (E.cOf π) s = Z.logLam j π s := by
   have h : ∃ π', E.cOf π' = E.cOf π ∧ D.what₂.isot j π' ≠ ⊥ := ⟨π, rfl, hπ⟩
   unfold DV.logLamC
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact E.lam_const j hj _ _ s h.choose_spec.2 hπ h.choose_spec.1
 
 theorem MjPart_ne_bot (hR : ThetaRationalityOverField D Z Y) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (π : D.what₂.FT)

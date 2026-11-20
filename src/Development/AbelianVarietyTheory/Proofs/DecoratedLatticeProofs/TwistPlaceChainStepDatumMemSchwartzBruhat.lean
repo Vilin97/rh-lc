@@ -58,7 +58,7 @@ theorem viaRed_mem_SB {D : D7} {v : FinPl D} {k : Type} [CommRing k] {a b : ℕ}
     unfold GlobalTheory.StepVec.viaRed
     by_cases hx : ∀ i j, x i j ∈ v.adicCompletionIntegers D.host.F
     · have hy' : ∀ i j, y i j ∈ v.adicCompletionIntegers D.host.F := fun i j => (hint i j).2 (hx i j)
-      rw [dif_pos hy', dif_pos hx]
+      rw [dite_eq_left hy', dite_eq_left hx]
       congr 1
       ext i j
       simp only [Matrix.of_apply]

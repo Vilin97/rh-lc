@@ -120,7 +120,7 @@ theorem absFibreSum_ae (R : AnLogRes P J e) (Ψ : (((k : K) → ι k) → ℂ) �
   obtain ⟨γ, hγ, hval⟩ := exists_sheet_brW R Ψ L A s hP hL hs x hx.2
   rw [show brQ R Ψ x = y from hx.1] at hγ hval
   unfold sheetDensity
-  rw [dif_pos ⟨γ, hγ⟩]
+  rw [dite_eq_left ⟨γ, hγ⟩]
   exact congrArg abs
     ((hind _ _ _ (Exists.choose_spec (⟨γ, hγ⟩ : ∃ γ, IsSheet P Ψ y (brW R Ψ x) γ)) hγ).trans hval)
 

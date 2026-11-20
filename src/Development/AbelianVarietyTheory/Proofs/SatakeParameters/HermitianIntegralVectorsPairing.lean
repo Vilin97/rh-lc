@@ -108,7 +108,7 @@ open Classical in
 noncomputable def redL (x : L) : Res L := if h : x ∈ OV L then IsLocalRing.residue (OV L) ⟨x, h⟩ else 0
 
 theorem redL_coe (x : OV L) : redL (x : L) = IsLocalRing.residue (OV L) x := by
-  unfold redL; rw [dif_pos x.2]
+  unfold redL; rw [dite_eq_left x.2]
 
 theorem redL_of_mem {x : L} (hx : x ∈ intL L) : redL x = IsLocalRing.residue (OV L) ⟨x, hx⟩ :=
   redL_coe ⟨x, hx⟩

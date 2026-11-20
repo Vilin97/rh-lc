@@ -358,12 +358,12 @@ theorem lamTrue_sgTrue_detShift (hW : W.Ok) (u : Word) (τ : X.Tau) :
   have hN1 : 0 < R.N R.m := by omega
   have hN2 : 0 < R.N R.m - 1 := by omega
   unfold DomWeight.detShift
-  rw [dif_pos hN1, dif_pos hN2]
+  rw [dite_eq_left hN1, dite_eq_left hN2]
   apply Int.cast_injective (α := ℚ)
 
   rw [Wts.lamTrue_eq, Wts.lamN_eq W u le_rfl]
   have hlt : ¬ R.N R.m - 1 < R.k := by omega
-  rw [dif_neg hlt]
+  rw [dite_eq_right hlt]
   have e1 : (R.N R.m - 1 - R.k) / (R.t + 1) = R.m - 1 := by
     have : R.N R.m - 1 - R.k = (R.m - 1) * (R.t + 1) + R.t := by omega
     rw [this]

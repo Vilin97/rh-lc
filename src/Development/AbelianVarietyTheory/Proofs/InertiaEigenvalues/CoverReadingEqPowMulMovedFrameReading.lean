@@ -64,11 +64,11 @@ theorem perFr_move (X X' : Data E r) (hΨ : ∀ τ, τ ∈ X'.Ψ ↔ τ ∈ X.Ψ
   by_cases h₁ : τ ∈ X.Ψ
   · rw [dif_pos h₁, dif_pos ((hΨ τ).2 h₁), hx τ h₁, GlobalTheory.PerMove.emb_mulVec, Matrix.mul_inv_rev, Matrix.mulVec_mulVec,
       Matrix.mul_assoc, Matrix.nonsing_inv_mul _ (hu _), Matrix.mul_one]
-  · rw [dif_neg h₁, dif_neg (mt (hΨ τ).1 h₁)]
+  · rw [dite_eq_right h₁, dite_eq_right (mt (hΨ τ).1 h₁)]
     by_cases h₂ : conjEmb τ ∈ X.Ψ
     · rw [dif_pos h₂, dif_pos ((hΨ _).2 h₂), hx _ h₂]
       simp only [GlobalTheory.PerMove.emb_mulVec, GlobalTheory.PerMove.col_mul, GlobalTheory.PerMove.hermC_unitary _ _ _ hγ]
-    · rw [dif_neg h₂, dif_neg (mt (hΨ _).1 h₂)]
+    · rw [dite_eq_right h₂, dite_eq_right (mt (hΨ _).1 h₂)]
 
 end Lattice
 

@@ -15,7 +15,7 @@ theorem solve_spec {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (f : (Fi
     (he : e ∈ LinearMap.range f) : f (solve f e) = e := by
   have hex : ∃ y, f y = e := he
   unfold solve
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem lin_single {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (v : Fin n → E) (k : Fin n) :

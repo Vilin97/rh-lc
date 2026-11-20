@@ -24,12 +24,12 @@ theorem valR_app_eq {A : Type} [CommRing A] {X X' : Scheme.{0}} (z : Sp A ⟶ X)
   unfold valR
   by_cases h : ⊤ ≤ z ⁻¹ᵁ g ⁻¹ᵁ U
   · have h' : ⊤ ≤ (z ≫ g) ⁻¹ᵁ U := h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     have e := Scheme.Hom.appLE_comp_appLE z g U (g ⁻¹ᵁ U) ⊤ le_rfl h
     rw [Scheme.Hom.app_eq_appLE]
     exact congrArg (fun q => (Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom (q.hom f)) e
   · have h' : ¬ ⊤ ≤ (z ≫ g) ⁻¹ᵁ U := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem differentiableOn_ev_up : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H} {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l} {c : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l} (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c (algebraMap (𝓞 c.F) c.F)) (σ : c.F →+* ℂ) (Y : Scheme.{0}) (q : Y ⟶ Sp (𝓞 c.F)) (jm : Y ⟶ Z.X) (hq : jm ≫ Z.s = q) (n : ℕ) (ch : AlgChart q (σ.comp (algebraMap (𝓞 c.F) c.F)) n) (W : (gen Z).Opens) (f : Γ(gen Z, W)), DifferentiableOn ℂ (ev (genStr Z) σ W f ∘ up jm hq σ ∘ ch.e.symm) (ch.e.target ∩ ch.e.symm ⁻¹' (up jm hq σ ⁻¹' ptsIn (genStr Z) σ W)) := by
   intro E _ _ _ H Dw l Xo c Z σ Y q jm hq n ch W f v hv

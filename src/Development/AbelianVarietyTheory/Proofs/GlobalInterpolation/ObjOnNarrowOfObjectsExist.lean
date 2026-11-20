@@ -358,7 +358,7 @@ theorem over_of_from {C : FC} {s : Scale} {H : Host R} (hK : H.ccK = ⊤)
     rw [← this]
     exact ⟨hcp, hh⟩
   · rw [hB, Formalism.HC.Frame.A.val_injective _ e1, Formalism.HC.Frame.A.val_injective _ e2]
-  · rw [he u l.1, dif_pos l.2]
+  · rw [he u l.1, dite_eq_left l.2]
     rfl
 
 def ObjExNarrow (Q : PtProp) : Prop :=
@@ -769,7 +769,7 @@ theorem over_iff {C : FC} {s : Scale} {H : Host R} {q0 : ℕ} {bs : R.A → R.A 
         exact ⟨fun ⟨u, hu⟩ => ⟨e u, Finset.mem_univ _, by rw [e.symm_apply_apply, hu]⟩, fun ⟨w, _, hw⟩ => ⟨_, hw⟩⟩
       rw [← this]
       exact ⟨hcp, hh⟩
-    · rw [he u l.1, dif_pos l.2]
+    · rw [he u l.1, dite_eq_left l.2]
       rfl
 
 theorem range_over_iff {C : FC} (hC : Std C) {s : Scale} {H : Host R} {hK : H.ccK = ⊤}

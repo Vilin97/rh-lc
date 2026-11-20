@@ -56,6 +56,6 @@ theorem fFun_trM : ∀ {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpac
       obtain ⟨g, rfl⟩ := (glTrEquiv j cD).surjective h₂
       rw [invT_glTrEquiv_ffun, ← hX] at H
       exact h ⟨g, trM_injective j rA cD H⟩
-    rw [fFun, fFun, dif_neg h, dif_neg h']
+    rw [fFun, fFun, dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.PureMatch.Transport

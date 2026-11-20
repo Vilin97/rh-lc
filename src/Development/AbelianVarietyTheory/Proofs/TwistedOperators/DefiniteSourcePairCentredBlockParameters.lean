@@ -25,13 +25,13 @@ theorem lamAt_tail (n : ℕ) (c : Fin R.m) (hn : n + 1 = R.k + c) : lamAt h n = 
   have hk := R.m_add_three_le_k
   have hc := c.2
   unfold lamAt
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   congr 2
   exact Fin.ext (by simp only; omega)
 
 theorem lamAt_head (n : Fin (R.k - 1)) : lamAt h n = h.v n := by
   unfold lamAt
-  rw [dif_pos n.2]
+  rw [dite_eq_left n.2]
 
 theorem lamAt_lt_of_lt {a b : ℕ} (hab : a < b) (hb : b < R.r) : lamAt h b < lamAt h a := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_lt hab

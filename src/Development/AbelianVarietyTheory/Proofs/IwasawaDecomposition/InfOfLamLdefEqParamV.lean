@@ -55,7 +55,7 @@ theorem infOf_lamLdef_eq_paramV : ∀ (D : D7) (j : Fin D.R.m) (τ : D.what₂.T
     have hr : (D.sp.V ((j : ℕ) + 1)).rank = D.R.nV := D.sp.V_rank _ (by omega) (by omega)
     exact transport hr ⟨_, h0⟩
   have hl : Bridge.IsLamPrime (D := D) (Bridge.lamLdef (D := D) D.R.nV ((j : ℕ) + 1) τ) ((j : ℕ) + 1) τ := by
-    unfold Bridge.lamLdef; rw [dif_pos hex]; exact hex.choose_spec
+    unfold Bridge.lamLdef; rw [dite_eq_left hex]; exact hex.choose_spec
   set lam := Bridge.lamLdef (D := D) D.R.nV ((j : ℕ) + 1) τ
   obtain ⟨hj, W, hWk, hWm, hWt, hWj, hWe, hWv, hWb, hw⟩ := hl
   have hWn : W.nV = D.R.nV := by

@@ -24,7 +24,7 @@ theorem rootNorm_castAdd {N j : ℕ} (hpq : j + (N - j) = N) (cW cΩ : ℝ)
     rootNorm N j cW cΩ GW GΩ Z (Fin.cast hpq (Fin.castAdd (N - j) i)) =
       GlobalTheory.GradedNorm.grSq (wLine cW GW Z) i := by
   unfold rootNorm
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   exact congrArg _ (Fin.ext (by simp))
 
 theorem rootNorm_natAdd {N j : ℕ} (hpq : j + (N - j) = N) (cW cΩ : ℝ)
@@ -33,7 +33,7 @@ theorem rootNorm_natAdd {N j : ℕ} (hpq : j + (N - j) = N) (cW cΩ : ℝ)
     rootNorm N j cW cΩ GW GΩ Z (Fin.cast hpq (Fin.natAdd j k)) =
       (GlobalTheory.GradedNorm.grSq (oLine cΩ GΩ Z) (Fin.rev k))⁻¹ := by
   unfold rootNorm
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   congr 2
   ext; simp [Fin.val_rev]; omega
 

@@ -29,7 +29,7 @@ private lemma toGQ_mul_ofSL_eq_ofSL_mul_toGQ (γ γ' : SL(2, ℤ)) (l : ℕ) (hl
     simp only [Matrix.det_fin_two_of, one_mul, mul_zero, sub_zero]
     exact_mod_cast hl
   unfold _root_.GlobalTheory.KZ.toGQ _root_.GlobalTheory.KZ.ofSL
-  rw [dif_pos (hdet j), dif_pos (hdet k)]
+  rw [dite_eq_left (hdet j), dite_eq_left (hdet k)]
   apply Subtype.ext
   apply Matrix.GeneralLinearGroup.ext
   intro i i'

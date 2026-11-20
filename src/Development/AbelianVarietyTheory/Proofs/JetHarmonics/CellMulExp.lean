@@ -178,7 +178,7 @@ theorem ell_hX {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) {a b : Fin r}
     simp [hX, Matrix.single_apply, h1, h2]
   unfold ell
   rw [Finset.sum_eq_single b]
-  · rw [dif_pos (by omega), hrow]
+  · rw [dite_eq_left (by omega), hrow]
     simp [eI, Fin.ext_iff]
   · intro l _ hl
     split_ifs with h

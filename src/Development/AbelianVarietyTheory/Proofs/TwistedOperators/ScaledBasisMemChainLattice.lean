@@ -206,11 +206,11 @@ theorem col_smul (a : k) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Fre
 theorem colMat_col (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free 1 rs} → k) (r s) :
     colMat n' (col e) r s = open Classical in if h : Free 1 (r, s) then e ⟨(r, s), h⟩ else 0 := by
   rcases s with s | s
-  · rw [dif_neg]
+  · rw [dite_eq_right]
     · simp [colMat]
     · rcases r with r | r <;> simp [Free]
   · refine Fin.cases ?_ (fun i => ?_) s
-    · rw [dif_neg]
+    · rw [dite_eq_right]
       · simp [colMat]
       · rcases r with r | r <;> simp [Free]
     · simp [colMat, col]
@@ -231,7 +231,7 @@ omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
 theorem col_mem_Yle (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free 1 rs} → k) (i : Fin c) :
     col e i ∈ Yle k n c (i.val + 1) := by
   intro l hl
-  rw [col, dif_neg]
+  rw [col, dite_eq_right]
   simp only [Free, Fin.val_succ]
   omega
 
@@ -350,7 +350,7 @@ private theorem col_mem_Yle' [ValuativeRel k]
     _root_.GlobalTheory.RootEx.UnfoldShape.col e i ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms.Yle k n c (i.val + 1) := by
   intro l hl
   simp only [_root_.GlobalTheory.RootEx.UnfoldShape.col]
-  rw [dif_neg]
+  rw [dite_eq_right]
   simp only [_root_.GlobalTheory.RootEx.Free, Fin.val_succ]
   omega
 

@@ -206,12 +206,12 @@ theorem hT_fvec (F : FlagG S r T) (a b : Fin (r + 1)) :
     simp [FlagG.fvec, F.e_iso a b, diagonal_apply, Fin.castSucc_ne_last]
 
 theorem Dl_succ (F : FlagG S r T) (F' : FlagG S r T') : Dl F F' (r + 1) = (Zhat F F').det := by
-  rw [Dl, leadMinorE, dif_pos le_rfl]
+  rw [Dl, leadMinorE, dite_eq_left le_rfl]
   congr 1
 
 theorem Dl_self (F : FlagG S r T) (F' : FlagG S r T') :
     Dl F F' r = ((Zhat F F').submatrix Fin.castSucc Fin.castSucc).det := by
-  rw [Dl, leadMinorE, dif_pos (Nat.le_succ r)]
+  rw [Dl, leadMinorE, dite_eq_left (Nat.le_succ r)]
   congr 1
 
 theorem det_gram (F : FlagG S r T) (F' : FlagG S r T') :

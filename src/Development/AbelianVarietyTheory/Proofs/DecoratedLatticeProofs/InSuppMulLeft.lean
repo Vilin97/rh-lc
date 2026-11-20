@@ -84,13 +84,13 @@ theorem omTwo_datum_inv : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
       refine tame_eq hξ (by rw [Units.val_mul, map_mul, hu, Units.val_mk0, Units.val_mk0, hy.2.1, h11, mul_one]) ?_
       rw [Units.val_mul, Units.val_mk0, Units.val_mk0]
       exact hc
-    rw [dif_pos hs, dif_pos hy, MonoidHom.inv_apply, MonoidHom.inv_apply, inv_inv, inv_inv, t1, t2, map_mul, map_mul]
+    rw [dite_eq_left hs, dite_eq_left hy, MonoidHom.inv_apply, MonoidHom.inv_apply, inv_inv, inv_inv, t1, t2, map_mul, map_mul]
     simp only [Units.val_mul]
     ring
   · have hs : ¬ InSupp (j.val * y) := fun hs => by
       have := (inSupp_mul_left hs (inv_mem hj)).1
       rw [← Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mul] at this
       exact hy this
-    rw [dif_neg hs, dif_neg hy, mul_zero, mul_zero]
+    rw [dite_eq_right hs, dite_eq_right hy, mul_zero, mul_zero]
 
 end GlobalTheory.DatumEigenLeft

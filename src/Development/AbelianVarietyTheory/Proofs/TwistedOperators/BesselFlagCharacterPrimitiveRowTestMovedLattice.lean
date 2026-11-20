@@ -56,7 +56,7 @@ theorem primAt_rowN {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
   have line : ∀ i (t : AE D), t ∈ idAt D (· = v) →
       (colMul (besDecAt G j σ hj).jX i t ∈ latV _ (rowN G j) (· = v) ↔ t ∈ idV (I i) v) := by
     intro i t ht
-    rw [colMul_besDecAt G j σ hj hjm, rowN, dif_pos hjm,
+    rw [colMul_besDecAt G j σ hj hjm, rowN, dite_eq_left hjm,
       (GlobalTheory.AscFin.UnitaryEmbeddingLine.embedding_line_mem_lattice_iff (G.rowDec j hjm) (neg_ne_zero.2 one_ne_zero) _ _ _ v _).1, rowId_even hodd,
       hIdef, f3 _ _ (inv_ne_zero (pow_ne_zero _ hξ)), inv_inv]
     exact ⟨fun h => ⟨h, ht⟩, fun h => h.1⟩

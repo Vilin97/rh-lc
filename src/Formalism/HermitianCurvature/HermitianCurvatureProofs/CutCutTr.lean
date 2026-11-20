@@ -130,7 +130,7 @@ theorem cutoff_transport_to_model : CutTr := by
     ring
   have hR : (trJ S T v e (B.JF (T v).base (f v)) ρ) = ⟨u, hu⟩ := by
     unfold trJ MA.toSm
-    rw [dif_pos hu]
+    rw [dite_eq_left hu]
   rw [hL]
   show _ = MA.toSm (D.parOf S v) (fun q => ((c.sc ε 1 (MA.Gq (D.parOf S v) q) : ℝ) : ℂ) *
     (trJ S T v e (B.JF (T v).base (f v)) ρ).1 q)

@@ -137,7 +137,7 @@ theorem oneP_eq_brg (θ : InfFam D) (hθ : IsInfFam θ) {V : HSp D} (fr : UI.Fra
   rw [← ha, ← one_smul ℝ X] at hc
   have hex : ∃ x, IsAtTau θ V ((Formalism.L2.Host.tauPl D).symm v) (NormedSpace.exp ((1 : ℝ) • X)) x := ⟨_, hc⟩
   unfold oneP atTau
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact isAtTau_unique θ hθ fr hex.choose_spec hc
 
 theorem map_prod_pairs {ι G H : Type*} [Monoid G] [Monoid H] (f : G →* H) (l : List ι) (a b : ι → G) :

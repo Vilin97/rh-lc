@@ -99,12 +99,12 @@ theorem perFr_mem {A : Type} (S : Submodule ℂ (A → ℂ)) (w : A → Fin r �
         have hbr := b.2
         convert hS (b - X.p0) (by omega) using 2 with a
         unfold perFr
-        rw [dif_pos h, dif_pos (by omega)]
+        rw [dite_eq_left h, dite_eq_left (by omega)]
         congr 1
         exact Fin.ext (by simp; omega)
     convert key using 2 with a
     unfold perFr
-    rw [dif_pos h, dif_pos hi']
+    rw [dite_eq_left h, dite_eq_left hi']
     conv_lhs => rw [← mul_nonsing_inv_cancel_right (mat x ⟨τ, h⟩) (mat x' ⟨τ, h⟩)⁻¹ hd, ← mulVec_mulVec]
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rfl
@@ -119,13 +119,13 @@ theorem perFr_mem {A : Type} (S : Submodule ℂ (A → ℂ)) (w : A → Fin r �
       · refine Submodule.smul_mem _ _ ?_
         convert hS (X.p0 - 1 - b) (by omega) using 2 with a
         unfold perFr
-        rw [dif_neg h, dif_pos h', dif_pos (by omega)]
+        rw [dite_eq_right h, dite_eq_left h', dite_eq_left (by omega)]
         congr 2
         exact Fin.ext (by simp; omega)
       · rw [h1 _ _ _ (not_lt.1 hb) (by simp only; omega), zero_smul]; exact zero_mem _
     convert key using 2 with a
     unfold perFr
-    rw [dif_neg h, dif_pos h', dif_pos hi']
+    rw [dite_eq_right h, dite_eq_left h', dite_eq_left hi']
     conv_lhs => rw [← mul_nonsing_inv_cancel_left (mat x ⟨_, h'⟩) (mat x' ⟨_, h'⟩) hd]
     generalize (mat x ⟨_, h'⟩)⁻¹ * mat x' ⟨_, h'⟩ = n
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, mul_apply, Finset.sum_mul,

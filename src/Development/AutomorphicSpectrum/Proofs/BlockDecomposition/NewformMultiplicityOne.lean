@@ -20,7 +20,7 @@ def gU (μ : Fˣ →* ℂˣ) (y : F) : ℂ :=
 
 theorem gU_unit (μ : Fˣ →* ℂˣ) (u : Fˣ) (hu : ord (u : F) = 0) : gU μ (u : F) = ((μ u : ℂˣ) : ℂ) := by
   have h : (u : F) ≠ 0 ∧ ord (u : F) = 0 := ⟨u.ne_zero, hu⟩
-  rw [gU, dif_pos h, Units.mk0_val]
+  rw [gU, dite_eq_left h, Units.mk0_val]
 
 theorem gU_eq_zero (μ : Fˣ →* ℂˣ) {y : F} (h : ¬ (y ≠ 0 ∧ ord y = 0)) : gU μ y = 0 := dif_neg h
 
@@ -54,7 +54,7 @@ theorem gU_add {μ : Fˣ →* ℂˣ} {n : ℕ} (hn : 1 ≤ n) (hk : unitFiltrati
       have := hk hv
       rw [MonoidHom.mem_ker, map_mul, map_inv, inv_mul_eq_one] at this
       exact this.symm
-    rw [gU, gU, dif_pos ⟨h1, h2⟩, dif_pos hy, hb]
+    rw [gU, gU, dite_eq_left ⟨h1, h2⟩, dite_eq_left hy, hb]
   · have h3 : ¬ (y + t ≠ 0 ∧ ord (y + t) = 0) := fun h => hy (by
       have := unit_add hn h.1 h.2 (neg_mem ht)
       simpa using this)

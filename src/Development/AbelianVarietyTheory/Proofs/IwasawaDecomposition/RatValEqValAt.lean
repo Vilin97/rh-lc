@@ -23,7 +23,7 @@ theorem ratVal_eq_valAt {k : Type} [CommRing k] {Z : Scheme.{0}} [IsIntegral Z] 
     have hy : y ∈ CxPts.ptsIn q σ U := CxPts.mem_ptsIn.2 hU
     rw [ratVal_fnOf hy, OfModel.valAt_fnOf y.1 hU hy, CxPts.ev_eq hy]
     rfl
-  · rw [ratVal, dif_neg h, valAt, dif_neg h]
+  · rw [ratVal, dite_eq_right h, valAt, dite_eq_right h]
 
 theorem bijective_comp (F : Type) [Field F] [NumberField F] :
     Function.Bijective fun σ : F →+* ℂ => σ.comp (algebraMap (𝓞 F) F) := by
@@ -82,7 +82,7 @@ theorem ht_eq : ∀ (F : Type) [Field F] [NumberField F] (C : CxSt F) (Y : Var F
       simp)
   have h₂ (v) : ∑ᶠ y, ((k : ℕ) : ℝ) * A.lg v (hne v).some (E y).1 =
       (k : ℕ) * if h : Nonempty (Ext v) then ∑ᶠ (y : AlgPt Y) (_ : below y.1 = x), A.lg v h.some y else 0 := by
-    rw [dif_pos (hne v), ← mul_finsum, ← finsum_subtype_eq_finsum_cond]
+    rw [dite_eq_left (hne v), ← mul_finsum, ← finsum_subtype_eq_finsum_cond]
     exact congrArg _ (finsum_comp_equiv E (f := fun y => A.lg v (hne v).some y.1))
   replace h₁ := h₁.trans (congrArg (- ·) (finsum_congr h₂))
 

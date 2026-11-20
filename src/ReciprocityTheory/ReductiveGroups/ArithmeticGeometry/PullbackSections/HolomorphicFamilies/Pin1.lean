@@ -34,7 +34,7 @@ theorem pin1 (hx : (U.X k).IsOrtho x.1) (a' : (W.F.Di (W.ik k)).La) :
     have e1 := A.coord_pos ⟨ρ, h⟩ a v
     refine e1.trans ?_
     rw [e_mul A hx hdet]
-    rw [ReciprocityTheory.ChartRestriction.G.FD.EmbeddingHermitianPairs.hermC_smul_right, wt, dif_pos h, star_def,
+    rw [ReciprocityTheory.ChartRestriction.G.FD.EmbeddingHermitianPairs.hermC_smul_right, wt, dite_eq_left h, star_def,
       ReciprocityTheory.ChartRestriction.G.FD.EmbeddingHermitianPairs.hermC_conj ρ (U.X k).Gm (U.X k).Gm_herm]
     have hidx : (⟨(U.X k).p0 - 1 - ((U.X k).p0 - 1 - (a : ℕ)), by have := (U.X k).p0_le; omega⟩ : Fin r) =
         Fin.castLE (by rw [A.dim_pos ⟨ρ, h⟩]; exact (U.X k).p0_le) a := Fin.ext (by simp; omega)
@@ -48,7 +48,7 @@ theorem pin1 (hx : (U.X k).IsOrtho x.1) (a' : (W.F.Di (W.ik k)).La) :
     have hτ' : τ ∈ (U.X k).Ψ := by rwa [conjEmb_conjEmb] at hτ
     have ha := index_lt_complementSignature_of_not_mem hU A h a
     have hp := (U.X k).p0_le
-    rw [perFr_self (U.X k) x.1 v hτ a (by omega), inv_coord (U.X k) x.1 hx _ (hdet _) (Data.emb _ v), wt, dif_neg h]
+    rw [perFr_self (U.X k) x.1 v hτ a (by omega), inv_coord (U.X k) x.1 hx _ (hdet _) (Data.emb _ v), wt, dite_eq_right h]
     have hsub : (⟨conjEmb (conjEmb τ), hτ⟩ : (U.X k).Ψ) = ⟨τ, hτ'⟩ := Subtype.ext (conjEmb_conjEmb τ)
     simp only [hsub]
     rw [conjEmb_conjEmb]

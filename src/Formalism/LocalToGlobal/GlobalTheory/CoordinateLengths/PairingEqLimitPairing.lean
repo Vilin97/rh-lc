@@ -23,11 +23,11 @@ def gExt (g : ∀ τ : {τ // τ ≠ τ₀}, κ τ.1) (k : κ τ₀) : ∀ τ, �
 theorem gRest_gExt (g : ∀ τ : {τ // τ ≠ τ₀}, κ τ.1) (k : κ τ₀) : gRest τ₀ κ (gExt τ₀ κ g k) = g := by
   funext τ
   unfold gRest gExt
-  rw [dif_neg τ.2]
+  rw [dite_eq_right τ.2]
 
 theorem gExt_self (g : ∀ τ : {τ // τ ≠ τ₀}, κ τ.1) (k : κ τ₀) : gExt τ₀ κ g k τ₀ = k := by
   unfold gExt
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 theorem ten_eq_psi (g : ∀ τ, κ τ) :
     Formalism.L2.Forms.ten (fun τ => b τ (g τ)) = mvPolynomialProductExtension τ₀ κ b (Pi.single (gRest τ₀ κ g) (b τ₀ (g τ₀))) := by

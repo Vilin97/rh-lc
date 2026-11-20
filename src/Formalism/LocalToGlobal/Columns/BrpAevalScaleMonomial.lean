@@ -57,7 +57,7 @@ theorem brpSc_coe (t : Kˣ) : ((brpSc K t : GL (Fin n) K) : Matrix (Fin n) (Fin 
 theorem brp_natW_cast (lam : DomWeight n) (i : Fin n) : ((lam.natW i : ℕ) : ℤ) = lam.w i - lam.detShift := by
   have hn : 0 < n := Fin.pos i
   have h : lam.detShift ≤ lam.w i := by
-    rw [DomWeight.detShift, dif_pos hn]
+    rw [DomWeight.detShift, dite_eq_left hn]
     exact lam.anti (show i ≤ ⟨n - 1, by omega⟩ from Fin.le_iff_val_le_val.mpr (by simp; omega))
   simp only [DomWeight.natW]
   exact Int.toNat_of_nonneg (by omega)

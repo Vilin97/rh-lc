@@ -14,7 +14,7 @@ namespace GlobalTheory.TraitBasis
 
 theorem toStk_valF_eq_gs {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (z : Sp F)
     (h : x z ∈ U) (a : Γ(X, U)) : toStk z (valF x U a) = gs x z U a := by
-  rw [valF, dif_pos ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
+  rw [valF, dite_eq_left ((top_le_iff_mem x U z).2 h), gs_eq x z U h]
   show ((Sp F).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _)) = _
   rw [Iso.hom_inv_id_apply]
@@ -52,7 +52,7 @@ theorem map_eq_zero_of_points {X B Y : Scheme.{0}} {M : LB X} (π : X ⟶ B) {n 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, toStk_valF_eq_gs _ _ z hz, toStk_eq_cst, h₂, H1.gs_spec]
   · refine Finset.sum_eq_zero fun i _ => ?_
-    rw [valF, dif_neg (fun h => hz ((top_le_iff_mem _ _ z).1 h)), mul_zero]
+    rw [valF, dite_eq_right (fun h => hz ((top_le_iff_mem _ _ z).1 h)), mul_zero]
 
 theorem exists_comb_of_independent {F : Type} [Field F] {Y : Scheme.{0}} {M : LB Y} {p : Y ⟶ Sp F} {n : ℕ}
     (H : HasBasis M p n) (β : Fin n → LB.Sec M)

@@ -209,7 +209,7 @@ theorem htData_eq (H : IsHTBlowup ct Z (ct.Xn n)) :
     rintro ⟨m, h⟩ Hd
     obtain rfl : n = m := eq_of_i_eq ct ((H₀.i_eq ct).symm.trans (Hd.i_eq ct))
     exact ⟨h, Hd, rfl⟩
-  rw [htData, dif_pos H₁]
+  rw [htData, dite_eq_left H₁]
   exact key _ H₁.choose_spec
 
 def omSub (Z : ct.Mdl) : Sub Z.om := omP (htData ct Z).2

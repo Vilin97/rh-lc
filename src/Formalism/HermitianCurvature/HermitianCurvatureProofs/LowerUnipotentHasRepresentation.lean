@@ -298,7 +298,7 @@ theorem lower_unipotent_has_representation (hk : 1 ≤ k) (hz : inWb k r z) (hz'
     HasRep k r z z' (fun _ _ _ F ζ => Q.tL k r z z' (Fin.last r) Y 1 0 F (mu0 k r z z' ζ)) := by
   have hfv : fvec k r z (Fin.last r) = z := by
     unfold fvec
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
   refine hr_congr (hr_sum Finset.univ
     (fun i : Ix k r => fun E _ _ F ζ => ∑ j ∈ (Finset.univ : Finset (Ix k r)),
       (-((-1 : ℂ) ^ ((i : ℕ) + (j : ℕ)) * xbv k r z' (Fin.last r) i) * ((mu0 k r z z' ζ)⁻¹ *ᵥ z) (pL k r j)) •

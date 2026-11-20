@@ -155,7 +155,7 @@ variable {r : ℕ} {X : Data E r} {G : Subgroup (GL (Fin r) E)} {x0 x : Frame X.
 theorem poleFn_eq (hG : FreeBall X G x0 ρ0) (hx : x ∈ X.dom) {γ : GL (Fin r) E} (hγ : γ ∈ G)
     (h : rhX X x0 (lact γ x) < ρ0) : poleFn X G x0 ρ0 k x = k (rhX X x0 (lact γ x)) := by
   have hex : ∃ γ, γ ∈ G ∧ rhX X x0 (lact γ x) < ρ0 := ⟨γ, hγ, h⟩
-  rw [poleFn, dif_pos hex, hG.unique hex.choose_spec.1 hγ hx hex.choose_spec.2 h]
+  rw [poleFn, dite_eq_left hex, hG.unique hex.choose_spec.1 hγ hx hex.choose_spec.2 h]
 
 theorem poleFn_eq_zero {a : ℝ} (hk : ∀ u, a ≤ u → k u = 0) (h : ∀ γ ∈ G, a ≤ rhX X x0 (lact γ x)) :
     poleFn X G x0 ρ0 k x = 0 := by
@@ -178,7 +178,7 @@ theorem poleFn_inv (hG : FreeBall X G x0 ρ0) {γ : GL (Fin r) E} (hγ : γ ∈ 
   · have hex' : ¬ ∃ g, g ∈ G ∧ rhX X x0 (lact g (lact γ (rmul x b))) < ρ0 := by
       rintro ⟨g, hg, h⟩
       exact hex ⟨g * γ, G.mul_mem hg hγ, by rwa [← e]⟩
-    rw [poleFn, poleFn, dif_neg hex, dif_neg hex']
+    rw [poleFn, poleFn, dite_eq_right hex, dite_eq_right hex']
 
 theorem poleFn_local (h0 : IsOrth X x0) (hG : FreeBall X G x0 ρ0) {a : ℝ} (ha : a < ρ0)
     (hk : ∀ u, a ≤ u → k u = 0) {x1 : Frame X.Ψ r} {z : V (nd X)} (hz : z ∈ OmF X x1) :

@@ -23,7 +23,7 @@ theorem valAt_eq_of_residueField_hom {K : Type} [Field K] {Z : Scheme.{0}} [IsIn
     exact (Scheme.descResidueField_stalkClosedPointTo_fromSpecResidueField K Z y).symm
   have h : RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
   have e : h.choose = a := IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec
-  rw [valAt, dif_pos h, e, hσ]
+  rw [valAt, dite_eq_left h, e, hσ]
   rfl
 
 theorem exists_finprod_valAt_eq (F : Type) [Field F] [NumberField F] (Y : Var F) (x : Y.X)

@@ -272,7 +272,7 @@ theorem factEV_of : IndexWeightsDominance → PsiWeight → FactEV := by
       funext c hc
       have h4 := congrFun h3 c
       unfold extF at h4
-      rw [dif_pos hc] at h4
+      rw [dite_eq_left hc] at h4
       exact h4
     · intro h
       exact absurd (Finset.mem_pi.2 fun _ _ => Finset.mem_univ _) h

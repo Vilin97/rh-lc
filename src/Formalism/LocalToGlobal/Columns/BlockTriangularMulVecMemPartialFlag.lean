@@ -279,7 +279,7 @@ theorem reducedMatrix_eq_of_isReduction {E : Type} [Field E] [NumberField E] [St
   ext l s
   have h1 := (h l.1 s.1 l.2 s.2).2
   unfold Loc.atN at h1
-  rw [dif_pos l.2, dif_pos l.2, residue_basisVec_eq_single s.2, residue_basisVec_eq_single s.2] at h1
+  rw [dite_eq_left l.2, dite_eq_left l.2, residue_basisVec_eq_single s.2, residue_basisVec_eq_single s.2] at h1
   exact h1.symm
 
 theorem residueFrameEntry_eq_coord {k : Type} [Field k] {k₀ n c : ℕ} (hk : k₀ ≤ n) (κ : (Fin (n + c) → k) ≃ₗ[k] (Fin (n + c) → k)) (l l' : Fin (n + c)) :
@@ -287,7 +287,7 @@ theorem residueFrameEntry_eq_coord {k : Type} [Field k] {k₀ n c : ℕ} (hk : k
   unfold ocbEnt
   rw [frameIndex_framePos hk l.2, frameIndex_framePos hk l'.2, residue_basisVec_eq_single l'.2]
   unfold Loc.atN
-  rw [dif_pos l.2]
+  rw [dite_eq_left l.2]
   rfl
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)

@@ -21,7 +21,7 @@ theorem inX_apply (x : Fin n → k) (l : Fin (n + c)) :
 theorem resX_inX (x : Fin n → k) : resX c (Loc.inX k n c x) = x := by
   funext i
   show Loc.inX k n c x (Fin.castAdd c i) = _
-  rw [inX_apply, dif_pos (by simp)]
+  rw [inX_apply, dite_eq_left (by simp)]
   rfl
 
 theorem resX_eN (i : ℕ) : resX c (Loc.eN k (n + c) (n + i)) = 0 := by
@@ -35,7 +35,7 @@ theorem resX_eN (i : ℕ) : resX c (Loc.eN k (n + c) (n + i)) = 0 := by
 
 theorem inX_mem_Ufl (i : ℕ) (x : Fin n → k) : Loc.inX k n c x ∈ Loc.Ufl k n c i := by
   intro l hl
-  rw [inX_apply, dif_neg]
+  rw [inX_apply, dite_eq_right]
   intro h
   exact hl (show l.1 < n + i by omega)
 

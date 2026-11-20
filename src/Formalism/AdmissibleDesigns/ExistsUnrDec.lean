@@ -32,7 +32,7 @@ private lemma plOf_colIdx (l : K.Col i dc) : K.plOf i dc (K.colIdx i dc l) = l.1
     exact Or.inl (Or.inr l.2)
   have hlt : ((K.plSet i dc).equivFin ⟨l.1, hmem⟩ : ℕ) < (K.plSet i dc).card := Fin.is_lt _
   unfold K.colIdx K.idx K.plOf
-  rw [dif_pos hmem, dif_pos hlt]
+  rw [dite_eq_left hmem, dite_eq_left hlt]
   simp
 
 theorem col_over (l : K.Col i dc) : K.plOf i dc (K.colIdx i dc l) ∈ placesOver D.host.E (D.nd.l i) := by

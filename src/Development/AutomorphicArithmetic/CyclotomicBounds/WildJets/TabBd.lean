@@ -42,7 +42,7 @@ theorem UpperTheory.WildA.tabBd :
     obtain ⟨h, -⟩ := hκ
     refine ⟨h, ?_⟩
     have h1 := hκ1 lam
-    rw [lamC, dif_pos h] at h1
+    rw [lamC, dite_eq_left h] at h1
     exact h1.le
   have hall := KernelAt.Cmb.smul hκb
     (KernelAt.Cmb.sum fun i => KernelAt.Cmb.smul (hrb i) (hcmb (s i) (hs i)))

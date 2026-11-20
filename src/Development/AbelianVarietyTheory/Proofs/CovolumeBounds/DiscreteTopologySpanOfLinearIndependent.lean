@@ -63,7 +63,7 @@ theorem spanCovol_eq_sqrt_det_gram {L : Submodule ℤ E} (b : Basis ι ℤ L) :
   have hfg : L.FG := Module.Finite.iff_fg.1 hf
   have : Module.Free ℤ L := .of_basis b
   let e := (finBasis ℤ L).indexEquiv b
-  rw [spanCovol, dif_pos hfg, sqrt_det_gram_eq_relIndex_mul le_rfl b ((finBasis ℤ L).reindex e),
+  rw [spanCovol, dite_eq_left hfg, sqrt_det_gram_eq_relIndex_mul le_rfl b ((finBasis ℤ L).reindex e),
     AddSubgroup.relIndex_self, Nat.cast_one, one_mul, ← Hadamard.det_gram_comp_equiv _ e]
   congr 3
   ext i

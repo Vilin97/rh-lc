@@ -32,13 +32,13 @@ theorem uni_val (y : Matrix (Fin m₁) (Fin m₂) R) :
 theorem put_inl_inr (h : m₁ + m₂ = m) (y : Matrix (Fin m₁) (Fin m₂) R) (i : Fin m₁) (j : Fin m₂) :
     put m 0 m₁ y (stdSum h (.inl i)) (stdSum h (.inr j)) = y i j := by
   simp only [put, Matrix.of_apply]
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   congr 1 <;> ext <;> simp
 
 theorem put_inr (h : m₁ + m₂ = m) (y : Matrix (Fin m₁) (Fin m₂) R) (i : Fin m₂) (j : Fin m) :
     put m 0 m₁ y (stdSum h (.inr i)) j = 0 := by
   simp only [put, Matrix.of_apply]
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
 
 end Ring
 

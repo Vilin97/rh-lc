@@ -18,8 +18,8 @@ theorem pB_conjTranspose (ε : Fin n → Bool) (B : Mode ε → ℂ) : (pB ε B)
 
 theorem pB_ne (ε : Fin n → Bool) (B : Mode ε → ℂ) (a b : Fin n) (h : ε a = ε b) : pB ε B a b = 0 := by
   simp only [pB]
-  rw [dif_neg (by rintro ⟨h1, h2⟩; rw [h, h2] at h1; simp at h1),
-    dif_neg (by rintro ⟨h1, h2⟩; rw [← h, h2] at h1; simp at h1)]
+  rw [dite_eq_right (by rintro ⟨h1, h2⟩; rw [h, h2] at h1; simp at h1),
+    dite_eq_right (by rintro ⟨h1, h2⟩; rw [← h, h2] at h1; simp at h1)]
 
 theorem pB_inG (ε : Fin n → Bool) (B : Mode ε → ℂ) : inG ε (pB ε B) := by
   unfold inG

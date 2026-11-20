@@ -17,11 +17,11 @@ theorem chiC_apply {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) (j : Fin
     (w : {w // w ∈ (B.primes px).vGs}) (y : 𝓞 B.host.E) (hu : IsUnit (Ideal.Quotient.mk w.1.asIdeal y)) :
     chiC I j w.1 y = B.embLL ((I.Ch.chi j w hu.unit : B.LLˣ) : B.LL) := by
   unfold chiC
-  rw [dif_pos w.2, dif_pos hu]
+  rw [dite_eq_left w.2, dite_eq_left hu]
 
 theorem qC_xi {B : Base} {px : PreX B.toPre} {I : Col2.ColIn B px} (hI : I.Ok) (a : I.ι) : qC I (I.xi a) = I.Q a := by
   unfold qC
-  rw [dif_pos ⟨a, rfl⟩]
+  rw [dite_eq_left ⟨a, rfl⟩]
   congr 1
   exact hI.xi_inj (Exists.choose_spec (⟨a, rfl⟩ : ∃ a', I.xi a' = I.xi a))
 

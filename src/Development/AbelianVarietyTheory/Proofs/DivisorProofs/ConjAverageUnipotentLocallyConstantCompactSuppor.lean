@@ -72,7 +72,7 @@ theorem blk_val (m : GLw a w × GLw b w) (X : Matrix (Fin a) (Fin b) (w.adicComp
       (Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val) := by
   unfold blk
   simp only
-  rw [dif_pos (isUnit_blkMat h w m X)]
+  rw [dite_eq_left (isUnit_blkMat h w m X)]
   rfl
 
 theorem blk_add (m : GLw a w × GLw b w) (x y : Matrix (Fin a) (Fin b) (w.adicCompletion E)) :

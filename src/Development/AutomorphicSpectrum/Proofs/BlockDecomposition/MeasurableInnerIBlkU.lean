@@ -80,7 +80,7 @@ theorem row_of_blk {m : ℕ} {γ : GL (Fin k) E} (h : GlobalTheory m γ) (r j : 
 theorem isMir_blkU_mul {m : ℕ} (c : UnipotentBlockColumnIndex k m m → E) {γ : GL (Fin k) E} (h : GlobalTheory m γ) :
     IsMir m (blkU c * γ) := by
   intro i j hij
-  rw [blkU_mul_val m c γ (row_of_blk h), Matrix.add_apply, posM_blk_apply, dif_neg (by omega), add_zero]
+  rw [blkU_mul_val m c γ (row_of_blk h), Matrix.add_apply, posM_blk_apply, dite_eq_right (by omega), add_zero]
   exact h i j (by omega)
 
 def colEquiv (m : ℕ) :
@@ -97,7 +97,7 @@ def colEquiv (m : ℕ) :
         have h2 := congrFun (congrFun hv t.1.1) t.1.2
         simp only [Matrix.add_apply] at h2
         rw [hγ t.1.1 t.1.2 (Or.inr h1.2.1), hγ' t.1.1 t.1.2 (Or.inr h1.2.1), posM_blk_apply, posM_blk_apply,
-          dif_pos ⟨h1.1, by omega⟩, dif_pos ⟨h1.1, by omega⟩] at h2
+          dite_eq_left ⟨h1.1, by omega⟩, dite_eq_left ⟨h1.1, by omega⟩] at h2
         exact add_left_cancel h2
       subst hc
       have : γ = γ' := mul_left_cancel h0

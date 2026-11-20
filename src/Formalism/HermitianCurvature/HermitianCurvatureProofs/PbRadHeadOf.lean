@@ -130,7 +130,7 @@ theorem pb_radHead_of (hOne : PBO.FormOne) (hZN : PBO.ZetaNormExists) (hHP : Hea
   rw [hTΦ, hTΦ']
   have hRR : p.RR F (j + 1) w (h ++ [(1, t)]) (h' ++ [(1, t)]) = D.formLev p.T (M.sgn P p.l0) jF w x2 x2' := by
     unfold KB.Pl.RR D.RRplace
-    rw [dif_pos ⟨hl, hl'⟩, dif_pos hj]
+    rw [dite_eq_left ⟨hl, hl'⟩, dite_eq_left hj]
     rfl
   have key : P5.RRform Ls sts μs 0 (D.positionted w) Φ2 Φ2' 0 = D.formLev p.T (M.sgn P p.l0) jF w x2 x2' := hOne'.symm
   calc _ = ((‖t‖ ^ (-2 : ℤ) : ℝ) : ℂ) * ((lam : ℂ) * conj (lam : ℂ) * P5.RRform Ls sts μs 0 (D.positionted w) Φ2 Φ2' 0) :=

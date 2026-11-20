@@ -86,7 +86,7 @@ theorem supAtUnit (hL1 : Lam1RowSt) : SupAtUnitSt := by
       ‖toC (evR (T.Q.Xo j) T.Q.c f ((T.U j σ).un k ⟨_, hx'⟩))‖ := by
     rw [pnorm_unit (X k) (la k) (P k) hunit, hPdef]
     simp [rdU]
-    rw [dif_pos hx']
+    rw [dite_eq_left hx']
   rw [← e, hpn]
   exact h2
 

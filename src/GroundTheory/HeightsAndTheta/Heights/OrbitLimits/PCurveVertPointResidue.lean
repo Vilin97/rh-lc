@@ -155,7 +155,7 @@ theorem CurveVertPointResidue.proof (hC : CurveClosedPointChart.Statement) :
   set J := W ⊔ I0 with hJ
   have hgeo : ∀ b, geoNum 0 W b = ((Module.length ℤ (MRing ι ⧸ J)).toNat : ℤ) := by
     intro b
-    rw [geoNum, dif_pos hWrel]
+    rw [geoNum, dite_eq_left hWrel]
   obtain ⟨hF, hFin, hcard⟩ := Inter.regularityLocalResidue_holds.chart_field_card hWmh hcW hdim (charOf W) hp
   letI : Field (MRing ι ⧸ J) := hF.toField
   have hyc : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k => ne_zero_of_X_notMem fun h => hcW k (hPW h)

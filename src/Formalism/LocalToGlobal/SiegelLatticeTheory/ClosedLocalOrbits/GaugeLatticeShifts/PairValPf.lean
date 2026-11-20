@@ -400,8 +400,8 @@ theorem simple_eq (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUni
       have k := key ⟨a + 1, ha⟩ (fσ p ⟨a, by omega⟩)
       rw [fσ_fσ, (hm _ _).1 (show fσ p ⟨a, by omega⟩ < fσ p ⟨a + 1, ha⟩ by exact hc), mul_zero] at k
       have := (mul_eq_zero.mp k).resolve_right (pv_ne' p _)
-      simp only [F]; rw [dif_pos ha]; exact this
-    · exact hne (by simp only [F]; rw [dif_neg ha])
+      simp only [F]; rw [dite_eq_left ha]; exact this
+    · exact hne (by simp only [F]; rw [dite_eq_right ha])
   have hG : ∀ a ∈ Finset.range N, G a ≠ 0 → sameB p.1 N a := by
     intro a _ hne
     by_contra hs
@@ -411,8 +411,8 @@ theorem simple_eq (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUni
       have k := key (fσ p ⟨a, by omega⟩) ⟨a + 1, ha⟩
       rw [fσ_fσ, (hn _ _).1 (show fσ p ⟨a, by omega⟩ < fσ p ⟨a + 1, ha⟩ by exact hc), zero_mul] at k
       have := (mul_eq_zero.mp k.symm).resolve_left (pv_ne' p _)
-      simp only [G]; rw [dif_pos ha]; exact this
-    · exact hne (by simp only [G]; rw [dif_neg ha])
+      simp only [G]; rw [dite_eq_left ha]; exact this
+    · exact hne (by simp only [G]; rw [dite_eq_right ha])
   have hGF : ∀ a ∈ (Finset.range N).filter (sameB p.1 N), G a = F (pσ p.1 (a + 1)) := by
     intro a ha
     obtain ⟨-, hs⟩ := Finset.mem_filter.mp ha
@@ -428,7 +428,7 @@ theorem simple_eq (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUni
     rw [hb3] at k
     have hv := pv_ne' p ⟨pσ p.1 (a + 1), by omega⟩
     simp only [Fin.val_mk] at hv
-    simp only [F, G]; rw [dif_pos ha1, dif_pos hb1]
+    simp only [F, G]; rw [dite_eq_left ha1, dite_eq_left hb1]
     exact mul_left_cancel₀ hv (k.symm.trans (mul_comm _ _))
   rw [eLo, eUp, ← Finset.sum_filter_of_ne hF, ← Finset.sum_filter_of_ne hG]
   refine (Finset.sum_nbij' (fun a => pσ p.1 (a + 1)) (fun a => pσ p.1 (a + 1)) ?_ ?_ ?_ ?_ hGF).symm

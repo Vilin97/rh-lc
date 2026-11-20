@@ -406,13 +406,13 @@ theorem omega_decomposition : OrthogonalComplementDecomposition := by
     simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     by_cases hi : i.val < r
     · rw [hW i (Or.inl hi), add_zero, Finset.sum_eq_single ⟨i.val, by omega⟩]
-      · rw [fvec_apply_lt z' hz' _ i hi, if_pos rfl, mul_one, dif_pos hi]; rfl
+      · rw [fvec_apply_lt z' hz' _ i hi, if_pos rfl, mul_one, dite_eq_left hi]; rfl
       · intro c _ hc
         rw [fvec_apply_lt z' hz' _ i hi, if_neg (fun h => hc (Fin.ext h)), mul_zero]
       · intro h; exact absurd (Finset.mem_univ _) h
     · push Not at hi
       rw [Finset.sum_eq_single (Fin.last r)]
-      · rw [fvec_apply_ge z' _ i hi, if_pos (by simp), dif_neg (by simp)]
+      · rw [fvec_apply_ge z' _ i hi, if_pos (by simp), dite_eq_right (by simp)]
         by_cases hk : i.val ≤ r + k
         · simp only [N3om]
           rw [if_pos ⟨hi, hk⟩]; ring

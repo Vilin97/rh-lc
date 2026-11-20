@@ -290,9 +290,9 @@ def univN (Dw : Datum H) (A : Type) [CommRing A] (σ : E →+* ℂ) :
 theorem isUnit_det_univN {A B : Type} [CommRing A] [CommRing B] (f : MvPolynomial (VIx Dw) A →+* B) (σ : E →+* ℂ) :
     IsUnit ((univN Dw A σ).map f).det := by
   rw [Matrix.det_of_upperTriangular (M := (univN Dw A σ).map f) (fun i j (h : j < i) => by
-    rw [Matrix.map_apply, univN, dif_neg (not_lt.2 h.le), if_neg h.ne', map_zero])]
+    rw [Matrix.map_apply, univN, dite_eq_right (not_lt.2 h.le), if_neg h.ne', map_zero])]
   refine IsUnit.prod_univ_iff.2 fun i => ?_
-  rw [Matrix.map_apply, univN, dif_neg (lt_irrefl i), if_pos rfl, map_one]
+  rw [Matrix.map_apply, univN, dite_eq_right (lt_irrefl i), if_pos rfl, map_one]
   exact isUnit_one
 
 theorem eval₂Hom_univN {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : C →+* B)
@@ -301,9 +301,9 @@ theorem eval₂Hom_univN {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (
     MvPolynomial.eval₂Hom f (fun a => g (cellCoord N a)) (univN Dw A σ i j) = g (N σ i j) := by
   rw [univN]
   rcases lt_trichotomy i j with h | rfl | h
-  · rw [dif_pos h]; exact MvPolynomial.eval₂Hom_X' _ _ _
-  · rw [dif_neg (lt_irrefl i), if_pos rfl, h1, map_one, map_one]
-  · rw [dif_neg (not_lt.2 h.le), if_neg h.ne', h0 σ i j h, map_zero, map_zero]
+  · rw [dite_eq_left h]; exact MvPolynomial.eval₂Hom_X' _ _ _
+  · rw [dite_eq_right (lt_irrefl i), if_pos rfl, h1, map_one, map_one]
+  · rw [dite_eq_right (not_lt.2 h.le), if_neg h.ne', h0 σ i j h, map_zero, map_zero]
 
 theorem Carries.nonempty (hC : IsCell TF Z U e v W k L N) (a : Γ(TF.Y.X, U.1)) {S : Type} [CommRing S]
     [Algebra (MvPolynomial (VIx Dw) Γ(TF.Y.X, U.1)) S]

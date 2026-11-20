@@ -358,7 +358,7 @@ theorem col_over (l : K.Col i dc) : K.plOf i dc (K.colIdx i dc l) ∈ placesOver
     exact Or.inl (Or.inr l.2)
   have hidx : K.plOf i dc (K.colIdx i dc l) = l.1 := by
     unfold K.plOf K.colIdx K.idx
-    rw [dif_pos hmem, dif_pos ((K.plSet i dc).equivFin ⟨l.1, hmem⟩).isLt]
+    rw [dite_eq_left hmem, dite_eq_left ((K.plSet i dc).equivFin ⟨l.1, hmem⟩).isLt]
     simp
   rw [hidx]
   exact (dc.cover l.1).mp (Or.inr l.2)
@@ -445,14 +445,14 @@ private theorem lx_col_eq (x' : X') (l : K.Col i dc) :
     Lx i dc r χ x' l = finZ (eK (D.nbr i _ (col_over i dc l))) (Br.PD D.loc D.nbr i _ (col_over i dc l))
       (repE i dc r χ x' (K.colIdx i dc l)) (Br.iota D.nbr i _ (col_over i dc l)) := by
   unfold Lx fZ
-  rw [dif_pos (col_over i dc l)]
+  rw [dite_eq_left (col_over i dc l)]
 
 private theorem jK_colIdx_eq_finrank_cohomology (l : K.Col i dc) :
     jK i dc ρ π (K.colIdx i dc l) = Module.finrank (Br.LL D.nbr i _ (col_over i dc l))
       (FiniteCohomology (Br.PD D.loc D.nbr i _ (col_over i dc l))
         (repW i dc ρ π (K.colIdx i dc l) (col_over i dc l))) := by
   unfold jK
-  rw [dif_pos (col_over i dc l)]
+  rw [dite_eq_left (col_over i dc l)]
   rfl
 
 private theorem iota_bijective_col (l : K.Col i dc) :

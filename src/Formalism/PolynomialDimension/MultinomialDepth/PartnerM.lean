@@ -319,7 +319,7 @@ theorem phi_mem {N r : ℕ} [NeZero r] (LL : Letters N) (T : TieData) (j : Fin T
     (T.phi p LL j : Module.End ℚ_[p] (MvPolynomial (Fin N × Fin r) ℚ_[p])) ∈
       FockB.Ops {v : Fin N × Fin r | (v.1 : ℕ) = T.pos j ∨ (v.1 : ℕ) = T.pos j + 1} := by
   unfold TieData.phi
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   unfold tiePhiAt
   refine FockB.ops_mono ?_ (FockB.tiePhi_mem (zv := ((⟨T.pos j, by omega⟩ : Fin N), (0 : Fin r)))
     (sv := ((⟨T.pos j, by omega⟩ : Fin N), (0 : Fin r))) _ _ _)
@@ -375,7 +375,7 @@ theorem phi_pol {N r : ℕ} [NeZero r] (LL : Letters N) (T : TieData) (j : Fin T
   have he : Function.Injective (fun c : Fin r => (b, c)) := fun c d h' => (Prod.mk.inj h').2
   have hwe : ∀ c d : Fin r, (a, c) ≠ (b, d) := fun c d h' => hab (Prod.mk.inj h').1
   have hphi : T.phi p LL j = tiePhi (fun c : Fin r => (a, c)) (fun c : Fin r => (b, c)) (LL.deg a) (LL.deg b) (T.z j) := by
-    unfold TieData.phi; rw [dif_pos h]; rfl
+    unfold TieData.phi; rw [dite_eq_left h]; rfl
   by_cases hia : i = a
   · subst hia
     rw [hphi]

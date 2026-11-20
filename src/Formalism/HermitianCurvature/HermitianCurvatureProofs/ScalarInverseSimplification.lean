@@ -103,7 +103,7 @@ theorem column_indicator_expansion : ExpansionCovector := by
     · intro a p ha hp
       rw [hxa _ _ (by omega)]
       split_ifs
-      · unfold Zb; rw [dif_pos ha, dif_neg (by omega)]
+      · unfold Zb; rw [dite_eq_left ha, dite_eq_right (by omega)]
       · rfl
     · intro a b
       have hb := b.isLt

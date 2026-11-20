@@ -136,7 +136,7 @@ theorem tm_face (m' : Mor F F' σ) {G : C' ⥤ C} (η : G ⟶ m'.G) {n k : ℕ} 
     · apply Subsingleton.elim
   · have h' : ¬ (Monotone (j.succAbove ∘ a) ∧ Monotone b) := fun h' =>
       h ⟨fun x y hxy => (Fin.strictMono_succAbove j).le_iff_le.1 (h'.1 hxy), h'.2⟩
-    rw [dif_neg h, dif_neg h', map_zero]
+    rw [dite_eq_right h, dite_eq_right h', map_zero]
 
 end CrystallineSemistableComparison.Auxfc
 

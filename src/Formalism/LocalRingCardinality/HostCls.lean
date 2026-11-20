@@ -128,7 +128,7 @@ private theorem psAt_eq_one_or_neg_one (hp : p.Prime) (h : ¬ p ∣ H.condN) :
     H.psAt p = 1 ∨ H.psAt p = -1 := by
   have hc : Nat.Coprime p H.condN := (Nat.Prime.coprime_iff_not_dvd hp).2 h
   unfold HostRaw.psAt
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
   rcases Int.units_eq_one_or ((H.art (ZMod.unitOfCoprime p hc)).1.1) with h1 | h1 <;> simp [h1]
 
 theorem primeClass_eq_inert_iff_symbols (hp : p.Prime) : primeClass H p = .inertClass ↔
@@ -192,7 +192,7 @@ theorem psAt_prime {p : ℕ} (hp : p.Prime) (h : ¬ p ∣ H.condN) : H.psAt p = 
   have hqo : Odd H.q := hq.odd_of_ne_two (by omega)
   have step1 : H.psAt p = jacobiSym (p : ℤ) H.q := by
     unfold HostRaw.psAt
-    rw [dif_pos hc, H.flPS (ZMod.unitOfCoprime p hc)]
+    rw [dite_eq_left hc, H.flPS (ZMod.unitOfCoprime p hc)]
     apply jacobiSym.mod_left'
     rw [ZMod.coe_unitOfCoprime, ZMod.val_natCast, Int.natCast_mod]
     apply Int.emod_emod_of_dvd

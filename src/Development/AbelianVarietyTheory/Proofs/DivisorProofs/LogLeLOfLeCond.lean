@@ -116,7 +116,7 @@ theorem sizeRows_numRec : ∀ (D : D7) (large₂ : SizeData₂ D) (EX : ErrX D),
     have e : (numDatumOfParameters D large₂).uW (codeRec large₂ u) z ⟨l + 1, hi⟩ = (D.hcW u (tauPl D z)).u ⟨l + 1, hi⟩ := by
       rw [D.s.u_letter u (tauPl D z) l hl, D.hcW_v]
       unfold NumDatum.uW
-      rw [dif_pos ⟨h1, h2⟩]
+      rw [dite_eq_left ⟨h1, h2⟩]
       show _ - _ - (if D.s.letter u ⟨l, hl⟩ = true then ((⌊D.s.Del⌋₊ : ℕ) : ℚ) else 0) = _
       rw [hDel]
       rfl

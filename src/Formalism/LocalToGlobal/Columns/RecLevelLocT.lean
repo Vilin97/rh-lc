@@ -290,12 +290,12 @@ theorem rll_baseLb_eq (h : BasePi ST π) : baseLb E n ST = rll_dLat n (algebraMa
       by_cases hi : i = lastIdx n
       · subst hi
         dsimp only
-        rw [dif_pos rfl, map_mul, ht, mul_inv_cancel_left₀ h.coe_ne_zero]
+        rw [dite_eq_left rfl, map_mul, ht, mul_inv_cancel_left₀ h.coe_ne_zero]
       · simp only [dif_neg hi]
         exact ((hI _).mp (h1 i hi)).choose_spec
     · intro P hP
       dsimp only
-      rw [dif_pos rfl]
+      rw [dite_eq_left rfl]
       exact Ideal.mul_mem_right _ _ (h.mem hP)
 
 theorem rll_one_eq_range : ((1 : Submodule (𝓞 E) E) : Set E) = (intOE E : Set E) := by

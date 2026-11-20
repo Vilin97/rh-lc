@@ -86,7 +86,7 @@ theorem upperLeftBlock_diagonal_conj_eq {κ : Type} [CommRing κ] {n r : ℕ} (h
       rwa [← diagGL_inv, inv_inv, ← mul_assoc, ← mul_assoc, mul_inv_cancel, one_mul, mul_assoc,
         mul_inv_cancel, mul_one] at this
     unfold Formalism.L2.DIV.upperLeftBlock Formalism.L2.DIV.ext1
-    rw [dif_neg hX, dif_neg hY, mul_one, inv_mul_cancel]
+    rw [dite_eq_right hX, dite_eq_right hY, mul_one, inv_mul_cancel]
 
 theorem intGL_diagGL_val {n : ℕ} (u : Fin n → (𝒪)ˣ) :
     (Formalism.L2.DIV.intGL D.host.F D.host.E n (diagGL u)).val =
@@ -169,7 +169,7 @@ theorem exists_rescale : ∀ {D : D7} {n r : ℕ} (hr : r ≤ n) (β : GL (Fin n
       rw [e3, e4, bc_conj, hred]
     refine (congrArg (Formalism.L2.DIV.upperLeftBlock hr) e2).trans (upperLeftBlock_diagonal_conj_eq hr (dn PP) (d PP) (fun i => ?_) _)
     show (if h : (Fin.castLE hr i).val < r then d PP ⟨(Fin.castLE hr i).val, h⟩ else 1) = d PP i
-    rw [dif_pos (show (Fin.castLE hr i).val < r from i.2)]
+    rw [dite_eq_left (show (Fin.castLE hr i).val < r from i.2)]
     rfl
 
 end GlobalTheory.FrameRescale

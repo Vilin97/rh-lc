@@ -63,7 +63,7 @@ theorem app_resG {X Y : Scheme.{0}} (f : Y ⟶ X) {U V : X.Opens} (e : V ≤ U) 
 theorem valF_resG {F : Type} [Field F] {X : Scheme.{0}} (y : Sp F ⟶ X) {U V : X.Opens} (e : V ≤ U)
     (hV : ⊤ ≤ y ⁻¹ᵁ V) (f : Γ(X, U)) : valF y V (resG X e f) = valF y U f := by
   unfold valF
-  rw [dif_pos hV, dif_pos (hV.trans fun x hx => show y x ∈ U from e (show y x ∈ V from hx))]
+  rw [dite_eq_left hV, dite_eq_left (hV.trans fun x hx => show y x ∈ U from e (show y x ∈ V from hx))]
   congr 1
   simp only [resG]
   rw [← CommRingCat.comp_apply, Scheme.Hom.map_appLE]

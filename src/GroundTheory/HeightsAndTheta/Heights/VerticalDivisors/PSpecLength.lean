@@ -86,7 +86,7 @@ theorem SpecLength.proof (h1 : SpecChart.Statement) (h2 : FiniteOrd.Statement)
       (Module.length (Localization.AtPrime W) (Localization.AtPrime W ⧸
         ((integralModel I).map (algebraMap _ (Localization.AtPrime W)) ⊔
           Ideal.span {algebraMap _ (Localization.AtPrime W) (linForm u)}))).toNat := by
-    rw [localMult, dif_pos hWp, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
+    rw [localMult, dite_eq_left hWp, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
   unfold Ring.ord at hfin ⊢
   rw [hlen] at hfin ⊢
   split_ifs with hlW

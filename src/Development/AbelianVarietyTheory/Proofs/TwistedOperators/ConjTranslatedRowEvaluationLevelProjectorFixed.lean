@@ -59,7 +59,7 @@ theorem GlobalTheory.RowEvalHH.Re_evF : ∀ {D : D7} {G : Type} [Group G] [Finty
   unfold evF
   by_cases hm : MemLp (fun x => ev (MP R) (vecOf R X c y) S
       (@HMul.hMul (GA D (Yc D 0)) (GA D (Yc D 0)) (GA D (Yc D 0)) _ ((iotaX X h).symm x) t)) 2 (muX X)
-  · rw [dif_pos hm]
+  · rw [dite_eq_left hm]
     set f : X.B.I.GA → ℂ := fun x => ev (MP R) (vecOf R X c y) S
       (@HMul.hMul (GA D (Yc D 0)) (GA D (Yc D 0)) (GA D (Yc D 0)) _ ((iotaX X h).symm x) t) with hf
     have hm0 : MemLp (fun x => star (f x)) 2 (muX X) := hm.star
@@ -116,7 +116,7 @@ theorem GlobalTheory.RowEvalHH.Re_evF : ∀ {D : D7} {G : Type} [Group G] [Finty
       have hC : ((X.B.μf X.K2).toReal : ℂ) ≠ 0 := by exact_mod_cast hvol
       rw [mul_div_assoc', mul_div_cancel_left₀ _ hC]
     exact Formalism.L2.SG.Pf.idempotent_fixes_invariant_L2 X (fun x => star (f x)) hmeas hinv hm0 hfix
-  · rw [dif_neg hm]
+  · rw [dite_eq_right hm]
     have h0 : (star (0 : L2X X)) = 0 := (Formalism.L2.SG.RowDict.conjL (muX X)).map_zero
     rw [h0, map_zero]
 

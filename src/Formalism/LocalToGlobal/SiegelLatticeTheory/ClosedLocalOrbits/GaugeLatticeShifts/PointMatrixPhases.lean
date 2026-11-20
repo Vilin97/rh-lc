@@ -171,7 +171,7 @@ theorem simple_eqF (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUn
       else 0 := by
     intro a
     by_cases ha : a.val + 1 < N
-    · rw [dif_pos ha]
+    · rw [dite_eq_left ha]
       have K1 := key ⟨a.val + 1, ha⟩ ⟨pσ p.1 a.val, hlt _ a.isLt⟩ a ⟨pσ p.1 (a.val + 1), hlt _ ha⟩
         (hinv _ a.isLt).symm rfl
       split_ifs with hS
@@ -187,12 +187,12 @@ theorem simple_eqF (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUn
             (hm _ _).1 (by rw [Fin.lt_iff_val_lt_val]; exact hgt)
           rw [e, mul_zero] at K1
           exact (mul_eq_zero.1 K1).resolve_right (hv _ a.isLt)
-    · rw [dif_neg ha, dif_neg (fun hS => ha hS.1)]
+    · rw [dite_eq_right ha, dite_eq_right (fun hS => ha hS.1)]
   have hup : ∀ b : Fin N, (if h : b.val + 1 < N then m b ⟨b.val + 1, h⟩ else 0) =
       if hS : sameBF p.1 N b.val then m b ⟨b.val + 1, hS.1⟩ else 0 := by
     intro b
     by_cases hb : b.val + 1 < N
-    · rw [dif_pos hb]
+    · rw [dite_eq_left hb]
       split_ifs with hS
       · rfl
       · rcases pσ_nb p.1 hbs b.val (by rw [hs]; exact hb) with hsame | hgt
@@ -203,7 +203,7 @@ theorem simple_eqF (p : Point K N) {n m : Matrix (Fin N) (Fin N) K} (hn : IsLoUn
             (hn _ _).1 (by rw [Fin.lt_iff_val_lt_val]; exact hgt)
           rw [e, zero_mul] at K1
           exact (mul_eq_zero.1 K1.symm).resolve_left (hv _ (hlt _ b.isLt))
-    · rw [dif_neg hb, dif_neg (fun hS => hb hS.1)]
+    · rw [dite_eq_right hb, dite_eq_right (fun hS => hb hS.1)]
   unfold sgLoF sgUpF
   rw [Finset.sum_congr rfl (fun a _ => hlo a), Finset.sum_congr rfl (fun b _ => hup b)]
   set fe : Fin N → Fin N := fun a =>

@@ -74,7 +74,7 @@ theorem evalAt_mul (f g : Rules pts) {S : Type} [CommRing S] [Algebra K S] (y : 
 
 theorem evalAt_one {S : Type} [CommRing S] [Algebra K S] (y : pts S) (h : FromTest pts mapR y) :
     evalAt pts mapR (1 : Rules pts) y = 1 := by
-  unfold evalAt; rw [dif_pos h]; simp
+  unfold evalAt; rw [dite_eq_left h]; simp
 
 def evalL {S : Type} [CommRing S] [Algebra K S] (y : pts S) : Rules pts →ₗ[K] S where
   toFun f := evalAt pts mapR f y

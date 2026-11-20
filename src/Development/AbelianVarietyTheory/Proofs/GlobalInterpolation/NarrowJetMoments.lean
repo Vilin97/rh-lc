@@ -158,7 +158,7 @@ theorem off_of_datum (hT0 : T ≠ 0) (hT : ∀ P ∈ SB, (T : 𝓞 X.E) ∉ P.as
     simp only [e]
   · have hx' : ∃ x', R x x' := ⟨x, hx, by rw [sub_self]; exact zero_mem _⟩
     beta_reduce
-    rw [dif_pos hx']
+    rw [dite_eq_left hx']
     exact (h.1 _ hx _ hx'.choose_spec.1 hx'.choose_spec.2).symm
 
 variable (A : Amb X)

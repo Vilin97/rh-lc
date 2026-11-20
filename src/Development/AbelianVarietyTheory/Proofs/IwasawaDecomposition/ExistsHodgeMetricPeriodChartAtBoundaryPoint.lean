@@ -132,7 +132,7 @@ theorem exists_hodge_period_chart : ∀ (E : Type) [Field E] [NumberField E] [Is
       rw [(hrel' z hz).2]; exact hball _ (hpoly z hz)
     obtain ⟨hex, hDirs⟩ := hWfr z (hrel' z hz).1 hb
     unfold lieGram
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     obtain ⟨hgram, -⟩ := hHodge _ (hrel' z hz).1 hI hex.choose _ (hDirs _ hex.choose_spec)
     rw [hgram τ, hY _ (hnz z hz hI), ← (hrel' z hz).2]
     ext b b'

@@ -102,10 +102,10 @@ theorem eventualValue_congr {f g : (K → ℤ) → ℤ} (h : f =ᶠ[atTop] g) : 
     ⟨fun ⟨c, hc⟩ => ⟨c, (h.and hc).mono fun _ hm => hm.1.symm.trans hm.2⟩,
       fun ⟨c, hc⟩ => ⟨c, (h.and hc).mono fun _ hm => hm.1.trans hm.2⟩⟩
   by_cases hf : ∃ c, ∀ᶠ m in atTop, f m = c
-  · rw [dif_pos hf, dif_pos (hiff.mp hf)]
+  · rw [dite_eq_left hf, dite_eq_left (hiff.mp hf)]
     obtain ⟨m, hm⟩ := (hf.choose_spec.and ((hiff.mp hf).choose_spec.and h)).exists
     exact hm.1.symm.trans (hm.2.2.trans hm.2.1)
-  · rw [dif_neg hf, dif_neg (mt hiff.mpr hf)]
+  · rw [dite_eq_right hf, dite_eq_right (mt hiff.mpr hf)]
 
 theorem intNum_radical_eq_offBlocks (I : Ideal (MvPolynomial (Σ k, ι k) ℂ)) {n : ℕ} (bs : Fin n → K → ℤ) :
     intNum ℂ I.radical bs =

@@ -31,7 +31,7 @@ theorem phiQ_mul_conj_eq_indicator : ∀ (D : D7) (PP : Pl D.host.E) (v : FinPl 
         (∀ i j, x i j ∈ v.adicCompletionIntegers D.host.F) ∧
         ∀ i j, r ≤ i.val → j.val < r → Valued.v (x i j) < 1 := hx
     unfold phiQ
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     obtain ⟨⟨red, -, -, hrel, -⟩, -⟩ := GlobalTheory.PlaceRed.red_dict D v φ PP hP
     set u := h.1.unit with hu
     have hv : Valued.v (u : Fv D.host.F v) = 1 := by rw [hu, IsUnit.unit_spec]; exact h.2.1

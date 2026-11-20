@@ -27,7 +27,7 @@ theorem dbarAt_germ {n : ℕ} {α β : V n → Alt n} {v : V n} (h : α =ᶠ[�
 
 theorem loc_dbar_of_mem {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) (α : A.Fld) (i : A.ι) {v : V n}
     (hv : v ∈ (A.e i).target) : A.loc (A.dbar α) i v = dbarAt (A.loc α i) v := by
-  rw [HolAtlas.loc, dif_pos hv]
+  rw [HolAtlas.loc, dite_eq_left hv]
   exact congrArg (dbarAt (A.loc α i)) ((A.e i).right_inv hv)
 
 theorem ddc_eq_of_eventuallyEq : ∀ {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) (α : A.Fld) (x : A.Pt)

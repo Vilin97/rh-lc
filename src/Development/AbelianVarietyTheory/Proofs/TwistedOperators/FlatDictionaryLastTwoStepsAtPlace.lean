@@ -131,7 +131,7 @@ theorem GlobalTheory.FlatPlace.lastStep_eventually : Big fun ch => ChrP ch → A
   have hsymm' : e.symm (topLast (locGrid ch.G t w) (j + 1 + 1)) = Sum.inr () := by
     rw [Equiv.symm_apply_eq]; ext; rw [he2]; rfl
   unfold facAt locA conAt
-  rw [dif_pos hj0, dif_pos hj0]
+  rw [dite_eq_left hj0, dite_eq_left hj0]
   unfold lastDat
   rw [← hT₁O O₁ hO₁, ← hT₂O O₂ hO₂]
   refine ⟨fun hrel => ?_, fun hexp => ?_⟩
@@ -146,7 +146,7 @@ theorem GlobalTheory.FlatPlace.lastStep_eventually : Big fun ch => ChrP ch → A
     refine key S Φ₂ hc' fun y y' => ?_
     rw [hΦ₂, hΦ₁]
     refine Eq.trans ?_ (hexp (y, y'.submatrix e.symm id))
-    rw [dif_pos (show j + 2 * 0 + 2 = (locGrid ch.G t w).m from hj0)]
+    rw [dite_eq_left (show j + 2 * 0 + 2 = (locGrid ch.G t w).m from hj0)]
     have hy : y'.toRows₁.submatrix (Fin.cast h₃) (Fin.cast h₄) = (y'.submatrix e.symm id).submatrix
         (Fin.castLE (show (locGrid ch.G t w).rank ((locGrid ch.G t w).m, j + 1 + 1) ≤ _ by simp only [hm]; omega))
         (Fin.cast (show (locGrid ch.G t w).rank ((locGrid ch.G t w).m, j + 1) = _ by simp only [hm]; omega)) := by

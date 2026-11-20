@@ -26,7 +26,7 @@ theorem fillTie_of {D : D7} (Gt : GatTies D) (u : D.what₂.Word) (v : D.what₂
   have h := hw x s (b + 1) (by simp only [SizeData₂.lifts, Finset.mem_Icc]; omega)
   have e1 : wj D (b + 1) (Gt.gat_pos u v hg ⟨x, s⟩) = (((D.hc (Gt.gat_pos u v hg ⟨x, s⟩)).e ⟨b, hb⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl
   rw [e1] at h
   rw [D.hcW_e]

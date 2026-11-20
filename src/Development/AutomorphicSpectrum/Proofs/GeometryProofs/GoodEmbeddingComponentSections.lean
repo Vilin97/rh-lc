@@ -96,7 +96,7 @@ theorem evR_map (hL : GlobalTheory.Reg.EvLaws Xo c) {f : Rul Xo c}
     intro S' _ _ p χ y₀ w hw
     have h : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) w := ⟨p, χ, y₀, hw⟩
     unfold evR evalAt
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact hL.wd f hf S' _ p _ χ _ y₀ w h.choose_spec.choose_spec.choose_spec hw
   obtain ⟨q, χ, y₀, hy₀⟩ := hL.test S y
   rw [key q χ y₀ y hy₀, key q (φ.comp χ) y₀ z (PullbackSections.frMap_trans χ φ hy₀ hyz)]
@@ -114,7 +114,7 @@ theorem frBor_of_proportional_readings : ∀ (E : Type) [Field E] [NumberField E
     intro f
     classical
     show (if h : y.1 ∈ ((U σ).X k).dom then toC (evR Xo c f ((U σ).un k ⟨y.1, h⟩)) else 0) = _
-    rw [dif_pos y.2]
+    rw [dite_eq_left y.2]
   obtain ⟨C, ψ, z, t', hz, hbz⟩ : ∃ (C : GlobalTheory.Reg.FChart h) (ψ : C.R →ₐ[c.F] CAt σ) (z : FrPt Xo c (CAt σ))
       (t' : Ix Dw → (CAt σ)ˣ), FrMap ψ C.y z ∧ FrBor t' z ((U σ).un k y) := by
     letI : Field (CAt σ) := inferInstanceAs (Field ℂ)

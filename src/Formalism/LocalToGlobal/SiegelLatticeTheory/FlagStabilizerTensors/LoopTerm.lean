@@ -220,14 +220,14 @@ theorem volRC_pos {u u' : D.what₂.Word} (hPin : PinAll (Y := Y) u u') (hCv : C
       rw [gterm_val hI t, h0, map_zero]
     have hp := hPin _ hr hg
     unfold covR
-    rw [dif_pos hp]
+    rw [dite_eq_left hp]
     exact hCv _ hr hg _ _ _ hp.choose_spec.1 hp.choose_spec.2.1 hp.choose_spec.2.2
   · exact one_pos
 
 theorem ptC_spec {u u' : D.what₂.Word} (t : D.s.Term u u') (τ : D.what₂.Tau)
     (h : ∃ p, RelPt D (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u' τ) (gamR hI C t τ) p) :
     RelPt D (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u' τ) (gamR hI C t τ) (ptC hI C t τ) := by
-  rw [ptC, dif_pos h]
+  rw [ptC, dite_eq_left h]
   exact h.choose_spec
 
 variable (hB : WuBessel C)
@@ -247,7 +247,7 @@ theorem rmeas_nuR {u u' : D.what₂.Word} (hPin : PinAll (Y := Y) u u') (hCv : C
     RMeas D (locW C u u' τ) (gamR hI C t τ) (thetaS hI C hB t) (nuR hI C hB t τ) := by
   have hν : RMeas D (locW C u u' τ) (gamR hI C t τ) 1 (nu1 hI C t τ) := by
     unfold nu1
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   obtain ⟨p, μR, hp, hq⟩ := hν
   have hθ := thetaS_pos hI C hB hPin hCv t
@@ -362,12 +362,12 @@ theorem gram_holds {u u' : D.what₂.Word} (hL : FrameLiftEx hI u u') : GramTr W
   obtain ⟨_, hQQi, hH, _⟩ := C.isT τ
   have hlin : IsFrameLift hI t (linOf hI t) := by
     unfold linOf
-    rw [dif_pos (hL t)]
+    rw [dite_eq_left (hL t)]
     exact (hL t).choose_spec
   have hrat : Formalism.L2.SG.TermOp.RatLink X (ptR hI t) (linOf hI t) := by
     have hex := Formalism.L2.SG.Pf.ratPt_holds D X (linOf hI t) hlin.1
     unfold ptR
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   obtain ⟨M, _, hM1, _, hM3⟩ := hrat
   have hA : Formalism.QuantumDeterminants.Zhat D.R.k D.R.rS (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u' τ) (gamR hI C t τ) a b =
@@ -625,7 +625,7 @@ theorem tz_zB (u : D.what₂.Word) (τ : D.what₂.Tau) :
   obtain ⟨_, _, hH, _⟩ := C.isT τ
   have hz : Formalism.QuantumDeterminants.fvec D.R.k D.R.rS (zB X (C.Qi τ) u τ) (Fin.last D.R.rS) = zB X (C.Qi τ) u τ := by
     unfold Formalism.QuantumDeterminants.fvec
-    rw [dif_neg (by simp)]
+    rw [dite_eq_right (by simp)]
   have hQ := Q_fvec C u τ (Fin.last D.R.rS)
   rw [hz, rhoF_last, Complex.ofReal_one, one_smul] at hQ
   have hl : (X.Fu u).fvec (Fin.last D.R.rS) = X.zu u := by
@@ -700,7 +700,7 @@ theorem gf_ne {u u' : D.what₂.Word} (t : D.s.Term u u') (hG : D.s.Gterm t ≠ 
   apply (embS D τ).injective
   show embS D τ (Gflag (FlagOfWord W u) (fl'Of W hI t).fl) = embS D τ 0
   unfold Gflag Dl leadMinorE
-  rw [dif_pos le_rfl, dif_pos (Nat.le_succ _), map_zero, map_sub, map_mul, map_mul, map_mul, map_mul,
+  rw [dite_eq_left le_rfl, dite_eq_left (Nat.le_succ _), map_zero, map_sub, map_mul, map_mul, map_mul, map_mul,
     embS_star' D τ, embS_star' D τ, Complex.mul_conj, Complex.mul_conj, map_natCast,
     map_natCast]
   exact_mod_cast h1

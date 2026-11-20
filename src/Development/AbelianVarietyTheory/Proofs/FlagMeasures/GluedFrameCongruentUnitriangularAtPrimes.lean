@@ -107,7 +107,7 @@ theorem glued_loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D
   have hiso : g⁻¹ * g' ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := mul_mem (inv_mem hA.1) hA'.1
   have hfr : frame (mapLF (g⁻¹ * g') (lf D (X.Fu u'))) b = (g⁻¹ * g') (frame (lf D (X.Fu u')) b) := by
     unfold mapLF
-    rw [dif_pos hiso]
+    rw [dite_eq_left hiso]
     simp only [frame, Formalism.MainNotions.S.FlagG.fvec, mapFlag]
     exact (congrFun (Fin.comp_snoc (⇑(g⁻¹ * g')) _ _) b).symm
   have htarget : frame (mapLF (g⁻¹ * g') (lf D (X.Fu u'))) b - frameAct (frame (lf D (X.Fu u))) ξ b = g⁻¹ v := by

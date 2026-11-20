@@ -85,12 +85,12 @@ private theorem isHolTo_comp_continuousLinearMap {V : Type} [NormedAddCommGroup 
     unfold valAt'
     by_cases hb : ⊤ ≤ (f b ≫ g) ⁻¹ᵁ U
     · have hb' : ⊤ ≤ f b ⁻¹ᵁ g ⁻¹ᵁ U := hb
-      rw [dif_pos hb, dif_pos hb']
+      rw [dite_eq_left hb, dite_eq_left hb']
       unfold valAt
       rw [Scheme.Hom.comp_appLE]
       rfl
     · have hb' : ¬ ⊤ ≤ f b ⁻¹ᵁ g ⁻¹ᵁ U := hb
-      rw [dif_neg hb, dif_neg hb']
+      rw [dite_eq_right hb, dite_eq_right hb']
   exact ⟨h1, h2.congr fun b _ => key b⟩
 
 theorem isHolTo_expPt {m : ℂ → Λ →+ ℂ} (hm : ∀ x, Differentiable ℂ fun s => m s x) :

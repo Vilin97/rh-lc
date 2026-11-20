@@ -201,7 +201,7 @@ theorem hint_line (hd : d.AxH 𝒜) {c : ι} {G : WT} {f g : A c} (hg : g ∈ �
     ⟨f, hf⟩
   have hex : ∃ a : Ω c, f = a • g := ⟨a, by simpa using (congrArg Subtype.val ha).symm⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 variable {d} in
@@ -209,7 +209,7 @@ theorem hint_ratio_self (hd : d.AxH 𝒜) {c : ι} {G : WT} {g : A c} (hg : g �
     (hg0 : g ≠ 0) : ratio (Ω := Ω c) g g = 1 := by
   have hex : ∃ a : Ω c, g = a • g := ⟨1, (one_smul _ _).symm⟩
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have h := hex.choose_spec
   have h2 : (hex.choose - 1) • g = 0 := by rw [sub_smul, one_smul, ← h, sub_self]
   rcases smul_eq_zero.mp h2 with h3 | h3

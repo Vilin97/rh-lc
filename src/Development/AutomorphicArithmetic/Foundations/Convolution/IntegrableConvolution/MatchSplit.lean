@@ -38,7 +38,7 @@ private theorem transport (X Y T : Type) [Group X] [TopologicalSpace X] [IsTopol
       refine ⟨hρ.1.comp e.continuous.measurable, fun x => ?_⟩
       have := hρ.2 (e x)
       simpa only [id, he, hj] using this
-    rw [quotAny X T μ ν i hi _ _ hΦ hinv h' (hfin _ h'), quotInt, dif_pos h, integral_smul_measure,
+    rw [quotAny X T μ ν i hi _ _ hΦ hinv h' (hfin _ h'), quotInt, dite_eq_left h, integral_smul_measure,
       e.measurableEmbedding.integral_map, ENNReal.toReal_ofReal hc]
     simp
   · have h' : ¬ ∃ ρ, IsNormAlong id i ν ρ := by
@@ -47,7 +47,7 @@ private theorem transport (X Y T : Type) [Group X] [TopologicalSpace X] [IsTopol
       obtain ⟨x, rfl⟩ := e.surjective y
       have := hρ.2 x
       simpa only [id, hj, ← he, e.symm_apply_apply] using this
-    rw [quotInt, dif_neg h, quotInt, dif_neg h', mul_zero]
+    rw [quotInt, dite_eq_right h, quotInt, dite_eq_right h', mul_zero]
 
 private theorem invInv {T : Type} [Group T] [TopologicalSpace T] [IsTopologicalGroup T] [LocallyCompactSpace T]
     [SecondCountableTopology T] [MeasurableSpace T] [BorelSpace T] (h : ∀ a b : T, a * b = b * a) (ν : Measure T)

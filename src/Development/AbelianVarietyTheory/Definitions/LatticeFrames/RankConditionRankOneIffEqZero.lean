@@ -49,7 +49,7 @@ def Pts.ofFam {ε : ℝ} (F : FamCore ε) : Pts where
     F.g_eq x i i', (F.pde_eq x i i').1, (F.pde_eq x i i').2, F.QS_eq x i i', fun p h h' => by
       have e := congrFun (F.art_eq x i i') p
       unfold artNum at e
-      rw [dif_pos h, dif_pos h'] at e
+      rw [dite_eq_left h, dite_eq_left h'] at e
       exact Prod.mk.inj e⟩
 
 theorem Pts.ofFam_covered {ε : ℝ} (F : FamCore ε) : (Pts.ofFam F).Covered := by

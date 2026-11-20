@@ -209,9 +209,9 @@ theorem minPar_of_eich {k : ℕ} (hk : k ≤ r) {R : Type} [CommRing R] (A : Mat
     ext i m
     simp only [Matrix.mul_apply, Matrix.of_apply, colK, Matrix.submatrix_apply, id]
     rw [sum_castLE hk (fun l => A i l * if hl : l.val < k then C ⟨l.val, hl⟩ m else 0) fun l hl => by
-      rw [dif_neg (by omega), mul_zero]]
+      rw [dite_eq_right (by omega), mul_zero]]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [dif_pos (by simp)]
+    rw [dite_eq_left (by simp)]
     rfl
 
 theorem nMat_minPar (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame σ J X Y) {k : ℕ} (hk : k ≤ r)

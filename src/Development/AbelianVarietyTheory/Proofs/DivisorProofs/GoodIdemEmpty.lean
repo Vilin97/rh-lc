@@ -64,7 +64,7 @@ theorem IsRootOne.isAlgUnit {a : ℂ} (ha : IsRootOne a) : IsAlgUnit a := by
   have h1 : (⟨a, hq⟩ : Qbar) ^ m = 1 := Subtype.ext h
   have h2 : ‖lam ⟨a, hq⟩‖ ^ m = 1 := by rw [← norm_pow, ← map_pow, h1, map_one, norm_one]
   unfold lamC
-  rw [dif_pos hq]
+  rw [dite_eq_left hq]
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hm.ne').1 h2
 
 theorem IsAlgUnit.mul {a b : ℂ} (ha : IsAlgUnit a) (hb : IsAlgUnit b) : IsAlgUnit (a * b) :=

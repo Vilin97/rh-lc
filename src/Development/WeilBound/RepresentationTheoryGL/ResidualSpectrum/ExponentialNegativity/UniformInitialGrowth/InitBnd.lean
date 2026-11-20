@@ -14,7 +14,7 @@ variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 def ext0 (x : Fin n → ℝ) (j : ℕ) : ℝ := if h : j < n then x ⟨j, h⟩ else 0
 
 theorem sr_eq (x : Fin n → ℝ) {r : ℕ} (h0 : 0 < r) (h1 : r < n) : An.sr x r = ext0 x (r - 1) - ext0 x r := by
-  rw [An.sr, dif_pos ⟨h0, h1⟩, ext0, ext0, dif_pos (by omega : r - 1 < n), dif_pos h1]
+  rw [An.sr, dite_eq_left ⟨h0, h1⟩, ext0, ext0, dite_eq_left (by omega : r - 1 < n), dite_eq_left h1]
 
 theorem abs_sr_le (x : Fin n → ℝ) (t₀ : ℝ) (hx : ∀ r, -t₀ ≤ An.sr x r) (r : ℕ) :
     |An.sr x r| ≤ An.sr x r + 2 * t₀ := by
@@ -35,7 +35,7 @@ theorem bound_nonneg (x : Fin n → ℝ) (t₀ : ℝ) (hx : ∀ r, -t₀ ≤ An.
 theorem abs_le_bound (x : Fin n → ℝ) (t₀ : ℝ) (hx : ∀ r, -t₀ ≤ An.sr x r)
     (hlast : ∀ i : Fin n, (i : ℕ) + 1 = n → x i = 0) (i : Fin n) :
     |x i| ≤ ∑ r ∈ Finset.range n, An.sr x r + 2 * (n : ℝ) * t₀ := by
-  have hXi : ext0 x i = x i := by rw [ext0, dif_pos i.2]
+  have hXi : ext0 x i = x i := by rw [ext0, dite_eq_left i.2]
   have hXl : ext0 x (n - 1) = 0 := by
     rw [ext0]; split_ifs with h
     · exact hlast _ (by show n - 1 + 1 = n; omega)

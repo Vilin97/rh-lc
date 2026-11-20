@@ -23,7 +23,7 @@ theorem fam_eq (hl : lam ≠ 0) (b : Fin (D.R.rS + 1)) :
   refine Fin.lastCases ?_ (fun c => ?_) b
   · rw [Fin.snoc_last]
     unfold Formalism.QuantumDeterminants.fvec
-    rw [dif_neg (by simp), Matrix.mulVec_mulVec, hT.2.1, Matrix.one_mulVec, Fin.val_last, Nat.sub_self, pow_zero,
+    rw [dite_eq_right (by simp), Matrix.mulVec_mulVec, hT.2.1, Matrix.one_mulVec, Fin.val_last, Nat.sub_self, pow_zero,
       inv_one, one_smul]
   · rw [Fin.snoc_castSucc]
     have h1 := (hT.2.2.2 c c rfl).1

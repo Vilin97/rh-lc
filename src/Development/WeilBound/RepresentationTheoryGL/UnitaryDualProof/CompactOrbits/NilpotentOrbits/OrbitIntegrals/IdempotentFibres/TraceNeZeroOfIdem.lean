@@ -164,7 +164,7 @@ theorem piZ_spec [CharZero k] {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} (hZ 
     piZ Z x ∈ Z ∧ qZ Z (piZ Z x) = qZ Z x := by
   have h : ∃ c ∈ Z, qZ Z c = qZ Z x := qZ_surj hZ _
   unfold piZ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem fibZN [CharZero k] : FibZN (k := k) := by

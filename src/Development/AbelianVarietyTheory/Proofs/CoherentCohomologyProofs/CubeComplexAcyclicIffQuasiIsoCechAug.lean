@@ -249,13 +249,13 @@ variable (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R)
 
 theorem termIncl_apply_of_notMem {p : ℕ} (y : Term (upperFace e i A) p)
     (t : {t : Finset ι // t.card = p + 1}) (ht : i ∉ t.1) : termIncl e i A p y t = 0 := by
-  rw [termIncl, LinearMap.pi_apply, dif_neg ht]; rfl
+  rw [termIncl, LinearMap.pi_apply, dite_eq_right ht]; rfl
 
 theorem termIncl_apply_insert {p : ℕ} (y : Term (upperFace e i A) p)
     (s : {s : Finset κ // s.card = p}) :
     termIncl e i A p y ⟨insert i (s.1.map e.toEmbedding), by rw [card_insert_map he, s.2]⟩ =
       upperSign e i s.1 • y s := by
-  rw [termIncl, LinearMap.pi_apply, dif_pos (Finset.mem_insert_self _ _)]
+  rw [termIncl, LinearMap.pi_apply, dite_eq_left (Finset.mem_insert_self _ _)]
   have key : ∀ (s' : Finset κ) (_ : s' = s.1) (h : insert i (s'.map e.toEmbedding) ⊆
       insert i (s.1.map e.toEmbedding)), upperSign e i s' • res A h
         (extend (upperFace e i A) p y s') = upperSign e i s.1 • y s := by

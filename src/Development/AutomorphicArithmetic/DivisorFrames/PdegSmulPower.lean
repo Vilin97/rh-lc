@@ -67,4 +67,4 @@ theorem UpperTheory.pdeg_smul_power :
     simp
   · have h' : ¬ ∃ a, IsDeg p N ζ a := fun ⟨_, Z, i, hi, hZ, alg, hz, hd, _⟩ =>
       h ⟨_, Z, i, hi, hZ, alg, hz, hd, rfl⟩
-    rw [pdeg, pdeg, dif_neg h, dif_neg h', mul_zero]
+    rw [pdeg, pdeg, dite_eq_right h, dite_eq_right h', mul_zero]

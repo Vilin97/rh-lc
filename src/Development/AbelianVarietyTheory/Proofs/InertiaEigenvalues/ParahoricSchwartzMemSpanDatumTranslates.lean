@@ -227,7 +227,7 @@ theorem topL_eq {κ : Type} [Zero κ] {r t : ℕ} (y : Matrix (Fin (r + t)) (Fin
     topL r y = Matrix.toRows₁ (y.submatrix finSumFinEquiv id) := by
   ext a b
   unfold topL
-  rw [dif_pos ⟨by have := a.2; omega, b.2⟩]
+  rw [dite_eq_left ⟨by have := a.2; omega, b.2⟩]
   rfl
 
 theorem lowZero_of_toBlocks {κ : Type} [Zero κ] {r t : ℕ} (y : Matrix (Fin r ⊕ Fin t) (Fin r ⊕ Fin t) κ)

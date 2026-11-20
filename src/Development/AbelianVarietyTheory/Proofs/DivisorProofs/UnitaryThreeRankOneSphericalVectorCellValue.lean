@@ -310,7 +310,7 @@ theorem value_point : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicati
     exact Int.eq_ofNat_of_zero_le hv.le
   unfold chiDeltaU
   rw [Finset.prod_eq_single k]
-  · rw [dif_pos (by omega)]
+  · rw [dite_eq_left (by omega)]
     show α k ^ ordL ((((Pb : GU σ n) : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) a a) *
         (q : ℂ) ^ (-(ordL ((((Pb : GU σ n) : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) a a)) *
           ((n : ℤ) - 1 - 2 * (k.val : ℤ))) = _
@@ -321,7 +321,7 @@ theorem value_point : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicati
     have hi : i.val < k.val := by
       have : i.val ≠ k.val := fun h => hik (Fin.ext h)
       omega
-    rw [dif_pos (by omega), hdiag _ hi]
+    rw [dite_eq_left (by omega), hdiag _ hi]
     simp
   · simp
 

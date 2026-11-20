@@ -203,17 +203,17 @@ theorem partialInverseOfEmbedding_apply_self {m k : ℕ} (e : Fin m → Fin k) (
   classical
   unfold partialInverseOfEmbedding
   have h : ∃ a', e a' = e a := ⟨a, rfl⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact congrArg some (he (Classical.choose_spec h))
 
 theorem eq_of_partialInverseOfEmbedding_eq_some {m k : ℕ} (e : Fin m → Fin k) (c : Fin k) (a : Fin m) (h : partialInverseOfEmbedding e c = some a) : c = e a := by
   classical
   unfold partialInverseOfEmbedding at h
   by_cases h1 : ∃ a, e a = c
-  · rw [dif_pos h1] at h
+  · rw [dite_eq_left h1] at h
     rw [← Option.some.inj h]
     exact (Classical.choose_spec h1).symm
-  · rw [dif_neg h1] at h
+  · rw [dite_eq_right h1] at h
     exact absurd h (by simp)
 
 section types

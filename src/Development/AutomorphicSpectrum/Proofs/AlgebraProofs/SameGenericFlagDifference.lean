@@ -51,7 +51,7 @@ theorem ck_rootNum_eq_pairNum_on_flagPair : ∀ (O : Type) [CommRing O] [IsDomai
       rw [hd, hd', hf, hg, map_one]
       rfl
     unfold ck
-    rw [dif_pos hne]
+    rw [dite_eq_left hne]
     refine (GlobalTheory.T.flag_model_value_independent O Ω K ι x d N V E E' hW hEE'
       (Classical.choice hne) F₀ _ _ (ChernClassOnFlagPair.fieldNum_spec _ _) hI (psum (Fin N) ℤ k)
       (psum_isSymmetric _ _ k) q L L (fun _ => 1) (fun _ => 1)
@@ -82,7 +82,7 @@ theorem ck_rootNum_eq_pairNum_on_flagPair : ∀ (O : Type) [CommRing O] [IsDomai
         pull := hp, pull' := hp, flag := φ }
     have hne : Nonempty (FlagModel O x d N E E) := ⟨F₀⟩
     unfold rootNum
-    rw [dif_pos hne]
+    rw [dite_eq_left hne]
     refine (GlobalTheory.T.flag_model_root_independent O Ω K ι x d N V E E hW hsame
       (Classical.choice hne) F₀ _ _ (ChernClassOnFlagPair.fieldNum_spec _ _) hI c G hsym hG hc q L Q hQ a
       ha).trans ?_

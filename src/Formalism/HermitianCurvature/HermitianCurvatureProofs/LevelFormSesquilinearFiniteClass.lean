@@ -1589,7 +1589,7 @@ theorem rma_tprod_pref (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (Y : ℂ
     ∀ m i, i + m = r → P5.tprod L Y i * rma_pref L Y i = rma_pref L Y r
   | 0, i, h => by
     have hi : i = r := by omega
-    rw [hi, P5.tprod, dif_neg (lt_irrefl r), Matrix.one_mul]
+    rw [hi, P5.tprod, dite_eq_right (lt_irrefl r), Matrix.one_mul]
   | m + 1, i, h => by
     have hi : i < r := by omega
     have e : rma_pref L Y (i + 1) = Wd.Ts (P5.site L ⟨i, hi⟩) Y * rma_pref L Y i := by

@@ -41,7 +41,7 @@ theorem yv_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hun : Formalism.Hermit
   have hD : Dl F F' (D.R.rS + 1) = algebraMap (𝓞 D.host.E) D.host.E
       ((FinalForm.submatrix (Fin.castLE le_rfl) (Fin.castLE le_rfl)).det) := by
     unfold Dl leadMinorE
-    rw [dif_pos le_rfl, hZo, Matrix.submatrix_map, RingHom.map_det]
+    rw [dite_eq_left le_rfl, hZo, Matrix.submatrix_map, RingHom.map_det]
     rfl
   unfold NormalVectorPairings.yv NormalVectorPairings.omp
   refine Λ.add_mem ?_ ?_

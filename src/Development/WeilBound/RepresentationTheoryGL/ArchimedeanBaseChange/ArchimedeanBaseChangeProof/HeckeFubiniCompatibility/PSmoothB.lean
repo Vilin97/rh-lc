@@ -68,13 +68,13 @@ def uOf (x : Lie E n) : GL (Fin n) (Cinf E) := if h : IsUnit (Matrix.of x) then 
 omit [NumberField E] [IsTotallyComplex E] in
 theorem uOf_val {x : Lie E n} (hx : x ∈ invSet E n) : (uOf x).val = Matrix.of x := by
   have h : IsUnit (Matrix.of x) := hx
-  rw [uOf, dif_pos h]
+  rw [uOf, dite_eq_left h]
   rfl
 
 theorem chart_eq {φ : GA E n → ℂ} {g : GA E n} {x : Lie E n} (hx : x ∈ invSet E n) :
     chart φ g x = φ (g * infGL E n (uOf x)) := by
   have h : IsUnit (Matrix.of x) := hx
-  rw [chart, dif_pos h, uOf, dif_pos h]
+  rw [chart, dite_eq_left h, uOf, dite_eq_left h]
 
 omit [IsTotallyComplex E] in
 theorem continuousOn_uOf : ContinuousOn (uOf (E := E) (n := n)) (invSet E n) := by

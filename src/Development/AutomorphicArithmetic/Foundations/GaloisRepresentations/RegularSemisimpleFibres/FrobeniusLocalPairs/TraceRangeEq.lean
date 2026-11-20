@@ -112,7 +112,7 @@ theorem trSum : TrSum := by
     exact hTF v
   obtain ⟨-, rfl⟩ := hT
   unfold GlobalTheory.BCT.twTr
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   haveI := hfd
   rw [trace_range_eq (B ∘ₗ A) (fixed ρ U) hTF]
   congr 1

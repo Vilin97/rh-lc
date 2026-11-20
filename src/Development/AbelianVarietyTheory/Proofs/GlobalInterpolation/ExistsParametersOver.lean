@@ -47,7 +47,7 @@ theorem exists_sizeData_over : ∀ (eps cD ch : ℝ) (C : FC), 0 < eps → eps <
     unfold wordBits
     by_cases h : l < P.R.k - 2
     · have h' : l < D.R.k - 2 := h
-      rw [dif_pos h', dif_pos h]
+      rw [dite_eq_left h', dite_eq_left h]
       have τ : Tau P.R := tauPl D (false, 0)
       have a1 := D.s.u_letter u τ l h'
       have a2 := hP.code u τ l h
@@ -60,7 +60,7 @@ theorem exists_sizeData_over : ∀ (eps cD ch : ℝ) (C : FC), 0 < eps → eps <
       revert a4
       cases D.s.letter u ⟨l, h'⟩ <;> cases c u ⟨l, h⟩ <;> simp [hpos.ne', hpos.ne]
     · have h' : ¬ l < D.R.k - 2 := h
-      rw [dif_neg h', dif_neg h]
+      rw [dite_eq_right h', dite_eq_right h]
 
 end GlobalTheory.EX.OB
 

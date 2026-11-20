@@ -97,7 +97,7 @@ theorem flatTensor_support : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
     by_cases hj' : j < G.m - 1
     · have h := key _ hmem (frame (b := G.rank (G.m, j)) (c := G.m - 2 - j + 1) (by have := topRank_add hs j; omega) (Sum.inl s))
         (frame (b := G.rank (G.m, j + 1)) (c := G.m - 2 - j) (by have := topRank_add hs (j + 1); omega) (Sum.inl r))
-      rw [fill_theta, transpose_apply, downMap, dif_pos hj'] at h
+      rw [fill_theta, transpose_apply, downMap, dite_eq_left hj'] at h
       simpa [reindex_apply, submatrix_apply, Equiv.symm_apply_apply, stepPt, basePt, Free, Kept] using h
     · have hjm : j + 1 = G.m := by omega
       have hrk := topRank_add hs (j + 1)
@@ -110,7 +110,7 @@ theorem flatTensor_support : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
         omega
       have h := key _ hmem (show Fin (G.rank (G.m, j)) from ⟨s.val, by have := s.2; omega⟩)
         (show Fin (G.rank (G.m, j + 1)) from ⟨r.val, hr'⟩)
-      rw [fill_theta, transpose_apply, downMap, dif_neg hj', dif_pos hjm] at h
+      rw [fill_theta, transpose_apply, downMap, dite_eq_right hj', dite_eq_left hjm] at h
       simpa using h
   · have hmem : Edge.ex i G.m ∈ oppositePath G.m := by simp [oppositePath]; omega
     have h := key _ hmem s r

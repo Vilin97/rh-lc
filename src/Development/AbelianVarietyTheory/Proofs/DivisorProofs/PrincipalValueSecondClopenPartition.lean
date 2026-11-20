@@ -10,7 +10,7 @@ theorem pv_add_right : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   by_cases h₁ : B₁.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d
   swap
   · have h0 : ∀ X : Set (Matrix (Fin n) (Fin d) k), pv Bf B₁ X = 0 := fun X => by
-      rw [pv, dif_neg (fun h => h₁ h.1)]
+      rw [pv, dite_eq_right (fun h => h₁ h.1)]
     rw [h0, Finset.sum_eq_zero (fun i _ => h0 _)]
   have hsub : ∀ i ∈ s, Kf i ⊆ B₂ := fun i hi x hx => by
     rw [hcov]; exact Set.mem_biUnion hi hx

@@ -22,7 +22,7 @@ theorem isIrreducible_contra_rep (hA : GlobalTheory.Published.IrreducibleAdmissi
 theorem dualCl_eq_of (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (x : IrrGL k) :
     dualCl x = IrrGL.of (contra x.rep) (isSmooth_smoothRep _) (isIrreducible_contra_rep hA x) := by
   unfold dualCl
-  rw [dif_pos (isIrreducible_contra_rep hA x)]
+  rw [dite_eq_left (isIrreducible_contra_rep hA x)]
 
 private theorem dualCl_eq_of_eq_contra (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (x y : IrrGL k)
     (hy : y = IrrGL.of (contra x.rep) (isSmooth_smoothRep _) (isIrreducible_contra_rep hA x)) :

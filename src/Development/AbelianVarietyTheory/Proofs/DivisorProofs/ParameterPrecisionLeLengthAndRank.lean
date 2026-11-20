@@ -178,7 +178,7 @@ theorem size_window (D : D7) (L : SizeData₂ D) (hS : Formalism.MainNotions.Siz
     nlinarith
   have hwj : DV.wSz D j τ = wj D j τ := by
     unfold DV.wSz wj
-    rw [dif_pos ⟨h1, h2⟩, dif_pos (by omega)]
+    rw [dite_eq_left ⟨h1, h2⟩, dite_eq_left (by omega)]
   rw [hwj]
   by_cases htop : ((D.eTau τ : D.R.Psi) : D.R.GG) ∈ D.host.topPlaces
   · unfold Host.topPlaces at htop
@@ -354,19 +354,19 @@ def sgR (D : D7) (τ : D.what₂.Tau) (i : ℕ) : ℝ := ((DV.sigPar D τ i : �
 theorem sigPar_low (D : D7) (τ : D.what₂.Tau) (a : ℕ) :
     DV.sigPar D τ (D.R.k - 1 + a) = -(if h : a < D.R.m then (D.hc τ).b ⟨a, h⟩ else 0) := by
   unfold DV.sigPar
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
   simp only [Nat.add_sub_cancel_left]
   split_ifs <;> simp
 
 theorem sgR_cloud (D : D7) (τ : D.what₂.Tau) (i : ℕ) (h : i < D.R.k - 1) :
     sgR D τ i = (((D.hc τ).v ⟨i, h⟩ : ℚ) : ℝ) := by
   unfold sgR DV.sigPar
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem sgR_low (D : D7) (τ : D.what₂.Tau) (a : ℕ) (h : a < D.R.m) :
     sgR D τ (D.R.k - 1 + a) = -(((D.hc τ).b ⟨a, h⟩ : ℚ) : ℝ) := by
   unfold sgR
-  rw [sigPar_low, dif_pos h]
+  rw [sigPar_low, dite_eq_left h]
   push_cast
   rfl
 
@@ -429,7 +429,7 @@ theorem r_cast (R : Ranks) : (R.r : ℝ) = (R.k : ℝ) + R.m - 1 := by
 theorem wSz_eq (D : D7) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (τ : D.what₂.Tau) :
     DV.wSz D j τ = (((D.hc τ).e ⟨j - 1, by omega⟩ : ℚ) : ℝ) := by
   unfold DV.wSz
-  rw [dif_pos ⟨h1, h2⟩]
+  rw [dite_eq_left ⟨h1, h2⟩]
 
 theorem six_le_h0 (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) : 6 ≤ LevelStarExponents.h0 L := by
   have h := P.h0_ge.2.2.2.2.1

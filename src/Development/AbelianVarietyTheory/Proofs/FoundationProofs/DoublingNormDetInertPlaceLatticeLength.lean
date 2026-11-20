@@ -200,7 +200,7 @@ theorem ordL_eq_addVal {d : w.adicCompletionIntegers E} (hd : d ≠ 0) :
   have hne : Valued.v (d : w.adicCompletion E) ≠ 0 := by rw [hv]; exact WithZero.exp_ne_zero
   have hz : WithZero.unzero hne = Multiplicative.ofAdd (-(m : ℤ)) :=
     WithZero.coe_inj.1 (by rw [WithZero.coe_unzero, hv]; rfl)
-  rw [Formalism.UG.ordL, dif_neg hne, hz]
+  rw [Formalism.UG.ordL, dite_eq_right hne, hz]
   simp
 
 theorem main_of_abs (habs : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

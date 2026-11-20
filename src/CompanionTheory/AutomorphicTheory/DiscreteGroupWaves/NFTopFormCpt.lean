@@ -56,7 +56,7 @@ theorem residue_zero_bound : ∃ Cs : ℝ, 0 ≤ Cs ∧ ∀ (Wp Wq : Type) [Norm
   have e : p.RR (D.cutF p.T.base χ h ε) 0 w [] [] = D.formLev p.T (M.sgn P p.l0) ⟨0, by omega⟩ w
       (PBE.xs p.T χ ε 0 (Nat.zero_le _) w [] hc h) (PBE.xs p.T χ ε 0 (Nat.zero_le _) w [] hc h) := by
     unfold KB.Pl.RR D.RRplace
-    rw [dif_pos ⟨hloc, hloc⟩, dif_pos (Nat.zero_le _)]
+    rw [dite_eq_left ⟨hloc, hloc⟩, dite_eq_left (Nat.zero_le _)]
     rfl
   rw [e]
   exact hb.trans (le_of_eq (by ring))

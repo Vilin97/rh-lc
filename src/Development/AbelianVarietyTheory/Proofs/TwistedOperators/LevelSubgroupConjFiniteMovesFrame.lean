@@ -44,7 +44,7 @@ theorem redFn_conj (T β x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (PP :
     rw [← frGL_mul_left, redFn_frGL, redFn_frGL]
   · have h' : T * x * T⁻¹ ∉ St (T * β) := fun h => hx ((conj_mem_St_iff T β x).1 h)
     unfold redFn ext1
-    rw [dif_neg hx, dif_neg h']
+    rw [dite_eq_right hx, dite_eq_right h']
 
 variable {LL : Type} [CommRing LL]
 

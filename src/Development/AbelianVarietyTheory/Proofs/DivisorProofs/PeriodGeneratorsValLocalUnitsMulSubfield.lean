@@ -25,7 +25,7 @@ theorem gm_stalkMap {X Y Z : Scheme.{0}} (r : Z ⟶ Y) (f : Y ⟶ X) (z : Z) (U 
     rw [Units.coe_map, gm_val f (r z) U h, gm_val (r ≫ f) z U h]
     exact Scheme.Hom.germ_stalkMap_apply r (f ⁻¹ᵁ U) z h _
   · have h' : (r ≫ f) z ∉ U := h
-    rw [gm, dif_neg h, gm, dif_neg h']
+    rw [gm, dite_eq_right h, gm, dite_eq_right h']
     simp
 
 theorem val_stalkMap {X Y Y' Z : Scheme.{0}} {L : LB X} {Ix : Type} [Fintype Ix] {φ : Ix → (Y ⟶ X)} {ε : Ix → ℤ}

@@ -26,7 +26,7 @@ theorem sCls : SCls := by
     have hf : (f : X.K) ≠ 0 := f.ne_zero
     show (AdicCompletion.eval (idl l) (X.Kl l) n) (clsK X l n (f : X.K)) = X.cls l n f
     unfold clsK
-    rw [dif_pos hf, Units.mk0_val]
+    rw [dite_eq_left hf, Units.mk0_val]
     unfold liftK
     exact Classical.epsilon_spec (p := fun b => (AdicCompletion.eval (idl l) (X.Kl l) n) b = X.cls l n f)
       (AdicCompletion.eval_surjective (idl l) (X.Kl l) n (X.cls l n f))

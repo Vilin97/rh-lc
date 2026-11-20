@@ -35,7 +35,7 @@ theorem ell_eq (z : Fin (2 * r + k + 1) → ℂ) (m : Mat k r) :
   unfold ell
   refine Finset.sum_congr rfl fun j _ => ?_
   unfold Uof
-  rw [dif_pos (show (j.castSucc).val < r from j.2)]
+  rw [dite_eq_left (show (j.castSucc).val < r from j.2)]
   split_ifs with h
   · exact (mF_col z m _ j.succ h).symm
   · have h' : ¬ (j.succ).val < r := h

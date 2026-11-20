@@ -54,7 +54,7 @@ theorem phi_aw {R : Type} [CommRing R] {I J K : Cx R} (μ : Pair I J K) {E : Spc
   rw [hγ N t ht U x, phi, Pr.aw, ← Finsupp.sum_finsetSum_index (fun z => zero_smul ℤ (phiT μ hk α β x t z))
     (fun z a b => add_smul a b (phiT μ hk α β x t z))]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [Finsupp.sum_single_index (zero_smul ℤ (phiT μ hk α β x t _)), one_smul, phiT, dif_pos (by have := p.2; push_cast [Nat.cast_sub (by omega : (p : ℕ) ≤ N)]; omega)]
+  rw [Finsupp.sum_single_index (zero_smul ℤ (phiT μ hk α β x t _)), one_smul, phiT, dite_eq_left (by have := p.2; push_cast [Nat.cast_sub (by omega : (p : ℕ) ≤ N)]; omega)]
   rw [Units.smul_def]
   rfl
 
@@ -73,7 +73,7 @@ theorem cupflip_phi_diag_pf : cupflip_phi_diag := by
   refine Finset.sum_congr rfl fun p _ => ?_
   have hp := p.2
   rw [Finsupp.sum_single_index (zero_smul ℤ (phiT μ hk α β x t _)), phiT,
-    dif_pos (by push_cast [Nat.cast_sub (by omega : (p : ℕ) ≤ N)]; omega)]
+    dite_eq_left (by push_cast [Nat.cast_sub (by omega : (p : ℕ) ≤ N)]; omega)]
   rw [hflip U _ _ t (by push_cast [Nat.cast_sub (by omega : (p : ℕ) ≤ N)]; omega)]
   simp only [Units.smul_def, smul_smul]
   congr 1

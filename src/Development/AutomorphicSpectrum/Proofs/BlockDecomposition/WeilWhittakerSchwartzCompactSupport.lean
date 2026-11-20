@@ -65,7 +65,7 @@ theorem GlobalTheory.CompanionTheory.WeilRd.main : ∀ (F : Type) [Field F] [Val
   unfold GL2LocalData.Wc
   by_cases h : ∃ t : Eˣ, Algebra.norm F (t : E) = (g.val).det
   · have h' := hiff.2 h
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     set t := h.choose with ht
     set t' := h'.choose with ht'
     have nt : Algebra.norm F (t : E) = (g.val).det := h.choose_spec
@@ -107,4 +107,4 @@ theorem GlobalTheory.CompanionTheory.WeilRd.main : ∀ (F : Type) [Field F] [Val
       rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
     linear_combination (((c t : ℂˣ) : ℂ) * ((c s : ℂˣ) : ℂ) * ((modulus (g.val).det : ℝ) : ℂ) ^ (1 / 2 : ℂ) * ((modulus (m : F) : ℝ) : ℂ) ^ (1 / 2 : ℂ) * GL2LocalData.rW χ σ μ lam (g.val 0 0 / (g.val).det) (g.val 0 1) (g.val 1 0 / (g.val).det) (g.val 1 1) (fun x => (fun z => Φ (z * (s : E))) (x * (t : E))) 1) * hcu
   · have h' : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = ((g * dg2 m 1).val).det := fun q => h (hiff.1 q)
-    rw [dif_neg h', dif_neg h, mul_zero]
+    rw [dite_eq_right h', dite_eq_right h, mul_zero]

@@ -95,7 +95,7 @@ lemma analyticAt_pow_meromorphicShift_mul {f : ℂ → ℂ} {p : ℂ} (hf : Mero
   have := Nat.find_spec hf
   simp only [smul_eq_mul] at this
   unfold meromorphicShift
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   convert this
 
 lemma meromorphicShift_le {f : ℂ → ℂ} {p : ℂ} {n : ℕ}
@@ -103,7 +103,7 @@ lemma meromorphicShift_le {f : ℂ → ℂ} {p : ℂ} {n : ℕ}
   classical
   have hf : MeromorphicAt f p := ⟨n, by simpa [smul_eq_mul] using h⟩
   unfold meromorphicShift
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   convert Nat.find_min' hf (by simpa [smul_eq_mul] using h)
 
 lemma analyticAt_pow_mul_of_meromorphicShift_le {f : ℂ → ℂ} {p : ℂ} (hf : MeromorphicAt f p)

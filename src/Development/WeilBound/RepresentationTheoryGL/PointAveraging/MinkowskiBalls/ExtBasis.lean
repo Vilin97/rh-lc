@@ -175,7 +175,7 @@ theorem nf1 {k : Type*} [Field k] {n r j : ℕ} (x : Matrix (Fin n) (Fin r) k) (
   have hzero : ∀ i : Fin n, ¬ (i : ℕ) < j → y i = 0 := by
     intro i hi
     ext m
-    rw [← hrows, E_mul_apply_eq_dite_lt hn, dif_neg hi]
+    rw [← hrows, E_mul_apply_eq_dite_lt hn, dite_eq_right hi]
     rfl
   obtain ⟨z, hzd⟩ : ∃ z : Fin j → (Fin r → k), z = fun l => y (Fin.castLE hn l) := ⟨_, rfl⟩
   have hz : LinearIndependent k z := by

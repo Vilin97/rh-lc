@@ -66,7 +66,7 @@ theorem colVar_shift (x : ColArgs G) (e : Vars G) (j₀ : Fin (G.m - 1)) (hj₀ 
   congr 1
   by_cases hj : j = j₀
   · subst hj
-    rw [dif_pos (Or.inr ⟨by rw [show G.m - 2 - (j : ℕ) = 0 by omega]; exact ⟨0, rfl⟩, rfl⟩)]
+    rw [dite_eq_left (Or.inr ⟨by rw [show G.m - 2 - (j : ℕ) = 0 by omega]; exact ⟨0, rfl⟩, rfl⟩)]
     simp [shiftVar]
   · simp [shiftVar, hj]
 
@@ -148,7 +148,7 @@ theorem flatTensor_lastRow_bounded : ∀ {k : Type} [Field k] [ValuativeRel k] [
   obtain ⟨t, ht, hne⟩ := hψ.exists_ne_one (ϖ ^ n) hu
   set u := x ((j₀ : ℕ) + 1) (topLast G ((j₀ : ℕ) + 1 + 1)) r with hu_def
   have hrow : ∀ e' : Vars G, rowVar x e' ((j₀ : ℕ) + 1) r = u := fun e' => by
-    rw [rowVar, dif_neg (by omega)]
+    rw [rowVar, dite_eq_right (by omega)]
   let δ : Vars G := shiftVar j₀ r (-t)
   have hδ : ∀ j w, valuation k (δ j w) ≤ valuation k ((ϖ ^ n : kˣ) : k) :=
     valuation_shiftVar_le _ _ (by simpa [cball, Valuation.map_neg] using ht)

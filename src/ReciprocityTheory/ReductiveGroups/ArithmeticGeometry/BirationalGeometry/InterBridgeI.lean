@@ -19,7 +19,7 @@ theorem pushForward_null' [CompactSpace X] [T2Space X] (A : FinHolAtlas e X)
     mInt A Φ g = ∫ y, ∑ᶠ x ∈ q ⁻¹' {y} \ S, g x * pushDens A Φ q x := by
   classical
   have hne : Nonempty (ChartPartition A) := existsPartition A
-  rw [mInt, dif_pos hne, integralWith]
+  rw [mInt, dite_eq_left hne, integralWith]
   generalize hne.some = Pt
   have hnull : ∀ j, volume ((q ∘ (A.chart j).symm) '' (goodT A q j ∩ (A.chart j).symm ⁻¹' S)) = 0 := by
     intro j

@@ -887,7 +887,7 @@ theorem bbTie_core (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) : BB
   have hadm : IsAdmissible Λ (gS D) (lf D F0) F' := hPD.2.1
   have hXL' : XLam Λ F' = XS D F'.fl := hPD.2.2.2
   have hξ : AdmWit Λ (gS D) (lf D F0) F' (admXi D Λ (lf D F0) F') := by
-    unfold admXi; rw [dif_pos hadm]; exact hadm.choose_spec
+    unfold admXi; rw [dite_eq_left hadm]; exact hadm.choose_spec
   have hUUle : UU Λ (lf D F0) F' ≤ Λ := by
     refine sup_le (sup_le (sup_le inf_le_left ?_) inf_le_left) ?_
     · rw [Submodule.span_le, Set.singleton_subset_iff]; exact hLift.1
@@ -1260,7 +1260,7 @@ theorem bt_Dl_loc (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host
     simp only [Formalism.MainNotions.S.Zhat, hΞ, Matrix.map_apply]
     ring
   unfold Loc.HermSp.Dl Formalism.MainNotions.S.Dl leadMinorE
-  rw [dif_pos hl, dif_pos hl, hZ]
+  rw [dite_eq_left hl, dite_eq_left hl, hZ]
   have hsub : (Matrix.diagonal (fun a => (Z.M p).L.cj (sgnP D p a * frFac Z.δ p a)) *
         (Formalism.MainNotions.S.Zhat F0 F'.fl * Ξ).map (D.s.atP p).ιE *
         Matrix.diagonal (fun b => sgnP' D p b * frFac Z.δ p b)).submatrix (Fin.castLE hl) (Fin.castLE hl) =
@@ -1583,7 +1583,7 @@ theorem bt_typed_second (hE : LocEqC D Z) (hD : LocDiffC D Z) (p : PlF D) {u u' 
   have hφ := bt_typed_frFac Z hE hD p F0 Λ hΛfg hR.2.2 hFix.2.2.2 hgP
   have hO := bt_typed_O Z hD p F0 Λ F' (Tu D u) (Tu D u') hR.2.2 sg hs hφ
   have hξ : AdmWit Λ (gS D) (lf D F0) F' (admXi D Λ (lf D F0) F') := by
-    unfold admXi; rw [dif_pos hPD.2.1]; exact hPD.2.1.choose_spec
+    unfold admXi; rw [dite_eq_left hPD.2.1]; exact hPD.2.1.choose_spec
   have hMΛ := bt_typed_Mle Z hE p F0 Λ F' hΛfg hFix.2.2.1 hξ hgP
   apply hMΛ
   rw [← hO, hgq]

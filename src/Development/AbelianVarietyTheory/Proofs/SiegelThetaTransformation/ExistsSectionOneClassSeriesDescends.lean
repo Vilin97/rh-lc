@@ -171,7 +171,7 @@ theorem exists_sec_oneClass : Formalism.MainNotions.ModuliIntegralCharts.H1.Char
     have e : ∑ _cl : Unit, algebraMap c.F k (1 * (((1 : ℕ) : c.F))⁻¹ * 1) * v = v := by simp
     rw [e]
     unfold evR evalAt
-    rw [dif_pos hy]
+    rw [dite_eq_left hy]
     exact (hd _ _).exists.choose_spec k hk _ y y₂ hy.choose_spec.choose_spec.choose_spec ho v hv
 
 end GlobalTheory.ClsDescent

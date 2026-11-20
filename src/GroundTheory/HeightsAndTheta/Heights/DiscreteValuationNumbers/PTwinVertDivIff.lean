@@ -164,11 +164,11 @@ theorem divCycle_eq_of_unit_mul_sub_mem {P W : Ideal (ReciprocityTheory.ChartRes
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hc : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
   · have hc' : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W := ⟨hmin.1 hc.1, hc.2⟩
-    rw [dif_pos hc, dif_pos hc']
+    rw [dite_eq_left hc, dite_eq_left hc']
     exact congrArg (fun n : ℕ∞ => ((n.toNat : ℕ) : ℤ)) hmult
   · have hc' : ¬ (W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W) :=
       fun h'' => hc ⟨hmin.2 h''.1, h''.2⟩
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 end Divisor
 
@@ -201,7 +201,7 @@ theorem VerticalDivisorCharacterisation.proof : VerticalDivisorCharacterisation.
       by_cases h2 : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W
       · exact key g β hβ h2.1 h2.2
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_neg h1, dif_neg h2]
+      rw [dite_eq_right h1, dite_eq_right h2]
     · intro W hWp hPW hWr hϖW
       obtain ⟨W', hW'p, hW'h, hW'W, hW'max, hW'form⟩ := exists_multiHomog_core hWp
       have hPW' := hW'max P hP.multiHomog hPW

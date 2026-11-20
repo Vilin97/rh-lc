@@ -223,7 +223,7 @@ theorem exp_sl_m (X : Tower Ω ε) (j l : ℕ) [NeZero l] (g : X.K) :
       ((!![1, (j : ℤ); 0, (l : ℤ)] : Matrix (Fin 2) (Fin 2) ℤ) a b : ℚ) := by
     intro a b
     unfold ent toGQ
-    rw [dif_pos hd]; rfl
+    rw [dite_eq_left hd]; rfl
   rw [Api.exp_sl_upper X _ (by rw [he]; simp), he, he, he]
   simp [subHom]
 

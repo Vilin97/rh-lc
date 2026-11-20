@@ -23,7 +23,7 @@ theorem map_mul_fv {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (
   have hu : IsUnit x := hx.isUnit
   have hc : ((distribHaarChar (Fv F v) hu.unit : ℝ≥0) : ℝ) = (a : ℝ)⁻¹ := by
     have := GlobalTheory.GaugeProdFormula.modu_finite F v x hx
-    rw [GlobalTheory.GaugeEx.modu, dif_pos hu] at this
+    rw [GlobalTheory.GaugeEx.modu, dite_eq_left hu] at this
     rw [this, ha]
   have hc' : distribHaarChar (Fv F v) hu.unit⁻¹ = a := by
     rw [map_inv]

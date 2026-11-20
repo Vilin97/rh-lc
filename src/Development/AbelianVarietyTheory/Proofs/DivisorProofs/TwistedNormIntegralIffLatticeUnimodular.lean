@@ -204,7 +204,7 @@ theorem unimodular_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],
   set M : GLw m w := invT m _ g⁻¹ * hG.unit * Matrix.GeneralLinearGroup.map (cj w) g with hMdef
 
   have hX : g⁻¹ * dlt e b β * thL m w g = invT m _ M * (PhiU m _)⁻¹ := by
-    rw [dlt, dif_pos hG, thL, if_neg hw, hMdef, map_mul, map_mul, invT_invT]
+    rw [dlt, dite_eq_left hG, thL, if_neg hw, hMdef, map_mul, map_mul, invT_invT]
     simp only [thetaGL, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_apply]
     group
 

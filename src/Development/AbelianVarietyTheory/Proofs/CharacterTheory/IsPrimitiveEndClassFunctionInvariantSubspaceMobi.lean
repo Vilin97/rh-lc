@@ -19,9 +19,9 @@ theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} �
     ∑ᶠ x, f x = ∑ a, if h : p a then f ⟨a, h⟩ else 0 := by
   rw [finsum_eq_sum_of_fintype, ← Fintype.sum_subtype_add_sum_subtype p]
   have h1 : ∀ i : {a // p a}, (if h : p i.1 then f ⟨i.1, h⟩ else 0) = f i := fun i => by
-    rw [dif_pos i.2]
+    rw [dite_eq_left i.2]
   have h2 : ∀ i : {a // ¬ p a}, (if h : p i.1 then f ⟨i.1, h⟩ else 0) = 0 := fun i => by
-    rw [dif_neg i.2]
+    rw [dite_eq_right i.2]
   simp only [h1, h2, Finset.sum_const_zero, add_zero]
 
 open Classical in
@@ -54,7 +54,7 @@ theorem res_top {F : Type} [Field F] (s : F[X] → ℂ) {V : Type} [AddCommGroup
     [FiniteDimensional F V] (k : Module.End F V) : res s ⊤ k = psi s V k := by
   have htop : ∀ x ∈ (⊤ : Submodule F V), k x ∈ (⊤ : Submodule F V) := fun _ _ => Submodule.mem_top
   unfold res
-  rw [dif_pos htop]
+  rw [dite_eq_left htop]
   have hconj := GlobalTheory.T.invariantSubspaceMobiusInverseCharpoly_linearEquiv_conj F s (⊤ : Submodule F V) V Submodule.topEquiv (k.restrict htop)
   rw [← hconj]
   congr 1
@@ -96,13 +96,13 @@ theorem step {F : Type} [Field F] [Finite F] (s : F[X] → ℂ) (hs : IsAdditive
     by_cases hk : ∀ x ∈ W, g x ∈ W
     · have hk' : ∀ x ∈ W, (g + h) x ∈ W := fun x hx => by
         simpa [h0 x hx] using hk x hx
-      rw [dif_pos hk', dif_pos hk]
+      rw [dite_eq_left hk', dite_eq_left hk]
       congr 1
       ext x
       simp [h0 x.1 x.2]
     · have hk' : ¬ ∀ x ∈ W, (g + h) x ∈ W := fun hk' => hk fun x hx => by
         simpa [h0 x hx] using hk' x hx
-      rw [dif_neg hk', dif_neg hk]
+      rw [dite_eq_right hk', dite_eq_right hk]
   have res_mixed : ∀ W : Submodule F V, W ≠ ⊤ → W ⊓ A ≠ ⊥ → ¬ W ≤ A →
       ∑ h ∈ H, res s W (g + h) = 0 := by
     intro W hWT hWA hWle

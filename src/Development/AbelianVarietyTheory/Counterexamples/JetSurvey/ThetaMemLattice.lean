@@ -50,7 +50,7 @@ theorem two_sq_le_last (Tp : ParamsT D L P) (hK : DV.KapDef D) {j : ℕ} (hj : I
   have hb : i.1 - (D.R.k - 1) < D.R.m := by omega
   rw [DV.aPlusQ_eq, hc] at e2
   unfold DV.sigPar DV.eQ at e2
-  rw [dif_neg hn, dif_pos hb, dif_pos ⟨h1, h2⟩] at e2
+  rw [dite_eq_right hn, dite_eq_left hb, dite_eq_left ⟨h1, h2⟩] at e2
   have hf : (⟨i.1 - (D.R.k - 1), hb⟩ : Fin D.R.m) = ⟨j - 1, by omega⟩ := Fin.ext (by simp only; omega)
   rw [hf] at e2
   have h3 := (abs_le.1 (P.e_centred τ ⟨j - 1, by omega⟩)).1

@@ -61,13 +61,13 @@ theorem secInv_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a :
   unfold GlobalTheory.RSJ.secInv
   by_cases hu : IsUnit (u ℓ)
   · have hd : IsUnit (GlobalTheory.RSJ.secRow u).det := by rw [hrow, GlobalTheory.RSTheta.det_rowMat]; exact hu
-    rw [dif_pos hd]
+    rw [dite_eq_left hd]
     congr 1
     ext : 1
     rw [GlobalTheory.RSTheta.val_rowGL hu, ← hrow]
     rfl
   · have hd : ¬ IsUnit (GlobalTheory.RSJ.secRow u).det := by rw [hrow, GlobalTheory.RSTheta.det_rowMat]; exact hu
-    rw [dif_neg hd, GlobalTheory.RSTheta.rowGL, dif_neg hu, inv_one]
+    rw [dite_eq_right hd, GlobalTheory.RSTheta.rowGL, dite_eq_right hu, inv_one]
 
 theorem indN_eq {E : Type} [Field E] [NumberField E] {a : ℕ} (N : ℕ) (hN : 0 < N) (ℓ : Fin a)
     (hℓ : (ℓ : ℕ) + 1 = a) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ)

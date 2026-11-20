@@ -436,7 +436,7 @@ theorem isNatDatum_givenDatum (hL : L.Is μ₀) {b : Edge} (hb : b ∈ givenPath
     refine isNatDatum_of_periodic (fun x hx a b => ?_) (fun x y hy => h2 _ (yᵀ.submatrix _ _) fun _ _ => hy _ _)
       (isUnif_unifAt w) (le_max_right _ _)
     simpa using h1 _ hx ((ixFin G t w (j + 1)).symm b) ((ixFin G t w j).symm a)
-  · rw [givenDatum, dif_pos hi]
+  · rw [givenDatum, dite_eq_left hi]
     exact isNatDatum_cosets (intM_coord B hL hi) (isUnif_unifAt w) (le_max_left _ _)
 
 theorem givenLevel_succ {j : ℕ} {P : TypeDatum (Kw w) (Ix (Fin D.R.r) (Fin D.R.t) (j + 1))}
@@ -474,7 +474,7 @@ theorem row_law (hL : L.Is μ₀) (hw : w ∈ locPl G t) (g : (locGrid G t w).Ve
   have hc : ∀ l, (locGrid G t w).blockChar (.ex i 0) (gdet (g (l, 0))) = 1 := fun l =>
     chi_condLE hw (by change 1 ≤ D.R.m - i; omega) (Nat.sub_le _ _) _ (gdet_mem_unitCong (h0 l))
   rw [edgeFactor_eq fun Y => (givenLevel_open hL hw Y).2 (hg Y), hc, hc, inv_one, Units.val_one, one_mul, one_mul,
-    givenDatum, dif_pos hi]
+    givenDatum, dite_eq_left hi]
   exact indicator_cosets_mul (intM_coord B hL hi) (inv_mem (invT_mem_glLatCong (h0 _))) (invT_mem_glLatCong (h0 _)) _
 
 theorem column_law (hL : L.Is μ₀) (hw : w ∈ locPl G t) (g : (locGrid G t w).VertexGroup)

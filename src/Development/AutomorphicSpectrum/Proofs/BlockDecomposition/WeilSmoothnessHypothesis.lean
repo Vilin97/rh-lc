@@ -201,7 +201,7 @@ theorem piG_choice (χ : AddChar F Circle) (σ : E ≃ₐ[F] E) (μE : Measure E
     exact hΦ u hN _
   have hcu : ((c u : ℂˣ) : ℂ) * (((c u)⁻¹ : ℂˣ) : ℂ) = 1 := by
     rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
-  rw [piG, dif_pos h, hfun, GlobalTheory.CompanionTheory.WeilChoice.rW_const_mul, hu, map_mul, Units.val_mul]
+  rw [piG, dite_eq_left h, hfun, GlobalTheory.CompanionTheory.WeilChoice.rW_const_mul, hu, map_mul, Units.val_mul]
   linear_combination (-(((c h.choose : ℂˣ) : ℂ) * (((modulus (g.val).det : ℝ) : ℂ) ^ (1 / 2 : ℂ)) *
       rW χ σ μE lam (g.val 0 0 / (g.val).det) (g.val 0 1)
         (g.val 1 0 / (g.val).det) (g.val 1 1) (fun x => Φ (x * (h.choose : E))) x)) * hcu

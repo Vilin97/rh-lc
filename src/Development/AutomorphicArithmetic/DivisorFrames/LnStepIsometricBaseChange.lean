@@ -168,11 +168,11 @@ theorem UpperTheory.lnStep_isometric_base_change :
   rcases st with ⟨τ, k⟩ | k
   · simp only [lnStep]
     by_cases h : k < Dw.mult τ
-    · rw [dif_pos h, dif_pos h, ← UpperTheory.IsoNorm.grNorm_iso j hj x p b (u τ)]
+    · rw [dite_eq_left h, dite_eq_left h, ← UpperTheory.IsoNorm.grNorm_iso j hj x p b (u τ)]
       rfl
-    · rw [dif_neg h, dif_neg h]
+    · rw [dite_eq_right h, dite_eq_right h]
   · simp only [lnStep]
     by_cases h : k < (letters Dw).length
-    · rw [dif_pos h, dif_pos h, ← UpperTheory.IsoNorm.grNorm_iso j hj x p b]
+    · rw [dite_eq_left h, dite_eq_left h, ← UpperTheory.IsoNorm.grNorm_iso j hj x p b]
       rfl
-    · rw [dif_neg h, dif_neg h]
+    · rw [dite_eq_right h, dite_eq_right h]

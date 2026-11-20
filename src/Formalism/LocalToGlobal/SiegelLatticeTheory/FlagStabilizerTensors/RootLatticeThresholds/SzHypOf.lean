@@ -51,7 +51,7 @@ theorem deOf_eq (h5 : ∀ (u : D.what₂.Word) τ, ¬ IsTop D τ → uOne D u τ
     linarith
   · rw [if_neg hl]
     unfold Formalism.MainNotions.BridgeLemma.deOf
-    rw [dif_neg (by omega)]
+    rw [dite_eq_right (by omega)]
 
 variable {D e}
 

@@ -218,11 +218,11 @@ theorem exists_tie (T : NTypes A) (hs : ∀ k f, f.Monic ∧ f.natDegree = R.r �
       cenMt := fun μ j => twoChar ω₁ ω₀ (what₂.eMt μ j) (what₂.eMt_idem μ j) }
   have he : T'.e0 = T.e0 := rfl
   refine ⟨T', ⟨fun μ => ?_, fun μ j => ?_⟩, he⟩
-  · rw [he, NTypes.onAmb, dif_pos hc]
+  · rw [he, NTypes.onAmb, dite_eq_left hc]
     change _ = twoChar ω₁ ω₀ (what₂.eOp μ) (what₂.eOp_idem μ) _
     rw [twoChar_apply, h0, zero_smul, add_zero]
     exact (h1 μ).symm
-  · rw [he, NTypes.onMt, dif_pos hc]
+  · rw [he, NTypes.onMt, dite_eq_left hc]
     change _ = twoChar ω₁ ω₀ (what₂.eMt μ j) (what₂.eMt_idem μ j) _
     rw [twoChar_apply, h0, zero_smul, add_zero]
     exact (h2 μ j).symm

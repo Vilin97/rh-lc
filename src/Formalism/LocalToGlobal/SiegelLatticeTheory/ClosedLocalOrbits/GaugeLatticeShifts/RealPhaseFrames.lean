@@ -109,17 +109,17 @@ variable {r : ℕ}
 theorem sgLoF_eq {K : Type} [Field K] (M : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     sgLoF M = ∑ a : Fin r, M a.succ a.castSucc := by
   unfold sgLoF
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem sgUpF_eq {K : Type} [Field K] (M : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     sgUpF M = ∑ a : Fin r, M a.castSucc a.succ := by
   unfold sgUpF
-  rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
+  rw [Fin.sum_univ_castSucc, dite_eq_right (by simp), add_zero]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem sgLoF_one {K : Type} [Field K] {N : ℕ} : sgLoF (1 : Matrix (Fin N) (Fin N) K) = 0 := by

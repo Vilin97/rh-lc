@@ -84,16 +84,16 @@ theorem GlobalTheory.BlockSubst.fourierSum_blockDiag_one : ∀ {k : Type} [Field
     ext i (j | j)
     · rw [hX1]
       simp only [setCols, Matrix.of_apply]
-      rw [dif_pos (by simp [hP, Assignment.block]), Matrix.mul_apply, hsumP]
+      rw [dite_eq_left (by simp [hP, Assignment.block]), Matrix.mul_apply, hsumP]
       refine Finset.sum_congr rfl fun l _ => ?_
-      rw [dif_pos (by simp [hP, Assignment.block])]
+      rw [dite_eq_left (by simp [hP, Assignment.block])]
       simp only [Matrix.submatrix_apply, Equiv.symm_apply_apply]
       rfl
     · rw [hX2]
       simp only [setCols, Matrix.of_apply]
-      rw [dif_neg (by simp [hP, Assignment.block]), hYHdef, hX2]
+      rw [dite_eq_right (by simp [hP, Assignment.block]), hYHdef, hX2]
       refine Finset.sum_congr rfl fun l _ => ?_
-      rw [dif_neg (by simp [hP, Assignment.block])]
+      rw [dite_eq_right (by simp [hP, Assignment.block])]
   have hpc : ∀ (Z : Matrix A (D₁ ⊕ D₂) k) (S : Matrix A ↥P k),
       pairCols P Z S = ∑ i, ∑ j : D₁, S i (E j) * Z i (Sum.inl j) := by
     intro Z S; simp only [pairCols]; exact Finset.sum_congr rfl fun i _ => hsumP _

@@ -33,7 +33,7 @@ theorem ev_gs (x : Sp F ⟶ X) (z : Sp F) {U : X.Opens} (h : x z ∈ U) (f : Γ(
     ev z (gs x z U f) = valF x U f := by
   refine (RingEquiv.symm_apply_eq _).2 ?_
   have h' := (top_le_iff_mem x U z).2 h
-  rw [valF, dif_pos h', gs_eq x z U h]
+  rw [valF, dite_eq_left h', gs_eq x z U h]
   show _ = ((Sp F).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
     ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _))
   rw [Iso.hom_inv_id_apply]

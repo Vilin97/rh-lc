@@ -324,7 +324,7 @@ theorem goodRing_of (h : IsCMExt F E σ) (hv : GlobalTheory.IndefiniteRowSideFul
     have hred : ∀ c : O, red (intA (E := E) v) (algebraMap (Fv F v) A πF) (algebraMap (Fv F v) A c) = φ c := by
       intro c
       unfold red
-      rw [dif_pos (iota_mem v c.2)]
+      rw [dite_eq_left (iota_mem v c.2)]
       rfl
     have hset : ∀ x, (∃ a ∈ intA (E := E) v, sigR (Fv F v) σ a = a ∧
         x = red (intA (E := E) v) (algebraMap (Fv F v) A πF) a) ↔ x ∈ φ.range := by

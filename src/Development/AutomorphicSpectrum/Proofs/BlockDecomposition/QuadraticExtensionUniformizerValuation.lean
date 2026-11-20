@@ -284,7 +284,7 @@ theorem Wc_torusPow : ∀ (F : Type) [Field F] [ValuativeRel F] [TopologicalSpac
   · have hn : ¬ ∃ t : Eˣ, Algebra.norm F (t : E) = ((Iwasawa.torusPow F 2 l).val).det := by
       rw [torus_det]
       exact not_norm_of_odd h2 h1 he
-    rw [GL2LocalData.Wc, dif_neg hn, hs, if_neg he]
+    rw [GL2LocalData.Wc, dite_eq_right hn, hs, if_neg he]
     simp
 
 end GlobalTheory.CompanionTheory.SphTheta.InertTorus

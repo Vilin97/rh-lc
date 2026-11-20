@@ -27,7 +27,7 @@ theorem blk_frame_eq {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v 
       exact hu
     have hv : (SecondKernelHermitian.frGL fd 0 La v : Matrix _ _ _) = fd.frM 0 La v := by
       unfold SecondKernelHermitian.frGL
-      rw [dif_pos hdet]
+      rw [dite_eq_left hdet]
       rfl
     apply Units.ext
     ext a b
@@ -59,7 +59,7 @@ theorem blk_frame_eq {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v 
       exact hu
     have hv : (SecondKernelHermitian.frGL fd (j + 1) La v : Matrix _ _ _) = fd.frM (j + 1) La v := by
       unfold SecondKernelHermitian.frGL
-      rw [dif_pos hdet]
+      rw [dite_eq_left hdet]
       rfl
     apply Units.ext
     ext a b

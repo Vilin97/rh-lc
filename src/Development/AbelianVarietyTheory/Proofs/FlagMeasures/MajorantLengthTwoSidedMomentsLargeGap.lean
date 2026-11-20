@@ -222,7 +222,7 @@ theorem two_sided_moments_gap : GlobalTheory.GapIn.Hyp → ∀ Cg cb Cu cT CT C0
   obtain ⟨hNum, -, heps⟩ := GlobalTheory.T.momentPieriNumerics_of_sizeHyps D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w (uOne D w τ) (fun i => by
     have := i.isLt
     simp only [uOne]
-    rw [dif_pos ⟨by omega, by omega⟩]; rfl)
+    rw [dite_eq_left ⟨by omega, by omega⟩]; rfl)
   set ν : Fin (2 * D.R.rS + D.R.k + 1) → ℤ := 0 with hν0
   have e0 : (fun i => lamD D τ i + (ν i : ℝ)) = lamD D τ := funext fun i => by simp [hν0]
   have hn0 : n1 ν = 0 := by simp [hν0, n1]

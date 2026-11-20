@@ -93,7 +93,7 @@ theorem jetC_sum (cD : ι → ℂ) {I : Type} [Fintype I] (c : I → ℂ) (G : I
   ring
 
 theorem map_desc {K : Type} [Field K] (σ : K →+* ℂ) {z : ℂ} (h : ∃ k : K, σ k = z) : σ (desc σ z) = z := by
-  rw [desc, dif_pos h]
+  rw [desc, dite_eq_left h]
   exact h.choose_spec
 
 end An

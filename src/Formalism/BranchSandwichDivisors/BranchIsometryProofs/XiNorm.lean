@@ -868,11 +868,11 @@ lemma xn_interlace {n : ℕ} (lam sg : Fin n → ℕ) (hI : Interlace (lamZ lam)
   obtain ⟨h1, h2⟩ := hI i
   have hi := i.isLt
   simp only [lamZ, Fin.coe_castSucc, Fin.val_succ] at h1 h2
-  rw [dif_pos hi] at h1
+  rw [dite_eq_left hi] at h1
   unfold nuNext
   constructor
   · split_ifs with hh
-    · rw [dif_pos hh] at h2
+    · rw [dite_eq_left hh] at h2
       exact_mod_cast h2
     · exact Nat.zero_le _
   · exact_mod_cast h1
@@ -883,12 +883,12 @@ lemma xnLam_anti {n : ℕ} (lam sg : Fin n → ℕ) (hI : Interlace (lamZ lam) (
   unfold xnLam
   by_cases h1 : q + 1 < n
   · have h0 : q < n := by omega
-    rw [dif_pos h1, dif_pos h0]
+    rw [dite_eq_left h1, dite_eq_left h0]
     obtain ⟨ha, hb⟩ := xn_interlace lam sg hI ⟨q, h0⟩
     unfold nuNext at ha
-    rw [dif_pos h1] at ha
+    rw [dite_eq_left h1] at ha
     exact le_trans ha hb
-  · rw [dif_neg h1]
+  · rw [dite_eq_right h1]
     exact Nat.zero_le _
 
 lemma xn_stage (n : ℕ) (lam sg : Fin n → ℕ) (hI : Interlace (lamZ lam) (fun i => (sg i : ℤ)))

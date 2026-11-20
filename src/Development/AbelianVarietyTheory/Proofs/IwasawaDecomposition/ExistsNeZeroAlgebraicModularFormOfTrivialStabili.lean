@@ -41,7 +41,7 @@ theorem cosetForm_apply {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
     cosetForm ρ J χ g w ((γ : GAf L n) * g * κ) = ((χ κ : Kˣ) : K) • ρ γ w := by
   have hex : ∃ p : GQ L n × J, (γ : GAf L n) * g * κ = (p.1 : GAf L n) * g * p.2 := ⟨(γ, κ), rfl⟩
   unfold cosetForm
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨h1, h2⟩ := double_coset_unique hg hex.choose_spec
   rw [← h1, ← h2]
 
@@ -49,7 +49,7 @@ theorem cosetForm_not {L : Type} [Field L] [NumberField L] [IsCMField L] {n : �
     [AddCommGroup W] [Module K W] (ρ : Representation K (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J →* Kˣ)
     (g : GAf L n) (w : W) (x : GAf L n) (hx : ¬ ∃ p : GQ L n × J, x = (p.1 : GAf L n) * g * p.2) :
     cosetForm ρ J χ g w x = 0 := by
-  unfold cosetForm; rw [dif_neg hx]
+  unfold cosetForm; rw [dite_eq_right hx]
 
 theorem exists_form_of_trivial_stabiliser : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (K : Type) [Field K] (W : Type) [AddCommGroup W] [Module K W] [Nontrivial W] (ρ : Representation K (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J →* Kˣ) (g : GAf L n), (∀ γ ∈ GQ L n, g⁻¹ * γ * g ∈ J → γ = 1) → ∃ f ∈ NX.TypeSpF L n K ρ J χ, f ≠ 0 := by
   intro L _ _ _ n K _ W _ _ _ ρ J χ g hg

@@ -69,7 +69,7 @@ theorem goodLift_eq : ∀ (q : ℕ) [Fact q.Prime] (lam : Qbar →+* ℂ_[q]) (g
   obtain ⟨⟨-, -, hcl⟩, hZ, hdiv, hid, -, -, -⟩ := GlobalTheory.MomOne.okArith S.d q ι hS.1 hS.2.1 hsp
   obtain ⟨H1, -, -, H4, H5, H6⟩ := GlobalTheory.HeisOps.heisenberg g S.d S.Hm hS.1.pos hS.2.2.1.isHermitian
   have hlam : ∀ x : ℂ, x ∈ Qbar → lamA lam x = ι x := fun x hx => by
-    rw [lamA, dif_pos hx]; exact (hι ⟨x, hx⟩).symm
+    rw [lamA, dite_eq_left hx]; exact (hι ⟨x, hx⟩).symm
   have hOK1 : ∀ α ∈ OK S.d, ‖ι α‖ ≤ 1 := fun α hα => by
     obtain ⟨⟨a, ha⟩, -⟩ := hZ α hα
     rw [ha, norm_zc]; exact PadicInt.norm_le_one a

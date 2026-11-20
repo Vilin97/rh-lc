@@ -116,7 +116,7 @@ theorem unitV_mul {K : Type} [Field K] (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) 
   have ha : IsUnit (redP P a) := IsUnit.of_mul_eq_one _ h
   have hb : IsUnit (redP P b) := IsUnit.of_mul_eq_one_right _ h
   unfold unitV
-  rw [dif_pos ha, dif_pos hb, ← Units.val_mul, ← map_mul]
+  rw [dite_eq_left ha, dite_eq_left hb, ← Units.val_mul, ← map_mul]
   have : ha.unit * hb.unit = 1 := Units.ext (by simpa using h)
   rw [this, map_one, Units.val_one]
 
@@ -188,7 +188,7 @@ theorem ent_mul {N : ℕ} (g : Sp E N ≃ₗ[E] Sp E N) (p p' : ℕ) (hp : p < N
   · rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
     congr 1
     unfold ent atN
-    rw [dif_pos hp]
+    rw [dite_eq_left hp]
     rfl
   · simp [eN]
 
@@ -221,7 +221,7 @@ theorem red_ent_block (hq : q ≠ 0) (hP : (q : 𝓞 E) ∈ P.asIdeal) (hg : g �
   rw [if_pos h', zpow_one] at h2
   have h3 := reduction_eq_zero_of_integral_inv_mul P hq hP h2
   unfold ent atN
-  rw [dif_pos (show p < n + 0 from hp)]
+  rw [dite_eq_left (show p < n + 0 from hp)]
   exact h3
 
 theorem red_ent_uni (hq : q ≠ 0) (hP : (q : 𝓞 E) ∈ P.asIdeal) (hg : g ∈ JG P q k₀ r t n 0) (hr : r ≤ n) (s : ℕ)
@@ -238,7 +238,7 @@ theorem red_ent_uni (hq : q ≠ 0) (hP : (q : 𝓞 E) ∈ P.asIdeal) (hg : g ∈
   have h3 := reduction_eq_zero_of_integral_inv_mul P hq hP h2
   have h4 : ent g.toLinearMap p s = g (eN E (n + 0) s) ⟨p, hp⟩ := by
     unfold ent atN
-    rw [dif_pos (show p < n + 0 from hp)]
+    rw [dite_eq_left (show p < n + 0 from hp)]
     rfl
   have h5 : IntAt P (if p = s then 1 else 0 : E) := by
     split_ifs

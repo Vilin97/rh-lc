@@ -105,7 +105,7 @@ theorem exists_good_cmPt_frPoly_ne_zero : ∀ (E : Type) [Field E] [NumberField 
     intro h0
     apply hne
     change (if h : x ∈ (U.X k).dom then toC (evR Xo c F (U.un k ⟨x, h⟩)) else 0) = 0
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact h0
   exact ⟨z, La, hz, fun G hG =>
     (GlobalTheory.LamT.isFrPoly_equiv_and_ne_zero E H Dw l Xo c z.K z.y a n F hF G hG).2 _ σ₁ _ hzx hev⟩

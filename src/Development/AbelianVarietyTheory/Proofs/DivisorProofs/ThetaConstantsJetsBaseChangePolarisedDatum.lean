@@ -61,7 +61,7 @@ theorem valR_spMap_comp' {A A' : Type} [CommRing A] [CommRing A'] {Y : Scheme.{0
     (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f : Γ(Y, V)) : valR (spMap ψ ≫ x) V f = ψ (valR x V f) := by
   have h' : ⊤ ≤ (spMap ψ ≫ x) ⁻¹ᵁ V := fun y _ => h (Set.mem_univ ((spMap ψ) y))
   unfold valR
-  rw [dif_pos h', dif_pos h]
+  rw [dite_eq_left h', dite_eq_left h]
   have e : (spMap ψ ≫ x).appLE V ⊤ h' = x.appLE V ⊤ h ≫ (spMap ψ).appTop :=
     (Scheme.Hom.appLE_comp_appLE (spMap ψ) x V ⊤ ⊤ h le_rfl).symm
   have n := Scheme.ΓSpecIso_naturality (CommRingCat.ofHom ψ)

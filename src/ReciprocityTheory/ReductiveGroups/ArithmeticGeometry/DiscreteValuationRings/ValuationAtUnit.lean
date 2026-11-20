@@ -30,7 +30,7 @@ theorem eq_of_gs_eq {F : Type} [Field F] (z : Spec (CommRingCat.of F)) (c c' : F
       gs (𝟙 _) z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom c')) : c = c' := by
   have hz : (𝟙 (Spec (CommRingCat.of F)) : _) z ∈ (⊤ : (Spec (CommRingCat.of F)).Opens) := trivial
   unfold gs at h
-  rw [dif_pos hz, dif_pos hz] at h
+  rw [dite_eq_left hz, dite_eq_left hz] at h
   have h2 : (Scheme.Hom.app (𝟙 (Spec (CommRingCat.of F))) ⊤).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom c) =
       (Scheme.Hom.app (𝟙 (Spec (CommRingCat.of F))) ⊤).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom c') := by
     first

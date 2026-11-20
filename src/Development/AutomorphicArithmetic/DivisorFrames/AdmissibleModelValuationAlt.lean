@@ -15,7 +15,7 @@ open scoped Classical
 private theorem valF_map {F F' : Type} [Field F] [Field F'] {X : Scheme.{0}} (χ : F →+* F') {w : Sp F ⟶ X}
     {U : X.Opens} (h : ⊤ ≤ w ⁻¹ᵁ U) (r : Γ(X, U)) : valF (spMap χ ≫ w) U r = χ (valF w U r) := by
   have h' : ⊤ ≤ (spMap χ ≫ w) ⁻¹ᵁ U := fun q _ => h (Set.mem_univ (spMap χ q))
-  rw [valF, valF, dif_pos h, dif_pos h', ← Scheme.Hom.appLE_comp_appLE (spMap χ) w U ⊤ ⊤ h le_rfl]
+  rw [valF, valF, dite_eq_left h, dite_eq_left h', ← Scheme.Hom.appLE_comp_appLE (spMap χ) w U ⊤ ⊤ h le_rfl]
   exact congrArg (fun g => g.hom ((w.appLE U ⊤ h).hom r)) (Scheme.ΓSpecIso_naturality (CommRingCat.ofHom χ))
 
 private theorem bc_comp {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}

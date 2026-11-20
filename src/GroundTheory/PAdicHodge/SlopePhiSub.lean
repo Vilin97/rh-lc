@@ -66,7 +66,7 @@ theorem deg_congr [Nontrivial R] (v : UnitOrd R φ) {M₂ : Type*} [AddCommGroup
     rw [deg_eq v b Φ h, deg_eq v (b.map e) Φ₂ h₂, degIn, degIn]
     exact v.ord_unit_eq _ _ (by rw [phiMatrix_map b e he])
   · have h₂ : ¬ IsPhiModule Φ₂ := fun h₂ => h ((isPhiModule_congr e he).2 h₂)
-    rw [deg, deg, dif_neg h, dif_neg h₂]
+    rw [deg, deg, dite_eq_right h, dite_eq_right h₂]
 
 section Adapted
 

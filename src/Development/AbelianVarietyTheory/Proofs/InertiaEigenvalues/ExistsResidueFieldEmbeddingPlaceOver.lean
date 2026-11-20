@@ -35,5 +35,5 @@ theorem GlobalTheory.residue_ringOfIntegers_to_place : ∀ (E' Ω : Type) [Field
   refine ⟨Ideal.Quotient.lift _ ψ hker, fun x => ?_⟩
   rw [Ideal.Quotient.lift_mk]
   unfold redThrough
-  rw [dif_pos (hmem x)]
+  rw [dite_eq_left (hmem x)]
   rfl

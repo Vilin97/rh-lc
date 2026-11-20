@@ -899,7 +899,7 @@ def coefOf (N : ℕ) (φ : ℂ → E) : ℕ → E := if h : PolyAt N φ then h.c
 
 theorem coefOf_spec {N : ℕ} {φ : ℂ → E} (h : PolyAt N φ) (Y : ℂ) :
     φ Y = ∑ j ∈ Finset.range N, Y ^ j • coefOf N φ j := by
-  rw [coefOf, dif_pos h]
+  rw [coefOf, dite_eq_left h]
   exact h.choose_spec Y
 
 def lowC (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (i : Fin (r + 1)) :

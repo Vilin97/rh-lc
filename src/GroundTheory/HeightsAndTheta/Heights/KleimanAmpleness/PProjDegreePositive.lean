@@ -188,13 +188,13 @@ theorem pos (D : ℕ) : ∀ q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
       intro W hW
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW ⊢
       by_cases hc : W ∈ J.minimalPrimes ∧ IsRelevant W
-      · rw [dif_pos hc] at hW ⊢
+      · rw [dite_eq_left hc] at hW ⊢
         have hWp : W.IsPrime := hc.1.1.1
         have hWd := ringKrullDim_of_mem_minimalPrimes q W x hX (D + 1) hd hc.1
         have hWq : IsMultiProjPrime W :=
           ⟨hWp, MinimalPrimeMultiHomog.full F Unit (fun _ => ι₀) J W hJh hc.1, hc.2⟩
         exact ⟨lt_of_le_of_ne (by positivity) (Ne.symm hW), ih W hWq hWd⟩
-      · rw [dif_neg hc] at hW
+      · rw [dite_eq_right hc] at hW
         exact absurd rfl hW
     have hfin := DivCycleFiniteSupport.full F Unit (fun _ => ι₀) q x
     rw [finsum_eq_sum_of_support_subset _
@@ -217,7 +217,7 @@ theorem pos (D : ℕ) : ∀ q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
     have hrel := isRelevant_of_ringKrullDim W D hWd
     have hne : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle q x) W : ℤ) ≠ 0 := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hmin, hrel⟩]
+      rw [dite_eq_left ⟨hmin, hrel⟩]
       have htop := length_localizedQuot_ne_top J W hmin
       have hzero : multAt J W ≠ 0 := by
         unfold multAt

@@ -106,7 +106,7 @@ theorem exists_form_in_all (I : Ideal R) [IsPrecomplete I R]
     have hex := hlift (e + i) n hn (s i) h1 h2
     rw [hsS]
     simp only [lift']
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   have hinv : ∀ i, s i ∈ L (e + i) ∧ (s i).IsHomogeneous n := by
     intro i

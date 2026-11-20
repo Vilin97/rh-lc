@@ -187,7 +187,7 @@ theorem exists_cRoot (D : D7) {p : ℕ} (hp : SplitOK D p) : ∃ c : ℤ, (p : �
   linear_combination (-h ^ 2) * hr + h ^ 2 * e4 + ((1 + r) * h - (mE D : ZMod p) * (2 * h + 1)) * hh
 
 theorem cRoot_spec (D : D7) {p : ℕ} (hp : SplitOK D p) : (p : ℤ) ∣ cRoot D p ^ 2 - cRoot D p + mE D := by
-  rw [cRoot, dif_pos (exists_cRoot D hp)]; exact Classical.choose_spec (exists_cRoot D hp)
+  rw [cRoot, dite_eq_left (exists_cRoot D hp)]; exact Classical.choose_spec (exists_cRoot D hp)
 
 theorem cRoot_coprime (D : D7) {p : ℕ} (hp : SplitOK D p) : IsCoprime (1 - 2 * cRoot D p) (p : ℤ) := by
   apply IsCoprime.symm

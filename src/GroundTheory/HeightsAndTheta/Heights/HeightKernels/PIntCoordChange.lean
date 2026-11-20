@@ -179,7 +179,7 @@ theorem multAt_comap {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * 
     Geo.multAt (J.comap (intCoordSubst A)) (W.comap (intCoordSubst A)) = Geo.multAt J W := by
   have hW' : (W.comap (intCoordSubst A)).IsPrime := Ideal.comap_isPrime _ _
   unfold Geo.multAt
-  rw [dif_pos hW', dif_pos hW]
+  rw [dite_eq_left hW', dite_eq_left hW]
   congr 1
   let e := Ideal.quotientEquiv (J.comap (intCoordSubst A)) J (substEquiv hAB hBA)
     (Ideal.map_comap_of_surjective _ (subst_surjective hAB) J).symm

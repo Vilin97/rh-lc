@@ -32,7 +32,7 @@ theorem sChart_projL_discL (s : ℂ) : sChart 0 (projL (discL s)) = fun _ => (2 
   have hne : vecL (discL s) ≠ 0 := vecL_ne_zero (discL_mem s)
   rw [sChart_apply]
   unfold projL
-  rw [dif_pos hne, CP.chartCoord_mk]
+  rw [dite_eq_left hne, CP.chartCoord_mk]
   funext j
   simp [vecL, discL]
 

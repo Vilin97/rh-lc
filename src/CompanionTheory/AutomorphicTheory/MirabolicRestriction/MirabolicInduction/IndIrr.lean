@@ -35,7 +35,7 @@ def deltaU (ψ₀ : AddChar k ℂ) (x : mirabSub k n) : ℂ :=
 
 theorem deltaU_one (ψ₀ : AddChar k ℂ) : deltaU n ψ₀ 1 = 1 := by
   unfold deltaU
-  rw [dif_pos (one_mem _)]
+  rw [dite_eq_left (one_mem _)]
   exact map_one (genericChar n ψ₀)
 
 theorem deltaU_mem (ψ₀ : AddChar k ℂ) : deltaU n ψ₀ ∈ MirabInducedSpace n ψ₀ := by
@@ -44,7 +44,7 @@ theorem deltaU_mem (ψ₀ : AddChar k ℂ) : deltaU n ψ₀ ∈ MirabInducedSpac
   by_cases hx : x ∈ uniSub k n
   · have hux : (u : mirabSub k n) * x ∈ uniSub k n := mul_mem u.2 hx
     unfold deltaU
-    rw [dif_pos hx, dif_pos hux, ← map_mul]
+    rw [dite_eq_left hx, dite_eq_left hux, ← map_mul]
     exact congrArg (genericChar n ψ₀) (Subtype.ext rfl)
   · have hux : (u : mirabSub k n) * x ∉ uniSub k n := by
       intro hm
@@ -52,7 +52,7 @@ theorem deltaU_mem (ψ₀ : AddChar k ℂ) : deltaU n ψ₀ ∈ MirabInducedSpac
       rw [← mul_assoc, inv_mul_cancel, one_mul] at this
       exact hx this
     unfold deltaU
-    rw [dif_neg hx, dif_neg hux, mul_zero]
+    rw [dite_eq_right hx, dite_eq_right hux, mul_zero]
 
 theorem char_inv_mul (ψ₀ : AddChar k ℂ) (u : uniSub k n) :
     genericChar n ψ₀ (u⁻¹) * genericChar n ψ₀ u = 1 := by

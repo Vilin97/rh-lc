@@ -315,7 +315,7 @@ theorem ratio_single_mul {Ω M : Type} [Field Ω] (m : M) (a b : Ω) (hb : b ≠
   have hex : ∃ r : Ω, (AddMonoidAlgebra.single m a : AddMonoidAlgebra Ω M) = r • AddMonoidAlgebra.single m b :=
     ⟨a / b, by rw [AddMonoidAlgebra.smul_single', div_mul_cancel₀ _ hb]⟩
   unfold ReciprocityTheory.ChartRestriction.G.T0.ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have := hex.choose_spec
   rw [AddMonoidAlgebra.smul_single'] at this
   exact (AddMonoidAlgebra.single_right_injective this).symm

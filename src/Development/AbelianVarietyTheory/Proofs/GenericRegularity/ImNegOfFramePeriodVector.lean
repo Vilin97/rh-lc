@@ -127,7 +127,7 @@ theorem im_neg_of_isPeriod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       have hk2 : (idx k).2 = ⟨X.p0 + (e k).2, hi⟩ :=
         Fin.ext (show ((idx k).2 : ℕ) = X.p0 + (e k).2 by rw [hp0]; exact h3)
       have hnot : ¬ (((idx k).2 : ℕ) < Dw.q) := by rw [h3]; omega
-      rw [dif_pos h1, dif_pos hi, if_neg hnot, hk1, hk2]
+      rw [dite_eq_left h1, dite_eq_left hi, if_neg hnot, hk1, hk2]
     · have hc : conjEmb (relab c σ (e k).1) ∈ X.Ψ := by
         have h5 := (idx k).1.2
         rw [h2] at h5
@@ -137,7 +137,7 @@ theorem im_neg_of_isPeriod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       have hk2 : (idx k).2 = ⟨X.p0 - 1 - (e k).2, hj⟩ :=
         Fin.ext (show ((idx k).2 : ℕ) = X.p0 - 1 - (e k).2 by rw [hp0]; exact h3)
       have hlt : ((idx k).2 : ℕ) < Dw.q := by rw [h3]; omega
-      rw [dif_neg h1, dif_pos hc, dif_pos hj, if_pos hlt, hk1, hk2]
+      rw [dite_eq_right h1, dite_eq_left hc, dite_eq_left hj, if_pos hlt, hk1, hk2]
 
   obtain ⟨x₀, b, hb, hon, rfl⟩ :=
     (GlobalTheory.UnitFrames.frame_mul_triangular_orthonormal E r X.p0 X.Ψ X.Gm X.Gm_herm).1 x hx

@@ -83,7 +83,7 @@ theorem hhFl_testPoly_line (II : IntersectionSystem) :
   funext k
   have hl : (Finsupp.toMultiset (Finsupp.single ((), (1 : Fin 2)) 2)).toList.length = 2 := by simp
   unfold GroundTheory.Heights₂.Heights.LowerBoundFree.monoLines
-  rw [dif_pos (by rw [hl]; exact k.2)]
+  rw [dite_eq_left (by rw [hl]; exact k.2)]
   congr 1
   have hm := List.get_mem (Finsupp.toMultiset (Finsupp.single ((), (1 : Fin 2)) 2)).toList ⟨k, by rw [hl]; exact k.2⟩
   rw [Multiset.mem_toList, Finsupp.mem_toMultiset] at hm
@@ -101,7 +101,7 @@ theorem hhFl_X_pow (II : IntersectionSystem) (p : Ψ × Fin N) :
   have hl : (Finsupp.toMultiset (Finsupp.single p (GlobalTheory.CompanionTheory.Ar.Top.dimFl Ψ N + 1))).toList.length =
       GlobalTheory.CompanionTheory.Ar.Top.dimFl Ψ N + 1 := by simp
   unfold GroundTheory.Heights₂.Heights.LowerBoundFree.monoLines
-  rw [dif_pos (by rw [hl]; exact k.2)]
+  rw [dite_eq_left (by rw [hl]; exact k.2)]
   congr 1
   have hm := List.get_mem (Finsupp.toMultiset (Finsupp.single p (GlobalTheory.CompanionTheory.Ar.Top.dimFl Ψ N + 1))).toList
     ⟨k, by rw [hl]; exact k.2⟩

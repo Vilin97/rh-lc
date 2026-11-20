@@ -66,7 +66,7 @@ theorem low_top_iff {κ : Type} [Zero κ] [One κ] {n r : ℕ} (hrn : r ≤ n) (
     ext b a
     by_cases hb : b.val < r
     · have := congrFun (congrFun h2 ⟨b.val, hb⟩) a
-      rw [topL, dif_pos ⟨b.2, a.2⟩, Matrix.one_apply] at this
+      rw [topL, dite_eq_left ⟨b.2, a.2⟩, Matrix.one_apply] at this
       simpa only [rectOne, Fin.ext_iff] using this
     · rw [h1 b a (by omega) a.2, rectOne, if_neg (by omega)]
   · rintro rfl
@@ -389,7 +389,7 @@ theorem exists_point_phiIs : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
     (h2 x).trans (forall₂_congr fun PP _ => by
       rw [low_top_iff hrn]
       exact Eq.congr_left (Matrix.ext fun b a => (h4 PP b a).symm))
-  rw [hQ, omegaQ, dif_pos (by simp), Finset.attach_empty, Finset.prod_empty, mul_one, omegaK, indPhi]
+  rw [hQ, omegaQ, dite_eq_left (by simp), Finset.attach_empty, Finset.prod_empty, mul_one, omegaK, indPhi]
   by_cases h6 : (fun b => Submodule.Quotient.mk (x b)) = x1
   · rw [if_pos h6, if_pos (h5.1 h6), map_one]
   · rw [if_neg h6, if_neg (mt h5.2 h6), map_zero]

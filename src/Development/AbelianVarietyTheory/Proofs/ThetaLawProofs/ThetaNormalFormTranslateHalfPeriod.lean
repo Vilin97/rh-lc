@@ -112,7 +112,7 @@ variable {X Y : Scheme.{0}}
 
 theorem gs_eq_toStalk (x : Sp ℂ ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     gs x pt U f = toStalk (valAt' x U f) := by
-  rw [gs_eq x pt U (h trivial), valAt', dif_pos h, valAt, toStalk, RingHom.comp_apply]
+  rw [gs_eq x pt U (h trivial), valAt', dite_eq_left h, valAt, toStalk, RingHom.comp_apply]
   erw [(Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom_inv_id_apply]
   exact (TopCat.Presheaf.germ_res_apply (Sp ℂ).presheaf (homOfLE h) pt trivial _).symm
 
@@ -197,7 +197,7 @@ theorem valAt'_app (x : Sp ℂ ⟶ Y) (φ : Y ⟶ X) (U : X.Opens) (f : Γ(X, U)
     rw [← gs_eq_toStalk _ _ h, ← gs_eq_toStalk _ _ h']
     exact gs_pull x φ pt U (h trivial) f
   · have h' : ¬ ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [valAt', valAt', dif_neg h, dif_neg h']
+    rw [valAt', valAt', dite_eq_right h, dite_eq_right h']
 
 end Germs
 

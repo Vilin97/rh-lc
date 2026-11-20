@@ -111,12 +111,12 @@ variable (B : ValuationSubring Ω) {l : ℕ} [Fact l.Prime] (κ : IsLocalRing.Re
 theorem redThrough_mul {z w : Ω} (hz : z ∈ B) (hw : w ∈ B) :
     redThrough B κ (z * w) = redThrough B κ z * redThrough B κ w := by
   unfold redThrough
-  rw [dif_pos (mul_mem hz hw), dif_pos hz, dif_pos hw, ← map_mul, ← map_mul]
+  rw [dite_eq_left (mul_mem hz hw), dite_eq_left hz, dite_eq_left hw, ← map_mul, ← map_mul]
   rfl
 
 theorem redThrough_one : redThrough B κ 1 = 1 := by
   unfold redThrough
-  rw [dif_pos (one_mem B)]
+  rw [dite_eq_left (one_mem B)]
   have : (⟨1, one_mem B⟩ : B) = 1 := rfl
   rw [this, map_one, map_one]
 

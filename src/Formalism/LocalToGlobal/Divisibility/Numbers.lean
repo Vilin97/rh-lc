@@ -105,7 +105,7 @@ theorem frobUnitMod_of_coprime {M p : ℕ} (h : Nat.Coprime p M) : frobUnitMod M
   have hex : ∃ w : (ZMod M)ˣ, ((w : ZMod M).cast : ZMod (ordCompl[p] M)) = (p : ZMod (ordCompl[p] M)) ∧
       ((w : ZMod M).cast : ZMod (ordProj[p] M)) = 1 := ⟨_, (key _).2 rfl⟩
   unfold frobUnitMod
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact (key _).1 hex.choose_spec
 
 namespace NumDatum

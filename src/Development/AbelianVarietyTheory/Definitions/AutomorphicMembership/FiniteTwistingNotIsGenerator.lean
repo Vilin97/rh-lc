@@ -50,7 +50,7 @@ end Place
 
 theorem valF_unit_ne {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
     (f : Γ(X, U)ˣ) : valF x U f.val ≠ 0 := by
-  rw [valF, dif_pos h]
+  rw [valF, dite_eq_left h]
   exact ((f.isUnit.map _).map _).ne_zero
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}

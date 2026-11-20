@@ -30,7 +30,7 @@ theorem ltLog_map {K L : Type} [Field K] [Field L] (φ : K →+* L) (l : ℕ) :
 
 theorem constantCoeff_ltLog {K : Type} [Field K] (l : ℕ) (hl : 2 ≤ l) :
     constantCoeff (ltLog K l) = 0 := by
-  rw [← coeff_zero_eq_constantCoeff_apply, ltLog, coeff_mk, dif_neg]
+  rw [← coeff_zero_eq_constantCoeff_apply, ltLog, coeff_mk, dite_eq_right]
   rintro ⟨j, hj⟩
   have : 0 < (l ^ 2) ^ j := pow_pos (pow_pos (by omega) 2) j
   omega

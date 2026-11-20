@@ -22,10 +22,10 @@ theorem lattice_embedding : LamCIota := by
   intro p _ lam ι h
   refine ⟨fun x hx => ?_, fun x hx => ?_⟩
   · unfold Formalism.MainNotions.TaylorLogMetric.lamC
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact (h ⟨x, hx⟩).symm
   · unfold Formalism.MainNotions.TaylorLogMetric.lamC
-    rw [dif_neg hx]
+    rw [dite_eq_right hx]
 
 theorem power_series_embedding : PSerIota := by
   intro D N N' p _ lam ι h G hG

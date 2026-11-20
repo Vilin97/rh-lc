@@ -224,8 +224,8 @@ theorem inOrbP_of_orb {δ : ∀ p : PlF D, (D.s.atP p).Fp} {T T' : ℕ} {p : PlF
     · subst hab; rw [if_pos rfl, hLβ.1]
     · rw [if_neg hab]
       by_cases hlt : b < a
-      · rw [dif_pos hlt]
-      · rw [dif_neg hlt]
+      · rw [dite_eq_left hlt]
+      · rw [dite_eq_right hlt]
         exact hLβ.2 a b (lt_of_le_of_ne (not_lt.1 hlt) hab)
   · ext a b
     simp only [Loc.uUp]
@@ -235,8 +235,8 @@ theorem inOrbP_of_orb {δ : ∀ p : PlF D, (D.s.atP p).Fp} {T T' : ℕ} {p : PlF
       simpa [bdM] using this
     · rw [if_neg hab]
       by_cases hc : a < b ∧ Loc.sameBlock w₀.blocks a b = false
-      · rw [dif_pos hc]
-      · rw [dif_neg hc]
+      · rw [dite_eq_left hc]
+      · rw [dite_eq_right hc]
         by_cases hlt : a < b
         · have hsb : Loc.sameBlock w₀.blocks a b = true := by
             by_contra hf; exact hc ⟨hlt, by simpa using hf⟩
@@ -298,7 +298,7 @@ theorem modBlocks_full {δ : ∀ p : PlF D, (D.s.atP p).Fp} (T T' : ℕ) (p : Pl
     have hs0 : 0 < s := by omega
     have e : modBlocks (blkTop δ T T' p) a ((t, s) :: rest) = some ((hu.unit, ⟨s, hs0⟩) :: l') := by
       simp only [modBlocks]
-      rw [dif_pos ⟨hu, hs0⟩, hl']
+      rw [dite_eq_left ⟨hu, hs0⟩, hl']
       rfl
     exact ⟨_, e⟩
 

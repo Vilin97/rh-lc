@@ -53,7 +53,7 @@ theorem blk_val {n a b : ℕ} (h : a + b = n) (w : Pl E) (m : GLw a w × GLw b w
     exact (m.1.isUnit.map detMonoidHom).mul (m.2.isUnit.map detMonoidHom)
   unfold blk
   simp only
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   rfl
 
 end GlobalTheory.BCT.CtLevel

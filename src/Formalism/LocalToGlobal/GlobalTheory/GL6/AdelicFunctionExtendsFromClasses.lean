@@ -74,11 +74,11 @@ theorem adelic_function_extends_from_classes (S : StepLevel F E σ J T f bad) (e
         x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) p.1.1 * (y c).1 * p.2.1
     · have e : rndFillG S emb hc (y c) (Fc c) x = fun yy => (S.chi (Classical.choose hx).2 : ℂ) *
           Fc c (frameTranslate emb hc (Classical.choose hx).1.1⁻¹ ((UJ (σ : E →+* E) J).inv_mem (Classical.choose hx).1.2) yy) := by
-        funext yy; unfold rndFillG; rw [dif_pos hx]
+        funext yy; unfold rndFillG; rw [dite_eq_left hx]
       rw [e]
       exact hspan (translate_mem_span_adelic S emb hc hgA _ (Classical.choose hx).1.2 _ (hF c))
     · have e : rndFillG S emb hc (y c) (Fc c) x = 0 := by
-        funext yy; unfold rndFillG; rw [dif_neg hx]; rfl
+        funext yy; unfold rndFillG; rw [dite_eq_right hx]; rfl
       rw [e]; exact zero_mem _
   · intro c
     show (∑ c', rndFillG S emb hc (y c') (Fc c')) (y c) = Fc c
@@ -87,7 +87,7 @@ theorem adelic_function_extends_from_classes (S : StepLevel F E σ J T f bad) (e
     · intro c' _ hne
       funext yy
       unfold rndFillG
-      rw [dif_neg]
+      rw [dite_eq_right]
       · rfl
       rintro ⟨p, hp⟩
       apply hne
@@ -141,7 +141,7 @@ theorem U_op_preserves_forms_level_zero (Tf : FormsTied D u) (v : (D.mem u).A.vT
     simp only [Formalism.MainNotions.product_first_zeroth_parts.Uop, Formalism.BasicNotions.LT.Uop, LinearMap.pi_apply, LinearMap.sum_apply, Finset.sum_apply, Fc]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hx1 := (Finset.mem_filter.1 hx).2
-    rw [dif_pos hx1]
+    rw [dite_eq_left hx1]
     exact congrFun (hpp c x hx1) s
   have hF : ∀ c, Fc c ∈ Submodule.span ℂ (Set.range g) := by
     intro c
@@ -185,7 +185,7 @@ theorem D_op_preserves_forms_level_zero (Tf : FormsTied D u) (v : (D.mem u).A.vT
     simp only [Formalism.MainNotions.product_first_zeroth_parts.Dop, LinearMap.pi_apply, LinearMap.sum_apply, Finset.sum_apply, Fc]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hx1 := (Finset.mem_filter.1 hx).2
-    rw [dif_pos hx1]
+    rw [dite_eq_left hx1]
     exact congrFun (hpp c x hx1) s
   have hF : ∀ c, Fc c ∈ Submodule.span ℂ (Set.range g) := by
     intro c

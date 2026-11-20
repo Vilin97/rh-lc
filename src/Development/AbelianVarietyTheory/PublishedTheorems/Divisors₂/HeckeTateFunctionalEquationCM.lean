@@ -81,7 +81,7 @@ theorem gaussTerm_congr' {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} {a : �
     exact zero_ne_one hz
   have hval : ∀ x : E, Valued.v (algebraMap E (w.adicCompletion E) x) = w.valuation E x := fun x =>
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation' w x
-  rw [gaussTerm, gaussTerm, dif_neg (h0 hy), dif_neg (h0 hy')]
+  rw [gaussTerm, gaussTerm, dite_eq_right (h0 hy), dite_eq_right (h0 hy')]
   congr 1
   · have h1 : χ.loc w (atFin w (Units.mk0 _ (h0 hy) * (Units.mk0 _ (h0 hy'))⁻¹)) = 1 := by
       have e : ((atFin w (Units.mk0 _ (h0 hy) * (Units.mk0 _ (h0 hy'))⁻¹) : (w.adicCompletion E)ˣ) : w.adicCompletion E) =
@@ -169,7 +169,7 @@ theorem locK_mul_gaussSumAt_eq {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} {
   have e2 : (z : E) * (c / c') / c = z / c' := by
     have := c.ne_zero
     field_simp
-  rw [h1, gaussTerm, gaussTerm, dif_neg hz0, dif_neg hzc, e1, e2, map_mul, map_mul, map_inv]
+  rw [h1, gaussTerm, gaussTerm, dite_eq_right hz0, dite_eq_right hzc, e1, e2, map_mul, map_mul, map_inv]
   simp only [mul_inv, inv_inv, Units.val_mul, Units.val_inv_eq_inv_val]
   have := (χ.locK w c).ne_zero
   field_simp

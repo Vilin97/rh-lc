@@ -84,7 +84,7 @@ theorem eval_injective (M : DSModel V S) {H : Type} [NormedAddCommGroup H] [Inne
       rw [hx, h2, mul_one] at h1
       rw [← h1]
       simp
-    · rw [ipM, dif_neg hc, mul_zero]
+    · rw [ipM, dite_eq_right hc, mul_zero]
   intro x y hxy
   refine sub_eq_zero.1 (key _ ?_)
   rw [map_sub]

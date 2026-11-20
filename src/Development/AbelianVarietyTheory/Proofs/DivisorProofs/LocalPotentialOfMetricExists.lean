@@ -68,10 +68,10 @@ theorem exists_stalkId_eq_prod {X : Scheme.{0}} {q : ℕ} {C : Fin q → Closeds
   refine ⟨fun i => if h : x ∈ C i then m (e ⟨i, h⟩) else 0, ?_⟩
   rw [hγ, hm, Ideal.span_singleton_mul_left_unit u.isUnit, Finset.prod_map, ← Ideal.prod_span_singleton,
     ← Fintype.prod_subtype_mul_prod_subtype (fun i => x ∈ C i)]
-  rw [Finset.prod_eq_one (s := Finset.univ) (f := fun i : {i // ¬ x ∈ C i} => _) (fun i _ => by beta_reduce; rw [dif_neg i.2, pow_zero]), mul_one]
+  rw [Finset.prod_eq_one (s := Finset.univ) (f := fun i : {i // ¬ x ∈ C i} => _) (fun i _ => by beta_reduce; rw [dite_eq_right i.2, pow_zero]), mul_one]
   refine Finset.prod_congr rfl fun i _ => ?_
   beta_reduce
-  rw [dif_pos i.2, hst i, Ideal.span_singleton_pow]
+  rw [dite_eq_left i.2, hst i, Ideal.span_singleton_pow]
 
 theorem exists_mult {X : Scheme.{0}} {q : ℕ} {C : Fin q → Closeds X} (G : X.IdealSheafData)
     (hC : CompList (G.support : Set X) C) (hx : ∀ x, LSncAt X C x) (hp : ∀ x, (stalkId G x).IsPrincipal) :

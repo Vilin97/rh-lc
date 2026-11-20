@@ -432,7 +432,7 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
   have hhr : ∀ w : ↥(WKr D S j), (hLr D S In j k P w : S.WL j) = In.hL j k P w := by
     intro w
     unfold hLr
-    rw [dif_pos ⟨h1, h2⟩]
+    rw [dite_eq_left ⟨h1, h2⟩]
     rfl
   have hkΦ : ∀ y, hkT D T S In i j b k P (Φ y) = ((cHkT D T i b P : T.O i) ^ k) • Φ (In.hL j k P y) := by
     intro y

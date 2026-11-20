@@ -115,7 +115,7 @@ theorem toRS_surj (S : Finset (HeightOneSpectrum (𝓞 F))) : Function.Surjectiv
     apply hv
     have hvS' : v ∉ S := fun h => hvS (Finset.mem_coe.mpr h)
     beta_reduce
-    rw [dif_neg hvS']
+    rw [dite_eq_right hvS']
     exact zero_mem (v.adicCompletionIntegers F)⟩
   refine ⟨pairA F r.1 y, Prod.ext rfl (funext fun v => ?_)⟩
   exact dif_pos v.2

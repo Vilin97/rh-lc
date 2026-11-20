@@ -450,7 +450,7 @@ theorem Lead_minor (k : Type*) [CommRing k] (J : Finset (Fin n)) :
   have hle : J.card ≤ n := by simpa using Finset.card_le_univ J
   have hcard : J.card = (initSeg n J.card).card := (card_initSeg hle).symm
   unfold minorF
-  rw [dif_pos hcard, colDiag_eq J hcard ((initSeg n J.card).orderEmbOfFin rfl)
+  rw [dite_eq_left hcard, colDiag_eq J hcard ((initSeg n J.card).orderEmbOfFin rfl)
     (fun i => initSeg_emb hle rfl i)]
   exact Lead_det k _ _ (OrderEmbedding.strictMono _) (OrderEmbedding.strictMono _)
 

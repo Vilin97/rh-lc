@@ -27,7 +27,7 @@ def fnOnOpen (U : X.Opens) (g : X.functionField) (hg : ∀ x ∈ U, RegAt x g) :
 theorem fnOf_fnOnOpen {U : X.Opens} {g : X.functionField} (hg : ∀ x ∈ U, RegAt x g) (h : genericPoint X ∈ U) :
     fnOf U h (fnOnOpen U g hg) = g := by
   classical
-  rw [fnOnOpen, dif_pos h]
+  rw [fnOnOpen, dite_eq_left h]
   exact (exists_fnOf_eq h hg).choose_spec
 
 def secOfRat (B : LB X) (ρ : B.ι → X.functionFieldˣ) (hρ : IsRatSec B ρ) (g : X.functionField)

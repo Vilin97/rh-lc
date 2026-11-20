@@ -49,7 +49,7 @@ theorem redM_eq_one {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (g : v.adicComple
       ⟨(1 : Matrix (Fin n) (Fin n) (v.adicCompletion F)) a b, h1 a b⟩ + ⟨g, hgi⟩ * ⟨W a b, hW a b⟩ := by
     exact Subtype.ext ((hX a b).trans rfl)
   simp only [redM]
-  rw [dif_pos hm, e, map_add (f := _), map_mul, hz, zero_mul, add_zero]
+  rw [dite_eq_left hm, e, map_add (f := _), map_mul, hz, zero_mul, add_zero]
   by_cases ab : a = b
   · subst ab
     simp only [Matrix.one_apply_eq]

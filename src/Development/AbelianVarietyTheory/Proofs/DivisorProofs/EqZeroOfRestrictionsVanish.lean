@@ -43,7 +43,7 @@ theorem wtAllZ_of_borChart {K : Type} [Field K] {ι : Type} [Fintype ι]
     (hy' : FromTest pts mapR y') (hb : borR t y y') :
     evalAt pts mapR f y' = ((∏ i, t i ^ e i : Sˣ) : S) * evalAt pts mapR f y := by
   unfold evalAt
-  rw [dif_pos hy, dif_pos hy']
+  rw [dite_eq_left hy, dite_eq_left hy']
   apply eq_of_locM (K := K)
   intro m hm
   obtain ⟨A, u, c, c', B, uB, uB', tB, π, π', cB, hc, hc', hπ, hπ', hbB, e1, e2, e3⟩ := h S t y y' hb m
@@ -89,7 +89,7 @@ theorem cuspW_eq_zero_of_reading : ∀ (D : D7) (T : Core D) (j : ℕ) (Y : Deep
     ⟨p, ψ, y, hz⟩
   have hev : evR Y.d.Xo₂ Y.d.c₂ (x : Rul Y.d.Xo₂ Y.d.c₂) z = ψ ((x : Rul Y.d.Xo₂ Y.d.c₂) p y) := by
     unfold evR evalAt
-    rw [dif_pos hft]
+    rw [dite_eq_left hft]
     exact hW _ hx.1 (CAt σ) _ p _ ψ _ y z hft.choose_spec.choose_spec.choose_spec hz
   haveI : IsReduced (CAt σ) := inferInstanceAs (IsReduced ℂ)
   have hw := wtAllZ_of_borChart hB (exZ _ G) hx.1 hx.2 (CAt σ) t _ z (hall _ _) (hall _ _) ht
@@ -98,7 +98,7 @@ theorem cuspW_eq_zero_of_reading : ∀ (D : D7) (T : Core D) (j : ℕ) (Y : Deep
     rw [← h1]
     classical
     show _ = (if h : x'.1 ∈ ((Y.U σ).X k).dom then toC (evR Y.d.Xo₂ Y.d.c₂ (x : Rul Y.d.Xo₂ Y.d.c₂) ((Y.U σ).un k ⟨x'.1, h⟩)) else 0)
-    rw [dif_pos x'.2]
+    rw [dite_eq_left x'.2]
   have h3 : evR Y.d.Xo₂ Y.d.c₂ (x : Rul Y.d.Xo₂ Y.d.c₂) ((Y.U σ).un k x') = 0 := h2
   rw [← hev]
   unfold evR

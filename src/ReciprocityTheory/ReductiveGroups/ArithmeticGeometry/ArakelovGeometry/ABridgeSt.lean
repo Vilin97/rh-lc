@@ -344,7 +344,7 @@ theorem chi_eq {x : Ix κ → Ω} {m : ConeMetric ℂ (Ix κ)} {μ : Measure (Ix
     chi x m μ n = -(1 / 2) * Real.log (bGram μ (fun k => secFun (b k)) (wgt m n)).det.re := by
   have hex : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis x n p.2 := ⟨⟨r, b⟩, hb⟩
   have hspec := hex.choose_spec
-  rw [chi, dif_pos hex]
+  rw [chi, dite_eq_left hex]
   rcases hp : hex.choose with ⟨r', b'⟩
   rw [hp] at hspec
   have hr : r' = r := (IsSecBasis.card_eq hspec).trans (IsSecBasis.card_eq hb).symm

@@ -24,7 +24,7 @@ theorem main : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι 
     ⟨hpr, z₀, hz₀, hz₀v⟩
   have hph : stepPh M BM p v R pr y' = stepGap M BM p hex.2.choose := by
     unfold stepPh
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   obtain ⟨hz₁, hz₁v⟩ := hex.2.choose_spec
   rw [hph]
   generalize hex.2.choose = z₁ at hz₁ hz₁v

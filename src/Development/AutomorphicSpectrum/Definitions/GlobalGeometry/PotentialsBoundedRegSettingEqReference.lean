@@ -352,7 +352,7 @@ theorem projL_chartMap (a : Fin 2) (t : Fin 1 → ℂ) : projL (chartMap a t) = 
     · rw [CP.chartVec_succAbove]
       simp [vecL, chartMap_apply, Fin.succAbove_ne]
   unfold projL
-  rw [dif_pos (by rw [hv]; exact CP.chartVec_ne_zero _ _)]
+  rw [dite_eq_left (by rw [hv]; exact CP.chartVec_ne_zero _ _)]
   simp only [hv]
   rfl
 
@@ -372,7 +372,7 @@ theorem adapted : Adapted model charts hyp := by
   change z ∈ bd ↔ ∃ i ∈ (![Finset.univ, ∅] : Fin 2 → Finset (Fin 1)) j, sChart j (projL z) i = 0
   rw [sChart_apply]
   unfold projL at hs' ⊢
-  rw [dif_pos h1] at hs' ⊢
+  rw [dite_eq_left h1] at hs' ⊢
   fin_cases j <;> simp [vecL, bd, hz] at hs' ⊢ <;> simp [hs']
 
 theorem conj_region (j : Fin 2) {z : (Σ _ : Unit, Fin 2) → ℂ} (hz : z ∈ mcPts (mCoordIdeal yLine)) :
@@ -381,7 +381,7 @@ theorem conj_region (j : Fin 2) {z : (Σ _ : Unit, Fin 2) → ℂ} (hz : z ∈ m
   have h1 := vecL_ne_zero hz
   have h2 : vecL (conjVec z) ≠ 0 := fun h => h1 (funext fun i => by simpa [vecL, conjVec] using congrFun h i)
   unfold projL
-  rw [dif_pos h1, dif_pos h2]
+  rw [dite_eq_left h1, dite_eq_left h2]
   refine ⟨by simp [vecL, conjVec], ?_⟩
   funext i
   simp [vecL, conjVec]

@@ -37,7 +37,7 @@ theorem bsH_step {φ : Formalism.HC.Frame} (h t : φ.A) : Arith.bsH h (t + h) = 
   have hex : ∃ v : ℕ, ∃ i : ℕ, φ.ofNat v + i • h = t := ⟨t.val, 0, by simp⟩
   have hex' : ∃ v : ℕ, ∃ i : ℕ, φ.ofNat v + i • h = t + h := ⟨(t + h).val, 0, by simp⟩
   unfold Arith.bsH
-  rw [dif_pos hex, dif_pos hex']
+  rw [dite_eq_left hex, dite_eq_left hex']
   congr 1
   exact Nat.find_congr' (fun {v} => hiff v)
 
@@ -132,7 +132,7 @@ theorem offC_top (L : SizeData₂ D) (j : ℕ) (z : Bool × HH D) (h : IsTopPl D
     obtain ⟨h1, h2⟩ := Finset.mem_Icc.1 hj
     have h3 := L.win_top j h1 h2 (tauPl D z) ⟨z.2, h.2⟩ (by rw [eTau_tauPl]; simp [plGG, h.1])
     unfold wPl bL
-    rw [dif_pos h.2]
+    rw [dite_eq_left h.2]
     constructor <;> linarith [h3.1, h3.2]
   · rw [if_neg hj, if_pos h]
     constructor <;> linarith
@@ -212,7 +212,7 @@ theorem one_le_fill {L : SizeData₂ D} (X : Inst D L) (hw : 1 ≤ L.sc.w'' D.R.
   · have h' : z.1 = false ∧ z.2 ∈ D.host.TT := h1
     rw [if_pos h']
     unfold bL
-    rw [dif_pos h1.2]
+    rw [dite_eq_left h1.2]
     linarith [(X.off_top j z h1).1, L.bT_ge ⟨z.2, h1.2⟩]
   · have h' : ¬ (z.1 = false ∧ z.2 ∈ D.host.TT) := h1
     rw [if_neg h', zero_add]
@@ -233,7 +233,7 @@ theorem tau_eq_zero_of_not_candidate {L : SizeData₂ D} (X : Inst D L) (K : Con
 theorem ioP_eq_zero_of_not_cand {L : SizeData₂ D} (X : Inst D L) (K : Consts) (a b : HH D → ℤ) (p : ℕ) (h : ¬ Cand D L K p) :
     ioP X K a b p = 0 := by
   unfold ioP
-  rw [dif_neg (by rw [VV_empty X K a b p h]; simp)]
+  rw [dite_eq_right (by rw [VV_empty X K a b p h]; simp)]
 
 theorem TTP_subset {L : SizeData₂ D} (X : Inst D L) (K : Consts) (a b : HH D → ℤ) (p : ℕ) :
     TTP X K a b p ⊆ D.host.TT := by

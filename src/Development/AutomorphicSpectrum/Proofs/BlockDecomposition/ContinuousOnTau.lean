@@ -47,7 +47,7 @@ open Classical in
 def tau (e : AE D) (g : G D p) : hermS D p e := if h : ∃ x, IsB e g x then h.choose else 0
 
 theorem isB_tau {e : AE D} {g : G D p} (h : ∃ x, IsB e g x) : IsB e g (tau e g) := by
-  rw [tau, dif_pos h]
+  rw [tau, dite_eq_left h]
   exact h.choose_spec
 
 theorem tau_eq {e : AE D} {g : G D p} {x : hermS D p e} (h : IsB e g x) : tau e g = x :=

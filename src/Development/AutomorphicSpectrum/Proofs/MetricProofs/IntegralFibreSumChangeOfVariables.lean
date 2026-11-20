@@ -29,7 +29,7 @@ theorem integrable_mInt_fibreSum {e : ℕ} {X : Type} [TopologicalSpace X] [Comp
       mInt A Φ G = ∫ y, ∑ᶠ x ∈ q ⁻¹' {y} \ S, G x * pushDens A Φ q x := by
   classical
   have hne : Nonempty (ChartPartition A) := existsPartition A
-  have hm : mInt A Φ G = integralWith A hne.some Φ G := by unfold mInt; rw [dif_pos hne]
+  have hm : mInt A Φ G = integralWith A hne.some Φ G := by unfold mInt; rw [dite_eq_left hne]
   set Pt := hne.some with hPt
   set hj : Fin A.n → (Fin e → ℂ) → ℝ := fun j u =>
     Pt.χ j ((A.chart j).symm u) * G ((A.chart j).symm u) * locDens A Φ j u with hhj

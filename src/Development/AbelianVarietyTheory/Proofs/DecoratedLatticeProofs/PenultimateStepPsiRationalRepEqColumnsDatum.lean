@@ -85,7 +85,7 @@ theorem char_scalar (hok : cst.Ok) (hA : AtTwist (R := R) sel mu cst σ₀ P ι 
     rw [if_neg hA.nmem, ← hvdef, ← hbdef]
     congr 1
     unfold LocE.unitV
-    rw [dif_pos hspec, dif_pos hspec, MonoidHom.inv_apply, Units.val_inv_eq_inv_val]
+    rw [dite_eq_left hspec, dite_eq_left hspec, MonoidHom.inv_apply, Units.val_inv_eq_inv_val]
   have hchar : ((W.η (s + 1) * W.δ) u : ℂ) = σ₀ (cst.muq (s + 1) P) ^ v * (σ₀ (LocE.unitV (resChar (mu : Chr X.F X.E X.K) P.1) b))⁻¹ := by
     rw [hu_eq, map_mul, map_zpow, Units.val_mul, Units.val_zpow_eq_zpow_val, hμ, MonoidHom.mul_apply, Units.val_mul, hη,
       Units.val_one, one_mul, hδ]
@@ -123,7 +123,7 @@ theorem muAt_one {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
   rw [PsiStep.valuation_one₂, zpow_zero, zpow_zero, one_mul, div_one]
   have h1 : IsUnit (redP P.1 (1 : X.E)) := by rw [PsiStep.reduction_one']; exact isUnit_one
   unfold LocE.unitV
-  rw [dif_pos h1]
+  rw [dite_eq_left h1]
   have : h1.unit = 1 := Units.ext (by rw [IsUnit.unit_spec, PsiStep.reduction_one', Units.val_one])
   rw [this, map_one, Units.val_one]
 

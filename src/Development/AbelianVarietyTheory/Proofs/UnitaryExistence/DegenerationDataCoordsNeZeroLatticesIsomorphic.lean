@@ -69,7 +69,7 @@ theorem vPsiAt_eq {R C : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [CharZe
     {χ : D.toPre.X} {r : R} (hr : PsiCoord D.toPre χ r) : vPsiAt D.toPre f p χ = -Real.logb p ‖f r‖ := by
   have h : ∃ r, PsiCoord D.toPre χ r := ⟨r, hr⟩
   obtain ⟨u, hu⟩ := (GlobalTheory.PsiCoordLocal.main R D hR χ).2.1 r _ hr h.choose_spec
-  rw [vPsiAt, dif_pos h, hu, map_mul, norm_mul, norm_unit f hf, one_mul]
+  rw [vPsiAt, dite_eq_left h, hu, map_mul, norm_mul, norm_unit f hf, one_mul]
 
 variable {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   {Y : Model Xo c β} {p : ℕ} {C : SCF p} {P : PointsOfFlagModel.PtC Y C}

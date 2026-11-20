@@ -24,7 +24,7 @@ theorem cls_neg {n : ℕ} (x : Fin n → D.La) : cls l (-x) = -cls l x := by
 
 theorem isSep_cSep (l : Level H) : IsSep l (cSep l) := by
   have h : ∃ c, c ∈ Mfr l ∧ c - 1 ∈ l.Mb := exists_isSep l
-  rw [cSep, dif_pos h]
+  rw [cSep, dite_eq_left h]
   exact h.choose_spec
 
 theorem mk_levRep (q : LevQ D l) : (Submodule.Quotient.mk (levRep q) : NamedCl D l) = q :=

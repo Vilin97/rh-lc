@@ -76,7 +76,7 @@ theorem _root_.GlobalTheory.IdxInt.cint_eq_of_fine : ∀ {W : Type} [AddCommGrou
   intro W _ A B φ hB
   have h : _root_.GlobalTheory.IdxInt.Nice A φ := ⟨B, hB⟩
   unfold _root_.GlobalTheory.IdxInt.cint
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hB0 := h.choose_spec
   have hidx : (B ⊓ h.choose).relIndex A ≠ 0 := AddSubgroup.relIndex_inf_ne_zero hB.2.1 hB0.2.1
   rw [← finsum_out_div_relIndex_eq_of_le hB0 inf_le_right hidx, finsum_out_div_relIndex_eq_of_le hB inf_le_left hidx]

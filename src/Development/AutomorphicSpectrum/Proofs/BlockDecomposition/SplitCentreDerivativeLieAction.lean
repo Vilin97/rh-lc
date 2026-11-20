@@ -83,7 +83,7 @@ theorem hasDerivAt_splitCentre : ∀ (E : Type) [Field E] [NumberField E] [IsTot
     intro t
     unfold GlobalTheory.CuspRep.chart GlobalTheory.CuspRep.toL
     have hu : IsUnit (Matrix.of (Matrix.of.symm (cExp E a t).val)) := by simp
-    rw [dif_pos hu]
+    rw [dite_eq_left hu]
     have hunit : hu.unit = cExp E a t := Units.ext (by simp)
     rw [hunit, ← splitCentre_eq_infGL, hadd, mul_assoc]
   have hF : HasDerivAt (fun t : ℝ => (φ : GlobalTheory.CuspRep.GA E a → ℂ) (g * GlobalTheory.UnitaryBC.splitCentre E a (s + t)))

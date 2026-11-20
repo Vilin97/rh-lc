@@ -73,7 +73,7 @@ theorem ptSharpFun_of_le {z : L} (hz : ‖z‖ ≤ 1) : T.ptSharpFun hξ z = T.p
 theorem ptSharpFun_of_gt {z : L} (hz : 1 < ‖z‖) :
     T.ptSharpFun hξ z = (T.ptSharpInt hξ (show ‖z⁻¹‖ ≤ 1 by
       rw [norm_inv]; exact inv_le_one_of_one_le₀ hz.le))⁻¹ := by
-  rw [ptSharpFun, dif_neg (not_le.2 hz)]
+  rw [ptSharpFun, dite_eq_right (not_le.2 hz)]
 
 theorem norm_ptSharpFun (z : L) : ‖T.ptSharpFun hξ z‖ = ‖z‖ := by
   by_cases hz : ‖z‖ ≤ 1

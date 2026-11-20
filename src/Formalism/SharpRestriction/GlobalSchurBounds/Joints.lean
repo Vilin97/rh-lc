@@ -470,7 +470,7 @@ theorem jnt_ramEK (D : D7) (𝔭 : Ideal (𝓞 D.host.K)) (h𝔭 : 𝔭.IsPrime)
     by_contra hn
     rw [Ideal.ramificationIdxIn, dif_neg hn] at hr
     omega
-  rw [Ideal.ramificationIdxIn, dif_pos hex] at hr
+  rw [Ideal.ramificationIdxIn, dite_eq_left hex] at hr
   obtain ⟨hP, hlo⟩ := hex.choose_spec
   generalize hex.choose = P at hr hP hlo
   have hdvd : P ∣ differentIdeal (𝓞 D.host.K) (𝓞 D.host.E) := by
@@ -796,7 +796,7 @@ def MM (D : D7) : ℕ := D.host.QS * D.host.q * D.host.d
 
 theorem Phi_of_coprime (D : D7) {a : ℕ} (h : a.Coprime D.host.condN) :
     Phi D a = D.host.art (ZMod.unitOfCoprime a h) := by
-  rw [Phi, dif_pos h]
+  rw [Phi, dite_eq_left h]
 
 theorem cop2 {D : D7} {a : ℕ} (h : a.Coprime (MM D)) : a.Coprime 2 := by
   have h2 : 2 ∣ MM D := by
@@ -822,7 +822,7 @@ theorem cop_odd {D : D7} {a : ℕ} (h : a.Coprime (MM D)) : a % 2 = 1 := by
 theorem hN_mul (e : ℕ) {a b : ℕ} (ha : a.Coprime 2) (hb : b.Coprime 2) :
     hN e (a * b) = hN e a * hN e b := by
   unfold hN hcl
-  rw [dif_pos (Nat.Coprime.mul_left ha hb), dif_pos ha, dif_pos hb]
+  rw [dite_eq_left (Nat.Coprime.mul_left ha hb), dite_eq_left ha, dite_eq_left hb]
   have hu : ZMod.unitOfCoprime (a * b) (Nat.Coprime.pow_right (e + 2) (Nat.Coprime.mul_left ha hb)) =
       ZMod.unitOfCoprime a (Nat.Coprime.pow_right (e + 2) ha) * ZMod.unitOfCoprime b (Nat.Coprime.pow_right (e + 2) hb) :=
     Units.ext (by simp)
@@ -831,13 +831,13 @@ theorem hN_mul (e : ℕ) {a b : ℕ} (ha : a.Coprime 2) (hb : b.Coprime 2) :
 
 theorem hN_one (e : ℕ) : hN e 1 = 1 := by
   unfold hN hcl
-  rw [dif_pos (Nat.coprime_one_left 2)]
+  rw [dite_eq_left (Nat.coprime_one_left 2)]
   have h1 : ZMod.unitOfCoprime 1 (Nat.Coprime.pow_right (e + 2) (Nat.coprime_one_left 2)) = 1 := Units.ext (by simp)
   rw [h1]
   first | rfl | simp | exact QuotientGroup.mk_one _
 
 theorem Phi_one (D : D7) : Phi D 1 = 1 := by
-  rw [Phi, dif_pos (Nat.coprime_one_left _)]
+  rw [Phi, dite_eq_left (Nat.coprime_one_left _)]
   have h1 : ZMod.unitOfCoprime 1 (Nat.coprime_one_left D.host.condN) = 1 := Units.ext (by simp)
   rw [h1, map_one]
 
@@ -865,7 +865,7 @@ theorem jnt_frob_eq (D : D7) (p : ℕ) (hp : p.Prime) (h : ¬ p ∣ D.host.condN
     obtain ⟨σ, hσ⟩ := (D.host.der.frob p h P).1
     exact ⟨σ, P, hP.1, hP.2, hσ⟩
   unfold frob
-  rw [dif_pos hex, Phi_of_coprime D hc]
+  rw [dite_eq_left hex, Phi_of_coprime D hc]
   obtain ⟨P', hP'1, hP'2, hfr⟩ := hex.choose_spec
   exact (D.host.frob_iff p hc P' _).1 hfr
 
@@ -976,7 +976,7 @@ theorem jnt_chC_Phi (D : D7) {a : ℕ} (ha : a.Coprime (MM D)) :
 theorem jnt_prim_reads (D : D7) (ψ : ZetaZeroFreeRegion.Chr D) (h : ∃ χ, ZetaZeroFreeRegion.Reads D ψ χ) :
     ZetaZeroFreeRegion.Reads D ψ (ZetaZeroFreeRegion.prim D ψ) := by
   unfold ZetaZeroFreeRegion.prim
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem jnt_eight_ne (D : D7) : NeZero (8 * D.host.q * D.host.d) :=
@@ -1573,7 +1573,7 @@ theorem frob_mem (D : D7) (p : ℕ) [Fact p.Prime] (P : Ideal (𝓞 D.host.E)) [
     rw [galE_sigmaOf, Equiv.apply_symm_apply, sub_self]
     exact zero_mem _
   unfold frob
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨P', hP', hlo', hfr⟩ := hex.choose_spec
   exact ((fld D p P' hex.choose).2).mp hfr
 

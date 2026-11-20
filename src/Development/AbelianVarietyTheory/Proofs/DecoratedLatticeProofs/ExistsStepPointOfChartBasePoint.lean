@@ -54,7 +54,7 @@ theorem pointOf_base : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → 
         exact ChEx.q_disj I hI b P.1 hb
       have hfr : ptFr q P.1 = 1 := by
         unfold ptFr
-        rw [dif_neg hPG, dif_neg hPQ, hqN]
+        rw [dite_eq_right hPG, dite_eq_right hPQ, hqN]
         unfold GlobalTheory.Mem.Col2.latFr
         exact if_pos rfl
       have hkP := congrFun (congrFun (hk P.1 P.2 hPQ) i') j

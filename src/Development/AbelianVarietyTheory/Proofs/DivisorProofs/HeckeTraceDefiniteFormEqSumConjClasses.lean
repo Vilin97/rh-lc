@@ -84,7 +84,7 @@ theorem heckeTrace_eq (ι : Γ →* H) (K : Subgroup H) (ξ : Representation ℂ
     GlobalTheory.LKDef.HeckeTraceForms.heckeTrace ι K ξ F =
       LinearMap.trace ℂ (GlobalTheory.LKDef.HeckeTraceForms.forms ι K ξ) (hecke ι K ξ F hF hs) := by
   have h : ∃ T, GlobalTheory.LKDef.HeckeTraceForms.IsHecke ι K ξ F T := ⟨_, isHecke_hecke ι K ξ F hF hs⟩
-  rw [GlobalTheory.LKDef.HeckeTraceForms.heckeTrace, dif_pos h]
+  rw [GlobalTheory.LKDef.HeckeTraceForms.heckeTrace, dite_eq_left h]
   congr 1
   apply LinearMap.ext; intro φ; apply Subtype.ext; funext g
   rw [h.choose_spec φ g]; rfl

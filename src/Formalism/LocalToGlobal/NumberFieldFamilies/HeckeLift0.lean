@@ -45,7 +45,7 @@ theorem hLC_spec (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 
       NG.tN (M (what₂.muTw w) j h1 h2).J s ϖ k ((M (what₂.muTw w) j h1 h2).real (what₂.jMt (what₂.muTw w) j x)) := by
   have h : (1 ≤ j ∧ j ≤ R.m) ∧ GenAt0 H (what₂.places.resChar w) (Qw w) v k := ⟨⟨h1, h2⟩, hg⟩
   unfold hLC
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (hR j w v k h.1.1 h.1.2 h.2).choose_spec s ϖ hc hu x
 
 variable (X : CoefIn what₂)

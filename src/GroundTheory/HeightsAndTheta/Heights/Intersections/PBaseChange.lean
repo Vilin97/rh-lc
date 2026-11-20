@@ -108,7 +108,7 @@ theorem multAt_extC_toNat {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
     [Z.IsPrime] (hZ : Z ∈ (extC P0).minimalPrimes) : (NumbersDVR.multAt (extC P0) Z).toNat = 1 := by
   have h1 := localMult_eq_one_of_isRadical (ReciprocityTheory.AnForm.R.extC_isRadical P0) hZ
   unfold localMult at h1
-  rw [dif_pos ‹Z.IsPrime›] at h1
+  rw [dite_eq_left ‹Z.IsPrime›] at h1
   unfold NumbersDVR.multAt
   rw [ObjectsChow.VerticalPartMultiplicity.length_localizedModule_quotient]
   exact h1
@@ -142,9 +142,9 @@ theorem BCDeg.intersectionNumber_baseChange : BCDeg.Statement := by
   unfold NumbersDVR.idealCycle
   by_cases hW : W ∈ (extC P0).minimalPrimes
   · have : W.IsPrime := hW.1.1
-    rw [dif_pos ⟨hW, (hmin W hW).1.relevant⟩, Set.indicator_of_mem hW, multAt_extC_toNat hW]
+    rw [dite_eq_left ⟨hW, (hmin W hW).1.relevant⟩, Set.indicator_of_mem hW, multAt_extC_toNat hW]
     simp
-  · rw [dif_neg (fun h => hW h.1), Set.indicator_of_notMem hW]
+  · rw [dite_eq_right (fun h => hW h.1), Set.indicator_of_notMem hW]
     simp
 
 namespace BaseChange

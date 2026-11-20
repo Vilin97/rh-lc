@@ -88,13 +88,13 @@ theorem thetaLift_lie_derivative_eq_zero (hP : _root_.GlobalTheory.FunPr.ThetaLo
       liftPure Mo pr pv s (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) := by
     rw [hΦ']
     unfold thetaLift
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec _ hΨ₁
   have HL := GlobalTheory.PureLift.exists_pureLift D.sp.cm.sig Yv Z Mo ψ hM P pr N pv s hs
   have e2 : ∀ i, liftPure Mo pr pv s (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) = 0 := by
     intro i
     unfold liftPure
-    rw [dif_pos HL, HL.choose_spec _ _ (hf i).2.1 (hf i).2.2, hlie γ hγ (f i) (hf i).1 (f₁ i) (hA i),
+    rw [dite_eq_left HL, HL.choose_spec _ _ (hf i).2.1 (hf i).2.2, hlie γ hγ (f i) (hf i).1 (f₁ i) (hA i),
       TensorProduct.zero_tmul]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e1, map_sum]

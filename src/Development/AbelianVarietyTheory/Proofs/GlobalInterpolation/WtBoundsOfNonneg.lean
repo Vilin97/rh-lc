@@ -31,7 +31,7 @@ theorem lamT_last (X : Ch D u) (i : ℕ) (hi : i < D.R.m) (τ : D.what₂.Tau) (
     rw [ha', Nat.add_sub_cancel_left, Nat.add_mul_div_right _ _ (Nat.succ_pos _),
       Nat.div_eq_of_lt (Nat.lt_succ_self _), zero_add]
   have h1 := X.fm.lam_eq (i + 1) hi τ a
-  rw [dif_neg hk] at h1
+  rw [dite_eq_right hk] at h1
   simp only [hq] at h1
   have h2 := X.C.sDiv_eq i hi τ
   obtain ⟨c, hc⟩ := D.R.t_odd
@@ -66,7 +66,7 @@ theorem wtBounds_of_nonneg : ∀ (D : D7) (u : D.what₂.Word) (X : Ch D u), (�
     rw [hlast] at h
     omega
   · unfold DomWeight.detShift
-    rw [dif_pos hpos]
+    rw [dite_eq_left hpos]
     exact hlast
   · have h := natAbs_lamT_le_Wt X (i + 1) hi τ ⟨0, hpos⟩ (fun h => hτ h.2)
     omega

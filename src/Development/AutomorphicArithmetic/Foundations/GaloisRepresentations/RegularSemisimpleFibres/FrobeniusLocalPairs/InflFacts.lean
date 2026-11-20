@@ -26,7 +26,7 @@ private theorem infl_incl (rd : 𝒪[k] →+* F₀) (fb : GL (Fin n) F₀ → �
   have h : ∃ y' : GL (Fin n) 𝒪[k], GeneralLinearGroup.map (algebraMap 𝒪[k] k) y' =
       GeneralLinearGroup.map (algebraMap 𝒪[k] k) y := ⟨y, rfl⟩
   unfold infl
-  rw [dif_pos h, incl_inj h.choose_spec]
+  rw [dite_eq_left h, incl_inj h.choose_spec]
 
 private theorem infl_not_mem (rd : 𝒪[k] →+* F₀) (fb : GL (Fin n) F₀ → ℂ) {x : GL (Fin n) k}
     (hx : x ∉ KO k n) : infl rd fb x = 0 :=

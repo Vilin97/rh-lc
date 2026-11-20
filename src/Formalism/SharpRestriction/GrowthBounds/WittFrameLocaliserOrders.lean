@@ -316,7 +316,7 @@ theorem columnSetMinor_image_eq_sign {r k : ℕ} (c : Fin r → Fin k) (hc : Fun
     exact ((univ.image c).orderEmbOfFin hcard).injective this
   refine ⟨Equiv.ofBijective f (Finite.injective_iff_bijective.mp hinj), fun R _ x e => ?_⟩
   unfold columnSetMinor
-  rw [dif_pos hcard]
+  rw [dite_eq_left hcard]
   unfold entrywisePowerMinor
   have := Matrix.det_permute' (Equiv.ofBijective f (Finite.injective_iff_bijective.mp hinj))
     (Matrix.of fun l i : Fin r => x l (c i) ^ e l)
@@ -1024,7 +1024,7 @@ theorem complement_minor_order_pos (hV : Fr.Valid L₁ N₁) (hn : Even n') (hr 
     simp only [hi0, hc', if_true] at this
     exact this
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [minorI, dif_pos hIc, Matrix.det_apply, map_sum]
+    rw [minorI, dite_eq_left hIc, Matrix.det_apply, map_sum]
   refine sum_mem fun s _ => ?_
   rcases Int.units_eq_one_or (Equiv.Perm.sign s) with hs | hs
   · rw [hs, one_smul, map_prod]
@@ -2321,7 +2321,7 @@ theorem bf_tp_spec {b : ℤ} (h : bf_MT TT r u b) {c : ℕ} (h1 : 1 ≤ c) (h2 :
       ∀ y : ℤ, b + (c : ℤ) * u - u ≤ y → y < b + (c : ℤ) * u → posOf n' y ∈ TT → y = bf_tp TT u b c := by
   have hx := (h c h1 h2).2 he
   unfold bf_tp
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact Classical.choose_spec hx
 
 theorem bf_cu {c c' : ℕ} (h : c ≤ c') (u : ℕ) : (c : ℤ) * u ≤ (c' : ℤ) * u :=
@@ -2802,11 +2802,11 @@ def bf_ms (a : ℕ) : ℕ :=
 variable {T r u t}
 
 theorem bf_ms_mem {a : ℕ} (h : a < (bf_MS T r u t).card) : bf_ms T r u t a ∈ bf_MS T r u t := by
-  unfold bf_ms; rw [dif_pos h]; exact orderEmbOfFin_mem _ _ _
+  unfold bf_ms; rw [dite_eq_left h]; exact orderEmbOfFin_mem _ _ _
 
 theorem bf_ms_lt {a a' : ℕ} (h : a < a') (h' : a' < (bf_MS T r u t).card) :
     bf_ms T r u t a < bf_ms T r u t a' := by
-  unfold bf_ms; rw [dif_pos (lt_trans h h'), dif_pos h']
+  unfold bf_ms; rw [dite_eq_left (lt_trans h h'), dite_eq_left h']
   exact ((bf_MS T r u t).orderEmbOfFin rfl).strictMono (Fin.mk_lt_mk.2 h)
 
 theorem bf_ms_le {a a' : ℕ} (h : a ≤ a') (h' : a' < (bf_MS T r u t).card) :
@@ -2818,7 +2818,7 @@ theorem bf_ms_le {a a' : ℕ} (h : a ≤ a') (h' : a' < (bf_MS T r u t).card) :
 theorem bf_ms_surj {s : ℕ} (hs : s ∈ bf_MS T r u t) : ∃ a, a < (bf_MS T r u t).card ∧ bf_ms T r u t a = s := by
   have : s ∈ Set.range ((bf_MS T r u t).orderEmbOfFin rfl) := by rw [range_orderEmbOfFin]; exact hs
   obtain ⟨a, ha⟩ := this
-  exact ⟨a.val, a.2, by unfold bf_ms; rw [dif_pos a.2]; exact ha⟩
+  exact ⟨a.val, a.2, by unfold bf_ms; rw [dite_eq_left a.2]; exact ha⟩
 
 theorem bf_ms_next {a s : ℕ} (ha : a < (bf_MS T r u t).card) (hs : s ∈ bf_MS T r u t)
     (hlt : bf_ms T r u t a < s) : a + 1 < (bf_MS T r u t).card ∧ bf_ms T r u t (a + 1) ≤ s := by
@@ -4510,7 +4510,7 @@ theorem bc_IT_Del {L₁ N₁ : ℕ} (hV : Fr.Valid L₁ N₁) (hn : Even n') (hr
     bc_IT Fr (subst p n' O w n' r g (Del p n' O Fr g j)) := by
   refine bc_IT_of_K w Fr (subst_integral w r hg (frame_determinant_integral Fr w g j)) ?_
   unfold Del minorI
-  rw [dif_pos (first_columns_card hrk), AlgHom.map_det]
+  rw [dite_eq_left (first_columns_card hrk), AlgHom.map_det]
   refine det_mem_subalgebra_alt _ _ fun l i => ?_
   show subst p n' O w n' r g (twRow p n' O Fr g j l.val ((Ifirst r k).orderEmbOfFin (first_columns_card hrk) i)) ∈ _
   unfold twRow

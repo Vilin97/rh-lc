@@ -192,7 +192,7 @@ theorem dl_loc (u v : Fin (D.R.rS + 1) → (VS D).V) (c c' : Fin (D.R.rS + 1) �
     (locH Z p).Dl (fun a => c a • baseChange₂ D p (u a)) (fun b => c' b • baseChange₂ D p (v b)) l =
       (∏ i : Fin l, (Z.M p).L.cj (c (Fin.castLE hl i))) * (∏ i : Fin l, c' (Fin.castLE hl i)) *
         (D.s.atP p).ιE (GDl u v l) := by
-  rw [Loc.HermSp.Dl, dif_pos hl, zhat_loc, GDl, dif_pos hl]
+  rw [Loc.HermSp.Dl, dite_eq_left hl, zhat_loc, GDl, dite_eq_left hl]
   have e : (Matrix.diagonal (fun a => (Z.M p).L.cj (c a)) * (GZ u v).map (D.s.atP p).ιE *
       Matrix.diagonal c').submatrix (Fin.castLE hl) (Fin.castLE hl) =
       Matrix.diagonal (fun i => (Z.M p).L.cj (c (Fin.castLE hl i))) *

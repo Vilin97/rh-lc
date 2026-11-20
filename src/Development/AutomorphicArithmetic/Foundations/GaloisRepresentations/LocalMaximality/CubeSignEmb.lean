@@ -24,7 +24,7 @@ private theorem detC_erase {S κ : Type} [CommRing S] [LinearOrder κ] {p : ℕ}
   have h' : (t.erase (t.orderEmbOfFin h k)).card = p := by
     rw [Finset.card_erase_of_mem (Finset.orderEmbOfFin_mem _ _ _), h]; rfl
   unfold detC
-  rw [dif_pos h']
+  rw [dite_eq_left h']
   congr 1
   ext a b
   simp only [Matrix.of_apply]

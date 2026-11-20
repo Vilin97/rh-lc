@@ -256,7 +256,7 @@ theorem horOf_eq_perVal {Z : Model Xo c β} (hx : ∀ i, IsPerBasis (Fu.Di i) (x
     (a : CxFr Z σ) (i : Fin Fu.n) (Q : (Fu.Di i).La →+ (Letter Dw → ℂ)) (h : Per Fu a i Q) :
     horOf Fu τ x hm a = perVal c σ τ (x i) (hm i) Q := by
   have hex : ∃ iQ : Σ i : Fin Fu.n, (Fu.Di i).La →+ (Letter Dw → ℂ), Per Fu a iQ.1 iQ.2 := ⟨⟨i, Q⟩, h⟩
-  rw [horOf, dif_pos hex]
+  rw [horOf, dite_eq_left hex]
   have hs := hex.choose_spec
   generalize hex.choose = w at hs
   obtain ⟨j, Q'⟩ := w

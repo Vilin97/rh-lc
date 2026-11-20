@@ -91,13 +91,13 @@ theorem matRel_smono (π : Fin n → Fin n) (hπ : ∀ a, π (π a) = a) (c ε :
     intro y
     by_cases h : y.val + 1 < n
     · by_cases hs : (π ⟨y.val + 1, h⟩).val + 1 = (π y).val
-      · have hy : ψ y = π ⟨y.val + 1, h⟩ := by rw [hψdef, dif_pos h, if_pos hs]
+      · have hy : ψ y = π ⟨y.val + 1, h⟩ := by rw [hψdef, dite_eq_left h, if_pos hs]
         have h' : (π ⟨y.val + 1, h⟩).val + 1 < n := by have := (π y).isLt; omega
         have hzs : (⟨(π ⟨y.val + 1, h⟩).val + 1, h'⟩ : Fin n) = π y := Fin.ext hs
         have hs' : (π ⟨(π ⟨y.val + 1, h⟩).val + 1, h'⟩).val + 1 = (π (π ⟨y.val + 1, h⟩)).val := by
           rw [hzs, hπ, hπ]
-        rw [hy, hψdef (π ⟨y.val + 1, h⟩), dif_pos h', if_pos hs', hzs, hπ]
-      · have hy : ψ y = y := by rw [hψdef, dif_pos h, if_neg hs]
+        rw [hy, hψdef (π ⟨y.val + 1, h⟩), dite_eq_left h', if_pos hs', hzs, hπ]
+      · have hy : ψ y = y := by rw [hψdef, dite_eq_left h, if_neg hs]
         rw [hy, hy]
     · have hy : ψ y = y := by rw [hψdef, dif_neg h]
       rw [hy, hy]
@@ -106,12 +106,12 @@ theorem matRel_smono (π : Fin n → Fin n) (hπ : ∀ a, π (π a) = a) (c ε :
     intro y
     by_cases h : y.val + 1 < n
     · by_cases hs : (π ⟨y.val + 1, h⟩).val + 1 = (π y).val
-      · have hy : ψ y = π ⟨y.val + 1, h⟩ := by rw [hψdef, dif_pos h, if_pos hs]
+      · have hy : ψ y = π ⟨y.val + 1, h⟩ := by rw [hψdef, dite_eq_left h, if_pos hs]
         have h' : (π ⟨y.val + 1, h⟩).val + 1 < n := by have := (π y).isLt; omega
-        rw [hy, dif_pos h, dif_pos h']
+        rw [hy, dite_eq_left h, dite_eq_left h']
         exact hF2 y h hs
-      · have hy : ψ y = y := by rw [hψdef, dif_pos h, if_neg hs]
-        rw [hy, dif_pos h, dif_pos h, (hF1 y h hs).1, (hF1 y h hs).2, star_zero]
+      · have hy : ψ y = y := by rw [hψdef, dite_eq_left h, if_neg hs]
+        rw [hy, dite_eq_left h, dite_eq_left h, (hF1 y h hs).1, (hF1 y h hs).2, star_zero]
     · have hy : ψ y = y := by rw [hψdef, dif_neg h]
       rw [hy, dif_neg h, dif_neg h, star_zero]
   unfold supSum
@@ -292,7 +292,7 @@ theorem expand_Xa (F : FlagG S r T) (a : ℕ) {y : S.V} (hy : y ∈ F.Xa a) :
   have hco : ∀ i, F.coefX y i = l i := by
     intro i
     unfold FlagG.coefX
-    rw [dif_pos hyX, hrep]
+    rw [dite_eq_left hyX, hrep]
   rw [Finsupp.mem_supported'] at hl
   conv_lhs => rw [← hly]
   rw [Finsupp.linearCombination_apply, Finsupp.sum_fintype _ _ (by simp)]
@@ -325,7 +325,7 @@ theorem coefM_expand (F : FlagG S r T) {Y : S.V →ₗ[E] S.V} (hY : Y ∈ F.Lie
   rw [hfi]
   unfold coefM
   by_cases h : i.val < ρ.val
-  · rw [if_pos h, dif_pos (by simpa using h)]
+  · rw [if_pos h, dite_eq_left (by simpa using h)]
     rfl
   · rw [if_neg h, dif_neg (by simpa using h)]
 
@@ -333,9 +333,9 @@ theorem coefM_supSum (F : FlagG S r T) (Y : S.V →ₗ[E] S.V) : supSum (coefM F
   unfold supSum FlagG.ell
   rw [Fin.sum_univ_castSucc, dif_neg (by simp), add_zero]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   unfold coefM
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 theorem rel_of_matRel (K : Type) [Field K] [Algebra K E]

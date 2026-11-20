@@ -73,7 +73,7 @@ theorem lab_conj {D : D7} (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : l
       · right; rw [h]
       · left; rw [h, conj_conj]
   unfold lab
-  rw [dif_pos (lab_exists _ ρ), dif_pos (lab_exists σ ρ)]
+  rw [dite_eq_left (lab_exists _ ρ), dite_eq_left (lab_exists σ ρ)]
   congr 1
 
 theorem parAt_conj {D : D7} (W : HSp D) (σ : D.what₂.LL →+* ℂ) :
@@ -81,7 +81,7 @@ theorem parAt_conj {D : D7} (W : HSp D) (σ : D.what₂.LL →+* ℂ) :
   funext ρ
   have hk : kapAt W ((starRingEnd ℂ).comp σ) ρ = kapAt W σ ρ := by unfold kapAt; rw [lab_conj]
   have hs : labE σ (lab σ ρ) = tauE D ρ ∨ labE σ (lab σ ρ) = (starRingEnd ℂ).comp (tauE D ρ) := by
-    unfold lab; rw [dif_pos (lab_exists σ ρ)]; exact (lab_exists σ ρ).choose_spec
+    unfold lab; rw [dite_eq_left (lab_exists σ ρ)]; exact (lab_exists σ ρ).choose_spec
   unfold Links.parAt
   rw [hk, lab_conj, labE_conj]
   rcases hs with h | h
@@ -128,7 +128,7 @@ theorem branch (ha : AlgTie T) (hp : T.Q.PinField) (hr : ∀ τ, tauE D τ (T.Q.
     (congrArg σ (hx _)).symm.trans ((RingHom.congr_fun h _).trans (hr ρ))
   refine ⟨fun h => ?_, hb σ⟩
   have hs : labE σ (lab σ ρ) = tauE D ρ ∨ labE σ (lab σ ρ) = (starRingEnd ℂ).comp (tauE D ρ) := by
-    unfold lab; rw [dif_pos (lab_exists σ ρ)]; exact (lab_exists σ ρ).choose_spec
+    unfold lab; rw [dite_eq_left (lab_exists σ ρ)]; exact (lab_exists σ ρ).choose_spec
   refine hs.resolve_right fun h' => not_good_conj T h (hb _ ?_)
   rw [lab_conj, labE_conj, h', conj_conj]
 

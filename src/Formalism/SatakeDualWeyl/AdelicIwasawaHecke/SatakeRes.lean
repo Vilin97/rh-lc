@@ -124,7 +124,7 @@ theorem satake_card_res {ϖ : v.adicCompletion F} (hϖ : ϖ ∈ Ov F v) (h : IsU
 theorem satake_ordV_unif {ϖ : v.adicCompletion F} (h : IsUnifV F v ϖ) : ordV F v ϖ = 1 := by
   unfold ordV IsUnifV at *
   have h0 : Valued.v ϖ ≠ 0 := by rw [h]; exact WithZero.coe_ne_zero
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   have e : ((WithZero.unzero h0 : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) =
       ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
     rw [WithZero.coe_unzero, h]
@@ -134,7 +134,7 @@ theorem satake_ordV_unif {ϖ : v.adicCompletion F} (h : IsUnifV F v ϖ) : ordV F
 theorem satake_ordV_one : ordV F v 1 = 0 := by
   unfold ordV
   have h0 : Valued.v (1 : v.adicCompletion F) ≠ 0 := by simp
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   have e : ((WithZero.unzero h0 : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) =
       ((1 : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
     rw [WithZero.coe_unzero, map_one, WithZero.coe_one]

@@ -517,7 +517,7 @@ theorem eigComp_comp (hcard : Fintype.card (E →+* L) = Module.finrank ℚ E)
         exact HT.LatBasic.eigProj_mem ρ u x
       exact Submodule.mem_iSup_of_mem _ (Submodule.mem_iSup_of_mem (hres u hut) hmem)
   unfold eigComp
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨h1, h2⟩ := hex.choose_spec
   have h3 := hker _ h2
   rw [map_sub, sub_eq_zero] at h3

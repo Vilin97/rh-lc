@@ -16,7 +16,7 @@ theorem rr_eq_form (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp))
     (w : List C.Letter) (a b : C.LPt) (ha : D.IsLocPt a j) (hb : D.IsLocPt b j) :
     p.RR F j w a b = p.form j hj w (KB.slv p.T F j hj w a ha.2) (KB.slv p.T F j hj w b hb.2) := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos (⟨ha, hb⟩ : D.IsLocPt a j ∧ D.IsLocPt b j), dif_pos hj]
+  rw [dite_eq_left (⟨ha, hb⟩ : D.IsLocPt a j ∧ D.IsLocPt b j), dite_eq_left hj]
   rfl
 
 end rr
@@ -430,7 +430,7 @@ theorem rr_zero_of_not {Wp' Wq' : Type} [NormedAddCommGroup Wp'] [InnerProductSp
     (p : KB.Pl P Wp' Wq') (F : B.Mat P.k P.r → (Wq' →L[ℂ] Wp')) (i : ℕ) (w : List C.Letter) (a b : C.LPt)
     (hn : ¬ (D.IsLocPt a i ∧ D.IsLocPt b i)) : p.RR F i w a b = 0 := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_neg hn]
+  rw [dite_eq_right hn]
 
 private theorem tent_lemma (r : ℕ) (g : ℝ) (hg : g ≠ 0) (P : C.LPt) :
     ∀ x : ℕ, (∀ b ∈ D.toStd r g x P, 1 ≤ b.1 ∧ b.2 ≠ 0) ↔ (∀ b ∈ P, 1 ≤ b.1 ∧ b.2 ≠ 0) := by

@@ -136,7 +136,7 @@ theorem w_eq_scalarRatio_smul (hd : d.AxH 𝒜) (c : ι) (j : Fin (d.N + 1)) :
     have h2 := congrArg Subtype.val ha
     simpa using h2.symm
   unfold ratio
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem exists_integral_base (hd : d.AxH 𝒜) (c : ι) (v : AddValuation (Ω c) (WithTop ℤ)) :
@@ -148,7 +148,7 @@ theorem exists_integral_base (hd : d.AxH 𝒜) (c : ι) (v : AddValuation (Ω c)
     intro f g a hg hfa
     have hex : ∃ b : Ω c, f = b • g := ⟨a, hfa⟩
     unfold ratio
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     by_contra hne
     apply hg
     have h0 : (hex.choose - a) • g = 0 := by rw [sub_smul, ← hex.choose_spec, ← hfa, sub_self]
@@ -219,7 +219,7 @@ theorem genericHomAt_relation (hd : d.AxH 𝒜) (c : ι) (j0 : Fin (d.N + 1)) (h
     intro f g a hg hfa
     have hex : ∃ b : Ω c, f = b • g := ⟨a, hfa⟩
     unfold ratio
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     by_contra hne
     apply hg
     have h0 : (hex.choose - a) • g = 0 := by rw [sub_smul, ← hex.choose_spec, ← hfa, sub_self]

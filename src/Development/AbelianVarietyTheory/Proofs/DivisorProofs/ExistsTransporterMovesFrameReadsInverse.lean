@@ -216,7 +216,7 @@ theorem exists_marking_tri (hU : Formalism.L2.PjFree.IsUnf U) :
     rw [← a1, hh, Finset.sum_range]
     refine (apply_of_cols e h.toLinearMap (fun τ i j => cf τ i j) hcol (P v) τ ⟨i, hi⟩).trans
       (Finset.sum_congr rfl fun j _ => ?_)
-    rw [hP, Equiv.apply_symm_apply, dif_pos ⟨hi, j.2⟩]
+    rw [hP, Equiv.apply_symm_apply, dite_eq_left ⟨hi, j.2⟩]
     rfl
   · have := map_mem_smul_top _ (φ k').toLinearMap (hmk a)
     simpa only [LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply, LinearMap.comp_apply, LinearEquiv.coe_coe,

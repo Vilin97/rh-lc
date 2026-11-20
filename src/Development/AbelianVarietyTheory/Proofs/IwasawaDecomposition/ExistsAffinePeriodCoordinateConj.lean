@@ -56,7 +56,7 @@ theorem frame_col_top_letter : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     exact (hev.filter_mono nhdsWithin_le_nhds).mono fun t ht => ⟨_, ht, hκ t⟩
   · intro x _ v
     unfold Formalism.L2.PjFree.perFr
-    rw [dif_neg h1, dif_pos hτ, dif_pos (by omega : X.p0 - 1 - i < r)]
+    rw [dite_eq_right h1, dite_eq_left hτ, dite_eq_left (by omega : X.p0 - 1 - i < r)]
     have hcol : (⟨X.p0 - 1 - i, by omega⟩ : Fin r) = c₀ := Fin.ext (by simp [c₀]; omega)
     have hcj : ∀ z : E, (starRingEnd ℂ) (conjEmb τ₁ z) = τ₁ z := by
       intro z; simp [conjEmb]

@@ -175,7 +175,7 @@ private theorem killed_of {d : ℕ} {ρ : KA E (r + s) → Matrix (Fin d) (Fin d
     have := hK (x.mapDomain ι) (by
       rw [Finsupp.sum_mapDomain_index (h := fun k (c : ℂ) => c • ρ k) (fun _ => zero_smul _ _) (fun _ _ _ => add_smul _ _ _), ← hx]
       refine Finsupp.sum_congr fun k _ => ?_
-      rw [resL, dif_pos (hlev k)]) y
+      rw [resL, dite_eq_left (hlev k)]) y
     rwa [Finsupp.sum_mapDomain_index (h := fun (k : KA E (r + s)) (c : ℂ) => c * φ (y * (k : GA E (r + s)))) (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)] at this
   simp only [Finsupp.sum, lev_right, constantTerm, ← integral_const_mul] at h1 ⊢
   rw [← integral_finsetSum _ fun k _ => (integrableOn_constantTerm hc _).const_mul _]

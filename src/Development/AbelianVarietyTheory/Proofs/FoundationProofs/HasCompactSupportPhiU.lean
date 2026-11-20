@@ -22,12 +22,12 @@ theorem phiU_of_mem (ρ : P →* ℂˣ) {x : Matrix (Fin r ⊕ Fin t) (Fin r) F}
   have h1 : (∃ k : P, ((k : GL (Fin r) F) : Matrix (Fin r) (Fin r) F) = toRows₁ x) ∧
       toRows₂ x ∈ IIset O ϖ := ⟨⟨k, hk⟩, h2⟩
   unfold phiU
-  rw [dif_pos h1, LemmaU.choose_eq h1.1 k hk]
+  rw [dite_eq_left h1, LemmaU.choose_eq h1.1 k hk]
 
 theorem phiU_of_notMem (ρ : P →* ℂˣ) {x : Matrix (Fin r ⊕ Fin t) (Fin r) F}
     (hx : x ∉ suppSet t O ϖ P) : phiU O ϖ P ρ x = 0 := by
   unfold phiU
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨⟨k, ek⟩, h2⟩
   exact hx ⟨⟨k, k.2, ek⟩, h2⟩
 

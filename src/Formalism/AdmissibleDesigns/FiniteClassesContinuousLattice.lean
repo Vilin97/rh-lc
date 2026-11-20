@@ -507,7 +507,7 @@ theorem fZ_map (ρ : Representation (D.nd.O i) ↥(Γn i dc n) V) (ρ' : Represe
     rw [fZ_pos i dc ρ' hn]
     exact finZ_map _ _ ρ ρ' _ f hf c hc
   · unfold fZ
-    rw [dif_neg hn]
+    rw [dite_eq_right hn]
     trivial
 
 theorem fLoc_map (ρM : Representation (D.nd.O i) ↥(Γn i dc n) M) (ρ : Representation (D.nd.O i) ↥(Γn i dc n) V)
@@ -519,7 +519,7 @@ theorem fLoc_map (ρM : Representation (D.nd.O i) ↥(Γn i dc n) M) (ρ : Repre
     rw [fZ_pos i dc ρ hn]
     exact finLoc_map _ _ _ ρ ρM f hf c hc
   · unfold fZ
-    rw [dif_neg hn]
+    rw [dite_eq_right hn]
     trivial
 
 def OrbC (ρ : Representation (D.nd.O i) ↥(Γn i dc n) V) : Prop :=
@@ -532,7 +532,7 @@ theorem cob_mem_fZ (ρ : Representation (D.nd.O i) ↥(Γn i dc n) V) (h : OrbC 
   · rw [fZ_pos i dc ρ hn]
     exact coboundaryMap_mem_finiteCocycles (PD := Br.PD D.loc D.nbr i _ hn) (h hn) v
   · unfold fZ
-    rw [dif_neg hn]
+    rw [dite_eq_right hn]
     trivial
 
 end Prf

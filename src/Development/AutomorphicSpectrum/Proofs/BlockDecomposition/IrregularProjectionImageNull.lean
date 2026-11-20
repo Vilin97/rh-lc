@@ -47,7 +47,7 @@ theorem over_liftOf {X : Scheme.{0}} [IsIntegral X] (i : X ⟶ MP ℤ m n) [IsCl
     (y : GlobalTheory.CxPts (i ≫ mpStr ℤ m n) σ₀) : Over i y (liftOf i y) := by
   obtain ⟨z, -, hz⟩ := GlobalTheory.T.complex_point_lifts_to_multicone m n X i y
   have h : ∃ z, Over i y z := ⟨z, hz⟩
-  rw [liftOf, dif_pos h]
+  rw [liftOf, dite_eq_left h]
   exact h.choose_spec
 
 theorem differentiableAt_projCoord {X : Scheme.{0}} [IsIntegral X] (i : X ⟶ MP ℤ m n) [IsClosedImmersion i]

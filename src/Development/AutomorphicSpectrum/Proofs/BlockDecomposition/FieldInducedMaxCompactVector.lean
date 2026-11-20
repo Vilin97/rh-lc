@@ -77,7 +77,7 @@ theorem pikf : Ad3.K.QuadraticBaseChangeGL3.Th.RWKF → Ad3.K.GL2LocalData.WMod 
   funext x
   show GL2LocalData.piG χ σ (GL2LocalData.muE E χ) (GL2LocalData.lamE E χ η) c k _ x = _
   unfold GL2LocalData.piG
-  rw [dif_pos hex, htker, hmodu]
+  rw [dite_eq_left hex, htker, hmodu]
   have hfun : (fun y : E => Set.indicator {x : E | x ∈ 𝒪[E]} (1 : E → ℂ) (y * (hex.choose : E))) =
       Set.indicator {x : E | x ∈ 𝒪[E]} (1 : E → ℂ) :=
     funext fun y => indicator_mul_of_modulus_eq_one hmodt y

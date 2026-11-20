@@ -123,12 +123,12 @@ theorem local_existence_of_unramified (hSec : SecEx) (hU : UnifEx) (hLev : Level
     exact hfam.1 w
   · rw [dF a w hw, dK w hw]
     show fixFn n a w (μ.loc w) m (K₀ w) = _
-    rw [fixFn, dif_pos ha, if_pos hs]
+    rw [fixFn, dite_eq_left ha, if_pos hs]
   · rw [dK w hw]
     exact hcong w (Or.inr (Finset.mem_union_right _ hw)) γ
   · rw [dF a w hw, dK w hw]
     show fixFn n a w (μ.loc w) m (K₀ w) = _
-    rw [fixFn, dif_pos ha, if_neg hs]
+    rw [fixFn, dite_eq_left ha, if_neg hs]
 
 end PositivityTheory.Rg.BcB.F.Ex0
 

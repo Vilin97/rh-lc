@@ -220,7 +220,7 @@ theorem eigComp_eq_combination : ∀ (E : Type) [Field E] [NumberField E] (s₀ 
     have h : ∃ p ∈ eigSp ρ s₀, x - p ∈ ⨆ σ' ∈ {σ' : 𝓞 E →+* ℂ | σ' ≠ s₀}, eigSp ρ σ' :=
       ⟨_, (hex x).1, (hex x).2⟩
     unfold eigComp
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     obtain ⟨h1, h2⟩ := h.choose_spec
     have h3 := hz _ h2
     rw [map_sub, hself _ h1, sub_eq_zero] at h3

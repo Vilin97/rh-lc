@@ -117,13 +117,13 @@ theorem phiV_apply (b : Fin (r + 1)) (i : Fin (2 * r + k + 1)) :
       ((Real.sqrt 2)⁻¹ : ℂ) * ((if i.val = r then 1 else 0) + (if i.val = r + k then 1 else 0)) := by
   unfold phiV
   by_cases hb : (b : ℕ) < r
-  · rw [dif_pos hb, if_pos hb]
+  · rw [dite_eq_left hb, if_pos hb]
     show (Pi.single (esI k r ⟨b.val, hb⟩) (1 : ℂ) : Fin (2 * r + k + 1) → ℂ) i = _
     rw [Pi.single_apply]
     by_cases hi : (i : ℕ) = 2 * r + k - b.val
     · rw [if_pos hi, if_pos (show i = esI k r ⟨b.val, hb⟩ from Fin.ext hi)]
     · rw [if_neg hi, if_neg (show ¬ i = esI k r ⟨b.val, hb⟩ from fun h => hi (congrArg Fin.val h))]
-  · rw [dif_neg hb, if_neg hb]
+  · rw [dite_eq_right hb, if_neg hb]
     simp [epsV, bvec, Pi.single_apply, Fin.ext_iff]
     have e1 : ((wI k r 0 : Fin (2 * r + k + 1)) : ℕ) = r := by first | rfl | simp [wI]
     have e2 : ((wI k r (Fin.last k) : Fin (2 * r + k + 1)) : ℕ) = r + k := by first | rfl | simp [wI]

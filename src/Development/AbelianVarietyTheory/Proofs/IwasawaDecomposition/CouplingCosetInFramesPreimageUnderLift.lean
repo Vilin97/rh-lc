@@ -90,10 +90,10 @@ theorem cosetIn_act_of_liftsInv : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X)
         exact liftFr_spec p'.1.1.deco.2 w
       have e1 : frsF I.sel (I.tup a) p.1.1 P = p.1.1.deco.1.liftFr w := by
         unfold frsF
-        rw [dif_pos hP]
+        rw [dite_eq_left hP]
       have e2 : frsF I.sel (I.tup a) p'.1.1 P = p'.1.1.deco.1.liftFr w := by
         unfold frsF
-        rw [dif_pos hP]
+        rw [dite_eq_left hP]
       rw [e1, e2]
       have e3 : (p'.1.1.deco.1.liftFr w).symm y = (passFr (w := w) _ h.1 hf hf').1 ((p.1.1.deco.1.liftFr w).symm y) := by
         show _ = (p'.1.1.deco.1.liftFr w).symm (((1 : UF B.fields.E (B.R.N i)) : Sp B.fields.E (B.R.N i) ≃ₗ[B.fields.E] Sp B.fields.E (B.R.N i)) ((p.1.1.deco.1.liftFr w) ((p.1.1.deco.1.liftFr w).symm y)))
@@ -116,7 +116,7 @@ theorem cosetIn_act_of_liftsInv : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X)
       have hQ : P.1 ∈ I.Q a := (Finset.mem_union.mp P.2).resolve_left hP
       have hF' : frsF I.sel (I.tup a) p'.1.1 P = frsF I.sel (I.tup a) p.1.1 P * g := by
         unfold frsF
-        rw [dif_neg hP, dif_neg hP, hL.2.2 hQ]
+        rw [dite_eq_right hP, dite_eq_right hP, hL.2.2 hQ]
         exact LinearEquiv.ext fun x => rfl
       have e : g ((frsF I.sel (I.tup a) p'.1.1 P).symm y) = (frsF I.sel (I.tup a) p.1.1 P).symm y := by
         rw [eq_comm, LinearEquiv.symm_apply_eq]

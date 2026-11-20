@@ -23,9 +23,9 @@ theorem UpperTheory.cohomology_part_split :
     change (if h : c x = i then (funRep ↥(part c hc i) ξ γ f) ⟨x, h⟩ else 0) =
       Matrix.mulVec (ξ γ) (if h : c (γ⁻¹ • x) = i then f ⟨γ⁻¹ • x, h⟩ else 0)
     by_cases h : c x = i
-    · rw [dif_pos h, dif_pos ((hc _ _).trans h)]
+    · rw [dite_eq_left h, dite_eq_left ((hc _ _).trans h)]
       rfl
-    · rw [dif_neg h, dif_neg (fun h' => h ((hc _ _).symm.trans h')), Matrix.mulVec_zero]
+    · rw [dite_eq_right h, dite_eq_right (fun h' => h ((hc _ _).symm.trans h')), Matrix.mulVec_zero]
   · apply Rep.hom_ext
     rw [Rep.sum_hom]
     apply Representation.IntertwiningMap.ext

@@ -16,7 +16,7 @@ theorem DivCycleSupport.proof : DivCycleSupport.Statement.{u} := by
   intro F _ K _ _ ι _ P hP n hdim c f hf hfP W hW
   have h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hW (by rw [divCycle, dif_neg h])
+    exact hW (by rw [divCycle, dite_eq_right h])
   obtain ⟨hmin, hrel⟩ := h
   have hWh : IsMultiHomogIdeal W := (Bridge.isMultiHomogIdeal_iff W).mpr
     (ReciprocityTheory.ChartRestriction.G.AI.I1.cyc_isMultiHomogIdeal_of_mem_minimalPrimes

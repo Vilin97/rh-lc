@@ -221,7 +221,7 @@ theorem chr_inv_eq {X : Formalism.L2.Col.Fields} {Pr : Formalism.L2.Col.Primes X
     · rw [map_prod]
       refine Finset.prod_congr rfl fun s hs => ?_
       have hs' := Finset.mem_range.1 hs
-      rw [Formalism.L2.Col.chiAt, Formalism.L2.Col.extChi, dif_pos hs']
+      rw [Formalism.L2.Col.chiAt, Formalism.L2.Col.extChi, dite_eq_left hs']
       exact hχ w.1 hw ⟨s, hs'⟩ _
   · have e' := Formalism.L2.Col.LevFam.glue_of_not (Formalism.L2.Col.rowTyK (R := R) Ch)
       (Formalism.L2.Col.rowTyQ R (mu : Formalism.L2.DIV.Chr X.F X.E X.K) _) w hw

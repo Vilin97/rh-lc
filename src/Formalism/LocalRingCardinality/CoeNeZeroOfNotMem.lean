@@ -14,7 +14,7 @@ theorem nuRow_head (D : D7) (u : D.what₂.Word) (i : ℕ) (hi : i < D.R.m) (τ 
       (2 * (D.R.N i : ℚ) + D.R.t - 2 * r) / 2 : ℚ) : ℝ) := by
   have hw : 1 ≤ i + 1 ∧ i + 1 ≤ D.R.m := ⟨by omega, by omega⟩
   unfold DV.nuRow DV.srcPar DV.wSz
-  rw [dif_pos hr, dif_pos hw, ← D.hcW_e u τ]
+  rw [dite_eq_left hr, dite_eq_left hw, ← D.hcW_e u τ]
   simp only [Nat.add_sub_cancel, Ranks.N]
   push_cast
   ring
@@ -32,9 +32,9 @@ theorem nuRow_block (D : D7) (u : D.what₂.Word) (i : ℕ) (hi : i < D.R.m) (τ
   have hmod : (D.R.k + q * (D.R.t + 1) + s - D.R.k) % (D.R.t + 1) = s := by
     rw [h1, Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt hs]
   unfold DV.nuRow DV.srcPar DV.wSz
-  rw [dif_neg hk, dif_pos hw, ← D.hcW_e u τ]
+  rw [dite_eq_right hk, dite_eq_left hw, ← D.hcW_e u τ]
   simp only [hdiv, hmod, Nat.add_sub_cancel, Ranks.N]
-  rw [dif_pos (by omega : q < D.R.m)]
+  rw [dite_eq_left (by omega : q < D.R.m)]
   push_cast
   ring
 

@@ -36,7 +36,7 @@ private theorem valAt'_resG {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) {U' V' : Y.Opens
     valAt' x V' (Y.presheaf.map (homOfLE hle).op g) = valAt' x U' g := by
   have hx' : ⊤ ≤ x ⁻¹ᵁ U' := hx.trans (fun p hp => hle hp)
   unfold valAt'
-  rw [dif_pos hx, dif_pos hx']
+  rw [dite_eq_left hx, dite_eq_left hx']
   unfold valAt
   have key : Y.presheaf.map (homOfLE hle).op ≫ x.appLE V' ⊤ hx = x.appLE U' ⊤ hx' := by
     exact Scheme.Hom.map_appLE x _ _
@@ -46,7 +46,7 @@ private theorem valAt'_resG {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) {U' V' : Y.Opens
 private theorem valAt'_ne_zero_of_isUnit {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) {W : Y.Opens} (hx : ⊤ ≤ x ⁻¹ᵁ W)
     {g : Γ(Y, W)} (hg : IsUnit g) : valAt' x W g ≠ 0 := by
   unfold valAt'
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   unfold valAt
   exact ((hg.map (x.appLE W ⊤ hx).hom).map (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom).ne_zero
 
@@ -114,7 +114,7 @@ theorem IsHolFamily.der_mul (h : IsHolFamily ex) {U : X.Opens} {z : E} (hz : ⊤
 private theorem valAt'_constFn_of_section {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) (p : Y ⟶ Sp ℂ) (U : Y.Opens) (a : ℂ)
     (hx : ⊤ ≤ x ⁻¹ᵁ U) (hp : x ≫ p = 𝟙 _) : valAt' x U (constFn p U a) = a := by
   unfold valAt'
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   unfold valAt constFn
   have key : p.appLE ⊤ U (fun _ _ => trivial) ≫ x.appLE U ⊤ hx = (x ≫ p).appLE ⊤ ⊤ (by simp) := by
     exact Scheme.Hom.appLE_comp_appLE x p _ _ _ _ _

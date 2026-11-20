@@ -77,7 +77,7 @@ theorem stepNorms_cast {m : ℕ} (τ : E →+* ℂ) (e : m = Dw.mult τ) (h : τ
     · rw [h h'.2, zero_mul]
     · rfl
   simp only [lnStep]
-  rw [dif_pos (show (i : ℕ) < _ from (i.cast e).2), h₀, sub_zero]
+  rw [dite_eq_left (show (i : ℕ) < _ from (i.cast e).2), h₀, sub_zero]
   exact congrArg Real.log (grNorm_comp_cast w _ e (u τ) i).symm
 
 theorem pairwise_letters : (letters Dw).Pairwise fun x y => x.1 = y.1 → (x.2 : ℕ) < y.2 := by
@@ -141,7 +141,7 @@ theorem xOm_stepNorms (jc : KW p →+* ℂ) (τ : Emb D p) (h : vDiff D.host.E p
 theorem xAll_stepNorms (p : ℕ) : StepNorms S.Dw p (fun k : Fin (D.R.f * N) => .inr k) (xAll S) := by
   intro X t C _ _ w u b i
   simp only [lnStep]
-  rw [dif_pos (show (i : ℕ) < _ from (i.cast (length_letters S).symm).2)]
+  rw [dite_eq_left (show (i : ℕ) < _ from (i.cast (length_letters S).symm).2)]
   exact congrArg Real.log (grNorm_comp_cast w _ (length_letters S).symm
     (fun i => u ((letters S.Dw).get i).1 ((letters S.Dw).get i).2) i).symm
 

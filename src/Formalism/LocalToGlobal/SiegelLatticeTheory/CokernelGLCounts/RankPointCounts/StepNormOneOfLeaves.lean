@@ -57,7 +57,7 @@ theorem endMin_eq {r : ℕ} (w : Point K (r + 1)) (a : Fin (toPts w).1.length) :
 theorem dlast_eq {r : ℕ} (w : Point K (r + 1)) : DlastPt (toPts w) = leadingPrincipalMinor (ptMat w) (r + 1) := by
   have hl : 0 < (toPts w).1.length := Composition.length_pos_of_pos (toPts w).1 (Nat.succ_pos r)
   unfold DlastPt
-  rw [dif_pos hl, endMin_eq]
+  rw [dite_eq_left hl, endMin_eq]
   congr 1
   show (toPts w).1.sizeUpTo ((toPts w).1.length - 1 + 1) = r + 1
   rw [Nat.sub_add_cancel hl, Composition.sizeUpTo_length]
@@ -67,7 +67,7 @@ theorem dr_eq {r : ℕ} (w : Point K (r + 1)) : DrPt (toPts w) = leadingPrincipa
   have hsum := (toPts w).1.sizeUpTo_succ' ⟨(toPts w).1.length - 1, by omega⟩
   simp only [Nat.sub_add_cancel hlen, Composition.sizeUpTo_length] at hsum
   unfold DrPt
-  rw [dif_pos hlen]
+  rw [dite_eq_left hlen]
   split_ifs with h1 h2
   · rw [endMin_eq]
     congr 1
@@ -199,7 +199,7 @@ theorem lead_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hun : Formalism.Herm
 private theorem e4_lm_lemma_4 {N : ℕ} (A : Matrix (Fin N) (Fin N) D.host.E) (q : ℕ) (hq : q ≤ N) :
     leadingPrincipalMinor A q = leadMinorE A q := by
   unfold leadingPrincipalMinor leadMinorE
-  rw [dif_pos hq]
+  rw [dite_eq_left hq]
   let e : Fin q ≃ {i : Fin N // (i : ℕ) < q} :=
     { toFun := fun k => ⟨Fin.castLE hq k, k.2⟩, invFun := fun i => ⟨i.1, i.2⟩,
       left_inv := fun _ => rfl, right_inv := fun _ => rfl }
@@ -210,7 +210,7 @@ theorem lead_ZhatOM {r : ℕ} (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) D.host.E) 
     leadingPrincipalMinor (ZhatOM Z) q = (∏ b : Fin q, (-1 : D.host.E) ^ (r - (b : ℕ))) * leadMinorE Z q := by
   rw [e4_lm_lemma_4 _ q hq]
   unfold leadMinorE
-  rw [dif_pos hq, dif_pos hq]
+  rw [dite_eq_left hq, dite_eq_left hq]
   have hM : (ZhatOM Z).submatrix (Fin.castLE hq) (Fin.castLE hq) =
       Z.submatrix (Fin.castLE hq) (Fin.castLE hq) * Matrix.diagonal (fun b : Fin q => (-1 : D.host.E) ^ (r - (b : ℕ))) := by
     ext a b

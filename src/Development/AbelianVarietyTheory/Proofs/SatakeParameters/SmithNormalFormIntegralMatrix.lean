@@ -213,7 +213,7 @@ theorem v_eq_ord {y : L} (hy : y ≠ 0) :
     Valued.v y = ((Multiplicative.ofAdd (-Formalism.UG.ordL y) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v y ≠ 0 := (Valuation.ne_zero_iff _).2 hy
   unfold Formalism.UG.ordL
-  rw [dif_neg h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
+  rw [dite_eq_right h, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
 
 end GlobalTheory.Hk3.Smith
 

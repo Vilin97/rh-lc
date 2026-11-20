@@ -20,7 +20,7 @@ private theorem opt_ofChar (ξ : kˣ →* ℂˣ) (hξ) :
     (if h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ' then some h.choose else none)
       = some ξ := by
   have h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ' := ⟨ξ, hξ, rfl⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨_, h2⟩ := h.choose_spec
   exact congrArg some (IrrGL.ofChar_inj.1 h2).symm
 
@@ -69,7 +69,7 @@ private theorem pol_eq_lp (s : Multiset (IrrGL k)) (θ : kˣ →* ℂˣ) : pol s
       by_cases hu : IsUnram (ξ * θ)
       · have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * θ) :=
           ⟨ξ, ⟨hξ, rfl⟩, hu⟩
-        rw [dif_pos h]
+        rw [dite_eq_left h]
         obtain ⟨⟨_, h2⟩, _⟩ := h.choose_spec
         have e : h.choose = ξ := (IrrGL.ofChar_inj.1 h2).symm
         rw [e]

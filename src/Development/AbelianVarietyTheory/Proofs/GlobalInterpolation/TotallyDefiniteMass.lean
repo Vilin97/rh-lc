@@ -26,7 +26,7 @@ theorem mass_tMap {K V V' : Type} [Field K] [NumberField K] [StarRing K] [AddCom
     exact Formalism.ThetaLiftIndependence.latLiftIndep K V' h' _ _ _ (fun _ _ _ => rfl) (fun _ _ _ => rfl) _ _ hex.choose_spec hs
   · have hex' : ¬ ∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s := fun ⟨s, hs⟩ => hex ⟨_, Formalism.MainNotions.StandardLattice.tMap_reps e he L s hs⟩
     unfold Formalism.HermitianLatticesTheory.mass
-    rw [dif_neg hex, dif_neg hex']
+    rw [dite_eq_right hex, dite_eq_right hex']
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 

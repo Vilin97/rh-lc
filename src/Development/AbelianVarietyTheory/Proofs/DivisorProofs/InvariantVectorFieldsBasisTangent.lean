@@ -86,7 +86,7 @@ section Coc
 theorem pbT_id {X : Scheme.{0}} {O₀ : X.Opens} (s : Γ(X, O₀)) {O : X.Opens} (h : O ≤ O₀) :
     pbT (𝟙 X) s O = resG X h s := by
   unfold pbT
-  rw [dif_pos (show O ≤ 𝟙 X ⁻¹ᵁ O₀ from h)]
+  rw [dite_eq_left (show O ≤ 𝟙 X ⁻¹ᵁ O₀ from h)]
   simp [resG, Scheme.Hom.appLE]
   (erw [Category.id_comp]) <;> rfl
 

@@ -93,7 +93,7 @@ theorem GlobalTheory.PolFan.eq_subfamily_of_face : ∀ {O : Type} [CommRing O] (
     obtain ⟨i, hbi, c, hc, e⟩ := exists_ray hγi hδi.ne_zero (b j)
       (fun i => if hi : h (δ i) = 0 then a i hi else 0) (hb j)
       (fun i j' => by split_ifs with hi <;> [exact ha i hi j'; exact le_rfl]) j (hbe j)
-      (fun l hl => by rw [dif_pos (hsupp j l hl)]; exact hae l _)
+      (fun l hl => by rw [dite_eq_left (hsupp j l hl)]; exact hae l _)
     exact ⟨i, hsupp j i hbi, (GlobalTheory.T.eq_of_primitiveBalancedForm_same_real_ray bar (δ i) (γ j) (hδ i) (hγ j) (hδp i) (hγp j) c hc e).symm⟩
   choose s hsZ hsγ using hex2
   have hsinj : Function.Injective s := fun j j' hjj => hγi.injective (by rw [hsγ j, hsγ j', hjj])

@@ -86,7 +86,7 @@ theorem mass_kap : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E
     exact ⟨⟨δ, hPdef⟩, fun δ' h' => mass_of_charpoly E k δ δ' (h'.trans hPdef.symm) (hPdef ▸ hs)⟩
   obtain ⟨hex, hm⟩ := hcast _ hd
   unfold GlobalTheory.BCT.kap GlobalTheory.BCT.nfac
-  rw [dif_pos hex, hm _ hex.choose_spec, div_mul_cancel₀ _ (pow_ne_zero _ two_ne_zero)]
+  rw [dite_eq_left hex, hm _ hex.choose_spec, div_mul_cancel₀ _ (pow_ne_zero _ two_ne_zero)]
 
 end PositivityTheory.Rg.BcB.G3.MassP
 

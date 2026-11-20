@@ -146,11 +146,11 @@ theorem frob_of (h1 : LiftMonomialDeterminantStatement) (h2 : FrobeniusBlockStat
       rw [hyΨ]
       by_cases h : D.κ k = U.φ i
       · show (if h' : D.κ k = U.φ i then (Y.mulVecLin w) (eτ ⟨k, h'⟩) else 0) = _
-        rw [dif_pos h]
+        rw [dite_eq_left h]
         show ∑ b, Y (eτ ⟨k, h⟩) b * w b = _
         simp only [Y, Equiv.symm_apply_apply]
       · show (if h' : D.κ k = U.φ i then (Y.mulVecLin w) (eτ ⟨k, h'⟩) else 0) = _
-        rw [dif_neg h]
+        rw [dite_eq_right h]
         simp [c, h]
     show algebraMap R C ((y : Ix g → R) k) = _
     set_option synthInstance.maxHeartbeats 100000 in

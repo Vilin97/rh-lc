@@ -36,7 +36,7 @@ theorem acts_pureA {S : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f�
 theorem opI_eq (hU : ArchUniq) {S : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ} (h : Acts (evI F) S f f₁) :
     opI S f = f₁ := by
   have e : ∃ f₁ : SInf F κ, Acts (evI F) S f f₁ := ⟨f₁, h⟩
-  rw [opI, dif_pos e]
+  rw [opI, dite_eq_left e]
   exact (hU F κ f _ _).1 S e.choose_spec h
 
 def ptA (y : κ → mixedEmbedding.mixedSpace F) (a : κ → Af F) : κ → AF F :=

@@ -115,7 +115,7 @@ theorem assembleFinite_eq_of_mem (p : SIdelesProduct L S) (v : S) (w : PlacesOve
   obtain ⟨v, hv⟩ := v
   have e : below K u = v := (below_eq_iff u v).2 hu
   subst e
-  rw [assembleFinite, dif_pos hv]
+  rw [assembleFinite, dite_eq_left hv]
 
 omit [NumberField K] in
 theorem assembleFinite_eq_of_not_mem (p : SIdelesProduct L S) (v : ↥Sᶜ) (w : PlacesOver L v.1) :
@@ -124,7 +124,7 @@ theorem assembleFinite_eq_of_not_mem (p : SIdelesProduct L S) (v : ↥Sᶜ) (w :
   obtain ⟨v, hv⟩ := v
   have e : below K u = v := (below_eq_iff u v).2 hu
   subst e
-  rw [assembleFinite, dif_neg hv]
+  rw [assembleFinite, dite_eq_right hv]
 
 omit [NumberField K] in
 theorem assembleFinite_mem (p : SIdelesProduct L S) {u : HeightOneSpectrum (𝓞 L)}

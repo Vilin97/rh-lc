@@ -83,7 +83,7 @@ theorem rho_coordVal (k : Fin (m + 1)) (j : Bk n k) :
   by_cases h : j = c k
   · subst h
     rw [coordVal_self, map_one, pullRatio_self]
-  · rw [coordVal, dif_neg h]
+  · rw [coordVal, dite_eq_right h]
     simp only [rho, RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, rename_X, dehomog, eval₂Hom_X']
     exact resG_pullRatio _
 
@@ -103,7 +103,7 @@ theorem tau_comp_rho :
     exact (map_intCast _ r).trans (map_intCast _ r).symm
   · obtain ⟨⟨k, j⟩, h⟩ := q
     have e : (X ⟨⟨k, j⟩, h⟩ : CRing c) = coordVal c k j := by
-      rw [coordVal, dif_neg (show ¬ j = c k from h)]
+      rw [coordVal, dite_eq_right (show ¬ j = c k from h)]
     rw [e]
     exact tau_rho_coordVal c k j
 

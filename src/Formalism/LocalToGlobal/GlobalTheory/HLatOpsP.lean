@@ -362,7 +362,7 @@ theorem frameOf_spec {ι : Type} [Fintype ι] [DecidableEq ι] {G : Matrix ι ι
   have h := exists_frame hG
   have hspec := Classical.choose_spec h
   unfold frameOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   refine ⟨Matrix.isUnit_nonsing_inv_det _ hspec.1, ?_⟩
   rw [Matrix.nonsing_inv_nonsing_inv _ hspec.1]
   exact hspec.2

@@ -191,6 +191,6 @@ theorem GlobalTheory.WhitBump.exists_bump : ∀ (E : Type) [Field E] [NumberFiel
         (invSet E (m + 1)) := (h2.div_const c).mul contDiffOn_const
     refine hl.congr fun x hx => ?_
     have hx' : IsUnit (Matrix.of x) := hx
-    rw [chart, dif_pos hx']
+    rw [chart, dite_eq_left hx']
     simp only [pI, pF, map_mul, pInf_infGL, pFin_infGL, mul_one, Units.val_mul, IsUnit.unit_spec]
     rfl

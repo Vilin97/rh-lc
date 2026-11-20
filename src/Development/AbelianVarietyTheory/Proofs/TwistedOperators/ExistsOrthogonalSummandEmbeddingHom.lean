@@ -105,13 +105,13 @@ private theorem isBlock_embGL' {n N : ℕ} (hN : N = n + 1) (g : GL (Fin n) ℂ)
     GlobalTheory.BranchFormula.IsBlock hN (Formalism.MainNotions.PrimeDegreeVariant.embGL ℂ n N hN.symm g : Matrix (Fin N) (Fin N) ℂ)
       (g : Matrix (Fin n) (Fin n) ℂ) 1 := by
   refine ⟨fun a b => ?_, fun a => ⟨?_, ?_⟩, ?_⟩
-  · rw [GlobalTheory.Branching.embGL_apply, dif_pos ⟨a.2, b.2⟩]
+  · rw [GlobalTheory.Branching.embGL_apply, dite_eq_left ⟨a.2, b.2⟩]
     rfl
-  · rw [GlobalTheory.Branching.embGL_apply, dif_neg (fun h => absurd h.2 (lt_irrefl _)),
+  · rw [GlobalTheory.Branching.embGL_apply, dite_eq_right (fun h => absurd h.2 (lt_irrefl _)),
       if_neg (fun h => (ne_of_lt a.2) (congrArg Fin.val h))]
-  · rw [GlobalTheory.Branching.embGL_apply, dif_neg (fun h => absurd h.1 (lt_irrefl _)),
+  · rw [GlobalTheory.Branching.embGL_apply, dite_eq_right (fun h => absurd h.1 (lt_irrefl _)),
       if_neg (fun h => (ne_of_lt a.2) (congrArg Fin.val h).symm)]
-  · rw [GlobalTheory.Branching.embGL_apply, dif_neg (fun h => absurd h.1 (lt_irrefl _)), if_pos rfl]
+  · rw [GlobalTheory.Branching.embGL_apply, dite_eq_right (fun h => absurd h.1 (lt_irrefl _)), if_pos rfl]
 
 variable {θ : InfFam D} (hθ : IsInfFam θ) (N : Std G U)
 include hθ

@@ -39,7 +39,7 @@ theorem wtTie_of (Gt : GatTies D) (w : D.what₂.places.Pl) (hg : GIdx D.host (D
     rw [dif_pos h1, dif_pos h2, Gt.gat_lam u w hg v s ⟨i.val, h1⟩, (D.fm u).lam_eq 0 (Nat.zero_le _) _ _]
     exact dif_pos h2
   · have h2 : ¬ ((finCongr rk i : Fin (D.R.N (j + 1))) : ℕ) < D.R.k := by rw [hi, ← hk]; exact h1
-    rw [dif_neg h1, dif_neg h2, Int.cast_neg]
+    rw [dite_eq_right h1, dite_eq_right h2, Int.cast_neg]
     congr 1
     have e1 : (i.val - ((D.gat u w hg).P.m + 1)) / (Fl.t + 1) =
         (((finCongr rk i : Fin (D.R.N (j + 1))) : ℕ) - D.R.k) / (D.R.t + 1) := by rw [hk, ht, hi]

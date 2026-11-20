@@ -25,7 +25,7 @@ theorem slope_sq_bot {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Mo
     slope_sq N (⊥ : Submodule (𝓞 K) V) = -Real.log 2 + Real.log |(discr K : ℝ)| / (Module.finrank ℚ K : ℝ) := by
   unfold slope_sq
   letI : StarRing K := starRingOfComm
-  rw [dif_pos hN]
+  rw [dite_eq_left hN]
   exact muDef_bot _ _
 
 theorem slope_sq_sub_le_of_different_smul {K K' V V' : Type} [Field K] [NumberField K] [IsTotallyComplex K]

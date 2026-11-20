@@ -170,7 +170,7 @@ theorem redFn_conj {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
       refine ⟨y, ?_⟩
       rw [e, hy]; group
     unfold redFn ext1
-    rw [dif_neg h2, dif_neg hX]
+    rw [dite_eq_right h2, dite_eq_right hX]
 
 theorem upperLeftBlock_eq_submatrix_of_rank_eq {κ : Type} [CommRing κ] {n r : ℕ} (hr : r ≤ n) (hn : n ≤ r) (g : GL (Fin n) κ) :
     ((upperLeftBlock hr g : GL (Fin r) κ) : Matrix (Fin r) (Fin r) κ) =

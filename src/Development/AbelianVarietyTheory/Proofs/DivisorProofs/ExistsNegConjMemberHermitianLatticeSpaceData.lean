@@ -154,7 +154,7 @@ theorem negConj_isHerm : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
     exact isCartan_neg_conj (W.cart_is _ hR (τf w))
   · intro v
     show GlobalTheory.AdelicU.IsSplitBasis _ _ (if h : v.1 ∈ B.P then (hb ⟨v.1, h⟩).choose else 1)
-    rw [dif_pos v.2]
+    rw [dite_eq_left v.2]
     exact (hb v).choose_spec
 
 end GlobalTheory.TripleSpace

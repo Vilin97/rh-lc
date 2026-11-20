@@ -15,7 +15,7 @@ theorem valF_psi_of_psiCoord : ∀ (R : Type) [CommRing R] [IsDomain R] (D : Deg
   obtain ⟨j, hj, h, e⟩ := h
   refine ⟨j, hj, ?_⟩
   unfold valF
-  rw [dif_pos (by exact h)]
+  rw [dite_eq_left (by exact h)]
   have e1 : ∀ (h' : ⊤ ≤ 𝟙 (Sp (FractionRing R)) ⁻¹ᵁ (D.P.L.LinComb (fun _ ↦ ptK (D.c χ)) fun _ ↦ -1).U j),
       (Scheme.Hom.appLE (𝟙 (Sp (FractionRing R)))
         ((D.P.L.LinComb (fun _ ↦ ptK (D.c χ)) fun _ ↦ -1).U j) ⊤ h').hom ((D.psi χ).s j).val

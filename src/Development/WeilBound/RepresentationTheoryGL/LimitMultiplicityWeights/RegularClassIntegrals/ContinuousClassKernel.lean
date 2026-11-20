@@ -70,14 +70,14 @@ theorem le_pow_of_root {t : Fin r → ℝ} (ht : ∀ i, 0 < t i) {ρ : ℝ} (hρ
     | zero =>
       intro i hi
       have h1 := h i
-      rw [root, dif_neg (by have := i.2; omega)] at h1
+      rw [root, dite_eq_right (by have := i.2; omega)] at h1
       simpa using h1
     | succ k ih =>
       intro i hi
       have hlt : i.val + 1 < r := by have := i.2; omega
       have h1 := ih ⟨i.val + 1, hlt⟩ (by simp only; omega)
       have h2 := h i
-      rw [root, dif_pos hlt, div_le_iff₀ (ht _)] at h2
+      rw [root, dite_eq_left hlt, div_le_iff₀ (ht _)] at h2
       calc t i ≤ ρ * t ⟨i.val + 1, hlt⟩ := h2
         _ ≤ ρ * ρ ^ (k + 1) := by gcongr
         _ = ρ ^ (k + 1 + 1) := by ring
@@ -329,7 +329,7 @@ theorem class_bound {X Y : Matrix (Fin V.rank) (Fin r) D.host.E} (hW : IsWittFra
     have hall : ∀ i, root t i ≤ ρ := fun i => hjmax i (Finset.mem_univ _)
     have hc1 : t1 < t j := by
       by_cases hl : j.val + 1 < r
-      · have e : ρ = t j / t ⟨j.val + 1, hl⟩ := by rw [hρ, root, dif_pos hl]
+      · have e : ρ = t j / t ⟨j.val + 1, hl⟩ := by rw [hρ, root, dite_eq_left hl]
         have hp := tpos ⟨j.val + 1, hl⟩
         have h2 : R₀ * t ⟨j.val + 1, hl⟩ < t j := by
           rw [e, lt_div_iff₀ hp] at hρR; exact hρR
@@ -339,12 +339,12 @@ theorem class_bound {X Y : Matrix (Fin V.rank) (Fin r) D.host.E} (hW : IsWittFra
           exact mul_le_mul hRt' h3 hc₀.le this
         rw [div_mul_cancel₀ _ hc₀.ne'] at h4
         linarith
-      · have e : ρ = t j := by rw [hρ, root, dif_neg hl]
+      · have e : ρ = t j := by rw [hρ, root, dite_eq_right hl]
         rw [← e]; linarith
     have hc2 : ∀ j' : Fin r, j'.val = j.val + 1 → t1 * t j' < t j := by
       intro j' hj'
       have hl : j.val + 1 < r := hj' ▸ j'.2
-      have e : ρ = t j / t ⟨j.val + 1, hl⟩ := by rw [hρ, root, dif_pos hl]
+      have e : ρ = t j / t ⟨j.val + 1, hl⟩ := by rw [hρ, root, dite_eq_left hl]
       have e' : j' = ⟨j.val + 1, hl⟩ := Fin.ext hj'
       have hp := tpos j'
       rw [e', ] at hp ⊢

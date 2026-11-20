@@ -205,14 +205,14 @@ theorem simpleSum_eq (D : D7) {V₀ : HSp D} {ρ : ℕ} (d : HypDec (D.sp.Y 0) V
   · have h2 : ¬ (a.1 + 1 = ρ) := by omega
     rw [Finset.sum_eq_single (⟨a.1 + 1, h1⟩ : Fin ρ) (fun b _ hb => if_neg fun e => hb (Fin.ext e))
       (fun h => absurd (Finset.mem_univ _) h), if_pos rfl, ell, if_neg h2, zero_mul, add_zero, blockX_eq, hF, hE, hN_smul,
-      nxt, dif_pos h1]
+      nxt, dite_eq_left h1]
     congr 2
     have e : ρ - (a : ℕ) = (ρ - (a.1 + 1)) + 1 := by omega
     rw [star_inv₀, star_star, e, pow_succ]
     field_simp
   · have h2 : a.1 + 1 = ρ := by omega
     rw [Finset.sum_eq_zero (fun b _ => if_neg (by have := b.2; omega)), zero_add, ell, if_pos h2, one_mul, coefX_eq, hF, hz,
-      hN_smul, nxt, dif_neg h1]
+      hN_smul, nxt, dite_eq_right h1]
     congr 2
     have e : ρ - (a : ℕ) = 1 := by omega
     rw [star_inv₀, star_star, e, pow_one]

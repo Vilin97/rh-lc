@@ -39,7 +39,7 @@ theorem expR_val {n : ℕ} (ε : Fin n → Bool) (x : EuclideanSpace ℝ (Fin n 
     (((expR ε x : Formalism.REAL.UJ ε) : (Matrix (Fin n) (Fin n) ℂ)ˣ) : Matrix (Fin n) (Fin n) ℂ) =
       NormedSpace.exp (unrealify x) := by
   unfold expR
-  rw [dif_pos (inUJ_exp ε _ hx)]
+  rw [dite_eq_left (inUJ_exp ε _ hx)]
   rfl
 
 theorem psiInv_of (hL : LieSkewU) (hS : SkewLieU) (hC : CaySkewU) (hI : CayIdU) : PsiInvU := by
@@ -97,7 +97,7 @@ theorem psiInv_of (hL : LieSkewU) (hS : SkewLieU) (hC : CaySkewU) (hI : CayIdU) 
   apply Subtype.ext
   apply Units.ext
   unfold cayR
-  rw [dif_pos ⟨by rw [hid]; exact hMunit, by rw [hid]; exact hMU⟩]
+  rw [dite_eq_left ⟨by rw [hid]; exact hMunit, by rw [hid]; exact hMU⟩]
   show (2 + unrealify ((WithLp.equiv 2 _).symm (realifyFun X))) *
       (2 - unrealify ((WithLp.equiv 2 _).symm (realifyFun X)))⁻¹ = _
   rw [hid]

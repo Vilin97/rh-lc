@@ -99,10 +99,10 @@ theorem WeilFun.exists_eqRank (he : WeilOnEqEx D) (ht : WeilTwEq D) {ψ : AddCha
   refine ⟨Wf.patch fun V W χ χ' => if k : AdmE V W χ χ' then o V W χ χ' k else 1, ⟨fun V W χ χ' k => ?_,
     fun V W χ χ' ν k h1 h2 g x y hy => ?_, fun V W χ χ' ν k h1 h2 g x y hy => ?_⟩,
     fun V W χ χ' h => WeilFun.patch_om_ne _ _ h _ _⟩
-  · rw [WeilFun.patch_om_eq _ _ k.1, dif_pos k]; exact ho _ _ _ _ k
-  · rw [WeilFun.patch_om_eq _ _ k.1, WeilFun.patch_om_eq _ _ k.1, dif_pos k, dif_pos (k.mul_right h1 h2)]
+  · rw [WeilFun.patch_om_eq _ _ k.1, dite_eq_left k]; exact ho _ _ _ _ k
+  · rw [WeilFun.patch_om_eq _ _ k.1, WeilFun.patch_om_eq _ _ k.1, dite_eq_left k, dite_eq_left (k.mul_right h1 h2)]
     exact (ht ψ hψ V W χ χ' ν k h1 h2 _ (ho _ _ _ _ k)).1 _ (ho _ _ _ _ _) g x y hy
-  · rw [WeilFun.patch_om_eq _ _ k.1, WeilFun.patch_om_eq _ _ k.1, dif_pos k, dif_pos (k.mul_left h1 h2)]
+  · rw [WeilFun.patch_om_eq _ _ k.1, WeilFun.patch_om_eq _ _ k.1, dite_eq_left k, dite_eq_left (k.mul_left h1 h2)]
     exact (ht ψ hψ V W χ χ' ν k h1 h2 _ (ho _ _ _ _ k)).2 _ (ho _ _ _ _ _) g x y hy
 
 theorem isWeilOn_both_zero (ψ : AddChar (AF D.host.F) ℂ) {V W : HSp D} (hV : V.rank = 0) (hW : W.rank = 0) (χ χ' : IdC D) :

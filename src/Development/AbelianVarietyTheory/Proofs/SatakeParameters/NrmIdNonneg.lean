@@ -8,7 +8,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLo
 
 theorem lamC_mem' {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) {x : ℂ} (h : x ∈ Qbar) :
     lamC lam x = lam ⟨x, h⟩ := by
-  unfold lamC; rw [dif_pos h]
+  unfold lamC; rw [dite_eq_left h]
 
 theorem embT_mem (D : D7) (τ : D.what₂.Tau) (x : D.host.E) : embT D τ x ∈ Qbar := by
   have hx : IsAlgebraic ℚ x := Algebra.IsAlgebraic.isAlgebraic x

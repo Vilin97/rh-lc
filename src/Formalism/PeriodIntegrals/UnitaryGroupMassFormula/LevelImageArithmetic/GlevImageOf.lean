@@ -120,14 +120,14 @@ theorem glevImage_of (_hH : LevHom) (hU : LevUH) : GlevImage := by
     · ext p q
       simp only [ιLev, Matrix.of_apply]
       by_cases hp : i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i
-      · rw [dif_pos hp]
+      · rw [dite_eq_left hp]
         by_cases hq : i ≤ q.val ∧ q.val < 2 * r' + k + 1 + i
-        · rw [dif_pos hq]
+        · rw [dite_eq_left hq]
           congr 1 <;> (apply Fin.ext; simp only [levPos]; omega)
-        · rw [dif_neg hq, hcol q hq p, if_neg]
+        · rw [dite_eq_right hq, hcol q hq p, if_neg]
           rintro rfl
           exact hq hp
-      · rw [dif_neg hp, hrow p hp q]
+      · rw [dite_eq_right hp, hrow p hp q]
         rcases eq_or_ne p q with h | h
         · subst h; simp
         · simp [h, h.symm]

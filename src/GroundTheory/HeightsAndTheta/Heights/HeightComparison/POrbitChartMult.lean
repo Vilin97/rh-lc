@@ -373,7 +373,7 @@ theorem multAt_eq_localQuotLength_of [hVp : V.IsPrime] (hε : Function.Surjectiv
       IsScalarTower.algebraMap_apply O (MvPolynomial ι O) (locB ι (V.map ε)), algebraMap_eq,
       betaB, RingHom.comp_apply, hγ hs, map_mul,
       Ideal.span_singleton_mul_right_unit (isUnit_prod_X_pow _ a)]
-  rw [Geo.multAt, dif_pos hVp,
+  rw [Geo.multAt, dite_eq_left hVp,
     length_localizedModule_quot_eq (betaB γ (V.map ε)) V W s hker hunit hgood, hI,
     length_quot_map_eq hmaxA]
   rfl

@@ -102,7 +102,7 @@ theorem gamW_gen (h : PlOverEx H) (ht : TameEx H h) (v : HeightOneSpectrum (𝓞
     TameGenAt ((plOmC H h).1 v) (gamW H h v) := by
   classical
   unfold gamW
-  rw [dif_pos (ht v)]
+  rw [dite_eq_left (ht v)]
   exact (ht v).choose_spec
 
 theorem placesOver_fin (p : ℕ) (hp : p.Prime) : (placesOver H.E p).Finite := by

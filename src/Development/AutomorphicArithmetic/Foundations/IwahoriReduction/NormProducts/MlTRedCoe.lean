@@ -78,7 +78,7 @@ private theorem UpperTheory.Kd.K4.mlT_lsq (l p : ℕ) (hp : p.Prime) (h : Nat.Co
   have hu : IsUnit (l : ZMod p) := (ZMod.isUnit_iff_coprime l p).2 h.symm
   have hu2 : IsUnit ((l : ZMod p) ^ (2 * k)) := hu.pow _
   unfold lsqInv inv1
-  rw [dif_pos hu2, dif_pos hu, inv_pow]
+  rw [dite_eq_left hu2, dite_eq_left hu, inv_pow]
   congr 1
   ext
   simp

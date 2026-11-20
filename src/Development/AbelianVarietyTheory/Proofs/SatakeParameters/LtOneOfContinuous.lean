@@ -160,7 +160,7 @@ theorem isLift : ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K]
       rw [((key m).1 hm).infChar_eq, hm.infChar_eq]
     · have h' : ¬ ∃ m, (CG.mk (pullSub e.symm π)).HasInfChar τ m := fun ⟨m, hm⟩ => h ⟨m, (key m).2 hm⟩
       unfold CG.infChar
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
   · intro v w i hi hie σ σ' hσ hσ'
     have hO : Over e v w := over_of_continuous e i.toRingHom hi fun x => hie x
     have hiL : ∀ y, i y = cLoc hO y := fun y => congrFun

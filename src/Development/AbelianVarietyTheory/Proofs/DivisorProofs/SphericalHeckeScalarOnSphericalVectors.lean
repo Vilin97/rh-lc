@@ -223,7 +223,7 @@ theorem rtA_apply (V : HSp D) (g : GA D V) (F : GA D V → ℂ) (x : GA D V) : r
 theorem pre_psi (Q : principalLevelFrame.RowPsi V n) (h : Formalism.AUTREP.GAf D.host.E n) : principalLevelFrame.pre Q (Q.ψ h) = h := by
   have hx : ∃ x, Q.ψ x = Q.ψ h := ⟨h, rfl⟩
   unfold principalLevelFrame.pre
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact Q.inj hx.choose_spec
 
 open Classical in
@@ -361,7 +361,7 @@ theorem spherical_scalar : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.F = m
   have hsph : ∀ a ∈ Loc, SphOp V Pr (dd a) (GlobalTheory.Hk3.rep V Pr (dd a)) := fun a ha => by
     have h := hdd1 a ha
     unfold GlobalTheory.Hk3.rep
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact h.choose_spec
   have hrepG : ∀ a ∈ Loc, ∀ γ ∈ GlobalTheory.Hk3.rep V Pr (dd a), ∃ y, Q.ψ y = γ := fun a ha γ hγ =>
     hon γ ((sphOp_facts hef hKv (hsph a ha)).1 γ hγ).1

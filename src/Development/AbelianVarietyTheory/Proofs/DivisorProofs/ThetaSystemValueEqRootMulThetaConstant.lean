@@ -139,7 +139,7 @@ private theorem exists_injective_stalk_hom_gs_eq {o Ω : Type} [CommRing o] [Fie
     exact (Scheme.ΓSpecIso (CommRingCat.of S.R)).commRingCatIsoToRingEquiv.symm.injective (h1 h)
   · intro a
     unfold gs
-    rw [dif_pos (show _ ∈ (⊤ : (baseOver (Sp S.R)).left.Opens) from trivial)]
+    rw [dite_eq_left (show _ ∈ (⊤ : (baseOver (Sp S.R)).left.Opens) from trivial)]
     rfl
 
 private theorem exists_rootOfUnity_mul_of_pow_eq_pow {K : Type} [Field K] (a b : K) (n : ℕ) (hn : 0 < n) (h : a ^ n = b ^ n) :

@@ -357,10 +357,10 @@ theorem thetaGL_unip (h : r + s = a) (c : R →+* R) (x : BlockIx a r → R) :
   have hj := j.2
   simp only [Matrix.sub_apply, Matrix.add_apply, nilM, Matrix.of_apply, Matrix.one_apply, Fin.rev_inj]
   by_cases h1 : (i : ℕ) < s ∧ s ≤ (j : ℕ)
-  · rw [dif_pos h1, dif_pos (by simp only [Fin.val_rev]; omega), if_neg (fun e => by subst e; omega),
+  · rw [dite_eq_left h1, dite_eq_left (by simp only [Fin.val_rev]; omega), if_neg (fun e => by subst e; omega),
       if_neg (fun e => by subst e; omega), zero_sub, zero_add]
     rfl
-  · rw [dif_neg h1, dif_neg (by simp only [Fin.val_rev]; omega), sub_zero, add_zero]
+  · rw [dite_eq_right h1, dite_eq_right (by simp only [Fin.val_rev]; omega), sub_zero, add_zero]
     by_cases h2 : i = j
     · subst h2
       rw [if_pos rfl, map_one, mul_one, Even.neg_one_pow ⟨_, rfl⟩]

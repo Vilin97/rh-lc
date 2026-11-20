@@ -39,7 +39,7 @@ theorem tupleTwist_ramified_iff_chosenPrime_or_conj_host (X : Stages) (px : PreX
   have hsel : ∀ v, (I.sel v).under (𝓞 X.B.fields.F) = v := fun v => HeightOneSpectrum.ext (hI.sel_ok v)
   have memQ : ∀ v ∈ Qprime (I.tup a : Chr X.B.fields.F X.B.fields.E X.B.fields.K), I.sel v ∈ I.Q a := fun v hv => by
     unfold ColIn.Q
-    rw [Formalism.L2.Col.QE, dif_pos hf]
+    rw [Formalism.L2.Col.QE, dite_eq_left hf]
     exact Finset.mem_image_of_mem _ (hf.mem_toFinset.2 hv)
   have under_of_mem : ∀ P ∈ I.Q a, P.under (𝓞 X.B.host.F) ∈ Qprime (I.tup a : Chr X.B.fields.F X.B.fields.E X.B.fields.K) :=
     fun P hP => by

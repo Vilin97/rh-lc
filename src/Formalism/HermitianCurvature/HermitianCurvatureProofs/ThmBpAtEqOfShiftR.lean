@@ -144,7 +144,7 @@ theorem ptRep_spec {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProd
     Formalism.FourierDecayAlt.P.Dx2.dFrameExists P.k P.r Wp Wq p.T.base p.ν' p.m₀ γ p.hF hγ hG
   have hrep : ptRep p γ = hex.choose := by
     unfold ptRep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   obtain ⟨hmem, hz, _⟩ := hex.choose_spec
   refine ⟨by rw [hrep]; exact hmem, ?_⟩
   rw [hrep, Formalism.FourierDecayAlt.P.TBBx2.Gf_of_Zhat _ _ _ γ hz]

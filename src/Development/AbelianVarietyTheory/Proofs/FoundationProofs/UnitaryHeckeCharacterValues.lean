@@ -272,7 +272,7 @@ theorem hecke_values : ∀ (D : D7) (N : ℕ) (χ : HeckeU D N) (x : (AE D)ˣ), 
       have h0 : 0 < ‖ψ b‖ := norm_pos_iff.2 ((map_ne_zero _).2 b.ne_zero)
       have : ‖ψ b‖ = 1 := le_antisymm j1 ((inv_le_one₀ h0).1 j2)
       rw [Units.val_pow_eq_pow_val, map_pow, norm_pow, this, one_pow]
-    rw [lamC, dif_pos hz]
+    rw [lamC, dite_eq_left hz]
     refine H _ lam fun τ => ?_
     exact (key (lam.comp τ)).trans
       (key ((lam.comp τ).comp (IsCMField.complexConj D.host.E : D.host.E →+* D.host.E))).symm

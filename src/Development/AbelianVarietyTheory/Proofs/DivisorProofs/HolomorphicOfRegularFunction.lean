@@ -31,7 +31,7 @@ theorem valR_appLE_hol {A : Type} [CommRing A] {Y Z : Scheme.{0}} (x : Sp A ⟶ 
     (U : Z.Opens) (W : Y.Opens) (e : W ≤ g ⁻¹ᵁ U) (h : ⊤ ≤ x ⁻¹ᵁ W) (f : Γ(Z, U)) :
     valR x W (g.appLE U W e f) = valR (x ≫ g) U f := by
   have h' : ⊤ ≤ (x ≫ g) ⁻¹ᵁ U := fun a ha => e (h ha)
-  rw [valR, valR, dif_pos h, dif_pos h']
+  rw [valR, valR, dite_eq_left h, dite_eq_left h']
   congr 1
   rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
 

@@ -33,7 +33,7 @@ variable {T dt dh}
 theorem IsQuotMeasure.quotMeas {ν : Measure (Quot T)} (h : IsQuotMeasure T dt dh ν) :
     IsQuotMeasure T dt dh (quotMeas T dt dh) := by
   have h' : ∃ ν, IsQuotMeasure T dt dh ν := ⟨ν, h⟩
-  rw [Orb.quotMeas, dif_pos h']
+  rw [Orb.quotMeas, dite_eq_left h']
   exact h'.choose_spec
 
 omit [MeasurableSpace H] in

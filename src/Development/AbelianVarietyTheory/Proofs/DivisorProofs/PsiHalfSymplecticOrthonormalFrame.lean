@@ -106,7 +106,7 @@ end Classical
 theorem realM_tauE {D : D7} (θ : InfFam D) {m n : ℕ} (w : Mx D m n) (ρ : D.what₂.Tau) :
     realM θ w (tauE D ρ) = compAt θ ρ w := by
   have h : ∃ ρ', tauE D ρ = tauE D ρ' := ⟨ρ, rfl⟩
-  rw [realM, dif_pos h, ← GlobalTheory.StdRat.tauE_injective D h.choose_spec]
+  rw [realM, dite_eq_left h, ← GlobalTheory.StdRat.tauE_injective D h.choose_spec]
 
 theorem sum_four {m n : ℕ} (c : ℂ) (G : Fin m → Fin m → ℂ) (x y : Fin m → Fin n → ℂ) :
     ∑ b, 2 * (c * ∑ d, ∑ e, x d b * -G e d * conj (y e b)).re =

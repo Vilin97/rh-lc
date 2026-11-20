@@ -158,9 +158,9 @@ theorem redM_uMat_move : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf 
   have := red_eq _ (resS D.host.F PP) M hM' _ _ _ y.1 (hint x) (hint x') hW hmv i j
   rw [Matrix.mul_apply]
   unfold redM
-  rw [dif_pos (hint x' i j), this]
+  rw [dite_eq_left (hint x' i j), this]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [dif_pos (hint x i a)]
+  rw [dite_eq_left (hint x i a)]
   rfl
 
 end GlobalTheory.AdjMove

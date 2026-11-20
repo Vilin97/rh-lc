@@ -25,7 +25,7 @@ theorem ev_delta_bd {E : Spc} {I : Cx R} {n m : ℤ} (hm : n + 1 = m) (α : Coch
     congr 2
     simp only [bd]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
 
 theorem mul_congr {I J K : Cx R} (μ : Pair I J K) (U : Scheme.{0}) {E : Spc} {n m : ℤ}
     (α : Cochain ((chains R).obj E) I n) (β : Cochain ((chains R).obj E) J m) (p q : ℕ) (y : Sx E p U) (z : Sx E q U)
@@ -86,11 +86,11 @@ theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairi
       Fm μ α β U w p (N' - p) (y.sub 0 p (by omega)) (y.sub p (N' - p) (by omega))) ?_ x]
   swap
   · intro N' y hN
-    rw [dif_pos (by omega), hγ N' w _ U y]
+    rw [dite_eq_left (by omega), hγ N' w _ U y]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [Units.smul_def]
     unfold Fm
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
   rw [bd_aw (Fm μ α β U w) (fun p : ℕ => ((m * (p : ℤ)).negOnePow : ℤ)) (fun p : ℕ => ((m * ((p : ℤ) - 1)).negOnePow : ℤ))
     (fun p => by congr 2; push_cast; ring) N x]
   rw [secmap_sum, Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
@@ -101,14 +101,14 @@ theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairi
   simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, Units.smul_def, mul_bd_left, mul_bd_right]
   refine recombine _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_ ?_ ?_
   · refine bd_congr (fun q z hq => ?_) _
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     unfold Fm
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact mul_congr μ U α β _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
   · refine bd_congr (fun q z hq => ?_) _
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     unfold Fm
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     exact mul_congr μ U α β _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
   · simp only [← Units.val_mul, ← Int.negOnePow_add]
     congr 1

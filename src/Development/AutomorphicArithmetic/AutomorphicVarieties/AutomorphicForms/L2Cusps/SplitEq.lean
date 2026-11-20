@@ -11,7 +11,7 @@ private theorem posIdele_inf {E : Type} [Field E] [NumberField E] [IsTotallyComp
   rw [← coe_infiniteProj, infiniteProj_posIdele]
   change GroundTheory.Global.posRealElem w _ = _
   unfold GroundTheory.Global.posRealElem
-  rw [dif_neg hw]
+  rw [dite_eq_right hw]
   simp [InfinitePlace.mult, hw, Real.sqrt_sq hs.le]
 
 theorem UpperTheory.V.KernelIndexFullLattice.splitEq_holds :

@@ -166,7 +166,7 @@ variable {A B₀ κ}
 theorem IsRbar.chosen {σ : what₂.FT} {w : what₂.places.Pl} {r} (h : IsRbar A B₀ κ σ w r) :
     IsRbar A B₀ κ σ w (rbarOf A B₀ κ σ w) := by
   have h' : ∃ r, IsRbar A B₀ κ σ w r := ⟨r, h⟩
-  rw [rbarOf, dif_pos h']
+  rw [rbarOf, dite_eq_left h']
   exact h'.choose_spec
 
 theorem redTie_iff : RedTie A B₀ κ ↔ ∀ i (x : N.O i), ∃ h : iotaO N A i x ∈ B₀ (N.w i),
@@ -524,7 +524,7 @@ theorem bcTie (hC : GlobalTheory.Published.ChebotarevDegreeOne) (hJ : IsobaricRi
     (hW : LocWIndep A) {X : NTypes A} (hX : X.bc = bcOf A) : BcTie N A X := by
   intro i σ Sig h1 h2 h3
   have h : IsRowPar A σ Sig := ⟨⟨i, h1⟩, h2, h3⟩
-  rw [hX, bcOf, dif_pos ⟨Sig, h⟩]
+  rw [hX, bcOf, dite_eq_left ⟨Sig, h⟩]
   exact Multiset.coe_eq_coe.2 ((IsRowPar.perm hC hJ hG hW (Exists.choose_spec ⟨Sig, h⟩) h).map _)
 
 variable (A)

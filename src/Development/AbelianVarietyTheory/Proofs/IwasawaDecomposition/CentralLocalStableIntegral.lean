@@ -59,7 +59,7 @@ theorem zlStable_of_allT {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type
   refine ⟨y, ?_⟩
   rw [hy]
   unfold NTypes.onMt
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 theorem zlStable_at (hL : GlobalTheory.Published.LocalLanglandsGL) :
     AtMem hL fun _ _ _ _ w Z _ _ _ _ _ _ => GlobalTheory.PendOf.ZLStable (w.D Z) :=

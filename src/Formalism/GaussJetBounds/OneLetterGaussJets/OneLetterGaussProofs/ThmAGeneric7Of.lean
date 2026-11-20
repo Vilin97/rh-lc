@@ -28,13 +28,13 @@ theorem thmAFrame7_of : ThmAGen7.{u} → ThmAFrame7.{u} := by
     have hex : ∃ i', e s i' = e s i := ⟨i, rfl⟩
     have hch : hex.choose = i := he s hex.choose_spec
     show (if h : ∃ i', e s i' = e s i then some (lab s h.choose) else none) = _
-    rw [dif_pos hex, hch]
+    rw [dite_eq_left hex, hch]
   have hspec_some : ∀ s k, spec (s, k) ≠ none → ∃ i, k = e s i := by
     intro s k h
     by_contra hcon
     apply h
     show (if h : ∃ i', e s i' = k then some (lab s h.choose) else none) = _
-    rw [dif_neg (fun ⟨i, hi⟩ => hcon ⟨i, hi.symm⟩)]
+    rw [dite_eq_right (fun ⟨i, hi⟩ => hcon ⟨i, hi.symm⟩)]
   refine hGen K l d N0 N1 hl hl3 hd hde hlK h0 K0 hK0 ζ hζ be hbe x (fun y => hxs _ _ _) g hg0 hg U hU
     ε hε TT colN p hp hp1 I T hT xg ?_ nu1 nu2 size hnu1 hnu2 hsize spec ?_ ?_ ?_
   · intro s i b

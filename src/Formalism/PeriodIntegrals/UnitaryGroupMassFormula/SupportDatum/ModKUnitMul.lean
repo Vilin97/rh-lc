@@ -27,7 +27,7 @@ theorem uLow_det {E : Type} [CommRing E] {n : ℕ} (x : Loc.IL n → E) : (Loc.u
   · simp [Loc.uLow]
   · have hij' : i < j := hij
     simp only [Loc.uLow]
-    rw [if_neg (ne_of_lt hij'), dif_neg (not_lt.2 hij'.le)]
+    rw [if_neg (ne_of_lt hij'), dite_eq_right (not_lt.2 hij'.le)]
 
 theorem uUp_det {E : Type} [CommRing E] {n : ℕ} (w : Loc.Pt E n) (y : Loc.IN w → E) :
     (Loc.uUp w y).det = 1 := by
@@ -35,7 +35,7 @@ theorem uUp_det {E : Type} [CommRing E] {n : ℕ} (w : Loc.Pt E n) (y : Loc.IN w
   · simp [Loc.uUp]
   · have hij' : j < i := hij
     simp only [Loc.uUp]
-    rw [if_neg (ne_of_gt hij'), dif_neg (fun h => absurd h.1 (not_lt.2 hij'.le))]
+    rw [if_neg (ne_of_gt hij'), dite_eq_right (fun h => absurd h.1 (not_lt.2 hij'.le))]
 
 theorem bb_exists {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
     {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]

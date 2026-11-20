@@ -475,9 +475,9 @@ open Classical in
 theorem frsF_isFr {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu) : IsFrAt P.1 p.deco.1.N (frsF sel mu p P) := by
   unfold frsF
   by_cases h : P.1 ∈ Pr.vGs
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     exact (Deco.liftFr_spec (p.deco.2.hasLift ⟨P.1, h⟩)).1
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     exact p.2 ⟨P.1, (Finset.mem_union.mp P.2).resolve_left h⟩
 
 theorem qB_dvd (u : Pr.Word) (P : rowSG Pr sel mu) : qOf P.1 ^ cst.B ∣ cBof sel mu cst u :=
@@ -896,7 +896,7 @@ theorem entB_inB (q k₀ n' n : ℕ) (ex' ex : ℕ → ℕ) (x : HomE E (n' + 0)
     rw [if_pos (by omega)]
   rw [s1, s2, sub_zero, zpow_zero, mul_one, eN_inB _ _ hp']
   unfold Loc.atN
-  rw [dif_pos hp]
+  rw [dite_eq_left hp]
 
 theorem entB_outB (q k₀ n' n : ℕ) (ex' ex : ℕ → ℕ) (x : HomE E (n' + 0) (n + 0)) {p p' : ℕ} (h : ¬ (p < n + 0 ∧ p' < n' + 0)) :
     LocE.entB q k₀ 0 n' 0 n ex' ex x p p' = 0 := by
@@ -906,10 +906,10 @@ theorem entB_outB (q k₀ n' n : ℕ) (ex' ex : ℕ → ℕ) (x : HomE E (n' + 0
   · have hp' : ¬ p' < n' + 0 := fun h' => h ⟨hp, h'⟩
     rw [eN_outB _ _ hp', map_zero]
     unfold Loc.atN
-    rw [dif_pos hp]
+    rw [dite_eq_left hp]
     simp
   · unfold Loc.atN
-    rw [dif_neg hp, zero_mul]
+    rw [dite_eq_right hp, zero_mul]
 
 theorem entB_addB (q k₀ n' n : ℕ) (ex' ex : ℕ → ℕ) (x z : HomE E (n' + 0) (n + 0)) :
     LocE.entB q k₀ 0 n' 0 n ex' ex (x + z) = fun p p' => LocE.entB q k₀ 0 n' 0 n ex' ex x p p' + LocE.entB q k₀ 0 n' 0 n ex' ex z p p' := by

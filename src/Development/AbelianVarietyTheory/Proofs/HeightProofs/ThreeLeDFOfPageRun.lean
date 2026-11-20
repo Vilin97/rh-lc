@@ -33,7 +33,7 @@ theorem three_le_DF_of_SetC {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInte
   have hn : ¬ i.1 + 1 < (D.R.sigW j).1 := by omega
   rw [if_neg hn] at h3
   unfold gapZ at h3
-  rw [dif_neg hn] at h3
+  rw [dite_eq_right hn] at h3
   have hTp : (0 : ℤ) < (Tp D j T : ℤ) := by unfold Tp; positivity
   rw [Int.fdiv_eq_ediv_of_nonneg _ hTp.le] at h3
   have h4 : (3 : ℤ) ≤ ((ka.aP τ i : ℤ) - ((WeightFamilies.dimY D j : ℤ) + 2) * nW - 2 * D.R.r) / (Tp D j T : ℤ) := by

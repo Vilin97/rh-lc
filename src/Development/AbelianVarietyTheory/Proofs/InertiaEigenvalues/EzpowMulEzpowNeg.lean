@@ -25,7 +25,7 @@ def hatR (f : K⟦X⟧) : Ahat O K l e := if h : f ∈ Rpi O K l e then toHat O 
 
 theorem hatR_of_mem {f : K⟦X⟧} (h : f ∈ Rpi O K l e) : hatR O l e f = toHat O K l e ⟨f, h⟩ := by
   unfold hatR
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 variable (K a) in
 

@@ -692,7 +692,7 @@ theorem ptAtlas_mInt (Y : Type*) [TopologicalSpace Y] [Unique Y] (g : Y → ℝ)
     simp [locDens, maDens, mdisc]
   have ht : ((ptAtlas Y).chart (0 : Fin 1)).target = Set.univ := rfl
   unfold mInt
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
   unfold integralWith
   change ∑ j : Fin 1, _ = _
   rw [Fin.sum_univ_one]

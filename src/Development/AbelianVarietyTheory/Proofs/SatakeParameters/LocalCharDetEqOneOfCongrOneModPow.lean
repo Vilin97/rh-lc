@@ -50,6 +50,6 @@ theorem muAt_det_congr_one : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : 
   unfold muAt
   rw [LastSteps.locChar_unit _ _ hu, LastSteps.unitV_congr _ hred]
   unfold LocE.unitV
-  rw [dif_pos h1, show h1.unit = 1 from Units.ext reduction_one₂, map_one, Units.val_one]
+  rw [dite_eq_left h1, show h1.unit = 1 from Units.ext reduction_one₂, map_one, Units.val_one]
 
 end GlobalTheory.AwayMat

@@ -107,7 +107,7 @@ theorem FormIntPos.proof (hC : ConeToProjective.Statement) (hM : SliceFormMass.S
   have hform : ∀ a b, formInt h W e a b = varInt (W ⊔ Ideal.span {linForm hℓ.choose - 1}) (e + 1) a
       (vecCons b fun _ x => Real.log (h.dualNorm x)) := by
     intro a b
-    rw [formInt, dif_pos hℓ]
+    rw [formInt, dite_eq_left hℓ]
   have hcone : ∀ δ₀, 0 < δ₀ → coneIntegral h W (e + 1) (fsLogReg h u δ₀) =
       varInt (W ⊔ Ideal.span {linForm hℓ.choose - 1}) (e + 1) (fsLogReg h u δ₀)
         (fun _ x => Real.log (h.dualNorm x)) := fun δ₀ hδ₀ =>

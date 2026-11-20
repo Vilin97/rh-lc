@@ -303,7 +303,7 @@ open Classical in
 theorem chv_singleton (c : ℂ) : chv {c} = c := by
   have h : ∃ c', ({c} : Multiset ℂ) = {c'} := ⟨c, rfl⟩
   unfold chv
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (Multiset.singleton_inj.1 h.choose_spec).symm
 
 theorem placesOver_g_nonempty (h : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H.E)
@@ -397,10 +397,10 @@ open Classical in
 def toU (z : ℂ) : ℂˣ := if h : z = 0 then 1 else Units.mk0 z h
 
 theorem toU_val (u : ℂˣ) : toU (u : ℂ) = u := by
-  unfold toU; rw [dif_neg u.ne_zero]; ext; rfl
+  unfold toU; rw [dite_eq_right u.ne_zero]; ext; rfl
 
 theorem val_toU {z : ℂ} (h : z ≠ 0) : ((toU z : ℂˣ) : ℂ) = z := by
-  unfold toU; rw [dif_neg h]; rfl
+  unfold toU; rw [dite_eq_right h]; rfl
 
 open Polynomial in
 set_option synthInstance.maxHeartbeats 400000 in
@@ -541,7 +541,7 @@ def nautToy (what₂ : Rows.Data R) (h : NHyp H what₂) : NAut (ndToy H what₂
 theorem shaExample_eq (p : ℕ) [hp : Fact p.Prime] (e : ℕ) :
     shaExample H p e = ((Formalism.GaloisCohomology.shaLen (toyLocalData H p) (e : ℤ)).toNat : ℚ) := by
   unfold shaExample
-  rw [dif_pos hp.out]
+  rw [dite_eq_left hp.out]
 
 open Ideal Polynomial in
 

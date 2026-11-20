@@ -13,6 +13,6 @@ theorem UnipotentLeadingMinor.proof : UnipotentLeadingMinor.Statement := by
   · intro i j hji
     have hji' : Fin.castLE hl j < Fin.castLE hl i := hji
     simp only [Matrix.submatrix_apply, unipotentMatrix, Matrix.of_apply]
-    rw [dif_neg (not_lt.mpr hji'.le), if_neg (ne_of_gt hji')]
+    rw [dite_eq_right (not_lt.mpr hji'.le), if_neg (ne_of_gt hji')]
 
 end GroundTheory.Heights₂.Heights.FlagBundles

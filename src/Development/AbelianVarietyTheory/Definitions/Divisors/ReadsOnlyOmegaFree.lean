@@ -54,14 +54,14 @@ theorem readsOnly_omegaFree (Q : Finset (Pl D.host.E)) (ξR : ∀ PP : Pl D.host
   · exact if_congr ⟨fun H PP hp => (hg PP hp) ▸ H PP hp, fun H PP hp => (hg PP hp).symm ▸ H PP hp⟩ rfl rfl
   · by_cases H : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (y PP)).det
     · have H' : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (y' PP)).det := fun PP hp => (hq PP hp) ▸ H PP hp
-      rw [dif_pos H, dif_pos H']
+      rw [dite_eq_left H, dite_eq_left H']
       refine Finset.prod_congr rfl fun PP _ => ?_
       have : (H PP.1 PP.2).unit = (H' PP.1 PP.2).unit := by
         ext; simp [hq PP.1 PP.2]
       rw [this]
     · have H' : ¬ ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (y' PP)).det := fun H' =>
         H fun PP hp => (hq PP hp).symm ▸ H' PP hp
-      rw [dif_neg H, dif_neg H']
+      rw [dite_eq_right H, dite_eq_right H']
 
 theorem omegaK_mul_omegaQ (Q : Finset (Pl D.host.E)) (ξR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
     (y : ∀ PP : Pl D.host.E, Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (kP PP)) :
@@ -73,11 +73,11 @@ theorem omegaK_mul_omegaQ (Q : Finset (Pl D.host.E)) (ξR : ∀ PP : Pl D.host.E
   · rw [if_pos h1, one_mul]
     congr 1
     by_cases H : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (y PP)).det
-    · rw [dif_pos H, dif_pos (fun PP hp => ⟨h1 PP hp, H PP hp⟩)]
+    · rw [dite_eq_left H, dite_eq_left (fun PP hp => ⟨h1 PP hp, H PP hp⟩)]
       refine Finset.prod_congr rfl fun PP _ => ?_
       simp
-    · rw [dif_neg H, dif_neg (fun H' => H fun PP hp => (H' PP hp).2)]
-  · rw [if_neg h1, zero_mul, dif_neg (fun H' => h1 fun PP hp => (H' PP hp).1), mul_zero]
+    · rw [dite_eq_right H, dite_eq_right (fun H' => H fun PP hp => (H' PP hp).2)]
+  · rw [if_neg h1, zero_mul, dite_eq_right (fun H' => h1 fun PP hp => (H' PP hp).1), mul_zero]
 
 theorem omegaFree_ne_zero (Q : Finset (Pl D.host.E)) (hd : Disjoint R.Pg Q) (ξR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
     (y₀ : ∀ PP : Pl D.host.E, Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (kP PP)) :
@@ -88,7 +88,7 @@ theorem omegaFree_ne_zero (Q : Finset (Pl D.host.E)) (hd : Disjoint R.Pg Q) (ξR
     if_neg (Finset.disjoint_left.1 hd hp)
   have h2 : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (if PP ∈ Q then stdM (kP PP) _ _ else y₀ PP)).det := fun PP hp => by
     rw [if_pos hp, topL_stdM (rank_W_le_V i)]; simp
-  rw [if_pos h1, dif_pos h2, one_mul]
+  rw [if_pos h1, dite_eq_left h2, one_mul]
   exact Finset.prod_ne_zero_iff.2 fun _ _ => Units.ne_zero _
 
 theorem phiOf_iff_phiIs (t : T0) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]

@@ -187,7 +187,7 @@ theorem exists_setLift_family {S : Set ((Σ k, ι k) → ℂ)}
   have hBsome : ∀ t : T, Bo (some t) = if ∃ γ, Lift t γ then Bl t.1 else ∅ := fun t => rfl
   have hγsome : ∀ t : T, (h : ∃ γ, Lift t γ) → γo (some t) = h.choose := fun t h => by
     show (if h : ∃ γ, Lift t γ then h.choose else fun _ _ => 0) = _
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   have hBo : ∀ o, IsOpen (Bo o) := by
     rintro (_ | t)
     · exact isOpen_empty
@@ -306,7 +306,7 @@ theorem cxPosDens_aemeasurable_of_finite {S : Set ((Σ k, ι k) → ℂ)}
       simp only
       rw [Set.indicator_of_mem hm, hdens m y hm.1]
       unfold setSheetDensity
-      rw [dif_pos hex, hy _ _ _ hex.choose_spec hsh]
+      rw [dite_eq_left hex, hy _ _ _ hex.choose_spec hsh]
 
       choose i0 hi0 using hO m hm.1
       have hs : segre (γ m y) = segre (hex.choose y) := by
@@ -357,7 +357,7 @@ theorem cxPosDens_aemeasurable_of_finite {S : Set ((Σ k, ι k) → ℂ)}
         · rfl
       · have h0 : setSheetDensity S Ψ (pot L) g y w = 0 := by
           unfold setSheetDensity
-          rw [dif_neg hex]
+          rw [dite_eq_right hex]
         refine Eventually.of_forall fun N => ?_
         rw [h0, max_self]
         refine (Finset.sum_eq_zero fun m _ => ?_).symm

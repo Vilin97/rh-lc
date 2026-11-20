@@ -56,7 +56,7 @@ theorem cell_normSq (D : D7) {z z' : Fin (2 * D.R.rS + D.R.k + 1) → ℂ} {γ :
   obtain ⟨L, U, hL, hU, hZ⟩ := h.2.1
   have e : DminN z z' γ l = leadMinor (Formalism.QuantumDeterminants.Zhat D.R.k D.R.rS z z' γ) l hl := by
     unfold DminN
-    rw [dif_pos (Nat.lt_succ_of_le hl)]
+    rw [dite_eq_left (Nat.lt_succ_of_le hl)]
     rfl
   rw [e, ← normSq_leadMinor_ZhatO, hZ, leadMinor_cell L (ptMat p) U hL hU l hl]
 

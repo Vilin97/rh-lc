@@ -16,13 +16,13 @@ set_option synthInstance.maxHeartbeats 200000
 private theorem cmp_of {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {w : Plc L}
     (h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : UA L n) : cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold CaseU.cmp
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 private theorem cmp_not {l : ℕ} [Fact l.Prime] {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {w : Plc L}
     (h : ¬ ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : Ga l L n) : cmp n w x = 1 := by
   unfold CaseU.cmp
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   rfl
 
 private theorem cmp_cont (l : ℕ) [Fact l.Prime] {L : Type} [Field L] [NumberField L] [IsCMField L] (n : ℕ) (w : Plc L) :

@@ -13,7 +13,7 @@ theorem sz_eq (D : D7) (i : D.nd.Loc) (ρ : D.what₂.Tau) :
     AdmissibleParameterJ.sz D (D.nd.j i) ρ = (D.hc ρ).e (GlobalTheory.IndefiniteRowSideFullHecke.JumpDictionary.liftIdx D i) := by
   have := D.nd.j_range i
   unfold AdmissibleParameterJ.sz
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 theorem PPm_eq (D : D7) (i : D.nd.Loc) (ρ : D.what₂.Tau) :

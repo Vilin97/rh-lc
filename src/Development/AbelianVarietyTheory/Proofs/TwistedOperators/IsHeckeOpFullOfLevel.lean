@@ -232,7 +232,7 @@ theorem exists_part_ne_bot {θ : InfFam D} {M : DSModel V S} {L L' : Formalism.L
     x ⟨(P, d, hR.choose), hR.choose_spec⟩ else 0, fun hb => hT0 (Subtype.ext ?_)⟩
   refine (Submodule.eq_bot_iff _).1 hb _ ⟨(mem_partFull ..).2 ⟨T.2.1, fun P d R hR v => ?_⟩, T.2⟩
   have hex : ∃ R, Hecke₂ V (levS V β L') (levChi V β L') (GlobalTheory.IndefiniteRowSideFullHecke.CharacterMatchingGaps.finS D) P d R := ⟨R, hR⟩
-  rw [dif_pos hex, labelUnique (J := levG V β L') realUnif P d R hex.choose hR hex.choose_spec _ (hlev T v)]
+  rw [dite_eq_left hex, labelUnique (J := levG V β L') realUnif P d R hex.choose hR hex.choose_spec _ (hlev T v)]
   exact congrArg (fun U : goodPart θ M (levS V β L') (levChi V β L') (gaL V β L eG a) => (U : MMap M) v)
     (hx ⟨(P, d, hex.choose), hex.choose_spec⟩)
 

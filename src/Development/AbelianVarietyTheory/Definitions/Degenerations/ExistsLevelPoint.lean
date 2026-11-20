@@ -49,19 +49,19 @@ theorem exists_intGood (u : ρ.UTest p y₀) :
     have e : h.choose = ψ :=
       ext_of_isDominant_of_isSeparated u.D.toPre.P.A.hom (h.choose_spec.1.trans hψ.symm) (gPt p) h.choose_spec.2
     have hJ : J (gPt p ≫ ψ) = ch (ψ (cPt p)) := by
-      simp only [J]; rw [dif_pos h, e]
+      simp only [J]; rw [dite_eq_left h, e]
     intro w _
     show ψ w ∈ u.D.toPre.P.L.U (J (gPt p ≫ ψ))
     rw [hJ]; exact key ψ w
   · show φ z ∈ u.D.toPre.P.L.U (J φ)
     by_cases h : P φ
-    · have hJ : J φ = ch (h.choose (cPt p)) := by simp only [J]; rw [dif_pos h]
+    · have hJ : J φ = ch (h.choose (cPt p)) := by simp only [J]; rw [dite_eq_left h]
       rw [hJ]
       have e : φ z = h.choose (gPt p z) := by
         conv_lhs => rw [← h.choose_spec.2]
         rfl
       rw [e]; exact key _ _
-    · have hJ : J φ = ch (φ (IsLocalRing.closedPoint _)) := by simp only [J]; rw [dif_neg h]
+    · have hJ : J φ = ch (φ (IsLocalRing.closedPoint _)) := by simp only [J]; rw [dite_eq_right h]
       rw [hJ]
       have e : z = IsLocalRing.closedPoint (PadicAlgCl p) := Subsingleton.elim (α := PrimeSpectrum (PadicAlgCl p)) _ _
       rw [e]; exact hch _

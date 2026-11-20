@@ -121,10 +121,10 @@ theorem extension_by_zero_val_eq {D D' : D7} {P : Prop} (_he : P)
     exact hus ▸ hu
   by_cases h : t ∈ D.host.TT
   · have h' := key t t' hTT ht h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     exact hf ⟨t, h⟩ ⟨t', h'⟩ ht
   · have h' : t' ∉ D'.host.TT := fun h' => h (key t' t hTT.symm ht.symm h')
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem host_cls_eq {R R' : Ranks} {H : Host R} {H' : Host R'} (hq : H.q = H'.q) (hd : H.d = H'.d)
     (hQS : H.QS = H'.QS) : H.cls = H'.cls := by
@@ -138,7 +138,7 @@ theorem host_cls_eq {R R' : Ranks} {H : Host R} {H' : Host R'} (hq : H.q = H'.q)
     · have hc' : Nat.Coprime p H'.toHostRaw.condN := by
         rw [← hN]
         exact hc
-      rw [dif_pos hc, dif_pos hc']
+      rw [dite_eq_left hc, dite_eq_left hc']
       have e := H.flPS (ZMod.unitOfCoprime p hc)
       have e' := H'.flPS (ZMod.unitOfCoprime p hc')
       rw [e, e']
@@ -146,7 +146,7 @@ theorem host_cls_eq {R R' : Ranks} {H : Host R} {H' : Host R'} (hq : H.q = H'.q)
     · have hc' : ¬ Nat.Coprime p H'.toHostRaw.condN := by
         rw [← hN]
         exact hc
-      rw [dif_neg hc, dif_neg hc']
+      rw [dite_eq_right hc, dite_eq_right hc']
   funext p
   unfold Formalism.BasicNotions.Host.cls Formalism.BasicNotions.primeClass
   rw [hps p]

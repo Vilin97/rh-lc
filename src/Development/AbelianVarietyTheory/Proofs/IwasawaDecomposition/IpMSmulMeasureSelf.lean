@@ -84,7 +84,7 @@ theorem norm_sq_rows (hP : Pins R F cG) (Z : ReadL R F X0 Y) (y : Fin ((s1Of R F
       by_contra hno
       have h0 : ipM (R.MY 0) R.ν0 R.fd0 (R.HE.e z) (R.HE.e z) = 0 := by
         unfold ipM
-        rw [dif_neg hno]
+        rw [dite_eq_right hno]
       exact hz0 (inner_self_eq_zero.1 (hip'.trans h0))
     rw [ipM_smul_measure_self (R.MY 0) R.ν0 R.fd0 ha hu hex, ← hip'] at hE
     rw [← @inner_self_eq_norm_sq ℂ, ← @inner_self_eq_norm_sq ℂ _ _ _ _ z, hE]

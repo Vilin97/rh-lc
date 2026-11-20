@@ -98,7 +98,7 @@ theorem core (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (k : F
     ext c'
     have hx : xiBar D PP = 0 := by
       unfold xiBar Formalism.L2.Col.redP
-      rw [dif_neg]
+      rw [dite_eq_right]
       rintro ⟨_, r, s, hs, hsa, _⟩
       apply hs
       rw [hE0 s r hsa]

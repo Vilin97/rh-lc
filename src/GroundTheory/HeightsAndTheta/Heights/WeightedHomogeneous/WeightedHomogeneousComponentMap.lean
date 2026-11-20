@@ -110,8 +110,8 @@ theorem cycEval_divCycle_map (P : Ideal (ReciprocityTheory.ChartRestriction.G.Ge
       exact GenericCycleCorresp.length_eq M J W (hdisj W hW)
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     by_cases hr : IsRelevant W
-    · rw [dif_pos ⟨hW, hr⟩, dif_pos ⟨hmin W hW, hrel.mpr hr⟩, hl]
-    · rw [dif_neg (fun h ↦ hr h.2), dif_neg (fun h ↦ hr (hrel.mp h.2))]
+    · rw [dite_eq_left ⟨hW, hr⟩, dite_eq_left ⟨hmin W hW, hrel.mpr hr⟩, hl]
+    · rw [dite_eq_right (fun h ↦ hr h.2), dite_eq_right (fun h ↦ hr (hrel.mp h.2))]
   have hsupp : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι)) (x) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι)),
       ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q x) W : ℤ) ≠ 0 → W ∈ (Q ⊔ Ideal.span {x}).minimalPrimes := by
     intro Q x W h

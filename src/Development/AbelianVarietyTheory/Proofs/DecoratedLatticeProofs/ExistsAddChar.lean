@@ -112,7 +112,7 @@ theorem reduction_spec (P : HeightOneSpectrum (𝓞 E)) {a : E} (h : IntAt P a) 
       Ideal.Quotient.mk P.asIdeal s * c = Ideal.Quotient.mk P.asIdeal r :=
     ⟨(Ideal.Quotient.mk P.asIdeal s)⁻¹ * Ideal.Quotient.mk P.asIdeal r, r, s, hs, e, mul_inv_cancel_left₀ hs' _⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem exists_residue (P : HeightOneSpectrum (𝓞 E)) (ι : E →+* k) (hint : ∀ a, ι a ∈ 𝒪[k] ↔ IntAt P a)
@@ -219,7 +219,7 @@ theorem exists_tie : ∀ (E K k : Type) [Field E] [NumberField E] [StarRing E] [
     have e1 : Units.map (𝒪[k]).subtype.toMonoidHom hx.unit = u := Units.ext e.symm
     have e2 : Units.map r.toMonoidHom hx.unit = hu.unit := Units.ext (hred a _)
     change (μ (i + 1) u : ℂ) = _
-    rw [← e1, hμv, e2, LocE.unitV, dif_pos hu]
+    rw [← e1, hμv, e2, LocE.unitV, dite_eq_left hu]
     rfl
 
 end GlobalTheory.SymTieExists

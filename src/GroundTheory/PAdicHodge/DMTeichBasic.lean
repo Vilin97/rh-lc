@@ -298,7 +298,7 @@ noncomputable def ord (a : T.B) : ℤ :=
 
 theorem ord_spec {a : T.B} (ha : a ≠ 0) :
     ∃ u : Γˣ, a = U.ϖ ^ ord U a * algebraMap Γ T.B u := by
-  rw [ord, dif_neg ha]
+  rw [ord, dite_eq_right ha]
   exact Classical.choose_spec (exists_unit_form U a ha)
 
 theorem ord_eq {a : T.B} {n : ℤ} {u : Γˣ}
@@ -375,7 +375,7 @@ noncomputable def res (a : T.B) : L :=
 
 theorem res_algebraMap (w : Γ) : res U (algebraMap Γ T.B w) = T.red w := by
   have h := isInt_algebraMap (U := U) w
-  rw [res, dif_pos h]
+  rw [res, dite_eq_left h]
   have h1 := Classical.choose_spec h
   have h2 : algebraMap Γ T.B w = algebraMap Γ T.B (Classical.choose h) := by
     simpa using h1

@@ -58,7 +58,7 @@ theorem trdegD_iff_exists_linearIndependent_D :
   have hone : ratio (Ω := Ω c) (d.w (d.jc c) c) (d.w (d.jc c) c) = 1 := by
     have hex : ∃ a : Ω c, d.w (d.jc c) c = a • d.w (d.jc c) c := ⟨1, (one_smul _ _).symm⟩
     have h := hex.choose_spec
-    rw [ratio, dif_pos hex]
+    rw [ratio, dite_eq_left hex]
     exact smul_left_injective (Ω c) hw (h.symm.trans (one_smul _ _).symm)
   have heq : IntermediateField.adjoin K (Set.range fun j =>
       ratio (Ω := Ω c) (d.w j c) (d.w (d.jc c) c)) =

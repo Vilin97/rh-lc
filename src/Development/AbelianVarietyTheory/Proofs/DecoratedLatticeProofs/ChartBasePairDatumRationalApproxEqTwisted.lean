@@ -70,7 +70,7 @@ theorem xiAt_transport_tw : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X) (l : 
     intro x x₀ hx
     obtain ⟨hvT, hrow⟩ := hrowT _ x x₀ hx
     unfold xiAt
-    rw [dif_pos h2, dif_pos h2]
+    rw [dite_eq_left h2, dite_eq_left h2]
     unfold Formalism.L2.Col.XiEntry
     rw [H1 _ (dvd_mul_right _ _) x x₀ hvT]
     refine congrArg (HMul.hMul _) (Finset.prod_congr rfl fun P _ => ?_)
@@ -82,7 +82,7 @@ theorem xiAt_transport_tw : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X) (l : 
     intro x x₀ hx
     obtain ⟨hvT, hrow⟩ := hrowT _ x x₀ hx
     unfold xiAt
-    rw [dif_neg h2, dif_neg h2, dif_pos h3, dif_pos h3]
+    rw [dite_eq_right h2, dite_eq_right h2, dite_eq_left h3, dite_eq_left h3]
     unfold Formalism.L2.Col.XiCpl1
     rw [H1 _ (dvd_mul_right _ _) x x₀ hvT]
     refine congrArg (HMul.hMul _) (Finset.prod_congr rfl fun P _ => ?_)

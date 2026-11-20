@@ -350,7 +350,7 @@ theorem modulus : ∀ (n : ℕ) (ε : Fin n → Bool) (a : ℕ) (j : Fin a → �
       rw [(Submodule.mem_bot ℂ).1 hy, map_zero]
       exact zero_mem _
     unfold detOn
-    rw [dif_pos hb, LinearMap.det_eq_one_of_subsingleton, norm_one]
+    rw [dite_eq_left hb, LinearMap.det_eq_one_of_subsingleton, norm_one]
   have hν0 : Module.finrank ℂ (dblFlag ε W 0) = 0 := by rw [dblFlag_zero hW, finrank_bot]
   have hνs : ∀ i : Fin a, Module.finrank ℂ (dblFlag ε W (i + 1)) = Module.finrank ℂ (dblFlag ε W i) + j i := by
     intro i

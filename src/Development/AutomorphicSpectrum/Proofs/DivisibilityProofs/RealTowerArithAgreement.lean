@@ -262,7 +262,7 @@ theorem exists_word {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι
     rfl
   refine ⟨fun k => (Finsupp.toMultiset m).toList.get ⟨k, by omega⟩, fun ℓ => funext fun k => ?_⟩
   simp only [monoLines]
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
 
 section Limits
 

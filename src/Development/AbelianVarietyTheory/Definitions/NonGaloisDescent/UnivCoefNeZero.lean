@@ -193,7 +193,7 @@ theorem omegaG_empty (y : Reds D S.rank T.rank) :
     omegaG (TypeDat.empty D T.rank).levT (TypeDat.empty D T.rank).muC y = 1 := by
   have : IsEmpty ↥(TypeDat.empty D T.rank).levT.Pg := ⟨fun PP => absurd PP.2 (Finset.notMem_empty _)⟩
   unfold omegaG
-  rw [dif_pos ⟨fun _ h => absurd h (Finset.notMem_empty _), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
+  rw [dite_eq_left ⟨fun _ h => absurd h (Finset.notMem_empty _), fun PP => isEmptyElim PP, fun PP => isEmptyElim PP,
     fun PP => isEmptyElim PP, Subgroup.mem_bot.2 (Subsingleton.elim _ _)⟩, Finset.univ_eq_empty, Finset.prod_empty,
     Finset.prod_empty, mul_one, mul_one]
   rfl
@@ -204,7 +204,7 @@ theorem flat_rectOne {k : Type} [CommRing k] {r n : ℕ} (h : r ≤ n) (ν : kˣ
     ext i j
     have h1 : i.val < r ∧ j.val < n := ⟨i.2, by omega⟩
     unfold topL rectOne
-    rw [dif_pos h1, Matrix.one_apply]
+    rw [dite_eq_left h1, Matrix.one_apply]
     simp only [Fin.ext_iff]
   rw [this, det_one, Units.val_one]
 

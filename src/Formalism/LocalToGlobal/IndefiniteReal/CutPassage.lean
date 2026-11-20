@@ -29,7 +29,7 @@ theorem rinv_spec {d n : ℕ} (P : Matrix (Fin d) (Fin n) K) (h : Function.Surje
     rw [Matrix.one_apply, ← h1]
     simp only [Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.of_apply]
   unfold rinv
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 variable {Bs : DefBase K} {A : DefAmb Bs} (X : CxData A) {fc : DefSub A → DefFace Bs} (cr : Crd A fc)

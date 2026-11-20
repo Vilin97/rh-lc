@@ -47,10 +47,10 @@ theorem eIter_apply (n : ℕ) : ∀ (j : ℕ) (g : GL (Fin n) k) (a b : Fin (n +
           Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) a b := rfl
     rw [e, glEmbMat_apply]
     by_cases h : (a : ℕ) < n + j + 1 ∧ (b : ℕ) < n + j + 1
-    · rw [dif_pos h, eIter_apply n j g]
-    · rw [dif_neg h]
+    · rw [dite_eq_left h, eIter_apply n j g]
+    · rw [dite_eq_right h]
       have h' : ¬ ((a : ℕ) < n ∧ (b : ℕ) < n) := fun h2 => h ⟨by omega, by omega⟩
-      rw [dif_neg h']
+      rw [dite_eq_right h']
 
 theorem eIter_eq_leviEmb (n j : ℕ) (hd : ∑ a, (![n, j + 1] a) = n + j + 1) (g : GL (Fin n) k) :
     ((eIter k n j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) =
@@ -76,7 +76,7 @@ theorem eIter_eq_leviEmb (n j : ℕ) (hd : ∑ a, (![n, j + 1] a) = n + j + 1) (
   rcases hsplit x with ⟨i, rfl⟩ | ⟨i, rfl⟩ <;> rcases hsplit y with ⟨l, rfl⟩ | ⟨l, rfl⟩
   · have hi := i.isLt
     have hl := l.isLt
-    rw [dif_pos ⟨by rw [h0]; exact hi, by rw [h0]; exact hl⟩]
+    rw [dite_eq_left ⟨by rw [h0]; exact hi, by rw [h0]; exact hl⟩]
     have := leviEmb_apply_same k e (firstEmb ![n, j + 1] g) 0 i l
     rw [this]
     have h2 : (firstEmb ![n, j + 1] g) 0 = g := by
@@ -84,12 +84,12 @@ theorem eIter_eq_leviEmb (n j : ℕ) (hd : ∑ a, (![n, j + 1] a) = n + j + 1) (
       exact Pi.mulSingle_eq_same _ _
     rw [h2, hv0, hv0]
   · have hi := i.isLt
-    rw [dif_neg (fun h => by have := h.2; rw [h1] at this; omega), if_neg (by rw [h0, h1]; omega)]
+    rw [dite_eq_right (fun h => by have := h.2; rw [h1] at this; omega), if_neg (by rw [h0, h1]; omega)]
     exact (leviEmb_apply_ne k e _ (a := 0) (b := 1) (by decide) i l).symm
   · have hl := l.isLt
-    rw [dif_neg (fun h => by have := h.1; rw [h1] at this; omega), if_neg (by rw [h0, h1]; omega)]
+    rw [dite_eq_right (fun h => by have := h.1; rw [h1] at this; omega), if_neg (by rw [h0, h1]; omega)]
     exact (leviEmb_apply_ne k e _ (a := 1) (b := 0) (by decide) i l).symm
-  · rw [dif_neg (fun h => by have := h.1; rw [h1] at this; omega)]
+  · rw [dite_eq_right (fun h => by have := h.1; rw [h1] at this; omega)]
     have := leviEmb_apply_same k e (firstEmb ![n, j + 1] g) 1 i l
     rw [this]
     have h3 : (firstEmb ![n, j + 1] g) 1 = 1 := by

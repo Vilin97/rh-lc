@@ -551,7 +551,7 @@ theorem wLoc_le (v : D.what₂.Tau) (γ : Point D.host.E (D.R.rS + 1)) : wLoc D 
   rw [← Finset.range_eq_Ico, Finset.prod_range, ← Finset.prod_pow]
   refine Finset.prod_congr rfl fun l _ => ?_
   simp only [G]
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   rfl
 
 theorem WLoc_le (T T' : ℕ) (v : D.what₂.Tau) (γ : Point D.host.E (D.R.rS + 1))
@@ -578,7 +578,7 @@ theorem WLoc_le (T T' : ℕ) (v : D.what₂.Tau) (γ : Point D.host.E (D.R.rS + 
     rw [← Finset.range_eq_Ico, Finset.prod_range]
     refine Finset.prod_congr rfl fun l _ => ?_
     simp only [G]
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     rfl
   rw [e] at h
   have hd : dLoc D v γ ≤ Fl D v γ (Fin.last D.R.rS) := by rw [Fl_last]; linarith

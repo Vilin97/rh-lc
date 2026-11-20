@@ -426,7 +426,7 @@ theorem list_incl (ℓ : List ℤ) (G : BP K n) :
 
 theorem detShift_succ (lam : DomWeight (n + 1)) : lam.detShift = lam.w (Fin.last n) := by
   unfold DomWeight.detShift
-  rw [dif_pos (Nat.succ_pos n)]
+  rw [dite_eq_left (Nat.succ_pos n)]
   rfl
 
 theorem fock_gen [CharZero K] {lam : DomWeight (n + 1)} {sg : DomWeight n} (hI : InterlacingNumerators.Interlace lam sg)

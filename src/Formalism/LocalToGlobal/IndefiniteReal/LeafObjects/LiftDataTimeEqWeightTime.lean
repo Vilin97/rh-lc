@@ -282,7 +282,7 @@ theorem uTR_gap (τ : D.what₂.Tau) (k : ℕ) (h : k + 1 < D.R.r) :
   have h3 : gap (fun n => uMinus D.R.r (pp D i) (c0n D i) (uR D i τ) n - MeansTie.kap D.R.r (pp D i) n) k =
       (uMinus D.R.r (pp D i) (c0n D i) (uR D i τ) ⟨k, by omega⟩ - MeansTie.kap D.R.r (pp D i) ⟨k, by omega⟩) -
         (uMinus D.R.r (pp D i) (c0n D i) (uR D i τ) ⟨k + 1, h⟩ - MeansTie.kap D.R.r (pp D i) ⟨k + 1, h⟩) := by
-    unfold gap; rw [dif_pos h]
+    unfold gap; rw [dite_eq_left h]
   change remR D P i τ ⟨k, _⟩ - remR D P i τ ⟨k + 1, h⟩ = gap _ k - _ at h2
   rw [h3] at h2
   unfold uTR
@@ -566,7 +566,7 @@ theorem elocOf_nonempty {q : ℕ} (hq : q.Prime) : (elocOf P S i El q).Nonempty 
     rw [h, Ideal.mem_bot] at hmem
     exact hq.ne_zero (by exact_mod_cast hmem)
   unfold elocOf
-  rw [dif_pos hq]
+  rw [dite_eq_left hq]
   refine Finset.Nonempty.image ⟨(⟨m, hm.isPrime, hb⟩, Classical.arbitrary _), Finset.mem_product.mpr ⟨?_, Finset.mem_univ _⟩⟩ _
   simpa using hmem
 
@@ -749,7 +749,7 @@ theorem leafTie : LeafTie (packGeo _ Γ.S i (Γ.El i) (Γ.B i) r4 (Real.log (Γ.
   heloc0 := fun q hq => by
     show elocOf _ Γ.S i (Γ.El i) q = ∅
     unfold elocOf
-    rw [dif_neg hq]
+    rw [dite_eq_right hq]
   hlevel := Msh_pos _
 
 end Build

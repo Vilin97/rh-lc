@@ -23,7 +23,7 @@ theorem rd_zero {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (
     (θ : InfFam D) (β : Ch 0) : GlobalTheory.AdForm.rd F θ 0 (Nat.zero_le _) β = (chart0 F.to0).rd θ := by
   funext ψ y
   unfold GlobalTheory.AdForm.rd GlobalTheory.AdForm.chart
-  rw [dif_pos (Or.inl rfl)]
+  rw [dite_eq_left (Or.inl rfl)]
   rfl
 
 def IsTransportAdelicCorrection {X : HidaSetting D} {F : Formalism.L2.Forms.Forms0 D u} (tr : Formalism.L2.SG.ColDict.Transport X u F) (a : GA D (D.sp.X 0)) : Prop :=

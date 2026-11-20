@@ -141,34 +141,34 @@ theorem nL_eq {j ρ : ℕ} (hρ : 1 ≤ ρ) (a : Fin j → ℂ) :
       Matrix.fromCols_apply_inr, Matrix.zero_apply, Matrix.one_apply, Matrix.neg_apply, Matrix.of_apply,
       EmbeddingLike.apply_eq_iff_eq, Sum.inl.injEq, Sum.inr.injEq, reduceCtorEq, if_false, v1, v2, v3]
   · have := α.isLt; have := β.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := α.isLt; have := v.isLt
-    rw [wcH_apply hρ, dif_neg (by omega)]
+    rw [wcH_apply hρ, dite_eq_right (by omega)]
     by_cases hv : v.val = 0
-    · rw [dif_pos ⟨α.isLt, by omega⟩, if_pos hv]; simp
-    · rw [dif_neg (by omega), if_neg hv]; simp
+    · rw [dite_eq_left ⟨α.isLt, by omega⟩, if_pos hv]; simp
+    · rw [dite_eq_right (by omega), if_neg hv]; simp
   · have := α.isLt; have := β.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := u.isLt; have := β.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := u.isLt; have := v.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := u.isLt; have := β.isLt
-    rw [cL_last, dif_neg (show ¬(j + u.val < j ∧ j + (2 * ρ + k + 1) + β.val = j) by omega)]
+    rw [cL_last, dite_eq_right (show ¬(j + u.val < j ∧ j + (2 * ρ + k + 1) + β.val = j) by omega)]
     by_cases hu : u.val = 2 * ρ + k
-    · rw [dif_pos (show j + u.val = j + 2 * ρ + k ∧ j + 2 * ρ + k + 1 ≤ j + (2 * ρ + k + 1) + β.val by omega),
+    · rw [dite_eq_left (show j + u.val = j + 2 * ρ + k ∧ j + 2 * ρ + k + 1 ≤ j + (2 * ρ + k + 1) + β.val by omega),
         if_pos hu]
       have e : (⟨2 * (j + ρ) + k - (j + (2 * ρ + k + 1) + β.val), by omega⟩ : Fin j) = β.rev :=
         Fin.ext (by simp [Fin.rev]; omega)
       rw [e]; ring
-    · rw [dif_neg (show ¬(j + u.val = j + 2 * ρ + k ∧ j + 2 * ρ + k + 1 ≤ j + (2 * ρ + k + 1) + β.val) by omega),
+    · rw [dite_eq_right (show ¬(j + u.val = j + 2 * ρ + k ∧ j + 2 * ρ + k + 1 ≤ j + (2 * ρ + k + 1) + β.val) by omega),
         if_neg hu]; ring
   · have := α.isLt; have := β.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := α.isLt; have := v.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
   · have := α.isLt; have := β.isLt
-    rw [dif_neg (by omega), dif_neg (by omega)]; ring
+    rw [dite_eq_right (by omega), dite_eq_right (by omega)]; ring
 
 end nl
 

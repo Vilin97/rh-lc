@@ -21,7 +21,7 @@ theorem valR_top_comp (R : Type) [CommRing R] (G : Over (Sp R)) (Ω : Type) [Com
     valR x' ⊤ (G.hom.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom r)) = φ r := by
   have ht : ⊤ ≤ x' ⁻¹ᵁ (⊤ : G.left.Opens) := fun _ _ => trivial
   unfold valR
-  rw [dif_pos ht]
+  rw [dite_eq_left ht]
   have h1 : (x'.appLE ⊤ ⊤ ht).hom (G.hom.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom r)) =
       (spMap φ).appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom r) := by
     rw [← hx]

@@ -22,7 +22,7 @@ def trm (Ht : G → ℝ≥0) (f : G → ℂ) (s₀ z : ℂ) (x : G) : ℂ := ((H
 theorem lift_mR (φ : GR n → ℂ) (y : GR n) : lift φ (mR y) = φ y := by
   unfold lift
   have h : IsUnit (mR y) ∧ InG (mR y) := ⟨y.1.isUnit, y.2⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   congr 1
   apply Subtype.ext
   apply Units.ext

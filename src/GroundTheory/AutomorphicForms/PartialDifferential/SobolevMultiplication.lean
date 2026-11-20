@@ -365,9 +365,9 @@ def sob (s : ℝ) (u : 𝓢'(E, ℂ)) : ℝ≥0∞ :=
   if h : MemSobolev s 2 u then ‖(SobolevSpace.mk u h : SobolevSpace E ℂ s)‖ₑ else ⊤
 
 theorem sob_of_mem {s : ℝ} {u : 𝓢'(E, ℂ)} (h : MemSobolev s 2 u) :
-    sob s u = ‖(SobolevSpace.mk u h : SobolevSpace E ℂ s)‖ₑ := by rw [sob, dif_pos h]
+    sob s u = ‖(SobolevSpace.mk u h : SobolevSpace E ℂ s)‖ₑ := by rw [sob, dite_eq_left h]
 
-theorem sob_of_not_mem {s : ℝ} {u : 𝓢'(E, ℂ)} (h : ¬ MemSobolev s 2 u) : sob s u = ⊤ := by rw [sob, dif_neg h]
+theorem sob_of_not_mem {s : ℝ} {u : 𝓢'(E, ℂ)} (h : ¬ MemSobolev s 2 u) : sob s u = ⊤ := by rw [sob, dite_eq_right h]
 
 theorem mk_toDistribution {s : ℝ} (v : SobolevSpace E ℂ s) (h) :
     SobolevSpace.mk (SobolevSpace.toDistribution v) h = v :=

@@ -105,7 +105,7 @@ theorem ellT_ne_bot {D : D7} {M : IntermediateField ℚ ℂ} [NumberField M]
     refine Submodule.subset_span ⟨(a : D.host.E), integers_mem_inverse_half_different D.host a, ?_⟩
     funext j
     unfold Formalism.MainNotions.TaylorLogMetric.liftM
-    rw [dif_pos (hM j _)]
+    rw [dite_eq_left (hM j _)]
     rfl
   intro h
   have hs' : s ∈ ellT D M τ := by

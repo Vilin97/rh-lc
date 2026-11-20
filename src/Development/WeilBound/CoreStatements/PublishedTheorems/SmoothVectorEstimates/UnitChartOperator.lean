@@ -203,7 +203,7 @@ theorem orb_mulI (g : GL (Fin a) (ι → ℂ)) (v : X) (M : LieI ι a) :
     rw [dif_pos h', dif_pos h, hu, map_mul, ContinuousLinearMap.mul_apply]
   · have h' : ¬ IsUnit (Matrix.of (mulI (gI g) M)) := by rw [e, Units.isUnit_units_mul]; exact h
     simp only [orb]
-    rw [dif_neg h', dif_neg h, map_zero]
+    rw [dite_eq_right h', dite_eq_right h, map_zero]
 
 theorem orb_mulI_right (g : GL (Fin a) (ι → ℂ)) (v : X) (M : LieI ι a) :
     orb ρ v (mulI M (gI g)) = orb ρ (ρ g v) M := by
@@ -216,7 +216,7 @@ theorem orb_mulI_right (g : GL (Fin a) (ι → ℂ)) (v : X) (M : LieI ι a) :
     rw [dif_pos h', dif_pos h, hu, map_mul, ContinuousLinearMap.mul_apply]
   · have h' : ¬ IsUnit (Matrix.of (mulI M (gI g))) := by rw [e, Units.isUnit_mul_units]; exact h
     simp only [orb]
-    rw [dif_neg h', dif_neg h]
+    rw [dite_eq_right h', dite_eq_right h]
 
 theorem hasFDerivAt_orb_at {v : X} {D : LieI ι a →L[ℝ] X} (hD : HasFDerivAt (orb ρ v) D (oneI ι a))
     (g : GL (Fin a) (ι → ℂ)) :

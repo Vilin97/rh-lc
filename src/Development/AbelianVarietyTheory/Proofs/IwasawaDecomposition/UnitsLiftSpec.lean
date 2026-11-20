@@ -126,7 +126,7 @@ theorem gamN_tg (D : D7) (hD : PlGwDisj D) (k : Fin 2) (v : D.nd.PlG k) : gamN D
   classical
   have h : ∃ kv : (Σ k, D.nd.PlG k), D.naut.plGw kv.1 kv.2 = D.naut.plGw k v := ⟨⟨k, v⟩, rfl⟩
   unfold gamN
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have key : ∀ kv : (Σ k, D.nd.PlG k), D.naut.plGw kv.1 kv.2 = D.naut.plGw k v → kv = ⟨k, v⟩ := by
     rintro ⟨k', v'⟩ e
     obtain rfl := hD k' k v' v e

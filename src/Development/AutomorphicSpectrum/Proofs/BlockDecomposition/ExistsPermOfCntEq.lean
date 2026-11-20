@@ -61,7 +61,7 @@ theorem coef_cnt {ι : Type} {m : ℕ} (F : (Fin m → ι) → ℝ)
     coef F (cnt f) = F f := by
   have h : ∃ g : Fin m → ι, cnt g = cnt f := ⟨f, rfl⟩
   obtain ⟨σ, hσ⟩ := exists_perm_of_cnt_eq h.choose_spec.symm
-  rw [coef, dif_pos h, hσ, hF]
+  rw [coef, dite_eq_left h, hσ, hF]
 
 theorem coef_of_degree_ne {ι : Type} {m : ℕ} (F : (Fin m → ι) → ℝ) {k : ι →₀ ℕ}
     (hk : k.degree ≠ m) : coef F k = 0 := by

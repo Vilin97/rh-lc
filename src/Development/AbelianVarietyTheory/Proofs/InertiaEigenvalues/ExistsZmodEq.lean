@@ -68,14 +68,14 @@ theorem exists_rep : ∀ (D : D7), GrpSide D → ∀ (k : Fin 2) (v : D.nd.PlG k
   have haA : (n : D.nd.Om) ∈ D.nd.plOm.1 (D.naut.plGw k v) := natCast_mem _ _
   have hra : redThrough (D.nd.plOm.1 (D.naut.plGw k v)) (hG.kv k v) (n : D.nd.Om) =
       hG.kv k v (IsLocalRing.residue _ ⟨_, haA⟩) := by
-    unfold redThrough; rw [dif_pos haA]
+    unfold redThrough; rw [dite_eq_left haA]
   have hra' : hG.kv k v (IsLocalRing.residue _ ⟨_, haA⟩) = hG.ζ k 1 := by
     have : (⟨(n : D.nd.Om), haA⟩ : D.nd.plOm.1 (D.naut.plGw k v)) = (n : D.nd.plOm.1 (D.naut.plGw k v)) :=
       Subtype.ext (by simp)
     rw [this, map_natCast, map_natCast, hca]
   have hrq : redThrough (D.nd.plOm.1 (D.naut.plGw k v)) (hG.kv k v) (D.ntypes.tg k v π / π) =
       hG.kv k v (IsLocalRing.residue _ ⟨_, hq⟩) := by
-    unfold redThrough; rw [dif_pos hq]
+    unfold redThrough; rw [dite_eq_left hq]
   have hval : (D.nd.plOm.1 (D.naut.plGw k v)).valuation (D.ntypes.tg k v π / π - (n : D.nd.Om)) < 1 := by
     have h1 := (hG.kv k v).injective (((hrq.symm.trans hT).trans hra'.symm))
     have h2 := Ideal.Quotient.eq.1 h1

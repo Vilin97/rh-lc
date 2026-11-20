@@ -51,7 +51,7 @@ theorem exists_orderedForm (𝔪 : Multiset (Segment k)) : ∃ (h : ℕ) (Δ : F
 theorem class_apply_same_degree {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
     (hl : HasFiniteLength π) (c : IrrCl (GL (Fin N) k)) : cl0 π ⟨N, c⟩ = ((jhMult c.rep.ρ π).toNat : ℤ) := by
   unfold cl0
-  rw [dif_pos hl]
+  rw [dite_eq_left hl]
   exact (clsGL_apply π hl c).trans (cls_apply π hl c)
 
 omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in

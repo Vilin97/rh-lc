@@ -153,7 +153,7 @@ theorem core (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (ι : E →+* k) (ϖ : k
         (hC.int _).1 ((Valuation.mem_integer_iff _ _).2 hv.le)
       rw [Units.val_inv_eq_inv_val, hδ _ _ hint hu hdet, inv_inv]
     · have h0 : LocE.unitV ξ (Matrix.det (Matrix.of fun s t : Fin (κ + l) => M s.1 t.1)) = 0 := by
-        unfold LocE.unitV; rw [dif_neg hu]
+        unfold LocE.unitV; rw [dite_eq_right hu]
       rw [h0, map_zero]
       by_contra hne
       exact hu (key.1 ((parPhi_ne_zero_iff δ).1 hne)).2

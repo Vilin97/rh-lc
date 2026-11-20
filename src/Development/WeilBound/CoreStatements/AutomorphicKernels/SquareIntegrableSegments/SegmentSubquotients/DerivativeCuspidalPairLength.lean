@@ -33,13 +33,13 @@ theorem extFam_apply {ι : Fin r → Fin c} (hι : Function.Injective ι) (x : �
     rfl
   have h : ∃ i', ι i' = ι i := ⟨i, rfl⟩
   unfold extFam
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact key _ _
 
 theorem extFam_of_not {ι : Fin r → Fin c} (x : ∀ i, M (ι i)) (z : ∀ j, M j) {j : Fin c} (h : ¬ ∃ i, ι i = j) :
     extFam ι x z j = z j := by
   unfold extFam
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 theorem extFam_update {ι : Fin r → Fin c} (hι : Function.Injective ι) [DecidableEq (Fin r)]
     (x : ∀ i, M (ι i)) (z : ∀ j, M j) (i : Fin r) (v : M (ι i)) :

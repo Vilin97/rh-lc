@@ -83,7 +83,7 @@ def tr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ
 
 theorem isTr_tr {q q' : LatChart Z L} {e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ}
     (h : ∃ a : Γ(Z.X, q.U ⊓ q'.U)ˣ, q.IsTr q' e a.val) : q.IsTr q' e (q.tr q' e).val := by
-  rw [tr, dif_pos h]
+  rw [tr, dite_eq_left h]
   exact h.choose_spec
 
 end LatChart

@@ -138,13 +138,13 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.isogeny_product_decomposition 
   have hincPhi : ∀ k, inc k ≫ Φ = ψ k := by
     intro k
     rw [hΦ, Finset.prod_eq_single k]
-    · rw [hinc, dif_pos rfl, eqToHom_refl, Category.id_comp]
+    · rw [hinc, dite_eq_left rfl, eqToHom_refl, Category.id_comp]
     · intro j _ hj
-      rw [hinc, dif_neg (Ne.symm hj), MonObj.one_comp]
+      rw [hinc, dite_eq_right (Ne.symm hj), MonObj.one_comp]
     · intro h; exact absurd (Finset.mem_univ k) h
   have hψχ : ∀ k k', ψ k ≫ χ k' = (inc k ≫ a k') ^ N := by
     intro k k'
     rw [← hincPhi, Category.assoc, key, MonObj.comp_pow]
   refine ⟨fun k => ?_, fun k k' hk => ?_⟩
-  · rw [hψχ, hinc, dif_pos rfl, eqToHom_refl]
-  · rw [hψχ, hinc, dif_neg hk, one_pow]
+  · rw [hψχ, hinc, dite_eq_left rfl, eqToHom_refl]
+  · rw [hψχ, hinc, dite_eq_right hk, one_pow]

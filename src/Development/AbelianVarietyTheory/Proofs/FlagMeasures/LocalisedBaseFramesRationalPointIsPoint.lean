@@ -51,7 +51,7 @@ theorem modBlocks_some {A S : Type} [CommRing S] (f : ℕ → ℕ → A → S) :
     obtain ⟨L1, hL1⟩ := modBlocks_some f l (a + s) (fun b hb => h1 b (List.mem_cons_of_mem _ hb))
       (fun b hb => h2 b (List.mem_cons_of_mem _ hb))
     have hu : IsUnit (f a s t) ∧ 0 < s := ⟨h2 (t, s) List.mem_cons_self a s, h1 (t, s) List.mem_cons_self⟩
-    rw [modBlocks, dif_pos hu, hL1]
+    rw [modBlocks, dite_eq_left hu, hL1]
     exact ⟨_, rfl⟩
 
 end GlobalTheory.LocalBlockEntries

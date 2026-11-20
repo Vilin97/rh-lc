@@ -37,12 +37,12 @@ theorem fam_eq_single : ∀ (D : D7) (O : Setup D), (∀ i, GlobalTheory.RelabDR
       by_cases hi : (i : ℕ) < O.j
       · have hx : ((rootL O (t, i)).1, ((rootL O (t, i)).2 : ℕ)) = (DV.tauEmb D t, (i : ℕ)) := by
           unfold rootL LieGen.rootLetter
-          rw [dif_pos hi]
+          rw [dite_eq_left hi]
         rw [if_pos (show (i : ℕ) < O.S.Dw.p by omega), if_pos hi, hx]
       · have hx : ((rootL O (t, i)).1, ((rootL O (t, i)).2 : ℕ)) =
             (ReciprocityTheory.ChartRestriction.G.Geo.Tor.conjEmb (DV.tauEmb D t), O.S.Dw.p + O.S.Dw.q - 1 - (i : ℕ)) := by
           unfold rootL LieGen.rootLetter
-          rw [dif_neg hi]
+          rw [dite_eq_right hi]
           simp only [Prod.mk.injEq, true_and]
           omega
         rw [if_neg (show ¬ (i : ℕ) < O.S.Dw.p by omega), if_neg hi, hx]

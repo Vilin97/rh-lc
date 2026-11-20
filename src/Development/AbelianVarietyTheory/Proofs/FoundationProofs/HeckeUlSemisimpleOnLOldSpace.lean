@@ -15,7 +15,7 @@ namespace GlobalTheory.OldSpace
 theorem toGL_mat (γ : SL(2, ℤ)) : toGL (mat γ) = Matrix.SpecialLinearGroup.mapGL ℝ γ := by
   have h : (mat γ).det ≠ 0 := by simp [mat]
   unfold toGL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   ext i j
   simp [mat, Matrix.SpecialLinearGroup.mapGL]
 
@@ -23,14 +23,14 @@ theorem toGL_mul (A B : Matrix (Fin 2) (Fin 2) ℤ) (hA : A.det ≠ 0) (hB : B.d
     toGL (A * B) = toGL A * toGL B := by
   have hAB : (A * B).det ≠ 0 := by rw [Matrix.det_mul]; exact mul_ne_zero hA hB
   unfold toGL
-  rw [dif_neg hA, dif_neg hB, dif_neg hAB]
+  rw [dite_eq_right hA, dite_eq_right hB, dite_eq_right hAB]
   ext i j
   simp [Matrix.mul_apply]
 
 theorem det_toGL (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : A.det ≠ 0) :
     ((toGL A).det : ℝ) = (A.det : ℝ) := by
   unfold toGL
-  rw [dif_neg hA]
+  rw [dite_eq_right hA]
   simp [Matrix.det_fin_two]
 
 theorem sigma_toGL (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : 0 < A.det) (c : ℂ) : σ (toGL A) c = c := by
@@ -50,7 +50,7 @@ namespace GlobalTheory.OldSpace
 theorem toGL_apply (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : A.det ≠ 0) (i j : Fin 2) :
     (↑(toGL A) : Matrix (Fin 2) (Fin 2) ℝ) i j = (A i j : ℝ) := by
   unfold toGL
-  rw [dif_neg hA]
+  rw [dite_eq_right hA]
   simp
 
 theorem toGL_smul_coe (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : 0 < A.det) (τ : ℍ) :

@@ -21,7 +21,7 @@ theorem fourier_coefficients_of_vector_group (hL1 : UnipotentVectorGroup (E := E
       if IsHermFam ψ ∧ X.IsFreqZ g ψ then Ich X u ω G ψ x else 0 := by
     intro ψ x
     unfold Data.fz
-    rw [dif_pos hex, ← hωdef]
+    rw [dite_eq_left hex, ← hωdef]
     rfl
   have hsum : ∀ x ∈ X.dom, Summable (fun ψ : X.Ψ → Fin 2 → Fin 2 → ℂ => ‖X.fz u g ψ G x‖) →
       HasSum (fun ψ : X.Ψ → Fin 2 → Fin 2 → ℂ => X.fz u g ψ G x) (G x) := by

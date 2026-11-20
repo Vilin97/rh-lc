@@ -30,7 +30,7 @@ theorem multAt_pos_of_mem_divSupp {P : Ideal (MRing ι)} {s : MRing ι} {W : Ide
   have hpos := Module.length_pos (R := Localization.AtPrime W)
     (M := Localization.AtPrime W ⧸
       (P ⊔ Ideal.span {s}).map (algebraMap (MRing ι) (Localization.AtPrime W)))
-  rw [multAt, dif_pos hWp, ReciprocityTheory.ChartRestriction.G.AI.I1.inh_length_locQuot]
+  rw [multAt, dite_eq_left hWp, ReciprocityTheory.ChartRestriction.G.AI.I1.inh_length_locQuot]
   exact ENat.toNat_pos hpos.ne' hne
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter

@@ -79,7 +79,7 @@ theorem dGL_val (b : ι → Fin s) (g : ∀ c, GL {i // b i = c} K) :
 theorem isBlockUT_dGL (b : ι → Fin s) (g : ∀ c, GL {i // b i = c} K) :
     IsBlockUT K b ((dGL b g : GL ι K) : Matrix ι ι K) := by
   intro i j h
-  rw [dGL_val, blockHom_apply, dif_neg (ne_of_lt h)]
+  rw [dGL_val, blockHom_apply, dite_eq_right (ne_of_lt h)]
 
 theorem dGL_mem (b : ι → Fin s) (g : ∀ c, GL {i // b i = c} K) : dGL b g ∈ parab K b :=
   ⟨isBlockUT_dGL b g, by rw [← map_inv]; exact isBlockUT_dGL b g⁻¹⟩
@@ -91,7 +91,7 @@ theorem leviHom_dGL (b : ι → Fin s) (g : ∀ c, GL {i // b i = c} K) :
   ext ⟨i, hi⟩ ⟨j, hj⟩
   subst hi
   show ((dGL b g : GL ι K) : Matrix ι ι K) i j = _
-  rw [dGL_val, blockHom_apply, dif_pos hj]
+  rw [dGL_val, blockHom_apply, dite_eq_left hj]
 
 theorem unip_conj (b : ι → Fin s) (g : ∀ c, GL {i // b i = c} K) {u : GL ι K} (hu : u ∈ unip K b) :
     (dGL b g)⁻¹ * u * dGL b g ∈ unip K b := by

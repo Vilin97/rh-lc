@@ -47,10 +47,10 @@ theorem isHolTo_of_comp_openImmersion {W : Type} [NormedAddCommGroup W] [NormedS
     unfold valAt'
     by_cases hb : ⊤ ≤ y b ⁻¹ᵁ U
     · have hb' : ⊤ ≤ (y b ≫ j) ⁻¹ᵁ (j ''ᵁ U) := by rw [hpre]; exact hb
-      rw [dif_pos hb, dif_pos hb']
+      rw [dite_eq_left hb, dite_eq_left hb']
       exact key _ hb' hb
     · have hb' : ¬ ⊤ ≤ (y b ≫ j) ⁻¹ᵁ (j ''ᵁ U) := by rw [hpre]; exact hb
-      rw [dif_neg hb, dif_neg hb']
+      rw [dite_eq_right hb, dite_eq_right hb']
   obtain ⟨ho, hd⟩ := h (j ''ᵁ U) ((j.appIso U).inv f)
   simp only [hpre] at ho hd
   exact ⟨ho, by simpa only [hval] using hd⟩

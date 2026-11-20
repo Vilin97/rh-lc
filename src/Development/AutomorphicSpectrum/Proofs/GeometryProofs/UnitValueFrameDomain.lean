@@ -64,7 +64,7 @@ theorem valAt_ne_zero_of_isUnitOn : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] 
   obtain ⟨r, hr0, hr⟩ := GlobalTheory.CompanionTheory.Ar.ChgUnit.exists_value_of_unit hT.gen z hz hu0 hu hui
   have hex : ∃ v, GroundTheory.Heights₂.Heights.LowerBoundFree.IsValueAt y u w v := ⟨r, (hequiv u r).1 hr⟩
   have hval : GroundTheory.Heights₂.Heights.LowerBoundFree.valAt y u w = hex.choose := by
-    rw [GroundTheory.Heights₂.Heights.LowerBoundFree.valAt, dif_pos hex]
+    rw [GroundTheory.Heights₂.Heights.LowerBoundFree.valAt, dite_eq_left hex]
   have hc : GlobalTheory.CompanionTheory.Ar.ValAt ξ z u hex.choose := (hequiv u _).2 hex.choose_spec
   have heq : hex.choose = r := valAt_unique_lemma hT.gen hc hr
   rw [hval, heq]

@@ -129,11 +129,11 @@ noncomputable def g (A : Type u) [AddCommGroup A] [DistribMulAction Γ A] : ℤ 
 theorem g_eq (A : Type u) [AddCommGroup A] [DistribMulAction Γ A] [Finite (ModN A l)]
     [Finite (TorsN A l)] :
     d.g A = d.toFun (ModN A l) (modNRep Γ A l) - d.toFun (TorsN A l) (torsNRep Γ A l) := by
-  rw [g, dif_pos ⟨‹_›, ‹_›⟩]
+  rw [g, dite_eq_left ⟨‹_›, ‹_›⟩]
 
 theorem g_of_not_finite (A : Type u) [AddCommGroup A] [DistribMulAction Γ A]
     (h : ¬ (Finite (ModN A l) ∧ Finite (TorsN A l))) : d.g A = 0 := by
-  rw [g, dif_neg h]
+  rw [g, dite_eq_right h]
 
 noncomputable def one [NeZero l] : ℤ :=
   d.toFun (ULift.{u} (ZMod l)) (Representation.trivial (ZMod l) Γ (ULift.{u} (ZMod l)))

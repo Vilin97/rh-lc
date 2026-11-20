@@ -180,8 +180,8 @@ theorem cellD_apply (y : (Σ k, ι k) → Ω) (m : ℕ) (t : Cell K ι m → Ω)
   unfold ext rem
   by_cases h : (∀ l, (Function.update J.1 k ((J.1 k).erase i) l).Nonempty) ∧
       ∑ l, ((Function.update J.1 k ((J.1 k).erase i) l).card - 1) = m
-  · rw [dif_pos h, dif_pos h]; rfl
-  · rw [dif_neg h, dif_neg h, smul_zero]; rfl
+  · rw [dite_eq_left h, dite_eq_left h]; rfl
+  · rw [dite_eq_right h, dite_eq_right h, smul_zero]; rfl
 
 omit [∀ k, Fintype (ι k)] in
 theorem cellD_apply_not (y : (Σ k, ι k) → Ω) (m : ℕ) (t : Cell K ι m → Ω) (J : Cell K ι (m + 1))
@@ -221,7 +221,7 @@ omit [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] [LinearOrder K] [Algebr
 theorem ext_of_empty {m : ℕ} (t : Cell K ι m → Ω) {J : ∀ k, Finset (ι k)} {k : K} (h : J k = ∅) :
     ext m t J = 0 := by
   unfold ext
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨hc, -⟩
   simpa [h] using hc k
 
@@ -241,7 +241,7 @@ theorem CellDSq.proof : CellDSq.Statement := by
       intro k i hi
       by_cases hne : ((I.1 k).erase i).Nonempty
       · have hc := rem_isCell I hi hne
-        rw [ext, dif_pos hc, cellD_apply S y n s ⟨_, hc⟩ (meets_rem hI _)]
+        rw [ext, dite_eq_left hc, cellD_apply S y n s ⟨_, hc⟩ (meets_rem hI _)]
       · have h0 : rem I.1 ⟨k, i⟩ k = ∅ := by
           rw [rem_apply_self]; exact Finset.not_nonempty_iff_eq_empty.1 hne
         rw [ext_of_empty _ h0]

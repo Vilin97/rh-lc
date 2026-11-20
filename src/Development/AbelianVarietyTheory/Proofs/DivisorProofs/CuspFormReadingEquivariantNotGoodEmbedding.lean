@@ -32,7 +32,7 @@ theorem exists_lift_act {i : Fin D.R.m} (σ : D.what₂.LL →+* ℂ) {g : G}
   refine ⟨hk.choose, hk.choose_spec, fun x v h => ?_⟩
   show Lev.actG0 (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG g) (x v) h = _
   unfold Lev.actG0
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   simp only [hchi, inv_one, one_mul]
 
 set_option maxHeartbeats 1000000 in
@@ -67,7 +67,7 @@ theorem chiTop_eq {i : Fin D.R.m} (h1 : ∀ g, ∃ a, D.what₂.embLL a = (chiC 
   have hex : ∃ chi, ChiIs R i chi :=
     ⟨MonoidHom.mk' (fun g => Units.mk0 (a g) (hne g)) fun g g' => Units.ext (D.what₂.embLL.injective (by
       simp only [Units.val_mk0, Units.val_mul, map_mul, ha, chiC_mul])), ha⟩
-  rw [chiTop, dif_pos hex]
+  rw [chiTop, dite_eq_left hex]
   exact hex.choose_spec
 
 end Model

@@ -366,7 +366,7 @@ variable {n' k1 : ℕ} {p t m c r : ℕ} {TT : Finset (Fin n')} {a b : Fin n' �
 theorem lamI_ge (h : Std p n' k1 t m c r TT a b lam0 w) (s : Fin n') (i : ℕ) (h1 : 1 ≤ i) (h2 : i ≤ k1 + 1) :
     -w 1 s ≤ lamI lam0 s i := by
   unfold lamI
-  rw [dif_pos ⟨h1, h2⟩]
+  rw [dite_eq_left ⟨h1, h2⟩]
   have hs := (h.w_low s).2
   have hd : lam0 s (Fin.last k1) ≤ lam0 s ⟨i - 1, by omega⟩ := h.dom s (by change i - 1 ≤ k1; omega)
   linarith

@@ -299,7 +299,7 @@ theorem isGood_of_notMem {μ₀ : T} (hL : L.Is μ₀) {G : GridData L sc} (W : 
   have hμ := L.C.isMu0 ⟨j, hj⟩
   have emu : (locGrid G t w).mu (j + 1) = (L.C.mu0 ⟨j, hj⟩).loc w * (L.xiH t).loc w := by
     change (muBase L (j + 1) * L.xiH t).loc w = _
-    rw [muBase, dif_pos hj]
+    rw [muBase, dite_eq_left hj]
     rfl
   have echi : (locGrid G t w).chi ((locGrid G t w).m - i) = (G.ch.chiH (D.R.m - i)).loc w := rfl
   have enu : ∀ x, ((locGrid G t w).alpha i j / (locGrid G t w).beta i j) x =

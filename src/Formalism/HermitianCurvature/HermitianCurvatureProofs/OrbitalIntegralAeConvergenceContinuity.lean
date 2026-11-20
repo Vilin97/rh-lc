@@ -494,7 +494,7 @@ theorem d_ell (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (t : ℝ) (ht 
   refine Finset.sum_congr rfl fun a _ => ?_
   have ha := a.isLt
   by_cases h : a.val + 1 < r
-  · rw [dif_pos h, dif_pos h, d_conj_apply t ht]
+  · rw [dite_eq_left h, dite_eq_left h, d_conj_apply t ht]
     have e1 : d_dg k r t (eI k r a) = ((t ^ (r - a.val) : ℝ) : ℂ) := by
       unfold d_dg; rw [if_pos (by simp only [eI]; omega)]; rfl
     have e2 : d_dg k r t⁻¹ (eI k r ⟨a.val + 1, h⟩) = (((t⁻¹) ^ (r - (a.val + 1)) : ℝ) : ℂ) := by
@@ -507,7 +507,7 @@ theorem d_ell (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (t : ℝ) (ht 
     calc _ = (((t ^ (r - a.val) : ℝ) : ℂ) * (((t⁻¹) ^ (r - (a.val + 1)) : ℝ) : ℂ)) *
           n (eI k r a) (eI k r ⟨a.val + 1, h⟩) := by ring
       _ = _ := by rw [e4]
-  · rw [dif_neg h, dif_neg h]
+  · rw [dite_eq_right h, dite_eq_right h]
     simp only [Matrix.mulVec, dotProduct]
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_

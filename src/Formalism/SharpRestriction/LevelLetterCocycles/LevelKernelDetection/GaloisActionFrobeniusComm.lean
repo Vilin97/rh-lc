@@ -78,7 +78,7 @@ theorem lambda_coe_eq_frobenius_pow (C : Coord W (baseIdOf hR) T) (c : ZMod n) (
     ((lamOf C c ell e k : Dc W T c) : T.V ⊗[Qp] B) =
       ((φVB PD (LL := LL) (V := T.V) : Module.End LL (T.V ⊗[Qp] B)) ^ ell) (W.cmp T ⟨_, hk⟩) := by
   unfold lamOf
-  rw [dif_pos hk, dif_pos (lambda_mem_dcris_letter C c ell (e k) hk)]
+  rw [dite_eq_left hk, dite_eq_left (lambda_mem_dcris_letter C c ell (e k) hk)]
 
 end Letters
 

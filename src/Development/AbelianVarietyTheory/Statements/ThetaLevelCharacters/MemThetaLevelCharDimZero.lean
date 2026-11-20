@@ -115,7 +115,7 @@ open Out Out.Inh
 
 theorem valAt'_id (f : Γ(Sp ℂ, ⊤)) :
     valAt' (𝟙 (Sp ℂ)) ⊤ f = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom f := by
-  rw [valAt', dif_pos (show (⊤ : (Sp ℂ).Opens) ≤ 𝟙 (Sp ℂ) ⁻¹ᵁ ⊤ from le_rfl), valAt]
+  rw [valAt', dite_eq_left (show (⊤ : (Sp ℂ).Opens) ≤ 𝟙 (Sp ℂ) ⁻¹ᵁ ⊤ from le_rfl), valAt]
   congr 1
 
 theorem valAt'_id_bijective (U : (Sp ℂ).Opens) (hU : U = ⊤) :

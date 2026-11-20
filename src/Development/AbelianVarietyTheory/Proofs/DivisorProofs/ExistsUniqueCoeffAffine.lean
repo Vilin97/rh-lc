@@ -44,7 +44,7 @@ private theorem exists_openImmersion_restrict_pullback_constFn {S X A : Scheme.{
       rw [Scheme.Hom.comp_appLE, IsAffineOpen.fromSpec_app_self, Category.assoc]
       congr 1
       exact Scheme.Hom.map_appLE _ _ _
-    rw [pbT, dif_pos hW, constFn]
+    rw [pbT, dite_eq_left hW, constFn]
     exact congrArg (fun φ => φ.hom r) key
 
 private theorem false_of_pullback_point_mem_preimage_of_not_univ_le {S X A T : Scheme.{0}} (x₀ : Sp K ⟶ S) (p : X ⟶ S) (h₀ : A ⟶ Sp K)
@@ -145,7 +145,7 @@ private theorem resG_resG_divisor {Y : Scheme.{0}} {O O₁ O₂ : Y.Opens} (h₁
 
 private theorem rsT_eq_resG_of_le {Y : Scheme.{0}} {O₀ : Y.Opens} (s : Γ(Y, O₀)) {O : Y.Opens} (h : O ≤ O₀) :
     rsT s O = resG Y h s := by
-  rw [rsT, dif_pos h]
+  rw [rsT, dite_eq_left h]
 
 private theorem resG_self_eq {Y : Scheme.{0}} {O : Y.Opens} (h : O ≤ O) (s : Γ(Y, O)) :
     resG Y h s = s := by
@@ -153,7 +153,7 @@ private theorem resG_self_eq {Y : Scheme.{0}} {O : Y.Opens} (h : O ≤ O) (s : �
 
 private theorem resG_pbT_eq_pbT_of_le {Z Y : Scheme.{0}} (y : Z ⟶ Y) {O₀ : Y.Opens} (s : Γ(Y, O₀))
     {O O' : Z.Opens} (h : O' ≤ O) (hO : O ≤ y ⁻¹ᵁ O₀) : resG Z h (pbT y s O) = pbT y s O' := by
-  rw [pbT, pbT, dif_pos hO, dif_pos (h.trans hO), ← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
+  rw [pbT, pbT, dite_eq_left hO, dite_eq_left (h.trans hO), ← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
 
 private theorem pbT_app_presheaf_map_eqToHom_eq {Z Y T' : Scheme.{0}} (F : ∀ O : Z.Opens, Γ(Z, O) → Γ(Z, O)) (m' : Z ⟶ Y)
     (y : T' ⟶ Z) {O O' : Y.Opens} (h : O' = O) (f : Γ(Y, O)) (V : T'.Opens) :

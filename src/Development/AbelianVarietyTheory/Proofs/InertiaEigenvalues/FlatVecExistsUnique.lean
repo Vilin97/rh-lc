@@ -76,12 +76,12 @@ theorem omegaFlat_congr {a b : ℕ} (Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : �
     forall_congr' fun PP => forall_congr' fun hPP => by rw [h PP hPP]
   unfold GlobalTheory.ConjTwist.omegaFlat
   by_cases h1 : ∀ PP ∈ Q, IsUnit (topL r (y PP)).det
-  · rw [dif_pos h1, dif_pos (hiff.1 h1)]
+  · rw [dite_eq_left h1, dite_eq_left (hiff.1 h1)]
     refine Finset.prod_congr rfl fun PP _ => ?_
     have e : (h1 PP.1 PP.2).unit = (hiff.1 h1 PP.1 PP.2).unit :=
       Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, h PP.1 PP.2])
     rw [e]
-  · rw [dif_neg h1, dif_neg fun h2 => h1 (hiff.2 h2)]
+  · rw [dite_eq_right h1, dite_eq_right fun h2 => h1 (hiff.2 h2)]
 
 theorem off_of_half {e c : AE D} (hc : e * c = 0) (hc' : cA D e * c = 0) {S T : HSp D} {u : WO S T} (hu : IsHalf c u) :
     ∀ a b, e * u a b = 0 ∧ cA D e * u a b = 0 := fun a b => by

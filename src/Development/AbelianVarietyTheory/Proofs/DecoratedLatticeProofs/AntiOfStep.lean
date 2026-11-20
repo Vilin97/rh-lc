@@ -38,7 +38,7 @@ theorem anti_of_step {r : ℕ} (f : Fin r → ℝ) (h : ∀ (i : Fin r) (hi : i.
 theorem lamS_node (R : Ranks) (P : HCParam R) (j : ℕ) (hj : j < R.m) (hi : R.k - 1 + j < R.r) :
     lamS R P ⟨R.k - 1 + j, hi⟩ = -(((P.b ⟨j, hj⟩ : ℚ)) : ℝ) := by
   unfold lamS
-  rw [dif_neg (by simp only []; omega)]
+  rw [dite_eq_right (by simp only []; omega)]
   have e : R.k - 1 + j - (R.k - 1) = j := by omega
   simp only [e, dif_pos hj]
 

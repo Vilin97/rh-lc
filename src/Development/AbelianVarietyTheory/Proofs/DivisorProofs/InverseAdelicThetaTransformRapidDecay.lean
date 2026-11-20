@@ -75,7 +75,7 @@ theorem phase {ψ : AddChar (AF F) ℂ} {lam : InfinitePlace F → ℝ} (hL : Is
       lam w₀.1 * (rc w₀ (fstA F (z l)) * s) := by
     rw [Finset.sum_eq_single w₀.1]
     · congr 1
-      rw [re, mul_apply', map_mul, ext_symm, dif_pos w₀.2, Complex.re_mul_ofReal, rc]
+      rw [re, mul_apply', map_mul, ext_symm, dite_eq_left w₀.2, Complex.re_mul_ofReal, rc]
       have := re_eq (fstA F (z l)) w₀.1 w₀.2
       rw [re] at this
       rw [this]

@@ -294,7 +294,7 @@ variable {D : D7} {X : Fields} {s : Seam D X} {χ : TaylorLogMetric.IdE D → �
 
 theorem desc_spec {K : Type} [Field K] (σ : K →+* ℂ) {z : ℂ} (h : ∃ k, σ k = z) : σ (desc σ z) = z := by
   unfold desc
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem desc_map {K : Type} [Field K] (σ : K →+* ℂ) (k : K) : desc σ (σ k) = k :=
@@ -790,7 +790,7 @@ theorem muAtT_unit (hZ : Z.Ok) (ht : Z.Ch.Tied Z.sig0 (fun j τ => (Z.W.row τ).
     have hd := Proof.NormalFormAtPrime.degOne_of_split hZ.fields.rankE hgood.1 hgood.2.1 (P := P.1) (e ▸ hsel v)
     refine key _ _ (val_natCast_of_notMem_sq (Ideal.absNorm_mem _) hd.2) ?_
     have hg : ∀ k, ((Z.Pr.g k : ℕ) : 𝓞 Z.X.E) ∉ P.1.asIdeal := fun k h => hG k v ((natCast_mem_sel hsel v _).1 (e ▸ h)) hv
-    rw [if_neg hP, muqT, dif_pos i.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
+    rw [if_neg hP, muqT, dite_eq_left i.2, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_inv_eq_inv_val, map_mul, map_inv₀, map_inv₀,
       hq, muVal_unit hZ ht i hg hTP hw]
     simp
 

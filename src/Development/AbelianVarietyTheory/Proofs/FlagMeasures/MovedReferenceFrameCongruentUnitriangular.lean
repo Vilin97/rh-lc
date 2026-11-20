@@ -46,7 +46,7 @@ theorem loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what�
   have hfr : ∀ b, frame (mapLF (n⁻¹ * t₀.lin * m) (lf D (X.Fu u'))) b = (n⁻¹ * t₀.lin * m) (frame (lf D (X.Fu u')) b) := by
     intro b
     unfold mapLF
-    rw [dif_pos hiso]
+    rw [dite_eq_left hiso]
     simp only [frame, Formalism.MainNotions.S.FlagG.fvec, mapFlag]
     exact (congrFun (Fin.comp_snoc (⇑(n⁻¹ * t₀.lin * m)) _ _) b).symm
   have hyin : ∀ a, frame (lf D (X.Fu u)) a ∈ t₀.lam := fun a => GlobalTheory.T.fixedFrame_mem_rowLattices_of_word D X Y u t₀.lam t₀.mem a

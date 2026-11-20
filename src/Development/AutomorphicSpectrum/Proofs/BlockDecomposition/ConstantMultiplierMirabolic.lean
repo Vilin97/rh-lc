@@ -69,14 +69,14 @@ theorem bdet_map (e : R ≃+* R') (s : Set ι) (g : GL ι R) :
   · have h' : IsUnit (((Matrix.GeneralLinearGroup.map e.toRingHom g : GL ι R') : Matrix ι ι R').submatrix
         (Subtype.val : s → ι) Subtype.val).det := by
       rw [hd]; exact h.map e.toRingHom
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     ext
     simpa using hd
   · have h' : ¬ IsUnit (((Matrix.GeneralLinearGroup.map e.toRingHom g : GL ι R') : Matrix ι ι R').submatrix
         (Subtype.val : s → ι) Subtype.val).det := by
       rw [hd]; intro hu
       exact h ((isUnit_map_iff e _).1 hu)
-    rw [dif_neg h, dif_neg h', map_one]
+    rw [dite_eq_right h, dite_eq_right h', map_one]
 
 theorem bdet_tInv (s : Set ι) (g : GL ι R) : bdet s (tInv g) = bdet s g⁻¹ := by
   classical

@@ -22,7 +22,7 @@ theorem gIk : GIk := by
     apply Subtype.ext
     rw [h1]
     unfold phiS
-    rw [dif_pos hmem]
+    rw [dite_eq_left hmem]
   unfold thF thetaInt theta
   simp only [map_mul, Module.End.mul_apply, key]
 

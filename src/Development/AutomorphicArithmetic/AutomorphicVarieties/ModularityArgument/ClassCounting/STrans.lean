@@ -309,7 +309,7 @@ private theorem projection_smul_invariant (u : kˣ) (v : V × W) (hv : v ≠ 0) 
     pr0 (k := k) (u • v) huv = pr0 v hv := by
   unfold pr0
   by_cases h : v.1 = 0
-  · rw [dif_pos h, dif_pos (by simp [h])]
+  · rw [dite_eq_left h, dite_eq_left (by simp [h])]
     exact congrArg _ ((Projectivization.mk_eq_mk_iff k _ _ _ _).2 ⟨u, rfl⟩)
   · rw [dif_neg h, dif_neg (show ¬(u • v).1 = 0 from (smul_ne_zero_iff_ne u).2 h)]
     exact congrArg _ ((Projectivization.mk_eq_mk_iff k _ _ _ _).2 ⟨u, rfl⟩)
@@ -326,7 +326,7 @@ private theorem pr_inl {v : V × W} (hv : v ≠ 0) (h : v.1 ≠ 0) :
     pr (Projectivization.mk k v hv) = Sum.inl (Projectivization.mk k v.1 h) := by rw [pr_mk, pr0, dif_neg h]
 
 private theorem pr_inr {v : V × W} (hv : v ≠ 0) (h : v.1 = 0) (h2 : v.2 ≠ 0) :
-    pr (Projectivization.mk k v hv) = Sum.inr (Projectivization.mk k v.2 h2) := by rw [pr_mk, pr0, dif_pos h]
+    pr (Projectivization.mk k v hv) = Sum.inr (Projectivization.mk k v.2 h2) := by rw [pr_mk, pr0, dite_eq_left h]
 
 private theorem card_inl (v : V) (hv : v ≠ 0) :
     Nat.card {x : ℙ k (V × W) // pr x = Sum.inl (Projectivization.mk k v hv)} = Nat.card W := by

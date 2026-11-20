@@ -52,7 +52,7 @@ theorem trueVol_pos (cm : CMData F E) {I : Type} [Fintype I] (τ : I → (E →+
 theorem trueVol_spec (cm : CMData F E) {I : Type} [Fintype I] (τ : I → (E →+* ℂ)) (cd : CDHaar) (W : HSpace E)
     (h : ∃ x : ℝ, 0 < x ∧ VolIs cm τ cd W x) : VolIs cm τ cd W (trueVol cm τ cd W) := by
   unfold trueVol
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (Classical.choose_spec h).2
 
 end Volume

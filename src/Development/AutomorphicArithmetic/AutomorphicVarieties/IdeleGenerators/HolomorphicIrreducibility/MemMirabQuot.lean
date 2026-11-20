@@ -60,7 +60,7 @@ private theorem genD_uniq {y : Af F} {I J : Ideal (𝓞 F)} (hI : GenD y I) (hJ 
 
 private theorem coefAt_eq (c : Ideal (𝓞 F) → ℂ) {y : Af F} {I : Ideal (𝓞 F)} (h : GenD y I) : coefAt c y = c I := by
   have e : ∃ 𝔪, GenD y 𝔪 := ⟨I, h⟩
-  rw [coefAt, dif_pos e, genD_uniq e.choose_spec h]
+  rw [coefAt, dite_eq_left e, genD_uniq e.choose_spec h]
 
 private theorem genD_shift {w : Pl F} {u : Af F} (hu : ∀ v, Valued.v (pLoc F v u) = WithZero.exp (ordI v w.asIdeal : ℤ))
     (y : Af F) (I : Ideal (𝓞 F)) : GenD (y * u) I ↔ GenD y (w.asIdeal * I) := by
@@ -76,15 +76,15 @@ private theorem coefAt_shift {w : Pl F} {u : Af F} (hu : ∀ v, Valued.v (pLoc F
   by_cases h : ∃ I, GenD (y * u) I
   · obtain ⟨I, hI⟩ := h
     have e : ∃ 𝔫, w.asIdeal * I = w.asIdeal * 𝔫 := ⟨I, rfl⟩
-    rw [coefAt_eq a hI, coefAt_eq _ ((genD_shift hu y I).1 hI), coefDiv, dif_pos e,
+    rw [coefAt_eq a hI, coefAt_eq _ ((genD_shift hu y I).1 hI), coefDiv, dite_eq_left e,
       ← mul_left_cancel₀ w.ne_bot e.choose_spec]
-  · rw [coefAt.eq_1 a, dif_neg h]
+  · rw [coefAt.eq_1 a, dite_eq_right h]
     by_cases h' : ∃ J, GenD y J
     · obtain ⟨J, hJ⟩ := h'
-      rw [coefAt_eq _ hJ, coefDiv, dif_neg]
+      rw [coefAt_eq _ hJ, coefDiv, dite_eq_right]
       rintro ⟨I, rfl⟩
       exact h ⟨I, (genD_shift hu y I).2 hJ⟩
-    · rw [coefAt, dif_neg h']
+    · rw [coefAt, dite_eq_right h']
 
 private theorem max_eq {w : Pl F} (π : w.adicCompletionIntegers F)
     (hπ : Valued.v (π : w.adicCompletion F) = WithZero.exp (-1 : ℤ)) :

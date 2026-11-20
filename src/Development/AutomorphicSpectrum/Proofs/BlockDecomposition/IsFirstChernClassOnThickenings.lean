@@ -62,12 +62,12 @@ def lbOn (Y : SmV k) (L : LB Y.X) (hL : L.IsLB) : GlobalTheory.LogCris.LB (covFu
       Units.map (GlobalTheory.Cris.evalAt (B := B) y.1.2 (L.U i ⊓ L.U j) h : Γ(Y.X, L.U i ⊓ L.U j) →* B) (L.g i j) else 1
   g_map := @fun i j B B' φ y hi hj => by
     have h := le_preimage_inf y.1.2 hi hj
-    rw [dif_pos h, dif_pos (show ⊤ ≤ (((covFun b ht κ Y L.U).Pt.map φ y)).1.2 ⁻¹ᵁ (L.U i ⊓ L.U j) from le_preimage_map φ y.1.2 h)]
+    rw [dite_eq_left h, dite_eq_left (show ⊤ ≤ (((covFun b ht κ Y L.U).Pt.map φ y)).1.2 ⁻¹ᵁ (L.U i ⊓ L.U j) from le_preimage_map φ y.1.2 h)]
     ext
     exact evalAt_map φ y.1.2 h _ _
   g_self := @fun i B y hi => by
     have h := le_preimage_inf y.1.2 hi hi
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     ext
     have e := congrArg (fun u : Γ(Y.X, L.U i)ˣ => (u : Γ(Y.X, L.U i))) (hL.g_self i)
     simp only [Units.coe_map, MonoidHom.coe_coe, Units.val_one]
@@ -78,7 +78,7 @@ def lbOn (Y : SmV k) (L : LB Y.X) (hL : L.IsLB) : GlobalTheory.LogCris.LB (covFu
     have h23 := le_preimage_inf y.1.2 hj hl
     have h13 := le_preimage_inf y.1.2 hi hl
     have h123 := le_preimage_inf y.1.2 h12 hl
-    rw [dif_pos h12, dif_pos h23, dif_pos h13]
+    rw [dite_eq_left h12, dite_eq_left h23, dite_eq_left h13]
     ext
     have e := congrArg (fun u : Γ(Y.X, L.U i ⊓ L.U j ⊓ L.U l)ˣ => (u : Γ(Y.X, L.U i ⊓ L.U j ⊓ L.U l))) (hL.cocycle i j l)
     simp only [Units.val_mul, Units.coe_map, MonoidHom.coe_coe] at e ⊢

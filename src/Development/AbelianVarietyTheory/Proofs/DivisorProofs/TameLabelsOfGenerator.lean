@@ -21,7 +21,7 @@ theorem theta_gen_pow (L : GlobalTheory.GLq.LabelDatum p) {x : Fbar p} (hx : x ^
     GlobalTheory.GLq.thetaOf L 1 x (L.gen 1 ^ n) = L.teich x ^ n := by
   have h : ∃ m : ℕ, L.gen 1 ^ n = L.gen 1 ^ m := ⟨n, rfl⟩
   unfold GlobalTheory.GLq.thetaOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have hpos : 0 < p ^ 1 - 1 := Nat.sub_pos_of_lt (Nat.one_lt_pow one_ne_zero (Fact.out : p.Prime).one_lt)
   have hfin : IsOfFinOrder (L.gen 1) := by
     rw [← orderOf_pos_iff, L.gen_order 1 one_pos]; exact hpos

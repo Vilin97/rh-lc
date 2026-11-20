@@ -192,7 +192,7 @@ theorem IsParamVec.unique_of_isSplit (hv : IsSplit (E := E) v) (hx : IsParamVec 
   · exact absurd hv (not_isSplit_of_isInertAt hw)
 
 theorem HasParam.hasParam_paramOf (hρ : HasParam σ J L h ρ B) : HasParam σ J L h ρ (paramOf σ J L h ρ) := by
-  rw [paramOf, dif_pos ⟨B, hρ⟩]
+  rw [paramOf, dite_eq_left ⟨B, hρ⟩]
   exact Exists.choose_spec (⟨B, hρ⟩ : ∃ B, HasParam σ J L h ρ B)
 
 theorem HasParam.paramOf_eq_of_isSplit (hv : IsSplit (E := E) v) (hρ : HasParam σ J L h ρ B) :

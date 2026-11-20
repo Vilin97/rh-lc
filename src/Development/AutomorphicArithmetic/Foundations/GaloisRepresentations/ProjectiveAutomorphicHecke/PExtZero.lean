@@ -49,14 +49,14 @@ private theorem extension_by_zero_double_coset (hφ : KerForm ι K ξ c φ) {γ 
   have h : ∃ x : Γ × H × H, c x.2.1 = 1 ∧ x.2.2 ∈ K ∧ ι γ * u * k = ι x.1 * x.2.1 * x.2.2 :=
     ⟨(γ, u, k), hu, hk, rfl⟩
   unfold ext0
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   obtain ⟨s1, s2, s3⟩ := h.choose_spec
   exact key hφ s1 hu s2 hk s3.symm
 
 private theorem extension_by_zero_outside_support {g : H} (h : ¬ ∃ γ u k, c u = 1 ∧ k ∈ K ∧ g = ι γ * u * k) :
     ext0 ι K ξ c φ g = 0 := by
   unfold ext0
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨x, hx1, hx2, hx3⟩
   exact h ⟨x.1, x.2.1, x.2.2, hx1, hx2, hx3⟩
 

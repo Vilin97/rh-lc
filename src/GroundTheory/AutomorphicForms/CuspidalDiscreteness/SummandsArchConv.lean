@@ -134,7 +134,7 @@ def matExt (κ : archGroup K n → ℂ) (M : ArchMatrix K n) : ℂ :=
 theorem matExt_val (κ : archGroup K n → ℂ) (a : archGroup K n) :
     matExt K n κ ((a : ArchUnits K n) : ArchMatrix K n) = κ a := by
   unfold matExt
-  rw [dif_pos (a : ArchUnits K n).isUnit]
+  rw [dite_eq_left (a : ArchUnits K n).isUnit]
   congr 1
   exact Subtype.ext (IsUnit.unit_of_val_units _)
 
@@ -187,7 +187,7 @@ theorem contDiff_matExt {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n
       rw [hMeq]
       exact (g : ArchUnits K n).isUnit.mul (h.expG (ι (e.symm (gi * M))) : ArchUnits K n).isUnit
     unfold matExt
-    rw [dif_pos hMu]
+    rw [dite_eq_left hMu]
     congr 1
     apply Subtype.ext
     apply Units.ext

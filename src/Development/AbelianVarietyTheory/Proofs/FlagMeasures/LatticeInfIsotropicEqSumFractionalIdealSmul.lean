@@ -36,7 +36,7 @@ private lemma coefX_linearCombination_eq (F : FlagG S r T) (l : Fin r →₀ E) 
     rw [← Finsupp.range_linearCombination]
     exact LinearMap.mem_range_self _ l
   unfold FlagG.coefX
-  rw [dif_pos hmem, F.e_indep.repr_eq (l := l) rfl]
+  rw [dite_eq_left hmem, F.e_indep.repr_eq (l := l) rfl]
 
 private lemma exists_linearCombination_eq_of_mem_flagX (F : FlagG S r T) {y : S.V} (hy : y ∈ F.X) :
     ∃ l : Fin r →₀ E, Finsupp.linearCombination E F.e l = y := by

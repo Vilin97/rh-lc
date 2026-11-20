@@ -27,7 +27,7 @@ def placesOver (g : ℕ) : Finset (HeightOneSpectrum (𝓞 F)) :=
 
 theorem mem_placesOver (g : ℕ) (hg : g ≠ 0) (v : HeightOneSpectrum (𝓞 F)) :
     v ∈ placesOver F g ↔ ((g : ℕ) : 𝓞 F) ∈ v.asIdeal := by
-  rw [placesOver, dif_pos (finite_placesOver F g hg)]
+  rw [placesOver, dite_eq_left (finite_placesOver F g hg)]
   simp
 
 end Places

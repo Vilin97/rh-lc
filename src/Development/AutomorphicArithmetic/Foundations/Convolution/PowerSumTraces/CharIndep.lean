@@ -72,7 +72,7 @@ private theorem finRankTrace_smoothOp (m : Measure G) [m.IsHaarMeasure] {U : Sub
   have hmem : ∀ v ∈ fixed ρ U, GlobalTheory.BCT.levOp ρ U U f LinearMap.id v ∈ fixed ρ U := fun v hv =>
     GlobalTheory.TwTrLevel.levOp_mem_fixed ρ (MonoidHom.id G) (fun _ => rfl) LinearMap.id (fun _ => rfl) U U hUo
       (fun _ h => h) f hf v hv
-  rw [finRankTrace_eq _ (fixed ρ U) hW, GlobalTheory.BCT.twTr, dif_pos hmem, ← smul_eq_mul, ← map_smul]
+  rw [finRankTrace_eq _ (fixed ρ U) hW, GlobalTheory.BCT.twTr, dite_eq_left hmem, ← smul_eq_mul, ← map_smul]
   congr 1
   refine LinearMap.ext fun v => Subtype.ext ?_
   simpa using smoothOp_eq_levOp m hUo hUc hρ hf v.2

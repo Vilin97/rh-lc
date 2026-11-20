@@ -484,7 +484,7 @@ theorem ev_map (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z =
     obtain ⟨p, χ, y', h'⟩ := hy
     exact ⟨p, φ.comp χ, y', ReciprocityTheory.ChartRestriction.G.PullbackSections.frMap_trans χ φ h' h⟩
   unfold evR evalAt
-  rw [dif_pos hy, dif_pos hz]
+  rw [dite_eq_left hy, dite_eq_left hz]
   exact hWD f hf T _ _ _ (φ.comp hy.choose_spec.choose) _ _ z hz.choose_spec.choose_spec.choose_spec
     (ReciprocityTheory.ChartRestriction.G.PullbackSections.frMap_trans _ _ hy.choose_spec.choose_spec.choose_spec h)
 

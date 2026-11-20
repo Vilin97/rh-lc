@@ -119,7 +119,7 @@ theorem glueMeas_real_sub_eq_mInt : ∀ {F : Type} [Field F] [NumberField F] {Y 
     rw [← integral_finsetSum_measure fun j _ => (h1 _ j).1, ← hsum ε, integral_const, smul_eq_mul,
       mul_one, hμ, Measure.real, Measure.real, Measure.map_apply h.symm.continuous.measurable
       MeasurableSet.univ, preimage_univ]
-  rw [hreal 1, hreal (-1), ← Finset.sum_sub_distrib, mInt, dif_pos (existsPartition A), integralWith]
+  rw [hreal 1, hreal (-1), ← Finset.sum_sub_distrib, mInt, dite_eq_left (existsPartition A), integralWith]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [(h1 _ j).2, (h1 _ j).2, ← integral_sub (h2 _ j) (h2 _ j)]
   refine integral_congr_ae (ae_of_all _ fun y => ?_)

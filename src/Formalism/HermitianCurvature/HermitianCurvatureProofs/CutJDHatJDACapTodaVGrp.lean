@@ -55,7 +55,7 @@ theorem kvC_one (w : ℂ) (f : (Fin r → ℂ) → X) (hr : 1 ≤ r) (c : Fin r 
   have h1 : r - 0 - 1 = r - 1 := by omega
   simp only [Nat.cast_zero, sub_zero, Nat.sub_zero]
   unfold pbN cbN
-  rw [dif_pos (by omega), dif_neg (lt_irrefl r)]
+  rw [dite_eq_left (by omega), dite_eq_right (lt_irrefl r)]
   simp
 
 theorem kvC_two (w : ℂ) (m : ℕ) (f : (Fin r → ℂ) → X) (c : Fin r → ℂ) :
@@ -220,13 +220,13 @@ theorem claimV (hRR : RightRuleEv) (hLR : LeftRuleCellv) (hTC : TorusCellv) (hCh
       (fun c' hc' => by
         rw [hT, la_torus hD hTC v₀ g₀ hg₀ hcell ⟨r - m - 2, by omega⟩ _ P c' hc']
         unfold pbN
-        rw [dif_pos (by omega)]
+        rw [dite_eq_left (by omega)]
         have e : (⟨r - (m + 1) - 1, by omega⟩ : Fin r) = ⟨r - m - 2, by omega⟩ := Fin.ext (by simp only; omega)
         rw [e]) hc
     rw [hloc]
     congr 1
     unfold cbN cbiN
-    rw [dif_pos (by omega), dif_pos (by omega)]
+    rw [dite_eq_left (by omega), dite_eq_left (by omega)]
     have e1 : (⟨r - (m + 1), by omega⟩ : Fin r) = ⟨r - m - 1, by omega⟩ := Fin.ext (by simp only; omega)
     have e2 : (⟨r - (m + 1) - 1, by omega⟩ : Fin r) = ⟨r - m - 2, by omega⟩ := Fin.ext (by simp only; omega)
     rw [e1, e2]

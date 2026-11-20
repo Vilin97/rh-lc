@@ -33,7 +33,7 @@ def transl {A : Over (Sp K)} [GrpObj A] {B : Type} [CommRing B] (φ : K →+* B)
 theorem isTransl_transl {A : Over (Sp K)} [GrpObj A] {B : Type} [CommRing B] (φ : K →+* B) (x : Sp B ⟶ A.left)
     (hx : x ≫ A.hom = spMap φ) (v : epsR K ⟶ A) : IsTransl φ x v (transl φ x v) := by
   have h : ∃ w, IsTransl φ x v w := exists_isTransl φ x hx v
-  rw [transl, dif_pos h]
+  rw [transl, dite_eq_left h]
   exact h.choose_spec
 
 def dlogAt {A : Over (Sp K)} [GrpObj A] {B : Type} [CommRing B] (φ : K →+* B) (x : Sp B ⟶ A.left)
@@ -66,12 +66,12 @@ theorem isChartPt_chartPt {A : Over (Sp K)} [GrpObj A] (A' : Over (Sp (DualNumbe
     {B : Type} [CommRing B] [Algebra (DualNumber K) B] (x : Sp B ⟶ A.left)
     (h : ∃ l, IsChartPt A' m m' Ω δ u θ Wo g x l) :
     IsChartPt A' m m' Ω δ u θ Wo g x (chartPt A' i m m' Ω δ u θ Wo g x) := by
-  rw [chartPt, dif_pos h]
+  rw [chartPt, dite_eq_left h]
   exact h.choose_spec
 
 theorem valR_eq_ev {Z : Scheme.{0}} {S : Type} [CommRing S] (z : Sp S ⟶ Z) (U : Z.Opens) (h : ⊤ ≤ z ⁻¹ᵁ U)
     (f : Γ(Z, U)) : valR z U f = ev z U h f := by
-  rw [valR, dif_pos h]
+  rw [valR, dite_eq_left h]
   rfl
 
 theorem IsChartPt.unique {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {A' : Over (Sp (DualNumber K))}

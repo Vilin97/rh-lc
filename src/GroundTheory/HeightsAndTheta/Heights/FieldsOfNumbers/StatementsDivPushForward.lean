@@ -55,10 +55,10 @@ theorem DivPushForward.hypotheses_example :
     exact X_ne_zero _
   · intro W' hW' _ hc
     show (if h : _ then _ else _) = _
-    rw [dif_pos ⟨hW'.isPrime, hc⟩]
+    rw [dite_eq_left ⟨hW'.isPrime, hc⟩]
   · intro W' _ _ hc
     show (if h : _ then _ else _) = _
-    rw [dif_neg (fun h => (ne_of_lt hc) h.2)]
+    rw [dite_eq_right (fun h => (ne_of_lt hc) h.2)]
 
 end
 

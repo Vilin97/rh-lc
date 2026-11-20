@@ -405,7 +405,7 @@ theorem reduction_spec (P : HeightOneSpectrum (𝓞 E)) {a : E} {r s : 𝓞 E} (
       Ideal.Quotient.mk P.asIdeal s * c = Ideal.Quotient.mk P.asIdeal r :=
     ⟨b * Ideal.Quotient.mk P.asIdeal r, r, s, hs, h, by rw [← mul_assoc, hb, one_mul]⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨r', s', hs', h', hc⟩ := hex.choose_spec
   have e : s * r' = s' * r := by
     apply RingOfIntegers.ext
@@ -428,7 +428,7 @@ theorem reduction_coe (P : HeightOneSpectrum (𝓞 E)) (r : 𝓞 E) :
 theorem reduction_eq_zero_of_not_integral (P : HeightOneSpectrum (𝓞 E)) {a : E} (h : ¬ IntAt P a) : redP P a = 0 := by
   classical
   unfold redP
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨c, r, s, hs, h', -⟩
   exact h ⟨r, s, hs, h'⟩
 

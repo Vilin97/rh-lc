@@ -65,7 +65,7 @@ theorem bigF_stdA_zero (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (X : Matr
   have h0 : ∀ g : Matrix (Fin a) (Fin a) k, stdA ν ϖ c a a' (g * X) = 0 := by
     intro g
     unfold stdA
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨h, -⟩
     exact h (by rw [blk₁_mul, Matrix.det_mul, hX, mul_zero])
   simp [bigF, shellSum, shell, h0]
@@ -115,7 +115,7 @@ theorem bigF_stdA_eq (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ : IsUn
           rw [h1, h2]; exact ⟨hdet, hglo, hYiff.2 hc⟩
         have hmk : Units.mk0 _ hcond.1 = gdet g * gdet g₁ := by
           rw [← gdet_mul]; exact Units.ext (by rw [Units.val_mk0, val_gdet, h1])
-        rw [dif_pos hcond, hC, Set.indicator_of_mem (show Y ∈ {M : Matrix (Fin a) (Fin a') k |
+        rw [dite_eq_left hcond, hC, Set.indicator_of_mem (show Y ∈ {M : Matrix (Fin a) (Fin a') k |
           ∀ i j, M i j ∈ cball (ϖ ^ c)} from hc), Pi.one_apply, mul_one, hmk, hap, map_mul, mul_inv]
         simp only [Units.val_mul, Units.val_inv_eq_inv_val]
         have h3 := (ν (gdet g)).ne_zero
@@ -125,7 +125,7 @@ theorem bigF_stdA_eq (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ : IsUn
           rintro ⟨-, -, h⟩
           rw [h2] at h
           exact hc (hYiff.1 h)
-        rw [dif_neg hneg, hC, Set.indicator_of_notMem (show Y ∉ {M : Matrix (Fin a) (Fin a') k |
+        rw [dite_eq_right hneg, hC, Set.indicator_of_notMem (show Y ∉ {M : Matrix (Fin a) (Fin a') k |
           ∀ i j, M i j ∈ cball (ϖ ^ c)} from hc)]
         simp
     · rw [Set.indicator_of_notMem hg]
@@ -135,7 +135,7 @@ theorem bigF_stdA_eq (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ : IsUn
         rw [h1] at hglo
         exact hg (mem_KO_of_isGLO _ hglo)
       unfold stdA
-      rw [dif_neg hneg, zero_mul, zero_mul]
+      rw [dite_eq_right hneg, zero_mul, zero_mul]
   have hshell : ∀ m : {m : Fin a → ℤ // Antitone m}, shell (haarVol (KO k (Fin a))) ϖ ν N
       (fun M => stdA ν ϖ c a a' (M * X)) m.1 = (haarVol (KO k (Fin a))).real (shellSet ϖ m.1 ∩ S) • C := by
     intro m

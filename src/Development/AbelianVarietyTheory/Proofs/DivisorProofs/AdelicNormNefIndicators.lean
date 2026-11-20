@@ -80,7 +80,7 @@ namespace GlobalTheory.DetHT
 theorem valAt_stalk {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z) (a : Z.presheaf.stalk (below y)) :
     valAt y (algebraMap _ Z.functionField a) = (Scheme.stalkClosedPointTo y).hom a := by
   have h : GlobalTheory.Cartier.RegAt (below y) (algebraMap _ Z.functionField a) := ⟨a, rfl⟩
-  rw [GlobalTheory.TrueGeo.valAt, dif_pos h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
+  rw [GlobalTheory.TrueGeo.valAt, dite_eq_left h, IsFractionRing.injective (Z.presheaf.stalk (below y)) Z.functionField h.choose_spec]
 
 theorem valAt_inv_of_unit {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z) {g : Z.functionField}
     (h : GlobalTheory.Cartier.UnitAt (below y) g) : valAt y g⁻¹ = (valAt y g)⁻¹ := by

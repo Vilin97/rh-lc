@@ -187,7 +187,7 @@ theorem S3.proof : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.In
     exact byPartsSymm R.atlas _ _ (res_smooth R hv) (res_smooth R hw) _
       fun i => res_isPotential R (hL i)
   unfold zInt
-  rw [dif_pos hR, dif_pos hR]
+  rw [dite_eq_left hR, dite_eq_left hR]
   exact key _
 
 end GroundTheory.Heights₂.Heights.Inter

@@ -55,7 +55,7 @@ theorem mk_p {D M P : Type} [AddCommGroup P] [Module ℂ P] (SD : Submodule ℂ 
   have hgS : ∀ φ ∈ SD, (g φ : P) = f (ι φ) := by
     intro φ hφ
     show ((if h : ι φ ∈ SM then (⟨f (ι φ), hmem _ h⟩ : N) else 0 : N) : P) = f (ι φ)
-    rw [dif_pos (show ι φ ∈ SM from hι.mapsTo hφ)]
+    rw [dite_eq_left (show ι φ ∈ SM from hι.mapsTo hφ)]
   obtain ⟨p, hp⟩ := extendOn SD g (by
     intro x hx y hy c
     apply Subtype.ext

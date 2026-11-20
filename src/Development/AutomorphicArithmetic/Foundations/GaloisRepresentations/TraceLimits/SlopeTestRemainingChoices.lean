@@ -113,6 +113,6 @@ theorem powSatU_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ} 
   obtain ⟨σ, hσ, h1⟩ := h.choose_spec
   obtain ⟨σ', hσ', h2⟩ := hB
   obtain ⟨e⟩ := (GlobalTheory.SplitComp.exists_comp_and_unique E a U hU w hw).2 _ _ hσ hσ'
-  rw [PowSatU, dif_pos h, GlobalTheory.LFun.HasSatGL.unique (GlobalTheory.PrinSat.hasSatGL_of_equiv e.symm h1) h2]
+  rw [PowSatU, dite_eq_left h, GlobalTheory.LFun.HasSatGL.unique (GlobalTheory.PrinSat.hasSatGL_of_equiv e.symm h1) h2]
 
 end UpperTheory.Gal.Lim

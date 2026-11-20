@@ -44,7 +44,7 @@ theorem valR_spMap_fromSpec {X : Scheme.{0}} {R : Type} [CommRing R] {U W : X.Op
   have h : ⊤ ≤ (Spec.map (CommRingCat.ofHom φ) ≫ hW.fromSpec : Sp R ⟶ X) ⁻¹ᵁ U :=
     fun y _ => e (h0 (Set.mem_univ ((Spec.map (CommRingCat.ofHom φ)) y)))
   unfold valR
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have e1 : (Spec.map (CommRingCat.ofHom φ) ≫ hW.fromSpec : Sp R ⟶ X).appLE U ⊤ h =
       X.presheaf.map (homOfLE e).op ≫ hW.fromSpec.appLE W ⊤ h0 ≫ (Spec.map (CommRingCat.ofHom φ)).appTop := by
     rw [← Category.assoc, Scheme.Hom.map_appLE]
@@ -110,7 +110,7 @@ theorem exists_eq_constFn_of_one_value :
     have h1 : ⊤ ≤ y ⁻¹ᵁ ⊤ := le_top
     have h2 : ⊤ ≤ (y ≫ U.ι) ⁻¹ᵁ U := fun x _ => (y x).2
     unfold valR
-    rw [dif_pos h1, dif_pos h2, ← Scheme.Hom.appLE_comp_appLE y U.ι U ⊤ ⊤ hle h1]
+    rw [dite_eq_left h1, dite_eq_left h2, ← Scheme.Hom.appLE_comp_appLE y U.ι U ⊤ ⊤ hle h1]
     rfl
   have hr : ∀ y : Sp ℂ ⟶ U.toScheme, Set.range (y ≫ U.ι) ⊆ U := by
     rintro y _ ⟨x, rfl⟩

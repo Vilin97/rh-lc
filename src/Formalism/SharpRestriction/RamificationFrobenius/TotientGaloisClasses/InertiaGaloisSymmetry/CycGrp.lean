@@ -350,7 +350,7 @@ theorem frob : ∀ (p : ℕ) [Fact p.Prime], ¬ p ∣ H.condN →
   refine ⟨?_, ?_, ?_⟩
   · rw [hg]
     unfold HostRaw.psAt
-    rw [dif_pos hcop]
+    rw [dite_eq_left hcop]
   · rw [hg, art_snd_lemma H, hu0, ZMod.val_natCast, jac_lemma hpodd hd4,
       jacobiSym.mod_left ((p % H.condN : ℕ) : ℤ), jacobiSym.mod_left (p : ℤ)]
     congr 1

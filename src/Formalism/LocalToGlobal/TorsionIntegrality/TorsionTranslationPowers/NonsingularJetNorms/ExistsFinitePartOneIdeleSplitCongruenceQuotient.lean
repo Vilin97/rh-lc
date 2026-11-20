@@ -158,7 +158,7 @@ variable (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l])
 theorem ptOf_some (t : ℂ) (ht : t ∉ L.lattice) :
     ptOf l L ι t = .some _ _ (AddThm.nonsing l L ι t ht) := by
   unfold ptOf
-  rw [dif_pos ⟨ht, AddThm.nonsing l L ι t ht⟩]
+  rw [dite_eq_left ⟨ht, AddThm.nonsing l L ι t ht⟩]
 
 theorem ptOf_lattice (t : ℂ) (ht : t ∈ L.lattice) : ptOf l L ι t = 0 := by
   unfold ptOf

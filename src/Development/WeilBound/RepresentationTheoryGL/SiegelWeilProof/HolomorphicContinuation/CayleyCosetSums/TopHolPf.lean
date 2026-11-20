@@ -20,7 +20,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 theorem lift_mR (φ : GR n → ℂ) (w : GR n) : lift φ (mR w) = φ w := by
   have h : IsUnit (mR w) ∧ InG (mR w) := ⟨⟨w.1, rfl⟩, w.2⟩
   unfold lift
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   congr 1
   apply Subtype.ext
   apply Units.ext

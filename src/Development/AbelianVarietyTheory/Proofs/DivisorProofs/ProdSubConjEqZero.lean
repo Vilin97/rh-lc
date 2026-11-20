@@ -123,7 +123,7 @@ theorem pick_spec [Algebra.IsAlgebraic K Ω] [Normal K Ω] (k : ℕ) (θ : Ω) (
     choose g hg using fun i => (mem_conj_iff θ (t i)).1 (ht i)
     exact ⟨g, hg⟩
   classical
-  rw [pick, dif_pos hex]
+  rw [pick, dite_eq_left hex]
   exact hex.choose_spec i
 
 end GlobalTheory.EtC.GalSec.Tens

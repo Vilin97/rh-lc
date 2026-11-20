@@ -80,7 +80,7 @@ def imgE (q : Unif k) (P : Pair k n') {L : Submodule 𝒪[k] (n → k)} {x₀ : 
 theorem term_pos (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (P : Pair k n') {L : Submodule 𝒪[k] (n → k)}
     {x₀ : Matrix n n' k} (h0 : ∀ z ∈ P.ker, x₀ *ᵥ z ∈ L) (f : Module.Dual 𝓀[k] (Red L)) :
     term q χ 1 P L f x₀ = χ (-f (Red.mk L (imgE q P h0))) := by
-  rw [term, dif_pos h0, Units.val_one, one_mul]
+  rw [term, dite_eq_left h0, Units.val_one, one_mul]
   rfl
 
 theorem term_neg (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (P : Pair k n') {L : Submodule 𝒪[k] (n → k)}
@@ -101,7 +101,7 @@ theorem datum_expand (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L
     · have key : ∀ f : Module.Dual 𝓀[k] (Red L), term q χ 1 P L f x₀ *
           (if h : y ∈ L then χ (-f (Red.mk L ⟨y, h⟩)) else 0) =
           χ (-f (Red.mk L (⟨y, hy⟩ + imgE q P h0))) := fun f => by
-        rw [term_pos q χ P h0, dif_pos hy, map_add (f := _), map_add (f := _), neg_add, AddChar.map_add_eq_mul, mul_comm]
+        rw [term_pos q χ P h0, dite_eq_left hy, map_add (f := _), map_add (f := _), neg_add, AddChar.map_add_eq_mul, mul_comm]
       rw [finsum_congr key, finsum_char χ hχ, Red.mk_eq_zero q]
       have hc : q.inv • ((⟨y, hy⟩ + imgE q P h0 : L) : n → k) = q.inv • y + x₀ *ᵥ P.vec := by
         simp only [imgE, Submodule.coe_add, smul_add, mulVec_smul, q.inv_smul_smul]
@@ -139,13 +139,13 @@ theorem glued_col (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : 
   congr 2
   · rw [term_zero, tensCol, vecInd]
     by_cases hy : (fun i => x i (Sum.inr 0)) ∈ L
-    · rw [dif_pos hy, if_pos hy, LinearMap.zero_apply, neg_zero, AddChar.map_zero_eq_one]
+    · rw [dite_eq_left hy, if_pos hy, LinearMap.zero_apply, neg_zero, AddChar.map_zero_eq_one]
     · rw [dif_neg hy, if_neg hy]
   · rw [← finsum_ofDual L (fun Q => tensCol (latInd P.ker Q.ker + mainDatum q χ 1 P Q) (charInd χ Q) x)]
     refine finsum_congr fun f => ?_
     rw [term_ne_zero, tensCol, charInd, vecInd, ofDual_lat]
     by_cases hy : (fun i => x i (Sum.inr 0)) ∈ L
-    · rw [dif_pos hy, if_pos hy, mul_one, (ofDual_hasVal L f ⟨_, hy⟩).ev_eq]
+    · rw [dite_eq_left hy, if_pos hy, mul_one, (ofDual_hasVal L f ⟨_, hy⟩).ev_eq]
     · simp only [dif_neg hy, if_neg hy, mul_zero]
 
 theorem glued_sum (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
@@ -268,7 +268,7 @@ theorem glued_row (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     rw [Unif.inv, ← mul_assoc, mul_inv_cancel₀ q.ne_zero, one_mul]
   rw [hR, finsum_lifts, latInd]
   by_cases hD : InDual L (q.1 • η)
-  · rw [dif_pos hD]
+  · rw [dite_eq_left hD]
     have hf₀ := (exists_lifts hD).choose_spec
     set f₀ := (exists_lifts hD).choose
     refine if_congr ⟨fun h y => ?_, fun h y hy => ?_⟩ rfl rfl

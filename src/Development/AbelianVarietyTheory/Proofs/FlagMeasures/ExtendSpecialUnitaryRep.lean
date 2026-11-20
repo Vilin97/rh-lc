@@ -73,7 +73,7 @@ lemma extRep_eq {ε : Fin n → Bool} (hn : 1 ≤ n) (m : ℤ) (π' : Matrix (Fi
     {g : Matrix (Fin n) (Fin n) ℂ} {z : ℂ} (hz : ‖z‖ = 1) (hg : z⁻¹ • g ∈ SUset ε) :
     extRep ε m π' g = z ^ m • π' (z⁻¹ • g) := by
   have h : ∃ z : ℂ, ‖z‖ = 1 ∧ z⁻¹ • g ∈ SUset ε := ⟨z, hz, hg⟩
-  rw [extRep, dif_pos h]
+  rw [extRep, dite_eq_left h]
   exact central_eq hn m π' hrep hc h.choose_spec.1 hz h.choose_spec.2 hg
 
 theorem extends_to_U : ∀ (n : ℕ), 1 ≤ n → ∀ (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H]

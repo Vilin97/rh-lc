@@ -100,8 +100,8 @@ theorem ResChiSymMeasure.full : ResChiSymMeasure.Statement := by
   unfold resChi chi
   by_cases h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d.x n p.2
   swap
-  · rw [dif_neg h, dif_neg h]
-  rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_right h, dite_eq_right h]
+  rw [dite_eq_left h, dite_eq_left h]
   have hp := h.choose_spec
   generalize h.choose = p at hp ⊢
   obtain ⟨r, b⟩ := p

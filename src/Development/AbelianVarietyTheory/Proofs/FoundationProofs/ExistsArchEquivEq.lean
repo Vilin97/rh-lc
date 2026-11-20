@@ -77,7 +77,7 @@ theorem atTau_archEquiv (hθ : IsInfFam θ) (V : HSp D) {ρ : D.what₂.Tau} {w 
   have hu := GlobalTheory.PointAtPlace.existsUnique_isAtTau V ρ θ hθ _ (archEquiv_mem_UH V τ hτ x)
   refine hu.unique ?_ (isAtTau_embArch hθ V τ hτ x)
   unfold atTau
-  rw [dif_pos hu.exists]
+  rw [dite_eq_left hu.exists]
   exact hu.exists.choose_spec
 
 end GlobalTheory.AdelicU

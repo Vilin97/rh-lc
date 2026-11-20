@@ -213,7 +213,7 @@ theorem toE_ord_eq (h : IsUnif A ϖ) (hι : AddValPres ζ ι) (x : A) :
     toE (ord ϖ ζ x) = nval V 1 (phiAt ζ F ι h hι x) := by
   have hex : ∃ n : ℕ, ϖ ^ n • x ∈ As O A := h.denom x
   unfold ord
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact toE_ordAt_lemma_3 (F := F) h hι x _ _ rfl
 
 end Cover

@@ -21,7 +21,7 @@ theorem finiteGroupAction_preserves_principalFlagMultiplicity : ∀ {D : D7} {V 
         actG0 V β L g0 (T v) := by
       intro v
       unfold actG0
-      rw [dif_pos hk]
+      rw [dite_eq_left hk]
       funext g
       simp [heckeOn, postOn_apply, heckeLin_apply]
     have h0 : IsMultMap θ M ∅ (levChi V β (flag1L L))
@@ -34,7 +34,7 @@ theorem finiteGroupAction_preserves_principalFlagMultiplicity : ∀ {D : D7} {V 
     exact GlobalTheory.FlagAction.act_hasType (fun k hk => hT.lev v k hk) hk k hk' g
   · refine ⟨0, Submodule.zero_mem _, fun v => ?_⟩
     unfold actG0
-    rw [dif_neg hk]
+    rw [dite_eq_right hk]
     rfl
 
 end GlobalTheory.FlagAct

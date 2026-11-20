@@ -29,7 +29,7 @@ theorem onStep_fs (M : FlagModel y Ψ N j) (p : Ψ × Fin N) : M.OnStep p (fsHer
     · simp only [h2 k hk']
     · have : M.dy p k = 0 := by
         unfold FlagModel.dy
-        rw [dif_neg hk, if_neg hk']
+        rw [dite_eq_right hk, if_neg hk']
       simp [this]
 
 theorem isPsh_of_univ {e : ℕ} {X : Type} [TopologicalSpace X] {A : FinHolAtlas e X} {U : Set X} {P : LocPot X}

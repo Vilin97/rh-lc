@@ -204,7 +204,7 @@ theorem exists_step {I : TC B X} (hI : I.Ok) (hP : TC.Pins B X) {l : I.Laws} {Z 
     have hPG : P ∉ (B.primes X).vGs := Finset.disjoint_right.1 (LevTwist.levOk_twists B X I hI).2.1 hP'
     have hfr : ptFr (q β) P = 1 := by
       unfold ptFr
-      rw [dif_neg hPG, dif_neg hPQ, hN]
+      rw [dite_eq_right hPG, dite_eq_right hPQ, hN]
       unfold GlobalTheory.Mem.Col2.latFr
       exact if_pos rfl
     refine Matrix.ext fun r s => ?_

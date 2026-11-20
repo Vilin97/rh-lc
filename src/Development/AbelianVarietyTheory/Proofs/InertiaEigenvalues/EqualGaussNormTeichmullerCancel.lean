@@ -28,7 +28,7 @@ theorem isGauss_gC {ρ : ℝ} (h1 : (l : ℝ)⁻¹ ≤ ρ) (h2 : ρ < 1) : IsGau
   have hfun : gC l ρ = Classical.choose h := by
     funext x
     unfold gC
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [hfun]
   exact Classical.choose_spec h
 

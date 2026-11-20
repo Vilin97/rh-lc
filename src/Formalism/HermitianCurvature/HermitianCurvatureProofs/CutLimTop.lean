@@ -28,7 +28,7 @@ theorem limTopN_of_decay : ∃ c₃ : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGrou
     refine ⟨?_, fun F => ?_⟩
     swap
     unfold TBB.Ew TBB.NP KB.Pl.RR D.RRplace
-    rw [dif_pos ⟨hγ, hγ⟩, dif_neg (show ¬ (P.r + 1 ≤ P.r) by omega), if_pos rfl, if_pos rfl]
+    rw [dite_eq_left ⟨hγ, hγ⟩, dite_eq_right (show ¬ (P.r + 1 ≤ P.r) by omega), if_pos rfl, if_pos rfl]
   obtain ⟨K, hK⟩ := key
   simp only [hK]
   have hs : Continuous (fun V : Wq →L[ℂ] Wp => B.hsVec V) := by

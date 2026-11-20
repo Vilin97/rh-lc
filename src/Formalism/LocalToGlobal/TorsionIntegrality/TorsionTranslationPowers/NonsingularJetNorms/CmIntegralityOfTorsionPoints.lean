@@ -70,7 +70,7 @@ theorem nonsing (hΔ : (curveL l L ι).Δ ≠ 0) (t : ℂ) (ht : t ∉ L.lattice
 theorem ptOf_notMem (hΔ : (curveL l L ι).Δ ≠ 0) (t : ℂ) (ht : t ∉ L.lattice) :
     ptOf l L ι t = .some _ _ (nonsing l L ι hΔ t ht) := by
   unfold ptOf
-  rw [dif_pos ⟨ht, nonsing l L ι hΔ t ht⟩]
+  rw [dite_eq_left ⟨ht, nonsing l L ι hΔ t ht⟩]
 
 theorem px_ptOf (hΔ : (curveL l L ι).Δ ≠ 0) (t : ℂ) (ht : t ∉ L.lattice) :
     px (curveL l L ι) (ptOf l L ι t) = ι (L.weierstrassP t) := by

@@ -87,7 +87,7 @@ theorem UnitaryMinkowskiBound.proof : UnitaryMinkowskiBound.Statement := by
   have hcov : D.covolZ z I = Real.sqrt (Matrix.of fun k l =>
       D.hodgeInner z (hex.choose_spec.choose k) (hex.choose_spec.choose l)).det := by
     unfold FullerData.covolZ
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hb : IsZBasis I hex.choose_spec.choose := hex.choose_spec.choose_spec
   have hm : hex.choose = 2 * D.f * ρ := by
     rw [card_eq_of_isZBasis hv hb, D.herm.finrank_eq]

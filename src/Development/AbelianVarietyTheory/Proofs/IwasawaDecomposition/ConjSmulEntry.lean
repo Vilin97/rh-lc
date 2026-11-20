@@ -61,7 +61,7 @@ theorem redM_adj_congr : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf 
   have hg : ∀ y, redM PP (uMat S T βS βT e fun b => ι (y b)) i j = g y := by
     intro y
     unfold redM
-    rw [dif_pos (hint y i j)]
+    rw [dite_eq_left (hint y i j)]
     rfl
   have hs : ∀ a ∈ J, ∀ y : Fin S.rank → La, g (a • y) = 0 := by
     intro a ha y

@@ -593,7 +593,7 @@ theorem dat_pos {y : Matrix (Fin n) (Fin r) E} {k : D.J}
     (h' : ∀ k : Fin n, r ≤ (k : ℕ) → Cong X D.𝔪 (y k) 0) : D.dat hn y = (D.lam k : ℂˣ) := by
   have H : (∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k) ∧
       ∀ k : Fin n, r ≤ (k : ℕ) → Cong X D.𝔪 (y k) 0 := ⟨⟨k, h⟩, h'⟩
-  rw [Level.dat, dif_pos H, Subtype.ext (red_unique H.1.choose_spec h)]
+  rw [Level.dat, dite_eq_left H, Subtype.ext (red_unique H.1.choose_spec h)]
 
 theorem dat_congr {y y' : Matrix (Fin n) (Fin r) E} (h : ∀ k, Cong X D.𝔪 (y k) (y' k)) :
     D.dat hn y = D.dat hn y' := by
@@ -602,7 +602,7 @@ theorem dat_congr {y y' : Matrix (Fin n) (Fin r) E} (h : ∀ k, Cong X D.𝔪 (y
   · obtain ⟨⟨k, hk⟩, H⟩ := H
     rw [dat_pos hn hk H, dat_pos hn (red_congr (fun i => h _) hk)
       fun j hj => cong_trans (h j) (H j hj)]
-  · rw [Level.dat, Level.dat, dif_neg H, dif_neg]
+  · rw [Level.dat, Level.dat, dite_eq_right H, dite_eq_right]
     rintro ⟨⟨k, hk⟩, H'⟩
     exact H ⟨⟨k, red_congr (fun i => cong_symm (h _)) hk⟩,
       fun j hj => cong_trans (cong_symm (h j)) (H' j hj)⟩
@@ -620,7 +620,7 @@ theorem dat_lin {γ : GL (Fin r) E} {k : D.J} (h : D.Red (fun i => lin γ (D.β 
     rw [dat_pos hn hl H, dat_pos hn (k := k * l), map_mul, Units.val_mul]
     · simp only [e]; exact (red_lin_iff h).2 hl
     · intro j hj; rw [e, e0]; exact H j hj
-  · rw [Level.dat, Level.dat, dif_neg H, dif_neg, mul_zero]
+  · rw [Level.dat, Level.dat, dite_eq_right H, dite_eq_right, mul_zero]
     rintro ⟨⟨l, hl⟩, H'⟩
     refine H ⟨⟨k⁻¹ * l, (red_lin_iff h).1 ?_⟩, fun j hj => ?_⟩
     · simpa [e] using hl

@@ -76,7 +76,7 @@ theorem piZ_spec (h2 : FibZN (k := k)) (hZ : CR Z) (x : Matrix (Fin n) (Fin n) k
     piZ Z x ∈ Z ∧ qZ Z (piZ Z x) = qZ Z x := by
   have h : ∃ c ∈ Z, qZ Z c = qZ Z x := qZ_Z_exists h2 hZ (qZ Z x)
   unfold piZ
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem piZ_eq_of (h2 : FibZN (k := k)) (hZ : CR Z) {x c : Matrix (Fin n) (Fin n) k} (hc : c ∈ Z)

@@ -282,7 +282,7 @@ theorem rrTop_zero {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ
   have hv : ∀ F' : B.Mat P.k P.r → (Wq →L[ℂ] Wp), D.vecV T.base ν' m₀ F' (H ++ [(1, c)]) = 0 := by
     intro F'
     unfold D.vecV
-    rw [dif_neg]
+    rw [dite_eq_right]
     rintro ⟨-, hG⟩
     rw [ptG_app _ c H P.r hH] at hG
     have : Complex.normSq (D.ptMatN H P.r).det * (Complex.normSq c - Tz P.k P.r T.base.z * Tz P.k P.r T.base.z') ≤ 0 :=
@@ -441,7 +441,7 @@ theorem frameInt : FrameInt := by
     intro i P Q hPQ
     simp only [hRRs]
     unfold D.RRplace
-    rw [dif_neg]
+    rw [dite_eq_right]
     rwa [isLocPt_toStd_iff _ _ hgpos, isLocPt_toStd_iff _ _ hgpos]
   by_cases hloc : D.IsLocPt h j ∧ D.IsLocPt h' j
   · obtain ⟨hh, hh'⟩ := hloc

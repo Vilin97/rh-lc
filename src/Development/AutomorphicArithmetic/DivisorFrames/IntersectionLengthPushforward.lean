@@ -91,5 +91,5 @@ theorem UpperTheory.intersection_length_pushforward :
   · have h' : ¬ ∃ a, IsDeg p L (i (genericPoint Z)) a := fun ⟨_, Z', i', _, _, _, hz, hd', _⟩ => by
       rw [← hdim i', hz, hdim i] at hd'
       exact h.ne hd'
-    rw [pdeg, dif_neg h', interNum_eq_zero_of_isProjOver (algebraMap_eq_strHom (ResidueField O) Z)
+    rw [pdeg, dite_eq_right h', interNum_eq_zero_of_isProjOver (algebraMap_eq_strHom (ResidueField O) Z)
       (structureModule Z) hp (by rwa [QCoh.suppDim_structureModule, Fintype.card_fin]) hL', zero_mul]

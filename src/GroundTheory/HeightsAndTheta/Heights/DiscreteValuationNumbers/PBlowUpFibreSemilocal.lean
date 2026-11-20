@@ -74,7 +74,7 @@ theorem BlowUpFibreSemilocal.proof (ha : HomLocRingLocal.Statement.{u})
     have hdivQ : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) Q : ℤ) =
         ((multAt (blowUpOf P u ⊔ Ideal.span {liftForm x}) Q).toNat : ℤ) := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-      rw [dif_pos ⟨hQmin, hQrel⟩]
+      rw [dite_eq_left ⟨hQmin, hQrel⟩]
     have : Ring.KrullDimLE 1 (homLocRing (blowUpOf P u) Q) := by
       rw [Ring.krullDimLE_iff, hd]
       rfl

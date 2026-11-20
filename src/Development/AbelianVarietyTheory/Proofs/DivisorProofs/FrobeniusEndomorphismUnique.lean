@@ -18,7 +18,7 @@ theorem frob_isFrob_unique : ∀ (K : Type) [Field K] [Fintype K] (A : AbVar K),
     exact ⟨π, hπ⟩
   have hf : IsFrob (frob A) := by
     unfold frob
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   refine ⟨hf, fun π hπ => ?_⟩
   apply GlobalTheory.AV.AbVar.ext_of_pt_eq

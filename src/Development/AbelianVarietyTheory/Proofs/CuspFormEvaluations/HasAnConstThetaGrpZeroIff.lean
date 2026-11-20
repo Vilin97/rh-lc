@@ -52,7 +52,7 @@ private theorem exists_algChart_mem_source (hL : L.IsLB) (f : Sp ℂ ⟶ A.left)
 private theorem valAt'_unit_ne_zero_cusp_form_evaluations {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (U : X.Opens)
     (h : ⊤ ≤ y ⁻¹ᵁ U) (f : Γ(X, U)ˣ) : valAt' y U f.val ≠ 0 := by
   unfold valAt'
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   unfold valAt
   exact (Units.map ((Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom.comp (y.appLE U ⊤ h).hom).toMonoidHom f).ne_zero
 
@@ -69,7 +69,7 @@ private theorem valAt'_resG {X : Scheme.{0}} (y : Sp ℂ ⟶ X) {U V : X.Opens} 
     valAt' y V (X.presheaf.map (homOfLE hVU).op f) = valAt' y U f := by
   have h' : ⊤ ≤ y ⁻¹ᵁ U := fun a ha => hVU (h ha)
   unfold valAt'
-  rw [dif_pos h, dif_pos h']
+  rw [dite_eq_left h, dite_eq_left h']
   unfold valAt
   exact congrArg (fun F => (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom (F.hom f))
     (Scheme.Hom.map_appLE y h (homOfLE hVU).op)
@@ -79,12 +79,12 @@ private theorem valAt'_app_eq_valAt'_comp {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) 
   unfold valAt'
   by_cases h : ⊤ ≤ (y ≫ φ) ⁻¹ᵁ U
   · have h' : ⊤ ≤ y ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     unfold valAt
     rw [Scheme.Hom.comp_appLE]
     rfl
   · have h' : ¬ ⊤ ≤ y ⁻¹ᵁ (φ ⁻¹ᵁ U) := h
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 private theorem exAt_eq_ex_comp_lift (z : Fin g → ℂ) :
     exAt u p z = (u.ex z).left ≫ (lift (toUnit A ≫ p) (𝟙 A)).left := by
@@ -96,7 +96,7 @@ private theorem exists_ringHom_eq_valAt' {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (U 
     ∃ φ : Γ(X, U) →+* ℂ, ∀ f, φ f = valAt' y U f :=
   ⟨(Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom.comp (y.appLE U ⊤ h).hom, fun f => by
     unfold valAt'
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     rfl⟩
 
 private theorem preimage_inf_eq_univ {X : Scheme.{0}} (y : Sp ℂ ⟶ X) {U V : X.Opens}

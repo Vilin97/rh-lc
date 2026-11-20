@@ -129,7 +129,7 @@ theorem toG_pG (he : Function.Bijective e) (hl : IsLt (mv e lt)) (h : IsTyp D H)
     conv_rhs => rw [← m1, Finset.prod_range]
     refine Finset.prod_congr rfl fun i _ => ?_
     have hi : (i : ℕ) < Dw.p := lt_of_lt_of_eq i.2 m1
-    rw [map_pow, dif_pos (by omega), if_pos ((h.1 _).2 ⟨e t, rfl⟩), toG_minorP]
+    rw [map_pow, dite_eq_left (by omega), if_pos ((h.1 _).2 ⟨e t, rfl⟩), toG_minorP]
     congr 1
     · rw [minorPlus]
       congr 1
@@ -146,7 +146,7 @@ theorem toG_pG (he : Function.Bijective e) (hl : IsLt (mv e lt)) (h : IsTyp D H)
     conv_rhs => rw [← m2, Finset.prod_range]
     refine Finset.prod_congr rfl fun i _ => ?_
     have hi : (i : ℕ) < Dw.q := lt_of_lt_of_eq i.2 m2
-    rw [map_pow, dif_pos (by omega), if_neg ((h.2 _).2 ⟨e t, rfl⟩), toG_minorP]
+    rw [map_pow, dite_eq_left (by omega), if_neg ((h.2 _).2 ⟨e t, rfl⟩), toG_minorP]
     congr 1
     · rw [minorMinus]
       congr 1

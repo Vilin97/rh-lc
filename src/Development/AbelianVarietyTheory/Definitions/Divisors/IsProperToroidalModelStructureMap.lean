@@ -256,7 +256,7 @@ theorem IsMonomial.betaAt_eq (h : IsMonomial Dg t β) (hs : ∀ i y z, β i y z 
   have key : ∀ y, vPsiAt Dg f p y = ∑ i, -Real.logb p ‖f (t i)‖ * ((β i y y : ℝ) / 2) := fun y => by
     have hex : ∃ r, PsiCoord Dg y r := (h y).elim fun _ h => h.elim fun _ h => ⟨_, h.2⟩
     obtain ⟨u, n, hn, hr⟩ := h.coord hex.choose_spec
-    rw [vPsiAt, dif_pos hex, hr, map_mul, norm_mul, hunit, one_mul, map_prod, norm_prod,
+    rw [vPsiAt, dite_eq_left hex, hr, map_mul, norm_mul, hunit, one_mul, map_prod, norm_prod,
       Real.logb_prod _ _ fun i _ => by simp [ht i], ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_pow, norm_pow, Real.logb_pow, hn]

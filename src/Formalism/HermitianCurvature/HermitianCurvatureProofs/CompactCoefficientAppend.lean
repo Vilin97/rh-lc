@@ -108,7 +108,7 @@ theorem vector_level_zero_degenerate (hρ : ρ = 0) (B0 : B.RealPlaceData k ρ W
     D.vecV B0 ν m Φ [(1, ζ)] = 0 := by
   subst hρ
   unfold D.vecV
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨_, h⟩
   rw [ptG_one] at h
   linarith

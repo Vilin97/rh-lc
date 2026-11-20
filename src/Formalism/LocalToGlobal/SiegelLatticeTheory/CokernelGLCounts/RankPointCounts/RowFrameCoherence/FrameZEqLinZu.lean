@@ -140,19 +140,19 @@ theorem lin_iso : s.lin ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := 
 
 theorem frame_e (b : Fin D.R.rS) : s.frame.fl.e b = s.lin (X.eX b) := by
   unfold Formalism.L2.SG.TermOp.GTerm.frame Formalism.L2.SG.TermOp.mapLF
-  rw [dif_pos (lin_iso X Y u u' s)]
+  rw [dite_eq_left (lin_iso X Y u u' s)]
   show s.lin ((X.Fu u').e b) = _
   rw [X.Fu_e]
 
 theorem frame_z_eq_lin_zu : s.frame.fl.z = s.lin (X.zu u') := by
   unfold Formalism.L2.SG.TermOp.GTerm.frame Formalism.L2.SG.TermOp.mapLF
-  rw [dif_pos (lin_iso X Y u u' s)]
+  rw [dite_eq_left (lin_iso X Y u u' s)]
   show s.lin ((X.Fu u').z) = _
   rw [X.flagZVector]
 
 theorem frame_zt : s.frame.zt = s.frame.fl.z := by
   unfold Formalism.L2.SG.TermOp.GTerm.frame Formalism.L2.SG.TermOp.mapLF
-  rw [dif_pos (lin_iso X Y u u' s)]
+  rw [dite_eq_left (lin_iso X Y u u' s)]
   rfl
 
 theorem frame_fvec (b : Fin (D.R.rS + 1)) : s.frame.fl.fvec b = s.lin ((X.Fu u').fvec b) := by

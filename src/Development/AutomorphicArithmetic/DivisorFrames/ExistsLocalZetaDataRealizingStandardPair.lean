@@ -60,7 +60,7 @@ private theorem stdA_ne (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) : stdA �
   have e1 : blk₁ X = 1 := by ext i j; simp [X, blk₁]
   have e2 : blk₂ X = 0 := by ext i j; simp [X, blk₂]
   have hX := congrFun h X
-  rw [stdA, dif_pos] at hX
+  rw [stdA, dite_eq_left] at hX
   · exact Units.ne_zero _ hX
   · rw [e1, e2]
     refine ⟨by simp, ⟨fun i j => ?_, by simp⟩, fun i j => by simp [cball]⟩
@@ -76,7 +76,7 @@ private theorem stdB_ne (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) : stdB �
   have e1 : blk₁ X = 0 := by ext i j; simp [X, blk₁]
   have e2 : blk₂ X = 1 := by ext i j; simp [X, blk₂]
   have hX := congrFun h X
-  rw [stdB, dif_pos] at hX
+  rw [stdB, dite_eq_left] at hX
   · exact Units.ne_zero _ hX
   · rw [e1, e2]
     refine ⟨by simp, ⟨fun i j => ?_, by simp⟩, fun i j => by simp [cball]⟩

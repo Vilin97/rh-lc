@@ -119,14 +119,14 @@ theorem omegaFree_move (R : RealDat D A Ks) (i : Fin D.R.m) (Q : Finset (Pl D.ho
   by_cases h : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank (u PP)).det
   · have h' : ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank ((M PP).val * u PP)).det := fun PP hP => by
       rw [hv PP hP]; exact h PP hP
-    rw [dif_pos h', dif_pos h]
+    rw [dite_eq_left h', dite_eq_left h]
     refine Finset.prod_congr rfl fun PP _ => ?_
     have e : (h' PP.1 PP.2).unit = (h PP.1 PP.2).unit :=
       Units.ext (by rw [IsUnit.unit_spec, IsUnit.unit_spec, hv PP.1 PP.2])
     rw [e]
   · have h' : ¬ ∀ PP ∈ Q, IsUnit (topL (Wc D i).rank ((M PP).val * u PP)).det := fun h' =>
       h fun PP hP => by rw [← hv PP hP]; exact h' PP hP
-    rw [dif_neg h', dif_neg h]
+    rw [dite_eq_right h', dite_eq_right h]
 
 end GlobalTheory.TypeMove
 

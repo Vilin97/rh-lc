@@ -242,7 +242,7 @@ theorem covolZ_eq_of_family {z : (Σ k, ι k) → ℂ} (hz : z ∈ D.Xo) {I : Su
         |(discr Em : ℝ)| ^ ((ρ : ℝ) / 2) := by
   classical
   unfold covolZ
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hb := hex.choose_spec.choose_spec
   have h1 := det_gram_tower_eq (D.hodgeAdd z) hv hb
   simp only [hodgeAdd_apply] at h1

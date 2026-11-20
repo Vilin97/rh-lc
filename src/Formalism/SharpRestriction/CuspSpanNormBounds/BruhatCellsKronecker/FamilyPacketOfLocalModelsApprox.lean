@@ -133,14 +133,14 @@ theorem vanish_of (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.
   apply hK
   unfold Kglob
   by_cases e : m + s = D.R.rS + 1
-  · rw [dif_pos e]
+  · rw [dite_eq_left e]
     unfold KtopG
     split_ifs
     · refine finprod_eq_zero _ p ?_ (hfin.2.2.2 _ _)
       unfold KtopP
       rw [locK_cast, h0, mul_zero, zero_mul]
     · rfl
-  · rw [dif_neg e]
+  · rw [dite_eq_right e]
     exact finprod_eq_zero _ p h0 (hfin.1 _ _ _ hms)
 
 end Van
@@ -229,13 +229,13 @@ theorem kind_snoc (h : Point D.host.E D.R.rS) (t : D.host.E) (ht : t ≠ 0) (hs 
     fun _ _ => Fin.ext rfl
   have hD1 : Dmin (ptApp h t ht 1 hs) D.R.rS = (ptMat h).det := by
     unfold Dmin
-    rw [dif_pos (Nat.le_succ _), hM]
+    rw [dite_eq_left (Nat.le_succ _), hM]
     congr 1
     ext i j
     simp [schExt, hc]
   have hD2 : Dmin (ptApp h t ht 1 hs) (D.R.rS + 1) = (ptMat h).det * t := by
     unfold Dmin
-    rw [dif_pos le_rfl, hM, ← schExt_det]
+    rw [dite_eq_left le_rfl, hM, ← schExt_det]
     congr 1
   unfold kind zetaOf
   rw [hD1, if_neg hdet, hD2, mul_div_cancel_left₀ t hdet]
@@ -247,7 +247,7 @@ theorem vanish_one (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D
   have hm : m = D.R.rS := by omega
   subst hm
   unfold Kglob at hK
-  rw [dif_pos hms] at hK
+  rw [dite_eq_left hms] at hK
   unfold KtopG at hK
   split_ifs at hK with hk
   · change kind (ptApp h t ht 1 hs) = kind (ptApp h' t' ht' 1 hs) at hk

@@ -296,7 +296,7 @@ theorem isBeta_betaH (hK : KPsiIn (Dw := Dw) c) {n b : ℕ} {Λ : GenLat E n} (h
     BlockLatticeAdmissibility.IsBeta Dw c Λ (betaH (Dw := Dw) c Λ) := by
   have h := GlobalTheory.BetaEx.betaExists E H Dw l c n b hK Λ hU hT
   unfold betaH
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 end Beta

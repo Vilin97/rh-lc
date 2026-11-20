@@ -157,13 +157,13 @@ theorem GlobalTheory.HomStab.exists_perm_face_stdSeq : ∀ (R : Type) [CommRing 
     · by_cases hc : (c : ℕ) < n - (p + 1)
       · rw [fx2 a ha, fx1 c hc]
       · simp only [padMat, Matrix.of_apply]
-        rw [dif_neg, dif_neg]
+        rw [dite_eq_right, dite_eq_right]
         all_goals first
           | simp only [bij]
           | (rw [lo1]; omega)
           | (rw [lo2]; omega)
     · simp only [padMat, Matrix.of_apply]
-      rw [dif_neg, dif_neg]
+      rw [dite_eq_right, dite_eq_right]
       all_goals first
         | simp only [bij]
         | (rw [lo1]; omega)

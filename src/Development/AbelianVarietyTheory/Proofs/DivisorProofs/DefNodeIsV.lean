@@ -84,11 +84,11 @@ theorem exists_std {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridDa
   obtain ⟨fr, frt, hfr⟩ : ∃ fr : ∀ X : Node, GL (Fin (G.V X).rank) D.host.E, fr (.top D.R.m) = frT ∧
       ∀ X (hX : DefNode D.R.m X), X ≠ .top D.R.m → fr X = fr0 X hX :=
     ⟨Function.update (fun X => if h : DefNode D.R.m X then fr0 X h else 1) (.top D.R.m) frT,
-      Function.update_self _ _ _, fun X hX hXt => by rw [Function.update_of_ne hXt, dif_pos hX]⟩
+      Function.update_self _ _ _, fun X hX hXt => by rw [Function.update_of_ne hXt, dite_eq_left hX]⟩
   obtain ⟨u, ut, hu⟩ : ∃ u : ∀ X : Node, FinPt G X, u (.top D.R.m) = uT ∧
       ∀ X (hX : DefNode D.R.m X), X ≠ .top D.R.m → u X = u0 X hX :=
     ⟨Function.update (fun X => if h : DefNode D.R.m X then u0 X h else 1) (.top D.R.m) uT,
-      Function.update_self _ _ _, fun X hX hXt => by rw [Function.update_of_ne hXt, dif_pos hX]⟩
+      Function.update_self _ _ _, fun X hX hXt => by rw [Function.update_of_ne hXt, dite_eq_left hX]⟩
   have frmm := hfr _ hmm hne
   have hu_mm := hu _ hmm hne
   refine ⟨⟨S, hSp, ?_, ?_, fr, ?_, u, ?_, ?_, ?_, ?_, ?_, ?_⟩⟩

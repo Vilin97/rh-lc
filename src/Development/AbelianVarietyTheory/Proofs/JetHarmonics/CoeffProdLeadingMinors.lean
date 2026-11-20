@@ -50,7 +50,7 @@ theorem _root_.GlobalTheory.LeadingMinors.killCompl_det_X {k σ ρ ι : Type*} [
     split_ifs with h
     · subst h
       rw [hd, ← MvPolynomial.rename_X f, MvPolynomial.killCompl_rename_app]
-    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dif_neg (ho a i h)]
+    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dite_eq_right (ho a i h)]
   rw [hM, Matrix.det_diagonal, MvPolynomial.monomial_sum_one]
   rfl
 

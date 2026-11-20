@@ -120,7 +120,7 @@ theorem dr_y_le : ∀ (k r : ℕ) (z z' : (Fin (2 * r + k + 1) → ℂ)) (γ : M
       have hb := b.2
       simp only at ha hb
       simp only [Matrix.transpose_apply, Matrix.submatrix_apply, Zhat, fvec, Matrix.of_apply, formE_apply]
-      rw [dif_pos (by simpa using ha), dif_pos (by simpa using hb),
+      rw [dite_eq_left (by simpa using ha), dite_eq_left (by simpa using hb),
         ← herm_mulVec (hG.2.2 _ hgx).2, Matrix.mulVec_mulVec, Matrix.mul_inv_rev,
         Matrix.nonsing_inv_mul_cancel_right _ _ (hG.2.2 _ hg).1]
       rfl

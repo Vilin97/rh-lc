@@ -57,7 +57,7 @@ theorem heckeVec_satU_borel : ∀ (L : Type) [Field L] [Valued L (WithZero (Mult
     rw [this]
     unfold chiDeltaU
     refine Finset.prod_congr rfl fun k _ => ?_
-    rw [dif_pos (by omega), mul_zpow, ← _root_.zpow_mul]
+    rw [dite_eq_left (by omega), mul_zpow, ← _root_.zpow_mul]
     have hl : lo n k = ⟨k.1, by omega⟩ := rfl
     rw [hl]
     congr 2

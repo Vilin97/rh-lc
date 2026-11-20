@@ -27,7 +27,7 @@ theorem inner_cls {n : ℕ} [MeasurableSpace (G n)] (μ : Measure (G n)) {V : Ty
     (hg : MemLp (fun y : G n => g y.val) 2 μ) :
     ⟪cls μ f, cls μ g⟫_ℂ = ∫ y : G n, ⟪f y.val, g y.val⟫_ℂ ∂μ := by
   unfold cls
-  rw [dif_pos hf, dif_pos hg, L2.inner_def]
+  rw [dite_eq_left hf, dite_eq_left hg, L2.inner_def]
   refine integral_congr_ae ?_
   filter_upwards [hf.coeFn_toLp, hg.coeFn_toLp] with y h1 h2
   rw [h1, h2]

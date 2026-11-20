@@ -129,7 +129,7 @@ theorem admissible_local_term {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS 
   have hφ := bt_typed_frFac Zd hE hD p F0 Λ hΛfg hR.2.2 hFix.2.2.2 hgP
   have hO := bt_typed_O Zd hD p F0 Λ F' (Tu D u) (Tu D u') hR.2.2 sg hs hφ
   have hξ : AdmWit Λ (gS D) (lf D F0) F' (admXi D Λ (lf D F0) F') := by
-    unfold admXi; rw [dif_pos hA]; exact hA.choose_spec
+    unfold admXi; rw [dite_eq_left hA]; exact hA.choose_spec
   have hMΛ := bt_typed_Mle Zd hE p F0 Λ F' hΛfg hFix.2.2.1 hξ hgP
   intro b
   have hmem : algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((g.q : (D.s.atP p).Fp)⁻¹) •
@@ -167,7 +167,7 @@ theorem admissible_local_partner {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.
   have hκ := (bt_kappa Zd p sg hs).1
   have hA : IsAdmissible Λ (gS D) (lf D F0) F' := ⟨1, hA1⟩
   have hξ : AdmWit Λ (gS D) (lf D F0) F' (admXi D Λ (lf D F0) F') := by
-    unfold admXi; rw [dif_pos hA]; exact hA.choose_spec
+    unfold admXi; rw [dite_eq_left hA]; exact hA.choose_spec
   have hMΛ := bt_typed_Mle Zd hE p F0 Λ F' hΛfg hFix.2.2.1 hξ hgP
   have hXfg : (XLam Λ (lf D F0)).FG := bt_fg_le hΛfg inf_le_left
   have hEq : lattice₂ D Zd.M p (Mplus Λ (gS D) (lf D F0) F' 1) =

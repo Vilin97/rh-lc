@@ -174,7 +174,7 @@ theorem restr_toLam {j : ι → ι'} (hj : Function.Injective j) (F : MvPolynomi
       congr 3
       funext q'
       simp [Pi.single_apply, hj.eq_iff]
-    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dif_neg hq, map_zero, sub_eq_zero, ← map_one (MonoidAlgebra.of _ _)]
+    · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dite_eq_right hq, map_zero, sub_eq_zero, ← map_one (MonoidAlgebra.of _ _)]
       congr 1
       funext q'
       exact Pi.single_eq_of_ne (fun h => hq ⟨q', h⟩) _

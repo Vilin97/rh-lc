@@ -77,7 +77,7 @@ theorem upperIn_eq (β : Fin r → ℕ) (x : UTin β → ℂ) : upperIn β x = 1
 theorem strIn_inj (β : Fin r → ℕ) : Function.Injective (strIn β) := fun x y h => by
   funext p
   have := congrFun (congrFun h p.1.1.1) p.1.1.2
-  rwa [strIn_apply, strIn_apply, dif_pos ⟨p.1.2, p.2⟩, dif_pos ⟨p.1.2, p.2⟩] at this
+  rwa [strIn_apply, strIn_apply, dite_eq_left ⟨p.1.2, p.2⟩, dite_eq_left ⟨p.1.2, p.2⟩] at this
 
 theorem mem_strIn (β : Fin r → ℕ) (A : Matrix (Fin r) (Fin r) ℂ) (hA : ∀ a b, ¬ (a < b ∧ β a = β b) → A a b = 0) :
     A ∈ Set.range (strIn β) := by
@@ -195,7 +195,7 @@ theorem topL_snd (q : PTop k r j) : (topL k r j q).2 =
 theorem topL_inj : Function.Injective (topL k r j) := fun x y h => by
   refine Prod.ext (funext fun a => ?_) (Prod.ext (funext fun p => ?_) (funext fun a => ?_))
   · have := congrFun (congrArg Prod.fst h) a.1
-    rwa [topL_fst, topL_fst, dif_pos a.2, dif_pos a.2] at this
+    rwa [topL_fst, topL_fst, dite_eq_left a.2, dite_eq_left a.2] at this
   · have := congrFun (congrFun (congrArg Prod.snd h) p.1.1.1) p.1.1.2
     simpa [topL_snd, skewM, p.1.2, p.2] using this
   · have := congrFun (congrFun (congrArg Prod.snd h) a.1) a.1

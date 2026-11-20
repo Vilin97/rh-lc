@@ -163,7 +163,7 @@ theorem exists_qZ [CharZero k] (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ
 theorem piZ_spec [CharZero k] (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ : CR Z)
     (x : Matrix (Fin n) (Fin n) k) : qZ Z (piZ Z x) = qZ Z x := by
   unfold piZ
-  rw [dif_pos (exists_qZ Z hZ x)]
+  rw [dite_eq_left (exists_qZ Z hZ x)]
   exact (exists_qZ Z hZ x).choose_spec.2
 
 theorem piZ_eq [CharZero k] (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ : CR Z)

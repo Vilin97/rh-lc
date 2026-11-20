@@ -207,7 +207,7 @@ variable (D : D7) {N N' : ℕ}
 theorem lamC_alg {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (q : Qbar) :
     lamC lam (algebraMap Qbar ℂ q) = lam q := by
   unfold lamC
-  rw [dif_pos (show algebraMap Qbar ℂ q ∈ Qbar from q.2)]
+  rw [dite_eq_left (show algebraMap Qbar ℂ q ∈ Qbar from q.2)]
   rfl
 
 theorem isHom_prodQ {σ : Type*} [Fintype σ] {R : Type*} [CommSemiring R] (c : σ → σ → R) (d : σ →₀ ℕ) :

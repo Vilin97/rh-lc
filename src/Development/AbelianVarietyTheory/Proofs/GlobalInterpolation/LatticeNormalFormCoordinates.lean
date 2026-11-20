@@ -54,7 +54,7 @@ theorem isFrame : IsFrame (LinearMap.range (Loc.inX F n c)) (fun i : Fin c => Lo
   · rw [Fintype.linearIndependent_iff]
     intro g hg i
     have := congrFun hg (Fin.natAdd n i)
-    rw [sum_eN_apply, dif_neg (by simp)] at this
+    rw [sum_eN_apply, dite_eq_right (by simp)] at this
     simpa using this
   · rw [Submodule.disjoint_def]
     rintro _ ⟨x, rfl⟩ hv
@@ -63,9 +63,9 @@ theorem isFrame : IsFrame (LinearMap.range (Loc.inX F n c)) (fun i : Fin c => Lo
     have h1 := congrFun hg l
     rw [sum_eN_apply] at h1
     by_cases h : l.1 < n
-    · rw [dif_pos h] at h1
+    · rw [dite_eq_left h] at h1
       exact h1.symm
-    · rw [inX_apply, dif_neg h]
+    · rw [inX_apply, dite_eq_right h]
       rfl
   · rw [codisjoint_iff, eq_top_iff]
     intro v _

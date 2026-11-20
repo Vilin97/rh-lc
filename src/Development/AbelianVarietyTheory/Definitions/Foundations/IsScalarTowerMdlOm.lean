@@ -188,7 +188,7 @@ attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 theorem _root_.GlobalTheory.ZetaB.unitOf_val (X : _root_.GlobalTheory.KZ.Tower Ω ε) {a : X.K}
     (ha : a ≠ 0) : ((_root_.GlobalTheory.ZetaB.unitOf X a : (X.K)ˣ) : X.K) = a := by
   unfold _root_.GlobalTheory.ZetaB.unitOf
-  rw [dif_neg ha]
+  rw [dite_eq_right ha]
   rfl
 
 open scoped MatrixGroups TensorProduct in
@@ -199,7 +199,7 @@ attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 theorem _root_.GlobalTheory.ZetaB.unitOf_zero (X : _root_.GlobalTheory.KZ.Tower Ω ε) :
     _root_.GlobalTheory.ZetaB.unitOf X 0 = 1 := by
   unfold _root_.GlobalTheory.ZetaB.unitOf
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 theorem vecMul_gR (l N : ℕ) [Fact l.Prime] (hN : (N : ZMod l) ≠ 0) (r₀ : ZMod l) :
     ![-r₀, -1] ᵥ* (((gR l N r₀ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ZMod l)) = ![0, -1] := by

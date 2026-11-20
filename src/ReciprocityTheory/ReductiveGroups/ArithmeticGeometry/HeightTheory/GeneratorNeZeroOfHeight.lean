@@ -9,7 +9,7 @@ theorem ratio_eq_of_eq_smul {Ω V : Type*} [Field Ω] [AddCommGroup V] [Module �
     (hg : g ≠ 0) (h : f = a • g) : ratio f g = a := by
   unfold ratio
   have hex : ∃ a' : Ω, f = a' • g := ⟨a, h⟩
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hs : a • g = hex.choose • g := by
     rw [← h]
     exact hex.choose_spec

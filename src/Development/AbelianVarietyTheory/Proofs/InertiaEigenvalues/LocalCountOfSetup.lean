@@ -511,7 +511,7 @@ theorem locCount : LocalFiniteness → LocalTateDuality → LocalEulerChar → G
   rw [← finprod_set_coe_eq_finprod_mem, ← finprod_set_coe_eq_finprod_mem, finprod_eq_prod_of_fintype,
     finprod_eq_prod_of_fintype, ← sum_h1fDim bkP i s hG, ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun u _ => ?_
-  rw [bkOn, dif_pos u.2]
+  rw [bkOn, dite_eq_left u.2]
   refine card_local (bkP.br i u.1 u.2) (X.twistBaseCoefficientRing_isAdic i) h4.2.2.2.1 (D.loc (X.l i)) ((Tgl i s).comp (DecV N u.1).subtype)
     ((continuous_Tgl i s).comp continuous_subtype_val)
     (GlobalTheory.BKDimNoInv.localGaloisRep_invariants_from_fractionRing _ _ (noInv bkP i s hG.1 u.1)) hkill _ fun g x a => ?_

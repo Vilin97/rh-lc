@@ -39,7 +39,7 @@ theorem labE_lab (D : D7) (σ : D.what₂.LL →+* ℂ) (s : ℂ ≃+* ℂ) (h :
     refine ⟨B.perm.symm ρ, ?_⟩
     split_ifs at h'
     exacts [Or.inl h', Or.inr h']
-  rw [Formalism.IndefR.Links.lab, dif_pos hex]
+  rw [Formalism.IndefR.Links.lab, dite_eq_left hex]
   refine hex.choose_spec.resolve_right fun h' => ?_
   have h2 := labE_sqrt D σ s h hex.choose ρ
   rw [h', RingHom.comp_apply] at h2

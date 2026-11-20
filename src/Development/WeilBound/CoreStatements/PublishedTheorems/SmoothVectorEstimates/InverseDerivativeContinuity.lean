@@ -64,7 +64,7 @@ variable [IsTotallyComplex E]
 theorem chart_inv (g : GA E a) {x : Lie E a} (hx : x ∈ invSet E a) :
     ∃ h : GA E a, ∀ f : GA E a → ℂ, chart f g x = f h :=
   have hu : IsUnit (Matrix.of x) := hx
-  ⟨g * infGL E a hu.unit, fun f => by rw [chart, dif_pos hu]⟩
+  ⟨g * infGL E a hu.unit, fun f => by rw [chart, dite_eq_left hu]⟩
 
 theorem chart_one (f : GA E a → ℂ) (g : GA E a) : chart f g (oneL E a) = f g := by
   have e := chart_val f g 1

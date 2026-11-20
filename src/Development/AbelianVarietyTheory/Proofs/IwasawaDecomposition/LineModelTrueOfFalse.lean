@@ -40,7 +40,7 @@ variable {F : Type} [Field F] {x : Sp F ⟶ X}
 theorem valF_rs {U V : X.Opens} (e : V ≤ U) (h : ⊤ ≤ x ⁻¹ᵁ V) (a : Γ(X, U)) :
     valF x V (rs e a) = valF x U a := by
   have h' : ⊤ ≤ x ⁻¹ᵁ U := fun q hq => e (h hq)
-  rw [valF, valF, dif_pos h, dif_pos h', ← Scheme.Hom.map_appLE x h (homOfLE e).op]
+  rw [valF, valF, dite_eq_left h, dite_eq_left h', ← Scheme.Hom.map_appLE x h (homOfLE e).op]
   rfl
 
 theorem valF_uinv {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) : valF x U (a⁻¹).val = (valF x U a.val)⁻¹ :=

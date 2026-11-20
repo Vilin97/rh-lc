@@ -167,7 +167,7 @@ private lemma ordL_zpow_uniformizer {ϖ : L} (hϖ : Valued.v ϖ = ↑(Multiplica
   have hne : Valued.v (ϖ ^ a) ≠ 0 := by
     rw [hv]
     exact WithZero.coe_ne_zero
-  rw [ordL, dif_neg hne]
+  rw [ordL, dite_eq_right hne]
   have h2 : WithZero.unzero hne = Multiplicative.ofAdd (-a) := by
     apply WithZero.coe_injective
     rw [WithZero.coe_unzero, hv]
@@ -228,7 +228,7 @@ private lemma sigma_tMat_diag {ϖ : L} (hσ : σ ϖ = ϖ) {m : ℕ} (a : Fin m �
 private lemma valuation_eq_ofAdd_neg_ordL {x : L} (hx : x ≠ 0) :
     Valued.v x = ↑(Multiplicative.ofAdd (-ordL x)) := by
   have hv : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
-  rw [ordL, dif_neg hv, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
+  rw [ordL, dite_eq_right hv, neg_neg, ofAdd_toAdd, WithZero.coe_unzero]
 
 private lemma valuation_zpow_uniformizer {ϖ : L} (hϖ : Valued.v ϖ = ↑(Multiplicative.ofAdd (-1 : ℤ))) (a : ℤ) :
     Valued.v (ϖ ^ a) = ((Multiplicative.ofAdd (-a) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
@@ -480,7 +480,7 @@ theorem fSatake_phi_cell {ϖ : L} {q m : ℕ} (hU : IsUnramInv ϖ σ q) (hm : 2 
     show (⟪t⟫ * ⟪u⟫) ⟨i, hi⟩ ⟨i, hi⟩ = _
     rw [ht, tMat, Matrix.diagonal_mul, hu1, mul_one]
     simp [i.isLt]
-  rw [dif_pos hi, hd, ordL_zpow_uniformizer hϖ]
+  rw [dite_eq_left hi, hd, ordL_zpow_uniformizer hϖ]
 
 theorem fSatake_vanish (hSph : SphericalExistsU) [CompleteSpace L] {ϖ : L} {q m : ℕ}
     (hU : IsUnramInv ϖ σ q) (hm : 2 * m ≤ n) (hm' : n ≤ 2 * m + 1) {α : Fin m → ℂ}

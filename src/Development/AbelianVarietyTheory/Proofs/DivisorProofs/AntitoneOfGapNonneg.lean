@@ -28,7 +28,7 @@ theorem antitone_of_gap_nonneg {N : ℕ} (v : Fin N → ℤ) (h : ∀ k, k + 1 <
   | succ n =>
     refine Fin.antitone_iff_succ_le.2 fun i => ?_
     have := h i (by omega)
-    rw [gap, dif_pos (by omega)] at this
+    rw [gap, dite_eq_left (by omega)] at this
     have e1 : (⟨(i : ℕ), by omega⟩ : Fin (n + 1)) = Fin.castSucc i := rfl
     have e2 : (⟨(i : ℕ) + 1, by omega⟩ : Fin (n + 1)) = i.succ := rfl
     rw [e1, e2] at this
@@ -48,7 +48,7 @@ theorem GlobalTheory.CompHS.WtPar.antitone_wt_gap_bar : ∀ {E : Type} [Field E]
     have hk : -2 ≤ FlagTan.kap Dw τ ⟨k, by omega⟩ - FlagTan.kap Dw τ ⟨k + 1, h⟩ := by
       simp only [FlagTan.kap, Fin.val_mk]
       split_ifs <;> push_cast <;> omega
-    rw [gap, dif_pos h] at hr ⊢
+    rw [gap, dite_eq_left h] at hr ⊢
     simp only [WtPar.wt, WtPar.uc, WtPar.u₂, Pi.add_apply, Pi.smul_apply] at hr ⊢
     simp only [nsmul_eq_mul] at hr ⊢
     have hD' : (2 : ℤ) ≤ (FlagTan.dimFlag Dw : ℤ) + (j : ℤ) := by exact_mod_cast hD

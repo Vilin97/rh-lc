@@ -71,7 +71,7 @@ theorem proj_surjective (hL : ∀ (v : Pl) (x : GL (Fin 2) (Qv v)), ∃ h, IsLoc
     · rw [h3]
       exact one_mem _
     · by_cases hv : v ∈ S
-      · rw [h1 v hv, dif_pos hv]
+      · rw [h1 v hv, dite_eq_left hv]
         exact (y ⟨v, hv⟩).2
       · rw [h2 v hv]
         exact one_mem _
@@ -79,7 +79,7 @@ theorem proj_surjective (hL : ∀ (v : Pl) (x : GL (Fin 2) (Qv v)), ∃ h, IsLoc
   funext v
   refine Subtype.ext ?_
   change finAt v.1 h = (y v).1
-  rw [h1 v.1 v.2, dif_pos v.2]
+  rw [h1 v.1 v.2, dite_eq_left v.2]
 
 theorem integral_prod_finAt : Ad3.R.B0 → Ad3.R.E3 := by
   intro hB mK _ _ m hm S A hA

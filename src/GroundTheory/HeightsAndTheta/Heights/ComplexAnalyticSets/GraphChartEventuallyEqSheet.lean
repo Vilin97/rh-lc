@@ -183,11 +183,11 @@ theorem sheetDens_eq (φ : Fin d → (Fin n → ℂ) → ℝ) (x : Fin n → ℂ
   unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets.sheetDens
   by_cases h : ∃ σ, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets.IsGraphChart J A x σ
   · have h' : ∃ s, GroundTheory.Heights₂.Heights.IsSheetAt J A x s := exists_graphChart_iff.mp h
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     exact maDens_graphChart_eq_sheet h.choose_spec h'.choose_spec φ
   · have h' : ¬ ∃ s, GroundTheory.Heights₂.Heights.IsSheetAt J A x s :=
       fun h' => h (exists_graphChart_iff.mpr h')
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem fibreSum_eq_chartDens (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ)
     (g : (Fin n → ℂ) → ℝ) (φ : Fin d → (Fin n → ℂ) → ℝ) (w : Fin d → ℂ) :
@@ -198,8 +198,8 @@ theorem fibreSum_eq_chartDens (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix
   refine finsum_congr fun x => finsum_congr fun hx => ?_
   rw [sheetDens_eq, hx.2]
   by_cases h : ∃ s, GroundTheory.Heights₂.Heights.IsSheetAt J A x s
-  · rw [dif_pos h, dif_pos h]
-  · rw [dif_neg h, dif_neg h, mul_zero]
+  · rw [dite_eq_left h, dite_eq_left h]
+  · rw [dite_eq_right h, dite_eq_right h, mul_zero]
 
 theorem fibreAbsSum_eq_chartAbsDens (J : Ideal (MvPolynomial (Fin n) ℂ))
     (A : Matrix (Fin d) (Fin n) ℂ) (g : (Fin n → ℂ) → ℝ) (φ : Fin d → (Fin n → ℂ) → ℝ)
@@ -211,8 +211,8 @@ theorem fibreAbsSum_eq_chartAbsDens (J : Ideal (MvPolynomial (Fin n) ℂ))
   refine finsum_congr fun x => finsum_congr fun hx => ?_
   rw [sheetDens_eq, hx.2]
   by_cases h : ∃ s, GroundTheory.Heights₂.Heights.IsSheetAt J A x s
-  · rw [dif_pos h, dif_pos h]
-  · rw [dif_neg h, dif_neg h, mul_zero, abs_zero]
+  · rw [dite_eq_left h, dite_eq_left h]
+  · rw [dite_eq_right h, dite_eq_right h, mul_zero, abs_zero]
 
 theorem projInt_eq (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ)
     (g : (Fin n → ℂ) → ℝ) (φ : Fin d → (Fin n → ℂ) → ℝ) :
@@ -248,12 +248,12 @@ theorem varIntegral_eq (J : Ideal (MvPolynomial (Fin n) ℂ)) (g : (Fin n → �
         GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets.IsFiniteProj J A := by
       obtain ⟨A, hA⟩ := h
       exact ⟨A, (isFiniteProj_iff hJ).mpr hA⟩
-    rw [dif_pos h, dif_pos h', projInt_eq, choose_congr hp h' h]
+    rw [dite_eq_left h, dite_eq_left h', projInt_eq, choose_congr hp h' h]
   · have h' : ¬ ∃ A : Matrix (Fin d) (Fin n) ℂ,
         GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets.IsFiniteProj J A := by
       rintro ⟨A, hA⟩
       exact h ⟨A, (isFiniteProj_iff hJ).mp hA⟩
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 end
 

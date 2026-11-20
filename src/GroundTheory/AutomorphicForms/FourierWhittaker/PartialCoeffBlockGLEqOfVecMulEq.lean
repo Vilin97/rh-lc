@@ -126,7 +126,7 @@ def rowCompletion {k : ℕ} (ξ : Fin k → K) : GL (Fin k) K :=
 theorem vecMul_rowCompletion {k : ℕ} {ξ : Fin k → K} (hξ : ξ ≠ 0) :
     Matrix.vecMul (lastVec k) ((rowCompletion ξ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) = ξ := by
   unfold rowCompletion
-  rw [dif_pos hξ]
+  rw [dite_eq_left hξ]
   exact (exists_lastRow_eq hξ).choose_spec
 
 theorem partialCoeff_blockGL_eq_of_vecMul_eq {ϕ : AdelicGLn.AdelicGL K n → ℂ}

@@ -118,7 +118,7 @@ theorem formAllC_holds : FormAllC := by
 
   have hFE : ∃ Ω, IsSFund X.B.I (ROinf t) Ω := fundExistsC_holds D X Y u u' t
   have hFO : IsSFund X.B.I (ROinf t) (FundOf t) := by
-    unfold FundOf; rw [dif_pos hFE]; exact hFE.choose_spec
+    unfold FundOf; rw [dite_eq_left hFE]; exact hFE.choose_spec
 
   set Γ0 := ROsub X (X.Fu u) (X.Fu u') t.lam t.lam' t.lin with hΓ0
   have hΓc : Countable Γ0 := by

@@ -58,7 +58,7 @@ theorem torsFrame_pow_origin (P : PolAV S) {T : Over S} {m : ℕ}
 
 theorem valF_spMap_fn {R K : Type} [CommRing R] [Field K] (y : R →+* K) (a : R) :
     valF (X := (baseOver (Sp R)).left) (spMap y) ⊤ (fn a) = y a := by
-  rw [valF, dif_pos (by simp)]
+  rw [valF, dite_eq_left (by simp)]
   have h := congrArg (fun q => q.hom a) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom y))
   have h' := congrArg (Scheme.ΓSpecIso (CommRingCat.of K)).hom.hom h
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, Iso.inv_hom_id_apply] at h'

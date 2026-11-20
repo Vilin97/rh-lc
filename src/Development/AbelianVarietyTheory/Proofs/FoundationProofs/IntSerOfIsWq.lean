@@ -23,7 +23,7 @@ theorem wModel_Δ (lam : Qbar →+* ℂ_[p]) {Λ : AddSubgroup ℂ} (h2 : g2 Λ 
     have e : -(x : ℂ) / 4 = ((-x / 4 : Qbar) : ℂ) := by
       push_cast
       rfl
-    rw [e, lamC, dif_pos (-x / 4).2]
+    rw [e, lamC, dite_eq_left (-x / 4).2]
     change lam (-x / 4) = _
     rw [map_div₀, map_neg, map_ofNat]
   have e : a ^ 3 - 27 * b ^ 2 = 1 := by

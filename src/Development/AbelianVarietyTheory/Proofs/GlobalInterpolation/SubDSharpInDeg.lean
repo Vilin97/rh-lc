@@ -105,7 +105,7 @@ theorem weight_derW (τ : ι) (μ : (ι × Fin b × Fin b) ⊕ DVar ι a b →�
 theorem natW_cast (lam : DomWeight a) (i : Fin a) : (lam.natW i : ℤ) = lam.w i - lam.detShift := by
   have hi := i.2
   have h : lam.detShift ≤ lam.w i := by
-    rw [DomWeight.detShift, dif_pos (by omega)]
+    rw [DomWeight.detShift, dite_eq_left (by omega)]
     exact lam.anti (by rw [Fin.le_def]; simp only; omega)
   rw [DomWeight.natW]
   omega

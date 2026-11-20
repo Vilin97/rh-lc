@@ -105,7 +105,7 @@ theorem isAtTau_atTau {D : D7} (θ : D.what₂.Tau → (Formalism.MainNotions.Gl
     (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D (D.sp.Y 0) τ)) : IsAtTau θ (D.sp.Y 0) τ g (atTau θ (D.sp.Y 0) τ g) := by
   have hu := GlobalTheory.PointAtPlace.existsUnique_isAtTau (D.sp.Y 0) τ θ hθ g hg
   unfold atTau
-  rw [dif_pos hu.exists]
+  rw [dite_eq_left hu.exists]
   exact hu.exists.choose_spec
 
 theorem iota_real_finite_of_eq {D : D7} (θ : D.what₂.Tau → (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (hθ : IsInfFam θ)

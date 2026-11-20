@@ -15,7 +15,7 @@ theorem arTop_of_induced : GlobalTheory.Published.ArCalc → GlobalTheory.Publis
   have hex : ∃ t, A.IsArTop t := ⟨_, M, L, k, cf, _, hI, ⟨h, hh, rfl⟩, rfl⟩
   have htop : A.IsArTop A.arTop := by
     unfold Adl.arTop
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   exact ⟨htop, fun a ha => GlobalTheory.T.arakelov_top_unique hc hd F C Y A _ _ htop ⟨M, L, k, cf, a, hI, ha, rfl⟩⟩
 

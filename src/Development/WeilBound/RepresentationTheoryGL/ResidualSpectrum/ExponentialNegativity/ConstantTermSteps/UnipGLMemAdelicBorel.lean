@@ -20,7 +20,7 @@ theorem unipGL_mem_adelicBorel (r : ℕ) (X : UPos n r → 𝔸[K]) :
   have hij' : (j : ℕ) < i := hij
   simp only [unipMatrix, Matrix.add_apply, blockEntry_apply, Matrix.one_apply]
   have hne : i ≠ j := fun h => by subst h; omega
-  rw [if_neg hne, dif_neg (by omega), add_zero]
+  rw [if_neg hne, dite_eq_right (by omega), add_zero]
 
 theorem ctn_unipGL_mul {r : ℕ} {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsLeftInvariant φ)
     (X : UPos n r → 𝔸[K]) (g : AdelicGLn.AdelicGL K n) :
@@ -113,10 +113,10 @@ theorem sr_shift {r : ℕ} (hr : 0 < r) (hrn : r < n) (x : Fin n → ℝ) (s : �
     sr (shift r x s) r' = sr x r' + if r' = r then s else 0 := by
   unfold sr
   by_cases h : 0 < r' ∧ r' < n
-  · rw [dif_pos h, dif_pos h]
+  · rw [dite_eq_left h, dite_eq_left h]
     simp only [shift]
     split_ifs <;> first | omega | ring
-  · rw [dif_neg h, dif_neg h]
+  · rw [dite_eq_right h, dite_eq_right h]
     have : r' ≠ r := by omega
     simp [this]
 

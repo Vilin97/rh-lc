@@ -27,7 +27,7 @@ def pureT (s : ∀ i, N i) (ξ : ∀ i, N i) : RTens s :=
   if h : Restr s ξ then ⟨evFam s ξ, Submodule.subset_span ⟨ξ, h, rfl⟩⟩ else 0
 
 theorem coe_pureT {s ξ : ∀ i, N i} (h : Restr s ξ) : (pureT s ξ : AdmFun s → ℂ) = evFam s ξ := by
-  unfold pureT; rw [dif_pos h]
+  unfold pureT; rw [dite_eq_left h]
 
 omit [∀ i, AddCommGroup (N i)] [∀ i, Module ℂ (N i)] in
 theorem restr_update [DecidableEq ι] {s ξ : ∀ i, N i} (h : Restr s ξ) (v : ι) (x : N v) :
@@ -119,7 +119,7 @@ theorem exists_lift {M : ι → Type} [∀ i, AddCommGroup (M i)] [∀ i, Module
         simpa [e] using hi
       · exact Or.inl e
     unfold pureT
-    rw [dif_neg h2, LinearMap.zero_apply]
+    rw [dite_eq_right h2, LinearMap.zero_apply]
 
 end Restricted
 

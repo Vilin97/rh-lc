@@ -37,7 +37,7 @@ theorem tw_sub_SyOf (Df : DefSide Bs) (S : IndefData Df) : S.Tw ⊆ SyOf Df S :=
 theorem gram_det_unit_outside [IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (S : IndefData Df) (hH0 : S.H0)
     (y : HeightOneSpectrum (𝓞 K)) (hy : y ∉ SyOf Df S) : vw y (Df.Gm (ebOf Df) (S.μ y) y) = 0 := by
   unfold SyOf at hy
-  rw [dif_pos (gm_support_finite wf Bs.μ0)] at hy
+  rw [dite_eq_left (gm_support_finite wf Bs.μ0)] at hy
   simp only [Finset.mem_union, not_or, Set.Finite.mem_toFinset, Function.mem_support, not_not] at hy
   have hμ : S.μ y = Bs.μ0 := by
     by_contra h

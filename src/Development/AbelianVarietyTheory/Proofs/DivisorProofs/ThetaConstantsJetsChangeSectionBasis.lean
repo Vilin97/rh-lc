@@ -53,7 +53,7 @@ def germAt (z : Sp B) : B →+* (Sp B).presheaf.stalk z :=
 
 theorem germAt_valR (x : Sp B ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) (z : Sp B) :
     germAt z (valR x U f) = gs x z U f := by
-  rw [valR, dif_pos h, gs_eq x z U (h trivial), germAt, RingHom.comp_apply, Iso.hom_inv_id_apply]
+  rw [valR, dite_eq_left h, gs_eq x z U (h trivial), germAt, RingHom.comp_apply, Iso.hom_inv_id_apply]
   exact TopCat.Presheaf.germ_res_apply (Sp B).presheaf (homOfLE h) z trivial _
 
 theorem germAt_ext {a b : B} (h : ∀ z : Sp B, germAt z a = germAt z b) : a = b := by
@@ -62,7 +62,7 @@ theorem germAt_ext {a b : B} (h : ∀ z : Sp B, germAt z a = germAt z b) : a = b
   exact (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of B)).inv).1 e
 
 theorem isUnit_valR (x : Sp B ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (u : Γ(X, U)ˣ) : IsUnit (valR x U u.val) := by
-  rw [valR, dif_pos h]
+  rw [valR, dite_eq_left h]
   exact (u.isUnit.map _).map _
 
 theorem valR_sec_chart {Y : Scheme.{0}} {L : LB X} (φ : Y ⟶ X) (n : ℕ)

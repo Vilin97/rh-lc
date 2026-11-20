@@ -150,10 +150,10 @@ theorem gram_det (f f' : Fin (r + 1) → V) (T T' : F) (hF : Formalism.MainNotio
     ∃ s : E, s * s = 1 ∧ (H.gram (Sum.elim f f')).det * s = H.Gdet f f' T T' := by
   classical
   have hdB : H.Dl f f' (r + 1) = (H.Zhat f f').det := by
-    rw [HermSp.Dl, dif_pos le_rfl]
+    rw [HermSp.Dl, dite_eq_left le_rfl]
     exact congrArg Matrix.det (Matrix.ext fun i j => rfl)
   have hdBr : H.Dl f f' r = ((H.Zhat f f').submatrix Fin.castSucc Fin.castSucc).det := by
-    rw [HermSp.Dl, dif_pos (by omega : r ≤ r + 1)]
+    rw [HermSp.Dl, dite_eq_left (by omega : r ≤ r + 1)]
     exact congrArg Matrix.det (Matrix.ext fun i j => rfl)
   haveI hBinv : Invertible (H.Zhat f f') := Matrix.invertibleOfIsUnitDet _ (hdB ▸ hD)
   have hcorner : cornerM (r := r) (-algebraMap F E T') * ⅟(H.Zhat f f') * cornerM (-algebraMap F E T) =

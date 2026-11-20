@@ -53,7 +53,7 @@ theorem siegel_eq {c : ℕ} {x : Fin 2 → ℚ} {f : T.K} (hf : T.an f = ((sgC c
     siegel T c x = f := by
   have hex : ∃ f : T.K, T.an f = ((sgC c x : ℂ → ℂ) : Mero) := ⟨f, hf⟩
   unfold siegel
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact an_injective T (hex.choose_spec.trans hf.symm)
 
 theorem siegel_ne_zero_iff {c : ℕ} {x : Fin 2 → ℚ} (h : admitted c x) :

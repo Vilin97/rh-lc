@@ -75,7 +75,7 @@ theorem PtsPosDensMeasurable.proof : PtsPosDensMeasurable.Statement := by
       simp only
       rw [Set.indicator_of_mem hm, hdens m y hm.1]
       unfold sheetDensity
-      rw [dif_pos hex, hy _ _ _ hex.choose_spec hsh]
+      rw [dite_eq_left hex, hy _ _ _ hex.choose_spec hsh]
 
       choose i0 hi0 using hO m hm.1
       have hs : segre (γ m y) = segre (hex.choose y) := by
@@ -126,7 +126,7 @@ theorem PtsPosDensMeasurable.proof : PtsPosDensMeasurable.Statement := by
         · rfl
       · have h0 : sheetDensity P Ψ (pot L) g y w = 0 := by
           unfold sheetDensity
-          rw [dif_neg hex]
+          rw [dite_eq_right hex]
         refine Eventually.of_forall fun N => ?_
         rw [h0, max_self]
         refine (Finset.sum_eq_zero fun m _ => ?_).symm

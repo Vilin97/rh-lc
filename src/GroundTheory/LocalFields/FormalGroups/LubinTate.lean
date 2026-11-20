@@ -148,7 +148,7 @@ noncomputable def divBy (c a : A) : A :=
   if h : c ∣ a then h.choose else 0
 
 theorem mul_divBy {c a : A} (h : c ∣ a) : c * divBy c a = a := by
-  rw [divBy, dif_pos h]
+  rw [divBy, dite_eq_left h]
   exact h.choose_spec.symm
 
 noncomputable def step (π : A) (f g : PowerSeries A) (ℓ φ : MvPowerSeries σ A) :

@@ -41,7 +41,7 @@ theorem ptAway_top : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =
     intro q q'
     funext z
     unfold xiPt
-    rw [dif_neg (by omega), if_neg (by omega)]
+    rw [dite_eq_right (by omega), if_neg (by omega)]
   rw [e, e]
 
   have hF := GlobalTheory.T.chartFrames_congruent_one_of_same_badPlace_components A dtU a hP hTie (t.m2 + 1) (Nat.le_of_succ_le hi) β x x₁ p p₁ h1 h3 hagS

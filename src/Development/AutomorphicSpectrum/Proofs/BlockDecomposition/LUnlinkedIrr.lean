@@ -211,7 +211,7 @@ theorem false_of_shift {h : ℕ} (Δ : Fin h → Segment k) (hun : ∀ i j, ¬ (
 theorem deg_of_one_le {W : List (IrrGL k)} {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     {π : Representation ℂ (GL (Fin N) k) V} (h : 1 ≤ jmL W π) : ∑ a, (W.get a).1 = N := by
   by_contra hc
-  rw [jmL, dif_neg hc] at h
+  rw [jmL, dite_eq_right hc] at h
   simp at h
 
 theorem one_le_jmL_append (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (y : Fin 2 → IrrGL k) {N : ℕ}

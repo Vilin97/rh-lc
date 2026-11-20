@@ -141,7 +141,7 @@ theorem bessel_schur : GlobalTheory.GapIn.Hyp → ∀ (D : D7) (large₂ : SizeD
   have := FiniteDimensional.complete ℂ W.Wp
   have hU : ∀ i : Fin D.R.k, uOne D w τ (i.val + 1) = uS D w τ i := fun i => by
     unfold uOne
-    rw [dif_pos ⟨by omega, i.isLt⟩]
+    rw [dite_eq_left ⟨by omega, i.isLt⟩]
     rfl
   obtain ⟨hnum, -, heps⟩ := GlobalTheory.SizeNum.num_of_size D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w _ hU
   obtain ⟨-, -, -, -, -, -, -, -, -, -, hgap, hok, -, hh, -⟩ := hnum

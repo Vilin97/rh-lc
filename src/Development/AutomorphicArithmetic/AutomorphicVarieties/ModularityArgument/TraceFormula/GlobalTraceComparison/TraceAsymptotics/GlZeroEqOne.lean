@@ -158,7 +158,7 @@ private theorem bblk_eq (h : a + b = n) (m : GLw a w × GLw b w) (X : Matrix (Fi
   apply Units.ext
   unfold GlobalTheory.BCT.blk
   simp only
-  rw [dif_pos hu, IsUnit.unit_spec, e]
+  rw [dite_eq_left hu, IsUnit.unit_spec, e]
 
 private theorem mem_intMat {X : Multiplicative (Matrix (Fin a) (Fin b) (w.adicCompletion E))} :
     X ∈ intMat a b w ↔ ∀ i j, (Multiplicative.toAdd X) i j ∈ Ov E w := by

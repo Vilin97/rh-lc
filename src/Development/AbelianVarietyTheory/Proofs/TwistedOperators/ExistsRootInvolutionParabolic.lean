@@ -46,14 +46,14 @@ theorem lowTop_spec {S : Finset (SV k)} (hS : ∀ x ∈ S, ∀ y ∈ S, Below x 
       rcases mem_insert.1 hy with rfl | hy
       · exact .inr (zero_below _)
       exact hS x hx y hy
-  rw [lowTop, dif_pos h]
+  rw [lowTop, dite_eq_left h]
   exact ⟨h.choose_spec.1, fun b hb => h.choose_spec.2 b (mem_insert_of_mem hb)⟩
 
 theorem upBot_spec {S : Finset (SV k)} (hn : S.Nonempty) (hS : ∀ x ∈ S, ∀ y ∈ S, Below x y ∨ Below y x) :
     upBot S ∈ S ∧ ∀ b ∈ S, Below (upBot S) b := by
   have h : ∃ a ∈ S, ∀ b ∈ S, Below a b :=
     exists_top (r := fun a b => Below b a) (fun a b c h h' => below_trans h' h) S hn fun x hx y hy => hS y hy x hx
-  rw [upBot, dif_pos h]
+  rw [upBot, dite_eq_left h]
   exact h.choose_spec
 
 def lowSet (W : Finset (SV k)) (v : SV k) : Finset (SV k) := W.filter (Below · v)

@@ -279,7 +279,7 @@ theorem locQ (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.nd 
       hQP _ hq _ hg'
     have hn : D.nd.chi i 1 (g : GE D.nd) = D.nd.chi i 1 (γQ i dc w : GE D.nd) ^ nQ i dc w g := by
       unfold nQ
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
       exact Nat.find_spec hex
     refine ⟨?_, ?_⟩
     · apply Subtype.ext

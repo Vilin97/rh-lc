@@ -186,7 +186,7 @@ theorem parOf_rootSym (a : ℕ → Bool) (R : Option ℝ) (τ : D.host.E →+* �
   have h : (rootSym O.S.Dw a R τ i).support.Nonempty := by
     rw [Finsupp.support_nonempty_iff, rootSym]
     split_ifs <;> simp
-  rw [parOf, dif_pos h]
+  rw [parOf, dite_eq_left h]
   exact (mem_support_rootSym h.choose_spec).2
 
 theorem lnAdl_root (c : O.s.Comp) (hm : Mets (O.Φ.C c) (cxSt D.what₂.LL)) (a : ℕ → Bool) (R : Option ℝ)

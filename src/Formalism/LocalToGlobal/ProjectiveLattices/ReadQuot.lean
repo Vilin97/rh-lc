@@ -30,7 +30,7 @@ theorem quotSupp_of (V : HSp D) (hV : FinVol V) (hP : âˆƒ p : Measure (GA D V) Ã
   have hvp : IsVolPair D V (volPair V).1 (volPair V).2 := by
     have e : volPair V = hP.choose := by
       unfold volPair
-      rw [dif_pos hP]
+      rw [dite_eq_left hP]
     rw [e]
     exact hP.choose_spec
   haveI : (volPair V).1.IsHaarMeasure := hvp.1.1

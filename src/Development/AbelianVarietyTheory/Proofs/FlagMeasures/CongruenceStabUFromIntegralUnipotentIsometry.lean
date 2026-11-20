@@ -332,7 +332,7 @@ theorem gramM_apply (F : LFlag S r T) (F' : LFlag S r T') (p q) :
 theorem Dr1_eq (F : LFlag S r T) (F' : LFlag S r T') : Dr1 F F' = (ZhatL F F').det := by
   show leadMinorE (Zhat F.fl F'.fl) (r + 1) = _
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   have hc : (Fin.castLE (le_refl (r + 1))) = id := funext fun i => Fin.ext rfl
   rw [hc, Matrix.submatrix_id_id]
 
@@ -344,7 +344,7 @@ theorem gramM_det (F : LFlag S r T) (F' : LFlag S r T') : (gramM F F').det = (-1
   have hr : Dl F.fl F'.fl r = ((ZhatL F F').submatrix Fin.castSucc Fin.castSucc).det := by
     show leadMinorE (Zhat F.fl F'.fl) r = _
     unfold leadMinorE
-    rw [dif_pos (Nat.le_succ r)]
+    rw [dite_eq_left (Nat.le_succ r)]
     rfl
   have hr1 : Dl F.fl F'.fl (r + 1) = (ZhatL F F').det := Dr1_eq F F'
   show _ = Gflag F.fl F'.fl

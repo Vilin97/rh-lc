@@ -252,7 +252,7 @@ theorem onV_embH (hδ0 : δ ≠ 0) (Ξ : Formalism.L2.Col.HomE D.host.E a b → 
   have := tau_nonempty D
   have h : ∃ y, embH (ι := D.what₂.Tau) (fun τ => TaylorLogMetric.embT D τ) δ y = embH (ι := D.what₂.Tau) (fun τ => TaylorLogMetric.embT D τ) δ x := ⟨x, rfl⟩
   unfold onV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact congrArg Ξ (embH_inj _ hδ0 h.choose_spec)
 
 theorem onV_TT (hδ0 : δ ≠ 0) (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Matrix (Fin b) (Fin b) D.host.E) (he : e * star e = 1)
@@ -269,7 +269,7 @@ theorem onV_TT (hδ0 : δ ≠ 0) (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Mat
       rw [← tPull_embH (cc := cc), hy]
       exact (TT cc δ e e' he he').left_inv v
     unfold onV
-    rw [dif_neg h, dif_neg h2]
+    rw [dite_eq_right h, dite_eq_right h2]
 
 theorem unimod_iff {n : ℕ} (L : Submodule (𝓞 D.host.E) (Formalism.L2.Col.Sp D.host.E n)) :
     Formalism.HermitianLatticesTheory.IsUnimodular (Formalism.L2.Col.hStd D.host.E n) L ↔

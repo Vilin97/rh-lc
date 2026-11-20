@@ -56,7 +56,7 @@ theorem kapOf_eq (S : RealDat3 D A3 Ks) (κ : ℝ)
       ∃ t p, S.EEp3 p ≠ ⊥ ∧ ∏ j ∈ Finset.Icc 1 D.R.m, S.lamN t j p ≠ 0 := ⟨κ, hκ, hn⟩
   obtain ⟨t, p, hp, hl⟩ := hn
   unfold kapOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Lift.IsKap.unique h.choose_spec.1 hκ t p hp hl
 
 theorem kapOf_of_thmB (S : RealDat3 D A3 Ks) (hB : S.PThmB) : kapOf S = S.kap := by

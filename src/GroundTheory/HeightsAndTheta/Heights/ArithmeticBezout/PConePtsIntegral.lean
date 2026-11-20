@@ -39,7 +39,7 @@ theorem ConeIntegralPts.proof (hC : ConeIntegralComponents.Statement)
       ptsIntegralAt P hΨ.choose (pot fun _ : Fin e => IndefiniteRowSideFullHecke.ArithBezout.hermLine S hS)
         (IndefiniteRowSideFullHecke.ArithBezout.logFormNorm S hS u) := by
     unfold ptsIntegral
-    rw [dif_pos hΨ]
+    rw [dite_eq_left hΨ]
   rw [hpts, ← hW n e S hS P u hΨ.choose hP hu hΨ.choose_spec, ← hC n e _ P u hP hu, cycleIntegral]
   refine Finset.sum_congr rfl fun W hWm => ?_
   rw [fundCycle_apply_of_isRadical hrad hWm, Nat.cast_one, one_mul]

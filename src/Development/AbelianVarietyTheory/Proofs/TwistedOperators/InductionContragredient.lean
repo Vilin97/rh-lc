@@ -41,7 +41,7 @@ theorem extFun_mul {σ : Representation ℂ P W} {J : Subgroup G} {φ : G → W}
     (hφ : ∀ p : P, (p : G) ∈ J → ∀ j ∈ J, φ (p * j) = σ p (φ j)) (p : P) {j : G} (hj : j ∈ J) :
     extFun σ J φ (p * j) = σ p (φ j) := by
   have h : (p : G) * j ∈ cell P J := ⟨p, by simpa using hj⟩
-  rw [extFun, dif_pos h]
+  rw [extFun, dite_eq_left h]
   have h1 := h.choose_spec
   generalize h.choose = q at h1
   have h2 : ((q⁻¹ * p : P) : G) ∈ J := by simpa [mul_assoc] using mul_mem h1 (inv_mem hj)

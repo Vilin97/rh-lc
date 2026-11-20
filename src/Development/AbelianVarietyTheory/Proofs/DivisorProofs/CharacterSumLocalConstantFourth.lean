@@ -16,7 +16,7 @@ variable {E K : Type} [Field E] [NumberField E] [Field K] {P : HeightOneSpectrum
 theorem norm_unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a : E} (h : IsUnit (redP P a)) (σ : K →+* ℂ) :
     ‖σ (LocE.unitV χ a)‖ = 1 := by
   unfold LocE.unitV
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
   have hc : 0 < Nat.card (𝓞 E ⧸ P.asIdeal)ˣ := Nat.card_pos
   have h1 : ((χ h.unit : Kˣ) : K) ^ Nat.card (𝓞 E ⧸ P.asIdeal)ˣ = 1 := by

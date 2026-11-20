@@ -243,7 +243,7 @@ theorem exists_prime_comap_eq_notMem (φ : A →+* B) (hφ : φ.Finite) (b : B) 
   apply h
   by_cases hex : ∃ a : A, algebraMap A (FractionRing A) a = (charK φ hφ (FractionRing A) b).reverse.coeff k
   · exact mem_of_forall_mem_prime φ hφ b p hne k hk _ (algebraMap_normCoeff φ hφ b k hex)
-  · rw [normCoeff, dif_neg hex]
+  · rw [normCoeff, dite_eq_right hex]
     exact p.zero_mem
 
 end Main

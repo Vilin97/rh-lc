@@ -20,7 +20,7 @@ theorem sec_inv_mul_mem_slice : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
   have hc : hex.choose = J := eq_of_isFirstMax_of_isFirstMax hex.choose_spec hJ
   have hs : (sec Y).val = Y.submatrix id J := by
     unfold sec
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     show Y.submatrix id hex.choose = _
     rw [hc]
   have hsub : (((sec Y)⁻¹).val * Y).submatrix id J = ((sec Y)⁻¹).val * Y.submatrix id J := by

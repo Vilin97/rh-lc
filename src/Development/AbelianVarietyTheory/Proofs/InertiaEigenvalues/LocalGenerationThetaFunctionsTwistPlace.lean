@@ -104,7 +104,7 @@ theorem omegaQ_split {a b : ℕ} (Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : ∀ 
     · rw [← Finset.prod_attach Q' F]
       refine Finset.prod_congr rfl fun P _ => ?_
       simp only [F]
-      rw [dif_pos (h P.1 P.2).2]
+      rw [dite_eq_left (h P.1 P.2).2]
     · rfl
   rw [key, key, key]
   by_cases h : ∀ P ∈ Q, LowZero r (y P) ∧ IsUnit (topL r (y P)).det

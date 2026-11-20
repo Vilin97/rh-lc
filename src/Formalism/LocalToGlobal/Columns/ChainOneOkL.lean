@@ -193,7 +193,7 @@ theorem ookEntB_joinX (q : ℕ) {k₀ n' c' n c : ℕ} (hc' : c' = 1) (hc : c = 
   have f1 : LocE.fIdx k₀ 1 n' (LocE.fPos k₀ 1 n' s) = s := ocbPhi_fIdx_fPos hk (by omega)
   have f2 : LocE.fIdx k₀ 0 n p = p := ciFIdx (Or.inl rfl) (by omega)
   unfold LocE.entB joinCol atNL
-  rw [f1, f2, ciScE_lt _ hp, ciScE_lt _ hs, dif_pos (show n' < n' + 1 by omega)]
+  rw [f1, f2, ciScE_lt _ hp, ciScE_lt _ hs, dite_eq_left (show n' < n' + 1 by omega)]
   simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearMap.proj_apply]
   rw [ciAtN_inX hp]
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]

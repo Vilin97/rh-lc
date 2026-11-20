@@ -41,7 +41,7 @@ theorem frameC_val {K : Type} [Field K] {g : ℕ} (H : Matrix (Fin (g + g)) (Fin
     (k : Fin g) (h : minorAt H ((k : ℕ) + 1) k.2 (σ ((k : ℕ) + 1)) ≠ 0) (h' : minorAt H k k.2.le (σ k) ≠ 0) :
     (frameC H σ k : K) = minorAt H ((k : ℕ) + 1) k.2 (σ ((k : ℕ) + 1)) / minorAt H k k.2.le (σ k) := by
   unfold frameC
-  rw [dif_pos (div_ne_zero h h')]
+  rw [dite_eq_left (div_ne_zero h h')]
   rfl
 
 end GlobalTheory.ConstLat.CramerFrame

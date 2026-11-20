@@ -55,7 +55,7 @@ private theorem nonMonomialPart_eq_of_isMonomialSplitting_unique {X : Scheme.{u}
   have hch : IsMonomialSplitting E I hex.choose.1 hex.choose.2 := hex.choose_spec
   have hNN := (hu _ _ hch).2
   unfold nonMonomialPart monomialSplitting
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hNN.symm
 
 private theorem markedIdealWithBoundary_mk_congr {k : Type u} [Field k] {A : Scheme.{u}}

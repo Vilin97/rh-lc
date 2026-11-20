@@ -25,7 +25,7 @@ private theorem gm_res_eq_gm {X Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) {U V : X.O
     congr 1
     exact TopCat.Presheaf.germ_res _ _ _ _
   unfold gm res
-  rw [dif_pos hz, dif_pos (hUV hz)]
+  rw [dite_eq_left hz, dite_eq_left (hUV hz)]
   unfold pullU
   ext
   simp only [MonoidHom.comp_apply, Units.coe_map, MonoidHom.coe_coe]
@@ -78,7 +78,7 @@ private theorem gm_pullU_eq_gm_comp' {X Y Z : Scheme.{0}} (f : Y ⟶ X) (r : Z �
     (hz : r z ∈ f ⁻¹ᵁ V) (a : Γ(X, V)ˣ) : gm r z (f ⁻¹ᵁ V) (pullU f V a) = gm (r ≫ f) z V a := by
   have hz' : (r ≫ f) z ∈ V := by simpa using hz
   unfold gm
-  rw [dif_pos hz, dif_pos hz']
+  rw [dite_eq_left hz, dite_eq_left hz']
   unfold pullU
   ext
   simp
@@ -91,7 +91,7 @@ private theorem units_ext_of_gm_id_eq_on_open {Y : Scheme.{0}} {W : Y.Opens} (s 
   intro y hy
   have e := congrArg Units.val (h y hy)
   unfold gm pullU at e
-  rw [dif_pos (by simpa using hy)] at e
+  rw [dite_eq_left (by simpa using hy)] at e
   exact e
 
 private theorem gm_linComb_transition_eq {X' Y Z : Scheme.{0}} (M : LB X') {K : Type} [Fintype K] (φ : K → (Y ⟶ X'))

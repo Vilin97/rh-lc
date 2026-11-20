@@ -28,7 +28,7 @@ theorem xiDeg_self (M : FlagModel y Ψ N j) {τ : Ψ} {a : Fin N} {k₀ : K} (hk
   have hd : ∀ p, M.dy p k₀ = if p = (τ, a) then 1 else 0 := fun p => by
     have hn : ¬ ∀ p', M.blk p' ≠ some k₀ := fun h => h _ hk
     unfold FlagModel.dy
-    rw [dif_neg hn]
+    rw [dite_eq_right hn]
     by_cases hp : p = (τ, a)
     · rw [if_pos (hp ▸ hk), if_pos hp]
     · rw [if_neg fun e => hp (M.blk_inj _ _ k₀ e hk), if_neg hp]

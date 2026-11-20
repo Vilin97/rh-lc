@@ -17,7 +17,7 @@ theorem UpperTheory.V.Z.Sym.Al.secSpec :
   have h : ∃ j : GL (Fin n) (Kw w) →* UA L n, (∀ g, j g ∈ locU n w) ∧ ∀ g, cLoc w (j g) = g :=
     ⟨(locU n w).subtype.comp e.symm.toMulEquiv.toMonoidHom, fun g => (e.symm g).2, hs⟩
   have h1 : (∀ g, secW n w g ∈ locU n w) ∧ ∀ g, cLoc w (secW n w g) = g := by
-    unfold secW; rw [dif_pos h]; exact h.choose_spec
+    unfold secW; rw [dite_eq_left h]; exact h.choose_spec
   have h2 : ∀ g, secW n w g = (e.symm g : UA L n) := fun g => by
     have : e ⟨_, h1.1 g⟩ = g := by rw [he]; exact h1.2 g
     exact (congrArg Subtype.val ((e.symm_apply_eq.2 this.symm) : e.symm g = ⟨_, h1.1 g⟩)).symm

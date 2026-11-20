@@ -338,7 +338,7 @@ theorem evR_fnRule (g : Γ(Xo.XF c, ⊤)) {S : Type} [CommRing S] [IsReduced S] 
     evR Xo c (fnRule g) y = fnAt (basePt y) g := by
   have h := GlobalTheory.Frames.allTest_of_secBaseChange GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H D l Xo c S y
   unfold evR evalAt
-  rw [dif_pos h, basePt_frMap h.choose_spec.choose_spec.choose_spec, fnAt_comp]
+  rw [dite_eq_left h, basePt_frMap h.choose_spec.choose_spec.choose_spec, fnAt_comp]
   rfl
 
 theorem fnAt_one {X : Scheme.{0}} {S : Type} [CommRing S] (y : Sp S ⟶ X) : fnAt y (1 : Γ(X, ⊤)) = 1 := by

@@ -53,7 +53,7 @@ theorem UpperTheory.functionField_of_finite_etale_cover :
   haveI : Algebra.IsSeparable Z.functionField Y.functionField := Algebra.IsAlgebraic.isSeparable_of_perfectField
   have hT := UpperTheory.exists_deRhamTrace_of_separable ℂ Z.functionField Y.functionField
   have hspec : GlobalTheory.W1.IsTrDR ℂ Z.functionField Y.functionField (GlobalTheory.W1.trDR ℂ Z.functionField Y.functionField) := by
-    unfold GlobalTheory.W1.trDR; rw [dif_pos hT]; exact hT.choose_spec
+    unfold GlobalTheory.W1.trDR; rw [dite_eq_left hT]; exact hT.choose_spec
   obtain ⟨z, rfl⟩ := toOm_surjective (s := p') (j := a) (hV.preimage c) y
   change formGerm p a hV hη _ = GlobalTheory.W1.trDR ℂ _ _ (formGerm p' a (hV.preimage c) hη' _)
   rw [omegaTrace_app_toOm hc a hV, formGerm_toOm, formGerm_toOm]

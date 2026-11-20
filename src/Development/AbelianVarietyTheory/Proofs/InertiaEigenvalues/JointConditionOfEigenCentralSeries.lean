@@ -183,7 +183,7 @@ theorem main : ∀ (D : D7) (Q : PairedCharacterCondition.Pend D), GlobalTheory.
     intro F
     rw [hz]
     unfold NTypes.onMt
-    rw [dif_pos (Subalgebra.smul_mem _ hcen _), dif_pos hcen, ← LinearMap.smul_apply, ← map_smul]
+    rw [dite_eq_left (Subalgebra.smul_mem _ hcen _), dite_eq_left hcen, ← LinearMap.smul_apply, ← map_smul]
     rfl
   refine ⟨Q.zO i z, Q.zO_comm i z, ?_, ?_⟩
   · intro x hx u hu

@@ -77,7 +77,7 @@ theorem kills_liftAll : ∀ (F F' : Type) [Field F] [Field F'] [Algebra F F'] [F
       funext δ
       have hδ : δ = 1 := by ext i j; exact i.elim0
       unfold shLift
-      rw [dif_pos ⟨1, by rw [hδ]; exact isNorm_one s 0⟩]
+      rw [dite_eq_left ⟨1, by rw [hδ]; exact isNorm_one s 0⟩]
       rfl
     rw [h1]
     exact GlobalTheory.T.isInCharacterIsotypicPart_self _ _ (GlobalTheory.T.isCharacter_harishChandraProductCuspidalGL_of_regular F' θ hθ [] (by simp) 0 rfl)

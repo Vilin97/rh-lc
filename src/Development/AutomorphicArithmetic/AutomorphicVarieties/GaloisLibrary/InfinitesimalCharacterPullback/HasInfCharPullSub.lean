@@ -404,7 +404,7 @@ theorem isRegAlg_pullSub {π : CuspSub F a} (h : (CG.mk π).IsRegAlg) : (CG.mk (
     · obtain ⟨m, hm⟩ := h1
       rw [hm.infChar_eq]
       exact CG.HasInfChar.infChar_eq (π := CG.mk (pullSub j π)) ((hasInfChar_pullSub j π σ m).2 hm)
-    · rw [CG.infChar, CG.infChar, dif_neg h1, dif_neg]
+    · rw [CG.infChar, CG.infChar, dite_eq_right h1, dite_eq_right]
       rintro ⟨m, hm⟩
       exact h1 ⟨m, (hasInfChar_pullSub j π σ m).1 hm⟩
   rw [e]

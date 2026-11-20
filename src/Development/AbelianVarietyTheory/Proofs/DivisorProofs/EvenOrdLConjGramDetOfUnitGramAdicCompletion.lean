@@ -12,7 +12,7 @@ theorem ordL_spec {x : L} (hx : x ≠ 0) :
     Valued.v x = ((Multiplicative.ofAdd (-ordL x) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) := by
   have h : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
   unfold ordL
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   simp
 
 theorem ordL_eq_of {x : L} (hx : x ≠ 0) {a : ℤ}

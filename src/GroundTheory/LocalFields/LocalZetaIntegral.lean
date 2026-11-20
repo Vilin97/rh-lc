@@ -323,7 +323,7 @@ theorem exists_localZetaRatio_eq (hf : f ∈ schwartzBruhat K) (hχ : Continuous
       ∀ s : ℂ, -quasiCharExponent χ < s.re →
         localZeta f χ s = localLFactor χ s * evalQpow K P s := by
   have h := exists_localZeta_eq_mul_evalQpow hf hχ
-  exact ⟨h.choose, fun s => by rw [localZetaRatio, dif_pos h], h.choose_spec⟩
+  exact ⟨h.choose, fun s => by rw [localZetaRatio, dite_eq_left h], h.choose_spec⟩
 
 theorem localZeta_eq_localLFactor_mul (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ) {s : ℂ}
     (hs : -quasiCharExponent χ < s.re) :

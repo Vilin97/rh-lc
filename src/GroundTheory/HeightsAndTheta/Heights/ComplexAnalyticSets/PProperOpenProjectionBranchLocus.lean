@@ -58,14 +58,14 @@ theorem ProperOpenProjectionBranchLocus.proof (hL : ProperOpenProjectionLocalCov
   refine ⟨fibreDiscr (X ∩ B) A l (n y₀), hH σ (X ∩ B) d A D (n y₀) l hDo hmaps hprop hopen hcov,
     ⟨ys, hysD, ?_⟩, ?_⟩
   · unfold fibreDiscr
-    rw [dif_pos hcys, Finset.prod_ne_zero_iff]
+    rw [dite_eq_left hcys, Finset.prod_ne_zero_iff]
     intro p hp
     have := hl₀ ⟨p, hp⟩
     simpa [l, map_sub, sub_eq_zero] using this
   · intro x hx hδ
     have hc : {x' | x' ∈ X ∩ B ∧ A x' = A x}.encard = (n y₀ : ℕ∞) := by
       by_contra hne
-      exact hδ (by unfold fibreDiscr; rw [dif_neg hne])
+      exact hδ (by unfold fibreDiscr; rw [dite_eq_right hne])
     exact hM σ (X ∩ B) d A D (n y₀) hDo hmaps hprop hopen hcov x hx hc
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets

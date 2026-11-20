@@ -80,7 +80,7 @@ theorem maMeasure_univ (hM : IsOpen M) (x₀ : Fin D → ℂ) (hx₀ : x₀ ∈ 
   let j0 : Fin (atlas hM x₀ hx₀).n := ⟨0, Nat.zero_lt_one⟩
   have ht : ((atlas hM x₀ hx₀).chart j0).target = M := rfl
   have hm : Measurable ((atlas hM x₀ hx₀).chart j0).symm := measurable_retract hM hx₀
-  rw [maMeasure, dif_pos hne, Fintype.sum_subsingleton _ j0,
+  rw [maMeasure, dite_eq_left hne, Fintype.sum_subsingleton _ j0,
     Measure.map_apply hm MeasurableSet.univ, Set.preimage_univ,
     withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ, ht]
   refine lintegral_congr fun y => ?_

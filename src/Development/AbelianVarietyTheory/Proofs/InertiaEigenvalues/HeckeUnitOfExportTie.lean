@@ -79,7 +79,7 @@ theorem valC_geoHecke {P : PlE D.host} {k : ℕ} (hP : GlobalTheory.IndefiniteRo
     have hex : ∃ w, hkRelFr P.asIdeal (charAt P) k (GlobalTheory.ThetaTrace.hkTr (T0.Q.Xo ((j : ℕ) + 1)) T0.Q.c (charAt P))
         (PAt (embC YS iC b)) z C w := ⟨quot C, hq C⟩
     unfold hkTerm
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     have hm := hfun (PAt (embC YS iC b)) z C _ _ hex.choose_spec (hq C)
     exact (GlobalTheory.Reg.PChartModel.evR_map hL hf.1 (AlgHom.id _ _) hm).symm
   change toCp _ (evR (T0.Q.Xo ((j : ℕ) + 1)) T0.Q.c g z) = _

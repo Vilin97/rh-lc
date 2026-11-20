@@ -28,7 +28,7 @@ theorem tg_of_base_point : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' :
     rw [← hGw, ← hpt]
     show GPt _ (toPts (Formalism.L2.SG.PairVal.ptOf t.toTerm)) = 0
     unfold Formalism.L2.SG.PairVal.ptOf
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     exact Formalism.L2.SG.NGCut.NormalVectorPairings.GPt_junk D u u'
   obtain ⟨F'', ⟨hP, hmk⟩, -, hcell⟩ := Formalism.L2.SG.PairVal.ptOf_spec t.toTerm hex
   rw [hw] at hcell

@@ -17,8 +17,8 @@ def unitOrOne (x : Lie E a) : GL (Fin a) (Cinf E) :=
 theorem unitOrOne_val (x : Lie E a) :
     (unitOrOne x : Matrix (Fin a) (Fin a) (Cinf E)) = (invSet E a).piecewise (fun y => Matrix.of y) (fun _ => 1) x := by
   by_cases hx : x ∈ invSet E a
-  · rw [Set.piecewise_eq_of_mem _ _ _ hx, unitOrOne, dif_pos (show IsUnit (Matrix.of x) from hx)]; rfl
-  · rw [Set.piecewise_eq_of_notMem _ _ _ hx, unitOrOne, dif_neg (show ¬ IsUnit (Matrix.of x) from hx)]; rfl
+  · rw [Set.piecewise_eq_of_mem _ _ _ hx, unitOrOne, dite_eq_left (show IsUnit (Matrix.of x) from hx)]; rfl
+  · rw [Set.piecewise_eq_of_notMem _ _ _ hx, unitOrOne, dite_eq_right (show ¬ IsUnit (Matrix.of x) from hx)]; rfl
 
 theorem measurable_unitOrOne : Measurable fun x : Lie E a => (unitOrOne x : Matrix (Fin a) (Fin a) (Cinf E)) := by
   have e : (fun x : Lie E a => (unitOrOne x : Matrix (Fin a) (Fin a) (Cinf E))) =
@@ -32,7 +32,7 @@ theorem continuousAt_height_unitOrOne {x : Lie E a} (hx : x ∈ invSet E a) :
       fun y => 1 + ‖y‖ + ‖toL ((Matrix.of y)⁻¹)‖ := by
     filter_upwards [isOpen_invSet.mem_nhds hx] with y hy
     have h1 : ((unitOrOne y : GL (Fin a) (Cinf E)) : Matrix (Fin a) (Fin a) (Cinf E)) = Matrix.of y := by
-      rw [unitOrOne, dif_pos (show IsUnit (Matrix.of y) from hy)]; rfl
+      rw [unitOrOne, dite_eq_left (show IsUnit (Matrix.of y) from hy)]; rfl
     have h2 : (((unitOrOne y)⁻¹ : GL (Fin a) (Cinf E)) : Matrix (Fin a) (Fin a) (Cinf E)) = (Matrix.of y)⁻¹ := by
       rw [Matrix.coe_units_inv, h1]
     simp only [height, h1, h2]
@@ -72,7 +72,7 @@ theorem isRapidInf_and_smoothInf_eq_kerInf :
   congr 1
   funext x
   by_cases hx : IsUnit (Matrix.of x)
-  · rw [chart, dif_pos hx, dif_pos hx]
+  · rw [chart, dite_eq_left hx, dite_eq_left hx]
   · have h0 : f x = 0 := image_eq_zero_of_notMem_tsupport fun h => hx (hf.2.2 h)
     simp [h0]
 

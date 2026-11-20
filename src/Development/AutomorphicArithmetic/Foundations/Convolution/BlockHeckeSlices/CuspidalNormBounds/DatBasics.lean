@@ -16,7 +16,7 @@ private theorem posIdele_inf (s : ℝ) (hs : 0 < s) (w : InfinitePlace E) :
   rw [← coe_infiniteProj, infiniteProj_posIdele]
   change GroundTheory.Global.posRealElem w _ = _
   unfold GroundTheory.Global.posRealElem
-  rw [dif_neg hw]
+  rw [dite_eq_right hw]
   simp [InfinitePlace.mult, hw, Real.sqrt_sq hs.le]
 
 private noncomputable def eU (E : Type) [Field E] (x : ℝ) : (Cinf E)ˣ where

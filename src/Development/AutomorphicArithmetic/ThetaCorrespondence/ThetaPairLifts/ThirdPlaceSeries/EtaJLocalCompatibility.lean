@@ -35,7 +35,7 @@ theorem GlobalTheory.etaJ_with_local_data_eq_alt : ∀ (hPr : _root_.GlobalTheor
   obtain ⟨i, rfl⟩ : ∃ i : Fin (Dof x).R.m, j = (i : ℕ) + 1 := ⟨⟨j - 1, by omega⟩, by simp only; omega⟩
   refine (key i v').trans (Eq.trans ?_ (x.m.eta _ v'))
   unfold Rw.etaOf
-  rw [dif_pos ⟨by omega, i.2⟩]
+  rw [dite_eq_left ⟨by omega, i.2⟩]
   split_ifs with ha hb hb
   · simp only [Nat.add_sub_cancel, Fin.eta]
     rfl

@@ -120,7 +120,7 @@ theorem cycEval_divCycle_eq (Q : Ideal (MRing ι (ZMod p))) (s : ReciprocityTheo
     apply hW'
     show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W' : ℤ) * N W' = 0
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_neg (show ¬ (_ ∧ _) from hT), zero_mul]
+    rw [dite_eq_right (show ¬ (_ ∧ _) from hT), zero_mul]
 
 theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), IsMultiProjPrime Q →
     relDim Q = ((n : ℕ) : WithBot (WithTop ℤ)) → ∀ a : Fin n → K → ℤ,

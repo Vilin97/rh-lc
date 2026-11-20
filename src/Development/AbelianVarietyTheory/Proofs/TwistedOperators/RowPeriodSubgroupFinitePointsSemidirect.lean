@@ -177,9 +177,9 @@ theorem rowGrp_finite_semidirect : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype 
   have sp := GlobalTheory.RowGrpSplit.grpAt_all ch j hj
   have hNfl : ∃ (S₀ : HSp D) (ρ : ℕ) (d : HypDec (ch.G.V (.grid D.R.m j)) S₀ ρ), rowN ch.G j = flagN d := by
     by_cases h1 : j + 2 * ((D.R.m - 1 - j) / 2) + 1 = D.R.m
-    · exact ⟨_, _, _, by unfold rowN; rw [dif_pos h1]⟩
+    · exact ⟨_, _, _, by unfold rowN; rw [dite_eq_left h1]⟩
     · have h2 : j + 2 * ((D.R.m - 2 - j) / 2) + 2 = D.R.m := by omega
-      exact ⟨_, _, _, by unfold rowN; rw [dif_neg h1, dif_pos h2]⟩
+      exact ⟨_, _, _, by unfold rowN; rw [dite_eq_right h1, dite_eq_left h2]⟩
   have hNc : IsClosed ((rowN ch.G j : Subgroup (GA D (ch.G.V (.grid D.R.m j)))) : Set (GA D (ch.G.V (.grid D.R.m j)))) := by
     obtain ⟨S₀, ρ, d, e⟩ := hNfl
     rw [e]
@@ -197,9 +197,9 @@ theorem rowGrp_finite_semidirect : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype 
     exact sp.clB.isClosedEmbedding_subtypeVal.isCompact_preimage sp.cpt
   · by_cases h1 : j + 2 * ((D.R.m - 1 - j) / 2) + 1 = D.R.m
     · exact GlobalTheory.RowGrpSemi.jac_case (rowJac ch.G j (by omega) ((D.R.m - 1 - j) / 2) (by omega)) _ _ _ _
-        (by unfold rowN; rw [dif_pos h1]) (by unfold rowEmb; rw [dif_pos h1]) (rowGrp_eq ch.G j) sp.le
+        (by unfold rowN; rw [dite_eq_left h1]) (by unfold rowEmb; rw [dite_eq_left h1]) (rowGrp_eq ch.G j) sp.le
     · have h2 : j + 2 * ((D.R.m - 2 - j) / 2) + 2 = D.R.m := by omega
       exact GlobalTheory.RowGrpSemi.bes_case (besDecAt ch.G j _ h2) (GlobalTheory.OrthSumExists.orthDecHsum D _ _) _ _ _ _
-        (by unfold rowN; rw [dif_neg h1, dif_pos h2]) (by unfold rowEmb; rw [dif_neg h1, dif_pos h2]) (rowGrp_eq ch.G j) sp.le
+        (by unfold rowN; rw [dite_eq_right h1, dite_eq_left h2]) (by unfold rowEmb; rw [dite_eq_right h1, dite_eq_left h2]) (rowGrp_eq ch.G j) sp.le
 
 end GlobalTheory.CellMass

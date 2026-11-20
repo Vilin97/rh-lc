@@ -60,7 +60,7 @@ def natPer (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (q : ℕ) (M : Matr
 theorem perFr_mem (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : E →+* ℂ) (h : τ ∈ X.Ψ) (i : ℕ) :
     Formalism.L2.PjFree.perFr X x v τ i = natPer τ X.Gm X.p0 (mat x ⟨τ, h⟩) (Data.emb τ v) (X.p0 + i) := by
   unfold Formalism.L2.PjFree.perFr natPer
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   split_ifs with hi
   · rw [locPer_apply, if_neg (by simp)]
   · rfl
@@ -84,7 +84,7 @@ theorem perFr_conj (X : Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : E �
   generalize conjEmb τ = σ at hn e
   subst e
   unfold Formalism.L2.PjFree.perFr natPer
-  rw [dif_neg hn, dif_pos h]
+  rw [dite_eq_right hn, dite_eq_left h]
   split_ifs with hj
   · rw [locPer_apply, if_pos (by simp only; omega)]
   · rfl

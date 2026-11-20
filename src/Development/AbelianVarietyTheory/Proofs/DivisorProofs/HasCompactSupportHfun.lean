@@ -211,7 +211,7 @@ theorem twTr_linearIndependent : ∀ (G : Type) [Group G] [TopologicalSpace G] [
         rw [hfixedEq i v hv]
         exact Submodule.smul_mem _ _ hv
     unfold twTr
-    rw [dif_pos hmem]
+    rw [dite_eq_left hmem]
     have : (levOp (σ i).ρ K K' f LinearMap.id).restrict hmem =
         (if i = i₀ then r⁻¹ * N else 0) • LinearMap.id := by
       refine LinearMap.ext fun v => Subtype.ext ?_

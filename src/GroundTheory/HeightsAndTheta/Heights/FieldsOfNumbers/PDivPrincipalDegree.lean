@@ -40,7 +40,7 @@ theorem isMultiProjPrime_relDim_zero_of_divCycle_ne_zero {P : Ideal (Reciprocity
     IsMultiProjPrime W ∧ relDim W = 0 := by
   have h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hW (by rw [divCycle, dif_neg h])
+    exact hW (by rw [divCycle, dite_eq_right h])
   obtain ⟨hmin, hrel⟩ := h
   have hWh : IsMultiHomogIdeal W := (Bridge.isMultiHomogIdeal_iff W).mpr
     (ReciprocityTheory.ChartRestriction.G.AI.I1.cyc_isMultiHomogIdeal_of_mem_minimalPrimes
@@ -90,6 +90,6 @@ theorem DivPrincipalDegree.proof (h₁ : CutRational.Statement.{u}) (h₂ : IntN
     obtain ⟨-, he⟩ := h₂ F K ι W hWm hW0
     show ((resDeg W : ℕ) : ℤ) = intNum F W ![]
     unfold resDeg
-    rw [dif_pos hWm.isPrime, he]
+    rw [dite_eq_left hWm.isPrime, he]
 
 end GroundTheory.Heights₂.Heights.FieldNumbers

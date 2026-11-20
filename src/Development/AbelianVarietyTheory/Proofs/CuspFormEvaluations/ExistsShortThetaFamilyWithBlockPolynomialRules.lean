@@ -65,12 +65,12 @@ theorem theta_family_block : Formalism.MainNotions.ModuliIntegralCharts.H1.Chart
     intro m g hg i k hik
     dsimp only [ext0]
     by_cases h1 : k < m <;> by_cases h2 : i < m
-    · rw [dif_pos h1, dif_pos h2]
+    · rw [dite_eq_left h1, dite_eq_left h2]
       exact hg (Fin.mk_le_mk.2 hik)
     · exact absurd (lt_of_le_of_lt hik h1) h2
-    · rw [dif_neg h1]
+    · rw [dite_eq_right h1]
       exact Nat.zero_le _
-    · rw [dif_neg h1, dif_neg h2]
+    · rw [dite_eq_right h1, dite_eq_right h2]
   have hanti : ∀ τ i k, i ≤ k → wtA w (τ, k) ≤ wtA w (τ, i) := by
     intro τ i k hik
     dsimp only [wtA]

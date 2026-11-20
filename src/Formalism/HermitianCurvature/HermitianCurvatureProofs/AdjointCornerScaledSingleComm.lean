@@ -18,8 +18,8 @@ theorem zfull_conjTranspose (Z : Matrix (Fin j) (Fin j) ℂ) (τ : ℂ) :
   ext a b
   rw [Matrix.conjTranspose_apply, zfull_apply, zfull_apply]
   by_cases h1 : a.val < j ∧ b.val < j
-  · rw [dif_pos ⟨h1.2, h1.1⟩, dif_pos h1, Matrix.conjTranspose_apply]
-  · rw [dif_neg (by tauto), dif_neg h1]
+  · rw [dite_eq_left ⟨h1.2, h1.1⟩, dite_eq_left h1, Matrix.conjTranspose_apply]
+  · rw [dite_eq_right (by tauto), dite_eq_right h1]
     by_cases h2 : a.val = j ∧ b.val = j
     · rw [if_pos ⟨h2.2, h2.1⟩, if_pos h2]
     · rw [if_neg (by tauto), if_neg h2, star_zero]
@@ -38,9 +38,9 @@ theorem zfull_one : zfull (1 : Matrix (Fin j) (Fin j) ℂ) 1 = 1 := by
   ext a b
   rw [zfull_apply, Matrix.one_apply]
   by_cases h1 : a.val < j ∧ b.val < j
-  · rw [dif_pos h1, Matrix.one_apply]
+  · rw [dite_eq_left h1, Matrix.one_apply]
     simp [Fin.ext_iff]
-  · rw [dif_neg h1]
+  · rw [dite_eq_right h1]
     by_cases h2 : a.val = j ∧ b.val = j
     · rw [if_pos h2, if_pos (Fin.ext (by omega))]
     · rw [if_neg h2, if_neg]

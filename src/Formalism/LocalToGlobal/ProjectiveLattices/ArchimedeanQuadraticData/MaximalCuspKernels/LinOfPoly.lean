@@ -43,7 +43,7 @@ theorem arcNum_map (Dw : Datum H) (K₁ : Type) [Field K₁]
   have hex : ∃ Q, algebraMap (MvPolynomial (ArcLt Dw) (LaurentSeries K₁)) (ArcS Dw K₁) Q =
       algebraMap (MvPolynomial (ArcLt Dw) (LaurentSeries K₁)) (ArcS Dw K₁) P := ⟨P, rfl⟩
   unfold arcNum
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact inj Dw K₁ hex.choose_spec
 
 theorem laur_alg {S K : Type} [CommRing S] [Field K] [Algebra S K] (x : S) :

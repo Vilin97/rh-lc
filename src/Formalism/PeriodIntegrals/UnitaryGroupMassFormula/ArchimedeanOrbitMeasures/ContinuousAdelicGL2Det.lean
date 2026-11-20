@@ -86,7 +86,7 @@ theorem cayF_spec (X : lieU P Q) (hX : X ∈ D0 P Q) :
     UpqT.mat (cayF P Q X) * ((1 + 1) - ((X : lieU P Q) : Mat)) = (1 + 1) + ((X : lieU P Q) : Mat) := by
   have hex := cay_exists X hX
   unfold cayF
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact Classical.choose_spec hex
 
 theorem mem_cayley_domain_of (g : UpqT P Q) (X : lieU P Q)
@@ -219,7 +219,7 @@ theorem cayF_zero : cayF P Q 0 = 1 := by
 
 theorem cayF_off (X : lieU P Q) (hX : X ∉ D0 P Q) : cayF P Q X = 1 := by
   unfold cayF
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨g, hg⟩
   exact hX (mem_cayley_domain_of g X hg)
 

@@ -122,7 +122,7 @@ theorem norm_sq_toLp {f : X.B.I.GA → ℂ} (hf : MemLp f 2 (muX X)) :
 theorem re_ipM_eq {T : MMap M} (hT : ∃ c', IsMultIP M μ 𝓕 T T c') (hv : ∀ τ, ‖(v₀ τ : M.H τ)‖ = 1) :
     (ipM M μ 𝓕 T T).re = ∫ x in 𝓕, ‖T v₀ x‖ ^ 2 ∂μ := by
   unfold ipM
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   obtain ⟨-, heq⟩ := hT.choose_spec v₀ v₀
   have hprod : ∏ τ, ⟪(v₀ τ : M.H τ), (v₀ τ : M.H τ)⟫_ℂ = 1 := by
     refine Finset.prod_eq_one fun τ _ => ?_

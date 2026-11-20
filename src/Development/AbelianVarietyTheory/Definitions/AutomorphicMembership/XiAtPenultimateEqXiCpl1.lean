@@ -42,7 +42,7 @@ theorem PhiQ_comp_of_red {E K : Type} [Field E] [NumberField E] [StarRing E] [Fi
     unfold LocE.PhiQ at hy
     split_ifs at hy with h
     · have := h.1 l.1 s.1 l.2 (by omega)
-      rwa [TopStep.entB_zero _ _ _ _ _ hc, dif_pos ⟨l.2, s.2⟩] at this
+      rwa [TopStep.entB_zero _ _ _ _ _ hc, dite_eq_left ⟨l.2, s.2⟩] at this
     · exact absurd rfl hy
   by_cases hy : ∀ s : Fin n', x (Pi.single ⟨s.1, by omega⟩ 1) ∈ stdAt E n P
   · have h : ∀ p p', TopStep.CongQ P (LocE.entB (qOf P) k₀ c' n' 0 n 0 0 (κ.1.toLinearMap ∘ₗ x : HomE E (n' + c') (n + 0)) p p')
@@ -178,12 +178,12 @@ theorem XiTop_tilF {u : Pr.Word} (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) 
   by_cases hP : P.1 ∈ Pr.vGs
   · have e1 : frsF sel mu (tilF sel mu u d) P = frsF sel mu (TopStep.tilTop H (toRow sel mu d)) P := by
       unfold frsF
-      rw [dif_pos hP, dif_pos hP, e]
+      rw [dite_eq_left hP, dite_eq_left hP, e]
     rw [e1]
   · obtain ⟨κ, hκ, e2⟩ := TopStep.exists_of_isLiftFr (TopStep.liftFr_spec (toRow sel mu d).2 P) (isLiftFr_toRow sel mu d P hP)
     have e1 : frsF sel mu (tilF sel mu u d) P = TopStep.sumE (N_m_succ R) (d.fr (rightOf P hP)) (TopStep.piU H P) := by
       unfold frsF
-      rw [dif_neg hP, tilF_fr sel mu hPr u hQ]
+      rw [dite_eq_right hP, tilF_fr sel mu hPr u hQ]
       congr 1
       exact Units.ext (unitOf_val (H.2.1 P))
     rw [e1, TopStep.frsF_tilTop_Q H _ P hP, TopStep.tilFr]
@@ -217,16 +217,16 @@ variable {u : Pr.Word} {i : ℕ} {b : Idx sel mu L i} {b' : Idx sel mu L (i + 1)
 theorem xiAt_entry (h : i + 2 < R.m) {al : L.β i} {be : L.β (i + 1)} (e : b.1 = some al) (e' : b'.1 = some be)
     (p : PtAt R sel mu cst u i) (p' : PtAt R sel mu cst u (i + 1)) :
     xiAt Ch sel mu cst L u i b b' p p' = XiEntry Ch sel mu cst L i al be p.1.1 p'.1.1 := by
-  rw [xiAt, dif_pos h, Idx.get_eq e, Idx.get_eq e']
+  rw [xiAt, dite_eq_left h, Idx.get_eq e, Idx.get_eq e']
 
 theorem xiAt_penultimate_eq_xiCpl1 (h : i + 2 = R.m) {al : L.β i} (e : b.1 = some al) (p : PtAt R sel mu cst u i)
     (p' : PtAt R sel mu cst u (i + 1)) :
     xiAt Ch sel mu cst L u i b b' p p' = XiCpl1 Ch sel mu cst L i al p.1.1 p'.1.1 p'.1.2 := by
-  rw [xiAt, dif_neg (by omega), dif_pos h, Idx.get_eq e]
+  rw [xiAt, dite_eq_right (by omega), dite_eq_left h, Idx.get_eq e]
 
 theorem xiAt_of_le (h : R.m ≤ i) (p : PtAt R sel mu cst u i) (p' : PtAt R sel mu cst u (i + 1)) :
     xiAt Ch sel mu cst L u i b b' p p' = 0 := by
-  rw [xiAt, dif_neg (by omega), dif_neg (by omega), dif_neg (by omega)]
+  rw [xiAt, dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_right (by omega)]
 
 end Unfold
 
@@ -236,7 +236,7 @@ variable {u : Pr.Word} {n : ℕ} {b : Idx sel mu L (n + 1)} {b' : Idx sel mu L (
   (p : PtAt R sel mu cst u (n + 1)) (p' : PtAt R sel mu cst u (n + 1 + 1))
 
 theorem xiAt_last : xiAt Ch sel mu cst L u (n + 1) b b' p p' = xiOver Ch sel mu cst n h p.1.1 p.1.2 p'.1.1 := by
-  rw [xiAt, dif_neg (by omega), dif_neg (by omega), dif_pos h]
+  rw [xiAt, dite_eq_right (by omega), dite_eq_right (by omega), dite_eq_left h]
   rfl
 
 end UnfoldLast

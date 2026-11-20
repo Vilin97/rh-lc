@@ -54,7 +54,7 @@ theorem blk_inv_val {E : Type} [Field E] [NumberField E] {n a b : ℕ} (h : a + 
       (finSumFinEquiv.trans (finCongr h)) (fromBlocks m.1.val (m.1.val * X) 0 m.2.val) := by
     unfold blk
     simp only []
-    rw [dif_pos hU]
+    rw [dite_eq_left hU]
     rfl
   exact Units.inv_eq_of_mul_eq_one_right (by rw [hb]; exact r1)
 

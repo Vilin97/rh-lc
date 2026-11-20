@@ -41,7 +41,7 @@ theorem fs_eq {n : ℕ} (hn : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i)) 
     Fs i dc VT VT' Dat n = FsG (Γ := ↥(Γn i dc n)) (eK (D.nbr i _ hn)) (Br.PD D.loc D.nbr i _ hn) (Br.iota D.nbr i _ hn) (Dat n) := by
   have key : fZ i dc n (Dat n).ρT' = finZ (eK (D.nbr i _ hn)) (Br.PD D.loc D.nbr i _ hn) (Dat n).ρT' (Br.iota D.nbr i _ hn) := by
     unfold fZ
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
   unfold Fs FsG Hf₂ finiteClassesContinuousMap fPre finiteClassesContinuous finPre
   rw [key]
 
@@ -50,7 +50,7 @@ theorem finite_classes_row_eq_generic {n : ℕ} (hn : K.plOf i dc n ∈ placesOv
       (resRep ρ₁ (Γn i dc n)) := by
   have key : fZ i dc n (locRep (resRep ρ₁ (Γn i dc n))) = finZ (eK (D.nbr i _ hn)) (Br.PD D.loc D.nbr i _ hn) (locRep (resRep ρ₁ (Γn i dc n))) (Br.iota D.nbr i _ hn) := by
     unfold fZ
-    rw [dif_pos hn]
+    rw [dite_eq_left hn]
   unfold Hf₁ finiteClassesContinuousLocal finiteClassesContinuousLattice finiteClassesContinuousMap fPre finiteClassesContinuous finPre
   rw [key]
   rfl

@@ -201,7 +201,7 @@ theorem cosG_moved (hW : AllTrue W) (ha : a.Is) (n : Fin a.n) {b : I.ι}
   have h1 := GlobalTheory.AdForm.Rebase.repY_cong hs p p' hc P
   have h2 : frsF I.sel (I.tup b) p'.1.1 P = frsF I.sel (I.tup b) p.1.1 P := by
     unfold frsF
-    rw [dif_pos hP', dif_pos hP', hd]
+    rw [dite_eq_left hP', dite_eq_left hP', hd]
   rw [h2, if_pos hP', pow_zero, inv_one, one_smul, ← map_sub] at h1
   have h3 := (isFr_ptFr p.1.1 P.1 _).2 h1
   rw [← frsF_eq_ptFr, LinearEquiv.apply_symm_apply, hN] at h3
@@ -239,12 +239,12 @@ theorem dead_moved (hI : I.Ok) {b : I.ι} {Ch₀ Ch : ℕ → Type} {A A' : TwDa
   · unfold TwDat.xi
     rw [hb, hne j h1]
     unfold xiAt
-    rw [dif_neg (by omega), dif_pos h2]
+    rw [dif_neg (by omega), dite_eq_left h2]
     exact (congrArg B.embLL (key _)).trans (map_zero _)
   · obtain ⟨z', hz'⟩ := toHom_surj _ _ (rankN (I.rec7 l Z) j (Nat.le_of_succ_le hj)) (rankN (I.rec7 l Z) (j + 1) hj) x
     have h := hl.dead j hj γ hγ α z'
     unfold TwDat.xi xiAt at h
-    rw [dif_neg (by omega), dif_pos h2] at h
+    rw [dif_neg (by omega), dite_eq_left h2] at h
     subst hz'
     exact (map_eq_zero_iff _ B.embLL.injective).1 h
 

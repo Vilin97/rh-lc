@@ -28,11 +28,11 @@ theorem resFam_apply {f : κ → ι} (hf : Function.Injective f) (k : κ) :
     resFam (R := R) f (f k) = MvPowerSeries.X k := by
   have h : ∃ k', f k' = f k := ⟨k, rfl⟩
   unfold resFam
-  rw [dif_pos h, hf h.choose_spec]
+  rw [dite_eq_left h, hf h.choose_spec]
 
 theorem resFam_off (f : κ → ι) (i : ι) (hi : ∀ k, f k ≠ i) : resFam (R := R) f i = 0 := by
   unfold resFam
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨k, hk⟩
   exact hi k hk
 

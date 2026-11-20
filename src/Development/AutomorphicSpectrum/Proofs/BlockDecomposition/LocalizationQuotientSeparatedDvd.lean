@@ -119,15 +119,15 @@ theorem main : TwistedDoubleCosetStrictDiagonal → P_asmReg := by
   by_cases h0 : s.card = a / 2 ∧ sᶜ.card = (n - a) / 2 ∧ a % 2 + (n - a) % 2 = n % 2
   swap
   · exact absurd (dif_neg h0) hs
-  rw [dif_pos h0] at hs
+  rw [dite_eq_left h0] at hs
   by_cases h1 : (symIdx n (a % 2 = 1) s).card = a
   swap
   · exact absurd (dif_neg h1) hs
-  rw [dif_pos h1] at hs
+  rw [dite_eq_left h1] at hs
   by_cases h2 : (symIdx n ((n - a) % 2 = 1) sᶜ).card = n - a
   swap
   · exact absurd (dif_neg h2) hs
-  rw [dif_pos h2] at hs
+  rw [dite_eq_left h2] at hs
   have hd1 : dcos a w (tdiag ϖ (restr x _ h1)) y.1 ≠ 0 := fun h => hs (by rw [h]; simp)
   have hd2 : dcos (n - a) w (tdiag ϖ (restr x _ h2)) y.2 ≠ 0 := fun h => hs (by rw [h]; simp)
   obtain ⟨-, -, u₁, hQ₁, hu₁⟩ := hs1 hU w hw ϖ hϖ a _ (restr_strictAnti hx _ h1) y.1 ⟨1, by simpa using hd1⟩

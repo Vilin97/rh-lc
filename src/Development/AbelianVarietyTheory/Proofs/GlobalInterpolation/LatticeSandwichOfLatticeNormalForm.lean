@@ -71,7 +71,7 @@ theorem decomp {n c : ℕ} (x : Fin (n + c) → E) :
         ext
         omega
     have h3 : Loc.inX E n c (fun a => x (Fin.castAdd c a)) (Fin.natAdd n b) = 0 := by
-      rw [inX_apply, dif_neg (by simp)]
+      rw [inX_apply, dite_eq_right (by simp)]
     simp [Finset.sum_apply, h2, h3]
 
 theorem mem_nfLat {P : HeightOneSpectrum (𝓞 E)} {n c : ℕ} {e : Fin c → ℤ} (he : ∀ i, e i ≤ 0) {z : Sp E n}

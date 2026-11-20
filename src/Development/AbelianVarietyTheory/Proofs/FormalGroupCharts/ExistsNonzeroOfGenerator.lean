@@ -255,7 +255,7 @@ theorem exists_ext_chart_unif : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       have h2 := y'.2.1
       show evalAt _ _ f z = φ (evalAt _ _ f y.1)
       unfold evalAt
-      rw [dif_pos h1, dif_pos h2]
+      rw [dite_eq_left h1, dite_eq_left h2]
       exact hL.wd f hf _ _ _ _ _ _ _ z h2.choose_spec.choose_spec.choose_spec
         (Formalism.L2.Pj.frMap_trans (Xo := Xo) (c := c) _ _ _ _ ψ _ y.1 z h1.choose_spec.choose_spec.choose_spec hz)
     exact ⟨h, h ▸ nval_bc φ hr0 hv e _⟩

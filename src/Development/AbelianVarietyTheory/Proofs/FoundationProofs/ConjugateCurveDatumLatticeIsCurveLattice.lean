@@ -243,7 +243,7 @@ theorem galCurve_holds : ∀ D : D7, galCurve D := by
     have : (TaylorLogMetric.liftM M (g2 Λ)) ^ 3 - 27 * (TaylorLogMetric.liftM M (g3 Λ)) ^ 2 = 1 := by
       apply Subtype.ext
       unfold TaylorLogMetric.liftM
-      rw [dif_pos h2, dif_pos h3]
+      rw [dite_eq_left h2, dite_eq_left h3]
       exact hdisc
     have h := congrArg ρ this
     simpa [map_ofNat] using h

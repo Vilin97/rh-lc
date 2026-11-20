@@ -85,7 +85,7 @@ theorem isAtTau_atTau {θ : InfFam D} (hθ : IsInfFam θ) (V : HSp D) (τ : D.wh
     IsAtTau θ V τ M (atTau θ V τ M) := by
   have hex : ∃ x, IsAtTau θ V τ M x := Formalism.IndefR.PublishedAut.atTauExists_of hθ V τ M hM
   unfold atTau
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem compAt_mul_gen (θ : InfFam D) (τ : D.what₂.Tau) {a b c : ℕ} (A : Mx D a b) (B : Mx D b c) :
@@ -140,7 +140,7 @@ theorem lieComm_of (hAway : AwayIn) (hLNe : LNe) (hSch : SchFP) (hOp : OpCLM) (h
     intro Q T hT
     have hm : tens θ τ fr (fP (cLoc l τ) Q) Ψ ∈ schwartzA θ V.rank n := hT ▸ memQ T
     unfold phiS
-    rw [dif_pos hm]
+    rw [dite_eq_left hm]
     apply Subtype.ext
     show tens θ τ fr (fP (cLoc l τ) Q) Ψ = tens θ τ fr T Ψ
     rw [hT]

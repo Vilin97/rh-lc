@@ -159,8 +159,8 @@ theorem exists_cocycle (hG : Out.GlobalFnsSt) (hA : IsAbelianScheme A) {L : LB A
       gm r z ⊤ (Units.map A.hom.appTop.hom c) = gm (r ≫ A.hom) z ⊤ c := by
     intro Z r z c
     unfold gm
-    rw [dif_pos (show r z ∈ (⊤ : A.left.Opens) from trivial),
-      dif_pos (show (r ≫ A.hom) z ∈ (⊤ : S.Opens) from trivial)]
+    rw [dite_eq_left (show r z ∈ (⊤ : A.left.Opens) from trivial),
+      dite_eq_left (show (r ≫ A.hom) z ∈ (⊤ : S.Opens) from trivial)]
     ext
     simp only [MonoidHom.coe_comp, Function.comp_apply, Units.coe_map, pullU]
     rfl

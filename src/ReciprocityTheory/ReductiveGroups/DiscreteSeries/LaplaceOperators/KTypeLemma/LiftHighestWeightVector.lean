@@ -52,7 +52,7 @@ theorem contraction_compactWordAction (ε : Fin n → Bool) (E : Fin n → Fin n
     have key := lc_adLW E hE a b (v : M) w
     rw [Finsupp.linearCombination_apply, Finsupp.sum] at key
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Cone.compactWordAction_single, dif_pos hab, map_add (f := _), map_sum, sT_single, Pi.add_apply, Finset.sum_apply]
+      rw [Cone.compactWordAction_single, dite_eq_left hab, map_add (f := _), map_sum, sT_single, Pi.add_apply, Finset.sum_apply]
     simp only [map_smul, sT_single, Pi.smul_apply]
     by_cases hd : d = c
     · subst hd
@@ -137,7 +137,7 @@ theorem lift_highestWeightVector {M : Type*} [NormedAddCommGroup M] [InnerProduc
       Submodule.smul_mem _ _ (Finsupp.single_mem_supported ℂ _ ?_)) ?_) ?_
     · show w'.length ≤ R
       rw [TRA.adLW_length a b _ _ hw']; exact hpS
-    · rw [dif_pos hab]
+    · rw [dite_eq_left hab]
       exact Finsupp.single_mem_supported ℂ _ hpS
     · split_ifs
       · exact Finsupp.single_mem_supported ℂ _ (show p.1.length ≤ R from hpS)

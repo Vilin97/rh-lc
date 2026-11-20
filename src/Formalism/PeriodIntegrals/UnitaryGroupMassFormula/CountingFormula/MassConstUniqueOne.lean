@@ -79,7 +79,7 @@ theorem massConst_cMass (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
   have hex : ∃ c : ℝ, 0 < c ∧ MassConst K F 1 c := ⟨c₁, hc₁, h1⟩
   have hone : cOne K F = c₁ := by
     unfold cOne
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact massConst_unique_one hK hF hex.choose_spec.2 h1
   unfold cMass
   rw [hone]

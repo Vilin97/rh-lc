@@ -18,7 +18,7 @@ def wideInd (C : ClassGroup (𝓞 F)) : Ideal (𝓞 F) → ℚ := fun I => if cl
 
 theorem cls_of_ne_bot {I : Ideal (𝓞 F)} (h : I ≠ ⊥) :
     cls I = ClassGroup.mk0 ⟨I, mem_nonZeroDivisors_of_ne_zero h⟩ := by
-  rw [cls, dif_pos]
+  rw [cls, dite_eq_left]
 
 theorem cls_mul {I J : Ideal (𝓞 F)} (hI : I ≠ ⊥) (hJ : J ≠ ⊥) : cls (I * J) = cls I * cls J := by
   rw [cls_of_ne_bot hI, cls_of_ne_bot hJ, cls_of_ne_bot (mul_ne_zero hI hJ), ← map_mul]

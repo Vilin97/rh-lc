@@ -41,14 +41,14 @@ theorem unip_col (x : BlockIx (r + s) r → R) (i : Fin (r + s)) (k : Fin r) :
   have := k.isLt
   rw [GlobalTheory.CompanionTheory.AffglAssembly.unip_eq_unipGL, GroundTheory.Automorphic.AutomorphicForm.coe_unipGL,
     GroundTheory.Automorphic.AutomorphicForm.unipMatrix, Matrix.add_apply, GroundTheory.Automorphic.AutomorphicForm.blockEntry_apply,
-    dif_neg (fun h => by have := h.2; simp only [Fin.val_castAdd] at this; omega), add_zero]
+    dite_eq_right (fun h => by have := h.2; simp only [Fin.val_castAdd] at this; omega), add_zero]
 
 theorem unip_row (x : BlockIx (r + s) r → R) (k : Fin s) (j : Fin (r + s)) :
     ((unip x : GL (Fin (r + s)) R) : Matrix _ _ R) (Fin.natAdd r k) j =
       (1 : Matrix (Fin (r + s)) (Fin (r + s)) R) (Fin.natAdd r k) j := by
   rw [GlobalTheory.CompanionTheory.AffglAssembly.unip_eq_unipGL, GroundTheory.Automorphic.AutomorphicForm.coe_unipGL,
     GroundTheory.Automorphic.AutomorphicForm.unipMatrix, Matrix.add_apply, GroundTheory.Automorphic.AutomorphicForm.blockEntry_apply,
-    dif_neg (fun h => by have := h.1; simp only [Fin.val_natAdd] at this; omega), add_zero]
+    dite_eq_right (fun h => by have := h.1; simp only [Fin.val_natAdd] at this; omega), add_zero]
 
 end B
 

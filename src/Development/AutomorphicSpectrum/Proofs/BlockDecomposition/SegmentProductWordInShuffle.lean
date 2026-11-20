@@ -103,7 +103,7 @@ theorem inShW_of_wd {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [
   have hmult := GlobalTheory.T.segment_product_jacquet_shuffle_count hA hL Δ x hd hΔ w hc
   have hpos : Zc.Cos.jmL w (GlobalTheory.LocGL.prodIrr x hd) ≠ 0 := by
     unfold Zc.Cos.jmL
-    rw [dif_pos hsum]
+    rw [dite_eq_left hsum]
     exact hne
   rw [hmult] at hpos
   have hcard : Zc.Cos.shuffleCount w (fun i => Zc.Cos.decWord (Δ i)) ≠ 0 := by exact_mod_cast hpos

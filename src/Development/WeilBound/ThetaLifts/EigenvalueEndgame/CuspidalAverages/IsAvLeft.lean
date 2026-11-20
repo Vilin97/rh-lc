@@ -187,7 +187,7 @@ theorem ct_van {r : ℕ} (hr : r ≤ j - 1) (h0 : Av σ W (colSp (fst u (hr.tran
     (fun a ha b => funext fun t => by
       change C.ad _ = b.toAdd t
       rw [mat_mul, Matrix.mul_assoc, Matrix.mul_assoc, ιu, ← Matrix.mul_assoc (mat a), ((mem_N h).1 ha).1, ← Matrix.mul_assoc,
-        (frA h).vu, Matrix.one_mul, Matrix.map_apply, RingEquiv.apply_symm_apply, Matrix.add_apply, posM_blk_apply, dif_pos t.2,
+        (frA h).vu, Matrix.one_mul, Matrix.map_apply, RingEquiv.apply_symm_apply, Matrix.add_apply, posM_blk_apply, dite_eq_left t.2,
         Matrix.one_apply_ne (fun e => by have := t.2; rw [e] at this; omega), zero_add]) r1
     (fun γ hγ => by
       obtain ⟨g, -, hg, -⟩ := mem_ratU.1 hγ

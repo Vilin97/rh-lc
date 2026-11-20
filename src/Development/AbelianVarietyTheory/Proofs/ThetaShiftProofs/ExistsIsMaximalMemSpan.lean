@@ -179,7 +179,7 @@ theorem exists_fz_eq {g : ℕ} (hg : 0 < g) :
   have h := exists_isLZBasis (d := d) X hg
   obtain ⟨e, he, hsp⟩ := h.choose_spec.exists_basis
   refine ⟨e, hsp, fun u χ h1 h2 G x => ?_⟩
-  rw [cubeCoeff_orb, fz, if_pos ⟨h1, h2⟩, dif_pos h]
+  rw [cubeCoeff_orb, fz, if_pos ⟨h1, h2⟩, dite_eq_left h]
   simp only [he]
 
 theorem fz_of_not {g : ℕ} {χ : X.Ψ → Fin d → Fin d → ℂ} (h : ¬ (IsHerm χ ∧ IsFreqZ X g χ))
@@ -256,7 +256,7 @@ theorem orb_fj {u : Fin d → Fin r → E} (hu : ∀ i k, herm X.Gm (u i) (u k) 
         (nuForm X ν) := by
   funext b
   have hν' : ∀ p ∈ X.periods la, ∃ k : ℤ, 2 * ∑ τ, ν τ * p τ = k := hν
-  rw [orb, Data.fj, if_pos hν', dif_pos (PeriodLatticeCountable.fd_exists X la), partialCoeff, coeff_eq]
+  rw [orb, Data.fj, if_pos hν', dite_eq_left (PeriodLatticeCountable.fd_exists X la), partialCoeff, coeff_eq]
   simp only [orb_add_lineMap X hu, nuForm_apply]
   congr 2
   funext s

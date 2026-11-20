@@ -33,7 +33,7 @@ theorem sum_sq_norm_pluckerCoord_eq_det_mul_conjTranspose (h0 : PluckerFrameChan
     have key := h0 ℂ l N V g I0 hI0
     have lhs : pluckerCoord (V * g) I0 = (V * Vᴴ).det := by
       unfold pluckerCoord
-      rw [dif_pos hI0]
+      rw [dite_eq_left hI0]
       congr 1
       ext i j
       simp [I0, Matrix.mul_apply, hemb, g, Matrix.conjTranspose_apply]
@@ -43,7 +43,7 @@ theorem sum_sq_norm_pluckerCoord_eq_det_mul_conjTranspose (h0 : PluckerFrameChan
       have hJc : J.card = l := (mem_powersetCard.mp hJ).2
       have hm : minorOn g l J I0 = star (pluckerCoord V J) := by
         unfold minorOn pluckerCoord
-        rw [dif_pos ⟨hJc, hI0⟩, dif_pos hJc, ← Matrix.det_conjTranspose]
+        rw [dite_eq_left ⟨hJc, hI0⟩, dite_eq_left hJc, ← Matrix.det_conjTranspose]
         congr 1
         ext i j
         simp [I0, hemb, g, Matrix.conjTranspose_apply]

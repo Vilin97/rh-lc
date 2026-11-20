@@ -26,14 +26,14 @@ private theorem sum_castLE_lemma {s : ℕ} (d : Fin s → ℕ) (a : ℕ) (ha : a
     ∑ b : Fin a, d (Fin.castLE ha b) = ∑ i ∈ Finset.range a, (if h : i < s then d ⟨i, h⟩ else 0) := by
   rw [Finset.sum_range]
   refine Finset.sum_congr rfl fun b _ => ?_
-  rw [dif_pos (lt_of_lt_of_le b.2 ha)] <;> rfl
+  rw [dite_eq_left (lt_of_lt_of_le b.2 ha)] <;> rfl
 
 private theorem sum_castLE_add_le_lemma_2 {s : ℕ} (d : Fin s → ℕ) {a b : Fin s} (hab : a < b) :
     ∑ c : Fin a, d (Fin.castLE a.2.le c) + d a ≤ ∑ c : Fin b, d (Fin.castLE b.2.le c) := by
   rw [sum_castLE_lemma d (a : ℕ) a.2.le, sum_castLE_lemma d (b : ℕ) b.2.le]
   have e : (∑ i ∈ Finset.range a, (if h : i < s then d ⟨i, h⟩ else 0)) + d a =
       ∑ i ∈ Finset.range (a + 1), (if h : i < s then d ⟨i, h⟩ else 0) := by
-    rw [Finset.sum_range_succ, dif_pos a.2]
+    rw [Finset.sum_range_succ, dite_eq_left a.2]
   rw [e]
   exact Finset.sum_le_sum_of_subset (Finset.range_mono (Nat.succ_le_of_lt hab))
 

@@ -245,7 +245,7 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
 private theorem cmp_of {w : Plc L} (h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : UA L n) :
     cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold CaseU.cmp
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 private theorem l_under {u : Plc L} :
@@ -300,7 +300,7 @@ private theorem mem_KS {a : Ga l L n} (h1 : toGS n s a = 1)
 private theorem sec_spec (hb : Function.Bijective ((toGS n s).comp (GaS n s).subtype)) (g : GS n s) :
     toGS n s (secS n s g) = g ∧ ∀ w : Plc L, w.under (𝓞 (Lp L)) ∉ s.S → cmp n w (secS n s g) = 1 := by
   unfold secS
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   refine ⟨(MulEquiv.ofBijective _ hb).apply_symm_apply g, fun w hw => ?_⟩
   exact Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 ((MulEquiv.ofBijective _ hb).symm g).2 w)
     ⟨fun h => hw (Or.inr (Or.inl h)), fun h => hw (Or.inr (Or.inr h))⟩

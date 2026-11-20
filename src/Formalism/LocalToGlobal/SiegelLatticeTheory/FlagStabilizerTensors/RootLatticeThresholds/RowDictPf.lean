@@ -304,15 +304,15 @@ theorem eg_mul (x : X.B.I.Gf) {k : X.B.I.Gf} (hk : k ∈ X.B.I.Kg X.B.g) : eg X 
       funext fun γ => propext (goodAt_mul X hx hk γ)
     by_cases hE : ∃ γ, GoodAt X x γ
     · have hE' : ∃ γ, GoodAt X (x * k) γ := by rw [hpred]; exact hE
-      rw [dif_pos ⟨hxk, hE'⟩, dif_pos ⟨hx, hE⟩, choose_congr hpred hE' hE]
+      rw [dite_eq_left ⟨hxk, hE'⟩, dite_eq_left ⟨hx, hE⟩, choose_congr hpred hE' hE]
     · have hE' : ¬ ∃ γ, GoodAt X (x * k) γ := by rw [hpred]; exact hE
-      rw [dif_neg (fun h => hE' h.2), dif_neg (fun h => hE h.2)]
+      rw [dite_eq_right (fun h => hE' h.2), dite_eq_right (fun h => hE h.2)]
   · have hxk : x * k ∉ X.B.I.Kset := by
       intro h
       apply hx
       have := K_mul _ h (K_inv _ hk.1)
       rwa [mul_inv_cancel_right] at this
-    rw [dif_neg (fun h => hxk h.1), dif_neg (fun h => hx h.1)]
+    rw [dite_eq_right (fun h => hxk h.1), dite_eq_right (fun h => hx h.1)]
 
 theorem level_ne_zero : X.B.g ≠ 0 := by
   rw [X.g_eq]
@@ -349,7 +349,7 @@ theorem integrable_eg : Integrable (eg X) X.B.μf := by
     hc.continuousOn.integrableOn_compact' hK (isOpen_Kset X).measurableSet
   refine hon.integrable_of_forall_notMem_eq_zero fun x hx => ?_
   unfold eg
-  rw [dif_neg (fun h => hx h.1)]
+  rw [dite_eq_right (fun h => hx h.1)]
 
 theorem goodOp_exists (hR : RConvFExists) : Nonempty (GoodOp X) := by
   have hFR := Formalism.L2.SG.Pf.foldReady_holds X.B.I

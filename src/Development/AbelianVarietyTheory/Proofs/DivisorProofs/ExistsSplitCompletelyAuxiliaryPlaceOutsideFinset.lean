@@ -49,7 +49,7 @@ theorem ncard_primesOver_eq_two {F E : Type} [Field F] [NumberField F] [Field E]
   have hcE := (GlobalTheory.ColClassCompare.unram_card_of_split (F := E) (E := E) hp h q hpq).2
   have hf : v.asIdeal.inertiaDeg' q = 1 := by
     have hcomap : Ideal.comap (algebraMap (𝓞 F) (𝓞 E)) q = v.asIdeal := (Ideal.LiesOver.over (P := q) (p := v.asIdeal)).symm
-    rw [Ideal.inertiaDeg', dif_pos hcomap]
+    rw [Ideal.inertiaDeg', dite_eq_left hcomap]
     letI : Field (𝓞 F ⧸ v.asIdeal) := Ideal.Quotient.field _
     have hfin : Module.Finite (𝓞 F ⧸ v.asIdeal) (𝓞 E ⧸ q) := inferInstance
     have := Module.natCard_eq_pow_finrank (K := 𝓞 F ⧸ v.asIdeal) (V := 𝓞 E ⧸ q)

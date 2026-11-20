@@ -137,13 +137,13 @@ variable {n0 : ℕ} (A0 : LocAt D.host.F D.host.E n0 (D.gat u w h)) (J0 : Matrix
 
 theorem chAt_succ_J (i : ℕ) (hi : i + 1 ≤ D.R.m) (La : (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt (i + 1)) :
     (chAt Ch std vp unif eO eO_spec dG dG_spec om I A0 J0 Lb0 Uloc0 (i + 1) La).J = (Formalism.L2.Forms.gramN D (i + 1) hi).reindex (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm) (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm) := by
-  rw [chAt, dif_pos hi]
+  rw [chAt, dite_eq_left hi]
 
 theorem chAt_succ_Lb (i : ℕ) (hi : i + 1 ≤ D.R.m) (La : (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt (i + 1)) :
     (chAt Ch std vp unif eO eO_spec dG dG_spec om I A0 J0 Lb0 Uloc0 (i + 1) La).Lb = ((I.at' i hi).st.K ((I.at' i hi).st.eC.symm La.1).1).lev.Lb.map
       (((reE (E := D.host.E) (n := ((sysAt Ch std vp unif eO eO_spec dG dG_spec om).Pj (i + 1)).m + 1) (by exact ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm) : _ ≃ₗ[D.host.E] _) :
         _ →ₗ[D.host.E] _).restrictScalars (𝓞 D.host.E)) := by
-  rw [chAt, dif_pos hi]
+  rw [chAt, dite_eq_left hi]
 
 set_option maxHeartbeats 400000 in
 theorem chAt_succ_y (i : ℕ) (hi : i + 1 ≤ D.R.m) (La : (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt (i + 1)) :
@@ -151,13 +151,13 @@ theorem chAt_succ_y (i : ℕ) (hi : i + 1 ≤ D.R.m) (La : (sysAt Ch std vp unif
       (Classical.epsilon fun x => ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).IsPt ((I.at' i hi).st.eC.symm La.1).2
         (basesAt Ch std vp unif eO eO_spec dG dG_spec om (i + 1) La.2) x ∧
         x ∈ Formalism.UG.UPts (sigD D) (Formalism.L2.Forms.gramN D (i + 1) hi) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) := by
-  rw [chAt, dif_pos hi]
+  rw [chAt, dite_eq_left hi]
 
 theorem chAt_fill (i : ℕ) (hi : ¬ i + 1 ≤ D.R.m) (La : (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt (i + 1)) :
     (chAt Ch std vp unif eO eO_spec dG dG_spec om I A0 J0 Lb0 Uloc0 (i + 1) La).J = 1 ∧
       (chAt Ch std vp unif eO eO_spec dG dG_spec om I A0 J0 Lb0 Uloc0 (i + 1) La).Lb = Submodule.span (𝓞 D.host.E) (Set.range fun k => Pi.single k (1 : D.host.E)) ∧
       (chAt Ch std vp unif eO eO_spec dG dG_spec om I A0 J0 Lb0 Uloc0 (i + 1) La).y = 1 := by
-  rw [chAt, dif_neg hi]
+  rw [chAt, dite_eq_right hi]
   exact ⟨rfl, rfl, rfl⟩
 
 end Unfold

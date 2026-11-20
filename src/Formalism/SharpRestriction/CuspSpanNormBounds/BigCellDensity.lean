@@ -629,7 +629,7 @@ theorem orbJ_eq {k0 r : ℕ} (L : LocBessel (k0 + 1) r) (Ds : Formalism.FourierD
       Integrable (fun p => θ p • Formalism.FourierDecayAlt.D.orbIntegrand Ds g F p) Ds.μSS) :
     Formalism.FourierDecayAlt.D.orbJ Ds g μ F = OrbInt L F g ν := by
   unfold Formalism.FourierDecayAlt.D.orbJ
-  rw [dif_pos hcut]
+  rw [dite_eq_left hcut]
   obtain ⟨⟨_, _, hθ1⟩, hint⟩ := hcut.choose_spec
   generalize hcut.choose = θ at hθ1 hint ⊢
   have hμS : Ds.μSS = pairMeas L := by
@@ -878,7 +878,7 @@ theorem herm_esI (k r : ℕ) (v : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
 theorem flag_eq_uMap (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (ρ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)
     (a b : Fin (r + 1)) (ha : a.val < r) : flagMat k r z ρ a b = Formalism.FourierDecayAlt.C2.uMap k r z ρ a b := by
   unfold flagMat Formalism.FourierDecayAlt.C2.uMap
-  rw [dif_pos ha, dif_pos ha, herm_esI]
+  rw [dite_eq_left ha, dite_eq_left ha, herm_esI]
 
 def Tmap {r : ℕ} (γ : Point ℂ (r + 1)) (x : Formalism.FourierDecayAlt.C2.Lstidx (wPt γ) → ℂ) : (rootPat γ) → ℂ :=
   fun p => (starRingEnd ℂ) (x (eRoot γ p))

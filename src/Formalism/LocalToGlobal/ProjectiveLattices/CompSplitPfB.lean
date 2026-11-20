@@ -171,7 +171,7 @@ theorem cspB_evR {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S)
     (hy : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) y) :
     evR Xo c (cspB_rule Xo c C hC) y = cspB_idem C hC y.x y.x_over := by
   unfold evR evalAt
-  rw [dif_pos hy]
+  rw [dite_eq_left hy]
   first
   | exact cspB_idem_map C hC _ _ _ hy.choose_spec.choose_spec.choose_spec.1
   | exact cspB_idem_map C hC _ _ _ hy.choose_spec.choose_spec.choose_spec.1.1
@@ -180,7 +180,7 @@ theorem cspB_evR_zero {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S)
     (hy : ¬ FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) y) (f : Rul Xo c) :
     evR Xo c f y = 0 := by
   unfold evR evalAt
-  rw [dif_neg hy]
+  rw [dite_eq_right hy]
 
 theorem cspB_evR_mul {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) (f g : Rul Xo c) :
     evR Xo c (f * g) y = evR Xo c f y * evR Xo c g y := by
@@ -264,7 +264,7 @@ theorem cspB_isIdemFn {σ : c.F →+* ℂ} {r : ℕ} (U : Unf Xo c σ r) (hU : I
   refine ⟨fun x hx => ?_, hsec.1, fun x hx b hb => ?_, fun γ hγ x hx => ?_⟩
   · show (if h : x ∈ (U.X k).dom then toC (evR Xo c (cspB_rule Xo c C hC) (U.un k ⟨x, h⟩)) else 0) = 0 ∨
       (if h : x ∈ (U.X k).dom then toC (evR Xo c (cspB_rule Xo c C hC) (U.un k ⟨x, h⟩)) else 0) = 1
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     by_cases ht : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) (U.un k ⟨x, hx⟩)
     · rw [cspB_evR C hC _ ht]
       have he := cspB_idem_idem C hC (U.un k ⟨x, hx⟩).x (U.un k ⟨x, hx⟩).x_over

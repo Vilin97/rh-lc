@@ -104,7 +104,7 @@ theorem BlowUpHorizontalLift.full : BlowUpHorizontalLift.Statement.{u} := by
   refine ⟨Wt, ?_, fun h => hϖW ((hcomap _).1 (by rw [liftForm_C]; exact h)), ?_⟩
   ·
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [dif_pos ⟨hmin, hrelWt⟩]
+    rw [dite_eq_left ⟨hmin, hrelWt⟩]
     have hne := length_localizedQuot_ne_top (blowUpOf P u ⊔ Ideal.span {liftForm x}) Wt hmin
     have hnz : multAt (blowUpOf P u ⊔ Ideal.span {liftForm x}) Wt ≠ 0 := by
       unfold multAt

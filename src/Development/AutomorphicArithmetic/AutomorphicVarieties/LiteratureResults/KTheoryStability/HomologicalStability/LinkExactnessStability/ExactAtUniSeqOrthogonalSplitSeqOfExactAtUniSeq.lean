@@ -20,7 +20,7 @@ lemma dotProduct_padZero {m N : ℕ} (h : m ≤ N) (F : Fin N → R) (v : Fin m 
   refine Fintype.sum_of_injective (Fin.castLE h) (Fin.castLE_injective h) _ _ ?_ ?_
   · intro i hi
     simp only [padZero]
-    rw [dif_neg, mul_zero]
+    rw [dite_eq_right, mul_zero]
     intro hlt
     exact hi ⟨⟨i, hlt⟩, Fin.ext rfl⟩
   · intro i

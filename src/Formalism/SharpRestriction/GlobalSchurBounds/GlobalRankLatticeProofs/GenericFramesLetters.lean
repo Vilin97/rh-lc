@@ -319,7 +319,7 @@ theorem hOf_ord (e l : ℕ) (hl : Nat.Coprime l 2) :
     ordH (hOf e l) =
       orderOf (hcl e (ZMod.unitOfCoprime l (Nat.Coprime.pow_right (e + 2) hl))) := by
   unfold hOf
-  rw [dif_pos hl]
+  rw [dite_eq_left hl]
   unfold ordH
   rw [← orderOf_iotaH_eq_addOrderOf, iotaH_iotaHInv]
 

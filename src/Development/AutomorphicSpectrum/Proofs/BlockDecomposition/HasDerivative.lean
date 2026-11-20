@@ -669,7 +669,7 @@ theorem main : Ad3.K.LC.B.IbpBound → Ad3.K.LC.B.MajScaled → Ad3.K.LC.HasDer 
     simp only [secI_eq_G _ _ _ hM', gl_val]
   have hext : extC (sec k Ψ) =ᶠ[𝓝 M] fun M' => ((‖(Matrix.of M').det‖ ^ 2 : ℝ) : ℂ) * ∫ p, G k Ψ M' p := by
     filter_upwards [nb_mem hM] with M' hM'
-    rw [extC, dif_pos (nb_det hM')]
+    rw [extC, dite_eq_left (nb_det hM')]
     exact hsec M' (nb_det hM') Ψ
   have hD := ((hasFDerivAt_normSq_det hM).mul (hasFDerivAt_intG hI hMj k Ψ hM)).congr_of_eventuallyEq hext
   refine ⟨_, hD, fun m => ?_⟩

@@ -50,7 +50,7 @@ omit [DecidableEq K] in
 theorem res_eq (hPW : P ≤ W) {x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hg : g ∉ W)
     (hx : x = fr P f / fr P g) : res P W x = fr W f / fr W g := by
   have h : ∃ fg : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 := ⟨(f, g), hg, hx⟩
-  rw [res, dif_pos h]
+  rw [res, dite_eq_left h]
   exact residue_eq hPW h.choose_spec.1 hg (h.choose_spec.2.symm.trans hx)
 
 theorem exists_rep (x : degZeroLoc P {W}) : ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧

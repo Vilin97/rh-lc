@@ -146,7 +146,7 @@ theorem columnInduction : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (s : ℤ
         · rw [hP, hPw k.1 hk1 j, (h1 k.2 hk2 j).1, hmap]
         · rw [he', (hdc w k.1 hk1 j).1, (h1 k.2 hk2 j).2.1, hsum]
         · dsimp only
-          rw [dif_pos j.2]
+          rw [dite_eq_left j.2]
           exact hc
       · intro u hu
         have hu' : ∀ j, IsHalf (eL w + ∑ w' ∈ S₀, eL w') (u j) := fun j => by rw [← hsum]; exact hu j
@@ -193,7 +193,7 @@ theorem columnInduction : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (s : ℤ
           rw [← congrFun (hTc (c w i) _) u]
           refine hE (c w i) (cJ a) _ ?_ _ u
           intro j hj f
-          rw [dif_pos hj]
+          rw [dite_eq_left hj]
           exact (hdF (i, a) ⟨j, hj⟩ hi ha).2.2.2.2 f
         rw [Finset.prod_insert hw, Finset.sum_product, Finset.mul_sum, Finset.mul_sum]
         refine Finset.sum_congr rfl fun i hi => ?_

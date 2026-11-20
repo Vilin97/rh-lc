@@ -10,7 +10,7 @@ private theorem lsq_eq (l p L : ℕ) (h : Nat.Coprime p l) : lsqInv l p L = inv1
   have h1 : IsUnit (l : ZMod p) := (ZMod.isUnit_iff_coprime l p).2 h.symm
   have h2 : IsUnit ((l : ZMod p) ^ (2 * L)) := h1.pow _
   unfold lsqInv inv1
-  rw [dif_pos h1, dif_pos h2, inv_pow]
+  rw [dite_eq_left h1, dite_eq_left h2, inv_pow]
   congr 1
   ext
   simp

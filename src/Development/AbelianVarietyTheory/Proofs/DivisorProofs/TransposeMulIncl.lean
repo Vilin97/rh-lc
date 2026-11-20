@@ -158,7 +158,7 @@ theorem blkGL_mul_unip {r : ℕ} (h : r ≤ a) (p : GL (Fin r) R × GL (Fin (a -
         intro k _
         rcases blkGL_block h p i k with h1 | h1
         · simp only [nilM, Matrix.of_apply]
-          rw [dif_neg (fun hh => hij (by omega)), mul_zero]
+          rw [dite_eq_right (fun hh => hij (by omega)), mul_zero]
         · rw [h1, zero_mul]
       · rw [h2, mul_zero]
   apply Units.ext

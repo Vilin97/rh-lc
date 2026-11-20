@@ -57,7 +57,7 @@ theorem smoothRepConj_conj {P : Ideal (MRing ι)} (A : HermLine ι)
     IsConjInvariantH (smoothRepConj P A) := by
   classical
   unfold smoothRepConj
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec.2.2.1
 
 variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {Ω : Type} [Field Ω] [Algebra ℚ Ω]

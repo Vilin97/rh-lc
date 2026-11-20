@@ -142,18 +142,18 @@ theorem paramGap_of_params (L : SizeData₂ D) (Pm : ParameterChoice' D L) : Par
   unfold Ranks.r at hn
   unfold Formalism.L2.NTheta.lamAt
   by_cases h1 : n + 1 < D.R.k - 1
-  · rw [dif_pos h1, dif_pos (by omega : n < D.R.k - 1)]
+  · rw [dite_eq_left h1, dite_eq_left (by omega : n < D.R.k - 1)]
     have := cast _ (s1 n h1)
     linarith
   · by_cases h2 : n + 1 = D.R.k - 1
-    · rw [dif_neg h1, dif_pos (by omega : n < D.R.k - 1), dif_pos (by omega : n + 1 - (D.R.k - 1) < D.R.m)]
+    · rw [dite_eq_right h1, dite_eq_left (by omega : n < D.R.k - 1), dite_eq_left (by omega : n + 1 - (D.R.k - 1) < D.R.m)]
       have := cast _ (s2 (by omega) (by omega))
       have e1 : (⟨n, by omega⟩ : Fin (D.R.k - 1)) = ⟨D.R.k - 2, by omega⟩ := Fin.ext (by simp only; omega)
       have e2 : (⟨n + 1 - (D.R.k - 1), by omega⟩ : Fin D.R.m) = ⟨0, by omega⟩ := Fin.ext (by simp only; omega)
       rw [e1, e2]
       linarith
-    · rw [dif_neg h1, dif_neg (by omega : ¬ n < D.R.k - 1), dif_pos (by omega : n + 1 - (D.R.k - 1) < D.R.m),
-        dif_pos (by omega : n - (D.R.k - 1) < D.R.m)]
+    · rw [dite_eq_right h1, dite_eq_right (by omega : ¬ n < D.R.k - 1), dite_eq_left (by omega : n + 1 - (D.R.k - 1) < D.R.m),
+        dite_eq_left (by omega : n - (D.R.k - 1) < D.R.m)]
       have := cast _ (s3 (n - (D.R.k - 1)) (by omega))
       have e2 : (⟨n + 1 - (D.R.k - 1), by omega⟩ : Fin D.R.m) = ⟨n - (D.R.k - 1) + 1, by omega⟩ :=
         Fin.ext (by simp only; omega)

@@ -428,7 +428,7 @@ theorem boundAt_gens (X : Stages) (f : Fr X.B.toPre) {S : Finset ℂ} (h1 : ∀ 
     (h2 : ∀ i, BoundAt (Fr.at X f) i S) : ∀ i, BoundAt (Fr.at X f) i (gens X.B.toPre f) := by
   have h : ∃ S, Bounds X.B.toPre f S := ⟨S, h1, fun X' f' e hf => boundAt_tr X X' e f f' hf S h2⟩
   unfold gens
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec.2 X f rfl HEq.rfl
 
 theorem rowEig_mem_fixedField : GlobalTheory.Published.DiscreteSeriesUpqUnique → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, StepW Start fun K B f T w => ∀ (P : Pre2 K w) (x : St P), LA hL x → ∀ hL' : ∀ j, ℕ → PlE (Dof x).host → Module.End (Dof x).what₂.LL ((SOf x).WL j), StabC (SOf x) hL' → HeckeRd x.m.z.R x.m.z.cG (kKsOf x) (hkOf x) (SbD (Dof x)) hL' → ∀ (i : Fin (Dof x).R.m) (σ : (Dof x).what₂.FT) (k : ℕ) (Pl : PlE (Dof x).host) α Rr, HkDat x.m.z.R (SbD (Dof x)) i k Pl α Rr → (Dof x).nd.goodRow σ → (Dof x).what₂.isot (i.1 + 1) σ ≠ ⊥ → ∃ c : ↥(Dof x).LL0, (Dof x).what₂.embLL (c : (Dof x).what₂.LL) = hkNorm x.m.z.R i k Pl * GlobalTheory.EigRows.rowEig x.r.Y i σ Pl (GlobalTheory.EigRows.diagLab (Dof x).R.r k) := by

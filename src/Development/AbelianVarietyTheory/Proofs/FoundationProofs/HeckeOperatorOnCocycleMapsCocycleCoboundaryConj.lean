@@ -174,7 +174,7 @@ theorem hk_apply [Fintype ι] (w : ℕ) (hD : IsDCReps Γ α δ) (hα : α.det �
     hk Γ w δ z γ = ∑ i, slP w (δ (π i)) (z (g i)) := by
   have hex : ∃ π : Equiv.Perm ι, ∀ i, ∃ γ' : Γ, δ i * mat γ = mat γ' * δ (π i) :=
     ⟨π, fun i => ⟨g i, hg i⟩⟩
-  rw [hk, LinearMap.pi_apply, dif_pos hex, LinearMap.sum_apply]
+  rw [hk, LinearMap.pi_apply, dite_eq_left hex, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.comp_apply, LinearMap.proj_apply]
   have e := ((hex.choose_spec i).choose_spec).symm.trans (hg i)

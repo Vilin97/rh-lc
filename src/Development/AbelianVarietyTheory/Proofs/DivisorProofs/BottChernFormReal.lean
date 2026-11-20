@@ -83,7 +83,7 @@ theorem bcFld_apply (T : HermSeq A r s) (x : A.Pt) :
 
 theorem loc_bcFld (T : HermSeq A r s) {a : T.κ} {i : A.ι} {v : V n} (hv : v ∈ frmSet T a i) :
     A.loc (bcFld T) i v = (ofValues (extTrace (midRead T a i) v) : Alt n) := by
-  rw [HolAtlas.loc, dif_pos hv.1]
+  rw [HolAtlas.loc, dite_eq_left hv.1]
   have hc : (A.e i) ((A.e i).symm v) = v := (A.e i).right_inv hv.1
   change (ofValues (extTrace (midRead T (T.cover ((A.e i).symm v)).choose i) ((A.e i) ((A.e i).symm v))) : Alt n) = _
   rw [hc, extTrace_midRead_indep T _ a i ⟨⟨hv.1, (T.cover _).choose_spec⟩, hv⟩]

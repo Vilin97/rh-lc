@@ -28,7 +28,7 @@ theorem unitCharExtendedByZero_det_eq_char_det (δ : Fˣ →* ℂˣ) {n : ℕ} (
     rw [← Matrix.GeneralLinearGroup.val_det_apply]; exact Units.ne_zero _
   have e : Units.mk0 _ h = GeneralLinearGroup.det k :=
     Units.ext (by simp [Matrix.GeneralLinearGroup.val_det_apply])
-  rw [chi0, dif_neg h, e]
+  rw [chi0, dite_eq_right h, e]
 
 def rowEq (r t : ℕ) : Matrix (Fin r ⊕ Fin t) (Fin r) F ≃ Matrix (Fin (r + t)) (Fin r) F :=
   Matrix.reindex finSumFinEquiv (Equiv.refl _)
@@ -54,7 +54,7 @@ theorem phiQ_rowEq (O : Subring F) (ϖ : F) (δ : Fˣ →* ℂˣ) (r t : ℕ) (x
   unfold phiQ phiU
   by_cases h : (∃ k : GLint O r, ((k : GL (Fin r) F) : Matrix (Fin r) (Fin r) F) = Matrix.toRows₁ x) ∧
       Matrix.toRows₂ x ∈ IIset O ϖ
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     have hc : bAA (d := t) (c := 0) (rowEq r t x) ∈ Jset (GLint O r) ∧
         bDA (d := t) (c := 0) (rowEq r t x) ∈ IIset O ϖ ∧
         bAD (d := t) (c := 0) (rowEq r t x) ∈ intMat O r 0 ∧
@@ -69,7 +69,7 @@ theorem phiQ_rowEq (O : Subring F) (ϖ : F) (δ : Fˣ →* ℂˣ) (r t : ℕ) (x
       rw [← unitCharExtendedByZero_det_eq_char_det, hk]
     rw [e]
     simp [Units.val_inv_eq_inv_val]
-  · rw [dif_neg h, if_neg]
+  · rw [dite_eq_right h, if_neg]
     rintro ⟨h1, h2, -, -⟩
     rw [hA] at h1
     rw [hD] at h2

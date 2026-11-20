@@ -156,7 +156,7 @@ theorem val_sub_lt (φ : Datum.EAf D →+* Fv D.host.F v)
     {U : Matrix (Fin b) (Fin a) (Datum.EAf D)} (hU : IsIntM U) (hU' : topL a (redM PP U) = 1) (j i : Fin a) :
     Valued.v (U.map φ (Fin.castLE hr j) i - if j = i then 1 else 0) < 1 := by
   have h1 := congrFun (congrFun hU' j) i
-  rw [topL, dif_pos ⟨(Fin.castLE hr j).2, i.2⟩, redM, dif_pos (hU _ _), Matrix.one_apply] at h1
+  rw [topL, dite_eq_left ⟨(Fin.castLE hr j).2, i.2⟩, redM, dite_eq_left (hU _ _), Matrix.one_apply] at h1
   by_cases h : j = i
   · rw [if_pos h] at h1 ⊢
     have h2 := hres (⟨_, hU (Fin.castLE hr j) i⟩ - 1) (by

@@ -344,7 +344,7 @@ theorem side_at : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) 
     obtain ⟨h0, -, huniq⟩ := GlobalTheory.PointAtPlace.existsUnique_isAtTau V τ θ hθ _ (GlobalTheory.Mem.Lift.exp_mem hX t)
     have hc : ∃ x, IsAtTau θ V τ (NormedSpace.exp (t • X)) x := ⟨_, hex⟩
     unfold atTau
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     exact (huniq _ hc.choose_spec).trans (huniq _ hex).symm
   have memS : ∀ Y ∈ upq p q, phiFr frS true e Y ∈ lieAt S τ := fun Y hY => phiFr_mem hfS hS true hY
   have memT : ∀ Y ∈ upq r s, phiFr frT false e' Y ∈ lieAt T τ := fun Y hY => phiFr_mem hfT hT false hY

@@ -101,7 +101,7 @@ theorem Hpk_es (a b : Fin r) :
 theorem Hpk_mulVec_es (v : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
     (Formalism.QuantumDeterminants.Hpk k r *ᵥ v) (Formalism.QuantumDeterminants.esI k r a) = v (Formalism.QuantumDeterminants.eI k r a) := by
   have ha := a.isLt
-  rw [Formalism.QuantumDeterminants.gn_Hpk_mulVec, dif_pos (Or.inr (by simp only [Formalism.QuantumDeterminants.esI]; omega))]
+  rw [Formalism.QuantumDeterminants.gn_Hpk_mulVec, dite_eq_left (Or.inr (by simp only [Formalism.QuantumDeterminants.esI]; omega))]
   congr 1
   apply Fin.ext
   simp only [Formalism.QuantumDeterminants.esI, Formalism.QuantumDeterminants.eI]
@@ -110,7 +110,7 @@ theorem Hpk_mulVec_es (v : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
 theorem Hpk_mulVec_e (v : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
     (Formalism.QuantumDeterminants.Hpk k r *ᵥ v) (Formalism.QuantumDeterminants.eI k r a) = v (Formalism.QuantumDeterminants.esI k r a) := by
   have ha := a.isLt
-  rw [Formalism.QuantumDeterminants.gn_Hpk_mulVec, dif_pos (Or.inl (by simp only [Formalism.QuantumDeterminants.eI]; omega))]
+  rw [Formalism.QuantumDeterminants.gn_Hpk_mulVec, dite_eq_left (Or.inl (by simp only [Formalism.QuantumDeterminants.eI]; omega))]
   congr 1
 
 end Hpk

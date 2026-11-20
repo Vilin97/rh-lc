@@ -70,7 +70,7 @@ theorem blkGL_glEquiv {s : ℕ} (b : ι → Fin s) (σ : Equiv.Perm ι) (c : Fin
     blkGL b c (glEquiv K σ g) = glEquiv K e (blkGL (b ∘ σ) c g) := by
   unfold blkGL
   by_cases h : g ∈ parab K (b ∘ σ)
-  · rw [dif_pos h, dif_pos ((glEquiv_mem_parab b σ g).2 h)]
+  · rw [dite_eq_left h, dite_eq_left ((glEquiv_mem_parab b σ g).2 h)]
     apply Units.ext
     ext ⟨i, hi⟩ ⟨j, hj⟩
     rw [glEquiv_apply]
@@ -80,7 +80,7 @@ theorem blkGL_glEquiv {s : ℕ} (b : ι → Fin s) (σ : Equiv.Perm ι) (c : Fin
     show (glEquiv K σ g : Matrix ι ι K) i j = (g : Matrix ι ι K) _ _
     rw [glEquiv_apply]
     exact congrArg₂ (g : Matrix ι ι K) (key ⟨i, hi⟩).symm (key ⟨j, hj⟩).symm
-  · rw [dif_neg h, dif_neg (fun h' => h ((glEquiv_mem_parab b σ g).1 h')), map_one]
+  · rw [dite_eq_right h, dite_eq_right (fun h' => h ((glEquiv_mem_parab b σ g).1 h')), map_one]
 
 theorem pmFacts : ReciprocityTheory.Ty.Fin.St.PmFacts := by
   intro K _ _ _ ι _ _ σ

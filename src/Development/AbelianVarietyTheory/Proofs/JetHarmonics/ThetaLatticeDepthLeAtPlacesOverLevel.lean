@@ -113,7 +113,7 @@ theorem nusOf_of_mem {D : D7} {j : ℕ} (B : WeightFamilies.Prov D) (w : WeightF
     ((RPfVal.prime_mem_iff la (D.host.g_prime _)).1 (Classical.choose_spec h)).symm.trans
       ((RPfVal.prime_mem_iff la (D.host.g_prime i)).1 hg)
   unfold nusOf
-  rw [dif_pos h, h1, H1algLink.eWL_eq]
+  rw [dite_eq_left h, h1, H1algLink.eWL_eq]
 
 theorem wtA_antitone {D : D7} {j : ℕ} (w : WeightFamilies.Wt D j) (τ : D.host.E →+* ℂ) : Antitone fun i => wtA w (τ, i) := by
   intro i i' hii

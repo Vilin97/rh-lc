@@ -256,7 +256,7 @@ include hχ h2
 theorem ell_eq {s : kˣ} (g : SB (n → k)) (hs : admitted χ s g.1) :
     ell χ μ B g = (μ.real (box n s) : ℂ)⁻¹ * B (ind s) g := by
   have h : ∃ s : kˣ, admitted χ s g.1 := ⟨s, hs⟩
-  rw [ell, dif_pos h]
+  rw [ell, dite_eq_left h]
   rcases box_total (n := n) h.choose s with h1 | h1
   · exact (ratio_indep hχ μ B h2 g hs h1).symm
   · exact ratio_indep hχ μ B h2 g h.choose_spec h1

@@ -73,7 +73,7 @@ end wave
 theorem glue_at {r : ℕ} (i : ℕ) (hi : i < r) (c : Fin r → ℂ) (c'' : Fin (r - i) → ℂ) (l : Fin r) (hl : l.val = i) :
     P5.glue (⟨i, by omega⟩ : Fin (r + 1)) c (PTie.shiftCf ⟨i, by omega⟩ c'') l = c'' ⟨0, by omega⟩ := by
   unfold P5.glue PTie.shiftCf
-  rw [dif_pos (by simp [hl])]
+  rw [dite_eq_left (by simp [hl])]
   congr 1
   ext
   simp [hl]

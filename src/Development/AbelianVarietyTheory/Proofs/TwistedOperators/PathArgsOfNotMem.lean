@@ -205,7 +205,7 @@ theorem pathArgs_of_notMem (B : Frames G) (t : T) (w : Pl D.host.E) {X : Node} :
   | _, .snoc a p, x, b, hb => by
     rw [edges_snoc, List.mem_append, not_or, List.mem_singleton] at hb
     show argAt B t w a x.2 b (pathArgs B t w p x.1 b) = 0
-    rw [argAt, dif_neg (Ne.symm hb.2), pathArgs_of_notMem B t w p x.1 b hb.1]
+    rw [argAt, dite_eq_right (Ne.symm hb.2), pathArgs_of_notMem B t w p x.1 b hb.1]
 
 theorem pathArgs_snoc (B : Frames G) (t : T) (w : Pl D.host.E) {X : Node} (a : Arrow T) (p : Path T X a.src)
     (x : ArgT G (.snoc a p)) :
@@ -214,8 +214,8 @@ theorem pathArgs_snoc (B : Frames G) (t : T) (w : Pl D.host.E) {X : Node} (a : A
   show argAt B t w a x.2 b (pathArgs B t w p x.1 b) = _
   by_cases h : edgeOf a = b
   · subst h
-    rw [argAt, dif_pos rfl, Function.update_self]; rfl
-  · rw [argAt, dif_neg h, Function.update_of_ne (Ne.symm h)]
+    rw [argAt, dite_eq_left rfl, Function.update_self]; rfl
+  · rw [argAt, dite_eq_right h, Function.update_of_ne (Ne.symm h)]
 
 theorem pathArgs_append (B : Frames G) (t : T) (w : Pl D.host.E) {X Y : Node} (p : Path T X Y) (x : ArgT G p) :
     ∀ {Z : Node} (q : Path T Y Z) (y : ArgT G q), (∀ b ∈ edges q, b ∉ edges p) →

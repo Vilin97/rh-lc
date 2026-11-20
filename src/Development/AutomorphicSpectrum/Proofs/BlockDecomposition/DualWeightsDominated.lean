@@ -29,7 +29,7 @@ theorem trOn_dualT_id {n : ℕ} (E : KMod n) (S : Submodule ℂ (E.V →L[ℂ] �
     simp [dualT]
   rw [h1]
   unfold trOn
-  rw [dif_pos (fun x hx => by simpa using hx)]
+  rw [dite_eq_left (fun x hx => by simpa using hx)]
   have h2 : (LinearMap.id : (E.V →L[ℂ] ℂ) →ₗ[ℂ] (E.V →L[ℂ] ℂ)).restrict (fun x (hx : x ∈ S) => hx) = LinearMap.id := by
     ext x; rfl
   rw [h2, LinearMap.trace_id]

@@ -18,7 +18,7 @@ theorem perFr_pos (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : Fr
     (hi : X.p0 + i < r) :
     perFr X x v ρ.1 i = ((mat x ρ)⁻¹ *ᵥ ReciprocityTheory.ChartRestriction.G.FD.Data.emb ρ.1 v) ⟨X.p0 + i, hi⟩ := by
   unfold perFr
-  rw [dif_pos ρ.2, dif_pos hi]
+  rw [dite_eq_left ρ.2, dite_eq_left hi]
 
 theorem perFr_neg (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : Frame X.Ψ r) (v : Fin r → E) (τ : E →+* ℂ)
     (hτ : τ ∉ X.Ψ) (ρ : X.Ψ) (hρ : ρ.1 = conjEmb τ) (i : ℕ) (hi : X.p0 - 1 - i < r) :
@@ -27,7 +27,7 @@ theorem perFr_neg (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : Fr
   simp only at hρ
   subst hρ
   unfold perFr
-  rw [dif_neg hτ, dif_pos hρ1, dif_pos hi]
+  rw [dite_eq_right hτ, dite_eq_left hρ1, dite_eq_left hi]
 
 theorem emb_smul_single (τ : E →+* ℂ) (t : 𝓞 E) (c : Fin r) :
     ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ (t • (Pi.single c 1 : Fin r → E)) = τ (t : E) • (Pi.single c 1 : Fin r → ℂ) := by

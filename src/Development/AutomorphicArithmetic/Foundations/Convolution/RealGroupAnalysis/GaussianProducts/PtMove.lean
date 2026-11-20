@@ -26,7 +26,7 @@ private theorem coe_al {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
     ((al D ξ : (A E)ˣ) : A E) = D.mkE (rt (ξ 0)) (-rt (ξ 1)) := by
   have e := D.mkE_rt (ξ 0) (-ξ 1)
   have e' : -rt (ξ 1) = (rt (-ξ 1) : A F) := (map_neg _ _).symm
-  rw [e', e, al, dif_neg h, IdeleGroup.coe_diagonal]
+  rw [e', e, al, dite_eq_right h, IdeleGroup.coe_diagonal]
   simp [sub_eq_add_neg]
 
 private theorem vcD {F : Type} [Field F] [NumberField F] (t : (A F)ˣ) (x : G1 F) :
@@ -63,7 +63,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.wxPt :
   set α := al D ξ with hαdef
   let t : Fˣ := Units.map (Algebra.norm F : E →* F) (Units.mk0 _ hz)
   have hT : ideleNorm F E α = IdeleGroup.diagonal F t := by
-    rw [hαdef, al, dif_neg hz, ideleNorm_diagonal]
+    rw [hαdef, al, dite_eq_right hz, ideleNorm_diagonal]
   have hco : D.co (α : A E) = ![rt (ξ 0), -rt (ξ 1)] := by rw [hα, D.co_mkE]
   have ht : (t : F) = ξ 0 ^ 2 - D.δ * ξ 1 ^ 2 := by
     haveI := AdeleBaseChange.nontrivial_adeleRing F

@@ -42,7 +42,7 @@ theorem lambdaCharacter_norm_eq_p_pow_of_pos : Sites (fun {D L hT Gi Gl Kc Dx cX
   have hb := S.law.mu_alg j hj _ hzU
   have hc := S.law.mu_alg j hj k hkU
   have hlamC : ∀ (a : ℂ) (h : a ∈ TaylorLogMetric.Qbar), TaylorLogMetric.lamC S.lam a = S.lam ⟨a, h⟩ := fun a h => by
-    unfold TaylorLogMetric.lamC; rw [dif_pos h]
+    unfold TaylorLogMetric.lamC; rw [dite_eq_left h]
   have eQ : (⟨S.muT (j + 1) x, ha⟩ : TaylorLogMetric.Qbar) ^ m = ⟨_, hb⟩ * ⟨_, hc⟩ := Subtype.ext (by push_cast; exact hsplit)
   have eQk : (⟨S.muT (j + 1) k, hc⟩ : TaylorLogMetric.Qbar) ^ n = 1 := Subtype.ext (by push_cast; exact hkroot)
   have hnormk : ‖S.lam ⟨_, hc⟩‖ = 1 := by

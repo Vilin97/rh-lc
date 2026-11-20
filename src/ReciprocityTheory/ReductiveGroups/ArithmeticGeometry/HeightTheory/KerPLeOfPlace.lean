@@ -148,7 +148,7 @@ theorem w0rat_eq_base (hd : d.AxH 𝒜) (c : ι) :
   have hr1 : ratio (Ω := Ω c) (d.w (d.jc c) c) (d.w (d.jc c) c) = 1 := by
     have hex : ∃ a : Ω c, d.w (d.jc c) c = a • d.w (d.jc c) c := ⟨1, (one_smul _ _).symm⟩
     unfold ratio
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact (key _ _ _ hb ((one_smul _ _).trans hex.choose_spec)).symm
   unfold Data.rationalBaseRow
   rw [Fin.sum_univ_succAbove _ (d.jc c), hr1, map_one, mul_one]

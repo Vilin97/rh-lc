@@ -313,7 +313,7 @@ theorem res_faces {M : Type} [AddCommGroup M] [Module (MRing ι) M] (z : KH.Cech
     simp only [LinearMap.sum_apply]
     rw [Finset.sum_eq_single k0]
     · rw [Finset.sum_eq_add_of_mem i1 i2 hi1 hi2 (ne_of_lt hlt)]
-      · rw [dif_pos (hface i1 hi1), dif_pos (hface i2 hi2)]
+      · rw [dite_eq_left (hface i1 hi1), dite_eq_left (hface i2 hi2)]
         rfl
       · intro i hi hne'
         rw [hI] at hi

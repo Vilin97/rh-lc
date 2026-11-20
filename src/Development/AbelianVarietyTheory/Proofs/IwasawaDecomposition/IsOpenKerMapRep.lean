@@ -96,7 +96,7 @@ theorem rbar_tie_at (D : D7) (Rw : RowSide D) (Pl : PlSide D) (X : LocNd (lay0 D
       (ρ g : Matrix (Fin D.R.r) (Fin D.R.r) (X.nd.O i)).charpoly.map ((Y.naut.kFbar i).comp (IsLocalRing.residue (X.nd.O i))) := by
   have hex : RbarData Y σ (X.nd.w i) := ⟨i, rfl, Sig, ρ, hP, hR⟩
   unfold rbarOf
-  rw [dif_pos hex, (ssRep_spec _).2.2 g, charpoly_mapRep, Polynomial.map_map]
+  rw [dite_eq_left hex, (ssRep_spec _).2.2 g, charpoly_mapRep, Polynomial.map_map]
   have hw0 := hex.choose_spec.1
   have hs := hex.choose_spec.2.choose_spec.choose_spec
   generalize hex.choose_spec.2.choose_spec.choose = ρ0 at hs ⊢
@@ -156,7 +156,7 @@ theorem locTy_exists : ∀ (D : D7) (Rw : RowSide D) (Pl : PlSide D) (X : LocNd 
     have hex : ∃ Sig, BcGood D Rw σ Sig := ⟨Sig, hg⟩
     show bcOf D Rw σ = _
     unfold bcOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     have h0 := hex.choose_spec
     refine hBU _ _ (fun p hp => ?_) h0.2.1 hg.2.1 (fun w hw => (h0.2.2 w hw).trans (hg.2.2 w hw).symm)
     rcases List.mem_append.1 hp with hp | hp
@@ -169,7 +169,7 @@ theorem locTy_exists : ∀ (D : D7) (Rw : RowSide D) (Pl : PlSide D) (X : LocNd 
     show mtParOf Y (X.nd.mu i) (X.nd.j i) σ' = mtSup Y i σ'
     have hex : ∃ i', X.nd.mu i' = X.nd.mu i ∧ X.nd.j i' = X.nd.j i := ⟨i, rfl, rfl⟩
     unfold mtParOf
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact castMt_eq _ _ _ _ (hMt _ _ σ' hex.choose_spec.1 hex.choose_spec.2)
   · exact fun σ lam => isSSRep_rbarOf Y σ lam
 

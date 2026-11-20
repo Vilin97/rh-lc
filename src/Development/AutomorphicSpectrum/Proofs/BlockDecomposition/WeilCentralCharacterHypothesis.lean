@@ -41,7 +41,7 @@ theorem wCen : Ad3.K.GL2LocalData.WCen := by
         rw [← hNa, ← map_mul, ← Units.val_mul, mul_inv_cancel_left, ht, hdet, hNa]
       exact mul_left_cancel₀ (pow_ne_zero 2 ha0) e
     show Wc _ _ _ _ _ _ _ = _ * Wc _ _ _ _ _ _ _
-    rw [Wc, Wc, dif_neg h, dif_neg h', mul_zero]
+    rw [Wc, Wc, dite_eq_right h, dite_eq_right h', mul_zero]
   obtain ⟨t, ht⟩ := h
   have hN' : Algebra.norm F ((ae * t : Eˣ) : E) = ((dg2 a a * g).val).det := by
     rw [Units.val_mul, map_mul, hNa, ht, hdet]

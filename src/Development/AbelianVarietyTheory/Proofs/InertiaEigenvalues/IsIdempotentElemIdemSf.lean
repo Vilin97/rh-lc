@@ -102,7 +102,7 @@ def mkGL {R : Type} [CommRing R] {k : ℕ} (M : Matrix (Fin k) (Fin k) R) : GL (
 
 theorem coe_mkGL {R : Type} [CommRing R] {k : ℕ} {M : Matrix (Fin k) (Fin k) R} (h : IsUnit M.det) :
     ((mkGL M : GL (Fin k) R) : Matrix (Fin k) (Fin k) R) = M := by
-  rw [mkGL, dif_pos h]; rfl
+  rw [mkGL, dite_eq_left h]; rfl
 
 def psi (x : Ad E) : ℂ := (GroundTheory.Global.adelicChar E x : ℂ)
 

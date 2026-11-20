@@ -498,7 +498,7 @@ def phiQ (D : D7) : D.host.E →+* Qbar :=
 theorem lamC_phi (D : D7) {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (x : D.host.E) :
     lamC lam (D.host.φ₀ x) = lam (phiQ D x) := by
   unfold lamC
-  rw [dif_pos (show D.host.φ₀ x ∈ Qbar from (phiQ D x).2)]
+  rw [dite_eq_left (show D.host.φ₀ x ∈ Qbar from (phiQ D x).2)]
   rfl
 
 theorem local_orthonormal_basis : LocBasisMM := by

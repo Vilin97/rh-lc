@@ -286,11 +286,11 @@ theorem perp_modulus : ∀ (n : ℕ) (ε : Fin n → Bool) (V V' : Submodule ℂ
   rw [norm_mul, norm_one] at e3
   refine ⟨hV', ?_, ?_⟩
   · unfold detOn
-    rw [dif_pos k1', dif_pos k1]
+    rw [dite_eq_left k1', dite_eq_left k1]
     linear_combination ‖LinearMap.det ((toLin' (uMat m)).restrict k1)‖ * e2 -
       ‖LinearMap.det ((toLin' (uMat m)).restrict k1')‖ * e1
   · unfold detOn
-    rw [dif_pos k1]
+    rw [dite_eq_left k1]
     refine lt_of_le_of_ne (norm_nonneg _) fun h0 => ?_
     rw [← h0, zero_mul] at e3
     exact zero_ne_one e3

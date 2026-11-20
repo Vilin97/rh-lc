@@ -136,13 +136,13 @@ theorem psiF_lt (a : ℕ → Fin G.N → OsK X la G.w) {T k : ℕ} (hk : k < a0 
     (x : ↥(HK X la G.w wF)) (hx : toWK X la G.w wF (a0 D j T) x = z) :
     psiF G la a T k z = psiRaw G la (a k) k x := by
   unfold psiF
-  rw [dif_pos hk]
+  rw [dite_eq_left hk]
   exact psiRaw_congr G la (a k) hk ((pre_eq G la z.2).trans hx.symm)
 
 theorem psiF_ge (a : ℕ → Fin G.N → OsK X la G.w) {T k : ℕ} (hk : ¬ k < a0 D j T) (z : ↥(Fk G la T k)) :
     psiF G la a T k z = 0 := by
   unfold psiF
-  rw [dif_neg hk]
+  rw [dite_eq_right hk]
   rfl
 
 theorem taylorRead (hE5 : ColDeriv G la) (u : Fin G.N → OsK X la G.w) (hu : uSpec G la u) (k : ℕ)

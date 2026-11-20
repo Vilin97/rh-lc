@@ -213,7 +213,7 @@ theorem _root_.GlobalTheory.T.standard_lattice_size_sum : GlobalTheory.FunPr.Hyp
   have h2 : (opp p c) ^ m = 1 := by rw [← map_pow, h1, map_one]
   have h3 := mem_Qbar_of_pow hm h2
   refine ⟨opp p c, ⟨h3, fun σ => norm_map_of_pow σ hm h2 h3⟩, fun q _ lam => ?_, fun k => ?_⟩
-  · rw [lamC, dif_pos h3]
+  · rw [lamC, dite_eq_left h3]
     exact norm_map_of_pow lam hm h2 h3
   · have hs : srcLat ch.S.toGridChoice p x y = stdL D _ := by
       cases p

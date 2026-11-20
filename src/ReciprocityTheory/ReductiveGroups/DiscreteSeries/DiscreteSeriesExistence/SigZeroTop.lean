@@ -43,7 +43,7 @@ theorem psi_eq_PsiM {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε
       rfl
     rw [hgc, h1, hps]
   unfold S7.PsiM
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact key _ _ hex.choose_spec.choose_spec.1 hex.choose_spec.choose_spec.2
 
 theorem sigZero (hAll : ∀ m : ℕ, S7.PsiAllStatement m) : Lap.SigZeroStatement := by

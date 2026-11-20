@@ -88,7 +88,7 @@ theorem eq_spMap_of_evalPt {k : Type} [CommRing k] (y : Sp R ⟶ Sp k) (φ : k �
 theorem valAt'_eq_evalPt (x : Sp ℂ ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) :
     valAt' x U f = evalPt x U h f := by
   unfold valAt'
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 abbrev fstC : DualNumber ℂ →+* ℂ := (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom

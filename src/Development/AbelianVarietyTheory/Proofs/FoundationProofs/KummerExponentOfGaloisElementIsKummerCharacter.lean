@@ -36,7 +36,7 @@ theorem kum_spec {N : ℕ} [NeZero N] {ζ θ : Ω} (hζ : IsPrimitiveRoot ζ N) 
     g θ = ζ ^ (kum (N := N) ζ θ g).val * θ := by
   have h := exists_pow hζ hθ hN g
   unfold kum
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem kum_eq {N : ℕ} [NeZero N] {ζ θ : Ω} (hζ : IsPrimitiveRoot ζ N) (hθ : θ ≠ 0)

@@ -65,7 +65,7 @@ theorem twisted : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Ho
     rw [Int.mul_ediv_cancel_left _ (mul_ne_zero hk0 hi0), mul_assoc, Int.mul_ediv_cancel_left _ hk0]
     ring
   refine ⟨I', s₄, fun v => lev l.A_pos (Nat.dvd_lcm_right l.M l.A) _ v (e₂ v), fun v hv q hq => ?_⟩
-  rw [GlobalTheory.ArcBuild.eta0, dif_pos hv] at hq
+  rw [GlobalTheory.ArcBuild.eta0, dite_eq_left hv] at hq
   exact lev (lt_of_lt_of_le (by decide) l.three_le) (Nat.dvd_lcm_left l.M l.A) _ v (e₃ v hv) q hq
 
 theorem tateCl : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (T : CDVR) (io : c.F →+* T.Fr) (b : O →+* T.V) (y : Sp T.V ⟶ Y.X) (z : Sp T.Fr ⟶ Xo.XF c), (algebraMap T.V T.Fr).comp b = io.comp β → y ≫ Y.s = spMap b → z ≫ pullback.snd _ _ = spMap io → z ≫ Y.j = spMap (algebraMap T.V T.Fr) ≫ y → ∀ (t : SAB H (Sp T.V)) (m : SABMap t Y.t y) (P : PELUnif (maximalIdeal T.V) t), P.TorsionIso → ∀ (ϖ : T.V) (hϖ : Irreducible ϖ) (hdiv : ∀ a a', (2 * l.M' : ℤ) ∣ GlobalTheory.ArcBuild.beF P hϖ a a') (hL : GlobalTheory.ArcExt.LevelReps Y y t m P), GlobalTheory.ArcBuild.TateCl P hϖ Y b y m hdiv hL := by

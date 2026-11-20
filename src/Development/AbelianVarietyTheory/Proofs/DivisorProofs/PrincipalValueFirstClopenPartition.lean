@@ -24,7 +24,7 @@ theorem pv_sum_left_clopen (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   by_cases h₂ : B₂.indicator (1 : Matrix (Fin n) (Fin d) k → ℂ) ∈ fullRk k n d
   swap
   · have e : ∀ B : Set (Matrix (Fin n) (Fin d) k), pv Bf B B₂ = 0 := fun B => by
-      rw [pv, dif_neg (fun h => h₂ h.2)]
+      rw [pv, dite_eq_right (fun h => h₂ h.2)]
     simp [e]
   have hsub : ∀ i ∈ s, Kf i ⊆ B₁ := fun i hi x hx => by
     rw [hB]; exact Set.mem_biUnion hi hx

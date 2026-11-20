@@ -54,7 +54,7 @@ private lemma ofGaps_eq_sub_mul {p : ℕ} (a b g : Fin p → ℕ) (T : ℕ)
       push_cast
       rw [ih ⟨(i : ℕ) + 1, h⟩ (by simp only; omega), hg i, if_pos h]
       unfold _root_.Formalism.MainNotions.WeightAlgebra.gapZ
-      rw [dif_pos h, dif_pos h]
+      rw [dite_eq_left h, dite_eq_left h]
       ring
     · rw [_root_.Formalism.MainNotions.DIV.Cons.ofGaps_last g i h, hg i, if_neg h]
 

@@ -31,7 +31,7 @@ theorem exists_pt (w : Point D.host.E (D.R.rS + 1)) :
     rw [hinv]
     exact y.2
   unfold ptOfL Formalism.L2.SG.DataInst.ptOfList
-  rw [dif_pos hcond]
+  rw [dite_eq_left hcond]
   congr 1
   apply (Formalism.L2.S.ptEquiv D.host.E (D.R.rS + 1)).symm_apply_eq.mpr
   exact Subtype.ext hinv

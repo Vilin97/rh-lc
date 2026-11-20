@@ -152,7 +152,7 @@ theorem quotLIntegral_eq [MeasurableMul₂ G] [MeasurableInv G]
     {ρ : G → ℝ≥0∞} (hρ : IsQuotNormaliser H μH ρ) :
     quotLIntegral μG H μH F = ∫⁻ g, F g * ρ g ∂μG := by
   have hex : ∃ ρ, IsQuotNormaliser H μH ρ := ⟨ρ, hρ⟩
-  rw [quotLIntegral, dif_pos hex]
+  rw [quotLIntegral, dite_eq_left hex]
   exact lintegral_normaliser_eq hF hFH hex.choose_spec hρ
 
 def twOrbIntegral (θ : Monoid.End G) (μG : Measure G) (δ : G) (μδ : Measure (twCent θ δ))

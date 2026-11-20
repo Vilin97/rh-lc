@@ -52,11 +52,11 @@ theorem paramGap_of_params {L : SizeData₂ D} (h : ParameterChoice' D L) : Line
   have hr : n + 1 < D.R.k + D.R.m - 1 := hn
   unfold Formalism.L2.NTheta.lamAt
   by_cases h1 : n + 1 < D.R.k - 1
-  · rw [dif_pos h1, dif_pos (by omega : n < D.R.k - 1)]
+  · rw [dite_eq_left h1, dite_eq_left (by omega : n < D.R.k - 1)]
     have := key _ (s1 n h1)
     linarith
   · by_cases h2 : n + 1 = D.R.k - 1
-    · rw [dif_neg h1, dif_pos (by omega : n < D.R.k - 1), dif_pos (by omega : n + 1 - (D.R.k - 1) < D.R.m)]
+    · rw [dite_eq_right h1, dite_eq_left (by omega : n < D.R.k - 1), dite_eq_left (by omega : n + 1 - (D.R.k - 1) < D.R.m)]
       have := key _ (s2 (by omega) (by omega))
       have e1 : (⟨n + 1 - (D.R.k - 1), by omega⟩ : Fin D.R.m) = ⟨0, by omega⟩ := Fin.ext (by simp only; omega)
       have e2 : (⟨n, by omega⟩ : Fin (D.R.k - 1)) = ⟨D.R.k - 2, by omega⟩ := Fin.ext (by simp only; omega)
@@ -64,7 +64,7 @@ theorem paramGap_of_params {L : SizeData₂ D} (h : ParameterChoice' D L) : Line
       linarith
     · have P1 : n + 1 - (D.R.k - 1) < D.R.m := by omega
       have P2 : n - (D.R.k - 1) < D.R.m := by omega
-      rw [dif_neg h1, dif_neg (by omega : ¬ n < D.R.k - 1), dif_pos P1, dif_pos P2]
+      rw [dite_eq_right h1, dite_eq_right (by omega : ¬ n < D.R.k - 1), dite_eq_left P1, dite_eq_left P2]
       have := key _ (s3 (n - (D.R.k - 1)) (by omega))
       have e1 : (⟨n + 1 - (D.R.k - 1), P1⟩ : Fin D.R.m) = ⟨n - (D.R.k - 1) + 1, by omega⟩ := Fin.ext (by simp only; omega)
       rw [e1]

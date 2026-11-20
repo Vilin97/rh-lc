@@ -104,7 +104,7 @@ theorem sdFromAnn_holds : SdFromAnn := by
   obtain hex := PI.UnitaryGroupMassFormula.LocJacTyp.Sd.exists_sd (E := E) v ψ hker hnt ι
   have hμ : LocVol.sdE ψ v ι = hex.choose := by
     change PI.LocJacTyp.sdE ψ v ι = _
-    rw [PI.UnitaryGroupMassFormula.LocJacTyp.Sd.sdE_eq, dif_pos hex]
+    rw [PI.UnitaryGroupMassFormula.LocJacTyp.Sd.sdE_eq, dite_eq_left hex]
   have hsd := hex.choose_spec
   rw [hμ]
   haveI : hex.choose.IsAddHaarMeasure := hsd.1

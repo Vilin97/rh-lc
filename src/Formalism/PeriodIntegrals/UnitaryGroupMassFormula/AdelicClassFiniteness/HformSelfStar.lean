@@ -196,7 +196,7 @@ theorem stH_of_hl (hHL : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     show cT (starRingEnd E) ((dite _ _ _ : Submodule (𝓞 E) (Fin n → E) × GL (Fin n) E).2 : Matrix (Fin n) (Fin n) E) * J *
         ((dite _ _ _ : Submodule (𝓞 E) (Fin n → E) × GL (Fin n) E).2 : Matrix (Fin n) (Fin n) E) = q.1 ∧
       IsImg (dite _ _ _ : Submodule (𝓞 E) (Fin n → E) × GL (Fin n) E).2 q.2 (dite _ _ _ : Submodule (𝓞 E) (Fin n → E) × GL (Fin n) E).1
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact Classical.choose_spec (Classical.choose_spec h)
   refine ⟨(hT0.image (fun q => (pick q).1)).toFinset, fun M hfg hspan hsd => ?_⟩
   have hLat : (J, M) ∈ Lat E n 1 := by

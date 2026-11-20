@@ -22,7 +22,7 @@ theorem ratVal_eq_valAt {k : Type} [CommRing k] {Z : Scheme.{0}} [IsIntegral Z] 
     have hy : y ∈ CxPts.ptsIn q σ U := CxPts.mem_ptsIn.2 hU
     rw [ratVal_fnOf hy, OfModel.valAt_fnOf y.1 hU hy, CxPts.ev_eq hy]
     rfl
-  · rw [ratVal, dif_neg h, valAt, dif_neg h]
+  · rw [ratVal, dite_eq_right h, valAt, dite_eq_right h]
 
 theorem finsum_neg_log {α K : Type} [Field K] (w : K →* ℝ) (hw : ∀ a, a ≠ 0 → w a ≠ 0) {p : α → Prop}
     (hp : {y | p y}.Finite) (f : α → K) (hf : ∀ y, p y → f y ≠ 0) :

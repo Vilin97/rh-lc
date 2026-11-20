@@ -73,13 +73,13 @@ private theorem SectionSplitPlaces (s : HidaSetting l L Ω) : ((l : ℕ) : 𝓞 
 private theorem cmp_at {w : Plc L} (hl : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (x : UA L n) :
     UpperTheory.V.Hi.CaseU.cmp n w ((away l L n).rangeRestrict x) = cLoc w x := by
   unfold UpperTheory.V.Hi.CaseU.cmp
-  rw [dif_pos hl]
+  rw [dite_eq_left hl]
   rfl
 
 private theorem sec_val (hb : Function.Bijective ((toGS n s).comp (GaS n s).subtype)) {a : Ga l L n} (ha : a ∈ GaS n s) :
     secS n s (toGS n s a) = a := by
   unfold secS
-  rw [dif_pos hb]
+  rw [dite_eq_left hb]
   have h : (MulEquiv.ofBijective _ hb).symm (toGS n s a) = ⟨a, ha⟩ := (MulEquiv.symm_apply_eq _).2 rfl
   change ((MulEquiv.ofBijective _ hb).symm (toGS n s a) : GaS n s).1 = a
   rw [h]
@@ -179,7 +179,7 @@ private theorem loc_J (V : s.Lev) (hb : Function.Bijective ((toGS n s).comp (GaS
     refine Subgroup.mem_iInf.2 fun u => Subgroup.mem_iInf.2 fun hu' => MonoidHom.mem_ker.2 ?_
     by_cases h : ((l : ℕ) : 𝓞 L) ∈ u.asIdeal
     · unfold UpperTheory.V.Hi.CaseU.cmp
-      rw [dif_neg (not_not.2 h)]
+      rw [dite_eq_right (not_not.2 h)]
       rfl
     · rw [cmp_at h]
       refine GlobalTheory.DefU.LocRet.mem_locU_ne hx fun e => ?_

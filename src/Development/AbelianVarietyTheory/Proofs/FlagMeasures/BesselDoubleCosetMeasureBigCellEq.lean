@@ -212,7 +212,7 @@ theorem isDis_bigCell : ∀ (k r : ℕ) (z z' : (Fin (2 * r + k + 1) → ℂ)) (
       refine Prod.ext (funext fun a => ?_) ?_
       · show bigCell k r q.1 (μsec q.2) (esI k r a) (eI k r a) = q.1 a
         unfold bigCell
-        rw [dif_pos (show (eI k r a).val < r from a.isLt)]
+        rw [dite_eq_left (show (eI k r a).val < r from a.isLt)]
         exact if_pos rfl
       · show herm (Hpk k r) (bigCell k r q.1 (μsec q.2) *ᵥ z') z = q.2
         rw [BigCellHermitian.herm_bigCell _ _ hz hz', (hsec.2 q.2 hq.2).2]

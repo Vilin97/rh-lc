@@ -12,7 +12,7 @@ def pick {α : Type*} [Zero α] (P : α → Prop) : α := by
 
 theorem pick_spec {α : Type*} [Zero α] {P : α → Prop} (h : ∃ a, P a) : P (pick P) := by
   unfold pick
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 abbrev Sec.res {R : Type} [CommRing R] {F : Shv R} {V U : Scheme.{0}} (g : V ⟶ U) (x : Sec F U) : Sec F V := (F.obj.map g.op).hom x

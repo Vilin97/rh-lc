@@ -291,15 +291,15 @@ theorem infEmb_expG_dirMat (k : ℕ) (hk : k < n) (p : Fin k × BIdx K) (s : ℝ
       exact map_one _
     · rw [if_neg hab, if_neg hab, zero_add]
       by_cases hlt : a < b
-      · rw [dif_pos hlt]
+      · rw [dite_eq_left hlt]
         by_cases hbk : b.val = k
-        · rw [dif_pos hbk, ← GroundTheory.Global.homeomorphMixedSpace_apply, hv1]
+        · rw [dite_eq_left hbk, ← GroundTheory.Global.homeomorphMixedSpace_apply, hv1]
           by_cases ha : a.val = p.1.val
           · rw [if_pos (Fin.ext ha), if_pos ⟨ha, hbk⟩]
           · rw [if_neg (fun h => ha (by rw [← h])), if_neg (fun h => ha h.1), smul_zero]
-        · rw [dif_neg hbk, if_neg (fun h => hbk h.2), smul_zero]
+        · rw [dite_eq_right hbk, if_neg (fun h => hbk h.2), smul_zero]
           exact map_zero _
-      · rw [dif_neg hlt, if_neg (fun h => hlt (by rw [Fin.lt_def]; omega)), smul_zero]
+      · rw [dite_eq_right hlt, if_neg (fun h => hlt (by rw [Fin.lt_def]; omega)), smul_zero]
         exact map_zero _
   apply (AdelicGLn.prodEquiv K n).injective
   rw [prodEquiv_infEmb, ← hinf, ContinuousMulEquiv.symm_apply_apply, ← hfin]

@@ -32,7 +32,7 @@ def prj (i : I) : Cx.Hom (Dsum E) (E i) (RingHom.id K) where
       by_cases h : j = i
       · subst h
         simp only [DirectSum.component.lof_self]
-      · rw [DirectSum.component.of, DirectSum.component.of, dif_neg h, dif_neg h, map_zero]
+      · rw [DirectSum.component.of, DirectSum.component.of, dite_eq_right h, dite_eq_right h, map_zero]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def toH (n : ℕ) : (⨁ i, (E i).H n) →ₗ[K] (Dsum E).H n :=
@@ -55,11 +55,11 @@ theorem prj_toH (n : ℕ) (i : I) (y : ⨁ i, (E i).H n) :
     · subst hji
       rw [DirectSum.component.lof_self]
       exact hcl _ _ _ _ (DirectSum.component.lof_self K _ _)
-    · rw [DirectSum.component.of, dif_neg hji]
+    · rw [DirectSum.component.of, dite_eq_right hji]
       rw [← CrystallineSemistableComparison.CechClassBoundaries.cls_zero' (K := E i) (n := n) (map_zero _)]
       refine hcl _ _ _ _ ?_
       show DirectSum.component K I (fun i ↦ (E i).X n) i (DirectSum.lof K I (fun i ↦ (E i).X n) j a) = 0
-      rw [DirectSum.component.of, dif_neg hji]
+      rw [DirectSum.component.of, dite_eq_right hji]
   | add y₁ y₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
 
 theorem toH_injective (n : ℕ) : Function.Injective (toH E n) := by

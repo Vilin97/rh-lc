@@ -60,15 +60,15 @@ def dpOf (n : ℕ) (x : B) : B := if hx : x ∈ J then (h x hx).choose n else 0
 variable {J h}
 
 theorem dpOf_zero {x : B} (hx : x ∈ J) : dpOf J h 0 x = 1 := by
-  rw [dpOf, dif_pos hx]
+  rw [dpOf, dite_eq_left hx]
   exact (h x hx).choose_spec.1
 
 theorem dpOf_mem {n : ℕ} {x : B} (hn : n ≠ 0) (hx : x ∈ J) : dpOf J h n x ∈ J := by
-  rw [dpOf, dif_pos hx]
+  rw [dpOf, dite_eq_left hx]
   exact (h x hx).choose_spec.2.1 n hn
 
 theorem dpOf_spec (n : ℕ) {x : B} (hx : x ∈ J) : (n.factorial : B) * dpOf J h n x = x ^ n := by
-  rw [dpOf, dif_pos hx]
+  rw [dpOf, dite_eq_left hx]
   exact (h x hx).choose_spec.2.2 n
 
 theorem cancel (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x = 0) {m : ℕ} (hm : m ≠ 0) {a b : B}
@@ -83,7 +83,7 @@ variable (J h) in
 
 def dpExt (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x = 0) : DividedPowers J where
   dpow := dpOf J h
-  dpow_null {n x} hx := by rw [dpOf, dif_neg hx]
+  dpow_null {n x} hx := by rw [dpOf, dite_eq_right hx]
   dpow_zero hx := dpOf_zero hx
   dpow_one {x} hx := by
     have := dpOf_spec (h := h) 1 hx

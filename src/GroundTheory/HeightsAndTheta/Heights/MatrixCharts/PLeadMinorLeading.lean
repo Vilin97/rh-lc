@@ -18,7 +18,7 @@ theorem LeadMinorLeading.proof : LeadMinorLeading.Statement := by
   simp only [Matrix.of_apply, Matrix.submatrix_apply]
   have ha : (a : ℕ) < m := lt_of_lt_of_le a.2 hj
   have hb : (b : ℕ) < m := lt_of_lt_of_le b.2 hj
-  rw [dif_pos ⟨ha, hb⟩, dif_pos ⟨ha.trans_le h, hb.trans_le h⟩]
+  rw [dite_eq_left ⟨ha, hb⟩, dite_eq_left ⟨ha.trans_le h, hb.trans_le h⟩]
   rfl
 
 end

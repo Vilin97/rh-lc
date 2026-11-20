@@ -140,7 +140,7 @@ theorem exists_closed_ok : ∃ (X : Fields) (Pr : Primes X) (R : Ranks) (Ch : Ch
   obtain ⟨k, i1, i2, i3, i4, ι, S, hS⟩ := atType_of_ok hX hPr (R := ranksFour) (Ch := powChars Ch₀ (2 + 2)) hCh h4 (fun _ => w) ∅ σ₀ P
   refine ⟨X, Pr, ranksFour, powChars Ch₀ (2 + 2), _, _, _, _, σ₀, P, k, i1, i2, i3, i4, ι, _, S, hX, hPr, hCh, hf, ?_, le_rfl, hS⟩
   unfold chiP
-  rw [dif_pos hw']
+  rw [dite_eq_left hw']
   exact powChars_ne_one hCh ⟨w, hw'⟩
 
 end GlobalTheory.AtTypeClosed

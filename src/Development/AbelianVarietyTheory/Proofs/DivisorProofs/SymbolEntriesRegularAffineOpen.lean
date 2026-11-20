@@ -35,7 +35,7 @@ theorem entry_regular : ∀ (K : Type) [Field K] [CharZero K] (P₀ : Out.PolAV 
   let φ : Γ(P₀.A.left, W) →+* F :=
     (Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom.comp (ξ.appLE W ⊤ hξW).hom
   have hφ : ∀ f, valR ξ W f = φ f := fun f => by
-    unfold valR; rw [dif_pos hξW]; rfl
+    unfold valR; rw [dite_eq_left hξW]; rfl
   have hδ' : ∀ b x, φ (dd b W x) = δ b (φ x) := fun b x => by
     rw [← hφ, ← hφ]; exact hδ b W x hξW
   obtain ⟨N, g, f, hgf⟩ := GlobalTheory.T.exists_dual_oneForms_invariantFields_affineOpen K P₀ n v dd hinv W hW a

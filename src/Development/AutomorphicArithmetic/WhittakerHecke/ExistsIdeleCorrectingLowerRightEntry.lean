@@ -71,7 +71,7 @@ theorem UpperTheory.exists_idele_correcting_lowerRight_entry :
     exact zero_ne_one this
   obtain ⟨ζ, h1, h2⟩ := ex_idele (fun v => if h : Bad N v then (Units.mk0 _ (hne v h))⁻¹ else 1) hfin.toFinset
   have hb : ∀ v, Bad N v → H.cp v (ζ : A ℚ) = (H.cp v (k 1 1))⁻¹ := fun v hv => by
-    rw [h2 v, if_pos (hfin.mem_toFinset.2 hv), dif_pos hv]
+    rw [h2 v, if_pos (hfin.mem_toFinset.2 hv), dite_eq_left hv]
     simp
   have hg : ∀ v, ¬ Bad N v → H.cp v (ζ : A ℚ) = 1 := fun v hv => by
     rw [h2 v, if_neg (fun h => hv (hfin.mem_toFinset.1 h))]

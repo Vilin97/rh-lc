@@ -122,7 +122,7 @@ theorem reduction_spec {a : E} {r s : 𝓞 E} (hs : s ∉ P.asIdeal) (hsa : alge
       Ideal.Quotient.mk P.asIdeal s * c = Ideal.Quotient.mk P.asIdeal r :=
     ⟨Ideal.Quotient.mk P.asIdeal r * (Ideal.Quotient.mk P.asIdeal s)⁻¹, r, s, hs, hsa, by field_simp⟩
   unfold redP
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨r', s', hs', h1, h2⟩ := hex.choose_spec
   have hs0' : Ideal.Quotient.mk P.asIdeal s' ≠ 0 := by rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
   have hrr : s * r' = s' * r := by

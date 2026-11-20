@@ -246,7 +246,7 @@ def pick (hDC : IsDC J x A) {u : G} (hu : u ∈ J) (a : G) : G :=
 
 theorem pick_spec (hDC : IsDC J x A) {u : G} (hu : u ∈ J) {a : G} (ha : a ∈ A) :
     pick hDC hu a ∈ A ∧ (pick hDC hu a)⁻¹ * (u * a) ∈ J := by
-  unfold pick; rw [dif_pos ha]
+  unfold pick; rw [dite_eq_left ha]
   exact (hDC.2 (u * a) (mul_mem_dc hDC hu ha)).exists.choose_spec
 
 theorem pick_unique (hDC : IsDC J x A) {u : G} (hu : u ∈ J) {a b : G} (ha : a ∈ A) (hb : b ∈ A)
@@ -391,7 +391,7 @@ def heckeNew (one : I → Prop) : HeckeTie ι P (opNew P hχ hρ H hloc one) inR
   hDC := H.hDC
   op_eq i hi f := by
     unfold opNew
-    rw [dif_pos hi, ext_trE]
+    rw [dite_eq_left hi, ext_trE]
     rfl
 
 end Hecke

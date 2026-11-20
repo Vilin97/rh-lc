@@ -34,7 +34,7 @@ theorem IsFinPt.cast {D : D7} {WW : HSp D} {g : Formalism.L2.Theta.GA D WW} {n n
 theorem lamC_mul {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) {x y : ℂ} (hx : x ∈ Qbar) (hy : y ∈ Qbar) :
     lamC lam (x * y) = lamC lam x * lamC lam y := by
   unfold lamC
-  rw [dif_pos (Qbar.mul_mem hx hy), dif_pos hx, dif_pos hy, ← map_mul]
+  rw [dite_eq_left (Qbar.mul_mem hx hy), dite_eq_left hx, dite_eq_left hy, ← map_mul]
   rfl
 
 end GlobalTheory.BotFormula

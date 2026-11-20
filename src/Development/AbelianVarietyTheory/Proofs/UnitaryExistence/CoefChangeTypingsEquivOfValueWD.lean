@@ -170,11 +170,11 @@ theorem hasBC_of (hS : Out.SecBaseChangeSt) : HasBC Xo c :=
 theorem evR_spec {S : Type} [CommRing S] [Algebra c.F S] {y : FrPt Xo c S} (hy : FromT y) :
     ∃ (p : TRing c.F) (φ : p.R →ₐ[c.F] S) (y₀ : FrPt Xo c p.R), FrMap φ y₀ y ∧
       ∀ f : Rul Xo c, evR Xo c f y = φ (f p y₀) :=
-  ⟨_, _, _, hy.choose_spec.choose_spec.choose_spec, fun f => by unfold evR evalAt; rw [dif_pos hy]⟩
+  ⟨_, _, _, hy.choose_spec.choose_spec.choose_spec, fun f => by unfold evR evalAt; rw [dite_eq_left hy]⟩
 
 theorem evR_not {S : Type} [CommRing S] [Algebra c.F S] {y : FrPt Xo c S} (hy : ¬ FromT y) (f : Rul Xo c) :
     evR Xo c f y = 0 := by
-  unfold evR evalAt; rw [dif_neg hy]
+  unfold evR evalAt; rw [dite_eq_right hy]
 
 theorem evR_test {f : Rul Xo c} (hf : Natural c f) (p : TRing c.F) (y : FrPt Xo c p.R) : evR Xo c f y = f p y := by
   obtain ⟨q, φ, y₀, h, e⟩ := evR_spec (y := y) ⟨p, AlgHom.id _ _, y, GlobalTheory.Frames.frMapUniq_refl y⟩

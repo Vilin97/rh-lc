@@ -99,13 +99,13 @@ theorem one_mem_secZ_zero : (1 : Rul Xo c) ∈ GlobalTheory.CompanionTheory.Ar.R
 theorem evC_mul_of_test {h : GenFrEx Xo c} (hT : GenFromTest Xo c h) (Z : Comp Xo c) (f g : Rul Xo c) :
     evC h Z (f * g) = evC h Z f * evC h Z g := by
   unfold evC evR evalAt
-  rw [dif_pos (hT Z), dif_pos (hT Z), dif_pos (hT Z)]
+  rw [dite_eq_left (hT Z), dite_eq_left (hT Z), dite_eq_left (hT Z)]
   exact map_mul _ _ _
 
 theorem evC_one_of_test {h : GenFrEx Xo c} (hT : GenFromTest Xo c h) (Z : Comp Xo c) :
     evC h Z (1 : Rul Xo c) = 1 := by
   unfold evC evR evalAt
-  rw [dif_pos (hT Z)]
+  rw [dite_eq_left (hT Z)]
   exact map_one _
 
 end GenInj

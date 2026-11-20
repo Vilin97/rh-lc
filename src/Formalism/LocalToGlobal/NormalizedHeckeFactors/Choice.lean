@@ -451,7 +451,7 @@ theorem twInOf_ok_iff (D : D7) (E : IntegralHeckeForms.XD D) (N0 : D.ntw.Tw → 
     have hx := (h j hj b).2
     show IntegralHeckeForms.BasisOf D.nexp i j b (IntegralHeckeForms.SgJ D.nexp E i j b)
       (if h : ∃ S, IntegralHeckeForms.BasisOf D.nexp i j b (IntegralHeckeForms.SgJ D.nexp E i j b) S then h.choose else ∅)
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact hx.choose_spec
 
 theorem twInAll_ok_iff (D : D7) (N0 : D.ntw.Tw → ℕ) (i : D.ntw.Tw) :

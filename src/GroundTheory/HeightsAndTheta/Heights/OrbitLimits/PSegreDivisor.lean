@@ -31,7 +31,7 @@ theorem multAt_pos_of_mem_divSupp_field {K : Type*} [Fintype K] {ι : K → Type
   have hpos := Module.length_pos (R := Localization.AtPrime W)
     (M := Localization.AtPrime W ⧸
       (V ⊔ Ideal.span {f}).map (algebraMap (MRingOver F ι) (Localization.AtPrime W)))
-  rw [multAt, dif_pos hWp, inh_length_locQuot]
+  rw [multAt, dite_eq_left hWp, inh_length_locQuot]
   exact ENat.toNat_pos hpos.ne' hne
 
 theorem SegreDivisor.proof (h₁ : SegreComponent.Statement.{u, v, w}) :

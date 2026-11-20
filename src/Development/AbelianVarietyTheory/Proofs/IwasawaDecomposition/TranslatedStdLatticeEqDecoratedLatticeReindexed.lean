@@ -29,7 +29,7 @@ theorem hLat_eq_decoPt_N : ∀ (X : Stages) (i : Fin X.toD7.R.m) (Λ : Submodule
   obtain ⟨c, hfr, -⟩ := hΛ'
   rw [GlobalTheory.HLatMove.hLat_eq_span hΛ, Formalism.L2.Col.decoPt_mk]
   unfold Formalism.L2.Col.decoOf
-  rw [dif_pos (Formalism.L2.Col.decorated_lattice_exists _ _ _ _ _ x.2)]
+  rw [dite_eq_left (Formalism.L2.Col.decorated_lattice_exists _ _ _ _ _ x.2)]
   set h := eG x with hh
   set g := Formalism.UG.bc (swapAE X.toD7) (h : GL (Fin (Vc X.toD7 i).rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af X.toD7.host.F ⊗[X.toD7.host.F] X.toD7.host.E)) with hg
   have hxg : (x : GL (Fin X.B.R.nV) (LiftBrg.EA X)) = LiftBrg.castGL (LiftBrg.rkEq X i).symm g := (hx x).symm

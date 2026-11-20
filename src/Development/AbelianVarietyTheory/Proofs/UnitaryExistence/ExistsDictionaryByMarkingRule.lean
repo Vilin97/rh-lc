@@ -25,18 +25,18 @@ theorem GlobalTheory.Member.Ctx.exists_isDict : ∀ (D : D7) (H : ReciprocityThe
     by_cases hk : ∃ k, C.Mark h k 1
     · refine ⟨1, ?_⟩
       beta_reduce
-      rw [dif_pos hk]
+      rw [dite_eq_left hk]
       exact ⟨hk.choose_spec, by rw [one_mul]⟩
     · refine ⟨γ₀ h, ?_⟩
       beta_reduce
-      rw [dif_neg hk]
+      rw [dite_eq_right hk]
       exact ⟨h₀ h, rfl⟩
   · intro k
     obtain ⟨h, hf, hm⟩ := GlobalTheory.T.exists_finiteAdelic_element_marking_component D H Dw l Xo c σ V r C hC k
     have hk : ∃ k, C.Mark h k 1 := ⟨k, hm⟩
     refine ⟨h, ?_⟩
     beta_reduce
-    rw [dif_pos hk]
+    rw [dite_eq_left hk]
     have e : hk.choose = k :=
       (GlobalTheory.T.marking_component_unique_frame_unique_arithmeticGroup D H Dw l Xo c σ V r C hC h).1 _ _ _ _ hk.choose_spec hm
     rw [e]

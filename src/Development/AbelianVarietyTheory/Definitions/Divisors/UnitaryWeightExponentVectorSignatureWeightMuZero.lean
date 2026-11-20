@@ -641,7 +641,7 @@ theorem evR_toRule (s : X.SecO e) (P : FrPt Xo c S)
     (h : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) P) :
     evR Xo c (toRule s) P = val s P := by
   unfold evR evalAt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (val_frMap s h.choose_spec.choose_spec.choose_spec).symm
 
 theorem evR_toRule_of_isReduced [_root_.IsReduced S] (s : X.SecO e) (P : FrPt Xo c S) :

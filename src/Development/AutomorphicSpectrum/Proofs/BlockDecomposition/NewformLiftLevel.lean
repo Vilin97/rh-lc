@@ -52,7 +52,7 @@ variable {N}
 
 theorem res_eq {x : 𝔸f} {n : ℤ} (h : x - (n : 𝔸f) ∈ levelIdeal N) : res N x = (n : ZMod N) := by
   have hex : ∃ n : ℤ, x - (n : 𝔸f) ∈ levelIdeal N := ⟨n, h⟩
-  rw [res, dif_pos hex]
+  rw [res, dite_eq_left hex]
   have h2 := hex.choose_spec
   set m := hex.choose
   have h3 : ((n - m : ℤ) : 𝔸f) ∈ levelIdeal N := by

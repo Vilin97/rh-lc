@@ -104,18 +104,18 @@ theorem sum_lnN_rootGen : ∀ (D : D7) (O : Setup D) (c : O.s.Comp) (σ : D.what
     by_cases h : (y.2 : ℕ) < O.S.Dw.p
     · have h' : (y.2 : ℕ) < O.S.Dw.mult (DV.tauEmb D y.1) := by rw [hp]; exact h
       have hl : GlobalTheory.RootSum.rootLetter O.S y = ⟨DV.tauEmb D y.1, ⟨y.2, h'⟩⟩ := by
-        rw [GlobalTheory.RootSum.rootLetter, dif_pos h]
-      rw [if_pos h, lnRoot, dif_pos h', hl, Int.cast_one, one_mul]
+        rw [GlobalTheory.RootSum.rootLetter, dite_eq_left h]
+      rw [if_pos h, lnRoot, dite_eq_left h', hl, Int.cast_one, one_mul]
     · have h' : ¬ (y.2 : ℕ) < O.S.Dw.mult (DV.tauEmb D y.1) := by rw [hp]; exact h
       have h'' : O.S.Dw.mult (DV.tauEmb D y.1) + O.S.Dw.mult (conjEmb (DV.tauEmb D y.1)) - 1 - y.2 <
           O.S.Dw.mult (conjEmb (DV.tauEmb D y.1)) := by rw [hp, hq]; omega
       have hl : GlobalTheory.RootSum.rootLetter O.S y = ⟨conjEmb (DV.tauEmb D y.1), ⟨_, h''⟩⟩ := by
-        rw [GlobalTheory.RootSum.rootLetter, dif_neg h]
+        rw [GlobalTheory.RootSum.rootLetter, dite_eq_right h]
         have e2 : O.S.Dw.p + O.S.Dw.q - 1 - (y.2 : ℕ) =
             O.S.Dw.mult (DV.tauEmb D y.1) + O.S.Dw.mult (conjEmb (DV.tauEmb D y.1)) - 1 - y.2 := by
           rw [hp, hq]
         simp only [e2]
-      rw [if_neg h, lnRoot, dif_neg h', dif_pos h'', hl, Int.cast_neg, Int.cast_one, neg_one_mul]
+      rw [if_neg h, lnRoot, dite_eq_right h', dite_eq_left h'', hl, Int.cast_neg, Int.cast_one, neg_one_mul]
 
   intro u lam hul e HW Hω z hW hω
   simp only [hroot]
@@ -139,12 +139,12 @@ theorem sum_lnN_rootGen : ∀ (D : D7) (O : Setup D) (c : O.s.Comp) (σ : D.what
       (fun j => -Real.log (grSq (G.gram _ g (conjEmb (DV.tauEmb D τ))) j.rev))]
     · ring
     · intro i
-      rw [lnRoot, dif_pos i.2]
+      rw [lnRoot, dite_eq_left i.2]
     · intro j
       have h1 : ¬ (O.S.Dw.mult (DV.tauEmb D τ) + (j : ℕ) < O.S.Dw.mult (DV.tauEmb D τ)) := by omega
       have h2 : O.S.Dw.mult (DV.tauEmb D τ) + O.S.Dw.mult (conjEmb (DV.tauEmb D τ)) - 1 -
           (O.S.Dw.mult (DV.tauEmb D τ) + j) < O.S.Dw.mult (conjEmb (DV.tauEmb D τ)) := by omega
-      rw [lnRoot, dif_neg h1, dif_pos h2]
+      rw [lnRoot, dite_eq_right h1, dite_eq_left h2]
       have h3 : (⟨_, h2⟩ : Fin (O.S.Dw.mult (conjEmb (DV.tauEmb D τ)))) = j.rev := by
         ext; simp only [Fin.val_rev]; omega
       rw [h3]

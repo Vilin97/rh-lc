@@ -83,7 +83,7 @@ theorem component_of_auxiliary_embedding {θ : InfFam D} (hθ : IsInfFam θ) {Y 
     ((GlobalTheory.PointAtPlaceHom.atTau_laws D θ hθ Y τ).1 _ hU).exists
   have hk : IsAtTau θ Y τ (GlobalTheory.SepPer.cmp θ τ h) (atTau θ Y τ (GlobalTheory.SepPer.cmp θ τ h)) := by
     unfold atTau
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact hex.choose_spec
   set k := atTau θ Y τ (GlobalTheory.SepPer.cmp θ τ h) with hkdef
   have h1 : GlobalTheory.SepPer.cmp θ τ (1 : GA D Y) = 1 := hRP.2.2.2.2.1 1 (one_mem _) τ

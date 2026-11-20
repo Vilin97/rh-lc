@@ -146,7 +146,7 @@ private theorem val_colRat {L : Type} [Field L] (g : ι → GL (Fin N) L) (x : �
     (h₁ : plVec (g x.1).1 x.2.castSucc (a.1 PUnit.unit) ≠ 0) (h₂ : plVec (g x.1).1 x.2.succ (a.2 PUnit.unit) ≠ 0) :
     (colRat g x a : L) =
       plVec (g x.1).1 x.2.succ (a.2 PUnit.unit) / plVec (g x.1).1 x.2.castSucc (a.1 PUnit.unit) := by
-  rw [colRat, dif_pos ⟨h₁, h₂⟩, Units.val_mk0]
+  rw [colRat, dite_eq_left ⟨h₁, h₂⟩, Units.val_mk0]
 
 private theorem colRat_trans {L : Type} [Field L] (g : ι → GL (Fin N) L) (x : ι × Fin N) (a b : (grLine x).B.ι)
     (h : ⊤ ≤ flagPt Prod.fst Prod.snd g ⁻¹ᵁ ((grLine x).B.U a ⊓ (grLine x).B.U b)) :

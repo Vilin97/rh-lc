@@ -22,7 +22,7 @@ theorem avg_eq_setIntegral {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsT
   have hex : ∃ p : Measure G × Set G, p.1.IsAddHaarMeasure ∧ IsAddFundamentalDomain Γ p.2 p.1 ∧ p.1 p.2 = 1 :=
     ⟨(μ, D), inferInstance, hD, h1⟩
   unfold avg
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨hH, hD', h1'⟩ := hex.choose_spec
   set ν := hex.choose.1
   set D' := hex.choose.2
@@ -70,7 +70,7 @@ theorem blkU_eq_colGL {R : Type} [CommRing R] {a k : ℕ} (hk : k < a) (x : Unip
   · have hne : i ≠ j := fun h => by rw [h] at hij; omega
     have hlt : i < j := by rw [Fin.lt_def]; omega
     rw [Finset.sum_eq_single (⟨(i, j), hij.1, hij.2.ge, hij.2.le⟩ : UnipotentBlockColumnIndex a k k)]
-    · rw [if_neg hne, if_neg hne, dif_pos hlt, colX_apply, dif_pos hij.2, Matrix.single_apply_same, zero_add]
+    · rw [if_neg hne, if_neg hne, dite_eq_left hlt, colX_apply, dite_eq_left hij.2, Matrix.single_apply_same, zero_add]
       congr 1
       apply Subtype.ext
       apply Prod.ext
@@ -87,7 +87,7 @@ theorem blkU_eq_colGL {R : Type} [CommRing R] {a k : ℕ} (hk : k < a) (x : Unip
     · rw [add_zero]
       split_ifs with h1 h2
       · rfl
-      · rw [colX_apply, dif_neg]
+      · rw [colX_apply, dite_eq_right]
         intro h3
         exact hij ⟨by rw [← h3]; exact h2, h3⟩
       · rfl

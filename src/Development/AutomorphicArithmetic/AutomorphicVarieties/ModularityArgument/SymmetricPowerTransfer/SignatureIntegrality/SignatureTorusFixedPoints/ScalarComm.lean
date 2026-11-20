@@ -101,7 +101,7 @@ private theorem supp_orb (V : Lev k) (ω : kˣ →* ℂˣ) (d : Fin 2 → kˣ) (
     a / b / (d 0 / d 1) ∈ V.H ∧ ∃ u : Fin 2 → kˣ, ∃ j ∈ V.J 2, g = g₀ * dg u * j := by
   have hex : ∃ z : kˣ, (GeneralLinearGroup.scalar (Fin 2) z)⁻¹ * (g⁻¹ * (g₀ * dg ![a, b] * g₀⁻¹) * g) ∈ V.DC d := by
     by_contra hn
-    exact h (by rw [Lev.fZ, dif_neg hn])
+    exact h (by rw [Lev.fZ, dite_eq_right hn])
   obtain ⟨z, hz⟩ := hex
   obtain ⟨j, hj, s, ⟨s', hs', rfl⟩, e⟩ := contract k V 2 (MonoidHom.id _) (pres_id V 2) d hd _ hz
   have hs : ∀ i, s' i ∈ V.H := fun i => hs' i trivial

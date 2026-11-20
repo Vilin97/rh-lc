@@ -243,7 +243,7 @@ theorem trace_sqRep_inv_eq_conj_chAt : ∀ (E : Type) [Field E] [NumberField E] 
   have hex : ∃ h : GL (Fin n) ℂ, (h : Matrix (Fin n) (Fin n) ℂ).charpoly = (g : Matrix (Fin n) (Fin n) ℂ).charpoly :=
     ⟨g, rfl⟩
   unfold chAt
-  rw [dif_pos hex, trace_sqRep_eq_of_charpoly_eq lam _ D (hex.choose_spec.trans cpD.symm),
+  rw [dite_eq_left hex, trace_sqRep_eq_of_charpoly_eq lam _ D (hex.choose_spec.trans cpD.symm),
     trace_sqRep_diag lam D _ hD, map_gtChar]
 
 end GlobalTheory.ContraChar

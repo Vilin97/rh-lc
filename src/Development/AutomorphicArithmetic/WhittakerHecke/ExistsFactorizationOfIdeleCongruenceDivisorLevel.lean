@@ -48,7 +48,7 @@ private theorem fst_pin (n : ℕ) : ((pin n : (A ℚ)ˣ) : A ℚ).1 = 1 := by
 
 private theorem iy_val {r : ℝ} (hr : r ≠ 0) :
     ((iy r : (A ℚ)ˣ) : A ℚ).1 = TR.infEq ℚ (fun _ => r) ∧ ∀ v : H.P ℚ, H.cp v ((iy r : (A ℚ)ˣ) : A ℚ) = 1 := by
-  rw [iy, dif_neg hr]
+  rw [iy, dite_eq_right hr]
   have e : ∀ u : (TR.Rinf ℚ)ˣ, ((TR.infId ℚ u : (A ℚ)ˣ) : A ℚ) = 1 - TR.sInf ℚ 1 + TR.sInf ℚ u := fun _ => rfl
   rw [e]
   refine ⟨?_, fun v => ?_⟩

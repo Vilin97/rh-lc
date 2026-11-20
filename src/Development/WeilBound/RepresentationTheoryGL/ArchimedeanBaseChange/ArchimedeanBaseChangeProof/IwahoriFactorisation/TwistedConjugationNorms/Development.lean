@@ -184,7 +184,7 @@ theorem ordL_of_eq' {x : L} {u : Multiplicative ℤ} (h : Valued.v x = (u : With
     ordL x = -Multiplicative.toAdd u := by
   have h0 : Valued.v x ≠ 0 := by rw [h]; exact WithZero.coe_ne_zero
   unfold ordL
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   congr 2
   apply WithZero.coe_injective
   rw [WithZero.coe_unzero, h]
@@ -767,7 +767,7 @@ theorem aL_phiX_val (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (n a : ℕ) (b
         (dcos a w (tdiag ϖ (restr x _ h₁)) y.1 * dcos (n - a) w (tdiag ϖ (restr x _ h₂)) y.2) := by
   unfold phiX
   rw [Finset.sum_eq_single s]
-  · rw [dif_pos hsh, dif_pos h₁, dif_pos h₂]
+  · rw [dite_eq_left hsh, dite_eq_left h₁, dite_eq_left h₂]
     ring
   · intro s' _ hne
     split_ifs with hsh' h₁' h₂' <;> try rfl

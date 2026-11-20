@@ -720,7 +720,7 @@ theorem dcTerms_of [SigmaFinite (Formalism.L2.SG.ProjRows.muInf X.B.I)] (hK : X.
     apply hy
     simp only [f]
     unfold Ph
-    rw [dif_neg hn]
+    rw [dite_eq_right hn]
     simp
   have hfeq : f = fun x => conj (Ph X u hK T x * conj (∑' δ : Dt', Ph X u' hK T' ((δ : X.B.I.GA) * x))) := by
     funext x

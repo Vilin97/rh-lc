@@ -53,7 +53,7 @@ theorem secondFactorMap_theta_pure_tensor : GlobalTheory.Published.HoweDualityRe
   have h1 : mapB ψ e Bs Γ R Rf (GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i))) =
       liftPure Γ.M' R.p' Rf.p' (vacIm Γ Rf) (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) := by
     unfold mapB thetaLift
-    rw [dif_pos H]
+    rw [dite_eq_left H]
     exact H.choose_spec _ hmem
   have hs : ∀ᶠ v in Filter.cofinite, Rf.p' v (Γ.M'.vac v) = vacIm Γ Rf v := by
     filter_upwards [Xc.T.eventually_cofinite_notMem] with v hv using (hm.fin.sph v hv).1.symm
@@ -62,7 +62,7 @@ theorem secondFactorMap_theta_pure_tensor : GlobalTheory.Published.HoweDualityRe
     rw [h1, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   unfold liftPure
-  rw [dif_pos HL]
+  rw [dite_eq_left HL]
   exact HL.choose_spec (f i) (φ i) (hφ i).1 (hφ i).2
 end GlobalTheory.TripleAssembly
 end

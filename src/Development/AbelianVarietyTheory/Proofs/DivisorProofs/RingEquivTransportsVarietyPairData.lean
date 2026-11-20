@@ -161,7 +161,7 @@ theorem formOrd_place (E : Place c) {n : ℕ} (η : Forms c n) :
       have := isFormOrd_place e.symm (symm_apply e he) ha
       rw [place_symm_place, formMap_symm_formMap e] at this
       exact h ⟨a, this⟩
-    rw [Place.formOrd, Place.formOrd, dif_neg h, dif_neg h']
+    rw [Place.formOrd, Place.formOrd, dite_eq_right h, dite_eq_right h']
 
 theorem ordQ_place (E : Place c) (φ : K →₀ ℚ) :
     (place e he E).ordQ (Finsupp.mapDomain e φ) = E.ordQ φ := by

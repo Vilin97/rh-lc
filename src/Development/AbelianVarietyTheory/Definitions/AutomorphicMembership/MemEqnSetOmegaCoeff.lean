@@ -34,7 +34,7 @@ theorem val_cx (a : Y.Fn) (y : Y.pts σ) : val y (Y.cx σ a) = ratVal a y := by
   by_cases h : RegAt (base y) a
   · obtain ⟨U, hU, a, rfl⟩ := h.exists_fnOf
     rw [val_cx_fnOf hU, ratVal_fnOf (mem_ptsIn_iff.2 hU)]
-  · rw [val_of_not_regC (mt regC_cx_iff.1 h)]; rw [ratVal, dif_neg (show ¬ RegAt (under y) a from h)]
+  · rw [val_of_not_regC (mt regC_cx_iff.1 h)]; rw [ratVal, dite_eq_right (show ¬ RegAt (under y) a from h)]
 
 variable (σ) in
 

@@ -642,7 +642,7 @@ theorem crd_rTensor [Module.Flat O Λ] (W : B ⊗[O] Λ) :
     crd β Λ (B.subtype.rTensor Λ W) = crdB β Λ W := by
   have h : IntIn B Λ (B.subtype.rTensor Λ W) := ⟨W, rfl⟩
   unfold crd
-  rw [dif_pos h, rTensor_injective Λ h.choose_spec]
+  rw [dite_eq_left h, rTensor_injective Λ h.choose_spec]
 
 variable {Λ}
 
@@ -2089,7 +2089,7 @@ theorem run_packs (bkP : Formalism.MainNotions.BlochKatoReduction.Gen.BKPh X) (N
         (fun j => ∑ b : Bool, (if h : j ∈ Finset.Icc 1 D.R.m then ep (e (⟨j, h⟩, b)) else 0)),
         ← e.sum_comp, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun b _ => ?_
-      rw [dif_pos j.2]
+      rw [dite_eq_left j.2]
     rw [h1]
     exact hepS
   · intro x
@@ -2099,7 +2099,7 @@ theorem run_packs (bkP : Formalism.MainNotions.BlochKatoReduction.Gen.BKPh X) (N
     refine ⟨hl, ?_⟩
     rw [hi]
     show _ ≤ _ + (if h : x.1.1 ∈ Finset.Icc 1 D.R.m then ep (e (⟨x.1.1, h⟩, x.2)) else 0)
-    rw [dif_pos x.1.2]
+    rw [dite_eq_left x.1.2]
     have h4 : vv x = sIdx (X.l i) (pk x).B (pk x).Th + ((pk x).c : ℝ) * (pk x).S.card := rfl
     have h5 := h3.2
     rw [h4] at h5

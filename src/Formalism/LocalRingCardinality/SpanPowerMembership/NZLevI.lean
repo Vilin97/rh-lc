@@ -88,7 +88,7 @@ theorem natAct_tor (v0 a0) : ∃ c : Kf, IsZPow 2 c ∧ P.natAct (torM P v0 a0) 
 theorem EV_isWH : IsWeightedHomogeneous (om P) (EV P) (LamTot P) := by
   refine prodF_isWH P _ _ fun v s => ?_
   have h := hwRowWeight Kf (P.m + 1) (P.m + 1) le_rfl (nuV P v s) (nuV_anti P v s)
-  have : rowNu (r := P.m + 1) (nuV P v s) = nuV P v s := by funext a; unfold rowNu; rw [dif_pos a.2]
+  have : rowNu (r := P.m + 1) (nuV P v s) = nuV P v s := by funext a; unfold rowNu; rw [dite_eq_left a.2]
   rwa [this] at h
 
 theorem subst_Gtor_EV (v0 a0) :

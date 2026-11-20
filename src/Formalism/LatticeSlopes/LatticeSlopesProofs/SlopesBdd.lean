@@ -132,7 +132,7 @@ theorem slopesBdd_of (hG : GramDetLe.{u, 0, 0}) : SlopesBdd.{u} := by
     rw [Real.log_one, Real.log_mul (by positivity) hgpos.ne', Real.log_pow] at h1
     push_cast at h1
     linarith
-  have hcov : covol N = Real.sqrt g := by rw [covol, dif_pos hN]
+  have hcov : covol N = Real.sqrt g := by rw [covol, dite_eq_left hN]
   show -Real.log (covol N) / (Module.finrank ℤ N : ℝ) ≤ Real.log K
   rw [hcov, Real.log_sqrt hgpos.le, div_le_iff₀ hk]
   nlinarith

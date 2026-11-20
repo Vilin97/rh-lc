@@ -362,7 +362,7 @@ theorem exists_prov_prescribed_points :
     (fun _ _ => none) (fun _ _ => zeroLattice_subsingleton D),
     fun j => if h : 1 ≤ j ∧ j < D.R.m then ⟨j, h⟩ else ⟨1, le_rfl, hm⟩, fun j h1 h2 => ?_⟩
   beta_reduce
-  rw [dif_pos (And.intro h1 h2)]
+  rw [dite_eq_left (And.intro h1 h2)]
   exact ⟨⟨rfl, rfl⟩, fun p y => ⟨some y, rfl, LinearEquiv.refl _ _, fun a b => rfl⟩⟩
 
 end GlobalTheory

@@ -165,19 +165,19 @@ theorem plusPosOfParts : CutHL.PlusPosOfParts := by
     intro a q
     rw [hx₁, upper_minor_of_level_point hj Z τ γ ⟨a, by omega⟩ q (by show a.val < m + 1 + 1; omega)]
     by_cases hq : q.val < m + 1
-    · rw [dif_pos (by omega), dif_pos hq, zfull_apply, dif_pos ⟨a.isLt, hq⟩]
-    · rw [dif_neg hq]
+    · rw [dite_eq_left (by omega), dite_eq_left hq, zfull_apply, dite_eq_left ⟨a.isLt, hq⟩]
+    · rw [dite_eq_right hq]
       split_ifs with h1
-      · rw [zfull_apply, dif_neg (by simp; omega), if_neg (by simp; omega)]
+      · rw [zfull_apply, dite_eq_right (by simp; omega), if_neg (by simp; omega)]
       · rfl
   have hxl : ∀ q : Fin (2 * r + k + 1), PBG.xi0 x₁ ⟨m + 1, by omega⟩ q = if q.val = m + 1 then τ else 0 := by
     intro q
     rw [hx₁, upper_minor_of_level_point hj Z τ γ ⟨m + 1, by omega⟩ q (by simp)]
     by_cases hq : q.val = m + 1
-    · rw [dif_pos (by omega), if_pos hq, zfull_apply, dif_neg (by simp), if_pos ⟨rfl, hq⟩]
+    · rw [dite_eq_left (by omega), if_pos hq, zfull_apply, dite_eq_right (by simp), if_pos ⟨rfl, hq⟩]
     · rw [if_neg hq]
       split_ifs with h1
-      · rw [zfull_apply, dif_neg (by simp), if_neg (by simp; omega)]
+      · rw [zfull_apply, dite_eq_right (by simp), if_neg (by simp; omega)]
       · rfl
 
   have hHA := Formalism.FourierDecayAlt.P.head_algebra_relations (SB E hD) E k r m (by omega) z' (EB hD) La' (PBG.xi0 x₁) Z τ u

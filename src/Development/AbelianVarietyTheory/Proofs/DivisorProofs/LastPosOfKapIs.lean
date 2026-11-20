@@ -13,7 +13,7 @@ theorem lamAt_last {R : Ranks} (h : HCParam R) (i : Fin R.m) (n : ℕ) (hn : n +
   have hi := i.2
   have e : n - (R.k - 1) = i := by omega
   unfold Formalism.L2.NTheta.lamAt
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   congr 2
   exact Fin.ext e
 

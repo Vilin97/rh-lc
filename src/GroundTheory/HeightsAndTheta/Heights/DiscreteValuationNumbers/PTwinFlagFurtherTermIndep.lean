@@ -238,14 +238,14 @@ theorem polyNum_rename_perm {F : Type*} [Field F] {K : Type} [Fintype K] {κ : K
   have hlen := hp.length_eq
   by_cases h₂ : (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList (deg ∘ e) ν).length = n
   · have h₁ : (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList deg (Finsupp.mapDomain e ν)).length = n := hlen.trans h₂
-    rw [dif_pos h₁, dif_pos h₂]
+    rw [dite_eq_left h₁, dite_eq_left h₂]
     have key := hsym (fun j => (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList (deg ∘ e) ν).get (Fin.cast h₂.symm j))
       ((finCongr h₁.symm).trans (σ.trans (finCongr h₂)))
     rw [← key]
     congr 1
     rw [hσ]
     rfl
-  · rw [dif_neg (fun h => h₂ (hlen.symm.trans h)), dif_neg h₂]
+  · rw [dite_eq_right (fun h => h₂ (hlen.symm.trans h)), dite_eq_right h₂]
 
 end flagFurtherTerm_independent
 

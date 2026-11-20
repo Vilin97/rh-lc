@@ -247,7 +247,7 @@ theorem unitChar_eq (ν : (AE D)ˣ →* Circle) (e : AE D) {a : ℕ} (N : Matrix
   have e1 : h.choose = x := Units.ext (StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.eq_of_parts (h.choose_spec.1.trans hx.1.symm)
     (h.choose_spec.2.1.trans hx.2.1.symm))
   unfold unitChar
-  rw [dif_pos h, e1]
+  rw [dite_eq_left h, e1]
 
 set_option maxHeartbeats 1000000 in
 

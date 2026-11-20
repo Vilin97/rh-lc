@@ -73,7 +73,7 @@ theorem elt_last {k : Type*} [Field k] {Γ : Grid k} {hs : 1 ≤ Γ.s} {J : Γ.L
     (hj : j + 2 = Γ.m) : ρ.elt β (Γ.m, j + 1) = 1 := by
   rw [Reps.elt, onColumn_apply]
   dsimp only
-  rw [dif_neg (by omega)]
+  rw [dite_eq_right (by omega)]
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
 

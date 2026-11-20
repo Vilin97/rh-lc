@@ -106,7 +106,7 @@ theorem hiw_red {F : Type} [Field F] [NumberField F] {n : ℕ} (v : HeightOneSpe
       Matrix (Fin n) (Fin n) (v.adicCompletion F)) p q ∈ v.adicCompletionIntegers F :=
     ((g : Matrix (Fin n) (Fin n) (v.adicCompletionIntegers F)) p q).2
   simp only [redM]
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   rfl
 
 include hX hPr in

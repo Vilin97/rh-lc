@@ -28,7 +28,7 @@ theorem th_gram0_eq (hS : SpStd d.toColBase) : d.sp.gram0 = 1 := by
 theorem th_crdLat_eq (u : d.what₂.Word) (i : ℕ) (hi : i ≤ d.R.m) (c : StCl (Pr := d.Pr) d.W d.lev u i) :
     Formalism.L2.Herm.crdLat (d.sp.X i) (d.clsLat u i c) = Formalism.L2.Forms.reL (d.sp.X_rank i hi).symm (d.repr u i c).1.L := by
   unfold Formalism.L2.Herm.crdLat ColDat.clsLat Formalism.L2.Forms.reL
-  rw [dif_pos hi, ← Submodule.map_comp]
+  rw [dite_eq_left hi, ← Submodule.map_comp]
   congr 1
   apply LinearMap.ext
   intro x
@@ -41,7 +41,7 @@ theorem th_crdLat_eq (u : d.what₂.Word) (i : ℕ) (hi : i ≤ d.R.m) (c : StCl
 theorem th_crdLat0_eq (u : d.what₂.Word) (c : StCl (Pr := d.Pr) d.W d.lev u 0) :
     d.sp.crdLat0 (d.clsLat u 0 c) = Formalism.L2.Forms.reL (Formalism.L2.Forms.rank_eq_first_level d.R).symm (d.repr u 0 c).1.L := by
   unfold Spaces.crdLat0 ColDat.clsLat Formalism.L2.Forms.reL
-  rw [dif_pos (Nat.zero_le _), ← Submodule.map_comp]
+  rw [dite_eq_left (Nat.zero_le _), ← Submodule.map_comp]
   congr 1
   apply LinearMap.ext
   intro x

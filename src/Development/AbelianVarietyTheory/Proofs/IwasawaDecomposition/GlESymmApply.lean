@@ -78,7 +78,7 @@ theorem locExt_spec (res : R →+* k) (M : Submodule R V) (pr : M →+ W) (hs : 
     (x : V) (hx : x ∈ loc res M) (a : R) (h : a • x ∈ M) : pr ⟨a • x, h⟩ = res a • locExt res M pr x := by
   have h0 := (mem_loc res M x).1 hx
   unfold locExt
-  rw [dif_pos h0]
+  rw [dite_eq_left h0]
   have h1 := h0.choose_spec
   have e : h0.choose • (⟨a • x, h⟩ : M) = a • ⟨_, h1.2⟩ := Subtype.ext (smul_comm _ _ _)
   have := congrArg pr e

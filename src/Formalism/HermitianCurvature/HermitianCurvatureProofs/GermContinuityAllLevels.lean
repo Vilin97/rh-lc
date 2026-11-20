@@ -19,7 +19,7 @@ theorem rr_congr_below {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [Inner
     (a b : C.LPt) : p.RR F i w a b = p.RR F₂ i w a b := by
   by_cases hl : D.IsLocPt a i ∧ D.IsLocPt b i
   · unfold KB.Pl.RR D.RRplace
-    rw [dif_pos hl, dif_pos hl, dif_pos hi, dif_pos hi]
+    rw [dite_eq_left hl, dite_eq_left hl, dite_eq_left hi, dite_eq_left hi]
     have hU : ∀ (e : Wd.Ix (Fin w.length)), ∀ g ∈ B.GV P.k P.r,
         D.uwG P.k P.r p.T.base.z p.T.base.z' F₂ i hi w e g = D.uwG P.k P.r p.T.base.z p.T.base.z' F i hi w e g :=
       fun e g hg => (Formalism.FourierDecayAlt.P.CutEXUw.uwG_congrG p.T.base.z p.T.base.z' i hi isOpen_univ

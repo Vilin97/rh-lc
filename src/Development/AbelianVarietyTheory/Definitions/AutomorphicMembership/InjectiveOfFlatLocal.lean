@@ -262,7 +262,7 @@ def pick {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (h : Nonempty (BDat t₀ x)) 
 
 theorem pick_exact {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (h : Nonempty (BDat t₀ x)) (h' : ∃ A : BDat t₀ x, A.Exact) :
     (pick h).Exact := by
-  rw [pick, dif_pos h']
+  rw [pick, dite_eq_left h']
   exact h'.choose_spec
 
 end GlobalTheory.LocM.Bdy

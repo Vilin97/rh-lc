@@ -220,7 +220,7 @@ theorem geomB_of (hL : LeviTens) (hW : WfrSpan) (hN : CplxNF) : GeomB := by
   have hiso := q.2.2.1
   have hfrq : (frq X q).fl = mapFlag q.1.2 hiso (lf D (X.Fu u')).fl := by
     unfold frq mapLF
-    rw [dif_pos hiso]
+    rw [dite_eq_left hiso]
     rfl
   have he' : ∀ a, q.1.2 (X.eX a) ∈ (frq X q).fl.X := by
     intro a

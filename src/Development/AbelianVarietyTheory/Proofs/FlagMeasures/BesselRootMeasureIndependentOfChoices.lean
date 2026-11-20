@@ -407,7 +407,7 @@ theorem eq_one_of_fix {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz
       rw [fvec_apply_ge z _ i (by omega)]
       split_ifs with hl
       · simp only [T, Matrix.of_apply]
-        rw [dif_neg (by omega), mul_zero]
+        rw [dite_eq_right (by omega), mul_zero]
       · rw [zero_mul]
   rw [h8, ← Matrix.mul_assoc] at h3
   have h9 : Matrix.fromRows T (0 : Matrix (Fin (r + 1)) (Fin (2 * r + k + 1)) ℂ) = 0 := by

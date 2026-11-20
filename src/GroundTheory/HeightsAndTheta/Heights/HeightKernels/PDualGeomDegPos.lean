@@ -96,7 +96,7 @@ theorem DualGeomDegPos.proof (hDeg : DegreeStatement) (hInd : PtsIndepStatement)
   have hm := hMass K D (stdLattice F) T b hb fun _ => rfl
   have hval : geomDeg (dualIdeal b) (dualLine (stdLattice F) b hb) D = Fintype.card (K →+* ℂ) := by
     unfold geomDeg ptsIntegral
-    rw [dif_pos hΨ]
+    rw [dite_eq_left hΨ]
     exact h.trans hm
   rw [hswap, hval]
   exact_mod_cast Fintype.card_pos

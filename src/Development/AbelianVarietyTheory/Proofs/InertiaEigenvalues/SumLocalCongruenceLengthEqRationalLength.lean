@@ -293,12 +293,12 @@ theorem sum_etaLoc_eq_etaRat : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCo
       refine ⟨fun i => if h : i ∈ D.nd.locs j w then zf ⟨i, h⟩ else 0, fun i => ?_, ?_⟩
       · dsimp only
         by_cases h : i ∈ D.nd.locs j w
-        · rw [dif_pos h]; exact hzf ⟨i, h⟩
-        · rw [dif_neg h]; exact Submodule.zero_mem _
+        · rw [dite_eq_left h]; exact hzf ⟨i, h⟩
+        · rw [dite_eq_right h]; exact Submodule.zero_mem _
       · rw [← hμ]
         refine Finset.sum_congr rfl fun i _ => ?_
         dsimp only
-        rw [dif_pos i.2]
+        rw [dite_eq_left i.2]
         exact (hzf' i).symm
     · rintro ⟨z, hz, rfl⟩
       refine ⟨fun i => ⟨T.Psi j w i.1 i.2 (z i.1), ?_⟩, rfl⟩

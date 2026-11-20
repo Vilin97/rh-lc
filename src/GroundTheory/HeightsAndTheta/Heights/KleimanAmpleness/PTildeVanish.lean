@@ -56,7 +56,7 @@ theorem liftCochain_mem {i : ℕ} (t : Cech.Cochain (fun I : Chart x => ↥((M.t
   · rw [liftCochain_of M c t J hJ]
     exact liftTilde_mem M c _ hJ _
   · change (if hJ : J.1.1 ⊆ support x then _ else 0) ∈ _
-    rw [dif_neg hJ]
+    rw [dite_eq_right hJ]
     exact zero_mem _
 
 theorem locConeE_d {i : ℕ} (z : Cech.Cochain (locSys S N M.coneSubE) i)

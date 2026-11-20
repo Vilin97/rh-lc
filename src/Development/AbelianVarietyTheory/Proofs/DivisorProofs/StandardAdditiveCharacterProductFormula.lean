@@ -140,7 +140,7 @@ lemma finite_decomp (ψ : AddChar (AF F) ℂ) (hunr : ∀ᶠ v in cofinite, PsiU
       rw [Finset.sum_eq_zero]
       · show x w = ((if h : PsiUnr ψ w ∧ x w ∈ HeightOneSpectrum.adicCompletionIntegers F w
           then (⟨x w, h.2⟩ : HeightOneSpectrum.adicCompletionIntegers F w) else 0 : _) : Fv F w) + 0
-        rw [dif_pos hw, add_zero]
+        rw [dite_eq_left hw, add_zero]
       · intro v hv
         apply hne
         rintro rfl; exact hwS hv

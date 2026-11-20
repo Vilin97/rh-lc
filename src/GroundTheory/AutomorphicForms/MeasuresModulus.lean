@@ -120,7 +120,7 @@ noncomputable def modulus : F →*₀ ℝ≥0 where
   toFun x := by classical exact if h : x = 0 then 0 else distribHaarChar F (Units.mk0 x h)
   map_zero' := dif_pos rfl
   map_one' := by
-    rw [dif_neg one_ne_zero]
+    rw [dite_eq_right one_ne_zero]
     convert map_one (distribHaarChar F (G := Fˣ))
     ext
     rfl
@@ -129,13 +129,13 @@ noncomputable def modulus : F →*₀ ℝ≥0 where
     · simp [hx]
     by_cases hy : y = 0
     · simp [hy]
-    rw [dif_neg (mul_ne_zero hx hy), dif_neg hx, dif_neg hy, ← map_mul]
+    rw [dite_eq_right (mul_ne_zero hx hy), dite_eq_right hx, dite_eq_right hy, ← map_mul]
     congr 1
     ext
     rfl
 
 theorem modulus_units (u : Fˣ) : modulus (u : F) = distribHaarChar F u := by
-  rw [modulus, MonoidWithZeroHom.coe_mk, ZeroHom.coe_mk, dif_neg u.ne_zero]
+  rw [modulus, MonoidWithZeroHom.coe_mk, ZeroHom.coe_mk, dite_eq_right u.ne_zero]
   congr 1
   ext
   rfl

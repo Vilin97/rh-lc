@@ -107,14 +107,14 @@ theorem topDatum_congr {n : ℕ} (Q : Finset (Pl E)) (ξ : ∀ P : Pl E, (kP P)�
       if h : ∀ P ∈ Q, IsUnit (topL r (y' P)).det then ∏ P ∈ Q.attach, (((ξ P.1 (h P.1 P.2).unit)⁻¹ : ℂˣ) : ℂ) else 0 := by
   by_cases H : ∀ PP ∈ Q, IsUnit (topL r (y PP)).det
   · have H' : ∀ PP ∈ Q, IsUnit (topL r (y' PP)).det := fun PP hp => (hq PP hp) ▸ H PP hp
-    rw [dif_pos H, dif_pos H']
+    rw [dite_eq_left H, dite_eq_left H']
     refine Finset.prod_congr rfl fun PP _ => ?_
     have : (H PP.1 PP.2).unit = (H' PP.1 PP.2).unit := by
       ext; simp [hq PP.1 PP.2]
     rw [this]
   · have H' : ¬ ∀ PP ∈ Q, IsUnit (topL r (y' PP)).det := fun H' =>
       H fun PP hp => (hq PP hp).symm ▸ H' PP hp
-    rw [dif_neg H, dif_neg H']
+    rw [dite_eq_right H, dite_eq_right H']
 
 end Ideals
 
@@ -254,7 +254,7 @@ theorem datum_eq_hat_free : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
         x ∈ ((∏ P ∈ R.Pg ∪ placesOver R (R.mu v) (ownAt D v), P.asIdeal).map (T.Q.H.bar : 𝓞 D.host.E →+* 𝓞 D.host.E) • ⊤ :
           Submodule (𝓞 D.host.E) (T.Q.Dw ((i : ℕ) + 1)).La) :=
     ⟨GlobalTheory.BasePoint.rho (Wc D i) (R.βW i) e (iotaW T.J i) hi, fun P x => Matrix.ext fun b a => by
-                 rw [redM, dif_pos (hint x b a)]
+                 rw [redM, dite_eq_left (hint x b a)]
                  exact congrArg _ (Subtype.ext (hrow x b a)),
       fun P a t x => GlobalTheory.BasePoint.rho_smul _ _ _ _ hi P a t _ (hτ t) x,
       GlobalTheory.BasePoint.rho_onto _ _ _ _ hi (hL.βW i) hio.emb he fun PP h h' =>

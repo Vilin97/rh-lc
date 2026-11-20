@@ -47,7 +47,7 @@ theorem conjLoc_eq_cj {w : Pl E} (hw : ¬ IsSplitAt w) (a : Af E) :
     rintro v rfl f hf h
     have hex : ∃ s : v.adicCompletion E →+* v.adicCompletion E, Continuous s ∧
       ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x) := ⟨f, hf, h⟩
-    rw [cj, dif_pos hex]
+    rw [cj, dite_eq_left hex]
     exact congrFun ((HeightOneSpectrum.denseRange_algebraMap (K := E) v).equalizer hf hex.choose_spec.1
       (funext fun k => (h k).trans (hex.choose_spec.2 k).symm)) _
   exact key _ (conjSrc_eq_of_not_split hw) _ (conjLoc_spec (conjE E) _).1 (conjLoc_spec (conjE E) _).2.1

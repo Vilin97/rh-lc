@@ -65,7 +65,7 @@ theorem lastRow_moves : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     simp [Y, y, j]
   · intro x _ v
     unfold Formalism.L2.PjFree.perFr
-    rw [dif_pos h, dif_pos hj]
+    rw [dite_eq_left h, dite_eq_left hj]
     rfl
 
 end GlobalTheory.FrameLastRow

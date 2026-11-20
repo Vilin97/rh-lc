@@ -28,13 +28,13 @@ theorem baseSubst_rename (hv : IsBlockMap κ v) (G : GenFibre v P') (g : MRing �
       rw [eval₂Hom_X']
       have h1 : (v p).1 ∈ Set.range κ := ⟨p.1, (hv.2.2.1 p).symm⟩
       have h2 : v p ∈ Set.range v := ⟨p, rfl⟩
-      rw [dif_pos h1, dif_pos h2, hv.2.1 h2.choose_spec]
+      rw [dite_eq_left h1, dite_eq_left h2, hv.2.1 h2.choose_spec]
   exact DFunLike.congr_fun h g
 
 theorem baseSubst_X_fibre (G : GenFibre v P') (q : Σ k : FibreBlock κ, ι' k.1) :
     baseSubst κ G (X ⟨q.1.1, q.2⟩) = X q := by
   unfold baseSubst
-  rw [eval₂Hom_X', dif_neg q.1.2]
+  rw [eval₂Hom_X', dite_eq_right q.1.2]
 
 theorem mem_of_baseSubst_eq_zero (hv : IsBlockMap κ v) (G : GenFibre v P') {f : MRing ι'}
     (hf : baseSubst κ G f = 0) : f ∈ P' := by

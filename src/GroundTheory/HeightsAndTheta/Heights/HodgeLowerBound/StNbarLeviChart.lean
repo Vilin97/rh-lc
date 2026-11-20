@@ -44,10 +44,10 @@ theorem projL_discL_mem_mid : projL (discL 0) ∈ cpMid 0 := by
     simp
   refine ⟨(mem_sChart_source_iff 0 _).2 ⟨?_, ?_⟩, ?_⟩
   · unfold projL
-    rw [dif_pos hne, CP.mk_mem_chartDomain]
+    rw [dite_eq_left hne, CP.mk_mem_chartDomain]
     simp [vecL, discL]
   · unfold projL
-    rw [dif_pos hne, CP.chartCoord_mk]
+    rw [dite_eq_left hne, CP.chartCoord_mk]
     have : (fun j : Fin 1 => vecL (discL 0) ((0 : Fin 2).succAbove j) / vecL (discL 0) 0) = 0 := by
       funext j
       simp [vecL, discL]

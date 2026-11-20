@@ -61,7 +61,7 @@ theorem PositivityTheory.Rg.BcB.G3.count2_pf (h1 : Count1) : Count2 := by
       · exact h.choose_spec.2.symm
       · exact Quot.out_eq _
     · dsimp only
-      rw [dif_pos hw]
+      rw [dite_eq_left hw]
       exact hw.choose_spec.1
   have hrel : ∀ w, ∃ g, (y w).rep = g⁻¹ * zz w * ((thL a w).prodMap (thL b w)) g := by
     intro w

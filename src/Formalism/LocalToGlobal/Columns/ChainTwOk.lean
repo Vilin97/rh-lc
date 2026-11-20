@@ -45,7 +45,7 @@ theorem twInX_mem_std (P : HeightOneSpectrum (𝓞 E)) {n c : ℕ} (x : Sp E n) 
   constructor
   · intro h l
     have h1 := h (Fin.castAdd c l)
-    rwa [ciInX_apply, dif_pos (by simp)] at h1
+    rwa [ciInX_apply, dite_eq_left (by simp)] at h1
   · intro h l
     rw [ciInX_apply]
     split_ifs with hl

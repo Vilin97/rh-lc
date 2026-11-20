@@ -153,7 +153,7 @@ theorem exists_atTwist (s : ℕ) (hP : P.1 ∉ Pr.vGs) (hs : R.m = s + 2) (hok :
   refine ⟨_, _, _, _, inferInstance, _, ⟨ϖ, hu, ψ, hψ.continuous, hψ, δ, hδ, η, hη, σ₀ (cst.sq P) / Real.sqrt (qOf P.1)⟩,
     hP, hs, hc, hψv, fun a u ha hu' e => ?_, fun i hi => ?_, (div_mul_cancel₀ _ hq0).symm⟩
   · change (δ u : ℂ) = _
-    rw [hδv a u ha hu' e, LocE.unitV, dif_pos hu']
+    rw [hδv a u ha hu' e, LocE.unitV, dite_eq_left hu']
     simp
   · change ((η (i + 1) * δ) ϖ : ℂ) = _
     have h : σ₀ (cst.muq (i + 1) P) ≠ 0 := (map_ne_zero σ₀).2 (hmu i hi)
@@ -183,7 +183,7 @@ theorem not_isUnram (h : AtTwist (R := R) sel mu cst σ₀ P ι s W) (hξ : resC
   have hv := (ComplRes.v_eq_one_iff_red h.compl W.unif hi).2 hu
   have h0 : ι a ≠ 0 := fun h0 => by simp [h0] at hv
   have h1 := h.del a (Units.mk0 _ h0) hi hu rfl
-  rw [hun _ hv, LocE.unitV, dif_pos hu, show hu.unit = c from Units.ext hr] at h1
+  rw [hun _ hv, LocE.unitV, dite_eq_left hu, show hu.unit = c from Units.ext hr] at h1
   refine Units.ext (σ₀.injective ?_)
   simpa using (inv_eq_one.1 h1.symm)
 
@@ -257,7 +257,7 @@ theorem mu_agree (h : AtTwist (R := R) sel mu cst σ₀ P ι s W) (i : ℕ) (hi 
   have h5 : u = W.ϖ ^ z * (u * W.ϖ ^ (-z)) := by simp [mul_comm u]
   change ((W.η (i + 1) * W.δ) u : ℂ) = _
   rw [h5, map_mul, map_zpow, Units.val_mul, Units.val_zpow_eq_zpow_val, h.mu i hi, MonoidHom.mul_apply, h4, one_mul, h3,
-    muAt, LocE.locChar, if_neg h.nmem, ← hz, map_mul, map_zpow₀, LocE.unitV, LocE.unitV, dif_pos h2, dif_pos h2]
+    muAt, LocE.locChar, if_neg h.nmem, ← hz, map_mul, map_zpow₀, LocE.unitV, LocE.unitV, dite_eq_left h2, dite_eq_left h2]
   simp
 
 theorem nabs_agree (h : AtTwist (R := R) sel mu cst σ₀ P ι s W) (hok : cst.Ok) {a : X.E} (u : kˣ) (hu : (u : k) = ι a) (n : ℕ) :
@@ -363,7 +363,7 @@ theorem twData_closed : ∃ (k : Type) (_ : Field k) (_ : ValuativeRel k) (_ : T
     have h0 : ι a ≠ 0 := fun h0 => by simp [h0] at hv
     have h1 := hS.tie.chi 0 a (Units.mk0 _ h0) hi hu rfl
     have h2 : S.μ (0 + 1) (Units.mk0 _ h0) = 1 := hun _ hv
-    rw [h2, LocE.unitV, dif_pos hu, show hu.unit = c from Units.ext hr] at h1
+    rw [h2, LocE.unitV, dite_eq_left hu, show hu.unit = c from Units.ext hr] at h1
     refine Units.ext (σ₀.injective ?_)
     simpa using h1.symm
   · have h1 : η = 1 := h

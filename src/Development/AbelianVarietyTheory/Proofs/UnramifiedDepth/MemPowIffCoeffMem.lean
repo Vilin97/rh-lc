@@ -92,7 +92,7 @@ theorem pick_eq (d : κ →₀ ℕ) (h : d ≠ 0) (k k' : κ) : pick d k = pick 
 
 theorem pick_mem (d : κ →₀ ℕ) (h : d ≠ 0) (k : κ) : pick d k ∈ d.support := by
   have h' : d.support.Nonempty := Finsupp.support_nonempty_iff.2 h
-  rw [pick, dif_pos h']
+  rw [pick, dite_eq_left h']
   exact h'.choose_spec
 
 noncomputable def cof [DecidableEq κ] (f : MvPowerSeries κ R) (k : κ) : MvPowerSeries κ R :=

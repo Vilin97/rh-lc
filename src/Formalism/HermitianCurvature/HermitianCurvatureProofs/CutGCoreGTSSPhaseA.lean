@@ -92,7 +92,7 @@ theorem phase_exists (P : M.Par) (w : ℕ → M.Ty P → M.Ty P → ℂ)
       rw [hρ]
       by_cases hn : height P ρ' = n + 1
       · simp only [u']
-        rw [dif_pos hn]
+        rw [dite_eq_left hn]
         set hp := pred_exists P ρ' (by omega) with hpdef
         set l0 := hp.choose with hl0
         have hl0m : l0 ∈ Icc 1 (P.k - 1) := hp.choose_spec.1

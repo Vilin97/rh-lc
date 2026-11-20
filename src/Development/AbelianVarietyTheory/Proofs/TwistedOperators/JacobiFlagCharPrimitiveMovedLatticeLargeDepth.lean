@@ -28,7 +28,7 @@ theorem rowJac_line {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridD
     funext k
     simp [colMul, HypDec.jX, rat, Matrix.map_apply, rowJac, jacDec, HermitianOrthogonalExtensionData.iso]
   have e2 : rowN G n = (G.rowDec n hn).lat (G.Λ (.top n)) (rowId D n) := by
-    unfold rowN; rw [dif_pos hn]
+    unfold rowN; rw [dite_eq_left hn]
   rw [e1, e2, GlobalTheory.StairLine.line_mem_iff _ _ _ _ (by simp only [Fin.coe_castLE]; omega) one_ne_zero v a, inv_one,
     FractionalIdeal.spanSingleton_one, one_mul]
 

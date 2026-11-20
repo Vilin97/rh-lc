@@ -46,12 +46,12 @@ theorem linInd_of_orthonormal {N N' r : ℕ} (b : Fin r → Matrix (Fin N') (Fin
 
 theorem lamC_one {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) : lamC lam 1 = 1 := by
   unfold lamC
-  rw [dif_pos (IntermediateField.one_mem _)]
+  rw [dite_eq_left (IntermediateField.one_mem _)]
   exact map_one lam
 
 theorem lamC_zero {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) : lamC lam 0 = 0 := by
   unfold lamC
-  rw [dif_pos (IntermediateField.zero_mem _)]
+  rw [dite_eq_left (IntermediateField.zero_mem _)]
   exact map_zero lam
 
 theorem lamC_phi_K_one {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) :

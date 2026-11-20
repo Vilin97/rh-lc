@@ -107,7 +107,7 @@ theorem lieGram_local_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     obtain ⟨h', hx⟩ := hu2
     have hex : ∃ g : EigFrame T.Z σ ((cxOf e σ hj (c'.e.symm u)).1 ≫ genι T.Z), FrameAt e f₀ A₀ A (c'.e.symm u) g :=
       ⟨g, hg⟩
-    rw [lieGram, dif_pos hex]
+    rw [lieGram, dite_eq_left hex]
     show ((hodgeMet T.Z U).gram _ hex.choose τ.1)ᵀ = _
     rw [GlobalTheory.HodgeOnDomain.eigGram_transport (hodgeMet T.Z U) hx.symm hex.choose (cxFrame T.Z (U.un kU ⟨G u, h⟩)) τ.1
       (M u) (hc _ _ hex.choose_spec)]

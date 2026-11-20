@@ -11,7 +11,7 @@ theorem localMult_ne_zero_of_mem_minimalPrimes {A : Type*} [CommRing A] [IsNoeth
     {J P : Ideal A} (hP : P ∈ J.minimalPrimes) : localMult J P ≠ 0 := by
   have hPp : P.IsPrime := hP.1.1
   unfold localMult
-  rw [dif_pos hPp]
+  rw [dite_eq_left hPp]
   let R := Localization.AtPrime P
   let I : Ideal R := J.map (algebraMap A R)
   have hmin : IsLocalRing.maximalIdeal R ∈ I.minimalPrimes := by

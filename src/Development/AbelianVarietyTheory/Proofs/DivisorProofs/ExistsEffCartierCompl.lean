@@ -387,7 +387,7 @@ open GlobalTheory.Toroidal (genBd HasToricChart)
 
 theorem gapGe_of_strictAnti {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {la : AllWt.Weight Dw} (h : ∀ τ, StrictAnti (la τ)) : GapGe 0 la := fun τ k hk => by
-  rw [gap, dif_pos hk]
+  rw [gap, dite_eq_left hk]
   exact sub_nonneg.2 (h τ (Fin.mk_lt_mk.2 k.lt_succ_self)).le
 
 theorem growthOn_eq_topSelf (hP : Hypotheses₂) (hN : GlobalTheory.Published.NefNumerics)

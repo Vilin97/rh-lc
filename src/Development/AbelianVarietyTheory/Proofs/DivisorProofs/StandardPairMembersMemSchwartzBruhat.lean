@@ -49,7 +49,7 @@ theorem prop_of_ne {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c m r : ℕ} {A : Matrix (F
     {B : Matrix (Fin m) (Fin r) k} (h : gfun ν ϖ c A B ≠ 0) :
     A.det ≠ 0 ∧ IsGLO A ∧ ∀ i j, B i j ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c) := by
   by_contra hP
-  exact h (by unfold gfun; rw [dif_neg hP])
+  exact h (by unfold gfun; rw [dite_eq_right hP])
 
 theorem stable {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c : ℕ} (hϖ : GlobalTheory.SplitFlip.IsUnif ϖ)
     (hν : GlobalTheory.SplitFlip.CondLE ϖ c ν) {m r : ℕ} {A A' : Matrix (Fin m) (Fin m) k}
@@ -85,7 +85,7 @@ theorem stable {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c : ℕ} (hϖ : GlobalTheory.Sp
     intro h; rw [h, map_zero] at hdet'; exact zero_ne_one hdet'
   refine ⟨⟨hd0', ⟨hA'int, hdet'⟩, hB'c⟩, ?_⟩
   unfold gfun
-  rw [dif_pos ⟨hd0', ⟨hA'int, hdet'⟩, hB'c⟩, dif_pos ⟨hd0, ⟨hAint, hAdet⟩, hBc⟩]
+  rw [dite_eq_left ⟨hd0', ⟨hA'int, hdet'⟩, hB'c⟩, dite_eq_left ⟨hd0, ⟨hAint, hAdet⟩, hBc⟩]
   set u := Units.mk0 A.det hd0
   set u' := Units.mk0 A'.det hd0'
   have hr : ν (u⁻¹ * u') = 1 := by
@@ -123,7 +123,7 @@ theorem isLocallyConstant_gfun {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c : ℕ} (hϖ :
   filter_upwards [hev] with q hq
   by_cases hP : A.det ≠ 0 ∧ IsGLO A ∧ ∀ i j, B i j ∈ GlobalTheory.SplitWeil.cball (ϖ ^ c)
   · exact (stable hϖ hν hP hq.1 hq.2).2
-  · have h0 : gfun ν ϖ c A B = 0 := by unfold gfun; rw [dif_neg hP]
+  · have h0 : gfun ν ϖ c A B = 0 := by unfold gfun; rw [dite_eq_right hP]
     show gfun ν ϖ c q.1 q.2 = gfun ν ϖ c A B
     rw [h0]
     by_contra hne

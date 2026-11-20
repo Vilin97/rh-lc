@@ -40,9 +40,9 @@ theorem xp_baseLb {N n : ℕ} (hN : N = n + 1) [NeZero N] [NeZero n] {ST : Finse
     rw [Pi.add_apply, Pi.smul_apply, padL_apply]
     by_cases hj : (j : ℕ) < n
     · have hne : j ≠ lastIdx N := fun e => hlv (e ▸ hj)
-      rw [dif_pos hj, Pi.single_eq_of_ne hne, smul_zero, add_zero]
+      rw [dite_eq_left hj, Pi.single_eq_of_ne hne, smul_zero, add_zero]
       exact hr j
-    · rw [dif_neg hj, zero_add, hlast j hj, Pi.single_eq_same, Algebra.smul_def, ← map_mul, mul_comm, ← hq]
+    · rw [dite_eq_right hj, zero_add, hlast j hj, Pi.single_eq_same, Algebra.smul_def, ← map_mul, mul_comm, ← hq]
       exact hr _
   · rintro ⟨y, hy, z, hz, rfl⟩
     obtain ⟨y', hy', rfl⟩ := hy
@@ -55,11 +55,11 @@ theorem xp_baseLb {N n : ℕ} (hN : N = n + 1) [NeZero N] [NeZero n] {ST : Finse
       beta_reduce
       by_cases hj : (j : ℕ) < n
       · have hne : j ≠ lastIdx N := fun e => hlv (e ▸ hj)
-        rw [dif_pos hj, dif_pos hj, Pi.single_eq_of_ne hne, smul_zero, add_zero]
+        rw [dite_eq_left hj, dite_eq_left hj, Pi.single_eq_of_ne hne, smul_zero, add_zero]
         exact hr' _
-      · rw [dif_neg hj, dif_neg hj, zero_add, hlast j hj, Pi.single_eq_same, Algebra.smul_def, map_mul]
+      · rw [dite_eq_right hj, dite_eq_right hj, zero_add, hlast j hj, Pi.single_eq_same, Algebra.smul_def, map_mul]
     · beta_reduce
-      rw [dif_neg hlv]
+      rw [dite_eq_right hlv]
       exact Ideal.mul_mem_left _ _ ((hB.dvd π).2 (dvd_refl π) P hP)
 
 end Gen

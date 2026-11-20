@@ -50,14 +50,14 @@ theorem exists_ringMaps_of_hol : ∀ (X : Scheme.{0}) (W : X.Opens) (hW : IsAffi
     intro z hz
     have hzS : ⊤ ≤ p ((ρ : ℂ) • z) ⁻¹ᵁ W := (hmaps z hz).2
     show (if hz : ⊤ ≤ p ((ρ : ℂ) • z) ⁻¹ᵁ W then φ _ hz else φ _ h0) r = valR (p ((ρ : ℂ) • z)) W r
-    rw [dif_pos hzS]
+    rw [dite_eq_left hzS]
     unfold valR
-    rw [dif_pos hzS]
+    rw [dite_eq_left hzS]
     rfl
   · intro z hz
     have hzS : ⊤ ≤ p ((ρ : ℂ) • z) ⁻¹ᵁ W := (hmaps z hz).2
     show spMap (if hz : ⊤ ≤ p ((ρ : ℂ) • z) ⁻¹ᵁ W then φ _ hz else φ _ h0) ≫ hW.fromSpec = _
-    rw [dif_pos hzS]
+    rw [dite_eq_left hzS]
     exact spMap_appLE_comp_fromSpec hW _ hzS
 
 end GlobalTheory.CompanionTheory.Ar.HolFac

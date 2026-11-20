@@ -152,13 +152,13 @@ theorem main : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCompatibility D M)
       exact ⟨z, hz, e⟩
     refine ⟨fun i => if h : i ∈ D.nd.locs j w then (ex i h).choose else 0, fun i => ?_, ?_⟩
     · by_cases h : i ∈ D.nd.locs j w
-      · dsimp only; rw [dif_pos h]; exact (ex i h).choose_spec.1
-      · dsimp only; rw [dif_neg h]; exact Submodule.zero_mem _
+      · dsimp only; rw [dite_eq_left h]; exact (ex i h).choose_spec.1
+      · dsimp only; rw [dite_eq_right h]; exact Submodule.zero_mem _
     · have hsum : ∑ i ∈ (D.nd.locs j w).attach,
           T.Psi j w i.1 i.2 (if h : i.1 ∈ D.nd.locs j w then (ex i.1 h).choose else 0) =
           ∑ i ∈ (D.nd.locs j w).attach, tp (T.mx j w i.1) y := by
         refine Finset.sum_congr rfl fun i _ => ?_
-        rw [dif_pos i.2]
+        rw [dite_eq_left i.2]
         exact (ex i.1 i.2).choose_spec.2
       rw [hsum, ← sub_eq_zero]
       refine NCov.eq_zero_of_forall_mem_off hinj hS hsplit hint ((D.nd.locs j w).image (T.mx j w))

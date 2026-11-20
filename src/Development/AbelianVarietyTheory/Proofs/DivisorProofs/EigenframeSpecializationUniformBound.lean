@@ -63,7 +63,7 @@ theorem periods_le_pow : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     · exact hlat τ i (Or.inl ⟨hτ, hi⟩)
     · have e : perFr (U.X k) (xx w) v τ i = 0 := by
         unfold perFr
-        rw [dif_pos hτ, dif_neg (by omega)]
+        rw [dite_eq_left hτ, dite_eq_right (by omega)]
       rw [e, norm_zero]
       exact hzero
   · by_cases hc : conjEmb τ ∈ (U.X k).Ψ
@@ -76,13 +76,13 @@ theorem periods_le_pow : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
         · have e : perFr (U.X k) (xx w) v τ i = perFr (U.X k) (xx w) v τ ((U.X k).p0 - 1) := by
             have e1 : (U.X k).p0 - 1 - i = (U.X k).p0 - 1 - ((U.X k).p0 - 1) := by omega
             unfold perFr
-            rw [dif_neg hτ, dif_neg hτ, dif_pos hc, dif_pos hc]
+            rw [dite_eq_right hτ, dite_eq_right hτ, dite_eq_left hc, dite_eq_left hc]
             simp only [e1]
           rw [e]
           exact hlat τ _ (Or.inr ⟨hc, by omega⟩)
     · have e : perFr (U.X k) (xx w) v τ i = 0 := by
         unfold perFr
-        rw [dif_neg hτ, dif_neg hc]
+        rw [dite_eq_right hτ, dite_eq_right hc]
       rw [e, norm_zero]
       exact hzero
 

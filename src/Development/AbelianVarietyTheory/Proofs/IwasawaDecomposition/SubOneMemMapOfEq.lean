@@ -144,7 +144,7 @@ theorem mem_QE_iff (hsel : IsSel X sel) (ξ : Tup X.F X.E X.K S) {P : HeightOneS
       P.under (𝓞 X.F) ∈ Qprime (ξ : Chr X.F X.E X.K) ∧ sel (P.under (𝓞 X.F)) = P := by
   classical
   have hf := finite_Qprime (ξ := (ξ : Chr X.F X.E X.K)) ξ.2.1.1.1.1.2
-  rw [QE, dif_pos hf, Finset.mem_image]
+  rw [QE, dite_eq_left hf, Finset.mem_image]
   simp only [Set.Finite.mem_toFinset]
   refine ⟨?_, fun h => ⟨_, h.1, h.2⟩⟩
   rintro ⟨v, hv, rfl⟩

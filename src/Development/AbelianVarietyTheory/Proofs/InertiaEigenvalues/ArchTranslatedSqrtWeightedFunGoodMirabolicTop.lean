@@ -30,7 +30,7 @@ theorem secInv_eq_inv_rowGL {y : Fin (m + 1) → Cinf E} (hy : y ∈ GlobalTheor
     secInv y = (GlobalTheory.RSTheta.rowGL (Fin.last m) y)⁻¹ := by
   have hu := GlobalTheory.RSTheta.isUnit_of_mem_rowSet hy
   have hd : IsUnit (secRow y).det := by rw [secRow_eq_rowMat, GlobalTheory.RSTheta.det_rowMat]; exact hu
-  rw [secInv, dif_pos hd]
+  rw [secInv, dite_eq_left hd]
   congr 1
   apply Units.ext
   rw [GlobalTheory.RSTheta.val_rowGL hu, ← secRow_eq_rowMat]

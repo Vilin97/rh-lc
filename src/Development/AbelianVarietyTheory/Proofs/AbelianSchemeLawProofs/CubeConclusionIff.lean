@@ -166,14 +166,14 @@ theorem corr_of_pm (hA : A.IsLB) {φ : K → (Y ⟶ X)} {ε : K → ℤ} {a : LB
     intro k
     have hz : ∃ k', φ k' = φ k := ⟨k, rfl⟩
     show _ = (if hz : ∃ k', φ k' = φ k then _ else _)
-    rw [dif_pos hz, cj _ _ hz.choose_spec, Category.id_comp]
+    rw [dite_eq_left hz, cj _ _ hz.choose_spec, Category.id_comp]
   have hF' : ∀ k, gw w (𝟙 Y ≫ φ' k) y (j' k) (idx (φ' k)) = F (φ' k) := by
     intro k
     show _ = (if hz : ∃ k', φ k' = φ' k then _ else if hz' : ∃ k', φ' k' = φ' k then _ else _)
     by_cases hz : ∃ k', φ k' = φ' k
-    · rw [dif_pos hz, cjj _ _ hz.choose_spec, Category.id_comp]
+    · rw [dite_eq_left hz, cjj _ _ hz.choose_spec, Category.id_comp]
     · have hz' : ∃ k', φ' k' = φ' k := ⟨k, rfl⟩
-      rw [dif_neg hz, dif_pos hz', cj' _ _ hz'.choose_spec, Category.id_comp]
+      rw [dite_eq_right hz, dite_eq_left hz', cj' _ _ hz'.choose_spec, Category.id_comp]
   simp only [hF, hF']
   exact Out.Canon.prod_sameSum φ ε φ' ε' hS F
 

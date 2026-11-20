@@ -152,9 +152,9 @@ theorem map_translate_hom (Q : isogHom E E') (R : E.toAffine.Point) :
     Point.map (translate E R) Q.1 = Q.1 + constMap E' E.toAffine.FunctionField (homPt Q R) := by
   by_cases h : Q = 0
   · subst h
-    rw [homPt, dif_pos rfl, AddMonoidHom.zero_apply, map_zero, add_zero, ZeroMemClass.coe_zero,
+    rw [homPt, dite_eq_left rfl, AddMonoidHom.zero_apply, map_zero, add_zero, ZeroMemClass.coe_zero,
       map_zero]
-  · rw [homPt, dif_neg h]
+  · rw [homPt, dite_eq_right h]
     exact (isogOfHom Q h).map_translate R
 
 theorem homPt_eq_of (Q : isogHom E E') {R : E.toAffine.Point} {c : E'.toAffine.Point}
@@ -170,7 +170,7 @@ theorem homPt_add (Q₁ Q₂ : isogHom E E') : homPt (Q₁ + Q₂) = homPt Q₁ 
     map_add]
   abel
 
-theorem homPt_zero : homPt (0 : isogHom E E') = 0 := by rw [homPt, dif_pos rfl]
+theorem homPt_zero : homPt (0 : isogHom E E') = 0 := by rw [homPt, dite_eq_left rfl]
 
 noncomputable def homPointHom : isogHom E E' →+ (E.toAffine.Point →+ E'.toAffine.Point) :=
   AddMonoidHom.mk' homPt homPt_add
@@ -186,10 +186,10 @@ noncomputable def homDualFun (Q : isogHom E E') : isogHom E' E :=
   open Classical in if h : Q = 0 then 0 else (isogOfHom Q h).dual.toHom
 
 theorem homDualFun_toHom (φ : Isogeny E E') : homDualFun φ.toHom = φ.dual.toHom := by
-  rw [homDualFun, dif_neg φ.toHom_ne_zero]
+  rw [homDualFun, dite_eq_right φ.toHom_ne_zero]
   rfl
 
-theorem homDualFun_zero : homDualFun (0 : isogHom E E') = 0 := by rw [homDualFun, dif_pos rfl]
+theorem homDualFun_zero : homDualFun (0 : isogHom E E') = 0 := by rw [homDualFun, dite_eq_left rfl]
 
 theorem weilPairing_homDualFun (Q : isogHom E E') {n : ℕ} (hn : (n : F) ≠ 0) {S : E.toAffine.Point}
     (hS : n • S = 0) {T' : E'.toAffine.Point} (hT' : n • T' = 0) :

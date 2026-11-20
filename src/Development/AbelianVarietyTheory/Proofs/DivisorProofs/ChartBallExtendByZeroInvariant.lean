@@ -43,14 +43,14 @@ theorem ext_val (X : Data E r) {x : Frame X.Ψ r} {R : ℝ} (ho : IsOrth X x)
     {z : V (nd X)} (hz : ‖z‖ ≤ R) : ext X x R η (lact γ (rmul (cpt X x z) b)) = η z := by
   have hP : InOrbit X x R (lact γ (rmul (cpt X x z) b)) := ⟨z, hz, γ, hγ, b, hb, rfl⟩
   unfold ext
-  rw [dif_pos hP]
+  rw [dite_eq_left hP]
   obtain ⟨hz', γ', hγ', b', hb', he⟩ := hP.choose_spec
   rw [uniq X ho hinj hγ' hγ hb' hb hz' hz he.symm]
 
 theorem ext_zero (X : Data E r) {x : Frame X.Ψ r} {R : ℝ} (η : V (nd X) → ℝ) {y : Frame X.Ψ r}
     (hy : ¬ InOrbit X x R y) : ext X x R η y = 0 := by
   unfold ext
-  rw [dif_neg hy]
+  rw [dite_eq_right hy]
 
 end GlobalTheory.ChartBallExt
 

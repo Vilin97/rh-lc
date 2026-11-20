@@ -129,7 +129,7 @@ theorem GDl_frameAct_top (u h : Fin (D.R.rS + 1) → (VS D).V)
     GDl u (frameAct h η) (D.R.rS + 1) = GDl u h (D.R.rS + 1) := by
   have hm := unitri_map η h1 h2
   unfold GDl
-  rw [dif_pos le_rfl, dif_pos le_rfl]
+  rw [dite_eq_left le_rfl, dite_eq_left le_rfl]
   have e : ∀ M : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E,
       M.submatrix (Fin.castLE (le_refl _)) (Fin.castLE (le_refl _)) = M := fun M => by ext i j; rfl
   rw [e, e, GZ_frameAct, Matrix.det_mul, det_unitri _ hm.1 hm.2, mul_one]
@@ -140,7 +140,7 @@ theorem GDl_frameAct_r (u h : Fin (D.R.rS + 1) → (VS D).V)
     GDl u (frameAct h η) D.R.rS = GDl u h D.R.rS := by
   have hm := unitri_map η h1 h2
   unfold GDl
-  rw [dif_pos (Nat.le_succ _), dif_pos (Nat.le_succ _), GZ_frameAct]
+  rw [dite_eq_left (Nat.le_succ _), dite_eq_left (Nat.le_succ _), GZ_frameAct]
   have ecs : (Fin.castLE (Nat.le_succ D.R.rS) : Fin D.R.rS → Fin (D.R.rS + 1)) = Fin.castSucc :=
     funext fun i => Fin.ext rfl
   rw [ecs]

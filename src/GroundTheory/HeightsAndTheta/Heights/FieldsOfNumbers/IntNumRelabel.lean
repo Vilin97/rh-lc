@@ -36,13 +36,13 @@ theorem eventualValue_congr {K K' : Type*} {f : (K → ℤ) → ℤ} {g : (K' �
   unfold eventualValue
   by_cases hf : ∃ c, ∀ᶠ m in atTop, f m = c
   · have hg : ∃ c, ∀ᶠ m in atTop, g m = c := hf.imp fun c hc => (h c).1 hc
-    rw [dif_pos hf, dif_pos hg]
+    rw [dite_eq_left hf, dite_eq_left hg]
     have h1 := (h _).1 hf.choose_spec
     have h2 := hg.choose_spec
     obtain ⟨m, hm1, hm2⟩ := (h1.and h2).exists
     exact hm1.symm.trans hm2
   · have hg : ¬ ∃ c, ∀ᶠ m in atTop, g m = c := fun ⟨c, hc⟩ => hf ⟨c, (h c).2 hc⟩
-    rw [dif_neg hf, dif_neg hg]
+    rw [dite_eq_right hf, dite_eq_right hg]
 
 theorem eventualValue_precomp (g : (K₁ → ℤ) → ℤ) :
     eventualValue (fun m : K₂ → ℤ => g (m ∘ e)) = eventualValue g := by

@@ -246,11 +246,11 @@ theorem bdet_eq {κ : Type} [Fintype κ] [DecidableEq κ] {s : Set ι} {s' : Set
   by_cases h1 : IsUnit ((g : Matrix ι ι R).submatrix (Subtype.val : s → ι) Subtype.val).det
   · have h2 : IsUnit ((g' : Matrix κ κ R).submatrix (Subtype.val : s' → κ) Subtype.val).det := by
       rw [← h]; exact h1
-    rw [dif_pos h1, dif_pos h2]
+    rw [dite_eq_left h1, dite_eq_left h2]
     exact Units.ext (by simpa using h)
   · have h2 : ¬ IsUnit ((g' : Matrix κ κ R).submatrix (Subtype.val : s' → κ) Subtype.val).det := by
       rw [← h]; exact h1
-    rw [dif_neg h1, dif_neg h2]
+    rw [dite_eq_right h1, dite_eq_right h2]
 
 theorem bdet_cGL (t₀ : Sub ι m) (g : GL ι R) : bdet ({t₀} : Set (Sub ι m)) (cGL m g) = bdet (t₀.1 : Set ι) g := by
   refine bdet_eq ?_

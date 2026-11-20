@@ -22,7 +22,7 @@ theorem inX_mem_nfLat_iff {E : Type} [Field E] [NumberField E] [StarRing E] (P :
       have h1 := congrFun h (Fin.natAdd n b)
       have hq := Proof.NormalFormAtPrime.qOf_ne_zero P
       have h2 : ∀ (y : Fin n → E), Loc.inX E n c y (Fin.natAdd n b) = 0 := fun y => by
-        rw [inX_apply, dif_neg (by simp)]
+        rw [inX_apply, dite_eq_right (by simp)]
       have h3 : ∀ i : Fin c, IndefiniteRowSideFullHecke.SandwichNormalForm.nfGen (qOf P) n c e z i (Fin.natAdd n b) =
           if b = i then ((qOf P : E) ^ e i) else 0 := by
         intro i

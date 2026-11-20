@@ -193,7 +193,7 @@ theorem nmat_toEntries_of_not (z : V (nd X)) (τ : X.Ψ) {a b : Fin r}
 theorem nmat_ofEntries_of_not (w : V (nd X)) (τ : X.Ψ) {a b : Fin r}
     (h : ¬ (X.p0 ≤ (a : ℕ) ∧ (b : ℕ) < X.p0)) : nmat X (ofEntries X w) τ a b = nmat X w τ a b := by
   by_cases h' : b < a
-  · rw [ofEntries, nmat_coordOf_of_lt X _ τ h', dif_neg h]
+  · rw [ofEntries, nmat_coordOf_of_lt X _ τ h', dite_eq_right h]
   · exact nmat_of_not_lt X _ _ τ h'
 
 theorem leadingBlock_blockCoordsToLowerEntries (z : V (nd X)) (τ : X.Ψ) : ExF.n1 X (toEntries X z) τ = ExF.n1 X z τ := by

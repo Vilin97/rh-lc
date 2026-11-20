@@ -57,11 +57,11 @@ theorem valF_appLE {k : Type} [Field k] {X X' : Scheme.{0}} (w : Sp k ⟶ X') (g
   unfold valF
   by_cases hc : ⊤ ≤ (w ≫ g) ⁻¹ᵁ U
   · have hc' : ⊤ ≤ w ⁻¹ᵁ g ⁻¹ᵁ U := by rwa [Scheme.Hom.comp_preimage] at hc
-    rw [dif_pos hc, dif_pos hc']
+    rw [dite_eq_left hc, dite_eq_left hc']
     congr 1
     rw [← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
   · have hc' : ¬ ⊤ ≤ w ⁻¹ᵁ g ⁻¹ᵁ U := by rwa [Scheme.Hom.comp_preimage] at hc
-    rw [dif_neg hc, dif_neg hc']
+    rw [dite_eq_right hc, dite_eq_right hc']
 
 theorem top_le_of_closedPoint {R : Type} [CommRing R] [IsLocalRing R] {X : Scheme.{0}} (w : Sp R ⟶ X) (V : X.Opens)
     (h : w (IsLocalRing.closedPoint R) ∈ V) : ⊤ ≤ w ⁻¹ᵁ V :=

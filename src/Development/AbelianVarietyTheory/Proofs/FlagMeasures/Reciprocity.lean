@@ -11,12 +11,12 @@ open scoped Classical
 
 theorem toG_coe {g : ℕ} [Fact g.Prime] {n : ℕ} (h : Gn g n) : toG (h : Mt g n) = h := by
   unfold toG
-  rw [dif_pos h.isUnit]
+  rw [dite_eq_left h.isUnit]
   exact Units.ext (IsUnit.unit_spec _)
 
 theorem coe_toG {g : ℕ} [Fact g.Prime] {n : ℕ} {M : Mt g n} (h : IsUnit M) : ((toG M : Gn g n) : Mt g n) = M := by
   unfold toG
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact IsUnit.unit_spec _
 
 theorem mean_conj {G : Type} [Group G] [Fintype G] (χ F : G → ℂ) (hχ : IsClass χ) (c : ℂ) :

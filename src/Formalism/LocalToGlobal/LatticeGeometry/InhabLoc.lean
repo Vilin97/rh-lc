@@ -611,7 +611,7 @@ open Classical in
   trB_norm := fun _ _ _ _ _ _ => rfl
   alp := fun n => if h : ModuliIntegralCharts.NHyp D p n then (exists_alp D p n h).choose else 0
   alp_spec := fun n h => by
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact (exists_alp D p n h).choose_spec
   th1 := fun _ _ => (1 : c.C)
   pbAl := fun _ _ _ => LinearMap.id

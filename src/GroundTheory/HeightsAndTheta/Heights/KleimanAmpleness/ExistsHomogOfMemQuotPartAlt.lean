@@ -162,7 +162,7 @@ theorem evMap_mk' {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (m : MRingOver
     (t : cellMon S I) :
     evMap y I (LocalizedModule.mk m t) = ev0 y m / aeval y (t : MRingOver S ι) := by
   unfold evMap
-  rw [dif_pos hI]
+  rw [dite_eq_left hI]
   exact ev_mk y I hI _ t
 
 theorem evMap_mk {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (g : MRingOver S ι) (t : cellMon S I) :
@@ -173,7 +173,7 @@ theorem evMap_mk {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (g : MRingOver 
 theorem evMap_of_not {I : ∀ k, Finset (ι k)} (hI : ¬ CellMeets y I)
     (x : LocalizedModule (cellMon S I) (MRingOver S ι ⧸ mIdealOver S y)) : evMap y I x = 0 := by
   unfold evMap
-  rw [dif_neg hI]
+  rw [dite_eq_right hI]
   rfl
 
 end Eval
@@ -333,7 +333,7 @@ theorem cellRes_mk {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] {J I 
     (h : cellMon S J ≤ cellMon S I) (m : M) (t : cellMon S J) :
     cellRes S M J I (LocalizedModule.mk m t) = LocalizedModule.mk m ⟨t.1, h t.2⟩ := by
   unfold cellRes
-  rw [dif_pos h, IsLocalizedModule.mk_eq_mk', IsLocalizedModule.liftOfLE_mk', ← IsLocalizedModule.mk_eq_mk']
+  rw [dite_eq_left h, IsLocalizedModule.mk_eq_mk', IsLocalizedModule.liftOfLE_mk', ← IsLocalizedModule.mk_eq_mk']
 
 variable {Ω : Type} [Field Ω] [Algebra S Ω] {y : (Σ k, ι k) → Ω}
 
@@ -345,7 +345,7 @@ theorem cellRes_smul {J I : ∀ k, Finset (ι k)} (s : S)
     | h m t => rw [LocalizedModule.smul'_mk, cellRes_mk h, cellRes_mk h,
         LocalizedModule.smul'_mk]
   · unfold cellRes
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     simp
 
 theorem cellRes_mem_locPart {J I : ∀ k, Finset (ι k)} (h : cellMon S J ≤ cellMon S I) (γ : K → ℤ)

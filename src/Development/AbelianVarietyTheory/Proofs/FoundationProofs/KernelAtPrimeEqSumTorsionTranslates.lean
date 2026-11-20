@@ -310,7 +310,7 @@ theorem GlobalTheory.NormSum.kernel_eq_sum_translates : ∀ (D : D7), Inp D → 
       (n₀ * (s₂ * s₁) * Q) (1 * 1) P.e0 := by
     rw [he0]
     refine Cmb.smul ⟨hε, ?_⟩ (Cmb.iop hn hB hi₀ (fun x hx => ?_) Cmb.base)
-    · rw [lamC, dif_pos hε] at hεn
+    · rw [lamC, dite_eq_left hε] at hεn
       exact hεn.le
     · rw [mul_assoc n₀, mul_comm n₀, mul_smul]
       exact AddSubgroup.nsmul_mem _ (a0 x hx) _
@@ -326,7 +326,7 @@ theorem GlobalTheory.NormSum.kernel_eq_sum_translates : ∀ (D : D7), Inp D → 
     rw [inv_pow, ← one_div, le_div_iff₀ (pow_pos hQ0 _), mul_comm]
     exact h
   have hc' : Bd lam 1 c := ⟨hc, by
-    rw [lamC, dif_pos hc] at hcn
+    rw [lamC, dite_eq_left hc] at hcn
     exact hcn.le⟩
   have c2 : ∀ i, Cmb D (tor0 D ⊤ δ) lam (LaB D (tor0 D ⊤ δ) b) (pullB D (tor0 D ⊤ δ) b (GL3Theta.th0 (lamOf D ⊤ δ) t0))
       (n₀ * (s₂ * s₁) * Q) (1 * 1) (U D (tor0 D ⊤ δ) (y i) (Iop D (tor0 D ⊤ δ) (La0 D (tor0 D ⊤ δ) P.a P.d)

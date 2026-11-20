@@ -76,9 +76,9 @@ theorem dy_apply (h : ModelOK A x₀ m) (r : Ψ × Fin (p + q)) (k : K₀ ⊕ St
       if ∀ r', blkF Ψ p q K₀ r' ≠ some k then -twist m r k else if blkF Ψ p q K₀ r = some k then 1 else 0 := by
   delta FlagModel.dy
   by_cases hc : ∀ p', (model A x₀ m h).blk p' ≠ some k
-  · rw [dif_pos hc, if_pos (show ∀ r' : Ψ × Fin (p + q), blkF Ψ p q K₀ r' ≠ some k from hc)]
+  · rw [dite_eq_left hc, if_pos (show ∀ r' : Ψ × Fin (p + q), blkF Ψ p q K₀ r' ≠ some k from hc)]
     rfl
-  · rw [dif_neg hc, if_neg (show ¬ ∀ r' : Ψ × Fin (p + q), blkF Ψ p q K₀ r' ≠ some k from hc)]
+  · rw [dite_eq_right hc, if_neg (show ¬ ∀ r' : Ψ × Fin (p + q), blkF Ψ p q K₀ r' ≠ some k from hc)]
     by_cases hb : (model A x₀ m h).blk r = some k
     · rw [if_pos hb, if_pos (show blkF Ψ p q K₀ r = some k from hb)]
     · rw [if_neg hb, if_neg (show ¬ blkF Ψ p q K₀ r = some k from hb)]

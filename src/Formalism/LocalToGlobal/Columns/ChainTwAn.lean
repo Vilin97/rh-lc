@@ -50,7 +50,7 @@ theorem twAn_phiQ_int (q : ℕ) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {k₀ r
     unfold LocE.entB at h1
     rw [frameIndex_framePos hk l.2, frameIndex_framePos hk' s.2, basisVec_eq_single s.2] at h1
     unfold Loc.atN at h1
-    rw [dif_pos l.2] at h1
+    rw [dite_eq_left l.2] at h1
     have e0 : ∀ (N : ℕ) (p : ℕ), LocE.scE N (0 : ℕ → ℕ) p = 0 := fun N p => by
       unfold LocE.scE
       split_ifs <;> rfl
@@ -72,7 +72,7 @@ theorem integral_of_firstUnfolding_ne_zero {n' c' n c : ℕ} (Ψ : Loc.SF E K (n
     unfold Loc.xx1
     rw [← LinearMap.toMatrix'_apply, LinearMap.toMatrix'_toLin', Matrix.of_apply]
     have hf : ¬ Loc.IsFree n' n c (Fin.castAdd c l).1 (Fin.castAdd c' s).1 := fun hf => absurd s.2 (not_lt.2 hf.1)
-    rw [dif_neg hf, dif_pos (show (Fin.castAdd c' s).1 < n' from s.2), dif_pos (show (Fin.castAdd c l).1 < n from l.2),
+    rw [dite_eq_right hf, dite_eq_left (show (Fin.castAdd c' s).1 < n' from s.2), dite_eq_left (show (Fin.castAdd c l).1 < n from l.2),
       LinearMap.toMatrix'_apply]
     rfl
   rw [e] at h3
@@ -131,7 +131,7 @@ theorem frameEntry_unscaled_eq_coord (q : ℕ) {k₀ c' n' c n : ℕ} (hk' : k�
   unfold LocE.entB
   rw [basisVec_eq_single (symFIdx_lt hk' hp')]
   unfold Loc.atN
-  rw [dif_pos (symFIdx_lt hk hp)]
+  rw [dite_eq_left (symFIdx_lt hk hp)]
   have e0 : ∀ (N : ℕ) (p : ℕ), LocE.scE N (0 : ℕ → ℕ) p = 0 := fun N p => by
     unfold LocE.scE
     split_ifs <;> rfl
@@ -171,7 +171,7 @@ theorem twAn_joinCol {n' c' n c : ℕ} (hc : 1 ≤ c') (x₀ : HomE E n' n) (y' 
       omega
   have h2 : atNL E (n' + c') n' (Pi.single (⟨n', by omega⟩ : Fin (n' + c')) (1 : E)) = 1 := by
     unfold atNL
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     show (Pi.single (⟨n', by omega⟩ : Fin (n' + c')) (1 : E) : Fin (n' + c') → E) ⟨n', by omega⟩ = 1
     exact Pi.single_eq_same _ _
   simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, h1, h2, map_zero, one_smul, zero_add]
@@ -206,12 +206,12 @@ theorem unipotentExtension_add_sub {n' c' n c : ℕ} (xj z : (Fin n' → E) →�
     LinearMap.toMatrix'_toLin', Matrix.of_apply]
   by_cases hs : s.1 < n'
   · have hf : ¬ Loc.IsFree n' n c l.1 s.1 := fun hf => absurd hs (not_lt.2 hf.1)
-    rw [dif_neg hf, dif_neg hf, dif_pos hs, dif_pos hs, dif_pos hs]
+    rw [dite_eq_right hf, dite_eq_right hf, dite_eq_left hs, dite_eq_left hs, dite_eq_left hs]
     by_cases hl : l.1 < n
-    · rw [dif_pos hl, dif_pos hl, dif_pos hl, LinearMap.toMatrix'_apply, LinearMap.toMatrix'_apply, LinearMap.add_apply, Pi.add_apply]
+    · rw [dite_eq_left hl, dite_eq_left hl, dite_eq_left hl, LinearMap.toMatrix'_apply, LinearMap.toMatrix'_apply, LinearMap.add_apply, Pi.add_apply]
       ring
-    · rw [dif_neg hl, dif_neg hl, dif_neg hl, sub_self]
-  · rw [dif_neg hs]
+    · rw [dite_eq_right hl, dite_eq_right hl, dite_eq_right hl, sub_self]
+  · rw [dite_eq_right hs]
     split_ifs <;> simp
 
 theorem charArg_unipotentExtension_indep {n' c' n c : ℕ} (xj xj' : (Fin n' → E) →ₗ[E] (Fin n → E)) (t : Loc.FC n' c' n c → E) :
@@ -246,7 +246,7 @@ theorem twAn_funLeft_int {n' c' : ℕ} (s : Fin (n' + c')) (l : Fin n') :
 theorem unipotentExtension_freeCoord {n' c' n c : ℕ} (xj : (Fin n' → E) →ₗ[E] (Fin n → E)) (t : Loc.FC n' c' n c → E) (f : Loc.FC n' c' n c) :
     Loc.xx1 xj t (Pi.single f.1.2 1) f.1.1 = t f := by
   unfold Loc.xx1
-  rw [← LinearMap.toMatrix'_apply, LinearMap.toMatrix'_toLin', Matrix.of_apply, dif_pos f.2]
+  rw [← LinearMap.toMatrix'_apply, LinearMap.toMatrix'_toLin', Matrix.of_apply, dite_eq_left f.2]
 
 theorem xx1_add_sub_xx1_single_eq_dite {n' c' n c : ℕ} (xj : (Fin n' → E) →ₗ[E] (Fin n → E)) (t δ : Loc.FC n' c' n c → E)
     (s : Fin (n' + c')) (l : Fin (n + c)) :
@@ -256,9 +256,9 @@ theorem xx1_add_sub_xx1_single_eq_dite {n' c' n c : ℕ} (xj : (Fin n' → E) �
   rw [← LinearMap.toMatrix'_apply, LinearMap.toMatrix'_toLin', Matrix.of_apply, ← LinearMap.toMatrix'_apply,
     LinearMap.toMatrix'_toLin', Matrix.of_apply]
   by_cases hf : Loc.IsFree n' n c l.1 s.1
-  · rw [dif_pos hf, dif_pos hf, dif_pos hf, Pi.add_apply]
+  · rw [dite_eq_left hf, dite_eq_left hf, dite_eq_left hf, Pi.add_apply]
     ring
-  · rw [dif_neg hf, dif_neg hf, dif_neg hf, sub_self]
+  · rw [dite_eq_right hf, dite_eq_right hf, dite_eq_right hf, sub_self]
 
 theorem twAn_chArg_term {n' c' n c : ℕ} (x : (Fin (n' + c') → E) →ₗ[E] (Fin (n + c) → E)) (i : ℕ) :
     Loc.atN (x (Loc.eN E (n' + c') (n' + i + 1))) (n + i) =
@@ -267,14 +267,14 @@ theorem twAn_chArg_term {n' c' n c : ℕ} (x : (Fin (n' + c') → E) →ₗ[E] (
   · rw [basisVec_eq_single h1]
     unfold Loc.atN
     by_cases h2 : n + i < n + c
-    · rw [dif_pos h2, dif_pos ⟨h1, h2⟩]
-    · rw [dif_neg h2, dif_neg (fun h => h2 h.2)]
+    · rw [dite_eq_left h2, dite_eq_left ⟨h1, h2⟩]
+    · rw [dite_eq_right h2, dite_eq_right (fun h => h2 h.2)]
   · have e : Loc.eN E (n' + c') (n' + i + 1) = 0 := by
       funext l
       unfold Loc.eN
       rw [if_neg (by omega)]
       rfl
-    rw [e, map_zero, dif_neg (fun h => h1 h.1)]
+    rw [e, map_zero, dite_eq_right (fun h => h1 h.1)]
     unfold Loc.atN
     split_ifs <;> rfl
 

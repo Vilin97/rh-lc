@@ -19,7 +19,7 @@ def rep (π : Formalism.REAL.UJ ε →* (X →L[ℂ] X)) (x : Matrix (Fin n) (Fi
 
 theorem rep_mat (π : Formalism.REAL.UJ ε →* (X →L[ℂ] X)) (g : Formalism.REAL.UJ ε) : rep ε π (mat ε g) = π g := by
   have h : ∃ g', mat ε g' = mat ε g := ⟨g, rfl⟩
-  rw [rep, dif_pos h, mat_injective ε h.choose_spec]
+  rw [rep, dite_eq_left h, mat_injective ε h.choose_spec]
 
 theorem range_mat : Set.range (mat ε) = Formalism.MainNotions.S.UJset ε := (Formalism.REAL.isClosedEmbeddingMatrix n ε).2
 

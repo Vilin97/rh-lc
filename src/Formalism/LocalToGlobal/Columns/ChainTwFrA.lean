@@ -51,7 +51,7 @@ theorem tfa_conj {N n : ℕ} (hN : N = n + 1) (f : Sp E n ≃ₗ[E] Sp E n) (g :
     have e1 : (extE f).symm (extE g.1 (extE f x)) (Fin.castSucc i) = initL E n ((extE f).symm (extE g.1 (extE f x))) i := rfl
     rw [e1, initL_extE_symm, initL_extE, initL_extE]
     rfl
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     obtain rfl : l = Fin.last n := Fin.ext (by have := l.2; simp; omega)
     rw [extE_symm_last, extE_last, extE_last]
 
@@ -122,7 +122,7 @@ theorem tfaZ_conj {N n : ℕ} (hN : N = n + 1) (f : Sp E n ≃ₗ[E] Sp E n) (z 
       rw [tfaD_apply, if_neg (Fin.castSucc_ne_last i)]
     rw [hinit]
     rfl
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     obtain rfl : l = Fin.last n := Fin.ext (by have := l.2; simp; omega)
     rw [if_pos rfl, extE_symm_last, extE_last, extE_last, tfaD_apply, if_pos rfl, ← mul_assoc, inv_mul_cancel₀ hz, one_mul]
 
@@ -147,7 +147,7 @@ def topFrA (hQS : ∀ P ∈ QE sel (mu : Chr X.F X.E X.K), P ∈ SG') : TopFr (R
     by_cases h : (d.1.til (ST := Pr.vT u) (Pr.piT u)).Ok ∧ Pr.piT u ∉ P.1.asIdeal
     · rw [dif_pos h]
       exact tfaZ_spec (N_m_succ R) (Pr.piT u) d h.1 ⟨P.1, hQS P.1 P.2⟩ h.2 _ x
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact frameOfY_spec u P.1 (tilR hSG u d) x
 
 open Classical in

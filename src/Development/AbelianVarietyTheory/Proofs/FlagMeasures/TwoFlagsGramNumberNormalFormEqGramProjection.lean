@@ -132,7 +132,7 @@ theorem rW_u (u : Matrix (Fin r) (Fin r) ℂ) (v : Fin (2 * r + k + 1) → ℂ) 
   funext j
   have := j.2
   have h : ∀ y, uEmb k r u (wI k r j) y = if wI k r j = y then 1 else 0 := fun y => by
-    unfold uEmb; rw [dif_neg (by simp only [wI]; omega), dif_neg (by simp only [wI]; omega)]
+    unfold uEmb; rw [dite_eq_right (by simp only [wI]; omega), dite_eq_right (by simp only [wI]; omega)]
   simp [rW, Matrix.mulVec, dotProduct, h]
 
 theorem rS_u (u : Matrix (Fin r) (Fin r) ℂ) (v : Fin (2 * r + k + 1) → ℂ) :
@@ -143,13 +143,13 @@ theorem rS_u (u : Matrix (Fin r) (Fin r) ℂ) (v : Fin (2 * r + k + 1) → ℂ) 
     Fin.ext (by have := b.2; simp only [esI]; omega)
   have h1 : ∀ b, uEmb k r u (esI k r a) (eI k r b) = 0 := fun b => by
     have := b.2
-    unfold uEmb; rw [dif_neg (by simp only [esI]; omega), dif_neg (by simp only [eI]; omega), if_neg (esI_ne_eI _ _)]
+    unfold uEmb; rw [dite_eq_right (by simp only [esI]; omega), dite_eq_right (by simp only [eI]; omega), if_neg (esI_ne_eI _ _)]
   have h2 : ∀ b, uEmb k r u (esI k r a) (wI k r b) = 0 := fun b => by
     have := b.2
-    unfold uEmb; rw [dif_neg (by simp only [esI]; omega), dif_neg (by simp only [wI]; omega), if_neg (esI_ne_wI _ _)]
+    unfold uEmb; rw [dite_eq_right (by simp only [esI]; omega), dite_eq_right (by simp only [wI]; omega), if_neg (esI_ne_wI _ _)]
   have h3 : ∀ b, uEmb k r u (esI k r a) (esI k r b) = star (u⁻¹ b a) := fun b => by
     have := b.2
-    unfold uEmb; rw [dif_neg (by simp only [esI]; omega), dif_pos (by simp only [esI]; omega)]
+    unfold uEmb; rw [dite_eq_right (by simp only [esI]; omega), dite_eq_left (by simp only [esI]; omega)]
     simp only [hb]
   simp [rS, Matrix.mulVec, dotProduct, sum3, h1, h2, h3]
 

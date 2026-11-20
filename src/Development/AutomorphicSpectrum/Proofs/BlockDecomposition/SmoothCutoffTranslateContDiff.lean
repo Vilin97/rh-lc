@@ -63,7 +63,7 @@ theorem rt_inv_eq_orb (φ : XB E k) {x : Fin k → Cinf E} (h : IsUnit (lastEnt 
   have hu := tauM_isUnit h
   have e : hu.unit = (rowGL x)⁻¹ := Units.ext (by
     rw [IsUnit.unit_spec]; exact (rowGL_inv_val h).symm)
-  rw [orb, dif_pos hu, e]
+  rw [orb, dite_eq_left hu, e]
   change _ = Rt E k (infGL E k (rowGL x)⁻¹) φ
   rw [map_inv (infGL E k)]
 

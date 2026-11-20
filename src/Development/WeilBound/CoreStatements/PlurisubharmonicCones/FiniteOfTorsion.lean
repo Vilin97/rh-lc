@@ -394,7 +394,7 @@ theorem nz_eq {σ : Ψ → (𝓞 E →+* ℂ)} (hσ : IsCMFam σ) {I : Submodule
     (hv : IsNzFamily I r v) : R.nz σ I = R.nzOf σ I v := by
   have h : ∃ r v, IsNzFamily I r v := ⟨r, v, hv⟩
   unfold RiemLat.nz
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact nzOf_eq R hσ hv h.choose_spec.choose_spec
 
 theorem nzOf_pos (σ : Ψ → (𝓞 E →+* ℂ)) {I : Submodule (𝓞 E) Λ} (hI : IsIsoSub R.form I) {r : ℕ} {v : Fin r → Λ}

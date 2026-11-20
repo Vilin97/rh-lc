@@ -154,7 +154,7 @@ theorem isHermPos_mult (hθ : IsInfFam θ) (hfin : HCFinite θ M J χ)
     intro T T' c h
     have hex : ∃ c, IsMultIP M μ 𝓕 T T' c := ⟨c, h⟩
     unfold ipM
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     exact huniq _ _ _ _ hex.choose_spec h
   have hE : ∀ x y : Mult θ M J χ, ∃ c, IsMultIP M μ 𝓕 x y c := fun x y => hS hθ hH hF _ x.2 _ y.2
   refine ⟨hfd, ?_, ?_, ?_, ?_⟩

@@ -48,7 +48,7 @@ theorem norm_det_eq {r s : ℕ} {Γ : Matrix (Fin r) (Fin r) ℂ} (hΓ : Γ.PosD
     ‖(Γ.submatrix (Fin.castLE h) (Fin.castLE h)).det‖ = leadMinor Γ s := by
   have h1 := (hΓ.submatrix (Fin.castLE_injective h)).det_pos
   unfold leadMinor
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (Complex.re_eq_norm.2 h1.le).symm
 
 theorem sum_grLog {p q : ℕ} {Γ : Matrix (Fin p) (Fin p) ℂ} {Γ' : Matrix (Fin q) (Fin q) ℂ} (h : Γ.PosDef) (h' : Γ'.PosDef)

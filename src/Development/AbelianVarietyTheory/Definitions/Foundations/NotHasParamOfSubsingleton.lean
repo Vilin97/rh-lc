@@ -62,7 +62,7 @@ theorem psFunGL_one_apply (a : ℂˣ) (t : GL (Fin 1) (w.adicCompletion E)) (ht 
     have h0 : Valued.v (t.1 0 0) ≠ 0 := by rw [ht]; exact WithZero.coe_ne_zero
     have h1 : WithZero.unzero h0 = Multiplicative.ofAdd (-1 : ℤ) :=
       WithZero.coe_injective ((WithZero.coe_unzero h0).trans ht)
-    rw [ordV, dif_neg h0, h1]; rfl
+    rw [ordV, dite_eq_right h0, h1]; rfl
   rw [hc, φ.2 t g fun i j h => absurd h (by simp [Subsingleton.elim i j])]
   simp [chiDelta, ho]
 

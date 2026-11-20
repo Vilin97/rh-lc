@@ -55,7 +55,7 @@ theorem Val.bw (Pl : Rows.Places X.K) (pw : Pl.Pl → HeightOneSpectrum (𝓞 X.
   have hT : (Pr.T u : 𝓞 X.K) ∈ (pw w).asIdeal := hw ▸ vl_resChar_mem Pl pw hval w
   have htau : tauOfR hX hPr u (pw w) v = tauOfC (pw w) v.1 := by
     unfold tauOfR
-    rw [dif_pos hT]
+    rw [dite_eq_left hT]
     rfl
   rw [vl_mem_span_intW_iff Pl pw hval w (stepBv W Λ u i v) x, mem_localization_stepLattice_iff W Λ hX u i (pw w) v x]
   refine forall_congr' fun c => ?_

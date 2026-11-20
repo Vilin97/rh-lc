@@ -35,7 +35,7 @@ theorem zhat_famSc (sc : ℝ) (e : Fin r → Fin n → ℂ) (z z' : Fin n → �
 theorem dl_scale (lam : Fin (r + 1) → ℂ) (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ) (l : ℕ) (hl : l ≤ r + 1) :
     Formalism.L2.SG.RealObj.Dl (diagonal lam * Z * diagonal lam) l = (∏ i : Fin l, lam (Fin.castLE hl i)) ^ 2 * Formalism.L2.SG.RealObj.Dl Z l := by
   unfold Formalism.L2.SG.RealObj.Dl
-  rw [dif_pos hl, dif_pos hl]
+  rw [dite_eq_left hl, dite_eq_left hl]
   have h1 : (diagonal lam * Z * diagonal lam).submatrix (Fin.castLE hl) (Fin.castLE hl) =
       diagonal (fun i => lam (Fin.castLE hl i)) * Z.submatrix (Fin.castLE hl) (Fin.castLE hl) *
         diagonal (fun i => lam (Fin.castLE hl i)) := by

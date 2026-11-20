@@ -49,7 +49,7 @@ theorem refKEquiv_of_cpTop (hX : X.Ok) (hPr : Pr.Ok) (hF : FixE (R := R) Λ m2)
     congr 1
     funext x
     unfold XiRef
-    rw [dif_neg (by omega), dif_neg (by omega), if_pos rfl]
+    rw [dite_eq_right (by omega), dite_eq_right (by omega), if_pos rfl]
     rfl
   rw [e, e, lastVectorLine_equivariant hF, liftQ_oneG, liftQ_oneG]
   have h := h2 (oneG Λ sel mu g) (oneG Λ sel mu g') (liftQ hQ p) (p.1.y0 R.k) (liftQ hQ p') (hmem p)

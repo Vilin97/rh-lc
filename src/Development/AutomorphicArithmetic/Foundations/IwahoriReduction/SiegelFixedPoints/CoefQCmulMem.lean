@@ -29,7 +29,7 @@ private theorem coe_diag {D : ℕ} (hD : 0 < D) :
     (((toGQ !![(D : ℤ), 0; 0, 1] : GQ) : GL (Fin 2) ℚ) : Matrix (Fin 2) (Fin 2) ℚ) = !![(D : ℚ), 0; 0, 1] := by
   have h : (0 : ℤ) < (!![(D : ℤ), 0; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ).det := by
     simp [Matrix.det_fin_two]; exact_mod_cast hD
-  rw [toGQ, dif_pos h]
+  rw [toGQ, dite_eq_left h]
   show (!![(D : ℤ), 0; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℚ) = _
   ext i j
   fin_cases i <;> fin_cases j <;> simp

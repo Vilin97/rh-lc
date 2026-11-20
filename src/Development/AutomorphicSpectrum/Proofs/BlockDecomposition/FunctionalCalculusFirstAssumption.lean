@@ -207,7 +207,7 @@ section Fn
 
 theorem coe_toC0 {f : ℝ → ℂ} (h : Continuous f ∧ Tendsto f (cocompact ℝ) (𝓝 0)) : ⇑(toC0 f) = f := by
   unfold toC0
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 def rf (y : ℝ) : ℂ := (((1 + y ^ 2)⁻¹ : ℝ) : ℂ)
@@ -284,7 +284,7 @@ variable [MeasurableSpace (G n)] [BorelSpace (G n)] {μ : Measure (G n)} [μ.IsH
 theorem cls_zero {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] : cls μ (0 : Mat n → V) = 0 := by
   have h : MemLp (fun y : G n => (0 : Mat n → V) y.val) 2 μ := MemLp.zero
   unfold cls
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact MemLp.toLp_zero h
 
 theorem cut_eq_one {c y : ℝ} (h : y ≤ c) : cut c y = 1 := by

@@ -106,10 +106,10 @@ theorem idempotent_sum {A : NAut N} (X : NTypes A) : X.e0 * X.e0 = X.e0 := by
 
 theorem ambientAction_idempotent {A : NAut N} (X : NTypes A) (μ) : X.onAmb μ X.e0 = X.cenAmb μ ⟨X.e0, idempotent_mem_center X⟩ := by
   unfold Formalism.BasicNotions.NTypes.onAmb
-  rw [dif_pos (idempotent_mem_center X)]
+  rw [dite_eq_left (idempotent_mem_center X)]
 
 theorem matrixAction_idempotent {A : NAut N} (X : NTypes A) (μ j) : X.onMt μ j X.e0 = X.cenMt μ j ⟨X.e0, idempotent_mem_center X⟩ := by
   unfold Formalism.BasicNotions.NTypes.onMt
-  rw [dif_pos (idempotent_mem_center X)]
+  rw [dite_eq_left (idempotent_mem_center X)]
 
 end Formalism.BasicNotions.Examples₂.NZ

@@ -44,26 +44,26 @@ def extendZero {L : Subgroup G} (hL : IsOpen (L : Set G)) (f : CompactlySupporte
     · have hcl : IsOpen (L : Set G)ᶜ := (Subgroup.isClosed_of_isOpen L hL).isOpen_compl
       refine (continuousAt_const (y := (0 : ℂ))).congr ?_
       filter_upwards [hcl.mem_nhds hg] with x hx
-      rw [dif_neg (show x ∉ L from hx)]
+      rw [dite_eq_right (show x ∉ L from hx)]
   hasCompactSupport' := by
     refine HasCompactSupport.intro (f.hasCompactSupport.isCompact.image continuous_subtype_val)
       fun g hg => ?_
     by_cases h : g ∈ L
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       exact image_eq_zero_of_notMem_tsupport fun ht => hg ⟨⟨g, h⟩, ht, rfl⟩
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
 
 open Classical in
 theorem extendZero_apply_coe {L : Subgroup G} (hL : IsOpen (L : Set G))
     (f : CompactlySupportedContinuousMap L ℂ) (x : L) : extendZero hL f x = f x := by
   show (if h : (x : G) ∈ L then f ⟨x, h⟩ else 0) = f x
-  rw [dif_pos x.2]
+  rw [dite_eq_left x.2]
 
 open Classical in
 theorem extendZero_apply_of_notMem {L : Subgroup G} (hL : IsOpen (L : Set G))
     (f : CompactlySupportedContinuousMap L ℂ) {g : G} (hg : g ∉ L) : extendZero hL f g = 0 := by
   show (if h : g ∈ L then f ⟨g, h⟩ else 0) = 0
-  rw [dif_neg hg]
+  rw [dite_eq_right hg]
 
 variable [MeasurableSpace G] [BorelSpace G]
 

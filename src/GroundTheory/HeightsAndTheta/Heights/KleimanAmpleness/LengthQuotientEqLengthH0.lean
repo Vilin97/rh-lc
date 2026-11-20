@@ -156,7 +156,7 @@ theorem exists_toCochain_eq (F₁ F₂ : SubSystem S x Ω)
     if h : (T.Nonempty ∧ T ⊆ support x) ∧ T.card = 0 + 1 then v ⟨⟨T, h.1⟩, h.2⟩ else 0
   have hV : ∀ I : Cech.Idx (support x) 0, V I.1.1 = v I := fun I => by
     simp only [V]
-    rw [dif_pos ⟨I.1.2, I.2⟩]
+    rw [dite_eq_left ⟨I.1.2, I.2⟩]
   have hVpair : ∀ (a b : Fin (N + 1)) (ha : a ∈ support x) (hb : b ∈ support x) (T : Chart x),
       a ∈ T.1 → b ∈ T.1 → V {a} - V {b} ∈ F₂.sub T := by
     intro a b ha hb T haT hbT

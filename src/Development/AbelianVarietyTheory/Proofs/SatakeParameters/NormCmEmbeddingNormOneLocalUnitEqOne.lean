@@ -44,7 +44,7 @@ theorem GlobalTheory.TwV.UnitPos.norm_embT_unit : AllSites (fun {D L hT Gi Gl Kc
   obtain ⟨⟨v, s⟩, rfl⟩ := (hT.gat_pos u w hg).surjective τ
   have hq := embT_mem_qbar D ((hT.gat_pos u w hg) ⟨v, s⟩) b
   have e1 : ι (TaylorLogMetric.embT D ((hT.gat_pos u w hg) ⟨v, s⟩) b) = TaylorLogMetric.lamC S.lam (TaylorLogMetric.embT D ((hT.gat_pos u w hg) ⟨v, s⟩) b) := by
-    rw [TaylorLogMetric.lamC, dif_pos hq]
+    rw [TaylorLogMetric.lamC, dite_eq_left hq]
     exact hι ⟨_, hq⟩
   rw [e1, hS v s b]
   obtain ⟨y, hy⟩ := hloc v

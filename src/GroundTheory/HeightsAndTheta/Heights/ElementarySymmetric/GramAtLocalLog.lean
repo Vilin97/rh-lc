@@ -28,7 +28,7 @@ theorem valAt_eq_complexPoint_reading {y : (Σ k, ι k) → Ω} {s : Ω} {z : (�
       IndefiniteRowSideFullHecke.LowerBoundFree.valAt_eq hz (HermMetricEq.isValueAt_iff.1 hv)]
   · have h' : ¬ IndefiniteRowSideFullHecke.LowerBoundFree.RegularAt y s z := fun ⟨v, hv⟩ =>
       h ⟨v, HermMetricEq.isValueAt_iff.2 hv⟩
-    rw [LowerBoundFree.valAt, dif_neg h, IndefiniteRowSideFullHecke.LowerBoundFree.valAt, dif_neg h']
+    rw [LowerBoundFree.valAt, dite_eq_right h, IndefiniteRowSideFullHecke.LowerBoundFree.valAt, dite_eq_right h']
 
 theorem regularAt_of_isUnitOn {y : (Σ k, ι k) → Ω} {c : (k : K) → ι k} {f u : Ω}
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal y)) (hd : InFrameDomain y c f z)

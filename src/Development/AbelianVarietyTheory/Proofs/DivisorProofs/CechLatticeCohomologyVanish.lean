@@ -33,34 +33,34 @@ theorem delta_toFam {m : ℕ} (hm : 0 < m)
   unfold DI.delta toFam
   by_cases ht : t.card = m + 1
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [dif_pos ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
+    · rw [dite_eq_left ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hc : (t.erase i.1).card = m := by rw [Finset.card_erase_of_mem i.2, ht]; rfl
-    rw [dif_pos hc, map_zsmul, hres _ _ _ (nonempty_of_card hm hc)]
-  · rw [dif_neg ht]
+    rw [dite_eq_left hc, map_zsmul, hres _ _ _ (nonempty_of_card hm hc)]
+  · rw [dite_eq_right ht]
     refine Finset.sum_eq_zero fun i hi => ?_
     have hc : (t.erase i).card ≠ m := by
       have := Finset.card_pos.2 ⟨i, hi⟩
       rw [Finset.card_erase_of_mem hi]; omega
-    rw [dif_neg hc, smul_zero]
+    rw [dite_eq_right hc, smul_zero]
 
 theorem toFam_inCech {N : Finset ι → AddSubgroup V} {m : ℕ} (hm : 0 < m)
     (hrange : ∀ s, s.Nonempty → (φ s).range = N s) (x : Cube.Term A m) :
     DI.InCech N m (toFam A φ m x) := by
   refine ⟨?_, fun s => ?_, fun s hs => ?_⟩
-  · unfold toFam; rw [dif_neg (by simp; omega)]
+  · unfold toFam; rw [dite_eq_right (by simp; omega)]
   · unfold toFam
     split_ifs with h
     · rw [← hrange s (nonempty_of_card hm h)]; exact AddMonoidHom.mem_range.2 ⟨_, rfl⟩
     · exact zero_mem _
-  · unfold toFam; rw [dif_neg hs]
+  · unfold toFam; rw [dite_eq_right hs]
 
 theorem toFam_injective {m : ℕ} (hm : 0 < m) (hinj : ∀ s, s.Nonempty → Function.Injective (φ s))
     {x y : Cube.Term A m} (h : toFam A φ m x = toFam A φ m y) : x = y := by
   funext s
   have := congrFun h s.1
   unfold toFam at this
-  rw [dif_pos s.2, dif_pos s.2] at this
+  rw [dite_eq_left s.2, dite_eq_left s.2] at this
   exact hinj _ (nonempty_of_card hm s.2) this
 
 theorem exists_toFam {N : Finset ι → AddSubgroup V} {m : ℕ} (hm : 0 < m)

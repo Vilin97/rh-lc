@@ -156,7 +156,7 @@ theorem quotIntegral_eq {F : G → ℂ} (hF : Measurable F)
     (hFH : ∀ h ∈ H, ∀ g, F (h * g) = F g) {ρ : G → ℝ≥0∞} (hρ : IsQuotNormaliser H μH ρ) :
     quotIntegral μG H μH F = ∫ g, F g * ((ρ g).toReal : ℂ) ∂μG := by
   have hex : ∃ ρ, IsQuotNormaliser H μH ρ := ⟨ρ, hρ⟩
-  rw [quotIntegral, dif_pos hex]
+  rw [quotIntegral, dite_eq_left hex]
   exact integral_normaliser_eq_of hF hFH hex.choose_spec hρ
 
 theorem integral_normaliser_eq : PositivityTheory.Rg.BcB.D4.NormEq := by

@@ -93,7 +93,7 @@ private theorem blk_zero {n : ℕ} (w : Pl E) (g : GLw n w) (m : GLw 0 w) (X : M
   have key : ∀ (M : Matrix (Fin n) (Fin n) (w.adicCompletion E)), M = g.val →
       (if hM : IsUnit M then hM.unit else (1 : GLw n w)) = g := by
     rintro _ rfl
-    rw [dif_pos g.isUnit]
+    rw [dite_eq_left g.isUnit]
     exact Units.ext rfl
   exact key _ hM
 
@@ -107,7 +107,7 @@ private theorem constant_term_parabolic_average {n : ℕ} (w : Pl E) (hw : IsSpl
     trivial
   have hs : ∀ y : GLw n w, (toSub (UL n w) y : GLw n w) = y := fun y => by
     unfold toSub
-    rw [dif_pos (hU y)]
+    rw [dite_eq_left (hU y)]
   unfold ct0 ctMu ct
   rw [hint_sub]
   simp only [blk_zero, hs]

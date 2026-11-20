@@ -218,7 +218,7 @@ theorem evStalk_germ {y : Y.pts σ} {U : Y.X.Opens} (h : base y ∈ U) (a : Γ(Y
   have e := congrArg (fun φ => φ.hom a) (Scheme.germ_stalkClosedPointTo y.1 U h)
   refine e.trans ?_
   show _ = valR y.1 U a
-  rw [valR, dif_pos hy]
+  rw [valR, dite_eq_left hy]
   rfl
 
 theorem evStalk_ne_zero_iff {y : Y.pts σ} (a : Y.X.presheaf.stalk (base y)) :
@@ -262,13 +262,13 @@ theorem HasVal.unique (h : HasVal y f c) (h' : HasVal y f c') : c = c' := by
 theorem HasVal.regC (h : HasVal y f c) : RegC y f := ⟨c, h⟩
 
 theorem RegC.hasVal (h : RegC y f) : HasVal y f (val y f) := by
-  rw [val, dif_pos h]
+  rw [val, dite_eq_left h]
   exact h.choose_spec
 
 theorem HasVal.val_eq (h : HasVal y f c) : val y f = c := h.regC.hasVal.unique h
 
 theorem val_of_not_regC (h : ¬ RegC y f) : val y f = 0 := by
-  rw [val, dif_neg h]
+  rw [val, dite_eq_right h]
 
 theorem regC_of_val_ne_zero (h : val y f ≠ 0) : RegC y f := by
   by_contra h'

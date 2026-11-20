@@ -43,21 +43,21 @@ theorem wI_val (c : Fin (k + 1)) : (wI k r c).val = r + c.val := rfl
 theorem esI_val (a : Fin r) : (esI k r a).val = 2 * r + k - a.val := rfl
 
 theorem colQ_eI (a : Fin r) : colQ e f wf z0 (eI k r a) = e a := by
-  unfold colQ; rw [dif_pos (by rw [eI_val]; exact a.isLt)]; rfl
+  unfold colQ; rw [dite_eq_left (by rw [eI_val]; exact a.isLt)]; rfl
 
 theorem colQ_wI (c : Fin (k + 1)) (hc : c.val < k) : colQ e f wf z0 (wI k r c) = wf ⟨c.val, hc⟩ := by
   unfold colQ
-  rw [dif_neg (by rw [wI_val]; omega), dif_pos (by rw [wI_val]; omega)]
+  rw [dite_eq_right (by rw [wI_val]; omega), dite_eq_left (by rw [wI_val]; omega)]
   congr 1; apply Fin.ext; show r + c.val - r = c.val; omega
 
 theorem colQ_wI_last (c : Fin (k + 1)) (hc : c.val = k) : colQ e f wf z0 (wI k r c) = z0 := by
   unfold colQ
-  rw [dif_neg (by rw [wI_val]; omega), dif_neg (by rw [wI_val]; omega), dif_pos (by rw [wI_val]; omega)]
+  rw [dite_eq_right (by rw [wI_val]; omega), dite_eq_right (by rw [wI_val]; omega), dite_eq_left (by rw [wI_val]; omega)]
 
 theorem colQ_esI (a : Fin r) : colQ e f wf z0 (esI k r a) = f a := by
   have ha := a.isLt
   unfold colQ
-  rw [dif_neg (by rw [esI_val]; omega), dif_neg (by rw [esI_val]; omega), dif_neg (by rw [esI_val]; omega)]
+  rw [dite_eq_right (by rw [esI_val]; omega), dite_eq_right (by rw [esI_val]; omega), dite_eq_right (by rw [esI_val]; omega)]
   congr 1; apply Fin.ext; show 2 * r + k - (2 * r + k - a.val) = a.val; omega
 
 def Qm : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ := Matrix.of fun i j => colQ e f wf z0 j i
@@ -433,8 +433,8 @@ def piB {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
 theorem blockW_wI (h : Matrix (Fin k) (Fin k) ℂ) (a b : Fin k) :
     blockW k r h (wI k r ⟨a.val, by omega⟩) (wI k r ⟨b.val, by omega⟩) = h a b := by
   unfold blockW
-  rw [dif_pos ⟨by rw [wI_val]; omega, by rw [wI_val]; simp only [Fin.val_mk]; have := a.isLt; omega⟩,
-    dif_pos ⟨by rw [wI_val]; omega, by rw [wI_val]; simp only [Fin.val_mk]; have := b.isLt; omega⟩]
+  rw [dite_eq_left ⟨by rw [wI_val]; omega, by rw [wI_val]; simp only [Fin.val_mk]; have := a.isLt; omega⟩,
+    dite_eq_left ⟨by rw [wI_val]; omega, by rw [wI_val]; simp only [Fin.val_mk]; have := b.isLt; omega⟩]
   congr 1 <;> apply Fin.ext <;> simp only [wI_val] <;> omega
 
 theorem piB_blockW (hF : IsFrameJ ε e f wf z0) {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]

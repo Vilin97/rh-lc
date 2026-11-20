@@ -166,16 +166,16 @@ variable {U σ V dict mu}
 theorem isNormOn_l2C (x₀ : ℝ) {h : CuspL2 U σ V dict mu} (h1 : L2DefiniteCuspForms U σ V dict mu h) {a n} (hd : Dom a n) :
     IsNormOn (cusp Xo c U a n) σ (l2C U σ V dict mu x₀ a n (h a n hd)) where
   nonneg f hf := by
-    rw [l2C, dif_pos hf]; exact mul_nonneg (lieFac_pos _ _ _).le (l2Norm_nonneg_bis _ _ _ _ _ _ _)
+    rw [l2C, dite_eq_left hf]; exact mul_nonneg (lieFac_pos _ _ _).le (l2Norm_nonneg_bis _ _ _ _ _ _ _)
   defin f hf h0 := by
-    rw [l2C, dif_pos hf] at h0
+    rw [l2C, dite_eq_left hf] at h0
     exact congrArg Subtype.val (h1 a n hd ⟨f, hf⟩ ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne'))
   smul x f hf := by
-    rw [l2C, l2C, dif_pos hf, dif_pos (Submodule.smul_mem _ x hf)]
+    rw [l2C, l2C, dite_eq_left hf, dite_eq_left (Submodule.smul_mem _ x hf)]
     have := l2Norm_smul_alt V σ (rdC U σ a n) dict mu (h a n hd) x ⟨f, hf⟩
     exact (congrArg (lieFac Dw x₀ a * ·) this).trans (by ring)
   add f hf g hg := by
-    rw [l2C, l2C, l2C, dif_pos hf, dif_pos hg, dif_pos (Submodule.add_mem _ hf hg), ← mul_add]
+    rw [l2C, l2C, l2C, dite_eq_left hf, dite_eq_left hg, dite_eq_left (Submodule.add_mem _ hf hg), ← mul_add]
     exact mul_le_mul_of_nonneg_left (L2Norm_add_le V σ (rdC U σ a n) dict mu (h a n hd) ⟨f, hf⟩ ⟨g, hg⟩)
       (lieFac_pos _ _ _).le
 
@@ -184,7 +184,7 @@ theorem l2C_le_supC (x : ℝ) (hσ : GoodEmb c σ) {a n} (h : JMemL2 V σ (rdC U
     ∀ f ∈ cusp Xo c U a n, l2C U σ V dict mu x a n h f ≤ supC Xo c U x σ a n f := by
   intro f hf
   unfold l2C supC
-  rw [dif_pos hf]
+  rw [dite_eq_left hf]
   refine mul_le_mul_of_nonneg_left ?_ (lieFac_pos Dw x a).le
   exact L2Norm_le_sup_norm (V := V) (la := laU (U σ) a n) (rd := rdC U σ a n) (dict := dict) (mu := mu) (h := h)
     (hd := hd) (hm := hm) (f := ⟨f, hf⟩) (hfin := supE_cusp_ne_top hσ hf)

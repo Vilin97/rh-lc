@@ -133,7 +133,7 @@ theorem one_le_nloc {D : D7} {large₂ : SizeData₂ D} {X : HidaSetting D} {Y :
   have hdne : dI D ≠ ⊥ := hd ▸ N.𝔡_ne
   have key : N.nD l = ((Nloc (ddS D) D.R.rS l (Dl (lf D (X.Fu u)).fl (frq X t.rep).fl l) : ℚ) : ℝ) := by
     unfold GlobalTheory.DegCnt.NF.nD
-    rw [dif_pos hl', hDl l hl', nloc_norm, hnf, norm_of_star, hd, frameExp_int _ _ hl']
+    rw [dite_eq_left hl', hDl l hl', nloc_norm, hnf, norm_of_star, hd, frameExp_int _ _ hl']
   have hne : N.nD l ≠ 0 := by
     rw [key, nloc_norm]
     have hA : (Ideal.absNorm (dI D) : ℝ) ≠ 0 := by

@@ -140,13 +140,13 @@ theorem colGL_col {R : Type} [CommRing R] {k : ℕ} (hk : k ≠ m) (y : Fin k �
   rw [colGL, coe_uGL, uMat_apply, one_apply]
   split_ifs with h1 h2
   · rfl
-  · rw [colX_apply, dif_neg (by simp only; omega)]
+  · rw [colX_apply, dite_eq_right (by simp only; omega)]
   · rfl
 
 omit [IsTotallyComplex E] in
 theorem blockGL_row_last {R : Type} [CommRing R] (hmn : m < n) (h : GL (Fin m) R) {j : Fin n} (hj : j.val + 1 = n)
     (t : Fin n) : (blockGL hmn.le h : Matrix (Fin n) (Fin n) R) j t = (1 : Matrix (Fin n) (Fin n) R) j t := by
-  rw [coe_blockGL, blockMat_apply, dif_neg (by omega), one_apply]
+  rw [coe_blockGL, blockMat_apply, dite_eq_right (by omega), one_apply]
 
 omit [IsTotallyComplex E] in
 theorem blockGL_col {R : Type} [CommRing R] (hmn : m < n) (h : GL (Fin m) R) {l : Fin n} (hl : l.val = m)

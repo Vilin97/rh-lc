@@ -43,7 +43,7 @@ theorem topPD_self (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp))
   congr 2
   unfold KB.Pl.RR D.RRplace
   by_cases hl : D.IsLocPt (TBB.bigPt P.r c) (P.r + 1)
-  · rw [if_pos hl, dif_pos ⟨hl, hl⟩, dif_neg (by omega), if_pos rfl]
+  · rw [if_pos hl, dite_eq_left ⟨hl, hl⟩, dite_eq_right (by omega), if_pos rfl]
     by_cases hw : w = []
     · subst hw
       simp [topPair, KB.Pl.V]
@@ -51,7 +51,7 @@ theorem topPD_self (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp))
       unfold topPair Top.topOf
       rw [if_neg hw]
       rfl
-  · rw [if_neg hl, dif_neg (fun h => hl h.1)]
+  · rw [if_neg hl, dite_eq_right (fun h => hl h.1)]
 
 theorem residual_pairing_eq_self_pairing (p : KB.Pl P Wp Wq) {F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)} (hF : B.CkOn ⊤ (B.GV P.k P.r) F)
     {w : List C.Letter} (hw : KB.CutWord P p.l0 w) : p.RR F 0 w [] [] = pair0 p F F w := by

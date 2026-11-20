@@ -30,7 +30,7 @@ theorem detOn_mul (g h : Matrix (Fin n) (Fin n) ℂ) (W : Submodule ℂ (Fin n �
   have hgh : ∀ y ∈ W, Matrix.toLin' (g * h) y ∈ W := fun y hy => by
     rw [Matrix.toLin'_apply, ← Matrix.mulVec_mulVec]; exact hg _ (hh y hy)
   unfold detOn
-  rw [dif_pos hgh, dif_pos hg', dif_pos hh', ← norm_mul, ← LinearMap.det_comp]
+  rw [dite_eq_left hgh, dite_eq_left hg', dite_eq_left hh', ← norm_mul, ← LinearMap.det_comp]
   congr 2
   refine LinearMap.ext fun y => Subtype.ext ?_
   simp [Matrix.toLin'_apply, Matrix.mulVec_mulVec]
@@ -41,7 +41,7 @@ theorem detOn_unipotent (g : Matrix (Fin n) (Fin n) ℂ) (W : Submodule ℂ (Fin
   have hg' : ∀ y ∈ W, Matrix.toLin' g y ∈ W := fun y hy => by
     rw [Matrix.toLin'_apply]; exact hg y hy
   unfold detOn
-  rw [dif_pos hg']
+  rw [dite_eq_left hg']
   set f := (Matrix.toLin' g).restrict hg' with hf
   have key : ∀ k : ℕ, ∀ y : W,
       (((f - 1) ^ k) y : Fin n → ℂ) = ((Matrix.toLin' g - 1) ^ k) (y : Fin n → ℂ) := by
@@ -117,7 +117,7 @@ theorem gram_move {r : ℕ} (c : Fin r → Fin n → ℂ) (hc : LinearIndependen
   set A := LinearMap.toMatrix b b f with hA
   have hdetA : LinearMap.det f = A.det := (LinearMap.det_toMatrix b f).symm
   have hdetOn : detOn g W = ‖A.det‖ := by
-    unfold detOn; rw [dif_pos hW', hdetA]
+    unfold detOn; rw [dite_eq_left hW', hdetA]
   set C : Matrix (Fin n) (Fin r) ℂ := Matrix.of fun i a => c a i with hC
   have hcol : ∀ a, g *ᵥ c a = ∑ i, A i a • c i := by
     intro a
@@ -383,7 +383,7 @@ private theorem detOn_pos_of_isUnit_det_of_mapsTo {n : ℕ} (g : Matrix (Fin n) 
     (W : Submodule ℂ (Fin n → ℂ)) (hW : ∀ y ∈ W, g *ᵥ y ∈ W) : 0 < detOn g W := by
   have hW' : ∀ y ∈ W, Matrix.toLin' g y ∈ W := fun y hy => by rw [Matrix.toLin'_apply]; exact hW y hy
   unfold detOn
-  rw [dif_pos hW']
+  rw [dite_eq_left hW']
   apply norm_pos_iff.2
   apply IsUnit.ne_zero
   apply (LinearMap.isUnit_iff_isUnit_det _).1

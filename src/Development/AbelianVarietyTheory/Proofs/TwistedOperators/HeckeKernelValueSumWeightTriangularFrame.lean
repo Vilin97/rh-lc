@@ -78,7 +78,7 @@ theorem hkVal_frBor : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     have ex' := hT Ω (⟨y.x, xo', u', tan', eig', bas', s', gen'⟩ : FrPt Xo c Ω) C
     have ex := hT Ω y C
     unfold hkTerm
-    rw [dif_pos ex', dif_pos ex]
+    rw [dite_eq_left ex', dite_eq_left ex]
     have hz' := ex'.choose_spec
     have hz := ex.choose_spec
     generalize ex'.choose = z' at hz' ⊢

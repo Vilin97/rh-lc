@@ -40,7 +40,7 @@ theorem contracts_of_iso_directSum (H G I F V : Type) [Monoid H] [Monoid G] [Add
     | tmul x v => rw [hJ, hπ, DirectSum.component.lof_self, hP]
     | add s t hs ht => simp only [map_add (f := _), hs, ht, add_smul]
   have hπJ' : ∀ i, i ≠ i₀ → ∀ y x v, π (J i y (x ⊗ₜ v)) = 0 := fun i hi y x v => by
-    rw [hJ, hπ, DirectSum.component.of, dif_neg hi]; simp
+    rw [hJ, hπ, DirectSum.component.of, dite_eq_right hi]; simp
   refine ⟨π, fun y => ⟨J i₀ y z, by rw [hπJ, hz, one_smul]⟩, fun h g f v => ?_, fun l hl => ?_⟩
   · rw [hπ, hπ]
     have e : DirectSum.component ℂ I (fun i => A i ⊗[ℂ] B i) i₀ ((Representation.directSum fun i =>

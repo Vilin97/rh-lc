@@ -38,7 +38,7 @@ theorem main : PI.ProdUnitInert := by
   have hβmem : φ₀ (b : E) ∈ Qbar := mem_Qbar φ₀ _
   have hPmem : (∏ s, emb s z) ∈ Qbar := by rw [hP]; exact mem_Qbar φ₀ _
   unfold PI.ProdUnitInert.lamC
-  rw [dif_pos hPmem]
+  rw [dite_eq_left hPmem]
   have hsub : (⟨∏ s, emb s z, hPmem⟩ : Qbar) = (x : Qbar) + (y : Qbar) * ⟨φ₀ (b : E), hβmem⟩ := by
     apply Subtype.ext
     simp [hPxy]

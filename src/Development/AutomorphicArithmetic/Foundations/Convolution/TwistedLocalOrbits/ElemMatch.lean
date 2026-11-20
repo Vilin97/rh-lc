@@ -99,7 +99,7 @@ private theorem quot_dcoset {G : Type} [Group G] [TopologicalSpace G] [IsTopolog
     rw [key]
     exact ENNReal.mul_ne_top (ENNReal.inv_ne_top.2 (hV0 y)) hUc.measure_ne_top
   have hm2 : Measurable fun g => S.indicator (fun _ => (1 : ENNReal)) g * hex.choose g := hm.mul hex.choose_spec.1
-  rw [quotIntegral, dif_pos hex]
+  rw [quotIntegral, dite_eq_left hex]
   have : ∀ g, F g * ((hex.choose g).toReal : ℂ) = c * ((S.indicator (fun _ => 1) g * hex.choose g).toReal : ℂ) := by
     intro g
     by_cases hg : g ∈ S <;> simp [hF, hg]

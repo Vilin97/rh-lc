@@ -59,7 +59,7 @@ private lemma secIsMul_trans' {R : Type} [CommRing R] {Y : Scheme.{0}} (p : Y �
 private lemma gs_id_eq_germ_moduli {X : Scheme.{0}} (U : X.Opens) (a : Γ(X, U)) (z : X) (hz : z ∈ U) :
     gs (𝟙 X) z U a = (X.presheaf.germ U z hz).hom a := by
   unfold gs
-  rw [dif_pos (show (𝟙 X) z ∈ U from hz)]
+  rw [dite_eq_left (show (𝟙 X) z ∈ U from hz)]
   rfl
 
 theorem exists_sec_unit_closed_fibre (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (G : Over (Sp V))

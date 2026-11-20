@@ -37,7 +37,7 @@ theorem chi_succ_eq : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B
     inv_injective h3
   have e : Formalism.L2.Col.chiAt I.Ch w (i : ℕ) = I.Ch.chi i w := by
     unfold Formalism.L2.Col.chiAt Formalism.L2.Col.extChi
-    rw [dif_pos (show (i : ℕ) < X.B.R.m from i.2)]
+    rw [dite_eq_left (show (i : ℕ) < X.B.R.m from i.2)]
     rfl
   rw [e]
   exact Units.ext h5

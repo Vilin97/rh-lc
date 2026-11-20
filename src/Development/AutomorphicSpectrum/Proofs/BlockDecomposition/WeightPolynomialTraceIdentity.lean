@@ -164,7 +164,7 @@ theorem trace_restrict_eq (E : KMod n) (T' : E.V →L[ℂ] E.V) (hT : ∀ k, T' 
     obtain ⟨ξ, hξ⟩ := x
     simp only [LinearMap.restrict_apply, LinearMap.smul_apply, SetLike.val_smul]
     exact dualT_wt E T' μ k z hk ξ hξ
-  rw [trOn, dif_pos hg, e, map_smul, smul_eq_mul]
+  rw [trOn, dite_eq_left hg, e, map_smul, smul_eq_mul]
 
 theorem trace_decomp (E : KMod n) (T' : E.V →L[ℂ] E.V) (hT : ∀ k, T' * E.ρ k = E.ρ k * T')
     (htop : (⨆ μ, wtDual E μ) = ⊤) (hind : iSupIndep (wtDual E)) (s : Finset (Fin n → ℤ))

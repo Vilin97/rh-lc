@@ -31,7 +31,7 @@ theorem br_exists_ellT (D : D7) (M : IntermediateField ℚ ℂ) [NumberField M]
   refine ⟨liftM M (embT D τ a), ?_, Submodule.subset_span ⟨a, ha, rfl⟩⟩
   have hm := hemb τ a
   unfold liftM
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   intro h
   have : embT D τ a = 0 := congrArg Subtype.val h
   exact ha0 ((map_eq_zero (embT D τ)).mp this)

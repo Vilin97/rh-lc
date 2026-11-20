@@ -56,7 +56,7 @@ def ext {V V' : Z.Opens} (h : V' ≤ V) (Λ' : Lifts q V') : Lifts q V where
     by_cases hT : inU q V' T.obj
     · rw [dif_pos hT]
       exact (Λ'.hv ⟨T.obj, hT⟩ (rs h g)).trans (ev_res q h T.obj hT T.property g)
-    · rw [dif_neg hT]
+    · rw [dite_eq_right hT]
       exact anyLift_spec q T g
 
 theorem ext_v {V V' : Z.Opens} (h : V' ≤ V) (k : inU q V' ≤ inU q V) (Λ' : Lifts q V')

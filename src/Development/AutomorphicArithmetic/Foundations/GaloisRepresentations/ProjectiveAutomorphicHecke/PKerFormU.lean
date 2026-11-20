@@ -98,7 +98,7 @@ theorem pKerFormU_of :
   have hφ : ∀ u : finU E n, φ (ofU u) = algForms.val f u.1 := fun u => by
     have h : ∃ u', ofU u' = ofU u := ⟨u, rfl⟩
     show (if h : ∃ u', ofU u' = ofU u then algForms.val f h.choose.1 else 0) = _
-    rw [dif_pos h, hinj h.choose_spec]
+    rw [dite_eq_left h, hinj h.choose_spec]
   have hone : ∀ γ : Gam0 E n, sim (rat γ) ∈ ZU → γ.1.2 = 1 := fun γ h => rat_eq_one_of_ZU γ.1.2 γ.2.2 h
   refine ⟨φ, ⟨?_, ?_, ?_⟩, hφ, ?_⟩
   · intro γ k hk he

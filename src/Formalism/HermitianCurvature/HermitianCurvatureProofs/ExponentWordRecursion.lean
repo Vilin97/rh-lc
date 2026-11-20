@@ -308,7 +308,7 @@ theorem rule_A2_of_word_expansion : C2.SmoothClassInFiniteOrder := by
     have h : ∃ uv : List (Mat k r) × List (Mat k r), (∀ X ∈ uv.1, unitLie k r X) ∧
         (∀ X ∈ uv.2, unitLie k r X) ∧ lr u v = lr uv.1 uv.2 := ⟨(u, v), hu, hv, rfl⟩
     dsimp only [Cw]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     obtain ⟨hu0, hv0, heq⟩ := h.choose_spec
     have hlen : (u.length : ℝ) + v.length = (h.choose.1.length : ℝ) + h.choose.2.length := by
       have h1 := congrArg List.length heq

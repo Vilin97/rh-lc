@@ -21,13 +21,13 @@ private theorem chs_cons_some (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL k
     obtain ⟨hη, he⟩ := h.choose_spec
     exact (IrrGL.ofChar_inj.mp he).symm
   unfold chs
-  rw [Multiset.filterMap_cons_some _ _ _ (by rw [dif_pos h])]
+  rw [Multiset.filterMap_cons_some _ _ _ (by rw [dite_eq_left h])]
   rw [hc]
 
 private theorem chs_cons_not {y : IrrGL k} (hy : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
     (s : Multiset (IrrGL k)) : chs (y ::ₘ s) = chs s := by
   unfold chs
-  rw [Multiset.filterMap_cons_none _ _ (by rw [dif_neg hy])]
+  rw [Multiset.filterMap_cons_none _ _ (by rw [dite_eq_right hy])]
 
 end Loc
 

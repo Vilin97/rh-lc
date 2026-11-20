@@ -92,14 +92,14 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 theorem leadMinorE_self {K : Type} [Field K] [StarRing K] {N : ℕ}
     (Z : Matrix (Fin N) (Fin N) K) : leadMinorE Z N = Z.det := by
   unfold leadMinorE
-  rw [dif_pos le_rfl]
+  rw [dite_eq_left le_rfl]
   exact congrArg Matrix.det (Matrix.ext fun i j => rfl)
 
 theorem leadMinorE_castSucc {K : Type} [Field K] [StarRing K] {N : ℕ}
     (Z : Matrix (Fin (N + 1)) (Fin (N + 1)) K) :
     leadMinorE Z N = (Z.submatrix Fin.castSucc Fin.castSucc).det := by
   unfold leadMinorE
-  rw [dif_pos (Nat.le_succ N)]
+  rw [dite_eq_left (Nat.le_succ N)]
   exact congrArg Matrix.det (Matrix.ext fun i j => rfl)
 
 theorem hT_fvec (F : FlagG S r T) (i j : Fin (r + 1)) : S.hT (F.fvec i) (F.fvec j) = TF r T i j := by
@@ -212,7 +212,7 @@ theorem gmatScale : GmatScale := by
         (∏ a : Fin l, star (c (Fin.castLE hl a)) * c' (Fin.castLE hl a)) * leadMinorE Z l := by
     intro l hl
     unfold leadMinorE
-    rw [dif_pos hl, dif_pos hl]
+    rw [dite_eq_left hl, dite_eq_left hl]
     have hsub : (Matrix.diagonal (fun a => star (c a)) * Z * Matrix.diagonal c').submatrix (Fin.castLE hl)
         (Fin.castLE hl) = Matrix.diagonal (fun a : Fin l => star (c (Fin.castLE hl a))) *
           Z.submatrix (Fin.castLE hl) (Fin.castLE hl) * Matrix.diagonal (fun a : Fin l => c' (Fin.castLE hl a)) := by

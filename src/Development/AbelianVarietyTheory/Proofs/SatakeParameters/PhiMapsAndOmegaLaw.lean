@@ -170,8 +170,8 @@ theorem matrixExtendByZero_mul (χ : κˣ →* Kˣ) (a b : κ) : ext0 χ (a * b)
     · rw [dif_pos ha, dif_pos hb, dif_pos (ha.mul hb), ← Units.val_mul, ← map_mul]
       congr 2
       exact Units.ext (by simp)
-    · rw [dif_neg hb, dif_neg fun h => hb (isUnit_of_mul_isUnit_right h), mul_zero]
-  · rw [dif_neg ha, dif_neg fun h => ha (isUnit_of_mul_isUnit_left h), zero_mul]
+    · rw [dite_eq_right hb, dite_eq_right fun h => hb (isUnit_of_mul_isUnit_right h), mul_zero]
+  · rw [dite_eq_right ha, dite_eq_right fun h => ha (isUnit_of_mul_isUnit_left h), zero_mul]
 
 theorem unitCharacterExtendByZero_ne_zero_of_isUnit (χ : κˣ →* Kˣ) {a : κ} (h : IsUnit a) : ext0 χ a ≠ 0 := by
   unfold ext0

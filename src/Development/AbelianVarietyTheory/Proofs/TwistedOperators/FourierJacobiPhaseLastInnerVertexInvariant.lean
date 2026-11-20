@@ -64,7 +64,7 @@ theorem phase_eq_of_lastMove {k : Type} [Field k] [ValuativeRel k] [TopologicalS
     have hrow : ∀ (z : ColArgs Γ) (f : Vars Γ) s, rowVar z f (i + 1) s = z (i + 1) (topLast Γ (i + 1 + 1)) s := by
       intro z f s
       simp only [rowVar]
-      rw [dif_neg (by omega)]
+      rw [dite_eq_right (by omega)]
     simp only [hrow, hx1, colVar, Fin.val_mk, hst, map_inv]
     rw [← map_inv]
     have hv : ∀ (g : GL (Fin (topRank Γ (i + 1))) k) a b,

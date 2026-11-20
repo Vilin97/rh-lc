@@ -120,7 +120,7 @@ lemma qr_base_can (c : ℤ) : qr_base (canT nu) c = qr_can nu c := by
 
 lemma qr_base_mem (I' : TIdx nu) (c : ↥(TCols nu)) : qr_base I' c = I' c := by
   unfold qr_base
-  rw [dif_pos c.2]
+  rw [dite_eq_left c.2]
 
 def qr_j (hi : Interl lam nu) (I' : TIdx nu) : TIdx lam := fun c =>
   ⟨qr_ext (colH lam c = colH nu c + 1) (qr_base I' c).1, by
@@ -150,7 +150,7 @@ lemma qr_j_surj (hn : Dominant nu) (hi : Interl lam nu) (K : TIdx lam)
   rw [qr_ext_surj _ (K c).1 (hK c)]
   congr 1
   by_cases h : c.1 ∈ TCols nu
-  · rw [qr_base, dif_pos h]
+  · rw [qr_base, dite_eq_left h]
   · have := qr_subsing hn h
     exact congrArg Subtype.val (Subsingleton.elim (qr_base _ c.1) ⟨_, hc c⟩)
 

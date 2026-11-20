@@ -213,13 +213,13 @@ theorem lamPat2_holds : LamPat2 := by
     by_cases h : a.1 + 1 < D.R.rS
     · have hy : nxt (fun b => rv X.B.I v (X.eR b)) (rv X.B.I v (X.zR w)) a =
           rv X.B.I v (bv X (Sum.inl ⟨a.1 + 1, h⟩)) := by
-        unfold nxt; rw [dif_pos h]; rfl
+        unfold nxt; rw [dite_eq_left h]; rfl
       rw [hy, Bv'_rv, Pi.single_apply] at hj
       split_ifs at hj with hjj
       · subst hjj; simp [lvk]
       · exact absurd rfl hj
     · have hy : nxt (fun b => rv X.B.I v (X.eR b)) (rv X.B.I v (X.zR w)) a = rv X.B.I v (X.zR w) := by
-        unfold nxt; rw [dif_neg h]
+        unfold nxt; rw [dite_eq_right h]
       rcases j with b | i | b
       · simp only [lvk, Sum.elim_inl]; omega
       · simp only [lvk, Sum.elim_inl, Sum.elim_inr]; omega

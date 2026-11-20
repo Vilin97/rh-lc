@@ -53,7 +53,7 @@ theorem isTwG_carFun : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZer
         ∀ a b, B (τ a) (τ b) = β a b :=
       ⟨Tw.pullA τ h.choose, Tw.pullA_mem hc hτ h.choose_spec.1, fun y => h.choose_spec.2.1 _,
         fun a b => h.choose_spec.2.2 _ _⟩
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     have e : h'.choose = Tw.pullA τ h.choose := LinearMap.ext₂ fun a b => by
       have h1 := h'.choose_spec.2.2 a b
       have h2 := h.choose_spec.2.2 (τ a) (τ b)
@@ -70,6 +70,6 @@ theorem isTwG_carFun : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZer
       rintro ⟨β, h1, h2, h3⟩
       refine h ⟨Tw.pullA τ.symm β, Tw.pullA_mem hcs hτs h1, fun y => h2 _, fun a b => ?_⟩
       rw [Tw.pullA_apply, ← h3, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply]
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.CompanionTheory.Ar.Fan.TwistedCarrierFunction

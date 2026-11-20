@@ -60,7 +60,7 @@ theorem cayCand_mem (g : UpqT P Q) : cayCand P Q g ∈ lieU P Q := by
 
 theorem cayInv_eq (g : UpqT P Q) : cayInv P Q g = ⟨cayCand P Q g, cayCand_mem P Q g⟩ := by
   unfold cayInv
-  rw [dif_pos (cayCand_mem P Q g)]
+  rw [dite_eq_left (cayCand_mem P Q g)]
 
 end Chart
 

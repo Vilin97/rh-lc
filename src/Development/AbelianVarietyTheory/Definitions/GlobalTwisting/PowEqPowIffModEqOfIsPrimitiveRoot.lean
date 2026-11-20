@@ -19,7 +19,7 @@ theorem isFrob_one {K : Type} [Field K] [NumberField K] (p : HeightOneSpectrum (
 theorem heckeVal_one {K : Type} [Field K] [NumberField K] (p : HeightOneSpectrum (𝓞 K)) :
     heckeVal K (1 : (K ≃ₐ[K] K) →* ℂˣ) p = 1 := by
   unfold heckeVal
-  rw [dif_pos ⟨fun _ _ => rfl, ⟨1, isFrob_one p⟩⟩]
+  rw [dite_eq_left ⟨fun _ _ => rfl, ⟨1, isFrob_one p⟩⟩]
   simp
 
 theorem absNorm_eq (p : HeightOneSpectrum (𝓞 ℚ)) :
@@ -197,7 +197,7 @@ theorem heckeVal_galChar (ψ : DirichletCharacter ℂ m) (𝔭 : HeightOneSpectr
     rw [unramIn_cyc m F 𝔭 hp σ hσ, map_one]
   have hcond : (∀ σ, InInertia F 𝔭 σ → galChar m F ψ σ = 1) ∧ ∃ σ, IsFrob F 𝔭 σ := ⟨hin, hex⟩
   unfold heckeVal
-  rw [dif_pos hcond]
+  rw [dite_eq_left hcond]
   have hs := gal_of_isFrob m F 𝔭 hp hcond.2.choose_spec
   simp only [galChar, MonoidHom.coe_comp, Function.comp_apply, MulEquiv.coe_toMonoidHom,
     MulChar.coe_toUnitHom]

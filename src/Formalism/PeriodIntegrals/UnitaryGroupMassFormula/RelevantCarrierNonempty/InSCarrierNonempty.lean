@@ -43,7 +43,7 @@ theorem coefX_single_add {T : E} (G : FlagG S r T) (i : Fin r) (c : E) {w : S.V}
     Submodule.add_mem _ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩))
       (Submodule.span_mono (Set.image_subset_range _ _) hw')
   unfold FlagG.coefX
-  rw [dif_pos hmem]
+  rw [dite_eq_left hmem]
   have hrepr : G.e_indep.repr ⟨c • G.e i + w, hmem⟩ = Finsupp.single i c + l := by
     apply G.e_indep.repr_eq
     rw [map_add (f := _), Finsupp.linearCombination_single, hlw]

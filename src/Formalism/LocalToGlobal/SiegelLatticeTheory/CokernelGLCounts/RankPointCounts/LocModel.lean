@@ -1713,7 +1713,7 @@ theorem clK_core {δ : ∀ p : PlF D, (D.s.atP p).Fp}
       unfold KrOf
       rw [if_neg h0, if_neg hbig, hxw, hyw]
       simp only
-      rw [Kglob, dif_neg ht]
+      rw [Kglob, dite_eq_right ht]
     rw [hK]
     have e1 : ∀ q : {p // p ∈ B}, (if (none : Option D.host.E) = none then
         dL δ T T' i q.1 x * (starRingEnd ℂ) (dL δ T T' i q.1 y) *

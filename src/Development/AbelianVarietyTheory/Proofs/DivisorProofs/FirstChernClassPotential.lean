@@ -22,7 +22,7 @@ def pick (s : Finset (Fin (e + 1))) : Equiv.Perm (Fin (e + 1)) :=
   if h : s.Nonempty then Equiv.swap 0 h.choose else 1
 
 theorem pick_mem {s : Finset (Fin (e + 1))} (h : s.Nonempty) : pick s 0 ∈ s := by
-  rw [pick, dif_pos h, Equiv.swap_apply_left]
+  rw [pick, dite_eq_left h, Equiv.swap_apply_left]
   exact h.choose_spec
 
 def symForm (T : MultilinearMap ℝ (fun _ : Fin (e + 1) => V) ℝ) (Q P : V →ₗ[ℝ] V) :
@@ -131,7 +131,7 @@ theorem mInt_update_byParts [CompactSpace X] [T2Space X] (A : FinHolAtlas e X) (
 theorem mInt_one_pos [CompactSpace X] [T2Space X] [Nonempty X] (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
     (hΦ : ∀ i, IsPotential A (Φ i)) (hp : ∀ i, IsPosPot A (Φ i)) : 0 < mInt A Φ fun _ => 1 := by
   have hP := existsPartition A
-  rw [mInt, dif_pos hP, integralWith]
+  rw [mInt, dite_eq_left hP, integralWith]
   set R := hP.some
   have hnn : ∀ j, ∀ y ∈ (A.chart j).target, 0 ≤ R.χ j ((A.chart j).symm y) * 1 * locDens A Φ j y := fun j y hy =>
     mul_nonneg (mul_nonneg (R.nonneg _ _) zero_le_one) (locDensPos A Φ hΦ hp j y hy).le

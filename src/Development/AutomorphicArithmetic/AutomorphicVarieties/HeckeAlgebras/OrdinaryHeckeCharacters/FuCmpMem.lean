@@ -79,13 +79,13 @@ private theorem fu_split (V : s.Lev) (w : Plc L) (hw : w.under (𝓞 (Lp L)) ∈
 
 private theorem fu_cmp {w : Plc L} (h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (g : UA L n) :
     cmp n w ((away l L n).rangeRestrict g) = cLoc w g := by
-  rw [CaseU.cmp, dif_pos h]
+  rw [CaseU.cmp, dite_eq_left h]
   rfl
 
 private theorem fu_cmp_mem (w : Plc L) (g : UA L n) {P : Subgroup (GLw n w)} (hg : cLoc w g ∈ P) :
     cmp n w ((away l L n).rangeRestrict g) ∈ P := by
   by_cases h : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal
-  · rw [CaseU.cmp, dif_neg (not_not.2 h)]
+  · rw [CaseU.cmp, dite_eq_right (not_not.2 h)]
     exact one_mem _
   · rwa [fu_cmp h]
 

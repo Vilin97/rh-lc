@@ -322,27 +322,27 @@ theorem thetaExp_kap_eq (h : T.Pins) (hj : InR D j) (w : WeightFamilies.Wt D j) 
       rw [(hA t i).1, ext0]
       by_cases hi : i < (T.Dw j).p
       · refine (wtOf_big _ _ (psiOf h.1 t) i hi).trans ?_
-        rw [toWt_psiOf, GlobalTheory.IndefiniteRowSideFullHecke.DescentConstants.kap, dif_pos (by show i < _; omega), ← hw, dif_pos (by omega)]
+        rw [toWt_psiOf, GlobalTheory.IndefiniteRowSideFullHecke.DescentConstants.kap, dite_eq_left (by show i < _; omega), ← hw, dite_eq_left (by omega)]
         simp only [Formalism.L2.Geo.wtOf, Formalism.L2.Geo.wtOfN, hn]
-        rw [dif_pos (by omega)]; ring
-      · rw [dif_neg (by omega)]
+        rw [dite_eq_left (by omega)]; ring
+      · rw [dite_eq_right (by omega)]
         simp only [thetaExp, wtOf]
         unfold InPsi at hτ
-        rw [dif_pos hτ, dif_neg hi]; rfl
+        rw [dite_eq_left hτ, dite_eq_right hi]; rfl
     · obtain ⟨t, rfl⟩ := (hΨ' τ).1 hτ
       rw [(hA t i).2, ext0]
       by_cases hi : i < (T.Dw j).q
       · refine (wtOf_small _ _ (psiOf h.1 t) i hi).trans ?_
-        rw [toWt_psiOf, GlobalTheory.IndefiniteRowSideFullHecke.DescentConstants.kap, dif_pos (by show (T.Dw j).p + _ < _; omega), ← hw, dif_pos (by omega)]
+        rw [toWt_psiOf, GlobalTheory.IndefiniteRowSideFullHecke.DescentConstants.kap, dite_eq_left (by show (T.Dw j).p + _ < _; omega), ← hw, dite_eq_left (by omega)]
         simp only [Formalism.L2.Geo.wtOf, Formalism.L2.Geo.wtOfN, hn]
-        rw [dif_neg (by omega), dif_pos (by omega)]
+        rw [dite_eq_right (by omega), dite_eq_left (by omega)]
         have e : ∀ (a : Fin (D.R.sigW j).2) (b : Fin (D.R.sigW j).2), (a : ℕ) + b + 1 = (D.R.sigW j).2 → Fin.rev a = b :=
           fun a b hab => Fin.ext (by rw [Fin.val_rev]; omega)
         rw [e _ ⟨i, by omega⟩ (by simp only; omega)]; ring
-      · rw [dif_neg (by omega)]
+      · rw [dite_eq_right (by omega)]
         simp only [thetaExp, wtOf]
         unfold InPsi at hτ
-        rw [dif_neg hτ]
+        rw [dite_eq_right hτ]
         split_ifs <;> first | rfl | omega
   · obtain ⟨a, ha⟩ := w.n_even
     show 2 * ((D.R.nV / 2 : ℕ) : ℤ) = ((w.n : ℕ) : ℤ)

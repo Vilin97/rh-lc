@@ -104,7 +104,7 @@ theorem univ_spec {k : Type} [Field k] [Finite k] {r n : ℕ} {C : Type} [AddCom
     intro U
     unfold univTerm
     by_cases hC : Compl U.1 y
-    · rw [dif_pos hC]
+    · rw [dite_eq_left hC]
       have hd : dU β U y ≠ 0 := (dU_ne_zero_iff β U y).2 hC
       have hdet : (topL r (y * (g U : Matrix (Fin n) (Fin n) k))).det ≠ 0 := by
         intro h0; apply hd; rw [hg, h0, mul_zero]
@@ -116,7 +116,7 @@ theorem univ_spec {k : Type} [Field k] [Finite k] {r n : ℕ} {C : Type} [AddCom
       · intro a _ ha
         rw [if_neg (Ne.symm ha), Rat.cast_zero, mul_zero]
       · intro h; exact absurd (Finset.mem_univ _) h
-    · rw [dif_neg hC]
+    · rw [dite_eq_right hC]
       have hd : dU β U y = 0 := by
         by_contra h; exact hC ((dU_ne_zero_iff β U y).1 h)
       have hdet : ¬ IsUnit (topL r (y * (g U : Matrix (Fin n) (Fin n) k))).det := by

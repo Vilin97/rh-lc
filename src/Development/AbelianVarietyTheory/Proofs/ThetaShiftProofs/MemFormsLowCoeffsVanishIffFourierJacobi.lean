@@ -107,7 +107,7 @@ theorem coefFn_eq_zero_of_fj (X : Data E r) (cu : CuspFD X ρ) (hbas : ∃ bs, I
   refine B.1 ?_ _ (fun i => ?_) hcomp
   · funext b
     have h := hP _ (hdom b)
-    rw [Data.fj, if_pos hfreq, dif_pos hex] at h
+    rw [Data.fj, if_pos hfreq, dite_eq_left hex] at h
     rw [partialCoeff, coeff_eq, Pi.zero_apply, ← h]
     congr 2
     funext s

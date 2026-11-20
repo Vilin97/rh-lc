@@ -55,14 +55,14 @@ theorem normalFr_zero_repr' (E Ev : ∀ j, ℕ → (D.sp.Y j).V) (z : ∀ j, (D.
   unfold normalFr frame0
   rw [hρ]
   by_cases h1 : i < D.R.rS
-  · rw [if_pos h1, dif_pos h1, (hE0 i h1).1]
-  · rw [if_neg h1, dif_neg h1]
+  · rw [if_pos h1, dite_eq_left h1, (hE0 i h1).1]
+  · rw [if_neg h1, dite_eq_right h1]
     by_cases h3 : i = D.R.rS
     · rw [if_pos ⟨(Nat.even_iff.2 rfl : Even 0), h3⟩, if_pos h3, hz0]
     · rw [if_neg (fun h => h3 h.2), if_neg h3, if_pos (Nat.even_iff.2 rfl : Even 0)]
       have h5 : 2 * D.R.rS - i < D.R.rS := by unfold Ranks.rS at *; omega
       have h6 : nAux D 0 - 1 - i = 2 * D.R.rS - i := by unfold nAux Ranks.rS at *; omega
-      rw [dif_pos h5, h6, (hE0 _ h5).2]
+      rw [dite_eq_left h5, h6, (hE0 _ h5).2]
 
 theorem isAdaptedVectorSystem_eCo_zCo (E Ev : ∀ j, ℕ → (D.sp.Y j).V) (z : ∀ j, (D.sp.Y j).V)
     (hAux : ∀ j, j < D.R.m → IsAuxiliaryHeckeCharacter D j (E j) (Ev j) (z j)) : IsAdaptedVectorSystem (eCo E) (eCo Ev) (zCo z) := by

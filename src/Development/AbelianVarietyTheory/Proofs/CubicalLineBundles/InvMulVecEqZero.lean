@@ -49,14 +49,14 @@ theorem perFr_pure : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r :
   obtain ⟨-, -, ho, -, -, -, hsp⟩ := hb
   refine ⟨fun hj hτ => ?_, fun hj hτ hi => ?_⟩
   · unfold perFr
-    rw [dif_pos hτ]
+    rw [dite_eq_left hτ]
     split_ifs with h
     · refine inv_mulVec_eq_zero X.p0_le _ (hx ⟨τ, hτ⟩).1 ?_ _ (by simp)
       rw [hsp ⟨τ, hτ⟩, emb_smul']
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨j, hj⟩, rfl⟩)
     · rfl
   · unfold perFr
-    rw [dif_neg hτ]
+    rw [dite_eq_right hτ]
     split_ifs with h' h
     · have hm : FD.col (FD.mat x ⟨conjEmb τ, h'⟩) ⟨X.p0 - 1 - i, h⟩ ∈
           Submodule.span ℂ (Set.range fun a : Fin X.p0 =>

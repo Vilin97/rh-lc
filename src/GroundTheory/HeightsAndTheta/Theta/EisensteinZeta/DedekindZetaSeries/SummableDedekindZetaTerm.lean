@@ -91,7 +91,7 @@ def label (P : Ideal (𝓞 K)) : Fin (Module.finrank ℚ K) :=
 theorem label_inj {P Q : Ideal (𝓞 K)} (hP : P.IsPrime) (hP0 : P ≠ ⊥) (hQ : Q.IsPrime)
     (hQ0 : Q ≠ ⊥) (e : ratPrime K P = ratPrime K Q) (h : label K P = label K Q) : P = Q := by
   unfold label at h
-  rw [dif_pos ⟨hP, hP0⟩, dif_pos ⟨hQ, hQ0⟩] at h
+  rw [dite_eq_left ⟨hP, hP0⟩, dite_eq_left ⟨hQ, hQ0⟩] at h
   exact prime_label_injective _ _ e _ _ h
 
 variable (K) in

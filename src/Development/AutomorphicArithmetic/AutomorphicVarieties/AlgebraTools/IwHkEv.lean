@@ -10,7 +10,7 @@ private theorem hkEv_coe (ρ : Representation A G M) (I : Subgroup G) (hI : Heck
     (v : fixd ρ I) : (hk ρ I x v : M) = dc ρ I I x v := by
   have h := (UpperTheory.V.Hi.dcSum A G M ρ I I x (hI x)).2.1
   unfold hk hk2
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   rfl
 
 private noncomputable def hkEv_phi (ρ : Representation A G M) (I : Subgroup G) (m : M) :

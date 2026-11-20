@@ -31,7 +31,7 @@ variable {δ K}
 theorem iwAbs_mul_of_triv (h : ∀ p : P, (p : G) ∈ K → δ p = 1) (p : P) {k : G} (hk : k ∈ K) :
     iwAbs δ K (p * k) = δ p := by
   have e : ∃ p' : P, ∃ k' ∈ K, (p : G) * k = p' * k' := ⟨p, k, hk, rfl⟩
-  rw [iwAbs, dif_pos e]
+  rw [iwAbs, dite_eq_left e]
   obtain ⟨k', hk', e'⟩ := e.choose_spec
   have h1 := h (p⁻¹ * e.choose) (by
     have : ((p⁻¹ * e.choose : P) : G) = k * k'⁻¹ := by

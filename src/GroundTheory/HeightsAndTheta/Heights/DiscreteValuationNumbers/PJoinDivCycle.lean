@@ -152,7 +152,7 @@ theorem multAt_map_rename (P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
   rw [hsup, PolynomialLocalizedLength.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) Q (P ⊔ Ideal.span {f})] at key
   rw [hm P, hm Q, hf]
   unfold ReciprocityTheory.ChartRestriction.G.Geo.multAt
-  rw [dif_pos hQp, dif_pos ‹Q.IsPrime›]
+  rw [dite_eq_left hQp, dite_eq_left ‹Q.IsPrime›]
   exact congrArg ENat.toNat key
 
 end JoinDivCycle

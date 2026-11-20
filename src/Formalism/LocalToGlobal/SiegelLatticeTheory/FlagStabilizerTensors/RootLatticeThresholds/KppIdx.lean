@@ -39,7 +39,7 @@ theorem jPred_of (hr : r = kk + 2 * s + 1) {N : Matrix (Fin r) (Fin r) (ZMod g)}
     JPred kk s N := by
   refine ⟨fun a b => ⟨hlow a b, fun h => h ▸ hdiag a⟩, fun a ha1 ha2 => ?_⟩
   unfold entN
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   have := hwz ⟨a - s, by omega⟩
   convert this using 2 <;> ext <;> simp <;> omega
 
@@ -57,7 +57,7 @@ theorem inv_super {N N' : Matrix (Fin r) (Fin r) (ZMod g)} (hJ : JPred kk s N) (
   rw [Finset.sum_eq_add (⟨i, by omega⟩ : Fin r) ⟨i + 1, hi⟩ hne (fun c _ hc => ?_) (by simp) (by simp)] at e
   · rw [diag_of hJ, diag_of hJ', one_mul, mul_one] at e
     unfold entN
-    rw [dif_pos ⟨by omega, hi⟩, dif_pos ⟨by omega, hi⟩]
+    rw [dite_eq_left ⟨by omega, hi⟩, dite_eq_left ⟨by omega, hi⟩]
     linear_combination e
   · rcases lt_or_gt_of_ne (show c.1 ≠ i from fun h => hc.1 (Fin.ext h)) with h | h
     · rw [low_of hJ _ _ (show c < ⟨i, by omega⟩ from h), zero_mul]
@@ -118,7 +118,7 @@ theorem jPred_conj (hr : r = kk + 2 * s + 1) (ob : Bool) {N : Matrix (Fin r) (Fi
     exact dN_sq ob a.1
   · have := (hJ.2 (s + i.1) (by omega) (by omega))
     unfold entN at this
-    rw [dif_pos ⟨by omega, by omega⟩] at this
+    rw [dite_eq_left ⟨by omega, by omega⟩] at this
     simp only [dM, Matrix.diagonal_mul, Matrix.mul_diagonal]
     have e : N (wI hr i) (zI hr) = 0 := this
     rw [e]; ring

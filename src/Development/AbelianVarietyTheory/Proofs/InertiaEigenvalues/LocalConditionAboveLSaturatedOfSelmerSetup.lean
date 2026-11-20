@@ -223,7 +223,7 @@ theorem locSat (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) 
     exact ⟨n, fun x hx => hf (by rw [map_smul, hn x hx, map_zero])⟩
   obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ y
   unfold bkOn at hy ⊢
-  rw [dif_pos hv] at hy ⊢
+  rw [dite_eq_left hv] at hy ⊢
   have h1 : (fun g j => f (z.1 g j)) ∈ tensorSpan (algebraMap (X.O0 i) Λ)
       (intCrys (bkP.br i v hv) (D.loc (X.l i)) (Tgl i s)) B := by
     refine GlobalTheory.BlochKatoIntegralScalars.mem_of_mk_mem_span ((repOn (Tgl i s) κ B).comp (DecV N v).subtype) _

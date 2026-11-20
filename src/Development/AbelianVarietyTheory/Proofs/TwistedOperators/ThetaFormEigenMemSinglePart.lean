@@ -191,7 +191,7 @@ theorem mem_one_part : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : T
     unfold rRep
     ext v g
     simp [heckeOn, postOn, heckeLin, rLin, LinearMap.compMultilinearMap_apply]
-  rw [hsum, ((GlobalTheory.T.spherical_label_operators_on_hyperspecial_fixed_vectors (Wc D i) P).1 d Rp hsph).2 _ (rRep (R.MW i σ)) _ (hfix w), dif_pos hex]
+  rw [hsum, ((GlobalTheory.T.spherical_label_operators_on_hyperspecial_fixed_vectors (Wc D i) P).1 d Rp hsph).2 _ (rRep (R.MW i σ)) _ (hfix w), dite_eq_left hex]
   exact hex.choose_spec _ ((hSw _).2 ⟨w, hw, rfl⟩)
 
 end GlobalTheory.ConjScalar.OnePart

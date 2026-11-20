@@ -235,7 +235,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
 
   have hhH : hh ∈ D.X.S.HH D.X.M z₂ := by rw [← hK2']; exact hhker
   have hex : ∃ h' ∈ D.X.S.HH D.X.M z₂, D.m • h' = D.lab b := ⟨hh, hhH, hlb.symm⟩
-  have hlift : GSum.lift D z₂ b = hex.choose := by rw [GSum.lift, dif_pos hex]
+  have hlift : GSum.lift D z₂ b = hex.choose := by rw [GSum.lift, dite_eq_left hex]
   obtain ⟨hH'', hm''⟩ := hex.choose_spec
   obtain ⟨ξ, ⟨k', hk'pos, hξ⟩, hshift⟩ := GlobalTheory.T.theta_translate_values_shift_by_root_of_unity D.X.ρ (D.X.S.HH D.X.M z₂) D.m D.sq hh hex.choose
     (by rw [hm'', hlb]) ((D.X.S.HH D.X.M z₂).sub_mem hH'' hhH)
@@ -245,7 +245,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
     obtain ⟨x, hx⟩ := X₁.div z₁
     exact ⟨x, hx⟩
   have hbase : GSum.base X₁ z₁ ∈ X₁.S.supI X₁.M z₁ := by
-    rw [GSum.base, dif_pos hne]
+    rw [GSum.base, dite_eq_left hne]
     exact hne.some_mem
   have hqz : D.q (y (cPt p)) = z₁ := by
     rw [← c.cen, ← h]

@@ -91,7 +91,7 @@ theorem glv_red_conj {c : (v.adicCompletionIntegers F)ˣ} (hc1 : IsLocalRing.res
       (glvD n v c : Matrix (Fin n) (Fin n) (v.adicCompletion F))) a b ∈ v.adicCompletionIntegers F := by
     rw [e]; exact Subtype.mem _
   unfold redM
-  rw [dif_pos (hA a b), dif_pos hm]
+  rw [dite_eq_left (hA a b), dite_eq_left hm]
   have e2 : (⟨_, hm⟩ : v.adicCompletionIntegers F) =
       (((glvU n v c a)⁻¹ : (v.adicCompletionIntegers F)ˣ) : v.adicCompletionIntegers F) * ⟨A a b, hA a b⟩ * (glvU n v c b :
         v.adicCompletionIntegers F) := Subtype.ext e

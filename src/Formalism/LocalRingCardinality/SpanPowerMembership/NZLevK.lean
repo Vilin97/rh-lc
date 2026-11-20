@@ -34,7 +34,7 @@ theorem Fb_mem (c : C) : Fb P hp C c ∈ (gatC P hp C).M := by
     · exact valE_mem P hp L hL
     · exact Submodule.zero_mem _
   · unfold Fb; split_ifs
-    · unfold valE; rw [dif_neg hL]
+    · unfold valE; rw [dite_eq_right hL]
     · rfl
   · unfold Fb; split_ifs
     · exact valE_smul P hp v0 γ L

@@ -53,7 +53,7 @@ theorem th_one_ne_zero {F : Type} [Field F] [Algebra (FractionRing R) F] {D : De
       (fun _ => ν.J ((ν.eA 1).left ≫ 𝟙 _)) := fun y hy => Set.mem_iInter.2 fun _ => by
     rw [Category.comp_id]; exact hU hy
   unfold sF valF at h
-  rw [dif_pos hx] at h
+  rw [dite_eq_left hx] at h
   exact (((hu _).map _).map _).ne_zero h.symm
 
 end Basics

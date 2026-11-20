@@ -76,7 +76,7 @@ theorem GlobalTheory.RowEvalHH.conj_eval_mem_HH : ∀ {D : D7} {G : Type} [Group
   have hval : Aop (X.B.tens X.B.w) = star φ := by
     rw [← hu0, hA]
     unfold evF
-    rw [hvec, dif_pos hmem]
+    rw [hvec, dite_eq_left hmem]
     congr 1
     exact (Lp.ext (hφ.trans hmem.coeFn_toLp.symm)).symm
   have hmemHH : star φ ∈ Formalism.L2.SG.RowsDef.HH X.B.I X.B.μf X.B.fund X.B.Re X.Rph := by

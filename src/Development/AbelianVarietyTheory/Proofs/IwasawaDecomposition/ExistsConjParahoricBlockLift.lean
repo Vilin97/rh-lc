@@ -35,7 +35,7 @@ theorem pl_blkDiag_mem {m r : ℕ} {x : GL (Fin r) K} {M : GL (Fin m) K} (hM : G
     unfold Formalism.L2.DIV.blk2 at hij; split_ifs at hij with h1 h2 <;> omega
   have hne : i ≠ j := fun h => hi (h ▸ hj)
   show M.val i j = 0
-  rw [hM i j, dif_neg (fun h => hi h.1), if_neg hne]
+  rw [hM i j, dite_eq_right (fun h => hi h.1), if_neg hne]
 
 theorem pl_blkOf_eq {m r t : ℕ} (hm : m = r + t) (a : Fin m) :
     Formalism.L2.DIV.blkOf r t a = Formalism.L2.DIV.blk2 r a := by
@@ -65,7 +65,7 @@ theorem pl_core {m r t : ℕ} (hm : m = r + t) (hr : r ≤ m) {b M : GL (Fin m) 
   · have hMr : Formalism.L2.DIV.upperLeftBlock hr M = x := by
       apply Units.ext
       ext i j
-      rw [Formalism.L2.DIV.upper_block_val_submatrix hr hM2, Matrix.submatrix_apply, hM, dif_pos ⟨i.2, j.2⟩]
+      rw [Formalism.L2.DIV.upper_block_val_submatrix hr hM2, Matrix.submatrix_apply, hM, dite_eq_left ⟨i.2, j.2⟩]
       rfl
     unfold Formalism.L2.DIV.upperLeftBlock at hMr ⊢
     rw [Formalism.L2.DIV.extendMatrixByIdentityAlongIndices_mul _ hbM hbinv, Formalism.L2.DIV.extendMatrixByIdentityAlongIndices_mul _ hb hM2, Formalism.L2.DIV.extendOne_inv _ hb, hMr]
@@ -81,7 +81,7 @@ theorem pl_core {m r t : ℕ} (hm : m = r + t) (hr : r ≤ m) {b M : GL (Fin m) 
         have ha : ¬ a.1.val < r := fun h => by
           have h2 := a.2
           simp [Formalism.L2.DIV.blkOf, h] at h2
-        rw [Matrix.submatrix_apply, hM, dif_neg (fun h => ha h.1), Matrix.one_apply]
+        rw [Matrix.submatrix_apply, hM, dite_eq_right (fun h => ha h.1), Matrix.one_apply]
         by_cases hac : a = c
         · subst hac; simp
         · rw [if_neg hac, if_neg (fun h => hac (Subtype.ext h))]

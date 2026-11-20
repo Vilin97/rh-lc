@@ -53,5 +53,5 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.divCycle_map_localisation :
   change ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) (φ f)) _ : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) Q : ℤ)
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hc : Q ∈ J.minimalPrimes ∧ IsRelevant Q
-  · rw [dif_pos ⟨hmin.mpr hc.1, hrel.mpr hc.2⟩, dif_pos hc, hl]
-  · rw [dif_neg (fun h => hc ⟨hmin.mp h.1, hrel.mp h.2⟩), dif_neg hc]
+  · rw [dite_eq_left ⟨hmin.mpr hc.1, hrel.mpr hc.2⟩, dite_eq_left hc, hl]
+  · rw [dite_eq_right (fun h => hc ⟨hmin.mp h.1, hrel.mp h.2⟩), dite_eq_right hc]

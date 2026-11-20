@@ -46,13 +46,13 @@ theorem lamAt_b' {Rk : Ranks} (h : HCParam Rk) (j : Fin Rk.m) :
   have hc : ∀ (x y : ℕ) (hx : x < Rk.m) (hy : y < Rk.m), x = y → h.b ⟨x, hx⟩ = h.b ⟨y, hy⟩ := by
     rintro x _ _ _ rfl; rfl
   unfold Formalism.L2.NTheta.lamAt
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   rw [hc _ _ _ j.2 (by omega)]
 
 theorem lamAt_v' {Rk : Ranks} (h : HCParam Rk) (j : Fin (Rk.k - 1)) :
     Formalism.L2.NTheta.lamAt h j = h.v j := by
   unfold Formalism.L2.NTheta.lamAt
-  rw [dif_pos j.2]
+  rw [dite_eq_left j.2]
 
 theorem parA_fst (D : D7) (ρ : D.what₂.Tau) {n : ℕ} (hn : n = D.R.r) :
     (parA (Ptw D) 0 ρ).image Prod.fst = Finset.univ.image fun a : Fin n => Formalism.L2.NTheta.lamAt (D.hc ρ) a := by
@@ -108,7 +108,7 @@ theorem lab_base {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : F
   have hex : ∃ τ, labE D.what₂.embLL τ = tauE D ρ ∨ labE D.what₂.embLL τ = (starRingEnd ℂ).comp (tauE D ρ) :=
     ⟨ρ, Or.inl (hb ρ)⟩
   unfold lab
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   rcases hex.choose_spec with h | h
   · rw [hb] at h; exact tauE_inj h
   · rw [hb] at h; exact absurd h (tauE_ne_conj' _ _)

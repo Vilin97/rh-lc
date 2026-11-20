@@ -17,7 +17,7 @@ variable {W : Wts X Pr.Word R} {Δ S a b' : ℝ} {c : X.Tau → ℝ} {code : Pr.
 theorem hcSeq_apply (W : Wts X Pr.Word R) (u : Pr.Word) (τ : X.Tau) (i : Fin R.k) :
     hcSeq W u τ i.1 = (((W.hc u τ).u i : ℚ) : ℝ) := by
   unfold hcSeq
-  rw [dif_pos i.2]
+  rw [dite_eq_left i.2]
 
 theorem k_ge_real (R : Ranks) : (5 : ℝ) ≤ (R.k : ℝ) := by exact_mod_cast k_ge R
 

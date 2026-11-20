@@ -28,7 +28,7 @@ theorem absHalf_mul : ∀ (E : Type) [Field E] [NumberField E] (w : Pl E) (x y :
     have h1 : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
     have h2 : Valued.v y ≠ 0 := (Valuation.ne_zero_iff _).2 hy
     have h3 : Valued.v (x * y) ≠ 0 := (Valuation.ne_zero_iff _).2 (mul_ne_zero hx hy)
-    rw [dif_neg h1, dif_neg h2, dif_neg h3]
+    rw [dite_eq_right h1, dite_eq_right h2, dite_eq_right h3]
     have : WithZero.unzero h3 = WithZero.unzero h1 * WithZero.unzero h2 := by
       apply WithZero.coe_injective
       simp [map_mul]

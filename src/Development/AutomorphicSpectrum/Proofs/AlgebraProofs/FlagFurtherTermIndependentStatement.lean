@@ -32,7 +32,7 @@ theorem polyNum_eq_sum {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq 
     rwa [Finsupp.degree_eq_weight_one]
   have hlen : (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList d α ++ List.ofFn Y).length = e := by
     rw [List.length_append, SegreFlagIndep.length_monoList, hdeg, List.length_ofFn, hcn]
-  rw [SegreFlagIndep.listNum, dif_pos hlen,
+  rw [SegreFlagIndep.listNum, dite_eq_left hlen,
     Numbers.agree FieldNumbers.IntNumUnique.full (IntNumPoint.proof FieldNumbers.IntNumBase.full)
       FieldNumbers.IntNumBase.full I hI V e _ hV,
     BundleExamples.intNum_get_cast F V _ e hlen]

@@ -96,16 +96,16 @@ def lowL (ε : Fin n → Bool) : (Mode ε → ℂ) ≃ₗ[ℝ] (PCoord ε → �
     funext x
     obtain ⟨⟨a, b⟩, h⟩ := x
     simp only [blkM, pmat_low, pB]
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   right_inv z := by
     funext x
     obtain ⟨⟨a, b⟩, h⟩ := x
     simp only [low, pB, blkM]
     split_ifs with h1 h2
     · simp only [pmat]
-      rw [dif_pos h]
+      rw [dite_eq_left h]
     · simp only [pmat]
-      rw [dif_neg (fun h' => lt_asymm h'.1 h.1), dif_pos h, star_star]
+      rw [dite_eq_right (fun h' => lt_asymm h'.1 h.1), dite_eq_left h, star_star]
     · exfalso
       have := h.2
       revert this h1 h2

@@ -234,7 +234,7 @@ theorem unfold_law [CharZero K] (hP : IndefiniteRowSideFullHecke.SourceLatticeIn
       ring)
     (fun u hu p => by
       have := (intHom_iff _).1 (hb _ (hqk D _ ((mM u).1 hu))) p.1.2 p.1.1
-      rw [smul_inv_smul₀ (pow_ne_zero _ q0), LinearMap.smul_apply, Pi.smul_apply, linPart_single, dif_pos p.2] at this
+      rw [smul_inv_smul₀ (pow_ne_zero _ q0), LinearMap.smul_apply, Pi.smul_apply, linPart_single, dite_eq_left p.2] at this
       exact intAt_pow_mono hA this)
     (fun s hs s' hs' h => funext fun i => (Proof.rationalFractions_represent_primeNormQuotient.valsQ_reps E P hP A B).1 _ (Fintype.mem_piFinset.1 hs i) _
       (Fintype.mem_piFinset.1 hs' i) (h i))
@@ -382,7 +382,7 @@ theorem chArg_depth (hL : L.Ok Ch sel mu cst G m2) {i : ℕ} (hi : i < m2) (al :
   have l1 : R.N (i + 1) + s < R.N (i + 1) + cOf R (i + 1) := by omega
   have l2 : R.N i + s + 1 < R.N i + cOf R i := by omega
   unfold Loc.atN
-  rw [dif_pos l1, Proof.exists_xx1_eq_iff_inX_eN_Ufl_conditions.eN_eq_single l2]
+  rw [dite_eq_left l1, Proof.exists_xx1_eq_iff_inX_eN_Ufl_conditions.eN_eq_single l2]
   by_cases hP : P.1 ∈ Pr.vGs
   · have h1 : ∀ v ∈ lamYat (Pr := Pr) (R := R) i P.1, z v ∈ lamYat (Pr := Pr) (R := R) (i + 1) P.1 := fun v hv => by
       have := (hL.stabG _ be P hP _).2 (hz _ ((inv_mem (hL.stabG _ al P hP) v).2 hv))

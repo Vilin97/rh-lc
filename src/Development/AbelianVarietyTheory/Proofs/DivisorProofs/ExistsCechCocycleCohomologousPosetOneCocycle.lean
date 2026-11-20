@@ -30,7 +30,7 @@ variable {F}
 theorem V_res (f : Z1 F) {a b : (NE κ)ᵒᵖ} (φ : a ⟶ b) {x : κ} (hx : x ∈ sub a) :
     mp F φ (V F f a x) = V F f b x - f.1 a b φ := by
   unfold V
-  rw [dif_pos hx, dif_pos (sub_subset φ hx)]
+  rw [dite_eq_left hx, dite_eq_left (sub_subset φ hx)]
   have e := Z1.comp f (homOf (a := ne {x} (Finset.singleton_nonempty x)) (b := a)
     (Finset.singleton_subset_iff.2 hx)) φ
   rw [hom_eq (_ ≫ φ) (homOf (a := ne {x} (Finset.singleton_nonempty x)) (b := b)

@@ -82,14 +82,14 @@ theorem hJ_famSc (sc : ℝ) (e : Fin r → Fin n → ℂ) (z : Fin n → ℂ) (T
 theorem dl_diag_last (c : Fin (r + 1) → ℂ) :
     Dl (Matrix.diagonal c) (r + 1) = (∏ i : Fin r, c (Fin.castSucc i)) * c (Fin.last r) := by
   unfold Dl
-  rw [dif_pos le_rfl, Matrix.submatrix_diagonal _ _ (Fin.castLE_injective _), Matrix.det_diagonal,
+  rw [dite_eq_left le_rfl, Matrix.submatrix_diagonal _ _ (Fin.castLE_injective _), Matrix.det_diagonal,
     Fin.prod_univ_castSucc]
   rfl
 
 theorem dl_diag_r (c : Fin (r + 1) → ℂ) :
     Dl (Matrix.diagonal c) r = ∏ i : Fin r, c (Fin.castSucc i) := by
   unfold Dl
-  rw [dif_pos (Nat.le_succ r), Matrix.submatrix_diagonal _ _ (Fin.castLE_injective _), Matrix.det_diagonal]
+  rw [dite_eq_left (Nat.le_succ r), Matrix.submatrix_diagonal _ _ (Fin.castLE_injective _), Matrix.det_diagonal]
   rfl
 
 theorem normSq_last_gt (T T' : ℝ) (c : Fin (r + 1) → ℂ) (hG : 0 < Gv T T' (Matrix.diagonal c)) :

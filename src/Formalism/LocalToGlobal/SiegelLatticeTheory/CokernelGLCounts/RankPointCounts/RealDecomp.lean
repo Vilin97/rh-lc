@@ -24,7 +24,7 @@ def RealDecompC : Prop :=
 theorem isPtRep_gamW {w : Point D.host.E (D.R.rS + 1)} (h : ∃ γ, Formalism.L2.SG.RealObj.IsPtRep X u u' w γ) :
     Formalism.L2.SG.RealObj.IsPtRep X u u' w (Formalism.L2.SG.RealObj.gamW X u u' w) := by
   unfold Formalism.L2.SG.RealObj.gamW
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem realDecompC_gamW (h : RealDecompC X Y u u')

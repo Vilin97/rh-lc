@@ -18,7 +18,7 @@ variable {R : Type*} [CommRing R] (g : Matrix (Fin n) (Fin n) R)
 
 lemma qs_mn_eq {h : ℕ} (J I : Finset (Fin n)) (hJ : J.card = h) (hI : I.card = h) :
     qs_mn g J I = Matrix.det (Matrix.of fun a b : Fin h => g (J.orderEmbOfFin hJ a) (I.orderEmbOfFin hI b)) := by
-  subst hI; rw [qs_mn, dif_pos hJ]
+  subst hI; rw [qs_mn, dite_eq_left hJ]
 
 lemma qs_mn_ne {J I : Finset (Fin n)} (h : J.card ≠ I.card) : qs_mn g J I = 0 := dif_neg h
 

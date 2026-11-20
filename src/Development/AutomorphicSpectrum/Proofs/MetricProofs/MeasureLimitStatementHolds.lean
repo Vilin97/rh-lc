@@ -493,7 +493,7 @@ theorem muMeasureLimit : GroundTheory.Heights₂.Heights.LowerBoundFree.MuMeasur
   · have h0 : ∀ (φ : Fin D.n → ((Σ k, ι k) → ℂ) → ℝ) (g : ((Σ k, ι k) → ℂ) → ℝ),
         ptsIntegral (e := D.n) (mCoordIdeal D.y) φ g = 0 := fun φ g => by
       unfold ptsIntegral
-      rw [dif_neg hΨ]
+      rw [dite_eq_right hΨ]
     have hd : degMu X.H = 0 := h0 _ _
     have hg : ∀ t, geomDeg (mCoordIdeal D.y) (muReg X.H X.S B t) D.n = 0 := fun t => h0 _ _
     refine ⟨?_, ?_⟩
@@ -505,7 +505,7 @@ theorem muMeasureLimit : GroundTheory.Heights₂.Heights.LowerBoundFree.MuMeasur
         ptsIntegral (e := D.n) (mCoordIdeal D.y) φ g =
           ptsIntegralAt (mCoordIdeal D.y) hΨ.choose φ g := fun φ g => by
       unfold ptsIntegral
-      rw [dif_pos hΨ]
+      rw [dite_eq_left hΨ]
     obtain ⟨G, Cg, hm, hb, hG⟩ := GlobalTheory.T.cuspWeight_factors_through_measurable_log_bounded II Ψ K ι Ω E D O Lt X
     have hCg : ∀ x ∈ X.S.R.Yo, |G x / 2| ≤ |Cg| + |Cg| * Real.log (X.S.R.r x) := by
       intro x hx

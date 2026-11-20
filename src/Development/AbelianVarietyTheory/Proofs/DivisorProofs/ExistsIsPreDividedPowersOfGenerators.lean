@@ -199,7 +199,7 @@ theorem gam_L (h0 : ∀ i, g i 0 = 1) (hm : ∀ i m n, g i m * g i n = ((m + n).
     gam x g n (L x c) = coeff n (E g c) := by
   have h : ∃ c', L x c' = L x c := ⟨c, rfl⟩
   unfold gam
-  rw [dif_pos h, E_eq x g h0 hm hE h.choose_spec]
+  rw [dite_eq_left h, E_eq x g h0 hm hE h.choose_spec]
 
 end Gen
 
@@ -221,7 +221,7 @@ theorem exists_isPreDividedPowers_of_generators₂ : ∀ (B ι : Type) [CommRing
   refine ⟨gam x g, ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩, ?_⟩
   · intro n y hy
     unfold gam
-    rw [dif_neg fun h ↦ hy (mem_span_iff.2 h)]
+    rw [dite_eq_right fun h ↦ hy (mem_span_iff.2 h)]
   · intro y hy
     obtain ⟨c, rfl⟩ := mem_span_iff.1 hy
     rw [G]; exact (P c).1

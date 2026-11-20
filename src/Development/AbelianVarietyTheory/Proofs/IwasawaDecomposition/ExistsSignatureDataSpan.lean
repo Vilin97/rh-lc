@@ -51,13 +51,13 @@ def sigEig (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) : T.O i :
 theorem sigEig_on (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) (h : sigVal D T i k P) :
     algebraMap (T.O i) (FractionRing (T.O i)) (sigEig D T In i x k P) = sigLam D T In i x.1.1 x.1.2.1 x.1.2.2 k P := by
   unfold sigEig
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact (x.2.2.2.2 k P h).choose_spec
 
 theorem sigEig_off (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) (h : ¬ sigVal D T i k P) :
     sigEig D T In i x k P = 1 := by
   unfold sigEig
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 def sigSys (i : T.Tw) (x : SigIdx D T In i) : ℕ × Bool × (ℕ → PlE D.host → T.O i) :=
   ((x.1.1 : ℕ), x.1.2.1, sigEig D T In i x)
@@ -85,7 +85,7 @@ theorem hkB_coe_of_val (D : D7) (T : TwR D.LL0 D.nd) {S : RatDat D.ntw} (In : Ra
     (x : ↥(BI D T S In i j b)) :
     ((hkB D T S In hst i j b k P x : ↥(BI D T S In i j b)) : FmT D T S i j b) = hkT D T S In i j b k P x := by
   unfold hkB
-  rw [dif_pos ⟨h1, h2, hv⟩]
+  rw [dite_eq_left ⟨h1, h2, hv⟩]
   rfl
 
 theorem span_eig_BI (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : SideA D cf jE) (S : RatDat D.ntw)

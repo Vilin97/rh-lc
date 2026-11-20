@@ -96,7 +96,7 @@ theorem rdS_res (hy : Function.Surjective (fun c => (Quotient.mk'' (yc c) : Cls 
     (Ψ) (hΨ : Ψ ∈ AdFun S (embT D)) (y : Frames (gramC _ (embT D))) (g : GA D V) :
     rdS θ V hn S yc (fun c => Ψ (yc c)) y g = Ψ ⟨finGL V hn g, finGL_mem V hn g⟩ (trFr θ V hn g y) := by
   have h := exists_dec V hn S yc hy g
-  rw [rdS, dif_pos h]
+  rw [rdS, dite_eq_left h]
   obtain ⟨h1, h2⟩ := h.choose_spec
   generalize h.choose = p at h1 h2 ⊢
   have hi : ∀ τ, atInf (embT D) p.2.1.1 τ * atInf (embT D) (p.2.1⁻¹ : GL (Fin n) D.host.E).1 τ = 1 := by
@@ -107,7 +107,7 @@ theorem rdS_res (hy : Function.Surjective (fun c => (Quotient.mk'' (yc c) : Cls 
     intro τ
     rw [Matrix.det_mul, Matrix.det_mul]
     exact ((Matrix.isUnit_det_of_left_inverse (hi τ)).mul (infM_unit θ V hn g τ)).mul (y.2 τ)
-  rw [atFr, dif_pos hu]
+  rw [atFr, dite_eq_left hu]
   refine (hΨ p.2.1 h1 (yc p.1) _ p.2.2 (Units.ext h2) _ _ ?_).symm
   intro τ
   simp only [trFr]
@@ -198,7 +198,7 @@ theorem mid_left (i : ℕ) (h1 : 1 ≤ i) (h2 : i + 1 ≤ D.R.m) (β : Ch i) (θ
     (ψ : (D.mem u).C.cls i → (D.mem u).C.Y i → ℂ) (hψ : ψ ∈ (D.fm u).Fi i) (y) (γ) (hγ : γ ∈ GQ (D.sp.X i)) (g) :
     rd F θ i (le_of_succ_m h2) β ψ y (γ * g) = rd F θ i (le_of_succ_m h2) β ψ y g := by
   have hc : chart F i (le_of_succ_m h2) β = midChart F i h1 h2 β := by
-    rw [chart, dif_neg (by omega)]
+    rw [chart, dite_eq_right (by omega)]
   obtain ⟨Ψ, hΨ, e⟩ := ((F.valC i h1 h2).Fi ψ).1 hψ β
   rw [rd, hc, Chart.rd]
   have e' : (fun c z => ψ ((midChart F i h1 h2 β).inc c) ((midChart F i h1 h2 β).eY.symm z)) =
@@ -209,7 +209,7 @@ theorem mid_left (i : ℕ) (h1 : 1 ≤ i) (h2 : i + 1 ≤ D.R.m) (β : Ch i) (θ
 theorem end_left (i : ℕ) (hi : i ≤ D.R.m) (h : i = 0 ∨ i = D.R.m) (β : Ch i) (θ : InfFam D) (hθ : IsInfFam θ)
     (ψ : (D.mem u).C.cls i → (D.mem u).C.Y i → ℂ) (hψ : ψ ∈ (D.fm u).Fi i) (y) (γ) (hγ : γ ∈ GQ (D.sp.X i)) (g) :
     rd F θ i hi β ψ y (γ * g) = rd F θ i hi β ψ y g := by
-  have hc : chart F i hi β = endChart F i hi h := by rw [chart, dif_pos h]
+  have hc : chart F i hi β = endChart F i hi h := by rw [chart, dite_eq_left h]
   obtain ⟨Ψ, hΨ, e⟩ := ((F.val i hi h).Fi ψ).1 hψ
   rw [rd, hc, Chart.rd]
   have e' : (fun c z => ψ ((endChart F i hi h).inc c) ((endChart F i hi h).eY.symm z)) =

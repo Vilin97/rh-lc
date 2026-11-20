@@ -363,7 +363,7 @@ theorem admissibleFrame_congruent_mod_unitriangular {T T' : E} (G : Formalism.Ma
 theorem fl_mapLF {T : E} (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : Formalism.MainNotions.S.FlagG S r T) :
     (Formalism.L2.SG.TermOp.mapLF γ (⟨F, F.z⟩ : Formalism.MainNotions.S.Lat.LFlag S r T)).fl = Formalism.L2.SG.TermOp.mapFlag γ hγ F := by
   unfold Formalism.L2.SG.TermOp.mapLF
-  rw [dif_pos hγ]
+  rw [dite_eq_left hγ]
 
 end Gen
 

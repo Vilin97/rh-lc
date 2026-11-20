@@ -17,9 +17,9 @@ theorem cBpp_herm {N : ℕ} (ε : Fin N → Bool) (z : cBNC ε → ℂ) : (cBpp 
   simp only [Matrix.conjTranspose_apply, cBpp]
   by_cases h1 : a < b ∧ ε a ≠ ε b
   · have h2 : ¬ (b < a ∧ ε b ≠ ε a) := fun h => absurd h1.1 (not_lt.2 h.1.le)
-    rw [dif_neg h2, dif_pos h1, dif_pos h1, star_star]
+    rw [dite_eq_right h2, dite_eq_left h1, dite_eq_left h1, star_star]
   · by_cases h3 : b < a ∧ ε b ≠ ε a
-    · rw [dif_pos h3, dif_neg h1, dif_pos h3]
+    · rw [dite_eq_left h3, dite_eq_right h1, dite_eq_left h3]
     · simp [h1, h3]
 
 def cBp {N : ℕ} (ε : Fin N → Bool) : ℕ := (univ.filter (fun a => ε a = true)).card

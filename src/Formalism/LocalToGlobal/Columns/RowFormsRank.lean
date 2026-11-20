@@ -29,7 +29,7 @@ theorem GSD.orbFun_smul {d : S.D} {v : S.V} (hv : ∀ g : S.G, g • d = d → S
     S.orbFun d v (g • d) = S.ρ g v := by
   have hx : ∃ g' : S.G, g' • d = g • d := ⟨g, rfl⟩
   unfold GSD.orbFun
-  rw [dif_pos hx]
+  rw [dite_eq_left hx]
   exact GSD.rho_eq_of_fixed hv hx.choose_spec
 
 theorem GSD.orbFun_mem {d : S.D} {v : S.V} (hv : ∀ g : S.G, g • d = d → S.ρ g v = v) : S.orbFun d v ∈ S.EqFun := by
@@ -41,7 +41,7 @@ theorem GSD.orbFun_mem {d : S.D} {v : S.V} (hv : ∀ g : S.G, g • d = d → S.
       rintro ⟨g', e⟩
       exact hx ⟨g⁻¹ * g', by rw [mul_smul, e, inv_smul_smul]⟩
     unfold GSD.orbFun
-    rw [dif_neg hx, dif_neg hx', map_zero]
+    rw [dite_eq_right hx, dite_eq_right hx', map_zero]
 
 theorem GSD.finrank_pos_iff (h : S.Ok) :
     0 < finrank K S.EqFun ↔ ∃ (d : S.D) (v : S.V), v ≠ 0 ∧ ∀ g : S.G, g • d = d → S.ρ g v = v := by

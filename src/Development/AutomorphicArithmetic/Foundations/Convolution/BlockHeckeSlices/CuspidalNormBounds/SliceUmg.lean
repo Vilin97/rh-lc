@@ -130,7 +130,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceUmg :
     have h0 := h (x.mapDomain j) (by
       rw [Finsupp.sum_mapDomain_index (h := fun k (c : ℂ) => c • ρ k) (fun _ => zero_smul _ _)
         fun _ _ _ => add_smul _ _ _, ← hx]
-      exact Finsupp.sum_congr fun k _ => by rw [resR, dif_pos (hK k)])
+      exact Finsupp.sum_congr fun k _ => by rw [resR, dite_eq_left (hK k)])
     have hz : ∑ k ∈ x.support, x k • rt E (r + s) (lev (Ad E) r s (1, (k : GA E s))) φ = 0 := by
       refine Subtype.ext (funext fun g => ?_)
       have := h0 g

@@ -167,21 +167,21 @@ theorem sN_cast (j : ℕ) (hj : 1 ≤ j) :
 
 theorem uW_zero (δ : Code N) (z : RPl N.R) (h : 0 < N.R.k) : N.uW δ z ⟨0, h⟩ = (N.hc z).u ⟨0, h⟩ := by
   unfold uW
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨h1, -⟩
   simp at h1
 
 theorem uW_last (δ : Code N) (z : RPl N.R) (h : N.R.k - 1 < N.R.k) :
     N.uW δ z ⟨N.R.k - 1, h⟩ = (N.hc z).u ⟨N.R.k - 1, h⟩ := by
   unfold uW
-  rw [dif_neg]
+  rw [dite_eq_right]
   rintro ⟨-, h2⟩
   simp only [] at h2
   omega
 
 theorem srcPar_lt (δ : Code N) (z : RPl N.R) (i : ℕ) (h : i < N.R.k) : N.srcPar δ z i = N.uW δ z ⟨i, h⟩ := by
   unfold srcPar
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem x_pos : 0 < N.sc.x := lt_trans one_pos N.sc.one_lt_alt
 
@@ -1034,7 +1034,7 @@ theorem large_example_bound_zero : numBig.bT 0 = 0 := by
 theorem big_eQ (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ 2) (z : RPl numBig.R) :
     numBig.eQ j z = if j = 1 then 100 else 118 := by
   unfold NumDatum.eQ
-  rw [dif_pos ⟨h1, h2⟩, big_hc_e]
+  rw [dite_eq_left ⟨h1, h2⟩, big_hc_e]
   interval_cases j <;> first | rfl | simp [hcE] | norm_num [hcE]
 
 theorem big_w (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ 2) (z : RPl numBig.R) : 100 ≤ numBig.w j z ∧ numBig.w j z ≤ 118 := by
@@ -1060,10 +1060,10 @@ theorem big_v_nonneg (z : RPl numBig.R) (l : Fin (numBig.R.k - 1)) : 0 ≤ (numB
 theorem big_uW_ge (z : RPl numBig.R) (i : Fin numBig.R.k) : -7 / 2 ≤ numBig.uW wd0 z i := by
   unfold NumDatum.uW
   by_cases h : 1 ≤ i.1 ∧ i.1 + 1 < numBig.R.k
-  · rw [dif_pos h, if_neg (by simp [wd0])]
+  · rw [dite_eq_left h, if_neg (by simp [wd0])]
     have := big_v_nonneg z ⟨i.1 - 1, by have := i.2; omega⟩
     linarith
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     by_cases hz : z = (false, 0)
     · have hu : ∀ l : Fin 8, -7 / 2 ≤ hcUTop l := by intro l; fin_cases l <;> simp [hcUTop] <;> norm_num
       rw [hz, big_hc_top]
@@ -1103,8 +1103,8 @@ theorem big_nu_blk (z : RPl numBig.R) (c : ℕ) (hc : c < 16) : numBig.nu wd0 2 
   have hk : numBig.R.k = 8 := rfl
   have ht : numBig.R.t = 15 := rfl
   unfold NumDatum.nu NumDatum.srcPar
-  rw [dif_neg (by rw [hk]; omega)]
-  rw [dif_pos (by show (8 + c - 8) / (15 + 1) < 2; omega)]
+  rw [dite_eq_right (by rw [hk]; omega)]
+  rw [dite_eq_left (by show (8 + c - 8) / (15 + 1) < 2; omega)]
   have hq : (8 + c - numBig.R.k) / (numBig.R.t + 1) = 0 := by
     show (8 + c - 8) / (15 + 1) = 0
     omega
@@ -1170,7 +1170,7 @@ theorem big_inter (z : RPl numBig.R) (i : ℕ) (h : i + 1 < numBig.R.k) :
     numBig.sigPar z i < numBig.uW wd0 z ⟨i, by omega⟩ ∧ numBig.uW wd0 z ⟨i + 1, h⟩ < numBig.sigPar z i := by
   have hi : i < 7 := by simp at h; omega
   unfold NumDatum.sigPar NumDatum.uW
-  rw [dif_pos (show i < numBig.R.k - 1 by simp; omega), big_hc_v]
+  rw [dite_eq_left (show i < numBig.R.k - 1 by simp; omega), big_hc_v]
   by_cases hz : z = (false, 0)
   · rw [hz, big_hc_top]
     interval_cases i <;> simp [hcTop, hcUTop, hcV, wd0] <;> norm_num
@@ -1204,11 +1204,11 @@ theorem big_top (t : numBig.R.A) (ht : t ∈ numBig.TT) :
   subst ht
   refine ⟨by rw [large_example_exponent_zero]; norm_num, by rw [large_example_bound_zero], ?_, ?_⟩
   · unfold NumDatum.sigPar
-    rw [dif_pos (by simp), big_hc_v]
+    rw [dite_eq_left (by simp), big_hc_v]
     simp [hcV]
     norm_num
   · unfold NumDatum.sigPar
-    rw [dif_pos (by simp), big_hc_v]
+    rw [dite_eq_left (by simp), big_hc_v]
     simp [hcV]
     norm_num
 

@@ -103,12 +103,12 @@ theorem gapped_holPar {R : Ranks} (hc : HCParam R) (i : Fin R.m) {p q : ℕ} (hp
     rw [show a.1 + (p - 1 - a) = p - 1 by omega] at h1
     have e1 : Formalism.L2.NTheta.lamAt hc (p - 1) = -hc.b i := by
       unfold Formalism.L2.NTheta.lamAt
-      rw [dif_neg (by omega), dif_pos (by omega)]
+      rw [dite_eq_right (by omega), dite_eq_left (by omega)]
       congr 2
       exact Fin.ext (by simp only; omega)
     have e2 : Formalism.L2.NTheta.lamAt hc p = -hc.b ⟨i.1 + 1, hj⟩ := by
       unfold Formalism.L2.NTheta.lamAt
-      rw [dif_neg (by omega), dif_pos (by omega)]
+      rw [dite_eq_right (by omega), dite_eq_left (by omega)]
       congr 2
       exact Fin.ext (by simp only; omega)
     have h3 := hg hj

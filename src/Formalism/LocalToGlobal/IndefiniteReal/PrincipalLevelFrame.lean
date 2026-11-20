@@ -390,7 +390,7 @@ theorem mult_lev {T : Mult.MMap M} (hT : T ∈ Mult.Mult θ M J χ) : ∀ v, ∀
 
 theorem pre_spec (P : RowPsi V n) {γ : GA D V} (hγ : γ ∈ GfC V) : P.ψ (pre P γ) = γ := by
   unfold pre
-  rw [dif_pos (P.onto γ hγ)]
+  rw [dite_eq_left (P.onto γ hγ)]
   exact (P.onto γ hγ).choose_spec
 
 theorem exists_wit (c : Mult.IxFull θ M J χ Sb e) :

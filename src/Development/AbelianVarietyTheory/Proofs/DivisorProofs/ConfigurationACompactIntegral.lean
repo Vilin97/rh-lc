@@ -85,5 +85,5 @@ theorem GlobalTheory.FockLowStab.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
     obtain ⟨T, hT, rfl⟩ := hv
     rw [fockOp_apply h.1 h.2]
     exact ⟨_, atPl_fockAct2_mem w hY _ T hT, rfl⟩
-  · rw [fockOp, dif_neg h]
+  · rw [fockOp, dite_eq_right h]
     exact Submodule.zero_mem _

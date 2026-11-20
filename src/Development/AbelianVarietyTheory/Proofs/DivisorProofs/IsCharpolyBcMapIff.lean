@@ -50,11 +50,11 @@ theorem charpoly_bcMap : ∀ (K : Type) [Field K] (L : Type) [Field L] [Algebra 
   by_cases h : ∃ P, IsCharpoly f P
   · have h' : ∃ P, IsCharpoly (A := baseChange L A) (bcMap L f) P :=
       let ⟨P, hP⟩ := h; ⟨P, (isCharpoly_bcMap_iff L A f P).2 hP⟩
-    rw [dif_pos h, dif_pos h']
+    rw [dite_eq_left h, dite_eq_left h']
     exact isCharpoly_unique f ((isCharpoly_bcMap_iff L A f _).1 h'.choose_spec) h.choose_spec
   · have h' : ¬ ∃ P, IsCharpoly (A := baseChange L A) (bcMap L f) P :=
       fun ⟨P, hP⟩ => h ⟨P, (isCharpoly_bcMap_iff L A f P).1 hP⟩
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 end GlobalTheory.AV.AbVar
 

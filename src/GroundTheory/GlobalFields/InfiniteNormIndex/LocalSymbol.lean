@@ -90,7 +90,7 @@ theorem extensionEmbedding_completionConj (hv : v.IsReal) (x : w.Completion) :
   by_cases hw : w.IsComplex
   · rw [← ringEquivComplexOfIsComplex_apply hw]
     simp [completionConj, dif_pos hw]
-  · rw [completionConj, dif_neg hw, AlgEquiv.one_apply,
+  · rw [completionConj, dite_eq_right hw, AlgEquiv.one_apply,
       ← extensionEmbeddingOfIsReal_apply (not_isComplex_iff_isReal.1 hw), Complex.conj_ofReal]
 
 theorem completionConj_mul_self (hv : v.IsReal) :
@@ -236,7 +236,7 @@ theorem localSymbol_apply (hv : v.IsReal) (x : v.Completionˣ) :
   exact if_congr Iff.rfl rfl rfl
 
 theorem localSymbol_of_not_isReal (hv : ¬ v.IsReal) : localSymbol v w = 1 := by
-  rw [localSymbol, dif_neg hv]
+  rw [localSymbol, dite_eq_right hv]
 
 theorem ker_localSymbol : (localSymbol v w).ker = normSubgroup v w := by
   by_cases h2 : v.IsReal ∧ w.IsComplex
@@ -257,7 +257,7 @@ theorem ker_localSymbol : (localSymbol v w).ker = normSubgroup v w := by
     rw [MonoidHom.mem_ker]
     by_cases hv : v.IsReal
     · have hw : ¬ w.IsComplex := fun hw => h2 ⟨hv, hw⟩
-      rw [localSymbol_apply v w hv, completionConj, dif_neg hw, ite_self]
+      rw [localSymbol_apply v w hv, completionConj, dite_eq_right hw, ite_self]
     · rw [localSymbol_of_not_isReal v w hv, MonoidHom.one_apply]
 
 theorem localSymbol_surjective : Function.Surjective (localSymbol v w) := by

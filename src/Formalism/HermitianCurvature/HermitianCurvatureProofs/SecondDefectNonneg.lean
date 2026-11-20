@@ -27,7 +27,7 @@ theorem rr_top_eq (hVT : Top.VecVTypes) (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r �
     (P1 Q1 : C.LPt) (hP : D.IsLocPt P1 (P.r + 1)) (hQ : D.IsLocPt Q1 (P.r + 1)) :
     p.RR F (P.r + 1) w P1 Q1 = Top.topOf P p.l0 p.T p.ν' p.m₀ p.Θ p.TP F w P1 Q1 := by
   unfold KB.Pl.RR D.RRplace
-  rw [dif_pos ⟨hP, hQ⟩, dif_neg (by omega), if_pos rfl]
+  rw [dite_eq_left ⟨hP, hQ⟩, dite_eq_right (by omega), if_pos rfl]
   split_ifs with hw
   · subst hw
     set TT := Tz P.k P.r p.T.base.z * Tz P.k P.r p.T.base.z' with hTT

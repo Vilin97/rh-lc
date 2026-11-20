@@ -67,7 +67,7 @@ def famOf (R : RealDat3 D A3 Ks) (hq : ∀ i : Fin D.R.m, GlobalTheory.Indefinit
 theorem famOf_zero (R : RealDat3 D A3 Ks) (hq : ∀ i : Fin D.R.m, GlobalTheory.IndefiniteRowSideFullHecke.RationalHeckeScalars.RationalHecke R.toRealDat i) (j : ℕ)
     (Pl : PlE D.host) : famOf R hq j 0 Pl = 1 := by
   unfold famOf
-  rw [dif_neg (fun h => h.1 rfl)]
+  rw [dite_eq_right (fun h => h.1 rfl)]
 
 theorem exists_heckeRd (R : RealDat3 D A3 Ks) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (kKs : Ks →+* ↥D.LL0)
     (hk : ∀ x : Ks, ((kKs x : ↥D.LL0) : D.what₂.LL) = algebraMap Ks D.what₂.LL x) (Sb : Finset (PlE D.host))
@@ -100,7 +100,7 @@ theorem exists_heckeRd (R : RealDat3 D A3 Ks) (cG : G0 R.Pg D.R.r ≃* G0g D.nd)
         ((Classical.choose_spec (hq (idxOf D j) Pl h.2.1 k h.2.2)).1 Rr ⟨α, hd.elt, hd.reps⟩) y
       have h1 : famOf R hq j k Pl = Classical.choose (hq (idxOf D j) Pl h.2.1 k h.2.2) := by
         unfold famOf
-        rw [dif_pos h]
+        rw [dite_eq_left h]
       rw [h1, ← heckeScalar_eq]
       exact e1
 end Gen

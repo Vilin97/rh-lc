@@ -77,7 +77,7 @@ theorem lev_sq (k r' : ℕ) : ιLev k 1 r' (Hpk k r') * ιLev k 1 r' (Hpk k r') 
   have e : (fun j => (ιLev k 1 r' (Hpk k r') *ᵥ v) (levPos k 1 r' j)) =
       Hpk k r' *ᵥ fun j => v (levPos k 1 r' j) := by
     funext j
-    rw [RankOneLeviIdentities.ιLev_mulVec, dif_pos ⟨Nat.le_add_left 1 j.val, by
+    rw [RankOneLeviIdentities.ιLev_mulVec, dite_eq_left ⟨Nat.le_add_left 1 j.val, by
       show j.val + 1 < 2 * r' + k + 1 + 1; omega⟩]
     congr 1
   ext p
@@ -85,7 +85,7 @@ theorem lev_sq (k r' : ℕ) : ιLev k 1 r' (Hpk k r') * ιLev k 1 r' (Hpk k r') 
   split_ifs with h
   · rw [e, Hpk_mulVec_mulVec]
     exact congrArg v (Fin.ext (show p.val - 1 + 1 = p.val by omega))
-  · rw [RankOneLeviIdentities.ιLev_mulVec, dif_neg h]
+  · rw [RankOneLeviIdentities.ιLev_mulVec, dite_eq_right h]
 
 theorem lev_inv (k r' : ℕ) : (ιLev k 1 r' (Hpk k r'))⁻¹ = ιLev k 1 r' (Hpk k r') :=
   Matrix.inv_eq_left_inv (lev_sq k r')

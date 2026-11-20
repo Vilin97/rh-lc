@@ -249,7 +249,7 @@ theorem placeInv_brauerLocal_globalCupClass_iChar (v : InfinitePlace K.1) :
     placeInv (.inl v) (brauerLocal ι (globalCupClass (iChar K) a) (.inl v)) =
       if h : v.IsReal then (if v.embedding_of_isReal h (a : K.1) < 0 then QZ.mk (1 / 2) else 0) else 0 := by
   by_cases hv : v.IsReal
-  · rw [dif_pos hv]
+  · rw [dite_eq_left hv]
     by_cases ha : embedding_of_isReal hv (a : K.1) < 0
     · rw [if_pos ha]
       exact placeInv_brauerLocal_globalCupClass_iChar_of_neg ι a v hv ha
@@ -257,7 +257,7 @@ theorem placeInv_brauerLocal_globalCupClass_iChar (v : InfinitePlace K.1) :
       have hpos : 0 < embedding_of_isReal hv (a : K.1) :=
         lt_of_le_of_ne (not_lt.1 ha) (fun h => a.ne_zero ((map_eq_zero _).1 h.symm))
       exact placeInv_brauerLocal_globalCupClass_iChar_of_pos ι a v hv hpos
-  · rw [dif_neg hv]
+  · rw [dite_eq_right hv]
     exact placeInv_brauerLocal_globalCupClass_iChar_of_isComplex ι a v (not_isReal_iff_isComplex.1 hv)
 
 end Invariants

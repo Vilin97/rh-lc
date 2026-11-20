@@ -46,7 +46,7 @@ theorem phiOf_eq (C : Choice X 1) (hB : WuBessel C) (u : D.what₂.Word) (τ : D
   have hex : ∃ γ : Formalism.REAL.UJ (X.B.I.ε (vOf X τ)), uMat γ = C.Q τ * (m * C.y τ) * C.Qi τ :=
     exists_uj (transp_mem C τ hmy)
   unfold wT
-  rw [dif_pos hex, (hB u τ).choose_spec.2 hex.choose, hex.choose_spec]
+  rw [dite_eq_left hex, (hB u τ).choose_spec.2 hex.choose, hex.choose_spec]
   unfold phiOf v0Of sigB bOf
   have hmul := (X.ds (vOf X τ)).2.2.1.1.2 _ (transp_mem C τ hm) _ (transp_mem C τ (C.y_mem τ))
   have e : C.Q τ * m * C.Qi τ * (C.Q τ * C.y τ * C.Qi τ) = C.Q τ * (m * C.y τ) * C.Qi τ := by

@@ -157,7 +157,7 @@ theorem over_liftOf {m : ℕ} {n : Fin (m + 1) → ℕ} {X : Scheme.{0}} {i : X 
     {y : GlobalTheory.CxPts (i ≫ mpStr ℤ m n) σ₀} {z : (Σ k, Bk n k) → ℂ} (h : Over i y z) : Over i y (liftOf i y) := by
   have hex : ∃ z, Over i y z := ⟨z, h⟩
   unfold liftOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
 theorem volume_chart_crit : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (X : Scheme.{0}) [IsIntegral X] (i : X ⟶ MP ℤ m n) [IsClosedImmersion i] (D : ℕ),

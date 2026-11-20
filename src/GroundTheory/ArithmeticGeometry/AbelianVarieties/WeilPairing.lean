@@ -80,7 +80,7 @@ theorem translate_eq_weilPairing_mul {n : ℕ} {S T : W.toAffine.Point}
   obtain ⟨ζ, -, hζ⟩ := h.exists_translate_eq hS
   have hex : ∃ ζ : F, ∃ f g, IsWeilData W n T f g ∧ translate W S g = ι ζ * g := ⟨ζ, f, g, h, hζ⟩
   classical
-  rw [weilPairing, dif_pos hex]
+  rw [weilPairing, dite_eq_left hex]
   obtain ⟨f₀, g₀, h₀, hζ₀⟩ := hex.choose_spec
   obtain ⟨d, rfl⟩ := h₀.exists_eq_mul h
   rw [map_mul, translate_algebraMap, hζ₀]

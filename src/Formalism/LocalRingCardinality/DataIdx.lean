@@ -108,7 +108,7 @@ theorem hLL_spec (h : HermRat D) (μ : D.what₂.Tup) (j : ℕ) (h1 : 1 ≤ j) (
     (x y : D.what₂.MtL μ j) :
     D.what₂.embLL (hLL D μ j x y) = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y) := by
   unfold hLL
-  rw [dif_pos (h μ j h1 h2 x y)]
+  rw [dite_eq_left (h μ j h1 h2 x y)]
   exact (h μ j h1 h2 x y).choose_spec
 
 def gramDet (μ : D.what₂.Tup) (j : ℕ) {n : ℕ} (b : Fin n → D.what₂.MtL μ j) : D.what₂.LL :=

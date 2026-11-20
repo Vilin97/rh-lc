@@ -72,8 +72,8 @@ theorem stabU_map_eq_ofRoots {K : Type} [Field K] (ψ : K →+* ℂ) (p : Point 
   ext a b
   unfold GlobalTheory.LoopV.ofRoots
   by_cases hr : (a, b) ∈ GlobalTheory.LoopV.roots (ptMat p)
-  · rw [dif_pos hr]
-  · rw [dif_neg hr]
+  · rw [dite_eq_left hr]
+  · rw [dite_eq_right hr]
     rcases lt_trichotomy a b with hab | rfl | hab
     · rw [if_neg hab.ne]
       have hσ : σ.symm a < σ.symm b := by

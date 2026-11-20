@@ -170,7 +170,7 @@ theorem main : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι 
     have hc'κ : ∀ k', c' (κ k') = c k' := fun k' => by
       have hk : ∃ k'', κ k'' = κ k' := ⟨k', rfl⟩
       simp only [c']
-      rw [dif_pos hk, hb.1 hk.choose_spec]
+      rw [dite_eq_left hk, hb.1 hk.choose_spec]
     have hyP : IsMultiHomogIdeal (mCoordIdeal y) := GroundTheory.Heights₂.Heights.CoordinateConeArithVar.isMultiHomogIdeal _
     refine ⟨fun p => c' p.1 * z₀ p, mcPts_smul hyP c' hc'0 hz₀, ?_, ?_⟩
     · funext q

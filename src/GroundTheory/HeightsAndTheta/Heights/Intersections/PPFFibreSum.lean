@@ -76,11 +76,11 @@ theorem baseSubst_isMultiHomog (G : GenFibre v P') {s : MRing ι'} {a : K' → �
         funext k
         have : k.1 ≠ q.1 := fun e => k.2 (e ▸ h)
         simp [this]
-      rw [dif_pos h, h0]
+      rw [dite_eq_left h, h0]
       split_ifs
       · exact isWeightedHomogeneous_C _ _
       · exact isWeightedHomogeneous_zero _ _ _
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       have e : (fun k : FibreBlock κ => (Pi.single q.1 1 : K' → ℕ) k.1) =
           (Pi.single (⟨q.1, h⟩ : FibreBlock κ) 1 : FibreBlock κ → ℕ) := by
         funext k

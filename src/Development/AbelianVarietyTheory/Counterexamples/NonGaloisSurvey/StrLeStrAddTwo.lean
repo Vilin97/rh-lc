@@ -24,7 +24,7 @@ theorem aPl_last_pos (i : Fin D.R.m) (τ : D.what₂.Tau) : 0 < aPl D i (D.R.k +
   have hn : D.R.k + (i : ℕ) - 1 < D.R.k + (i : ℕ) := by omega
   have hlam : Formalism.L2.NTheta.lamAt (D.hc τ) (D.R.k + (i : ℕ) - 1) = -(D.hc τ).b i := by
     unfold Formalism.L2.NTheta.lamAt
-    rw [dif_neg (by omega), dif_pos (by omega)]
+    rw [dite_eq_right (by omega), dite_eq_left (by omega)]
     congr 2
     ext
     simp only

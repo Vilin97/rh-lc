@@ -31,7 +31,7 @@ open scoped Topology in
 variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.latticePoint_of_mem {z : ℂ} (hz : z ∈ L.lattice) :
     _root_.GlobalTheory.latticePoint L z = 0 := by
-  rw [_root_.GlobalTheory.latticePoint, dif_pos hz]
+  rw [_root_.GlobalTheory.latticePoint, dite_eq_left hz]
 
 open Filter PeriodPair WeierstrassCurve in
 open scoped Topology in
@@ -39,7 +39,7 @@ variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.latticePoint_of_notMem {z : ℂ} (hz : z ∉ L.lattice) :
     _root_.GlobalTheory.latticePoint L z =
       .some (℘[L] z) (℘'[L] z / 2) (_root_.GlobalTheory.latticeCurve_nonsingular L hz) := by
-  rw [_root_.GlobalTheory.latticePoint, dif_neg hz]
+  rw [_root_.GlobalTheory.latticePoint, dite_eq_right hz]
 
 open Filter PeriodPair WeierstrassCurve in
 open scoped Topology in

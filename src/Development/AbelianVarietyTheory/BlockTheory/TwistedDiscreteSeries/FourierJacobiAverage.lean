@@ -49,7 +49,7 @@ open Classical in
 def app (l : SB X →ₗ[ℂ] V) (f : X → ℂ) : V := if h : f ∈ SB X then l ⟨f, h⟩ else 0
 
 theorem app_coe (l : SB X →ₗ[ℂ] V) (f : SB X) : app l (f : X → ℂ) = l f := by
-  rw [app, dif_pos f.2]
+  rw [app, dite_eq_left f.2]
 
 def HasTensorVal (l : SB X → SB Z → ℂ) (Θ : X → Z → ℂ) (z : ℂ) : Prop :=
   ∃ (m : ℕ) (Ψ : Fin m → SB X) (Φ₀ : Fin m → SB Z),

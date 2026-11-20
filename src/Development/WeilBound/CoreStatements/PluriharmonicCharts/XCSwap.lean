@@ -20,7 +20,7 @@ theorem PositivityTheory.Xgp.t_c_swap : ∀ (K : Type) [Fintype K] (ι : K → T
     intro p
     unfold FlagModel.dy
     have hnot : ¬ ∀ p' : Ψ × Fin N, M.blk p' ≠ some k₀ := fun h => h (τ, a) hk₀
-    rw [dif_neg hnot]
+    rw [dite_eq_right hnot]
     by_cases hp : p = (τ, a)
     · subst hp
       simp [hk₀]

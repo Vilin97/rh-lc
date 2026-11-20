@@ -25,7 +25,7 @@ theorem mem_NA_iff (u : GA E a) : u ∈ NA E a ↔ ∃ X : Pos a → Ad E, u = u
     · exact h0 i j (lt_of_le_of_ne (not_lt.1 h') (Ne.symm h))
   · rintro ⟨X, rfl⟩
     refine ⟨fun i j h => ?_, fun i => ?_⟩
-    · rw [coe_uGL, uMat_apply, if_neg (ne_of_gt h), dif_neg (not_lt.2 h.le)]
+    · rw [coe_uGL, uMat_apply, if_neg (ne_of_gt h), dite_eq_right (not_lt.2 h.le)]
     · rw [coe_uGL, uMat_apply, if_pos rfl]
 
 theorem superDiag_uGL (X : Pos a → Ad E) : GlobalTheory.Whittaker.superDiag (uGL X) = supSum 0 X := by
@@ -45,7 +45,7 @@ theorem superDiag_uGL (X : Pos a → Ad E) : GlobalTheory.Whittaker.superDiag (u
     exact ⟨⟨(i, j), by rw [Fin.lt_def]; simp only; omega⟩, by simp [h], rfl⟩
   · intro p _
     simp only [coe_uGL, uMat_apply]
-    rw [if_neg (ne_of_lt p.2), dif_pos p.2]
+    rw [if_neg (ne_of_lt p.2), dite_eq_left p.2]
 
 theorem whit_mul {F : GA E a → ℂ} (hc : Continuous F) (hl : AutomorphicForm.IsLeftInvariant F) {u : GA E a}
     (hu : u ∈ NA E a) (g : GA E a) : whit F (u * g) = psiN u * whit F g := by

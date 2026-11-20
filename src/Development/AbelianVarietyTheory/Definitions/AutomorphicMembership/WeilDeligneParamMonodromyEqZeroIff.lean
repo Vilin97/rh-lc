@@ -391,7 +391,7 @@ theorem IsWDOf.unique {x y : WD h} (hx : IsWDOf ι r x) (hy : IsWDOf ι r y) : x
   exact WD.sound (h1.trans (ha'.iso_of_smul ((map_ne_zero ι).mpr hc0) hb))
 
 theorem IsWDOf.wdOf_eq {x : WD h} (hx : IsWDOf ι r x) : wdOf h hl ι r = x := by
-  rw [wdOf, dif_pos ⟨x, hx⟩]
+  rw [wdOf, dite_eq_left ⟨x, hx⟩]
   exact (Exists.choose_spec (⟨x, hx⟩ : ∃ x : WD h, IsWDOf ι r x)).unique hl hx
 
 include hl in

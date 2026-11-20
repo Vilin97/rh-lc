@@ -68,11 +68,11 @@ theorem tendsto_ptsIntegral_of_chart_conv : ∀ (K : Type) [Fintype K] (ι : K �
       funext i z
       simp [pot]
     rw [hpot] at h3
-    rw [ptsIntegral, dif_pos hQ, h3]
+    rw [ptsIntegral, dite_eq_left hQ, h3]
   · refine ⟨0, ?_⟩
     have : (fun t => ptsIntegral P (pot (L t)) (g t)) = fun _ => (0 : ℝ) := by
       funext t
-      rw [ptsIntegral, dif_neg hQ]
+      rw [ptsIntegral, dite_eq_right hQ]
     rw [this]
     exact tendsto_const_nhds
 

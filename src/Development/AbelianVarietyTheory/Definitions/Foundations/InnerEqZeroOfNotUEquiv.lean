@@ -178,7 +178,7 @@ variable (H) in
 
 theorem norm_unitVec [Nontrivial H] : ‖unitVec H‖ = 1 := by
   have h : ∃ x : H, ‖x‖ = 1 := exists_norm_eq H zero_le_one
-  rw [unitVec, dif_pos h]
+  rw [unitVec, dite_eq_left h]
   exact h.choose_spec
 
 variable (H K) in

@@ -52,10 +52,10 @@ theorem cosetIn_smul_unitary : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (sel
         exact liftFr_spec q'.1.1.deco.2 w
       have e1 : frsF sel mu q.1.1 P = q.1.1.deco.1.liftFr w := by
         unfold frsF
-        rw [dif_pos hP]
+        rw [dite_eq_left hP]
       have e2 : frsF sel mu q'.1.1 P = q'.1.1.deco.1.liftFr w := by
         unfold frsF
-        rw [dif_pos hP]
+        rw [dite_eq_left hP]
       rw [e1, e2]
       let κ := passFr γ.1 1 hf hf'
       have hκ : redGL (R.N j) P.1 κ = 1 := redGL_passFr γ.1 1 hf hf'
@@ -88,7 +88,7 @@ theorem cosetIn_smul_unitary : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (sel
       have e : (frsF sel mu q'.1.1 P).symm (γ.1 y) = (frsF sel mu q.1.1 P).symm y := by
         rw [LinearEquiv.symm_apply_eq]
         unfold frsF
-        rw [dif_neg hP, dif_neg hP, h1]
+        rw [dite_eq_right hP, dite_eq_right hP, h1]
         show γ.1 y = γ.1 (q.1.1.fr _ ((((1 : GLQ X.E (R.N j) (QE sel (mu : Chr X.F X.E X.K))) _)⁻¹).1 ((q.1.1.fr _).symm y)))
         simp
       rw [e, sub_self, smul_zero]

@@ -105,7 +105,7 @@ theorem jetAgree_of_local (h : JetLocal) : JetAgree := by
   funext q
   have hex : ∃ g' : MA.SmQ r TT, JetEq m q g'.1 g.1 := ⟨g, fun _ _ => rfl⟩
   unfold actJ
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact h r TT d a ha m hd q _ g (Classical.choose_spec hex)
 
 theorem jetExists_top (r : ℕ) (TT : ℝ) (u : MA.Qp r TT → ℂ) (hu : u ∈ smSubM r TT ⊤) (q : MA.Qp r TT) :

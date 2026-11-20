@@ -90,7 +90,7 @@ theorem aRay_mul_log : ∀ (K : Type) [Field K] [NumberField K] (M : ℕ), 2 ≤
     unfold lamRay; rw [finsum_mem_eq_finite_toFinset_sum _ (finite_idealsIn D g n)]
   let T : Ideal (𝓞 K) → Finset (Ideal (𝓞 K)) := fun I => if h : I = 0 then ∅ else (finite_dvd h).toFinset
   have hT : ∀ I, I ≠ 0 → ∀ J, J ∈ T I ↔ J ∣ I := fun I hI J => by
-    simp only [T]; rw [dif_neg hI]; simp
+    simp only [T]; rw [dite_eq_right hI]; simp
   have L : aRay D g n * Real.log n = ∑ I ∈ F g n, ∑ J ∈ T I, lamIdeal J := by
     rw [ha, ← nsmul_eq_mul, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun I hI => ?_

@@ -103,7 +103,7 @@ theorem cc_span_partFull : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7,
     rw [mem_partFull]
     refine ⟨T.2, fun P d R hR v => ?_⟩
     have hex : ∃ R, Hecke₂ s.V (s.J : Set (GA D s.V)) (1 : GA D s.V → ℂ) c.S P d R := ⟨R, hR⟩
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
     have hlevT := ((GlobalTheory.MultMem.mem_mult_iff ..).1 T.2).lev v
     rw [hLU P d R hex.choose hR hex.choose_spec _ hlevT]
     have h1 := (Submodule.mem_iInf _).1 hT ⟨(P, d, hex.choose), hex.choose_spec⟩

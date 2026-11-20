@@ -96,7 +96,7 @@ theorem firstEmbedding_mul (hK : Module.finrank ℚ K = 2) (L : LM c v) (hL : L.
 
 theorem unitCoordinate_eq_firstEmbedding (hK : Module.finrank ℚ K = 2) (L : LM c v) (hL : L.ok) (κ : Kˣ) :
     ((k1 L κ : (Qv v)ˣ) : Qv v) = e1 L (κ : K) := by
-  rw [k1, dif_neg (firstEmbedding_ne_zero hK L hL κ.ne_zero)]
+  rw [k1, dite_eq_right (firstEmbedding_ne_zero hK L hL κ.ne_zero)]
   rfl
 
 theorem order_unitCoordinate_mul (hK : Module.finrank ℚ K = 2) (L : LM c v) (hL : L.ok) (a b : Kˣ) :
@@ -153,7 +153,7 @@ theorem support_ord_finite (hK : Module.finrank ℚ K = 2) (M : ∀ v : Pl, LM c
 
 theorem vK_apply (hK : Module.finrank ℚ K = 2) (M : ∀ v : Pl, LM c v) (hM : AdmM M) (κ : Kˣ) (v : Pl) :
     vK M κ v = ord ((k1 (M v) κ : (Qv v)ˣ) : Qv v) := by
-  rw [vK, dif_pos (support_ord_finite hK M hM κ)]
+  rw [vK, dite_eq_left (support_ord_finite hK M hM κ)]
   rfl
 
 theorem vK_valuation_map : ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →

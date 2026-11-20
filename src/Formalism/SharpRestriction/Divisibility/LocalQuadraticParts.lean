@@ -134,7 +134,7 @@ theorem logLamC_cOf {D : D7} {Z : DivX D} (E : EigIdx D Z) {j : ℕ} (hj : j ∈
     (hπ : D.what₂.isot j π ≠ ⊥) (e : D.what₂.LL →+* ℂ) : logLamC E j (E.cOf π) e = Z.logLam j π e := by
   have hex : ∃ π', E.cOf π' = E.cOf π ∧ D.what₂.isot j π' ≠ ⊥ := ⟨π, rfl, hπ⟩
   unfold logLamC
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact E.lam_const j hj _ _ e hex.choose_spec.2 hπ hex.choose_spec.1
 
 theorem all_embeddings_of_bounds {D : D7} {Z : DivX D} {A : AmbForm D (RowSide.sharp D)}
@@ -147,9 +147,9 @@ theorem all_embeddings_of_bounds {D : D7} {Z : DivX D} {A : AmbForm D (RowSide.s
     intro c e j hj
     unfold logLamC
     by_cases hh : ∃ π, E.cOf π = c ∧ D.what₂.isot j π ≠ ⊥
-    · rw [dif_pos hh, dif_pos hh]
+    · rw [dite_eq_left hh, dite_eq_left hh]
       exact hc j hj _ hh.choose_spec.2 e
-    · rw [dif_neg hh, dif_neg hh]
+    · rw [dite_eq_right hh, dite_eq_right hh]
   intro s
   by_cases hs : InfinitePlace.mk s = InfinitePlace.mk D.what₂.embLL
   · rcases InfinitePlace.mk_eq_iff.mp hs with h1 | h1

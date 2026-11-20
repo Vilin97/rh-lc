@@ -99,7 +99,7 @@ theorem tb_colDia_top (hPr : Pr.Ok) (u : Pr.Word) (R : Ranks) (P : Pr.vT u) :
   unfold colDia
   rw [if_neg (lt_irrefl _)]
   unfold diaT
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   rfl
 
 end GenQ

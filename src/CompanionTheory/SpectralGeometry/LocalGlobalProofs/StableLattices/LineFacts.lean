@@ -193,7 +193,7 @@ theorem detOn_eT (h3 : A * A * A = A) (t : ℝ) : detOn (eT A t) (Vm A) = Real.e
     simp only [LinearMap.restrict_coe_apply, Matrix.toLin'_apply, eT_mulVec h3 y.2]
     rfl
   unfold detOn
-  rw [dif_pos hk, hr, LinearMap.det_smul, LinearMap.det_id, mul_one, norm_pow, Complex.norm_real,
+  rw [dite_eq_left hk, hr, LinearMap.det_smul, LinearMap.det_id, mul_one, norm_pow, Complex.norm_real,
     Real.norm_of_nonneg (Real.exp_pos _).le, ← Real.exp_nat_mul]
   congr 1
   simp only [rk]

@@ -27,7 +27,7 @@ theorem leadMinor_triMul {E : Type} [Field E] {m : ℕ} (A B Z : Matrix (Fin m) 
     leadMinorE (A * Z * B) l = leadMinorE Z l := by
   unfold leadMinorE
   by_cases hl : l ≤ m
-  · rw [dif_pos hl, dif_pos hl]
+  · rw [dite_eq_left hl, dite_eq_left hl]
     have red : ∀ g : Fin m → E, (∀ i : Fin m, l ≤ (i : ℕ) → g i = 0) →
         ∑ i, g i = ∑ i : Fin l, g (Fin.castLE hl i) := by
       intro g hg
@@ -60,7 +60,7 @@ theorem leadMinor_triMul {E : Type} [Field E] {m : ℕ} (A B Z : Matrix (Fin m) 
         have h2 : j < i := hij
         exact hB _ _ (Fin.lt_def.2 (Fin.lt_def.1 h2))
     rw [key, Matrix.det_mul, Matrix.det_mul, hdA, hdB, one_mul, mul_one]
-  · rw [dif_neg hl, dif_neg hl]
+  · rw [dite_eq_right hl, dite_eq_right hl]
 
 variable {D : D7}
 

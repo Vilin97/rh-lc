@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.IdxInt.Lin.main : ∀ {W : Type} [AddCommGroup W] (A
         unfold _root_.GlobalTheory.IdxInt.ind
         split_ifs <;> simp
     · unfold _root_.GlobalTheory.IdxInt.cint
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       simp
   · intro ι s φ hs
     induction s using Finset.induction_on with

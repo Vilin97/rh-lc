@@ -43,11 +43,11 @@ theorem extM_elemMat (R : Type) [CommRing R] {n : ℕ} (a b : Fin n) (t : R) :
   unfold Formalism.BranchingDeterminantCap.extM elemMat
   simp only [Matrix.of_apply]
   by_cases h : c.val < n ∧ d.val < n
-  · rw [dif_pos h]
+  · rw [dite_eq_left h]
     congr 1
     · simp [Fin.ext_iff]
     · simp [Fin.ext_iff]
-  · rw [dif_neg h]
+  · rw [dite_eq_right h]
     have : ¬ (c = b.castSucc ∧ d = a.castSucc) := by
       rintro ⟨rfl, rfl⟩
       exact h ⟨b.isLt, a.isLt⟩

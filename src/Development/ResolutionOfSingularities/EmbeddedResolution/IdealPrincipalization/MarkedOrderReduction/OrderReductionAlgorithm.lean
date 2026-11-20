@@ -39,7 +39,7 @@ theorem isMonomialSplitting_monomialPart_nonMonomialPart (E : List X.IdealSheafD
     (h : ∃ q : X.IdealSheafData × X.IdealSheafData, IsMonomialSplitting E I q.1 q.2) :
     IsMonomialSplitting E I (monomialPart E I) (nonMonomialPart E I) := by
   unfold monomialPart nonMonomialPart monomialSplitting
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 end

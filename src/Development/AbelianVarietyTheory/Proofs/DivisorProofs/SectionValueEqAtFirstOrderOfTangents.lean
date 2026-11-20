@@ -43,7 +43,7 @@ theorem fst_eq_of_tangent : ∀ (K C : Type) [Field K] [Field C] [Algebra K C] (
     · have h' : ¬ ⊤ ≤ (spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ y) ⁻¹ᵁ U :=
         fun h' => h ((GlobalTheory.ArcLie.le_iff_fst y U).2 h')
       unfold valR
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
       rfl
   have sq : spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) =
       spMap (algebraMap K C) ≫ spMap (TrivSqZeroExt.fstHom K K K).toRingHom := by
@@ -60,7 +60,7 @@ theorem fst_eq_of_tangent : ∀ (K C : Type) [Field K] [Field C] [Algebra K C] (
     fun q hq => Set.mem_iInter.2 fun _ => hi hq
   have hr : valR (spMap (algebraMap K C)) ((P.L.pull (eSec P.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ≠ 0 := by
     unfold valR
-    rw [dif_pos hU]
+    rw [dite_eq_left hU]
     exact (((ρ.s fun _ => i₀).isUnit.map _).map _).ne_zero
   have h1 := congrArg TrivSqZeroExt.fst ev
   have h2 := congrArg TrivSqZeroExt.fst ew

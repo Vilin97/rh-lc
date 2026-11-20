@@ -30,7 +30,7 @@ theorem ordL_of_v_eq {L : Type} [Field L] [Valued L (WithZero (Multiplicative �
     (hx : Valued.v x = ((Multiplicative.ofAdd z : Multiplicative ℤ) : WithZero (Multiplicative ℤ))) : ordL x = -z := by
   unfold ordL
   have h0 : Valued.v x ≠ 0 := by rw [hx]; exact WithZero.coe_ne_zero
-  rw [dif_neg h0]
+  rw [dite_eq_right h0]
   have : WithZero.unzero h0 = Multiplicative.ofAdd z := by
     apply WithZero.coe_injective; rw [WithZero.coe_unzero, hx]
   rw [this]; rfl

@@ -170,7 +170,7 @@ def carFun : InvFun O where
     · have h' : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), β ∈ balForms bar (Fin n → O) ∧ (∀ y, 0 ≤ β y y) ∧
           ∀ a b, B (r a) (r b) = β a b :=
         ⟨pull r h.choose, pull_mem r h.choose_spec.1, fun y => h.choose_spec.2.1 _, fun a b => h.choose_spec.2.2 _ _⟩
-      rw [dif_pos h, dif_pos h']
+      rw [dite_eq_left h, dite_eq_left h']
       have e : h'.choose = pull r h.choose := LinearMap.ext₂ fun a b => by
         have h1 := h'.choose_spec.2.2 a b
         have h2 := h.choose_spec.2.2 (r a) (r b)
@@ -183,7 +183,7 @@ def carFun : InvFun O where
           ∀ a b, B (r a) (r b) = β a b := by
         rintro ⟨β, h1, h2, h3⟩
         exact h ⟨pull s β, pull_mem s h1, fun y => h2 _, fun a b => by rw [pull_apply, ← h3, hrs, hrs]⟩
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
   zero B := by
     split_ifs with h
     · have := Nat.sInf_eq_zero.2 (Or.inl (zero_mem_cdimSet (bar := bar) (ψ := ψ) (orad h.choose) h.choose))

@@ -24,8 +24,8 @@ theorem trOn_iSup_eq_sum : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (ι : 
   have key := LinearMap.trace_eq_sum_trace_restrict_of_eq_biSup (N := M) Finset.univ hs hf
     (⨆ i, M i) hp hsup
   unfold trOn
-  rw [dif_pos hsup, key]
+  rw [dite_eq_left hsup, key]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
-  rw [dif_pos (hinv i)]
+  rw [dite_eq_left (hinv i)]
 
 end GlobalTheory.BCT

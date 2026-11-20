@@ -53,7 +53,7 @@ theorem exists_comb {Y : Scheme.{0}} {N : Y.Modules} {r : ℕ} (fl : Vert.Flag N
     (fun l _ hl => ?_) (fun i _ => ?_)).symm
   · rw [dif_neg, zero_mul]
     exact fun h => hl ⟨⟨l, h⟩, Finset.mem_coe.2 (Finset.mem_univ _), rfl⟩
-  · rw [dif_pos (show ((Fin.castLE hk i : Fin r) : ℕ) < k from i.2), Matrix.of_apply,
+  · rw [dite_eq_left (show ((Fin.castLE hk i : Fin r) : ℕ) < k from i.2), Matrix.of_apply,
       ← TangentOrigin.evalPt_res y inf_le_left hy h0, ← he.repr_resM]
     rfl
 

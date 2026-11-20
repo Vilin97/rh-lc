@@ -207,7 +207,7 @@ theorem cmp_sum_letter (T : LocLat G Qp LL O) (i : ZMod n) {d : ℕ} (b : Fin d 
 
 theorem cmpD_of_mem (T : LocLat G Qp LL O) {x : W.DD T} (hx : x ∈ W.N T) :
     Formalism.MainNotions.ArcLiftingSetup.cmpD W T x = W.cmp T ⟨x, hx⟩ := by
-  unfold Formalism.MainNotions.ArcLiftingSetup.cmpD; rw [dif_pos hx]
+  unfold Formalism.MainNotions.ArcLiftingSetup.cmpD; rw [dite_eq_left hx]
 
 theorem letter_of_Nl (T : LocLat G Qp LL O) (i : ZMod n) {x : W.DD T} (hx : x ∈ W.Nl T i) :
     (letE i : LetA O n) • x = x := by

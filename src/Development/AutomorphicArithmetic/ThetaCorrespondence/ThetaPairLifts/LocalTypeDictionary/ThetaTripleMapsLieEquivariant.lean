@@ -70,7 +70,7 @@ theorem GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant : GlobalTh
       GlobalTheory.TripleAssembly.opLie θ ωA (algF ψ θ true A B) (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf) τ Y = (H τ Y hY).choose := by
     intro τ Y hY
     unfold GlobalTheory.TripleAssembly.opLie
-    rw [dif_pos (H τ Y hY)]
+    rw [dite_eq_left (H τ Y hY)]
   refine ⟨fun τ Y hY Φ hΦ Φ' hΦ' hD => ?_, fun τ Y hY Φ hΦ Φ' hΦ' hD => ?_⟩
   · rw [hOp τ Y hY]
     exact (H τ Y hY).choose_spec Φ hΦ Φ' hΦ' hD

@@ -35,7 +35,7 @@ def FieldOfNorms : Type _ :=
 
 theorem relNorm_of_mem {E E' : IntermediateField K Ω} (h : E ≤ E') {y : Ω} (hy : y ∈ E') :
     relNorm h y = ((@Algebra.norm E E' _ _ (inclAlgebra h) ⟨y, hy⟩ : E) : Ω) := by
-  rw [relNorm, dif_pos hy]
+  rw [relNorm, dite_eq_left hy]
 
 theorem relNorm_mem {E E' : IntermediateField K Ω} (h : E ≤ E') (y : Ω) : relNorm h y ∈ E := by
   unfold relNorm

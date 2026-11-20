@@ -136,9 +136,9 @@ theorem evalPt_tvE_mul : ∀ {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G
     exact hw (Set.mem_univ _)
   refine ⟨h', fun f => ?_⟩
   have hval : valR (g' * v').left O f = evalPt (g' * v').left O hw f := by
-    unfold valR; rw [dif_pos hw]; rfl
+    unfold valR; rw [dite_eq_left hw]; rfl
   have hvalz : valR z.left O (dd O f) = evalPt z.left O h (dd O f) := by
-    unfold valR; rw [dif_pos h]; rfl
+    unfold valR; rw [dite_eq_left h]; rfl
   have hsnd := hinv.2 B φ z.left (g' * v').left O f hz h htr
   rw [hval, hvalz] at hsnd
   have key : ∀ (y : Sp B ⟶ G.left) (hy : ⊤ ≤ y ⁻¹ᵁ O),

@@ -28,12 +28,12 @@ theorem sum_hi {M : Type} [AddCommMonoid M] (N : ℕ) (f : Fin N → M)
 
 theorem embLow_hi {n' n : ℕ} (z : Matrix (Fin (n' / 2)) (Fin (n / 2)) L) (k : Fin (n' / 2)) (l : Fin (n / 2)) :
     embLow n' n z (hi n' k) (hi n l) = z k l := by
-  rw [embLow, dif_pos ⟨by simp [hi], by simp [hi]⟩]
+  rw [embLow, dite_eq_left ⟨by simp [hi], by simp [hi]⟩]
   congr 1 <;> ext <;> simp [hi]
 
 theorem embLow_eq_zero {n' n : ℕ} (z : Matrix (Fin (n' / 2)) (Fin (n / 2)) L) (r : Fin n') (c : Fin n)
     (h : r.1 < n' - n' / 2 ∨ c.1 < n - n / 2) : embLow n' n z r c = 0 := by
-  rw [embLow, dif_neg (by omega)]
+  rw [embLow, dite_eq_right (by omega)]
 
 theorem mul_embLow_mul_apply {n' n : ℕ} (A : Matrix (Fin n') (Fin n') L) (B : Matrix (Fin n) (Fin n) L)
     (z : Matrix (Fin (n' / 2)) (Fin (n / 2)) L) (r : Fin n') (c : Fin n) :

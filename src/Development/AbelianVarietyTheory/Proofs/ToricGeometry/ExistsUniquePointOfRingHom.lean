@@ -60,14 +60,14 @@ theorem existsUnique_point_of_ringHom :
     exact h
   refine ⟨Over.homMk (Spec.map φ ≫ hU.fromSpec) hw, ⟨hpre, fun f => ?_⟩, ?_⟩
   · show valAt' (Spec.map φ ≫ hU.fromSpec) U f = e f
-    rw [valAt', dif_pos hpre]
+    rw [valAt', dite_eq_left hpre]
     exact congrArg (fun g => g.hom f) (appLE_specMap_fromSpec hU φ hpre)
   · rintro y ⟨hy, hv⟩
     apply Over.OverMorphism.ext
     have h1 : y.left.appLE U ⊤ hy ≫ (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom = φ := by
       ext f
       have := hv f
-      rw [valAt', dif_pos hy] at this
+      rw [valAt', dite_eq_left hy] at this
       exact this
     rw [← specMap_appLE_fromSpec hU y.left hy, h1]
     rfl

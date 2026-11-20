@@ -213,7 +213,7 @@ theorem unitChar_eq (ν : (Formalism.L2.Theta.AE D)ˣ →* Circle) {e : Formalis
     unitChar ν e N = (((ν x)⁻¹ : Circle) : ℂ) := by
   have h : ∃ x, IsUnitDet e N x := ⟨x, hx⟩
   unfold unitChar
-  rw [dif_pos h, GlobalTheory.BotFinLevel.isUnitDet_unique h.choose_spec hx]
+  rw [dite_eq_left h, GlobalTheory.BotFinLevel.isUnitDet_unique h.choose_spec hx]
 
 theorem unitChar_congr {e : Formalism.L2.Theta.AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) {c : Pl D.host.E → ℕ}
     (hc : ∀ w ∈ P, 1 ≤ c w) {ν : (Formalism.L2.Theta.AE D)ˣ →* Circle} {νH : Formalism.L2.Host.HChar D.host.E} (hν : ChrEq ν νH)
@@ -293,7 +293,7 @@ theorem stdSnd_coset_value : ∀ {D : D7} (S T : HSp D), S.gram = 1 → T.gram =
         rw [if_neg fun h => hne (Fin.ext (Nat.add_left_cancel h).symm), mul_zero, mul_zero])
         (fun h => absurd (Finset.mem_univ _) h), if_pos rfl, mul_right_comm, hee, mul_comm] at h1
       unfold rightBlock
-      rw [dif_pos hj]
+      rw [dite_eq_left hj]
       exact h1
     · have h1 := GlobalTheory.FrameIdeal.inId_int (key i j)
       refine (sub_add_cancel (dualCoord S T β 1 y i j) _) ▸ add_mem h1 (Subring.sum_mem _ fun l _ =>

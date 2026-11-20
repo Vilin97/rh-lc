@@ -27,7 +27,7 @@ theorem evI_eq_thExpr_ext : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   letI : Algebra c.F F := ((algebraMap T.Fr F).comp io).toAlgebra
   have hyT := y.2.1
   unfold evI evR evalAt
-  rw [dif_pos hyT]
+  rw [dite_eq_left hyT]
   have hm0 := hyT.choose_spec.choose_spec.choose_spec
   have hv0 := hf hyT.choose hyT.choose_spec.choose_spec.choose
   have hvF : ThValAt Xo c nab yF xx Pp (thExpr Xo c nab yF Pp Fs) :=

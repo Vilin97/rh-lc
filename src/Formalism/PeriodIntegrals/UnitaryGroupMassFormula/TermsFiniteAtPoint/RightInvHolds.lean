@@ -15,7 +15,7 @@ theorem rowsDep_holds : RowsDep := by
   have hcast1 : ∀ (h : r + 1 ≤ r + 1) (c : Fin (r + 1)), Fin.castLE h c = c := fun h c => Fin.ext rfl
   constructor
   · unfold leadMinorE
-    rw [dif_pos le_rfl, ← Matrix.exists_vecMul_eq_zero_iff]
+    rw [dite_eq_left le_rfl, ← Matrix.exists_vecMul_eq_zero_iff]
     refine ⟨Fin.snoc (α := fun _ => E) u 0, ?_, ?_⟩
     · intro h0
       apply hu
@@ -28,7 +28,7 @@ theorem rowsDep_holds : RowsDep := by
       simp only [Fin.snoc_castSucc, Fin.snoc_last, zero_mul, add_zero]
       exact hdep b
   · unfold leadMinorE
-    rw [dif_pos (Nat.le_succ r), ← Matrix.exists_vecMul_eq_zero_iff]
+    rw [dite_eq_left (Nat.le_succ r), ← Matrix.exists_vecMul_eq_zero_iff]
     refine ⟨u, hu, ?_⟩
     funext b
     simp only [Matrix.vecMul, dotProduct, Matrix.submatrix_apply, hcast, Pi.zero_apply]

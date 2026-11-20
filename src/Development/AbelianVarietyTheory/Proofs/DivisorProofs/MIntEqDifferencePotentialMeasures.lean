@@ -183,7 +183,7 @@ theorem mInt_eq_potMeas : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (
     simp [h0 y hy.1 hy.2]
   rw [potMeas_eq_sum I hP Q, potMeas_eq_sum I hP Q, integral_finsetSum_measure fun j _ => (h1 _ j).1,
     integral_finsetSum_measure fun j _ => (h1 _ j).1, ← Finset.sum_sub_distrib, mInt,
-    dif_pos (existsPartition (M.A a)), integralWith]
+    dite_eq_left (existsPartition (M.A a)), integralWith]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [(h1 _ j).2, (h1 _ j).2, ← integral_sub (h2 _ j) (h2 _ j)]
   refine integral_congr_ae (ae_of_all _ fun y => ?_)

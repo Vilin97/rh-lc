@@ -30,7 +30,7 @@ theorem joint_amplitude_eq_normSq (w : Point D.host.E (D.R.rS + 1)) (hw : ∃ g,
   have hex : ∃ w' : Point D.host.E (D.R.rS + 1), toPts w' = toPts w ∧ ∃ g, Formalism.L2.SG.RealObj.IsPtRep X u u' w' g :=
     ⟨w, rfl, hw⟩
   unfold J2of
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   have hc : hex.choose = w := toPts_injective hex.choose_spec.1
   rw [hc, Formalism.L2.SG.PackageTie.norm_hsEmb_sq]
   unfold Jw OOP

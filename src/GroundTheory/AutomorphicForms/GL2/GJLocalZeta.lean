@@ -437,7 +437,7 @@ theorem LPolynomial_spec [NeZero n] [π.IsIrreducible] (hπ : IsAdmissible π)
       ∃ L ∈ laurentSubalgebra, R = L / algebraMap ℂ[X] (RatFunc ℂ) (LPolynomial π) := by
   classical
   have h := (existsUnique_zetaIdeal_eq hπ (Measure.haar : Measure (GL (Fin n) F))).exists
-  rw [LPolynomial, dif_pos h]
+  rw [LPolynomial, dite_eq_left h]
   obtain ⟨h0, hiff⟩ := h.choose_spec
   refine ⟨h0, fun R => ?_⟩
   rw [zetaIdeal_eq_of_isHaarMeasure μ Measure.haar]

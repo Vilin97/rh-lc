@@ -49,7 +49,7 @@ theorem restrictTo_eq {i : ℕ} (s : Cech.Cochain G i) (K : Cell U) (L : Cech.Id
   have key : ∀ (L₁ L₂ : Cech.Idx U i) (_ : L₁ = L₂) (h₁ : L₁.1.1 ⊆ K.1) (h₂ : L₂.1.1 ⊆ K.1),
       ρ L₁.1 K h₁ (s L₁) = ρ L₂.1 K h₂ (s L₂) := by
     rintro _ _ rfl _ _; rfl
-  rw [restrictTo, dif_pos hex]
+  rw [restrictTo, dite_eq_left hex]
   exact key _ _ (Subtype.ext (Subtype.ext hex.choose_spec.1)) _ _
 
 end CechDSq

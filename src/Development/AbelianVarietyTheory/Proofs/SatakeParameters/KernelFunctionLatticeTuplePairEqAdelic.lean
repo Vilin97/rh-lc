@@ -44,7 +44,7 @@ theorem kerTh_pair_eq : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H
         (J.pt std (j + 1) hj La') (homRe hr hr' x) := by
     funext x
     simp only [xiM, movD, Joint.xi0]
-    rw [dif_pos ⟨hj, hr, hr'⟩, inFr_symm_inFr]
+    rw [dite_eq_left ⟨hj, hr, hr'⟩, inFr_symm_inFr]
   rw [hx]
   exact kerTh_homRe _ _ _ _ hr hr' h1 h2 _
 

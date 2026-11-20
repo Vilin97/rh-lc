@@ -92,7 +92,7 @@ theorem product_formula_holds : P5 := by
 
   have hex := hR D X u u' sc hsc c hc
   have hh : HasDiag X u u' sc c (hOf X u u' sc c) := by
-    unfold hOf; rw [dif_pos hex]; exact hex.choose_spec
+    unfold hOf; rw [dite_eq_left hex]; exact hex.choose_spec
   have hdc := fun v => hDC _ _ _ _ _ _ _ _ _ sc (frameLoc_X X u u' v) (c v) (hcv v) (hs v (c v)) (hOf X u u' sc c v)
     (hss v (c v) (hcv v)) (hh v)
   choose t ht t' ht' htt using hdc

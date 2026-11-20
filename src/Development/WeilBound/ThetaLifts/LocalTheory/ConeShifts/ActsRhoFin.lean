@@ -27,12 +27,12 @@ variable {κ : Type} [Fintype κ]
 theorem opF_eq {v : Pl F} {S : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {φ φ₁ : (κ → Fv F v) → ℂ} (h0 : φ ∈ SB _) (h1 : φ₁ ∈ SB _)
     (h : Acts (evFin F v) S φ φ₁) : opF v S φ = φ₁ := by
   have ex : ∃ φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) S φ φ₁ := ⟨φ₁, h1, h⟩
-  rw [opF, dif_pos ex]
+  rw [opF, dite_eq_left ex]
   exact GlobalTheory.TensUniq.eq_of_tens_eq v φ _ _ h0 fun r hr => (ex.choose_spec.2 r hr).symm.trans (h r hr)
 
 theorem opI_eq (hU : ArchUniq) {S : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ} (h : Acts (evI F) S f f₁) : opI S f = f₁ := by
   have ex : ∃ f₁ : SInf F κ, Acts (evI F) S f f₁ := ⟨f₁, h⟩
-  rw [opI, dif_pos ex]
+  rw [opI, dite_eq_left ex]
   exact (hU F κ f _ _).1 S ex.choose_spec h
 
 theorem acts_comp {R : Type} [Zero R] {ev : AF F → R} {S S' : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {φ φ₁ φ₂ : (κ → R) → ℂ}

@@ -27,7 +27,7 @@ theorem exists_resInv {A : Type} [CommRing A] (S : Subring A) (σ : A →+* A) (
     rw [show (x : A) = ϖ from hx, hσϖ]
   refine ⟨Ideal.quotientMap (piIdeal S ϖ) σS hle, fun a ha => ?_⟩
   unfold red
-  rw [dif_pos ha, dif_pos (hσ a ha), Ideal.quotientMap_mk]
+  rw [dite_eq_left ha, dite_eq_left (hσ a ha), Ideal.quotientMap_mk]
   rfl
 
 theorem card_skewTr : ∀ {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n] (S : Subring A) (σ : A →+* A) (H : Matrix n n A) (ϖ : A) (q : ℕ), GoodRing S σ ϖ q → GoodForm S σ H → Nat.card (skewTr S σ H ϖ) = q ^ (Fintype.card n ^ 2 - 1) := by

@@ -24,7 +24,7 @@ def annNormR (x : T.Ann ρ0 σ0) (s : ℝ) : ℝ :=
 
 theorem annNormR_of_mem (x : T.Ann ρ0 σ0) (r : AnnRad ρ0 σ0) :
     T.annNormR x r = T.annNorm ρ0 σ0 r x := by
-  rw [annNormR, dif_pos r.2]
+  rw [annNormR, dite_eq_left r.2]
 
 theorem continuousOn_gaussNorm_coreVal (b : T.AnnCore ρ0 σ0) :
     ContinuousOn (gaussNorm (T.coeffB (T.coreVal ρ0 σ0 b))) (Set.Icc (σ0 : ℝ) ρ0) := by

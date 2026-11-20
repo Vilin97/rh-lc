@@ -26,7 +26,7 @@ theorem dlt_eq_iff (hw : ¬ IsSplitAt w) (β β' : B.A) (hβ : IsUnit (GlobalThe
     (g : GLw m w) :
     GlobalTheory.TwLat.dlt e b β' = g⁻¹ * GlobalTheory.TwLat.dlt e b β * thL m w g ↔ g.valᵀ * GlobalTheory.TwLat.gram e b β * g.val.map (cj w) = GlobalTheory.TwLat.gram e b β' := by
   unfold GlobalTheory.TwLat.dlt
-  rw [dif_pos hβ, dif_pos hβ']
+  rw [dite_eq_left hβ, dite_eq_left hβ']
   have hth : thL m w g = PhiU m _ * invT m _ (GeneralLinearGroup.map (cj w) g) * (PhiU m _)⁻¹ := by
     simp only [thL, if_neg hw]; rfl
   have hinv : g⁻¹ = invT m _ (invT m _ g⁻¹) := (invT_invT _).symm

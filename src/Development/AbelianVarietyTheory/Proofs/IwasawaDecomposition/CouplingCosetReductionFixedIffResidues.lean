@@ -87,7 +87,7 @@ theorem cosetIn_smul_eq_iff : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} {sel 
   set w : Pr.vGs := ⟨P.1, hP⟩ with hw
   have hf : GlobalTheory.TopStep.IsLiftFr p.1.1.deco.1 w (frsF sel mu p.1.1 P) := by
     unfold frsF
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact GlobalTheory.TopStep.liftFr_spec p.1.1.deco.2 w
   have key : ∀ q : ChPt (R := R) sel mu u j,
       q = ((1 : UF X.E (R.N j)), h, (1 : GLQ X.E (R.N j) (QE sel (mu : Chr X.F X.E X.K)))) • p.1.1 →
@@ -98,7 +98,7 @@ theorem cosetIn_smul_eq_iff : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} {sel 
     exact this
   have hf' : GlobalTheory.TopStep.IsLiftFr (p.1.1.deco.1.act 1 h) w (frsF sel mu p'.1.1 P) := by
     unfold frsF
-    rw [dif_pos hP]
+    rw [dite_eq_left hP]
     exact key _ h1
   set κ := GlobalTheory.TopStep.passFr 1 h hf hf' with hκ
   have hred : GlobalTheory.TopStep.redGL _ P.1 κ = h w := GlobalTheory.TopStep.redGL_passFr 1 h hf hf'

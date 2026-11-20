@@ -111,7 +111,7 @@ variable {g}
 
 theorem map_beOf {ep : ℂ_[p]} (h : BeRat g ep) : map (k0ToC p) (beOf g ep) = beC g ep := by
   unfold beOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem be_tie (hOk : g.Ok) {ep : ℂ_[p]} (hep : ep ≠ 0) (h : BeRat g ep) :

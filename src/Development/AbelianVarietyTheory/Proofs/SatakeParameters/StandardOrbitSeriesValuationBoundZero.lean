@@ -71,7 +71,7 @@ theorem lgF_deriv_int {l : ℕ} (hl : 2 ≤ l) (n : ℕ) :
 theorem hur_expF {l : ℕ} (hl : 2 ≤ l) : Hur R ((expF K l : PowerSeries K) : MvPowerSeries Unit K) := by
   have hu : IsUnit (PowerSeries.coeff 1 (lgF K l)) := by rw [coeff_one_lgF hl]; exact isUnit_one
   unfold expF
-  rw [dif_pos hu]
+  rw [dite_eq_left hu]
   refine hur_substInv R (cc_lgF l) hu ?_ (lgF_deriv_int R hl)
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative, coeff_one_lgF hl]
   simp

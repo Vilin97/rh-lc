@@ -48,7 +48,7 @@ theorem pt_eq (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (c :
     have hV : p.V F (TBB.bigPt P.r c) = 0 := by
       show D.vecV p.T.base p.ν' p.m₀ F (TBB.bigPt P.r c) = 0
       unfold D.vecV
-      rw [dif_neg (fun h => hG h.2)]
+      rw [dite_eq_right (fun h => hG h.2)]
     rw [hw, zero_mul, TBBx2.Tri.Ew_top p F hl, hV, TBBx2.Tri.hsVec_zero, norm_zero]
     simp
 

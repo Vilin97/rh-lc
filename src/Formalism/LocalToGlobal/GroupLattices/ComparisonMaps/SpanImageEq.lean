@@ -71,7 +71,7 @@ def UpData.cmpS (X : UpData c Tw u w h Lv) (j : ℕ) :
 theorem UpData.cmpS_apply (X : UpData c Tw u w h Lv) (j : ℕ) (hj : j + 1 ≤ D.R.m)
     (x : ((Tw.fm u (D.what₂.muAt w)).lat (j + 1)).V) : X.cmpS j x = (X.phi j hj x).1 := by
   unfold UpData.cmpS
-  rw [dif_pos hj]
+  rw [dite_eq_left hj]
   rfl
 
 def UpData.up (X : UpData c Tw u w h Lv) : CmpUp c Tw u w h Lv :=

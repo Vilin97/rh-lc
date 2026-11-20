@@ -30,7 +30,7 @@ private theorem bm_isUnit (h : a + b = n) (w : Pl E) (m : GLw a w × GLw b w)
 private theorem blk_val (h : a + b = n) (w : Pl E) (m : GLw a w × GLw b w)
     (X : Matrix (Fin a) (Fin b) (w.adicCompletion E)) : (GlobalTheory.BCT.blk h w m X).val = bm h w m X := by
   show (if hM : IsUnit (bm h w m X) then hM.unit else 1).val = _
-  rw [dif_pos (bm_isUnit h w m X)]
+  rw [dite_eq_left (bm_isUnit h w m X)]
   rfl
 
 private theorem blk_add (h : a + b = n) (w : Pl E) (m : GLw a w × GLw b w)

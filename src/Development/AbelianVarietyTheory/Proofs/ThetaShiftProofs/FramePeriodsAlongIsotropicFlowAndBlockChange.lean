@@ -34,7 +34,7 @@ lemma perFr_conj (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) (i : ℕ) (j :
   have h2 : conjEmb (conjEmb τ.1) ∈ X.Ψ := by rw [hcc]; exact τ.2
   have h3 : X.p0 - 1 - i < r := hj ▸ j.2
   unfold perFr
-  rw [dif_neg h1, dif_pos h2, dif_pos h3]
+  rw [dite_eq_right h1, dif_pos h2, dif_pos h3]
   have key : ∀ (σ : E →+* ℂ) (hσ : σ ∈ X.Ψ), σ = τ.1 →
       hermC σ X.Gm (FD.col (mat x ⟨σ, hσ⟩) ⟨X.p0 - 1 - i, h3⟩) (Data.emb σ v) =
         hermC τ.1 X.Gm (FD.col (mat x τ) j) (Data.emb τ.1 v) := by

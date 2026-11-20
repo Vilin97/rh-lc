@@ -18,7 +18,7 @@ def evalHom (x : Sp A ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) : Γ(X, U)
   (x.appLE U ⊤ h ≫ (Scheme.ΓSpecIso (CommRingCat.of A)).hom).hom
 
 theorem valR_eq (x : Sp A ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) : valR x U f = evalHom x U h f := by
-  rw [valR, dif_pos h]; rfl
+  rw [valR, dite_eq_left h]; rfl
 
 theorem valAt'_eq_valR (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : valAt' x U f = valR x U f := rfl
 
@@ -33,7 +33,7 @@ theorem valR_comp {Y : Scheme.{0}} (x : Sp A ⟶ X) (φ : X ⟶ Y) (U : Y.Opens)
   by_cases hx : ⊤ ≤ x ⁻¹ᵁ (φ ⁻¹ᵁ U)
   · rw [Scheme.Hom.app_eq_appLE, valR_appLE x φ U _ le_rfl f hx]
   · have hx' : ¬ ⊤ ≤ (x ≫ φ) ⁻¹ᵁ U := hx
-    rw [valR, valR, dif_neg hx, dif_neg hx']
+    rw [valR, valR, dite_eq_right hx, dite_eq_right hx']
 
 theorem valR_res (x : Sp A ⟶ X) {U V : X.Opens} (h : V ≤ U) (f : Γ(X, U)) (hx : ⊤ ≤ x ⁻¹ᵁ V) :
     valR x V ((X.presheaf.map (homOfLE h).op).hom f) = valR x U f := by

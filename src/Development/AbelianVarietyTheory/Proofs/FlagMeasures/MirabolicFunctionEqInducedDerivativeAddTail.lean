@@ -33,7 +33,7 @@ theorem tl_apply (M : Mt g (m + 1)) (i j : Fin m) : tl m M i j = M i.castSucc j.
   have hi := i.2
   have hj := j.2
   simp only [tl, entN]
-  rw [dif_pos ⟨by omega, by omega⟩]
+  rw [dite_eq_left ⟨by omega, by omega⟩]
   rfl
 
 @[simp] theorem tl_Em (h : Mt g m) (v) : tl m (Em h v) = h := by
@@ -161,7 +161,7 @@ theorem inR_iff (M : Mt g (m + 1)) : InR m M ↔ InMir M := by
       have hi := i.2
       have hj := j.2
       simp only [br, entN]
-      rw [dif_pos ⟨by omega, by omega⟩]
+      rw [dite_eq_left ⟨by omega, by omega⟩]
       congr 1 <;> exact Fin.ext (by simp; omega)
     constructor
     · intro h
@@ -306,7 +306,7 @@ theorem der_eq (ψ : AddChar (ZMod g) ℂ) (F : Gn g (m + 1) → ℂ) (h : Gn g 
 
 theorem entN_Em (l : Fin m) (hl : (l : ℕ) + 1 = m) (h : Mt g m) (v) :
     entN (Em h v) (m - 1) m = Pi.single l 1 ⬝ᵥ v := by
-  rw [single_dotProduct, one_mul, ← Em_cl h v l, entN, dif_pos ⟨by omega, by omega⟩]
+  rw [single_dotProduct, one_mul, ← Em_cl h v l, entN, dite_eq_left ⟨by omega, by omega⟩]
   congr 1
   exact Fin.ext (by simp; omega)
 

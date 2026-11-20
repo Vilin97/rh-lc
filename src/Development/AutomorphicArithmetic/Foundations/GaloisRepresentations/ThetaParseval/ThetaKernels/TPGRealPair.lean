@@ -77,10 +77,10 @@ theorem UpperTheory.TP.realPair_k : _root_.UpperTheory.TP.Tools_k → _root_.Upp
     dsimp only
     by_cases h3 : (q : ℕ) < n
     · have h4 : (p : ℕ) < n := by omega
-      rw [dif_pos h3, dif_pos h4]
+      rw [dite_eq_left h3, dite_eq_left h4]
       have := hanti w (show (⟨p, h4⟩ : Fin n) ≤ ⟨q, h3⟩ from hle)
       omega
-    · rw [dif_neg h3]
+    · rw [dite_eq_right h3]
       split_ifs <;> omega⟩
   refine ⟨lam', fun k => ?_, GlobalTheory.DefU.isIrreducible_sqRep d lam', ?_⟩
   · have h3 := ha w

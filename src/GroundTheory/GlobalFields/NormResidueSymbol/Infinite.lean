@@ -58,12 +58,12 @@ def conjOfEmbedding (φ : L →+* ℂ) : L ≃ₐ[K] L :=
 theorem conjOfEmbedding_eq {φ : L →+* ℂ} {σ : L ≃ₐ[K] L} (hσ : IsConj φ σ) :
     conjOfEmbedding φ = σ := by
   have h : ∃ σ : L ≃ₐ[K] L, IsConj φ σ := ⟨σ, hσ⟩
-  rw [conjOfEmbedding, dif_pos h]
+  rw [conjOfEmbedding, dite_eq_left h]
   exact h.choose_spec.ext hσ
 
 theorem conjOfEmbedding_of_not {φ : L →+* ℂ} (h : ¬ ∃ σ : L ≃ₐ[K] L, IsConj φ σ) :
     conjOfEmbedding (K := K) φ = 1 := by
-  rw [conjOfEmbedding, dif_neg h]
+  rw [conjOfEmbedding, dite_eq_right h]
 
 theorem conjOfEmbedding_congr {φ ψ : L →+* ℂ}
     (h : ∀ σ : L ≃ₐ[K] L, IsConj φ σ ↔ IsConj ψ σ) :
@@ -138,7 +138,7 @@ theorem completionConj_algebraMap (hv : v.IsReal) (l : L) :
     rw [InfinitePlace.extensionEmbedding_completionConj, extensionEmbedding_algebraMap_self,
       extensionEmbedding_algebraMap_self, (isConj_conjAt hram).eq, starRingEnd_apply]
   · have hw' : w.IsReal := not_isComplex_iff_isReal.1 hw
-    rw [InfinitePlace.completionConj, dif_neg hw, conjAt_of_isReal hw']
+    rw [InfinitePlace.completionConj, dite_eq_right hw, conjAt_of_isReal hw']
     rfl
 
 end Completion
@@ -160,14 +160,14 @@ def infiniteLocalSymbol : v.Completionˣ →* (L ≃ₐ[K] L) :=
 theorem infiniteLocalSymbol_apply (hv : v.IsReal) (w : v.placesOver L) (x : v.Completionˣ) :
     infiniteLocalSymbol L v x =
       if extensionEmbeddingOfIsReal hv x < 0 then conjAt K (w : InfinitePlace L) else 1 := by
-  rw [infiniteLocalSymbol, dif_pos hv, MonoidHom.comp_apply, InfinitePlace.realSignHom_apply,
+  rw [infiniteLocalSymbol, dite_eq_left hv, MonoidHom.comp_apply, InfinitePlace.realSignHom_apply,
     conjAt_eq _ w]
   rfl
 
 omit [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] in
 
 theorem infiniteLocalSymbol_of_not_isReal (hv : ¬ v.IsReal) : infiniteLocalSymbol L v = 1 := by
-  rw [infiniteLocalSymbol, dif_neg hv]
+  rw [infiniteLocalSymbol, dite_eq_right hv]
 
 theorem algebraMap_infiniteLocalSymbol_apply (w : v.placesOver L) (x : v.Completionˣ) (l : L) :
     algebraMap L (w : InfinitePlace L).Completion (infiniteLocalSymbol L v x l) =

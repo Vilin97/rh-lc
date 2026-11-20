@@ -230,9 +230,9 @@ theorem ordL_eq_of_v {x y : L} (h : Valued.v x = Valued.v y) : ordL x = ordL y :
   unfold ordL
   by_cases hx : Valued.v x = 0
   · have hy : Valued.v y = 0 := by rw [← h]; exact hx
-    rw [dif_pos hx, dif_pos hy]
+    rw [dite_eq_left hx, dite_eq_left hy]
   · have hy : Valued.v y ≠ 0 := by rw [← h]; exact hx
-    rw [dif_neg hx, dif_neg hy]
+    rw [dite_eq_right hx, dite_eq_right hy]
     have e : WithZero.unzero hx = WithZero.unzero hy := by
       apply WithZero.coe_injective
       rw [WithZero.coe_unzero, WithZero.coe_unzero, h]
@@ -243,7 +243,7 @@ theorem ordL_mul' {x y : L} (hx : x ≠ 0) (hy : y ≠ 0) : ordL (x * y) = ordL 
   have h0' : Valued.v y ≠ 0 := by simpa using hy
   have h1 : Valued.v (x * y) ≠ 0 := by rw [map_mul]; exact mul_ne_zero h0 h0'
   unfold ordL
-  rw [dif_neg h1, dif_neg h0, dif_neg h0']
+  rw [dite_eq_right h1, dite_eq_right h0, dite_eq_right h0']
   have e : WithZero.unzero h1 = WithZero.unzero h0 * WithZero.unzero h0' := by
     apply WithZero.coe_injective
     rw [WithZero.coe_mul, WithZero.coe_unzero, WithZero.coe_unzero, WithZero.coe_unzero, map_mul]

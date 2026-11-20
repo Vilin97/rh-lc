@@ -73,11 +73,11 @@ theorem nonempty_muAction (G : LogFGL v d) (p h : ℕ) (ty : Fin d → ZMod h)
   classical
   choose φ hφ using hz
   refine ⟨⟨fun z => if hz : z ^ (p ^ h - 1) = 1 then φ z hz else 0, fun z hz a => ?_, fun z a => ?_, fun z hz a => ?_⟩⟩
-  · rw [dif_pos hz]; exact (hφ z hz).2.1 a
+  · rw [dite_eq_left hz]; exact (hφ z hz).2.1 a
   · split_ifs with hz
     · exact (hφ z hz).1 a
     · simp
-  · rw [dif_pos hz, (hφ z hz).2.2 a]
+  · rw [dite_eq_left hz, (hφ z hz).2.2 a]
     simp [Matrix.diagonal_apply, ite_smul]
 
 end Abstract

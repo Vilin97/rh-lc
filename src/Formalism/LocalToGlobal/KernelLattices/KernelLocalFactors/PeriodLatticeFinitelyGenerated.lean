@@ -445,7 +445,7 @@ theorem jet_weight : JetWt := by
     rfl
   · intro r hr
     simp only [extNu]
-    rw [dif_neg (not_lt.2 hr), pow_zero]
+    rw [dite_eq_right (not_lt.2 hr), pow_zero]
 
 end Wt
 
@@ -1219,7 +1219,7 @@ theorem atPos_prod [Fintype ι] (τ : ι) (π : MvPolynomial (Fin n × Fin n) K 
   refine atPos_mul τ π (F τ) _ (∏ σ ∈ Finset.univ.erase τ, if h : σ = τ then 1 else rename (fun v => (⟨(σ, v), h⟩ : Off ι n τ)) (F σ)) ?_
   rw [map_prod, map_prod]
   refine Finset.prod_congr rfl fun σ hσ => ?_
-  rw [dif_neg (Finset.ne_of_mem_erase hσ), psi_blockEmb_ne τ σ (Finset.ne_of_mem_erase hσ)]
+  rw [dite_eq_right (Finset.ne_of_mem_erase hσ), psi_blockEmb_ne τ σ (Finset.ne_of_mem_erase hσ)]
 
 def TS [Fintype ι] (W : ι → Submodule K (MvPolynomial (Fin n × Fin n) K)) (S : Finset ι) : Submodule K (Pol K ι n) :=
   Submodule.span K {P | ∃ F : ι → MvPolynomial (Fin n × Fin n) K, (∀ σ ∈ S, F σ ∈ W σ) ∧ P = ∏ σ, blockEmb K σ (F σ)}

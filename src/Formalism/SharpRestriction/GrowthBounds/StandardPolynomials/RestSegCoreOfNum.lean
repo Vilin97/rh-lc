@@ -21,7 +21,7 @@ theorem jE_add {s : ℕ} (S : SegData s) (f g : Fin S.t → ℕ) (i : ℕ) : jE 
 theorem jE_uTop {s : ℕ} (S : SegData s) (g : Fin s → ℕ) (i : Fin s) (h : S.sigma ≤ i.val) :
     jE S (fun l => g (uTop S l)) i.val = g i := by
   unfold jE
-  rw [dif_pos ⟨h, i.2⟩]
+  rw [dite_eq_left ⟨h, i.2⟩]
   have e : uTop S ⟨i.val - S.sigma, by unfold SegData.t; have := i.2; omega⟩ = i := by
     apply Fin.ext
     show S.sigma + (i.val - S.sigma) = i.val

@@ -63,7 +63,7 @@ theorem mir_exists_row : ∀ (E : Type) [Field E] [NumberField E] (a m : ℕ), m
       split_ifs with e1 e2
       · subst e1
         simp only [v, Matrix.one_apply, h1.symm, if_false]
-        rw [dif_neg (by omega)]
+        rw [dite_eq_right (by omega)]
       · simp [e2, Matrix.one_apply, Ne.symm h2]
       · rfl
   · intro t

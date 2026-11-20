@@ -68,13 +68,13 @@ theorem ext_eq (n : ℕ) (u : S) {j : B} (hj : j ∈ J) :
     ext δ n (u * algebraMap B S j) = u ^ n * algebraMap B S (δ.dpow n j) := by
   have h : ∃ p : S × B, p.2 ∈ J ∧ u * algebraMap B S j = p.1 * algebraMap B S p.2 :=
     ⟨(u, j), hj, rfl⟩
-  rw [ext, dif_pos h]
+  rw [ext, dite_eq_left h]
   exact (wellDef M δ hj h.choose_spec.1 h.choose_spec.2 n).symm
 
 def dp : DividedPowers (J.map (algebraMap B S)) where
   dpow := ext δ
   dpow_null {n x} hx := by
-    rw [ext, dif_neg]
+    rw [ext, dite_eq_right]
     rintro ⟨p, hp, rfl⟩
     exact hx (Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ hp))
   dpow_zero hx := by

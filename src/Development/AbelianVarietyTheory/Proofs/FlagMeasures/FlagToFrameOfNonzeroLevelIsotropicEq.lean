@@ -109,7 +109,7 @@ theorem mem_NLam_iff (Λ : Submodule (𝓞 E) S.V) (L : LFlag S r T) (hT : T ≠
 
 theorem fvec_mapLF (g : S.V ≃ₗ[E] S.V) (hg : g ∈ Formalism.HermitianLatticesTheory.isom S.hT) (L : LFlag S r T) (a : Fin (r + 1)) :
     (mapLF g L).fl.fvec a = g (L.fl.fvec a) := by
-  rw [mapLF, dif_pos hg]
+  rw [mapLF, dite_eq_left hg]
   refine Fin.lastCases ?_ (fun b => ?_) a
   · rw [fv_last, fv_last]; rfl
   · rw [fv_cast, fv_cast]; rfl

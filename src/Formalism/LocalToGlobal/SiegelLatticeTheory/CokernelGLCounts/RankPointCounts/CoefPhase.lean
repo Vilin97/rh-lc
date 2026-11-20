@@ -79,10 +79,10 @@ theorem phaseProd_of (hrows : IsRowReps D F0 what₂) (hN : PairVal.NormRepExist
   have hex := normRepElig_of hN γ w hγ
   have hz : zT γ = ZhatL (lf D F0) hex.choose.2.1 := by
     unfold zT nrep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hpt : ptT γ = hex.choose.1 := by
     unfold ptT nrep
-    rw [dif_pos hex]
+    rw [dite_eq_left hex]
   have hw : hex.choose.1 = w := hpt.symm.trans (FCount.ptT_eq hN hrows hγ hrel)
   have h0 : PairVal.NormRep γ w hex.choose.2.1 hex.choose.2.2.1 hex.choose.2.2.2 := by
     have := hex.choose_spec
@@ -98,7 +98,7 @@ theorem phaseProd_of (hrows : IsRowReps D F0 what₂) (hN : PairVal.NormRepExist
   have hex1 : ∃ x : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) × PairVal.MatR D × PairVal.MatR D,
       PairVal.NormRep γ w x.1 x.2.1 x.2.2 := ⟨(hex.choose.2.1, hex.choose.2.2.1, hex.choose.2.2.2), h0⟩
   unfold PairVal.phaseAt
-  rw [dif_pos hex1]
+  rw [dite_eq_left hex1]
   exact hW γ w hrel _ _ _ _ _ _ hex1.choose_spec h0
 
 end Assembly

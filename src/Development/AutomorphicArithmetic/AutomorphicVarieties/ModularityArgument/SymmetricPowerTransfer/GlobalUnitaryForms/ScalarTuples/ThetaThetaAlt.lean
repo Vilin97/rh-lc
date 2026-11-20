@@ -204,7 +204,7 @@ theorem UpperTheory.V.Z.Sym.Glob.gqG :
           rwa [hfN v hs] at this)
     have hms : ms τ = mass φ (scalE τ)
         ((rpg (fun v => (Etau (Kv v) (cv v τ))ˣ) fun v => Cu (Ov v) (cv v τ)).box fun v => Cint (Ov v) (cv v τ)) := by
-      rw [ms, dif_pos hphi]
+      rw [ms, dite_eq_left hphi]
     have hprod : ∏ v ∈ D.Sg, ((D.S v).cG : ℂ) * one (Ind (D.S v).H (cv v τ) (t v)) = ∏ v ∈ D.Sg, ((D.S v).cG : ℂ) :=
       Finset.prod_congr rfl fun v hv => by simp [one, hAdm v hv]
     show mass φ (scalE τ) _ * ∏ v ∈ S, orb (ιv v) (Cint (Ov v) (cv v τ)) (theta (cv v Δ)) (D.Jv v) (D.fGv t v) ((ι δ).1 v) = _

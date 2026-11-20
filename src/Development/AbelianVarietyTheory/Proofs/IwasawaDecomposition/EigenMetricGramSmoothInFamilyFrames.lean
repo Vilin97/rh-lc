@@ -134,7 +134,7 @@ theorem GlobalTheory.LieBase.cInfAt_gramOf : ∀ (E : Type) [Field E] [NumberFie
     have hx : (cxOf e σ hj z).1 ≫ genι Z = spMap (evHom hzV) ≫ LogKS.chart V ≫ genι Z := by
       rw [← Category.assoc, GlobalTheory.LieMet.spMap_evHom hzV]
     obtain ⟨f, hf⟩ := Φ.exists_isMap (evHom hzV) hov hx
-    rw [gramOf, dif_pos hex]
+    rw [gramOf, dite_eq_left hex]
     show (G.gram (cxOf e σ hj z) hex.choose τ)ᵀ a b = _
     rw [Matrix.transpose_apply, G.change (cxOf e σ hj z) f, hco _ hex.choose_spec f hf τ]
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply]

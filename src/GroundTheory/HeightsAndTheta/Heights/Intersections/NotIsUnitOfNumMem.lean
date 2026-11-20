@@ -260,7 +260,7 @@ theorem regularityLocalResidue_holds.proof : regularityLocalResidue_holds.Statem
   have hT : ∀ k, (X ⟨k, T k⟩ : MRing ι) ∉ W := fun k => (hWrel k).choose_spec
   set J := W ⊔ Ideal.span (Set.range fun k => (X ⟨k, T k⟩ : MRing ι) - 1) with hJ
   have hgeo : geoNum 0 W b = ((Module.length ℤ (MRing ι ⧸ J)).toNat : ℤ) := by
-    rw [geoNum, dif_pos hWrel]
+    rw [geoNum, dite_eq_left hWrel]
   obtain ⟨hCf, hCfin, hCcard⟩ := chart_field_card hWmh hT hdim (charOf W) hp
   letI : Field (MRing ι ⧸ J) := hCf.toField
   let g := chartMap hPW T hT

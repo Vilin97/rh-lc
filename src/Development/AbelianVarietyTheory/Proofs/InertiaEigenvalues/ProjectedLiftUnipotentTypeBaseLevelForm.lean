@@ -212,7 +212,7 @@ theorem act_type (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : Se
   have hk := (GlobalTheory.StepLifts.lifts_exist X.R.toRealDat X.char.lev j).2 (X.R.eG g)
   show actG0 (Wc D j) (X.R.βW j) (X.R.datWp j X.R.triv) (X.R.eG g) ((X.R.HW j (sg0 D X.A3.A)).e w (X.geo.v₀ j _)) g' = _
   unfold actG0
-  rw [dif_pos hk, levChi_W_one, inv_one, one_mul]
+  rw [dite_eq_left hk, levChi_W_one, inv_one, one_mul]
   exact hty _ hg _ (liftW_transport D X E Y i j b g _ hk.choose_spec) g'
 
 set_option maxHeartbeats 6400000 in
@@ -270,7 +270,7 @@ theorem avg_level : ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) 
       exact Nat.cast_ne_zero.2 (Finset.card_pos.2 ⟨1, by simpa using h1⟩).ne'
     have hev : ∀ g, X.cG (X.R.eG g) ∈ D.nexp.U → ((levFn (Y.Z.ρ.B i j b).F.βS ((Y.Z.ρ.B i j b).levS (Y.Z.ρ.tw i b 0 ∅ 1)) (finE (Vc D j) (κ g)) : ℂˣ) : ℂ) = levChi (Vc D j) (X.R.βV j) (flagL (X.R.datVt j t)) (κ g) * (if h : X.cG (X.R.eG g) ∈ D.nexp.U then Y.Z.ρ.e i b ((D.nexp.psiU i b ⟨_, h⟩ : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)) else 1) := by
       intro g hg
-      rw [dif_pos hg]
+      rw [dite_eq_left hg]
       have hu : X.cG (rTup (X.R.βV j) (X.R.datVt j t) (finE (Vc D j) (κ g))) ∈ D.nexp.U := by
         rw [(hκ g).2.2]; exact hg
       refine ((hL (finE (Vc D j) (κ g))).2 (hκ g).2.1 hu).trans ?_
@@ -278,12 +278,12 @@ theorem avg_level : ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) 
       exact psi_congr i b _ _ _ hu hg (congrArg X.cG (hκ g).2.2)
     have hev0 : ∀ g, X.cG (X.R.eG g) ∈ D.nexp.U → (if h : X.cG (X.R.eG g) ∈ D.nexp.U then Y.Z.ρ.e i b ((D.nexp.psiU i b ⟨_, h⟩ : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)) else 1) ≠ 0 := by
       intro g hg
-      rw [dif_pos hg]
+      rw [dite_eq_left hg]
       exact (map_ne_zero _).2 (Units.ne_zero _)
     refine (Finset.sum_congr rfl fun g _ => ?_).trans (avg_value (fun g => X.cG (X.R.eG g) ∈ D.nexp.U) (fun g => ((levFn (Y.Z.ρ.B i j b).F.βS ((Y.Z.ρ.B i j b).levS (Y.Z.ρ.tw i b 0 ∅ 1)) (finE (Vc D j) (κ g)) : ℂˣ) : ℂ)) (fun g => levChi (Vc D j) (X.R.βV j) (flagL (X.R.datVt j t)) (κ g))
       (fun g => (if h : X.cG (X.R.eG g) ∈ D.nexp.U then Y.Z.ρ.e i b ((D.nexp.psiU i b ⟨_, h⟩ : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)) else 1)) _ hlc hev hev0 hN)
     by_cases hg : X.cG (X.R.eG g) ∈ D.nexp.U
-    · rw [act_type D X E Y i j b _ hty g hg g', dif_pos hg]
+    · rw [act_type D X E Y i j b _ hty g hg g', dite_eq_left hg]
     · simp only [if_neg hg, zero_mul]
 
 end GlobalTheory.AvgLevel

@@ -48,7 +48,7 @@ theorem HolAtlas.IsRealForm.exists_fn {M : Type} [TopologicalSpace M] {n : ℕ} 
   refine ⟨t, fun i => ?_, funext e⟩
   refine (Complex.reCLM.contDiff.comp_contDiffOn (hα.1.smooth i ∅)).congr fun v hv => ?_
   have h₁ : A.loc α i v = algebraMap ℂ (Alt n) (t ((A.e i).symm v) : ℂ) := by
-    rw [HolAtlas.loc, dif_pos hv]
+    rw [HolAtlas.loc, dite_eq_left hv]
     exact e ⟨(i, (A.e i).symm v), (A.e i).map_target hv⟩
   simp [h₁, Algebra.algebraMap_eq_smul_one, ← bas_empty, -Complex.coe_smul]
 

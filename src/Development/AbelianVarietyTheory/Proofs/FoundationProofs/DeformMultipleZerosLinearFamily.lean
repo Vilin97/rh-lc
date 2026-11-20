@@ -120,7 +120,7 @@ theorem deform : ∀ (k J I : Type) [Field k] [CharZero k] [Fintype J] [Fintype 
             = w (some (i, l)) := by
           simp only [hA]
           have := hvl i l.1 hl
-          rw [dif_pos l.2] at this
+          rw [dite_eq_left l.2] at this
           calc ∑ j, hv j * ((l.1.factorial : k) * PowerSeries.coeff l.1 (s i j))
               = (l.1.factorial : k) * ∑ j, hv j * PowerSeries.coeff l.1 (s i j) := by
                 rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun j _ => by ring

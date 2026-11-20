@@ -42,7 +42,7 @@ theorem exists_traceForm {H Γ W : Type} [Group H] [Group Γ] [NormedAddCommGrou
         have e3 : ρ δ (ρ (γ * δ)⁻¹ w) = ρ γ⁻¹ w := by
           rw [← Module.End.mul_apply, ← map_mul, _root_.mul_inv_rev, mul_inv_cancel_left]
         simp only [T]
-        rw [dif_pos h, dif_pos h', e2, map_mul, LinearMap.smul_apply, map_smul, e3, smul_smul, Units.val_mul, mul_comm]
+        rw [dite_eq_left h, dite_eq_left h', e2, map_mul, LinearMap.smul_apply, map_smul, e3, smul_smul, Units.val_mul, mul_comm]
       · have h' : z₀⁻¹ * ι γ * (ι δ * z * k) ∉ J := by rw [e, J.mul_mem_cancel_right k.2]; exact h
         simp only [T]
         rw [dif_neg h, dif_neg h', map_zero]
@@ -59,7 +59,7 @@ theorem exists_traceForm {H Γ W : Type} [Group H] [Group Γ] [NormedAddCommGrou
       rfl
     · have h : z₀⁻¹ * ι γ * z₀ ∈ J := (Bridge.mem_stab _).1 (hfin'.mem_toFinset.1 hγ)
       simp only [T]
-      rw [dif_pos h, hL]
+      rw [dite_eq_left h, hL]
 
 theorem finite_stab {H Γ I : Type} [Group H] [Group Γ] (ι : Γ →* H) (J : Subgroup H) {y : I → H} (hy : Bridge.IsReps ι J y)
     (hf : ∀ c, Finite (Bridge.stab ι J (y c))) (z : H) : Finite (Bridge.stab ι J z) := by

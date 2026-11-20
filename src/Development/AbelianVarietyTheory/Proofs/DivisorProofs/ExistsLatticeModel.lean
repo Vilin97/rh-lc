@@ -122,7 +122,7 @@ def smulSec (U : X.Opens) (r : Γ(X, U)) (s : secGrp M U) : secGrp M U :=
 
 theorem val_smulSec {U : X.Opens} (h : genericPoint X ∈ U) (r : Γ(X, U)) (s : secGrp M U) :
     (smulSec hM U r s : V) = fnOf U h r • (s : V) := by
-  rw [smulSec, dif_pos h]
+  rw [smulSec, dite_eq_left h]
 
 def secModule (U : X.Opens) : Module Γ(X, U) (secGrp M U) where
   smul := smulSec hM U

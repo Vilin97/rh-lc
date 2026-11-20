@@ -60,7 +60,7 @@ def primeK (p : ℕ) : HeightOneSpectrum (𝓞 H.K) :=
 
 theorem primeK_mem {p : ℕ} (hp : p.Prime) : ((p : ℕ) : 𝓞 H.K) ∈ (primeK H p).asIdeal := by
   unfold primeK
-  rw [dif_pos hp]
+  rw [dite_eq_left hp]
   exact (exists_mem_of_prime H.K hp).choose_spec
 
 def sel (v : HeightOneSpectrum (𝓞 H.F)) : HeightOneSpectrum (𝓞 H.E) :=

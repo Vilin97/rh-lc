@@ -205,6 +205,6 @@ theorem term_eq_of_rel : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P Q : Pai
       rw [h, hat, map_mul, map_mul, map_inv]
       group
     unfold term
-    rw [dif_neg hP, dif_neg hQ]
+    rw [dite_eq_right hP, dite_eq_right hQ]
 
 end GlobalTheory.LKMid.Pair

@@ -50,7 +50,7 @@ theorem hZ_w (hw : OkPt X u u' w) (v : InfinitePlace X.B.I.F) (c b : Fin (D.R.rS
     Zm (X.B.I.ε v) (Fw X u v) (Gw X u u' w v) c b ≠ 0 ↔ c = piW w b := by
   have hrep : IsPtRep X u u' w (gamW X u u' w) := by
     unfold gamW
-    rw [dif_pos hw.1]
+    rw [dite_eq_left hw.1]
     exact hw.1.choose_spec
   have hk : ∀ a : Fin (D.R.rS + 1), (((D.host.rdE : ℝ) : ℂ) ^ (D.R.rS - a.1))⁻¹ ≠ 0 := fun a =>
     inv_ne_zero (pow_ne_zero _ (by exact_mod_cast rdE_pos_c.ne'))

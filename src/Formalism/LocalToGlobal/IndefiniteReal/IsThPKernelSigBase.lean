@@ -75,7 +75,7 @@ def labOf (σ : D.what₂.LL →+* ℂ) : ArchLab D :=
 
 theorem labOf_spec {σ : D.what₂.LL →+* ℂ} (h : ∃ A : ArchLab D, IsLabOf σ A) : IsLabOf σ (labOf σ) := by
   unfold labOf
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 theorem labOf_base (hU : LabUnique D) : labOf (D := D) D.what₂.embLL = baseLab D :=

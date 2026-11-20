@@ -318,11 +318,11 @@ theorem dmin_eq {u u' : D.whatâ‚‚.Word} {F' : LFlag (VS D) D.R.rS ((Tu D u' : â„
     exact det_sub_ZhatOM h _
   have hD : Dmin w l = ((ptMat w).submatrix (Fin.castLE h) (Fin.castLE h)).det := by
     unfold Dmin
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   have hM : leadMinorE (ZhatL (lf D F0) F') l =
       ((ZhatL (lf D F0) F').submatrix (Fin.castLE h) (Fin.castLE h)).det := by
     unfold leadMinorE
-    rw [dif_pos h]
+    rw [dite_eq_left h]
   rw [hD, hM, e1]
   rfl
 

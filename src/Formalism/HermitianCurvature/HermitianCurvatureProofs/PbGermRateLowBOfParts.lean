@@ -70,7 +70,7 @@ theorem gN_setC_zero (S : C.HidaSetting E Wp Wq) (p : ∀ v, KB.Pl (D.parOf S v)
   unfold KB.gN C.HidaSetting.gramLoc PBL.setC KB.withRR
   simp only
   unfold PBL.rrC KB.Pl.RR D.RRplace
-  rw [dif_neg (fun h => hP ((isLocPt_toStdD S.G.r hg 1 P i).1 h.1))]
+  rw [dite_eq_right (fun h => hP ((isLocPt_toStdD S.G.r hg 1 P i).1 h.1))]
   simp
 
 end cut

@@ -56,7 +56,7 @@ lemma alg {S X Y Z : Type*} [CommRing S] (g : X → Z) (f : Y → Z) (D : Submod
     | single u r =>
       rw [Finsupp.mapDomain_single]
       simp only [θ, Finsupp.linearCombination_single, v]
-      rw [dif_neg (fun hz => hz.2 ⟨u, rfl⟩), smul_zero]
+      rw [dite_eq_right (fun hz => hz.2 ⟨u, rfl⟩), smul_zero]
   have : D.mkQ x = 0 := by rw [← hx, h, hy]
   simpa [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] using this
 

@@ -22,7 +22,7 @@ open Formalism.REAL (GlRel IsWeight KHighest Cas)
 private theorem trOn_top_one {V : Type} [AddCommGroup V] [Module ℂ V] [Module.Free ℂ V] (S : Submodule ℂ V)
     [FiniteDimensional ℂ S] : trOn S (1 : Module.End ℂ V) = (Module.finrank ℂ S : ℂ) := by
   unfold trOn
-  rw [dif_pos (fun x hx => by simpa using hx)]
+  rw [dite_eq_left (fun x hx => by simpa using hx)]
   have : (LinearMap.restrict (1 : Module.End ℂ V) (fun x hx => by simpa using hx) : Module.End ℂ S) = 1 := by
     ext x
     rfl

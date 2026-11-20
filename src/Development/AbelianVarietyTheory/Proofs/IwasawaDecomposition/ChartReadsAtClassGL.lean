@@ -119,7 +119,7 @@ theorem frame_near : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
   · rw [(hOk.idx_ok a).depthG P hG]
     have e2 : ptFr ((I.stp u a i).rep c).1.1 P.1 = (extTo I.SQ ((I.stp u a i).rep c).1.1).deco.1.liftFr ⟨P.1, hG⟩ := by
       unfold ptFr
-      rw [dif_pos hG]
+      rw [dite_eq_left hG]
       rfl
     rw [e2]
     exact le_exp_neg_one_of_lt_one' (val_sub_lt_of_liftFr hpt ⟨P.1, hG⟩ r s)

@@ -200,7 +200,7 @@ private theorem killsKernel_rowShear_invariant_lemma_10 (ν : Measure k) [ν.IsA
                 subst hq'
                 simp [_root_.GlobalTheory.RootEx.Free] at hit
                 omega
-            rw [hX, dif_neg hnit, if_pos hev]
+            rw [hX, dite_eq_right hnit, if_pos hev]
             rcases q with q | q
             · simp [hβdef, _root_.GlobalTheory.RootEx.basePt]
             · simp [_root_.GlobalTheory.RootEx.Free] at hit

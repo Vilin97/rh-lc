@@ -71,7 +71,7 @@ theorem res_surj (hQ : Cosieve Q) (hle : U ⊓ Q ≤ U) (n : ℕ) : Function.Sur
   funext s
   have hs : Q ((s ⋙ ObjectProperty.ιOfLE hle).obj 0).obj := (s.obj 0).property.2
   change (if hs : Q ((s ⋙ ObjectProperty.ιOfLE hle).obj 0).obj then z (liftQ U Q hQ _ hs) else 0) = z s
-  rw [dif_pos hs]
+  rw [dite_eq_left hs]
   rfl
 
 theorem res_exact (hQ : Cosieve Q) (hle : U ⊓ Q ≤ U) (ι : Cx.Hom (RC F U hQ) (CH.cx (U.ι ⋙ F)) (RingHom.id R))

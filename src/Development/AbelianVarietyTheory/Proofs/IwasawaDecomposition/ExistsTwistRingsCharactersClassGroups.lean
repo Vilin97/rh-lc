@@ -389,7 +389,7 @@ theorem exists_ringSpec (hA : GlobalTheory.Published.GlobalArtinReciprocity) : �
     if h : 1 ≤ n ∧ n ≤ D.R.m then toHC (cf.mu0 ⟨n - 1, by omega⟩) else 1
   have hmu0H : ∀ j : Fin D.R.m, mu0H (j.1 + 1) = toHC (cf.mu0 j) := fun j => by
     simp only [mu0H]
-    rw [dif_pos ⟨by omega, by omega⟩]
+    rw [dite_eq_left ⟨by omega, by omega⟩]
     congr 2
   let etaH := toHC cf.eta
   let delH : HeightOneSpectrum (𝓞 ↥D.LL0) → Formalism.L2.NC.HC D.host.E := fun w => toHC (cf.delAt (lw w))

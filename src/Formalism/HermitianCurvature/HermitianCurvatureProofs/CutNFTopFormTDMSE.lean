@@ -133,7 +133,7 @@ theorem empty_list_measurability_holds : EmptyMeas := by
     rfl
   · have hV : p.V X (TBB.bigPt P.r c) = 0 := by
       unfold KB.Pl.V D.vecV
-      rw [dif_neg (fun h => hG h.2)]
+      rw [dite_eq_right (fun h => hG h.2)]
     rw [hV]
     have hw0 : bcWeight P.k P.r T T' ((fun j => c j.castSucc), c (Fin.last P.r)) = 0 := by
       unfold bcWeight

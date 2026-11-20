@@ -24,7 +24,7 @@ theorem pairVec_move (S : GridChoice W U) {t : T} (fs : Vecs G t) (hf : IsThetaF
           (moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs (.inl ⟨j, h⟩)) (x j) (x (j + 1)) else 0) := by
     intro j
     by_cases h : j < D.R.m
-    · rw [dif_pos h, dif_pos h]
+    · rw [dite_eq_left h, dite_eq_left h]
       rcases j with _ | j
       · have e1 : Function.update x 0 (x 0 * k) 0 = x 0 * k := Function.update_self _ _ _
         have e2 : Function.update x 0 (x 0 * k) (0 + 1) = x (0 + 1) := Function.update_of_ne (by omega) _ _
@@ -43,7 +43,7 @@ theorem pairVec_move (S : GridChoice W U) {t : T} (fs : Vecs G t) (hf : IsThetaF
         have e3 : moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs (.inl ⟨j + 1, h⟩) = fs (.inl ⟨j + 1, h⟩) :=
           Function.update_of_ne (by simp [first]) _ _
         rw [e1, e2, e3]
-    · rw [dif_neg h, dif_neg h]
+    · rw [dite_eq_right h, dite_eq_right h]
   have hcol : colV S fs (Function.update x 0 (x 0 * k)) =
       colV S (moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs) x := by
     have hfam : (fun j => if h : j < D.R.m then kkVec S (.top t j) (fs (.inl ⟨j, h⟩)) (Function.update x 0 (x 0 * k) j)
@@ -58,11 +58,11 @@ theorem pairVec_move (S : GridChoice W U) {t : T} (fs : Vecs G t) (hf : IsThetaF
         (moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs (.inr ⟨i, h⟩)) (y i) (y (i + 1)) else 0) := by
     intro i
     by_cases h : i < D.R.m
-    · rw [dif_pos h, dif_pos h]
+    · rw [dite_eq_left h, dite_eq_left h]
       have e3 : moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs (.inr ⟨i, h⟩) = fs (.inr ⟨i, h⟩) :=
         Function.update_of_ne (by simp [first]) _ _
       rw [e3]
-    · rw [dif_neg h, dif_neg h]
+    · rw [dite_eq_right h, dite_eq_right h]
   have hrow : rowV S fs y = rowV S (moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) fs) y := by
     have hfam : (fun i => if h : i < D.R.m then kkVec S (.chi i D.R.m) (fs (.inr ⟨i, h⟩)) (y i) (y (i + 1)) else 0) =
       (fun i => if h : i < D.R.m then kkVec S (.chi i D.R.m)

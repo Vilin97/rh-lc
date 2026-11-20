@@ -113,7 +113,7 @@ theorem phase_bounded {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
       (frame (a := topRank G j) (b := G.rank (G.m, j)) (c := G.m - 2 - j + 1) (by have := topRank_add hs j; omega) q)
       (frame (a := topRank G (j + 1)) (b := G.rank (G.m, j + 1)) (c := G.m - 2 - j)
         (by have := topRank_add hs (j + 1); omega) p)
-    rw [fill_theta, transpose_apply, downMap, dif_pos hj'] at h
+    rw [fill_theta, transpose_apply, downMap, dite_eq_left hj'] at h
     simpa [reindex_apply, submatrix_apply, Equiv.symm_apply_apply] using h
   have hx : ∀ j, j < G.m → ∀ r s, valuation k (x j r s) ≤ c := by
     intro j hj r s

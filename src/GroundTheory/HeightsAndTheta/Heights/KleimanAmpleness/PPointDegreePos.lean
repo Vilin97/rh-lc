@@ -78,7 +78,7 @@ theorem PointDegreePos.proof : PointDegreePos.Statement.{u, w} := by
   have := hP.isPrime
   obtain ⟨hfd, -⟩ := FieldNumbers.IntNumBase.full k Unit (fun _ => Fin (N + 1)) _ hP hrel
   unfold FieldNumbers.resDeg
-  rw [dif_pos hP.isPrime]
+  rw [dite_eq_left hP.isPrime]
   exact Module.finrank_pos
 
 end

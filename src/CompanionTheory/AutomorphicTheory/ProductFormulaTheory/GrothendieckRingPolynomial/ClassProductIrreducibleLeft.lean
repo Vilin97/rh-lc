@@ -100,7 +100,7 @@ theorem class_congr_equiv {π : Representation ℂ (GL (Fin N) k) V} {τ : Repre
   · rw [class_eq_finite_length_class π h, class_eq_finite_length_class τ (h.of_equiv φ), clsGL_congr φ]
   · have h' : ¬ HasFiniteLength τ := fun h' => h (h'.of_equiv φ.symm)
     unfold cl0
-    rw [dif_neg h, dif_neg h']
+    rw [dite_eq_right h, dite_eq_right h']
 
 theorem class_subsingleton [Subsingleton V] (π : Representation ℂ (GL (Fin N) k) V) : cl0 π = 0 := by
   rw [class_eq_finite_length_class π (GlobalTheory.ProdLength.hasFiniteLength_of_subsingleton π), clsGL]

@@ -282,7 +282,7 @@ theorem multAt_sub_eq_count {J₁ J₂ : Ideal (MRing ι)} (hJ₁ : IsMultiHomog
   rw [h0', ← hlast] at e1
   rw [e1, h0] at e2
   unfold multAt
-  rw [dif_pos hWp, dif_pos hWp, e2, ← hlast, e1, ← Nat.cast_add, ENat.toNat_natCast, ENat.toNat_natCast]
+  rw [dite_eq_left hWp, dite_eq_left hWp, e2, ← hlast, e1, ← Nat.cast_add, ENat.toNat_natCast, ENat.toNat_natCast]
   push_cast
   ring
 

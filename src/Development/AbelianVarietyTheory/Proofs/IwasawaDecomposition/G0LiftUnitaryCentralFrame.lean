@@ -66,7 +66,7 @@ theorem isBlockDiagonal_reduction_of_blockLift_splitPlace (s : SplitPlace L) {r 
   have hyab := hy a b
   show φ (y.val a b) = _
   by_cases hab : a.val < r ∧ b.val < r
-  · rw [dif_pos hab] at hl' ⊢
+  · rw [dite_eq_left hab] at hl' ⊢
     show φ (y.val a b) = i ((γ : Matrix (Fin r) (Fin r) (ZMod p)) ⟨a.val, hab.1⟩ ⟨b.val, hab.2⟩)
     set m : ℕ := ((γ : Matrix (Fin r) (Fin r) (ZMod p)) ⟨a.val, hab.1⟩ ⟨b.val, hab.2⟩).val with hm
     have h0 : φ (y.val a b - (m : Os s)) = 0 := by
@@ -76,7 +76,7 @@ theorem isBlockDiagonal_reduction_of_blockLift_splitPlace (s : SplitPlace L) {r 
       exact hl'
     rw [map_sub, sub_eq_zero, map_natCast] at h0
     rw [h0, ← map_natCast i m, hm, ZMod.natCast_zmod_val]
-  · rw [dif_neg hab] at hl' ⊢
+  · rw [dite_eq_right hab] at hl' ⊢
     have h1 : ((y.val a b : Os s) : s.v.adicCompletion (maximalRealSubfield L)) = if a = b then 1 else 0 := by
       rw [hyab]; exact hl'
     split_ifs at h1 ⊢ with hab'

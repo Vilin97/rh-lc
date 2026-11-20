@@ -94,7 +94,7 @@ theorem finPhaseC_of (hNR : Formalism.L2.SG.PairVal.NormRepExists D u u' (X.Fu u
     Formalism.L2.SG.PairVal.ptOf_spec _ ⟨(h1 R ρ s hrel).choose, (h1 R ρ s hrel).choose_spec, hrel⟩
   have hex := hNR s.1.toTerm (Formalism.L2.SG.PairVal.ptOf s.1.toTerm) hat hrel s.2.2.1
   unfold Formalism.L2.SG.PairVal.phaseAt
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   obtain ⟨⟨hP'', hmk''⟩, hAdm'', hL'', hU'', hZ''⟩ := hex.choose_spec
 
   have hrow := (Y.rowsOK u).1 s.1.lam s.1.mem

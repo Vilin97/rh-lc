@@ -130,7 +130,7 @@ theorem U_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     simp only [Formalism.MainNotions.product_first_zeroth_parts.Uop, Formalism.BasicNotions.LT.Uop, LinearMap.pi_apply, LinearMap.sum_apply, Finset.sum_apply, Fc]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hx1 := (Finset.mem_filter.1 hx).2
-    rw [dif_pos hx1]
+    rw [dite_eq_left hx1]
     exact congrFun (hpp c x hx1) s
   have hF : ∀ c, Fc c ∈ Submodule.span ℂ (Set.range g) := by
     intro c
@@ -173,7 +173,7 @@ theorem D_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     simp only [Formalism.MainNotions.product_first_zeroth_parts.Dop, LinearMap.pi_apply, LinearMap.sum_apply, Finset.sum_apply, Fc]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hx1 := (Finset.mem_filter.1 hx).2
-    rw [dif_pos hx1]
+    rw [dite_eq_left hx1]
     exact congrFun (hpp c x hx1) s
   have hF : ∀ c, Fc c ∈ Submodule.span ℂ (Set.range g) := by
     intro c

@@ -87,10 +87,10 @@ theorem hm_eq_smul_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
       unfold perFr
-      rw [dif_pos a, dif_pos hn]
+      rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
       unfold perFr
-      rw [dif_neg a, dif_pos (show conjEmb (relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dif_pos hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (W.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       rfl
   have hcc : FD.cc (-(U.X k).ξ0) = -(-(U.X k).ξ0) := by
     have h := (U.X k).ξ0_im

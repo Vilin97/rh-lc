@@ -93,7 +93,7 @@ theorem exists_root_haar (hk : 1 ≤ k) {z z' : Fin (2 * r + k + 1) → ℂ} (hz
     have hq : q.1.2.val < r := by have h1 := q.2.1; have h2 := q.1.1.isLt; rw [Fin.lt_def] at h1; omega
     show star (C2.uMap k r Bs.z (Matrix.of x) q.1.2 q.1.1) = star (flagMat k r Bs.z (Matrix.of x) q.1.2 q.1.1)
     unfold C2.uMap flagMat
-    rw [dif_pos hq, dif_pos hq]
+    rw [dite_eq_left hq, dite_eq_left hq]
     exact congrArg star (DF.herm_es _ _)
   have hrc : rootCoords k r Bs.z p = (cjE (rootEquiv p)).symm ∘ Rad.phi0 Bs (permOf p) := by
     funext x; simp [hphi x]

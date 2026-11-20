@@ -75,7 +75,7 @@ theorem evR_eq {f : Rul Xo c}
     {φ : p.R →ₐ[c.F] S} {u : FrPt Xo c p.R} {w : FrPt Xo c S} (h : FrMap φ u w) : evR Xo c f w = φ (f p u) := by
   have hT : FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) w := ⟨p, φ, u, h⟩
   unfold evR evalAt
-  rw [dif_pos hT]
+  rw [dite_eq_left hT]
   exact evalWD_fr (frChartF_of (chartCoverF_of_secBaseChange GlobalTheory.lawsFieldsSeparately.2.1 E H Dw l Xo c)) f hf S
     _ _ _ _ _ _ w hT.choose_spec.choose_spec.choose_spec h
 

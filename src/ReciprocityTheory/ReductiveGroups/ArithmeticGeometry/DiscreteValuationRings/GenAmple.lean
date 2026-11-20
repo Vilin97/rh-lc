@@ -35,7 +35,7 @@ lemma pull_g_res {X : Scheme.{0}} (L : LB X) (f : Y ⟶ X) (a b : PUnit → L.ι
       Set.mem_iInter, Set.mem_preimage, SetLike.mem_coe] at hx'
     exact ⟨hx'.1 PUnit.unit, hx'.2 PUnit.unit⟩
   unfold tr
-  rw [dif_pos hV]
+  rw [dite_eq_left hV]
   dsimp only [LB.pull, LB.LinComb]
   rw [Fintype.prod_unique, zpow_one]
   exact (res_res_lemma h _ _).trans rfl

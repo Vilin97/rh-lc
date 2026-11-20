@@ -53,7 +53,7 @@ theorem cInt_spec {P Q : Matrix (Fin D.R.nV) (Fin D.R.nV) (KK D.nd i)} {A : MatN
     (h : ∃ M : MatN D.nd i, M.map (toK D.nd i) = P * A.map (toK D.nd i) * Q) :
     (cInt i P Q A).map (toK D.nd i) = P * A.map (toK D.nd i) * Q := by
   unfold cInt
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact h.choose_spec
 
 def phiC (P Q : Matrix (Fin D.R.nV) (Fin D.R.nV) (KK D.nd i)) (a : D.nd.X i → MatN D.nd i) :

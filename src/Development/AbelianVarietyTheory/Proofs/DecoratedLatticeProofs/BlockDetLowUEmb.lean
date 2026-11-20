@@ -35,7 +35,7 @@ theorem blockDet_lowU_emb (ν : Matrix D A k) (m : GL D k) :
     rw [Units.val_mul, val_emb_one, val_lowU, fromBlocks_multiply]; simp
   have h0 : (lowU ν * emb₂ k (Equiv.refl (A ⊕ D)) (1, m)).1.toBlocks₂₂.det ≠ 0 := by
     rw [h]; exact (GeneralLinearGroup.det m).ne_zero
-  rw [blockDet, dif_pos h0]; ext; rw [Units.val_mk0, h, GeneralLinearGroup.val_det_apply]
+  rw [blockDet, dite_eq_left h0]; ext; rw [Units.val_mk0, h, GeneralLinearGroup.val_det_apply]
 
 theorem emb_mul_lowU (m : GL D k) (ν : Matrix D A k) :
     emb₂ k (Equiv.refl (A ⊕ D)) (1, m) * lowU ν = lowU (m.1 * ν) * emb₂ k (Equiv.refl (A ⊕ D)) (1, m) := by

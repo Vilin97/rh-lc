@@ -350,7 +350,7 @@ theorem restLamTau : RestLamTau := by
   rw [Finset.sum_eq_single i]
   · rw [if_pos rfl]
     unfold Dat.eZ
-    rw [dif_pos (by omega)]
+    rw [dite_eq_left (by omega)]
     congr 1
     ext
     have hm : ((j : ℕ) : ℤ) % (X.F.J : ℤ) = ((j : ℕ) : ℤ) := Int.emod_eq_of_lt (by omega) (by omega)

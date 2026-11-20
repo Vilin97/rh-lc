@@ -149,7 +149,7 @@ theorem rep_pull {D : D7} (hF : D.host.F = maximalRealSubfield D.host.E) {V : Fo
       ∀ (M : Type) [AddCommMonoid M] (F : Formalism.L2.Theta.GA D V → M),
         ∑ γ ∈ GlobalTheory.Hk3.rep V Pp d, F γ = ∑ γ ∈ R₀, F (PV.ψ γ) := by
   unfold GlobalTheory.Hk3.rep
-  rw [dif_pos hd]
+  rw [dite_eq_left hd]
   obtain ⟨e, f, ϖ, α, -, hP, -, -, -, -, -, hα, -, -, hR⟩ := hd.choose_spec
   have hK : ∀ k, k ∈ GlobalTheory.InertSph.Kv D.host.E n v ↔
       PV.ψ k ∈ {k | k ∈ Formalism.L2.Theta.KsphC V ∅ ∧ Formalism.IndefR.Mult.SuppF V f k} :=

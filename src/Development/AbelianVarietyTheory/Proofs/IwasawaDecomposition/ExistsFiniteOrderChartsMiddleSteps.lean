@@ -358,7 +358,7 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     have e : ((diaT (Pr := B.primes X) u P : (𝓞 B.fields.E ⧸ P.1.asIdeal)ˣ) : 𝓞 B.fields.E ⧸ P.1.asIdeal) =
         Ideal.Quotient.mk P.1.asIdeal (B.fields.conjO (X.piT u)) := by
       unfold diaT
-      rw [dif_pos hu]
+      rw [dite_eq_left hu]
       rfl
     rw [e]
     exact k3 P r j hr
