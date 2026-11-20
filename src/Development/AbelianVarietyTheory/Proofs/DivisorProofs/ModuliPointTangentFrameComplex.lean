@@ -22,7 +22,7 @@ theorem exists_ext_of_ringOfIntegers : ∀ (F : Type) [Field F] [NumberField F] 
     (χ : 𝓞 F →+* K), ∃ φ : F →+* K, φ.comp (algebraMap (𝓞 F) F) = χ := by
   intro F _ _ K _ _ χ
   have hinj : Function.Injective χ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     have ha0 : (a : F) ≠ 0 := fun h => h0 (RingOfIntegers.coe_eq_zero_iff.1 h)

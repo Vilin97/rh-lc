@@ -94,7 +94,7 @@ theorem kq_split : ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (
       exact hc i hi
 
   have inj : Function.Injective (eMap p K hq r) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨c, rfl⟩ := GlobalTheory.T.unramified_extension_basis p K r hr ζ' hζ x
     have hz : ∀ i < Nat.gcd f r, ∑ j : Fin r, (c j : PadicAlgCl p) * (ζ ^ p ^ i) ^ (j : ℕ) = 0 := by

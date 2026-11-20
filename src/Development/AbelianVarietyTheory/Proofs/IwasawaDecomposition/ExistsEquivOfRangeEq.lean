@@ -42,7 +42,7 @@ theorem exists_equiv_of_range_eq [AddCommGroup V] [Module K V] (f : U →ₛₗ[
 
 theorem semi_injective_of_basis {ι : Type} [Fintype ι] (b : Basis ι K U) (g : U →ₛₗ[σ] W)
     (h : LinearIndependent ℂ fun i => g (b i)) : Function.Injective g := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← b.sum_repr x, map_sum] at hx

@@ -39,7 +39,7 @@ variable {S A B : Type} [Field S] [CommRing A] [Algebra S A] [IsLocalRing A] [Co
   (hJ : RingHom.ker q ^ 2 = ⊥)
 
 theorem incl_injective : Function.Injective (incl (S := S) (RingHom.ker q) hJ) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   rw [incl_apply] at hx
   have h1 : x.fst = 0 := by

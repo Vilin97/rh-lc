@@ -17,7 +17,7 @@ theorem exists_poly_aeval_eq_zero_map_separable :
       (minpoly.irreducible hint)
   have hsep := hirr.separable
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h
     have hs := PadicInt.unitCoeff_spec h

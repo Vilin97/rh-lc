@@ -312,7 +312,7 @@ theorem length_quotient_power_injective : LengthQuotientPowerInjective := by
       rintro _ ⟨y, rfl⟩; exact ⟨(U^m) y, by rw [pow_succ']; rfl⟩
     have key := Module.length_eq_add_of_exact (Submodule.mapQ _ _ U h1) (Submodule.mapQ _ _ LinearMap.id h2) ?_ ?_ ?_
     · rw [key, ih, succ_nsmul]
-    · rw [injective_iff_map_eq_zero]
+    · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a
       induction a using Submodule.Quotient.induction_on with
       | H x =>
@@ -363,7 +363,7 @@ theorem length_quotient_twist_formula : LengthQuotientTwistFormula := by
     rintro _ ⟨y, hy, rfl⟩; exact N.smul_mem _ hy
   have key := Module.length_eq_add_of_exact (Submodule.mapQ _ _ N.subtype h1) (Submodule.mapQ _ _ LinearMap.id h2) ?_ ?_ ?_
   · rw [key, add_comm]
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a
     induction a using Submodule.Quotient.induction_on with
     | H x =>

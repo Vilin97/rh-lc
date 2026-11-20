@@ -797,7 +797,7 @@ theorem eventually_lowIndex_phi {f : Robba K} (hf : f ≠ 0) :
     ⟨lowIndex_phiSeq h.1 h.2.1 h.2.2.1 h.2.2.2 hf0, highIndex_phiSeq h.1 h.2.1 h.2.2.1 h.2.2.2 hf0⟩
 
 theorem phi_injective : Function.Injective F.phi := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro f hf
   by_contra hne
   have hf0 : f.coeff ≠ 0 := fun h => hne (Robba.ext h)

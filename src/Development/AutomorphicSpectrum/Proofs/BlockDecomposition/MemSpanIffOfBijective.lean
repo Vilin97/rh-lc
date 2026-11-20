@@ -24,7 +24,7 @@ theorem compl_factor {E S B : Type} [CommRing E] [CommRing S] [CommRing B] {π :
   let q : E ⧸ Ideal.span {π} →+* S ⧸ Ideal.span {g π} := Ideal.quotientMap _ g hle
   have hqm : ∀ x, q (Ideal.Quotient.mk _ x) = Ideal.Quotient.mk _ (g x) := fun x => Ideal.quotientMap_mk
   have hinj : Function.Injective q := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective x
     rw [hqm, Ideal.Quotient.eq_zero_iff_mem] at hx

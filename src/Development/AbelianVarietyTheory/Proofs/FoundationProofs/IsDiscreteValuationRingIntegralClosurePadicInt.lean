@@ -213,7 +213,7 @@ theorem exists_injective_algHom_integralClosure (B : Type*) [CommRing B] [IsDoma
       (g : B →ₐ[ℤ_[p]] integralClosure ℤ_[p] K), Function.Injective g := by
   classical
   have hinj : Function.Injective (algebraMap ℤ_[p] B) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible h0
@@ -226,7 +226,7 @@ theorem exists_injective_algHom_integralClosure (B : Type*) [CommRing B] [IsDoma
     exact (algebraMap ℚ_[p] (PadicAlgCl p)).injective.comp (IsFractionRing.injective _ _))
   let φ : B →ₐ[ℤ_[p]] PadicAlgCl p := IsAlgClosed.lift
   have hφ : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro b hb
     have : (RingHom.ker φ).comap (algebraMap ℤ_[p] B) = ⊥ := by
       refine eq_bot_iff.mpr fun a ha => ?_

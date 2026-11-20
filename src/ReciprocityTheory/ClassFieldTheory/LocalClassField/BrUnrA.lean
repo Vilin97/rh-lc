@@ -15,7 +15,7 @@ theorem bijective_H_of_adm {G : Type} [Group G] [TopologicalSpace G] [IsTopologi
   have hs := admissibility_holds ℤ G _ _ _ _ _ h
   obtain ⟨⟨δ, -, hl⟩, -⟩ := lES_holds ℤ _ _ _ _ _ hs
   constructor
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨y, rfl⟩ := (hl.exB n x).1 hx
     rw [Subsingleton.elim y 0, map_zero]
@@ -124,7 +124,7 @@ def trivInfl (φ : G' →* G) (hφ : Continuous φ) (A : Type) [AddCommGroup A] 
 
 theorem trivial_inflation_h1_rat_mod_int_injective (φ : G' →* G) (hφ : Continuous φ) (hs : Surjective φ) :
     Injective ((trivInfl φ hφ QZ).hom.H 1) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   obtain ⟨x, hx, rfl⟩ := Cx.exists_cls c
   obtain ⟨e, he⟩ := exists_h1_equiv_characters G

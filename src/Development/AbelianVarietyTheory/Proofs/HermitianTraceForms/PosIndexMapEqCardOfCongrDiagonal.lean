@@ -146,7 +146,7 @@ theorem posIndex_diagonal (d : n → ℂ) :
     set S := Finset.univ.filter fun k => 0 < (d k).re with hS
     let f : W →ₗ[ℂ] (S → ℂ) := (LinearMap.funLeft ℂ ℂ (Subtype.val : S → n)).comp W.subtype
     have hf : Function.Injective f := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       refine Subtype.ext ?_
       by_contra hx0

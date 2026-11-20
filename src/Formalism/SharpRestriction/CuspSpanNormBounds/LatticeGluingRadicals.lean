@@ -1980,7 +1980,7 @@ theorem c_finrank_Th (hU : HU Λ F F'') (hN : HNd F F'') :
     finrank E (Th Λ F F' F'' β) = finrank E (ThPairs Λ F F' F'' β) := by
   have inj : Function.Injective
       ((LinearMap.fst E S.V S.V).domRestrict (ThPairs Λ F F' F'' β)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨p, hp⟩ h
     have h0 : p.1 = 0 := h
     obtain ⟨⟨_, hb⟩, hc, _⟩ := c_mem_ThPairs.1 hp
@@ -1997,7 +1997,7 @@ theorem c_finrank_Th'' (hU : HU Λ F F') (hN : HNd F F') :
     finrank E (Th'' Λ F F' F'' β) = finrank E (ThPairs Λ F F' F'' β) := by
   have inj : Function.Injective
       ((LinearMap.snd E S.V S.V).domRestrict (ThPairs Λ F F' F'' β)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨p, hp⟩ h
     have h0 : p.2 = 0 := h
     obtain ⟨⟨ha, _⟩, hc, _⟩ := c_mem_ThPairs.1 hp
@@ -5102,7 +5102,7 @@ instance i_isLoc : IsLocalizedModule p.primeCompl (i_g p A B) where
       have : (s : 𝓞 E) ≠ 0 := fun h => s.2 (h ▸ p.zero_mem)
       simpa using this
     constructor
-    · rw [injective_iff_map_eq_zero]
+    · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro q hq
       obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective _ q
       rw [Module.algebraMap_end_apply, Submodule.mkQ_apply, ← Submodule.Quotient.mk_smul,
@@ -5999,7 +5999,7 @@ theorem h_quot_equiv {A B A' B' : Submodule (𝓞 E) S.V} (hle : A ≤ A') (hB :
   let f : (A ⧸ B.comap A.subtype) →ₗ[𝓞 E] (A' ⧸ B'.comap A'.subtype) :=
     Submodule.mapQ _ _ (Submodule.inclusion hle) (fun x hx => hB hx)
   refine ⟨LinearEquiv.ofBijective f ⟨?_, ?_⟩⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro q hq
     obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective _ q
     rw [Submodule.mkQ_apply] at hq ⊢
@@ -6288,7 +6288,7 @@ def h_Pr (L : Submodule (𝓞 E) S.V) (Hs Θ : Submodule E S.V) : Submodule (�
 
 theorem h_smul_inj (d : 𝓞 E) (hd : d ≠ 0) :
     Function.Injective (LinearMap.lsmul (𝓞 E) S.V d) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have hd' : (algebraMap (𝓞 E) E d) ≠ 0 := by
     simpa using (map_ne_zero_iff (algebraMap (𝓞 E) E) (IsFractionRing.injective (𝓞 E) E)).2 hd
@@ -8460,7 +8460,7 @@ theorem k_idx_cyc {v : W} (hv : v ≠ 0) (d : 𝓞 E) :
     obtain ⟨o, rfl⟩ := Submodule.mem_span_singleton.1 hx
     exact ⟨o, rfl⟩
   have hφi : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro o ho
     exact hinj o (congrArg Subtype.val ho)
   let e : 𝓞 E ≃ₗ[𝓞 E] (Submodule.span (𝓞 E) {v}) := LinearEquiv.ofBijective φ ⟨hφi, hφs⟩

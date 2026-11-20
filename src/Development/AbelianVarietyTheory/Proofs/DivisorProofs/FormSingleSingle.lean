@@ -92,7 +92,7 @@ theorem det_ne_zero (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {m : ℕ}
   have hL : ∀ p, L p = ι *ᵥ p.1 + p.2.1 • x + p.2.2 • y := by
     intro p; simp [L, add_assoc]
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨u, a, b⟩ hp
     rw [hL] at hp
     obtain ⟨h1, h2, h3⟩ := key u a b (fun w => by simp only at hp; rw [hp]; simp [form])

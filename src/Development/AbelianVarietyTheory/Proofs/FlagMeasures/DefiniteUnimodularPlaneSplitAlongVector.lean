@@ -336,7 +336,7 @@ theorem planeSplit : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], Form
       dotProduct_smul, huw, hwu, ← hβ₁, ← hβ₂, smul_eq_mul]
     ring
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have a0 := hpair x (1, 0)
     have a1 := hpair x (0, 1)

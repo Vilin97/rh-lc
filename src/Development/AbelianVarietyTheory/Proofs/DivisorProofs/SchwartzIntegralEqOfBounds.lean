@@ -72,7 +72,7 @@ noncomputable def emb (N : ℕ) : SchwartzMap D ℂ →L[ℂ] Target D N :=
         (Finset.mem_product.2 ⟨Finset.mem_range.2 m.2, Finset.mem_range.2 n.2⟩)⟩
 
 lemma embLin_injective (N : ℕ) : Function.Injective (embLin (D := D) N) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro φ h
   ext x
   have h1 : weightedDeriv 0 0 φ = 0 := congrFun (congrFun h 0) 0

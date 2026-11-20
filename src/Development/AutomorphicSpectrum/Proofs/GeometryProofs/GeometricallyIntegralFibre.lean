@@ -215,7 +215,7 @@ theorem isIso_appTop_of_closedFibre : ∀ (A : Type) [CommRing A] [IsLocalRing A
   have h1 : p.appTop ≫ e.appTop = 𝟙 _ := by
     rw [← Scheme.Hom.comp_appTop, he, Scheme.Hom.id_appTop]
   have h2 : Function.Injective e.appTop := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro f hf
     refine eq_zero_of_mem_pow p f fun n U ↦ ?_
     obtain ⟨_, _, _⟩ := quotient_pow_facts A n

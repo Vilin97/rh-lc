@@ -145,7 +145,7 @@ theorem FlagProjTrdegLe.proof (hTr : SegreFlagClosureTrdeg.Statement) : FlagProj
   have hO : Function.Injective (algebraMap O Φ) := by
     rw [IsScalarTower.algebraMap_eq O Ω Φ]
     refine (FaithfulSMul.algebraMap_injective Ω Φ).comp ?_
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have hy : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,

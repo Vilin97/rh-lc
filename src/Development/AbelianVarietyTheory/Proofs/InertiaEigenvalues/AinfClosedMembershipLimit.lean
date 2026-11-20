@@ -212,7 +212,7 @@ theorem eo_X : eo bk X = bk.flat := by
   rw [← bk.evRed_X, ← eo_red, red, PowerSeries.map_X]
 
 theorem eo_injective : Function.Injective (eo bk) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro r hr
   obtain ⟨s, rfl⟩ := red_surj bk r
   rw [eo_red] at hr

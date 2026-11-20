@@ -96,7 +96,7 @@ private theorem lTensor_injective_val {R S M N : Type} [CommRing R] [IsDomain R]
         rw [← smul_tmul]
         congr 1
         exact Subtype.ext hc.symm
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨s, rfl⟩ := hsurj x
     have h1 : J • s = 0 := by
@@ -275,7 +275,7 @@ private theorem injective_app (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (Resi
     {F G : B.X.Modules} [F.IsQuasicoherent] [G.IsQuasicoherent] (φ : F ⟶ G) [Mono φ]
     (hF : Kills g F) (hG : Kills g G) (hE : NoEmb B ((frob p B).obj F)) (U : B.X.Opens)
     (hU : IsAffineOpen U) : Function.Injective (((frob p B).map φ).app U) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro s hs
   let I := fibI p B
   let f := GlobalTheory.SS.FrobField.absFrob _ p 1 Fact.out (FrobQuot.natCast_eq_zero_fibI p B) ≫ I.subschemeι

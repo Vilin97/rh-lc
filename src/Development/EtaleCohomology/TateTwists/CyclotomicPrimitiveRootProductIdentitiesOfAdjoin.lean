@@ -27,7 +27,7 @@ noncomputable def φ (q : ℕ) [NeZero q] : R q →+* ℂ :=
 lemma φ_root (q : ℕ) [NeZero q] : φ q (θ q) = μ q := AdjoinRoot.lift_root _
 
 lemma φ_inj (q : ℕ) [NeZero q] : Function.Injective (φ q) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨p, rfl⟩ := AdjoinRoot.mk_surjective x
   rw [AdjoinRoot.mk_eq_zero]

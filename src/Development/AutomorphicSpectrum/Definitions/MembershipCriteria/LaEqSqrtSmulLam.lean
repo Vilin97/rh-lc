@@ -192,7 +192,7 @@ theorem Implements.comp {g g' : X ≃+ X} {T T' : M →ₗ[ℂ] M} (h : Implemen
   ⟨fun x v => by simp [h'.1, h.1], fun u v => by simp [h.2, h'.2]⟩
 
 theorem Implements.injective {g : X ≃+ X} {T : M →ₗ[ℂ] M} (h : Implements S g T) : Function.Injective T := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   by_contra hne
   have := S.B_pos v hne

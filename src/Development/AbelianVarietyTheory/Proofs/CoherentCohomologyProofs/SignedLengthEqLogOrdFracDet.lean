@@ -58,7 +58,7 @@ theorem relLength_chain {R V : Type*} [Ring R] [AddCommGroup V] [Module R V]
     (Submodule.mapQ (C.submoduleOf D) (C.submoduleOf A) (Submodule.inclusion hDA) hf)
     (Submodule.factor hle) ?_ (Submodule.factor_surjective hle) ?_
   · rw [relLength_def, this, add_comm]; rfl
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ x
     rw [Submodule.mapQ_apply, Submodule.Quotient.mk_eq_zero] at hx
@@ -91,7 +91,7 @@ theorem relLength_span_columns {R : Type*} [CommRing R] [IsDomain R] [IsPrincipa
     simp [φ, Matrix.toLin_self]
   have hdet : LinearMap.det φ = h.det := LinearMap.det_toLin a h
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h0 : h.mulVec (a.repr x) = 0 := by
       rw [← Matrix.repr_toLin a a h x]

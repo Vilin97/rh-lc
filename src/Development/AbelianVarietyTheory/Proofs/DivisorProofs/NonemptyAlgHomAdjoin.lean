@@ -20,7 +20,7 @@ theorem nonempty_algHom_adjoin (k F Ω : Type) [Field k] [Field F] [Algebra k F]
   have hf : ∀ s : S, f (algebraMap S (Localization.Away h) s) = (s : F) := fun s => by
     simp [f, IsLocalization.liftAlgHom_apply]
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.surj (Submonoid.powers h) z
     have h1 := congrArg f hab

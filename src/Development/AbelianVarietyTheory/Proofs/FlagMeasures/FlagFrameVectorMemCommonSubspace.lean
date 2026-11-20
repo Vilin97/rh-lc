@@ -82,7 +82,7 @@ theorem finrank_wt (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {F G : F
   have hperp : ∀ (w : W) (a : Fin (r + 1)), H.B (F.e a) (e w) = 0 :=
     fun w => (he.2 _).2 (Submodule.mem_sup_left ⟨w, rfl⟩)
   have hinj : Function.Injective e := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro w hw
     refine HW.nondeg w fun y => ?_
     rw [← he.1, hw]; simp

@@ -269,7 +269,7 @@ theorem appTop_SpecMap_apply {R S : CommRingCat.{0}} (φ : R ⟶ S) {X : Scheme.
 
 theorem appTop_injective {U X : Scheme.{0}} [IsIntegral X] [Nonempty U] (m : U ⟶ X)
     [IsOpenImmersion m] : Function.Injective m.appTop.hom := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   by_contra h
   rw [← basicOpen_eq_bot_iff] at h

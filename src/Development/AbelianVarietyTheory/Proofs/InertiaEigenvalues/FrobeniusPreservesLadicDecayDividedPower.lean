@@ -45,7 +45,7 @@ theorem eq_zero_of_coeff [CharZero K]
 theorem ofWHom_injective [CharZero K]
     (hinj : ∀ τ : ZMod a, Function.Injective fun c : Wq l a => algebraMap O K (emb t τ c)) :
     Function.Injective (ofWHom t K e) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro w hw
   funext ⟨i, n⟩
   apply eq_zero_of_coeff t K e hinj

@@ -72,7 +72,7 @@ theorem surj_of_smallExt : ∀ (R : Type) [CommRing R] [IsLocalRing R] (t : R) (
       by_contra hnu
       exact htm ((IsLocalRing.mem_maximalIdeal t).2 hnu)
     have hinj : Function.Injective σ := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha
       have hma : a ∈ IsLocalRing.maximalIdeal R := by rw [← hkerσ]; exact ha
       exact (hu.mul_left_eq_zero).1 (hm a hma)

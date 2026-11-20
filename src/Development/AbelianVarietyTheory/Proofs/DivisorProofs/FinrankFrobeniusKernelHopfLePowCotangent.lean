@@ -65,7 +65,7 @@ theorem finrank_le_pow_finrank_cot (p : ℕ) [hp : Fact p.Prime] (K H : Type) [F
   have hε : (counitAlgHom K (H ⧸ J)).comp π = counitAlgHom K H := rfl
   have hbij : Function.Bijective (AugCot.map π hε) := by
     refine ⟨?_, AugCot.map_surjective π hε hπ⟩
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     obtain ⟨z, rfl⟩ := (AugCot.exact_kerMap_map π hε hπ y).1 hy
     rw [AugCot.kerMap_apply, AugCot.d_of_mem _ (AugCot.ker_le π hε z.2),

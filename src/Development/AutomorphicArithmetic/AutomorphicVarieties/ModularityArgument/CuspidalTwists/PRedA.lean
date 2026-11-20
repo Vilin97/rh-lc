@@ -105,7 +105,7 @@ theorem UpperTheory.V.Cu.redA_of : RedTanA → RedA := by
     · exact congrArg (· * c.r g⁻¹) (Matrix.ext fun i j => (hy _).2.symm)
     · exact congrArg (· * adj (c.n v)) (Matrix.ext fun i j => (hy _).2.symm)
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro D hD
     obtain ⟨y, h1⟩ := hy D
     obtain ⟨y0, h0⟩ := hy 0

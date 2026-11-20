@@ -107,7 +107,7 @@ theorem exists_eq_pow_mul_of_iota_eq_zero {y : ACris K p} (hy : iota K p y = 0) 
 set_option maxHeartbeats 1600000 in
 
 theorem iota_injective : Function.Injective (iota K p) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   refine IsHausdorff.haus' (I := Ideal.span {(p : ACris K p)}) y fun k => ?_
   rw [SModEq.sub_mem, sub_zero, smul_eq_mul, Ideal.mul_top, ← span_p_pow_map]

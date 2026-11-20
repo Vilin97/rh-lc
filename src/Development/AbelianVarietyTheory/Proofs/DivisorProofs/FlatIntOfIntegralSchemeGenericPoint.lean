@@ -34,7 +34,7 @@ theorem flat_of_generic_zero : ∀ {X : Scheme.{0}} [IsIntegral X] (s : X ⟶ Sp
   have h4 : ((j ≫ s) p0).asIdeal ≤ ⊥ := hx ▸ (PrimeSpectrum.le_iff_specializes _ _).2 h3
   rw [← hφ] at h4
   have hinj : Function.Injective φ.hom := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro n hn
     have : n ∈ ((Spec.map φ) p0).asIdeal := by
       show n ∈ Ideal.comap φ.hom ⊥

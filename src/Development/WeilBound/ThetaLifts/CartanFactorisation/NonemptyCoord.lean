@@ -105,7 +105,7 @@ theorem nonempty_coord : Nonempty (Coord F κ) := by
     conv_lhs => rw [this]
     simp [R]
   have hinj : Function.Injective R := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     by_contra h
     obtain ⟨i, hi⟩ := Function.ne_iff.1 h

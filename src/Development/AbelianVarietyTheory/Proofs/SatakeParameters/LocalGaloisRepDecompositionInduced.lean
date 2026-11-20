@@ -401,7 +401,7 @@ def lineV (u : Fin a → ↥L.1) : (Fin 1 → ↥L₁.1) →ₗ[ℚ_[l]] (Fin a 
       (IntermediateField.inclusion hL).toLinearMap.map_smul c (x 0), smul_assoc]
 
 theorem lineV_injective {u : Fin a → ↥L.1} (hu : u ≠ 0) : Function.Injective (lineV hL u) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have h0 : x 0 = 0 := by
     have := (smul_eq_zero.mp hx).resolve_right hu

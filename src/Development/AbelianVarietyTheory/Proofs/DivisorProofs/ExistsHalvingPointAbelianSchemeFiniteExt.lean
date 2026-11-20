@@ -25,7 +25,7 @@ theorem exists_spec_of_finite_surjective {R : Type} [CommRing R] [IsDomain R] {X
   · have hs : Surjective (Spec.map ψ) := by rw [hψ]; infer_instance
     have hd : DenseRange (PrimeSpectrum.comap ψ.hom) := hs.1.denseRange
     rw [PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical, nilradical_eq_zero] at hd
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     simpa using hd hx
   · have hf : IsFinite (Spec.map ψ) := by rw [hψ]; infer_instance

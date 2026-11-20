@@ -56,7 +56,7 @@ theorem FlagConeTrdeg.proof (h₁ : TrdegAdjoinFrac.Statement) (h₂ : FlagMinor
     (h₃ : FlagMinorsTrdeg.Statement) : FlagConeTrdeg.Statement := by
   intro K _ ι _ N1 n P B hP hH hB
   have hinj : Function.Injective (algebraMap ℤ (MRing ι ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have : C a ∈ P := by
       rw [← Ideal.Quotient.eq_zero_iff_mem]

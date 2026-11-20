@@ -52,7 +52,7 @@ theorem exists_addHom_zmod_pow_one_of_not_isUnit :
     have := ZMod.lift_coe (l ^ m) ⟨Int.castAddHom (R ⧸ I), by simpa using hlI⟩ (k : ℤ)
     simpa using this
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     rw [← ZMod.natCast_zmod_val x, hf_nat, ← map_natCast (Ideal.Quotient.mk I),
       Ideal.Quotient.eq_zero_iff_mem, hI, Ideal.mem_span_singleton] at hx

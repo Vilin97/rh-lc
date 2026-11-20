@@ -313,7 +313,7 @@ theorem hT_swap {D : D7} (V : HSp D) {x y : V.V} (h : V.hT x y = 0) : V.hT y x =
 
 theorem isomEmb_injective {D : D7} {V V' : HSp D} {ι : V'.V →ₗ[D.host.E] V.V} (h : HSpace.IsIsomEmb V' V ι) :
     Function.Injective ι := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   apply V'.nondeg.1
   intro y

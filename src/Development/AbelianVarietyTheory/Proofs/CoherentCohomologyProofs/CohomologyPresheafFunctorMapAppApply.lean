@@ -130,7 +130,7 @@ lemma connecting_restrict (n : ℕ) {V U : C} (i : V ⟶ U) (x : S.X₃.H' n U) 
 
 lemma connecting_injective (n : ℕ) (U : C) (h : Subsingleton (S.X₂.H' n U)) :
     Function.Injective (connecting hS n U) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨y, rfl⟩ := (exact_map_connecting hS n U x).1 hx
   rw [Subsingleton.elim y 0, map_zero]

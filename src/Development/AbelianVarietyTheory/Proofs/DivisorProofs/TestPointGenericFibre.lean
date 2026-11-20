@@ -46,7 +46,7 @@ theorem isTest_base_generic : ∀ (F : Type) [Field F] [NumberField F] (V : Valu
   have hmax : ∀ P : Ideal V, P.IsPrime → P ≠ ⊥ → P = IsLocalRing.maximalIdeal V := fun P hP hne =>
     IsLocalRing.eq_maximalIdeal (hP.isMaximal hne)
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     by_contra hne
     push_neg at hne
     obtain ⟨a, ha, ha0⟩ := hne

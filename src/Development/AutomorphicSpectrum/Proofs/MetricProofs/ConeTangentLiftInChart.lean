@@ -231,7 +231,7 @@ theorem finrank_tanSub_le {I : Ideal (MvPolynomial (Σ k, J k) ℂ)}
     LinearMap.prod ((Φ₁.comp (tanSub I z).subtype).codRestrict Vp fun v => hmem v v.2)
       (Φ₂.comp (tanSub I z).subtype)
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     have h1 : Φ₁ v = 0 := congrArg Subtype.val (congrArg Prod.fst hv)
     have h2 : Φ₂ v = 0 := congrArg Prod.snd hv
@@ -312,7 +312,7 @@ theorem coneTangent_eq_fderiv_add_torusSmul : ∀ (K : Type) [Fintype K] (J : K 
     filter_upwards [Metric.isOpen_ball.mem_nhds ht] with t' ht'
     exact (D.chart a).mem t' ht'
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨u, c⟩ h
     rw [hL] at h
     have hu : u = 0 := (D.chart a).immersion t ht u ⟨fun k => -c k, by

@@ -268,7 +268,7 @@ theorem trace_of_unif {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
 
 theorem injective_of_charZero {E F : Type} [Field E] [NumberField E] [Field F] [CharZero F] (τ : 𝓞 E →+* F) :
     Function.Injective τ := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   by_contra h0
   obtain ⟨n, hn, d, hd⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := ℤ) c).exists_nonzero_dvd

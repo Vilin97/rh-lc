@@ -15,7 +15,7 @@ theorem card_ringHom_to_integers_eq_finrank : ∀ (p : ℕ) [Fact p.Prime] (C : 
   letI : Algebra ℤ_[p] C := ((algebraMap O C).comp (algebraMap ℤ_[p] O)).toAlgebra
   haveI : IsScalarTower ℤ_[p] O C := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   have hZC : Function.Injective (algebraMap ℤ_[p] C) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     rw [PadicInt.unitCoeff_spec h0, map_mul, map_pow, map_natCast] at hx
@@ -64,7 +64,7 @@ theorem card_ringHom_to_integers_eq_finrank : ∀ (p : ℕ) [Fact p.Prime] (C : 
         rw [this]
       let τa : Λ →ₐ[ℤ_[p]] C := { Φ σ with commutes' := hcomm }
       have hinj : Function.Injective τa := by
-        rw [injective_iff_map_eq_zero]
+        set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
         have hk : RingHom.ker (τa : Λ →+* C) = ⊥ := by
           apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[p])
           rw [eq_bot_iff]

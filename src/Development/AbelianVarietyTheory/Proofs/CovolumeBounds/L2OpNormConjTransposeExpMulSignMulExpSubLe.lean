@@ -282,7 +282,7 @@ theorem finrank_le_card_of_eq_zero (S : Finset n) (W : Submodule ℂ (n → ℂ)
     (h : ∀ x ∈ W, (∀ k ∈ S, x k = 0) → x = 0) : Module.finrank ℂ W ≤ S.card := by
   let f : W →ₗ[ℂ] (S → ℂ) := (LinearMap.funLeft ℂ ℂ (Subtype.val : S → n)).comp W.subtype
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     exact Subtype.ext (h x x.2 fun k hk => congrFun hx ⟨k, hk⟩)
   simpa using LinearMap.finrank_le_finrank_of_injective hf
@@ -323,7 +323,7 @@ theorem card_le_card_pos_of_posDef (d : n → ℝ) (Q : Matrix n m ℂ)
   set S := Finset.univ.filter fun k => 0 < d k with hS
   let f : (m → ℂ) →ₗ[ℂ] (S → ℂ) := (LinearMap.funLeft ℂ ℂ (Subtype.val : S → n)).comp Q.mulVecLin
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra hx0
     have h1 := (Complex.pos_iff.1 (h.dotProduct_mulVec_pos hx0)).1

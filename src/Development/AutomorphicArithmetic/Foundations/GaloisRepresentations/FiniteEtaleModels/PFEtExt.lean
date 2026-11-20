@@ -104,7 +104,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.fEtExt_holds :
     have hpt : (Spec.map f) pt = (⊥ : PrimeSpectrum O) := by
       rw [hf, Scheme.Hom.comp_apply, ha1, h2]
     have hinj : Function.Injective f.hom := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro r hr
       have h3 : r ∈ (PrimeSpectrum.comap f.hom (⊥ : PrimeSpectrum k)).asIdeal := by
         simpa [PrimeSpectrum.comap_asIdeal] using hr

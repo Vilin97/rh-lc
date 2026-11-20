@@ -36,7 +36,7 @@ theorem exists_ringEquiv_powerSeries_of_complete {k O : Type*} [Field k] [CommRi
     rw [RingHom.comp_apply, hC, Ideal.Quotient.eq, hmap]
     exact Ideal.Quotient.eq.mp ha
   have hi : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     obtain ⟨n, u, rfl⟩ :=

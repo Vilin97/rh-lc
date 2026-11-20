@@ -33,7 +33,7 @@ theorem tr_back (z : Z1 rho') :
   congrArg Submodule.Quotient.mk (Subtype.ext rfl)
 
 theorem tr_injective : Function.Injective (tr σ hs rho rho' he) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   induction x using Submodule.Quotient.induction_on with
   | H z =>

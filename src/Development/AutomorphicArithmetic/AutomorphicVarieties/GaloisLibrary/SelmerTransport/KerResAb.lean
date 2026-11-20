@@ -66,7 +66,7 @@ theorem UpperTheory.V.Base.kerResAb :
   let ev : Z0 →ₗ[R] (T → M) := LinearMap.pi fun t =>
     (LinearMap.proj (⟨t.1, hT t.2⟩ : U)).comp ((Z1U ρ U).subtype.comp Z0.subtype)
   have hev : Function.Injective ev := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     have h1 : z.1.1 1 = 0 := z.2 1 U'.one_mem
     let K : Subgroup U :=

@@ -29,7 +29,7 @@ theorem cohomologyMapAlong_restrictNormalHom_two_injective :
       (InfiniteGalois.restrictNormalHom_continuous M) (unitsRestrictHom M) 2).hom := by
   have : Algebra.IsSeparable k M := Algebra.isSeparable_tower_bot_of_isSeparable k M L
   have : IsGalois k M := ⟨⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨E, y, rfl⟩ := exists_unitsInflation_eq (K := k) (L := M) 2 x
   let E₀ : IntermediateField k M := E.toIntermediateField
@@ -124,7 +124,7 @@ theorem gsRestrict_comp_galToFixing :
 set_option maxHeartbeats 1000000 in
 
 theorem gsBrauerInfl_injective : Function.Injective (gsBrauerInfl K S 2).hom := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨x', rfl⟩ :=
     (cohomologyULiftIntAddEquiv (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) 2).surjective x

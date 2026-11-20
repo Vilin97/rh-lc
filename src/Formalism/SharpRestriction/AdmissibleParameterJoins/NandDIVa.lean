@@ -38,7 +38,7 @@ theorem injective_of_scalars {ι V W : Type*} [DecidableEq ι] [AddCommGroup V] 
     | add a b ha hb =>
       intro k
       simp only [map_add, DirectSum.decompose_add, DirectSum.add_apply, Submodule.coe_add, smul_add, ha k, hb k]
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   have hz : DirectSum.decompose S v = 0 := by
     ext k
@@ -50,7 +50,7 @@ theorem injective_of_scalars {ι V W : Type*} [DecidableEq ι] [AddCommGroup V] 
 
 theorem thetaT_injective_of_onto {R : Ranks} (D : Rows.Data R) (μ : D.Tup) (j : ℕ)
     (h : Function.Surjective (D.thetaP μ j)) : Function.Injective (D.thetaT μ j) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   obtain ⟨x, rfl⟩ := h y
   have h1 : inner ℂ x (D.thetaT μ j (D.thetaP μ j x)) = inner ℂ (D.thetaP μ j x) (D.thetaP μ j x) := by

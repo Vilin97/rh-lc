@@ -32,7 +32,7 @@ theorem evalCharacter_apply (σ : G) (χ : Additive G →ₜ+ QZ) :
 
 theorem evalCharacter_injective {σ : G} (hσ : IsTopologicalGenerator σ) :
     Function.Injective (evalCharacter σ) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro χ hχ
   have hlc : IsLocallyConstant fun g : G => χ (Additive.ofMul g) :=
     (IsLocallyConstant.iff_continuous _).2 (χ.continuous.comp continuous_ofMul)

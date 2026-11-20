@@ -61,7 +61,7 @@ theorem exists_algEquiv_quadraticAlgebra (h2 : (2 : K) ≠ 0) :
     intro z
     simp [f, Algebra.smul_def]
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     rw [hf] at hz
     by_cases him : z.im = 0

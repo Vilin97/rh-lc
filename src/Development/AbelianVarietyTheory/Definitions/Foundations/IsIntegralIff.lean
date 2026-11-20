@@ -246,7 +246,7 @@ theorem exists_char (a : F) (ha : a ∉ 𝒪[F]) :
       obtain ⟨k, rfl⟩ := AddSubgroup.mem_zmultiples_iff.mp hq
       exact AddSubgroup.mem_zmultiples_iff.mpr ⟨k, by simp⟩)
   have hι : Function.Injective ι := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     induction x using QuotientAddGroup.induction_on with
     | H q =>

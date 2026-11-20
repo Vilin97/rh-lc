@@ -16,7 +16,7 @@ theorem sub_of (R : Type) [CommRing R] (F : Shv R) {U E : Spc} (f : U ⟶ E) (n 
 theorem rel_of (R : Type) [CommRing R] (F : Shv R) {U E : Spc} (f : U ⟶ E) (n : ℤ) (h : Subsingleton (Hrel R f F n)) :
     RelZS R F n f := by
   refine ⟨fun m hm y => range_of_bd R F f m n (by omega) y (Subsingleton.elim _ _), ?_⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨y, rfl⟩ := LateralTheory.E.TruncationKernel.exists_fgt_eq_of_pull_eq_zero R F f n x hx
   rw [Subsingleton.elim y 0, map_zero]

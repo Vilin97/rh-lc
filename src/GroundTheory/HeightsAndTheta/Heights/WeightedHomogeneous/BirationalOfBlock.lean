@@ -84,7 +84,7 @@ theorem comap_mCoordIdeal (y : Coord n → Ω) (k₀ : ι) :
 
 theorem algebraMap_injective {K : Type} {κ : K → Type} (I : Ideal (Geo.MRing κ))
     (h : Geo.IsHorizontal I) : Function.Injective (algebraMap ℤ (Geo.MRing κ ⧸ I)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   rw [← Ideal.Quotient.mk_algebraMap, MvPolynomial.algebraMap_eq,
     Ideal.Quotient.eq_zero_iff_mem] at ha

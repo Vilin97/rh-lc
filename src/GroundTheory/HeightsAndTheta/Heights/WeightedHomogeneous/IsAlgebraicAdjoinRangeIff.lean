@@ -162,7 +162,7 @@ theorem transcendental_C_mul_X (S : Subalgebra ℚ (Polynomial M))
     obtain ⟨a, ha⟩ := hS r r.2
     simp [κ, ha]
   have hinj : Function.Injective κ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     apply Subtype.ext
     rw [hκ r, hr, map_zero]

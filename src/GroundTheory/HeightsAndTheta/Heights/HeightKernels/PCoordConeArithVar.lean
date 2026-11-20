@@ -98,7 +98,7 @@ omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem algebraMap_injective (I : Ideal (MRing ι)) (h : IsHorizontal I) :
     Function.Injective (algebraMap ℤ (MRing ι ⧸ I)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   rw [← Ideal.Quotient.mk_algebraMap, MvPolynomial.algebraMap_eq,
     Ideal.Quotient.eq_zero_iff_mem] at ha

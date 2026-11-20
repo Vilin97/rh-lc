@@ -43,7 +43,7 @@ theorem isArithVar_globalSections : ∀ (F : Type) [Field F] [NumberField F] (X 
     rfl
   have hc : CharZero Γ(X, ⊤) := h.charZero
   have hinj : Function.Injective (algebraMap (𝓞 F) Γ(X, ⊤)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have hI : (RingHom.ker (algebraMap (𝓞 F) Γ(X, ⊤))).comap (algebraMap ℤ (𝓞 F)) = ⊥ := by
       ext n

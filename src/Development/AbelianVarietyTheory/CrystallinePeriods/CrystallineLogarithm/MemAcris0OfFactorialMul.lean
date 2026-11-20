@@ -1023,7 +1023,7 @@ theorem p_dvd_of_eq_zero {x : Acris p R} (hx : Acris.toBdRPlus p R x = 0) :
   exact dvd_add (dvd_mul_right _ _) (dvd_mul_right _ _)
 
 theorem toBdRPlus_injective : Function.Injective (Acris.toBdRPlus p R) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   refine Acris.eq_zero_of_forall_dvd fun n => ?_
   have hu : IsUnit (p : BdRPlus p R) := IsUnit.of_mul_eq_one _ BdRPlus.p_mul_inv

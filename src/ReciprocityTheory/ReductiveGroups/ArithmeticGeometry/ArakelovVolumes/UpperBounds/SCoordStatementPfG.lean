@@ -139,7 +139,7 @@ theorem part1 {K Ω : Type} [Field K] [CharZero K] [Field Ω] [Algebra K Ω]
     let Φ : EuclideanSpace ℂ (Fin n) →ₗ[ℂ] (B → ℂ) :=
       (ContinuousLinearMap.pi fun b : B => Dv b.1.1 : EuclideanSpace ℂ (Fin n) →L[ℂ] (B → ℂ)).toLinearMap
     have hinj : Function.Injective Φ := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro ξ hξ
       exact key ξ fun b => congrFun hξ b
     have h := LinearMap.finrank_le_finrank_of_injective hinj

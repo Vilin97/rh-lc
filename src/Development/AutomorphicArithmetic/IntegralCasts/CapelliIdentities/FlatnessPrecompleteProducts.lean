@@ -106,7 +106,7 @@ private lemma flat_of_isCplAt {R : Type} [CommRing R] [IsNoetherianRing R] {q : 
     exact hsa
   have hinj : Function.Injective
       (AdicCompletion.map (maximalIdeal S) (Algebra.linearMap S B)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     ext n
     have h1 := AdicCompletion.map_val_apply (maximalIdeal S) (Algebra.linearMap S B) (n := n) x
@@ -321,7 +321,7 @@ private lemma free_of_flat {Λ L N : Type} [CommRing Λ] [CommRing L] [IsLocalRi
     | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x n => rw [hψ]; simp
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   obtain ⟨y, rfl⟩ := hsurj z
   have h0 := hcomp y

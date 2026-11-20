@@ -18,7 +18,7 @@ theorem Datum.tmul_one_injective : Function.Injective (fun x : D.La => (1 : ℚ)
   simpa using h
 
 theorem Datum.actQ_injective : Function.Injective D.actQ := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro b hb
   apply GlobalTheory.HTFaith.faithful p D b
   intro y

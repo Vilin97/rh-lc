@@ -48,7 +48,7 @@ theorem directSum_eq_zero_of_toModule_eq_zero {k G ι W : Type} [Field k] [Group
     let p : K →ₗ[k] V i := DirectSum.component k ι V i ∘ₗ K.subtype
     have hp : ∀ x : K, p x = x.1 i := fun x => rfl
     have hinj : Function.Injective p := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       exact Subtype.ext (hz x.1 x.2 hx)
     let R : Subrepresentation (ρ i) :=
@@ -110,7 +110,7 @@ theorem nonempty_directSum_equiv_of_finrank_le : ∀ (k G ι W : Type) [Field k]
       ext i v
       simp [(φ i).isIntertwining]⟩
   have hinj : Function.Injective Φ.toLinearMap := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     refine directSum_eq_zero_of_toModule_eq_zero ρ σ hirr hdis Φ ?_ Finset.univ x
       (fun j hj => absurd (Finset.mem_univ j) hj) hx

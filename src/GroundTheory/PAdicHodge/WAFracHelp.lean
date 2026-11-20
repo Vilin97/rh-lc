@@ -29,7 +29,7 @@ theorem inv_p_le_inRad_radPhi : (p : ℝ)⁻¹ ≤ ((inRad p (radPhi (p := p)) :
   rw [e]; exact inv_p_lt_rhoMid.le
 
 theorem phiPlus_injective : Function.Injective (phiPlus ℂ_[p] p) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra hx0
   have hσ := inv_p_le_inRad_radPhi (p := p)

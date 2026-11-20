@@ -49,7 +49,7 @@ lemma lTensor_injective_of_extend {κ M N : Type*} [Field κ] [Field k] [Algebra
     [Algebra κ k] [IsScalarTower B κ k] [AddCommGroup M] [Module B M] [AddCommGroup N] [Module B N]
     (l : M →ₗ[B] N) (H : ∀ φ : M →ₗ[B] k, ∃ ψ : N →ₗ[B] k, ψ ∘ₗ l = φ) :
     Function.Injective (l.lTensor κ) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   rw [← Module.forall_dual_apply_eq_zero_iff κ]
   intro χ

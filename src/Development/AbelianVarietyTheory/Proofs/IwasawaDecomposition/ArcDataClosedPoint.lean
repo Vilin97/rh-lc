@@ -12,7 +12,7 @@ theorem closedPoint_mem_closure_genBd_of_arcData : ∀ (E : Type) [Field E] [Num
   intro E _ _ _ H D l Xo c Z hArc T b ϖ a y hϖ hys hj hA
 
   have hb : Function.Injective b := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     obtain ⟨d, hd⟩ := Algebra.dvd_algebraMap_intNorm_self ℤ (𝓞 c.F) x

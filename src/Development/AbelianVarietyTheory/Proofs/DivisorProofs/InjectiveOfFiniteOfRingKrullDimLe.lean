@@ -16,7 +16,7 @@ theorem injective_of_finite_of_ringKrullDim_le (A R : Type) [CommRing A] [IsDoma
     [IsLocalRing A] [IsNoetherianRing A] [CommRing R] [IsLocalRing R] (b : A →+* R) :
     b.Finite → ringKrullDim A ≤ ringKrullDim R → Function.Injective b := by
   intro hfin hdim
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra hx0
   set I := RingHom.ker b

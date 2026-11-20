@@ -97,7 +97,7 @@ theorem isSplitBasis_of_isAdapted : ∀ (F E : Type) [Field F] [NumberField F] [
     · simp
 
   have hinj : Function.Injective (Matrix.toLin' H.ι) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro u hu
     rw [Matrix.toLin'_apply] at hu
     have hu' : H.ι.map τ *ᵥ (fun i => τ (u i)) = 0 := by

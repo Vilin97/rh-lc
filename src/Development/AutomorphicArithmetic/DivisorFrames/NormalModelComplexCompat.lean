@@ -187,7 +187,7 @@ theorem UpperTheory.normal_model_complex_compat :
   have hφ (j : J) (x : Q.X.functionField) : (μ j).φ (e x) = SmallSec.fnMap (g j) (hg j) x :=
     congr($(phi_comp (μ j) Q (g j) (hg j) (hE j)) x)
   have hinj (j : J) : Function.Injective (cst (T j)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro o ho
     by_contra h0
     exact ((T j).isRegularFn_const h0).ne_zero

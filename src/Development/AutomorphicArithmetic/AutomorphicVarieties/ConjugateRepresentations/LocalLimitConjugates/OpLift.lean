@@ -43,7 +43,7 @@ theorem UpperTheory.V.Cj.H.opLift :
       map_add' := fun v w => hadd v.1 v.2 w.1 w.2
       map_smul' := fun s v => hsm s v.1 v.2 }
   have hc : Function.Injective c := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     exact Subtype.ext (hinj v.1 (hG v.1 v.2).1 (hG v.1 v.2).2.1 hv)
   have key : ∀ φ ∈ gard μ, ∃ φ' ∈ gard μ, cl μ φ' = T (cl μ φ) := by

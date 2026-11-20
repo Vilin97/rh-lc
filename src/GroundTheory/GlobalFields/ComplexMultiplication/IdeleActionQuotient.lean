@@ -133,7 +133,7 @@ theorem quotientToLocalQuotients_mk {I : FractionalIdeal (𝓞 K)⁰ K} (hI : I 
 def quotientEquivLocalQuotients {I : FractionalIdeal (𝓞 K)⁰ K} (hI : I ≠ 0) :
     (K ⧸ (I : Submodule (𝓞 K) K)) ≃ₗ[𝓞 K] DirectSum (HeightOneSpectrum (𝓞 K)) (LocalQuotient I) :=
   LinearEquiv.ofBijective (quotientToLocalQuotients hI) ⟨by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       rintro ⟨a⟩ h
       have h' : toLocalQuotients hI a = 0 := h
       exact (Submodule.Quotient.mk_eq_zero _).2 ((toLocalQuotients_eq_zero_iff hI).1 h'), by

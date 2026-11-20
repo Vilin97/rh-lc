@@ -143,7 +143,7 @@ theorem density_of_fourier_pairing_integrable (e : T ≃ₗ[ℝ] V) (B : T →�
     ∃ C : ℝ≥0∞, C ≠ ⊤ ∧ ∀ Y, MeasurableSet Y → m Y ≤ C * ν Y := by
   let eC : T ≃L[ℝ] V := e.toContinuousLinearEquiv
   have hDinj : Function.Injective B := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro u hu
     exact hB u fun v => by rw [hu]; rfl
   let D : T ≃ₗ[ℝ] Module.Dual ℝ T :=
@@ -155,7 +155,7 @@ theorem density_of_fourier_pairing_integrable (e : T ≃ₗ[ℝ] V) (B : T →�
     rw [h]
     rfl
   have hinj : Function.Injective L0 := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro ξ hξ
     have h := hL0 ξ (e.symm ξ)
     rw [hξ, map_zero, LinearMap.zero_apply, e.apply_symm_apply] at h

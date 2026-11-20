@@ -85,7 +85,7 @@ theorem main : ∀ (R K L : Type) [CommRing R] [IsDomain R] [IsDiscreteValuation
     rw [Algebra.TensorProduct.tmul_pow, one_pow]
     rfl
   have hinj : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have hli := bK.linearIndependent.comp (Fin.cast hdeg) (Fin.cast_injective hdeg)
     set_option synthInstance.maxHeartbeats 100000 in

@@ -183,7 +183,7 @@ theorem uniq (hs : SES i p) (δ δ' : ∀ n, C.H n →ₗ[R] A.H (n + 1)) (hδ :
 theorem les_of (hs : SES i p) (δ : ∀ n, C.H n →ₗ[R] A.H (n + 1)) (hδ : IsConn i p δ) :
     LES i p δ where
   inj := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro h hh
     obtain ⟨x, hx, rfl⟩ := cls_surj A 0 h
     rw [H_cls, cls_eq_zero, mem_B_zero] at hh

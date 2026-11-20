@@ -32,7 +32,7 @@ theorem injective_of_flat {A R : Type} [CommRing A] [IsDomain A] [CommRing R] [I
     (φ : A →+* R) (hφ : φ.Flat) : Function.Injective φ := by
   letI := φ.toAlgebra
   haveI : Module.Flat A R := hφ
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   by_contra hne
   push_neg at hne
   obtain ⟨a, ha, ha0⟩ := hne

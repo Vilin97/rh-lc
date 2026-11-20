@@ -115,7 +115,7 @@ theorem finrank_skewSp_le (G : Matrix (Fin r) (Fin r) E) (hG : G.det ≠ 0) :
         simp only [Prod.smul_fst, Prod.smul_snd, Submodule.coe_smul, smul_add, RingHom.id_apply,
           smul_comm δ c] }
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨⟨X, hX⟩, ⟨Y, hY⟩⟩ h
     change X + δ • Y = 0 at h
     change Xᵀ * G + G * X.map cc = 0 at hX

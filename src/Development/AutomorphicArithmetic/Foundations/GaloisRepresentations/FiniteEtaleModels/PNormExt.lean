@@ -54,7 +54,7 @@ private theorem exists_affine_irreducible_open_nhd (S : Scheme) [IsLocallyNoethe
 
 private theorem injective_germ_of_generic_in_open (X : Scheme) [IsReduced X] (W : X.Opens) (x : X) (hx : x ∈ W)
     (hgen : ∀ y ∈ W, x ⤳ y) : Function.Injective (X.presheaf.germ W x hx).hom := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro s hs
   rw [← basicOpen_eq_bot_iff]
   refine eq_bot_iff.mpr (fun y hy => ?_)

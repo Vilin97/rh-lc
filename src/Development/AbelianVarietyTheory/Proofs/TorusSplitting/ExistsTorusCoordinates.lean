@@ -160,7 +160,7 @@ theorem coordMap_injective (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ
     (he : ∀ τ a b, hermC τ.1 X.Gm (e τ a) (e τ b) =
       if a = b then ((ReciprocityTheory.ChartRestriction.G.FD.sgn X.p0 a : ℝ) : ℂ) else 0) :
     Function.Injective (coordMap X e) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   funext τ
   have hb : ∀ b, pr X e y τ b = 0 := by

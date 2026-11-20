@@ -52,7 +52,7 @@ theorem exists_cdvr_of_isRadical {W S : Type} [CommRing W] [IsDomain W] [IsDiscr
   obtain ⟨hd, hdvr, hirr⟩ := GlobalTheory.isDiscreteValuationRing_of_maximalIdeal_eq_span hmV hn
   let h : S →+* V := (algebraMap T V).comp (algebraMap S T)
   have hinj : Function.Injective (h.comp f) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible h0 hϖ
@@ -137,7 +137,7 @@ theorem isReduced_completion_tensor_finite (A D : Type) [CommRing A] [IsLocalRin
       have := hmap ((TensorProduct.mk A (AdicCompletion m A) D).flip d) n _ h1
       simpa [TensorProduct.sub_tmul, TensorProduct.smul_tmul] using this
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     let e := (AdicCompletion.ofTensorProductEquivOfFiniteNoetherian m D).restrictScalars A
     haveI : IsAdicComplete m (AdicCompletion m D) := AdicCompletion.isAdicComplete fgm

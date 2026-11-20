@@ -36,7 +36,7 @@ private theorem plane_span {F E : Type} [Field F] [Field E] [Algebra F E] (σ : 
     intro s t u w
     simp only [form, add_dotProduct, smul_dotProduct, smul_eq_mul]
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨⟨s, t⟩, u⟩ h
     rw [hL] at h
     have h1 := hf s t u H.y

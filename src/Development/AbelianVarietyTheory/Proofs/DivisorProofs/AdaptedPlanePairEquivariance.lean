@@ -76,7 +76,7 @@ theorem form_swap {n : ℕ} (hcm : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E
 theorem pm_inj (B : Base F E) (hcm : IsCMExt F E σ) {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {W : Spc F E d}
     (hJ : ∀ i j, σ (X.J j i) = X.J i j) (M : Model σ X W) (M₁ : Model σ X₁ W) (H : Plane E n n₁) {j₀ j₁ : ℕ}
     (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hd : 0 < d) : Function.Injective (pm H).mulVecLin := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   rw [Matrix.mulVecLin_apply, pm_mulVec] at hc
   have hb : c (Sum.inr (Sum.inr ())) = 0 := by

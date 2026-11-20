@@ -203,7 +203,7 @@ theorem exists_lagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     rw [hSapp, incM_add, hvmv, incM_mul, incM_mul, ← hΔ]
     rfl
   have hSinj : Function.Injective S := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨z, m⟩ hp
     rw [hSapp] at hp
     have hL : Matrix.vecMulVec H.x (z ∘ Sum.inl) + H.ι * m = 0 := by

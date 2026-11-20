@@ -89,7 +89,7 @@ theorem resSurj_coreD.{u} :
   have su : Function.Surjective (algebraMap R (R ⧸ m)) := Ideal.Quotient.mk_surjective
   let δ := (γ ∘ₗ N.subtype).baseChange (R ⧸ m)
   have hinj : Function.Injective δ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     obtain ⟨n, rfl⟩ := TensorProduct.mk_surjective R N (R ⧸ m) su z
     have h1 : γ n ∈ m • (⊤ : Submodule R M) := (oneT_iff m _).1 hz

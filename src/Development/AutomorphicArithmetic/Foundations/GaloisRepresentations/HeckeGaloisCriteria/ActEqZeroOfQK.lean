@@ -218,11 +218,11 @@ theorem mult_eq (x : S) : heckeMult (cutT T S) (cutAct T act S) x = heckeMult T 
   unfold heckeMult
   rw [← map_eig T act S hs x, ← LinearMap.range_domRestrict]
   refine LinearMap.finrank_range_of_inj ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   exact fun v hv => Subtype.ext (qK_inj T act S hs v.2 hv)
 
 theorem cutAct_inj (hi : Function.Injective act) : Function.Injective (cutAct T act S) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro b hb
   obtain ⟨g, rfl⟩ := resT_surj T S b
   refine Subtype.ext (funext fun x => ?_)

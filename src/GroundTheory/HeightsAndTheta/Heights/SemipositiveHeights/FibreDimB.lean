@@ -84,7 +84,7 @@ theorem FibreDimB.full : FibreDimStatement := by
     exact h
 
   have hZ' : Function.Injective (algebraMap ℤ G.Φ') := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have hm : a ∈ P'.comap (C : ℤ →+* MRing ι') := by
       rw [Ideal.mem_comap, ← G.genericFibre_ker_target, RingHom.mem_ker, aeval_C, ha]

@@ -903,7 +903,7 @@ theorem relLen_vecOf (he : LinearIndependent R e) {Mx : Matrix (Fin d) (Fin d) R
     unfold vecOf
     simp [hbE]
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h1 : Mx.mulVec (bE.repr x) = 0 := by
       have := LinearMap.toMatrix_mulVec_repr bE bE f x

@@ -85,7 +85,7 @@ theorem measurable_sum_embeddings_over_generic_point :
     exact (measurable_pi_apply k).comp (hρm.comp hcf)
   · intro t ht
     have hinj : Function.Injective (MvPolynomial.eval₂Hom sg t : R →+* ℂ) := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro p hp
       by_contra h
       exact ht p h hp

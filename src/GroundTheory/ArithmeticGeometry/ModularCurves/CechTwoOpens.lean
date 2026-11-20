@@ -119,7 +119,7 @@ lemma cocycle_swap {σ : Cochain P U 1} (hσ : d P U 1 σ = 0) (h01 : σ i01 = 0
 variable (P U)
 
 theorem cechOneToQuot_injective : Function.Injective (cechOneToQuot P U) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   induction x using QuotientAddGroup.induction_on with
   | H σ =>

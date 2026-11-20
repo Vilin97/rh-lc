@@ -88,7 +88,7 @@ theorem exists_chart_at : ∀ (n N : ℕ) (X Y Z : Scheme.{0}) (sX : X ⟶ Sp (c
   letI : Algebra (cycAway N) Ω := (φ.comp ψ).toAlgebra
   let f : Γ(Y, U) →ₐ[cycAway N] Ω := { φ with commutes' := fun _ => rfl }
   have hinj : Function.Injective (algebraMap (cycAway N) Ω) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have : x ∈ Ideal.comap ψ P.asIdeal := (hφker (ψ x)).1 hx
     rwa [hker, Ideal.mem_bot] at this

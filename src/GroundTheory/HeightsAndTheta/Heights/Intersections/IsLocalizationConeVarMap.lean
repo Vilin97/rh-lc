@@ -123,7 +123,7 @@ variable {P W} in
 
 theorem coneVarMap_injective (hPW : P ≤ W) (hPh : IsMultiHomogIdeal P) {v : ∀ k, ι k}
     (hv : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ W) : Function.Injective (coneVarMap P W hPW v) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro G hG
   obtain ⟨V, b, N, -, hVW, hN⟩ := exists_clear hPW G
   have hV0 : fracHom P V ≠ 0 := by

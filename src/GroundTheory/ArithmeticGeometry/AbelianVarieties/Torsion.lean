@@ -127,7 +127,7 @@ theorem nonempty_addEquiv_zmod_prod {n : ℕ} (hn : 0 < n) (hA : ∀ a : A, n �
     intro x
     simp [f, AddMonoidHom.coprod_apply, zmodHom_apply]
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨a, b⟩ hab
     rw [hf] at hab
     have hPC : (P : A ⧸ C) = 0 := (QuotientAddGroup.eq_zero_iff P).mpr (AddSubgroup.mem_zmultiples P)

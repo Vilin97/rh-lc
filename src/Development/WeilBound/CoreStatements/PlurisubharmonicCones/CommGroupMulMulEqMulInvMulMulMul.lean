@@ -152,7 +152,7 @@ theorem commGroup_mul_mul_eq_mul_inv_mul_mul_mul (hb : Function.Bijective form) 
     obtain ⟨m, hm⟩ := (hr x).1 hx
     exact ⟨π m, by rw [hs_apply, hm]; exact hrI x⟩
   have hs_inj : Function.Injective s := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     obtain ⟨m, rfl⟩ := hπ z
     rw [hs_apply] at hz
@@ -202,7 +202,7 @@ theorem commGroup_mul_mul_eq_mul_inv_mul_mul_mul (hb : Function.Bijective form) 
     let H : Λ →ₗ[ℤ] (Fin k → ℤ) := LinearMap.pi fun b => form.flip (i b)
     have hH : ∀ x b, H x b = form x (i b) := fun x b => rfl
     have hFinj : Function.Injective F := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       rintro ⟨z, c⟩ h0
       rw [hF] at h0
       have hc : c = 0 := by
@@ -241,7 +241,7 @@ theorem commGroup_mul_mul_eq_mul_inv_mul_mul_mul (hb : Function.Bijective form) 
     have h6 := rank_exact F H hFinj hHsurj hex
     rw [Module.finrank_prod, Module.finrank_fin_fun] at h6
     omega
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     apply hs_inj
     rw [map_zero]

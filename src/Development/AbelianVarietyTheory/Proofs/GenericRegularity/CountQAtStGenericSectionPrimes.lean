@@ -12,7 +12,7 @@ theorem injective_of_indep_image {K Γ L ι : Type} [Field K] [CommRing Γ] [IsD
   have hb : AlgebraicIndependent K b := AlgebraicIndependent.of_comp ψ hb'
   have hB := hb.isTranscendenceBasis_of_trdeg_le_of_finite hΓ
   have halg := hB.isAlgebraic
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra hne
   obtain ⟨r, hr0, c, hc⟩ := (halg.isAlgebraic a).exists_nonzero_dvd (mem_nonZeroDivisors_of_ne_zero hne)
@@ -133,7 +133,7 @@ theorem val_ne_zero {K Φ Ω L : Type} [Field K] [CommRing Φ] [Algebra K Φ] [F
   let p : Γ →ₐ[K] Ω := (AlgHom.fst K Ω L).comp Γ.val
   let ψ : Γ →ₐ[K] L := (AlgHom.snd K Ω L).comp Γ.val
   have hp : Function.Injective p := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨_, a, G, hG, rfl⟩ h
     have h' : g G / v ^ a = 0 := h
     have hG0 : g G = 0 := by simpa [hv] using h'

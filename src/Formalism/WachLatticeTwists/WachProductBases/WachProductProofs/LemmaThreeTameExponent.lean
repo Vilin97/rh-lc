@@ -11,7 +11,7 @@ theorem lemma_three_psi_operator : ProductBasisPsiOperator := by
   intro ℓ _ A _ φA ε X Q H c ι pr aa hpr hε hU hX hQ hc i
   have hℓ : 0 < ℓ := (Fact.out : ℓ.Prime).pos
   have hinj : Function.Injective φA := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have h1 : (0 : A) = ∑ j : Fin ℓ, ε ^ (j : ℕ) *
         φA ((fun j : Fin ℓ => if (j : ℕ) = 0 then a else 0) j) := by

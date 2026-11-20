@@ -15,7 +15,7 @@ theorem injective_of_flat_local {A R : Type} [CommRing A] [IsLocalRing A] [CommR
   haveI : Module.Flat A R := hφ
   haveI : IsLocalHom (algebraMap A R) := ‹_›
   haveI := Module.FaithfullyFlat.of_flat_of_isLocalHom (A := A) (B := R)
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   have h := Ideal.comap_map_eq_self_of_faithfullyFlat (A := A) (B := R) ⊥
   rw [Ideal.map_bot] at h

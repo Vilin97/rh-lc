@@ -342,7 +342,7 @@ theorem jetMap_mk_eq_mk_iff (ρ : Set.Ioo (0 : ℝ) 1) (m : ℕ) (a : 𝔸) (x :
 
 theorem jetMap_bijective (hρ : (p : ℝ)⁻¹ < ρ) (m : ℕ) : Function.Bijective (jetMap p ρ m) := by
   constructor
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro q hq
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective q
     rw [jetMap_mk, Ideal.Quotient.eq_zero_iff_mem, awayToExt_mem_pow_iff hρ] at hq
@@ -445,7 +445,7 @@ theorem eq_zero_of_forall_mem_pow (hρ : (p : ℝ)⁻¹ < ρ) {x : (𝓣).RobbaE
   omega
 
 theorem iota_injective (hρ : (p : ℝ)⁻¹ < ρ) : Function.Injective (iota p hρ) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   refine eq_zero_of_forall_mem_pow hρ fun m => ?_
   have h := (evalB_iota_eq_mk_iff hρ (m := m) (x := x) (a := 0)).1 (by rw [hx, map_zero, map_zero])
@@ -879,7 +879,7 @@ theorem iotaTilde_ofRad (hρ : (p : ℝ)⁻¹ < ρ) (y : (𝓣).RobbaExt ρ) :
   iotaTildeFun_ofRad hρ y
 
 theorem iotaTilde_injective : Function.Injective (iotaTilde p) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   rintro ⟨x, ρ, hρ, y, rfl⟩ hx
   rw [iotaTilde_ofRad hρ] at hx
   have hy : y = 0 := iota_injective hρ (hx.trans (map_zero _).symm)

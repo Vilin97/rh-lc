@@ -33,7 +33,7 @@ theorem productMap_bijective_of_involution {F E L : Type} [Field F] [CharZero F]
         obtain ⟨a, c, rfl⟩ := hx
         obtain ⟨a', c', rfl⟩ := hy
         exact ⟨a + a', c + c', by rw [TensorProduct.add_tmul, TensorProduct.add_tmul]; abel⟩
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨a, c, rfl⟩ := hrep x
     rw [hval] at hx

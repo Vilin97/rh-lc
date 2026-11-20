@@ -143,7 +143,7 @@ section Card
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem hom_injective (s : 𝓞 E →+* ℂ) : Function.Injective s := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   have hk : RingHom.ker s = ⊥ := by
     refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
     rw [eq_bot_iff]

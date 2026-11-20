@@ -93,7 +93,7 @@ theorem int : CMOrd ℤ id :=
 theorem exists_extend {E : Type} [Field E] [NumberField E] (σ : 𝓞 E →+* ℂ) :
     ∃ φ : E →+* ℂ, ∀ x : 𝓞 E, φ (x : E) = σ x := by
   have hσ : Function.Injective σ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     have hk : RingHom.ker σ ≠ ⊥ := fun h => h0 (by simpa [h] using (RingHom.mem_ker.2 hx : x ∈ RingHom.ker σ))

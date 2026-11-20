@@ -8,7 +8,7 @@ namespace GlobalTheory.UnitSpan
 theorem injective_of_finite (K : Type) [CommRing K] [IsDomain K] [Module.Finite ℤ K]
     (τ : K →+* ℂ) : Function.Injective τ := by
   haveI : Algebra.IsIntegral ℤ K := Algebra.IsIntegral.of_finite ℤ K
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   have hk : RingHom.ker τ = ⊥ := by
     apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)
     rw [RingHom.comap_ker]

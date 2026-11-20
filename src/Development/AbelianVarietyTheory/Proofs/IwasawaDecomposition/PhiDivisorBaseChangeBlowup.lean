@@ -30,7 +30,7 @@ theorem exists_moduli_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   let p0 : Sp K := IsLocalRing.closedPoint K
   obtain ⟨q, hq⟩ := hx ⟨p0, rfl⟩
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     have e1 : (x ≫ X.s) p0 = (X.jQ ≫ pullback.snd _ _ ≫ spMap (algebraMap (𝓞 c.F) c.F)) q := by
       rw [← pullback.condition]

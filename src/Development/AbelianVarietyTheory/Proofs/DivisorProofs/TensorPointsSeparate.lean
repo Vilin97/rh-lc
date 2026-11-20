@@ -50,7 +50,7 @@ theorem tensor_eq_zero_of_points_separate :
   letI : Fintype (C →ₐ[R] K) := Fintype.ofFinite _
   let e : C →ₗ[R] ((C →ₐ[R] K) → K) := LinearMap.pi fun ψ => ψ.toLinearMap
   have he : Function.Injective e := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     exact h a fun ψ => congrFun ha ψ
   have hinj : Function.Injective (e.rTensor C') :=

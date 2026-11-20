@@ -86,7 +86,7 @@ theorem finrank_oneG (h : HidaSetting p n' W Qq O Kf ι σ j w) :
     Module.finrank (gat1 h).O (Submodule.span (gat1 h).O {oneG h}) = 1 := by
   have := h.frac_O
   have hf : Function.Injective (LinearMap.toSpanSingleton (gat1 h).O (gat1 h).Fn (oneG h)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     have h1 : (show O from c) • (oneFn (places1 h) (tup0 h)) = 0 := congrFun (congrFun hc ()) (tup0 h)
     rw [oneFn_pos _ (zero_tuple_isLattice h), Algebra.smul_def, mul_one, MvPolynomial.algebraMap_apply] at h1

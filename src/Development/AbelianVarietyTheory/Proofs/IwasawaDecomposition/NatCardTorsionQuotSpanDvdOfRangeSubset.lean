@@ -44,7 +44,7 @@ theorem natCard_torsion_quot_span_dvd_of_range_subset :
       obtain ⟨a, ha⟩ := hx
       exact ⟨a, by rw [Submonoid.smul_def] at ha ⊢; rw [← map_smul, ha, map_zero]⟩)).toAddMonoidHom
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨x, hx⟩ hfx
     have hqx : q x = 0 := congrArg Subtype.val hfx
     apply Subtype.ext

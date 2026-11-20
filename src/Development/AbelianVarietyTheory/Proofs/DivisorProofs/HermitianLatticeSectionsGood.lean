@@ -27,7 +27,7 @@ theorem exists_approx {k A : Type} [CommRing k] [IsDedekindDomain k] [CommRing A
   haveI : FaithfulSMul k ℂ := (faithfulSMul_iff_algebraMap_injective _ _).2 hσ
   haveI : Module.Flat k ℂ := inferInstance
   have hinj : Function.Injective (algebraMap k (A ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     exact hP a (Ideal.Quotient.eq_zero_iff_mem.1 ha)
   haveI : Nontrivial (ℂ ⊗[k] (A ⧸ P)) := by

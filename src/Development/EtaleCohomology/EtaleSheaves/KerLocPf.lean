@@ -32,7 +32,7 @@ def TruncKer : Prop := Hyp → ∀ (q : ℕ) [NeZero q] (i n : ℤ) {A Y : CommR
 
 theorem KerLoc_of (hK : KillKer) (hP : PtsEt) (hT : TruncKer) : KerLoc := by
   intro hH q _ i n A Y φ hq P hpush het hlow hcok D d hD hpts Y' w φ' hpo
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨E, e, Y'', u, φ'', he, hs, hE, hpo', hxE⟩ :=
     hK hH q i n φ hq P hpush het hlow D d hD hpts Y' w φ' hpo x hx

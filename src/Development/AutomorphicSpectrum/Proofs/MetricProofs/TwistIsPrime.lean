@@ -172,7 +172,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
   have hφx : φ' (mk' xN) = Polynomial.C s * Polynomial.X := by
     rw [hφ', hx]
   have hinj : Function.Injective φ' := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro q hq
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective q
     obtain ⟨a, b, h1⟩ := hform f

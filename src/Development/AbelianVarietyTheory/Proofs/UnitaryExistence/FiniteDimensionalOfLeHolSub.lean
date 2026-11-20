@@ -43,7 +43,7 @@ theorem finiteDimensional_of_le_holSub : ∀ (E : Type) [Field E] [NumberField E
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   refine Module.Finite.of_injective ev ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   rintro ⟨P, hP⟩ h0
   refine Subtype.ext (funext fun k => funext fun x => ?_)
   by_cases hx : x ∈ (X k).dom

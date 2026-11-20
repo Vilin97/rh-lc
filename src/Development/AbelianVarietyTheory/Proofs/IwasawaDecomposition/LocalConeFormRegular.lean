@@ -63,7 +63,7 @@ theorem not_mem_of_comap_eq_bot : ∀ {E : Type} [Field E] [NumberField E] [IsCM
   have hf : ∀ r, f r = 0 ↔ r ∈ Q := fun r => by
     simp only [f, RingHom.comp_apply, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
   have hinj : Function.Injective (f.comp (Scheme.stalkClosedPointTo ξ).hom) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have : a ∈ Q.comap (Scheme.stalkClosedPointTo ξ).hom := (hf _).1 ha
     rw [hQ0] at this

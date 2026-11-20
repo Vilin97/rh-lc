@@ -135,7 +135,7 @@ theorem _root_.GlobalTheory.unramExt : _root_.ReciprocityTheory.ChartRestriction
   haveI : Module.Free V (AdjoinRoot μ) := Module.Free.of_basis pb.basis
   haveI : IsNoetherianRing (AdjoinRoot μ) := inferInstance
   have hinj : Function.Injective (algebraMap V (AdjoinRoot μ)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     rw [← hCm, RingHom.comp_apply, AdjoinRoot.mk_eq_zero] at hv
     by_contra hne

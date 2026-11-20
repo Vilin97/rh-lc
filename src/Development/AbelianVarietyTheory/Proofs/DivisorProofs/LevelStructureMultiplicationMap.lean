@@ -125,7 +125,7 @@ theorem exists_ptsMap_of_local (R K : Type) [CommRing R] [IsDomain R] [IsIntegra
     IsUnit.mk0 _ fun h0 => y.2 (by rw [hRK (h0.trans (map_zero _).symm)]; exact q.asIdeal.zero_mem)
   let i : S →ₐ[R] K := IsLocalization.liftAlgHom huK
   have hi : Function.Injective i := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     obtain ⟨⟨x, y⟩, rfl⟩ := IsLocalization.mk'_surjective q.asIdeal.primeCompl a
     have h1 : i (IsLocalization.mk' S x y) * algebraMap R K y = algebraMap R K x := by

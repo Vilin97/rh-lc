@@ -79,7 +79,7 @@ theorem exists_analytic_graph_chart {e c : ℕ} (f : (Fin (e + c) → ℂ) → (
   have hPr : ∀ x, Pr x = fun i => x (σ (Fin.castAdd c i)) := fun x => rfl
   let Lm : (Fin (e + c) → ℂ) →L[ℂ] (Fin e → ℂ) × (Fin c → ℂ) := Pr.prod A
   have hinj : Injective Lm := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     have h1 : Pr v = 0 := congrArg Prod.fst hv
     have h2 : A v = 0 := congrArg Prod.snd hv

@@ -225,7 +225,7 @@ theorem isCxBasis_coord : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] 
   intro K _ _ _ σ n W _ _ _ j hj
   have hco : ∀ x, j x = ∑ i, σ (x i) • j (Pi.single i 1) := fun x => semilinear_eq_sum_single j x
   refine ⟨hco, ?_, ?_⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     rw [hco x] at hx
     have h0 := Fintype.linearIndependent_iff.mp hj.li (fun i => σ (x i)) hx
@@ -448,7 +448,7 @@ namespace GlobalTheory.CompanionTheory.MemQ
 
 private theorem jEE_injective' {D : D7} {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE]
     [FiniteDimensional ℂ EE] (X : RowSide D EE) : Function.Injective X.jEE := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   have hsum : y = ∑ i, X.RR.b.repr y i • X.RR.b i := (X.RR.b.sum_repr y).symm
   set_option synthInstance.maxHeartbeats 100000 in

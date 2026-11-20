@@ -264,7 +264,7 @@ theorem IsQuasiRegularSeq.monoLEToQuotPow_injective {f : ι → R} (h : IsQuasiR
     (k : ℕ) : Function.Injective (monoLEToQuotPow f s k) := by
   have hs0 : ∀ y, s y ∈ (Ideal.span (Set.range f) • ⊤ : Submodule R M) → y = 0 := fun y hy =>
     hs (by simpa using hy)
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   let c' : (ι →₀ ℕ) → N := fun β => if hβ : β.degree ≤ k then c ⟨β, hβ⟩ else 0
   have hc' : ∀ α : MonoDegLE ι k, c α = c' α.1 := fun α => by simp only [c', dif_pos α.2]

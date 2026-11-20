@@ -185,7 +185,7 @@ theorem GlobalTheory.Poinc.Clocx.exists_at_closedPoint : ∀ (g n : ℕ), 1 ≤ 
   haveI := isLocalHom_of_irreducible h₀ T₀.irr hirr₀
   have hloc₀ := mem_maximalIdeal_of_square x j hcpl h₀ g₀ ξ₀ hξ₀ hsq₀
   have hρ₀i : Function.Injective ρ₀ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     by_contra hy0
     obtain ⟨r, hr, -, hrm, -⟩ := (GlobalTheory.PsiCoordLocal.main R D hRi y).1

@@ -207,7 +207,7 @@ theorem length_top_part (hϖ : Irreducible ϖ) {d : ℕ} (M : Submodule R W) (b 
   set P : Submodule R W := ϖ ^ τ • M with hPdef
   let g : M →ₗ[R] W := (ϖ ^ τ) • M.subtype
   have hg : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have : ((x : W)) = 0 := pow_smul_eq_zero (K := K) hϖ τ (x : W) hx
     exact Subtype.ext this

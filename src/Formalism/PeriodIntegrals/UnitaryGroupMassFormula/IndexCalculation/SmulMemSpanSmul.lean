@@ -50,7 +50,7 @@ theorem lenS_ker_img (S : Submonoid R) {V' : Type*} [AddCommGroup V'] [Module R 
     simp only [Submodule.mem_comap, Submodule.subtype_apply, g0, LinearMap.submoduleMap_coe_apply] at hx ⊢
     exact Submodule.mem_map_of_mem hx)
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     induction a using Submodule.Quotient.induction_on with
     | H x =>

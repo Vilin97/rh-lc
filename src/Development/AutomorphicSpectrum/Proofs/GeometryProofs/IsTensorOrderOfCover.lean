@@ -409,7 +409,7 @@ theorem exists_emb_baseChange : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Ty
 
 theorem ev_injective : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (C : Type) [CommRing C] [Algebra R C] (ev : C →ₐ[R] (T → R)) (τ : T → (C ≃+* C)), (∀ (t : T) (c : C) (h : T), ev (τ t c) h = ev c (t * h)) → ∀ (j : Γ.G.left ⟶ Spec (CommRingCat.of C)), IsOpenImmersion j → (∀ t : T, (Γ.pt t).left ≫ j = Spec.map (CommRingCat.ofHom ((algebraMap R (FractionRing R)).comp ((Pi.evalRingHom (fun _ : T => R) t).comp ev.toRingHom)))) → (∀ P : PrimeSpectrum C, ∃ (t : T) (g : Γ.G.left), ∀ c : C, c ∈ P.asIdeal ↔ τ t c ∈ (j g).asIdeal) → Function.Injective ev := by
   intro R _ _ T _ _ Γ C _ _ ev τ hτ j ho hpt hc
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc0
   have hz : ∀ t, pullSec j (τ t c) = 0 := fun t =>
     sec_zero Γ _ fun u => by

@@ -41,7 +41,7 @@ theorem exists_isom_move [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K]
     have key : ∀ a b, h (f a) (f b) = h a b := fun a b => by
       rw [hf, hf]; exact h_sub_smul_sub_smul_eq_of_hww h hsym (x - y) _ hα hww a b
     have hinj : Function.Injective f := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha0
       apply ha a
       rw [← key a a, ha0, map_zero]

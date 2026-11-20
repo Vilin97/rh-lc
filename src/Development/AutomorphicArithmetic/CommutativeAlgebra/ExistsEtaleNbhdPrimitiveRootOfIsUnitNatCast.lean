@@ -22,7 +22,7 @@ private theorem unitDeriv {A : Type} [CommRing A] (q : ℕ) (hq : IsUnit ((q : �
 
 private theorem injOf {A : Type} [CommRing A] [Nontrivial A] (q : ℕ) [NeZero q] :
     Function.Injective (algebraMap A (AdjoinRoot (Polynomial.cyclotomic q A))) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra h0
   rw [AdjoinRoot.algebraMap_eq, AdjoinRoot.of, RingHom.comp_apply, AdjoinRoot.mk_eq_zero] at ha

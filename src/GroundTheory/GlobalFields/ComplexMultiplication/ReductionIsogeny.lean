@@ -104,7 +104,7 @@ theorem pushPt_redU_genEval {x y : gaussRing (gaussCurve W W)}
     exact (WeierstrassCurve.Affine.map_equation (W.map (liftJ W)).toAffine
       (IsFractionRing.injective _ (liftField K W)) x y).mp h₁
   have hx : Function.Injective (eval₂RingHom (ResidueField.map (liftJ W)) (residue _ x)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro p hp
     by_contra hp0
     have hT : Transcendental (ResidueField 𝒪) (pushField W (residue _ x)) := hR

@@ -53,7 +53,7 @@ namespace GlobalTheory.GoodOpenFree
 
 theorem app_injective {X Y : Scheme.{0}} [IsIntegral Y] [IsReduced X] (f : X ⟶ Y) [Surjective f]
     (V : Y.Opens) : Function.Injective (f.app V) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro s hs
   rw [← basicOpen_eq_bot_iff]
   refine eq_bot_iff.2 fun x hx => ?_

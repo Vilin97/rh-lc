@@ -15,7 +15,7 @@ theorem finale {n N : ℕ} (Dv : Fin (N + 1) → (EuclideanSpace ℂ (Fin n) →
   set L := (((EuclideanSpace.equiv (Fin n) ℂ).symm : (Fin n → ℂ) →L[ℂ] EuclideanSpace ℂ (Fin n)).comp
       (ContinuousLinearMap.pi fun i => den⁻¹ • ∑ j, t (i.succ, j) • Dv j)) with hL
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro ξ hξ
     apply key
     have hmv : M.mulVec (fun k => w k ξ) = 0 := by

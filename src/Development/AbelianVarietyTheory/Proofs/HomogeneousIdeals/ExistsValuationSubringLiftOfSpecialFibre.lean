@@ -216,7 +216,7 @@ theorem exists_valuationSubring_lift_of_exists_le {O K : Type*} {A : Type u} [Co
       rw [e, Ideal.comap_top] at hcomap
       exact hm.ne_top hcomap.symm
   have hinj : Function.Injective (algebraMap O (A ⧸ q.asIdeal)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra ha0
     obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 hπ

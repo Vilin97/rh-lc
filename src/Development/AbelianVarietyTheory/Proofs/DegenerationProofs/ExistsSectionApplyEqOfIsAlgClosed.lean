@@ -24,7 +24,7 @@ private lemma exists_retraction_of_flat_quasiFinite (V K : Type) [CommRing V] [I
   have hPV : P.comap φ = ⊥ := hPl.over.symm
   set κ := P.ResidueField
   have hinj : Function.Injective (algebraMap V κ) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     rw [IsScalarTower.algebraMap_apply V B κ, Ideal.algebraMap_residueField_eq_zero] at hv
     have : v ∈ P.comap φ := hv

@@ -46,7 +46,7 @@ theorem les_one {K : Cx.{w} R} {L : Cx.{w'} R} {M : Cx.{w''} R} (f : Cx.Hom K L 
   · cases a with
     | zero => exact h0
     | succ k =>
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       obtain ⟨y, rfl⟩ := (hδf k x).1 hx
       have := hM k (by omega)

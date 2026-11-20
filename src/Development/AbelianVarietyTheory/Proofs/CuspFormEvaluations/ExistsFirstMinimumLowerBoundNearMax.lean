@@ -211,7 +211,7 @@ theorem rank_span_restrict_ss_le {r : ℕ} (X : Data E r) (la : Wt X.Ψ r)
   let ev : V →ₗ[ℂ] (N → ℂ) :=
     (LinearMap.funLeft ℂ ℂ fun y : N => (⟨y.1, hN y.1 y.2⟩ : X.dom)).comp V.subtype
   have hinj : Function.Injective ev := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨f, hf⟩ h0
     obtain ⟨P, hP, rfl⟩ := span_restrict_ss_eq X la hf
     refine Subtype.ext (funext fun x => ?_)

@@ -19,7 +19,7 @@ theorem exists_represent {V : Type} [AddCommGroup V] [Module ℂ V]
         funext i
         simp }
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro u hu
     have hall : ∀ w : W, Bf (u : V) (w : V) = 0 := by
       intro w

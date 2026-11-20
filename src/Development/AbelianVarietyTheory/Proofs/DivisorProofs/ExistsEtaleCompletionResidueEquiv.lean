@@ -62,7 +62,7 @@ theorem exists_finite_free_local_residue_equiv (B : Type) [CommRing B] [IsLocalR
       rw [hmax]; exact Ideal.mem_map_of_mem _ h
     exact h2 hx
   have hinj : Function.Injective (algebraMap B (AdjoinRoot F)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     change AdjoinRoot.mk F (C x) = 0 at hx

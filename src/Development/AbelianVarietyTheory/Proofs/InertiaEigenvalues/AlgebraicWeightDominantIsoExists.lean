@@ -222,7 +222,7 @@ def coef {G : Type} (Φ : G → Matrix κ κ ℂ) (u : κ → ℂ) : (κ → ℂ
 
 theorem coef_injective {G : Type} {Φ : G → Matrix κ κ ℂ} {u : κ → ℂ} (hu : u ≠ 0)
     (hspan : ∀ x, x ≠ 0 → ∀ w, w ∈ Submodule.span ℂ (Set.range fun g => Φ g *ᵥ x)) : Function.Injective (coef Φ u) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra hx0
   apply hu

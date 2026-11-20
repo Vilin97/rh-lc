@@ -149,7 +149,7 @@ theorem _root_.GlobalTheory.ZM.finrank_symm_commutant_le : ∀ (K : Type) [Field
         intro r x; funext s
         simp [B, Finset.mul_sum, _root_.mul_assoc] }
   have inj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro Θ hΘ0
     have hB : ∀ i j, B Θ i j = 0 := by
       intro i j

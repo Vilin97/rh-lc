@@ -14,7 +14,7 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A
 
 theorem ringOfIntegers_hom_injective (F : Type) [Field F] [NumberField F] (σ : 𝓞 F →+* ℂ) :
     Function.Injective σ := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   have hk : (RingHom.ker σ).comap (algebraMap ℤ (𝓞 F)) = ⊥ := by
     rw [eq_bot_iff]
     intro n hn

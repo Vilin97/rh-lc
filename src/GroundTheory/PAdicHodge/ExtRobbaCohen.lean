@@ -246,7 +246,7 @@ variable [CharZero K]
 
 theorem tiltResidue_injective : Function.Injective (tiltResidue K p) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible (normInteger K)
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have hsmall : ∀ n, ∀ y : normInteger K, Ideal.Quotient.mk _ y = PreTilt.coeff n x →
       ‖(y : K)‖ ≤ ‖(ϖ : K)‖ := by
@@ -419,7 +419,7 @@ theorem norm_cohenMap_of_coeff_ne_zero {w : WittVector p (ResidueField (normInte
   exact h
 
 theorem cohenMap_injective : Function.Injective (cohenMap K p) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro w hw
   by_contra h0
   obtain ⟨m, b, hb, rfl⟩ := WittVector.exists_eq_pow_p_mul w h0

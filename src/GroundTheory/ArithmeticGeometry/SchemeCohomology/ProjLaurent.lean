@@ -132,7 +132,7 @@ lemma awayToLaurent_mk {p : ℕ} (i : Fin p → Fin (n + 1)) (a : MvPolynomial (
 
 lemma awayToLaurent_injective {p : ℕ} (i : Fin p → Fin (n + 1)) :
     Function.Injective (awayToLaurent (A := A) i) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   induction z using Localization.induction_on with
   | H x =>

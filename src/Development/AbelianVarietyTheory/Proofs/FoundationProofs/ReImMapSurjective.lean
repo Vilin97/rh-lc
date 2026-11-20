@@ -32,7 +32,7 @@ def reImMap (P Q : ℕ) :
     ring
 
 theorem reImMap_injective (P Q : ℕ) : Function.Injective (reImMap P Q) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   rintro ⟨⟨a, ha⟩, ⟨b, hb⟩⟩ h
   have h1 : a + Complex.I • b = 0 := by
     ext i j

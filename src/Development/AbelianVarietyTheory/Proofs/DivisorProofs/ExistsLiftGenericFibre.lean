@@ -92,7 +92,7 @@ theorem exists_poly_sections (V B : Type) [CommRing V] [CommRing B] [Algebra V B
     rw [AlgHom.commutes]
     rfl
   have hψ : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have : a ∈ q.under V₁ := (Ideal.Quotient.eq_zero_iff_mem (I := q)).1 ha
     rwa [← hlo.over, Ideal.mem_bot] at this

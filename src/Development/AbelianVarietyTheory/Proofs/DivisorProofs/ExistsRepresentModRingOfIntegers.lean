@@ -31,7 +31,7 @@ theorem exists_represent_mod_of_basis {R ι : Type*} [CommRing R] [Fintype ι]
     ⟨fun l => (ZMod.intCast_surjective (v l)).choose,
       funext fun l => (ZMod.intCast_surjective (v l)).choose_spec⟩
   have hinj : Function.Injective M.mulVecLin := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     obtain ⟨w, rfl⟩ := lift v
     have h1 : ∀ d : R, (N : ℤ) ∣ T ((∑ l, w l • b l) * d) := by

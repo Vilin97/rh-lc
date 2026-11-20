@@ -36,7 +36,7 @@ private theorem prodMap_tmul {A B : Type} (X₁ : Submodule ℂ (A → ℂ)) (X�
 
 private theorem prodMap_inj {A B : Type} (X₁ : Submodule ℂ (A → ℂ)) (X₂ : Submodule ℂ (B → ℂ)) :
     Function.Injective (prodMap X₁ X₂) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   let β := Module.Basis.ofVectorSpace ℂ X₂
   obtain ⟨c, rfl⟩ := TensorProduct.eq_repr_basis_right β t

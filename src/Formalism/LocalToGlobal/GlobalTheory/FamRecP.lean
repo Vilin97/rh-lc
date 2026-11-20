@@ -189,7 +189,7 @@ theorem locLen_tower (w : Ideal R) [w.IsPrime] (A B C : Submodule R V) (hCB : C 
   let g : (A ⧸ C.comap A.subtype) →ₗ[R] (A ⧸ B.comap A.subtype) :=
     Submodule.mapQ _ _ LinearMap.id (fun x hx => hCB hx)
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x
     obtain ⟨b, rfl⟩ := Submodule.mkQ_surjective _ x
     intro h

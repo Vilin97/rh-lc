@@ -48,7 +48,7 @@ theorem main : ∀ (k Ω L : Type) [Field k] [CharZero k] [Field Ω] [Field L] [
     funext i
     simp [m, b]
   have hinj : Function.Injective m := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h2 : Finsupp.linearCombination Ω (m.toLinearMap ∘ b) (b.repr x) = 0 := by
       rw [← Finsupp.apply_linearCombination, b.linearCombination_repr]

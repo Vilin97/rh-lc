@@ -29,7 +29,7 @@ theorem points : StatPoints := by
     exact Set.disjoint_left.mp (Ideal.disjoint_nonZeroDivisors_of_mem_minimalPrimes hP) ha hnzd
   have : IsDomain (B ⧸ P) := Ideal.Quotient.isDomain P
   have hinjS : Function.Injective (algebraMap O (B ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have ha' : algebraMap O B a ∈ P := by
       rw [IsScalarTower.algebraMap_apply O B (B ⧸ P), Ideal.Quotient.algebraMap_eq,

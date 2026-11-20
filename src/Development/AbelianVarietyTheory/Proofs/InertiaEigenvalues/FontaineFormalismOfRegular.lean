@@ -329,7 +329,7 @@ theorem exists_dual_equiv (V : Type) [AddCommGroup V] [Module LL V] [Module Qp V
       map_add' := fun f f' => by ext; simp
       map_smul' := fun c f => by ext; simp }
   have hφ : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro f h0
     by_contra hne
     apply hlam

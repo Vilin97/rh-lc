@@ -40,7 +40,7 @@ theorem isSMulRegular_tensor_of_flat_quot (A : Type) [CommRing A] (f : A) (M : T
       Submodule.mem_smul_pointwise_iff_exists]
     simp
   have hb : Function.Injective (ι.lTensor B) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨k, rfl⟩ : ∃ k : K, (1 : B) ⊗ₜ[A] k = x := by
       obtain ⟨k, hk⟩ := Submodule.Quotient.mk_surjective _ (quotTensorEquivQuotSMul K I x)

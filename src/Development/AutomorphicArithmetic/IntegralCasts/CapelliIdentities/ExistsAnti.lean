@@ -55,7 +55,7 @@ theorem UpperTheory.Reformulated.B.Qh37.globEx :
       AlgEquiv.commutes, AlgEquiv.commutes, hδ, map_neg, map_zero]
     ring
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨x, y⟩ h
     have h' := hstar ⟨x, y⟩
     rw [h, map_zero, QuadraticAlgebra.star_mk, hf, map_add, map_mul, map_neg, map_zero] at h'

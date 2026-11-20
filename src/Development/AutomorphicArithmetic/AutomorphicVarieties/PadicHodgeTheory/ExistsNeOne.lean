@@ -94,7 +94,7 @@ theorem UpperTheory.V.Loc.z1fChar :
       exact hz m (sub_eq_zero.2 ((mem_riemannRochSpace_iff_regularAt_everywhere _ _).1 hm g))
     · unfold ReciprocityTheory.Gal.B1
       rw [LinearMap.finrank_range_of_inj, finrank_self]
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro m hm
       exact hz m (congrFun hm g)
   refine ⟨fun h => ?_, fun h => ?_⟩

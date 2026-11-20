@@ -55,7 +55,7 @@ theorem IntegralPointThroughPrime.proof (h₁ : ClosedPointOfGenericFibre.Statem
     (by rw [Ideal.mk_ker]; exact hQM)
   have hq : algebraMap (𝓞 F) (R ⧸ Q) = (Ideal.Quotient.mk Q).comp (algebraMap (𝓞 F) R) := rfl
   have hinj : Function.Injective (algebraMap (𝓞 F) (R ⧸ Q)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     rw [hq, RingHom.comp_apply, Ideal.Quotient.eq_zero_iff_mem,
       ← Ideal.mem_comap, hQ0, Ideal.mem_bot] at hx

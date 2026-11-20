@@ -119,7 +119,7 @@ theorem proof : ProjectionUnramifiedGeneric.Statement := by
 
   let M : Matrix (Fin r) β L := Matrix.of fun j b => φ (pderiv (Sum.inr b) (q j))
   have hMinj : Function.Injective M.mulVecLin := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     apply hker c
     intro j

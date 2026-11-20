@@ -25,7 +25,7 @@ def stdPairB : StdV K lam →ₗ[K] StdV K lam →ₗ[K] K := pairBK (oneW lam)
 instance bzd_finite : Module.Finite K (StdV K lam) := Module.Finite.of_basis (bVV K (oneW lam))
 
 theorem stdPairB_injective : Function.Injective (stdPairB K lam) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   exact (pairingBNondegenerate_holds K Unit n (oneW lam)).1 x fun y => by
     have := congrArg (fun f : Module.Dual K (StdV K lam) => f y) hx

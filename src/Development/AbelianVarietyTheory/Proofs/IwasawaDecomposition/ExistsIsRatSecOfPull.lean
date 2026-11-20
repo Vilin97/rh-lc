@@ -78,7 +78,7 @@ theorem exists_point (S : Type) [CommRing S] [IsDomain S] [Algebra (𝓞 F) S]
       rw [e, Ideal.comap_top] at hcomap
       exact hm.ne_top hcomap.symm
   have hinj' : Function.Injective (algebraMap (𝓞 F) (S ⧸ q.asIdeal)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra ha0
     have h1 : a ∈ q.asIdeal.comap (algebraMap (𝓞 F) S) :=

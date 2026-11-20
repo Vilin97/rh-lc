@@ -42,7 +42,7 @@ theorem charZero_residueField [CharZero O] (B : Model O) {y : B.X} (hy : y ∈ B
     CharZero (B.X.residueField y) := by
   refine charZero_of_injective_ringHom (R := O)
     (f := (B.X.evaluation ⊤ y trivial).hom.comp (algebraMap O Γ(B.X, ⊤))) ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro g hg
   by_contra h0
   exact (B.X.evaluation_ne_zero_iff_mem_basicOpen (U := ⊤) y trivial (B.const g)).2

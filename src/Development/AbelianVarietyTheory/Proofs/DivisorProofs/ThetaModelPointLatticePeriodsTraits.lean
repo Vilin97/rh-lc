@@ -59,7 +59,7 @@ theorem one_lattice {g n : ℕ} {o : Type} [CommRing o] {ζ : o} {F : SFam g n �
     · subst hu; simp
     · simp [Pi.single_apply, hu]
   have hinj : Function.Injective π := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     have h1 : ρT (e₀.symm (Pi.single 0 z)) = 0 := by rw [hsingle, hz, Pi.single_zero]
     have h2 : e₀.symm (Pi.single 0 z) = 0 := by simpa using h1

@@ -194,7 +194,7 @@ theorem exists_of_height_le (F : Type) [Field F] [NumberField F] (n : ℕ) :
   have : Algebra.FiniteType (𝓞 F) (R ⧸ P) :=
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ (𝓞 F) P) (Ideal.Quotient.mkₐ_surjective _ P)
   have hinj' : Function.Injective (algebraMap (𝓞 F) (R ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     rw [← Ideal.Quotient.mk_algebraMap, Ideal.Quotient.eq_zero_iff_mem] at hc
     have hc' : c ∈ P.comap (algebraMap (𝓞 F) R) := hc
@@ -238,7 +238,7 @@ end ClosedPointOfGenericFibre
 theorem ClosedPointOfGenericFibre.proof : ClosedPointOfGenericFibre.Statement := by
   intro F _ _ R _ _ _ _ _ M g ⟨hM, hg⟩
   have hinj : Function.Injective (algebraMap (𝓞 F) R) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     by_contra hc0
     have h1 : (1 : R) ∈ Submodule.torsion (𝓞 F) R :=

@@ -188,7 +188,7 @@ theorem exists_rows {d : ℕ} {I : Type} (L : (Fin d → ℂ) →ₗ[ℂ] (I →
     simpa using hli.fintype_card_le_finrank
   have h2 : d ≤ Fintype.card κ := by
     have : Function.Injective (LinearMap.funLeft ℂ ℂ a ∘ₗ L) := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       exact hker x fun k => congrFun hx k
     simpa using LinearMap.finrank_le_finrank_of_injective this

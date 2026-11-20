@@ -67,7 +67,7 @@ private theorem core (k L : Type) [Field k] [Field L] [Algebra k L] {C X : Schem
     ext a
     simp [Algebra.TensorProduct.includeRight_apply, hθ]
   have hinj : Function.Injective θ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro t ht
     obtain ⟨hV0, e0, he0⟩ := chart ⟨0, hn⟩
     haveI := hne' ⟨0, hn⟩

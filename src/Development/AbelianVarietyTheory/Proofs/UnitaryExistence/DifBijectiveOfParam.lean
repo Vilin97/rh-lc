@@ -408,7 +408,7 @@ theorem basis_iff (c : κ → Fin d → S) :
     (LinearIndependent S c ∧ Submodule.span S (Set.range c) = ⊤) ↔ Function.Bijective (Fintype.linearCombination S c) := by
   rw [← Fintype.range_linearCombination, LinearMap.range_eq_top, Fintype.linearIndependent_iff]
   refine and_congr_left fun _ => ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   simp only [Fintype.linearCombination_apply, funext_iff (g := (0 : κ → S)), Pi.zero_apply]
 
 theorem basis_iff' (c : κ → Fin d → S) :

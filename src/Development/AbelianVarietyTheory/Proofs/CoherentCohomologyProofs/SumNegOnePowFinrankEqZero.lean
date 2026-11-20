@@ -192,7 +192,7 @@ theorem map_g_surjective (h : Subsingleton (cohOn S.X₁ U (n + 1))) :
 
 theorem map_f_injective (h : Subsingleton (cohOn S.X₃ U n)) :
     Function.Injective (map R S.f U (n + 1)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨y, rfl⟩ := (exact₁ R hS U n x).1 hx
   rw [Subsingleton.elim y 0, map_zero]

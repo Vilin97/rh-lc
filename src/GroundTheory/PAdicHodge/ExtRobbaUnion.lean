@@ -134,7 +134,7 @@ theorem edagToTilde_apply {ρ0 : Set.Ioo (0 : ℝ) 1} {b : T.B} (hb : b ∈ T.Ec
   T.econToTilde_eq _ _
 
 theorem edagToTilde_injective : Function.Injective T.edagToTilde := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro b h
   have h' := h
   change T.edagFun b = 0 at h'

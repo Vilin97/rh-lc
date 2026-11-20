@@ -26,7 +26,7 @@ theorem latticeDual_int_fg {K : Type*} [Field K] [NumberField K] {r : ℕ} (F : 
   have hspan : Submodule.span K (s : Set (Fin (r + 1) → K)) = ⊤ := by
     rw [← Submodule.span_span_of_tower (R := 𝓞 K), hs, F.span_eq]
   have hinj : Function.Injective ev := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro φ hφ
     have h0 : ∀ w ∈ Submodule.span K (s : Set (Fin (r + 1) → K)), φ ⬝ᵥ w = 0 := by
       intro w hw

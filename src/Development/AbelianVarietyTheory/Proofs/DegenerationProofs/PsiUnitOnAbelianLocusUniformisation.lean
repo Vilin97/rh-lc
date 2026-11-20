@@ -116,7 +116,7 @@ theorem regAt_ev {V : (Sp R).Opens} (h : ⊤ ≤ jK R ⁻¹ᵁ V) {P : Sp R} (hP
   rwa [map_mul, ev_toOpen, ev_toOpen, ev_res l h] at e'
 
 theorem ev_injective {V : (Sp R).Opens} (h : ⊤ ≤ jK R ⁻¹ᵁ V) : Function.Injective (ev V h) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro r hr
   let z : Sp (FractionRing R) := (default : PrimeSpectrum (FractionRing R))
   have hP : jK R z ∈ V := h (TopologicalSpace.Opens.mem_top z)

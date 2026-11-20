@@ -214,7 +214,7 @@ private theorem exists_positive_period_line {K : Type} [Field K] [NumberField K]
     rw [e3, zero_sub, norm_neg] at e2
     exact absurd e2 (not_le.2 h2)
   have hinj : Function.Injective T := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     by_contra hne
     have hn : ‖v‖ ≠ 0 := norm_ne_zero_iff.2 hne

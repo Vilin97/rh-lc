@@ -16,7 +16,7 @@ theorem ringHom_integers_injective_of_charZero :
     ∀ (E : Type) [Field E] [NumberField E] (K : Type) [Field K] [CharZero K]
     (χ : 𝓞 E →+* K), Function.Injective χ := by
   intro E _ _ K _ _ χ
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro o ho
   by_contra hne
   have hdvd := Algebra.dvd_algebraMap_intNorm_self ℤ (𝓞 E) o

@@ -134,7 +134,7 @@ def cuspHom : V.toAffine.Point →+ F :=
 
 theorem cuspHom_bijective : Function.Bijective (cuspHom V h3 h4 h6 α h1 h2) := by
   constructor
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro (_ | ⟨x, y, h⟩) hP
     · rfl
     · change x / (y - α * x) = 0 at hP
@@ -247,7 +247,7 @@ def nodeHom : V.toAffine.Point →+ Additive Lˣ :=
       (nodeVal_neg V h3 h4 h6 α β hs hp) (nodeVal_triple V h3 h4 h6 α β hs hp))
 
 theorem nodeHom_injective (hαβ : α ≠ β) : Function.Injective (nodeHom V h3 h4 h6 α β hs hp) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   rintro (_ | ⟨x, y, h⟩) hP
   · rfl
   · exfalso

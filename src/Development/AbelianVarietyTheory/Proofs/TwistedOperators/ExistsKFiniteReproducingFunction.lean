@@ -190,7 +190,7 @@ theorem reproduce_one : ∀ (n : ℕ) (ε : Fin n → Bool) (W : Type) [AddCommG
         simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c]
         exact integral_const_mul c _)
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro e he
     have h0 : ∫ k, (e : Formalism.REAL.KG ε → ℂ) k * star ((e : Formalism.REAL.KG ε → ℂ) k) ∂(Formalism.REAL.muK ε) = 0 := by
       have := LinearMap.congr_fun he ⟨fun k => star ((e : Formalism.REAL.KG ε → ℂ) k), star_mem_sup e.2⟩

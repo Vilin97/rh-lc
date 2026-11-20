@@ -26,7 +26,7 @@ theorem offSupp_of_mult_vertical : ∀ (F : Type) [Field F] [NumberField F] (X :
   rw [GlobalTheory.Cartier.mem_offSupp]
 
   have hinj : Function.Injective σ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have hk : RingHom.ker σ = ⊥ := by
       apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)

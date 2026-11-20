@@ -52,7 +52,7 @@ theorem point_of_val {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra
   have hmax : (m.comap (algebraMap (𝓞 K) A)) = la.asIdeal :=
     (la.isMaximal.eq_of_le (Ideal.IsPrime.ne_top inferInstance) hlaM).symm
   have hinj' : Function.Injective (algebraMap (𝓞 K) (A ⧸ q.asIdeal)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra ha0
     have h1 : a ∈ q.asIdeal.comap (algebraMap (𝓞 K) A) :=

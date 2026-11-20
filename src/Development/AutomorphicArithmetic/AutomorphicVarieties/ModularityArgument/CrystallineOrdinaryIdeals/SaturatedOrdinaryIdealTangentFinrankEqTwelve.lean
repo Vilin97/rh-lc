@@ -238,7 +238,7 @@ private theorem tangent (T : Submodule E (U.R →ₗ[O] E))
     finrank E ↥T = finrank E ↥(finiteCocycles (MonoidHom.id _) (adRep (D.rz E))) := by
   have hm : HasMult D.η (D.rz E) := fun _ => rfl
   have hinj : Function.Injective ((cochain D U E).domRestrict T) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨δ, hδ⟩ h0
     have h1 : ∀ g, (U.r.hom g).mat.map δ = 0 := fun g => by
       rw [← cochain_mul, show cochain D U E δ = 0 from h0, Pi.zero_apply, Matrix.zero_mul]

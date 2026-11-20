@@ -63,7 +63,7 @@ theorem length_coker_of_not_injective (f : M →ₗ[R] M) (hf : LinearMap.ker f 
   push Not at h4
   obtain ⟨x, hx⟩ := h4
   have h5 : Function.Injective (LinearMap.toSpanSingleton R _ x) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     by_contra h0
     exact hx r h0 hr

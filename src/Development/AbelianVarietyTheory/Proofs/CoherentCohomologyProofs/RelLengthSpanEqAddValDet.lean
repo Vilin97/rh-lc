@@ -29,7 +29,7 @@ theorem length_coker_of_det_eq_zero (P : Matrix ι ι R) (h : P.det = 0) :
   let g : R →ₗ[R] (ι → R) ⧸ LinearMap.range P.mulVecLin :=
     (LinearMap.range P.mulVecLin).mkQ ∘ₗ LinearMap.single R (fun _ : ι => R) k
   have hg : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     have hr' : (Pi.single k r : ι → R) ∈ LinearMap.range P.mulVecLin :=
       (Submodule.Quotient.mk_eq_zero _).mp hr
@@ -79,7 +79,7 @@ theorem length_coker (P : Matrix ι ι R) :
   by_cases h : P.det = 0
   · rw [length_coker_of_det_eq_zero P h, h, addVal_zero]
   · have hinj : Function.Injective P.mulVecLin := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       by_contra hx0
       exact h (Matrix.exists_mulVec_eq_zero_iff.mp ⟨x, hx0, hx⟩)
@@ -91,7 +91,7 @@ theorem relLength_span_eq_addVal_det {V : Type*} [AddCommGroup V] [Module R V] {
     relLength (Submodule.span R (Set.range a)) (Submodule.span R (Set.range v)) =
       addVal R P.det := by
   have hinj : Function.Injective (Fintype.linearCombination R a) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     funext i
     exact Fintype.linearIndependent_iff.mp ha x (by rwa [Fintype.linearCombination_apply] at hx) i

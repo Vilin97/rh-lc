@@ -22,7 +22,7 @@ theorem map_eq_sum (j : V →ₛₗ[σ] H) (b : Module.Basis ι K V) (v : V) : j
     simp only [map_sum, map_smulₛₗ]
 
 theorem injective_of_li (hli : LinearIndependent ℂ fun i => j (b i)) : Function.Injective j := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   rw [map_eq_sum j b] at hv
   have h := Fintype.linearIndependent_iff.1 hli _ hv

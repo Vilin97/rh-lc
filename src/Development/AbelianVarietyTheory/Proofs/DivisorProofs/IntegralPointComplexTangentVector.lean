@@ -26,7 +26,7 @@ theorem tanPull_frac_injective {E : Type} [Field E] [NumberField E] [IsCMField E
     {X : Scheme.{0}} (t : SAB H X) (T : CDVR) (xV : Sp T.V ⟶ X) :
     Function.Injective (GlobalTheory.FlagMod.tanPull (G := t.G) (algebraMap T.V T.Fr)
       (rfl : spMap (algebraMap T.V T.Fr) ≫ xV = spMap (algebraMap T.V T.Fr) ≫ xV)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro D hD
   obtain ⟨n, Dv, hDt, hst⟩ := GlobalTheory.LieLocBasis.exists_lie_basis_stable E H X t T.V xV
   have hid : spMap (algebraMap T.V T.V) = 𝟙 _ := Spec.map_id _

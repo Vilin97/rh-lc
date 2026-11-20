@@ -130,7 +130,7 @@ theorem GlobalTheory.exists_letter_vector_exact_degree : ∀ (l : ℕ) [Fact l.P
     let h0 : ↥(K0 K) →ₗ[ℚ_[l]] P.R.BdR ⧸ (((P.PD K).Fil 1).restrictScalars ℚ_[l]) :=
       q ∘ₗ (IsScalarTower.toAlgHom ℚ_[l] ↥(K0 K) P.R.BdR).toLinearMap
     have hinj : Function.Injective h0 := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro k hk
       have hk' : algebraMap ↥(K0 K) P.R.BdR k ∈ (P.PD K).Fil 1 := by
         have := (Submodule.Quotient.mk_eq_zero _).1 hk

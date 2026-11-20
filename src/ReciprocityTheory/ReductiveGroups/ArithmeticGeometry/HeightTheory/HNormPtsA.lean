@@ -29,7 +29,7 @@ theorem oTtoKT_injective : Function.Injective (OTtoKT K D N) := by
   exact MvPolynomial.map_injective _ (IsFractionRing.injective (𝓞 K) K)
 
 theorem opToKT_injective : Function.Injective (OpToKT D N la) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective (laT D N la).primeCompl x
   unfold OpToKT at hx

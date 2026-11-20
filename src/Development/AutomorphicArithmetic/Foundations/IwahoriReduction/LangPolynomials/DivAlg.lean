@@ -40,7 +40,7 @@ private theorem alg_norm (z : ℤ_[l]) : ‖algebraMap ℤ_[l] (Qbar l) z‖ = �
   rfl
 
 private theorem alg_inj : Function.Injective (algebraMap ℤ_[l] (Qbar l)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   rw [← norm_eq_zero, ← alg_norm, ha, norm_zero]
 

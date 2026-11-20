@@ -63,7 +63,7 @@ theorem gram_nonneg (hF : Continuous F) : 0 ≤ gram μ F :=
   (ContinuousLinearMap.nonneg_iff_isPositive _).2 (gram_isPositive μ hF)
 
 theorem gram_injective (hF : Continuous F) : Function.Injective (gram μ F) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   by_contra h0
   have hpos : 0 < ∫ k, ‖F k v‖ ^ 2 ∂μ :=

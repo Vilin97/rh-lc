@@ -56,7 +56,7 @@ theorem fg_of_separating {K V : Type} [Field K] [AddCommGroup V] [Module K V] (O
         ext ψ
         exact ψ.1.map_smul (a : K) g.1 }
   have hΦ : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro g hg
     exact Subtype.ext (hsep g (hS g g.2) fun ψ hψ => congrArg Subtype.val (congrFun hg ⟨ψ, hψ⟩))
   have : Module.Finite O S := Module.Finite.of_injective Φ hΦ

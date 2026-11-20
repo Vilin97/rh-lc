@@ -106,7 +106,7 @@ theorem quotA_baseP (p : ℕ) (W : Ideal (MRing ι)) (g : Polynomial (MRing ι �
 
 theorem baseMap_injective (p : ℕ) (W : Ideal (MRing ι)) [Nontrivial (MRing ι ⧸ W)] :
     Function.Injective (baseP p W) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro g hg
   have h0 : AdjoinRoot.of (quadP p W) g = 0 := by
     rw [← quotA_baseP, hg, map_zero]

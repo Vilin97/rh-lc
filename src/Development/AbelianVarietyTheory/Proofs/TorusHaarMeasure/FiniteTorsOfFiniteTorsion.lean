@@ -816,7 +816,7 @@ theorem generic : Function.Bijective ((rep F).toFun C) := by
   haveI := finite_tors F
   letI := Fintype.ofFinite (Tors B p O.alg)
   have hinj : Function.Injective ((rep F).toFun C) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     obtain ⟨⟨f, s⟩, hs⟩ := IsLocalizedModule.surj (nonZeroDivisors (O.alg : Type))
       (TensorProduct.mk (O.alg : Type) C (rep F).total 1) z

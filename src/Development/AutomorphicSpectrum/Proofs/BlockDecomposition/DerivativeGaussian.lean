@@ -28,7 +28,7 @@ theorem toEuc_apply (p : M23 × (Fin 2 → ℂ)) (i : RIdx) :
   simp [toEuc]
 
 theorem toEuc_injective : Function.Injective toEuc := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro p hp
   have hs : Real.sqrt 2 ≠ 0 := by positivity
   have key : ∀ i : CIdx, cz i p = 0 := by

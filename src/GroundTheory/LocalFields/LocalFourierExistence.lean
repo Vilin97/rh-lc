@@ -20,7 +20,7 @@ theorem ratAddCircleToReal_coe (q : ℚ) :
     ratAddCircleToReal (q : AddCircle (1 : ℚ)) = ((q : ℝ) : AddCircle (1 : ℝ)) := rfl
 
 theorem ratAddCircleToReal_injective : Function.Injective ratAddCircleToReal := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   induction x using QuotientAddGroup.induction_on with
   | H q =>

@@ -66,7 +66,7 @@ theorem isWittLower_self (D : D7) (V : HSp D) : IsWittLower V V 0 := by
 
 theorem isomEmb_inj (D : D7) (V V' : HSp D) (ι : V'.V →ₗ[D.host.E] V.V) (h : HSpace.IsIsomEmb V' V ι) :
     Function.Injective ι := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   apply V'.nondeg.1
   intro y

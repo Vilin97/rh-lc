@@ -14,7 +14,7 @@ theorem UpperTheory.Reformulated.B.Qi2b.fin_quot_ann :
   let g : (R ⧸ Module.annihilator R M) →ₐ[Λ] Module.End Λ M :=
     Ideal.Quotient.liftₐ _ f (fun r hr => (hf r).1 hr)
   have hg : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective x
     exact Ideal.Quotient.eq_zero_iff_mem.2 ((hf r).2 hx)

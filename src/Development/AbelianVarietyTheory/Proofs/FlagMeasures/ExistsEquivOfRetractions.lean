@@ -266,7 +266,7 @@ private theorem isField_or_exists_swap_ringEquiv {F : Type} [Field F] [Valuative
     intro a b
     simp [φ, _root_.GlobalTheory.SgLoc.idemPairHom, Algebra.smul_def]
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨a, b⟩ hab
     rw [hφ] at hab
     have ha : algebraMap F E a * p = 0 := by

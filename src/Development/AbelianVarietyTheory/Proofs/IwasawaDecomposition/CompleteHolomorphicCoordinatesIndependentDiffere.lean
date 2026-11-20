@@ -69,7 +69,7 @@ theorem complete_coords : ∀ (n a : ℕ) (v₀ : ReciprocityTheory.L2DbarEstima
       rw [e]
       exact (f j).hasFDerivAt.sub_const _
   have hinj : Function.Injective D := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     have hv' : ∀ j, f j v = 0 := fun j => by
       have := congrFun hv j

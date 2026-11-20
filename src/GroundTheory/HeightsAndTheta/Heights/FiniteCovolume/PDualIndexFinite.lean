@@ -39,7 +39,7 @@ theorem DualIndexFinite.proof (h : HermitianForm F E W) : DualIndexFinite.Statem
         change h.toSesq ((a : W) + b) l = h.toSesq a l + h.toSesq b l
         rw [map_add, LinearMap.add_apply] }
   have hψ : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     have h0 : h.toSesq (y : W) = 0 := by
       refine LinearMap.ext_on hspan fun l hl => ?_

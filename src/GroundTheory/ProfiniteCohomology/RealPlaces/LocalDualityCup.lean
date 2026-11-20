@@ -47,7 +47,7 @@ theorem cartierDualToQZ_apply_eq_zero_iff (φ : cartierDual F Ω M) (m : M) :
     (rootsOfUnityToUnits_injective n).eq_iff]
 
 theorem cartierDualToQZ_injective : Function.Injective (cartierDualToQZ M hMn e) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro φ hφ
   apply LinearMap.ext
   intro m

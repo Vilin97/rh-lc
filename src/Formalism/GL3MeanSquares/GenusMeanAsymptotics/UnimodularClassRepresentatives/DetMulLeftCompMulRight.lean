@@ -70,7 +70,7 @@ theorem exists_tensor_decomp {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) (t
 
 theorem toMat_injective {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) :
     Function.Injective (toMat hF m) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   obtain ⟨B, C, rfl⟩ := exists_tensor_decomp hF hδ hδ0 t
   rw [map_add, toMat_tmul, toMat_tmul, one_smul] at ht

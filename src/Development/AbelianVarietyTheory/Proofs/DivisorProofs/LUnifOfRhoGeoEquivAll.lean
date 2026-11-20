@@ -168,7 +168,7 @@ theorem exists_ext_action (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C ≃ₗ
 
 theorem injective_of_indep {σ : L →+* ℂ} (j : WL →ₛₗ[σ] W σ)
     (h : ∀ (m : ℕ) (x : Fin m → WL), LinearIndependent L x → LinearIndependent ℂ fun k => j (x k)) : Function.Injective j := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra h0
   exact (h 1 (fun _ => x) (linearIndependent_unique_iff.2 h0)).ne_zero 0 hx

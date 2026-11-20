@@ -9,7 +9,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace Opposite
 
 theorem GenericGermInjective.proof : GenericGermInjective.Statement := by
   intro X _ E hE U hU
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro s hs
   refine TopCat.Presheaf.section_ext ⟨E.presheaf, E.isSheaf⟩ U s 0 fun x hx => ?_
   change E.presheaf.germ U x hx s = E.presheaf.germ U x hx 0

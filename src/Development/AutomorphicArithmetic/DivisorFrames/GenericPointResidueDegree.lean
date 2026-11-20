@@ -9,7 +9,7 @@ open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Cartier Gl
 private theorem residue_bijective_of_isField {R : Type} [CommRing R] [IsLocalRing R] (h : IsField R) :
     Function.Bijective (IsLocalRing.residue R) := by
   refine ⟨?_, IsLocalRing.residue_surjective⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   rw [IsLocalRing.residue_eq_zero_iff, (IsLocalRing.isField_iff_maximalIdeal_eq).1 h] at ha
   simpa using ha

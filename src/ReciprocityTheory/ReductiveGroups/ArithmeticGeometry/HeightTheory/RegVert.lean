@@ -117,7 +117,7 @@ theorem reg_vertical {O A : Type} [CommRing O] [IsDomain O] [IsDiscreteValuation
   have hϖm : ϖ ∈ maximalIdeal O := (IsLocalRing.mem_maximalIdeal ϖ).2 hϖ.not_isUnit
   have hϖ0 : ϖ ≠ 0 := hϖ.ne_zero
   have hinjOA : Function.Injective (algebraMap O A) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra hx0
     have hfl := (Module.Flat.flat_iff_torsion_eq_bot_of_isBezout (R := O) (M := A)).1 inferInstance

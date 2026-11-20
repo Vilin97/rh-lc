@@ -100,7 +100,7 @@ private theorem rank_eq {R : Representation ℂ G X} {Gi Gf : Subgroup G} {τ : 
       exact Submodule.sum_mem _ fun i _ => hB _ (F i).2 _
   have hev : ∀ F, (ev F : X) = ∑ i, tf (F i) (b i) := fun F => LinearMap.sum_apply _ _ _
   have hi : Function.Injective ev := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro F hF
     have h3 := (hev F).symm.trans (congrArg Subtype.val hF)
     exact funext fun j => Subtype.ext (hinj _ (F j).2 (sum_zero hτ b _ (fun i => hB' _ (F i).2) h3 j))
@@ -171,7 +171,7 @@ private theorem span_dual [FiniteDimensional ℂ D] {Gi : Subgroup G} {ρ : G �
   have hs : Function.Surjective (Module.Dual.transpose : (D →ₗ[ℂ] D) →ₗ[ℂ] _) := by
     refine (LinearMap.injective_iff_surjective_of_finrank_eq_finrank ?_).1 ?_
     · simp [Module.finrank_linearMap]
-    · rw [injective_iff_map_eq_zero]
+    · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha
       ext v
       exact (Module.forall_dual_apply_eq_zero_iff ℂ _).1 fun f => LinearMap.congr_fun (LinearMap.congr_fun ha f) v

@@ -28,7 +28,7 @@ private theorem finrank_Z1_chRep_eq_two_of_ne_one_ne_cyc (hP : LocalPublishedThe
   have hB : finrank E ↥(ReciprocityTheory.Gal.B1 (chRep κ)) = 1 := by
     unfold ReciprocityTheory.Gal.B1
     rw [LinearMap.finrank_range_of_inj, finrank_self]
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     exact fun m hm => hz m (congrFun hm g)
   have hD : H0dual ((cycA l l E).comp φ) (chRep κ) = ⊥ := by
     obtain ⟨s, hs⟩ := h2

@@ -10,7 +10,7 @@ theorem length_base_change_dvr : LengthBaseChange := by
     exact mul_ne_zero u.ne_zero (pow_ne_zero _ hϖ'.ne_zero)
 
   have hinj : Function.Injective (algebraMap O O') := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra hx0
     obtain ⟨k, v, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hx0 hϖ

@@ -38,7 +38,7 @@ namespace GlobalTheory.IsArithVar
 theorem algX_injective {F : Type} [Field F] [NumberField F] {X : Scheme.{0}} {p : X ⟶ Sp (𝓞 F)}
     {e : ℕ} (h : IsArithVar p e) : Function.Injective (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX p ⊤) := by
   have hc := h.charZero
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra ha0
   set I := RingHom.ker (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX p ⊤)

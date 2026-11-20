@@ -196,7 +196,7 @@ theorem mem_range_chartEval (x : κ → Ω) (c : κ) (hc : x c ≠ 0) (a : Ω) :
 theorem chartEval_injective (x : κ → Ω) (c : κ) (hc : x c ≠ 0)
     (hinj : ∀ (n : ℕ) (g : MvPolynomial κ o), g.IsHomogeneous n → aeval x g = 0 → g = 0) :
     Function.Injective (chartEval (o := o) x c hc) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   obtain ⟨n, a, ha, rfl⟩ := Away.mk_surjective _ (X_mem (o := o) c) z
   rw [chartEval_mk, div_eq_zero_iff, or_iff_left (pow_ne_zero _ hc)] at hz

@@ -53,7 +53,7 @@ theorem finrank_le (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (A J K : V →ₗ[ℝ] 
     rw [c (K (A x)), hK, map_neg, hA]
     module))
   refine LinearMap.finrank_le_finrank_of_injective (f := f) ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra h0
   have hx0 : (x : V) ≠ 0 := fun h => h0 (Subtype.ext h)

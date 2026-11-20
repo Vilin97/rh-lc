@@ -86,7 +86,7 @@ theorem secVal_isUnit : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.Publish
   haveI : CharZero A := by
     refine ⟨fun m n hmn => ?_⟩
     have hinjβ : Function.Injective β := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha
       by_contra h0
       exact (hβu a h0).ne_zero ha

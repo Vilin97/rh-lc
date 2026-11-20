@@ -64,7 +64,7 @@ theorem LocE_isField_or_split {F : Type} [Field F] [ValuativeRel F] [Topological
   clear_value p
   let φ : F × F →ₐ[F] E := idemPairHom p (L.cj p) h1 h0
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨a, b⟩ hab
     change a • p + b • L.cj p = 0 at hab
     have ha : a • p = 0 := by

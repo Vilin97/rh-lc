@@ -161,7 +161,7 @@ theorem UpperTheory.V.Loc.liftChart :
   · classical
     rw [← Submodule.range_subtype (wtDer W.part (W.origin h) E j), ← LinearMap.range_comp, Submodule.range_subtype,
       LinearMap.finrank_range_of_inj]
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro δ hδ
     refine Subtype.ext ((der_extend O R X W h E).2 δ.1 (hO _ δ.2.1) fun s => ?_)
     obtain ⟨g, a, b, e, -⟩ := hWz s

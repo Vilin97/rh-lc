@@ -172,7 +172,7 @@ theorem indEt_inj [IsDomain T] [Algebra.Smooth T B] [Algebra T A] [IsScalarTower
     (h : IndEt B A) : Function.Injective (algebraMap T A) := by
   haveI : Module.Flat B A := GlobalTheory.IndEtaleLocal.flat_of_isIndEtale h
   haveI : Module.Flat T A := Module.Flat.trans T B A
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   by_contra h0
   have hreg : IsSMulRegular A t := Module.Flat.isSMulRegular_of_isRegular (isRegular_of_ne_zero h0)

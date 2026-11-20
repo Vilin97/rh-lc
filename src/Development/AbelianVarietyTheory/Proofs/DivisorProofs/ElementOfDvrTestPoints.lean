@@ -131,7 +131,7 @@ theorem mem_range_of_norm_le_one_at_points_away : ∀ (F : Type) [Field F] [Numb
   let j : L →+* Ω := IsLocalization.Away.lift (p : A) hu
   have hj : ∀ a, j (algebraMap A L a) = algebraMap A Ω a := fun a => IsLocalization.lift_eq _ a
   have hjinj : Function.Injective j := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     obtain ⟨n, a, ha⟩ := IsLocalization.Away.surj (p : A) y
     have h1 : algebraMap A Ω a = 0 := by rw [← hj, ← ha, map_mul, hy, zero_mul]

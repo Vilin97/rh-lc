@@ -89,14 +89,14 @@ theorem refInputs_of_links (X : CxData A) (cr : Crd A fc) (wf : (lv (fc X.zs) fa
   w_inj j := by
     have hw : Function.Injective (X.wC false j Bs.v0) :=
       by
-        rw [injective_iff_map_eq_zero]
+        set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
         intro c hc
         have hc' : ∑ i, c i • X.bW false j Bs.v0 i = 0 := by
           simpa [CxData.wC, lin, Fintype.linearCombination_apply] using hc
         funext i
         exact Fintype.linearIndependent_iff.1 (hK j Bs.v0).1 c hc' i
     have he : Function.Injective (X.eW false j) := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       have h := hE j x x
       rw [hx, inner_zero_left] at h

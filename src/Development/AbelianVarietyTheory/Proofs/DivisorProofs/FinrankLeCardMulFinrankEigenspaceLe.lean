@@ -42,7 +42,7 @@ theorem finrank_le_card_mul_finrank_eigenspace_le :
             RingHom.id_apply, Finset.smul_sum]
           exact Finset.sum_congr rfl fun g _ => smul_comm _ _ _ }
     refine LinearMap.finrank_le_finrank_of_injective (f := Φ) ?_
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro f hf
     apply Subtype.ext
     exact hPhi f fun h => congrArg Subtype.val (congrFun hf h)
@@ -58,7 +58,7 @@ theorem finrank_le_card_mul_finrank_eigenspace_le :
           simp only [Submodule.coe_smul, smul_mul_assoc, Pi.smul_apply,
             RingHom.id_apply, Finset.smul_sum] }
     refine LinearMap.finrank_le_finrank_of_injective (f := Ψ) ?_
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro F hF
     have := hPsi (fun h => (F h : R)) (fun h g => ((hN _).1 (F h).2).2 g)
       (congrArg Subtype.val hF)

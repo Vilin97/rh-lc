@@ -44,7 +44,7 @@ theorem exists_re_im {g : ℕ} (V : Submodule ℂ (Fin g → ℂ)) (N : Submodul
       map_add' := fun p q => by ext i; simp; ring
       map_smul' := fun c p => by ext i; simp; ring }
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro p hp
     have h : ∀ i, ((p.1 : Fin g → ℝ) i : ℂ) + Complex.I * ((p.2 : Fin g → ℝ) i : ℂ) = 0 := fun i => by
       simpa [L] using congrFun (congrArg Subtype.val hp) i
@@ -198,7 +198,7 @@ theorem le_finrank_range {g : ℕ} (S : Matrix (Fin g) (Fin g) ℝ) (τ : Matrix
       map_add' := fun p q => by ext i; simp [mulVec_add]; ring
       map_smul' := fun c p => by ext i; simp [mulVec_smul] }
   have hinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro p hp
     have h : realVec g p.1 + τ *ᵥ realVec g p.2 = 0 := congrArg Subtype.val hp
     have h' : (p.2 : Fin g → ℝ) = 0 := by

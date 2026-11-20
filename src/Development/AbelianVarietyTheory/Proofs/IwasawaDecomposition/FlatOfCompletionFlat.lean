@@ -77,7 +77,7 @@ theorem flat_of_finite_of_flat_comp : ∀ {A R : Type} [CommRing A] [IsLocalRing
       exact ⟨u + v, by rw [map_add, hu, hv]⟩
   have hinjA : Function.Injective (mA.subtype.rTensor R) :=
     Module.Flat.rTensor_preserves_injective_linearMap mA.subtype Subtype.val_injective
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨y, rfl⟩ := surj x
   have h1 : TensorProduct.lid A R (mA.subtype.rTensor R y) = 0 := by rw [← key, hx, map_zero]

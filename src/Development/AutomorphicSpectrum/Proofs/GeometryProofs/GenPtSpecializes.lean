@@ -9,7 +9,7 @@ open AlgebraicGeometry CategoryTheory GlobalTheory.CompanionTheory.Ar
 
 theorem spec_inj (X : Scheme.{0}) [IsIntegral X] {x y : X} (h : x ⤳ y) :
     Function.Injective (X.presheaf.stalkSpecializes h).hom := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   obtain ⟨U, hyU, s, rfl⟩ := X.presheaf.germ_exist t
   have hxU : x ∈ U := h.mem_open U.isOpen hyU

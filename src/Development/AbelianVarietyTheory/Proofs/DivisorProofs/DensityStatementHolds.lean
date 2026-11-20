@@ -104,7 +104,7 @@ theorem densSt : DensSt := by
     have h : Flat (ξ ≫ s) := inferInstance
     rw [← Spec.map_preimage (ξ ≫ s)] at h
     haveI : Module.Flat V R := (HasRingHomProperty.Spec_iff (P := @Flat)).1 h
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     have hreg := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := R) (mem_nonZeroDivisors_of_ne_zero h0)

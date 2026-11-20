@@ -25,7 +25,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 
 theorem injective_of_ker_countable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     (h : V →ₗ[ℂ] W) {S : Set V} (hS : S.Countable) (hk : ∀ v, h v = 0 → v ∈ S) : Function.Injective h := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   by_contra hne
   have hi : Function.Injective fun t : ℂ => t • v := smul_left_injective ℂ hne

@@ -160,7 +160,7 @@ theorem exists_intertwiner (hAB : A ≤ B) {f f' : Module.End E M} (hs : (Linear
       map_add' := fun S T => Subtype.ext (by simp only [Submodule.coe_add, add_mul, mul_add]; abel)
       map_smul' := fun c T => Subtype.ext (by simp [smul_sub]) }
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro T hT
     have h1 : T.1 * f - f' * T.1 = 0 := congrArg Subtype.val hT
     exact Subtype.ext (eq_zero_of_intertwine hAB hs hf hd T.2 (sub_eq_zero.1 h1))

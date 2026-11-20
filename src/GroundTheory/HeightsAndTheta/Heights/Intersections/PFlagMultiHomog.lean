@@ -164,7 +164,7 @@ theorem exists_sigma (P : Ideal (MRing ι)) [P.IsPrime] (hP : IsMultiHomogIdeal 
   let g : MRing ι ⧸ P →+* LRing P n := Ideal.Quotient.lift P (zScale P n) fun f hf => by
     rw [← RingHom.mem_ker, hker]; exact hf
   have hg : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective a
     rw [Ideal.Quotient.eq_zero_iff_mem, ← hker, RingHom.mem_ker]

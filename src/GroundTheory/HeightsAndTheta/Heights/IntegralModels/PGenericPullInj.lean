@@ -15,7 +15,7 @@ lemma pullSectionOn_injective_of_basis_of_app (hPB : PullbackBasis.Statement.{0}
     (ht : IsBasisOn M W t) (hg : Function.Injective (g.app W)) :
     Function.Injective (pullSectionOn g M W) := by
   have hb := (hPB _ _ g M W n t ht).bijective_self
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro τ hτ
   obtain ⟨r, rfl⟩ := ht.bijective_self.2 τ
   have h0 : (fun i => g.app W (r i)) = 0 := by
@@ -29,7 +29,7 @@ lemma pullSectionOn_injective_of_app (hPB : PullbackBasis.Statement.{0}) {T Z : 
     (g : T ⟶ Z) (M : Z.Modules) (hM : IsVectorBundle M) (V : Z.Opens)
     (hg : ∀ W : Z.Opens, W ≤ V → Function.Injective (g.app W)) :
     Function.Injective (pullSectionOn g M V) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro τ hτ
   apply modules_eq_of_locally M τ 0
   intro x hx

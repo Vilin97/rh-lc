@@ -37,7 +37,7 @@ theorem exists_notMem_away_isDomain {A L : Type} [CommRing A] [IsNoetherianRing 
     IsLocalization.lift_eq _ _
   have hfB : IsUnit (algebraMap A B f) := IsLocalization.Away.algebraMap_isUnit f
   have hinj : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro b hb
     obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective (Submonoid.powers f) b
     have h1 := IsLocalization.mk'_spec B a s

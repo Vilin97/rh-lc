@@ -712,7 +712,7 @@ theorem good_of_rank_le_one {L : Loc D r j p} (B : BoundaryLocalData.LocB D L) (
   let φ : 𝓞 D.host.E →ₗ[ℤ] L.Ylat y :=
     (LinearMap.toSpanSingleton (𝓞 D.host.E) (L.Ylat y) a).restrictScalars ℤ
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro e he
     by_contra h0
     obtain ⟨d, hd⟩ := Algebra.dvd_algebraMap_intNorm_self ℤ (𝓞 D.host.E) e

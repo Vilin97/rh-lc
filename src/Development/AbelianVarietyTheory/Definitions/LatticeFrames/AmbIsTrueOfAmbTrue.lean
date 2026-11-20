@@ -150,7 +150,7 @@ theorem ambTrue_ex : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
     rw [hr, Submodule.span_image, h1, Submodule.map_top]
     exact LinearEquiv.range _
   have hinj : ∀ a, Function.Injective (jA a) := fun a => by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro z hz
     set b := (MtHL I hX a).b
     have hsum : jA a z = ∑ i, B.embLL (b.repr z i) • jA a (b i) := by

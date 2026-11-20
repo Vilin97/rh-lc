@@ -37,7 +37,7 @@ theorem exists_ringEquiv_extending_of_ker_le :
     rfl
   let ψ : S →+* FieldCopy k := ψ0.toRingHom
   have hψinj : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro s hs
     by_contra hne
     have hne' : (s : k) ≠ 0 := fun h => hne (Subtype.ext h)

@@ -146,7 +146,7 @@ theorem f_injective (Z : CMLat hP p q) (hpq : p + q = D.p + D.q) (j : Fin p ⊕ 
   have := D.proj
   have hnt : ∀ b, Nontrivial (Z.D₁ b).La := fun b =>
     Module.nontrivial_of_finrank_pos (R := 𝓞 E) (by rw [Z.finrank_D₁]; exact one_pos)
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a₀ h₀
   by_contra ha₀
   choose a ha using fun b => exists_ne (0 : (Z.D₁ b).La)

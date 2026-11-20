@@ -77,7 +77,7 @@ theorem exists_minor_ne_zero_of_separating {K V ι : Type*} [Field K] [AddCommGr
     ∃ J : Set.powersetCard ι r, pairingDual K V r (ιMulti_family K r c J) x ≠ 0 := by
   let φ : V →ₗ[K] (ι → K) := LinearMap.pi c
   have hφ : Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     exact hc v fun j => congrFun hv j
   have hinj : Injective (exteriorPower.map r φ) := map_injective_field hφ

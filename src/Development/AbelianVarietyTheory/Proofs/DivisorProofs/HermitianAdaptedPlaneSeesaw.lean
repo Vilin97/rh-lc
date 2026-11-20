@@ -246,7 +246,7 @@ theorem exists_lagr (B : Base F E) (hB : B.IsGood σ) (M : Model σ X W) (M₁ :
         have : ((0 : Fin n₁ × Fin d → F), (a • p).2) = a • (0, p.2) := by simp
         rw [this, map_smul, Matrix.mul_smul, Prod.smul_fst, Matrix.vecMulVec_smul, RingHom.id_apply, smul_add] }
   have hg : Function.Injective g := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro p hp
     obtain ⟨h1, h3⟩ := direct B M M₁ H hH p.1 _ hp
     exact Prod.ext h1 (Prod.ext_iff.1 (φ₁.symm.map_eq_zero_iff.1 h3)).2

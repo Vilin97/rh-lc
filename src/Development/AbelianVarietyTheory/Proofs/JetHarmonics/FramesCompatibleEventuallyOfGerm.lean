@@ -70,7 +70,7 @@ theorem psJet_pow [Fintype ι] [DecidableEq ι] (f : MvPowerSeries ι R) (q : �
 variable {K : Type} [CommRing K] (f : R →+* K)
 
 theorem jetCoef_injective (hf : Function.Injective f) : Function.Injective (jetCoef f ι m) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective a
   rw [JetTr.jetCoef_mk, mk_eq_zero_iff] at ha

@@ -39,7 +39,7 @@ theorem chart_normal_domain_testPoints : ∀ (F : Type) [Field F] [NumberField F
     have h : Flat (w ≫ s) := inferInstance
     rw [← Spec.map_preimage (w ≫ s)] at h
     haveI : Module.Flat V A := (HasRingHomProperty.Spec_iff (P := @Flat)).1 h
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra h0
     have hreg := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := A) (mem_nonZeroDivisors_of_ne_zero h0)

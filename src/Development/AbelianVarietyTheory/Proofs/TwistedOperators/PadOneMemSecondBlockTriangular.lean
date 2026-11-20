@@ -183,7 +183,7 @@ theorem isLattice_of_isFrame {β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)}
   refine ⟨Submodule.FG.of_le hL'.fg hle, ?_⟩
 
   have hinj : Function.Injective ι := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     by_contra ha0
     have hall : ∀ e : E, IsIntegral ℤ e := by

@@ -122,7 +122,7 @@ theorem eq_of_hasArcData' : Laws → Laws2 → Laws3 → Laws4 → Laws5 → ∀
 
 theorem ringOfIntegers_injective (K : Type) [Field K] [NumberField K] {O' : Type} [CommRing O'] [IsDomain O']
     [CharZero O'] (b : 𝓞 K →+* O') : Function.Injective b := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra hne
   have hc : (RingHom.ker b).comap (algebraMap ℤ (𝓞 K)) ≠ ⊥ :=

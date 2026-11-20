@@ -76,7 +76,7 @@ theorem exists_unique_wedge_map : ∀ (C : Type) [Field C] (V W : Type) [AddComm
   rw [h1, ← h2, ← ha, hV] at d1
   rw [← ha] at d2
   have hinj : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have e := congrArg β hx
     rw [hφ, map_add, hσ', hβα, add_zero, map_zero] at e
@@ -453,7 +453,7 @@ theorem eigen_all {R C Λ : Type} [CommRing R] [Field C] [Algebra R C] [CommRing
 
 theorem padic_injective {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [CharZero C] (j : ℤ_[p] →+* C) :
     Function.Injective j := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro m hm
   by_contra h0
   rw [PadicInt.unitCoeff_spec h0, map_mul, map_pow, map_natCast] at hm

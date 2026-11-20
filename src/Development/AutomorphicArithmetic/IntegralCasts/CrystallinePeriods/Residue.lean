@@ -107,7 +107,7 @@ theorem residue_wittResidueToRing (x : WittVector p (ResidueField A)) :
   exact modPToResidue_residueSection p A _
 
 theorem wittResidueToRing_injective : Function.Injective (wittResidueToRing p A) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra h
   obtain ⟨m, b, rfl⟩ := WittVector.exists_eq_pow_p_mul' x h

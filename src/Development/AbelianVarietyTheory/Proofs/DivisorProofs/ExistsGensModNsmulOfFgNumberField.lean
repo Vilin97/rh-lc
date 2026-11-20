@@ -56,7 +56,7 @@ theorem exists_gens_mod_nsmul_of_injective (E : Type) [Field E] [NumberField E] 
     let f' : LinearMap.ker π →ₗ[𝓞 E] (Fin r → E) :=
       LinearMap.pi fun i => (LinearMap.proj i.succ) ∘ₗ f ∘ₗ (LinearMap.ker π).subtype
     have hf' : Function.Injective f' := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       apply Subtype.ext
       apply hf

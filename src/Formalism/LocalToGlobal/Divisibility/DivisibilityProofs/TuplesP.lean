@@ -1670,7 +1670,7 @@ theorem d_finrank_of_conj {F E : Type} [Field F] [CharZero F] [Field E] [Algebra
   let f : (F × F) →ₗ[F] E := LinearMap.coprod (Algebra.linearMap F E) (LinearMap.toSpanSingleton F E θ)
   have hf : ∀ a b, f (a, b) = algebraMap F E a + b • θ := fun a b => by simp [f]
   have hinj : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨a, b⟩ hab
     rw [hf] at hab
     have hab' : algebraMap F E a - b • θ = 0 := by

@@ -40,7 +40,7 @@ def PrIsoF {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (c : CoefA
 theorem PrIsoF.injective {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} {c : CoefA V} {pr : c.W →ₗ[ℂ] SmT M →ₗ[ℂ] ℂ}
     (h : PrIsoF M c pr) : Function.Injective pr := by
   haveI := h.1
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro w hw
   have e := h.2 _ (fun τ => stdOrthonormalBasis ℂ (M.sm τ)) w w
   rw [hw] at e

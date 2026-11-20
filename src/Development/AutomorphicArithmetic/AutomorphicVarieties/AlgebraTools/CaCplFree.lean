@@ -69,7 +69,7 @@ private theorem rTensor_inj_of_map {Λ : Type} [CommRing Λ] (p : Ideal Λ) {L :
         = _
       simp [algebraMap_smul]
     | add x y hx hy => simp only [map_add, hx, hy]
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   obtain ⟨w, rfl⟩ := AddMonoidHom.mem_range.mp (hsurj z)
   have hw : p.subtype.rTensor N w = 0 := by

@@ -41,7 +41,7 @@ theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H :
         rw [hg, Submodule.coe_smul, ← algebraMap_smul K s (x : Fin d → K), map_smul]
         simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul, map_mul, hg]) }
   have hφ : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h0 : ∀ a ∈ S, Formalism.DivisionValues.hform H a x = 0 := by
       intro a ha

@@ -97,7 +97,7 @@ theorem flat_of {R : Type u} {M : Type v} [CommRing R] [Small.{v} R] [IsPrincipa
       obtain ⟨mx, rfl⟩ := hx
       obtain ⟨my, rfl⟩ := hy
       exact ⟨mx + my, by rw [tmul_add]⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   obtain ⟨m, rfl⟩ := hrep t
   have ham : a • m = 0 := by simpa using ht

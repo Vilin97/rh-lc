@@ -172,7 +172,7 @@ theorem IsIsometry.comp {h₁ : HermForm R M} {h₂ : HermForm R N} {h₃ : Herm
 
 theorem IsIsometry.injective {h₁ : HermForm R M} {h₂ : HermForm R N} {f : M →ₗ[R] N}
     (hf : h₁.IsIsometry h₂ f) (H : h₁.Nondegenerate) : Function.Injective f := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   exact fun x hx => H.eq_zero_left fun y => by rw [← hf, hx, zero_left]
 
 theorem isIsometry_subtype (h : HermForm R M) (W : Submodule R M) :

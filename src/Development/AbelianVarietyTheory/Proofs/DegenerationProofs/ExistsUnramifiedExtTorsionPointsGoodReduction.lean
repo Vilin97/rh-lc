@@ -62,7 +62,7 @@ theorem exists_local_of_etale {T W Ω F : Type} [CommRing T] [IsDomain T] [IsDis
   have : Module.IsTorsionFree T F := Module.isTorsionFree_iff_algebraMap_injective.2 hj
   let j' : B →ₐ[T] F := IsAlgClosed.lift
   have hj' : Function.Injective j' := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro b hb
     by_contra hb0
     have hne : (RingHom.ker j').comap (algebraMap T B) ≠ ⊥ :=

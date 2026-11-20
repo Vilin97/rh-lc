@@ -85,7 +85,7 @@ theorem noPrimO2_of_isNoetherianRing : ∀ (R : Type) [CommRing R] [IsNoetherian
         congr 1
         simp only [D, DB, LinearMap.sub_apply, map_sub]
         rw [pull_comm p1.w p2.w _ _ eμ, pull_comm p1.w p2.w _ _ e1, pull_comm p1.w p2.w _ _ e2]
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h0 : DB (e x) = 0 := by rw [← key, hx, map_zero]
     have h1 : e x = 0 := hN _ (by

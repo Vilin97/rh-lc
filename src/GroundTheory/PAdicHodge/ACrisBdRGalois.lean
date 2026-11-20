@@ -40,7 +40,7 @@ theorem iotaPlus_algebraMap (x : ACris K p) :
   IsLocalization.lift_eq _ x
 
 theorem iotaPlus_injective : Function.Injective (iotaPlus K p) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective (Submonoid.powers (p : ACris K p)) x
   have h := IsLocalization.mk'_spec (BCrisPlus K p) a s

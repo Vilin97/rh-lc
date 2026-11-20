@@ -414,7 +414,7 @@ theorem wedgeHyp_of (hproj : Module.Projective R (H1 F)) (hcl : Closed1 F = ⊤)
     rw [hk, hc]
     abel
   have hinj : Function.Injective e := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨y, u, z, rfl⟩ := decomp σ k hspan x
     rw [map_add, map_add, hs1, hs0] at hx

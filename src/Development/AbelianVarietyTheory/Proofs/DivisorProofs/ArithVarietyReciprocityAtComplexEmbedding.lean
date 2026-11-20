@@ -20,7 +20,7 @@ namespace GlobalTheory.MixRec
 
 theorem injective_of_finite_int {k : Type} [CommRing k] [IsDomain k] [Module.Finite ℤ k]
     (σ : k →+* ℂ) : Function.Injective σ := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   have hker : RingHom.ker σ = ⊥ := by
     apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)
     rw [eq_bot_iff]

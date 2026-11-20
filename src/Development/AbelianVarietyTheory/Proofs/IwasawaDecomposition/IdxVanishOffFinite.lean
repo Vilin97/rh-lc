@@ -47,7 +47,7 @@ theorem locLen_finite {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [M
         (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal C).comap (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal A).subtype) :=
       LinearMap.toSpanSingleton _ _ (Submodule.Quotient.mk ⟨x, hxA⟩)
     have hφ : Function.Injective φ := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro r hr
       by_contra hr0
       have h1 : Submodule.Quotient.mk (p := (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal C).comap (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal A).subtype)
@@ -149,7 +149,7 @@ theorem jw_finite {D : D7} (j : ℕ) (hfg : (Idx.TjL D D.what₂.mu0 j).FG) :
         map_smul' := fun s x => funext fun a => inj _ _ (by
           rw [← hg, Submodule.coe_smul, Idx.smul_def, LinearMap.map_smulₛₗ, inner_smul_right, hg]; simp) }
     have hφ : Function.Injective φ := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       have h0 : ∀ a ∈ S, inner ℂ (D.what₂.jMt D.what₂.mu0 j a) (D.what₂.jMt D.what₂.mu0 j x) = 0 := by
         intro a ha

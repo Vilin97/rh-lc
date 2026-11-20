@@ -14,7 +14,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 variable {R : Type} [CommRing R]
 
 theorem jetAug_zero_injective (κ : Type) : Function.Injective (jetAug R κ 0) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   have h : RingHom.ker (jetAug R κ 0) = ⊥ := by
     rw [← pow_one (RingHom.ker (jetAug R κ 0))]

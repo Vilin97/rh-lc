@@ -51,7 +51,7 @@ theorem hw_lift_orth : ∀ (R S : ℕ) (W : Type) [AddCommGroup W] [Module ℂ W
       have h1 : (B.flip y) ∘ₛₗ K.subtype = 0 := b.ext fun i => by simpa [G] using congrFun hy i
       simpa using LinearMap.congr_fun h1 ⟨v, hv⟩
     have hinj : Function.Injective (G ∘ₗ K.subtype) := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro z hz
       exact Subtype.ext (hdisj z z.2 ((hperp z).2 (key z hz)))
     have hsurj : Function.Surjective (G ∘ₗ K.subtype) :=

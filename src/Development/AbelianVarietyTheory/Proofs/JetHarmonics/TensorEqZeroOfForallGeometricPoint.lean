@@ -34,7 +34,7 @@ theorem tensor_eq_zero_of_forall_geometric_point :
       (Algebra.TensorProduct.includeRight : A →ₐ[O] TensorProduct O F A) :=
     Algebra.TensorProduct.includeRight_injective hinj
   have hL : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     apply hR
     rw [map_zero]

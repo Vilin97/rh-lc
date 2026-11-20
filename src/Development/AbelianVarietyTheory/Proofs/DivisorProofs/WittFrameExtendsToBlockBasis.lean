@@ -42,7 +42,7 @@ theorem exists_ker_basis {E : Type} [Field E] {n : ℕ} {ι : Type} [Fintype ι]
     rw [hK]
     omega
   have hinj : Function.Injective (Matrix.toLin' (Matrix.fromCols Z B)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     rw [Matrix.toLin'_apply, Matrix.fromCols_mulVec] at hv
     have h1 : (G * B) *ᵥ (v ∘ Sum.inr) = 0 := by

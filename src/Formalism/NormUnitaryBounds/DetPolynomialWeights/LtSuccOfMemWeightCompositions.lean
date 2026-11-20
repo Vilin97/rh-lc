@@ -84,7 +84,7 @@ lemma finrank_eq_sum_components {σ M K : Type*} [Field K] [AddCommMonoid M] [De
   have hΦ : ∀ F m, ((Φ F m : W m) : MvPolynomial σ K) =
       weightedHomogeneousComponent φ (m : M) (F : MvPolynomial σ K) := fun F m => rfl
   have hinj : Function.Injective Φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro F hF
     have h0 : ∀ m, weightedHomogeneousComponent φ m (F : MvPolynomial σ K) = 0 := by
       intro m

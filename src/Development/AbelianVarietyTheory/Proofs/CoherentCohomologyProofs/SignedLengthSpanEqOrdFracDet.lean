@@ -96,7 +96,7 @@ theorem relLength_span {R : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRi
     funext j
     simp [φ, hc j, Fintype.linearCombination_apply]
   have hinj : Function.Injective (Matrix.toLin' P) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     exact Matrix.eq_zero_of_mulVec_eq_zero hP (by simpa using hv)
   refine ⟨?_, ?_⟩

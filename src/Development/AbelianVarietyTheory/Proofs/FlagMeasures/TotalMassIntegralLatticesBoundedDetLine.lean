@@ -47,7 +47,7 @@ theorem sub_count {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Modul
   have ha0 : a ≠ 0 := nonZeroDivisors.ne_zero ha
   let ψ : V →ₗ[𝓞 K] K := a • e'
   have hψ : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have : a • e x = 0 := hx
     rw [smul_eq_zero] at this

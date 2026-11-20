@@ -39,7 +39,7 @@ theorem inner_eq_zero_of_isHomogeneous (hι : IsFockIP ι) {d e : ℕ} {P Q : Mv
   rw [hm, map_smul, inner_smul_left, inner_monomial_left hι, h0, zero_mul, mul_zero]
 
 theorem injective_of_isFockIP (hι : IsFockIP ι) : Function.Injective ι := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro P hP
   ext α
   have h := inner_monomial_left hι α P

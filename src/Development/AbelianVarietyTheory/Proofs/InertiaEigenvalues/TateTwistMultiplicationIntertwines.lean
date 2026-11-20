@@ -348,7 +348,7 @@ theorem inertia_dual [FiniteDimensional LL V] [FiniteDimensional LL W]
   obtain ⟨h1, h2⟩ := inertia_cyc (LL := LL) _ hf hu
   refine inertia_of_pair _ hf hu (m := P.flip) (fun g v u => hP.1 g u v) ?_ hA h1 hI h2
     fun b => by simpa using hs b
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   exact fun y hy => hP.2.2.1 y fun x => LinearMap.congr_fun hy x
 
 end Pot

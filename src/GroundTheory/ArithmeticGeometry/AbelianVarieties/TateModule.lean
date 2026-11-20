@@ -229,7 +229,7 @@ theorem TateModule.exists_basis
     simp [g, zmodMulHom_apply]
   have hginj : ∀ k, Function.Injective (g k) := by
     intro k
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨x, y⟩ hxy
     rw [hg] at hxy
     obtain ⟨hx, hy⟩ := hind k _ _ hxy

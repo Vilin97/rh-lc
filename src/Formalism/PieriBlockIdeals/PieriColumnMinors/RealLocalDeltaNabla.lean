@@ -44,7 +44,7 @@ theorem isUnit_int_of_not_dvd (A : Type) [CommRing A] (l : ℕ) (hu : ∀ m : �
 theorem injective_of_prime_to_units (R O : Type) [CommRing R] [CommRing O] [CharZero O] (φ : R →+* O) (l : ℕ)
     (hu : ∀ m : ℕ, ¬ l ∣ m → IsUnit (m : R))
     (hd : ∀ a : R, ∃ m : ℕ, ¬ l ∣ m ∧ ∃ z : ℤ, (m : R) * a = z) : Function.Injective φ := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   obtain ⟨m, hm, z, hz⟩ := hd a
   have h1 : ((z : ℤ) : O) = 0 := by
@@ -533,7 +533,7 @@ theorem tensor_injective_holds : TensorInj := by
       rw [h2, MultilinearMap.map_smul_univ, Finset.prod_pow_eq_pow_sum]
       rfl
     | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   have h3 := key z
   rw [hz, map_zero] at h3

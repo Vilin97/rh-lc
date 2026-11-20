@@ -33,7 +33,7 @@ private theorem prime_maximal_or_kernel (O : Type) [CommRing O] [IsDomain O] [Is
     right
     refine ⟨hc, ?_⟩
     have hinj : Function.Injective (algebraMap O (B ⧸ P)) := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha
       by_contra h0
       exact hc a h0 ((hcomap a).1 ha)

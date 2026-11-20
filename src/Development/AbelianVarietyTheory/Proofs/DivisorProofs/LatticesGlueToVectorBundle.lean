@@ -23,7 +23,7 @@ theorem exists_finiteDimensional_isDescended : ∀ (O : Type) [CommRing O] [IsDo
   haveI : CharZero B.X.functionField := by
     refine charZero_of_injective_ringHom (R := O)
       (f := (B.X.presheaf.germ ⊤ (genericPoint B.X) trivial).hom.comp (algebraMap O Γ(B.X, ⊤))) ?_
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro g hg
     by_contra h0
     have h1 : B.const g = 0 := germ_injective_of_isIntegral B.X (U := ⊤) (genericPoint B.X) trivial

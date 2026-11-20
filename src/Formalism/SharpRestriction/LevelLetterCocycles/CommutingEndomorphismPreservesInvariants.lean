@@ -849,7 +849,7 @@ instance isLoc_toLoc (V : Submodule R U) : IsLocalizedModule (nonZeroDivisors R)
 
 theorem toLoc_inj (V : Submodule R U) (hU : ∀ (r : R) (x : U), r ≠ 0 → r • x = 0 → x = 0) :
     Function.Injective (toLoc V) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨c, hc⟩ := (IsLocalizedModule.eq_zero_iff (nonZeroDivisors R) (toLoc V)).1 hx
   apply Subtype.ext
@@ -965,7 +965,7 @@ theorem isLatIn_of_scale {R U : Type} [CommRing R] [AddCommGroup U] [Module R U]
     (hU : ∀ (r : R) (x : U), r ≠ 0 → r • x = 0 → x = 0) (c : R) (hc : c ≠ 0) (P V : Submodule R U)
     (hP : P ≤ V) (h : IsLatIn (TW.scaleLat c P) V) : IsLatIn P V := by
   refine ⟨Submodule.fg_of_fg_map_injective (LinearMap.lsmul R U c) ?_ h.1, hP, fun x hx => ?_⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     exact fun x hx => hU c x hc hx
   · obtain ⟨d, hd, hdx⟩ := h.2.2 x hx
     exact ⟨d, hd, scaleLat_le_self c P hdx⟩

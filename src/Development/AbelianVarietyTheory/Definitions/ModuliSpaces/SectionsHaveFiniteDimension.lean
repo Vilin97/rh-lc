@@ -59,7 +59,7 @@ theorem SectionsHaveFiniteDimension.le {p : X ⟶ Sp K} {M : LB X} {r r' : ℕ} 
     erw [AbLaw.rs_cst, AbLaw.rs_cst]
     ring⟩
   have hinj : Function.Injective (Matrix.vecMulLinear (Matrix.of B)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have h0 : ∀ j, (t a).f j = 0 := fun j => by
       change ∑ i, AbLaw.cst p _ (a i) * (s i).f j = 0

@@ -147,7 +147,7 @@ theorem lTensor_map_injective {O : Type*} [CommRing O] [Algebra O A] [Module O M
     induction y with
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul m a => simp [t, j]
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨y, rfl⟩ := ht x
   have h0 := hc y

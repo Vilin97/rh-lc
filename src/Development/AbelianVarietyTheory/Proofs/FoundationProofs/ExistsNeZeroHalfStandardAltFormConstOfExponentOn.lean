@@ -127,7 +127,7 @@ open ReciprocityTheory.ChartRestriction.G.Out
 
 theorem injective_toBilin'_stdSymp {R : Type*} [CommRing R] (g : ℕ) :
     Injective (Matrix.toBilin' (Matrix.of fun i j => ((stdSymp g i j : ℤ) : R))) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   funext i
   have key : ∀ j, ∑ l, x l * ((stdSymp g l j : ℤ) : R) = 0 := fun j => by

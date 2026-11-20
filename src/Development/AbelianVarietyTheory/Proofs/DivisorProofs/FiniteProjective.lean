@@ -18,7 +18,7 @@ theorem finite_projective : ∀ (A : Type) [CommRing A] (f : A) (M : Type) [AddC
     have h3 := GlobalTheory.T.quotient_flat_of_completion_flat A f M inferInstance
     rw [Module.Flat.iff_rTensor_injective']
     intro I
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     obtain ⟨k, hk⟩ := GlobalTheory.T.torsion_of_localization_flat A f M inferInstance I y hy
     have hI : IsSMulRegular I f := fun a b h => Subtype.ext (hA (congrArg Subtype.val h))

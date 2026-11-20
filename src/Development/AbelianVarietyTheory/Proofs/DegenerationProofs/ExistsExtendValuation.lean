@@ -66,7 +66,7 @@ theorem exists_extend {L K C : Type} [Field L] [Field K] [Algebra L K] [Algebra.
 theorem exists_extend_valuation {F K : Type} [Field F] [CharZero F] [Algebra.IsAlgebraic ℚ F] [Field K] [CharZero K]
     (V : ValuationSubring F) (b : V →+* K) : ∃ f : F →+* K, ∀ x : V, f x = b x := by
   have hb : Function.Injective b := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     have ha : IsAlgebraic ℤ (x : F) := (IsFractionRing.isAlgebraic_iff ℤ ℚ F).2 (Algebra.IsAlgebraic.isAlgebraic _)

@@ -268,7 +268,7 @@ theorem tensorLatCrys_of [IsFractionRing O LL] (h : CrystallineSubrepresentation
 theorem dualLatCrys_of (h : CrystallineSubrepresentation.DualCrys PD LL) : DualLatCrys PD LL O := by
   rintro T T' Pr hT ⟨hG, -, h2, hr, -⟩
   have hinj : Function.Injective Pr.flip := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     exact h2 y fun x => LinearMap.congr_fun hy x
   have hbij : Function.Bijective Pr.flip :=
@@ -381,7 +381,7 @@ theorem exists_dualEquiv {A R D D' : Type} [CommRing A] [CommRing R] [Algebra A 
   have hd : ∀ (x : ↥N) (y : ↥N'), b (x : D) (y : D') = algebraMap A R (d y x) :=
     fun x y => hc y y.2 x x.2
   refine ⟨LinearEquiv.ofBijective d ⟨?_, fun f => ?_⟩, hd⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy
     refine Subtype.ext (hi y fun x hx => ?_)
     rw [hd ⟨x, hx⟩ y, hy, LinearMap.zero_apply, map_zero]

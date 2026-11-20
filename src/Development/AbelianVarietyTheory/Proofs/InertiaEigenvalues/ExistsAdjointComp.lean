@@ -41,7 +41,7 @@ theorem exists_adjoint_comp {X E : Type} [NormedAddCommGroup X] [InnerProductSpa
   intro y hy
   let S : N →ₗ[ℂ] N := (LinearMap.adjoint f ∘ₗ f).restrict hk
   have hinj : Function.Injective S := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro u hu
     have h1 : LinearMap.adjoint f (f u) = 0 := congrArg Subtype.val hu
     have h2 : ⟪f u, f u⟫_ℂ = 0 := by rw [← LinearMap.adjoint_inner_left, h1, inner_zero_left]

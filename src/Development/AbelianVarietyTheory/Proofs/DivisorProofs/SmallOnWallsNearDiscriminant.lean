@@ -136,7 +136,7 @@ theorem finiteDimensional_antiSub (j n : ℕ) : FiniteDimensional ℝ (antiSub �
   let L : antiSub ι N j n →ₗ[ℝ] ({m : (ι × Fin N) →₀ ℕ // m.degree = n} → ℝ) :=
     LinearMap.pi fun m => lcoeff ℝ m.1 ∘ₗ (antiSub ι N j n).subtype
   refine FiniteDimensional.of_injective L ?_
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro P hP
   ext m
   by_cases hm : m.degree = n

@@ -24,7 +24,7 @@ theorem frob_root_eq {F : Type} [Field F] {a b : F} {m n : ℕ} (hm : 0 < m) (hc
 theorem IsFrac.frob_injective {A B : Type} [CommRing A] [CommRing B] {f : A →+* B} {a t : A}
     (hf : IsFrac f a t) (hi : Function.Injective f) {F : B →+* B} {g : A →+* A}
     (hF : ∀ x, F (f x) = f (g x)) (hg : Function.Injective g) : Function.Injective F := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨m, n, y, h⟩ := hf.2.2 x
   have h1 := congrArg F h

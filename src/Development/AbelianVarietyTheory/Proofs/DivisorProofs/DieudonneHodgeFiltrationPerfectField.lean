@@ -45,7 +45,7 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
     rw [← SemiHom.ofHom_rig]
     exact T.base.red_smap trivial trivial (SemiHom.ofHom _) m
   have rinj : Function.Injective (frobProj (p_eq_zero p k) G).rig := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨m, rfl⟩ := T.base.red_surjective G trivial x
     rw [← T.base.red_smap trivial trivial (frobProj (p_eq_zero p k) G), T.base.red_eq_zero] at hx

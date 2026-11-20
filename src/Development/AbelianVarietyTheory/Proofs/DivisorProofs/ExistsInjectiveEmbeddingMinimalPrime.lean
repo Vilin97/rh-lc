@@ -6,7 +6,7 @@ namespace GlobalTheory.Div
 theorem exists_algHom_quotient_minimalPrime_injective (R K : Type) [CommRing R] [IsDomain R] [Field K] [IsAlgClosed K] [Algebra R K] [IsFractionRing R K] (D : Type) [CommRing D] [Algebra R D] [Module.Flat R D] [Algebra.IsAlgebraic R D] (P : Ideal D) (hP : P ∈ minimalPrimes D) : ∃ em : D ⧸ P →ₐ[R] K, Function.Injective em := by
   haveI hPp : P.IsPrime := hP.1.1
   have hinj : Function.Injective (algebraMap R (D ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     by_contra h0
     have hreg : IsSMulRegular D r :=
@@ -31,7 +31,7 @@ theorem exists_algHom_quotient_minimalPrime_injective (R K : Type) [CommRing R] 
   haveI : Module.IsTorsionFree R K := Module.isTorsionFree_iff_algebraMap_injective.mpr (IsFractionRing.injective R K)
   let f : D ⧸ P →ₐ[R] K := IsAlgClosed.lift
   refine ⟨f, ?_⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra h0
   obtain ⟨y, r, hr, hy⟩ : ∃ y : D ⧸ P, ∃ r : R, r ≠ 0 ∧ x * y = algebraMap R _ r := by

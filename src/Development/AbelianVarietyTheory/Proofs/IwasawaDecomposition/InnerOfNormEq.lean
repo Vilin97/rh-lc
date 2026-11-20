@@ -167,7 +167,7 @@ theorem norm_sq_eq : ∀ (ι H E : Type) [NormedAddCommGroup H] [InnerProductSpa
     obtain ⟨w, rfl⟩ := LinearMap.mem_range.mp hb
     exact ⟨w, hd⟩
   have hJ : Function.Injective J := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro γ hγ
     have hmem : (γ : WithLp 2 (H × E)) ∈ closure (G : Set (WithLp 2 (H × E))) := by
       rw [← Submodule.topologicalClosure_coe]

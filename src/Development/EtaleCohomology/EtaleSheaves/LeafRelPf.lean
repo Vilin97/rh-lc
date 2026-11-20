@@ -120,7 +120,7 @@ lemma inj_iff (n m : ℤ) (hm : m + 1 = n) :
     rw [CohomologyClass.mk_eq_zero_iff, mem_coboundaries_iff _ m hm] at h1
     simpa using h1
   · intro h
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨b, rfl⟩ := x.mk_surjective
     rw [cpre_mk, CohomologyClass.mk_eq_zero_iff, mem_coboundaries_iff _ m hm] at hx

@@ -78,7 +78,7 @@ theorem toC_alg (x : Per.OC l) : Per.toC l (algebraMap _ _ x) = (x : ℂ_[l]) :=
   GlobalTheory.RingIface.toC_alg l x
 
 theorem toC_injective : Function.Injective (Per.toC l) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨n, a, ha⟩ := IsLocalization.Away.surj ((l : ℕ) : Per.OC l) x
   have h := congrArg (Per.toC l) ha

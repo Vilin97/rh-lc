@@ -122,7 +122,7 @@ theorem locQuotSemilinear_apply (x : LocalizedModule V.primeCompl (A ⧸ J)) :
     locQuotSemilinear σ J V x = locQuotMap σ J V x := rfl
 
 theorem locQuotSemilinear_injective : Function.Injective (locQuotSemilinear σ J V) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   induction x using LocalizedModule.induction_on with | h m s => ?_
   rw [locQuotSemilinear_apply, locQuotMap_mk, ← LocalizedModule.zero_mk 1, LocalizedModule.mk_eq] at hx

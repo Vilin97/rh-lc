@@ -21,7 +21,7 @@ theorem toReal_mk (q : ℚ) : toReal (mk q) = ((q : ℝ) : AddCircle (1 : ℝ)) 
   rfl
 
 theorem toReal_injective : Injective toReal := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨q, rfl⟩ := mk_surjective x
   rw [toReal_mk, AddCircle.coe_eq_zero_iff] at hx
@@ -106,7 +106,7 @@ theorem evalHom_apply (a : G) (f : G →+ QZ) : evalHom G a f = f a :=
   rfl
 
 theorem evalHom_injective : Injective (evalHom G) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra hne
   obtain ⟨f, hf⟩ := exists_apply_ne_zero hne

@@ -316,7 +316,7 @@ theorem SmallSectionMixed.proof (hG4 : G4.Statement) (hG41 : ArithmeticVolumeDim
   intro K _ ι _ P P0 d M H p q II hII hd hP hP0 hMs hMn hMc hHa hHs hHm hHc hp htop
   obtain ⟨Ω, _, y, rfl, hbir⟩ := BirationalModelExists.proof K ι P d hP
   have hinj : Function.Injective (algebraMap ℤ Ω) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro m hm
     have hmem : (C m : MRing ι) ∈ mCoordIdeal y := by
       rw [mCoordIdeal, RingHom.mem_ker, mConeMap, aeval_C, MvPolynomial.algebraMap_apply, hm, map_zero]

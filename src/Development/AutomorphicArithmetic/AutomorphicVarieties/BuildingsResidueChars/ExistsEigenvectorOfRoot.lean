@@ -6,7 +6,7 @@ theorem UpperTheory.exists_eigenvector_of_root :
   intro L C D W _ _ _ _ _ _ _ _ s j S T hj hspan hT q b hb hq
   by_contra hcon
   have hinj : Function.Injective (aeval S q) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     by_contra h0
     exact hcon ⟨x, h0, hx⟩

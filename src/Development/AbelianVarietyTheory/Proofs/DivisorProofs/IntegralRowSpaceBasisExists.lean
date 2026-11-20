@@ -13,7 +13,7 @@ theorem exists_basis_matrix_of_integral_preimage
   let ι : (Fin n → O) →ₗ[O] (Fin n → k) := (Algebra.linearMap O k).compLeft (Fin n)
   let f : (Fin m → k) →ₗ[O] (Fin n → k) := (Matrix.vecMulLinear P).restrictScalars O
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     exact hP c hc
   let L : Submodule O (Fin m → k) := (LinearMap.range ι).comap f

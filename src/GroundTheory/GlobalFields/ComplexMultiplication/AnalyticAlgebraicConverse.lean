@@ -27,7 +27,7 @@ theorem homConst_ne_zero {Q : isogHom (weierstrassCurve L₁) (weierstrassCurve 
 
 theorem homConst_injective :
     Function.Injective (homConst (weierstrassCurve L₁) (weierstrassCurve L₂)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro Q h
   by_contra hQ
   exact homConst_ne_zero hQ h

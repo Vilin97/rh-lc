@@ -132,7 +132,7 @@ theorem surj_mod (D D' : Datum H) {n : ℕ} (hn : 0 < n) (g : D.La →ₗ[𝓞 E
     rw [natCast_zsmul, ← map_nsmul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
     exact (hN _).2 ⟨_, rfl⟩
   have hi : Function.Injective (N.mapQ N _ hle) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨y, rfl⟩ := N.mkQ_surjective x
     rw [Submodule.mkQ_apply, Submodule.mapQ_apply, Submodule.Quotient.mk_eq_zero] at hx

@@ -26,7 +26,7 @@ theorem coordsDiag : ∀ (g : ℕ) (T : (Fin g → ℂ) →ₗ[ℝ] (Fin g → �
     rw [h, norm_zero] at this
     exact (norm_nonneg _).not_gt this
   have hTinj : Function.Injective T := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     funext j
     have h1 := hq j v
@@ -44,7 +44,7 @@ theorem coordsDiag : ∀ (g : ℕ) (T : (Fin g → ℂ) →ₗ[ℝ] (Fin g → �
     rw [hq j v, hT]
     field_simp [hα j]
   have hLinj : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro w hw
     obtain ⟨v, rfl⟩ := hTsurj w
     have hv : v = 0 := by

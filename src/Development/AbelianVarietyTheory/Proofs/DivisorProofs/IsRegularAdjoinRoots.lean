@@ -75,7 +75,7 @@ lemma algebraMap_eq_mk (z : R) :
 
 theorem injective (hn : 0 < n) :
     Function.Injective (algebraMap R (MvPolynomial (Fin r) R ⧸ rel n x)) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   rw [algebraMap_eq_mk, Ideal.Quotient.eq_zero_iff_mem] at hc
   have := lin_rel n x hn hc

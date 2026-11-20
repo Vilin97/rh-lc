@@ -83,7 +83,7 @@ theorem finrank_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   have hf : Function.Injective f := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro Θ h0
     obtain ⟨hs, hc⟩ := hV Θ.1 Θ.2
     have key : ∀ i j, ty i H.rt = ρ → Θ.1 i j = 0 := by

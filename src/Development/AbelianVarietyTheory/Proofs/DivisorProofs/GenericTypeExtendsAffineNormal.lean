@@ -26,7 +26,7 @@ theorem exists_section_comap_eq (K : Type) [Field K] [Algebra R K] [IsFractionRi
   have hPb : P.comap (algebraMap R A) = ⊥ := hPo.over.symm
   haveI : IsDomain (A ⧸ P) := Ideal.Quotient.isDomain P
   have hinj : Function.Injective (algebraMap R (A ⧸ P)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
     rw [IsScalarTower.algebraMap_apply R A (A ⧸ P), Ideal.Quotient.algebraMap_eq, Ideal.Quotient.eq_zero_iff_mem] at hr
     have : r ∈ P.comap (algebraMap R A) := hr

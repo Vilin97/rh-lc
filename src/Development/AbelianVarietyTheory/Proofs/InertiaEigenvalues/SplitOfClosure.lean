@@ -155,7 +155,7 @@ theorem split_of_crys [FiniteDimensional LL V] (ρ : Representation LL G V) (f :
       exact h4
   have hpb : Function.Bijective p := by
     constructor
-    · rw [injective_iff_map_eq_zero]
+    · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro z h
       have hz : tB B (LinearMap.snd LL V LL) z.1.1 = 0 := congrArg Subtype.val z.2
       have hz' : tB B (LinearMap.fst LL V LL) z.1.1 = 0 := congrArg Subtype.val h
@@ -282,7 +282,7 @@ theorem split_of_closure
     simp [u, extRep_apply, he, hf, smul_sub]
     abel
   have hui : Function.Injective u := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     rintro ⟨w, c⟩ h
     have h' : j w + c • x = 0 := by simpa [u] using h
     have hc0 : c = 0 := by

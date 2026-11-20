@@ -16,7 +16,7 @@ theorem awayLift_algebraMap' (x : R) :
 
 theorem awayLift_injective (hf : Function.Injective f) :
     Function.Injective (Localization.awayLift f t ht) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨⟨y, s⟩, hs⟩ := IsLocalization.surj (Submonoid.powers t) x
   simp only at hs

@@ -118,7 +118,7 @@ theorem injective_lift_of_linearDisjoint [FiniteDimensional K₀ L] [Algebra.IsS
   have hle := le_natDegree_minpoly_of_linearDisjoint j F M N L pb hM (hN pb.gen) hdisj
   have li : LinearIndependent F (fun k : Fin pb.dim => x ^ (k : ℕ)) :=
     (linearIndependent_pow x).comp (Fin.castLE hle) (Fin.castLE_injective hle)
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   obtain ⟨c, rfl⟩ := TensorProduct.eq_repr_basis_left pb.basis z
   have hc : c = 0 := by

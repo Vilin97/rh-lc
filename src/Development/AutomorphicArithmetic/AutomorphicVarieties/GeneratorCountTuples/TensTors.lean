@@ -23,7 +23,7 @@ theorem UpperTheory.V.K.tensTors :
   obtain ⟨n, hn, hnx⟩ := isOfFinAddOrder_iff_nsmul_eq_zero.1 hx
   let m : ℤ_[l] →ₗ[ℤ] ℤ_[l] := n • LinearMap.id
   have hm : Function.Injective m := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     have : (n : ℤ_[l]) * a = 0 := by simpa [m] using ha
     rcases mul_eq_zero.1 this with h | h

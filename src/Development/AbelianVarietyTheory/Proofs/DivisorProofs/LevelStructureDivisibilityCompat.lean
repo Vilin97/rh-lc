@@ -18,7 +18,7 @@ theorem exists_section {R : Type} (K : Type) {A : Type} [CommRing R] [IsDomain R
     (m : Ideal A) [m.IsPrime] : ∃ σ : A →ₐ[R] R, RingHom.ker σ ≤ m := by
   obtain ⟨q, hqm, hq, hq0⟩ := Ideal.exists_ideal_le_liesOver_of_le (R := R) (p := ⊥) (q := m.under R) m bot_le
   have hinj : Function.Injective (algebraMap R (A ⧸ q)) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro s hs
     have h1 : algebraMap R A s ∈ q := Ideal.Quotient.eq_zero_iff_mem.1 hs
     have h2 : s ∈ q.under R := h1
@@ -121,7 +121,7 @@ theorem ker_trivial {K : Type} [IsDomain R] [IsIntegrallyClosed R] [Field K] [Is
       IsLocalization.map_units K (⟨y.1, hq y.2⟩ : nonZeroDivisors R)
     let jj : L →ₐ[R] K := IsLocalization.liftAlgHom (M := q.primeCompl) hu
     have hjj : Function.Injective jj := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro y hy
       obtain ⟨⟨a, b⟩, rfl⟩ := IsLocalization.mk'_surjective q.primeCompl y
       have h1 : jj (IsLocalization.mk' L a b * algebraMap R L b) = 0 := by

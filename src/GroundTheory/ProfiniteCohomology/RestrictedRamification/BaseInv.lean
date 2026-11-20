@@ -209,7 +209,7 @@ theorem injective_gsCompactInv (ℓ k : ℕ) (hℓ : ℓ.Prime) (hnk : n = ℓ ^
     (hodd : Odd n ∨ IsTotallyComplex K.1) (h3 : Subsingleton (cohomology (gsRoots S n) 3))
     (ht : ∀ v, Function.Injective (gsLocalInvRoots S ιs n v)) :
     Function.Injective (gsCompactInv S ιs n hodd h3) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz0
   refine Exists.elim (localToCompact_two_surjective S ιs n h3 z) (fun ξ hξ => ?_)
   subst hξ

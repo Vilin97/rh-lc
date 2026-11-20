@@ -75,7 +75,7 @@ theorem mono_of_ne_zero {X : Scheme.{0}} [IsIntegral X] {L F : X.Modules} {g : �
       rfl
     · exact Twist.sec_ext_of_cover (ι := Empty) (fun _ => V) (fun _ => le_rfl)
         (fun x hx => (hV (genericPoint_mem hx)).elim) fun x => x.elim
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   rw [← b.sum_repr t, Fin.sum_univ_one] at ht ⊢
   rw [map_smul] at ht

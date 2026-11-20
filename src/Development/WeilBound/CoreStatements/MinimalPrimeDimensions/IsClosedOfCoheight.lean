@@ -26,7 +26,7 @@ theorem bijective_comp (F : Type) [Field F] [NumberField F] :
     exact IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 F)) hfg
   · intro τ
     have hinj : Function.Injective τ := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       by_contra hne
       have h := Ideal.comap_ne_bot_of_integral_mem hne (show x ∈ RingHom.ker τ from hx)

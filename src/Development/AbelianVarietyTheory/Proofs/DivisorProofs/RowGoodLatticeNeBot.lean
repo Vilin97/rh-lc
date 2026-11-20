@@ -12,7 +12,7 @@ theorem GlobalTheory.CovTop.ne_bot_of_isLattice_coords {O K V : Type} [CommRing 
     (hM : Submodule.IsLattice K (M.comap ((Fintype.linearCombination K b).restrictScalars O))) : M ≠ ⊥ := by
   rintro rfl
   have hinj : Function.Injective (Fintype.linearCombination K b) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     exact funext (Fintype.linearIndependent_iff.1 hb c (by rwa [Fintype.linearCombination_apply] at hc))
   have h0 : (⊥ : Submodule O V).comap ((Fintype.linearCombination K b).restrictScalars O) = ⊥ := by

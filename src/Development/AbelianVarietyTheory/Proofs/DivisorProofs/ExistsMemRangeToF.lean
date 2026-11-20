@@ -89,7 +89,7 @@ theorem exists_orth [FiniteDimensional K V] {H : Type} [NormedAddCommGroup H] [I
       exact this.symm
     rw [map_smulₛₗ, inner_smul_left, h0, mul_zero]
   have hinj : Function.Injective (f ∘ₗ U.subtype) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro u hu
     have := horth u hu u u.2
     rw [inner_self_eq_zero, ← map_zero j] at this

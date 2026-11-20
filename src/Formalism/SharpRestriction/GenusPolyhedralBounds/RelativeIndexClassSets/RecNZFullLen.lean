@@ -29,7 +29,7 @@ private theorem length_quot_span_singleton_dvr_lemma {O : Type*} [CommRing O] [I
         rw [LinearMap.id_apply]
         ring)
     have hf : Function.Injective f := by
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro x hx
       obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ x
       change Submodule.Quotient.mk (ϖ ^ n * x) = (0 : O ⧸ Ideal.span {ϖ ^ (n + 1)}) at hx

@@ -345,7 +345,7 @@ theorem dualCrys_of_regular [CharZero Qp] (LL : Type) [Field LL] [Algebra Qp LL]
       map_add' := fun f g => by ext; simp
       map_smul' := fun c f => by ext; simp }
   have hT : Function.Injective T := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro f hf
     ext v
     refine (traceForm_nondegenerate Qp LL).1 (f v) fun y => ?_

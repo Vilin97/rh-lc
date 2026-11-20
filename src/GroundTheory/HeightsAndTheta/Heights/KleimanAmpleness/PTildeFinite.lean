@@ -221,7 +221,7 @@ def FinGradedSub.embedH (n : ℕ) :
         exact Submodule.mem_map.mpr ⟨M.embedC c n t, M.embedC_mem c n t, by rw [← M.embedC_d, ht]; rfl⟩)
 
 theorem FinGradedSub.embedH_injective (n : ℕ) : Function.Injective (M.embedH c n) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ y
   change Submodule.Quotient.mk _ = 0 at hy

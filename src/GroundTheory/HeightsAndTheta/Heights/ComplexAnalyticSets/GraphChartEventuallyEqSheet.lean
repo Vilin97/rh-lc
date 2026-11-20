@@ -64,7 +64,7 @@ theorem injective_projHom_of_finite {J : Ideal (MvPolynomial (Fin n) ℂ)}
   have hd : ringKrullDim (MvPolynomial (Fin d) ℂ) = (d : ℕ) := by
     rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field]
     simp
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra ha0
   have haP : a ∈ P := ha

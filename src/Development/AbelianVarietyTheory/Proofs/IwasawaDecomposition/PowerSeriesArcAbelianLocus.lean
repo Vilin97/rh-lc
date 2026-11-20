@@ -11,7 +11,7 @@ namespace GlobalTheory.PolArc
 theorem injective_of_charZero {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Level H}
     (c : Coeff l) (W : ValuationSubring ℂ) {O' : Type} [CommRing O'] [IsDomain O'] [CharZero O']
     (b' : c.V W →+* O') : Function.Injective b' := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
   by_contra hne
   have hvF : ((v : c.F)) ≠ 0 := fun h => hne (Subtype.ext h)

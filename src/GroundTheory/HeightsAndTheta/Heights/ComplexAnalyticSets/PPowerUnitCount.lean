@@ -70,7 +70,7 @@ theorem powerUnitCount_of_root {d m : ℕ} {F : (Fin (d + 1) → ℂ) → Fin d 
     have h2 := hasFDerivAt_pi'.mp hΨd j.succ
     exact DFunLike.congr_fun (h1.unique h2) v
   have hinj : Function.Injective (fderiv ℂ Φ s) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     apply hbij.1
     rw [map_zero]

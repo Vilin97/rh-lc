@@ -27,7 +27,7 @@ theorem injective_of_away {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] 
     [IsLocalization.Away t S] (hinj : Function.Injective (algebraMap R S)) (fR : R →+* R) (fS : S →+* S)
     (hf : ∀ x, fS (algebraMap R S x) = algebraMap R S (fR x)) (hfR : Function.Injective fR) :
     Function.Injective fS := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨n, y, hy⟩ := IsLocalization.Away.surj t x
   have h1 := congrArg fS hy

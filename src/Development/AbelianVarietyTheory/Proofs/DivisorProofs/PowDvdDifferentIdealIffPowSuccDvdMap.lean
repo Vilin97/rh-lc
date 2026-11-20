@@ -59,7 +59,7 @@ theorem trace_quotient_pow {k B : Type*} [Field k] [CommRing B] [IsDedekindDomai
     have hbij : Function.Bijective
         (Ideal.Quotient.factor (Ideal.pow_le_self (I := P) (Nat.succ_ne_zero 0))) := by
       refine ⟨?_, Ideal.Quotient.factor_surjective _⟩
-      rw [injective_iff_map_eq_zero]
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro y hy
       obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
       rw [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem] at hy
@@ -116,7 +116,7 @@ theorem trace_quotient_pow {k B : Type*} [Field k] [CommRing B] [IsDedekindDomai
       rw [key, ih']
       push_cast
       ring
-    · rw [injective_iff_map_eq_zero]
+    · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro y hy
       obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
       rw [hf, Ideal.Quotient.eq_zero_iff_mem] at hy

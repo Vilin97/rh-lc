@@ -77,7 +77,7 @@ theorem ioE_φ (hO : Function.Injective (algebraMap O LL)) {W : LocWach PD LL O 
     have := congrArg Subtype.val hc
     simpa [h] using this.symm
   have hinj : Function.Injective (LinearMap.toSpanSingleton O W.one.L.T e₀) := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro c hc
     have h1 : c • (e₀ : W.one.V) = 0 := congrArg Subtype.val hc
     rw [← algebraMap_smul LL, smul_eq_zero] at h1

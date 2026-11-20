@@ -75,7 +75,7 @@ section Transport
 variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ)
 
 theorem jF_injective : Function.Injective (jF X la N) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro p hp
   by_contra hne
   obtain ⟨β, hβ⟩ := MvPolynomial.ne_zero_iff.mp hne

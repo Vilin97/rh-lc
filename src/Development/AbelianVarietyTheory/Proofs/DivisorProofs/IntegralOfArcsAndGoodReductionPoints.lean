@@ -44,7 +44,7 @@ theorem exists_denominator {A : Type} [CommRing A] [IsDomain A] [IsDiscreteValua
     isUnit_iff_ne_zero.2 ((map_ne_zero_iff _ hf).2 h0)
   obtain ⟨ψ, hψ⟩ := exists_away_lift (S := S) _ f hu
   have hψi : Function.Injective ψ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨⟨a, m⟩, ha⟩ :=
       IsLocalization.surj (Submonoid.powers (PowerSeries.C ϖ * PowerSeries.X : PowerSeries A)) x

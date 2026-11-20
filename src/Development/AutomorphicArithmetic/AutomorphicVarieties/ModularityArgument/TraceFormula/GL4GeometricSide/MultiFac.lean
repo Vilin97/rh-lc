@@ -43,7 +43,7 @@ private theorem exists_equiv {A : Subalgebra ℂ (Module.End ℂ F)} (hA : Faith
     · right
       exact Submodule.map_injective_of_injective W.injective_subtype (by rw [h, Submodule.map_subtype_top])
   have hi : Function.Injective φ := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
     refine Subtype.ext (hA W hW.1 hW.2.1 a.1 a.2 fun x hx => ?_)
     exact congrArg Subtype.val (LinearMap.congr_fun ha ⟨x, hx⟩)

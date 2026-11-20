@@ -411,7 +411,7 @@ theorem rank_le_of_immersion [Algebra.FiniteType ℂ A] (hd : ringKrullDim A = d
   let L : E →ₗ[ℂ] (Fin d → ℂ) :=
     LinearMap.pi fun i => (fderiv ℂ (fun z => φ z (g (X i))) z : E →ₗ[ℂ] ℂ)
   have hL : Function.Injective L := by
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     refine himm z (hVU hz) v fun a => fderiv_apply_eq_zero_of_mem_adjoin hd' v
       (H z hz v fun r => ?_) (hs ▸ Algebra.mem_top)

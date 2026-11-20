@@ -36,7 +36,7 @@ private theorem comm_of_split (p : ℕ) [Fact p.Prime] {O : Type} [Ring O] [Modu
 
 private theorem a_inj {F : Type} [Field F] [NumberField F] {O : Type} [Ring O] [Algebra (𝓞 F) O] [Nontrivial O]
     [Module.Free ℤ O] : Function.Injective (algebraMap (𝓞 F) O) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro c hc
   by_contra h0
   have hI : RingHom.ker (algebraMap (𝓞 F) O) ≠ ⊥ := fun h => h0 (by

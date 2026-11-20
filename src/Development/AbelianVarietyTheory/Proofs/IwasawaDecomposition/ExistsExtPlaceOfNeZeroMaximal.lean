@@ -28,7 +28,7 @@ theorem exists_embed (B : Type) [CommRing B] [IsDomain B] [Algebra (𝓞 F) B] [
     exact (algebraMap F _).injective.comp (IsFractionRing.injective (𝓞 F) F)
   let ψ : B →ₐ[𝓞 F] AlgebraicClosure F := IsAlgClosed.lift
   refine ⟨ψ, ?_⟩
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   by_contra h0
   refine Ideal.comap_ne_bot_of_algebraic_mem (R := ℤ) (I := RingHom.ker ψ.toRingHom) h0 hx

@@ -367,7 +367,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordKill :
   intro R _ M _ _ N _ _ I hM hN U V f hf hs r hr
   refine ⟨?_, (UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordSurj hM hN f hf hs).1⟩
   obtain ⟨-, -, -, hb⟩ := UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordExists hM U
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have h1 := hr x (congrArg Subtype.val hx)
   refine Subtype.ext ((hb.iterate r).injOn x.2 (zero_mem _) ?_)
@@ -434,7 +434,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.towerIso :
       rw [pi_eq_sum_univ x]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem_smul (hx i) Submodule.mem_top
   constructor
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     funext i
     have : x i ∈ ⨅ b, I b := Ideal.mem_iInf.2 fun b =>
@@ -466,7 +466,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.adicIso :
   let F := IsAdicComplete.lift I f hc
   have hF : ∀ r x, Submodule.Quotient.mk (F x) = f r x := fun r x => IsAdicComplete.mk_lift I hc r x
   refine ⟨LinearEquiv.ofBijective F ⟨?_, fun y => ?_⟩, hF⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     refine IsHausdorff.haus (I := I) inferInstance _ fun r => ?_
     rw [SModEq.zero, ← hk, LinearMap.mem_ker, ← hF, hx]; rfl

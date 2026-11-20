@@ -88,7 +88,7 @@ lemma pullSectionOn_injective_of_basis :
     Function.Injective (pullSectionOn (baseChangeMap f ℚ) L W) := by
   have hb := (hPB _ _ (baseChangeMap f ℚ) L W n t ht).bijective_self
   have hinj := (hRL X f W hW).1
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro τ hτ
   obtain ⟨r, rfl⟩ := ht.bijective_self.2 τ
   have h0 : (fun i => (baseChangeMap f ℚ).app W (r i)) = 0 := by
@@ -126,7 +126,7 @@ theorem ClearDenominators.proof (hPB : PullbackBasis.Statement.{0})
 
   have inj : ∀ V : X.Opens, Function.Injective (pullSectionOn (baseChangeMap f ℚ) L V) := by
     intro V
-    rw [injective_iff_map_eq_zero]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro τ hτ
     apply modules_eq_of_locally L τ 0
     intro x hx

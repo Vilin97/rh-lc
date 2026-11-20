@@ -368,7 +368,7 @@ theorem extNorm_res (h : (ρ1 : ℝ) ≤ ρ0) (ρ : Set.Ioc (0 : ℝ) ρ1) (x : 
     fun b => by rw [res_coe, extNorm_coe, extNorm_coe, coe_incl]
 
 theorem res_injective (h : (ρ1 : ℝ) ≤ ρ0) : Function.Injective (T.res h) := by
-  rw [injective_iff_map_eq_zero]
+  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have := T.extNorm_res h (topRad ρ1) x
   rw [hx, extNorm_zero, eq_comm, T.extNorm_eq_zero_iff] at this
