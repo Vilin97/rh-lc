@@ -93,7 +93,7 @@ private noncomputable def colMap (j : Fin D) : Matrix (Fin D) (Fin D) ℂ →ₗ
   map_smul' _ _ := rfl
 
 private noncomputable def mdiscML :
-    MultilinearMap ℂ (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ :=
+    MultilinearMap (RingHom.id ℂ) (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ :=
   ∑ σ : Equiv.Perm (Fin D), (1 / (D.factorial : ℂ)) •
     ((Matrix.detRowAlternating (R := ℂ) (n := Fin D)).toMultilinearMap.compLinearMap
       colMap).domDomCongr σ
@@ -121,7 +121,7 @@ theorem mdisc_update_smul (A : Fin D → Matrix (Fin D) (Fin D) ℂ) (k : Fin D)
   exact mdiscML.map_update_smul A k c B
 
 theorem exists_multilinearMap_eq_mdisc :
-    ∃ M : MultilinearMap ℂ (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ, ⇑M = mdisc := by
+    ∃ M : MultilinearMap (RingHom.id ℂ) (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ, ⇑M = mdisc := by
   exact ⟨mdiscML, funext mdiscML_apply⟩
 
 theorem mdisc_const (A : Matrix (Fin D) (Fin D) ℂ) : mdisc (fun _ => A) = A.det := by
@@ -184,7 +184,9 @@ theorem det_smul_add_smul_eq_sum_mdisc (s t : ℂ) (A B : Matrix (Fin D) (Fin D)
     have e : T.piecewise (fun _ : Fin D => s • A) (fun _ => t • B) =
         fun k => (if k ∈ T then s else t) • (if k ∈ T then A else B) := by
       funext k; by_cases hk : k ∈ T <;> simp [Finset.piecewise, hk]
-    rw [e, MultilinearMap.map_smul_univ, smul_eq_mul, mdiscML_apply, mdisc_piecewise,
+    rw [e, MultilinearMap.map_smul_univ]
+    simp only [RingHom.id_apply]
+    rw [smul_eq_mul, mdiscML_apply, mdisc_piecewise,
       Finset.prod_ite, Finset.prod_const, Finset.prod_const]
     congr 2
     · simp
@@ -291,7 +293,9 @@ theorem norm_mdisc_le_of_abs_le (A B : Fin D → Matrix (Fin D) (Fin D) ℂ)
     have e : T.piecewise (fun k => A k + B k) (fun k => (-1 : ℂ) • B k) =
         fun k => (if k ∈ T then (1 : ℂ) else -1) • T.piecewise (fun k => A k + B k) B k := by
       funext k; by_cases hk : k ∈ T <;> simp [Finset.piecewise, hk]
-    rw [e, MultilinearMap.map_smul_univ, smul_eq_mul, mdiscML_apply, Finset.prod_ite,
+    rw [e, MultilinearMap.map_smul_univ]
+    simp only [RingHom.id_apply]
+    rw [smul_eq_mul, mdiscML_apply, Finset.prod_ite,
       Finset.prod_const, Finset.prod_const, one_pow, one_mul]
     congr 2
     rw [Finset.filter_not, Finset.filter_mem_eq_inter, Finset.univ_inter, Finset.card_sdiff,
@@ -315,7 +319,9 @@ theorem norm_mdisc_le_of_abs_le (A B : Fin D → Matrix (Fin D) (Fin D) ℂ)
       have e : T.piecewise (fun k => (2 : ℂ) • B k) B =
           fun k => (if k ∈ T then (2 : ℂ) else 1) • B k := by
         funext k; by_cases hk : k ∈ T <;> simp [Finset.piecewise, hk]
-      rw [e, MultilinearMap.map_smul_univ, smul_eq_mul, Finset.prod_ite, Finset.prod_const,
+      rw [e, MultilinearMap.map_smul_univ]
+      simp only [RingHom.id_apply]
+      rw [smul_eq_mul, Finset.prod_ite, Finset.prod_const,
         Finset.prod_const, one_pow, mul_one]
       simp
     have hz : mdisc (T.piecewise (fun k => A k + B k) B) =

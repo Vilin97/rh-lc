@@ -45,13 +45,23 @@ theorem maDens_comb {D m : ℕ} (φ : Fin D → (Fin D → ℂ) → ℝ) (ψ : F
     (c : Fin D → Fin m → ℝ) (z : Fin D → ℂ)
     (h : ∀ i, hessC (φ i) z = ∑ l, (c i l : ℂ) • hessC (ψ i l) z) :
     maDens φ z = ∑ s : Fin D → Fin m, (∏ i, c i (s i)) * maDens (fun i => ψ i (s i)) z := by
-  obtain ⟨M, hM⟩ := ReciprocityTheory.AnForm.A.exists_multilinearMap_eq_mdisc (D := D)
+  obtain ⟨M, hM⟩ := (by
+    show ∃ F : MultilinearMap (RingHom.id ℂ)
+        (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ,
+        ⇑F = _root_.ReciprocityTheory.AnForm.mdisc
+    refine ⟨MultilinearMap.mk' _root_.ReciprocityTheory.AnForm.mdisc
+      _root_.ReciprocityTheory.AnForm.A.mdisc_update_add ?_, rfl⟩
+    intro A k c B
+    simpa only [RingHom.id_apply, smul_eq_mul] using
+      (_root_.ReciprocityTheory.AnForm.A.mdisc_update_smul A k c B))
   unfold maDens
   simp only [h, ← hM]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [M.map_sum, Complex.re_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
-  rw [M.map_smul_univ, smul_eq_mul, ← Complex.ofReal_prod, Complex.re_ofReal_mul]
+  rw [M.map_smul_univ, smul_eq_mul]
+  simp only [RingHom.id_apply]
+  rw [← Complex.ofReal_prod, Complex.re_ofReal_mul]
   ring
 
 variable {e : ℕ} {X : Type} [TopologicalSpace X] {A : FinHolAtlas e X} {Z : Set X} {r : X → ℝ} {Om : LocPot X}

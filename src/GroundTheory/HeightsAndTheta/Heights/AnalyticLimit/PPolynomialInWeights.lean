@@ -28,7 +28,15 @@ theorem locDens_expand (A : FinHolAtlas D X) (Φ : Fin D → LocPot X) (B : Fin 
     simp_rw [hΦ]
     exact hessC_finset_sum _ _ (f k) y fun o _ =>
       ReciprocityTheory.AnForm.M.potential_contDiffAt A (B k o) (hB k o) j hy
-  obtain ⟨M, hM⟩ := ReciprocityTheory.AnForm.A.exists_multilinearMap_eq_mdisc (D := D)
+  obtain ⟨M, hM⟩ := (by
+    show ∃ F : MultilinearMap (RingHom.id ℂ)
+        (fun _ : Fin D => Matrix (Fin D) (Fin D) ℂ) ℂ,
+        ⇑F = _root_.ReciprocityTheory.AnForm.mdisc
+    refine ⟨MultilinearMap.mk' _root_.ReciprocityTheory.AnForm.mdisc
+      _root_.ReciprocityTheory.AnForm.A.mdisc_update_add ?_, rfl⟩
+    intro A k c B
+    simpa only [RingHom.id_apply, smul_eq_mul] using
+      (_root_.ReciprocityTheory.AnForm.A.mdisc_update_smul A k c B))
   have hL : locDens A Φ j y =
       (D.factorial : ℝ) * (2 / Real.pi) ^ D * (M fun k => ∑ o, (x o : ℂ) • hessC (f k o) y).re := by
     simp only [locDens, maDens, hS, hM]
@@ -39,7 +47,9 @@ theorem locDens_expand (A : FinHolAtlas D X) (Φ : Fin D → LocPot X) (B : Fin 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hL, MultilinearMap.map_sum, Complex.re_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
-  rw [MultilinearMap.map_smul_univ, hR, smul_eq_mul, ← Complex.ofReal_prod, Complex.re_ofReal_mul]
+  rw [MultilinearMap.map_smul_univ, hR, smul_eq_mul]
+  simp only [RingHom.id_apply]
+  rw [← Complex.ofReal_prod, Complex.re_ofReal_mul]
   ring
 
 theorem mIntegrable_of_continuousOn (A : FinHolAtlas D X) (Φ : Fin D → LocPot X)
