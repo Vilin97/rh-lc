@@ -56,7 +56,7 @@ def weyl (ν : Type) [Fintype ν] [DecidableEq ν] : UG c (stdJ ν E) :=
   ⟨⟨stdJ ν E, -stdJ ν E, by rw [Matrix.mul_neg, stdJ_mul_stdJ, neg_neg], by rw [Matrix.neg_mul, stdJ_mul_stdJ, neg_neg]⟩, by
     rw [mem_UG_iff]
     have h : ((stdJ ν E).map c)ᵀ = -stdJ ν E := by
-      ext (i | i) (j | j) <;> simp [stdJ, one_apply, eq_comm]
+      ext (i | i) (j | j) <;> simp [stdJ, Matrix.one_apply, eq_comm]
     change stdJ ν E * stdJ ν E * ((stdJ ν E).map c)ᵀ = stdJ ν E
     rw [h, stdJ_mul_stdJ]
     simp⟩
