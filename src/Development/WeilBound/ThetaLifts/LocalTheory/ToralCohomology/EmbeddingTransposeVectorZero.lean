@@ -20,7 +20,7 @@ theorem hasSum_exp (A : Matrix I I ℂ) (v : I → ℂ) :
   have h := NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) A
   let L : Matrix I I ℂ →ₗ[ℂ] (I → ℂ) := (Matrix.mulVecBilin ℂ ℂ).flip v
   have := h.map L L.continuous_of_finiteDimensional
-  convert this using 1
+  convert (preTransparency := .reducible) this using 1
   · funext n
     exact (Matrix.smul_mulVec _ _ _).symm
   · rfl

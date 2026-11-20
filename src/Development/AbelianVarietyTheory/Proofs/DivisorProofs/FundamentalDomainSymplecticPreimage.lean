@@ -19,7 +19,7 @@ theorem sp_vecMul_inv_vecMul {g : ℕ} (γ : Sp g) (x : Fl g) :
   rw [Matrix.vecMul_vecMul, h, Matrix.vecMul_one]
 
 theorem sp_vecMul_quasiMeasurePreserving {g : ℕ} (γ : Sp g) :
-    Measure.QuasiMeasurePreserving (fun x : Fl g => x ᵥ* γ.mat) volume volume := by
+    MeasureTheory.QuasiMeasurePreserving (fun x : Fl g => x ᵥ* γ.mat) volume volume := by
   have h : γ.mat * (γ⁻¹).mat = 1 := congrArg Subtype.val (mul_inv_cancel γ)
   have hd : (γ.mat).det ≠ 0 := by
     intro h0

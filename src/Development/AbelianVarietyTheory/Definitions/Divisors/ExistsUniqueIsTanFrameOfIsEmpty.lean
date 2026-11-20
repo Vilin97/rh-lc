@@ -91,7 +91,7 @@ theorem IsDef.exists_isShift {y : FrPt Xo c K} {v v' : FrPt Xo c (DualNumber K)}
     ((frChg_calculus E H Dw l Xo c _).2.1 y)
   refine ⟨fun k => k.elim (a : DualNumber K).snd fun q => (g q.1 q.2.1 q.2.2).snd, ?_⟩
   unfold IsShift
-  convert hc using 1
+  convert (preTransparency := .reducible) hc using 1
   · funext τ
     ext i j
     · simpa [unip] using (congrArg (fun g => g τ i j) h1).symm

@@ -101,7 +101,7 @@ theorem UpperTheory.ConvolutionTheory.FX.rearrange :
         · rw [hv, ← Finset.mul_sum, ← map_sum, ← Finset.smul_sum, ← Finset.sum_smul, ← map_sum, sum_homogeneousComponent,
           mul_comm, smul_mul_assoc, smul_assoc, map_smul, mul_smul, smul_eq_mul]
   have h2 := hasSum_sum (s := F.support) fun β _ => hA (F.coeff β) ((β.prod fun k e => lift D τ (b.h k) ^ e) • m)
-  convert h2 using 1
+  convert (preTransparency := .reducible) h2 using 1
   · funext k
     set_option synthInstance.maxHeartbeats 100000 in
       rw [pieceK, eval₂_sum, Finset.sum_smul, map_sum]

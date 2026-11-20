@@ -173,7 +173,7 @@ theorem exists_diagonal {ι : Type*} {a b : ι → Lp ℂ 2 ν} (h : Summable fu
         exact integral_add (L1.integrable_coeFn f).integrableOn (L1.integrable_coeFn f').integrableOn }
   have hg : Continuous g := continuous_setIntegral E
   have := hs.hasSum.map g hg
-  convert this using 1
+  convert (preTransparency := .reducible) this using 1
   · funext j
     simp only [Function.comp_apply, g, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
     exact integral_congr_ae ((Integrable.coeFn_toL1 (hI j)).restrict).symm

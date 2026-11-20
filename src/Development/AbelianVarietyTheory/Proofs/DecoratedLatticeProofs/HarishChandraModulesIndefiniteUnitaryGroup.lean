@@ -289,7 +289,7 @@ theorem eigD (h : IsHCMod πU M io) {X : Mat p q} (hX : X ∈ upq p q) {v : M.V}
       rw [sub_self]; exact h.2.2 X hX v
     have h1 := ((πU.π (T.expt (s • X))).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt s (h0.comp_sub_const s s)
     rw [hv, map_smul] at h1
-    convert h1 using 1
+    convert (preTransparency := .reducible) h1 using 1
     · funext r
       show _ = πU.π (T.expt (s • X)) (πU.π (T.expt ((r - s) • X)) (io v))
       rw [← pi_mulC, ← T.expt_add X hX, add_sub_cancel]
@@ -371,7 +371,7 @@ theorem dictD (hS : KFSm) (h : IsHCMod πU M io) {j : ℕ} (m : ℕ)
       PI.UnitaryCorollaryDerivatives.DjC.hasDerivAt_det_of_one _ _ (by simp) fun a b => PI.UnitaryCorollaryDerivatives.DjC.hasDerivAt_exp_entry (rx Y) a b
     have d2 := ((((hasDerivAt_id (0 : ℝ)).ofReal_comp.mul_const Y.trace).div_const 2).const_mul (j : ℂ)).fun_neg.cexp
     have d3 := ((d1.fun_pow m).fun_mul d2).fun_smul (h.2.2 Y hY v)
-    convert d3 using 1
+    convert (preTransparency := .reducible) d3 using 1
     · funext t
       rw [(hex Y hY).2, ContinuousLinearMap.smul_apply, smul_smul, mul_assoc, ← Complex.exp_add]
       simp only [id, neg_add_cancel, Complex.exp_zero, mul_one, twD, ContinuousLinearMap.smul_apply, Complex.coe_smul]

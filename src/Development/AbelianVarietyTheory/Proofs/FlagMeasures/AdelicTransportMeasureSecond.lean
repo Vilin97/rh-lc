@@ -53,7 +53,7 @@ theorem exists_rep_bound [μ.IsMulRightInvariant]
     have h1 := hv.1.hasDerivAt hp
     have h2 := ((ρ k).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt 0 h1
     refine HasDerivAt.unique (f := fun r : ℝ => ρ (e p r) v) (x := 0) ?_ h1
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext r
       show _ = (ρ k * ρ (e p r)) v
       rw [← map_mul, ← hcomm p r k hk, map_mul, mul_apply_eq_comp, hv.2 k hk]

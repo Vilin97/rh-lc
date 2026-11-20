@@ -76,7 +76,7 @@ theorem flow_eq {T : GrpData p q} (R : DSRep T) {X : Mat p q} (hX : X ∈ upq p 
       have := HasDerivAt.comp_sub_const t t (f := f) (f' := c • R.ι v) (by rw [sub_self]; exact h0)
       exact this
     have h2 := ((R.U.π (T.expt (t • X))).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt t h1
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext s
       simp only [hf, Function.comp, ContinuousLinearMap.coe_restrictScalars']
       rw [← ContinuousLinearMap.mul_apply, ← map_mul, ← T.expt_add X hX, add_sub_cancel]

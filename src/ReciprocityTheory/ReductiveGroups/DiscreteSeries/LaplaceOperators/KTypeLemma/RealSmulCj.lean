@@ -71,7 +71,7 @@ theorem derived_sdd {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {E : F
     have h4 := (toCjR (H := H)).hasFDerivAt.comp_hasDerivAt (0 : ℝ) h3
     have hv : v = ofD (toD v) := rfl
     rw [hv, actM_Edd hX]
-    convert h4 using 1
+    convert (preTransparency := .reducible) h4 using 1
     · funext t
       simp only [sdd, Function.comp_apply, ← exp_sub, sub_smul]
       rfl

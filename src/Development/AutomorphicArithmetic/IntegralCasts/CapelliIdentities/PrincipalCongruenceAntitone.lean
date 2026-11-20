@@ -84,7 +84,7 @@ theorem UpperTheory.Reformulated.B.Gr32.holLin :
       linear_combination (norm := module) a5 v + z • b5 v
   · intro φ ψ z c₀ a d₀ b h1 h2 x y hy yf
     have h := (h1 x y hy yf).add ((h2 x y hy yf).mul_left z)
-    convert h using 1
+    convert (preTransparency := .reducible) h using 1
     · funext ξ
       rw [UpperTheory.Reformulated.B.Gr32.coefAt_lin]
       ring

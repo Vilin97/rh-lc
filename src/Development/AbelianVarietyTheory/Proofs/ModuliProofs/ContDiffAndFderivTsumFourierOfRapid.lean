@@ -29,7 +29,7 @@ noncomputable def wave (a : ℂ) (t : ℝ) : ℂ := a * cexp (2 * π * I * t)
 theorem hasDerivAt_wave (a : ℂ) (t : ℝ) :
     HasDerivAt (wave a) (wave (2 * π * I * a) t) t := by
   have h := (((hasDerivAt_id (t : ℂ)).const_mul (2 * π * I)).cexp.const_mul a).comp_ofReal
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext y
     simp [wave]
   · simp only [wave, id]

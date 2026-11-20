@@ -428,7 +428,7 @@ theorem matches_of_grp (hH : GlobalTheory.Published.HarishChandraModules) (hs : 
     intro Z hZ v x hx
     have h1 := (hasDerivAt_sq_zpow T m hZ).fun_smul (R.der Z hZ v)
     have h2 := (realCLM hs U.symm).hasFDerivAt.comp_hasDerivAt (0 : ℝ) h1
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext t
       apply U.injective
       change _ = U (U.symm _)

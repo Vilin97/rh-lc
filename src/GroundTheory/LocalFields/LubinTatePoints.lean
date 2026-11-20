@@ -31,7 +31,7 @@ theorem map_psEval [TopologicalSpace M] [TopologicalSpace M'] [T2Space M'] (ρ :
     ρ (psEval f x) = psEval f fun i => ρ (x i) := by
   have h' := h.map ρ.toRingHom.toAddMonoidHom hρ
   refine (HasSum.tsum_eq ?_).symm
-  convert h' using 1
+  convert (preTransparency := .reducible) h' using 1
   · funext d
     exact (map_psTerm ρ f x d).symm
   · rfl
@@ -226,7 +226,7 @@ theorem hasSum_psEval_coe (E : IntermediateField K Ω) [FiniteDimensional K E] {
     mem_maximalIdeal_integer_iff.mpr ((valuation_coe_lt_one_iff E (x i)).mp (hx i))
   have hE : HasSum (psTerm f x) (psEval f x) := hasSum_psEval f a ha
   have h := hE.map E.val.toRingHom.toAddMonoidHom continuous_subtype_val
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext d
     exact (map_psTerm E.val f x d).symm
   · rfl

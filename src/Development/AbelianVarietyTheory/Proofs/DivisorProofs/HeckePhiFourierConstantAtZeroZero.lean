@@ -41,7 +41,7 @@ lemma hasDerivAt_neg_inv_ofReal_add_I (t : ℝ) :
   have h1 : HasDerivAt (fun w : ℂ => w + I) 1 (t : ℂ) := (hasDerivAt_id _).add_const I
   have h2 := (h1.inv (ofReal_add_I_ne_zero t)).neg
   have h3 := h2.comp_ofReal
-  convert h3 using 1
+  convert (preTransparency := .reducible) h3 using 1
   · funext s
     simp
   · rw [inv_pow]

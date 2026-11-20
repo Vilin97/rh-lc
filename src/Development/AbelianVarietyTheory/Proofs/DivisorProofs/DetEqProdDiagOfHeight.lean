@@ -107,7 +107,7 @@ theorem isVert_move {g g' : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin
       (g' q.1 * (Matrix.of fun i j => N (some ⟨q.1, i, j⟩)) * g q.1) q.2.1 q.2.2) y₀
   have k2 : FrChg (fun τ => (g τ).map (cst c K)) (cst c K a) w' v' := by
     refine (D.1 _ _ _ _ _ _ _ hw').2 ?_
-    convert k1 using 1
+    convert (preTransparency := .reducible) k1 using 1
     · funext τ
       have : g τ * (g' τ * (Matrix.of fun i j => N (some ⟨τ, i, j⟩)) * g τ) =
           (Matrix.of fun i j => N (some ⟨τ, i, j⟩)) * g τ := by

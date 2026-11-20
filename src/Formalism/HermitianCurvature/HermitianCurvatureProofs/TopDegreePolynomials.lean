@@ -114,7 +114,7 @@ theorem plane_wave_top_degree : Formalism.FourierDecayAlt.F7.PlaneWaveTop := by
   have h2 := pairing_top_degree R M Ξ A Bv n n 1 X X' hAn.le dBv
   have h3 := isTop_sub h1 h2
   rw [two_mul]
-  convert h3 using 1
+  convert (preTransparency := .reducible) h3 using 1
   · funext Y
     rw [j_pairing_formula R M Ξ A B Av Bv s Y (Y + 1) X X']
     simp [evR, eval_add, eval_C_mul]
@@ -138,7 +138,7 @@ theorem lift_top_degree : Formalism.FourierDecayAlt.F7.LiftTop := by
   have h3 := isTop_sub h1 h2
   have hce : (starRingEnd ℂ) e = e := by
     rcases he with rfl | rfl <;> simp
-  convert h3 using 1
+  convert (preTransparency := .reducible) h3 using 1
   · funext Y
     have := j_pairing_formula R M Ξ A B Av Bv 0 Y (Y + h) X X'
     have hU : Formalism.YangianSpanCharacter.T.Uinv (A := R) (0 : ℂ) = 1 := by

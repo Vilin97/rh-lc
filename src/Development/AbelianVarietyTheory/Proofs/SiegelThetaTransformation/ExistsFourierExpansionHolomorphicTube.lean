@@ -253,7 +253,7 @@ theorem _root_.GlobalTheory.exists_fourier_expansion_tube :
   have key := UnitAddTorus.hasSum_mFourier_series_apply_of_summable hsum
     (fun i ↦ (x₀ i : UnitAddCircle))
   rw [hg] at key
-  convert key using 1
+  convert (preTransparency := .reducible) key using 1
   · funext ν
     rw [hgc ν, mFourier_apply_coe, hc_indep y₁ hy₁ y₀ hz, smul_eq_mul]
     conv_lhs => rw [hz']

@@ -139,7 +139,7 @@ theorem GHatIdentity.proof (h0 : GKernelIdentity.Statement) : GHatIdentity.State
         (1 / 2 * ((eval ![1, c] G - eval ![1, -1] G) - (eval ![-1, c] G - eval ![-1, -1] G))))).sub
       ((((hasDerivAt_eval_fst G s 1).sub (hasDerivAt_eval_fst G s (-1))).const_mul (1 / 2)).sub
         ((hasDerivAt_id s).const_mul (k : ℝ)) |>.const_mul (c + 1))
-    convert this using 1
+    convert (preTransparency := .reducible) this using 1
     · funext u
       simp only [Pi.sub_apply, id]
     · ring

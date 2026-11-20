@@ -113,7 +113,7 @@ theorem fn_hahnSeries_inv_converges : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* 
     (hred z hzC).tsum_eq
   rw [hg]
   apply (GlobalTheory.fn_hasSum_reindex_nat Ω ε g N (-n₀) (fun k => PowerSeries.coeff k q) z (φ⁻¹ z) hN hgc hgz).2
-  convert hinv using 1
+  convert (preTransparency := .reducible) hinv using 1
   · funext k
     rw [← hmapinv, PowerSeries.coeff_map]
   · rw [htsum, mul_inv, ← Complex.exp_neg, Pi.inv_apply]

@@ -239,7 +239,7 @@ theorem tube_expansion (Ω : Set (Fin n → ℝ)) (h : (Fin n → ℂ) → ℂ) 
       mul_comm]
   have hs := four_sum n ((fun b => b + y0) ⁻¹' Ω) (fun t => h (t + fun j => (y0 j : ℂ) * I))
     hΩ'o hdg hpg h0' hsummg x0
-  convert hs using 1
+  convert (preTransparency := .reducible) hs using 1
   · funext k
     rw [hcoefg k, hsumu k, hexpu]
     have e : ((2 * Real.pi * (∑ j, (k j : ℝ) * x0 j) : ℝ) : ℂ) * I =

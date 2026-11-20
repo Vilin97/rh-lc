@@ -309,7 +309,7 @@ theorem _root_.GlobalTheory.SiegQ.ep_locUnif {M : ℕ} (hM : 0 < M) {w : ℂ}
     (Eventually.of_forall fun m z hz => _root_.GlobalTheory.SiegQ.norm_term_le hM hw he
       ((mem_ball_zero_iff.mp (hKr hz)).le.trans (le_max_left _ _)) hr1 m)
     (fun m => by fun_prop)
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext m z
     ring
   · funext z

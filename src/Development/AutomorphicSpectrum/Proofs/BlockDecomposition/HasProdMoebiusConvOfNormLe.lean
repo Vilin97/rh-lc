@@ -101,7 +101,7 @@ theorem hasProd_moebius_conv (hN1 : N 1 = 1)
   have hCi := hC.inv₀ hCne
   have hP := (hA.mul hCi).mul hB
   rw [LSeries_twist_moebius_conv c hs hsum]
-  convert hP using 1
+  convert (preTransparency := .reducible) hP using 1
   · funext p
     have hX := norm_X_lt_one c (s := s) (by linarith) p.prop
     rw [← local_factor hX, inv_inv]

@@ -356,7 +356,7 @@ theorem exists_mixed {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   · intro φ hφ
     have hT : c₀⁻¹ • U φ ∈ schA F (Fin n × Fin d) := Submodule.smul_mem _ _ (hmaps φ hφ)
     have h := GlobalTheory.ThK.RankRed.hasConstTerm_thetaSum_schr_lin F E B.ψ hψ _ _ j hj n q (fun z k => (hx z).2 k) hqs hqr _ hT
-    convert h using 1
+    convert (preTransparency := .reducible) h using 1
     · funext z
       have hm := GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ (Matrix.vecMulVec z (incV F H'.x)) φ hφ
       have h1 := hth _ hm

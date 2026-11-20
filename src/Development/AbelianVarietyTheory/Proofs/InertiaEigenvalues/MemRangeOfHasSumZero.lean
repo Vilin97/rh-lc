@@ -125,7 +125,7 @@ theorem hasSum_map_psEval (θ : M →+* ℂ_[l]) (hθ : Continuous θ) (f : Powe
       (θ (psEval (f : MvPowerSeries Unit 𝒪[K]) fun _ => x)) := by
   have h := (hasSum_psEval' (f : MvPowerSeries Unit 𝒪[K]) (fun _ => x) fun _ => hx).map θ.toAddMonoidHom hθ
   rw [← (Finsupp.uniqueEquiv (M := ℕ) ()).symm.hasSum_iff] at h
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext i
     simp [psTerm, PowerSeries.coeff, Finsupp.uniqueEquiv]
   · rfl

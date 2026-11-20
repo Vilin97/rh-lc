@@ -57,7 +57,7 @@ theorem exp_mul_injOn {ι V : Type} [Fintype ι] [Fintype V] {n : ℕ}
       rw [map_zero]
       exact hasStrictFDerivAt_exp_zero
     have h2 := (R v).hasStrictFDerivAt.comp 0 (he.comp 0 h0)
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext x
       rfl
     · exact ContinuousLinearMap.ext fun x => rfl

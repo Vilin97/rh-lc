@@ -189,7 +189,7 @@ theorem smallOne : ∀ D : D7, SmallOne D := by
     intro Q' hQ'
     have h0 := hlin n (n' ⊕ Fin 1) α₀ β L₁ L₂ f₁ _ Ξ'' hΞ'' 1 (gs Q')
     rw [GlobalTheory.T.unramifiedCharacter_det_latticeStabilizer_eq_one k n Q.lat inferInstance (gs Q') (hstab Q' hQ') lT (hlT hV)] at h0
-    convert h0 using 1
+    convert (preTransparency := .reducible) h0 using 1
     · funext x
       simp only [map_one, Units.val_one, one_mul, Matrix.mul_one]
       rw [tensCol_phiOne_charInd_smul, hgs]

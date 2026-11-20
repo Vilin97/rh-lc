@@ -223,7 +223,7 @@ lemma integral_Ek_inK [CompactSpace (KG ε)] (T : KType ε Λ) (μ : Fin n → �
       (φ (Bk * Z - Z * Bk)) 0 :=
     (φ.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) (dga_path Z Bk)
   have h := hφ.smul (hasDerivAt_Gint T μ hx k hZ γ hγ)
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext t
     congr 2
     rw [_root_.mul_inv_rev, hmk, hmk, hinv_t, hγ, hBk]

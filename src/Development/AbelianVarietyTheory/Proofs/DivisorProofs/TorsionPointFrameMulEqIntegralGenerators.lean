@@ -84,7 +84,7 @@ theorem frames_mul_eq_integral : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLoc
         GlobalTheory.T.section_value_integral_point_congruent_term_sum V (maximalIdeal V) D A G U.toUnifPre h g' hF f t e' k (htl e') (σ i) (fs i) (hE i e') (xs i) (hxs' i)
           (a i) (ha i)
     have hlk : l ^ k ≠ 0 := pow_ne_zero _ hl0
-    convert key using 1
+    convert (preTransparency := .reducible) key using 1
     · funext α
       simp only [Algebra.algebraMap_self, RingHom.id_apply]
       rw [show (∑ i, c i * (l ^ k)⁻¹ * algebraMap V (FractionRing V) (a i α)) =

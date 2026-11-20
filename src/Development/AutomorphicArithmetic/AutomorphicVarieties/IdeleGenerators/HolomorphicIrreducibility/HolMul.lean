@@ -321,7 +321,7 @@ theorem UpperTheory.V.Sd.holMul :
     have h3 := (h1.mul_right (d₀ y)).add (conv h1 h2)
     refine (hasSum_cf (fun 𝔪 => A (Y 𝔪)) y E _).2 ?_
     have hp : 0 < (∏ v, t.val v) * absF y := mul_pos (Finset.prod_pos fun v _ => ht v) ((Hm.absf F).1 y)
-    convert h3 using 1
+    convert (preTransparency := .reducible) h3 using 1
     · rfl
     · funext ξ
       have e : ∑' η, cf a y η * E η * (cf b y (ξ - η) * E (ξ - η)) = cv a b y ξ * E ξ := by

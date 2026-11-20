@@ -143,7 +143,7 @@ theorem diag (hC : Cauchy) (hS : SchurJT) {n q : ℕ} (hq : 2 ≤ q) {s : ℂ} (
   set P : ℂ := ∏ a, ∏ b, (1 - (z a : ℂ) * conj (z b : ℂ) * (x : ℂ))⁻¹ with hP
   have h' : HasSum (fun L : {l : Fin n → ℕ // Antitone l} =>
       (((‖evalAt z (schur fun i => (L.1 i : ℤ))‖ ^ 2 * x ^ (∑ i, L.1 i) : ℝ)) : ℂ)) P := by
-    convert h using 1
+    convert (preTransparency := .reducible) h using 1
     · funext L
       rw [padN_self, schur_conj hS, Complex.mul_conj, Complex.normSq_eq_norm_sq]
       push_cast

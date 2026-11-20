@@ -118,7 +118,7 @@ lemma one_param (φ : ℝ → (H →L[ℂ] H)) (hadd : ∀ s t, φ (s + t) = φ 
   have hg : ∀ s : ℝ, HasDerivAt (fun t : ℝ => Complex.exp ((t : ℂ) * -c) • φ t v) 0 s := by
     intro s
     have := (hasDerivAt_exp_mul (-c) s).smul (hder s)
-    convert this using 1
+    convert (preTransparency := .reducible) this using 1
     · funext t
       rfl
     · rw [smul_smul, ← add_smul]

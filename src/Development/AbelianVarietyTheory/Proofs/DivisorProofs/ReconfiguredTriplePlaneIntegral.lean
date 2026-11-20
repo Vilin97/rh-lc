@@ -117,7 +117,7 @@ theorem exists_approx_theta (hP : KP) (hPair : IsPair B M χX χW om r s r' s') 
     obtain ⟨ys, hys, hyl⟩ := ihy
     refine ⟨fun k => xs k + ys k, fun k => Submodule.add_mem _ (hxs k) (hys k), fun R => ?_⟩
     have := (hxl R).add (hyl R)
-    convert this using 1
+    convert (preTransparency := .reducible) this using 1
     · funext k p
       exact theta_add hPair (hsch (hxs k).2) (hsch (hys k).2) _ _
     · funext p
@@ -126,7 +126,7 @@ theorem exists_approx_theta (hP : KP) (hPair : IsPair B M χX χW om r s r' s') 
     obtain ⟨xs, hxs, hxl⟩ := ihx
     refine ⟨fun k => c • xs k, fun k => Submodule.smul_mem _ c (hxs k), fun R => ?_⟩
     have := (uniformContinuous_const_smul c).comp_tendstoUniformlyOn (hxl R)
-    convert this using 1
+    convert (preTransparency := .reducible) this using 1
     · funext k p
       exact theta_smul c _ _ _
     · funext p

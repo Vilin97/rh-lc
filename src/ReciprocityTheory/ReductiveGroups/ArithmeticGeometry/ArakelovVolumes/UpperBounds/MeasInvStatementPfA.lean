@@ -195,7 +195,7 @@ theorem hasFDerivAt_lu (w : Ix ι r → ℂ) : HasFDerivAt lu (luD' w) w := by
   rw [hf]
   have hd := HasFDerivAt.sum (u := Finset.univ)
     (fun k _ => (hasFDerivAt_entry1 w τ a k).mul (hasFDerivAt_entry2 w τ k b))
-  convert hd using 1
+  convert (preTransparency := .reducible) hd using 1
   · funext v
     simp only [Finset.sum_apply, Pi.mul_apply]
   · apply ContinuousLinearMap.ext

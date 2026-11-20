@@ -248,7 +248,7 @@ theorem IsShift.baseChange {N : FIx Dw → K} {v w : FrPt Xo c (DualNumber K)} {
     (ev : FrMap (dualExt ψ) v v') (ew : FrMap (dualExt ψ) w w') (h : IsShift N v w) : IsShift (ψ ∘ N) v' w' := by
   have := (frMap_iff_frChg h ev).1 ew
   unfold IsShift
-  convert this using 1
+  convert (preTransparency := .reducible) this using 1
   · funext τ
     ext i j <;> by_cases hij : i = j <;> simp [unip, Matrix.one_apply, hij]
   · ext <;> simp [unip₀]

@@ -180,7 +180,7 @@ theorem law_of_parts [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω) (cf : Coef 
           exact htCoL_of_eq A cf j _ m C y 0 (fun s => by simp)
         · simp only [hx, if_false]
           exact htCoL_mono (hc' x hx m (by omega) y (β y) t (hβ y).1 (hβ y).2 ht) (hle x))
-    convert h1 using 1
+    convert (preTransparency := .reducible) h1 using 1
     · funext r s y'
       rw [hZ]
       refine Finset.sum_congr rfl fun x _ => ?_

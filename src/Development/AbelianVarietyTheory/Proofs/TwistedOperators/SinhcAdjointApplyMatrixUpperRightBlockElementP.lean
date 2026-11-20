@@ -60,7 +60,7 @@ theorem hasSum_sAd (Y V : Mat p q) (a b : Ix p q) :
     simp only [Matrix.mulVec, dotProduct]
     fun_prop
   have h2 := h.map f hf
-  convert h2 using 1
+  convert (preTransparency := .reducible) h2 using 1
   · funext k
     simp [f, Matrix.smul_mulVec]
   · rfl

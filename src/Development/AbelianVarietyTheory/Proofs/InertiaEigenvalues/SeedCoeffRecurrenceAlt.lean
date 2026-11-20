@@ -80,7 +80,7 @@ theorem seed_coeff_recurrence : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk 
   have key : ∀ y, HasSum (fun i => Φ (j (cD i y)) * c i) (L (Φ y)) := by
     intro y
     have h := ((hsum y).map (Φ : bk.DA bk.ρ₀ →+ bk.DA bk.ρ₀) hΦc).map L hLc
-    convert h using 1
+    convert (preTransparency := .reducible) h using 1
     · funext i
       simp only [Function.comp_apply, AddMonoidHom.coe_coe]
       rw [map_mul Φ, hΦA, hcomm, hLa, hcm, hc, map_mul, hjS]

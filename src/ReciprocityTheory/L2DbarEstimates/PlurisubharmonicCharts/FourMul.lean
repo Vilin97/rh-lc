@@ -67,7 +67,7 @@ theorem fm_conv {f : ℕ} (F1 F2 : C(UnitAddTorus (Fin f), ℂ)) (ν : Fin f →
     ((UnitAddTorus.mFourier (-ν) * F2).toLp 2 volume ℂ)
   have H2 : HasSum (fun i => UnitAddTorus.mFourierCoeff (⇑F1) (-i) *
       UnitAddTorus.mFourierCoeff (⇑F2) (i + ν)) (UnitAddTorus.mFourierCoeff (⇑F1 * ⇑F2) ν) := by
-    convert H using 1
+    convert (preTransparency := .reducible) H using 1
     · funext i
       rw [UnitAddTorus.mFourierCoeff_toLp, UnitAddTorus.mFourierCoeff_toLp, fm_coeff_star,
         fm_coeff_shift]

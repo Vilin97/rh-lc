@@ -403,7 +403,7 @@ theorem finite_not_locFr_one (hq : Dw.q = 0) (hp : 1 ≤ Dw.p) (hg : ∀ p : ℕ
     rw [ho.2, h0, mul_zero]) z hz
   obtain ⟨A, u, hA, hc⟩ := frChg_of_integral T io z y hz' hy hx
   refine ⟨fun τ => (A τ)ᵀ, u, fun τ => by rw [Matrix.det_transpose]; exact hA τ, ?_⟩
-  convert hc using 1
+  convert (preTransparency := .reducible) hc using 1
   · funext τ
     simp [Matrix.transpose_map]
   · simp

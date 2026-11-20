@@ -103,7 +103,7 @@ theorem translationInv : TranslationInv := by
       show f (z + per (τ b) l - per (τ b) x) = j l (b, z) • f (z - per (τ b) x)
       rw [show z + per (τ b) l - per (τ b) x = z - per (τ b) x + per (τ b) l by abel, e]
     have h1 := (hKh.2.2.2 _ hf').comp (· + per (τ b) x) (continuous_id.add continuous_const)
-    convert h1 using 1
+    convert (preTransparency := .reducible) h1 using 1
     · funext t z
       simp only [Function.comp]
       rw [← setIntegral_add_right' D x]

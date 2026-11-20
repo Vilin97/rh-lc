@@ -46,7 +46,7 @@ theorem hasGauss_diag_norm : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRel
     induction s using Finset.induction_on with
     | empty => simp
     | insert a s ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, AddChar.map_add_eq_mul, ih]
-  convert hm using 1
+  convert (preTransparency := .reducible) hm using 1
   · funext x
     rw [← Fintype.sum_prod_type', hsum]
     rfl

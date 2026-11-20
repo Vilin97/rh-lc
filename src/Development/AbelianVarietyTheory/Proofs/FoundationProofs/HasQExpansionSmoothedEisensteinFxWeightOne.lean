@@ -118,7 +118,7 @@ theorem hasSum_fibre (j : ℕ) {M : ℕ} (hM : 0 < M) (a b : ℤ) (τ : ℍ) (m 
     let w : ℤ → ℤ → ℂ := fun A e => (Int.sign e : ℂ) * ((A : ℂ) / M) ^ (j - 1) * ee (1 / (M : ℂ)) ^ (b * e) * E
     have h1 := hasSum_sum (s := m.divisors) fun d _ =>
       (hasSum_point hM a ((m / d : ℕ) : ℤ) (d : ℤ) w).add (hasSum_point hM a (-((m / d : ℕ) : ℤ)) (-(d : ℤ)) w)
-    convert h1 using 1
+    convert (preTransparency := .reducible) h1 using 1
     · funext p
       classical
       rw [sum_div_point hm, Set.indicator_apply, fTerm_eq j hM]

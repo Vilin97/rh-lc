@@ -44,7 +44,7 @@ theorem hasDerivAt_rep [μ.IsMulRightInvariant]
       have h2 : HasDerivAt (fun t : ℝ => ρ (c t) v) v' (t - t) := by rwa [sub_self]
       exact h2.comp_sub_const t t
     have h2 := ((ρ (c t)).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt t h1
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext r
       show _ = (ρ (c t) * ρ (c (r - t))) v
       rw [← map_mul, ← hadd, add_sub_cancel]
@@ -192,7 +192,7 @@ theorem exists_smooth_rep [μ.IsMulRightInvariant]
     have h1 := hv.1.hasDerivAt hp
     have h2 := ((ρ k).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt 0 h1
     refine HasDerivAt.unique (f := fun r : ℝ => ρ (e p r) v) (x := 0) ?_ h1
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext r
       show _ = (ρ k * ρ (e p r)) v
       rw [← map_mul, ← hcomm p r k hk, map_mul, mul_apply_eq_comp, hv.2 k hk]

@@ -50,7 +50,7 @@ theorem hasQuotInt_indicator_mul [IsFiniteMeasureOnCompacts dh] {K : Subgroup H}
       (hT.isClosedEmbedding_subtypeVal.isCompact_preimage hc).measure_ne_top⟩
   have h := (weil_integral (dt := dt) (dh := dh) hT (f := (K : Set H).indicator fun _ => (dt.real (K.subgroupOf T) : ℂ)⁻¹)
     ((integrable_indicator_iff ho.measurableSet).2 (integrableOn_const hc.measure_ne_top))).2
-  convert h using 1
+  convert (preTransparency := .reducible) h using 1
   · funext x
     by_cases hx : x ∈ (T : Set H) * (K : Set H)
     · obtain ⟨s, hs, k, hk, rfl⟩ := hx

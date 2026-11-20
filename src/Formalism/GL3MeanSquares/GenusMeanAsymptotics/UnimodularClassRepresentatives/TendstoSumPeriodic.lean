@@ -115,7 +115,7 @@ theorem tendsto_sum_periodic (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
       rw [Finset.prod_insert h𝔮S]
       ring
     have hT := tendsto_finsetSum (Finset.univ : Finset (𝓞 F ⧸ 𝔮.1 ^ k)) fun c _ => (hlim c).const_mul (φ 𝔮 c)
-    convert hT using 1
+    convert (preTransparency := .reducible) hT using 1
     · funext j
       rw [hsplit j, Finset.mul_sum]
       exact Finset.sum_congr rfl fun c _ => by ring

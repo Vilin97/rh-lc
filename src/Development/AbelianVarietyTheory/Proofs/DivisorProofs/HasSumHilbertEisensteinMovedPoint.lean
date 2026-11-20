@@ -27,7 +27,7 @@ theorem hasSum_movedPoint : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyR
       ring)
   have h3 := h1.mul_left ((∏ i, (1 + z i * c))⁻¹ ^ k)
   rw [h2]
-  convert h3 using 1
+  convert (preTransparency := .reducible) h3 using 1
   · rfl
   · funext ξ
     have hq : qPow ξ (fun i : Emb F ↦ τ + t * z i / (1 + z i * c)) =

@@ -234,7 +234,7 @@ theorem exists_semiW : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar
       rw [e]
       exact hL.1 X hXm φ z
     have h2 := hX τ X hXm φ _ hder (PiTensorProduct.tprod ℂ (Function.update v τ y)) (Function.update w τ u)
-    convert h2 using 1
+    convert (preTransparency := .reducible) h2 using 1
     · funext t
       rw [hA, ← hcg, hc]
     · rw [hA, hc]

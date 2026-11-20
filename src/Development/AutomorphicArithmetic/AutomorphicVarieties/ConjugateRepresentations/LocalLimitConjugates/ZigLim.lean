@@ -21,7 +21,7 @@ private theorem fLim_add {w w' : ℕ → G.Om q} (h : FLim G w) (h' : FLim G w')
 private theorem fLim_zsmul (n : ℤ) {w : ℕ → G.Om q} (h : FLim G w) : FLim G fun j => n • w j := by
   intro s K hK hKc
   have h1 := (uniformContinuous_id.const_smul n).comp_tendstoUniformlyOn (h s K hK hKc)
-  convert h1 using 1
+  convert (preTransparency := .reducible) h1 using 1
   · funext k x
     simp
   · funext x

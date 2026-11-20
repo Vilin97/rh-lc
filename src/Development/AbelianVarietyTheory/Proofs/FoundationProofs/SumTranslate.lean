@@ -66,7 +66,7 @@ theorem htCoL_smooth {A : ValuationSubring Ω} {c : Coef l} {j : Ω →+* Qbar l
       cases b
       · exact H'
       · exact H)
-  convert h1 using 1
+  convert (preTransparency := .reducible) h1 using 1
   · funext r s y'
     simp [sub_eq_add_neg]
   · simp [sub_eq_add_neg]

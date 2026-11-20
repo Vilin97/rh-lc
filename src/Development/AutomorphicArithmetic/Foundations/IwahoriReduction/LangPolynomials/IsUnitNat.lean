@@ -97,7 +97,7 @@ theorem UpperTheory.Kd.C7.pRepTr :
   have hw : ((u⁻¹ : ℤ_[l]ˣ) : ℤ_[l]) * (b : ℤ_[l]) = 1 := by rw [← hu, Units.inv_mul]
   generalize ((u⁻¹ : ℤ_[l]ˣ) : ℤ_[l]) = w at hw
   have h2 := pRepSmul l hl Ω A hA j Φ c β ζ hζ _ _ (algebraMap ℤ_[l] c.O w) h1
-  convert h2 using 1
+  convert (preTransparency := .reducible) h2 using 1
   · funext r s x
     have : ((algebraMap ℤ_[l] c.O w : c.O) : PadicAlgCl l) * (b : Qbar l) = 1 := by
       have := congrArg (algebraMap ℤ_[l] (PadicAlgCl l)) hw
