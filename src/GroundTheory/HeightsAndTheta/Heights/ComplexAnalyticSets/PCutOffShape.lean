@@ -88,7 +88,7 @@ theorem CutOffShape.proof : CutOffShape.Statement := by
       contDiff_norm_sq ℝ |>.comp
         (((AnalyticOnNhd.eval_mvPolynomial Q).contDiff (n := ∞)).restrict_scalars ℝ)
     exact (cutProfile_contDiffOn k).comp_contDiff hw fun y =>
-      (neg_neg_of_pos (cutLevel_mem k).1).trans_le (by positivity)
+      (neg_neg_of_pos (cutLevel_mem k).1).trans_le (by exact sq_nonneg ‖eval y Q‖)
   · unfold logLogCut; split_ifs
     · exact ⟨le_rfl, zero_le_one⟩
     · exact ⟨zero_le_one, le_rfl⟩

@@ -124,7 +124,7 @@ open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
 private theorem integral_one_div_abs_add_half_eq_two_mul_log (a : ℝ) (ha : 0 ≤ a) :
     ∫ t in -a..a, 1 / (|t| + 1 / 2) = 2 * Real.log (2 * a + 1) := by
   have hc : Continuous fun t : ℝ => 1 / (|t| + 1 / 2) :=
-    continuous_const.div (continuous_abs.add continuous_const) (fun t => by positivity)
+    continuous_const.div (continuous_abs.add continuous_const) (fun t => by change (|t| + 1 / 2 : ℝ) ≠ 0; positivity)
   have h0 : ∫ t in (0:ℝ)..a, 1 / (|t| + 1 / 2) = Real.log (2 * a + 1) := by
     rw [intervalIntegral.integral_congr (g := fun t => 1 / (t + 1 / 2)) (fun t ht => by
       rw [Set.uIcc_of_le ha] at ht; simp only [abs_of_nonneg ht.1])]
@@ -153,7 +153,7 @@ private theorem norm_integral_logDeriv_LFunction_mul_cpow_div_neg_half_le :
   have hL : 0 ≤ Real.log (N * (T' + 2)) := Real.log_nonneg (by nlinarith)
   have hg : Continuous fun t : ℝ => 2 * C₀ * Real.log (N * (T' + 2)) * (1 / (|t| + 1 / 2)) :=
     continuous_const.mul
-      (continuous_const.div (continuous_abs.add continuous_const) (fun t => by positivity))
+      (continuous_const.div (continuous_abs.add continuous_const) (fun t => by change (|t| + 1 / 2 : ℝ) ≠ 0; positivity))
   refine (intervalIntegral.norm_integral_le_of_norm_le (by linarith)
     (Filter.Eventually.of_forall fun t ht => ?_) (hg.intervalIntegrable _ _)).trans ?_
   · have ht' : |t| ≤ T' := abs_le.mpr ⟨ht.1.le, ht.2⟩

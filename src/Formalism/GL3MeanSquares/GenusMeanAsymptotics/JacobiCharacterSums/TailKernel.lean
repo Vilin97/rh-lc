@@ -89,7 +89,7 @@ theorem tail_kernel_half (T : ℝ) (hT : 0 ≤ T) :
 theorem tail_kernel_line (σ T : ℝ) (hσ0 : 1 / 2 ≤ σ) (hσ1 : σ ≤ 1 - 1 / 800) (hT : 0 ≤ T) :
     ∫ u in (-T)..T, 1 / ‖(σ : ℂ) + (u : ℂ) * I - 1‖ ≤ 4 * Real.log (1 + 800 * T) := by
   have hg : Continuous (fun u : ℝ => 2 / (1 / 800 + |u|)) :=
-    Continuous.div continuous_const (continuous_const.add continuous_abs) (fun x => by positivity)
+    Continuous.div continuous_const (continuous_const.add continuous_abs) (fun x => by change (1 / 800 + |x| : ℝ) ≠ 0; positivity)
   have hne : ∀ u : ℝ, ‖(σ : ℂ) + (u : ℂ) * I - 1‖ ≠ 0 := by
     intro u
     have := tail_kernel_norm_lower σ u hσ1

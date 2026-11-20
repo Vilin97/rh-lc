@@ -27,7 +27,7 @@ theorem lintegral_radial {A : ℝ} (hA : 0 < A) (m : ℕ) :
   have hl : Tendsto (fun r : ℝ ↦ -(2 * (m + 1) * (A + r ^ 2) ^ (m + 1))⁻¹) atTop (𝓝 0) := by
     rw [← neg_zero]
     refine Tendsto.neg (Tendsto.inv_tendsto_atTop ?_)
-    refine Tendsto.const_mul_atTop (by positivity) ?_
+    refine Tendsto.const_mul_atTop (by change (0 : ℝ) < 2 * ((m : ℝ) + 1); positivity) ?_
     exact (tendsto_pow_atTop (Nat.succ_ne_zero m)).comp
       (tendsto_atTop_add_const_left _ _ (tendsto_pow_atTop two_ne_zero))
   rw [← ofReal_integral_eq_lintegral_ofReal (integrableOn_Ioi_deriv_of_nonneg' hd hnn hl)
