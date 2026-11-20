@@ -62,17 +62,19 @@ theorem exists_conj_integral {O K Γ : Type} [CommRing O] [IsDomain O] [IsDiscre
     refine Submodule.subset_span ⟨(1, j), ?_⟩
     funext i
     simp [col, Matrix.one_apply, Pi.single_apply]
-  haveI : Λ.IsLattice K := ⟨hfg, htop⟩
+  haveI : Λ.IsFullLattice K := { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := htop }
+  have := Submodule.IsLattice.finite K Λ
+  have := Submodule.IsLattice.free K Λ
   haveI : Module.Free O Λ := Submodule.IsLattice.free K Λ
   haveI : Module.Finite O Λ := Module.Finite.iff_fg.2 hfg
   have hrk : Module.finrank O Λ = n := by
     rw [Submodule.IsLattice.finrank_of_pi K Λ, Fintype.card_fin]
   let b : Module.Basis (Fin n) O Λ := Module.finBasisOfFinrankEq O Λ hrk
-  let B := b.extendOfIsLattice K
+  let B := b.extendOfIsFullLattice K
   let e := Pi.basisFun K (Fin n)
   let P : GL (Fin n) K := ⟨B.toMatrix e, e.toMatrix B, by simp, by simp⟩
   refine ⟨P, fun g i j => ?_⟩
-  have hB : ∀ j, B j = b j := fun j => b.extendOfIsLattice_apply K j
+  have hB : ∀ j, B j = b j := fun j => b.extendOfIsFullLattice_apply K j
   have h1 : ((P * r g * P⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) =
       LinearMap.toMatrix B B (Matrix.toLin' (r g : Matrix (Fin n) (Fin n) K)) := by
     rw [← basis_toMatrix_mul_linearMap_toMatrix_mul_basis_toMatrix B e B e]

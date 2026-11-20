@@ -19,11 +19,13 @@ theorem exists_gl_of_lattice (O : Type) [CommRing O] [IsDomain O] [IsPrincipalId
     (hsp : Submodule.span K (Λ : Set (Fin n → K)) = ⊤) :
     ∃ β : GL (Fin n) K, ∀ w, w ∈ Λ ↔ ∀ i, IsInt O (((β⁻¹).1 *ᵥ w) i) := by
   classical
-  have : Submodule.IsLattice K Λ := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice K Λ := { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite K Λ
+  have := Submodule.IsLattice.free K Λ
   have hr : Module.finrank O Λ = n := by
     rw [Submodule.IsLattice.finrank_of_pi K Λ, Fintype.card_fin]
   let b : Module.Basis (Fin n) O Λ := Module.finBasisOfFinrankEq O Λ hr
-  let c : Module.Basis (Fin n) K (Fin n → K) := b.extendOfIsLattice K
+  let c : Module.Basis (Fin n) K (Fin n → K) := b.extendOfIsFullLattice K
   let s := Pi.basisFun K (Fin n)
   refine ⟨⟨s.toMatrix c, c.toMatrix s, Module.Basis.toMatrix_mul_toMatrix_flip _ _,
     Module.Basis.toMatrix_mul_toMatrix_flip _ _⟩, fun w => ?_⟩
@@ -31,7 +33,7 @@ theorem exists_gl_of_lattice (O : Type) [CommRing O] [IsDomain O] [IsPrincipalId
     exact Module.Basis.toMatrix_mulVec_repr s c w
   change _ ↔ ∀ i, IsInt O ((c.toMatrix s *ᵥ w) i)
   rw [hw]
-  have hc : ∀ i, c i = (b i : Fin n → K) := fun i => Module.Basis.extendOfIsLattice_apply K b i
+  have hc : ∀ i, c i = (b i : Fin n → K) := fun i => Module.Basis.extendOfIsFullLattice_apply K b i
   constructor
   · intro h i
     refine ⟨b.repr ⟨w, h⟩ i, ?_⟩

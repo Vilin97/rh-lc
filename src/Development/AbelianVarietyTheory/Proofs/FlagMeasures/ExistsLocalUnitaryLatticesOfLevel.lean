@@ -39,16 +39,18 @@ theorem bidual (B : LinearMap.BilinForm K (Fin n → K)) (hB : B.Nondegenerate)
     (u : Fin n → K)
     (hu : ∀ w, (∀ u' ∈ N, B u' w ∈ (1 : Submodule O K)) → B u w ∈ (1 : Submodule O K)) : u ∈ N := by
   classical
-  haveI : N.IsLattice K := ⟨hfg, hsp⟩
+  haveI : N.IsFullLattice K := { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite K N
+  have := Submodule.IsLattice.free K N
   let b := Module.Free.chooseBasis O N
-  have h : Submodule.span O (Set.range (b.extendOfIsLattice K)) = N := by
-    have h1 : Set.range (b.extendOfIsLattice K) = N.subtype '' Set.range b := by
+  have h : Submodule.span O (Set.range (b.extendOfIsFullLattice K)) = N := by
+    have h1 : Set.range (b.extendOfIsFullLattice K) = N.subtype '' Set.range b := by
       rw [← Set.range_comp]
       congr 1
-      exact funext fun i => b.extendOfIsLattice_apply K i
+      exact funext fun i => b.extendOfIsFullLattice_apply K i
     rw [h1, ← Submodule.map_span, b.span_eq, Submodule.map_subtype_top]
   have e := LinearMap.BilinForm.dualSubmodule_dualSubmodule_flip_of_basis (R := O) B hB
-    (b.extendOfIsLattice K)
+    (b.extendOfIsFullLattice K)
   rw [h] at e
   rw [← e]
   exact fun w hw => hu w hw

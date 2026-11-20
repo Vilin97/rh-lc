@@ -180,11 +180,13 @@ theorem nablaEqDualWeylOf : NablaEqDualWeylOf := by
     exact hP
 
 theorem dual_dual_of_isLattice {V : Type} [AddCommGroup V] [Module ℚ V] (B : LinearMap.BilinForm ℚ V)
-    (hB : B.Nondegenerate) (hB' : B.IsSymm) (M : Submodule ℤ V) [M.IsLattice ℚ] :
+    (hB : B.Nondegenerate) (hB' : B.IsSymm) (M : Submodule ℤ V) [M.IsFullLattice ℚ] :
     B.dualSubmodule (B.dualSubmodule M) = M := by
+  have := Submodule.IsLattice.finite ℚ M
+  have := Submodule.IsLattice.free ℚ M
   classical
   let b := Module.Free.chooseBasis ℤ M
-  let b' := b.extendOfIsLattice ℚ
+  let b' := b.extendOfIsFullLattice ℚ
   have hrange : (Set.range b' : Set V) = M.subtype '' Set.range b := by
     rw [← Set.range_comp]
     congr 1

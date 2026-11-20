@@ -49,23 +49,27 @@ theorem isLattice_of_fg_dualSubmodule (B : LinearMap.BilinForm ℚ V) (hB : B.No
     exact zero_mem _
   exact hφ (by simpa using h0)
 
-theorem exists_basis_span_eq_of_isLattice (L : Submodule ℤ V) [L.IsLattice ℚ] :
+theorem exists_basis_span_eq_of_isLattice (L : Submodule ℤ V) [L.IsFullLattice ℚ] :
     ∃ b : Basis (Fin (finrank ℚ V)) ℚ V, L = Submodule.span ℤ (Set.range b) := by
+  have := Submodule.IsLattice.finite ℚ L
+  have := Submodule.IsLattice.free ℚ L
   have hr : finrank ℤ L = finrank ℚ V := by
     let b := Module.Free.chooseBasis ℤ L
-    rw [finrank_eq_card_basis b, finrank_eq_card_basis (b.extendOfIsLattice ℚ)]
+    rw [finrank_eq_card_basis b, finrank_eq_card_basis (b.extendOfIsFullLattice ℚ)]
   let b := Module.finBasisOfFinrankEq ℤ L hr
-  refine ⟨b.extendOfIsLattice ℚ, ?_⟩
-  have h1 : Set.range (b.extendOfIsLattice ℚ) = L.subtype '' Set.range b := by
+  refine ⟨b.extendOfIsFullLattice ℚ, ?_⟩
+  have h1 : Set.range (b.extendOfIsFullLattice ℚ) = L.subtype '' Set.range b := by
     rw [← Set.range_comp]
     congr 1
-    exact funext fun i => b.extendOfIsLattice_apply ℚ i
+    exact funext fun i => b.extendOfIsFullLattice_apply ℚ i
   rw [h1, ← Submodule.map_span, b.span_eq, Submodule.map_subtype_top]
 
-theorem finrank_eq_of_isLattice (L : Submodule ℤ V) [L.IsLattice ℚ] :
+theorem finrank_eq_of_isLattice (L : Submodule ℤ V) [L.IsFullLattice ℚ] :
     finrank ℤ L = finrank ℚ V := by
+  have := Submodule.IsLattice.finite ℚ L
+  have := Submodule.IsLattice.free ℚ L
   let b := Module.Free.chooseBasis ℤ L
-  rw [finrank_eq_card_basis b, finrank_eq_card_basis (b.extendOfIsLattice ℚ)]
+  rw [finrank_eq_card_basis b, finrank_eq_card_basis (b.extendOfIsFullLattice ℚ)]
 
 theorem isLattice_dualSubmodule (B : LinearMap.BilinForm ℚ V) (hB : B.Nondegenerate)
     (L : Submodule ℤ V) [L.IsLattice ℚ] : (B.dualSubmodule L).IsLattice ℚ := by

@@ -99,13 +99,15 @@ variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
   {K : Type*} [Field K] [Algebra R K] [IsFractionRing R K]
   {V : Type*} [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
 
-theorem exists_relLength_map (A : Submodule R V) [Submodule.IsLattice K A] (φ : V →ₗ[K] V)
+theorem exists_relLength_map (A : Submodule R V) [Submodule.IsFullLattice K A] (φ : V →ₗ[K] V)
     (hφ : LinearMap.det φ ≠ 0) (hA : ∀ x ∈ A, φ x ∈ A) :
     ∃ n : ℕ, relLength A (A.map (φ.restrictScalars R)) = n ∧
       Ring.ordFrac R (LinearMap.det φ) = WithZero.exp (n : ℤ) := by
+  have := Submodule.IsLattice.finite K A
+  have := Submodule.IsLattice.free K A
   classical
   let b := Module.Free.chooseBasis R A
-  let c := b.extendOfIsLattice K
+  let c := b.extendOfIsFullLattice K
   have : Module.Finite K V := Module.Finite.of_basis c
   let f : A →ₗ[R] A := (φ.restrictScalars R).restrict hA
   have hinj : Function.Injective φ :=
@@ -117,11 +119,11 @@ theorem exists_relLength_map (A : Submodule R V) [Submodule.IsLattice K A] (φ :
     ext i j
     have : φ (c j) = ∑ k, algebraMap R K (b.repr (f (b j)) k) • c k := by
       have h1 : φ (c j) = (f (b j) : V) := by
-        rw [Basis.extendOfIsLattice_apply]; rfl
+        rw [Basis.extendOfIsFullLattice_apply]; rfl
       have h2 := congrArg Subtype.val (b.sum_repr (f (b j)))
       rw [h1, ← h2, Submodule.coe_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
-      rw [Basis.extendOfIsLattice_apply, algebraMap_smul, Submodule.coe_smul]
+      rw [Basis.extendOfIsFullLattice_apply, algebraMap_smul, Submodule.coe_smul]
     rw [LinearMap.toMatrix_apply, this, c.repr_sum_self]
     simp [LinearMap.toMatrix_apply]
   have hf0 : LinearMap.det f ≠ 0 := by
@@ -142,12 +144,12 @@ theorem exists_relLength_map (A : Submodule R V) [Submodule.IsLattice K A] (φ :
   · rw [hdet, Ring.ordFrac_eq_ord R hf0, Ring.ordMonoidWithZeroHom_eq_coe R hnz hn.symm]
     rfl
 
-theorem exists_smul_preserves (A : Submodule R V) [Submodule.IsLattice K A] (g : V →ₗ[K] V) :
+theorem exists_smul_preserves (A : Submodule R V) [Submodule.IsFullLattice K A] (g : V →ₗ[K] V) :
     ∃ r : R, r ≠ 0 ∧ ∀ x ∈ A, r • g x ∈ A := by
   have one : ∀ v : V, ∃ r : R, r ≠ 0 ∧ r • v ∈ A := by
     intro v
     have hv : v ∈ Submodule.span K (A : Set V) := by
-      rw [Submodule.IsLattice.span_eq_top]; trivial
+      rw [Submodule.IsFullLattice.span_eq_top]; trivial
     induction hv using Submodule.span_induction with
     | mem x hx => exact ⟨1, one_ne_zero, by simpa using hx⟩
     | zero => exact ⟨1, one_ne_zero, by simp⟩
@@ -189,12 +191,14 @@ theorem signedLength_map_eq_log_ordFrac_det
     {R : Type u_1} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {K : Type u_2} [Field K] [Algebra R K] [IsFractionRing R K]
     {V : Type u_3} [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
-    (A : Submodule R V) [Submodule.IsLattice K A] (g : V →ₗ[K] V) (hg : LinearMap.det g ≠ 0) :
+    (A : Submodule R V) [Submodule.IsFullLattice K A] (g : V →ₗ[K] V) (hg : LinearMap.det g ≠ 0) :
     LengthCommensurable A (A.map (g.restrictScalars R)) ∧
       signedLength A (A.map (g.restrictScalars R)) =
         WithZero.log (Ring.ordFrac R (LinearMap.det g)) := by
+  have := Submodule.IsLattice.finite K A
+  have := Submodule.IsLattice.free K A
   have : Module.Finite K V :=
-    Module.Finite.of_basis ((Module.Free.chooseBasis R A).extendOfIsLattice K)
+    Module.Finite.of_basis ((Module.Free.chooseBasis R A).extendOfIsFullLattice K)
   obtain ⟨r, hr, hrA⟩ := exists_smul_preserves A g
   have hrK : algebraMap R K r ≠ 0 := by simpa using hr
   let μ : V →ₗ[K] V := algebraMap R K r • LinearMap.id

@@ -38,13 +38,15 @@ theorem glMap_std_le_iff (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValua
   rfl
 
 theorem exists_matrix_of_isLattice' {R K : Type} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [Field K]
-    [Algebra R K] [IsFractionRing R K] {n : ℕ} (M : Submodule R (Fin n → K)) [Submodule.IsLattice K M] :
+    [Algebra R K] [IsFractionRing R K] {n : ℕ} (M : Submodule R (Fin n → K)) [Submodule.IsFullLattice K M] :
     ∃ B : GL (Fin n) K, ∀ x : Fin n → K, x ∈ M ↔
       ∀ i, ((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K).mulVec x i ∈ (algebraMap R K).range := by
+  have := Submodule.IsLattice.finite K M
+  have := Submodule.IsLattice.free K M
   have hr : Module.finrank R M = n := by
     rw [Submodule.IsLattice.finrank_of_pi K M, Fintype.card_fin]
   let b : Module.Basis (Fin n) R M := Module.finBasisOfFinrankEq R M hr
-  let c : Module.Basis (Fin n) K (Fin n → K) := b.extendOfIsLattice K
+  let c : Module.Basis (Fin n) K (Fin n → K) := b.extendOfIsFullLattice K
   let p := Pi.basisFun K (Fin n)
   let B : GL (Fin n) K := ⟨p.toMatrix c, c.toMatrix p, by simp, by simp⟩
   have hB : ∀ x i, ((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K).mulVec x i = c.repr x i := by
@@ -59,7 +61,7 @@ theorem exists_matrix_of_isLattice' {R K : Type} [CommRing R] [IsDomain R] [IsPr
     have h1 : x = ∑ j, algebraMap R K (b.repr ⟨x, hx⟩ j) • c j := by
       have := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
       rw [Submodule.coe_sum] at this
-      simp only [c, Module.Basis.extendOfIsLattice_apply, algebraMap_smul]
+      simp only [c, Module.Basis.extendOfIsFullLattice_apply, algebraMap_smul]
       exact this.symm
     have h2 := congrFun (c.repr_sum_self fun j => algebraMap R K (b.repr ⟨x, hx⟩ j)) i
     rw [← h1] at h2

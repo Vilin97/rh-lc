@@ -80,17 +80,19 @@ theorem exists_form_of_covBy {O V : Type} [CommRing O] [IsLocalRing O] [AddCommG
 theorem exists_extend_latticeEquiv {O K V : Type} [CommRing O] [IsDomain O]
     [IsPrincipalIdealRing O] [Field K] [Algebra O K] [IsFractionRing O K]
     [AddCommGroup V] [Module K V] [Module O V] [IsScalarTower O K V]
-    (B B' : Submodule O V) [B.IsLattice K] [B'.IsLattice K] (e : B ≃ₗ[O] B') :
+    (B B' : Submodule O V) [B.IsFullLattice K] [B'.IsLattice K] (e : B ≃ₗ[O] B') :
     ∃ g : V ≃ₗ[K] V, ∀ x : B, g x = e x := by
+  have := Submodule.IsLattice.finite K B
+  have := Submodule.IsLattice.free K B
   let b := Module.Free.chooseBasis O B
   let c := b.map e
-  let g := (b.extendOfIsLattice K).equiv (c.extendOfIsLattice K) (Equiv.refl _)
+  let g := (b.extendOfIsFullLattice K).equiv (c.extendOfIsLattice K) (Equiv.refl _)
   refine ⟨g, fun x => ?_⟩
   have key : (g.toLinearMap.restrictScalars O) ∘ₗ B.subtype = B'.subtype ∘ₗ e.toLinearMap := by
     refine b.ext fun i => ?_
     simp only [LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_restrictScalars,
       LinearEquiv.coe_coe, Submodule.coe_subtype, g, c]
-    rw [← Module.Basis.extendOfIsLattice_apply K b i, Module.Basis.equiv_apply]
+    rw [← Module.Basis.extendOfIsFullLattice_apply K b i, Module.Basis.equiv_apply]
     simp
   exact LinearMap.congr_fun key x
 

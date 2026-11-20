@@ -51,7 +51,9 @@ theorem exists_basis_matrix_of_integral_preimage
       rw [smul_smul, inv_mul_cancel₀ hd0, one_smul]
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-  haveI : Submodule.IsLattice k L := ⟨hfg, hsp⟩
+  haveI : Submodule.IsFullLattice k L := { toIsLattice := Submodule.IsLattice.of_fg k hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite k L
+  have := Submodule.IsLattice.free k L
   have hr : Module.finrank O L = m := by
     simpa using Submodule.IsLattice.finrank_of_pi k L
   let b : Module.Basis (Fin m) O L := Module.finBasisOfFinrankEq O L hr
@@ -63,10 +65,10 @@ theorem exists_basis_matrix_of_integral_preimage
     simp [Matrix.vecMul, dotProduct, M, Algebra.smul_def]
   refine ⟨M, ?_, ?_⟩
   · have hli : LinearIndependent k M.row := by
-      have := (b.extendOfIsLattice k).linearIndependent
-      have e : M.row = ⇑(b.extendOfIsLattice k) := by
+      have := (b.extendOfIsFullLattice k).linearIndependent
+      have e : M.row = ⇑(b.extendOfIsFullLattice k) := by
         funext i
-        rw [Module.Basis.extendOfIsLattice_apply]
+        rw [Module.Basis.extendOfIsFullLattice_apply]
         rfl
       rw [e]
       exact this

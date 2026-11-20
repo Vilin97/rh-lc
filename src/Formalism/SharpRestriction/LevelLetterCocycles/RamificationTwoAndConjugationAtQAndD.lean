@@ -103,18 +103,22 @@ theorem lat_free (T : Submodule O V) (hfg : T.FG) (hsp : Submodule.span LL (T : 
 
 theorem finrank_lat (T : Submodule O V) (hfg : T.FG) (hsp : Submodule.span LL (T : Set V) = ⊤) :
     finrank O T = finrank LL V := by
-  have : Submodule.IsLattice LL T := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice LL T := { toIsLattice := Submodule.IsLattice.of_fg LL hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite LL T
+  have := Submodule.IsLattice.free LL T
   have : Module.Free O T := Submodule.IsLattice.free LL T
   let b := Module.Free.chooseBasis O T
-  rw [Module.finrank_eq_nat_card_basis b, Module.finrank_eq_nat_card_basis (b.extendOfIsLattice LL)]
+  rw [Module.finrank_eq_nat_card_basis b, Module.finrank_eq_nat_card_basis (b.extendOfIsFullLattice LL)]
 
 theorem exists_lin_lift (Y : Submodule O V) (hfg : Y.FG)
     (hsp : Submodule.span LL (Y : Set V) = ⊤) (T : Submodule O W) (φ : ↥Y →ₗ[O] (W ⧸ T)) :
     ∃ ψ : V →ₗ[LL] W, ∀ y : ↥Y, φ y = Submodule.Quotient.mk (ψ y) := by
-  have : Submodule.IsLattice LL Y := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice LL Y := { toIsLattice := Submodule.IsLattice.of_fg LL hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite LL Y
+  have := Submodule.IsLattice.free LL Y
   have : Module.Free O Y := Submodule.IsLattice.free LL Y
   let b := Module.Free.chooseBasis O Y
-  let bV := b.extendOfIsLattice LL
+  let bV := b.extendOfIsFullLattice LL
   have hb : ∀ i, bV i = (b i : V) := fun i => by simp [bV]
   choose x hx using fun i => Submodule.Quotient.mk_surjective T (φ (b i))
   let ψ : V →ₗ[LL] W := bV.constr LL x
@@ -239,11 +243,13 @@ theorem dualS_lattice [FiniteDimensional LL V] [FiniteDimensional LL V']
     (dualS P T).FG ∧ Submodule.span LL ((dualS P T : Submodule O V') : Set V') = ⊤ ∧
       dualS P.flip (dualS P T) = T := by
   classical
-  have : Submodule.IsLattice LL T := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice LL T := { toIsLattice := Submodule.IsLattice.of_fg LL hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite LL T
+  have := Submodule.IsLattice.free LL T
   have : Module.Free O T := lat_free T hfg hsp
   have : Module.Finite O T := Module.Finite.iff_fg.2 hfg
   let b := Module.Free.chooseBasis O T
-  let bV := b.extendOfIsLattice LL
+  let bV := b.extendOfIsFullLattice LL
   have hbV : ∀ i, bV i = (b i : V) := fun i => by simp [bV]
   let bV' := bV.dualBasis.map (toDual_of_pairing P h2 h3).symm
   have hδ : ∀ i j, P (bV i) (bV' j) = if i = j then 1 else 0 := by
@@ -364,11 +370,13 @@ variable {O LL : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Fi
 theorem lat_open (hopen : IsOpen (Set.range (algebraMap O LL))) (T : Submodule O V) (hfg : T.FG)
     (hsp : Submodule.span LL (T : Set V) = ⊤) : IsOpen (T : Set V) := by
   have : IsTopologicalAddGroup V := IsModuleTopology.topologicalAddGroup LL V
-  have : Submodule.IsLattice LL T := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice LL T := { toIsLattice := Submodule.IsLattice.of_fg LL hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite LL T
+  have := Submodule.IsLattice.free LL T
   have : Module.Free O T := lat_free T hfg hsp
   have : Module.Finite O T := Module.Finite.iff_fg.2 hfg
   let b := Module.Free.chooseBasis O T
-  let bV := b.extendOfIsLattice LL
+  let bV := b.extendOfIsFullLattice LL
   let S : Set V := ⋂ i, (fun v => bV.coord i v) ⁻¹' (Set.range (algebraMap O LL))
   have hS : IsOpen S := by
     refine isOpen_iInter_of_finite fun i => hopen.preimage ?_
@@ -383,7 +391,7 @@ theorem lat_open (hopen : IsOpen (Set.range (algebraMap O LL))) (T : Submodule O
     refine T.sum_mem fun i _ => ?_
     obtain ⟨a, ha⟩ := hv i
     have ha' : bV.repr v i = algebraMap O LL a := ha.symm
-    rw [ha', algebraMap_smul, Module.Basis.extendOfIsLattice_apply]
+    rw [ha', algebraMap_smul, Module.Basis.extendOfIsFullLattice_apply]
     exact T.smul_mem a (b i).2
   have : (T.toAddSubgroup : Set V) ∈ nhds (0 : V) := Filter.mem_of_superset (hS.mem_nhds h0) hST
   exact AddSubgroup.isOpen_of_mem_nhds T.toAddSubgroup this

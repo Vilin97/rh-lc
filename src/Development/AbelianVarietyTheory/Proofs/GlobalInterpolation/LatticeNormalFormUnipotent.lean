@@ -21,18 +21,22 @@ theorem span_range_extend {κ : Type} {L : Submodule O Y} [Submodule.IsLattice F
     exact funext fun i => b.extendOfIsLattice_apply F i
   rw [h1, ← Submodule.map_span, b.span_eq, Submodule.map_top, Submodule.range_subtype]
 
-theorem exists_equiv_map_eq (M L : Submodule O Y) [Submodule.IsLattice F M] [Submodule.IsLattice F L] :
+theorem exists_equiv_map_eq (M L : Submodule O Y) [Submodule.IsFullLattice F M] [Submodule.IsFullLattice F L] :
     ∃ γ : Y ≃ₗ[F] Y, M.map (γ.toLinearMap.restrictScalars O) = L := by
+  have := Submodule.IsLattice.finite F L
+  have := Submodule.IsLattice.free F L
+  have := Submodule.IsLattice.finite F M
+  have := Submodule.IsLattice.free F M
   let bM := Module.Free.chooseBasis O M
   let bL := Module.Free.chooseBasis O L
-  let e := (bM.extendOfIsLattice F).indexEquiv (bL.extendOfIsLattice F)
-  refine ⟨(bM.extendOfIsLattice F).equiv (bL.extendOfIsLattice F) e, ?_⟩
+  let e := (bM.extendOfIsFullLattice F).indexEquiv (bL.extendOfIsFullLattice F)
+  refine ⟨(bM.extendOfIsFullLattice F).equiv (bL.extendOfIsFullLattice F) e, ?_⟩
   refine (congrArg (Submodule.map _) (span_range_extend (F := F) bM).symm).trans
     (Eq.trans ?_ (span_range_extend (F := F) bL))
-  rw [Submodule.map_span, ← Set.range_comp, ← e.surjective.range_comp (bL.extendOfIsLattice F)]
+  rw [Submodule.map_span, ← Set.range_comp, ← e.surjective.range_comp (bL.extendOfIsFullLattice F)]
   congr 2
   funext i
-  exact (bM.extendOfIsLattice F).equiv_apply i (bL.extendOfIsLattice F) e
+  exact (bM.extendOfIsFullLattice F).equiv_apply i (bL.extendOfIsFullLattice F) e
 
 omit [IsDiscreteValuationRing O] in
 

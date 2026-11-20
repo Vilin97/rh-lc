@@ -20,17 +20,19 @@ theorem exists_frame [IsDomain R] [IsPrincipalIdealRing R] [IsFractionRing R K]
     (hsp : Submodule.span K (Λ : Set (Fin n → K)) = ⊤) :
     ∃ C : Matrix (Fin n) (Fin n) K, IsUnit C.det ∧
       ∀ y, y ∈ Λ ↔ ∃ z : Fin n → R, y = C.mulVec (fun i => algebraMap R K (z i)) := by
-  haveI : Submodule.IsLattice K Λ := ⟨hfg, hsp⟩
+  haveI : Submodule.IsFullLattice K Λ := { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hsp }
+  have := Submodule.IsLattice.finite K Λ
+  have := Submodule.IsLattice.free K Λ
   have hr : Module.finrank R Λ = n := by
     rw [Submodule.IsLattice.finrank_of_pi K Λ, Fintype.card_fin]
   let b : Module.Basis (Fin n) R Λ := Module.finBasisOfFinrankEq R Λ hr
   have key : ∀ z : Fin n → R,
-      ((Pi.basisFun K (Fin n)).toMatrix (b.extendOfIsLattice K)).mulVec
+      ((Pi.basisFun K (Fin n)).toMatrix (b.extendOfIsFullLattice K)).mulVec
         (fun i => algebraMap R K (z i)) = ((∑ j, z j • b j : Λ) : Fin n → K) := by
     intro z
     funext i
     simp [Matrix.mulVec, dotProduct, Module.Basis.toMatrix_apply, Algebra.smul_def, mul_comm]
-  refine ⟨(Pi.basisFun K (Fin n)).toMatrix (b.extendOfIsLattice K), ?_, fun y => ⟨?_, ?_⟩⟩
+  refine ⟨(Pi.basisFun K (Fin n)).toMatrix (b.extendOfIsFullLattice K), ?_, fun y => ⟨?_, ?_⟩⟩
   · rw [← Module.Basis.det_apply]; exact Module.Basis.isUnit_det _ _
   · intro hy
     refine ⟨b.repr ⟨y, hy⟩, ?_⟩
