@@ -223,7 +223,7 @@ theorem mk_eq_iff (hΛ : Module.Finite (𝓞 E) Λ) (hsp : Submodule.span E (Λ 
   letI := starOfInv (σ : E →+* E) hs
   constructor
   · intro h
-    obtain ⟨c, ⟨γ, hγ, e⟩, k, hk, rfl⟩ := (DoubleCoset.eq _ _ _ _).1 h
+    obtain ⟨c, ⟨γ, hγ, e⟩, k, hk, rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
     refine ⟨glEquiv γ, (unitary_isometry_lattice_holds E _ hs (Fin n) J 1 one_ne_zero (map_one _) _).1 hγ, ?_⟩
     rw [← global_lattice_equiv_holds F E (Fin n) Λ γ g k hk.2, e]
     rfl

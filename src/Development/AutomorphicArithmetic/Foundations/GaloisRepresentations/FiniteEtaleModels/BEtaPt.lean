@@ -35,7 +35,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.etaPtB_holds :
   have hN : 0 < (N : ℕ) := by
     have := N.2.1
     omega
-  have key := (hiff _ (Nat.mul_pos hN' hN) (Nat.Coprime.mul N'.2.2 N.2.2)
+  have key := (hiff _ (Nat.mul_pos hN' hN) (Nat.Coprime.mul_left N'.2.2 N.2.2)
     ((N : ℕ) • x) ((N' : ℕ) • y)).2 hv
   have ex : I'.ev ((N' : ℕ) * N) ((N : ℕ) • x) = I'.ev N' x := by
     have t1 := I'.tower (N' : ℕ) N hN' hN x

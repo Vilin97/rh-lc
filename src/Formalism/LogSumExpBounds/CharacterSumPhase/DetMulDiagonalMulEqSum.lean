@@ -17,7 +17,7 @@ theorem det_mul_diagonal_mul_eq_sum {R : Type*} [CommRing R] {n : Type*} [Fintyp
       = (X : R[X]) • (diagonal d * (B * A)).map C := by
     rw [Matrix.mul_smul, ← Matrix.map_mul, Matrix.mul_assoc]
   rw [e1, e2] at h
-  have h2 := congrArg (fun p => Polynomial.coeff p k) h
+  have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) h
   simp only [coeff_det_one_add_X_smul_eq_sum_minors] at h2
   have hu : powersetCard k (univ : Finset (Fin k)) = {univ} := by
     simpa using Finset.powersetCard_self (univ : Finset (Fin k))

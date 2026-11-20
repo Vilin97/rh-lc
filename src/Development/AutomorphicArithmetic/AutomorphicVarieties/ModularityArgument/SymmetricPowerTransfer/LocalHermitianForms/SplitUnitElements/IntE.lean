@@ -17,7 +17,7 @@ theorem UpperTheory.V.Z.Sym.Loc.One.intE :
   have h2 : IsUnit (2 + τ₀) := isUnit_of_mul_isUnit_right (hm ▸ (-u).isUnit)
   refine ⟨⟨τ₀, e₀⟩, ⟨h1.unit, by simp [map_ofNat, e₀]⟩, ⟨h2.unit, by simp [map_ofNat, e₀]⟩, fun x => ⟨fun hx => ?_, ?_⟩⟩
   · have down : ∀ a : K, IsIntegral O (algebraMap K (Etau K τ) a) → ∃ b : O, algebraMap O K b = a := fun a h =>
-      IsIntegrallyClosed.algebraMap_eq_of_integral ((isIntegral_algebraMap_iff (algebraMap K (Etau K τ)).injective).1 h)
+      IsIntegrallyClosed.algebraMap_eq_of_integral ((isIntegral_algebraMap_iff ).1 h)
     obtain ⟨t, ht⟩ := down (2 * x.re + τ * x.im) (by
       convert hx.add (isIntegral_star hx) using 1
       ext <;> simp; ring)

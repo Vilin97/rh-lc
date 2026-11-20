@@ -235,7 +235,7 @@ theorem mk_eq_of (S : StepIn M i hi G) (β : S.Ch) {γ : GL (Fin (D.R.N i)) D.ho
     (hx : x'.1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ * x.1 * κ.1) :
     (Quotient.mk'' x' : Cls (S.K β).lev) = Quotient.mk'' x := by
   symm
-  refine (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, PStabEq.bc_mem hγ⟩, Subgroup.mem_subgroupOf.2 ⟨γ, hγ, rfl⟩, ⟨_, PStabEq.U_le κ.2⟩,
+  refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, PStabEq.bc_mem hγ⟩, Subgroup.mem_subgroupOf.2 ⟨γ, hγ, rfl⟩, ⟨_, PStabEq.U_le κ.2⟩,
     Subgroup.mem_subgroupOf.2 κ.2, Subtype.ext ?_⟩
   exact hx
 
@@ -1846,7 +1846,7 @@ theorem exists_pow (S : StepIn M i hi G) (β : S.Ch) (cl : {c // S.chOf c = β})
     (fun n : ℕ => (Quotient.mk'' ((S.K β).y cl ^ n) : Cls (S.K β).lev))
   wlog hlt : a < b generalizing a b
   · exact this b a hab.symm he.symm (by omega)
-  obtain ⟨g, hg, κ, hκ, e⟩ := (DoubleCoset.eq _ _ ((S.K β).y cl ^ a) ((S.K β).y cl ^ b)).1 he
+  obtain ⟨g, hg, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ _ _ ((S.K β).y cl ^ a) ((S.K β).y cl ^ b)).1 he
   obtain ⟨γ, hγ, hγe⟩ := Subgroup.mem_subgroupOf.1 hg
   refine ⟨a, b - a, by omega, g, κ, γ, hγ, hγe.symm, Subgroup.mem_subgroupOf.1 hκ, ?_⟩
   rw [show a + (b - a) = b by omega]

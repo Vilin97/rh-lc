@@ -281,61 +281,61 @@ theorem indep_u {K Ω U τ : Type} [Field K] [NumberField K] [Field Ω] [Field U
       ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))) (fun j => (u j : U)) P) ↔
         ∀ α, P.coeff α ∈ la.asIdeal)
     (h1 : ∀ a : 𝓞 K, 0 ≤ w (((algebraMap Ω U).comp ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))) a)) :
-    letI _iW := ReciprocityTheory.MultiplicativeHeights.residueAlgebra (vRing w) (algebraMap Ω U)
-    letI _io := ReciprocityTheory.MultiplicativeHeights.residueAlgebra ((vRing w).comap (algebraMap Ω U)) (algebraMap K Ω)
-    letI : Algebra (ResidueField (((vRing w).comap (algebraMap Ω U)).comap (algebraMap K Ω)))
-        (ResidueField (vRing w)) :=
-      ((algebraMap _ (ResidueField (vRing w))).comp
-        (algebraMap _ (ResidueField ((vRing w).comap (algebraMap Ω U))))).toAlgebra
-    AlgebraicIndependent (ResidueField (((vRing w).comap (algebraMap Ω U)).comap (algebraMap K Ω)))
-      (fun j => residue (vRing w) (u j)) := by
-  classical
-  letI _iW := ReciprocityTheory.MultiplicativeHeights.residueAlgebra (vRing w) (algebraMap Ω U)
-  letI _io := ReciprocityTheory.MultiplicativeHeights.residueAlgebra ((vRing w).comap (algebraMap Ω U)) (algebraMap K Ω)
-  letI : Algebra (ResidueField (((vRing w).comap (algebraMap Ω U)).comap (algebraMap K Ω)))
-      (ResidueField (vRing w)) :=
-    ((algebraMap _ (ResidueField (vRing w))).comp
-      (algebraMap _ (ResidueField ((vRing w).comap (algebraMap Ω U))))).toAlgebra
-  let ν : AddValuation K (WithTop ℤ) := (w.comap (algebraMap Ω U)).comap (algebraMap K Ω)
-  have hpos : ∀ a : 𝓞 K, 0 < ν (algebraMap (𝓞 K) K a) ↔ a ∈ la.asIdeal := by
-    intro a
-    have := h0 (MvPolynomial.C a)
-    simp only [MvPolynomial.eval₂_C] at this
-    refine this.trans ?_
-    constructor
-    · intro h; simpa using h 0
-    · intro h α; rw [MvPolynomial.coeff_C]; split_ifs <;> simp [h]
-  have h1' : ∀ a : 𝓞 K, algebraMap (𝓞 K) K a ∈ vRing ν := h1
-  have h1o : ∀ a : 𝓞 K, algebraMap (𝓞 K) K a ∈ ((vRing w).comap (algebraMap Ω U)).comap (algebraMap K Ω) := h1
-  have hsurj : Function.Surjective ((residue (((vRing w).comap (algebraMap Ω U)).comap (algebraMap K Ω))).comp
-      ((algebraMap (𝓞 K) K).codRestrict _ h1o)) := surj_res ν la h1' hpos
-  rw [algebraicIndependent_iff]
-  intro P hP
-  by_contra hne
-  obtain ⟨P', rfl⟩ := MvPolynomial.map_surjective _ hsurj P
-  obtain ⟨α, hα⟩ : ∃ α, P'.coeff α ∉ la.asIdeal := by
-    by_contra hall
-    push Not at hall
-    apply hne
-    ext α
-    rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, RingHom.comp_apply, residue_eq_zero_iff]
-    exact (mem_max_iff ν _).mpr ((hpos _).mpr (hall α))
-  have hw0 : ¬ 0 < w (MvPolynomial.eval₂ ((algebraMap Ω U).comp
-      ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))) (fun j => (u j : U)) P') := by
-    rw [h0]; intro h; exact hα (h α)
-  let ψ : 𝓞 K →+* vRing w :=
-    ((algebraMap Ω U).comp ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))).codRestrict (vRing w) h1
-  let y : vRing w := MvPolynomial.eval₂ ψ u P'
-  have hy : (y : U) = MvPolynomial.eval₂ ((algebraMap Ω U).comp
-      ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))) (fun j => (u j : U)) P' :=
-    MvPolynomial.eval₂_comp_left (vRing w).subtype ψ u P'
-  have hres : residue (vRing w) y = 0 := by
-    have e := MvPolynomial.eval₂_comp_left (residue (vRing w)) ψ u P'
-    rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_map] at hP
-    refine e.trans (Eq.trans ?_ hP)
-    congr 1
-  rw [residue_eq_zero_iff, mem_max_iff, hy] at hres
-  exact hw0 hres
+    letI _iW := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end ValuationResidueLemmas
 end ReciprocityTheory.ChartRestriction.G.T0

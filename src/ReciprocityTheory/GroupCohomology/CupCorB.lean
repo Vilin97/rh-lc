@@ -234,7 +234,7 @@ theorem retr_pull_mem (hU : IsOpen (U : Set G)) {M : TRep R G} (n : ℕ) (F : (F
     refine IsLocallyConstant.continuous ?_
     rw [IsLocallyConstant.iff_exists_open]
     intro x
-    refine ⟨(fun y => y * x⁻¹) ⁻¹' (U : Set G), hU.preimage (continuous_mul_right _), by simp,
+    refine ⟨(fun y => y * x⁻¹) ⁻¹' (U : Set G), hU.preimage (continuous_mul_const _), by simp,
       fun y hy => ?_⟩
     congr 1
     exact (Quotient.sound (QuotientGroup.rightRel_apply.mpr hy)).symm

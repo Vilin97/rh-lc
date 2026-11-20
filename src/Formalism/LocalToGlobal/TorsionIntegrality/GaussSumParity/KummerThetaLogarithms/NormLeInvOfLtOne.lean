@@ -51,7 +51,7 @@ theorem poly_id (l : ℕ) (hl : l.Prime) : ∃ Q : Polynomial ℤ,
       Polynomial.map_prod]
     simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_natCast]
     rw [hrange, hprod, sub_self]
-  have h := congrArg (fun P => Polynomial.coeff P i) hmap
+  have h := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) hmap
   simp only [Polynomial.coeff_map, Polynomial.coeff_zero, eq_intCast] at h
   exact h
 

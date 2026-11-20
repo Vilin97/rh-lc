@@ -93,7 +93,7 @@ theorem rowDiv_succ (R : Type) [CommRing R] {r m : ℕ} (a b : Fin r) (k : ℕ)
     rowDiv R a b (k + 1) f * ((k : MvPolynomial (Fin r × Fin m) R) + 1) +
       (if a = b then rowDiv R a b k f * (k : MvPolynomial (Fin r × Fin m) R) else 0) =
       rowDiv R a b k (pol R a b f) := by
-  have h := congrArg (fun p => Polynomial.coeff p k) (deriv_rowGen R a b f)
+  have h := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) (deriv_rowGen R a b f)
   unfold rowDiv
   rw [← h]
   by_cases hab : a = b

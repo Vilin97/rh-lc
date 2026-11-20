@@ -103,7 +103,7 @@ theorem fiber_count (ι : H →* G) (hι : Injective ι) (Γ : Subgroup G) (hΓ 
     simp only [Set.mem_preimage, Set.mem_singleton_iff, MulAction.mem_orbit_iff]
     constructor
     · intro he
-      obtain ⟨g', hg', k, hk, e⟩ := (DoubleCoset.eq Γ' K _ _).1 he
+      obtain ⟨g', hg', k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ' K _ _).1 he
       obtain ⟨t, ht, rfl⟩ := (hΓ' g').1 hg'
       have e' : (ι h₀)⁻¹ = ι t * ((ι (Quotient.out δ))⁻¹ * x) * k * x⁻¹ := by
         rw [← e]; group
@@ -208,7 +208,7 @@ theorem unfold_classSum : ∀ {G H : Type} [Group G] [Group H] (ι : H →* G), 
     exact right_ne_zero_of_mul hp
   have hπ : ∀ q q' δ δ', Φ (q', δ) = Φ (q, δ') → q' = q := by
     intro q q' δ δ' h
-    obtain ⟨g', hg', k, hk, e⟩ := (DoubleCoset.eq Γ' K _ _).1 h
+    obtain ⟨g', hg', k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ' K _ _).1 h
     have hΓ'Γ : g' ∈ Γ := by
       obtain ⟨t, -, rfl⟩ := (hΓ' g').1 hg'
       exact hιΓ t

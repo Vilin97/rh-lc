@@ -236,7 +236,7 @@ theorem horb_isCO (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) {m i : �
   have hpu : ∀ n : ℕ, IsUnit (algebraMap F E ((ϖ : F) ^ n)) := fun n =>
     (IsUnit.mk0 _ (pow_ne_zero n hϖ0)).map _
   let A : AddSubgroup (Matrix (Fin m) (Fin m) E) :=
-    (hermLat L m).map (DistribMulAction.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j)))
+    (hermLat L m).map (DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j)))
   have hA : ∀ X, X ∈ A ↔ ∃ D, (IsHerm L D ∧ IsIntM L D) ∧ algebraMap F E ((ϖ : F) ^ j) • D = X := by
     intro X
     simp only [A, AddSubgroup.mem_map, mem_hermLat]

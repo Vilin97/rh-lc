@@ -196,7 +196,7 @@ theorem mem_fiC_iff (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ) 
       x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ.1 * (y c0).1 * κ.1 := by
     intro x
     obtain ⟨c0, hc0⟩ := hy.2 (Quotient.mk'' x)
-    obtain ⟨h, hh, k, hk, e⟩ := (DoubleCoset.eq _ _ (y c0) x).1 hc0
+    obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ (y c0) x).1 hc0
     have hh' : (h : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) ∈
         (UJ (σ : E →+* E) J).map (bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F))) := Subgroup.mem_subgroupOf.1 hh
     have hk' : (k : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) ∈ S.U := Subgroup.mem_subgroupOf.1 hk
@@ -228,7 +228,7 @@ theorem mem_fiC_iff (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ) 
         rw [Subgroup.mem_subgroupOf]
         exact (κ1 * κ2⁻¹).2
       refine hy.1 (show (Quotient.mk'' (y c1) : Cls S) = Quotient.mk'' (y c2) from
-        (DoubleCoset.eq _ _ (y c1) (y c2)).2 ⟨r, hrR, kk, hkK, ?_⟩)
+        (@DoubleCoset.eq _ _ _ _ (y c1) (y c2)).2 ⟨r, hrR, kk, hkK, ?_⟩)
       simp only [r]
       group
     subst hc

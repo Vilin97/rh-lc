@@ -290,7 +290,7 @@ theorem main : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [I
   obtain ⟨M, hM⟩ := exists_close L hϖ hH hΛ hh hΓ N e i (by omega)
   obtain ⟨-, hC, -⟩ := GlobalTheory.T.matrixCongruentOneModUniformizerPow_group_and_orbits L ϖ hϖ m i (by omega)
   let B : AddSubgroup (Fin m → Fin n → E) :=
-    (tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ M)))
+    (tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ M)))
   have hB : ∀ w : Fin m → Fin n → E, (∀ a, w a ∈ Λ) → algebraMap F E ((ϖ : F) ^ M) • w ∈ B :=
     fun w hw => ⟨w, fun a _ => hw a, rfl⟩
   obtain ⟨k, hk⟩ := exists_pow_le L hϖ hΛ.1 hΛs.1

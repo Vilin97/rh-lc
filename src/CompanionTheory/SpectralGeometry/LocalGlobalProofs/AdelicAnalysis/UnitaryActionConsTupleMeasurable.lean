@@ -26,7 +26,7 @@ theorem measurable_actW_consTup : ∀ (F E : Type) [Field F] [NumberField F] [Fi
   have hc : Continuous (fun X : Fin n → Fin M → R ⊗[F] E => actW R σ J g (consTup X)) := by
     refine continuous_pi fun a => continuous_pi fun i => ?_
     simp only [actW, actTup, Matrix.mulVec, dotProduct]
-    refine continuous_finset_sum _ fun j _ => continuous_const.mul ?_
+    refine continuous_finsetSum _ fun j _ => continuous_const.mul ?_
     exact (continuous_apply j).comp ((continuous_apply a).comp (continuous_consTup n M))
   exact hc.measurable
 

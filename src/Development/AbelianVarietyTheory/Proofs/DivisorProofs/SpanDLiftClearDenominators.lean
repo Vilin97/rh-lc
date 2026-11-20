@@ -34,7 +34,7 @@ theorem GlobalTheory.span_D_lift_clear_denominators : ∀ (k K L : Type) [Field 
     rw [hmax, Ideal.span_singleton_eq_bot] at h1
     exact hs0' h1
   have hprin : Submodule.IsPrincipal (IsLocalRing.maximalIdeal R) := ⟨⟨_, hmax⟩⟩
-  haveI : IsDiscreteValuationRing R := ((IsDiscreteValuationRing.TFAE R hnf).out 0 4).2 hprin
+  haveI : IsDiscreteValuationRing R := ((IsDiscreteValuationRing.TFAE R hnf).out 1 5).2 hprin
   have hirr : Irreducible (algebraMap B R s) :=
     (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 hmax
   haveI : IsDomain (B ⧸ Q) := Ideal.Quotient.isDomain Q

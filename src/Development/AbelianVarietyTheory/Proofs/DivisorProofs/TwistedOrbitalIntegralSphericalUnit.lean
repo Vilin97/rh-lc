@@ -114,7 +114,7 @@ theorem twOrb_unit_eventually : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       (Subgroup.relIndex_eq_one).2 hcpt]
     simp
   rw [finsum_eq_single _ (DoubleCoset.mk (twCent θ y) K g₀)]
-  · obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+  · obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
       (DoubleCoset.out_eq' (twCent θ y) K (DoubleCoset.mk (twCent θ y) K g₀)).symm
     rw [he, GlobalTheory.TwOrbConj.summand_rep θ K y _ g₀ ht hk, hval]
   · intro q hq

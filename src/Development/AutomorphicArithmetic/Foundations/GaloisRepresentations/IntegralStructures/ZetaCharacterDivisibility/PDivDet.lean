@@ -37,7 +37,7 @@ theorem UpperTheory.Gal.Int.Div.divDet_of :
     rw [Polynomial.natDegree_map, Matrix.charpoly_natDegree_eq_dim,
       Polynomial.natDegree_multiset_prod_X_sub_C_eq_card] at h1
     simpa using h1.symm
-  have h0 := congrArg (fun p => Polynomial.coeff p 0) hch
+  have h0 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) hch
   simp only [Polynomial.coeff_map] at h0
   have hdet : (r x : Matrix (Fin a) (Fin a) (Qbar l)).det =
       (-1) ^ a * (r x : Matrix (Fin a) (Fin a) (Qbar l)).charpoly.coeff 0 := by

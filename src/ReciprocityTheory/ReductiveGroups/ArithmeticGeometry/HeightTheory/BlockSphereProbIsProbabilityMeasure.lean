@@ -45,7 +45,7 @@ theorem height_const_eq_zero {K : Type} [Field K] [NumberField K] {B n : ℕ} (h
   rw [div_eq_zero_iff]
   left
   have hfin : (Function.mulSupport fun w : FinitePlace K => w a).Finite :=
-    NumberField.FinitePlace.mulSupport_finite ha
+    NumberField.FinitePlace.hasFiniteMulSupport ha
   have hsub : (Function.support fun w : FinitePlace K => Real.log (w a)) ⊆ hfin.toFinset := by
     intro w hw
     rw [Set.Finite.coe_toFinset, Function.mem_mulSupport]

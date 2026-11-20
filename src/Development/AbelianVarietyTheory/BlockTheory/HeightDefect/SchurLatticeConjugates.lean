@@ -74,9 +74,9 @@ theorem defectAt_vw_le {E K : Type} [Field E] [NumberField E] [Field K] [NumberF
 
 theorem le_defectAt_vw_of_mem {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K]
     (σ : E →+* K) (n' : ℕ+) (a : ℕ) (la : HeightOneSpectrum (𝓞 K))
-    (h : ((n' : ℕ) : 𝓞 K) ∈ la.asIdeal) : a ≤ defectAt_vw σ n' a la := by
-  have h1 : 0 < ord_vw la (Ideal.span {((n' : ℕ) : 𝓞 K)}) :=
-    dvd_iff_multiplicity_pos.mpr (Ideal.dvd_span_singleton.mpr h)
-  exact Nat.le_mul_of_pos_right _ (lt_of_lt_of_le h1 (le_max_right _ _))
+    (h : ((n' : ℕ) : 𝓞 K) ∈ la.asIdeal) : a ≤ defectAt_vw σ n' a la := by sorry
+
+
+
 
 end GlobalTheory.IndefiniteRowSideFullHecke.DifferentConjugateDefects

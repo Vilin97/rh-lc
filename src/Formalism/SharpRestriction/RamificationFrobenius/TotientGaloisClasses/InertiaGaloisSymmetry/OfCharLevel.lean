@@ -283,7 +283,7 @@ theorem coprime_QS : Nat.Coprime (QS Ξ e) (q * d) := by
     constructor
     · exact (Nat.coprime_primes Nat.prime_two hq).mpr (by omega)
     · exact (Nat.coprime_primes Nat.prime_two hd).mpr (by omega)
-  exact Nat.Coprime.coprime_dvd_left (QS_dvd_mul Ξ e) (Nat.Coprime.mul (Nat.Coprime.pow_left _ h2) hc)
+  exact Nat.Coprime.coprime_dvd_left (QS_dvd_mul Ξ e) (Nat.Coprime.mul_left (Nat.Coprime.pow_left _ h2) hc)
 
 def host : HostRaw (frame Ξ e hev) :=
   (data Ξ e hev).host hH (coprime_QS Ξ e hH hc) he fun l hl h2 h => hs l hl h2 (dvd_of_dvd_QS Ξ e hl h2 h)
@@ -306,7 +306,7 @@ theorem muPM (hq : q ≠ 3) : (host Ξ e hev hH hc he hs).MuPM := by
 
 theorem coprimeFifteen_of_coprime (h : Nat.Coprime M 15) : (host Ξ e hev hH hc he hs).CoprimeFifteen := by
   show Nat.Coprime (QS Ξ e) 15
-  exact Nat.Coprime.coprime_dvd_left (QS_dvd_mul Ξ e) (Nat.Coprime.mul (Nat.Coprime.pow_left _ (by decide)) h)
+  exact Nat.Coprime.coprime_dvd_left (QS_dvd_mul Ξ e) (Nat.Coprime.mul_left (Nat.Coprime.pow_left _ (by decide)) h)
 
 theorem exists_sqq : ∃ s : (host Ξ e hev hH hc he hs).E, s ^ 2 = -((host Ξ e hev hH hc he hs).q : (host Ξ e hev hH hc he hs).E) ∧
     ∀ σ : (host Ξ e hev hH hc he hs).E ≃ₐ[ℚ] (host Ξ e hev hH hc he hs).E,

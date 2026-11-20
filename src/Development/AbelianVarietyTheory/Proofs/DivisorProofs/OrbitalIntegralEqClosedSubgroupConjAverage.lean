@@ -113,7 +113,7 @@ theorem dcMap_bij (K P : Subgroup G) (δ : G) (hδ : δ ∈ P) (hT : twCent (Mon
     (hPK : ∀ g : G, ∃ p ∈ P, ∃ k ∈ K, g = p * k) : Function.Bijective (dcMap K P δ hδ) := by
   constructor
   · intro q₁ q₂ h
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 h
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
     have htP : t ∈ P := hT ht
     have hkP : k ∈ P := by
       have : k = ((Quotient.out q₁ : P) : G)⁻¹ * t⁻¹ * ((Quotient.out q₂ : P) : G) := by rw [he]; group
@@ -125,7 +125,7 @@ theorem dcMap_bij (K P : Subgroup G) (δ : G) (hδ : δ ∈ P) (hT : twCent (Mon
   · intro q
     obtain ⟨p, hp, k, hk, hg⟩ := hPK (Quotient.out q)
     refine ⟨DoubleCoset.mk _ _ (⟨p, hp⟩ : P), ?_⟩
-    obtain ⟨t, ht, k', hk', he⟩ := (DoubleCoset.eq _ _ _ _).1
+    obtain ⟨t, ht, k', hk', he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
       (DoubleCoset.out_eq' (twCent (MonoidHom.id P) ⟨δ, hδ⟩) (K.subgroupOf P) (DoubleCoset.mk _ _ (⟨p, hp⟩ : P))).symm
     rw [← DoubleCoset.out_eq' _ _ q]
     show DoubleCoset.mk _ K _ = _
@@ -149,7 +149,7 @@ theorem twOrb_sub : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopological
   refine finsum_congr fun q => ?_
   rw [summand_sub K P hP δ hδ hT f]
   show summand _ K δ f (Quotient.out (DoubleCoset.mk _ K ((Quotient.out q : P) : G))) = _
-  obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+  obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
     (DoubleCoset.out_eq' (twCent (MonoidHom.id G) δ) K (DoubleCoset.mk _ K ((Quotient.out q : P) : G))).symm
   rw [he, summand_rep _ K δ f _ ht hk]
 

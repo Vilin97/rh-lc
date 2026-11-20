@@ -33,7 +33,7 @@ theorem blockProd_ne_zero {K : Type} [Field K] [NumberField K] [StarRing K] {G :
   unfold Formalism.L2.Col.blockPoly at h
   rw [Finset.prod_eq_zero_iff] at h
   obtain ⟨c, _, hc⟩ := h
-  have := congrArg (fun q => Polynomial.coeff q 0) hc
+  have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 0) hc
   simp at this
 
 theorem eig_in_sum {H : Type} [AddCommGroup H] [Module ℂ H] [FiniteDimensional ℂ H] {Q J K : Type} (ok : Q → Prop)

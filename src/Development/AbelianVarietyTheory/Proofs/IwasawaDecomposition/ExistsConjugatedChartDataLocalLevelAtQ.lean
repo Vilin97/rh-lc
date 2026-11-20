@@ -15,16 +15,16 @@ theorem dc_mul_inv_bij {G : Type} [Group G] (Γ K K' : Subgroup G) (b : G) (hK :
     Function.Bijective fun i => (Quotient.mk'' (z i * b⁻¹) : ClassSet Γ K') := by
   constructor
   · intro i j hij
-    obtain ⟨h, hh, k, hk, e⟩ := (DoubleCoset.eq Γ K' _ _).1 hij
-    refine hz.1 ((DoubleCoset.eq Γ K _ _).2 ⟨h, hh, b⁻¹ * k * b, (hK k).1 hk, ?_⟩)
+    obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K' _ _).1 hij
+    refine hz.1 ((@DoubleCoset.eq _ _ Γ K _ _).2 ⟨h, hh, b⁻¹ * k * b, (hK k).1 hk, ?_⟩)
     calc z j = (z j * b⁻¹) * b := by group
       _ = h * z i * (b⁻¹ * k * b) := by rw [e]; group
   · intro w
     induction w using Quotient.inductionOn' with
     | h x =>
       obtain ⟨i, hi⟩ := hz.2 (Quotient.mk'' (x * b))
-      obtain ⟨h, hh, k, hk, e⟩ := (DoubleCoset.eq Γ K _ _).1 hi
-      refine ⟨i, (DoubleCoset.eq Γ K' _ _).2 ⟨h, hh, b * k * b⁻¹, (hK _).2 ?_, ?_⟩⟩
+      obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K _ _).1 hi
+      refine ⟨i, (@DoubleCoset.eq _ _ Γ K' _ _).2 ⟨h, hh, b * k * b⁻¹, (hK _).2 ?_, ?_⟩⟩
       · have : b⁻¹ * (b * k * b⁻¹) * b = k := by group
         rw [this]
         exact hk

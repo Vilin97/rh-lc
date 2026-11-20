@@ -45,7 +45,7 @@ theorem exists_rename_notMem {K : Type} [Field K] {σ : Type} (p : Ideal (MvPoly
       have hd0 : d = 0 := by
         ext i
         by_contra hi
-        have hiv : i ∈ g.vars := (MvPolynomial.mem_vars i).mpr ⟨d, hd, Finsupp.mem_support_iff.mpr hi⟩
+        have hiv : i ∈ g.vars := (MvPolynomial.mem_vars_iff_mem_support i).mpr ⟨d, hd, Finsupp.mem_support_iff.mpr hi⟩
         rw [hemp] at hiv
         simp at hiv
       simp [hd0]

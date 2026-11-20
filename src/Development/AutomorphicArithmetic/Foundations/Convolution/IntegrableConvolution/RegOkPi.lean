@@ -32,7 +32,7 @@ private theorem regOk_field (k : Type) [Field k] [TopologicalSpace k] [IsTopolog
       have h := Matrix.charpoly_units_conj x⁻¹ (γ : Matrix (Fin n) (Fin n) k)
       rw [← Matrix.coe_units_inv, inv_inv] at h
       rw [Units.val_mul, Units.val_mul]
-      exact congrArg (fun p => Polynomial.coeff p i) h
+      exact congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) h
     · intro h
       exact GlobalTheory.BCT.ClsFin.conj_of_charpoly γ y hs (Polynomial.ext h).symm
   rw [e]

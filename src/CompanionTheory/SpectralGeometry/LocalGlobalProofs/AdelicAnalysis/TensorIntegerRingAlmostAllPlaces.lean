@@ -38,13 +38,13 @@ theorem exists_good_nat {k : Type} [Field k] (h2 : (2 : k) ≠ 0) (h3 : (3 : k) 
     Polynomial.C A + Polynomial.C B * Polynomial.X + Polynomial.C C * Polynomial.X ^ 2
   have hQ1 : Q1 ≠ 0 := by
     intro h
-    have := congrArg (fun p => Polynomial.coeff p 0) h
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
     simp [Q1, Polynomial.coeff_one, Polynomial.coeff_X_pow] at this
   have hQ2 : Q2 ≠ 0 := by
     intro h
-    have e0 := congrArg (fun p => Polynomial.coeff p 0) h
-    have e1 := congrArg (fun p => Polynomial.coeff p 1) h
-    have e2 := congrArg (fun p => Polynomial.coeff p 2) h
+    have e0 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
+    have e1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h
+    have e2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 2) h
     simp [Q2, Polynomial.coeff_X_pow, Polynomial.coeff_X, Polynomial.coeff_C] at e0 e1 e2
     rcases hne with h' | h' | h'
     · exact h' e0

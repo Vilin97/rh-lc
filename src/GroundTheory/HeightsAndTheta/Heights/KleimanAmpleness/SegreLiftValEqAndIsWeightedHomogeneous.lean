@@ -116,7 +116,7 @@ theorem SegreLiftPrime.proof : SegreLiftPrime.Statement := by
         exact h (Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ (mem_support_iff.mpr hne)))
     have hker : segreLiftMap ι F W f = 0 := hf
     rw [hsum, map_sum, Finset.sum_congr rfl (fun b' _ => (hB b').1)] at hker
-    have hcoeff := congrArg (fun p => Polynomial.coeff p (b (Sum.inl ()))) hker
+    have hcoeff := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (b (Sum.inl ()))) hker
     simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero]
       at hcoeff
     rw [← Finset.sum_filter, ← map_sum, Ideal.Quotient.eq_zero_iff_mem] at hcoeff

@@ -73,7 +73,7 @@ lemma isPositiveDefinite_matrix_coefficient_of_mem_algA [FiniteDimensional ℂ S
     simp only [inv_mul_cancel_left] at hsh
     rw [hsh]
     simp_rw [hab h, Finset.sum_mul]
-    rw [integral_finset_sum]
+    rw [MeasureTheory.integral_finsetSum]
     · refine Finset.sum_congr rfl fun i _ => ?_
       simp_rw [mul_assoc]
       rw [integral_const_mul]

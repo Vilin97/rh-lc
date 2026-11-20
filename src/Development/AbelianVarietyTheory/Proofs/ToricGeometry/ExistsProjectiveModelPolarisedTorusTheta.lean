@@ -53,7 +53,7 @@ theorem isHomogeneous_ideal_cone {σ E : Type} [Fintype σ] (f : σ → E → �
     rw [eval_smul_of_isHomogeneous_toric_geometry (MvPolynomial.homogeneousComponent_isHomogeneous n F)]
     ring
   by_cases hi : i ≤ F.totalDegree
-  · have hc := congrArg (fun P => Polynomial.coeff P i) hQ
+  · have hc := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) hQ
     simpa [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range,
       Nat.lt_succ_iff.mpr hi] using hc
   · rw [MvPolynomial.homogeneousComponent_eq_zero, map_zero]

@@ -10,7 +10,7 @@ theorem exists_int_of_fixed {x : ℂ} (hx : IsIntegral ℤ x) (h : ∀ σ : ℂ 
   have h1 : x ∈ (⊥ : IntermediateField ℚ ℂ) :=
     GroundTheory.Global.mem_bot_iff_forall_algEquiv_apply_eq.2 fun σ => h σ.toRingEquiv
   obtain ⟨q, rfl⟩ := IntermediateField.mem_bot.1 h1
-  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective).1 hx
+  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff ).1 hx
   obtain ⟨n, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.1 h2
   exact ⟨n, by simp⟩
 

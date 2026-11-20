@@ -122,7 +122,7 @@ theorem exists_eq_of_isIntegral {x : FractionRing O}
     (h : IsIntegral O (algebraMap (FractionRing O) (AlgebraicClosure (FractionRing O)) x)) :
     ∃ y : O, algebraMap O (FractionRing O) y = x :=
   IsIntegrallyClosed.isIntegral_iff.1
-    ((isIntegral_algebraMap_iff (algebraMap (FractionRing O) (AlgebraicClosure (FractionRing O))).injective).1 h)
+    ((isIntegral_algebraMap_iff ).1 h)
 
 end Integral
 

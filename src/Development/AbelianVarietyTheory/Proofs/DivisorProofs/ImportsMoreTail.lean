@@ -31,7 +31,7 @@ theorem main : ∀ {κ : Type} [inst : Field κ] (R : Subring κ) [IsNoetherianR
     exact Ideal.comap_bot_of_injective _ hinj
   have hnf : ¬ IsField A := isField_iff_maximalIdeal_eq.not.mpr hm0
   have hDVR : IsDiscreteValuationRing A := by
-    have h03 := (IsDiscreteValuationRing.TFAE A hnf).out 0 3
+    have h03 := (IsDiscreteValuationRing.TFAE A hnf).out 1 4
     refine h03.mpr ⟨inferInstance, ExistsUnique.intro (maximalIdeal A) ⟨hm0, inferInstance⟩ ?_⟩
     rintro P ⟨hP0, hPp⟩
     have eP : Ideal.map (algebraMap R A) (P.comap (algebraMap R A)) = P :=

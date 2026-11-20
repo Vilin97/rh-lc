@@ -38,7 +38,7 @@ theorem natCoprime_of_zmod_mul_one_sub : ∀ (I : AutInst) (g T M : ℕ), 1 ≤ 
   obtain ⟨b, hb⟩ := hq
   have h1 : IsIntegral ℤ (algebraMap ℚ I.E q) := by
     rw [eq_ratCast, ← hb]; exact RingOfIntegers.isIntegral_coe b
-  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff (algebraMap ℚ I.E).injective).1 h1
+  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff ).1 h1
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h2
   have h3 : (M : ℤ) * (1 - (T : ℤ)) = (g : ℤ) * n := by
     have hn' : (n : ℚ) = q := by simpa using hn

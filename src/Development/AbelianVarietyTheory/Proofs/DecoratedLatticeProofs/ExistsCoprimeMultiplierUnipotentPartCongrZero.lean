@@ -65,7 +65,7 @@ theorem exists_mult : ∃ c : ℕ, Nat.Coprime c X.B.g ∧ ∀ b : Fin D.R.rS,
     (c : RA) • (X.f0 b - incl X.B.I (X.fR b)) ∈ mL X.B.I X.B.g := by
   choose ce hce using fun b => (X.basisApprox b).1
   choose cf hcf using fun b => (X.basisApprox b).2
-  refine ⟨∏ b, ce b * cf b, Nat.Coprime.prod_left fun b _ => Nat.Coprime.mul (hce b).1 (hcf b).1, fun b => ?_⟩
+  refine ⟨∏ b, ce b * cf b, Nat.Coprime.prod_left fun b _ => Nat.Coprime.mul_left (hce b).1 (hcf b).1, fun b => ?_⟩
   have hd : ce b * cf b ∣ ∏ b, ce b * cf b := Finset.dvd_prod_of_mem _ (Finset.mem_univ b)
   obtain ⟨k, hk⟩ := hd
   rw [hk]

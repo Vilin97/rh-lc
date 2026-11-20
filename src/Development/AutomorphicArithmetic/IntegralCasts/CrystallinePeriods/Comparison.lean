@@ -235,7 +235,7 @@ theorem map_toBdRPlus (f : R →+* S) (x : Acris p R) :
 omit [IsDomain R] [ValuationRing R] [CharZero R] [IsAlgClosed (FractionRing R)] in
 theorem coe_logPartial (N : ℕ) (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     (logPartial N u hu : AinfInv p R) = truncLog N (algebraMap _ _ (u - 1)) := by
-  rw [logPartial, truncLog, AddSubmonoidClass.coe_finset_sum]
+  rw [logPartial, truncLog, AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have e : (((-1) ^ k * (k ! : AcrisZero p R) : AcrisZero p R) : AinfInv p R) =
       algebraMap ℚ _ ((-1) ^ k * k !) := by simp

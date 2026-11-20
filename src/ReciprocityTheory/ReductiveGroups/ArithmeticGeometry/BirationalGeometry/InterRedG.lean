@@ -31,7 +31,7 @@ theorem isMultiHomog_secOf (i : ∀ k, ι k) (b : K → ℕ) : IsMultiHomog (sec
   intro m hm k
   rw [secOf_eq, MvPolynomial.support_monomial, if_neg one_ne_zero, Finset.mem_singleton] at hm
   subst hm
-  simp only [Finsupp.finset_sum_apply]
+  simp only [Finsupp.finsetSum_apply]
   rw [Finset.sum_comm]
   simp only [blockDeg_single]
   simp

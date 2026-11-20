@@ -1241,7 +1241,7 @@ theorem supp_of_supported {K σ : Type} [CommSemiring K] {s : Set σ} {q : MvPol
   intro m hm v hv
   rw [mem_supported] at hq
   apply hq
-  rw [Finset.mem_coe, mem_vars]
+  rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support]
   exact ⟨m, hm, Finsupp.mem_support_iff.mpr hv⟩
 
 theorem pderiv_eq_zero_of {K σ : Type} [CommRing K] {q : MvPolynomial σ K} {v : σ}

@@ -106,7 +106,7 @@ theorem relation_top_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     have e2 : ((-blockPolyBar e).map (toEven n)).charpolyRev =
         (-blockPolyBar e).charpolyRev.map (toEven n).toRingHom := (charpolyRev_map' _ _).symm
     rw [e1, e2, ← Polynomial.map_mul] at h2
-    have h3 := congrArg (fun f => Polynomial.coeff f k) h2
+    have h3 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f k) h2
     simp only [Polynomial.coeff_map, Polynomial.coeff_one, if_neg (show k ≠ 0 by omega)] at h3
     exact h3
   rw [chernTop, map_mul, hrel, GlobalTheory.T.topDegreeFormCoeff_eq_tensorSquareTopCoefficient, map_mul, hzero, zero_mul]

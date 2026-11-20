@@ -78,7 +78,7 @@ theorem diag_le_of_prop (x : ι → Ω) (δ : ν → Ω) (e : Module.Basis (Fin 
     rw [Polynomial.coeff_map, Polynomial.coeff_zero, hπ]
     refine hW ?_
     rw [T.wwIdeal, RingHom.mem_ker]
-    have := congrArg (fun f => Polynomial.coeff f n) h1
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f n) h1
     simpa [Polynomial.coeff_map] using this
   rw [← hπ, ← hσ, RingHom.comp_apply, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map, h2,
     Polynomial.eval_zero]

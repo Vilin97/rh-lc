@@ -202,7 +202,7 @@ theorem isQInt_piG {D : D7} (EX : ErrX D) (i : Fin 2) :
   rw [hab, hc] at hint hn
   have e : (a : D.host.E) + b * D.host.sqrtMinusD + (a - b * D.host.sqrtMinusD) = algebraMap ℚ D.host.E (2 * a) := by
     simp; ring
-  rw [e, isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective] at hint
+  rw [e, isIntegral_algebraMap_iff ] at hint
   obtain ⟨t, ht⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   have hn' : a ^ 2 + D.host.d * b ^ 2 = D.host.g i := by
     have : (a : D.host.E) ^ 2 + D.host.d * b ^ 2 = D.host.g i := by

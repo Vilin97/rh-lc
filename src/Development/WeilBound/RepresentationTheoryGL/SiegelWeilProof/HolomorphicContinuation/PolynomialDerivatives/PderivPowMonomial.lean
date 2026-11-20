@@ -226,7 +226,7 @@ theorem sf_renameL (p : PX m n) (hp : p ∈ F1 ε) {s : Sym m n} (h : SymbolInFi
   refine sf_sum ε _ _ fun μ hμ => ?_
   rw [rename_monomial]
   refine sf_mulL ε μ (fun k hk => ?_) h _
-  have hv : k ∈ p.vars := (MvPolynomial.mem_vars k).mpr ⟨μ, hμ, hk⟩
+  have hv : k ∈ p.vars := (MvPolynomial.mem_vars_iff_mem_support k).mpr ⟨μ, hμ, hk⟩
   exact (MvPolynomial.mem_supported.mp hp) hv
 
 theorem sf_inr (γ : σ →₀ ℕ) (hγ : ∀ k ∈ γ.support, inF1 ε k) (c : ℂ) :

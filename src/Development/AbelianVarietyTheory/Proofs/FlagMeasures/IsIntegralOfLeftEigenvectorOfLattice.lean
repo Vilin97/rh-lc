@@ -112,7 +112,7 @@ theorem trace_mem_of_nilpotent_mod_radical (E : Type) [Field E] [NumberField E] 
   have hdown : ∀ x : E, IsIntegral (𝓞 E) (f x) → ∃ t : 𝓞 E, (t : E) = x := by
     intro x hx
     exact IsIntegrallyClosed.isIntegral_iff.1
-      ((isIntegral_algebraMap_iff (algebraMap E K).injective).1 hx)
+      ((isIntegral_algebraMap_iff ).1 hx)
   obtain ⟨t₀, ht₀⟩ := hdown A.trace (hr ▸ r.2)
   have hsK : (s : K) * (g : K) = f A.trace ^ N := by
     have := congrArg (fun x : R => (x : K)) hs

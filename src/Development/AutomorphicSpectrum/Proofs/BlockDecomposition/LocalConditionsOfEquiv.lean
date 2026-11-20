@@ -48,7 +48,7 @@ theorem finite_support (e : G ≃* G') (θ : G →* G) (θ' : G' →* G')
     rw [hmul, twConj_mul θ' (e d) t _ ht₀, ← map_twConj e θ θ' hθ, ← hf]
     exact hne
   · intro q₁ _ q₂ _ heq
-    obtain ⟨t', ht', k', hk', hy⟩ := (DoubleCoset.eq _ _ _ _).1 heq
+    obtain ⟨t', ht', k', hk', hy⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 heq
     have h₂ : Quotient.out q₂ = e.symm t' * Quotient.out q₁ * e.symm k' := by
       apply e.injective
       simp only [map_mul, e.apply_symm_apply]
@@ -58,7 +58,7 @@ theorem finite_support (e : G ≃* G') (θ : G →* G) (θ' : G' →* G')
     have hk : e.symm k' ∈ K := by
       rw [hK, e.apply_symm_apply]; exact hk'
     rw [← DoubleCoset.out_eq' _ _ q₁, ← DoubleCoset.out_eq' _ _ q₂]
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨_, ht, _, hk, h₂⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨_, ht, _, hk, h₂⟩
 
 theorem index_ne_zero (e : G ≃* G') (K : Subgroup G) (K' : Subgroup G') (hK : ∀ x, x ∈ K ↔ e x ∈ K')
     (u : K → ℂ) (u' : K' → ℂ) (hu : ∀ k : K, u k = u' ⟨e k, (hK k).1 k.2⟩)

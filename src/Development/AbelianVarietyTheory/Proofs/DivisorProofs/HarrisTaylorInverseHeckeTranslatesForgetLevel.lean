@@ -61,7 +61,7 @@ theorem isGaloisCover_pow (k N : ℕ) (hk : 0 < k) (hN : 0 < N) (hkp : k.Coprime
   obtain ⟨-, hfin, het, hsurj⟩ := GlobalTheory.abelianScheme_id_pow_finite_etale_surjective S o.A k o.ab
     (isUnit_natCast b s k hkp)
   refine ⟨(heckeSub_finite_free p D R b LinearMap.id k (N * k) hk (Nat.mul_pos hN hk) hkp
-      (Nat.Coprime.mul hNp hkp) S s o).1, ?_, ?_, ?_, hfin, het, hsurj, hfib⟩
+      (Nat.Coprime.mul_left hNp hkp) S s o).1, ?_, ?_, ?_, hfin, het, hsurj, hfib⟩
   · show (transl (1 : 𝟙_ (Over S) ⟶ o.A)).left = 𝟙 _
     rw [transl_one']; rfl
   · intro a c

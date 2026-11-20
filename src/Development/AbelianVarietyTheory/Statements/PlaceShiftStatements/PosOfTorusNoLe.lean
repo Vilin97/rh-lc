@@ -103,7 +103,7 @@ theorem not_selfDual_two : ¬ SelfDualLat ((2 : E) • (1 : Matrix (Fin 1) (Fin 
     have := isIntegral_cc ((mem_intVec _).1 hy 0)
     simpa [herm] using this) 0
   have h2 : IsIntegral ℤ (algebraMap ℚ E (1 / 2)) := by simpa using h1
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at h2
+  rw [isIntegral_algebraMap_iff ] at h2
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral h2
   have : (2 * k : ℤ) = 1 := by
     have : (2 * k : ℚ) = 1 := by simp at hk; rw [hk]; norm_num

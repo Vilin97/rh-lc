@@ -151,7 +151,7 @@ theorem adFun_ext {F E ι : Type} [Field F] [NumberField F] [Field E] [NumberFie
     {g g'} (hg : g ∈ AdFun S emb) (hg' : g' ∈ AdFun S emb) (h : ∀ c, g (y c) = g' (y c)) : g = g' := by
   funext x s
   obtain ⟨c, hc⟩ := hy (Quotient.mk'' x)
-  obtain ⟨a, ha, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+  obtain ⟨a, ha, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
   obtain ⟨γ, hγ, ha⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 ha)
   obtain ⟨s', hs⟩ := exists_isTr' emb γ s
   have e' : x.1 = Formalism.UG.bc (Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ * (y c).1 * k.1 := by

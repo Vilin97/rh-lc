@@ -133,7 +133,7 @@ theorem trBasis_cons : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L) (
       rw [Polynomial.coeff_zero]
       by_contra h0
       apply (hwu _ h0).ne_zero
-      have := congrArg (fun p => Polynomial.coeff p i) hq
+      have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) hq
       simpa [Polynomial.coeff_map] using this
     exact (MvPolynomial.finSuccEquiv ℂ m).injective (by rw [← hQ, hQ0, map_zero])
   unfold TrBasis

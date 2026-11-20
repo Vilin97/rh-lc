@@ -396,7 +396,7 @@ theorem frame_of_glue (L : Submodule (𝓞 E) (Fin n → E)) (B C : Matrix (Fin 
 end FrGlue
 
 theorem exists_frame (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)
-    (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
+    (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsFullLattice E L) :
     ∃ β : GL (Fin n) (E ⊗[F] Af F), IsFrame β L := by
   classical
   have hfin : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.2 hL.fg

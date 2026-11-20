@@ -15,13 +15,13 @@ variable (U : Subgroup G) (ι : H →* G) (N : Rep.{u} k U)
 theorem exists_eq_mul_out_mul (y : G) :
     ∃ u : U, ∃ h : H, y = (u : G) * (DoubleCoset.mk U ι.range y).out * ι h := by
   obtain ⟨a, ha, b, hb, e⟩ :=
-    (DoubleCoset.eq U ι.range _ y).1 (DoubleCoset.out_eq' U ι.range (DoubleCoset.mk U ι.range y))
+    (@DoubleCoset.eq _ _ U ι.range _ y).1 (DoubleCoset.out_eq' U ι.range (DoubleCoset.mk U ι.range y))
   obtain ⟨h, rfl⟩ := MonoidHom.mem_range.1 hb
   exact ⟨⟨a, ha⟩, h, e⟩
 
 theorem doubleCosetMk_mul_mul (x : G) (u : U) (h : H) :
     DoubleCoset.mk U ι.range ((u : G) * x * ι h) = DoubleCoset.mk U ι.range x :=
-  ((DoubleCoset.eq U ι.range _ _).2 ⟨u, u.2, ι h, ⟨h, rfl⟩, rfl⟩).symm
+  ((@DoubleCoset.eq _ _ U ι.range _ _).2 ⟨u, u.2, ι h, ⟨h, rfl⟩, rfl⟩).symm
 
 theorem coind_apply_eq_of_mul_eq (x : G)
     (F : Representation.coindV (mackeySubgroup U ι x).subtype (mackeyRep U ι N x).ρ)

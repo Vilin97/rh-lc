@@ -84,12 +84,12 @@ theorem eq_zero_of_eval (P : B[X]) (h : ∀ u : ℂ, P.eval (algebraMap ℂ B u)
     intro u
     have := congrArg ℓ (h u)
     rw [eval_eq_sum, Polynomial.sum, map_sum, map_zero] at this
-    rw [eval_zero, ← this, eval_finset_sum]
+    rw [eval_zero, ← this, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, eval_monomial, smul_eq_mul,
       mul_comm]
   have hk := congrArg (fun r => r.coeff k) hq
-  simp only [q, finset_sum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq'] at hk
+  simp only [q, Polynomial.finsetSum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq'] at hk
   by_cases hs : k ∈ P.support
   · simpa [hs] using hk
   · simp [notMem_support_iff.mp hs]

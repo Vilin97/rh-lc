@@ -98,7 +98,7 @@ theorem fix_inv {g : GL (Fin r) k} {v : V} (h : σ g v = v) : σ g⁻¹ v = v :=
 
 theorem continuous_coef (hσ : IsSmooth σ) (v w : V) : Continuous (coef σ Bf v w) := by
   refine IsLocallyConstant.continuous ((IsLocallyConstant.iff_eventually_eq _).2 fun g₀ => ?_)
-  have hc : Continuous fun g : GL (Fin r) k => g * g₀⁻¹ := continuous_mul_right _
+  have hc : Continuous fun g : GL (Fin r) k => g * g₀⁻¹ := continuous_mul_const _
   have h1 : {g : GL (Fin r) k | σ g v = v} ∈ 𝓝 ((fun g : GL (Fin r) k => g * g₀⁻¹) g₀) :=
     (hσ v).mem_nhds (by simp)
   filter_upwards [hc.continuousAt.preimage_mem_nhds h1] with g hg

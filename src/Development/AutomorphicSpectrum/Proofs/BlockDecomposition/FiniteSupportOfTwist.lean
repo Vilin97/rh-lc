@@ -27,7 +27,7 @@ theorem cover_quot {G : Type} [Group G] (H K : Subgroup G) (A F : Set G) (hF : F
   obtain ⟨h, hh, f, hf, k', hk', e⟩ := hA _ hq
   refine ⟨f, hf, ?_⟩
   rw [← DoubleCoset.out_eq' H K q]
-  refine (DoubleCoset.eq H K _ _).2 ⟨h, hh, k' * k⁻¹, mul_mem hk' (inv_mem hk), ?_⟩
+  refine (@DoubleCoset.eq _ _ H K _ _).2 ⟨h, hh, k' * k⁻¹, mul_mem hk' (inv_mem hk), ?_⟩
   rw [← mul_assoc, ← e, mul_inv_cancel_right]
 
 theorem cover_gam {G : Type} [Group G] [TopologicalSpace G] (θ : G →* G) (K Γ : Subgroup G) (δ : G)

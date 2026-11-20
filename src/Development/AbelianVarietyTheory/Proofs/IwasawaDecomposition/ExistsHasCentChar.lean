@@ -25,7 +25,7 @@ theorem trace_mem {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (X : Fin n → F
     rw [Polynomial.eval_zero, ← h2, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun T _ => ?_
     simp [p, Polynomial.eval_prod, mul_comm]
-  have h3 := congrArg (fun q => Polynomial.coeff q n) hP
+  have h3 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q n) hP
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_smul, Polynomial.coeff_zero, smul_eq_mul] at h3
   have hz : ∀ T : Finset (Fin (n + 1)), 2 ≤ T.card → (p T).coeff n = 0 := fun T hT =>
     Polynomial.coeff_eq_zero_of_natDegree_lt (by

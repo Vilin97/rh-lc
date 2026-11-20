@@ -82,7 +82,7 @@ theorem deg_iff_not_li {F : Type} [Field F] {N n : ℕ} (x : Mat F N) :
     refine ⟨∑ b : Fin (n+1), Polynomial.monomial (b : ℕ) (g b), ?_, ?_, ?_⟩
     · intro h0
       apply hi
-      have := congrArg (fun q => Polynomial.coeff q (i : ℕ)) h0
+      have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (i : ℕ)) h0
       simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
       rw [Finset.sum_eq_single i] at this
       · simpa using this

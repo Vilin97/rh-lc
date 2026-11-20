@@ -36,14 +36,14 @@ theorem shift_coeff_of_eval_identity {N : Type} [AddCommGroup N] [Module ℂ N]
   refine ⟨?_, fun k => ?_⟩
   · rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
     intro f
-    have h1 := congrArg (fun P => Polynomial.coeff P 0) (key f)
+    have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P 0) (key f)
     simp only [Polynomial.coeff_add, Polynomial.coeff_X_mul_zero, hc, Polynomial.coeff_mul_C,
       zero_add] at h1
     rw [LinearMap.comp_apply] at h1
     rw [map_sub, map_smul, smul_eq_mul, h1, sub_self]
   · rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
     intro f
-    have h1 := congrArg (fun P => Polynomial.coeff P (k + 1)) (key f)
+    have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P (k + 1)) (key f)
     simp only [Polynomial.coeff_add, Polynomial.coeff_X_mul, hc, Polynomial.coeff_mul_C] at h1
     rw [LinearMap.comp_apply] at h1
     rw [map_sub, map_add, map_smul, smul_eq_mul, h1, sub_self]

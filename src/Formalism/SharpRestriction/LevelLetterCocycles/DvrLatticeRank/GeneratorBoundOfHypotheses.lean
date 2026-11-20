@@ -86,7 +86,7 @@ theorem isDVR (P : LocPrime l) (LL : FinExt l) : IsDiscreteValuationRing ↥(OL 
   haveI : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2
   haveI : ValuationRing ↥(OL LL) := valuationRing P LL
   haveI : IsNoetherianRing ↥(OL LL) := integralClosure.isNoetherianRing (A := ℤ_[l]) (K := ℚ_[l]) ↥LL.1
-  exact ((IsDiscreteValuationRing.TFAE ↥(OL LL) (not_isField P LL)).out 1 0).mp (valuationRing P LL)
+  exact ((IsDiscreteValuationRing.TFAE ↥(OL LL) (not_isField P LL)).out 2 1).mp (valuationRing P LL)
 
 theorem isFractionRing (LL : FinExt l) : IsFractionRing ↥(OL LL) ↥LL.1 := by
   haveI : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2

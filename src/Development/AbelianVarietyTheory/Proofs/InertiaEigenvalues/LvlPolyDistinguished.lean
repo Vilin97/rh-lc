@@ -55,7 +55,7 @@ theorem lvlPoly_distinguished [hl : Fact l.Prime] [IsLocalRing R] (h : ¬ IsUnit
   have h2 : (lvlPoly l R k).natDegree = l ^ (k + 1) - l ^ k := by
     rw [← (lvlPoly_monic (l := l) (R := R) k).natDegree_map (IsLocalRing.residue R), h1,
       Polynomial.natDegree_X_pow]
-  have h3 := congrArg (fun p => Polynomial.coeff p n) h1
+  have h3 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) h1
   rw [h2] at hn
   simp only [Polynomial.coeff_map, Polynomial.coeff_X_pow, hn.ne, if_false] at h3
   exact (IsLocalRing.residue_eq_zero_iff _).1 h3

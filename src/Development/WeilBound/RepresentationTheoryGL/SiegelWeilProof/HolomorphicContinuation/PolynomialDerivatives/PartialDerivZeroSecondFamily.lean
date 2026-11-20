@@ -31,15 +31,15 @@ theorem mem_first_family_iff (ε : Fin m → Bool) (p : PX m n) : p ∈ F1 ε �
   unfold F1
   rw [Subalgebra.mem_toSubmodule, MvPolynomial.mem_supported]
   constructor
-  · intro h s hs k hk; exact h (mem_vars k |>.mpr ⟨s, hs, hk⟩)
-  · intro h k hk; obtain ⟨s, hs, hk'⟩ := (mem_vars k).mp hk; exact h s hs k hk'
+  · intro h s hs k hk; exact h (MvPolynomial.mem_vars_iff_mem_support k |>.mpr ⟨s, hs, hk⟩)
+  · intro h k hk; obtain ⟨s, hs, hk'⟩ := (MvPolynomial.mem_vars_iff_mem_support k).mp hk; exact h s hs k hk'
 
 theorem mem_second_family_iff (ε : Fin m → Bool) (p : PX m n) : p ∈ F2 ε ↔ ∀ s ∈ p.support, ∀ k ∈ s.support, ¬ inF1 ε k := by
   unfold F2
   rw [Subalgebra.mem_toSubmodule, MvPolynomial.mem_supported]
   constructor
-  · intro h s hs k hk; exact h (mem_vars k |>.mpr ⟨s, hs, hk⟩)
-  · intro h k hk; obtain ⟨s, hs, hk'⟩ := (mem_vars k).mp hk; exact h s hs k hk'
+  · intro h s hs k hk; exact h (MvPolynomial.mem_vars_iff_mem_support k |>.mpr ⟨s, hs, hk⟩)
+  · intro h k hk; obtain ⟨s, hs, hk'⟩ := (MvPolynomial.mem_vars_iff_mem_support k).mp hk; exact h s hs k hk'
 
 theorem pderiv_mem_supported (S : Set (Fin m × Fin n × Bool)) (k) {p : PX m n} (hp : p ∈ supported ℂ S) :
     pderiv k p ∈ supported ℂ S := by
@@ -73,13 +73,13 @@ theorem variable_mul_mem_second_family (ε : Fin m → Bool) {k} (hk : ¬ inF1 �
 theorem partial_deriv_zero_first_family (ε : Fin m → Bool) {k} (hk : ¬ inF1 ε k) {p : PX m n} (hp : p ∈ F1 ε) : pderiv k p = 0 := by
   apply pderiv_eq_zero_of_notMem_vars
   intro hv
-  obtain ⟨s, hs, hks⟩ := (mem_vars k).mp hv
+  obtain ⟨s, hs, hks⟩ := (MvPolynomial.mem_vars_iff_mem_support k).mp hv
   exact hk ((mem_first_family_iff ε p).mp hp s hs k hks)
 
 theorem partial_deriv_zero_second_family (ε : Fin m → Bool) {k} (hk : inF1 ε k) {p : PX m n} (hp : p ∈ F2 ε) : pderiv k p = 0 := by
   apply pderiv_eq_zero_of_notMem_vars
   intro hv
-  obtain ⟨s, hs, hks⟩ := (mem_vars k).mp hv
+  obtain ⟨s, hs, hks⟩ := (MvPolynomial.mem_vars_iff_mem_support k).mp hv
   exact (mem_second_family_iff ε p).mp hp s hs k hks hk
 
 def piC (c : ℝ) (s : Fin m × Fin n × Bool →₀ ℕ) : ℂ :=

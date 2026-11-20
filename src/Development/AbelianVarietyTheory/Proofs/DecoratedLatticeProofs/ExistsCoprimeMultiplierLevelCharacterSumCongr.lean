@@ -125,8 +125,8 @@ theorem term_each (D : D7) (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u : 
       · rw [Matrix.mulVec_mulVec, PIW.NormChiNBi.fmat_mul_inv', Matrix.one_mulVec]
       · have h3 := neg_mem h2
         rwa [← smul_neg, neg_sub] at h3
-  have hcop : Nat.Coprime (c1 * c2) X.B.g := Nat.Coprime.mul hc1 hc2
-  refine ⟨(c1 * c2) * (c1 * c2), Nat.Coprime.mul hcop hcop, ?_⟩
+  have hcop : Nat.Coprime (c1 * c2) X.B.g := Nat.Coprime.mul_left hc1 hc2
+  refine ⟨(c1 * c2) * (c1 * c2), Nat.Coprime.mul_left hcop hcop, ?_⟩
   have hcf : ((c1 * c2 : ℕ) : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) • (X.f0 a - incl X.B.I (X.fR a)) ∈
       mL X.B.I X.B.g := by
     rw [Nat.cast_mul, mul_comm, mul_smul]; exact nsmul_mL' X.B.I h1

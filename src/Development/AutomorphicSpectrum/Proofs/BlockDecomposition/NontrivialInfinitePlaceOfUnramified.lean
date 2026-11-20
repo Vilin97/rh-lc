@@ -10,7 +10,7 @@ theorem algebraMap_int_ringOfIntegers_surjective (F : Type) [Field F] [NumberFie
   intro x
   obtain ⟨q, hq⟩ := (Algebra.finrank_eq_one_iff_bijective_algebraMap.mp h).2 (x : F)
   have hint : IsIntegral ℤ q :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ F).injective).1 (hq ▸ x.isIntegral_coe)
+    (isIntegral_algebraMap_iff ).1 (hq ▸ x.isIntegral_coe)
   obtain ⟨n, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   refine ⟨n, RingOfIntegers.ext ?_⟩
   simpa using hq

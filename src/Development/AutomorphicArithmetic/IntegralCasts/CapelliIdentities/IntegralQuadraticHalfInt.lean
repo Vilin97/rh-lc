@@ -2,7 +2,7 @@ import Mathlib
 
 private lemma int_of_isIntegral_cast (q : ℚ) (h : IsIntegral ℤ (q : ℂ)) : ∃ n : ℤ, (n : ℚ) = q := by
   have h1 : IsIntegral ℤ (algebraMap ℚ ℂ q) := by simpa using h
-  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective).1 h1
+  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff ).1 h1
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h2
   exact ⟨n, by simpa using hn⟩
 

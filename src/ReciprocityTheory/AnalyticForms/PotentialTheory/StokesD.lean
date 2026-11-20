@@ -262,7 +262,7 @@ private theorem mInt_finset_sum [CompactSpace X] [T2Space X] {d : ℕ} (A : FinH
   | insert a s ha ih =>
     have h := mIntLinear A Ψ hΨ 1 (f a) (fun x => ∑ m ∈ s, f m x)
       (mIntegrableCont A Ψ hΨ _ (hf a))
-      (mIntegrableCont A Ψ hΨ _ (continuous_finset_sum _ fun m _ => hf m))
+      (mIntegrableCont A Ψ hΨ _ (continuous_finsetSum _ fun m _ => hf m))
     simp only [one_mul] at h
     simp only [Finset.sum_insert ha]
     rw [h, ih]

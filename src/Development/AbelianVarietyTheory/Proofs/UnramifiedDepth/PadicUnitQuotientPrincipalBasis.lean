@@ -127,7 +127,7 @@ private theorem exists_dvr [IsDedekindDomain R] [CharZero R] [Module.Finite ℤ 
     rw [h, Ideal.mem_bot] at hpM
     exact nonZeroDivisors.ne_zero hpreg hpM
   have hpr : (IsLocalRing.maximalIdeal w.Ow).IsPrincipal := ⟨_, hπ⟩
-  exact ((IsDiscreteValuationRing.TFAE w.Ow hnf).out 0 4).2 hpr
+  exact ((IsDiscreteValuationRing.TFAE w.Ow hnf).out 1 5).2 hpr
 
 private def cutEquiv (w : Place p R) :
     LinearMap.range (LinearMap.mulLeft ℤ_[p] w.e) ≃ₗ[ℤ_[p]] w.Ow :=

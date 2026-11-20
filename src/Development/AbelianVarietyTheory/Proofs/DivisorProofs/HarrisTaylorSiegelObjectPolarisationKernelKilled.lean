@@ -83,7 +83,7 @@ theorem pow_eq_one_at_geom (hC : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [I
         exact (Nat.coprime_self_add_right.2 (Nat.coprime_one_right e'))
       exact hcop.dvd_of_dvd_mul_left h4
     · have h2p : Nat.Coprime 2 p := (Nat.coprime_primes Nat.prime_two hpr).2 (Ne.symm hp2)
-      have hmp : (e' * 2).Coprime p := Nat.Coprime.mul he' h2p
+      have hmp : (e' * 2).Coprime p := Nat.Coprime.mul_left he' h2p
       have ha : I.ev (e' * 2) y ^ 2 = g := by
         rw [I.tower e' 2 hpos two_pos hmp y, hy]
       have h1 := vanish (e' * 2) (by omega) hmp y z ha

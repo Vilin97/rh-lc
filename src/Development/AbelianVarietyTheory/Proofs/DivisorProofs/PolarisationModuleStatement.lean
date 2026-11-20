@@ -28,7 +28,7 @@ theorem gen_mul {L : Submodule (OF E) E} {l : ℕ} {ξ : E} (h : GenAt l (polMod
   | add z1 _ z2 _ h1 h2 =>
     obtain ⟨n1, hn1, h1⟩ := h1
     obtain ⟨n2, hn2, h2⟩ := h2
-    refine ⟨n1 * n2, Nat.Coprime.mul hn1 hn2, ?_⟩
+    refine ⟨n1 * n2, Nat.Coprime.mul_left hn1 hn2, ?_⟩
     have e : ((n1 * n2 : ℕ) : E) * (z1 + z2) = (n2 : OF E) • ((n1 : E) * z1) + (n1 : OF E) • ((n2 : E) * z2) := by
       rw [Algebra.smul_def, Algebra.smul_def]; push_cast; ring
     rw [e]
@@ -107,7 +107,7 @@ theorem sizePart {I : Type} (φ : I → E →+* ℂ) (hφ : IsCMType φ) (e₀ :
       rw [← hxe, mul_comm ξ, mul_assoc, mul_inv_cancel₀ hξ0, mul_one]
     rw [hx']; push_cast; ring
   have hinv : ∀ σ : E →+* ℂ, IntAt l (σ ξ)⁻¹ := fun σ => ⟨n' * n * n,
-    Nat.Coprime.mul (Nat.Coprime.mul hn' hn) hn, by
+    Nat.Coprime.mul_left (Nat.Coprime.mul_left hn' hn) hn, by
       rw [← map_inv₀, ← map_natCast σ, ← map_mul, key]; exact map_isIntegral_int σ hxi⟩
   refine ⟨hξ0, hinv, fun hdisc h𝔣l σ => ?_⟩
   have hcl : ∀ v : HeightOneSpectrum (OF E), v.asIdeal ∣ condQ 𝔣 Q → (l : OF E) ∉ v.asIdeal := by
@@ -144,7 +144,7 @@ theorem sizePart {I : Type} (φ : I → E →+* ℂ) (hφ : IsCMType φ) (e₀ :
     · exact h7
     · push_cast; rw [neg_mul]; exact h7.neg
   refine ⟨(map_ne_zero σ).2 hξ0, ⟨(discr E).natAbs * (n * m) ^ 2, ?_, ?_⟩, hinv σ⟩
-  · refine Nat.Coprime.mul ?_ (Nat.Coprime.pow_left 2 (Nat.Coprime.mul hn hm))
+  · refine Nat.Coprime.mul_left ?_ (Nat.Coprime.pow_left 2 (Nat.Coprime.mul_left hn hm))
     exact Nat.coprime_comm.1 ((Nat.Prime.coprime_iff_not_dvd hl).2 fun h => hdisc (Int.natCast_dvd.2 h))
   · have : (((discr E).natAbs * (n * m) ^ 2 : ℕ) : ℂ) * σ ξ = σ (((discr E).natAbs : E) * (((n : E) * m) ^ 2 * ξ)) := by
       rw [map_mul, map_mul, map_pow, map_mul]; simp only [map_natCast]; push_cast; ring

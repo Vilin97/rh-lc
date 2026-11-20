@@ -39,7 +39,7 @@ theorem exists_integral_add_cc_eq_one : ∀ (E : Type) [Field E] [NumberField E]
       have hi : IsIntegral ℤ (⟨_, hfix⟩ : maximalRealSubfield E) := by
         have h0 : IsIntegral ℤ ((t + σ t : 𝓞 E) : E) := (t + σ t).isIntegral_coe
         rw [hco] at h0
-        exact (isIntegral_algebraMap_iff (algebraMap (maximalRealSubfield E) E).injective).1 h0
+        exact (isIntegral_algebraMap_iff ).1 h0
       let a : 𝓞 (maximalRealSubfield E) := ⟨_, hi⟩
       have hA : algebraMap _ (𝓞 E) a = t + σ t := by
         apply RingOfIntegers.ext

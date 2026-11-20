@@ -69,7 +69,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
     have := D.nondeg (h0.trans (map_zero D.EF).symm)
     exact sub_eq_zero.1 this
   have hlev : ∀ n, 0 < n → n.Coprime p → ∀ w, I.ev (n * k) (n • w) = I.ev k w := fun n hn hnp w =>
-    ev_mul_nsmul I n k hn kpos (Nat.Coprime.mul hkp hnp) w
+    ev_mul_nsmul I n k hn kpos (Nat.Coprime.mul_left hkp hnp) w
   have hker : ∀ t : Over.mk x ⟶ o.A, t ≫ ψ = 1 ↔ ∃ z, t = I.ev (N * k) (N • g z) := by
     intro t
     constructor
@@ -90,7 +90,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
     constructor
     · rintro ⟨z, hz⟩
       rw [hlev N Npos hNp, ← hlev n hn hnp] at hz
-      obtain ⟨w, hw⟩ := (ev_eq_iff I (n * k) (Nat.mul_pos hn kpos) (Nat.Coprime.mul hnp hkp) _ _).1 hz
+      obtain ⟨w, hw⟩ := (ev_eq_iff I (n * k) (Nat.mul_pos hn kpos) (Nat.Coprime.mul_left hnp hkp) _ _).1 hz
       obtain ⟨w', hw'⟩ := hg w
       refine ⟨z + w', ginj ?_⟩
       rw [map_nsmul, map_add, hw', smul_add, smul_smul, ← sub_eq_iff_eq_add', hw]
@@ -116,7 +116,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
       obtain ⟨z, hz⟩ := (hker _).1 han
       rw [hlev N Npos hNp, ← hlev n hn hnp] at hz
       have hnk : 0 < n * k := Nat.mul_pos hn kpos
-      have hnkp : (n * k).Coprime p := Nat.Coprime.mul hnp hkp
+      have hnkp : (n * k).Coprime p := Nat.Coprime.mul_left hnp hkp
       have hak : a ^ (n * k) = 1 := by
         rw [pow_mul, hz, ← ev_nsmul, I.ker _ hnk hnkp]
         exact ⟨g z, by rw [smul_smul, mul_comm]⟩
@@ -160,7 +160,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
   · exact fun n hn hnp q => onto' n hn hnp q
   · intro n m hn hm hnm y
     rw [← hΨ, ← map_pow, hΨ, Nat.mul_right_comm n m k, I.tower (n * k) m (Nat.mul_pos hn kpos) hm
-      (by rw [Nat.mul_right_comm]; exact Nat.Coprime.mul hnm hkp)]
+      (by rw [Nat.mul_right_comm]; exact Nat.Coprime.mul_left hnm hkp)]
   · intro n hn hnp u v
     obtain ⟨e, he⟩ := GlobalTheory.T.exists_weilCommutatorPairing_torsion_geometricPoint S A' (P'.pull (lift (𝟙 A') (𝟙 A')).left) hA' (pull_isLB hP' _) κ x n hn (hnκ n hnp) _ _
       (htor n hn hnp u) (htor n hn hnp v)

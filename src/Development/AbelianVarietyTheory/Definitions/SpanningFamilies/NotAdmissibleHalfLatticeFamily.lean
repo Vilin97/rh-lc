@@ -345,7 +345,7 @@ theorem not_admissible_half_lattice_family {n N M : ℕ} : ¬ admitted M 1 (divF
     simp only [divFam, if_pos this]; exact one_ne_zero)
   have h2 : IsIntegral ℤ (2⁻¹ : E) := by simpa using (mem_stdL _).1 (h1 0) 0
   have h3 : IsIntegral ℤ (2⁻¹ : ℚ) := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap ℚ E).injective]; simpa using h2
+    rw [← isIntegral_algebraMap_iff (B := E) ]; simpa using h2
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.isIntegral_iff.1 h3
   have : (2 : ℚ) * k = 1 := by
     have : (k : ℚ) = 2⁻¹ := by simpa using hk

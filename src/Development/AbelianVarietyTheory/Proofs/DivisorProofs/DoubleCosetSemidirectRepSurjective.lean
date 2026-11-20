@@ -14,7 +14,7 @@ theorem doubleCoset_semidirect_surj :
             DoubleCoset.mk TP KP (s (Quotient.out (DoubleCoset.mk TM KM (π (Quotient.out d)))) * u X)
               = d := by
   intro P M N _ _ _ s π u hs _ hker KP KM L hKs _ _ TM CM TP CP _ hTP _ _ d
-  obtain ⟨t, ht, k, hk, hm⟩ := (DoubleCoset.eq TM KM
+  obtain ⟨t, ht, k, hk, hm⟩ := (@DoubleCoset.eq _ _ TM KM
     (Quotient.out (DoubleCoset.mk TM KM (π (Quotient.out d)))) (π (Quotient.out d))).1
     (DoubleCoset.out_eq' TM KM _)
   generalize Quotient.out (DoubleCoset.mk TM KM (π (Quotient.out d))) = q at hm ⊢

@@ -149,7 +149,7 @@ theorem null_sets : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
       have hne : (Polynomial.C (RealCoord.rho F w a) * Polynomial.X ^ 2 + Polynomial.C C * Polynomial.X
           + Polynomial.C Q : Polynomial ℝ) ≠ 0 := by
         intro h0
-        have := congrArg (fun p => Polynomial.coeff p 2) h0
+        have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 2) h0
         simp [Polynomial.coeff_X, Polynomial.coeff_C] at this
         exact ha this
       refine (Polynomial.finite_setOf_isRoot hne).subset fun t ht => ?_

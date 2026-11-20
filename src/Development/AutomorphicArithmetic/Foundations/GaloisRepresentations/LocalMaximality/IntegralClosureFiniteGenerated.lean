@@ -127,7 +127,7 @@ private theorem integralClosure_finiteGenerated {F K L : Type} [Field F] [Field 
     have h1 : IsIntegral A (algebraMap K L c) := IsIntegral.algebraMap hc
     have h2 : algebraMap B L b = algebraMap K L c := hb.symm
     rw [← h2] at h1
-    exact (isIntegral_algebraMap_iff (Subtype.val_injective : Function.Injective (algebraMap B L))).1 h1⟩
+    exact (isIntegral_algebraMap_iff ).1 h1⟩
   have e : R2 x j2 J = rB ℂ L x J := by
     ext y
     constructor

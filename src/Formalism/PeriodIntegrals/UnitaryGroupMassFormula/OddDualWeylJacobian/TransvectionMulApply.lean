@@ -141,7 +141,7 @@ theorem rowOpIntertwining : W1 := by
   intro R _ k M a b j f f' hab hrel
   unfold Rel at hrel ⊢
   unfold rowDiv
-  have h := congrArg (fun p => Polynomial.coeff p j) (PI.OddDualWeyl.Intw.key a b hab f')
+  have h := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) (PI.OddDualWeyl.Intw.key a b hab f')
   rw [coeff_comp_neg_X, Polynomial.coeff_map, hrel, map_mul, map_pow,
     PI.OddDualWeyl.Intw.rowGen_det a b hab, ← Polynomial.C_pow, Polynomial.coeff_C_mul] at h
   rw [map_mul, map_pow, map_neg, map_one]

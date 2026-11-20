@@ -16,14 +16,14 @@ theorem eqvFn_finrank {G : Type} [Group G] (Γ K : Subgroup G) (V : Type) [AddCo
   have dec : ∀ x : G, ∃ (c : ι) (γ : Γ) (κ : K), x = γ * y c * κ := by
     intro x
     obtain ⟨c, hc⟩ := hy.2 (Quotient.mk'' x)
-    obtain ⟨h, hh, k, hk, e⟩ := (DoubleCoset.eq Γ K (y c) x).1 hc
+    obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K (y c) x).1 hc
     exact ⟨c, ⟨h, hh⟩, ⟨k, hk⟩, e⟩
   have uniq : ∀ (c c' : ι) (γ γ' : Γ) (κ κ' : K), (γ : G) * y c * κ = γ' * y c' * κ' →
       c = c' ∧ γ = γ' ∧ κ = κ' := by
     intro c c' γ γ' κ κ' e
     have hc : c = c' := by
       apply hy.1
-      refine (DoubleCoset.eq Γ K (y c) (y c')).2 ⟨((γ'⁻¹ * γ : Γ) : G), (γ'⁻¹ * γ).2, ((κ * κ'⁻¹ : K) : G), (κ * κ'⁻¹).2, ?_⟩
+      refine (@DoubleCoset.eq _ _ Γ K (y c) (y c')).2 ⟨((γ'⁻¹ * γ : Γ) : G), (γ'⁻¹ * γ).2, ((κ * κ'⁻¹ : K) : G), (κ * κ'⁻¹).2, ?_⟩
       have : y c' = (γ' : G)⁻¹ * ((γ' : G) * y c' * κ') * (κ' : G)⁻¹ := by group
       rw [this, ← e]
       push_cast

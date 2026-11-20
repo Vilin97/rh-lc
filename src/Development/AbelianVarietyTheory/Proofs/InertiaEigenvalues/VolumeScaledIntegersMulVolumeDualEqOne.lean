@@ -36,7 +36,7 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     exact hψc.comp (htr.comp (continuous_const.mul continuous_id))
   refine ⟨hcl.measurableSet, ?_⟩
 
-  let M : AddSubgroup A.K := R.toAddSubgroup.comap (DistribMulAction.toAddMonoidHom A.K c)
+  let M : AddSubgroup A.K := R.toAddSubgroup.comap (DistribSMul.toAddMonoidHom A.K c)
   have hM : (M : Set A.K) = {z : A.K | c • z ∈ A.OK} := by
     ext z; simp [M, ← hR]
   have hsm : Continuous fun z : A.K => c • z := continuous_const_smul c

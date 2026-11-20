@@ -11,7 +11,7 @@ theorem exists_int_eq_of_isIntegral_of_mul_eq_int {x : ℂ} (hx : IsIntegral ℤ
   have hq : x = algebraMap ℚ ℂ ((k : ℚ) / n) := by
     simp only [eq_ratCast, Rat.cast_div, Rat.cast_intCast]
     rw [eq_div_iff hn', mul_comm, h]
-  rw [hq, isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective] at hx
+  rw [hq, isIntegral_algebraMap_iff ] at hx
   obtain ⟨j, hj⟩ := IsIntegrallyClosed.isIntegral_iff.mp hx
   refine ⟨j, ?_⟩
   rw [hq, ← hj]

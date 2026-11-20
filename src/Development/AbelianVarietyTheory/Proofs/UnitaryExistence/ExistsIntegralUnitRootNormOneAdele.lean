@@ -38,7 +38,7 @@ theorem fixed_integral (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c
     rcases eq_one_or c h2 hc f with rfl | rfl
     · rfl
     · exact hfix)
-  exact ⟨y, ⟨⟨y, (isIntegral_algebraMap_iff (algebraMap F E).injective).1 hx⟩, rfl⟩, rfl⟩
+  exact ⟨y, ⟨⟨y, (isIntegral_algebraMap_iff ).1 hx⟩, rfl⟩, rfl⟩
 
 end quad
 

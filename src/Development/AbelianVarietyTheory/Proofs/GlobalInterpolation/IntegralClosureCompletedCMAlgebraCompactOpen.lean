@@ -81,7 +81,7 @@ theorem isCompact_isOpen_integralClosure : ∀ (F E : Type) [Field F] [NumberFie
       (v.adicCompletionIntegers F))
   have h3 := h1.add h2
   rw [← SelfDualLatticeCompare.trace_tensor (Fv F v) h,
-    isIntegral_algebraMap_iff (FaithfulSMul.algebraMap_injective _ _)] at h3
+    isIntegral_algebraMap_iff ] at h3
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 h3
   beta_reduce
   rw [← hy]

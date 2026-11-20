@@ -219,7 +219,7 @@ theorem exists_fixed_odd (K : UQ) (L : Type) [Field L] [Algebra K.E L] [Algebra 
     IsDiscreteValuationRing.not_isField K.O
       ((Algebra.IsIntegral.isField_iff_isField injR).2 h)
   haveI : IsDiscreteValuationRing R :=
-    ((IsDiscreteValuationRing.TFAE R hnf).out 2 0).1 ‹IsDedekindDomain R›
+    ((IsDiscreteValuationRing.TFAE R hnf).out 3 1).1 ‹IsDedekindDomain R›
   have hint : ∀ x : R, τ (x : L) ∈ R := by
     intro x
     exact IsIntegral.map_of_comp_eq c τ (by ext z; simp [hτO]) x.2

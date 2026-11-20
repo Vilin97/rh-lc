@@ -20,7 +20,7 @@ theorem lcplead_weight_apply {r n : ℕ} (l j : Fin n) (hlj : l ≠ j) (d : Fin 
     Finsupp.weight (pairW l j) d (b, t) =
       if t = l then d (b, l) + d (b, j) else if t = j then 0 else d (b, t) := by
   classical
-  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply]
+  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply]
   simp only [Finsupp.smul_apply, pairW_apply, smul_eq_mul]
   split_ifs with h1 h2
   · subst h1

@@ -169,7 +169,7 @@ theorem isDiscreteValuationRing_atPrime_span {R : Type} [CommRing R] [IsDomain R
     rw [IsLocalRing.isField_iff_maximalIdeal_eq, hm, Ideal.span_singleton_eq_bot] at hf
     exact h0 ((Ideal.mem_bot).1 (ker_algebraMap_atPrime (Ideal.span {π}) ▸ hf))
   have hp : (IsLocalRing.maximalIdeal (Localization.AtPrime (Ideal.span {π}))).IsPrincipal := ⟨_, hm⟩
-  exact ((IsDiscreteValuationRing.TFAE _ hnf).out 0 4).2 hp
+  exact ((IsDiscreteValuationRing.TFAE _ hnf).out 1 5).2 hp
 
 theorem valueAt_maximalIdeal (hF : FieldClause κ) (hU : UnitClause κ) (n : ℕ) :
     ∀ (R : Type) [CommRing R] [IsRegularLocalRing R] (y : KeyIn R) (u : R),

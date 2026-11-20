@@ -58,7 +58,7 @@ theorem unfold_mass {Γ : Subgroup G} [Countable Γ] {μ : Measure G} [μ.IsMulL
     simp only [mem_preimage, mem_singleton_iff, mem_iUnion]
     constructor
     · intro hy
-      have h1 := (DoubleCoset.eq Γf U (xo c) y).1 (by
+      have h1 := (@DoubleCoset.eq _ _ Γf U (xo c) y).1 (by
         show DoubleCoset.mk Γf U (Quotient.out c) = DoubleCoset.mk Γf U y
         rw [DoubleCoset.out_eq']; exact hy.symm)
       obtain ⟨h, hh, k, hk, rfl⟩ := h1
@@ -82,7 +82,7 @@ theorem unfold_mass {Γ : Subgroup G} [Countable Γ] {μ : Measure G} [μ.IsMulL
     unfold PI.VolStabSW.cntN
     by_cases hg : cl (p g) = c
     · rw [indicator_of_mem (show p g ∈ cl ⁻¹' {c} from hg)]
-      have h1 := (DoubleCoset.eq Γf U (xo c) (p g)).1 (by
+      have h1 := (@DoubleCoset.eq _ _ Γf U (xo c) (p g)).1 (by
         show DoubleCoset.mk Γf U (Quotient.out c) = DoubleCoset.mk Γf U (p g)
         rw [DoubleCoset.out_eq']; exact hg.symm)
       obtain ⟨h, hh, k, hk, hpg⟩ := h1

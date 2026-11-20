@@ -4,7 +4,7 @@ private theorem int_of_rat {K : Type} [Field K] [CharZero K] (r : ℚ)
     (h : IsIntegral ℤ (r : K)) : ∃ a : ℤ, (a : ℚ) = r := by
   have h1 : IsIntegral ℤ r := by
     have h2 : IsIntegral ℤ (algebraMap ℚ K r) := by simpa using h
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ K).injective).mp h2
+    exact (isIntegral_algebraMap_iff ).mp h2
   obtain ⟨a, ha⟩ := IsIntegrallyClosed.isIntegral_iff.mp h1
   exact ⟨a, by simpa using ha⟩
 

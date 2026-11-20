@@ -104,7 +104,7 @@ theorem coef_mem {M : Type*} [AddCommGroup M] [Module ℂ M] (P : Submodule ℂ 
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← e]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
-  have e3 := congrArg (fun q => Polynomial.coeff q j) hp
+  have e3 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q j) hp
   simpa [p, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, hj, ℓ'] using e3
 
 theorem qdet_mem {A : Type} [Ring A] [Algebra ℂ A] (B : Subalgebra ℂ A) {m : ℕ} (E : Fin m → Fin m → A)

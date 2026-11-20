@@ -93,7 +93,7 @@ instance : IsDiscreteValuationRing (gaussRing W) := by
     rw [isField_iff_maximalIdeal_eq, hmax, Ideal.span_singleton_eq_bot]
     exact (map_ne_zero_iff _ (algebraMap_gaussRing_injective W)).2
       ((map_ne_zero_iff _ (algebraMap_coordinateRing_injective W)).2 hϖ.ne_zero)
-  refine ((IsDiscreteValuationRing.TFAE (gaussRing W) hnf).out 0 4).mpr ?_
+  refine ((IsDiscreteValuationRing.TFAE (gaussRing W) hnf).out 1 5).mpr ?_
   rw [hmax]
   exact ⟨⟨_, rfl⟩⟩
 

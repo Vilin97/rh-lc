@@ -249,7 +249,7 @@ private theorem exists_under (B : Base) (X : PreX B.toPre) (i : Fin 2) (hne : ((
     exact mul_mem (inv_mem (X.piG_K i)) (natCast_mem _ _)
   have lift : ∀ x : 𝓞 B.host.E, (x : B.host.E) ∈ B.host.K →
       ∃ y : 𝓞 B.host.K, algebraMap (𝓞 B.host.K) (𝓞 B.host.E) y = x := fun x hx =>
-    ⟨⟨⟨x, hx⟩, (isIntegral_algebraMap_iff (algebraMap B.host.K B.host.E).injective).1 x.isIntegral_coe⟩,
+    ⟨⟨⟨x, hx⟩, (isIntegral_algebraMap_iff ).1 x.isIntegral_coe⟩,
       RingOfIntegers.ext rfl⟩
   obtain ⟨a, ha⟩ := lift _ (X.piG_K i)
   obtain ⟨b, hb⟩ := lift _ hbK

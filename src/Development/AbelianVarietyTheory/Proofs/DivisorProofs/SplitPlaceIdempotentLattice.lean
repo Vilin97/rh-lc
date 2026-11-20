@@ -43,7 +43,7 @@ theorem exists_int_of_fixed {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {x : 𝓞 
   have hi : IsIntegral ℤ a := by
     have : IsIntegral ℤ (x : E) := x.isIntegral_coe
     rw [← ha] at this
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   exact ⟨⟨a, hi⟩, Subtype.ext ha⟩
 
 theorem exists_trace_norm {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (hv : Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v) :

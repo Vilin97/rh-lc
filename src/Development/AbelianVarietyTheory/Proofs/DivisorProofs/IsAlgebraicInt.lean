@@ -10,7 +10,7 @@ theorem isAlgebraic_int {E : Type} [Field E] [NumberField E] (c : E) : IsAlgebra
 
 theorem exists_int_smul_mem {E : Type} [Field E] [NumberField E] {d : ℕ}
     {L : Submodule (RingOfIntegers E) (Fin d → E)}
-    (hL : Submodule.IsLattice E L) (w : Fin d → E) :
+    (hL : Submodule.IsFullLattice E L) (w : Fin d → E) :
     ∃ N : ℤ, N ≠ 0 ∧ N • w ∈ L := by
   have hw : w ∈ Submodule.span E (L : Set (Fin d → E)) := by
     rw [hL.span_eq_top]; trivial

@@ -132,8 +132,8 @@ theorem hessC_eq_hessMat {D : ℕ} (φ : (Fin D → ℂ) → ℝ) (y : Fin D →
 theorem continuous_mdisc {D : ℕ} :
     Continuous (fun A : Fin D → Matrix (Fin D) (Fin D) ℂ => mdisc A) := by
   unfold mdisc
-  refine continuous_const.mul (continuous_finset_sum _ fun S _ => continuous_const.mul ?_)
-  exact (continuous_finset_sum _ fun k _ => continuous_apply k).matrix_det
+  refine continuous_const.mul (continuous_finsetSum _ fun S _ => continuous_const.mul ?_)
+  exact (continuous_finsetSum _ fun k _ => continuous_apply k).matrix_det
 
 theorem hessCof_eq {n : ℕ} (φ : Fin n → (Fin (n + 1) → ℂ) → ℝ) (y : Fin (n + 1) → ℂ) (j k : Fin (n + 1)) :
     hessCof φ y j k = mdisc (Fin.cons (Matrix.single j k 1) fun i => hessMat (fderiv ℝ (fderiv ℝ (φ i)) y)) := by

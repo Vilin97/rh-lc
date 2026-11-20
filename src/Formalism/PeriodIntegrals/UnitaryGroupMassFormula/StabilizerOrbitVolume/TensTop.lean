@@ -113,7 +113,7 @@ theorem continuous_hR (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M)
   haveI : IsTopologicalRing (R ⊗[F] E) := IsModuleTopology.isTopologicalRing R (R ⊗[F] E)
   have hs := continuous_sigR_stabilizer_orbit_volume (F := F) (E := E) R σ
   unfold hR Formalism.UG.hform
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     ((hs.comp ((continuous_apply i).comp continuous_fst)).mul continuous_const).mul
       ((continuous_apply j).comp continuous_snd)
 
@@ -124,7 +124,7 @@ theorem continuous_gramR_apply (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin
   have hs := continuous_sigR_stabilizer_orbit_volume (F := F) (E := E) R σ
   show Continuous fun X : Fin n → Fin M → R ⊗[F] E => hR R σ J (X a) (X b)
   unfold hR Formalism.UG.hform
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     ((hs.comp ((continuous_apply i).comp (continuous_apply a))).mul continuous_const).mul
       ((continuous_apply j).comp (continuous_apply b))
 

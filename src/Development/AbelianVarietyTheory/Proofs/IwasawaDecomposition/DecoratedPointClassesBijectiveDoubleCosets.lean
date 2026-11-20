@@ -35,7 +35,7 @@ theorem classes_bijective : ∀ (F E K : Type) [Field F] [NumberField F] [Field 
   intro F E K _ _ _ _ _ _ _ hc n _ ST SG Q C Λ Θ s U k' y hU hk' hlev hdense hpt hinj hsurj
   constructor
   · intro c c' hcc
-    obtain ⟨γ, hγ, u, hu, he⟩ := (DoubleCoset.eq _ _ (y c) (y c')).1 hcc
+    obtain ⟨γ, hγ, u, hu, he⟩ := (@DoubleCoset.eq _ _ _ _ (y c) (y c')).1 hcc
     have he' : (y c').1 = γ.1 * (y c).1 * u.1 := by rw [he]; rfl
     obtain ⟨δ, hδ⟩ := exists_ratAd_eq hc (Subgroup.mem_subgroupOf.1 hγ)
     have h1 := GlobalTheory.Mem.Col2.RatMove.isPtOf_ratAd F E hc n ST SG Q δ⁻¹ _ _ (hpt c')
@@ -72,7 +72,7 @@ theorem classes_bijective : ∀ (F E K : Type) [Field F] [NumberField F] [Field 
     let kk : UPts hc.sig (1 : Matrix (Fin n) (Fin n) E) (FiniteAdeleRing (𝓞 F) F) :=
       ⟨(y c).1⁻¹ * ratAd F γ⁻¹ * z.1 * x * x⁻¹, hU (mul_mem hx' (inv_mem hx))⟩
     show DoubleCoset.mk _ _ (y c) = DoubleCoset.mk _ _ z
-    refine (DoubleCoset.eq _ _ (y c) z).2 ⟨z * kk⁻¹ * (y c)⁻¹, ?_, kk, Subgroup.mem_subgroupOf.2 (mul_mem hx' (inv_mem hx)), by group⟩
+    refine (@DoubleCoset.eq _ _ _ _ (y c) z).2 ⟨z * kk⁻¹ * (y c)⁻¹, ?_, kk, Subgroup.mem_subgroupOf.2 (mul_mem hx' (inv_mem hx)), by group⟩
     rw [Subgroup.mem_subgroupOf]
     have e4 : ((z * kk⁻¹ * (y c)⁻¹ : UPts hc.sig (1 : Matrix (Fin n) (Fin n) E) (FiniteAdeleRing (𝓞 F) F)) : GL (Fin n) (AfE F E))
         = ratAd F γ := by

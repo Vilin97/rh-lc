@@ -106,7 +106,7 @@ variable {M : LB A.left}
 
 private lemma mapDomain_comp_fsum {X Y Z : Scheme} {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ) (h : Z ⟶ Y) :
     Finsupp.mapDomain (fun ψ => h ≫ ψ) (fsum φ ε) = fsum (fun k => h ≫ φ k) ε := by
-  rw [fsum_eq_sum_single, fsum_eq_sum_single, Finsupp.mapDomain_finset_sum]
+  rw [fsum_eq_sum_single, fsum_eq_sum_single, Finsupp.mapDomain_finsetSum]
   simp only [Finsupp.mapDomain_single]
 
 lemma hasGen_theta (t : LB.Gen (Theta A M)) (ht : t.IsGen) (x y z : T ⟶ A) :

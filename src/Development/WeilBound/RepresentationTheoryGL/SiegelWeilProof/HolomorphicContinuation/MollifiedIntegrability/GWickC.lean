@@ -85,7 +85,7 @@ theorem wick_of (hI : IntegP) : Wick := by
     ring
   rw [hsec]
   simp_rw [key]
-  rw [integral_neg, integral_finset_sum]
+  rw [integral_neg, MeasureTheory.integral_finsetSum]
   · simp only [integral_const_mul, ibpW, hsec]
     simp only [Finset.sum_neg_distrib, mul_neg, neg_neg]
   · intro j _

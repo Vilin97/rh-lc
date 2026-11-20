@@ -43,7 +43,7 @@ theorem _root_.GlobalTheory.qminor_polyMap (A : Type) [Ring A] [Algebra ℂ A] (
     · simp
   have hP : Polynomial.eval₂ (RingHom.id A) (algebraMap ℂ A u) P = _root_.Formalism.REAL.qminor E a b (u - s) := by
     unfold _root_.Formalism.REAL.qminor
-    simp only [P, Polynomial.eval₂_finset_sum]
+    simp only [P, Polynomial.eval₂_finsetSum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [Polynomial.eval₂_mul_noncomm _ _ (hcomm _), Polynomial.eval₂_C,
       Polynomial.eval₂_list_prod_noncomm _ _ _ (fun p _ => hcomm p), List.map_ofFn]

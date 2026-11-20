@@ -418,7 +418,7 @@ private theorem fx_gen [IsDomain O] [IsDiscreteValuationRing O] (hl : IsLoc O Δ
       convert e ▸ h using 2
       ring
     obtain ⟨a, ha⟩ := IsIntegrallyClosed.isIntegral_iff.mp
-      ((isIntegral_algebraMap_iff (algebraMap K (Lsq K Δ)).injective).mp h')
+      ((isIntegral_algebraMap_iff ).mp h')
     by_cases hau : IsUnit a
     · have hn : QuadraticAlgebra.norm y ≠ 0 := fun h0 => (hau.map (algebraMap O K)).ne_zero (by rw [ha, h0, mul_zero])
       have hyu : IsUnit y := isUnit_iff_norm_isUnit.2 (Ne.isUnit hn)
@@ -537,7 +537,7 @@ private theorem IB_of_int (hl : IsLoc O Δ) (hτ : τ ∈ (algebraMap O K).range
     have h : IsIntegral O (x + star x) := hx.add (hx.map φ)
     rw [← algebraMap_trace_eq_add_star] at h
     obtain ⟨a, ha⟩ := IsIntegrallyClosed.isIntegral_iff.mp
-      ((isIntegral_algebraMap_iff (algebraMap K (Etau K τ)).injective).mp h)
+      ((isIntegral_algebraMap_iff ).mp h)
     rw [trace_ofE, ← ha]
     exact int_of a
   have hω : IsIntegral O (ω : Etau K τ) := by

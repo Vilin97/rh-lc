@@ -64,7 +64,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
   [IsScalarTower (𝓞 K) K V]
 
 theorem card_quot_extP (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) :
+    (hL : Submodule.IsFullLattice K L) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) :
     Nat.card (↥L ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥L)) =
       Ideal.absNorm 𝔭 ^ (2 * finrank K V * k) := by
   let _ : Module F V := Module.compHom V (algebraMap F K)
@@ -177,7 +177,7 @@ theorem exists_val (hF : IsFixF K F) (hs : h.IsSymm) (hLi : Formalism.HermitianL
   obtain ⟨a, ha⟩ := (hF (h y y)).1 (hs.eq y y)
   obtain ⟨z, hz⟩ := Submodule.mem_one.1 (hLi y y.2 y y.2)
   have hint : IsIntegral ℤ a := by
-    rw [← isIntegral_algebraMap_iff (algebraMap F K).injective, ha, ← hz]
+    rw [← isIntegral_algebraMap_iff , ha, ← hz]
     exact RingOfIntegers.isIntegral_coe z
   exact ⟨⟨a, hint⟩, ha.symm⟩
 

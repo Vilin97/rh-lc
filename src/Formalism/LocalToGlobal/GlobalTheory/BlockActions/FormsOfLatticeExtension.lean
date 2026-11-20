@@ -34,7 +34,7 @@ theorem cls_eq_of_dec (S : StepLevel F E σ J T f bad) {C : Type} (yc : C → UP
     rw [e']; group
   apply hinj
   show (Quotient.mk'' (yc c1) : Cls S) = Quotient.mk'' (yc c2)
-  refine (DoubleCoset.eq _ _ (yc c1) (yc c2)).2 ⟨h, ?_, k, ?_, ?_⟩
+  refine (@DoubleCoset.eq _ _ _ _ (yc c1) (yc c2)).2 ⟨h, ?_, k, ?_, ?_⟩
   · exact Subgroup.mem_subgroupOf.2 (Subgroup.mem_map.2 ⟨γ2⁻¹ * γ1, (UJ _ _).mul_mem ((UJ _ _).inv_mem h2) h1, hh.symm⟩)
   · exact Subgroup.mem_subgroupOf.2 (S.U.mul_mem κ1.2 (S.U.inv_mem κ2.2))
   · simp only [h]; group
@@ -53,7 +53,7 @@ theorem fic_of_stab (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
       ∃ κ : S.U, x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ * (yc c).1 * κ.1 := by
     intro x
     obtain ⟨c, hcx⟩ := hbij.2 (Quotient.mk'' x)
-    obtain ⟨hh, hhH, κ, hκK, e⟩ := (DoubleCoset.eq _ _ (yc c) x).1 hcx
+    obtain ⟨hh, hhH, κ, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ (yc c) x).1 hcx
     obtain ⟨g, hgU, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
     refine ⟨c, g, hgU, ⟨κ.1, hκK⟩, ?_⟩
     have := congrArg Subtype.val e

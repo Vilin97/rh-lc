@@ -36,7 +36,7 @@ theorem pa_int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
   have hint : IsIntegral ℤ ((a : ℚ) / N) := by
     have : IsIntegral ℤ (z : E) := RingOfIntegers.isIntegral_coe z
     rw [hzE] at this
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   refine ⟨m, ?_⟩
   have hNQ : (N : ℚ) ≠ 0 := by exact_mod_cast hN

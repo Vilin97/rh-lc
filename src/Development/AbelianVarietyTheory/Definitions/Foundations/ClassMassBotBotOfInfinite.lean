@@ -93,14 +93,14 @@ theorem classMass_of_le (h : FiniteClasses Γ K) (hle : K' ≤ K) (hi : K'.relIn
     obtain ⟨γ, k, hγ, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
     set c : ClassSet Γ K := DoubleCoset.mk Γ K g with hc
     have hd : (Quotient.mk'' g : ClassSet Γ K') = DoubleCoset.mk Γ K' (c.out * ((⟨k, hk⟩ : K)⁻¹ : K)) :=
-      (DoubleCoset.eq Γ K' _ _).2 ⟨γ, hγ, 1, one_mem _, by rw [e]; simp⟩
+      (@DoubleCoset.eq _ _ Γ K' _ _).2 ⟨γ, hγ, 1, one_mem _, by rw [e]; simp⟩
     rw [hd]
     have key := card_fibre_mul (Γ := Γ) hle c.out (⟨k, hk⟩ : K)⁻¹
     generalize ((⟨k, hk⟩ : K)⁻¹ : K) = κ at key ⊢
     have hf : ∀ p, φ p = DoubleCoset.mk Γ K' (c.out * κ) → p.1 = c := fun p hp => by
-      obtain ⟨a, ha, b, hb, e⟩ := (DoubleCoset.eq Γ K' _ _).1 hp
+      obtain ⟨a, ha, b, hb, e⟩ := (@DoubleCoset.eq _ _ Γ K' _ _).1 hp
       rw [← DoubleCoset.out_eq' _ _ p.1, ← DoubleCoset.out_eq' _ _ c]
-      refine (DoubleCoset.eq Γ K _ _).2 ⟨a, ha, (p.2.out : K) * b * (κ : G)⁻¹,
+      refine (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨a, ha, (p.2.out : K) * b * (κ : G)⁻¹,
         K.mul_mem (K.mul_mem p.2.out.2 (hle hb)) (K.inv_mem κ.2), ?_⟩
       rw [eq_mul_inv_of_mul_eq e]; group
     rw [Finset.sum_congr rfl (g := fun _ => ((stabOrder Γ K c : ℝ))⁻¹)
@@ -157,7 +157,7 @@ theorem classMass_bot_bot_of_infinite [Infinite G] : classMass (⊥ : Subgroup G
       exact Nat.card_unique (α := stabAt (⊥ : Subgroup G) ⊥ g)
   haveI : Infinite (ClassSet (⊥ : Subgroup G) ⊥) :=
     Infinite.of_injective (fun g => DoubleCoset.mk ⊥ ⊥ g) fun a b e => by
-      obtain ⟨x, hx, y, hy, e⟩ := (DoubleCoset.eq _ _ _ _).1 e
+      obtain ⟨x, hx, y, hy, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 e
       rw [e, Subgroup.mem_bot.1 hx, Subgroup.mem_bot.1 hy]; simp
   refine finsum_of_infinite_support ?_
   have : (Function.support fun c : ClassSet (⊥ : Subgroup G) ⊥ => ((stabOrder ⊥ ⊥ c : ℝ))⁻¹) = Set.univ :=

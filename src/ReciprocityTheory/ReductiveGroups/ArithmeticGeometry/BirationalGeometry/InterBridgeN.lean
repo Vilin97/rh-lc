@@ -39,7 +39,7 @@ private theorem log_max_norm_le_circleAverage_of_analyticOnNhd {h : ℂ → ℂ}
           exact hu ((MeromorphicOn.divisor h _).supportWithinDomain hz)
         rw [hz]; simp
     have hlog : CircleIntegrable (fun ζ => Real.log ‖h ζ‖) 0 1 :=
-      circleIntegrable_log_norm_meromorphicOn (fun x hx => (hh x (hs hx)).meromorphicAt)
+      MeromorphicOn.circleIntegrable_log_norm (fun x hx => (hh x (hs hx)).meromorphicAt)
     calc Real.log ‖h 0‖ ≤ Real.circleAverage (fun ζ => Real.log ‖h ζ‖) 0 1 := by
           rw [hJ]; linarith
       _ ≤ _ := Real.circleAverage_mono hlog hI (fun x _ => by

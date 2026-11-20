@@ -63,7 +63,7 @@ theorem col_lower (Y : Full X) (w : D.what₂.Word) :
     rfl
   refine ⟨Fintype.card ι, fun i => f ((Fintype.equivFin ι).symm i), fun ξ h => ?_⟩
   obtain ⟨c, hc⟩ : ∃ c, c = DoubleCoset.mk (iotaF X w).range (Ku X w Y.hK) h := ⟨_, rfl⟩
-  obtain ⟨g, ⟨γ, rfl⟩, κ, hκ, hh⟩ := (DoubleCoset.eq _ _ c.out h).1 (by rw [DoubleCoset.out_eq', hc])
+  obtain ⟨g, ⟨γ, rfl⟩, κ, hκ, hh⟩ := (@DoubleCoset.eq _ _ _ _ c.out h).1 (by rw [DoubleCoset.out_eq', hc])
   obtain ⟨ξ', hξ'⟩ : ∃ ξ', ξ' = piRep X w (iotaI X w γ)⁻¹ ξ := ⟨_, rfl⟩
   have hn : ‖ξ'‖ = ‖ξ‖ := by
     have h2 : inner ℂ ξ' ξ' = inner ℂ ξ ξ := by

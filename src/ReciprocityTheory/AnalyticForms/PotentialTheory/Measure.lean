@@ -160,10 +160,10 @@ theorem mIntMeasure : MIntMeasureStatement := by
   intro g hg hgi
   have h1 := fun j => integral_chartPartMeasure A hP.some Φ hΦ 1 j g hg hgi
   have h2 := fun j => integral_chartPartMeasure A hP.some Φ hΦ (-1) j g hg hgi
-  refine ⟨integrable_finset_sum_measure.2 (fun j _ => (h1 j).1),
-    integrable_finset_sum_measure.2 (fun j _ => (h2 j).1), ?_⟩
-  rw [integral_finset_sum_measure (fun j _ => (h1 j).1),
-    integral_finset_sum_measure (fun j _ => (h2 j).1), ← Finset.sum_sub_distrib]
+  refine ⟨MeasureTheory.integrable_finsetSum_measure.2 (fun j _ => (h1 j).1),
+    MeasureTheory.integrable_finsetSum_measure.2 (fun j _ => (h2 j).1), ?_⟩
+  rw [MeasureTheory.integral_finsetSum_measure (fun j _ => (h1 j).1),
+    MeasureTheory.integral_finsetSum_measure (fun j _ => (h2 j).1), ← Finset.sum_sub_distrib]
   unfold mInt
   rw [dif_pos hP]
   unfold integralWith

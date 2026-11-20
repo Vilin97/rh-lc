@@ -618,7 +618,7 @@ theorem IsAbsIrrChar.isIntegral {χ : G → K} (h : IsAbsIrrChar χ) (t : G) : I
   have h2 : IsIntegral ℤ (algebraMap K (AlgebraicClosure K) (χ t)) := by
     rw [← hχ t]
     exact h1
-  exact (isIntegral_algebraMap_iff (algebraMap K (AlgebraicClosure K)).injective).mp h2
+  exact (isIntegral_algebraMap_iff ).mp h2
 
 private theorem coeff_chiIdem_lemma {K : Type} [Field K] {G : Type} [Group G] [Fintype G] (χ : G → K) (t : G) :
     (chiIdem χ).coeff t = χ 1 / (Fintype.card G : K) * χ t⁻¹ := by

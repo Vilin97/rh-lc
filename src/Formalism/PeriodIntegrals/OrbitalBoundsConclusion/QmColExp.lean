@@ -76,7 +76,7 @@ private theorem qminor_eq_sum_expand_last_column {A : Type} [Ring A] [Algebra â„
   refine Finset.sum_congr rfl fun Ï„ _ => ?_
   simp only [Equiv.coe_mulRight]
   rw [sign_cycleRange_symm_mul_decomposeFin_mul_finRotate, List.ofFn_succ', List.prod_concat]
-  simp only [Equiv.Perm.mul_apply, finRotate_succ_apply, Fin.coeSucc_eq_succ, Fin.last_add_one,
+  simp only [Equiv.Perm.mul_apply, finRotate_apply, Fin.coeSucc_eq_succ, Fin.last_add_one,
     Equiv.Perm.decomposeFin_symm_apply_zero, Fin.cycleRange_symm_zero,
     Equiv.Perm.decomposeFin_symm_apply_succ, Equiv.swap_self, Equiv.refl_apply,
     Fin.cycleRange_symm_succ, Function.comp_apply, Fin.coe_castSucc, Fin.val_last]

@@ -111,7 +111,7 @@ theorem latAd_basePt [StarRing E] (x : GL (Fin n) (E ⊗[F] FiniteAdeleRing (�
 theorem cls_move_iff (x y : UPts σ J (FiniteAdeleRing (𝓞 F) F)) :
     (Quotient.mk'' (x * basePtU k) : Cls (moveLev k)) = Quotient.mk'' (y * basePtU k) ↔
       (Quotient.mk'' x : Cls S) = Quotient.mk'' y := by
-  refine (DoubleCoset.eq _ _ _ _).trans (Iff.trans ?_ (DoubleCoset.eq _ _ _ _).symm)
+  refine (@DoubleCoset.eq _ _ _ _ _ _).trans (Iff.trans ?_ (@DoubleCoset.eq _ _ _ _ _ _).symm)
   refine exists_congr fun g => and_congr_right fun _ => ⟨?_, ?_⟩
   · rintro ⟨κ, hκ, e⟩
     refine ⟨basePtU k * κ * (basePtU k)⁻¹, hκ, ?_⟩

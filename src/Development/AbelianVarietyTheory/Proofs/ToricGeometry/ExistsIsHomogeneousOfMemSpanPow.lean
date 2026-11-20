@@ -54,7 +54,7 @@ theorem mem_of_homog_mem_iSup (T : ℕ → Submodule ℂ (X → ℂ)) (d : ℕ) 
       intro t
       rw [← hu']
       simp [homog, mul_comm]
-    have h2 := congrArg (fun q => Polynomial.coeff q d) h1
+    have h2 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q d) h1
     simpa using h2.symm
   exact this ▸ hu d
 

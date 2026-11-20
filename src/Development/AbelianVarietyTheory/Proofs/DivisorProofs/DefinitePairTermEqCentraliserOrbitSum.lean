@@ -35,7 +35,7 @@ theorem finsum_dc_translate {H : Type} [Group H] (A B K : Subgroup H) (u : H)
           simp only [Quotient.map'_mk'', inv_mul_cancel_left, mul_inv_cancel_left]
           rfl }
   have hF : ∀ x y : H, DoubleCoset.mk B K x = DoubleCoset.mk B K y → S₂ x = S₂ y := fun x y hxy => by
-    obtain ⟨b, hb, k, hk, rfl⟩ := (DoubleCoset.eq B K x y).1 hxy
+    obtain ⟨b, hb, k, hk, rfl⟩ := (@DoubleCoset.eq _ _ B K x y).1 hxy
     exact (hS₂ b hb k hk x).symm
   rw [← finsum_comp_equiv e]
   refine finsum_congr fun q => ?_

@@ -128,7 +128,7 @@ theorem exists_of_conj_eq (hX : X.Ok) {a : 𝓞 X.E} (ha : X.conjO a = a) :
   rw [hM, IntermediateField.mem_bot] at h2
   obtain ⟨x, hx⟩ := h2
   have h3 : IsIntegral ℤ x := by
-    rw [← isIntegral_algebraMap_iff (algebraMap X.F X.E).injective, hx]
+    rw [← isIntegral_algebraMap_iff , hx]
     exact RingOfIntegers.isIntegral_coe _
   exact ⟨⟨x, h3⟩, RingOfIntegers.ext hx⟩
 

@@ -12,7 +12,7 @@ namespace ReciprocityTheory.ChartRestriction.L1
 theorem xp_zmod {p : ℕ} (hp : p.Prime) (f : PowerSeries (ZMod p)) : xp p f = f ^ p := by
   haveI := Fact.mk hp
   ext n
-  have key := congrArg (fun q => Polynomial.coeff q n) (PowerSeries.trunc_trunc_pow (n := n + 1) f p)
+  have key := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q n) (PowerSeries.trunc_trunc_pow (n := n + 1) f p)
   simp only [PowerSeries.coeff_trunc, Nat.lt_add_one, ↓reduceIte] at key
   rw [← key, ← Polynomial.coe_pow, Polynomial.coeff_coe, ← ZMod.expand_card, Polynomial.coeff_expand hp.pos]
   simp only [xp, PowerSeries.coeff_mk]

@@ -338,7 +338,7 @@ theorem eq_or_eq_bar {w P : HeightOneSpectrum (𝓞 E)} {v : HeightOneSpectrum (
       change cc ((x : E) * cc (x : E)) = (x : E) * cc (x : E)
       rw [map_mul, IsCMField.complexConj_apply_apply, mul_comm]
     have hint : IsIntegral ℤ (⟨y, hy⟩ : maximalRealSubfield E) :=
-      (isIntegral_algebraMap_iff (algebraMap (maximalRealSubfield E) E).injective).1 y.isIntegral_coe
+      (isIntegral_algebraMap_iff ).1 y.isIntegral_coe
     obtain ⟨a, hn⟩ : ∃ a : OF E, algebraMap (OF E) (𝓞 E) a = y := ⟨⟨_, hint⟩, RingOfIntegers.ext rfl⟩
     have h1 : a ∈ v.asIdeal := by
       rw [← hP, Ideal.mem_comap, hn]

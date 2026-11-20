@@ -157,7 +157,7 @@ private theorem norm_mem (h : IsCMExt F E σ) (x : 𝓞 E) :
     rw [map_div₀, ht, map_ofNat]
     ring
   have hint : IsIntegral ℤ (Algebra.trace F E ((x : E) * σ x) / 2) := by
-    rw [← isIntegral_algebraMap_iff (algebraMap F E).injective, e]
+    rw [← isIntegral_algebraMap_iff , e]
     exact RingOfIntegers.isIntegral_coe (x * sgOF σ x)
   exact ⟨⟨_, hint⟩, RingOfIntegers.ext e⟩
 

@@ -384,7 +384,7 @@ theorem GlobalTheory.LevelSeries.clsScal_mem_valRing : ∀ (D : D7) (ψ : AddCha
     exact (hval P hb hc).2
   obtain ⟨s, hs⟩ := hodd
   have hq : ((((Ideal.absNorm cc) ^ s * kk ^ (2 * s + 1) : ℕ) : ℂ))⁻¹ ∈ O :=
-    hO _ (Nat.Coprime.mul (hNcop.pow_left _) (hkcop.pow_left _))
+    hO _ (Nat.Coprime.mul_left (hNcop.pow_left _) (hkcop.pow_left _))
   unfold clsScal
   rw [hidx, hs, GlobalTheory.ClassScalarIn.sqrt_pow_odd, c4]
   convert O.mul_mem hv' hq using 1

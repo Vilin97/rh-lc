@@ -51,7 +51,7 @@ theorem ae_eval_circleMap_ne_zero : ∀ (m : ℕ) (f : MvPolynomial (Fin m) ℂ)
       have hQ : Polynomial.map (MvPolynomial.eval w) P ≠ 0 := by
         intro h
         apply hs
-        have := congrArg (fun q => Polynomial.coeff q k) h
+        have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q k) h
         simpa [Polynomial.coeff_map] using this
       have hfin : ({y : ℂ | Polynomial.eval y (Polynomial.map (MvPolynomial.eval w) P) = 0}).Finite :=
         Polynomial.finite_setOfPred_isRoot hQ

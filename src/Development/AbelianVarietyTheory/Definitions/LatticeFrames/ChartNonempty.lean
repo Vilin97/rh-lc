@@ -83,7 +83,7 @@ variable {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
 theorem exists_dec (hy : Function.Surjective (fun c => (Quotient.mk'' (yc c) : Cls S))) (g : GA D V) :
     ∃ p, IsDec S yc (finM V hn g) p := by
   obtain ⟨c, hc⟩ := hy (Quotient.mk'' ⟨finGL V hn g, finGL_mem V hn g⟩)
-  obtain ⟨a, ha, b, hb, hab⟩ := (DoubleCoset.eq _ _ (yc c) _).1 hc
+  obtain ⟨a, ha, b, hb, hab⟩ := (@DoubleCoset.eq _ _ _ _ (yc c) _).1 hc
   obtain ⟨γ, hγ, e⟩ := Subgroup.mem_subgroupOf.1 ha
   refine ⟨(c, γ, ⟨b.1, Subgroup.mem_subgroupOf.1 hb⟩), hγ, ?_⟩
   have := congrArg (fun x => x.1.1) hab

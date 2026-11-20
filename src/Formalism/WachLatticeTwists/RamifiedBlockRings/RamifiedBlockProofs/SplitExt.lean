@@ -137,7 +137,7 @@ theorem splitExt : StatSplitExt := by
   have hinj : Function.Injective (algebraMap O O') := FaithfulSMul.algebraMap_injective O O'
   have hnf : ¬ IsField O' := fun h =>
     IsDiscreteValuationRing.not_isField O (isField_of_isIntegral_of_isField hinj h)
-  have hdvr : IsDiscreteValuationRing O' := ((IsDiscreteValuationRing.TFAE O' hnf).out 0 2).mpr hded
+  have hdvr : IsDiscreteValuationRing O' := ((IsDiscreteValuationRing.TFAE O' hnf).out 1 3).mpr hded
   obtain ⟨e, he⟩ := exists_ramification O O' hinj
   refine ⟨O', inferInstance, inferInstance, hdvr, inferInstance, hfree, hfin, e, he, fun x => ?_⟩
   have hfr : IsFractionRing O' L := integralClosure.isFractionRing_of_finite_extension K L

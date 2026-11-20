@@ -78,7 +78,7 @@ theorem curv_pow_chern_comp_holo : ∀ (n n' : ℕ) (r : Type) [Fintype r] [Deci
     simp only [powAt, Matrix.trace, Matrix.diag_apply, AddSubmonoidClass.coe_finsetSum, map_sum, this]
   · have e : chernPoly (fun x => G (φ x)) w k = subst (fderiv ℂ φ w) (chernPoly G (φ w) k) := by
       rw [chernPoly, chernPoly, curvPoly_comp hφ hG hu, ← map_neg]
-      exact (congrArg (fun p => Polynomial.coeff p k)
+      exact (congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k)
         (charpolyRev_map (subst (fderiv ℂ φ w)).toRingHom _)).trans (Polynomial.coeff_map _ _)
     rw [chernAt, chernAt, e, Subalgebra.coe_smul, Subalgebra.coe_smul, map_smul, pull_aeval_sym]
     rfl

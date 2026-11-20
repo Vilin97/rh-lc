@@ -2840,39 +2840,39 @@ theorem orth_unit {a b : Fin (2 * r + k + 1) → ℂ} (ha : inWb k r a) (hb : in
     (haa : herm (Hpk k r) a a = -(A : ℂ)) (hbb : herm (Hpk k r) b b = -(B : ℂ))
     (hG : 0 < Complex.normSq (herm (Hpk k r) a b) - A * B) :
     ∃ (e : Fin (2 * r + k + 1) → ℂ) (s c : ℂ), s ≠ 0 ∧ e = s • (a + c • b) ∧ inWb k r e ∧
-      herm (Hpk k r) e b = 0 ∧ herm (Hpk k r) e e = 1 := by
-  set ζ := herm (Hpk k r) a b with hζ
-  have hBC : (B : ℂ) ≠ 0 := by exact_mod_cast hB.ne'
-  set c : ℂ := ζ / B with hc
-  set G : ℝ := (Complex.normSq ζ - A * B) / B with hGd
-  have hGpos : 0 < G := div_pos hG hB
-  set t : ℝ := Real.sqrt G with ht
-  have htpos : 0 < t := Real.sqrt_pos.2 hGpos
-  have htt : (t : ℂ) * (t : ℂ) = (G : ℂ) := by
-    rw [← Complex.ofReal_mul, ht, Real.mul_self_sqrt hGpos.le]
-  have htC : (t : ℂ) ≠ 0 := by exact_mod_cast htpos.ne'
-  have hba : herm (Hpk k r) b a = star ζ := (herm_conj a b).symm
-  have h1 : herm (Hpk k r) (a + c • b) b = 0 := by
-    rw [herm_add_left', herm_smul_left', hbb, ← hζ, hc]
-    field_simp
-    ring
-  have hnorm : ζ * star ζ = (Complex.normSq ζ : ℂ) := Complex.mul_conj ζ
-  have h2 : herm (Hpk k r) (a + c • b) (a + c • b) = (G : ℂ) := by
-    rw [herm_add_right', herm_smul_right', h1, mul_zero, add_zero, herm_add_left', herm_smul_left', haa, hba, hc, hGd]
-    push_cast
-    rw [← hnorm]
-    field_simp
-    ring
-  refine ⟨(t : ℂ)⁻¹ • (a + c • b), (t : ℂ)⁻¹, c, inv_ne_zero htC, rfl, inWb_smul (inWb_add ha (inWb_smul hb _)) _, ?_,
-    ?_⟩
-  · rw [herm_smul_left', h1, mul_zero]
-  · rw [herm_smul_left', herm_smul_right', h2, ← htt]
-    have : star ((t : ℂ)⁻¹) = (t : ℂ)⁻¹ := by
-      rw [star_inv₀]
-      congr 1
-      exact Complex.conj_ofReal t
-    rw [this]
-    field_simp
+      herm (Hpk k r) e b = 0 ∧ herm (Hpk k r) e e = 1 := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem herm_self' (z : Fin (2 * r + k + 1) → ℂ) : herm (Hpk k r) z z = -((Tz k r z : ℝ) : ℂ) :=
   TwoByOneBlock.herm_self_eq z

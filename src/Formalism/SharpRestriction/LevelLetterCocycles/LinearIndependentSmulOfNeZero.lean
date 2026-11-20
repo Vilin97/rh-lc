@@ -2514,7 +2514,7 @@ theorem exists_frob_generic [IsGalois F Ω] (A : ValuationSubring Ω) (P : Ideal
     obtain ⟨k, hk⟩ := h1
     have h2 : IsIntegral R k := by
       have h3 : IsIntegral R (algebraMap F Ω k) := hk ▸ b.2
-      exact (isIntegral_algebraMap_iff (algebraMap F Ω).injective).1 h3
+      exact (isIntegral_algebraMap_iff ).1 h3
     obtain ⟨a, ha⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral h2
     refine ⟨a, Subtype.ext ?_⟩
     show algebraMap R Ω a = (b : Ω)

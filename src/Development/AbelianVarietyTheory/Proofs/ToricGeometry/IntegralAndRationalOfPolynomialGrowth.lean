@@ -285,7 +285,7 @@ theorem integral_and_rational_of_polynomial_growth :
       refine ⟨r, fun z hz => ?_⟩
       have hz' : z.2 ∈ T z.1 := (hT _ _).2 hz.2
       rw [hr z.1 hz.1, ← Polynomial.derivative_map, eq_nodal (hp.map _) (hsep z.1 hz.1),
-        Polynomial.eval_finset_sum, Finset.sum_eq_single z.2]
+        Polynomial.eval_finsetSum, Finset.sum_eq_single z.2]
       · rw [Polynomial.eval_mul, Polynomial.eval_C, mul_comm]
         congr 1
         exact Lagrange.eval_nodal_derivative_eval_node_eq (v := id) hz'
@@ -311,7 +311,7 @@ theorem integral_and_rational_of_polynomial_growth :
       rotate_right
       · rintro g hg
         refine ⟨g, fun x hx => ?_⟩
-        simp [Lagrange.eval_nodal, ← hg x hx, Polynomial.eval_finset_sum]
+        simp [Lagrange.eval_nodal, ← hg x hx, Polynomial.eval_finsetSum]
       · intro x₀ hx₀
         obtain ⟨y, ψ, hy, hψ, h⟩ := hloc x₀ hx₀
         have : DifferentiableAt ℂ

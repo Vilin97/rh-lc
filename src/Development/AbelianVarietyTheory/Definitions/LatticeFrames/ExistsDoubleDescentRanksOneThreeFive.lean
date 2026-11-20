@@ -59,7 +59,7 @@ theorem covers_ind {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measu
   refine ⟨by simp, fun h h0 => ⟨1, by simp, ?_⟩⟩
   obtain ⟨x, hx⟩ := Function.ne_iff.1 h0
   obtain ⟨r, hr, w, hw, rfl⟩ := (Unram.opE_unramified k n n' (c + 1) 1 le_rfl (by omega) ψ hψ ν hν μ _ rfl).1 h x hx
-  exact ((DoubleCoset.eq _ _ _ _).2 ⟨r, hr, w, hw, by simp⟩).symm
+  exact ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r, hr, w, hw, by simp⟩).symm
 
 theorem xi_ind {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measure k} (hν : IsUnitVol ν) (μ : kˣ →* ℂˣ) :
     xi ψ ν μ (ind k (n ⊕ Fin (c + 1)) (n' ⊕ Fin (c + 1 + 1))) (KO k _) 1 1 1 = ind k n n' := by

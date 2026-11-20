@@ -51,7 +51,7 @@ theorem continuous_form (w : Matrix R Q k →ₗ[k] k) : Continuous w := by
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   rw [h]
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).mul continuous_const
 
 omit [Fintype R] [Fintype Q] in

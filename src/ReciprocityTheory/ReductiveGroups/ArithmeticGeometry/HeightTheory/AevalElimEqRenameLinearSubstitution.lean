@@ -97,7 +97,7 @@ theorem eq_zero_of_xhom_zero (c : ι)
     (hQ : ∀ s ∈ Q.support, ∑ i, s (Sum.inr i) = 0) (h : d.linearSubstitution c Q = 0) : Q = 0 := by
   have hvars : (↑Q.vars : Set ((Fin (d.D + 2) × Fin (d.N + 1)) ⊕ Fin (d.D + 2))) ⊆ Set.range Sum.inl := by
     intro x hx
-    rw [Finset.mem_coe, MvPolynomial.mem_vars] at hx
+    rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hx
     obtain ⟨s, hs, hxs⟩ := hx
     cases x with
     | inl p => exact ⟨p, rfl⟩

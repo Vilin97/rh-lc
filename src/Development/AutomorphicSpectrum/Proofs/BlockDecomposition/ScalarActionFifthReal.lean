@@ -400,7 +400,7 @@ theorem coeffs_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (N : ℕ) (d : �
     simp only [eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
-  have h2 := congrArg (fun q => Polynomial.coeff q i) hp
+  have h2 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
   simpa [finset_sum_coeff, coeff_C_mul, coeff_X_pow, hi] using h2
 
 theorem poly_eq_zero_of_eval {B : Type} [CommRing B] [Algebra ℂ B] (p : B[X])

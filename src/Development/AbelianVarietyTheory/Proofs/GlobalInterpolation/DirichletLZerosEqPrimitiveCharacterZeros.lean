@@ -49,7 +49,7 @@ theorem _root_.GlobalTheory.Lin.zeros_eq_zeros_primitiveCharacter :
   have hEd : Differentiable ℂ E := by
     have h : Differentiable ℂ (∏ p ∈ q.primeFactors,
         fun z : ℂ => 1 - χ.primitiveCharacter p * (p : ℂ) ^ (-z)) :=
-      Differentiable.finset_prod (fun p hp => by
+      Differentiable.finsetProd (fun p hp => by
         have hp0 : (p : ℂ) ≠ 0 := by exact_mod_cast (Nat.prime_of_mem_primeFactors hp).ne_zero
         fun_prop (disch := exact Or.inl hp0))
     rw [hE]

@@ -161,7 +161,7 @@ theorem UpperTheory.Gal.W2.isogCoord_of :
     intro w
     constructor
     · rintro ⟨m, u'', hm, hmw⟩
-      refine (hloc w).mp ⟨d * m, lift u'', Nat.Coprime.mul hdp hm, ?_⟩
+      refine (hloc w).mp ⟨d * m, lift u'', Nat.Coprime.mul_left hdp hm, ?_⟩
       rw [mul_smul, hmw, ← hj''d, Nat.cast_smul_eq_nsmul]
     · intro hw
       obtain ⟨m, u, hm, hmw⟩ := (hloc w).mpr hw

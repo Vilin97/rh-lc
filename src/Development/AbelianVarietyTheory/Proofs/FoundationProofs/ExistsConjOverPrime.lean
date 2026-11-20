@@ -71,7 +71,7 @@ theorem isClosed_apply_mem {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] [Al
   rw [← isOpen_compl_iff, isOpen_iff_forall_mem_open]
   intro σ hσ
   refine ⟨(fun τ => σ⁻¹ * τ) ⁻¹' (E.fixingSubgroup : Set (Ω ≃ₐ[F] Ω)), ?_,
-    E.fixingSubgroup_isOpen.preimage (continuous_mul_left σ⁻¹), ?_⟩
+    E.fixingSubgroup_isOpen.preimage (continuous_const_mul σ⁻¹), ?_⟩
   · intro τ hτ hT
     apply hσ
     have hfix : (σ⁻¹ * τ) x = x := (IntermediateField.mem_fixingSubgroup_iff _ _).mp hτ x

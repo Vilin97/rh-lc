@@ -18,7 +18,7 @@ theorem not_integral_half {N : ℕ} (hN : Odd N) {x : ℂ} (hx : IsIntegral ℤ 
     have : algebraMap ℚ ℂ ((N : ℚ) / 2) = (N : ℂ) / 2 := by simp
     rw [this, ← h]; exact hx.add h1
   have h3 : IsIntegral ℤ ((N : ℚ) / 2) :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective).1 h2
+    (isIntegral_algebraMap_iff ).1 h2
   obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 h3
   have h4 : (N : ℚ) = 2 * (m : ℚ) := by
     have : (m : ℚ) = (N : ℚ) / 2 := by simpa using hm

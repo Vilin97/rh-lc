@@ -43,7 +43,7 @@ theorem exists_root (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRin
     exact fun h => hπ.ne_zero (hinj (h.trans (map_zero _).symm))
   have : IsNoetherianRing (AdjoinRoot P) := IsNoetherianRing.of_finite V _
   have hdvr : IsDiscreteValuationRing (AdjoinRoot P) :=
-    ((IsDiscreteValuationRing.TFAE (AdjoinRoot P) hnf).out 0 4).mpr
+    ((IsDiscreteValuationRing.TFAE (AdjoinRoot P) hnf).out 1 5).mpr
       (show (maximalIdeal (AdjoinRoot P)).IsPrincipal from ⟨_, hme'⟩)
   have hloc : IsLocalHom (AdjoinRoot.of P) := by
     refine ⟨fun a ha => ?_⟩

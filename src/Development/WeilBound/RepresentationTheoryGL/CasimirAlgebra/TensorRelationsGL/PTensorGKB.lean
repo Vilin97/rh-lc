@@ -49,8 +49,8 @@ theorem actT_cont {ι Γ : Type} [TopologicalSpace Γ] (lab : P → ι) (κ : ι
     refine Finset.sum_congr rfl fun J _ => ?_
     rw [map_smul, map_smul, smul_eq_mul]
   rw [key]
-  refine continuous_finset_sum _ fun I _ => continuous_finset_sum _ fun J _ => ?_
-  exact (continuous_finset_prod _ fun p _ => hκ _ _ _).mul (hc (y J) _)
+  refine continuous_finsetSum _ fun I _ => continuous_finsetSum _ fun J _ => ?_
+  exact (continuous_finsetProd _ fun p _ => hκ _ _ _).mul (hc (y J) _)
 
 end PositivityTheory.Rg.Cz.TGK
 

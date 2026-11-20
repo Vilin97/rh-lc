@@ -236,7 +236,7 @@ theorem exists_typePrime (D : D7) (i : Fin 2) : ∃ 𝔭 : Ideal (𝓞 D.host.K)
   have hK : (Formalism.MainNotions.BoundaryLocalData.w0 D : D.host.E) ∈ D.host.K :=
     div_mem (add_mem (one_mem _) (IntermediateField.mem_adjoin_simple_self ℚ _)) (ofNat_mem _ 2)
   let w : 𝓞 D.host.K := ⟨⟨_, hK⟩, by
-    exact (isIntegral_algebraMap_iff (algebraMap D.host.K D.host.E).injective).1 (Formalism.MainNotions.BoundaryLocalData.w0 D).2⟩
+    exact (isIntegral_algebraMap_iff ).1 (Formalism.MainNotions.BoundaryLocalData.w0 D).2⟩
   have hw : algebraMap _ (𝓞 D.host.E) w = Formalism.MainNotions.BoundaryLocalData.w0 D := rfl
   have hm : w - n ∈ Q.asIdeal.comap (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) := by
     rw [Ideal.mem_comap, map_sub, map_intCast, hw, ← Ideal.Quotient.eq, map_intCast, hn]

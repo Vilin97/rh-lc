@@ -36,7 +36,7 @@ theorem exists_natCast_mem_place (K : FiniteSubfield) {ℓ : ℕ} (hℓ : ℓ.Pr
     have heq : (((u⁻¹ : (𝓞 K.1)ˣ) : 𝓞 K.1) : K.1) = algebraMap ℚ K.1 (1 / ℓ) := by
       rw [eq_inv_of_mul_eq_one_right hK]
       simp
-    rw [heq, isIntegral_algebraMap_iff (algebraMap ℚ K.1).injective] at hint
+    rw [heq, isIntegral_algebraMap_iff ] at hint
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     have hℓ0 : (ℓ : ℚ) ≠ 0 := by exact_mod_cast hℓ.ne_zero
     have hy' : ((ℓ * y : ℤ) : ℚ) = 1 := by

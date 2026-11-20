@@ -108,7 +108,7 @@ theorem isTorsionFree_zp_Kloc (ι : Ω →+* PadicAlgCl p) : Module.IsTorsionFre
 theorem isIntegral_zp_Kloc_iff (ι : Ω →+* PadicAlgCl p) (x : Kloc F ι) :
     IsIntegral ℤ_[p] x ↔ IsIntegral (PadicInt.subring p) (x : PadicAlgCl p) := by
   have := isScalarTower_zp_Kloc_alg (F := F) ι
-  rw [← isIntegral_algebraMap_iff (A := Kloc F ι) (B := PadicAlgCl p) (algebraMap (Kloc F ι) (PadicAlgCl p)).injective]
+  rw [← isIntegral_algebraMap_iff (A := Kloc F ι) (B := PadicAlgCl p) ]
   exact Iff.rfl
 
 theorem isIntegralClosure_Kloc (ι : Ω →+* PadicAlgCl p) :

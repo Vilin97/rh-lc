@@ -15,7 +15,7 @@ private theorem exists_int_add_star_eq_one_of_isCMUnram (hK : Formalism.Hermitia
   classical
   have hstarF : ∀ f : F, star (algebraMap F K f) = algebraMap F K f := fun f => (hF _).mpr ⟨f, rfl⟩
   have hint : ∀ c : 𝓞 F, IsIntegral ℤ (algebraMap F K (algebraMap (𝓞 F) F c)) := fun c =>
-    (isIntegral_algebraMap_iff (algebraMap F K).injective).mpr
+    (isIntegral_algebraMap_iff ).mpr
       (NumberField.RingOfIntegers.isIntegral_coe c)
   have hcompat : ∀ x : 𝓞 F, algebraMap (𝓞 K) K (algebraMap (𝓞 F) (𝓞 K) x) =
       algebraMap F K (algebraMap (𝓞 F) F x) := fun x => rfl
@@ -57,7 +57,7 @@ private theorem exists_int_add_star_eq_one_of_isCMUnram (hK : Formalism.Hermitia
     ring
   obtain ⟨f, hf⟩ := (hF _).mp hdfix
   have hfi : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff (A := F) (B := K) (algebraMap F K).injective, hf]
+    rw [← isIntegral_algebraMap_iff (A := F) (B := K) , hf]
     have := NumberField.RingOfIntegers.isIntegral_coe ((a - t) ^ 2)
     simpa using this
   let fO : 𝓞 F := ⟨f, hfi⟩

@@ -13,7 +13,7 @@ theorem UpperTheory.Gal.G1.pNormTwo :
   have hcfE : algebraMap F E cf = (A.c : E) := rfl
   have hcint : IsIntegral ℤ cf := by
     have h : IsIntegral ℤ (algebraMap F E cf) := by rw [hcfE]; exact A.c.2
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h
+    exact (isIntegral_algebraMap_iff ).1 h
   let c0 : 𝓞 F := ⟨cf, hcint⟩
   have hc0 : ((c0 : 𝓞 F) : F) = cf := rfl
   have hc0ne : c0 ≠ 0 := by

@@ -36,7 +36,7 @@ theorem isDiscreteValuationRing_of_minimal {R : Type} [CommRing R] [IsDomain R] 
     ⟨⟨inferInstance, (Ideal.span_singleton_le_iff_mem _).2 hm⟩, fun P hP _ =>
       (h P hP.1 ((Ideal.span_singleton_le_iff_mem _).1 hP.2)).ge⟩
   have hle : (maximalIdeal R).height ≤ 1 := Ideal.height_le_one_of_isPrincipal_of_mem_minimalPrimes _ _ hmin
-  have key := (IsDiscreteValuationRing.TFAE R hf).out 3 0
+  have key := (IsDiscreteValuationRing.TFAE R hf).out 4 1
   refine key.1 ⟨inferInstance, maximalIdeal R, ⟨hne, inferInstance⟩, fun P hP => ?_⟩
   have := hP.2
   by_contra hn

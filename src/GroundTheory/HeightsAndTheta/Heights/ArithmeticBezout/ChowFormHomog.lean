@@ -58,7 +58,7 @@ theorem component_vanish_incidence {I : Ideal (MvPolynomial (Fin n) F)}
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [aeval_scale_of_isWeightedHomogeneous (weightedHomogeneousComponent_isWeightedHomogeneous b f),
       mul_comm]
-  have hc := congrArg (fun p => Polynomial.coeff p a) hq
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p a) hq
   simp only [hq_def, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
     Polynomial.coeff_zero] at hc
   rw [Finset.sum_ite_eq, if_pos ha] at hc

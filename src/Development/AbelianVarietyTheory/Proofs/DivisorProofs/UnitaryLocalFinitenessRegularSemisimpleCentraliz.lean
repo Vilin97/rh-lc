@@ -82,7 +82,7 @@ theorem locFin : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E �
     obtain ⟨i, hi, k, hk, hik⟩ := this
     refine ⟨i, hi, ?_⟩
     conv_rhs => rw [← Quotient.out_eq q]
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨t, ht, k, hk, ?_⟩
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨t, ht, k, hk, ?_⟩
     rw [heq, ← hik]
     simp only [smul_eq_mul, mul_assoc]
 

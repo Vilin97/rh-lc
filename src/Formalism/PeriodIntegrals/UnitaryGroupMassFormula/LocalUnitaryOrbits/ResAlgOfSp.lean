@@ -25,7 +25,7 @@ theorem etaIn_holds : EtaIn σ J ψ v := by
     have hnot : ∀ c : F, algebraMap F E c ≠ (θ : E) := by
       intro c hc
       have hint : IsIntegral ℤ c := by
-        rw [← isIntegral_algebraMap_iff (A := F) (B := E) (FaithfulSMul.algebraMap_injective F E), hc]
+        rw [← isIntegral_algebraMap_iff (A := F) (B := E) , hc]
         exact θ.isIntegral_coe
       let c' : 𝓞 F := ⟨c, (mem_integralClosure_iff ℤ F).2 hint⟩
       have hθ : algebraMap (𝓞 F) (𝓞 E) c' = θ := RingOfIntegers.ext hc

@@ -676,7 +676,7 @@ theorem eq_or_eq_conjP (hX : Z.X.Ok) {P Q : HeightOneSpectrum (𝓞 Z.X.E)} (hP 
   rw [hM, IntermediateField.mem_bot] at h2
   obtain ⟨x, hx⟩ := h2
   have h3 : IsIntegral ℤ x := by
-    rw [← isIntegral_algebraMap_iff (algebraMap Z.X.F Z.X.E).injective, hx]
+    rw [← isIntegral_algebraMap_iff , hx]
     exact RingOfIntegers.isIntegral_coe _
   obtain ⟨r, h4⟩ : ∃ r : 𝓞 Z.X.F, algebraMap (𝓞 Z.X.F) (𝓞 Z.X.E) r = a * cO Z.X.E a := ⟨⟨x, h3⟩, RingOfIntegers.ext hx⟩
   have h5 : r ∈ P.asIdeal.under (𝓞 Z.X.F) := by

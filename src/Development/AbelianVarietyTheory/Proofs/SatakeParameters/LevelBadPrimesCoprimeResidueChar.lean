@@ -83,7 +83,7 @@ theorem bad_prime_to_p : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X
       Nat.Coprime.prod_left fun P _ => hq P
     have hT' : Nat.Coprime (t.Pr.T (t.word u)) (D.what₂.places.resChar w) := by rw [t.T_rec u]; exact hTp
     simp only [Formalism.L2.Ker.levC, Formalism.L2.Col.cAof, Formalism.L2.Col.cBof]
-    exact Nat.Coprime.mul (Nat.Coprime.pow_left _ hprod) (Nat.Coprime.mul hT' (Nat.Coprime.pow_left _ hprod))
+    exact Nat.Coprime.mul_left (Nat.Coprime.pow_left _ hprod) (Nat.Coprime.mul_left hT' (Nat.Coprime.pow_left _ hprod))
   · rintro v ⟨P, hP, hv⟩ hm
     rw [hv, Ideal.mem_comap, map_natCast] at hm
     refine key P (Finset.mem_union_right _ hP) ((GlobalTheory.TwU.mem_seamP t.seam P _).1 ?_)

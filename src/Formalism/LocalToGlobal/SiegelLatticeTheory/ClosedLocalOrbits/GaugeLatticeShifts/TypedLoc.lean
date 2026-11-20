@@ -243,7 +243,7 @@ theorem tlin_int (o : 𝓞 I.E) : tlin I (o : I.E) ∈ (algebraMap (𝓞 I.F) I.
     exact (RingOfIntegers.isIntegral_coe o).map (I.cm.sig.restrictScalars ℤ)
   rw [← tlin_spec] at h1
   have h2 : IsIntegral ℤ (tlin I (o : I.E)) :=
-    (isIntegral_algebraMap_iff (algebraMap I.F I.E).injective).1 h1
+    (isIntegral_algebraMap_iff ).1 h1
   exact ⟨⟨_, h2⟩, rfl⟩
 
 variable (v : HeightOneSpectrum (𝓞 I.F))

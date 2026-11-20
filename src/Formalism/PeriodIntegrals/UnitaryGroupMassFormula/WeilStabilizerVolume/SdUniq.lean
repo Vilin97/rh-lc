@@ -294,16 +294,16 @@ theorem continuous_trace_tens : Continuous (Algebra.trace R (R ⊗[F] E)) := by
 theorem continuous_BR_right (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (X : Fin n → Fin M → R ⊗[F] E) : Continuous (BR R σ J X) := by
   unfold BR hR
-  refine continuous_finset_sum _ fun a _ => (continuous_trace_tens R).comp ?_
+  refine continuous_finsetSum _ fun a _ => (continuous_trace_tens R).comp ?_
   unfold Formalism.UG.hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact continuous_const.mul ((continuous_apply j).comp (continuous_apply a))
 
 theorem continuous_pairHerm_right (σ : E →ₐ[F] E) (n : ℕ) (S : HermR R σ n) :
     Continuous (pairHerm R σ n S) := by
   unfold pairHerm
   refine continuous_const.mul ((continuous_trace_tens R).comp ?_)
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => ?_
   exact continuous_const.mul
     ((continuous_apply a).comp ((continuous_apply b).comp continuous_subtype_val))
 

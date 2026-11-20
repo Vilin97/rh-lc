@@ -162,8 +162,8 @@ theorem splitFibre : StatSplitFibre := by
         p.map (RingHom.snd T' K) = q.map (RingHom.snd T' K) → p = q := by
       intro p q h1 h2
       ext k
-      · simpa using congrArg (fun f => Polynomial.coeff f k) h1
-      · simpa using congrArg (fun f => Polynomial.coeff f k) h2
+      · simpa using congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f k) h1
+      · simpa using congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f k) h2
     apply hext
     · rw [Polynomial.map_map, Polynomial.map_prod]
       have : (RingHom.fst T' K).comp (algebraMap T (T' × K)) = algebraMap T T' := by ext; rfl

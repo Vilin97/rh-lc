@@ -32,7 +32,7 @@ theorem eq_zero_of_reps (S : StepLevel F E σ J T f bad) (emb : ι → E →+* �
     (hy : Function.Surjective (fun c => (Quotient.mk'' (y c) : Cls S))) (g) (hg : g ∈ AdFun S emb)
     (h0 : ∀ c, g (y c) = 0) (x : GA σ J) : g x = 0 := by
   obtain ⟨c, hc⟩ := hy (Quotient.mk'' x)
-  obtain ⟨a, ha, b, hb, hab⟩ := (DoubleCoset.eq _ _ (y c) x).1 hc
+  obtain ⟨a, ha, b, hb, hab⟩ := (@DoubleCoset.eq _ _ _ _ (y c) x).1 hc
   obtain ⟨γ, hγ, e⟩ := Subgroup.mem_subgroupOf.1 ha
   funext s
   obtain ⟨s', hs'⟩ := exists_isTr' emb γ s

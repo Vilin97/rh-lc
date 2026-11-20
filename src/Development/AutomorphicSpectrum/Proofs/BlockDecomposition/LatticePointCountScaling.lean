@@ -162,7 +162,7 @@ theorem main : ∀ (G : Type) [AddCommGroup G] [TopologicalSpace G] [IsTopologic
     intro ε hε
     have hfin := finite_lattice_points μ hD hK hDK hD1 R Λ ht x0 (C := T ε⁻¹ '' tsupport φ)
       (IsCompact.image hφs (hcont _ (inv_pos.2 hε)))
-    refine summable_of_finite_support (hfin.subset ?_)
+    refine summable_of_hasFiniteSupport (hfin.subset ?_)
     intro l hl
     exact ⟨T ε (x0 + l), subset_tsupport _ hl, (hinv ε hε _).1⟩
   refine ⟨hsummable, ?_⟩

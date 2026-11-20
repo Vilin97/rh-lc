@@ -99,7 +99,7 @@ theorem int_of_rat {K : Type} [Field K] [NumberField K] (q : ℚ)
     (h : (q : K) ∈ (algebraMap (𝓞 K) K).range) : ∃ m : ℤ, q = m := by
   have h1 : IsIntegral ℤ (algebraMap ℚ K q) := by
     rw [eq_ratCast]; exact mem_O_iff.1 h
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ K).injective] at h1
+  rw [isIntegral_algebraMap_iff ] at h1
   obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
   exact ⟨m, by rw [← hm]; simp⟩
 

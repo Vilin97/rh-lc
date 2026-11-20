@@ -93,7 +93,7 @@ theorem exists_integral_reading {LL : Type} [Field LL] [NumberField LL] (L0 : In
   obtain ⟨r, hr1, hr⟩ := exists_integral_functional (K := K) N (Submodule.fg_span (Set.finite_range _)) 1 one_ne_zero (by
     intro c hc
     have h := hN _ hc
-    rw [← Algebra.algebraMap_eq_smul_one, isIntegral_algebraMap_iff (algebraMap K (AlgebraicClosure K)).injective] at h
+    rw [← Algebra.algebraMap_eq_smul_one, isIntegral_algebraMap_iff ] at h
     exact IsIntegrallyClosed.isIntegral_iff.mp h)
   refine ⟨r.toAddMonoidHom.comp ι.toRingHom.toAddMonoidHom, ?_, fun c y => ?_, fun a => hr _ (hmem a)⟩
   · change r (ι 1) = 1

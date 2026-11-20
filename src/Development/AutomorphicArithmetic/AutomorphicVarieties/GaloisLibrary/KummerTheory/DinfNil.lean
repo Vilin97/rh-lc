@@ -211,7 +211,7 @@ theorem UpperTheory.V.Kum.dinfNil :
         Polynomial.map_one]
       rw [hqdef, add_pow_char_pow, one_pow]
       ring
-    have h2 := congrArg (fun P => Polynomial.coeff P i) hmap
+    have h2 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) hmap
     simp only [Polynomial.coeff_map, Polynomial.coeff_zero, eq_intCast] at h2
     exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp h2
   obtain ⟨Qp, hQp⟩ := hP

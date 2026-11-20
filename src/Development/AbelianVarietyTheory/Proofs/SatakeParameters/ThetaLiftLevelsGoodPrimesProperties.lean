@@ -37,7 +37,7 @@ theorem eq_or_conj_of_under_eq {D : D7} {P Q : Pl D.host.E} (h : Q.under (𝓞 D
       rw [star_mul', star_star, mul_comm]
     obtain ⟨y, hy⟩ := (D.sp.cm.fixed ((x : D.host.E) * star (x : D.host.E))).1 hfix
     have hint : IsIntegral ℤ y := by
-      rw [← isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective]
+      rw [← isIntegral_algebraMap_iff ]
       have e : algebraMap D.host.F D.host.E y = ((x * Formalism.DivisionValues.cO _ x : 𝓞 D.host.E) : D.host.E) := hy
       rw [e]
       exact (x * Formalism.DivisionValues.cO _ x).isIntegral_coe

@@ -25,7 +25,7 @@ def tyAct {g : ℕ} (ty : Fin g → (E →+* ℂ)) (a : 𝓞 E) (z : Fin g → �
   fun i => ty i (a : E) * z i
 
 def actR (D : Datum H) (a : 𝓞 E) : ℝ ⊗[ℤ] D.La →ₗ[ℝ] ℝ ⊗[ℤ] D.La :=
-  (DistribMulAction.toLinearMap ℤ D.La a).baseChange ℝ
+  (DistribSMul.toLinearMap ℤ D.La a).baseChange ℝ
 
 def sigTrace (D : Datum H) (a : 𝓞 E) : ℂ :=
   ∑ τ ∈ Finset.univ.filter (fun τ : E →+* ℂ => τ (H.rt : E) = H.rt0),

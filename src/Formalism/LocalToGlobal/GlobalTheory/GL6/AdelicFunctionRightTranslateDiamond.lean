@@ -186,7 +186,7 @@ theorem level_prime_ne_type_prime (A : AtTTied u) (j : Fin 2) : (D.mem u).A.T �
     exact (eq_inv_of_mul_eq_one_right key)
   rw [hinv] at hint
   have hq : IsIntegral ℤ ((D.host.g j : ℚ)⁻¹) :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective).1 hint
+    (isIntegral_algebraMap_iff ).1 hint
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 hq
   have hy' : (y : ℚ) * (D.host.g j : ℚ) = 1 := by
     rw [show (y : ℚ) = algebraMap ℤ ℚ y from rfl, hy]

@@ -19,7 +19,7 @@ theorem symmetric_filtration_iff_supported (ε : Fin m → Bool) (s : Sym m n) :
   · intro h
     rw [mem_supported]
     intro v hv
-    rw [Finset.mem_coe, mem_vars] at hv
+    rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hv
     obtain ⟨t, ht, hvt⟩ := hv
     rw [Finsupp.mem_support_iff] at hvt
     cases v with
@@ -28,8 +28,8 @@ theorem symmetric_filtration_iff_supported (ε : Fin m → Bool) (s : Sym m n) :
   · intro h t ht k hk
     rw [mem_supported] at h
     rcases hk with hk | hk
-    · exact h (Finset.mem_coe.2 ((mem_vars _).2 ⟨t, ht, Finsupp.mem_support_iff.2 hk⟩))
-    · exact h (Finset.mem_coe.2 ((mem_vars _).2 ⟨t, ht, Finsupp.mem_support_iff.2 hk⟩))
+    · exact h (Finset.mem_coe.2 ((MvPolynomial.mem_vars_iff_mem_support _).2 ⟨t, ht, Finsupp.mem_support_iff.2 hk⟩))
+    · exact h (Finset.mem_coe.2 ((MvPolynomial.mem_vars_iff_mem_support _).2 ⟨t, ht, Finsupp.mem_support_iff.2 hk⟩))
 
 theorem symmetric_filtration_mul {ε : Fin m → Bool} {u v : Sym m n} (hu : SymbolInFirstFamily ε u) (hv : SymbolInFirstFamily ε v) : SymbolInFirstFamily ε (u * v) := by
   rw [symmetric_filtration_iff_supported] at *; exact Subalgebra.mul_mem _ hu hv
@@ -301,7 +301,7 @@ private theorem list_prod_pderiv_pow_monomial (e : Fin m × Fin n × Bool → �
     rw [List.map_cons, List.prod_cons, Module.End.mul_apply, ih hL.2, pderiv_pow_monomial', List.toFinset_cons,
       Finset.sum_insert haL, Finset.prod_insert haL]
     have h0 : (∑ k ∈ L.toFinset, Finsupp.single k (e k)) a = 0 := by
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun k hk => ?_
       rw [Finsupp.single_apply, if_neg]
       rintro rfl
@@ -343,7 +343,7 @@ theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by
       rw [Finsupp.comapDomain_apply, Nat.descFactorial_self]
       exact_mod_cast Nat.factorial_ne_zero _
     · ext k
-      simp [Finsupp.tsub_apply, Finsupp.finset_sum_apply, Finsupp.single_apply]
+      simp [Finsupp.tsub_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
   · intro b hb hbt
     split_ifs with hc
     · apply mul_eq_zero_of_right
@@ -364,7 +364,7 @@ theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by
       | inr k => exact heq k (Finset.mem_univ _)
       | inl k =>
         have hck := DFunLike.congr_fun hc k
-        simp [Finsupp.tsub_apply, Finsupp.finset_sum_apply, Finsupp.single_apply, heq k (Finset.mem_univ _)] at hck
+        simp [Finsupp.tsub_apply, Finsupp.finsetSum_apply, Finsupp.single_apply, heq k (Finset.mem_univ _)] at hck
         exact hck
     · rw [mul_zero]
   · intro hn

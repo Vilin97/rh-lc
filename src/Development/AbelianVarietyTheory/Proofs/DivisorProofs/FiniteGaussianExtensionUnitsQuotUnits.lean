@@ -107,7 +107,7 @@ theorem pow_mem_range (u : (𝓞 (Ext F))ˣ) :
     rw [map_pow, ← this, ← mul_pow, mul_assoc, mul_comm (conj F y), hcxy, mul_one]
   obtain ⟨a, ha⟩ := mem_range_of_conj_eq F _ hfix
   have hai : IsIntegral ℤ a := by
-    refine (isIntegral_algebraMap_iff (algebraMap F (Ext F)).injective).1 ?_
+    refine (isIntegral_algebraMap_iff ).1 ?_
     rw [ha]; exact (RingOfIntegers.isIntegral_coe _).pow m
 
   have hfix' : conj F (y ^ m) = y ^ m := by
@@ -115,7 +115,7 @@ theorem pow_mem_range (u : (𝓞 (Ext F))ˣ) :
     rw [e, map_inv₀, hfix]
   obtain ⟨b, hb⟩ := mem_range_of_conj_eq F _ hfix'
   have hbi : IsIntegral ℤ b := by
-    refine (isIntegral_algebraMap_iff (algebraMap F (Ext F)).injective).1 ?_
+    refine (isIntegral_algebraMap_iff ).1 ?_
     rw [hb]; exact (RingOfIntegers.isIntegral_coe _).pow m
   have hab : a * b = 1 := by
     apply (algebraMap F (Ext F)).injective

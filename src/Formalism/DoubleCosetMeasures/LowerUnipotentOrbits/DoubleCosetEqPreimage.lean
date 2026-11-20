@@ -234,7 +234,7 @@ theorem intBiInv : Formalism.DoubleCosetMeasures.IntBiInv := by
   have hf' : ∀ x y : G, Quotient.mk (DoubleCoset.setoid (K₀ : Set G) (K₀ : Set G)) x =
       Quotient.mk (DoubleCoset.setoid (K₀ : Set G) (K₀ : Set G)) y → f x = f y := by
     intro x y h
-    obtain ⟨a, ha, b, hb, rfl⟩ := (DoubleCoset.eq K₀ K₀ x y).1 h
+    obtain ⟨a, ha, b, hb, rfl⟩ := (@DoubleCoset.eq _ _ K₀ K₀ x y).1 h
     exact (hf a ha b hb x).symm
   refine ⟨support_out_finite _ hr f hcs, ?_⟩
   rw [integral_eq_finsum _ hr μ f hf' hcs]

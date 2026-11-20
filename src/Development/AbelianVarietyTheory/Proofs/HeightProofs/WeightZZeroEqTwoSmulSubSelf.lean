@@ -48,7 +48,7 @@ theorem exists_nat_comb {ι : Type} [Finite ι] {Ω : ι → Type} [∀ Z, Field
   have hp : ∀ Z, p Z ≠ 0 := by
     intro Z h0
     obtain ⟨k, hk⟩ := ha Z
-    have h1 := congrArg (fun q => Polynomial.coeff q (k : ℕ)) h0
+    have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (k : ℕ)) h0
     simp only [p, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h1
     rw [Finset.sum_eq_single k (fun b _ hb => if_neg fun e => hb (Fin.ext e)) (by simp), if_pos rfl] at h1
     exact hk h1

@@ -203,7 +203,7 @@ theorem cInd_lift (H : Subgroup G) (hH : IsClosed (H : Set G))
     rintro ⟨a, x, hx, e⟩
     apply hne
     rw [← DoubleCoset.out_eq' H K d]
-    exact ((DoubleCoset.eq H K _ _).2 ⟨a, a.2, x, hx, e⟩).symm
+    exact ((@DoubleCoset.eq _ _ H K _ _).2 ⟨a, a.2, x, hx, e⟩).symm
   refine ⟨∑ d ∈ T, B (Quotient.out d), fun g => ?_⟩
   let ev : cIndSpace H ρ →ₗ[ℂ] W :=
     (LinearMap.proj g) ∘ₗ (indSpace H ρ).subtype ∘ₗ (smoothPart (ind H ρ)).subtype ∘ₗ (cIndSpace H ρ).subtype
@@ -212,7 +212,7 @@ theorem cInd_lift (H : Subgroup G) (hH : IsClosed (H : Set G))
   rw [hsum]
   by_cases hg : DoubleCoset.mk H K g ∈ T
   · rw [Finset.sum_eq_single_of_mem _ hg (fun d _ hd => hoff d g (Ne.symm hd))]
-    obtain ⟨a, ha, x, hx, e⟩ := (DoubleCoset.eq H K _ _).1 (DoubleCoset.out_eq' H K (DoubleCoset.mk H K g))
+    obtain ⟨a, ha, x, hx, e⟩ := (@DoubleCoset.eq _ _ H K _ _).1 (DoubleCoset.out_eq' H K (DoubleCoset.mk H K g))
     have e' : g = ((⟨a, ha⟩ : H) : G) * Quotient.out (DoubleCoset.mk H K g) * x := e
     generalize Quotient.out (DoubleCoset.mk H K g) = c at e'
     rw [e', hB1 _ _ _ hx, hf, hw1, hKinv _ _ hx, hFeq]
@@ -223,7 +223,7 @@ theorem cInd_lift (H : Subgroup G) (hH : IsClosed (H : Set G))
     obtain ⟨x, hx, rfl⟩ := hcc
     apply hg
     have : DoubleCoset.mk H K c = DoubleCoset.mk H K g :=
-      (DoubleCoset.eq H K _ _).2 ⟨a, ha, x, hx, by rw [e]; group⟩
+      (@DoubleCoset.eq _ _ H K _ _).2 ⟨a, ha, x, hx, by rw [e]; group⟩
     rw [← this]
     exact Finset.mem_image_of_mem _ hc
 

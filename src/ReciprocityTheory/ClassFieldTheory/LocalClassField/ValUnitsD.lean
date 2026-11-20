@@ -40,7 +40,7 @@ theorem isTorsionFree_zp_K : Module.IsTorsionFree ℤ_[p] K := by
 theorem isIntegral_zp_K_iff (x : K) :
     IsIntegral ℤ_[p] x ↔ IsIntegral (PadicInt.subring p) (x : PadicAlgCl p) := by
   have := isScalarTower_zp_K_alg p K
-  rw [← isIntegral_algebraMap_iff (A := K) (B := PadicAlgCl p) (algebraMap K (PadicAlgCl p)).injective]
+  rw [← isIntegral_algebraMap_iff (A := K) (B := PadicAlgCl p) ]
   exact Iff.rfl
 
 theorem isIntegralClosure_OK : IsIntegralClosure (OK p K) ℤ_[p] K where

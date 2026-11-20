@@ -118,13 +118,13 @@ def OBp : Subring D.B where
   one_mem' := ⟨1, Nat.coprime_one_left p, by simpa using D.OB.one_mem⟩
   mul_mem' := by
     rintro x y ⟨m, hm, hx⟩ ⟨m', hm', hy⟩
-    refine ⟨m * m', Nat.Coprime.mul hm hm', ?_⟩
+    refine ⟨m * m', Nat.Coprime.mul_left hm hm', ?_⟩
     have : ((m * m' : ℕ) : D.B) * (x * y) = ((m : D.B) * x) * ((m' : D.B) * y) := by
       rw [Nat.cast_mul, mul_assoc, ← mul_assoc (m' : D.B) x y, (Nat.cast_commute m' x).eq]; noncomm_ring
     rw [this]; exact D.OB.mul_mem hx hy
   add_mem' := by
     rintro x y ⟨m, hm, hx⟩ ⟨m', hm', hy⟩
-    refine ⟨m * m', Nat.Coprime.mul hm hm', ?_⟩
+    refine ⟨m * m', Nat.Coprime.mul_left hm hm', ?_⟩
     have : ((m * m' : ℕ) : D.B) * (x + y) = (m' : D.B) * ((m : D.B) * x) + (m : D.B) * ((m' : D.B) * y) := by
       rw [mul_add, ← mul_assoc, ← mul_assoc, ← Nat.cast_mul, ← Nat.cast_mul, mul_comm m' m]
     rw [this]

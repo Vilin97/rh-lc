@@ -111,7 +111,7 @@ theorem height_int_of_isMaximal (M : Ideal ℤ) (hM : M.IsMaximal) : M.height = 
     exact bot_le
   have hx : ¬ IsMin (⟨M, hM.isPrime⟩ : PrimeSpectrum ℤ) := by
     intro h
-    have hlt : (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum ℤ) < ⟨M, hM.isPrime⟩ :=
+    have hlt : (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum ℤ) < ⟨M, hM.isPrime⟩ :=
       show (⊥ : Ideal ℤ) < M from bot_lt_iff_ne_bot.mpr hMbot
     exact lt_irrefl _ (lt_of_lt_of_le hlt (h (le_of_lt hlt)))
   apply le_antisymm

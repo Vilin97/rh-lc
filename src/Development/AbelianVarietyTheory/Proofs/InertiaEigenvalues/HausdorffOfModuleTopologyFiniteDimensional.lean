@@ -161,7 +161,7 @@ theorem le_v_iff (P : LocPrime l) (LL : FinExt l) (x : ℚ_[l]) (k : ℕ) :
   have h1 : 0 ≤ P.v LL (algebraMap ℚ_[l] ↥LL.1 y) ↔ ‖y‖ ≤ 1 := by
     rw [P.v_O]
     change IsIntegral ℤ_[l] _ ↔ _
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective,
+    rw [isIntegral_algebraMap_iff ,
       IsIntegrallyClosed.isIntegral_iff]
     constructor
     · rintro ⟨z, rfl⟩

@@ -50,7 +50,7 @@ theorem isDiscreteValuationRing [IsDomain R] [IsNoetherianRing R] [IsDomain S] (
   have hf : ¬ IsField S := by
     rw [isField_iff_maximalIdeal_eq, maximalIdeal_eq_span (π := π) S, Ideal.span_singleton_eq_bot]
     exact hne
-  refine ((IsDiscreteValuationRing.TFAE S hf).out 0 4).2 ?_
+  refine ((IsDiscreteValuationRing.TFAE S hf).out 1 5).2 ?_
   exact ⟨⟨_, maximalIdeal_eq_span (π := π) S⟩⟩
 
 theorem irreducible_algebraMap [IsDomain R] [IsNoetherianRing R] (hπ : π ≠ 0) :

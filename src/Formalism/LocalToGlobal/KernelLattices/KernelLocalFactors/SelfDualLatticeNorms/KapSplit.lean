@@ -64,7 +64,7 @@ theorem exists_conj (a : 𝓞 D.host.K) :
       map_isIntegral_int (algebraMap D.host.K D.host.E) (NumberField.RingOfIntegers.isIntegral_coe a)
     exact map_isIntegral_int D.host.conj.toRingEquiv.toRingHom h1
   have hk : IsIntegral ℤ (⟨D.host.conj ((a : D.host.K) : D.host.E), conj_mem_K D.host (a : D.host.K)⟩ : D.host.K) :=
-    (isIntegral_algebraMap_iff (A := D.host.K) (B := D.host.E) (algebraMap D.host.K D.host.E).injective).1 hi
+    (isIntegral_algebraMap_iff (A := D.host.K) (B := D.host.E) ).1 hi
   exact ⟨⟨_, hk⟩, rfl⟩
 
 theorem repr_K (x : D.host.K) : ∃ r s : ℚ, (x : D.host.E) =
@@ -126,7 +126,7 @@ theorem norm_int (t t' : 𝓞 D.host.K) (h : ((t' : D.host.K) : D.host.E) = D.ho
     rw [← hprod]
     exact map_isIntegral_int (algebraMap D.host.K D.host.E) (NumberField.RingOfIntegers.isIntegral_coe (t * t'))
   have hq : IsIntegral ℤ (r ^ 2 + (D.host.d : ℚ) * s ^ 2) :=
-    (isIntegral_algebraMap_iff (A := ℚ) (B := D.host.E) (algebraMap ℚ D.host.E).injective).1 hi
+    (isIntegral_algebraMap_iff (A := ℚ) (B := D.host.E) ).1 hi
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 hq
   refine ⟨n, ?_⟩
   apply NumberField.RingOfIntegers.coe_injective

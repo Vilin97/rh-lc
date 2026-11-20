@@ -165,7 +165,7 @@ def isoHc (h : F.Ok) (L : Submodule (𝓞 K) F.Forms) : Formalism.L2.GlobalTheor
 
 variable {F}
 
-theorem PosH.good {h : F.Ok} (hp : F.PosH h) {L : Submodule (𝓞 K) F.Forms} (hL : Submodule.IsLattice K L) :
+theorem PosH.good {h : F.Ok} (hp : F.PosH h) {L : Submodule (𝓞 K) F.Forms} (hL : Submodule.IsFullLattice K L) :
     (F.toH h L).Good := ⟨hp.frameOK L, hL.fg, hL.span_eq_top⟩
 
 theorem PosH.iso_sub {h : F.Ok} (hp : F.PosH h) (L : Submodule (𝓞 K) F.Forms) (U : Submodule K F.Forms) :

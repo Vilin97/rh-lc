@@ -535,7 +535,7 @@ theorem levg_chi {l : ℕ} [Fact l.Prime] (P : LocPrime l) (H : LocHW l P) (K LL
     rw [← hχ]
     exact (((H.W K 1 LL hg).χΓ (H.W K 1 LL hg).gam : (↥(OL LL))ˣ) : ↥(OL LL)).2
   have hint' : IsIntegral ℤ_[l] ((P.PD K).χ g : ℚ_[l]) :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective).1 hint
+    (isIntegral_algebraMap_iff ).1 hint
   obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint'
   have hzLL : algebraMap ℤ_[l] ↥LL.1 z = algebraMap ↥(OL LL) ↥LL.1
       (((H.W K 1 LL hg).χΓ (H.W K 1 LL hg).gam : (↥(OL LL))ˣ) : ↥(OL LL)) := by

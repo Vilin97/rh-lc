@@ -251,7 +251,7 @@ theorem _root_.GlobalTheory.local_maximum_principle_weight_finite_mvPolynomial_a
   set Φ : (B →+* ℂ) × (B →+* ℂ) → ℂ := fun p => ∏ j, (p.2 (b j) - t j) * (p.1 (b j) - t j)⁻¹
   have hΦc : ∀ x, ContinuousAt Φ (x₀, x) := by
     intro x
-    refine tendsto_finset_prod _ fun j _ => ?_
+    refine tendsto_finsetProd _ fun j _ => ?_
     refine (((hev (b j)).comp continuous_snd).sub continuous_const).continuousAt.mul ?_
     refine ((((hev (b j)).comp continuous_fst).sub continuous_const).continuousAt).inv₀ ?_
     exact sub_ne_zero.mpr (hb j).symm

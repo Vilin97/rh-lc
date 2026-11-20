@@ -305,7 +305,7 @@ theorem natCast_artinExponent_ind (v : HeightOneSpectrum (𝓞 K)) :
   have hinv : ∀ x : Gal(L/K), ∀ h ∈ H, ∀ e ∈ D, U (h * x * e) = U x := by
     intro x h hh e he
     exact Subtype.ext ((subfieldPlace_eq_iff H w (h * x * e) x).2
-      ((DoubleCoset.eq H D _ _).2 ⟨h⁻¹, H.inv_mem hh, e⁻¹, D.inv_mem he, by group⟩))
+      ((@DoubleCoset.eq _ _ H D _ _).2 ⟨h⁻¹, H.inv_mem hh, e⁻¹, D.inv_mem he, by group⟩))
   rw [natCast_artinExponent v _ w, character_ind_restrictScalarsHom]
   simp_rw [indFun_subtype_apply]
   rw [charArtinConductor_const_mul_sum]

@@ -32,7 +32,7 @@ theorem flCol_integrand_integrable (ψ : AddChar k Circle) (hψ : Continuous ψ)
   have hch : Continuous fun e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k =>
       ((ψ (-ch (affPt p (0 : Matrix n n' k) e)) : Circle) : ℂ) := by
     refine continuous_subtype_val.comp (hψ.comp (Continuous.neg ?_))
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_affPt_uncurry p).comp (Continuous.prodMk_right (0 : Matrix n n' k))).matrix_elem _ _
   refine Continuous.integrable_of_hasCompactSupport ?_ ?_
   · exact (hΦ.1.continuous.comp hemb.continuous).mul hch

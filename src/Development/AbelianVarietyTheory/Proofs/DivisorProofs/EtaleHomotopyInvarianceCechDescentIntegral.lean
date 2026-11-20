@@ -115,7 +115,7 @@ theorem poly_ker (A B : Type) [CommRing A] [CommRing B] (φ : A →+* B) (hk : R
   rw [← mem_nilradical]
   apply hk
   rw [RingHom.mem_ker] at hp ⊢
-  have := congrArg (fun r => Polynomial.coeff r n) hp
+  have := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r n) hp
   simpa using this
 
 theorem isUnit_gamma (q : ℕ) (A : Type) [CommRing A] (hq : IsUnit (q : A)) :

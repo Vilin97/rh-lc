@@ -31,7 +31,7 @@ theorem doubleCosetToOrbit_bijective (ι : Γ →* G) (H : Subgroup Γ) (K : Sub
     obtain ⟨h, hh⟩ := Quotient.exact hpq
     have hh' : LeftCosets.mk ι K (ι (h : Γ) * q.out) = LeftCosets.mk ι K p.out := hh
     rw [LeftCosets.mk_eq_mk] at hh'
-    refine ((DoubleCoset.eq _ _ _ _).2 ⟨ι h, Subgroup.mem_map_of_mem ι h.2, _, hh', ?_⟩).symm
+    refine ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨ι h, Subgroup.mem_map_of_mem ι h.2, _, hh', ?_⟩).symm
     group
   · intro o
     induction o using Quotient.inductionOn with

@@ -155,7 +155,7 @@ private theorem exists_residue_pow_prime_pow_eq_self {F Ω : Type} [Field F] [Nu
     have hdvd : Polynomial.C (p : ℤ) ∣ Q := by
       rw [Polynomial.C_dvd_iff_dvd_coeff]
       intro i
-      have := congrArg (fun f => Polynomial.coeff f i) h0
+      have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f i) h0
       simp only [Polynomial.coeff_map, Polynomial.coeff_zero, eq_intCast] at this
       exact (CharP.intCast_eq_zero_iff (IsLocalRing.ResidueField A) p _).1 this
     have hu := Polynomial.isPrimitive_primPart P (p : ℤ) hdvd

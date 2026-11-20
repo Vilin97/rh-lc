@@ -20,7 +20,7 @@ def mkC (S : Subgroup G) (a : G) : ClassSet H S := DoubleCoset.mk H S a
 theorem mk_eq_iff (S : Subgroup G) (a b : G) :
     (mkC H S a = mkC H S b) ↔ ∃ h ∈ H, ∃ κ ∈ S, b = h * a * κ := by
   unfold mkC
-  exact DoubleCoset.eq _ _ a b
+  exact @DoubleCoset.eq _ _ _ _ a b
 
 theorem K'_split (x : G) (hx : x ∈ K') : (X.j (X.pr x))⁻¹ * x ∈ K := by
   rw [X.K_iff]

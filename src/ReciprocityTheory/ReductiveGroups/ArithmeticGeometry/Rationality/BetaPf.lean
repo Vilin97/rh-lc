@@ -35,7 +35,7 @@ theorem exists_int_avoid {f : ℕ} (Z : Finset (Fin f → ℝ)) (hZ : ∀ z ∈ 
     intro z hz h0
     apply hZ z hz
     funext j
-    have h1 := congrArg (fun p => Polynomial.coeff p (j : ℕ)) h0
+    have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (j : ℕ)) h0
     simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
       Polynomial.coeff_zero] at h1
     rw [Finset.sum_eq_single j (fun i _ hij => by

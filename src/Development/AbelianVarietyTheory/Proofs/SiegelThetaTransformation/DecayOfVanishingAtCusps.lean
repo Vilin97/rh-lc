@@ -197,7 +197,7 @@ theorem coef_sing (hXc : Continuous X) (hX : ∀ x τ, (X x τ).IsHermitian) (hT
         hXc.add continuous_const
       refine (Continuous.mul (hf.continuousOn.comp_continuous hc (hH t ht)) ?_).aestronglyMeasurable
       refine Complex.continuous_exp.comp (Continuous.neg (continuous_const.mul ?_))
-      exact continuous_finset_sum _ fun τ _ =>
+      exact continuous_finsetSum _ fun τ _ =>
         (continuous_const.matrix_mul ((continuous_apply τ).comp hc)).matrix_trace)
     ((eventually_ge_atTop 0).mono fun t ht => ae_of_all _ fun x => by
       rw [← htr t]; exact norm_integrand_le hX hT hη hB (hY t ht) x)

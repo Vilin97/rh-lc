@@ -99,10 +99,10 @@ theorem exists_unitary_matLat_eq : ∀ {O K : Type} [CommRing O] [IsDomain O] [I
   have hcomm : ∀ u ∈ A, ∀ v ∈ A, u * v = v * u := by
     have hc : ∀ a ∈ ({γ} : Set (Matrix (Fin n) (Fin n) K)), ∀ b ∈ ({γ} : Set _), a * b = b * a := by
       intro a ha b hb; rw [Set.mem_singleton_iff] at ha hb; rw [ha, hb]
-    letI : CommRing A := Algebra.adjoinCommRingOfComm K hc
+    letI : CommRing A := Algebra.isMulCommutative_adjoin K hc
     intro u hu v hv
     exact congrArg Subtype.val (mul_comm (⟨u, hu⟩ : A) ⟨v, hv⟩)
-  letI : CommRing A := Algebra.adjoinCommRingOfComm K (by
+  letI : CommRing A := Algebra.isMulCommutative_adjoin K (by
     intro a ha b hb; rw [Set.mem_singleton_iff] at ha hb; rw [ha, hb])
   have hstar : ∀ a ∈ A, (a.map σ)ᵀ ∈ A := fun a ha => conjTranspose_mem_adjoin σ γ hγ ha
   let τ : A →+* A :=

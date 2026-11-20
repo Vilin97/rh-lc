@@ -341,7 +341,7 @@ theorem bijective_mk_permGL :
       DoubleCoset.mk (borel n k) (borel n k) (permGL k σ) := by
   constructor
   · intro σ τ hστ
-    obtain ⟨x, hx, y, hy, hxy⟩ := (DoubleCoset.eq _ _ _ _).mp hστ
+    obtain ⟨x, hx, y, hy, hxy⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp hστ
     exact eq_of_permGL_mem_doubleCoset (mem_doubleCoset.mpr ⟨x, hx, y, hy, hxy⟩)
   · intro q
     obtain ⟨σ, hσ⟩ := exists_mem_doubleCoset_permGL (k := k) q.out

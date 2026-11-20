@@ -113,7 +113,7 @@ theorem GlobalTheory.CMVal.NormCongr.absNorm_eq_div_modF : ∀ {K : Type} [Field
   · unfold idealOf
     rw [map_finprod Ideal.absNorm (finite_pow a)]
     refine finprod_induction (fun x : ℕ => Nat.Coprime x k) (Nat.coprime_one_left k)
-      (fun x y hx hy => Nat.Coprime.mul hx hy) fun w => ?_
+      (fun x y hx hy => Nat.Coprime.mul_left hx hy) fun w => ?_
     rw [map_pow]
     rcases Nat.eq_zero_or_pos (ordAt a w) with h0 | h0
     · rw [h0, pow_zero]; exact Nat.coprime_one_left k

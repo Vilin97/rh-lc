@@ -78,7 +78,7 @@ theorem diamond_value_root_of_unity (Tf : FormsTied D u) (hC : ChiFin Tf) (v : (
             (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ ((Tf.val 0 (Nat.zero_le _)).eY z))) := by
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all Tf 0 (Nat.zero_le _) v a
   have hcl := (Tf.val 0 (Nat.zero_le _)).dil v a k hk c δ hδ
-  obtain ⟨hh, hhH, κ, hκK, e⟩ := (DoubleCoset.eq _ _ _ _).1 hcl
+  obtain ⟨hh, hhH, κ, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
   have hκ : κ.1 ∈ (Tf.cls 0 (Nat.zero_le _)).lev.U := hκK
   obtain ⟨g, hgU, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have hx : ((Tf.cls 0 (Nat.zero_le _)).y c * δ).1 =

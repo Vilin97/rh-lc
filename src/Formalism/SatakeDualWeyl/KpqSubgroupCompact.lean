@@ -255,7 +255,7 @@ theorem HeckeBasis : Formalism.UG.HeckeBasis := by
     intro f hf g
     obtain ⟨hbi, -⟩ := hf
     obtain ⟨h, hh, c, hc, he⟩ :=
-      (DoubleCoset.eq K K g (Quotient.out (DoubleCoset.mk K K g))).mp (Quotient.out_eq _).symm
+      (@DoubleCoset.eq _ _ K K g (Quotient.out (DoubleCoset.mk K K g))).mp (Quotient.out_eq _).symm
     rw [he]
     exact hbi ⟨h, hh⟩ ⟨c, hc⟩ g
   have hfin : ∀ f : Hecke k K, (Function.support fun c : ClassSet K K => (f : G → k) (Quotient.out c)).Finite := by
@@ -266,7 +266,7 @@ theorem HeckeBasis : Formalism.UG.HeckeBasis := by
     obtain ⟨s, hs, a, b, he⟩ := hS _ hc
     refine ⟨s, hs, ?_⟩
     have h1 : DoubleCoset.mk K K s = DoubleCoset.mk K K (Quotient.out c) :=
-      (DoubleCoset.eq K K s _).mpr ⟨a, a.2, b, b.2, he⟩
+      (@DoubleCoset.eq _ _ K K s _).mpr ⟨a, a.2, b, b.2, he⟩
     rw [h1]
     exact Quotient.out_eq c
   have hinv : ∀ φ : ClassSet K K →₀ k, (fun g => φ (DoubleCoset.mk K K g)) ∈ Hecke k K := by
@@ -275,11 +275,11 @@ theorem HeckeBasis : Formalism.UG.HeckeBasis := by
       ∃ S : Finset G, ∀ g : G, φ (DoubleCoset.mk K K g) ≠ 0 → ∃ s ∈ S, ∃ a b : K, g = (a : G) * s * b
     refine ⟨fun a b g => ?_, ⟨φ.support.image Quotient.out, fun g hg => ?_⟩⟩
     · congr 1
-      exact ((DoubleCoset.eq K K g _).mpr ⟨a, a.2, b, b.2, rfl⟩).symm
+      exact ((@DoubleCoset.eq _ _ K K g _).mpr ⟨a, a.2, b, b.2, rfl⟩).symm
     · refine ⟨Quotient.out (DoubleCoset.mk K K g),
         Finset.mem_image_of_mem _ (Finsupp.mem_support_iff.mpr hg), ?_⟩
       obtain ⟨h, hh, c, hc, he⟩ :=
-        (DoubleCoset.eq K K g (Quotient.out (DoubleCoset.mk K K g))).mp (Quotient.out_eq _).symm
+        (@DoubleCoset.eq _ _ K K g (Quotient.out (DoubleCoset.mk K K g))).mp (Quotient.out_eq _).symm
       refine ⟨⟨h⁻¹, K.inv_mem hh⟩, ⟨c⁻¹, K.inv_mem hc⟩, ?_⟩
       rw [he]
       group

@@ -107,7 +107,7 @@ lemma covA_span (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Prime] (h
         rw [hab]
         simp
       have h2 : IsIntegral ℤ a := by
-        rw [← isIntegral_algebraMap_iff (algebraMap ℚ K).injective, ← h1]
+        rw [← isIntegral_algebraMap_iff , ← h1]
         exact hyint
       obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
       refine ⟨2 * z, by simp [← hz], z ^ 2, by simp [← hz]⟩
@@ -143,8 +143,8 @@ lemma covA_span (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Prime] (h
           minpoly.natDegree_pos (Algebra.IsIntegral.isIntegral _)
         omega
       have hZ := minpoly.isIntegrallyClosed_eq_field_fractions' ℚ hyint
-      have c1 := congrArg (fun p => Polynomial.coeff p 1) (hmin.trans hZ)
-      have c0 := congrArg (fun p => Polynomial.coeff p 0) (hmin.trans hZ)
+      have c1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) (hmin.trans hZ)
+      have c0 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) (hmin.trans hZ)
       simp only [hq, Polynomial.coeff_map, Polynomial.coeff_add, Polynomial.coeff_sub,
         Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, Polynomial.coeff_X, Polynomial.coeff_C,
         eq_intCast] at c1 c0

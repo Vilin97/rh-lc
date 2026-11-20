@@ -193,7 +193,7 @@ theorem transport_iso_of_diamond_elements (Tf : FormsTied D u) (hE : DiamondElem
       (by rw [Subgroup.coe_mul, InvMemClass.coe_inv, hmul, mul_inv_cancel_right]) hg hh
   · obtain ⟨k, hk, δ, hδ⟩ := hE i hi v a
     have hq := (Tf.val i hi).dil v a k hk c δ hδ
-    obtain ⟨hh', hhm, kk, hkm, heq⟩ := (DoubleCoset.eq _ _ _ _).1 hq
+    obtain ⟨hh', hhm, kk, hkm, heq⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hq
     obtain ⟨γ, hγ, hγe⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhm)
     have hkU : kk.1 ∈ (Tf.cls i hi).lev.U := Subgroup.mem_subgroupOf.1 hkm
     rw [hval, hvalψ, (Tf.val i hi).dilT v a k hk c δ hδ g hgA, (Tf.val i hi).dilT v a k hk c δ hδ h hhA]

@@ -93,7 +93,7 @@ theorem core : ∀ (P M N : Type) [Group P] [Group M] [Group N] (s : M →* P) (
   intro P M N _ _ _ s π u hs hinj hker KP KM L hsK hπK huK TM CM TP CP hCT hTP hCP hTC G hGT hGK hU hfin
   have hGout : ∀ p, G (Quotient.out (DoubleCoset.mk TP KP p)) = G p := by
     intro p
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 (DoubleCoset.out_eq' TP KP (DoubleCoset.mk TP KP p)).symm
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (DoubleCoset.out_eq' TP KP (DoubleCoset.mk TP KP p)).symm
     rw [he, hGK k hk, hGT t ht]
   have hTCP : ∀ p : P, TP ⊓ KP.map (MulAut.conj p).toMonoidHom ≤ CP := by
     intro p x hx
@@ -108,7 +108,7 @@ theorem core : ∀ (P M N : Type) [Group P] [Group M] [Group N] (s : M →* P) (
     fun d => DoubleCoset.mk TM KM (π (Quotient.out d))
   have hρmk : ∀ p, ρ (DoubleCoset.mk TP KP p) = DoubleCoset.mk TM KM (π p) := by
     intro p
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 (DoubleCoset.out_eq' TP KP (DoubleCoset.mk TP KP p)).symm
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (DoubleCoset.out_eq' TP KP (DoubleCoset.mk TP KP p)).symm
     show DoubleCoset.mk TM KM (π (Quotient.out (DoubleCoset.mk TP KP p))) = _
     rw [he, DoubleCoset.eq]
     obtain ⟨t', ht', rfl⟩ := (hTP t).1 ht
@@ -143,7 +143,7 @@ theorem core : ∀ (P M N : Type) [Group P] [Group M] [Group N] (s : M →* P) (
       (((TM ⊓ KM.map (MulAut.conj q0).toMonoidHom).relIndex CM : ℕ) : ℂ) * (Nat.card (ψ ⁻¹' {d}) : ℂ) := by
     intro d
     obtain ⟨X, hX, hc⟩ := hfib d
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 (hX.trans (DoubleCoset.out_eq' TP KP d.1).symm)
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (hX.trans (DoubleCoset.out_eq' TP KP d.1).symm)
     rw [he, GlobalTheory.T.doubleCoset_relIndex_inf_conj_const P TP CP KP hTCP t ht k hk,
       GlobalTheory.T.relIndex_unfold_semidirect_product P M N s π u hs hinj hker KP KM L hsK hπK huK TM CM TP CP hCT hTP hCP hTC q0 X, hc]
     push_cast

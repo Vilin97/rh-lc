@@ -145,7 +145,7 @@ theorem divisor_closed_holds : DivClosedOf := by
   set r : Polynomial ℂ := q.sum fun j c => Polynomial.monomial j (φ c) with hr
   have hr_eval : ∀ t : ℂ, r.eval t = φ (q.eval (C t)) := by
     intro t
-    rw [hr, Polynomial.sum_def, Polynomial.eval_finset_sum, Polynomial.eval_eq_sum (p := q), Polynomial.sum_def,
+    rw [hr, Polynomial.sum_def, Polynomial.eval_finsetSum, Polynomial.eval_eq_sum (p := q), Polynomial.sum_def,
       map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Polynomial.eval_monomial, ← map_pow, mul_comm (q.coeff j), MvPolynomial.C_mul', map_smul, smul_eq_mul,

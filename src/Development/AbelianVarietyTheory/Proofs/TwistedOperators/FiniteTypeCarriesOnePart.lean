@@ -30,7 +30,7 @@ open GlobalTheory.Hk3
 
 theorem heckePolyOf_coeff_inj : ∀ (n q : ℕ), q ≠ 0 → ∀ a b : ℕ → ℂ, Formalism.L2.Col.heckePolyOf n q a = Formalism.L2.Col.heckePolyOf n q b → ∀ k ≤ n, a k = b k := by
   intro n q hq a b h k hk
-  have hc := congrArg (fun f => Polynomial.coeff f k) h
+  have hc := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f k) h
   simp only [Formalism.L2.Col.heckePolyOf, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   rw [Finset.sum_ite_eq, Finset.sum_ite_eq, if_pos (Finset.mem_range.2 (Nat.lt_succ_of_le hk)),
     if_pos (Finset.mem_range.2 (Nat.lt_succ_of_le hk))] at hc

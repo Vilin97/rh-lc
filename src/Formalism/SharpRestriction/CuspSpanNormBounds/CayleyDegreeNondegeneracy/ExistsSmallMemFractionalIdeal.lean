@@ -191,7 +191,7 @@ theorem inner_orthCompanion_symm {K : Type} [Field K] [NumberField K] [StarRing 
 theorem exists_orthogonal_second_vector (K : Type) [Field K] [NumberField K] [StarRing K] (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     (V : Type) [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L 2)
-    (M : Submodule (𝓞 K) V) (hlat : Submodule.IsLattice K M) (hint : Formalism.HermitianLatticesTheory.IsIntegralLat h M)
+    (M : Submodule (𝓞 K) V) (hlat : Submodule.IsFullLattice K M) (hint : Formalism.HermitianLatticesTheory.IsIntegralLat h M)
     (huni : Formalism.HermitianLatticesTheory.dual h M = M) (x : V) (hx : x ∈ M) (hx0 : x ≠ 0) :
     ∃ y ∈ M, y ≠ 0 ∧ h x y = 0 ∧ ∀ φ : K →+* ℂ, ‖φ (h y y)‖ ≤ ‖φ (h x x)‖ * rootDiscriminant K := by
   obtain ⟨e, -, hspan, -, ho⟩ := hL

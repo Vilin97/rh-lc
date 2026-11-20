@@ -91,7 +91,7 @@ theorem exists_eq_algebraMap_of_fixed (A : Type) [CommRing A] [IsDomain A] [IsIn
   rw [IntermediateField.mem_bot] at hmem
   obtain ⟨k, rfl⟩ := hmem
   have hk : IsIntegral A k :=
-    (isIntegral_algebraMap_iff (algebraMap (FractionRing A) (AlgebraicClosure (FractionRing A))).injective).mp hint
+    (isIntegral_algebraMap_iff ).mp hint
   obtain ⟨a, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.mp hk
   exact ⟨a, (IsScalarTower.algebraMap_apply A (FractionRing A) _ a).symm⟩
 

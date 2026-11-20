@@ -45,7 +45,7 @@ theorem rdS_inj (θ : InfFam D) (V : HSp D) {n : ℕ} (hn : V.rank = n) {T f : �
   have hp := hex.choose_spec
   have hc : hex.choose.1 = c := by
     apply hbij.1
-    refine (DoubleCoset.eq _ _ _ _).mpr ?_
+    refine (@DoubleCoset.eq _ _ _ _ _ _).mpr ?_
     have hr : bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) hex.choose.2.1 ∈
         ratPts (sigD D) (V.gram.reindex (finCongr hn) (finCongr hn)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) :=
       Subgroup.mem_map.mpr ⟨_, hp.1, rfl⟩

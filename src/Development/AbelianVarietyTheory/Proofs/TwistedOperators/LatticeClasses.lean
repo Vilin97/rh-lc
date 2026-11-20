@@ -16,7 +16,7 @@ theorem lat_of_coset {n : Type} [Fintype n] [DecidableEq n] {c : ℕ} {J : Subgr
     (hJ : J ≤ KO k _) {a b : GL (n ⊕ Fin c) k}
     (h : DoubleCoset.mk (R k n c 1) J a = DoubleCoset.mk (R k n c 1) J b) :
     ∃ r ∈ R k n c 1, latOf b = latOf (r * a) := by
-  obtain ⟨r, hr, w, hw, rfl⟩ := (DoubleCoset.eq _ _ _ _).1 h
+  obtain ⟨r, hr, w, hw, rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
   exact ⟨r, hr, by rw [latOf_mul_congr _ (latOf_eq_of_KO (hJ hw)), mul_one]⟩
 
 variable [MeasurableSpace k] [BorelSpace k]

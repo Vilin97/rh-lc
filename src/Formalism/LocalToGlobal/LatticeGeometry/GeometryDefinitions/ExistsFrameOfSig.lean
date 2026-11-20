@@ -61,7 +61,7 @@ theorem crdLat_mem (S : HSpace E) (L : Submodule (𝓞 E) S.V) (x : S.V) : crd S
   · intro hx
     exact ⟨x, hx, rfl⟩
 
-theorem crdLat_lattice (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) :
+theorem crdLat_lattice (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L) :
     Submodule.IsLattice E (crdLat S L) := by
   refine ⟨hL.fg.map _, ?_⟩
   have hset : (crdLat S L : Set (Fin S.rank → E)) =

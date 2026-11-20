@@ -14,7 +14,7 @@ private theorem exists_real_lift (K M : Type) [Field K] [NumberField K] [IsCMFie
     exact (mem_maximalRealSubfield_iff _).2 fun φ =>
       (mem_maximalRealSubfield_iff _).1 (x : maximalRealSubfield K).2 (φ.comp (algebraMap K M))
   have hint : IsIntegral ℤ (⟨(y₀ : M), hmem⟩ : maximalRealSubfield M) :=
-    (isIntegral_algebraMap_iff (B := M) (algebraMap (maximalRealSubfield M) M).injective).1
+    (isIntegral_algebraMap_iff (B := M) ).1
       (RingOfIntegers.isIntegral_coe y₀)
   exact ⟨⟨⟨(y₀ : M), hmem⟩, hint⟩, RingOfIntegers.ext rfl⟩
 

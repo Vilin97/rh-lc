@@ -18,7 +18,7 @@ theorem symMat_mulVec {R : Type} [CommRing R] (m : ℕ) (A : Matrix (Fin 2) (Fin
     (symMat m A).mulVec p = fun a =>
       (∑ i : Fin (m + 1), C (p i) * (C (A 0 1) + C (A 1 1) * X) ^ (i : ℕ) * C (A 0 0) ^ (m - i)).coeff a := by
   funext a
-  simp only [Matrix.mulVec, dotProduct, symMat, Matrix.of_apply, finset_sum_coeff]
+  simp only [Matrix.mulVec, dotProduct, symMat, Matrix.of_apply, Polynomial.finsetSum_coeff]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_assoc, coeff_C_mul, mul_comm]
 

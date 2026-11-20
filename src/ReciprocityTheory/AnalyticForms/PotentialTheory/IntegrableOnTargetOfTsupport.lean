@@ -128,7 +128,7 @@ theorem mIntLocalize : MIntLocalizeStatement := by
       (mIntegrable_continuous_mul A Φ g (P.χ k) hg (smooth_continuous A (P.smooth k)))
   unfold integralWith
   rw [Finset.sum_congr rfl (fun k _ => chart_move A P Φ hΦ j k g hs),
-    ← integral_finset_sum _ (fun k _ => hint k)]
+    ← MeasureTheory.integral_finsetSum _ (fun k _ => hint k)]
   refine setIntegral_congr_fun (A.chart j).open_target.measurableSet (fun y _ => ?_)
   rw [← Finset.sum_mul, ← Finset.sum_mul, P.sum_eq_one, one_mul]
 
@@ -166,7 +166,7 @@ theorem integralWithIndep : IntegralWithIndepStatement := by
         unfold integralWith
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl (fun i _ => ?_)
-        rw [integral_finset_sum _ (fun j _ => hint i j)]
+        rw [MeasureTheory.integral_finsetSum _ (fun j _ => hint i j)]
     _ = integralWith A Q Φ g := by
         unfold integralWith
         refine Finset.sum_congr rfl (fun i _ =>

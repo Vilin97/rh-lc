@@ -162,7 +162,7 @@ variable {G : Type} [Group G]
 
 theorem mk_out_dc (K : Subgroup G) (g : G) :
     ∃ a b : K, Quotient.out (DoubleCoset.mk K K g) = (a : G) * g * b := by
-  obtain ⟨a, ha, b, hb, e⟩ := (DoubleCoset.eq K K g (Quotient.out (DoubleCoset.mk K K g))).1
+  obtain ⟨a, ha, b, hb, e⟩ := (@DoubleCoset.eq _ _ K K g (Quotient.out (DoubleCoset.mk K K g))).1
     (DoubleCoset.out_eq' K K _).symm
   exact ⟨⟨a, ha⟩, ⟨b, hb⟩, e⟩
 
@@ -178,7 +178,7 @@ def toFs (k : Type) [CommRing k] (K : Subgroup G) (f : Hecke k K) : ClassSet K K
     refine (S.finite_toSet.image (DoubleCoset.mk K K)).subset ?_
     intro c hc
     obtain ⟨s, hs, a, b, e⟩ := hS (Quotient.out c) hc
-    exact ⟨s, hs, ((DoubleCoset.eq K K s (Quotient.out c)).2 ⟨a, a.2, b, b.2, e⟩).trans
+    exact ⟨s, hs, ((@DoubleCoset.eq _ _ K K s (Quotient.out c)).2 ⟨a, a.2, b, b.2, e⟩).trans
       (DoubleCoset.out_eq' K K c)⟩)
 
 theorem toFs_apply (k : Type) [CommRing k] (K : Subgroup G) (f : Hecke k K) (c : ClassSet K K) :
@@ -187,11 +187,11 @@ theorem toFs_apply (k : Type) [CommRing k] (K : Subgroup G) (f : Hecke k K) (c :
 def ofFs (k : Type) [CommRing k] (K : Subgroup G) (c : ClassSet K K →₀ k) : Hecke k K :=
   ⟨fun g => c (DoubleCoset.mk K K g), by
     refine ⟨fun a b g => ?_, ?_⟩
-    · exact congrArg c ((DoubleCoset.eq K K g ((a : G) * g * b)).2 ⟨a, a.2, b, b.2, rfl⟩).symm
+    · exact congrArg c ((@DoubleCoset.eq _ _ K K g ((a : G) * g * b)).2 ⟨a, a.2, b, b.2, rfl⟩).symm
     · refine ⟨c.support.image Quotient.out, fun g hg => ?_⟩
       refine ⟨Quotient.out (DoubleCoset.mk K K g),
         Finset.mem_image_of_mem _ (Finsupp.mem_support_iff.2 hg), ?_⟩
-      obtain ⟨a, ha, b, hb, e⟩ := (DoubleCoset.eq K K (Quotient.out (DoubleCoset.mk K K g)) g).1
+      obtain ⟨a, ha, b, hb, e⟩ := (@DoubleCoset.eq _ _ K K (Quotient.out (DoubleCoset.mk K K g)) g).1
         (DoubleCoset.out_eq' K K (DoubleCoset.mk K K g))
       exact ⟨⟨a, ha⟩, ⟨b, hb⟩, e⟩⟩
 

@@ -84,7 +84,7 @@ theorem aeval_cone_eq_zero_iff {C : Type} [CommRing C] [Algebra K C] (r : σ →
   · intro h n
     by_cases hn : n ∈ Finset.range (G.totalDegree + 1)
     · rw [← sum_homogeneousComponent G, map_sum] at h
-      have h2 := congrArg (fun p => Polynomial.coeff p n) h
+      have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) h
       simp only [Polynomial.finset_sum_coeff, hm, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at h2
       rw [Finset.sum_eq_single n] at h2
       · simpa using h2

@@ -1925,7 +1925,7 @@ private theorem invariant : Algebra.IsInvariant (𝓞 F) (𝓞 Ω) (G F Ω) := b
   have h1 : IsIntegral ℤ x := by
     have : IsIntegral ℤ (b : Ω) := b.isIntegral_coe
     rw [← hx] at this
-    exact (isIntegral_algebraMap_iff (algebraMap F Ω).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   exact ⟨⟨x, h1⟩, Subtype.ext hx⟩
 
 attribute [local instance] Ideal.Quotient.field in

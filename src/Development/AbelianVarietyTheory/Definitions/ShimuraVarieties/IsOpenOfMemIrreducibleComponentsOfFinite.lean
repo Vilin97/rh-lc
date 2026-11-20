@@ -167,7 +167,7 @@ theorem isDiscreteValuationRing_stalk {X : Scheme.{u}} [IsNormalScheme X] [IsLoc
       ∃! P : Ideal (X.presheaf.stalk x), P ≠ ⊥ ∧ P.IsPrime :=
     ⟨inferInstance, _, ⟨hm, inferInstance⟩, fun P hP ↦ IsLocalRing.eq_maximalIdeal
       (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 P hP.1 hP.2)⟩
-  exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk x) hf).out 0 3).mpr h3
+  exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk x) hf).out 1 4).mpr h3
 
 theorem isDiscreteValuationRing_stalk_iff {X : Scheme.{u}} [IsNormalScheme X]
     [IsLocallyNoetherian X] {x : X} :

@@ -173,7 +173,7 @@ theorem gauss_blockMean {B n : ℕ} (hn : 0 < n) (δ : ℕ) (g : MvPolynomial (F
     hA.comp_fst _
   have hRsum : Integrable (fun r : Fin B → Ioi (0:ℝ) => ∑ b, (δ : ℝ) * Real.log (r b : ℝ))
       (Measure.pi fun _ => radProb n) :=
-    integrable_finset_sum _ fun b _ => (hRi b).const_mul _
+    MeasureTheory.integrable_finsetSum _ fun b _ => (hRi b).const_mul _
   have hRi' : Integrable (fun q : (Fin B → UnitSphereC n) × (Fin B → Ioi (0:ℝ)) =>
       ∑ b, (δ : ℝ) * Real.log (q.2 b : ℝ))
       ((Measure.pi fun _ : Fin B => sphereProb n).prod (Measure.pi fun _ : Fin B => radProb n)) :=
@@ -184,7 +184,7 @@ theorem gauss_blockMean {B n : ℕ} (hn : 0 < n) (δ : ℕ) (g : MvPolynomial (F
     integral_congr_ae hae, integral_add hAi hRi',
     integral_fun_fst (fun z : Fin B → UnitSphereC n => Real.log ‖eval (blockPoint z) g‖),
     integral_fun_snd (fun r : Fin B → Ioi (0:ℝ) => ∑ b, (δ : ℝ) * Real.log (r b : ℝ)),
-    integral_finset_sum _ fun b _ => (hRi b).const_mul _]
+    MeasureTheory.integral_finsetSum _ fun b _ => (hRi b).const_mul _]
   simp only [probReal_univ, one_smul, integral_const_mul, hRint, Finset.sum_const,
     Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
   rw [blockSphereMean, blockSphereProb]

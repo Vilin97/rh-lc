@@ -18,7 +18,7 @@ theorem lin_coeff_eq {ι κ : Type} (s : Finset ι) (s' : Finset κ) (a : ι →
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X]
     exact h t
-  have := congrArg (fun p => Polynomial.coeff p 1) hP
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hP
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow] at this
   simpa [eq_comm] using this
 

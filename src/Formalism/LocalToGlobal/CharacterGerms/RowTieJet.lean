@@ -67,7 +67,7 @@ theorem rtj_supp_of_supported {A : Set σ} {P : MvPolynomial σ K} (hP : P ∈ M
     (m : σ →₀ ℕ) (hm : AddMonoidAlgebra.coeff P m ≠ 0) : (↑m.support : Set σ) ⊆ A := by
   intro i hi
   rw [MvPolynomial.mem_supported] at hP
-  exact hP ((MvPolynomial.mem_vars i).mpr ⟨m, MvPolynomial.mem_support_iff.mpr hm, hi⟩)
+  exact hP ((MvPolynomial.mem_vars_iff_mem_support i).mpr ⟨m, MvPolynomial.mem_support_iff.mpr hm, hi⟩)
 
 theorem rtj_mfact_add {a b : σ →₀ ℕ} (h : Disjoint a.support b.support) :
     mfact (a + b) = mfact a * mfact b := by

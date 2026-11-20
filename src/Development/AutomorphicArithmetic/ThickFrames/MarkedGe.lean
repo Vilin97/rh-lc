@@ -137,8 +137,8 @@ theorem UpperTheory.BernoulliSumsFrobeniusOrbits.marked_ge :
       · rw [ind_neg' hM]
         unfold Formalism.G0.Marked at hM
         obtain ⟨c, hc⟩ := Classical.not_forall.1 hM
-        obtain ⟨hc1, hc⟩ := _root_.not_imp.1 hc
-        obtain ⟨hc2, hc⟩ := _root_.not_imp.1 hc
+        obtain ⟨hc1, hc⟩ := Classical.not_imp.1 hc
+        obtain ⟨hc2, hc⟩ := Classical.not_imp.1 hc
         obtain ⟨j, rfl⟩ : ∃ j, c = j + 1 := ⟨c - 1, by omega⟩
         apply le_of_eq
         apply Finset.prod_eq_zero (i := j) (Finset.mem_range.2 (by omega))

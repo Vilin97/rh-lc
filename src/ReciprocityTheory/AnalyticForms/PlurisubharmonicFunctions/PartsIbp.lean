@@ -145,9 +145,9 @@ theorem integration_by_parts_complex {n : ℕ} (φ : Fin n → (Fin (n + 1) → 
   refine ⟨hXi, hYi, ?_⟩
   rw [← integral_add hXi hYi]
   have hfun : (fun y => X y + Y y) = fun y => ∑ j, ∑ k, dz j (g j k) y := funext hpt
-  rw [hfun, integral_finset_sum _ (fun j _ => integrable_finset_sum _ fun k _ => hdzint j k)]
+  rw [hfun, MeasureTheory.integral_finsetSum _ (fun j _ => MeasureTheory.integrable_finsetSum _ fun k _ => hdzint j k)]
   refine Finset.sum_eq_zero fun j _ => ?_
-  rw [integral_finset_sum _ fun k _ => hdzint j k]
+  rw [MeasureTheory.integral_finsetSum _ fun k _ => hdzint j k]
   exact Finset.sum_eq_zero fun k _ => hint j k
 
 theorem vanish_outside_tsupport {D : ℕ} {v : (Fin D → ℂ) → ℝ} {y : Fin D → ℂ}

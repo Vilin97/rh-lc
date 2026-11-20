@@ -297,7 +297,7 @@ theorem ext_spec [CompleteSpace C] [CharZero C] (hc : IsClosed (M : Set C)) (hζ
     have hm : (⟨π, le_ext M ζ hπ, h1.le⟩ : ball (ext M ζ)) ∈ maximalIdeal _ := (mem_max _ _).mpr h1
     rw [isField_iff_maximalIdeal_eq.mp hf, Ideal.mem_bot] at hm
     exact h0 (congrArg Subtype.val hm)
-  exact ⟨hfin, ((IsDiscreteValuationRing.TFAE _ hnf).out 0 2).mpr hded⟩
+  exact ⟨hfin, ((IsDiscreteValuationRing.TFAE _ hnf).out 1 3).mpr hded⟩
 
 theorem ext_gen (hζ : IsIntegral M ζ) (z : ball (ext M ζ)) (hz : (z : C) = ζ)
     (x : FractionRing (ball (ext M ζ))) : ∃ p : (ball M)[X], ∃ d : ball M, d ≠ 0 ∧

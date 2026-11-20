@@ -60,7 +60,7 @@ theorem exists_bounded_rep : ∀ (R : Ranks) (k : Type) [Field k] [ValuativeRel 
   obtain ⟨x₀, h0⟩ := Function.ne_iff.1 (GlobalTheory.FlatSourceStable.flat_ne_zero_of_mem_R k _ _ c W.ψ ν _ _ g h' hf r hr)
   obtain ⟨r₂, hr₂, e, z, he, hz, hl₂⟩ := step_normal (NormalForm.normalFormModN k) hϖ W.cond he' hz'
     (hl ▸ om_supp (hs _ _ _) (r * g) h') (hl ▸ om_per hϖ (hp _ _ _) (r * g) h') h0
-  refine ⟨r₂ * h', ((DoubleCoset.eq _ _ _ _).2 ⟨r₂, hr₂, 1, one_mem _, (mul_one _).symm⟩).symm, fun κ hκ => ?_⟩
+  refine ⟨r₂ * h', ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r₂, hr₂, 1, one_mem _, (mul_one _).symm⟩).symm, fun κ hκ => ?_⟩
   rw [latOf_mul_congr _ (latOf_eq_of_KO (hJ _ _ _ hκ)), mul_one, hl₂]
   refine ⟨fun y hy => ?_, fun y hy => ?_⟩
   · rw [mem_latOf_one] at hy
@@ -189,7 +189,7 @@ theorem GlobalTheory.TwBridge.repsOnto : ∀ (X : Fields) (Pr : Primes X) (R : R
   have hdc' : DoubleCoset.mk (GlobalTheory.RootEx.R k (XIx (Fin R.k) (Fin R.t) (j + 1)) (c + 1) 1) J g' =
       DoubleCoset.mk (GlobalTheory.RootEx.R k (XIx (Fin R.k) (Fin R.t) (j + 1)) (c + 1) 1) J h' := by
     rw [← hdc]
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨1, one_mem _, (g₁⁻¹ * g')⁻¹, inv_mem hκ, by group⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, one_mem _, (g₁⁻¹ * g')⁻¹, inv_mem hκ, by group⟩
   obtain ⟨hb1, hb2⟩ := hbd _ hκ
   rw [mul_inv_cancel_left] at hb1 hb2
   have hbd' := bounds_of_isGL X Pr R P.1 k ι W.ϖ hA.compl hA.nmem (j + 1) (c + 1) (j + 1) γ g' hgl hb1 hb2

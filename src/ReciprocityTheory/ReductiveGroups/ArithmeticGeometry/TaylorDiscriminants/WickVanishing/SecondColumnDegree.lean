@@ -72,7 +72,7 @@ theorem totalDegree_pderiv_le (i : σ) (Q : MvPolynomial σ k) :
   classical
   conv_lhs => rw [Q.as_sum]
   rw [map_sum]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun s hs => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [pderiv_monomial]
   by_cases h0 : s i = 0
   · simp [h0]
@@ -95,8 +95,8 @@ theorem pderiv_eq_zero_of_deg (i : σ) (Q : MvPolynomial σ k) (h : Q.totalDegre
 theorem totalDegree_so_le (c : σ → σ → k) (Q : MvPolynomial σ k) :
     (secondOrder k c Q).totalDegree ≤ Q.totalDegree - 2 := by
   rw [so_def]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun l _ => ?_)
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun l' _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l' _ => ?_)
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
   rw [MvPolynomial.totalDegree_C, zero_add]
   have h1 := totalDegree_pderiv_le l (pderiv l' Q)

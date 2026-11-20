@@ -137,7 +137,7 @@ theorem rk_multV_of_not_jump (τ : K →ₐ[Qp] LL) (a : ℤ) (h : ¬ IsJumpV PD
 theorem rk_sum_multV (τ : K →ₐ[Qp] LL) (m k : ℤ) (hmk : m ≤ k) :
     ∑ a ∈ Finset.Ico m k, multV PD ρ τ a =
       (finrank LL ↥(FildR PD ρ τ m) : ℤ) - finrank LL ↥(FildR PD ρ τ k) := by
-  induction k, hmk using Int.le_induction with
+  induction k, hmk using Int.leInduction with
   | base => simp
   | succ n hn ih =>
     have hI : Finset.Ico m (n + 1) = insert n (Finset.Ico m n) := by

@@ -81,7 +81,7 @@ theorem residue_fixed_mem : ∀ (R K Ω : Type) [CommRing R] [IsDomain R] [IsDis
       fun g => congrArg Subtype.val (hb g)
     have hint : IsIntegral R k := by
       have h2 : IsIntegral R (algebraMap K Ω k) := hk ▸ b.2
-      exact (isIntegral_algebraMap_iff (algebraMap K Ω).injective).1 h2
+      exact (isIntegral_algebraMap_iff ).1 h2
     obtain ⟨v, hv⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     refine ⟨v, Subtype.ext ?_⟩
     rw [← hk, ← hv, ← IsScalarTower.algebraMap_apply]

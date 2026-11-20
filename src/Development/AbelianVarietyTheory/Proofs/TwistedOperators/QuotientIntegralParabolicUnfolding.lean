@@ -149,7 +149,7 @@ theorem integral_eq_zero_of_avg [MeasurableSpace G] [BorelSpace G] (μ : Measure
     rw [this]
     simp only [hshift]
     exact integral_mul_left_eq_self _ _
-  rw [show (fun g => F g) = fun g => ∑ q ∈ S, F q.out * ind q g from funext hdec, integral_finset_sum]
+  rw [show (fun g => F g) = fun g => ∑ q ∈ S, F q.out * ind q g from funext hdec, MeasureTheory.integral_finsetSum]
   · simp only [integral_const_mul, hint]
     rw [← Finset.sum_mul, htot, zero_mul]
   · intro q _

@@ -133,7 +133,7 @@ theorem largeResidueExtension : BigResExt := by
     have h1 : maximalIdeal W = ⊥ := (IsLocalRing.isField_iff_maximalIdeal_eq).1 hf
     rw [hmax, hM0def, Ideal.map_eq_bot_iff_of_injective hinj] at h1
     exact IsDiscreteValuationRing.not_a_field V h1
-  have hdvr : IsDiscreteValuationRing W := ((IsDiscreteValuationRing.TFAE W hnf).out 0 4).2 hprin
+  have hdvr : IsDiscreteValuationRing W := ((IsDiscreteValuationRing.TFAE W hnf).out 1 5).2 hprin
   have ecard : Nat.card (ResidueField W) = Nat.card (AdjoinRoot (g.map (residue V))) :=
     Nat.card_congr ((Ideal.quotEquivOfEq hmax).trans (quotResidueEquiv g)).toEquiv
   refine ⟨W, inferInstance, hdom, hdvr, inferInstance, ?_, ?_, ?_, hinj, ?_⟩

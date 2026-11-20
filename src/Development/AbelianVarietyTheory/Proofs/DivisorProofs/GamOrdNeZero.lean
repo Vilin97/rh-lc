@@ -62,7 +62,7 @@ theorem finite_finCl (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf D)))
   set y := Quotient.out q
   obtain ⟨a, γ, k, e⟩ := hc (gfcToGf V y)
   obtain ⟨z, hz⟩ := gfcToGf_surjective V (Bridge.ratF V γ)
-  refine ⟨a, (DoubleCoset.eq _ _ _ _).2 ⟨z, ?_, (x a)⁻¹ * z⁻¹ * y, ?_, by group⟩⟩
+  refine ⟨a, (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨z, ?_, (x a)⁻¹ * z⁻¹ * y, ?_, by group⟩⟩
   · have hz' : finHom V z.1 = finHom V γ.1 := congrArg Subtype.val hz
     refine ⟨γ.1, γ.2, ?_⟩
     show Formalism.UG.bc (Lev.swapAE D) (finHom V γ.1) = Formalism.UG.bc (Lev.swapAE D) (finHom V z.1)

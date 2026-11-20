@@ -48,7 +48,7 @@ theorem binary_form_splits : ∀ (F : Type) [Field F] (m : ℕ) (p : Fin (m + 1)
   set q : F[X] := ∑ i : Fin (m + 1), Polynomial.C (p i) * Polynomial.X ^ (i : ℕ) with hq_def
   have hcoeff : ∀ i : Fin (m + 1), q.coeff i = p i := by
     intro i
-    simp only [hq_def, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow]
+    simp only [hq_def, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single i]
     · simp
     · intro j _ hj

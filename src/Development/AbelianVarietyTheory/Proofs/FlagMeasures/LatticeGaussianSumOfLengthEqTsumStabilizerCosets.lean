@@ -97,7 +97,7 @@ theorem afVec_injective {m : ℕ} : Function.Injective (afVec I (m := m)) := by
       rw [← hz]
       exact z.isIntegral_coe
     have h2 : (2 : I.E)⁻¹ = algebraMap ℚ I.E (2 : ℚ)⁻¹ := by simp
-    rw [h2, isIntegral_algebraMap_iff (algebraMap ℚ I.E).injective] at hint
+    rw [h2, isIntegral_algebraMap_iff ] at hint
     obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     simp only [algebraMap_int_eq, eq_intCast] at hm
     have h3 : ((m * 2 : ℤ) : ℚ) = 1 := by

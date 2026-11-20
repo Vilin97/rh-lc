@@ -46,8 +46,8 @@ def one (D : Datum F) (p : ℕ) : IntSim D p :=
 def comp (g₁ g₂ : IntSim D p) : IntSim D p where
   c := g₁.c * g₂.c
   k := g₁.k * g₂.k
-  c_cop := Nat.Coprime.mul g₁.c_cop g₂.c_cop
-  k_cop := Nat.Coprime.mul g₁.k_cop g₂.k_cop
+  c_cop := Nat.Coprime.mul_left g₁.c_cop g₂.c_cop
+  k_cop := Nat.Coprime.mul_left g₁.k_cop g₂.k_cop
   g n := g₁.g n ∘ₗ g₂.g n
   compat n m h a := by
     obtain ⟨b₂, hb₂⟩ := g₂.compat n m h a

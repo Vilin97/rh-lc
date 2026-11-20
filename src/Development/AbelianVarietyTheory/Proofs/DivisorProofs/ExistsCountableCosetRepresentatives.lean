@@ -45,7 +45,7 @@ theorem exists_reps : ∀ (D : D7) (V : HSp D) (Λ : Set (Fin V.rank → D.host.
     exact Units.ext a1.symm
   have hmk : ∀ h : GA D V, DoubleCoset.mk (GQ V) H (jm (e0 h).2) = DoubleCoset.mk (GQ V) H h := by
     intro h
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨1, one_mem _, (jm (e0 h).2)⁻¹ * h, ?_, by group⟩
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, one_mem _, (jm (e0 h).2)⁻¹ * h, ?_, by group⟩
     show finE V ((jm (e0 h).2)⁻¹ * h) ∈ K₀
     rw [map_mul, map_inv, hfin, inv_mul_cancel]
     exact one_mem _
@@ -60,7 +60,7 @@ theorem exists_reps : ∀ (D : D7) (V : HSp D) (Λ : Set (Fin V.rank → D.host.
       have hU : IsOpen ((fun x => Quotient.out q * x) '' (H : Set (GA D V))) := isOpenMap_mul_left _ _ hHo
       obtain ⟨x, hxs, ⟨k, hk, rfl⟩⟩ := hd.exists_mem_open hU ⟨_, 1, one_mem _, mul_one _⟩
       refine ⟨⟨_, hxs⟩, ?_⟩
-      refine ((DoubleCoset.eq _ _ _ _).2 ⟨1, one_mem _, k⁻¹, inv_mem hk, by group⟩).trans (Quotient.out_eq' q)
+      refine ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, one_mem _, k⁻¹, inv_mem hk, by group⟩).trans (Quotient.out_eq' q)
     exact hsurj.countable
   refine ⟨_, hJc, g, fun j => hinf _, fun i j hE => ?_, fun h => ?_⟩
   · obtain ⟨γ, hγ, κ, hκ, he⟩ := hE
@@ -77,9 +77,9 @@ theorem exists_reps : ∀ (D : D7) (V : HSp D) (Λ : Set (Fin V.rank → D.host.
       rw [← hx] at h3
       exact hK1 _ h3
     have e : DoubleCoset.mk (GQ V) H (g i) = DoubleCoset.mk (GQ V) H (g j) :=
-      (DoubleCoset.eq _ _ _ _).2 ⟨γ₀, hγ₀, (γ₀ * g i)⁻¹ * g j, hxH, by group⟩
+      (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨γ₀, hγ₀, (γ₀ * g i)⁻¹ * g j, hxH, by group⟩
     exact (hgj i).symm.trans (e.trans (hgj j))
-  · obtain ⟨γ, hγ, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 (hgj (DoubleCoset.mk (GQ V) H h))
+  · obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (hgj (DoubleCoset.mk (GQ V) H h))
     refine ⟨DoubleCoset.mk (GQ V) H h, γ⁻¹, inv_mem hγ, ?_⟩
     generalize g (DoubleCoset.mk (GQ V) H h) = x at e ⊢
     subst e

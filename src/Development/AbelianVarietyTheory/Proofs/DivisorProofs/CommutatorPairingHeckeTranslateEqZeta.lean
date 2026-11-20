@@ -71,7 +71,7 @@ theorem GlobalTheory.UPel.HT.Hecke.weil_value_translate : ∀ (p : ℕ) [Fact p.
   set m := k ^ 2 / c with hm
   have hN : 0 < n * (m * k ^ 2) := by positivity
   have hNp : (n * (m * k ^ 2)).Coprime p :=
-    Nat.Coprime.mul hnp (Nat.Coprime.mul hmp (Nat.Coprime.pow_left 2 hk))
+    Nat.Coprime.mul_left hnp (Nat.Coprime.mul_left hmp (Nat.Coprime.pow_left 2 hk))
   have eN : n * (m * k ^ 2) = n * k * (m * k) := by ring
   have hev : ∀ w : D.La, I.ev (n * k) (g w) = I.ev (n * (m * k ^ 2)) (m • g w) ≫ Out.mulA o.A k := fun w => by
     rw [Out.mulA, MonObj.comp_pow, Category.comp_id, ← TateIsoO.ev_nsmul, smul_smul, mul_comm k m,

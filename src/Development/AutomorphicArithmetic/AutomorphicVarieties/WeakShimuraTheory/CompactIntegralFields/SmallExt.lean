@@ -121,7 +121,7 @@ private theorem key (A B : Type) [CommRing A] [IsDomain A] [IsDiscreteValuationR
     have hu : IsUnit (algebraMap A B ϖ) := ⟨⟨_, y, hy, by rw [mul_comm]; exact hy⟩, rfl⟩
     exact hϖ.not_isUnit ((isUnit_map_iff (algebraMap A B) ϖ).mp hu)
   haveI hd : IsDiscreteValuationRing B :=
-    ((IsDiscreteValuationRing.TFAE B hnf).out 1 0).mp (inferInstance : ValuationRing B)
+    ((IsDiscreteValuationRing.TFAE B hnf).out 2 1).mp (inferInstance : ValuationRing B)
   exact ⟨hd, GlobalTheory.FormalIsogeny.isAdicComplete_maximalIdeal_of_finite A B,
     IsLocalRing.ResidueField.finite_of_finite hf⟩
 

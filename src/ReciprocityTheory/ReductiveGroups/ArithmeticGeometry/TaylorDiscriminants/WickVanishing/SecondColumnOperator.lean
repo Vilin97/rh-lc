@@ -25,7 +25,7 @@ theorem trunc_apply (N : ℕ) (x : MvPolynomial σ k) :
 
 theorem trunc_deg (N : ℕ) (x : MvPolynomial σ k) : (trunc N x).totalDegree ≤ N := by
   rw [trunc_apply]
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun j hj => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun j hj => ?_)
   by_cases h0 : homogeneousComponent j x = 0
   · rw [h0, totalDegree_zero]
     exact Nat.zero_le _
@@ -69,7 +69,7 @@ private theorem totalDegree_pderiv_le' (i : σ) (y : MvPolynomial σ k) :
   classical
   conv_lhs => rw [MvPolynomial.as_sum y]
   rw [map_sum]
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun s hs => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [pderiv_monomial]
   refine le_trans ?_ (le_totalDegree hs)
   refine Finset.sup_le fun u hu => ?_
@@ -87,8 +87,8 @@ private theorem totalDegree_pderiv_le' (i : σ) (y : MvPolynomial σ k) :
 theorem deg_so_trunc (c : σ → σ → k) (N : ℕ) (x : MvPolynomial σ k) :
     (secondOrder k c (trunc N x)).totalDegree ≤ N := by
   unfold secondOrder
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun l _ => ?_)
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun l' _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l' _ => ?_)
   refine (totalDegree_mul _ _).trans ?_
   rw [totalDegree_C, zero_add]
   exact ((totalDegree_pderiv_le' _ _).trans (totalDegree_pderiv_le' _ _)).trans (trunc_deg N x)
@@ -165,12 +165,12 @@ def E1 (c : ι → ι → k) (t : k) (N : ℕ) (y : MvPolynomial ι k) : MvPolyn
 theorem totalDegree_second_exp_le (c : ι → ι → k) (t : k) (N : ℕ) (y : MvPolynomial ι k) :
     (E1 c t N y).totalDegree ≤ y.totalDegree := by
   unfold E1
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun i _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun i _ => ?_)
   exact (totalDegree_smul_le _ _).trans (totalDegree_iterate_secondOrder_le c _ i y le_rfl)
 
 theorem prodQ_deg (Q : Fin n → MvPolynomial ι k) : (prodQ Q).totalDegree ≤ ∑ b, (Q b).totalDegree := by
   unfold prodQ
-  refine (totalDegree_finset_prod _ _).trans (Finset.sum_le_sum fun b _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetProd _ _).trans (Finset.sum_le_sum fun b _ => ?_)
   unfold colE
   exact totalDegree_rename_le _ _
 

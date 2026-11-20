@@ -65,7 +65,7 @@ theorem dvr_of_span_maximal {S : Type*} [CommRing S] [IsNoetherianRing S] (π : 
     rw [IsLocalRing.isField_iff_maximalIdeal_eq, hm, Ideal.span_singleton_eq_bot]
     exact hπ0
   have hp : (IsLocalRing.maximalIdeal S).IsPrincipal := ⟨⟨π, hm⟩⟩
-  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 0 4).2 hp
+  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 1 5).2 hp
   exact ⟨inferInstance, inferInstance, (IsDiscreteValuationRing.irreducible_iff_uniformizer π).2 hm⟩
 
 theorem irreducible_X_pow_sub_param (K : Type*) [Field K] (N : ℕ) (hN : 1 ≤ N) :

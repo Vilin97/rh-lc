@@ -72,7 +72,7 @@ theorem pushForward_null' [CompactSpace X] [T2Space X] (A : FinHolAtlas e X)
       = ∑ j, ∫ y, fibSum (goodT A q j) (q ∘ (A.chart j).symm) (fun u => Pt.χ j ((A.chart j).symm u) * g ((A.chart j).symm u) * locDens A Φ j u) y :=
         Finset.sum_congr rfl (fun j _ => (htarget j).trans (harea j).2)
     _ = ∫ y, ∑ j, fibSum (goodT A q j) (q ∘ (A.chart j).symm) (fun u => Pt.χ j ((A.chart j).symm u) * g ((A.chart j).symm u) * locDens A Φ j u) y :=
-        (integral_finset_sum _ (fun j _ => (harea j).1)).symm
+        (MeasureTheory.integral_finsetSum _ (fun j _ => (harea j).1)).symm
     _ = ∫ y, ∑ᶠ x ∈ q ⁻¹' {y} \ S, g x * pushDens A Φ q x := by
         apply integral_congr_ae
         filter_upwards [hae] with y hy

@@ -132,7 +132,7 @@ private lemma card_mul_prod_rpow_inv_card_le_sum {ι : Type*} [Fintype ι] [None
   have hn : (0 : ℝ) < Fintype.card ι := by exact_mod_cast Fintype.card_pos
   have h := Real.geom_mean_le_arith_mean_weighted Finset.univ (fun _ => 1 / (Fintype.card ι : ℝ)) x
     (fun _ _ => by positivity) (by simp [Finset.card_univ]) (fun i _ => hx i)
-  rw [Real.finset_prod_rpow _ _ (fun i _ => hx i), ← Finset.mul_sum] at h
+  rw [Real.finsetProd_rpow _ _ (fun i _ => hx i), ← Finset.mul_sum] at h
   calc (Fintype.card ι : ℝ) * (∏ i, x i) ^ (1 / (Fintype.card ι : ℝ))
       ≤ (Fintype.card ι : ℝ) * (1 / (Fintype.card ι : ℝ) * ∑ i, x i) := by gcongr
     _ = ∑ i, x i := by field_simp
@@ -228,7 +228,7 @@ theorem _root_.GlobalTheory.SW.TracePair.trace_ge :
     card_mul_det_mul_det_rpow_le_trace_mul_of_posDef hN (hA τ) (hY τ)
   have hamgm := card_mul_prod_rpow_inv_card_le_sum (fun τ : Ψ => (a τ * y τ) ^ (1 / (N : ℝ)))
     (fun τ => by have := ha τ; have := hy τ; positivity)
-  rw [Fintype.card_coe, Real.finset_prod_rpow _ _ (fun τ _ => (mul_pos (ha τ) (hy τ)).le),
+  rw [Fintype.card_coe, Real.finsetProd_rpow _ _ (fun τ _ => (mul_pos (ha τ) (hy τ)).le),
     ← Real.rpow_mul (Finset.prod_nonneg fun τ _ => (mul_pos (ha τ) (hy τ)).le),
     Finset.prod_mul_distrib, ← hD] at hamgm
   have he : 1 / (N : ℝ) * (1 / (Ψ.card : ℝ)) = 1 / ((Ψ.card * N : ℕ) : ℝ) := by

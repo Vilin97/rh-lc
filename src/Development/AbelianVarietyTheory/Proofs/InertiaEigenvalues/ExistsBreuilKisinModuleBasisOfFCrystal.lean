@@ -37,7 +37,7 @@ theorem isDVR (l : ℕ) [hl : Fact l.Prime] (O K : Type) [CommRing O] [IsDomain 
     simp only [map_mul, map_natCast, map_one, norm_mul, norm_one] at h1
     have h2 := norm_algebraMap_le (K := K) y
     nlinarith [norm_nonneg (l : K), norm_nonneg (algebraMap O K y)]
-  exact ((IsDiscreteValuationRing.TFAE O hF).out 0 1).2 hV
+  exact ((IsDiscreteValuationRing.TFAE O hF).out 1 2).2 hV
 
 theorem exists_dual_pair {A S W R V ι : Type} [CommRing A] [CommRing S] [CommRing W] [CommRing R]
     [AddCommGroup V] [Module R V] [Module W V] [Module A V] [Fintype ι] (ω : W →+* R) (g : A →+* R)

@@ -128,7 +128,7 @@ theorem fiber_integral {U : AddSubgroup A} (hUo : IsOpen (U : Set A)) (hUc : IsC
       = ∫ a, ∑ q ∈ T, G (x, q.out) * (U : Set A).indicator (fun _ => (1 : ℂ)) (a - q.out) ∂μ :=
         integral_congr_ae (Filter.Eventually.of_forall fun a => hT (x, a))
     _ = (∑ q ∈ T, G (x, q.out)) * (μ.real (U : Set A) : ℂ) := by
-      rw [integral_finset_sum _ fun q _ => (he.comp_sub_right _).const_mul _]
+      rw [MeasureTheory.integral_finsetSum _ fun q _ => (he.comp_sub_right _).const_mul _]
       simp only [integral_const_mul, hshift, ← Finset.sum_mul]
 
 theorem map_eq_zero_of_fiber

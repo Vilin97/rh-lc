@@ -109,7 +109,7 @@ private lemma related_of_same_reduction_lemma_5 (M : ℕ) {Λ₁ Λ₂ : _root_.
   · rw [hst₁, hst₂]
     positivity
   · rw [hst₁, hst₂]
-    exact Nat.Coprime.mul (by simp) (by simp)
+    exact Nat.Coprime.mul_left (by simp) (by simp)
   · have hcong : ∀ a i, ∃ c : E, IsIntegral ℤ c ∧
         (s₁ : E) * ((s₁ : E) * (Pi.single i (1 : E) : Fin n → E) a) - s₂ * (s₁ * h a i) = c * M := by
       intro a i
@@ -334,7 +334,7 @@ private lemma exists_moves_mem_Vset_of_mem_DH {M : ℕ} {h : Matrix (Fin n) (Fin
   · obtain ⟨s₂, hs₂, hc₂, hg₂⟩ := exists_coprime_scale_integral_entries_of_mem_DH hh
     obtain ⟨s₃, hs₃, hc₃, hg₃⟩ :=
       exists_coprime_scale_integral_entries_of_mem_DH (_root_.GlobalTheory.SW.Base.ccT_mem_DH hh)
-    refine ⟨s₁ * s₂ * s₃, by positivity, (hc₁.mul hc₂).mul hc₃, fun v hv => ?_, fun v hv => ?_⟩
+    refine ⟨s₁ * s₂ * s₃, by positivity, (hc₁.Nat.Coprime.mul_left hc₂).Nat.Coprime.mul_left hc₃, fun v hv => ?_, fun v hv => ?_⟩
     · have h1 := smul_mulVec_mem_stdL_of_integral_scaled hg₂ (hstd₁ _ ((hmem v).1 hv))
       have h2 := _root_.GlobalTheory.SW.Base.nat_smul_mem _ s₃ h1
       rw [Matrix.mulVec_smul, hinv, smul_smul, smul_smul] at h2

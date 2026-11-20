@@ -115,7 +115,7 @@ theorem fnAlgClosed_of_fixed_points (F : FamilyUnif Xo (algebraMap (KA l) ℂ) t
       spMap (τ : ℂ →+* ℂ) ≫ F.u i P = F.u i P) : FnAlgClosed Xo c := by
   intro Z a ha
   obtain ⟨r, rfl⟩ := GlobalTheory.GeomIrr.mem_range_of_isAlgebraic_ratFun a (ha.tower_top (kap Z))
-  have hr : IsIntegral c.F r := (isIntegral_algebraMap_iff (algebraMap (kap Z) (Om Z)).injective).1 ha.isIntegral
+  have hr : IsIntegral c.F r := (isIntegral_algebraMap_iff ).1 ha.isIntegral
   suffices h : r ∈ (algebraMap c.F (kap Z)).range by
     obtain ⟨k, hk⟩ := h
     exact ⟨k, by rw [← hk, ← IsScalarTower.algebraMap_apply]⟩

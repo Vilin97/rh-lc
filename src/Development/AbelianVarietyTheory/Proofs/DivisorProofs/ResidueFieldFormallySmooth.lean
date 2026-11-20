@@ -22,7 +22,7 @@ theorem GlobalTheory.residueField_formallySmooth_of_isClosed : ∀ (k : Type) [F
   have hT : (Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ (Sp k).presheaf.germ ⊤ (f x) trivial =
       StructureSheaf.toStalk k (f x) := by
     rw [Scheme.ΓSpecIso_inv]
-    exact StructureSheaf.toOpen_germ _ _ _
+    exact AlgebraicGeometry.StructureSheaf.algebraMap_germ _ _ _
   have hφ : algebraMap k (X.presheaf.stalk x) =
       (((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ (Sp k).presheaf.germ ⊤ (f x) trivial) ≫
         f.stalkMap x).hom := by

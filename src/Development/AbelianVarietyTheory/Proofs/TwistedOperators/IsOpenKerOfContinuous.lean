@@ -211,7 +211,7 @@ theorem integral_eq_sum_reps [MeasurableSpace V] [BorelSpace V] (m : Measure V) 
     · rw [h0 β hβ]
       refine (Finset.sum_eq_zero fun t ht => Set.indicator_of_notMem (fun h => hβ ?_) _).symm
       simpa using add_mem (hT.1 t ht) (hBD h)
-  rw [integral_congr_ae (Eventually.of_forall e), integral_finset_sum, Finset.mul_sum]
+  rw [integral_congr_ae (Eventually.of_forall e), MeasureTheory.integral_finsetSum, Finset.mul_sum]
   · refine Finset.sum_congr rfl fun t _ => ?_
     rw [integral_indicator_const _ (hm t), Measure.real, measure_preimage_add, Complex.real_smul]
     rfl

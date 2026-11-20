@@ -22,7 +22,7 @@ theorem mem_OF (x : D.host.E) (hx : D.conjF x = x) (hi : IsIntegral ℤ x) :
     ∃ y : 𝓞 D.host.F, ((y : D.host.F) : D.host.E) = x := by
   obtain ⟨a, rfl⟩ := (D.sp.cm.fixed x).1 ((star_eq_conjF x).trans hx)
   have ha : IsIntegral ℤ a :=
-    (isIntegral_algebraMap_iff (algebraMap (↥D.host.F) D.host.E).injective).1 hi
+    (isIntegral_algebraMap_iff ).1 hi
   exact ⟨⟨a, ha⟩, rfl⟩
 
 theorem exists_theta : ∃ (θ : D.host.E) (c tr nm : 𝓞 D.host.F), IsIntegral ℤ θ ∧
@@ -143,7 +143,7 @@ private theorem algebraMap_Fp_Ep_injective : Function.Injective (algebraMap (D.s
 private theorem mem_integers_of_isIntegral_algebraMap (s : (D.s.atP p).Fp) (hs : IsIntegral 𝒪[(D.s.atP p).Fp] (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep s)) :
     s ∈ 𝒪[(D.s.atP p).Fp] := by
   haveI := isScalarTower_integers_Fp_Ep p
-  have h1 : IsIntegral 𝒪[(D.s.atP p).Fp] s := (isIntegral_algebraMap_iff (algebraMap_Fp_Ep_injective p)).1 hs
+  have h1 : IsIntegral 𝒪[(D.s.atP p).Fp] s := (isIntegral_algebraMap_iff ).1 hs
   first
   | exact (Valuation.integer.integers _).mem_of_integral h1
   | (obtain ⟨t, ht⟩ := (Valuation.integer.integers _).mem_of_integral h1; rw [← ht]; exact t.2)

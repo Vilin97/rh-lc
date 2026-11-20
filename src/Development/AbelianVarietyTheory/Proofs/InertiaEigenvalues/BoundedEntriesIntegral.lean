@@ -79,7 +79,7 @@ theorem GlobalTheory.StdAtPrimeLat.trivAt_hLat_of_bnd : ∀ (D : D7) (ι : (Af D
         algebraMap D.host.E (FiniteAdeleRing (𝓞 D.host.E) D.host.E) (r : D.host.E) •
           fun j => algebraMap D.host.E (FiniteAdeleRing (𝓞 D.host.E) D.host.E) (x j) :=
     fun r x => funext fun j => map_mul _ (r : D.host.E) (x j)
-  refine ⟨m₁ * m₂, Nat.Coprime.mul hm₁ hm₂, ?_, ?_⟩
+  refine ⟨m₁ * m₂, Nat.Coprime.mul_left hm₁ hm₂, ?_, ?_⟩
   · rw [Submodule.smul_le]
     intro r hr x hx
     obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.1 hr

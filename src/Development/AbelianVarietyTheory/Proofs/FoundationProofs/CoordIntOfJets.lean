@@ -133,7 +133,7 @@ theorem coordInt_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translates_
       have hγ' : γA ∈ ratG D P.a := (mem_ratG γA).2 ⟨γ, hγ⟩
       have hk' : k ∈ intG D P.a := (mem_intG k).2 hk
       have hq : DoubleCoset.mk (ratG D P.a) (intG D P.a) q.out = q := Quotient.out_eq' q
-      exact ((DoubleCoset.eq (ratG D P.a) (intG D P.a) q.out (γA * q.out * k)).2
+      exact ((@DoubleCoset.eq _ _ (ratG D P.a) (intG D P.a) q.out (γA * q.out * k)).2
         ⟨γA, hγ', k, hk', rfl⟩).symm.trans hq
     choose s hs htr using hrep
     rw [(GlobalTheory.T.definiteThetaPair_terms_norms_independent_representatives D hI ⊤ δ t0 Q' P.crv P.pt0 P P.level_pos).2.2.1 s hs h T]

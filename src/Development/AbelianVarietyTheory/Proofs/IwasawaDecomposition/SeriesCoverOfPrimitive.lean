@@ -21,7 +21,7 @@ theorem readsAt_conj {D : D7} (hs : ∀ x : D.LL0, star (x : D.what₂.LL) ∈ D
   have h2 : IsIntegral ℤ (star ((x : ↥D.LL0) : D.what₂.LL)) :=
     IsIntegral.map_of_comp_eq (RingHom.id ℤ) ((starRingEnd D.what₂.LL).comp (algebraMap ↥D.LL0 D.what₂.LL))
       (RingHom.ext_int _ _) (RingOfIntegers.isIntegral_coe x)
-  let y : 𝓞 ↥D.LL0 := ⟨⟨_, hs x⟩, (isIntegral_algebraMap_iff (algebraMap ↥D.LL0 D.what₂.LL).injective).1 h2⟩
+  let y : 𝓞 ↥D.LL0 := ⟨⟨_, hs x⟩, (isIntegral_algebraMap_iff ).1 h2⟩
   have hy : ((y : ↥D.LL0) : D.what₂.LL) = star ((x : ↥D.LL0) : D.what₂.LL) := rfl
   rw [sideEmb_not i b hy, D.conj_val, ← hy]
   exact h y

@@ -88,7 +88,7 @@ theorem main : ∀ (S K L : Type) [CommRing S] [IsDomain S] [IsDiscreteValuation
     obtain ⟨⟨t, ht⟩, hts⟩ := hmem
     have ht0 : t = 0 := htf ϖ hϖ.ne_zero t (by rw [Algebra.smul_def, mul_comm]; exact hts)
     exact ht (ht0 ▸ Q.zero_mem)
-  refine ((IsDiscreteValuationRing.TFAE (Localization.AtPrime Q) hnf).out 0 3).2
+  refine ((IsDiscreteValuationRing.TFAE (Localization.AtPrime Q) hnf).out 1 4).2
     (⟨hic, ?_⟩ : IsIntegrallyClosed (Localization.AtPrime Q) ∧
       ∃! P : Ideal (Localization.AtPrime Q), P ≠ ⊥ ∧ P.IsPrime)
   refine ⟨maximalIdeal _, ⟨⟨?_, inferInstance⟩, ?_⟩⟩

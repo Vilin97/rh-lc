@@ -91,7 +91,7 @@ theorem exists_int (D : D7) (x : 𝓞 D.host.E) (hx : star (x : D.host.E) = x) :
       algebraMap D.host.F D.host.E (t : D.host.F) = x := by
   obtain ⟨t, ht⟩ := exists_of_star_eq D hx
   have hi : IsIntegral ℤ t :=
-    (isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective).1 (ht ▸ x.2)
+    (isIntegral_algebraMap_iff ).1 (ht ▸ x.2)
   exact ⟨⟨t, hi⟩, RingOfIntegers.ext ht, ht⟩
 
 theorem exists_splitAt : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)), GlobalTheory.UnRep.SplitPl (GlobalTheory.Member.cF D) v → ∃ e : Formalism.L2.Theta.AE D, GlobalTheory.IdemModTwo.SplitAt D v e := by

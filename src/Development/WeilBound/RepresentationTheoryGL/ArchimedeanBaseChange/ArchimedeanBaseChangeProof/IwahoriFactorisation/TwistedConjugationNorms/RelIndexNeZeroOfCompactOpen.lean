@@ -118,7 +118,7 @@ theorem twOrb_indicator_eq_inv_index [TopologicalSpace G] [IsTopologicalGroup G]
   have key := GlobalTheory.T.twistedOrbitalIntegral_eq_sum_smallerLevel G θ K hKo hKc hθK I ⟨hIo, hIK, hθI⟩ δ (X.indicator 1) hH hb hfin
   rw [key.1, key.2]
   rw [finsum_eq_single _ (DoubleCoset.mk (twCent θ δ) I p0)]
-  · obtain ⟨h, hh, k, hk, hq0⟩ := (DoubleCoset.eq (twCent θ δ) I _ _).1
+  · obtain ⟨h, hh, k, hk, hq0⟩ := (@DoubleCoset.eq _ _ (twCent θ δ) I _ _).1
       (DoubleCoset.out_eq' (twCent θ δ) I (DoubleCoset.mk (twCent θ δ) I p0))
     have ho : Quotient.out (DoubleCoset.mk (twCent θ δ) I p0) = h⁻¹ * p0 * k⁻¹ :=
       calc Quotient.out (DoubleCoset.mk (twCent θ δ) I p0)

@@ -307,7 +307,7 @@ theorem fractionFieldToGenericStalk_algebraMap_eq : ∀ (L : Type) [Field L] [Nu
   have hzp : (ψ₀ y / ψ₀' y) ^ p = 1 := by rw [div_pow, hψp, hψp', div_one]
   have hz : ψ₀ y / ψ₀' y = 1 := by
     have : (ψ₀ y / ψ₀' y) ^ (Nat.gcd (m * η.ker.index) p) = 1 := pow_gcd_eq_one.2 ⟨hz1, hzp⟩
-    rwa [Nat.Coprime.gcd_eq_one (Nat.Coprime.mul hm hidx), pow_one] at this
+    rwa [Nat.Coprime.gcd_eq_one (Nat.Coprime.mul_left hm hidx), pow_one] at this
   exact (div_eq_one_iff_eq hne0).1 hz
 
 end GlobalTheory.PsiCmp

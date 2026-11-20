@@ -66,7 +66,7 @@ theorem eq_one_of_gam_bot {F E : Type} [Field F] [NumberField F] [Field E] [Numb
   rw [Subgroup.mem_subgroupOf] at hu
   simp only [Formalism.UG.ratPts, Subgroup.mem_map] at hu
   obtain ⟨g, hg, hgu⟩ := hu
-  obtain ⟨q, hq, k₁, hk₁, e3⟩ := (DoubleCoset.eq (UQ hc J) (K.subgroupOf (UA hc J))
+  obtain ⟨q, hq, k₁, hk₁, e3⟩ := (@DoubleCoset.eq _ _ (UQ hc J) (K.subgroupOf (UA hc J))
     (Formalism.L2.DIV.rep (Quotient.mk'' x : Cl hc J K)) x).1 (Formalism.L2.DIV.mk_rep _)
   rw [Subgroup.mem_subgroupOf] at hq hk₁
   simp only [Formalism.UG.ratPts, Subgroup.mem_map] at hq

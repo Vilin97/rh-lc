@@ -69,7 +69,7 @@ theorem newVar_not_mem_blowUpOf {P : Ideal (MRing ι R)} {u : J → MRing ι R} 
   rw [blowUpOf, RingHom.mem_ker, newVar, aeval_X]
   change ¬ (Polynomial.C (Ideal.Quotient.mk P (u j)) * Polynomial.X = 0)
   intro h0
-  have h1 := congrArg (fun p => Polynomial.coeff p 1) h0
+  have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
   simp only [Polynomial.coeff_C_mul_X, if_true, Polynomial.coeff_zero] at h1
   exact h (Ideal.Quotient.eq_zero_iff_mem.mp h1)
 

@@ -41,7 +41,7 @@ theorem twist_one : Twist F j LinearMap.id 1 (RingHom.id _) (𝟙 _) where
 theorem Twist.mul {T T' : (Fin h ⊕ Fin h → ℤ) →ₗ[ℤ] (Fin h ⊕ Fin h → ℤ)} {m m' : ℕ}
     {σ σ' : cycAway N →+* cycAway N} {f f' : F.X ⟶ F.X} (t : Twist F j T m σ f) (t' : Twist F j T' m' σ' f') :
     Twist F j (T ∘ₗ T') (m * m') (σ.comp σ') (f ≫ f') where
-  cop := Nat.Coprime.mul t.cop t'.cop
+  cop := Nat.Coprime.mul_left t.cop t'.cop
   root := by rw [RingHom.comp_apply, t'.root, map_pow, t.root, ← pow_mul, mul_comm]
   fix := by rw [RingHom.comp_assoc, t'.fix, t.fix]
   symp x y := by

@@ -48,7 +48,7 @@ theorem oneOrbit : OneOrbit k n c q := by
     · rw [← embX_smul_gluedS, ← e, mul_smul _ κ, show κ • L₀ = L₀ from hκ]
       simp only [mul_smul, inv_smul_smul]
 
-instance isLattice_interX (L : Submodule 𝒪[k] (n ⊕ Fin c → k)) [hL : L.IsLattice k] : (interX L).IsLattice k := by
+instance isLattice_interX (L : Submodule 𝒪[k] (n ⊕ Fin c → k)) [hL : L.IsFullLattice k] : (interX L).IsLattice k := by
   refine ⟨Submodule.fg_of_fg_map_injective (inX k n c) (fun x y h => funext fun r => congrFun h (Sum.inl r))
     (hL.fg.of_le (Submodule.map_comap_le _ _)), ChainLattice.span_eq_top_of_smul_mem _ fun v => ?_⟩
   obtain ⟨a, ha, hav⟩ := ChainLattice.exists_smul_mem (K := k) L (v := inX k n c v) (by rw [hL.span_eq_top]; trivial)

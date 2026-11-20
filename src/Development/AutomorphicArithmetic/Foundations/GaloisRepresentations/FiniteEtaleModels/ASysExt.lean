@@ -174,7 +174,7 @@ private theorem sys_ext_of_split {G : GDatum} {p : ℕ} {f : ℕ → G.La →+ G
       have hQd : Q n ∣ Q (n * m) := by
         rw [hQnm]
         exact dvd_mul_right _ _
-      have cQ : (Q n * Q m).Coprime p := Nat.Coprime.mul (hQp n hn) (hQp m hm)
+      have cQ : (Q n * Q m).Coprime p := Nat.Coprime.mul_left (hQp n hn) (hQp m hm)
       obtain ⟨s2a, s2b⟩ := s2 (Q n) (Q m) (hQpos n hn) (hQpos m hm) cQ
       refine ⟨fun x => eq_of_dv (key n hn _ ?_ ?_), keyZ n hn _ ?_ ?_⟩
       · have h := Dv.sub (Dv.of_dvd hPd (LP (n * m) hnm x)) (LP n hn x)

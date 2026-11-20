@@ -98,7 +98,7 @@ private theorem dc_equiv (e : G ≃* G') {T K : Subgroup G} {T' K' : Subgroup G'
   have hF : Function.Bijective F := by
     constructor
     · intro q₁ q₂ h
-      obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 h
+      obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
       rw [← DoubleCoset.out_eq' T K q₁, ← DoubleCoset.out_eq' T K q₂, DoubleCoset.eq]
       refine ⟨e.symm t, mT' t ht, e.symm k, mK' k hk, e.injective ?_⟩
       simp [he]

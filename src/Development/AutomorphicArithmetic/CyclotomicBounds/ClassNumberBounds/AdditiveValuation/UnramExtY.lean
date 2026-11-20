@@ -44,7 +44,7 @@ theorem adjoinRoot_unramified (hϖ : Irreducible ϖ) {f : O[X]} (hf : f.Monic)
     rw [isField_iff_maximalIdeal_eq, hm, Ideal.span_singleton_eq_bot]
     exact hne
   have hdvr : IsDiscreteValuationRing (AdjoinRoot f) :=
-    ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 0 4).mpr
+    ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 1 5).mpr
       (show (maximalIdeal (AdjoinRoot f)).IsPrincipal from ⟨_, hm⟩)
   refine ⟨hdom, hdvr, IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal _ hne hm, ?_⟩
   have e2 : ResidueField (AdjoinRoot f) ≃+* AdjoinRoot (f.map (residue O)) :=

@@ -26,7 +26,7 @@ theorem cDvr_of_finExt : ∀ (R R' : Type) [CommRing R] [IsDomain R] [IsLocalRin
   haveI : IsDedekindDomain R' := { }
   have hnf : ¬ IsField R' := fun h =>
     IsDiscreteValuationRing.not_isField R (isField_of_isIntegral_of_isField hinj' h)
-  have hdvr' : IsDiscreteValuationRing R' := ((IsDiscreteValuationRing.TFAE R' hnf).out 0 2).2 (inferInstance : IsDedekindDomain R')
+  have hdvr' : IsDiscreteValuationRing R' := ((IsDiscreteValuationRing.TFAE R' hnf).out 1 3).2 (inferInstance : IsDedekindDomain R')
   exact ⟨hdvr', hcomp, charZero_of_injective_algebraMap hinj'⟩
 
 end GlobalTheory.Mum

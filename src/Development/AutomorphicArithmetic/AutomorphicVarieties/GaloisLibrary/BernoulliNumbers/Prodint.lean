@@ -26,7 +26,7 @@ theorem UpperTheory.V.Bern.b_prodint :
   have hint' : IsIntegral ℤ q := by
     have : (q : ℂ) = algebraMap ℚ ℂ q := rfl
     rw [this] at hint
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective).mp hint
+    exact (isIntegral_algebraMap_iff ).mp hint
   obtain ⟨M, hM⟩ := IsIntegrallyClosed.isIntegral_iff.mp hint'
   have hM' : (M : ℚ) = q := by simpa using hM
   subst hM'

@@ -170,7 +170,7 @@ attribute [instance] Base.iM Base.iMB
 
 def splitIdeal {B : Type} [CommRing B] {q n : ℕ} (P : Fin q → Polynomial B) (ut : Fin q → Fin n → B) :
     Ideal (MvPowerSeries (Fin q × Fin n) B) :=
-  Ideal.span {c | ∃ (j : Fin q) (e : ℕ), c = Polynomial.coeff
+  Ideal.span {c | ∃ (j : Fin q) (e : ℕ), c = _root_.AddMonoidAlgebra.coeff (M := ℕ)
     ((∏ i : Fin n, (Polynomial.X - Polynomial.C (MvPowerSeries.C (ut j i) + MvPowerSeries.X (j, i)))) -
       (P j).map (MvPowerSeries.C : B →+* MvPowerSeries (Fin q × Fin n) B)) e}
 

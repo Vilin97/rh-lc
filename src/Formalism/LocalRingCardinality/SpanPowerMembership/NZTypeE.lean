@@ -11,8 +11,8 @@ open Polynomial Formalism.CyclotomicNorms NumberField IsDedekindDomain
 theorem monicOf_injective {K : Type} [Field K] {N : ℕ} : Function.Injective (monicOf (K := K) (N := N)) := by
   intro a b h
   funext i
-  have h2 := congrArg (fun p => Polynomial.coeff p i) h
-  simpa [monicOf, Polynomial.coeff_X_pow, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Fin.val_inj,
+  have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) h
+  simpa [monicOf, Polynomial.coeff_X_pow, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Fin.val_inj,
     (Fin.is_lt i).ne] using h2
 
 variable {R : Ranks} {H : Host R}

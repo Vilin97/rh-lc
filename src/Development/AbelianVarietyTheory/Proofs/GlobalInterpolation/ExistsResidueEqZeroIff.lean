@@ -159,7 +159,7 @@ private theorem measure_residueBox_lemma (μ : Measure V) [μ.IsAddHaarMeasure]
   · intro s _
     obtain ⟨w, hw⟩ := exists_residueBox_eq_preimage_add_lemma_2 e s
     rw [hw]
-    exact (measurableSet_residue_box_zero e).preimage (continuous_add_right w).measurable
+    exact (measurableSet_residue_box_zero e).preimage (continuous_add_const w).measurable
 
 open scoped TensorProduct in
 open NumberField IsDedekindDomain MeasureTheory Topology in

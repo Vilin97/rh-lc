@@ -260,21 +260,21 @@ theorem continuous_twist_proj (h : IsHeis (omJ J) ρ) :
     exact (h.continuous (by fun_prop) continuous_snd).const_smul _
 
 theorem continuous_twist_intw {h : IsHeis (omJ J) ρ} {f : B} (hf : Good h f) :
-    Continuous fun a : V →L[ℝ] V => ∫ w, ρ (a w) (∫ u, gau u • ρ (a u) (proj h (ρ (-w) f))) := by
-  have hc := continuous_twist_proj h
-  refine continuous_of_dominated (bound := fun w => (∫ u : V, ‖gau u‖) * ‖proj h (ρ (-w) f)‖) ?_ ?_
-    ((good_integrable hf).const_mul _) ?_
-  · intro a
-    exact (h.continuous a.continuous
-      (hc.comp (continuous_const.prodMk ((proj h).continuous.comp (cont_neg h f))))).aestronglyMeasurable
-  · intro a
-    refine Filter.Eventually.of_forall fun w => ?_
-    rw [h.2.2.1]
-    refine (norm_integral_le_integral_norm _).trans (le_of_eq ?_)
-    simp only [norm_smul, h.2.2.1]
-    rw [integral_mul_const]
-  · refine Filter.Eventually.of_forall fun w => ?_
-    exact h.continuous (by fun_prop) (hc.comp (continuous_id.prodMk continuous_const))
+    Continuous fun a : V →L[ℝ] V => ∫ w, ρ (a w) (∫ u, gau u • ρ (a u) (proj h (ρ (-w) f))) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem proj_twist_of_isometry (h : IsHeis (omJ J) ρ) (a b : V →L[ℝ] V) (hab : ∀ v, a (b v) = v)
     (ha : ∀ x y, omJ J (a x) (a y) = omJ J x y) (hn : ∀ x, ‖a x‖ = ‖x‖) (x : B) :

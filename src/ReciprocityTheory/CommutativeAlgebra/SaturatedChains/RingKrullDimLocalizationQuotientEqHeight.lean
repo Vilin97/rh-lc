@@ -184,8 +184,8 @@ theorem ringKrullDim_localization_quotient_eq_height {P : Type*} [CommRing P] (p
       have e1 := congrArg (Ideal.comap (Ideal.Quotient.mk p)) e
       rw [comap_map_mk_lemma_4 _ _ (hpA x), comap_map_mk_lemma_4 _ _ (hpA y)] at e1
       have e2 := congrArg (Ideal.map (algebraMap P (Localization.AtPrime q))) e1
-      rw [IsLocalization.map_comap (M := q.primeCompl) (S := Localization.AtPrime q),
-        IsLocalization.map_comap (M := q.primeCompl) (S := Localization.AtPrime q)] at e2
+      rw [IsLocalization.map_under (M := q.primeCompl) (S := Localization.AtPrime q),
+        IsLocalization.map_under (M := q.primeCompl) (S := Localization.AtPrime q)] at e2
       exact PrimeSpectrum.ext (Ideal.comap_injective_of_surjective _ Ideal.Quotient.mk_surjective e2)
     · intro x
       show _ ≤ q.map (Ideal.Quotient.mk p)
@@ -221,9 +221,9 @@ theorem ringKrullDim_localization_quotient_eq_height {P : Type*} [CommRing P] (p
       rw [comap_map_mk_lemma_4 _ _ (Ideal.map_mono (hpB x.1)),
         comap_map_mk_lemma_4 _ _ (Ideal.map_mono (hpB y.1))] at e1
       have e2 := congrArg (Ideal.under P) e1
-      rw [IsLocalization.comap_map_of_isPrime_disjoint (M := q.primeCompl) (S := Localization.AtPrime q)
+      rw [IsLocalization.under_map_of_isPrime_disjoint (M := q.primeCompl) (S := Localization.AtPrime q)
           inferInstance (hdB x),
-        IsLocalization.comap_map_of_isPrime_disjoint (M := q.primeCompl) (S := Localization.AtPrime q)
+        IsLocalization.under_map_of_isPrime_disjoint (M := q.primeCompl) (S := Localization.AtPrime q)
           inferInstance (hdB y)] at e2
       exact Subtype.ext (PrimeSpectrum.ext
         (Ideal.comap_injective_of_surjective _ Ideal.Quotient.mk_surjective e2))
@@ -251,12 +251,12 @@ private theorem height_map_atPrime_lemma_5 {R : Type*} [CommRing R] (p q : Ideal
       refine lt_of_le_of_ne (Ideal.comap_mono (show x.asIdeal ≤ y.asIdeal from hxy.le))
         fun e => hxy.ne ?_
       have e2 := congrArg (Ideal.map (algebraMap R (Localization.AtPrime q))) e
-      rw [IsLocalization.map_comap (M := q.primeCompl) (S := Localization.AtPrime q),
-        IsLocalization.map_comap (M := q.primeCompl) (S := Localization.AtPrime q)] at e2
+      rw [IsLocalization.map_under (M := q.primeCompl) (S := Localization.AtPrime q),
+        IsLocalization.map_under (M := q.primeCompl) (S := Localization.AtPrime q)] at e2
       exact PrimeSpectrum.ext e2
     have hfp : f ⟨_, hp'⟩ = ⟨p, ‹p.IsPrime›⟩ := PrimeSpectrum.ext (by
       show Ideal.under R (p.map (algebraMap R (Localization.AtPrime q))) = p
-      exact IsLocalization.comap_map_of_isPrime_disjoint (M := q.primeCompl)
+      exact IsLocalization.under_map_of_isPrime_disjoint (M := q.primeCompl)
         (S := Localization.AtPrime q) ‹p.IsPrime› (hdisj p hpq))
     have h := Order.height_le_height_apply_of_strictMono f hf ⟨_, hp'⟩
     rwa [hfp] at h
@@ -271,10 +271,10 @@ private theorem height_map_atPrime_lemma_5 {R : Type*} [CommRing R] (p q : Ideal
       refine lt_of_le_of_ne (Ideal.map_mono (show x.1.asIdeal ≤ y.1.asIdeal from hxy.le))
         fun e => hxy.ne ?_
       have e2 := congrArg (Ideal.under R) e
-      rw [IsLocalization.comap_map_of_isPrime_disjoint (M := q.primeCompl)
+      rw [IsLocalization.under_map_of_isPrime_disjoint (M := q.primeCompl)
           (S := Localization.AtPrime q) inferInstance
           (hdisj _ ((show x.1.asIdeal ≤ p from x.2).trans hpq)),
-        IsLocalization.comap_map_of_isPrime_disjoint (M := q.primeCompl)
+        IsLocalization.under_map_of_isPrime_disjoint (M := q.primeCompl)
           (S := Localization.AtPrime q) inferInstance
           (hdisj _ ((show y.1.asIdeal ≤ p from y.2).trans hpq))] at e2
       exact Subtype.ext (PrimeSpectrum.ext e2)

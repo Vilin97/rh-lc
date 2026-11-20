@@ -34,7 +34,7 @@ theorem lcssyt_card_initial {n : ℕ} (P : Fin n → Prop) [DecidablePred P]
 theorem lcssyt_colExp_apply_lt {r n h : ℕ} (c : Fin h → Fin r) (hh : h ≤ n) (a : Fin r) (t : Fin n)
     (ht : t.val < h) : colExp c hh (a, t) = if c ⟨t.val, ht⟩ = a then 1 else 0 := by
   unfold colExp
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single ⟨t.val, ht⟩]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single ⟨t.val, ht⟩]
   · rw [Finsupp.single_apply]
     congr 1
     apply propext
@@ -52,7 +52,7 @@ theorem lcssyt_colExp_apply_lt {r n h : ℕ} (c : Fin h → Fin r) (hh : h ≤ n
 theorem lcssyt_colExp_apply_ge {r n h : ℕ} (c : Fin h → Fin r) (hh : h ≤ n) (a : Fin r) (t : Fin n)
     (ht : ¬ t.val < h) : colExp c hh (a, t) = 0 := by
   unfold colExp
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   refine Finset.sum_eq_zero fun p _ => ?_
   rw [Finsupp.single_apply, if_neg]
   intro he

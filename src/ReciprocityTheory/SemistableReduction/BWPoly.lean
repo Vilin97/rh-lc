@@ -60,7 +60,7 @@ theorem bwPoly_holds (hH : LemmaHStatement) (hE : ∀ n, ReciprocityTheory.L2Dba
       Polynomial.eval_X, mul_comm, ← hscale t ht0, hsum t]
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, mul_comm]
-  have hc := congrArg (fun q => Polynomial.coeff q (∑ i, a i)) hΦ
+  have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (∑ i, a i)) hΦ
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, if_pos rfl] at hc
   rw [Finset.sum_ite_eq] at hc
   split_ifs at hc with hk

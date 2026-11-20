@@ -34,7 +34,7 @@ theorem det_int {D : D7} {N N' r : ℕ} (p : ℕ) {b₁ b₂ : Fin r → Matrix 
     intro j
     obtain ⟨s, hs, hmem⟩ := h₂.2.1 j
     obtain ⟨s', hs', c, hc⟩ := h₁.2.2 _ hmem
-    refine ⟨s' * s, Nat.Coprime.mul hs' hs, c, fun i => ?_⟩
+    refine ⟨s' * s, Nat.Coprime.mul_left hs' hs, c, fun i => ?_⟩
     have e1 : hYY D ((s' : D.host.E) • (s : D.host.E) • b₂ j) (b₁ i) =
         ((s' * s : ℕ) : D.host.K) * hYY D (b₂ j) (b₁ i) := by
       rw [smul_smul, ← Nat.cast_mul, Nat.cast_smul_eq_nsmul]

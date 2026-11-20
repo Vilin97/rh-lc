@@ -27,7 +27,7 @@ theorem continuous_qMap (B : Matrix ι ι F) (ρ : InfinitePlace F → (F →+* 
     (Continuous.matrix_mulVec continuous_const (continuous_apply w)))
 
 theorem continuous_gW (P : InfinitePlace F → Matrix ι ι ℝ) : Continuous (gW P) := by
-  refine Real.continuous_exp.comp (continuous_const.mul (continuous_finset_sum _ fun w _ => ?_))
+  refine Real.continuous_exp.comp (continuous_const.mul (continuous_finsetSum _ fun w _ => ?_))
   exact Continuous.dotProduct (continuous_apply w)
     (Continuous.matrix_mulVec continuous_const (continuous_apply w))
 

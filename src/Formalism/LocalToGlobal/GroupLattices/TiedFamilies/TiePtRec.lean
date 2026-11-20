@@ -60,7 +60,7 @@ theorem comp_re {a b : ℕ} (h : a = b) (σ : E →ₐ[F] E) (J : Matrix (Fin a)
   subst h
   obtain rfl : J' = J := by ext x y; exact hJ x y
   obtain ⟨i, hi⟩ := hs (Quotient.mk'' x)
-  obtain ⟨g, hg, k, hk, e⟩ := (DoubleCoset.eq _ _ (yG i) x).1 hi
+  obtain ⟨g, hg, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ (yG i) x).1 hi
   obtain ⟨γ, hγ, eγ⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hg)
   refine ⟨i, γ, k.1, hγ, Subgroup.mem_subgroupOf.1 hk, k.2, ?_⟩
   rw [reGL_rfl, reGL_rfl, eγ, e]; rfl

@@ -37,7 +37,7 @@ variable {cj : B ≃ₐ[K] B} {θ : B} {t n : K} (h : IsUnitGen cj θ t n)
 include h
 
 theorem mem_of_int' {a : K} (ha : IsIntegral 𝒪[K] (algebraMap K B a)) : a ∈ 𝒪[K] :=
-  mem_of_int ((isIntegral_algebraMap_iff h.inj).1 ha)
+  mem_of_int ((isIntegral_algebraMap_iff ).1 ha)
 
 theorem cj_gen : cj θ = algebraMap K B t - θ := by rw [← h.tr]; ring
 

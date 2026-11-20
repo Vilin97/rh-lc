@@ -43,7 +43,7 @@ theorem map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero : ∀ (k 
     exact ⟨b, hb⟩
 
   let T : (I₂ → k) → SB ((I₀ → k) × (I₁ → k) × (I₂ → k)) := fun b =>
-    ⟨fun x => Φ.1 (x + (0, 0, b)), Φ.2.1.comp_continuous (continuous_add_right _),
+    ⟨fun x => Φ.1 (x + (0, 0, b)), Φ.2.1.comp_continuous (continuous_add_const _),
       Φ.2.2.comp_homeomorph (Homeomorph.addRight _)⟩
   have hT : ∀ b, l (T b) = l Φ := fun b => hl b Φ (T b) fun _ => rfl
 
@@ -61,7 +61,7 @@ theorem map_eq_zero_of_translation_invariant_of_fibre_integral_eq_zero : ∀ (k 
     have hF2 : ∀ y ∉ box I₂ R, Φ.1 (x₀, x₁, y) = 0 := fun y hy =>
       image_eq_zero_of_notMem_tsupport fun hm => hy (hKR ⟨_, hm, rfl⟩)
     have hval : (∑ b ∈ S, T b).1 (x₀, x₁, a) = ∑ b ∈ S, Φ.1 (x₀, x₁, a + b) := by
-      rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+      rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       simp [T]
     rw [hval]

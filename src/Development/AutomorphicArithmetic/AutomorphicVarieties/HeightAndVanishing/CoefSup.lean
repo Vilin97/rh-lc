@@ -95,7 +95,7 @@ private theorem exists_unram (l : ℕ) [hl : Fact l.Prime] (n : ℕ) [NeZero n] 
     IsDiscreteValuationRing.not_isField ℤ_[l] ((Algebra.IsIntegral.isField_iff_isField hinj).2 hf)
   haveI : IsNoetherianRing A := IsNoetherianRing.of_finite ℤ_[l] A
   have hp : (IsLocalRing.maximalIdeal A).IsPrincipal := hm ▸ inferInstance
-  have hd : IsDiscreteValuationRing A := ((IsDiscreteValuationRing.TFAE _ hnf).out 0 4).mpr hp
+  have hd : IsDiscreteValuationRing A := ((IsDiscreteValuationRing.TFAE _ hnf).out 1 5).mpr hp
   refine ⟨⟨A, hd, hfin⟩, ?_, ?_⟩
   · exact eO_eq_one l A hm
   · refine ⟨⟨⟨ζ, Algebra.self_mem_adjoin_singleton _ ζ⟩, ?_⟩, rootsOfUnity.isCyclic _ _⟩

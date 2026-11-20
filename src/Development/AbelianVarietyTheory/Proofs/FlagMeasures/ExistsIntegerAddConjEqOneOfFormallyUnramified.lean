@@ -78,7 +78,7 @@ theorem _root_.GlobalTheory.exists_integer_add_conj_eq_one_of_formallyUnramified
       rw [← hb]
       exact b.isIntegral_coe
     have hint' : IsIntegral ℤ a :=
-      (isIntegral_algebraMap_iff (algebraMap F E).injective).1 hint
+      (isIntegral_algebraMap_iff ).1 hint
     exact ⟨⟨a, hint'⟩, rfl⟩
   set I : Ideal (𝓞 F) := LinearMap.range (Algebra.intTrace (𝓞 F) (𝓞 E)) with hI
   have hItop : I = ⊤ := by

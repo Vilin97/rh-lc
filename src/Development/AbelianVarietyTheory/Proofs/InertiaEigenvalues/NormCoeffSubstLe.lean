@@ -74,7 +74,7 @@ theorem Ex.mul {u f g e e' : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (hf : �
   have h1 : Tendsto (fun m : ℕ => coeff k (Polynomial.aeval u (trunc m f * trunc m g))) atTop
       (𝓝 (coeff k (e * e'))) := by
     simp only [map_mul, coeff_mul]
-    exact tendsto_finset_sum _ fun p _ => (he _).mul (he' _)
+    exact tendsto_finsetSum _ fun p _ => (he _).mul (he' _)
   have h2 : Tendsto (fun m : ℕ => coeff k (Polynomial.aeval u (trunc m (f * g) - trunc m f * trunc m g)))
       atTop (𝓝 0) := by
     refine squeeze_zero_norm (a := fun m => C * r ^ m) (fun M => hb _ _ (by positivity) fun m => ?_) ?_
@@ -113,7 +113,7 @@ theorem Ex.aeval {u f e : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (hf : ∀ m
     | succ n ih => rw [pow_succ, pow_succ]; exact ih.mul hu (coeff_pow_le hf n) hf he
   intro k
   simp only [Polynomial.aeval_eq_sum_range (p := p), map_sum, map_smul]
-  exact tendsto_finset_sum _ fun n _ => (hpow n k).const_smul _
+  exact tendsto_finsetSum _ fun n _ => (hpow n k).const_smul _
 
 theorem Ex.of_approx {u f e : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (F E : ℕ → K⟦X⟧)
     (h : ∀ N, Ex u (F N) (E N)) (hE : ∀ k, Tendsto (fun N => coeff k (E N)) atTop (𝓝 (coeff k e)))
@@ -226,7 +226,7 @@ private lemma norm_le_one_of_mem_integralClosure_padicInt {l : ℕ} [Fact (Nat.P
       -∑ i ∈ Finset.range p.natDegree, algebraMap ℤ_[l] ↥LL.1 (p.coeff i) * x ^ i := by
     have h := hp
     rw [hpm.as_sum] at h
-    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum,
+    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum,
       Polynomial.eval₂_mul, Polynomial.eval₂_C] at h
     exact eq_neg_of_add_eq_zero_left h
   have hn : p.natDegree ≠ 0 := by
@@ -412,7 +412,7 @@ private lemma ex_mul_of_bounded_coeff {u f g e e' : K⟦X⟧} (hu : ‖constantC
       calc _ ≤ M * M * r ^ j := by gcongr
         _ ≤ M * M * r ^ m :=
           mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one hr0.le hr1.le hjm) (by positivity)
-  have hlim := (tendsto_finset_sum (Finset.HasAntidiagonal.antidiagonal k : Finset (ℕ × ℕ))
+  have hlim := (tendsto_finsetSum (Finset.HasAntidiagonal.antidiagonal k : Finset (ℕ × ℕ))
     fun (x : ℕ × ℕ) _ => (h₁ x.1).mul (h₂ x.2)).add hD0
   rw [add_zero, ← coeff_mul] at hlim
   exact hlim.congr (fun m => (hsplit m).symm)

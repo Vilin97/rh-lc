@@ -29,7 +29,7 @@ theorem mem_one_iff_isIntegral (a : maximalRealSubfield E) :
     a ∈ (1 : Submodule (𝓞 (maximalRealSubfield E)) (maximalRealSubfield E)) ↔ IsIntegral ℤ (a : E) := by
   rw [Submodule.mem_one]
   have e : IsIntegral ℤ (a : E) ↔ IsIntegral ℤ a :=
-    isIntegral_algebraMap_iff (R := ℤ) (A := maximalRealSubfield E) (B := E) (x := a) Subtype.val_injective
+    isIntegral_algebraMap_iff (R := ℤ) (A := maximalRealSubfield E) (B := E) (x := a) 
   rw [e]
   exact ⟨fun ⟨b, hb⟩ => hb ▸ b.isIntegral_coe, fun h => ⟨⟨a, h⟩, rfl⟩⟩
 

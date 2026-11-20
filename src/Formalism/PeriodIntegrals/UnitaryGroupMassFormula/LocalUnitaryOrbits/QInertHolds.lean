@@ -55,7 +55,7 @@ theorem fix_int (h : IsCMExt F E σ) (y : 𝓞 E) (hy : sigO σ y = y) :
   have hy' : σ (y : E) = y := by rw [← sigO_coe, hy]
   obtain ⟨c, hc⟩ := fix_range σ h hy'
   have hint : IsIntegral ℤ c := by
-    rw [← isIntegral_algebraMap_iff (A := F) (B := E) (FaithfulSMul.algebraMap_injective F E), hc]
+    rw [← isIntegral_algebraMap_iff (A := F) (B := E) , hc]
     exact y.isIntegral_coe
   refine ⟨⟨c, (mem_integralClosure_iff ℤ F).2 hint⟩, RingOfIntegers.ext ?_⟩
   exact hc

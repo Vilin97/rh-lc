@@ -354,7 +354,7 @@ theorem pairs_standard_at_p : StdStep := by
     refine rep_U t R2 ?_
     rintro y ⟨a, ha, b, hb, rfl⟩
     refine ⟨cf_good t _ ⟨n, hn, hnt⟩ (q2_add a b (q2_2 a ha) (q2_1 b hb)), ?_⟩
-    refine ⟨n * (s * s'), Nat.mul_pos hn (Nat.mul_pos spos spos'), Nat.Coprime.mul hnp (Nat.Coprime.mul hs hs'), ?_⟩
+    refine ⟨n * (s * s'), Nat.mul_pos hn (Nat.mul_pos spos spos'), Nat.Coprime.mul_left hnp (Nat.Coprime.mul_left hs hs'), ?_⟩
     have e : (n * (s * s')) • (t + (a + b)) = (s * s') • (n • t) + (n • ((s * s') • a) + (n * s') • ((s * 1) • b)) := by
       simp only [smul_add, smul_smul]
       congr 1

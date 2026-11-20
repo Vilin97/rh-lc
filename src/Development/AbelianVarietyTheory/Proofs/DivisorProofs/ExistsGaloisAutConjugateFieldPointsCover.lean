@@ -87,7 +87,7 @@ theorem galConj : ∀ (A F L K : Type) [CommRing A] [IsDomain A] [Field F] [Fiel
       intro n
       have hfix : ∀ τ : L ≃ₐ[F] L, τ (P.coeff n : L) = P.coeff n := by
         intro τ
-        have := congrArg (fun p => Polynomial.coeff p n) (hPmap τ)
+        have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) (hPmap τ)
         simpa [Polynomial.coeff_map] using this
       obtain ⟨f, hf⟩ := (IsGalois.mem_bot_iff_fixed (P.coeff n : L)).2 hfix
       change algebraMap F L f = _ at hf

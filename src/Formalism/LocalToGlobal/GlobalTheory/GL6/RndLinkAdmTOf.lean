@@ -21,7 +21,7 @@ theorem rnd_cls (S : StepLevel F E σ J T f bad) (γ0 : GL (Fin n) E) (hγ0 : γ
     rw [← h]; group
   have hb : bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ0 ∈ UPts σ J (FiniteAdeleRing (𝓞 F) F) := by
     rw [e]; exact Subgroup.mul_mem _ (Subgroup.mul_mem _ y2.2 hkU) (Subgroup.inv_mem _ y1.2)
-  refine (DoubleCoset.eq _ _ y1 y2).2 ⟨⟨bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ0, hb⟩,
+  refine (@DoubleCoset.eq _ _ _ _ y1 y2).2 ⟨⟨bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ0, hb⟩,
     ?_, ⟨k.1⁻¹, Subgroup.inv_mem _ hkU⟩, ?_, ?_⟩
   · exact Subgroup.mem_subgroupOf.2 ⟨γ0, hγ0, rfl⟩
   · exact Subgroup.mem_subgroupOf.2 (S.U.inv_mem k.2)

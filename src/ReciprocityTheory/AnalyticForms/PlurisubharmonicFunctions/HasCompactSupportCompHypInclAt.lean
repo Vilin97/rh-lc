@@ -139,12 +139,12 @@ theorem integral_log_maDens_psiRef (i : Fin (n + 1)) {h : (Fin (n + 1) → ℂ) 
     simp only [fTerm, Complex.re_ofReal_mul, Complex.re_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => by ring
   have hint : ∀ j, ∫ z, ∑ k, fTerm i h j k z = ∑ k, ∫ z, fTerm i h j k z := fun j =>
-    integral_finset_sum _ fun k _ => (fTerm_props i hh hhc j k).1
+    MeasureTheory.integral_finsetSum _ fun k _ => (fTerm_props i hh hhc j k).1
   have hval : ∀ j k, ∫ z, fTerm i h j k z = if j = i ∧ k = i then
       (Real.pi / 2) * (1 / ((n : ℝ) + 1)) * ∫ w, h (Fin.insertNth i 0 w) else 0 :=
     fun j k => (fTerm_props i hh hhc j k).2
-  rw [hsplit, integral_const_mul, integral_finset_sum _ fun j _ =>
-    integrable_finset_sum _ fun k _ => (fTerm_props i hh hhc j k).1]
+  rw [hsplit, integral_const_mul, MeasureTheory.integral_finsetSum _ fun j _ =>
+    MeasureTheory.integrable_finsetSum _ fun k _ => (fTerm_props i hh hhc j k).1]
   simp only [hint, hval]
   simp [ite_and]
 

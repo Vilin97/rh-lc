@@ -47,7 +47,7 @@ theorem exists_sqrt_totallyNegative : ∀ (K : Type) [Field K] [NumberField K] [
   have hsq : (y : K) ^ 2 ∈ maximalRealSubfield K := by
     rw [← NumberField.IsCMField.complexConj_eq_self_iff, map_pow, hconj, neg_sq]
   have hint : IsIntegral ℤ (⟨(y : K) ^ 2, hsq⟩ : maximalRealSubfield K) := by
-    refine (isIntegral_algebraMap_iff (FaithfulSMul.algebraMap_injective (maximalRealSubfield K) K)).mp ?_
+    refine (isIntegral_algebraMap_iff ).mp ?_
     change IsIntegral ℤ ((y : K) ^ 2)
     exact (RingOfIntegers.isIntegral_coe y).pow 2
   refine ⟨⟨⟨(y : K) ^ 2, hsq⟩, hint⟩, (y : K), rfl, ?_, ?_⟩

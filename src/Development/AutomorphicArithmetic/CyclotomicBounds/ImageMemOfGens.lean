@@ -13,7 +13,7 @@ theorem exists_unit_neg : ∃ u : (ZMod H.condN)ˣ, (u : ZMod H.condN).val ≡ 1
   obtain ⟨hq, hd, hq8, hd16, -⟩ := H.hyp
   have hdq : Nat.Coprime H.d H.q := (Nat.coprime_primes hd hq).2 (by omega)
   have hsq : Nat.Coprime H.QS H.q := Nat.Coprime.coprime_dvd_right (dvd_mul_right _ _) H.QS_coprime
-  have hcop : Nat.Coprime (H.QS * H.d) H.q := Nat.Coprime.mul hsq hdq
+  have hcop : Nat.Coprime (H.QS * H.d) H.q := Nat.Coprime.mul_left hsq hdq
   obtain ⟨x, hx1, hx2⟩ := Nat.chineseRemainder hcop 1 (H.q - 1)
   have hq2 : 2 ≤ H.q := hq.two_le
   have hxm : Nat.Coprime x (H.QS * H.d) := by
@@ -54,7 +54,7 @@ theorem inertia_q : ∃ g : R.GG, g ≠ 1 ∧ ∀ (P : Ideal (𝓞 H.E)) [P.IsPr
   obtain ⟨u0, hu0, hneg⟩ := exists_unit_neg H
   have hdq : Nat.Coprime H.d H.q := (Nat.coprime_primes hd hq).2 (by omega)
   have hsq : Nat.Coprime H.QS H.q := Nat.Coprime.coprime_dvd_right (dvd_mul_right _ _) H.QS_coprime
-  have hcop : Nat.Coprime (H.QS * H.d) H.q := Nat.Coprime.mul hsq hdq
+  have hcop : Nat.Coprime (H.QS * H.d) H.q := Nat.Coprime.mul_left hsq hdq
   have hN : H.condN = H.QS * H.d * H.q := by simp only [Formalism.HC.HostRaw.condN]; ring
   have hNpos : 0 < H.condN := by
     rw [hN]; exact Nat.mul_pos (Nat.mul_pos H.QS_pos hd.pos) hq.pos

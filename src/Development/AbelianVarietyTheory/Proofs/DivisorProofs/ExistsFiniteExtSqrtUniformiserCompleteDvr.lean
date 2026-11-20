@@ -49,7 +49,7 @@ theorem exists_finite_ext_sq_eq_uniformiser : ∀ (V : Type) [CommRing V] [IsDom
     obtain ⟨b, hb⟩ := hF.mul_inv_cancel hϖ0
     exact hϖnu (IsUnit.of_mul_eq_one _ hb)
   have hdvr : IsDiscreteValuationRing V₁ := by
-    have h03 := (IsDiscreteValuationRing.TFAE V₁ hnf).out 0 3
+    have h03 := (IsDiscreteValuationRing.TFAE V₁ hnf).out 1 4
     refine h03.mpr ⟨hIC₁, ⟨maximalIdeal V₁, ⟨?_, inferInstance⟩, ?_⟩⟩
     · intro h
       apply hϖnu

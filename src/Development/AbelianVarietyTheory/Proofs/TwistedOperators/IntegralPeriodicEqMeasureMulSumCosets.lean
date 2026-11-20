@@ -48,7 +48,7 @@ theorem integral_periodic_eq_measure_mul_sum_cosets :
       exact hx ⟨w, hw, (hmem w x).1 h⟩
   have h1 : ∫ x, F x ∂μ = ∫ x, ∑ w ∈ T, (S w).indicator (fun _ => F (t w)) x ∂μ := by
     conv_lhs => rw [hF]
-  rw [h1, integral_finset_sum, Finset.mul_sum]
+  rw [h1, MeasureTheory.integral_finsetSum, Finset.mul_sum]
   · apply Finset.sum_congr rfl
     intro w _
     rw [integral_indicator_const _ (hSm w), Measure.real, hSμ w, Complex.real_smul]

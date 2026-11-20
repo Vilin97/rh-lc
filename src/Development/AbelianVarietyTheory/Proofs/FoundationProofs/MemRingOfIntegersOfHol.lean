@@ -81,7 +81,7 @@ theorem mem_ringOfIntegers_of_hol [IsAlgClosure ℚ Ω] (X : Tower Ω ε) {M : �
         refine ⟨X.sl (ofSL (δ * γ⁻¹)) f, (hmem _).2 ⟨_, rfl⟩, ?_⟩
         show X.sl (ofSL γ) _ = _
         rw [← X.sl_mul, ← map_mul, inv_mul_cancel_right]
-    have := congrArg (fun Q => Polynomial.coeff Q n) e
+    have := congrArg (fun Q => _root_.AddMonoidAlgebra.coeff (M := ℕ) Q n) e
     simpa only [Polynomial.coeff_map, RingHom.coe_coe] using this
   let A : (Polynomial Ω) →+* X.K := (Polynomial.aeval X.jK : (Polynomial Ω) →ₐ[Ω] X.K)
   have hl : P ∈ Polynomial.lifts A := by

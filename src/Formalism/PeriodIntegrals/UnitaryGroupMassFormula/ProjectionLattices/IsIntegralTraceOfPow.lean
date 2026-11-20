@@ -37,6 +37,6 @@ theorem isIntegral_trace_of_pow {K : Type} [Field K] {W : Type} [AddCommGroup W]
     have h1 : μ ^ n = 1 := eigen_pow_eq_one M' n hM'n μ (Polynomial.isRoot_of_mem_roots hμ)
     exact IsIntegral.of_pow hn (by rw [h1]; exact isIntegral_one)
   rw [← htr] at hint
-  exact (isIntegral_algebraMap_iff (algebraMap K L).injective).1 hint
+  exact (isIntegral_algebraMap_iff ).1 hint
 
 end PI.Dv.GLP

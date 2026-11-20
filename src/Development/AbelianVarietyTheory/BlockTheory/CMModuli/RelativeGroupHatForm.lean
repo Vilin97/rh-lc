@@ -26,7 +26,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 abbrev Lhat (D : Datum H) : Type := Zhat ⊗[ℤ] D.La
 
 def hatMul (D : Datum H) (c : 𝓞 E) : Lhat D →ₗ[Zhat] Lhat D :=
-  (DistribMulAction.toLinearMap ℤ D.La c).baseChange Zhat
+  (DistribSMul.toLinearMap ℤ D.La c).baseChange Zhat
 
 def hatForm (D : Datum H) : LinearMap.BilinForm Zhat (Lhat D) := D.EF.baseChange Zhat
 

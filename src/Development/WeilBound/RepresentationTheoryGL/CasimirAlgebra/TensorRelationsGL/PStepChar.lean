@@ -22,7 +22,7 @@ theorem eval_mul_nc (p q : A[X]) (x : A) (h : ∀ k, Commute (q.coeff k) x) :
 
 theorem eval_sumMono (d : ℕ → A) (N : ℕ) (u : ℂ) :
     (∑ i ∈ Finset.range N, monomial i (d i)).eval (algebraMap ℂ A u) = ∑ i ∈ Finset.range N, u ^ i • d i := by
-  simp only [Polynomial.eval_finset_sum, Polynomial.eval_monomial, ← map_pow, Algebra.smul_def,
+  simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial, ← map_pow, Algebra.smul_def,
     Algebra.commutes]
 
 theorem vanish (D : A[X]) (a : ℂ) (h : ∀ u : ℂ, u ≠ a → D.eval (algebraMap ℂ A u) = 0) : D = 0 := by
@@ -34,7 +34,7 @@ theorem vanish (D : A[X]) (a : ℂ) (h : ∀ u : ℂ, u ≠ a → D.eval (algebr
     intro u hu
     have e := congrArg φ (h u hu)
     rw [Polynomial.eval_eq_sum_range, map_zero, map_sum] at e
-    simp only [q, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [q, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     rw [← e]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
@@ -44,7 +44,7 @@ theorem vanish (D : A[X]) (a : ℂ) (h : ∀ u : ℂ, u ≠ a → D.eval (algebr
     exact (Set.finite_singleton a).infinite_compl
   by_cases hi : i < D.natDegree + 1
   · have e := congrArg (fun p => p.coeff i) q0
-    simpa [q, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hi] using e
+    simpa [q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hi] using e
   · rw [Polynomial.coeff_eq_zero_of_natDegree_lt (by omega), map_zero]
 
 theorem prod_neg_zero (L : List A) (h : (L.map fun x => -x).prod = 0) : L.prod = 0 := by

@@ -49,7 +49,7 @@ theorem collapse : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNor
   have hψc := GlobalTheory.FourKFub.psiK_continuous A ψ hψ
   have hηm := measurable_etaK A
   have hφc : Continuous φ' := hφ.1.continuous
-  let M : AddSubgroup A.K := R.toAddSubgroup.comap (DistribMulAction.toAddMonoidHom A.K c)
+  let M : AddSubgroup A.K := R.toAddSubgroup.comap (DistribSMul.toAddMonoidHom A.K c)
   have hMset : (M : Set A.K) = {z : A.K | c • z ∈ A.OK} := by
     ext z
     show c • z ∈ (R : Set A.K) ↔ c • z ∈ A.OK

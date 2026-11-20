@@ -47,7 +47,7 @@ private lemma foldMap_bijective' (Γ' T K : Subgroup G) (hΓT : Γ' ≤ T) (y : 
   · intro p p' h
     have h' : DoubleCoset.mk Γ' K (((Quotient.out p : T) : G) * y) =
         DoubleCoset.mk Γ' K (((Quotient.out p' : T) : G) * y) := congrArg Subtype.val h
-    obtain ⟨γ, hγ, k, hk, he⟩ := (DoubleCoset.eq Γ' K _ _).1 h'
+    obtain ⟨γ, hγ, k, hk, he⟩ := (@DoubleCoset.eq _ _ Γ' K _ _).1 h'
     have hmem : y * k * y⁻¹ = ((Quotient.out p : T) : G)⁻¹ * γ⁻¹ * ((Quotient.out p' : T) : G) := by
       rw [eq_mul_inv_of_mul_eq he]; group
     have hT : y * k * y⁻¹ ∈ T := by
@@ -64,7 +64,7 @@ private lemma foldMap_bijective' (Γ' T K : Subgroup G) (hΓT : Γ' ≤ T) (y : 
       rw [eq_mul_inv_of_mul_eq he]
       group
   · rintro ⟨q, hq⟩
-    obtain ⟨t, ht, k, hk, hqe⟩ := (DoubleCoset.eq T K _ _).1 hq.symm
+    obtain ⟨t, ht, k, hk, hqe⟩ := (@DoubleCoset.eq _ _ T K _ _).1 hq.symm
     refine ⟨DoubleCoset.mk (Γ'.subgroupOf T) ((T ⊓ K.map (MulAut.conj y).toMonoidHom).subgroupOf T)
       ⟨t, ht⟩, ?_⟩
     apply Subtype.ext
@@ -141,7 +141,7 @@ theorem _root_.GlobalTheory.finsum_fold_intermediate : ∀ {G : Type} [Group G] 
   have hfib : ∀ q : DoubleCoset.Quotient (Γ' : Set G) (K : Set G),
       DoubleCoset.mk T K (Quotient.out q) = DoubleCoset.mk T K y → F (Quotient.out q) = F y := by
     intro q hq
-    obtain ⟨t, ht, k, hk, hqe⟩ := (DoubleCoset.eq T K _ _).1 hq.symm
+    obtain ⟨t, ht, k, hk, hqe⟩ := (@DoubleCoset.eq _ _ T K _ _).1 hq.symm
     rw [hqe, hF t ht y k hk]
   let e : DoubleCoset.Quotient ((Γ'.subgroupOf T : Subgroup T) : Set T)
       (((T ⊓ K.map (MulAut.conj y).toMonoidHom).subgroupOf T : Subgroup T) : Set T) →

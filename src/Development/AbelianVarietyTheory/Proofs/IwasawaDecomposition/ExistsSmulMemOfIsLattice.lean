@@ -6,7 +6,7 @@ namespace GlobalTheory.SmulMemOfIsLattice
 
 theorem exists_smul_mem_of_isLattice {E : Type} [inst : Field E] [NumberField E] {n : ℕ}
     (B : Submodule (NumberField.RingOfIntegers E) (Formalism.L2.Col.Sp E n))
-    (hB : Submodule.IsLattice E B) (x : Formalism.L2.Col.Sp E n) :
+    (hB : Submodule.IsFullLattice E B) (x : Formalism.L2.Col.Sp E n) :
     ∃ r ∈ nonZeroDivisors (NumberField.RingOfIntegers E), r • x ∈ B := by
   have hx : x ∈ Submodule.span E (B : Set (Formalism.L2.Col.Sp E n)) := by
     rw [hB.span_eq_top]; exact Submodule.mem_top

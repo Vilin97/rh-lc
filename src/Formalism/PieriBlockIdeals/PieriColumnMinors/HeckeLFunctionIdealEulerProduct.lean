@@ -691,7 +691,7 @@ theorem rank_one_model_holds : RankOneModel := by
       show (Matrix.charmatrix (N.Th i)).det = _
       rw [Matrix.det_fin_one, Matrix.charmatrix_apply_eq]
     rw [h1, Fin.prod_univ_one] at hcp
-    have h2 := congrArg (fun p => Polynomial.coeff p 0) hcp
+    have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) hcp
     simp only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, Polynomial.coeff_C_zero, zero_sub,
       neg_inj] at h2
     have h3 := (evaluation_congruence_holds O (l : O) (N.Th i 0 0) (N.D i 0 0) (hD i 0 0)).2 F red

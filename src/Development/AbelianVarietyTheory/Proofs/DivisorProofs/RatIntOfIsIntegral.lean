@@ -21,10 +21,10 @@ theorem LKTorus.simT_integral_finite (L : Type) [Field L] [NumberField L] (c : L
     hy.map (c.toRingHom.toIntAlgHom)
   have hinj : Function.Injective (algebraMap ℚ L) := (algebraMap ℚ L).injective
   have htI : IsIntegral ℤ ((t : ℚ)) := by
-    rw [← isIntegral_algebraMap_iff hinj, ← ht]
+    rw [← isIntegral_algebraMap_iff , ← ht]
     exact hx.mul (hcint _ hx)
   have ht'I : IsIntegral ℤ ((t' : ℚ)) := by
-    rw [← isIntegral_algebraMap_iff hinj, ← ht']
+    rw [← isIntegral_algebraMap_iff , ← ht']
     exact hxi.mul (hcint _ hxi)
   obtain ⟨n, hn⟩ := LKTorus.rat_int_of_isIntegral htI
   obtain ⟨m, hm⟩ := LKTorus.rat_int_of_isIntegral ht'I

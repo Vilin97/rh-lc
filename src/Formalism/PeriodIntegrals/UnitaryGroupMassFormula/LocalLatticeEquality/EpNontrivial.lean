@@ -103,7 +103,7 @@ theorem intP : IntP := by
     have hf : A.ιF f ∈ 𝒪[A.Fp] := by
       rw [A.compat] at ha
       have hi : IsIntegral 𝒪[A.Fp] (A.ιF f) :=
-        (isIntegral_algebraMap_iff (algebraMap A.Fp A.Ep).injective).mp ha
+        (isIntegral_algebraMap_iff ).mp ha
       exact (Valuation.integer.integers _).mem_of_integral hi
     obtain ⟨d, hd, n, hn⟩ := int_of_val A f hf
     refine ⟨d, hd, algebraMap (𝓞 F) (𝓞 E) n, ?_⟩

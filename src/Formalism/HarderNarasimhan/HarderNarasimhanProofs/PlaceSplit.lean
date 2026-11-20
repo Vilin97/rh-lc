@@ -303,7 +303,7 @@ theorem span_real_eq_complex (b : Basis ι K V) (X : InfinitePlace K → Matrix 
     intro c w hw
     have key : Submodule.span ℝ (Formalism.HermitianLatticesTheory.fcoord b X v '' (N : Set V)) ≤
         (Submodule.span ℝ (Formalism.HermitianLatticesTheory.fcoord b X v '' (N : Set V))).comap
-          (DistribMulAction.toLinearMap ℝ (ι → ℂ) (v.embedding (c : K))) := by
+          (DistribSMul.toLinearMap ℝ (ι → ℂ) (v.embedding (c : K))) := by
       rw [Submodule.span_le]
       rintro _ ⟨x, hx, rfl⟩
       show v.embedding (c : K) • Formalism.HermitianLatticesTheory.fcoord b X v x ∈

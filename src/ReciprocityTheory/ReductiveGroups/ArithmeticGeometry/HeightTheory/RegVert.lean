@@ -51,7 +51,7 @@ theorem regVert_valuationRing {A : Type*} [CommRing A] [IsDomain A] [IsNoetheria
   have hcm : Ideal.comap (algebraMap A (Localization.AtPrime P))
       (IsLocalRing.maximalIdeal (Localization.AtPrime P)) = P := by
     first
-    | exact Localization.AtPrime.comap_maximalIdeal
+    | exact Localization.AtPrime.under_maximalIdeal
     | exact IsLocalization.AtPrime.comap_maximalIdeal _ P
   have hmne : IsLocalRing.maximalIdeal (Localization.AtPrime P) ≠ ⊥ := by
     rw [← hmax]
@@ -82,18 +82,18 @@ theorem regVert_valuationRing {A : Type*} [CommRing A] [IsDomain A] [IsNoetheria
     have hcne : Q'.under A ≠ ⊥ := by
       intro h
       apply hQ'ne
-      rw [← IsLocalization.map_comap P.primeCompl (Localization.AtPrime P) Q', h, Ideal.map_bot]
+      rw [← IsLocalization.map_under P.primeCompl (Localization.AtPrime P) Q', h, Ideal.map_bot]
     have heq := regVert_eq_of_le_height_one hcne hc hP
-    rw [← IsLocalization.map_comap P.primeCompl (Localization.AtPrime P) Q', heq, hmax]
+    rw [← IsLocalization.map_under P.primeCompl (Localization.AtPrime P) Q', heq, hmax]
   first
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 3).mpr (And.intro hic huniq)
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 4).mpr (And.intro hic huniq)
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 2).mpr (And.intro hic huniq)
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 5).mpr (And.intro hic huniq)
-  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 0 3).mpr (And.intro hic huniq))
-  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 0 4).mpr (And.intro hic huniq))
-  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 0 2).mpr (And.intro hic huniq))
-  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 0 5).mpr (And.intro hic huniq))
+  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 4).mpr (And.intro hic huniq))
+  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 5).mpr (And.intro hic huniq))
+  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 3).mpr (And.intro hic huniq))
+  | exact @ValuationRing.of_isDiscreteValuationRing _ _ _ (((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 6).mpr (And.intro hic huniq))
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 2 3).mpr (And.intro hic huniq)
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 2 4).mpr (And.intro hic huniq)
   | exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 2 5).mpr (And.intro hic huniq)

@@ -71,7 +71,7 @@ theorem depleted_newform_prim : ∀ (k r : ℕ) (g : Newform k), 1 ≤ k → 2 �
         rcases Nat.eq_zero_or_pos n with h0 | h0
         · subst h0; rw [Nat.coprime_zero_left] at hn; nlinarith
         · exact h0
-      have hqn : (q * n).Coprime (g.M * r) := Nat.Coprime.mul hqL hn
+      have hqn : (q * n).Coprime (g.M * r) := Nat.Coprime.mul_left hqL hn
       rw [if_pos hqn, if_pos hn]
       have e := heig n hn1
       by_cases hd : q ∣ n
@@ -89,7 +89,7 @@ theorem depleted_newform_prim : ∀ (k r : ℕ) (g : Newform k), 1 ≤ k → 2 �
           intro h
           apply hn
           rw [← Nat.mul_div_cancel' hd]
-          exact Nat.Coprime.mul hqL h
+          exact Nat.Coprime.mul_left hqL h
         rw [if_pos hd, if_neg hnq]; simp
       · rw [if_neg hd]; simp
 

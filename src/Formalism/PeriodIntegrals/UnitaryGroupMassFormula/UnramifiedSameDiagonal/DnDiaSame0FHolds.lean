@@ -220,7 +220,7 @@ theorem dn_same_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v
   have hcl := T.val0.dil v a k hk c1 _ hδ'
   obtain ⟨c1', hc1'⟩ : ∃ c1', (D.fm u).dil 0 v a c1 = c1' := ⟨_, rfl⟩
   rw [hc1'] at hcl
-  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (DoubleCoset.eq _ _ _ _).1 hcl
+  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
   have hκ0 : κ0.1 ∈ T.cls0.lev.U := hκK
   obtain ⟨γe, hγe, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have hx1 : (T.cls0.y c1 * conjPt T.cls0.lev δ κ).1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γe * (T.cls0.y c1').1 * κ0.1 := by

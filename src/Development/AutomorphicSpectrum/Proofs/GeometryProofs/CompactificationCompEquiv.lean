@@ -221,7 +221,7 @@ theorem fnAlgClosed_of_card {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (hσ : Good
   obtain ⟨φ₁, φ₂, hφ⟩ : ∃ φ₁ φ₂ : Om Z →ₐ[c.F] CAt σ, φ₁ a ≠ φ₂ a := exists_two_emb σ a ha hne
   obtain ⟨r₀, rfl⟩ := GlobalTheory.GeomIrr.mem_range_of_isAlgebraic_ratFun a (ha.tower_top (kap Z))
   have hr : IsIntegral c.F r₀ :=
-    (isIntegral_algebraMap_iff (algebraMap (kap Z) (Om Z)).injective).1 ha.isIntegral
+    (isIntegral_algebraMap_iff ).1 ha.isIntegral
   obtain ⟨f, hf, hev⟩ := exists_fn h Z r₀ hr
   have hread := (GlobalTheory.GenericReading.embedding_read_at_frame E H Dw l Xo c σ r V hσ hV h Z).2
   have key : ∀ φ : Om Z →ₐ[c.F] CAt σ, ∃ (k : V.Comp) (x : (V.X k).dom), q k = Z ∧

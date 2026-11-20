@@ -161,7 +161,7 @@ theorem lvlPoly_distinguished {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [
   rw [lvlPoly_of_char h0] at h1
   have h2 := hm.natDegree_map (IsLocalRing.residue O)
   rw [h1, Polynomial.natDegree_X_pow] at h2
-  have h3 := congrArg (fun p => Polynomial.coeff p n) h1
+  have h3 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) h1
   rw [← h2] at hn
   simp only [Polynomial.coeff_map, Polynomial.coeff_X_pow, hn.ne, if_false] at h3
   exact (IsLocalRing.residue_eq_zero_iff _).1 h3

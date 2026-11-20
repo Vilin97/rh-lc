@@ -119,7 +119,7 @@ theorem unitAt_natCast {l m : ℕ} (hm : m ≠ 0) (h : m.Coprime l) : UnitAt l (
 theorem not_intAt_inv {l : ℕ} (hl : l.Prime) : ¬ IntAt l (l : ℂ)⁻¹ := by
   rintro ⟨n, hn, h⟩
   have e : (n : ℂ) * (l : ℂ)⁻¹ = algebraMap ℚ ℂ ((n : ℚ) * (l : ℚ)⁻¹) := by simp
-  rw [e, isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective] at h
+  rw [e, isIntegral_algebraMap_iff ] at h
   obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 h
   have h0 : (l : ℚ) ≠ 0 := Nat.cast_ne_zero.2 hl.ne_zero
   have : (n : ℚ) = l * z := by

@@ -22,7 +22,7 @@ theorem znear_term : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word), ∃ 
   obtain ⟨-, hz0, -⟩ := X.vectorsInLattice
   set z' := X.B.I.fmat (X.xu u)⁻¹ *ᵥ GlobalTheory.ScalW.zV X u with hz'
   have hm' : (c : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • (z' - X.z0) ∈ mL X.B.I X.B.g := hm
-  refine ⟨c * c, Nat.Coprime.mul hc hc, ?_⟩
+  refine ⟨c * c, Nat.Coprime.mul_left hc hc, ?_⟩
   intro y hy
   have hcz : (c : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • z' ∈ X.B.I.Lf := by
     have e : (c : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • z' =

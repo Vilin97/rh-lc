@@ -235,7 +235,7 @@ theorem latConj : GlobalTheory.Published.SiegelKlingenDeligneRibet → GlobalThe
         have := w.isIntegral_coe
         rw [hw] at this
         simpa using this
-      exact (isIntegral_algebraMap_iff (algebraMap ℚ K).injective).1 h1
+      exact (isIntegral_algebraMap_iff ).1 h1
     obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     have hm' : (m : ℚ) = c₀ := by simpa using hm
     have h2 := indep ι θ₀ τ₀ hθ₀ (m * a) (m * b - 1) (by

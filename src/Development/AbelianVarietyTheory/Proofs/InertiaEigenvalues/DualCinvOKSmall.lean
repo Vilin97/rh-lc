@@ -45,7 +45,7 @@ theorem dual_cinvOK_small : ∀ (F E : Type) [NontriviallyNormedField F] [Nontri
   have hRr0 : 0 ≤ Rr := div_nonneg (norm_nonneg _) hε.le
 
   let g : (Fin (Module.finrank F A.K) → F) → A.K := fun t => ∑ i, t i • d i
-  have hg : Continuous g := continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const
+  have hg : Continuous g := continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
   have hg0 : g 0 = 0 := by simp [g]
   have hgV : g ⁻¹' V ∈ 𝓝 (0 : Fin (Module.finrank F A.K) → F) := by
     rw [← hg0] at hV; exact hg.continuousAt hV

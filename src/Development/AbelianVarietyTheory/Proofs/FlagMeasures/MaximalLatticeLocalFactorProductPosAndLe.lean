@@ -29,7 +29,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hq : ∀ P ∈ hfin.toFinset, (2 : ℝ) ≤ (qIn P : ℝ) := fun P hp => by
     exact_mod_cast (hP P (hfin.mem_toFinset.1 hp)).2.1
   refine ⟨Finset.prod_pos fun P hp => (factor_bounds (hq P hp) hn).1, ?_⟩
-  rw [Nat.cast_prod, ← Real.finset_prod_rpow _ _ (fun P _ => Nat.cast_nonneg _)]
+  rw [Nat.cast_prod, ← Real.finsetProd_rpow _ _ (fun P _ => Nat.cast_nonneg _)]
   refine Finset.prod_le_prod₀ (fun P hp => (factor_bounds (hq P hp) hn).1.le) fun P hp => ?_
   rw [(hP P (hfin.mem_toFinset.1 hp)).2.2.1, Nat.cast_pow]
   exact (factor_bounds (hq P hp) hn).2

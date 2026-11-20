@@ -254,7 +254,7 @@ theorem charpoly_eq_prod_of_isBaseChange [Module.Free S M] [Module.Finite S M]
       (algebraMap S T) = ∏ i, (X - C (algebraMap A T (σ i a)))
       ^ Module.finrank A (eigenSub ρ (σ i)) := by
     simp [Polynomial.map_prod, ← IsScalarTower.algebraMap_apply]
-  have := congrArg (fun q => Polynomial.coeff q n) (h1.trans h2.symm)
+  have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q n) (h1.trans h2.symm)
   simp only [Polynomial.coeff_map] at this
   exact this
 

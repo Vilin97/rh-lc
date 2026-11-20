@@ -379,7 +379,7 @@ theorem exists_split_idempotents : ∀ (D : D7) (w : D.host.E), IsIntegral ℤ w
     rw [star_mul', star_star, mul_comm, h2, star_mul', star_ofNat] at h3
     exact (mul_left_cancel₀ two_ne_zero h3).symm
   obtain ⟨t, rfl⟩ := exists_of_star_eq D hsb
-  have ht : IsIntegral ℤ t := (isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective).1 hb
+  have ht : IsIntegral ℤ t := (isIntegral_algebraMap_iff ).1 hb
   exact exists_global (pairA D.host.F 0 1 ⊗ₜ[D.host.F] w)
     (AddSubgroup.subset_closure ⟨1, fun v => by rw [map_one]; exact one_mem _, ⟨w, hw⟩, rfl⟩)
     ((fj_mul_tmul (D := D) 1 1 w).trans (by rw [mul_one]))

@@ -127,7 +127,7 @@ theorem PieceCoefficientsHolomorphic.proof : PieceCoefficientsHolomorphic.Statem
         ∏ x ∈ T.filter (· ∈ O), (Polynomial.X - Polynomial.C (∑ j, c j * g x w j)) := by
       rw [hset, finprod_mem_coe_finset, Finset.prod_image
         (fun x hx x' hx' h => hinj (Finset.mem_filter.1 hx).1 (Finset.mem_filter.1 hx').1 h)]
-    exact congrArg (fun p => Polynomial.coeff p i) key
+    exact congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) key
   have hd : DifferentiableAt ℂ (fun y => (∏ x ∈ T.filter (· ∈ O),
       (Polynomial.X - Polynomial.C (∑ j, c j * g x y j))).coeff i) y₀ :=
     coeff_finset_prod_differentiableAt _ _ _ (fun x hx k => coeff_X_sub_C_differentiableAt _ _

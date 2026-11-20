@@ -87,7 +87,7 @@ theorem lift_forms_of_card_isUnit : ∀ (O : Type) [CommRing O] (G : Type) [Grou
     refine ⟨fun g => (DoubleCoset.mk Γ K g).out, ?_, ?_⟩
     · intro γ g κ
       have : DoubleCoset.mk Γ K ((γ : G) * g * κ) = DoubleCoset.mk Γ K g :=
-        (DoubleCoset.eq Γ K _ _).2 ⟨(γ : G)⁻¹, Γ.inv_mem γ.2, (κ : G)⁻¹, K.inv_mem κ.2, by group⟩
+        (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨(γ : G)⁻¹, Γ.inv_mem γ.2, (κ : G)⁻¹, K.inv_mem κ.2, by group⟩
       simp only [this]
     · intro g
       obtain ⟨h, k, hh, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g

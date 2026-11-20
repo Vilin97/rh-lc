@@ -31,7 +31,7 @@ def DiaFree (Γ K D : Subgroup G) : Prop :=
 theorem diaFree_of_isNeat {Γ K K₀ D : Subgroup G} (hK : K ≤ K₀) (hD : D ≤ K₀) (hn : IsNeat Γ K₀) :
     DiaFree Γ K D := by
   intro x δ hδ h
-  obtain ⟨γ, hγ, κ, hκ, hx⟩ := (DoubleCoset.eq Γ K (x * δ) x).mp h
+  obtain ⟨γ, hγ, κ, hκ, hx⟩ := (@DoubleCoset.eq _ _ Γ K (x * δ) x).mp h
 
   have hst : (⟨γ⁻¹, Γ.inv_mem hγ⟩ : Γ) ∈ stabAt Γ K₀ x := by
     show x⁻¹ * γ⁻¹ * x ∈ K₀

@@ -135,7 +135,7 @@ theorem coeff_extract [CharZero K] {ι : Type} [Fintype ι] [DecidableEq ι] (B 
       refine Set.Infinite.mono ?_ (Set.infinite_range_of_injective (Nat.cast_injective (R := K)))
       rintro _ ⟨t, rfl⟩
       exact hroot t
-    have hc1 := congrArg (fun p => Polynomial.coeff p 1) hq0
+    have hc1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hq0
     simp only [hq, finsetSum_coeff, coeff_monomial, Finset.sum_ite_eq', Finset.mem_range, coeff_zero] at hc1
     rw [if_pos (by omega)] at hc1
     exact hc1

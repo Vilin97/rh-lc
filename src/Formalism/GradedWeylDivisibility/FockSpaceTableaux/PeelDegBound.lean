@@ -18,12 +18,12 @@ private theorem degreeOf_eq_zero_of_not_mem_vars {τ B : Type*} [CommRing B] (i 
     (p : MvPolynomial τ B) (h : i ∉ p.vars) : degreeOf i p = 0 := by
   refine Nat.le_zero.1 (degreeOf_le_iff.2 fun m hm => ?_)
   by_contra hne
-  exact h ((mem_vars i).2 ⟨m, hm, Finsupp.mem_support_iff.2 (by omega)⟩)
+  exact h ((MvPolynomial.mem_vars_iff_mem_support i).2 ⟨m, hm, Finsupp.mem_support_iff.2 (by omega)⟩)
 
 private theorem not_mem_vars_of_degreeOf_eq_zero {τ B : Type*} [CommRing B] (i : τ)
     (p : MvPolynomial τ B) (h : degreeOf i p = 0) : i ∉ p.vars := by
   intro hi
-  obtain ⟨m, hm, hmi⟩ := (mem_vars i).1 hi
+  obtain ⟨m, hm, hmi⟩ := (MvPolynomial.mem_vars_iff_mem_support i).1 hi
   have h1 := degreeOf_le_iff.1 h.le m hm
   exact Finsupp.mem_support_iff.1 hmi (by omega)
 
@@ -143,7 +143,7 @@ theorem peelDegBound_of (hE : EvalDeg) : PeelDegBound := by
     have hi3 := vars_bind₁ _ _ hi2
     rw [Finset.mem_biUnion] at hi3
     obtain ⟨v, hv, hiv⟩ := hi3
-    obtain ⟨m, hm, hmv⟩ := (mem_vars v).1 hv
+    obtain ⟨m, hm, hmv⟩ := (MvPolynomial.mem_vars_iff_mem_support v).1 hv
     have hvl : v ≠ (a0, l) := by
       rintro rfl; exact (Finsupp.mem_support_iff.1 hmv) (hw k m hm).1
     have hvj : v ≠ (a0, j) := by

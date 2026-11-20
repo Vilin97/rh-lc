@@ -323,7 +323,7 @@ theorem isIntegral_of_growth {K A : Type} [Field K] [CommRing A] [IsDomain A] [A
     (h : ∀ φ : A →+* ℂ, φ.comp (algebraMap K A) = σ → ‖φ s‖ ≤ C * (1 + ∑ i, ‖φ (w i)‖) ^ k) :
     IsIntegral (Algebra.adjoin K (Set.range w)) s := by
   have : Algebra.FiniteType K (Algebra.adjoin K (Set.range w)) := .adjoin_of_finite (Set.finite_range w)
-  exact (isIntegral_algebraMap_iff (IsFractionRing.injective A (FractionRing A))).1
+  exact (isIntegral_algebraMap_iff ).1
     (isIntegral_of_polynomialGrowth_abstract_fractionField (R := Algebra.adjoin K (Set.range w)) (L := FractionRing A) σ (k := k) (C := C)
       (w := fun i => ⟨w i, Algebra.subset_adjoin ⟨i, rfl⟩⟩) h)
 

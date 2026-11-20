@@ -245,7 +245,7 @@ theorem isom_of_mk_eq (Λ : Submodule (𝓞 E) (n → E))
       DoubleCoset.mk (GamA σ (Formalism.UG.gram h)) (KA σ (Formalism.UG.gram h) Λ) g') :
     ∃ u ∈ Formalism.HermitianLatticesTheory.isom h, Formalism.HermitianLatticesTheory.gmap u (globLat (g : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) Λ) =
       globLat (g' : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) Λ := by
-  obtain ⟨a, ha, k, hk, rfl⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+  obtain ⟨a, ha, k, hk, rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
   obtain ⟨γ, hγ, hγa⟩ := Subgroup.mem_subgroupOf.1 ha
   have hk' : (k : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) ∈ levelAfL σ (Formalism.UG.gram h) Λ :=
     Subgroup.mem_subgroupOf.1 hk

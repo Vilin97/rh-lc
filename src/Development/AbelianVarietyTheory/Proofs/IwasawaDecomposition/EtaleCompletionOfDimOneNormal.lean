@@ -30,7 +30,7 @@ theorem isLocalHom_of_map_maximalIdeal {A R : Type} [CommRing A] [IsLocalRing A]
 theorem isDVR_of_ringKrullDim_eq_one {A : Type} [CommRing A] [IsLocalRing A] [IsDomain A] [IsNoetherianRing A]
     [IsIntegrallyClosed A] (hA : ringKrullDim A = 1) : IsDiscreteValuationRing A := by
   obtain ⟨hf, hrad⟩ := ringKrullDim_eq_one_iff_of_isLocalRing_isDomain.1 hA
-  have key := (IsDiscreteValuationRing.TFAE A hf).out 0 3
+  have key := (IsDiscreteValuationRing.TFAE A hf).out 1 4
   try simp only [List.length_cons, List.getElem_cons_succ, List.getElem_cons_zero] at key
   refine key.2 ⟨inferInstance, maximalIdeal A, ⟨?_, ?_⟩, ?_⟩
   · exact (isField_iff_maximalIdeal_eq).not.1 hf
@@ -53,7 +53,7 @@ theorem cdvr_of_isEtaleCompletion : ∀ {A R : Type} [CommRing A] [IsLocalRing A
   have hinj := injective_of_flat_local φ hfl
   haveI := isDVR_of_ringKrullDim_eq_one hA
   have hAf : ¬IsField A := (isField_iff_maximalIdeal_eq).not.2 (IsDiscreteValuationRing.not_a_field A)
-  have keyA := (IsDiscreteValuationRing.TFAE A hAf).out 0 4
+  have keyA := (IsDiscreteValuationRing.TFAE A hAf).out 1 5
   try simp only [List.length_cons, List.getElem_cons_succ, List.getElem_cons_zero] at keyA
   obtain ⟨π, hπ⟩ := (keyA.1 inferInstance).principal
   have hπ0 : π ≠ 0 := by
@@ -67,7 +67,7 @@ theorem cdvr_of_isEtaleCompletion : ∀ {A R : Type} [CommRing A] [IsLocalRing A
     rw [isField_iff_maximalIdeal_eq, hmR, Ideal.span_singleton_eq_bot]
     exact (map_ne_zero_iff φ hinj).2 hπ0
   refine ⟨?_, hRc, hR0⟩
-  have keyR := (IsDiscreteValuationRing.TFAE R hnf).out 0 4
+  have keyR := (IsDiscreteValuationRing.TFAE R hnf).out 1 5
   try simp only [List.length_cons, List.getElem_cons_succ, List.getElem_cons_zero] at keyR
   exact keyR.2 ⟨⟨φ π, by rw [hmR]⟩⟩
 

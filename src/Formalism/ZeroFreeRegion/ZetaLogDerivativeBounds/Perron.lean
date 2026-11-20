@@ -98,7 +98,7 @@ lemma perron_Sz_continuousAt (y : ℝ) : ContinuousAt (fun x => (Formalism.Sz x 
     push_cast
     linarith
   have hg : Continuous (fun x : ℝ => ((∑ n ∈ Finset.range (⌊y⌋₊ + 2), Λ n * max (x / n - 1) 0 : ℝ) : ℂ)) :=
-    Complex.continuous_ofReal.comp (continuous_finset_sum _ fun n _ =>
+    Complex.continuous_ofReal.comp (continuous_finsetSum _ fun n _ =>
       continuous_const.mul (((continuous_id.div_const _).sub continuous_const).max continuous_const))
   refine hg.continuousAt.congr ?_
   filter_upwards [Iio_mem_nhds hyN] with x hx

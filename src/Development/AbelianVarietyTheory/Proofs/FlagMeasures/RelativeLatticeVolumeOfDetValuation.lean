@@ -103,7 +103,7 @@ theorem relVol_map : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace
     intro i
     have : b.repr (ψ.toAddMonoidHom x) i = ∑ j, b.repr x j * b.repr (ψ (b j)) i := by
       change b.repr (ψ x) i = _
-      conv_lhs => rw [← b.sum_repr x, map_sum, map_sum, Finsupp.finset_sum_apply]
+      conv_lhs => rw [← b.sum_repr x, map_sum, map_sum, Finsupp.finsetSum_apply]
       simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]
     rw [this]
     exact sum_mem fun j _ => mul_mem ((hW x).1 hx j) (hψ i j)

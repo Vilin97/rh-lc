@@ -197,7 +197,7 @@ private lemma homog_of_scale (P : MvPolynomial σ B) (d : ℕ)
     (h : aeval (fun s => (Polynomial.X * Polynomial.C (X s) : Polynomial (MvPolynomial σ B))) P =
       Polynomial.X ^ d * Polynomial.C P) : P.IsHomogeneous d := by
   classical
-  have key : ∀ (Q : MvPolynomial σ B) (α : σ →₀ ℕ), coeff α (Polynomial.coeff
+  have key : ∀ (Q : MvPolynomial σ B) (α : σ →₀ ℕ), coeff α (_root_.AddMonoidAlgebra.coeff (M := ℕ)
       (aeval (fun s => (Polynomial.X * Polynomial.C (X s) : Polynomial (MvPolynomial σ B))) Q) α.degree) =
       coeff α Q := by
     intro Q α
@@ -700,7 +700,7 @@ open Polynomial in
 private lemma eq_X_of_mul (p : A[X]) (hp : IsUnit (p.coeff 1))
     (h : aeval (C X * X : A[X][X]) p = aeval (C X : A[X][X]) p * aeval (X : A[X][X]) p) : p = X := by
   simp only [← aeval_map_algebraMap A[X] _ p, ← comp_eq_aeval, comp_X, comp_C] at h
-  have h1 := congrArg (fun q => Polynomial.coeff q 1) h
+  have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) h
   simp only [comp_C_mul_X_coeff, coeff_C_mul, Polynomial.coeff_map, pow_one, eval_map_algebraMap,
     aeval_X_left_apply] at h1
   exact ((hp.map C).mul_left_cancel (h1.trans (mul_comm _ _))).symm
@@ -1135,7 +1135,7 @@ private lemma eq_ofRep [Field k] [Algebra A k] [IsLocalHom (algebraMap A k)] (D 
     have e2 : ∀ M, Δ (Polynomial k) M = M.det := fun M => (hD _).trans (by rw [h1])
     rw [e2, ← AlgHom.mapMatrix_apply, ← AlgHom.map_det, Matrix.det_diagonal,
       Finset.prod_update_of_mem (Finset.mem_univ i)] at e
-    have e3 := congrArg (fun q => Polynomial.coeff q 1) e
+    have e3 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) e
     simp only [Pi.one_apply, Finset.prod_const_one, mul_one, Polynomial.coe_mapAlgHom, Polynomial.coeff_map,
       Polynomial.coeff_X_one, map_one] at e3
     exact (show algebraMap A k _ = 1 from e3.symm) ▸ isUnit_one
@@ -1212,7 +1212,7 @@ private theorem main [IsLocalRing A] [IsAdicComplete (IsLocalRing.maximalIdeal A
         simp [coeff_single_one_mul, -Polynomial.X_mul_C]
         ring
       rw [h3, h1, map_one, ← Polynomial.comp_eq_aeval] at h2
-      have h4 := congrArg (fun q => Polynomial.coeff q 1) h2
+      have h4 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) h2
       simp only [Polynomial.comp_C_mul_X_coeff, pow_one, Polynomial.coeff_one, one_ne_zero, if_false] at h4
       have h5 : IsUnit ((D.D (Polynomial A) y).coeff 1) := by
         apply isUnit_of_map_unit (algebraMap A k)

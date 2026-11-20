@@ -45,7 +45,7 @@ variable {G : HTGroup p} (L : Link D G)
 theorem isIsogWit_mul {S : Scheme.{0}} {s : S ⟶ Sp R} {N : ℕ} (o : Obj b N s) (c : ℕ) (hc : c.Coprime p) :
     IsIsogWit L 1 o o (𝟙 o.A ^ c) (𝟙 o.A ^ c) c (c * c) := by
   haveI := isMonHom_id_pow o.A c
-  refine ⟨inferInstance, inferInstance, fun a => ?_, fun a => ?_, ?_, ?_, hc, Nat.Coprime.mul hc hc,
+  refine ⟨inferInstance, inferInstance, fun a => ?_, fun a => ?_, ?_, ?_, hc, Nat.Coprime.mul_left hc hc,
     fun k _ _ t β ht => ?_⟩
   · haveI := o.act.hom a
     rw [comp_pow', pow_comp', Category.comp_id, Category.id_comp]

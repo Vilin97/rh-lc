@@ -56,7 +56,7 @@ theorem isCompact_stdLat : IsCompact (stdLat k ι : Set (ι → k)) := by
 
 theorem isOpen_and_relIndex_ne_zero (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (ι : Type) [Fintype ι] [DecidableEq ι]
-    (L : Submodule 𝒪[k] (ι → k)) (hL : Submodule.IsLattice k L) :
+    (L : Submodule 𝒪[k] (ι → k)) (hL : Submodule.IsFullLattice k L) :
     IsOpen (L : Set (ι → k)) ∧ L.toAddSubgroup.relIndex (stdLat k ι).toAddSubgroup ≠ 0 := by
   have ho := isOpen_of_span_eq_top L hL.span_eq_top
   refine ⟨ho, ?_⟩

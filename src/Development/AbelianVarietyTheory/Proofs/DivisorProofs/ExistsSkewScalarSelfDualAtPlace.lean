@@ -234,7 +234,7 @@ theorem exists_delta_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E
       rw [hδ₁E] at this
       rw [map_div₀, map_one, map_ofNat]; linear_combination this / 2
     have h2 : IsIntegral ℤ (algebraMap ℚ E (1 / 2)) := h1 ▸ θ.isIntegral_coe
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective, IsIntegrallyClosed.isIntegral_iff] at h2
+    rw [isIntegral_algebraMap_iff , IsIntegrallyClosed.isIntegral_iff] at h2
     obtain ⟨y, hy⟩ := h2
     have : (2 : ℚ) * (y : ℚ) = 1 := by rw [eq_intCast] at hy; rw [hy]; norm_num
     have : (2 * y : ℤ) = 1 := by exact_mod_cast this

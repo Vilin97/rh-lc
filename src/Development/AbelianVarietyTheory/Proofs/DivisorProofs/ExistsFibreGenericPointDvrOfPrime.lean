@@ -23,7 +23,7 @@ theorem exists_fibre_generic_of_prime : ∀ (R : Type) [CommRing R] [IsDomain R]
     exact hne
   have hpr : Submodule.IsPrincipal (IsLocalRing.maximalIdeal V) := ⟨⟨_, hmax⟩⟩
   have : IsDiscreteValuationRing V :=
-    ((IsDiscreteValuationRing.TFAE V hnf).out 0 4).mpr hpr
+    ((IsDiscreteValuationRing.TFAE V hnf).out 1 5).mpr hpr
   have hπ : Irreducible (algebraMap R V π) :=
     (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 hmax
   let l := spMap (algebraMap R V)

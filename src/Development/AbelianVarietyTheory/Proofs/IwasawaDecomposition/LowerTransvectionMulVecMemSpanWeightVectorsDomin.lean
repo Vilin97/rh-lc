@@ -169,7 +169,7 @@ theorem isWtVec_coeff {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι]
     simp only [eval_finset_sum, eval_mul, eval_C, eval_comp, eval_X]
     rw [e, mul_comm c s]
   funext a
-  have e := congrArg (fun p => Polynomial.coeff p k) (hpoly a)
+  have e := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) (hpoly a)
   simp only [finset_sum_coeff, coeff_C_mul, comp_C_mul_X_coeff] at e
   simp only [mulVec, dotProduct, Pi.smul_apply, smul_eq_mul]
   rw [e, prod_zpow_shiftWt _ hd]

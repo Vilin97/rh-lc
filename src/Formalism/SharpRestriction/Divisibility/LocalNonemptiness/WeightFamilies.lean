@@ -41,7 +41,7 @@ theorem OsRingOfIntegers_of_concrete (D : D7) (h : OsConcrete D) : OsRingOfInteg
       rw [hK, Set.mem_setOf_eq] at hx
       obtain ⟨hxK, hxI⟩ := hx
       have hz : IsIntegral ℤ (⟨D.what₂.OtoLL x, hxK⟩ : K) :=
-        (isIntegral_algebraMap_iff (algebraMap K D.what₂.LL).injective).mp hxI
+        (isIntegral_algebraMap_iff ).mp hxI
       obtain ⟨a, ha⟩ := (IsIntegralClosure.isIntegral_iff (A := 𝓞 K) (R := ℤ) (B := K)).mp hz
       refine ⟨a, ?_⟩
       show algebraMap K D.what₂.LL (algebraMap (𝓞 K) K a) = _

@@ -46,7 +46,7 @@ theorem X_le_orth (F : LFlag S r T) : Xsp F ≤ orth S (Xsp F) := fun y hy =>
 theorem half_not_int : ¬ ∃ o : 𝓞 E, (o : E) = algebraMap ℚ E (1 / 2) := by
   rintro ⟨o, ho⟩
   have h1 : IsIntegral ℤ (algebraMap ℚ E (1 / 2)) := by rw [← ho]; exact o.2
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at h1
+  rw [isIntegral_algebraMap_iff ] at h1
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp h1
   have h2 : ((2 * n : ℤ) : ℚ) = 1 := by push_cast; rw [show (algebraMap ℤ ℚ n) = (n : ℚ) from rfl] at hn; rw [hn]; norm_num
   have h3 : 2 * n = 1 := by exact_mod_cast h2

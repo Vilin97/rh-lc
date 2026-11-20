@@ -157,7 +157,7 @@ def torus (a b : Fin g → ℝ) : GT (Fin g) where
     obtain ⟨n, hn⟩ := (mem_lat_perBasis hs hp φ y).1 y.2
     have hy : y = ∑ j, n j • e j := by
       apply Subtype.ext
-      simp only [hn, e, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul_of_tower,
+      simp only [hn, e, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul_of_tower,
         ← map_zsmul, ← map_sum]
       congr 1
       funext j

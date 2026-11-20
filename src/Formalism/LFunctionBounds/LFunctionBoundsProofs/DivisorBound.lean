@@ -47,7 +47,7 @@ theorem rpow_eq_prod_primeFactors (e : ℝ) {n : ℕ} (hn0 : n ≠ 0) :
   conv_lhs => rw [← Nat.factorization_prod_pow_eq_self hn0]
   rw [Finsupp.prod, Nat.support_factorization]
   push_cast
-  rw [← Real.finset_prod_rpow _ _ (fun p _ => by positivity)]
+  rw [← Real.finsetProd_rpow _ _ (fun p _ => by positivity)]
   refine Finset.prod_congr rfl fun p _ => ?_
   have hx : (0 : ℝ) ≤ p := p.cast_nonneg
   rw [← Real.rpow_natCast (p : ℝ) (n.factorization p), ← Real.rpow_mul hx,

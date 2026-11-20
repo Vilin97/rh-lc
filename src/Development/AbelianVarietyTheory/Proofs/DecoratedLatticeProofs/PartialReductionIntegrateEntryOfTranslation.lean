@@ -205,7 +205,7 @@ theorem integral_cosets : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
         exact hba (hS b hb a ha hm)
       · exact fun ha' => absurd ha ha'
   rw [integral_congr_ae (Filter.Eventually.of_forall hT),
-    integral_finset_sum _ fun q _ => (he.comp_sub_right _).const_mul _]
+    MeasureTheory.integral_finsetSum _ fun q _ => (he.comp_sub_right _).const_mul _]
   simp only [integral_const_mul, hshift, ← Finset.sum_mul]
   rw [mul_comm]
   rfl
@@ -275,7 +275,7 @@ theorem integrate_entry : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
     intro f hf x
     unfold red
     simp only [Finset.sum_apply, Finset.sum_mul]
-    exact integral_finset_sum S fun a _ => integrable_red k ψ ν hψ hν R Q w β E I (f a) (hf a) x
+    exact MeasureTheory.integral_finsetSum S fun a _ => integrable_red k ψ ν hψ hν R Q w β E I (f a) (hf a) x
   have hsum : ∀ x, ∑ a ∈ S, red ψ ν w β E I Φ.1 (x + Matrix.single e.1 e.2 (a - x e.1 e.2)) = 0 := by
     intro x
     have h0 : red ψ ν w β E (insert e I) Φ.1 x = 0 := congrFun hΦ x

@@ -45,7 +45,7 @@ private theorem exTwo : ∃ w : Plc L, (2 : 𝓞 L) ∈ w.asIdeal := by
       field_simp
       linear_combination e1
     have hi : IsIntegral ℤ (algebraMap ℚ L (1 / 2)) := e ▸ u.2
-    have hi' : IsIntegral ℤ (1 / 2 : ℚ) := (isIntegral_algebraMap_iff (algebraMap ℚ L).injective).1 hi
+    have hi' : IsIntegral ℤ (1 / 2 : ℚ) := (isIntegral_algebraMap_iff ).1 hi
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 hi'
     have h2 : (2 : ℚ) * (y : ℚ) = 1 := by
       rw [show (y : ℚ) = 1 / 2 from hy]; norm_num

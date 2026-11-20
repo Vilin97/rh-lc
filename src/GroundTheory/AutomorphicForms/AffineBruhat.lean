@@ -630,7 +630,7 @@ theorem bijective_mk_affineWeylGL :
       DoubleCoset.mk (iwahori F n) (iwahori F n) (affineWeylGL F n w) := by
   constructor
   · intro w w' hww'
-    obtain ⟨x, hx, y, hy, hxy⟩ := (DoubleCoset.eq _ _ _ _).mp hww'
+    obtain ⟨x, hx, y, hy, hxy⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp hww'
     exact eq_of_affineWeylGL_mem_doubleCoset F n (mem_doubleCoset.mpr ⟨x, hx, y, hy, hxy⟩)
   · intro q
     obtain ⟨w, hw⟩ := exists_mem_doubleCoset_affineWeylGL F n q.out

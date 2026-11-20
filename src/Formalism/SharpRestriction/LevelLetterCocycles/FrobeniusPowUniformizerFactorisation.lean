@@ -130,7 +130,7 @@ theorem zl_chi_int {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL)
     rw [← h1]
     exact (((H.W K s LL h).χΓ ((H.W K s LL h).resΓ g') : (↥(OL LL))ˣ) : ↥(OL LL)).2
   have hint' : IsIntegral ℤ_[l] (((P.PD K).χ g' : ℚ_[l]ˣ) : ℚ_[l]) :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective).1 hint
+    (isIntegral_algebraMap_iff ).1 hint
   obtain ⟨y, hy⟩ := (IsIntegrallyClosed.isIntegral_iff (R := ℤ_[l]) (K := ℚ_[l])).1 hint'
   refine ⟨y, ?_⟩
   apply zl_O_inj LL

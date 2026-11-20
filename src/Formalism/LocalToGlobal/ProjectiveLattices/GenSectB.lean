@@ -226,7 +226,7 @@ theorem gs_indep [CharZero K] (x : Fin m → Ω) (j₀ : Fin m) (hx₀ : x j₀ 
         rw [Algebra.adjoin_range_eq_range_aeval]; exact ⟨_, rfl⟩
       refine ⟨Polynomial.C ⟨_, m1⟩ * Polynomial.X - Polynomial.C ⟨_, m2⟩, ?_, ?_⟩
       · intro h0
-        have h1 := congrArg (fun f => Polynomial.coeff f 1) h0
+        have h1 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 1) h0
         simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, Polynomial.coeff_C,
           Polynomial.coeff_zero, if_pos, one_ne_zero, if_false, sub_zero] at h1
         exact hi (congrArg Subtype.val h1)

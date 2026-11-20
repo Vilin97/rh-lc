@@ -114,7 +114,7 @@ theorem Kl_sum {V : Type} [AddCommGroup V] [Module ℂ V] (A B : Module.End ℂ 
     · exact hAB.eq
     · exact hAB.eq.symm
     · rfl
-  letI : CommRing (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))) := Algebra.adjoinCommRingOfComm ℂ hc
+  letI : CommRing (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))) := Algebra.isMulCommutative_adjoin ℂ hc
   let a' : Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V)) := ⟨A, Algebra.subset_adjoin (by simp)⟩
   let b' : Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V)) := ⟨B, Algebra.subset_adjoin (by simp)⟩
   have hinj : Function.Injective (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))).val := Subtype.val_injective

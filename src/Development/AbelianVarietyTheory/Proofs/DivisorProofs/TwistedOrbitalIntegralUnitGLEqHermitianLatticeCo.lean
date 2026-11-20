@@ -180,7 +180,7 @@ theorem GlobalTheory.TwOrbLat.twOrb_unit_eq_orbSum : ∀ (E : Type) [Field E] [N
       induction o using Quot.ind with
       | mk L =>
         obtain ⟨q0, hq0⟩ := GlobalTheory.T.exists_GL_latticeSpannedByGLColumns_eq_fullLattice E w K e a B b L.1 L.2.1
-        obtain ⟨t', ht', k, hk, he'⟩ := (DoubleCoset.eq _ _ _ _).1
+        obtain ⟨t', ht', k, hk, he'⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
           (DoubleCoset.out_eq' T' Kg (DoubleCoset.mk T' Kg q0)).symm
         have hP0 : P q0 := (hUni q0).2 (hq0 ▸ L.2)
         refine ⟨⟨DoubleCoset.mk _ _ q0, by rw [he']; exact (hPinv q0 t' k ht' hk).2 hP0⟩, ?_⟩

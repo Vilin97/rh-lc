@@ -77,7 +77,7 @@ theorem coeff_eq_zero_of_sum_eq_zero (h : O⟦X⟧ →ₐ[O] O⟦X⟧) (hX : h X
     obtain ⟨hq, hr⟩ := HW.eq_zero_of_mul_eq
       (by rw [Polynomial.degree_neg]; exact degree_poly_lt (D := wd g) _) h2
     refine ⟨fun i => ?_, hq⟩
-    have := congrArg (fun p => Polynomial.coeff p i) (neg_eq_zero.mp hr)
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) (neg_eq_zero.mp hr)
     simpa [coeff_poly] using this
   intro n
   induction n with

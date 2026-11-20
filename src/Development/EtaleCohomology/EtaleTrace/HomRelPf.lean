@@ -51,7 +51,7 @@ theorem HomRel_of : HomRel := by
     rw [Finset.mem_range]
     by_contra h
     exact hm (homogeneousComponent_eq_zero m G (by omega))
-  have hc := congrArg (fun p => Polynomial.coeff p m) (hsum.symm.trans hGx)
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p m) (hsum.symm.trans hGx)
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
   rwa [Finset.sum_ite_eq, if_pos hmem] at hc
 

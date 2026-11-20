@@ -84,7 +84,7 @@ theorem exists_homog_of_cone {n : ℕ} {c : MvPolynomial (Fin n) ℂ} (hc : c �
       intro t ht
       have h0 := hcT _ (hT v hv t ht)
       rw [← sum_homogeneousComponent c, map_sum] at h0
-      simp only [Q, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+      simp only [Q, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
         Polynomial.eval_pow, Polynomial.eval_X]
       rw [← h0]
       exact Finset.sum_congr rfl fun k _ => by rw [hscale]; ring
@@ -95,8 +95,8 @@ theorem exists_homog_of_cone {n : ℕ} {c : MvPolynomial (Fin n) ℂ} (hc : c �
         exact hQ t ht
       · exact (Set.finite_singleton (0 : ℂ)).infinite_compl
     by_cases hm : m ≤ c.totalDegree
-    · have h1 := congrArg (fun p => Polynomial.coeff p m) hQ0
-      simpa [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow,
+    · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p m) hQ0
+      simpa [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
         (by omega : m < c.totalDegree + 1)] using h1
     · rw [homogeneousComponent_eq_zero m c (by omega), map_zero]
   obtain ⟨m, -, hm⟩ : ∃ m ∈ Finset.range (c.totalDegree + 1), homogeneousComponent m c ≠ 0 := by

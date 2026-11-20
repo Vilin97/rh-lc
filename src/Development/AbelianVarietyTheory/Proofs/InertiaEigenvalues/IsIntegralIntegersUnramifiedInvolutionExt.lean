@@ -56,7 +56,7 @@ theorem intO : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), IsUnrExt K K' d 
     algebraMap_injective_of_field_isFractionRing K.O S K.E K'.E
   have hnf : ¬ IsField S := fun h =>
     IsDiscreteValuationRing.not_isField K.O (isField_of_isIntegral_of_isField hinj h)
-  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 2 0).1
+  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 3 1).1
     (inferInstance : IsDedekindDomain S)
 
   have hv : ∀ a : K.O, 0 ≤ val K'.O (φ (algebraMap K.O K.E a)) := fun a => by

@@ -17,7 +17,7 @@ theorem fl_mem_int {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] 
     [Algebra F E] [TopologicalSpace E] (L : Loc.LocE F E) (hinj : Function.Injective (algebraMap F E))
     {a : F} (ha : algebraMap F E a ∈ L.O) : a ∈ 𝒪[F] := by
   have h1 : IsIntegral 𝒪[F] (algebraMap F E a) := (L.9 _).1 ha
-  have h2 : IsIntegral 𝒪[F] a := (isIntegral_algebraMap_iff hinj).1 h1
+  have h2 : IsIntegral 𝒪[F] a := (isIntegral_algebraMap_iff ).1 h1
   exact (Valuation.integer.integers _).mem_of_integral h2
 
 theorem fl_int_mem {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [CommRing E]

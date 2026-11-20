@@ -178,7 +178,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.dictP_holds :
       (isInt_mul (isInt_natCast c') ht) hprod
   have hcc : κ ^ 2 = c * c' := by
     refine hMU2 (κ ^ 2) (c * c') (ε * t) (ε' * t') (Nat.Coprime.pow_left 2 hκp)
-      (Nat.Coprime.mul hcp hc') (isInt_mul hε ht) (isInt_mul hε' ht') ?_ ?_
+      (Nat.Coprime.mul_left hcp hc') (isInt_mul hε ht) (isInt_mul hε' ht') ?_ ?_
     · calc ε * t * (ε' * t') = (ε * ε') * (t * t') := by ring
         _ = 1 := by rw [hεε, htt, _root_.mul_one]
     · rw [← hprod, hmuc]

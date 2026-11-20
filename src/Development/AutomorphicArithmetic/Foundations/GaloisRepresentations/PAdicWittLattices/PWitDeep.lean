@@ -14,9 +14,9 @@ theorem UpperTheory.Gal.G3.pWitDeep :
     rcases Nat.eq_zero_or_pos k with rfl | hpos
     · exact absurd (Nat.coprime_zero_left _ |>.mp hk) (Fact.out : p.Prime).one_lt.ne'
     · exact hpos
-  let Nk : Lv p := ⟨↑N * k, le_trans N.2.1 (Nat.le_mul_of_pos_right _ hk0), Nat.Coprime.mul N.2.2 hk⟩
+  let Nk : Lv p := ⟨↑N * k, le_trans N.2.1 (Nat.le_mul_of_pos_right _ hk0), Nat.Coprime.mul_left N.2.2 hk⟩
   let M : Lv p := ⟨↑N' * (↑N * k), le_trans Nk.2.1 (Nat.le_mul_of_pos_left _ (by have := N'.2.1; omega)),
-    Nat.Coprime.mul N'.2.2 Nk.2.2⟩
+    Nat.Coprime.mul_left N'.2.2 Nk.2.2⟩
   have hNkM : (↑Nk : ℕ) ∣ ↑M := Dvd.intro_left _ rfl
   refine ⟨M, Dvd.intro _ rfl, ?_, ?_⟩
   · intro u hu

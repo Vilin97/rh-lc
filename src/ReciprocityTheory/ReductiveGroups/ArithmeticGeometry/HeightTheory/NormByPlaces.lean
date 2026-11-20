@@ -38,7 +38,7 @@ theorem gen_span {p : Ideal (KTp K d.D d.N)} (hp : p ∈ d.HtOne) : p = Ideal.sp
     have h2 : ¬ (Ideal.span {q}).height ≤ ((0 : ℕ) : ℕ∞) := by
       rw [Ideal.height_le_iff]
       push_neg
-      exact ⟨⊥, Ideal.bot_prime, hqb, by simp⟩
+      exact ⟨⊥, Ideal.isPrime_bot, hqb, by simp⟩
     apply h2
     have h1' : (Ideal.span {q}).height < 1 := by simpa using h1
     simpa using ENat.lt_one_iff_eq_zero.mp h1'
@@ -80,7 +80,7 @@ private lemma span_singleton_mem_htOne_of_prime {π : KTp K d.D d.N} (hπ : Prim
     have h0 : (Ideal.span {π}).height ≤ ((0 : ℕ) : ℕ∞) := by
       simpa using ENat.lt_one_iff_eq_zero.mp hlt
     rw [Ideal.height_le_iff] at h0
-    have h2 := h0 ⊥ Ideal.bot_prime (by
+    have h2 := h0 ⊥ Ideal.isPrime_bot (by
       rw [bot_lt_iff_ne_bot, Ne, Ideal.span_singleton_eq_bot]
       exact hπ.ne_zero)
     simp at h2

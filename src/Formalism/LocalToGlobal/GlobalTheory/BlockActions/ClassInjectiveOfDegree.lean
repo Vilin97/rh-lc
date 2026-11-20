@@ -60,7 +60,7 @@ theorem til_injective (Tf : FormsTiedSym D u Ch chOf)
     Formalism.UG.P.base_change_mem_holds _ _ _ _ _ _ hc _ Δ hΔ
   apply Tf.clsP.y_bij.1
   show (Quotient.mk'' (Tf.clsP.y c) : Cls Tf.clsP.lev) = Quotient.mk'' (Tf.clsP.y c')
-  apply (DoubleCoset.eq _ _ _ _).2
+  apply (@DoubleCoset.eq _ _ _ _ _ _).2
   refine ⟨⟨_, hrU⟩, ?_, ⟨K⁻¹, inv_mem hKU⟩, ?_, ?_⟩
   · exact Subgroup.mem_subgroupOf.2 (Subgroup.mem_map.2 ⟨Δ, hΔ, rfl⟩)
   · exact Subgroup.mem_subgroupOf.2 (inv_mem hK)

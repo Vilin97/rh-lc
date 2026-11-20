@@ -93,7 +93,7 @@ theorem exists_fibre_near : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     change Continuous fun p : Q × (Fin n → Fin M → R ⊗[F] E) => rmul R p.2 (c p.1)
     refine continuous_pi fun a => continuous_pi fun i => ?_
     simp only [rmul]
-    refine continuous_finset_sum _ fun b _ => Continuous.mul ?_ ?_
+    refine continuous_finsetSum _ fun b _ => Continuous.mul ?_ ?_
     · exact (continuous_apply i).comp ((continuous_apply b).comp continuous_snd)
     · exact (hcc.comp continuous_fst).matrix_elem b a
   have hcontH : ContinuousSMul Q (HermR R σ n) := by

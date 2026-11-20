@@ -215,7 +215,7 @@ theorem exists_orthonormal [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE
     rw [← hA j] at h
     simp only [hsm, hf_sum_r] at h
     rw [Matrix.mul_apply, Matrix.one_apply, apply_ite Subtype.val, OneMemClass.coe_one,
-      ZeroMemClass.coe_zero, ← h, AddSubmonoidClass.coe_finset_sum]
+      ZeroMemClass.coe_zero, ← h, AddSubmonoidClass.coe_finsetSum]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have hint : ∀ a : 𝒪[F], algebraMap F E a ∈ L.O := fun a => (algebraMap_mem_iff L a).2 a.2
   let i : 𝒪[F] →+* L.O := (algebraMap 𝒪[F] E).codRestrict L.O hint
@@ -247,7 +247,7 @@ theorem exists_orthonormal [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE
   · have h := congrArg Subtype.val (congrFun (congrFun hQ i) j)
     rw [Matrix.one_apply, apply_ite Subtype.val, OneMemClass.coe_one, ZeroMemClass.coe_zero] at h
     rw [← h]
-    simp only [hsm, hf_sum_l, hf_sum_r, Matrix.mul_apply, AddSubmonoidClass.coe_finset_sum,
+    simp only [hsm, hf_sum_l, hf_sum_r, Matrix.mul_apply, AddSubmonoidClass.coe_finsetSum,
       Subring.coe_mul, Matrix.transpose_apply, Matrix.map_apply, hcv, hGv]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   · rw [Submodule.span_le]

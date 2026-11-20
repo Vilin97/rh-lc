@@ -201,7 +201,7 @@ theorem charpoly_eq_lattice_model : ∀ (k : Type) [Field k] [IsAlgClosed k] (B 
   ext i
   rw [← PadicInt.ext_of_toZModPow]
   intro n
-  have h := congrArg (fun P => Polynomial.coeff P i) (key n)
+  have h := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) (key n)
   simp only [Polynomial.coeff_map, eq_intCast] at h ⊢
   rw [map_intCast]
   exact h

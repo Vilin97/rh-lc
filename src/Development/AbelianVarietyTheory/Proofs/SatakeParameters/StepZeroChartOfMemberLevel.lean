@@ -82,7 +82,7 @@ theorem chart_of_member : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok �
     exact (congrArg (fun g => g ∈ UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) 0 hi))
       (hK (e.symm c'') t)).mp (K.stabI (e.symm c'') t).2
   have hcls : ∀ c, (Quotient.mk'' (K.y c * κU c) : Cls K.lev) = Quotient.mk'' (K.y c) := fun c => by
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨1, one_mem _, (κU c)⁻¹, ?_, by group⟩
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, one_mem _, (κU c)⁻¹, ?_, by group⟩
     exact inv_mem (κ c).2
   refine ⟨fun _ =>
     { lev :=

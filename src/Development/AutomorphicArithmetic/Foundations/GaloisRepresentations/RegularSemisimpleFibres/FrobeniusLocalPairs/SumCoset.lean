@@ -12,7 +12,7 @@ open PositivityTheory.Rg.Tf.Loc UpperTheory.V.Z.Tf.Orb
 private lemma UpperTheory.Gal.InertialTypesAlt.L.mem_iff_mk {G : Type} [Group G] (T K : Subgroup G)
     (q : DoubleCoset.Quotient (T : Set G) (K : Set G)) (g : G) :
     (∃ t ∈ T, ∃ y ∈ K, g = t * Quotient.out q * y) ↔ DoubleCoset.mk T K g = q := by
-  have h := DoubleCoset.eq T K (Quotient.out q) g
+  have h := @DoubleCoset.eq _ _ T K (Quotient.out q) g
   rw [DoubleCoset.out_eq'] at h
   exact h.symm.trans eq_comm
 
@@ -25,7 +25,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
   obtain ⟨C, hC, hFC'⟩ := hFC
   have hFm : Measurable F := hF.measurable
   have hmk : ∀ h ∈ T, ∀ g : G, DoubleCoset.mk T K (h * g) = DoubleCoset.mk T K g :=
-    fun h hh g => ((DoubleCoset.eq T K g (h * g)).2 ⟨h, hh, 1, K.one_mem, by simp⟩).symm
+    fun h hh g => ((@DoubleCoset.eq _ _ T K g (h * g)).2 ⟨h, hh, 1, K.one_mem, by simp⟩).symm
   set Q : Set (DoubleCoset.Quotient (T : Set G) (K : Set G)) :=
     {q | ∃ y ∈ K, F (Quotient.out q * y) ≠ 0} with hQ
   have hkey : ∀ g, F g ≠ 0 → DoubleCoset.mk T K g ∈ Q := by

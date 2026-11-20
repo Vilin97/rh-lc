@@ -269,7 +269,7 @@ theorem _root_.GlobalTheory.LocalDifferentProduct.finprod_card_quot_map {K : Typ
     fun v => _root_.GlobalTheory.LocalDifferentProduct.card_quot_map v hI
   simp_rw [hcard]
   have hfin : (Function.mulSupport fun v : HeightOneSpectrum (𝓞 K) => v.maxPowDividing I).Finite :=
-    Ideal.finite_mulSupport hI
+    Ideal.hasFiniteMulSupport hI
   refine ⟨hfin.subset (Function.mulSupport_comp_subset (map_one _) _), ?_⟩
   have h := MonoidHom.map_finprod (Ideal.absNorm : Ideal (𝓞 K) →*₀ ℕ).toMonoidHom hfin
   simp only [MonoidWithZeroHom.toMonoidHom_coe, Ideal.finprod_heightOneSpectrum_factorization hI] at h

@@ -43,7 +43,7 @@ theorem cont_sandwich {T : Type*} [TopologicalSpace T] {m n p q : Type*} [Fintyp
     (hf : Continuous f) : Continuous (fun t => C * f t * D) := by
   refine continuous_matrix fun i j => ?_
   simp only [Matrix.mul_apply, Finset.sum_mul]
-  refine continuous_finset_sum _ fun l _ => continuous_finset_sum _ fun k _ => ?_
+  refine continuous_finsetSum _ fun l _ => continuous_finsetSum _ fun k _ => ?_
   exact (cont_mul_const R (C i k) (D l j)).comp (hf.matrix_elem k l)
 
 theorem cont_HA_iff {T : Type*} [TopologicalSpace T] {n : ℕ} {J : Matrix (Fin n) (Fin n) E}

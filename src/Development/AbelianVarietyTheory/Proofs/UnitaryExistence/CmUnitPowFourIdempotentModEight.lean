@@ -89,7 +89,7 @@ theorem det_interp {E : Type} [Field E] [NumberField E] {r : ℕ} (n : ℕ) (hn 
     rw [this, h]
     ring
   have hy' : IsIntegral ℤ ((d - 1) / n) := by
-    rw [← isIntegral_algebraMap_iff hinj, map_div₀, map_sub, map_one, map_natCast, hd',
+    rw [← isIntegral_algebraMap_iff , map_div₀, map_sub, map_one, map_natCast, hd',
       add_sub_cancel_left, mul_div_cancel_left₀ _ hn']
     exact hy
   obtain ⟨z, hz⟩ : ∃ z : 𝓞 E, (z : E) = (d - 1) / n := ⟨⟨_, hy'⟩, rfl⟩

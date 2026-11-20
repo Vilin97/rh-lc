@@ -151,7 +151,7 @@ theorem finPartI_detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) {N : Submodul
   · rw [map_pow, KerDet.finPartI_localIdele]
 
 theorem ordSub_detSub_eq {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E) (Sp E n)} {f : Sp E n ≃ₗ[E] Sp E n}
-    (hN : Submodule.IsLattice E N) (hf : IsFr P N f) : ordSub P (detSub N) = ordF P (LinearEquiv.det f) := by
+    (hN : Submodule.IsFullLattice E N) (hf : IsFr P N f) : ordSub P (detSub N) = ordF P (LinearEquiv.det f) := by
   classical
   have e : detSub N = CharValCompare.detI N := by
     unfold detSub CharValCompare.detI

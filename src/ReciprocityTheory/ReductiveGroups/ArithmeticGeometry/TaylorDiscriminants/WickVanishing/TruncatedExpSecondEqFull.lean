@@ -69,7 +69,7 @@ def glue (g : Fin n → (ι →₀ ℕ)) : (ι × Fin n) →₀ ℕ := ∑ b, Fi
 theorem glue_apply (g : Fin n → (ι →₀ ℕ)) (l : ι) (b : Fin n) : glue g (l, b) = g b l := by
   classical
   unfold glue
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single b]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single b]
   · exact Finsupp.mapDomain_apply (fun x y h => congrArg Prod.fst h) _ _
   · intro b' _ hb
     apply Finsupp.mapDomain_notin_range
@@ -135,7 +135,7 @@ private lemma totalDegree_pderiv_le_of_le_succ {σ : Type} (l : σ) (q : MvPolyn
   classical
   conv_lhs => rw [q.as_sum]
   rw [map_sum]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun s hs => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [MvPolynomial.pderiv_monomial]
   by_cases hsl : s l = 0
   · rw [hsl, Nat.cast_zero, mul_zero, MvPolynomial.monomial_zero, MvPolynomial.totalDegree_zero]
@@ -165,8 +165,8 @@ private lemma totalDegree_pderiv_le_of_le_succ {σ : Type} (l : σ) (q : MvPolyn
 private lemma totalDegree_secondOrder_le_of_le_add_two {σ : Type} [Fintype σ] (c : σ → σ → k) (q : MvPolynomial σ k) (D : ℕ)
     (hq : q.totalDegree ≤ D + 2) : (secondOrder k c q).totalDegree ≤ D := by
   unfold secondOrder
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun l _ => ?_)
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun l' _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l' _ => ?_)
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
   rw [MvPolynomial.totalDegree_C, zero_add]
   exact totalDegree_pderiv_le_of_le_succ l _ D (totalDegree_pderiv_le_of_le_succ l' q (D + 1) hq)

@@ -190,7 +190,7 @@ theorem UpperTheory.V.Pa.BC.oprime :
     simpa using hπn 1
   have hprin : (maximalIdeal (AdjoinRoot P)).IsPrincipal := ⟨⟨π, by rw [← hMeq, hMspan]⟩⟩
   haveI : IsDiscreteValuationRing (AdjoinRoot P) :=
-    ((IsDiscreteValuationRing.TFAE (AdjoinRoot P) hnf).out 0 4).mpr hprin
+    ((IsDiscreteValuationRing.TFAE (AdjoinRoot P) hnf).out 1 5).mpr hprin
   have hsub : ∀ n : ℕ, ((maximalIdeal O ^ n • ⊤ : Submodule O (AdjoinRoot P)) : Set (AdjoinRoot P))
       = ((maximalIdeal (AdjoinRoot P) ^ n • ⊤ : Submodule (AdjoinRoot P) (AdjoinRoot P)) : Set (AdjoinRoot P)) := by
     intro n

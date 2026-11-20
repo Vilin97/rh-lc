@@ -26,7 +26,7 @@ theorem hT_span_zero (e : Fin r → S.V) (v : S.V) (h : ∀ b, S.hT (e b) v = 0)
   | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
   | smul c x _ hx => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hx, smul_zero]
 
-theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E Λ)
+theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E Λ)
     (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) {T' : E} (F' : LFlag S r T') :
     ∃ u : Fin r → S.V, ∀ l ∈ Λ, l - ∑ a, S.hT (F'.fl.e a) l • u a ∈ Lrep Λ F' := by
   obtain ⟨ρ, hρX, hρid⟩ := PI.UnitaryGroupMassFormula.BetaModX.Iota.exists_retract Λ hL.fg (Xsp F')

@@ -245,7 +245,7 @@ theorem negTwo_roots (x : NegTwoField) (h : ∃ m : ℕ, 0 < m ∧ x ^ m = 1) : 
   have ht : IsIntegral ℤ (QuadraticAlgebra.trace x) := by
     have := hi.add hi'
     rw [← QuadraticAlgebra.algebraMap_trace_eq_add_star] at this
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ NegTwoField).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   obtain ⟨t, ht⟩ := IsIntegrallyClosed.isIntegral_iff.1 ht
   rw [QuadraticAlgebra.trace_def, eq_intCast] at ht
   have hn : QuadraticAlgebra.norm x = 1 := by

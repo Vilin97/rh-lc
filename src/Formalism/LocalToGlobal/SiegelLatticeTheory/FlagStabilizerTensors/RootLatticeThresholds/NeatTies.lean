@@ -22,7 +22,7 @@ theorem sharp_bij_of_neat (u : D.what₂.Word) (hN : Formalism.L2.SG.PoincareInH
     fun ρ => DoubleCoset.mk (iotaF X u).range (Ku X u Y.hK) ((Y.cs u).h ρ)
   have hcls : Function.Bijective cls := by
     refine ⟨fun ρ ρ' h => ?_, fun c => ?_⟩
-    · obtain ⟨a, ⟨γ, rfl⟩, κ, hκ, hab⟩ := (DoubleCoset.eq _ _ _ _).1 h
+    · obtain ⟨a, ⟨γ, rfl⟩, κ, hκ, hab⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
       obtain ⟨ρ0, _, huniq⟩ := Y.colReps u ((Y.cs u).h ρ')
       have h1 := huniq ρ ⟨γ, ⟨κ, hκ⟩, hab⟩
       have h2 := huniq ρ' ⟨1, 1, by simp⟩

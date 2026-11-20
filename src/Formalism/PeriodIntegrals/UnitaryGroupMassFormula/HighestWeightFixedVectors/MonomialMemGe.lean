@@ -132,7 +132,7 @@ theorem coeffs_mem [Infinite K] {V : Type*} [AddCommGroup V] [Module K V] (S : S
     rw [← h2]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]
-  have h3 := congrArg (fun q => Polynomial.coeff q k) hp
+  have h3 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q k) hp
   simp only [p, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, mul_ite, mul_one,
     mul_zero, Polynomial.coeff_zero] at h3
   rw [Finset.sum_ite_eq] at h3

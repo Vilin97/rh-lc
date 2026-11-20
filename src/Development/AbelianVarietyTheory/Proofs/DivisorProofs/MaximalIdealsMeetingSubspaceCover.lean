@@ -118,7 +118,7 @@ private theorem forms_fin : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Fintype ι
     refine ⟨⟨s, hs⟩, ?_⟩
     show DoubleCoset.mk F.Γ F.K s = c
     rw [← DoubleCoset.out_eq' F.Γ F.K c]
-    exact (DoubleCoset.eq F.Γ F.K s _).2 ⟨γ, hγ, κ, hκ, e⟩
+    exact (@DoubleCoset.eq _ _ F.Γ F.K s _).2 ⟨γ, hγ, κ, hκ, e⟩
   exact Formalism.UG.P.automorphic_forms_level_finite_holds F.G F.Γ F.K F.O (NablaT F.O N lam) _ ‹_›
 
 private theorem emb_norm : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) (N : ℕ) (F : Frame l ι N), F.Ok →

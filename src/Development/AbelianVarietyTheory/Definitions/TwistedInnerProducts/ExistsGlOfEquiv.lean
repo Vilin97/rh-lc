@@ -521,7 +521,7 @@ theorem mem_smul_iff {g : GL n k} {L : Submodule 𝒪[k] (n → k)} {x : n → k
   refine (Submodule.mem_smul_pointwise_iff_exists x g L).trans ?_
   exact ⟨fun ⟨y, hy, h⟩ => by simpa [← h] using hy, fun h => ⟨_, h, smul_inv_smul _ _⟩⟩
 
-instance isLattice_smul (g : GL n k) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsLattice k] : (g • L).IsLattice k := by
+instance isLattice_smul (g : GL n k) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsFullLattice k] : (g • L).IsLattice k := by
   refine ⟨hL.fg.map _, ?_⟩
   rw [eq_top_iff]
   intro x _

@@ -48,8 +48,8 @@ theorem exists_root_field {D : Type} [CommRing D] [IsDomain D] (p : ℕ)
       rw [Polynomial.degree_eq_natDegree hmonic.ne_zero, hdeg]
       compute_degree
       exact_mod_cast (by norm_num : 1 < 2))
-    have hu := congrArg (fun t => Polynomial.coeff t 0) h2
-    have hv := congrArg (fun t => Polynomial.coeff t 1) h2
+    have hu := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t 0) h2
+    have hv := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t 1) h2
     simp at hu hv
     exact ⟨hu, hv⟩
 
@@ -182,7 +182,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     rw [map_add, map_mul, hσ, hσ, hφx] at hq
     have hcoef : ∀ n, (a.coeff (n + 1) = 0 ∧ b.coeff n = 0) := by
       intro n
-      have := congrArg (fun t => Polynomial.coeff t (n + 1)) hq
+      have := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t (n + 1)) hq
       simp only [Polynomial.coeff_add, Polynomial.coeff_map, Polynomial.coeff_zero] at this
       have e : (Polynomial.map i b * (Polynomial.C s * Polynomial.X)).coeff (n + 1) =
           i (b.coeff n) * s := by
@@ -191,7 +191,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
       rw [e] at this
       exact hind _ _ this
     have ha0 : a.coeff 0 = 0 := by
-      have := congrArg (fun t => Polynomial.coeff t 0) hq
+      have := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t 0) hq
       simp only [Polynomial.coeff_add, Polynomial.coeff_map, Polynomial.coeff_zero] at this
       have e : (Polynomial.map i b * (Polynomial.C s * Polynomial.X)).coeff 0 = 0 := by
         rw [← mul_assoc, Polynomial.coeff_mul_X_zero]

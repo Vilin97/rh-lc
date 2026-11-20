@@ -55,7 +55,7 @@ theorem coeff_prod_mem {Ω : Type} [Field Ω] [IsAlgClosed Ω] [CharZero Ω] (k 
     conv_rhs => rw [← hmap]
     rw [Finset.prod_map]
     simp
-  have := congrArg (fun P => Polynomial.coeff P n) hP
+  have := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P n) hP
   simpa [Polynomial.coeff_map] using this
 
 theorem main : ∀ (Ω : Type) [Field Ω] [IsAlgClosed Ω] [CharZero Ω] (k : Subfield Ω) (S : Finset Ω),

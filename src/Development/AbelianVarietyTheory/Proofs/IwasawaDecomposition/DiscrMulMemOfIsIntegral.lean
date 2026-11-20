@@ -22,7 +22,7 @@ theorem isIntegral_trace_of_isIntegral
     rw [Algebra.trace_eq_matrix_trace b]
     simp only [Matrix.trace, Matrix.diag, map_sum]
     rfl
-  rw [← isIntegral_algebraMap_iff (A := L) (B := A) (algebraMap L A).injective, htr,
+  rw [← isIntegral_algebraMap_iff (A := L) (B := A) , htr,
     Matrix.trace_eq_sum_roots_charpoly]
   refine IsIntegral.multiset_sum fun μ hμ => ?_
   have hroot : IsRoot (f ω).charpoly μ := (mem_roots'.1 hμ).2

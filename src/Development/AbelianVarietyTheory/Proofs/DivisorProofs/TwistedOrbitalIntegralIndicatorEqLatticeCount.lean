@@ -146,7 +146,7 @@ theorem twOrb_eq_N : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheory.UnitL
     have h3 : Λ ((t : G) * Quotient.out d1) = Λ (Quotient.out d2) := by
       rw [hΛT, hts]
       exact hs'.symm
-    have := (DoubleCoset.eq (twCent θ δ) Kg (Quotient.out d1) (Quotient.out d2)).2
+    have := (@DoubleCoset.eq _ _ (twCent θ δ) Kg (Quotient.out d1) (Quotient.out d2)).2
       ⟨t, t.2, (t * Quotient.out d1)⁻¹ * Quotient.out d2, (hΛK _ _).1 h3, by group⟩
     rwa [DoubleCoset.out_eq', DoubleCoset.out_eq'] at this
   let e := Equiv.ofBijective g ⟨hg_inj, hg_surj⟩

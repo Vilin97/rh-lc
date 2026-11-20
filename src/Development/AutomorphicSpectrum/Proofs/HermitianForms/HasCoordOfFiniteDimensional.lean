@@ -346,8 +346,8 @@ theorem continuous_BR {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
   have := isTopologicalRing_tens (F := F) (E := E) R
   show Continuous fun Y : Fin n → Fin M → R ⊗[F] E => ∑ a, Algebra.trace R (R ⊗[F] E)
     (∑ i, ∑ j, sigR R σ (X a i) * JR R J i j * Y a j)
-  exact continuous_finset_sum _ fun a _ => (continuous_trace R).comp
-    (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun a _ => (continuous_trace R).comp
+    (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       continuous_const.mul ((continuous_apply j).comp (continuous_apply a)))
 
 theorem continuous_pairHerm (n : ℕ) (S : HermR R σ n) : Continuous (pairHerm R σ n S) := by
@@ -355,7 +355,7 @@ theorem continuous_pairHerm (n : ℕ) (S : HermR R σ n) : Continuous (pairHerm 
   show Continuous fun T : HermR R σ n => algebraMap F R (1 / 2) * Algebra.trace R (R ⊗[F] E)
     (∑ a, ∑ b, (S : Matrix (Fin n) (Fin n) (R ⊗[F] E)) a b * (T : Matrix (Fin n) (Fin n) _) b a)
   exact continuous_const.mul ((continuous_trace R).comp
-    (continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
+    (continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
       continuous_const.mul (continuous_subtype_val.matrix_elem b a)))
 
 theorem hasCoord_tens (h : HasCoord R) : HasCoord (R ⊗[F] E) := by

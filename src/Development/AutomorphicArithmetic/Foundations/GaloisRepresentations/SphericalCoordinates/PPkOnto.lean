@@ -202,7 +202,7 @@ private theorem rep_mem (hFI : FInt) {M : AddSubgroup (VQ D)} (hM : IsPLat D M) 
     rw [← hc', L.rep_F]
     exact hO _ y hy
   obtain ⟨m', hm', hm'y⟩ := (hMs _).1 key
-  refine (hMs _).2 ⟨m' * m, Nat.Coprime.mul hm' hmc, ?_⟩
+  refine (hMs _).2 ⟨m' * m, Nat.Coprime.mul_left hm' hmc, ?_⟩
   rw [mul_smul]
   exact hm'y
 

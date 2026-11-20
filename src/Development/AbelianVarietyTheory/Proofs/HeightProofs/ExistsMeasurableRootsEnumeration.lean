@@ -18,7 +18,7 @@ theorem continuous_coeff_prod_X_sub_C {ι : Type} (s : Finset ι) (n : ℕ) :
   | empty => simpa using continuous_const
   | insert a s ha ih =>
     simp only [Finset.prod_insert ha, coeff_mul]
-    refine continuous_finset_sum _ fun p _ => Continuous.mul ?_ (ih _)
+    refine continuous_finsetSum _ fun p _ => Continuous.mul ?_ (ih _)
     simp only [coeff_sub, coeff_C]
     refine continuous_const.sub ?_
     split_ifs
@@ -103,7 +103,7 @@ theorem exists_measurable_roots_enumeration :
   have hc : V (r ∘ Tuple.sort (e ∘ r)) = c := by
     funext i
     simp only [V]
-    rw [hp, coeff_add, coeff_X_pow, if_neg i.2.ne, zero_add, finset_sum_coeff]
+    rw [hp, coeff_add, coeff_X_pow, if_neg i.2.ne, zero_add, Polynomial.finsetSum_coeff]
     simp only [coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single i]
     · simp

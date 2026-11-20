@@ -125,7 +125,7 @@ theorem UpperTheory.V.Z.Sym.Loc.stabG : UpperTheory.V.Z.Sym.Loc.StabG := by
         _ = _ := by rw [e, Algebra.smul_def, ← map_mul, div_eq_inv_mul]
     rw [hr'] at hr
     have hI : IsIntegral O (-2 / algebraMap O K (π * d)) :=
-      (isIntegral_algebraMap_iff (algebraMap K (Etau K τ)).injective).mp hr
+      (isIntegral_algebraMap_iff ).mp hr
     obtain ⟨o, ho⟩ := IsIntegrallyClosed.isIntegral_iff.mp hI
     have h4 : (-2 : O) = π * d * o := by
       apply IsFractionRing.injective O K

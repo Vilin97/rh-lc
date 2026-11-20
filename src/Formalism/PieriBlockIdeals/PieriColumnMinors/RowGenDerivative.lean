@@ -110,7 +110,7 @@ theorem rowDiv_zero' {r n : ℕ} (a b : Fin r) (f : MvPolynomial (Fin r × Fin n
 theorem rowDiv_succ {r n : ℕ} (a b : Fin r) (k : ℕ) (f : MvPolynomial (Fin r × Fin n) ℚ) :
     ((k + 1 : ℕ) : ℚ) • rowDiv ℚ a b (k + 1) f =
       rowDiv ℚ a b k (der r n a b f) - (if a = b then (k : ℚ) • rowDiv ℚ a b k f else 0) := by
-  have h := congrArg (fun P => Polynomial.coeff P k) (rowGen_derivative a b f)
+  have h := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P k) (rowGen_derivative a b f)
   beta_reduce at h
   unfold rowDiv
   rw [← h, add_mul, one_mul, Polynomial.coeff_add, Polynomial.coeff_derivative]

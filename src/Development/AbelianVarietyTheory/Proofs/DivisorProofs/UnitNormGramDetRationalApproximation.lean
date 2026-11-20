@@ -278,7 +278,7 @@ theorem approx : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
     + Polynomial.C (lam (hR K σ J w w)) with hP
   have hP0 : P ≠ 0 := by
     intro h0
-    have := congrArg (fun p => Polynomial.coeff p 2) h0
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 2) h0
     simp [hP, Polynomial.coeff_X, Polynomial.coeff_C] at this
   have hZ : {ε : K | P.IsRoot ε}.Countable := (Polynomial.finite_setOf_isRoot hP0).countable
   have hD : Dense {ε : K | P.IsRoot ε}ᶜ := hZ.dense_compl K

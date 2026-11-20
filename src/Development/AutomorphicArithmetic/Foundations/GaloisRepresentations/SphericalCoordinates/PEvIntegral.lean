@@ -82,7 +82,7 @@ theorem UpperTheory.Gal.W2.evIntegral_of :
   have hhalf : IsIntegral ℤ (algebraMap ℚ ℂ (1 / 2)) := by
     rw [hprod]
     exact hint_t.mul hint_ev
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective] at hhalf
+  rw [isIntegral_algebraMap_iff ] at hhalf
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 hhalf
   have h2n : ((2 * n : ℤ) : ℚ) = 1 := by
     push_cast

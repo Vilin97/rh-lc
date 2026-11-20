@@ -28,7 +28,7 @@ theorem linFunctional_translate_pow_firstOrder_eq_zero (σ : Type) (Φ : MvPolyn
     rintro _ ⟨t, rfl⟩
     simp only [Set.mem_setOf_eq, Polynomial.IsRoot, Polynomial.eval_sub, Polynomial.eval_C, heval, h t,
       sub_self]
-  have hc := congrArg (fun p => Polynomial.coeff p 1) hzero
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hzero
   simp only [Polynomial.coeff_sub, Polynomial.coeff_C, Polynomial.coeff_zero, hq,
     Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   rw [Finset.sum_ite_eq (Finset.range (m + 2)) 1] at hc

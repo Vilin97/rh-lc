@@ -26,7 +26,7 @@ theorem InAt_add {a b : VA X.B.I} (ha : InAt X.B.I X.B.g X.B.g a) (hb : InAt X.B
     InAt X.B.I X.B.g X.B.g (a + b) := by
   obtain ⟨c, hc, hca⟩ := ha
   obtain ⟨d, hd, hdb⟩ := hb
-  refine ⟨c * d, Nat.Coprime.mul hc hd, ?_⟩
+  refine ⟨c * d, Nat.Coprime.mul_left hc hd, ?_⟩
   have e : ((c * d : ℕ) : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • (a + b) =
       ((d : ℕ) : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • (((c : ℕ) : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • a) +
         ((c : ℕ) : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • (((d : ℕ) : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • b) := by

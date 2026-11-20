@@ -194,7 +194,7 @@ theorem intAt_of_int {x : K} (h : IsIntegral ℤ x) : IntAt p x :=
 theorem intAt_mul {x y : K} (hx : IntAt p x) (hy : IntAt p y) : IntAt p (x * y) := by
   obtain ⟨s, hs, hx'⟩ := hx
   obtain ⟨t, ht, hy'⟩ := hy
-  refine ⟨s * t, Nat.Coprime.mul hs ht, ?_⟩
+  refine ⟨s * t, Nat.Coprime.mul_left hs ht, ?_⟩
   have e : ((s * t : ℕ) : K) * (x * y) = ((s : K) * x) * ((t : K) * y) := by push_cast; ring
   rw [e]
   exact isInt_cast (hx'.mul hy')
@@ -202,7 +202,7 @@ theorem intAt_mul {x y : K} (hx : IntAt p x) (hy : IntAt p y) : IntAt p (x * y) 
 theorem intAt_add {x y : K} (hx : IntAt p x) (hy : IntAt p y) : IntAt p (x + y) := by
   obtain ⟨s, hs, hx'⟩ := hx
   obtain ⟨t, ht, hy'⟩ := hy
-  refine ⟨s * t, Nat.Coprime.mul hs ht, ?_⟩
+  refine ⟨s * t, Nat.Coprime.mul_left hs ht, ?_⟩
   have e : ((s * t : ℕ) : K) * (x + y) = (t : K) * ((s : K) * x) + (s : K) * ((t : K) * y) := by
     push_cast; ring
   rw [e]

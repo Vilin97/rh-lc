@@ -39,8 +39,8 @@ theorem polyProd_bij (A B : Type) [CommRing A] [CommRing B] :
     intro p hp
     simp only [RingHom.prod_apply, Prod.mk_eq_zero, Polynomial.coe_mapRingHom] at hp
     ext n
-    · simpa using congrArg (fun r => Polynomial.coeff r n) hp.1
-    · simpa using congrArg (fun r => Polynomial.coeff r n) hp.2
+    · simpa using congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r n) hp.1
+    · simpa using congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r n) hp.2
   · rintro ⟨p, p'⟩
     let N := max p.natDegree p'.natDegree + 1
     refine ⟨∑ k ∈ Finset.range N, Polynomial.monomial k (p.coeff k, p'.coeff k), ?_⟩

@@ -176,7 +176,7 @@ theorem isOfFinOrder_of_mem (L : ColLevel R F E sp gp C A clsLat)
     (hγ1 : γ ∈ ratPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F))
     (hγ2 : y⁻¹ * γ * y ∈ L.U) : IsOfFinOrder γ := by
   obtain ⟨c, hc⟩ := L.y_bij.2 (Quotient.mk'' ⟨y, hy⟩)
-  obtain ⟨a, ha, b, hb, hab⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+  obtain ⟨a, ha, b, hb, hab⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
   have hab' : y = a.1 * (L.y c).1 * b.1 := congrArg Subtype.val hab
   have ha' : a.1 ∈ ratPts sp.cm.sig sp.gram0 (FiniteAdeleRing (𝓞 F) F) := ha
   have hb' : b.1 ∈ L.U := hb

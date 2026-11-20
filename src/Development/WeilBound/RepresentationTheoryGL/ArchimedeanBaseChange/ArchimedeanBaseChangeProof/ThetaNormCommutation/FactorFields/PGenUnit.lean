@@ -66,7 +66,7 @@ theorem PositivityTheory.Rg.BcB.G3.genUnit_pf : PositivityTheory.Rg.BcB.G3.GenUn
       GlobalTheory.TwOrbConj.map_conj_self K (K.one_mem), (Subgroup.relIndex_eq_one).2 hcpt]
     simp
   rw [GlobalTheory.TwOrbConj.twOrb_eq, finsum_eq_single _ (DoubleCoset.mk (twCent θ z) K 1)]
-  · obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+  · obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
       (DoubleCoset.out_eq' (twCent θ z) K (DoubleCoset.mk (twCent θ z) K 1)).symm
     rw [he, GlobalTheory.TwOrbConj.summand_rep θ K z _ 1 ht hk, hval]
   · intro q hq

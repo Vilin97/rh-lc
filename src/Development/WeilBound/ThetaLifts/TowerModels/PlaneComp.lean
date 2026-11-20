@@ -48,7 +48,7 @@ theorem fg_comap {V W : Type} [AddCommGroup V] [Module (𝓞 E) V] [AddCommGroup
   Submodule.fg_of_fg_map_injective f hf (hL.of_le (Submodule.map_comap_le f L))
 
 theorem isLattice_comap (n n₁ : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (ι : Matrix (Fin n) (Fin n₁) E)
-    (P : Matrix (Fin n₁) (Fin n) E) (hP : P * ι = 1) (hL : L.IsLattice E) :
+    (P : Matrix (Fin n₁) (Fin n) E) (hP : P * ι = 1) (hL : L.IsFullLattice E) :
     (L.comap ((Matrix.mulVecLin ι).restrictScalars (𝓞 E))).IsLattice E where
   fg := fg_comap _ (fun u u' e => by
     have := congrArg (P *ᵥ ·) (show ι *ᵥ u = ι *ᵥ u' from e)

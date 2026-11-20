@@ -77,7 +77,7 @@ theorem IsBK.of_surjective (h : Function.Surjective (algebraMap F₀ F₁)) {ρ 
     refine ⟨A, fun y => ?_, x, fun s hs => hx _ ⟨hs.1, hs.2⟩⟩
     obtain ⟨z, hz⟩ := h (y : F₁)
     have hi : IsIntegral ℤ z := by
-      rw [← isIntegral_algebraMap_iff (algebraMap F₀ F₁).injective, hz]
+      rw [← isIntegral_algebraMap_iff , hz]
       exact y.2
     have e : y = algebraMap (𝓞 F₀) (𝓞 F₁) ⟨z, hi⟩ := Subtype.ext hz.symm
     have := hA ⟨z, hi⟩

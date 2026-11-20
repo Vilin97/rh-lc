@@ -25,7 +25,7 @@ lemma binMatK_map (F L : Type) [Field F] [Field L] (φ : F →+* L) {n : ℕ} (d
 lemma binMatK_eval_nat (F : Type) [Field F] [CharZero F] {n : ℕ} (del : ℕ)
     (c : Fin n → Fin n → ℕ → F) (i j : Fin n) (t : ℕ) :
     (binMatK F del c i j).eval (t : F) = ∑ k ∈ range (del + 1), c i j k * (t.choose k : F) := by
-  simp only [binMatK, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, binK_eval_nat]
+  simp only [binMatK, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, binK_eval_nat]
 
 lemma norm_nat (p : ℕ) [hp : Fact p.Prime] (n : ℕ) (hn : n ≠ 0) :
     ‖(n : ℚ_[p])‖ = (p : ℝ) ^ (-(padicValNat p n : ℤ)) := by
@@ -218,7 +218,7 @@ lemma legendre' (p : ℕ) [hp : Fact p.Prime] (n : ℕ) :
   have hpm : (0 : ℝ) < (p : ℝ) - 1 := by linarith
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
-  · have hlen := Nat.digits_len p n hp1 hn.ne'
+  · have hlen := Nat.length_digits p n hp1 hn.ne'
     have key : ((p : ℝ) - 1) * (padicValNat p n.factorial) = n - (p.digits n).sum := by
       have := congrArg (fun x : ℕ => (x : ℝ)) h
       rw [Nat.cast_mul, Nat.cast_sub hp1.le, Nat.cast_sub hds, Nat.cast_one] at this

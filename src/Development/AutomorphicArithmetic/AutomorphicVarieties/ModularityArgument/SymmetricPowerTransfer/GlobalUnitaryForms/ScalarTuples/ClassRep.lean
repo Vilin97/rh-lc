@@ -197,7 +197,7 @@ private theorem val_one (hN : ∀ g : DX Δ, (Glob.mt g).det = algebraMap _ _ (N
     Valued.v (N g : Kv v) = 1 := by
   have h : ∀ g ∈ KD Δ (Ov v), Valued.v (N g : Kv v) ≤ 1 := fun g hg => by
     have h1 := det_int (Ov v) hg
-    rw [hN, isIntegral_algebraMap_iff QuadraticAlgebra.algebraMap_injective] at h1
+    rw [hN, isIntegral_algebraMap_iff ] at h1
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
     rw [← hy]
     exact y.2

@@ -47,7 +47,7 @@ theorem exists_orthonormal_same_span : ∀ {F : Type} [Field F] [ValuativeRel F]
     ext i j
     have h := congrFun (congrFun hGP₀ i) j
     rw [Matrix.one_apply, apply_ite Subtype.val, OneMemClass.coe_one, ZeroMemClass.coe_zero,
-      Matrix.mul_apply, AddSubmonoidClass.coe_finset_sum]
+      Matrix.mul_apply, AddSubmonoidClass.coe_finsetSum]
     rw [Matrix.mul_apply, Matrix.one_apply] at h
     exact h
   have hint : ∀ a : 𝒪[F], algebraMap F E a ∈ L.O := fun a => (algebraMap_mem_iff L a).2 a.2
@@ -80,7 +80,7 @@ theorem exists_orthonormal_same_span : ∀ {F : Type} [Field F] [ValuativeRel F]
   · have h := congrArg Subtype.val (congrFun (congrFun hQ i) j)
     rw [Matrix.one_apply, apply_ite Subtype.val, OneMemClass.coe_one, ZeroMemClass.coe_zero] at h
     rw [← h]
-    simp only [hsm, hf_sum_l, hf_sum_r, Matrix.mul_apply, AddSubmonoidClass.coe_finset_sum,
+    simp only [hsm, hf_sum_l, hf_sum_r, Matrix.mul_apply, AddSubmonoidClass.coe_finsetSum,
       Subring.coe_mul, Matrix.transpose_apply, Matrix.map_apply, hcv, hGv]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   · rw [Submodule.span_le]

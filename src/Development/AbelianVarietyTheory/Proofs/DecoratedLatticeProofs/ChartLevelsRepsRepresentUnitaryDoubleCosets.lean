@@ -119,7 +119,7 @@ theorem reps_of_chart (hy : Function.Bijective (fun c => (Quotient.mk'' (y c) : 
       rw [← hΦγ]; exact GlobalTheory.AdForm.Model.finGL_mem V hn γ
     apply hy.1
     show (Quotient.mk'' (y c) : Cls S) = Quotient.mk'' (y c')
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, hmemγ⟩, Subgroup.mem_subgroupOf.2 (Subgroup.mem_map_of_mem _ (r ⟨γ, hγ⟩).2),
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, hmemγ⟩, Subgroup.mem_subgroupOf.2 (Subgroup.mem_map_of_mem _ (r ⟨γ, hγ⟩).2),
       ⟨κ0.1, ((S.U_eq κ0.1).1 κ0.2).1⟩, Subgroup.mem_subgroupOf.2 κ0.2, Subtype.ext key⟩
 
 end Gen

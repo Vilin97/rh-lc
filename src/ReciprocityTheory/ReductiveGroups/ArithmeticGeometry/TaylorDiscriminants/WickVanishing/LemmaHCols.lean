@@ -61,7 +61,7 @@ def combine (f : Fin n → (ι →₀ ℕ)) : ι × Fin n →₀ ℕ :=
 theorem combine_apply (f : Fin n → (ι →₀ ℕ)) (l : ι) (b : Fin n) : combine f (l, b) = f b l := by
   classical
   unfold combine
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single b]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single b]
   · exact Finsupp.mapDomain_apply (fun x y h => (Prod.mk.inj h).1) (f b) l
   · intro b' _ hb'
     apply Finsupp.mapDomain_notin_range

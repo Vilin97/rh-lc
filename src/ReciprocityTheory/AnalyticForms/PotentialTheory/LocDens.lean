@@ -86,8 +86,8 @@ theorem maDens_continuousOn {D : ℕ} (φ : Fin D → (Fin D → ℂ) → ℝ) (
   have hH : ∀ k, ContinuousOn (hessC (φ k)) V := fun k => hessC_continuousOn (φ k) V hV (hφ k)
   unfold maDens mdisc
   refine continuousOn_const.mul (Complex.continuous_re.comp_continuousOn ?_)
-  refine continuousOn_const.mul (continuousOn_finset_sum _ fun S _ => continuousOn_const.mul ?_)
-  exact (continuous_id.matrix_det).comp_continuousOn (continuousOn_finset_sum _ fun k _ => hH k)
+  refine continuousOn_const.mul (continuousOn_finsetSum _ fun S _ => continuousOn_const.mul ?_)
+  exact (continuous_id.matrix_det).comp_continuousOn (continuousOn_finsetSum _ fun k _ => hH k)
 
 theorem locDensCont : LocDensContStatement := by
   intro e X _ A Φ hΦ j y0 hy0

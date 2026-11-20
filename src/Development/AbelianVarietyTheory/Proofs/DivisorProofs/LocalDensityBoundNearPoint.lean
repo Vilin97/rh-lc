@@ -72,7 +72,7 @@ theorem continuousOn_fsDensity {d : ℕ} {O : Set (V (d + 1))} {G : (Fin d → �
       · exact continuous_const
   have hh : ContinuousOn (fun z => hform (G (base z)) (lineVec s (fib z)) (lineVec s (fib z))) O := by
     unfold hform
-    refine continuousOn_finset_sum _ fun i _ => continuousOn_finset_sum _ fun j _ => ?_
+    refine continuousOn_finsetSum _ fun i _ => continuousOn_finsetSum _ fun j _ => ?_
     exact (((hw i).mul ((Complex.continuous_conj).comp (hw j))).continuousOn).mul (he i j)
   have hdet : ContinuousOn (fun z => (G (base z)).det) O :=
     (Continuous.matrix_det continuous_id).comp_continuousOn hc
@@ -92,7 +92,7 @@ theorem measurable_cosSq (s : Bool) (G : Matrix (Fin 2) (Fin 2) ℂ) : Measurabl
   have hh : ∀ (b : ℂ → Fin 2 → ℂ), (∀ j, Continuous fun z => b z j) →
       Continuous (fun z => hform G (lineVec s z) (b z)) := fun b hb => by
     unfold hform
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact ((hw i).mul ((Complex.continuous_conj).comp (hb j))).mul continuous_const
   exact ((hh (fun _ => Pi.single (0 : Fin 2) (1 : ℂ)) fun j => continuous_const).norm.pow 2).measurable.div
     ((Complex.continuous_re.comp (hh _ hw)).mul continuous_const).measurable

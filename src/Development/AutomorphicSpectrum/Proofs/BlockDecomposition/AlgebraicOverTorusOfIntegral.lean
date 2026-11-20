@@ -16,7 +16,7 @@ theorem isAlgebraic_unit_inv {K R : Type} [Field K] [CommRing R] [IsDomain R] [A
     (A : Subalgebra K R) (u : Rˣ) (hu : (u : R) ∈ A) : IsAlgebraic A ((u⁻¹ : Rˣ) : R) := by
   refine ⟨Polynomial.C (⟨u, hu⟩ : A) * Polynomial.X - 1, ?_, ?_⟩
   · intro h
-    have h1 := congrArg (fun p => Polynomial.coeff p 0) h
+    have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
     simp at h1
   · simp [Polynomial.aeval_def, Polynomial.eval₂_sub, Polynomial.eval₂_mul]
 

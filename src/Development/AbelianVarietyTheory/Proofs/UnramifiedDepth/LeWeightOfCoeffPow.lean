@@ -153,7 +153,7 @@ lemma mfact_smul [Fintype κ] {l : ℕ} (hl : l.Prime) (β : κ →₀ ℕ) :
 
 lemma not_dvd_mfact [Fintype κ] {l : ℕ} (hl : l.Prime) (β : κ →₀ ℕ) (h : ∀ j, β j < l) :
     ¬ l ∣ mfact β := by
-  rw [mfact_eq, Prime.dvd_finset_prod_iff hl.prime]
+  rw [mfact_eq, Prime.dvd_finsetProd_iff hl.prime]
   rintro ⟨j, -, hj⟩
   exact absurd (hl.dvd_factorial.1 hj) (not_le.2 (h j))
 
@@ -183,8 +183,8 @@ lemma prod_eq_monomial [Fintype κ] (l : ℕ) (B : κ →₀ ℕ) :
   rw [this]
   congr 2
   ext (x | x)
-  · simp [Finsupp.finset_sum_apply, Finsupp.single_apply]
-  · simp [Finsupp.finset_sum_apply, Finsupp.single_apply]
+  · simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
+  · simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 def mainTerm [Fintype κ] (l : ℕ) (c : C) : MvPowerSeries (κ ⊕ κ) C :=
   c • ∑ j, MvPowerSeries.X (Sum.inl j) ^ l * MvPowerSeries.X (Sum.inr j)
@@ -541,7 +541,7 @@ lemma val_prod_factorial {v : AddValuation C (WithTop ℝ)} {l : ℕ} (hl : l.Pr
     (hf : ∀ c ∈ s, f c < l) : v (∏ c ∈ s, ((f c).factorial : C)) = 0 := by
   rw [← Nat.cast_prod]
   refine val_nat hp _ ?_
-  rw [Prime.dvd_finset_prod_iff hl.prime]
+  rw [Prime.dvd_finsetProd_iff hl.prime]
   rintro ⟨j, hj, hj'⟩
   exact absurd (hl.dvd_factorial.1 hj') (not_le.2 (hf j hj))
 

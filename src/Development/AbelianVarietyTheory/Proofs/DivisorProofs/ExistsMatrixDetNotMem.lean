@@ -371,7 +371,7 @@ theorem trivAt_act {γ : Matrix (Fin n) (Fin n) E} {Λ : GenLat E n} {m : ℕ}
   obtain ⟨k1, hk1, h1, h1'⟩ := h
   obtain ⟨k2, hk2, h2, h2'⟩ := hΛ
   rw [span_singleton_smul_le_iff] at h1 h1' h2 h2'
-  refine ⟨k1 * k2, Nat.Coprime.mul hk1 hk2, (span_singleton_smul_le_iff _ _ _).2 ?_, (span_singleton_smul_le_iff _ _ _).2 ?_⟩
+  refine ⟨k1 * k2, Nat.Coprime.mul_left hk1 hk2, (span_singleton_smul_le_iff _ _ _).2 ?_, (span_singleton_smul_le_iff _ _ _).2 ?_⟩
   · intro y hy
     obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.1 hy
     have := h1 _ (Submodule.mem_map_of_mem (f := (Matrix.mulVecLin γ).restrictScalars (𝓞 E)) (h2 x hx))

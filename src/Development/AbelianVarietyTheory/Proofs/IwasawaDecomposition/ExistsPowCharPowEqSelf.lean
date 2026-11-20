@@ -144,7 +144,7 @@ theorem exists_pow_prime_pow_cong [CharZero Ω] (A : ValuationSubring Ω) {x : �
     have hdvd : Polynomial.C (p : ℤ) ∣ Q := by
       rw [Polynomial.C_dvd_iff_dvd_coeff]
       intro i
-      have := congrArg (fun g => Polynomial.coeff g i) h0
+      have := congrArg (fun g => _root_.AddMonoidAlgebra.coeff (M := ℕ) g i) h0
       simp only [Polynomial.coeff_map, Polynomial.coeff_zero, eq_intCast] at this
       exact (CharP.intCast_eq_zero_iff k p _).mp this
     have hu := hQprim (p : ℤ) hdvd

@@ -149,7 +149,7 @@ theorem ptIdeal_eq_coneIdeal (hB : B.IsLB) {k : Fin m} (t : Fin m → Γ(Z, nonz
     rcases hg' with h | ⟨_, h⟩
     · exact h
     · exfalso
-      have := congrArg (fun q => Polynomial.coeff q 1) h
+      have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) h
       simp at this
       exact this hb
   · intro g hg

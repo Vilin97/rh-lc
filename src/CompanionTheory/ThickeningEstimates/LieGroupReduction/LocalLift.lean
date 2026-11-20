@@ -142,7 +142,7 @@ theorem quad_eq {X : Matrix (l ⊕ l) (l ⊕ l) ℝ} (hX : X ∈ LieAlgebra.Symp
 theorem differentiableAt_det {M : ℝ → Matrix l l ℝ} {t : ℝ} (h : ∀ i j, DifferentiableAt ℝ (fun t => M t i j) t) :
     DifferentiableAt ℝ (fun t => (M t).det) t := by
   simp only [Matrix.det_apply']
-  exact DifferentiableAt.fun_sum fun σ _ => (DifferentiableAt.fun_finset_prod fun i _ => h _ _).const_mul _
+  exact DifferentiableAt.fun_sum fun σ _ => (DifferentiableAt.fun_finsetProd fun i _ => h _ _).const_mul _
 
 end CompanionTheory.ThKR.LL
 

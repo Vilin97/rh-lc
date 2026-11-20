@@ -267,7 +267,7 @@ theorem diamond_commutes_U_distinct (T : Forms0 D u) (hM : UpDiaMatch0F T) (v v'
     exact T.val0.dilT v' a k hk c1 δ hδ g hgA
   funext c
   have hcl := T.val0.dil v' a k hk c δ hδ
-  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (DoubleCoset.eq _ _ _ _).1 hcl
+  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
   have hκ : κ0.1 ∈ T.cls0.lev.U := hκK
   obtain ⟨γd, hγd, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have hx : (T.cls0.y c * δ).1 =
@@ -398,7 +398,7 @@ theorem diamond_commutes_D_distinct (T : Forms0 D u) (hM : DnDiaMatch0F T) (v v'
     exact T.val0.dilT v' a k hk c1 δ hδ g hgA
   funext c
   have hcl := T.val0.dil v' a k hk c δ hδ
-  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (DoubleCoset.eq _ _ _ _).1 hcl
+  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
   have hκ : κ0.1 ∈ T.cls0.lev.U := hκK
   obtain ⟨γd, hγd, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have hx : (T.cls0.y c * δ).1 =

@@ -71,7 +71,7 @@ theorem single_mem_span (nX nY q : ℕ) (hq : q ≠ 0) (c : ℂ) (hc : c ≠ 0) 
     rcases mul_eq_zero.1 h0.symm with h1 | h1
     · exact h1
     · exact absurd h1 hB
-  have hco := congrArg (fun p => Polynomial.coeff p j) hcomp
+  have hco := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) hcomp
   simp only [comp_C_mul_X_coeff, coeff_zero] at hco
   rw [coeff_heckePolyOf_le _ _ _ (Nat.lt_succ_iff.1 j.isLt)] at hco
   have hqc : (q : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hq

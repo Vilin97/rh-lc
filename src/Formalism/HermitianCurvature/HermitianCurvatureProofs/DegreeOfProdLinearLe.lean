@@ -85,7 +85,7 @@ theorem t_EstEJoint : EstEJoint := by
   have hsz : ∀ v, (S v).size (loc w v) ≠ 0 := fun v => size_ne_zero (S v) (hRoots v) _ (hAdm w hwW.1 v).1
   have hl : Tendsto (fun ε : ℝ => ∏ v, (S v).principalHermitianLattice ε (loc w v)) (𝓝[>] 0)
       (𝓝 (∏ v, ((S v).size (loc w v) * (S v).jn))) :=
-    tendsto_finset_prod _ (fun v _ => hlim v _ (hAdm w hwW.1 v).1
+    tendsto_finsetProd _ (fun v _ => hlim v _ (hAdm w hwW.1 v).1
       (by rw [hN]; exact (hAdm w hwW.1 v).2.trans hwW.2))
   have h2 := hl.div_const (D.wt w)
   have hval : (∏ v, ((S v).size (loc w v) * (S v).jn)) / D.wt w = ∏ v, (S v).jn := by

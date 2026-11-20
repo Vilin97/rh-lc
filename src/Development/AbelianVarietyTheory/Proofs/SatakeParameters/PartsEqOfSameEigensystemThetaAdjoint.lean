@@ -87,7 +87,7 @@ theorem q_ne_zero (R : RealDat D A Ks) (hF : R.IsFam) (P : Pl0) : A.q P ≠ 0 :=
 theorem blockProd_map_ne_zero (i : Fin D.R.m) (t : T) (P : A.ok t) :
     ((A.fam.L i t).blockProd P).map D.what₂.embLL ≠ 0 := by
   intro h
-  have h0 := congrArg (fun p => Polynomial.coeff p 0) h
+  have h0 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
   simp only [Polynomial.coeff_map, Polynomial.coeff_zero] at h0
   rw [Polynomial.coeff_zero_eq_eval_zero] at h0
   simp [BlockDat.blockProd, FamIn.fam, liftDat, Formalism.L2.Col.blockPoly, Polynomial.eval_prod] at h0
@@ -130,7 +130,7 @@ theorem heckePoly_cancel (nV nW q : ℕ) (κ : ℂ) (B : ℂ[X]) (z : ℕ → �
     dsimp only
     rw [heq k (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))]
   rw [hpoly, hpoly] at h1
-  have h2 := congrArg (fun p => Polynomial.coeff p j) (mul_right_cancel₀ hB h1)
+  have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) (mul_right_cancel₀ hB h1)
   simp only [Polynomial.comp_C_mul_X_coeff] at h2
   have h3 := mul_right_cancel₀ (pow_ne_zero j hκ) h2
   have hc : ∀ b : ℕ → ℂ, (Formalism.L2.Col.heckePolyOf nW q b).coeff j = (-1) ^ j * (q : ℂ) ^ (j * (j - 1) / 2) * b j := by

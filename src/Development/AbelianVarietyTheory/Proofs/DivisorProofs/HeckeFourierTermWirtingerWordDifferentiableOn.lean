@@ -59,7 +59,7 @@ theorem GlobalTheory.HeckeTwo.fTerm_wirtWord_differentiableOn : ∀ (F : Type) [
   refine DifferentiableOn.congr ?_ (fun σ hσ => h σ hσ z hz)
   refine DifferentiableOn.fun_sum fun i _ => DifferentiableOn.const_mul ?_ _
   unfold termQ
-  refine DifferentiableOn.fun_finset_prod fun τ _ => DifferentiableOn.const_mul ?_ _
+  refine DifferentiableOn.fun_finsetProd fun τ _ => DifferentiableOn.const_mul ?_ _
   have hy : (τ b : ℝ) * (z τ).im ≠ 0 :=
     mul_ne_zero ((map_ne_zero τ).2 hb) (hz τ).ne'
   exact (hJ (τ ν) (qf i τ) _ hy).2

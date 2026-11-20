@@ -126,7 +126,7 @@ theorem levelPrime_mod (D : D7) (u : D.what₂.Word) :
     have hM0' : (M : D.host.E) ≠ 0 := by exact_mod_cast (by omega : M ≠ 0)
     rw [map_div₀, map_sub, map_one, map_natCast, map_natCast, eq_div_iff hM0', hz]
     linear_combination hn
-  rw [h4, isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective] at hzi
+  rw [h4, isIntegral_algebraMap_iff ] at hzi
   obtain ⟨n, hn'⟩ := IsIntegrallyClosed.isIntegral_iff.1 hzi
   have h5 : (((D.mem u).A.T : ℤ) : ℚ) = ((1 + M * n : ℤ) : ℚ) := by
     have : (n : ℚ) = (((D.mem u).A.T : ℚ) - 1) / M := by simpa using hn'

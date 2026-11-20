@@ -72,7 +72,7 @@ theorem left_of_right (χ : G →* ℂ) (θ : G →* G) (cθ : Continuous θ) (i
       · simpa using (h2 _ hx').symm
       · rw [image_eq_zero_of_notMem_tsupport hx, image_eq_zero_of_notMem_tsupport hx']
   have c₀ : IsCompact (K₀ : Set G) :=
-    (IsCompact.image hφ.2 (continuous_mul_right x₀⁻¹)).of_isClosed_subset (K₀.isClosed_of_isOpen o₀) fun k hk =>
+    (IsCompact.image hφ.2 (continuous_mul_const x₀⁻¹)).of_isClosed_subset (K₀.isClosed_of_isOpen o₀) fun k hk =>
       ⟨k * x₀, subset_tsupport _ (by rw [Function.mem_support, hk x₀]; exact hx₀), by simp⟩
   let K := K₀ ⊓ K₀.comap θ
   have o : IsOpen (K : Set G) := o₀.inter (o₀.preimage cθ)

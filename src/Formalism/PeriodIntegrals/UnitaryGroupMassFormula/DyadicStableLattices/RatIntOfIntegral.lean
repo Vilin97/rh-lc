@@ -61,7 +61,7 @@ theorem repr_int (d : ℕ) (hd : Squarefree d) (hdm : d + 1 = 4 * m) (z : Kq m)
     have e : (⟨a, b⟩ : Kq m) + star ⟨a, b⟩ = algebraMap ℚ (Kq m) (2 * a + b) := by
       ext <;> simp [QuadraticAlgebra.star_mk] <;> ring_nf
     rw [e] at h
-    exact (isIntegral_algebraMap_iff hinj).1 h
+    exact (isIntegral_algebraMap_iff ).1 h
   have hn : IsIntegral ℤ (a ^ 2 + a * b + m * b ^ 2) := by
     have h := hz.mul hstar
     have e : (⟨a, b⟩ : Kq m) * star ⟨a, b⟩ = algebraMap ℚ (Kq m) (a ^ 2 + a * b + m * b ^ 2) := by
@@ -70,7 +70,7 @@ theorem repr_int (d : ℕ) (hd : Squarefree d) (hdm : d + 1 = 4 * m) (z : Kq m)
       congr 1
       ring
     rw [e] at h
-    exact (isIntegral_algebraMap_iff hinj).1 h
+    exact (isIntegral_algebraMap_iff ).1 h
   obtain ⟨T, hT⟩ := rat_int_of_integral _ ht
   obtain ⟨N, hN⟩ := rat_int_of_integral _ hn
   have hd' : (d : ℚ) = 4 * m - 1 := by

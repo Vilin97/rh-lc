@@ -31,7 +31,7 @@ theorem norm_aeval_lt (x : PadicAlgCl l) (hx : ‖x‖ ≤ 1) (g : ℤ_[l][X])
   have hd : ∀ n, (PC (l : ℤ_[l])) ∣ PC (g.coeff n) := by
     intro n
     have h0 : PadicInt.toZMod (g.coeff n) = 0 := by
-      have := congrArg (fun f => Polynomial.coeff f n) hg
+      have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f n) hg
       simpa [Polynomial.coeff_map] using this
     have hm : g.coeff n ∈ IsLocalRing.maximalIdeal ℤ_[l] := by
       rw [← PadicInt.ker_toZMod]; exact h0

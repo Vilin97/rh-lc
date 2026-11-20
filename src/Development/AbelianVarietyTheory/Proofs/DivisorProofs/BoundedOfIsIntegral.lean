@@ -32,7 +32,7 @@ theorem isIntegral_trace_of_isIntegral {R K : Type} [CommRing R] [Field K] [Alge
   have htr : algebraMap K L M.trace = (φ M).trace := by
     simp only [Matrix.trace, Matrix.diag, map_sum]
     rfl
-  rw [← isIntegral_algebraMap_iff (A := K) (B := L) (algebraMap K L).injective, htr,
+  rw [← isIntegral_algebraMap_iff (A := K) (B := L) , htr,
     Matrix.trace_eq_sum_roots_charpoly]
   refine IsIntegral.multiset_sum fun μ hμ => ?_
   have hroot : IsRoot (φ M).charpoly μ := (mem_roots'.1 hμ).2

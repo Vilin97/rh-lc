@@ -323,7 +323,7 @@ end LocalGlobal
 section Level
 
 instance isLattice_sumLat (L : Submodule (𝓞 E) (Fin m → E)) (L' : Submodule (𝓞 E) (Fin n → E))
-    [h : Submodule.IsLattice E L] [h' : Submodule.IsLattice E L'] :
+    [h : Submodule.IsFullLattice E L] [h' : Submodule.IsFullLattice E L'] :
     Submodule.IsLattice E (sumLat finSumFinEquiv L L') := by
   let φ : ((Fin m → E) × (Fin n → E)) ≃ₗ[E] (Fin (m + n) → E) :=
     (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)

@@ -37,7 +37,7 @@ theorem ae_eval_ne_zero_of_ne_zero_fin : ∀ (m : ℕ) (f : MvPolynomial (Fin m)
       have hQ : Polynomial.map (MvPolynomial.eval s) P ≠ 0 := by
         intro h
         apply hs
-        have := congrArg (fun q => Polynomial.coeff q k) h
+        have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q k) h
         simpa [Polynomial.coeff_map] using this
       have hfin : ({y : ℂ | Polynomial.eval y (Polynomial.map (MvPolynomial.eval s) P) = 0}).Finite :=
         Polynomial.finite_setOfPred_isRoot hQ

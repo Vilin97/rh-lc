@@ -39,7 +39,7 @@ theorem fixed_int (y : 𝓞 I.E) (hy : star (y : I.E) = y) :
   obtain ⟨a, ha⟩ := (I.cm.fixed (y : I.E)).1 hy
   have hi : IsIntegral ℤ (algebraMap I.F I.E a) := by
     rw [ha]; exact y.isIntegral_coe
-  have hi' : IsIntegral ℤ a := (isIntegral_algebraMap_iff (algebraMap I.F I.E).injective).mp hi
+  have hi' : IsIntegral ℤ a := (isIntegral_algebraMap_iff ).mp hi
   let c : 𝓞 I.F := ⟨a, (mem_integralClosure_iff _ _).mpr hi'⟩
   refine ⟨c, ?_⟩
   apply NumberField.RingOfIntegers.ext

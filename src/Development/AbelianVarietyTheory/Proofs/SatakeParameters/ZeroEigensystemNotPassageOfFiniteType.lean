@@ -60,7 +60,7 @@ theorem zero_not_passage : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0
   have hb : ((A3.A.fam.L j A3.A.μ0).blockProd P').coeff 0 = 1 := by
     rw [coeff_zero_eq_eval_zero]; exact (A3.A.fam.L j A3.A.μ0).lf_blockProd_eval_zero P'
   have ht : ((A3.fam3.tr3 j p.1).1 ((A3.A.fam.L j A3.A.μ0).pl P')).coeff 0 = 1 := dualPoly_coeff_zero _ _ hne
-  have h2 := congrArg (fun f => Polynomial.coeff f 0) hres
+  have h2 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 0) hres
   simp only [coeff_zero, mul_coeff_zero, hb, ht, mul_one] at h2
   exact zero_ne_one h2
 

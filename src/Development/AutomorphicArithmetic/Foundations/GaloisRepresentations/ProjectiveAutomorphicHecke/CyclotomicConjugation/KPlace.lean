@@ -33,7 +33,7 @@ private theorem sameK_iff {E : Type} [Field E] [NumberField E] (x : E) (w w' : P
   · intro h y hy
     have hk : IsIntegral ℤ (⟨y, hy⟩ : Kx x) := by
       have h1 : IsIntegral ℤ (algebraMap (Kx x) E ⟨y, hy⟩) := y.isIntegral_coe
-      exact (isIntegral_algebraMap_iff (algebraMap (Kx x) E).injective).1 h1
+      exact (isIntegral_algebraMap_iff ).1 h1
     obtain ⟨a, ha⟩ : ∃ a : 𝓞 (Kx x), algebraMap (𝓞 (Kx x)) (𝓞 E) a = y :=
       ⟨⟨⟨y, hy⟩, hk⟩, RingOfIntegers.ext rfl⟩
     have hm : ∀ u : Plc E, a ∈ (u.under (𝓞 (Kx x))).asIdeal ↔ y ∈ u.asIdeal := by

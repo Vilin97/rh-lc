@@ -109,7 +109,7 @@ variable (I X V) in
 def reesCoeffRing : Subring (Polynomial Γ(X, V)) where
   carrier := {p | ∀ n, p.coeff n ∈ (I.map (algV X V)) ^ n}
   one_mem' n := by
-    change Polynomial.coeff 1 n ∈ _
+    change _root_.AddMonoidAlgebra.coeff (M := ℕ) 1 n ∈ _
     rw [Polynomial.coeff_one]
     split_ifs with h
     · subst h

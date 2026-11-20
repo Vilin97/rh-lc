@@ -43,7 +43,7 @@ theorem continuous_rep (hU : IsOpen (U : Set G)) : Continuous (rep U) := by
   rw [continuous_iff_continuousAt]
   intro g
   have hmem : (fun y => y * g⁻¹) ⁻¹' (U : Set G) ∈ nhds g := by
-    apply (hU.preimage (continuous_mul_right g⁻¹)).mem_nhds
+    apply (hU.preimage (continuous_mul_const g⁻¹)).mem_nhds
     simp [U.one_mem]
   apply (continuousAt_const (y := rep U g)).congr
   filter_upwards [hmem] with y hy
@@ -102,7 +102,7 @@ theorem normF_mem (n : ℕ) (F : (Fin (n + 1) → G) → M.V) (hF : F ∈ hcoch 
   · have : normF M U n F = fun x => ∑ c : Quotient (QuotientGroup.rightRel U),
         M.rho c.out⁻¹ (F fun i => c.out * x i) := funext (normF_eq M U n F)
     rw [this]
-    refine continuous_finset_sum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
+    refine continuous_finsetSum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
     exact continuous_pi fun i => continuous_const.mul (continuous_apply i)
   · rw [normF_eq, normF_eq, map_sum]
     have key : ∀ c : Quotient (QuotientGroup.rightRel U),

@@ -78,7 +78,7 @@ theorem supp_zero {σ L : Type*} [CommRing L] {Lo : Set σ} {P : MvPolynomial σ
     {e : σ →₀ ℕ} (he : e ∈ P.support) {x : σ} (hx : x ∉ Lo) : e x = 0 := by
   by_contra h
   apply hx
-  exact (mem_supported.mp hP) (Finset.mem_coe.mpr ((mem_vars x).mpr ⟨e, he, Finsupp.mem_support_iff.mpr h⟩))
+  exact (mem_supported.mp hP) (Finset.mem_coe.mpr ((MvPolynomial.mem_vars_iff_mem_support x).mpr ⟨e, he, Finsupp.mem_support_iff.mpr h⟩))
 
 theorem coeff_key {σ τ L : Type*} [CommRing L] (Lo : Set σ) (T : Finset τ) (A : τ → MvPolynomial σ L)
     (m : τ → σ →₀ ℕ) (hA : ∀ β ∈ T, A β ∈ supported L Lo) (hm : ∀ β ∈ T, ∀ x ∈ Lo, m β x = 0)

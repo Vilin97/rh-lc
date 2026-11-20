@@ -37,7 +37,7 @@ private theorem fc_abs (D V : Type) [CommRing D] [IsDomain D] [IsNoetherianRing 
     rw [h, Ideal.mem_bot] at this
     exact ht0 (FaithfulSMul.algebraMap_injective D V (this.trans (map_zero _).symm))
   have hval : ValuationRing V := inferInstance
-  refine ⟨((IsDiscreteValuationRing.TFAE V hnf).out 1 0).mp hval,
+  refine ⟨((IsDiscreteValuationRing.TFAE V hnf).out 2 1).mp hval,
     GlobalTheory.FormalIsogeny.isAdicComplete_maximalIdeal_of_finite D V, ?_⟩
   have : Module.Finite (ResidueField D) (ResidueField V) := inferInstance
   exact Module.finite_of_finite (ResidueField D)

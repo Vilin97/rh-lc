@@ -166,7 +166,7 @@ theorem lift_ev {Γ K : Subgroup G} (ξ : Representation ℂ Γ W)
     lift Γ K ξ (fun q => φ (Quotient.out q)) g = φ g := by
   simp only [lift, sum_cosetSet_ev ξ hloc φ h1 h2]
   rw [finsum_eq_single _ (DoubleCoset.mk Γ K g)]
-  · obtain ⟨γ₀, hγ₀, k, hk, he⟩ := (DoubleCoset.eq Γ K _ _).1 (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K g))
+  · obtain ⟨γ₀, hγ₀, k, hk, he⟩ := (@DoubleCoset.eq _ _ Γ K _ _).1 (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K g))
     have hc := card_cosetSet Γ K (Quotient.out (DoubleCoset.mk Γ K g)) ⟨γ₀, hγ₀⟩ k hk
     rw [← he] at hc
     rw [hc, smul_smul]

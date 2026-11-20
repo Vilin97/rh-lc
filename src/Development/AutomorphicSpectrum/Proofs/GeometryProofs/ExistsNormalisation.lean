@@ -35,7 +35,7 @@ theorem int_trans {o K : Type} [CommRing o] [Field K] [Algebra o K] (A B : Subal
   haveI : IsScalarTower A B K := IsScalarTower.of_algebraMap_eq fun _ => rfl
   haveI : Algebra.IsIntegral A B := ⟨fun b => by
     have := hB b b.2
-    exact (isIntegral_algebraMap_iff (A := B) (B := K) (x := b) Subtype.val_injective).1 this⟩
+    exact (isIntegral_algebraMap_iff (A := B) (B := K) (x := b) ).1 this⟩
   exact isIntegral_trans a ha
 
 theorem mem_of_isIntegral_loc {o K : Type} [CommRing o] [Field K] [Algebra o K] (A : Subalgebra o K) (D : Subring K)

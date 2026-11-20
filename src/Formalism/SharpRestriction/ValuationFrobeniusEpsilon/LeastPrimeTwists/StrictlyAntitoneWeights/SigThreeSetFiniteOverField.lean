@@ -22,7 +22,7 @@ instance instDVR (l : ℕ) [Fact l.Prime] : IsDiscreteValuationRing (V.Ol l) := 
     rw [IsLocalRing.isField_iff_maximalIdeal_eq, V.Ol_unram l]
     intro h
     exact l_ne_zero V l (Ideal.span_singleton_eq_bot.mp h)
-  refine ((IsDiscreteValuationRing.TFAE (V.Ol l) hf).out 0 4).mpr ?_
+  refine ((IsDiscreteValuationRing.TFAE (V.Ol l) hf).out 1 5).mpr ?_
   rw [V.Ol_unram l]
   exact ⟨⟨_, rfl⟩⟩
 

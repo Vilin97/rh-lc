@@ -70,7 +70,7 @@ private theorem intEl_of_conj (n : ℕ) (γ : GL (Fin n) k) (g : GL (Fin n) K)
   constructor
   · intro i
     rw [← val_le_one_iff (K := K)]
-    have h := congrArg (fun p => Polynomial.coeff p i) hchar
+    have h := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) hchar
     simp only [Polynomial.coeff_map] at h
     rw [h]
     exact (Valuation.mem_integer_iff _ _).1 ((y : Matrix (Fin n) (Fin n) 𝒪[K]).charpoly.coeff i).2

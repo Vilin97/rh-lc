@@ -109,7 +109,7 @@ theorem eq_of_map_eval_eq_of_dense {a b : Polynomial (MvPolynomial (Fin d) ℂ)}
   have hfun : (fun x => MvPolynomial.eval x (a.coeff i)) = fun x => MvPolynomial.eval x (b.coeff i) := by
     refine Continuous.ext_on hU (MvPolynomial.continuous_eval _) (MvPolynomial.continuous_eval _) ?_
     intro x hx
-    have := congrArg (fun P => Polynomial.coeff P i) (h x hx)
+    have := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) (h x hx)
     simpa [Polynomial.coeff_map] using this
   exact congrArg (fun c => AddMonoidAlgebra.coeff c _) (MvPolynomial.funext fun x => congrFun hfun x)
 

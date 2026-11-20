@@ -42,9 +42,9 @@ theorem uniform_posDef {X : Type} [TopologicalSpace X] {ι : Type} [Fintype ι] 
   have hS : IsCompact S := hK.prod (isCompact_sphere 0 1)
   have hq : ContinuousOn (fun p : X × (ι → ℝ) => p.2 ⬝ᵥ F p.1 *ᵥ p.2) S := by
     simp only [dotProduct, mulVec]
-    refine continuousOn_finset_sum _ fun j _ => ?_
+    refine continuousOn_finsetSum _ fun j _ => ?_
     refine ContinuousOn.mul (continuous_apply j |>.comp continuous_snd).continuousOn ?_
-    refine continuousOn_finset_sum _ fun k _ => ?_
+    refine continuousOn_finsetSum _ fun k _ => ?_
     refine ContinuousOn.mul ?_ (continuous_apply k |>.comp continuous_snd).continuousOn
     exact (hF j k).comp continuous_fst.continuousOn (fun p hp => hp.1)
   have hyy : ∀ y : ι → ℝ, y ⬝ᵥ y ≤ Fintype.card ι * ‖y‖ ^ 2 := by

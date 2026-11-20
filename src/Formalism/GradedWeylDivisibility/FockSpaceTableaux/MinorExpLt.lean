@@ -51,7 +51,7 @@ private theorem domCongr_cmIdx_apply_cmIdx {r n : ℕ} (x : Fin r × Fin n →�
 private theorem sum_single_castLE_apply' {r n s : ℕ} (τ : Fin s → Fin r) (hs : s ≤ n) (b : Fin r) (t : Fin n) :
     (∑ q : Fin s, Finsupp.single (τ q, Fin.castLE hs q) 1 : Fin r × Fin n →₀ ℕ) (b, t) =
       if h : t.val < s then (if τ ⟨t.val, h⟩ = b then 1 else 0) else 0 := by
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   by_cases h : t.val < s
   · rw [dif_pos h, Finset.sum_eq_single ⟨t.val, h⟩]
     · rw [Finsupp.single_apply]

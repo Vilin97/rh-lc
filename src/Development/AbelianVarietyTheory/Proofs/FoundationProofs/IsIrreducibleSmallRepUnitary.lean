@@ -40,7 +40,7 @@ theorem rowDivClosed_of_rowAct_stable {n k : ℕ} (M : Submodule ℂ (MvPolynomi
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← smul_eq_C_mul, map_smul, smul_eq_mul, mul_comm]
     rfl
-  have := congrArg (fun p => Polynomial.coeff p j) hP0
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) hP0
   simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
     if_pos hk, Polynomial.coeff_zero] at this
   exact this

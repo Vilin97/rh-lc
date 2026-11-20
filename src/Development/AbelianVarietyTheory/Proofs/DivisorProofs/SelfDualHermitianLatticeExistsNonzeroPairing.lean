@@ -21,7 +21,7 @@ theorem not_fg_top_ringOfIntegers (E : Type) [Field E] [NumberField E] :
   haveI : Module.Finite (𝓞 E) E := ⟨h⟩
   haveI : Module.Finite ℤ E := Module.Finite.trans (𝓞 E) E
   have hi : IsIntegral ℤ (algebraMap ℚ E (2⁻¹ : ℚ)) := Algebra.IsIntegral.isIntegral _
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at hi
+  rw [isIntegral_algebraMap_iff ] at hi
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hi
   have h2 : ((2 * y : ℤ) : ℚ) = 1 := by
     push_cast

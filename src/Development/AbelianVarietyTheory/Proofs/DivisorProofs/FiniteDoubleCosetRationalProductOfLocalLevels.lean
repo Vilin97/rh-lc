@@ -65,7 +65,7 @@ theorem finite_doubleCoset_of_isOpen (K : Subgroup (finU E n)) (hK : IsOpen (K :
     exact this
   show DoubleCoset.mk _ _ (finPart (s : UA E n)) = DoubleCoset.mk _ _ g
   rw [hg]
-  exact (DoubleCoset.eq _ _ _ _).2 ⟨finPart γ, finPart_rat hγ, k, hk, rfl⟩
+  exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨finPart γ, finPart_rat hγ, k, hk, rfl⟩
 
 end GlobalTheory.BCT.ClassFinLev
 

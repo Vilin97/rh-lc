@@ -297,7 +297,7 @@ theorem exists_twoTorsionPointUnkilled_of_crv {D : D7} {cc : Ideal (𝓞 D.host.
       have : algebraMap ℚ ℂ ((N : ℚ) / 2) = (N : ℂ) / 2 := by simp
       rw [this, ← h]; exact hx.add h1
     obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1
-      ((isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective).1 h2)
+      ((isIntegral_algebraMap_iff ).1 h2)
     have h4 : (N : ℚ) = 2 * (m : ℚ) := by
       have : (m : ℚ) = (N : ℚ) / 2 := by simpa using hm
       rw [this]; ring

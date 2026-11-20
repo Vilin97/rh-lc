@@ -300,7 +300,7 @@ theorem epStep5 : EpStep5 := by
 theorem derived_energy_L2 : WeightedIntegrable := by
   intro B T _ f v C p N hpN hmf hf0 hfb h1 h2
   have hg : Integrable (fun ω => |C| * ∑ t, (‖v t ω‖ ^ 2 + (B.G ω) ^ (2 * p) * ‖v t ω‖ ^ 2)) B.μ :=
-    (integrable_finset_sum _ fun t _ => (h1 t).add (h2 t)).const_mul _
+    (MeasureTheory.integrable_finsetSum _ fun t _ => (h1 t).add (h2 t)).const_mul _
   refine hg.mono' hmf.aestronglyMeasurable (Eventually.of_forall fun ω => ?_)
   rw [Real.norm_eq_abs, abs_of_nonneg (hf0 ω)]
   refine (hfb ω).trans ?_

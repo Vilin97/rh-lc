@@ -186,7 +186,7 @@ theorem integers_completeDVR : ∀ (l : ℕ) [Fact l.Prime], ∀ LL : FinExt l,
     exact hpu (isUnit_iff_exists_inv.mpr ⟨c, hc⟩)
   have hded : IsDedekindDomain (integralClosure ℤ_[l] ↥LL.1) := inferInstance
   have hdvr : IsDiscreteValuationRing (integralClosure ℤ_[l] ↥LL.1) :=
-    ((IsDiscreteValuationRing.TFAE _ hnf).out 0 2).mpr hded
+    ((IsDiscreteValuationRing.TFAE _ hnf).out 1 3).mpr hded
   have hfin : Module.Finite ℤ_[l] (integralClosure ℤ_[l] ↥LL.1) := inferInstance
   have htf : Module.IsTorsionFree ℤ_[l] (integralClosure ℤ_[l] ↥LL.1) := by
     refine ⟨fun r hr x y hxy => ?_⟩

@@ -26,7 +26,7 @@ theorem vars_of_polB {R : Type*} [CommRing R] {n N : ℕ} {B : ℕ → ℕ} {G :
   push_neg at hlt
   have hGi := (Submodule.mem_iInf _).mp hG x.1
   rw [if_neg (not_lt.mpr hlt), mem_weightedHomogeneousSubmodule] at hGi
-  obtain ⟨e, he, hex⟩ := (MvPolynomial.mem_vars x).mp hx
+  obtain ⟨e, he, hex⟩ := (MvPolynomial.mem_vars_iff_mem_support x).mp hx
   have h0 := hGi (mem_support_iff.mp he)
   have hpos : 0 < e x := Nat.pos_of_ne_zero (Finsupp.mem_support_iff.mp hex)
   rw [Finsupp.weight_apply, Finsupp.sum] at h0

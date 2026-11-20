@@ -79,11 +79,11 @@ theorem partUnits : PartUnits := by
     rw [map_inv₀, hcW]
     exact eq_inv_of_mul_eq_one_right hWW'
   have hci : IsIntegral ℤ c := by
-    refine (isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective).mp ?_
+    refine (isIntegral_algebraMap_iff (B := E) ).mp ?_
     rw [hcW]
     exact (w : 𝓞 E).2
   have hci' : IsIntegral ℤ c⁻¹ := by
-    refine (isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective).mp ?_
+    refine (isIntegral_algebraMap_iff (B := E) ).mp ?_
     rw [← hW']
     exact ((w⁻¹ : (𝓞 E)ˣ) : 𝓞 E).2
   let cu : (𝓞 F)ˣ :=

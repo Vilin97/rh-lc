@@ -54,7 +54,7 @@ private theorem expo_eq {M a b : ℕ} [NeZero M] {ζ : Ω} (hζ : IsPrimitiveRoo
 
 private theorem det_of_charpoly {K : Type} [Field K] (ι : K ≃+* ℂ) {A : Matrix (Fin 2) (Fin 2) K} {a d : ℂ}
     (h : A.charpoly.map ι.toRingHom = X ^ 2 - C a * X + C d) : ι A.det = d := by
-  have h0 := congrArg (fun p => Polynomial.coeff p 0) h
+  have h0 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
   simp [Polynomial.coeff_map] at h0
   rw [Matrix.det_eq_sign_charpoly_coeff]
   simp [h0]

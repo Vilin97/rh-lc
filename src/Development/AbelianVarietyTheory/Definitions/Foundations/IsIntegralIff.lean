@@ -197,7 +197,7 @@ theorem vE_zero (L : LocE F E) (ϖ : 𝒪[F]) : vE L ϖ 0 = 0 := by
 
 theorem algebraMap_mem_iff (L : LocE F E) (a : F) : algebraMap F E a ∈ L.O ↔ a ∈ 𝒪[F] := by
   have := nontrivial L
-  rw [L.O_def, isIntegral_algebraMap_iff (algebraMap F E).injective]
+  rw [L.O_def, isIntegral_algebraMap_iff ]
   constructor
   · intro h
     exact (Valuation.integer.integers _).mem_of_integral h

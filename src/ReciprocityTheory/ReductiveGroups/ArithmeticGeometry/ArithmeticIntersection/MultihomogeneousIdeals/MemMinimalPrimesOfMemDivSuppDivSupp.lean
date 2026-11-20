@@ -266,7 +266,7 @@ theorem swap_cycle {V : Ideal (MRingOver F ι)} {n : ℕ} {f t : MRingOver F ι}
       (ratDiv V t 1).sum fun W m => m • ratDiv W f 1 := by
   ext Z
   have h := swap_coeff hV hf ht hfV htV hft (Z := Z)
-  simp only [Finsupp.sum, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul] at h ⊢
+  simp only [Finsupp.sum, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul] at h ⊢
   exact h
 
 end ReciprocityTheory.ChartRestriction.G.AI.I1

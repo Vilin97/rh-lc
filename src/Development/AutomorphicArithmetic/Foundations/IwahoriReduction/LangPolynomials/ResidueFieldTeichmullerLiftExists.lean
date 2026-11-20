@@ -72,7 +72,7 @@ private theorem fin_lemma_3 {Ω : Type} [Field Ω] [Algebra ℚ Ω] (A : Valuati
   set Q2 := Q.primPart.map (Int.castRingHom (ZMod l))
   have hQ2 : Q2 ≠ 0 := by
     intro h
-    have := congrArg (fun p => Polynomial.coeff p i) h
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) h
     simp only [Q2, Polynomial.coeff_map, Polynomial.coeff_zero, eq_intCast] at this
     exact hi ((ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 this)
   have hev : Polynomial.aeval (IsLocalRing.residue A a) Q2 = 0 := by

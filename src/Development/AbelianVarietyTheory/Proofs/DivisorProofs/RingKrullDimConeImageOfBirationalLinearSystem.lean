@@ -73,7 +73,7 @@ theorem isAlgebraic_of_closure_eq_top (y : Fin N → Ω) (hy : y ≠ 0)
       apply hι
       rw [map_mul, ← hab, mul_div_cancel₀ _ ((map_ne_zero_iff ι hι).2 hb0)]
     refine ⟨Polynomial.C (⟨b, hb⟩ : A) * Polynomial.X - Polynomial.C (⟨a, ha⟩ : A), fun h => hb0 ?_, ?_⟩
-    · have := congrArg (fun q => Polynomial.coeff q 1) h
+    · have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) h
       simp at this
       exact congrArg Subtype.val this
     · simp [e]

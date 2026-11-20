@@ -82,7 +82,7 @@ theorem transvection_fix_generator (c : ι) (F0 : KTp K d.D d.N) (hF0 : F0 ≠ 0
     trv i k Polynomial.X F0 = Polynomial.C F0 := by
   classical
   have h1 : ∀ n, F0 ∣ (trv i k Polynomial.X F0).coeff n := fun n => (hker _).1 (by
-    have h2 := congrArg (fun p => Polynomial.coeff p n)
+    have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n)
       (congrArg (fun f => f F0) (d.relation_map_comm_transvection c i k hik))
     simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom,
       Polynomial.coe_mapRingHom, Polynomial.coeff_map] at h2

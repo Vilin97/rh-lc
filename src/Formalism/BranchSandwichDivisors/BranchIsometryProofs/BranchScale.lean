@@ -252,7 +252,7 @@ lemma rad_rowDiv (H : BsForm sg D) (p : MvPolynomial (Fin n × Fin n) ℂ) (hp :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← smul_eq_C_mul, H.smull, mul_comm]
     rfl
-  have := congrArg (fun p => Polynomial.coeff p k) hP0
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hP0
   simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
     if_pos hk, Polynomial.coeff_zero] at this
   exact this

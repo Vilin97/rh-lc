@@ -66,7 +66,7 @@ theorem exists_finite_dvr_splitting : ∀ (l : ℕ) [Fact l.Prime] {A ι : Type}
     algebraMap_injective_of_field_isFractionRing A S K L
   have hnf : ¬ IsField S := fun h =>
     IsDiscreteValuationRing.not_isField A (isField_of_isIntegral_of_isField hinj h)
-  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 2 0).1
+  haveI : IsDiscreteValuationRing S := ((IsDiscreteValuationRing.TFAE S hnf).out 3 1).1
     (inferInstance : IsDedekindDomain S)
   refine ⟨S, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, hinj,
     fun i => ?_⟩

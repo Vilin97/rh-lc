@@ -65,7 +65,7 @@ theorem integral_eq_sum (μ : Measure G) [μ.IsMulLeftInvariant] (K : Subgroup G
     exact hfin
   rw [finsum_eq_sum_of_support_subset (s := S) _ (fun q hq => hF.mem_toFinset.2 hq)]
   conv_lhs => rw [hsum]
-  rw [integral_finset_sum S hint, Finset.smul_sum]
+  rw [MeasureTheory.integral_finsetSum S hint, Finset.smul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [integral_indicator_const _ (hmeas q)]
   simp only [Measure.real, measure_coset]

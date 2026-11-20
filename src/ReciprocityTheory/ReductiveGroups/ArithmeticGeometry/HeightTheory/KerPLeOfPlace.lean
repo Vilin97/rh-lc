@@ -248,7 +248,7 @@ theorem ker_eval_eq_of_place (hd : d.AxH 𝒜) (c : ι) {p : Ideal (KTp K d.D d.
   have h2 := (Ideal.height_le_iff.mp h1) _ hprime hlt
   have h3 : ¬ (kerP (K := K) (D := d.D) (d.jc c) (d.x c)).height ≤ ((0 : ℕ) : ℕ∞) := by
     intro h0
-    have h4 := (Ideal.height_le_iff.mp h0) ⊥ Ideal.bot_prime (bot_lt_iff_ne_bot.mpr hne)
+    have h4 := (Ideal.height_le_iff.mp h0) ⊥ Ideal.isPrime_bot (bot_lt_iff_ne_bot.mpr hne)
     simp at h4
   apply h3
   have h5 : (kerP (K := K) (D := d.D) (d.jc c) (d.x c)).height = 0 :=

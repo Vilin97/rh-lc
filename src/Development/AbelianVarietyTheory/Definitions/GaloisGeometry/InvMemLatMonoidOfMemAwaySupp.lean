@@ -401,7 +401,7 @@ theorem isGIsogWit_mul {S : Scheme.{0}} {s : S ⟶ Sp R} {N M : ℕ} (e : N = M)
   subst e
   show IsGIsogWit L h o o (𝟙 o.A ^ c) (𝟙 o.A ^ c) m (c * c)
   haveI := GlobalTheory.DrinLev.HT.MulModel.isMonHom_id_pow o.A c
-  refine ⟨inferInstance, inferInstance, fun a => ?_, fun a => ?_, ?_, ?_, hm, Nat.Coprime.mul hc hc,
+  refine ⟨inferInstance, inferInstance, fun a => ?_, fun a => ?_, ?_, ?_, hm, Nat.Coprime.mul_left hc hc,
     fun k _ _ t β ht => ?_⟩
   · haveI := o.act.hom a
     rw [MonObj.comp_pow, GlobalTheory.DrinLev.HT.MulModel.pow_comp', Category.comp_id, Category.id_comp]

@@ -31,7 +31,7 @@ private theorem twOrb_twConj' {G : Type} [Group G] [TopologicalSpace G] [IsTopol
       DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (Quotient.out (GlobalTheory.TwOrbConj.dcEquiv θ K δ g q)) := by
     rw [DoubleCoset.out_eq']
     rfl
-  obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1 h
+  obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
   show _ = GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out (GlobalTheory.TwOrbConj.dcEquiv θ K δ g q))
   rw [he, GlobalTheory.TwOrbConj.summand_rep θ K δ f _ ht hk]
 

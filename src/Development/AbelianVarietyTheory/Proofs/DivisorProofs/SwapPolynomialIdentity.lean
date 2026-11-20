@@ -127,7 +127,7 @@ theorem key [DecidableEq κ] {x y : κ} (hxy : x ≠ y) (D : ℕ) (Φ Ψ : MvPol
       (f := fun j : ℤ => ((c y : ℝ) - c x) / 2 + j) (fun j j' h => by simpa using h)).mono ?_)
     rintro _ ⟨j, rfl⟩
     rw [Set.mem_setOf_eq, Polynomial.IsRoot, hev, hj j, sub_self]
-  have hc := congrArg (fun q => Polynomial.coeff q (2 * k)) hp0
+  have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (2 * k)) hp0
   simp only [hp, Polynomial.coeff_sub, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow,
     Polynomial.coeff_zero, mul_eq_mul_left_iff, OfNat.ofNat_ne_zero, or_false, Finset.sum_ite_eq,
     Finset.mem_range] at hc

@@ -67,9 +67,9 @@ theorem coprime_QS_q : Nat.Coprime H.QS H.q :=
 theorem coprime_QS_d : Nat.Coprime H.QS H.d :=
   Nat.Coprime.coprime_dvd_right (dvd_mul_left H.d H.q) H.QS_coprime
 theorem coprime_QSq_d : Nat.Coprime (H.QS * H.q) H.d :=
-  Nat.Coprime.mul H.coprime_QS_d H.coprime_q_d
+  Nat.Coprime.mul_left H.coprime_QS_d H.coprime_q_d
 theorem coprime_QSd_q : Nat.Coprime (H.QS * H.d) H.q :=
-  Nat.Coprime.mul H.coprime_QS_q H.coprime_q_d.symm
+  Nat.Coprime.mul_left H.coprime_QS_q H.coprime_q_d.symm
 theorem QS_ne_zero : H.QS ≠ 0 := H.QS_pos.ne'
 theorem condN_ne_zero : H.condN ≠ 0 :=
   Nat.mul_ne_zero (Nat.mul_ne_zero H.QS_ne_zero H.q_prime.ne_zero) H.d_prime.ne_zero

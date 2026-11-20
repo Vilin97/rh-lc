@@ -13,7 +13,7 @@ theorem isDVR_of_ringKrullDim_eq_one (B : Type*) [CommRing B] [IsDomain B] [IsLo
     exact zero_ne_one h
   have hle : Ring.KrullDimLE 1 B := Ring.krullDimLE_iff.2 (by rw [h]; rfl)
   have hmax := Ring.krullDimLE_one_iff_of_noZeroDivisors.1 hle
-  have hT := (IsDiscreteValuationRing.TFAE B hf).out 0 3
+  have hT := (IsDiscreteValuationRing.TFAE B hf).out 1 4
   refine hT.2 ⟨inferInstance, ExistsUnique.intro (IsLocalRing.maximalIdeal B) ⟨?_, inferInstance⟩ ?_⟩
   · exact fun h0 => hf (IsLocalRing.isField_iff_maximalIdeal_eq.2 h0)
   · rintro Q ⟨h0, hQ⟩

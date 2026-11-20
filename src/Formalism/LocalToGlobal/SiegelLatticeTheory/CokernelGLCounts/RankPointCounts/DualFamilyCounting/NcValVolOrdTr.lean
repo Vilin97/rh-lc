@@ -249,7 +249,7 @@ theorem annX_of {D : D7} (X : HidaSetting D) (ψ : AddChar (AF X.B.I.F) ℂ) (hC
     have h1 := RingOfIntegers.isIntegral_coe ((θ - t) ^ 2)
     push_cast at h1
     rw [← hf] at h1
-    exact (isIntegral_algebraMap_iff (algebraMap X.B.I.F X.B.I.E).injective).mp h1
+    exact (isIntegral_algebraMap_iff ).mp h1
   let e : 𝓞 X.B.I.F := ⟨f, hfi⟩
   have he : ((θ : X.B.I.E) - t) ^ 2 = algebraMap X.B.I.F X.B.I.E (e : X.B.I.F) := hf.symm
   have hev : e ∉ v.asIdeal := by

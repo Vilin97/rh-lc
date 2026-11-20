@@ -59,7 +59,7 @@ private theorem summable_exp_neg_mul_norm_add_sq {E : Type} [NormedAddCommGroup 
       simp only [hz, if_false, add_zero, sub_neg_eq_add]
       exact key _ hu
   · refine (hs.mul_left C).add ?_
-    apply summable_of_finite_support
+    apply summable_of_hasFiniteSupport
     apply Set.Subsingleton.finite
     intro z1 h1 z2 h2
     simp only [Function.mem_support, ne_eq, ite_eq_right_iff, one_ne_zero, imp_false,
@@ -211,7 +211,7 @@ private theorem mFourierCoeff_periodization_eq_integral {ι : Type} [Fintype ι]
     rw [hSunion, MeasureTheory.Measure.restrict_univ] at hsum
     exact hsum.tsum_eq
   · intro k
-    exact ((hψcont.mul hcont).comp (continuous_add_right _)).aestronglyMeasurable
+    exact ((hψcont.mul hcont).comp (continuous_add_const _)).aestronglyMeasurable
   · have hEach : ∀ k : ι → ℤ, ∫⁻ s in S 0,
         ‖ψ (s + fun i => (k i : ℝ)) * h (s + fun i => (k i : ℝ))‖ₑ = ∫⁻ s in S k, ‖ψ s * h s‖ₑ := by
       intro k

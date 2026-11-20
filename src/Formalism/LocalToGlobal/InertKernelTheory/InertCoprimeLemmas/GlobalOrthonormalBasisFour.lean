@@ -286,7 +286,7 @@ theorem mem_bq {m : ℕ} (p : ℕ) (e : Fin m → Matrix (Fin 1) (Fin 1) D.host.
     (ik : Fin m × Fin 4) :
     ∃ s : ℕ, Nat.Coprime s p ∧ (s : D.host.E) • bq e n Q ik ∈ YYl D (Formalism.MainNotions.StandardLatticesGL3.stdL D 2) (Formalism.MainNotions.StandardLatticesGL3.stdL D 2) := by
   obtain ⟨s, hs, hmem⟩ := he ik.1
-  refine ⟨n ik.1 * s, Nat.Coprime.mul (hncop ik.1) hs, ?_⟩
+  refine ⟨n ik.1 * s, Nat.Coprime.mul_left (hncop ik.1) hs, ?_⟩
   rw [smul_bq e n Q hn0 ik s]
   exact Submodule.sum_mem _ (fun j _ => zsmul_mem (plc_mem j hmem) _)
 
@@ -328,7 +328,7 @@ theorem span_bq {m : ℕ} (p : ℕ) (e : Fin m → Matrix (Fin 1) (Fin 1) D.host
   have hsd : ∀ pc, s pc ∣ ∏ pc', s pc' := fun pc => Finset.dvd_prod_of_mem _ (Finset.mem_univ pc)
   have hdd : ∀ i, dn i ∣ ∏ i', dn i' := fun i => Finset.dvd_prod_of_mem _ (Finset.mem_univ i)
   refine ⟨(∏ pc, s pc) * ∏ i, dn i,
-    Nat.Coprime.mul (Nat.Coprime.prod_left fun pc _ => hs pc) (Nat.Coprime.prod_left fun i _ => hdcop i),
+    Nat.Coprime.mul_left (Nat.Coprime.prod_left fun pc _ => hs pc) (Nat.Coprime.prod_left fun i _ => hdcop i),
     fun ik => ∑ pc, (((∏ pc', s pc') / s pc * ((∏ i', dn i') / dn ik.1) : ℕ) : 𝓞 D.host.K) *
       ((Q ik.1 ik.2 (pos pc) : ℤ) : 𝓞 D.host.K) * c pc ik.1, ?_⟩
   refine Matrix.ext fun a c' => ?_
@@ -578,7 +578,7 @@ theorem oneCopyOrth_of (hU : UnitVec) : OneCopyOrth := by
       ring
     set S := ∏ j, (s j * n j) with hS
     have hdv : ∀ j, s j * n j ∣ S := fun j => Finset.dvd_prod_of_mem _ (Finset.mem_univ j)
-    refine ⟨S, Nat.Coprime.prod_left (fun j _ => Nat.Coprime.mul (hs j) (hncop j)),
+    refine ⟨S, Nat.Coprime.prod_left (fun j _ => Nat.Coprime.mul_left (hs j) (hncop j)),
       fun j => w j * (((u j).den : ℕ) : 𝓞 D.host.K) * ((S / (s j * n j) : ℕ) : 𝓞 D.host.K), ?_⟩
 
     have hexp : y 0 0 = ∑ j, bs.repr (y 0 0) j • e j := by
@@ -890,7 +890,7 @@ variable (D : D7) (p : ℕ) [hp : Fact p.Prime] {k : ℕ} (e : Fin k → D.host.
 theorem InC_add {x y : D.host.E} (hx : InC D p e x) (hy : InC D p e y) : InC D p e (x + y) := by
   obtain ⟨⟨t, ht, htx⟩, hxo⟩ := hx
   obtain ⟨⟨t', ht', hty⟩, hyo⟩ := hy
-  refine ⟨⟨t * t', Nat.Coprime.mul ht ht', ?_⟩, fun i => ?_⟩
+  refine ⟨⟨t * t', Nat.Coprime.mul_left ht ht', ?_⟩, fun i => ?_⟩
   · have e1 : ((t * t' : ℕ) : D.host.E) * (x + y) = (t' : D.host.E) * ((t : D.host.E) * x) + (t : D.host.E) * ((t' : D.host.E) * y) := by
       push_cast; ring
     rw [e1]
@@ -981,7 +981,7 @@ theorem oprj_mp (s : Fin k → ℕ) (hs : ∀ i, Nat.Coprime (s i) p) (hsm : ∀
     ring
   set t := ∏ j, (s j * s j * n j) with htdef
   have hdv : ∀ j, s j * s j * n j ∣ t := fun j => Finset.dvd_prod_of_mem _ (Finset.mem_univ j)
-  refine ⟨t, Nat.Coprime.prod_left (fun j _ => Nat.Coprime.mul (Nat.Coprime.mul (hs j) (hs j)) (hncop j)), ?_⟩
+  refine ⟨t, Nat.Coprime.prod_left (fun j _ => Nat.Coprime.mul_left (Nat.Coprime.mul_left (hs j) (hs j)) (hncop j)), ?_⟩
   let κ : Fin k → 𝓞 D.host.K := fun j => ω j * (((u j).den : ℕ) : 𝓞 D.host.K) * ((t / (s j * s j * n j) : ℕ) : 𝓞 D.host.K)
   have hterm : ∀ j, (t : D.host.E) * (((cf D e u w j : D.host.K) : D.host.E) * e j) =
       (((κ j : D.host.K)) : D.host.E) * ((s j : D.host.E) * e j) := by
@@ -1045,7 +1045,7 @@ theorem div_mem (D : D7) (p : ℕ) [hp : Fact p.Prime] {k : ℕ} (e : Fin k → 
   obtain ⟨⟨s0, hs0, hx0⟩, hxo⟩ := hx
   have hxC : InC D p e x := ⟨⟨s0, hs0, hx0⟩, hxo⟩
   have hpinv : x * (p : D.host.E)⁻¹ = (((p : ℚ)⁻¹ : ℚ) : D.host.E) * x := by push_cast; ring
-  refine ⟨⟨2 * D.host.d * s0, Nat.Coprime.mul hpd hs0, ?_⟩, fun i => ?_⟩
+  refine ⟨⟨2 * D.host.d * s0, Nat.Coprime.mul_left hpd hs0, ?_⟩, fun i => ?_⟩
   swap
   · rw [hpinv, mul_assoc, trace_rat_mul, hxo i, mul_zero]
   apply (factMMUnimodular D.R D.host _).2

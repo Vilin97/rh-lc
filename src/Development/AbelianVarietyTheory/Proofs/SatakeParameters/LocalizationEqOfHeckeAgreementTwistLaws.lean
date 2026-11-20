@@ -102,11 +102,11 @@ theorem main : ∀ (D : D7) (M : Formalism.L2.MtFam D), Formalism.L2.HeckeTied D
   set n := D.R.nV - k
   have e1 : IsLocalRing.residue (D.nd.O i) (p.coeff n) =
       IsLocalRing.residue (D.nd.O i) ((heckePol D.nd i x v).coeff n) := by
-    have := congrArg (fun P => Polynomial.coeff P n) hp2
+    have := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P n) hp2
     simpa only [Polynomial.coeff_map] using this
   have e2 : IsLocalRing.residue (D.nd.O i') (p'.coeff n) =
       IsLocalRing.residue (D.nd.O i') ((heckePol D.nd i' x' v).coeff n) := by
-    have := congrArg (fun P => Polynomial.coeff P n) hp2'
+    have := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P n) hp2'
     simpa only [Polynomial.coeff_map] using this
   have e3 := GlobalTheory.PtLocalEig.residue_map_equiv φ e1
   have hcp : φ (p.coeff n) = p'.coeff n := by

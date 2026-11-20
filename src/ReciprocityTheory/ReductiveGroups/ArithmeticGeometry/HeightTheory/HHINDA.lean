@@ -125,7 +125,7 @@ theorem exists_unif (la : HeightOneSpectrum (𝓞 K)) :
     have h3 := (la.intValuation_le_pow_iff_mem π 2).2 h2
     rw [hπ, WithZero.exp_le_exp] at h3
     norm_num at h3
-  · rw [FinitePlace.mk_apply, show (π : K) = algebraMap (𝓞 K) K π from rfl, FinitePlace.norm_def_int K la π, hπ,
+  · rw [FinitePlace.mk_apply, show (π : K) = algebraMap (𝓞 K) K π from rfl, NumberField.FinitePlace.norm_embedding_int K la π, hπ,
       WithZeroMulInt.toNNReal_neg_apply _ (WithZero.exp_ne_zero)]
     push_cast
     exact zpow_neg_one _

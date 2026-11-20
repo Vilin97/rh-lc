@@ -96,7 +96,7 @@ theorem exists_eq_eval (K : Type) [Field K] [CharZero K] (A : Type) [CommRing A]
       fun a => hV ((integralClosure A Ω).algebraMap_mem a)).1
   have hint' : IsIntegral A x := by
     rw [← hx] at hint
-    exact (isIntegral_algebraMap_iff (algebraMap L Ω).injective).1 hint
+    exact (isIntegral_algebraMap_iff ).1 hint
   obtain ⟨r, hr⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hint'
   have hrw : ι r = W Ω ι := by
     rw [← hx, ← hr]; exact IsScalarTower.algebraMap_apply A L Ω r

@@ -47,7 +47,7 @@ theorem curv_top_zero {E : Type*} [AddCommGroup E] [Module ℂ E] (n : ℕ) (c :
       Polynomial.eval_X, Polynomial.eval_finsetSum, Polynomial.eval_zero]
     rw [mul_comm (φ c), hu, sub_eq_zero]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
-  have hc := congrArg (fun q => Polynomial.coeff q (n + 1)) hp
+  have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (n + 1)) hp
   simp only [hpdef, Polynomial.coeff_sub, Polynomial.coeff_C_mul_X_pow, Polynomial.finsetSum_coeff,
     Polynomial.coeff_zero] at hc
   rw [Finset.sum_eq_zero (fun i hi => by

@@ -140,7 +140,7 @@ theorem mem_dual_iff (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) (y : (h
   have hint : ∀ t : KinE ζ a b, IsIntegral ℤ (algebraMap (KinE ζ a b) (hostE ζ a b) t) ↔
       t ∈ (algebraMap (𝓞 (KinE ζ a b)) (KinE ζ a b)).range := by
     intro t
-    rw [isIntegral_algebraMap_iff (algebraMap (KinE ζ a b) (hostE ζ a b)).injective]
+    rw [isIntegral_algebraMap_iff ]
     constructor
     · intro ht
       exact ⟨⟨t, ht⟩, rfl⟩

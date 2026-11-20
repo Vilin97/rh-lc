@@ -87,7 +87,7 @@ theorem exists_herm_notMem (hr : 1 ≤ r) {G : Matrix (Fin r) (Fin r) E} {Λ : S
       subst hp
       simpa using isIntegral_zero)
     have h2 : IsIntegral ℤ (algebraMap ℚ E (2 : ℚ)⁻¹) := by simpa using this
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at h2
+    rw [isIntegral_algebraMap_iff ] at h2
     obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h2
     have h3 : (2 * n : ℤ) = 1 := by
       have : ((2 * n : ℤ) : ℚ) = (1 : ℤ) := by
@@ -132,7 +132,7 @@ theorem span_norm_eq_top (hE : Unr E) (hr : 1 ≤ r) {G : Matrix (Fin r) (Fin r)
     intro x hx
     have hfix := (IsCMField.complexConj_eq_self_iff E _).1 (herm_symm G h.1 x x)
     have hi : IsIntegral ℤ (⟨herm G x x, hfix⟩ : maximalRealSubfield E) :=
-      (isIntegral_algebraMap_iff (algebraMap (maximalRealSubfield E) E).injective).1 (hint x hx x hx)
+      (isIntegral_algebraMap_iff ).1 (hint x hx x hx)
     have h1 : (⟨_, hi⟩ : 𝓞 (maximalRealSubfield E)) ∈ m := hIm (Ideal.subset_span ⟨x, hx, rfl⟩)
     rw [← hPm] at h1
     exact h1

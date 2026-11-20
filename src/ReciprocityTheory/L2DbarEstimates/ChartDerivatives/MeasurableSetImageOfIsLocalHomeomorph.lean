@@ -144,7 +144,7 @@ theorem measurable_encard_fiber (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorp
   have h4 : (fun y => ((A ∩ z ⁻¹' {y}).encard : ℝ≥0∞)) =
       fun y => ∑' i, (z '' (A ∩ disjointed T i)).indicator 1 y := funext key
   rw [h4]
-  exact Measurable.ennreal_tsum (fun i => measurable_one.indicator
+  exact Measurable.tsum (fun i => measurable_one.indicator
     (measurableSet_image_of_isLocalHomeomorph n z hz _ (hA.inter (hDm i))))
 
 end VolMain

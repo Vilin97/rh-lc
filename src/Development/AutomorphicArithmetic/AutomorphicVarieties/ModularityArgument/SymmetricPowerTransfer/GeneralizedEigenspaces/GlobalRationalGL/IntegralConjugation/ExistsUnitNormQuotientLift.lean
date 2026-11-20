@@ -36,7 +36,7 @@ private theorem dich [IsLocalRing O] [IsIntegrallyClosed O] [IsFractionRing O K]
     rw [this]
     exact hu.add (int_star hu)
   have ht' : IsIntegral O (2 * u.re) :=
-    (isIntegral_algebraMap_iff (algebraMap K (Lsq K Δ)).injective).1 ht
+    (isIntegral_algebraMap_iff ).1 ht
   haveI : IsDomain O := (IsFractionRing.injective O K).isDomain (algebraMap O K)
   obtain ⟨τ, hτ⟩ := IsIntegrallyClosed.isIntegral_iff.1 ht'
   have h4 : IsUnit ((2 + τ) + (2 - τ) : O) := by

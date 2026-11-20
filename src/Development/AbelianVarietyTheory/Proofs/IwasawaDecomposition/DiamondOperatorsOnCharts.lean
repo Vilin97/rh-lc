@@ -204,7 +204,7 @@ theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pi
     exact ((l.ch u a).step i).unit b g
   refine ⟨hch, fun v s z hz β c δ hδ => ?_, fun v s z hz β c δ hδ g hg => ?_⟩
   · obtain ⟨x, hx, -⟩ := key v s z hz β c δ hδ
-    refine (DoubleCoset.eq _ _ _ _).2 ?_
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ?_
     have hγ := hU c.1.1 ((I.stp u a i).mv c.1.1 (dp I u a i v s c.1))
     have hxU := (((K β).lev.U_eq x.1).1 x.2).1
     have hγ' : bc (n := Fin ((I.rec7 l Z).R.N i)) (inclE (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E)

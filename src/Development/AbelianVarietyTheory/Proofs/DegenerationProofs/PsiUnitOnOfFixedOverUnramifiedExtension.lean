@@ -328,7 +328,7 @@ theorem psiUnitOn_of_unramified : Laws → Laws2 → ∀ (R : Type) [CommRing R]
   have hP0 : P.asIdeal ≠ ⊥ := fun e => by rw [e, Ideal.height_bot] at hP; exact zero_ne_one hP
   have : IsDiscreteValuationRing (Localization.AtPrime P.asIdeal) :=
     ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P.asIdeal)
-      (IsLocalization.AtPrime.not_isField R hP0 _)).out 0 1).2 this
+      (IsLocalization.AtPrime.not_isField R hP0 _)).out 1 2).2 this
   have : IsFractionRing (Localization.AtPrime P.asIdeal) (FractionRing R) :=
     IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.asIdeal.primeCompl _ _
   obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible (Localization.AtPrime P.asIdeal)

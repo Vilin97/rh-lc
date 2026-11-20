@@ -82,7 +82,7 @@ theorem not_both_mem {R : Ranks} (H : Host R) {T : ℕ} (hT : T.Prime) (π π' :
     have : IsIntegral ℤ (algebraMap ℚ H.E r) := by
       rw [eq_ratCast, hr, ← hc]
       exact π.isIntegral_coe.add π'.isIntegral_coe
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ H.E).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   obtain ⟨a, ha⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   rw [eq_intCast] at ha
   have haE : (a : 𝓞 H.E) = π + π' := by

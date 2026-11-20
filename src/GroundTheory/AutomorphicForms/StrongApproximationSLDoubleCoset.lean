@@ -94,7 +94,7 @@ theorem detDoubleCoset_bijective (hn : 0 < n) {U : Subgroup (FiniteAdelicGL K n)
       ← DoubleCoset.out_eq' (rationalFiniteGL K n) U q] at hpq ⊢
     rw [detDoubleCoset_mk, detDoubleCoset_mk, QuotientGroup.eq] at hpq
     obtain ⟨γ, u, hu, heq⟩ := exists_eq_finiteDiagonal_mul_mul hn hU hpq
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨finiteDiagonal K n γ, ⟨γ, rfl⟩, u, hu, heq⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨finiteDiagonal K n γ, ⟨γ, rfl⟩, u, hu, heq⟩
   · intro q
     obtain ⟨a, rfl⟩ := QuotientGroup.mk_surjective q
     exact ⟨DoubleCoset.mk _ _ (diagonalGL (Pi.mulSingle (⟨0, hn⟩ : Fin n) a)), by

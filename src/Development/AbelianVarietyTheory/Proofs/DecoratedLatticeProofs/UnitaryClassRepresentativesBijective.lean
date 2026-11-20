@@ -75,7 +75,7 @@ theorem GlobalTheory.AdForm.rdS_val : ∀ (D : D7) (θ : InfFam D), IsInfFam θ 
   intro x y' hx hy
   obtain ⟨c, hc⟩ := hbij.2 (Quotient.mk'' x : Cls S)
   have hex : ∃ p, IsDec S yc (finM V hn g) p := by
-    obtain ⟨h, hh, k, hk, hxe⟩ := (DoubleCoset.eq _ _ _ _).mp hc
+    obtain ⟨h, hh, k, hk, hxe⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp hc
     obtain ⟨γ, hγ, hγe⟩ := Subgroup.mem_map.mp (Subgroup.mem_subgroupOf.mp hh)
     refine ⟨(c, γ, ⟨k.1, Subgroup.mem_subgroupOf.mp hk⟩), hγ, ?_⟩
     dsimp only

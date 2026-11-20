@@ -35,7 +35,7 @@ theorem hcompl_norm (σ : E →ₐ[F] E) (hσ : (σ : E →+* E) = starRingEnd E
       rw [map_mul, hstar (σ (s : E)), hstar (s : E), star_star, mul_comm]
     obtain ⟨a, ha⟩ := hfix _ hinv
     have haint : IsIntegral ℤ a := by
-      rw [← isIntegral_algebraMap_iff (algebraMap F E).injective, ha]
+      rw [← isIntegral_algebraMap_iff , ha]
       exact hint.mul s.2
     refine ⟨t, ⟨a, haint⟩, ?_, ?_⟩
     · have e : algebraMap (𝓞 F) (𝓞 E) ⟨a, haint⟩ = t * s := by

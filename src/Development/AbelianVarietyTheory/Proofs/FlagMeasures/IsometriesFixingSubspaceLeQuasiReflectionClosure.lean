@@ -107,9 +107,9 @@ theorem quad_finite {K : Type} [Field K] (a b c : K) (h : ¬ (a = 0 ∧ b = 0 �
     intro h0
     apply h
     refine ⟨?_, ?_, ?_⟩
-    · simpa using congrArg (fun p => Polynomial.coeff p 2) h0
-    · simpa using congrArg (fun p => Polynomial.coeff p 1) h0
-    · simpa using congrArg (fun p => Polynomial.coeff p 0) h0
+    · simpa using congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 2) h0
+    · simpa using congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
+    · simpa using congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h0
   have := Polynomial.finite_setOf_isRoot hp
   simpa [Polynomial.IsRoot] using this
 

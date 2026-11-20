@@ -3638,7 +3638,7 @@ lemma inC_ker_rowDiv {n : ℕ} {σ : Type} (sg : Fin n → ℕ)
     apply Polynomial.eq_zero_of_infinite_isRoot
     refine Set.Infinite.mono (s := ({-1} : Set ℚ)ᶜ) (fun c hc => hroot c hc) ?_
     exact (Set.finite_singleton _).infinite_compl
-  have := congrArg (fun p => Polynomial.coeff p k) hP0
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hP0
   simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
     if_pos hk, Polynomial.coeff_zero] at this
   exact this

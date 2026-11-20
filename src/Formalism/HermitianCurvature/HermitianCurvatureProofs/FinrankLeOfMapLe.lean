@@ -79,7 +79,7 @@ theorem exists_theta (E : Type) [Field E] [NumberField E] [IsCMField E] (g : ℕ
     have hint : IsIntegral ℤ x := by
       have : IsIntegral ℤ (algebraMap F E x) := by
         rw [hxE]; exact RingOfIntegers.isIntegral_coe _
-      exact (isIntegral_algebraMap_iff (algebraMap F E).injective).mp this
+      exact (isIntegral_algebraMap_iff ).mp this
     exact hx1 ((FractionalIdeal.mem_one_iff _).mpr ⟨⟨x, hint⟩, rfl⟩)
   have h1 : (1 : 𝓞 F) ∈ I ⊔ Ideal.span {(g : 𝓞 F)} := by rw [key]; trivial
   obtain ⟨i, ⟨θ, rfl⟩, j, hj, hij⟩ := Submodule.mem_sup.mp h1

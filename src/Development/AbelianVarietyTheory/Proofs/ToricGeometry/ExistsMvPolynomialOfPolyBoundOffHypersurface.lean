@@ -255,7 +255,7 @@ theorem _root_.GlobalTheory.exists_mvPolynomial_of_poly_bound_off_hypersurface :
       have hx0 : f x = φ.eval (x 0) := by
         have := hφ (x 0) (by rw [hr, hxc]; exact hx)
         rw [← this, hxc]
-      rw [hx0, hinterp, Lagrange.interpolate_apply, Polynomial.eval_finset_sum, hPm]
+      rw [hx0, hinterp, Lagrange.interpolate_apply, Polynomial.eval_finsetSum, hPm]
       refine Finset.sum_congr rfl fun k hk => ?_
       rw [Polynomial.eval_mul, Polynomial.eval_C, mul_comm]
       congr 1

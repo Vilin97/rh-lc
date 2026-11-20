@@ -55,7 +55,7 @@ private theorem orbOf_bij (T K : Subgroup G) : Function.Bijective (orbOf T K) :=
   · obtain ⟨t, ht⟩ := (orb_iff T K _ _).1 h
     rw [smul_mk, QuotientGroup.eq] at ht
     have e : DoubleCoset.mk T K (Quotient.out d') = DoubleCoset.mk T K (Quotient.out d) :=
-      (DoubleCoset.eq T K _ _).2 ⟨t, t.2, _, ht, by group⟩
+      (@DoubleCoset.eq _ _ T K _ _).2 ⟨t, t.2, _, ht, by group⟩
     rw [DoubleCoset.out_eq', DoubleCoset.out_eq'] at e
     exact e.symm
   · rw [orbOf_mk, QuotientGroup.out_eq', Quotient.out_eq']

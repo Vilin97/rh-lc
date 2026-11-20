@@ -157,7 +157,7 @@ def dcEquiv (θ : G →* G) (K : Subgroup G) (δ g : G) :
   toFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)
   invFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (g⁻¹ * Quotient.out q)
   left_inv q := by
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
       (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ δ) K (DoubleCoset.mk _ K (g * Quotient.out q))).symm
     show DoubleCoset.mk _ K (g⁻¹ * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q))) = q
     rw [he]
@@ -167,7 +167,7 @@ def dcEquiv (θ : G →* G) (K : Subgroup G) (δ g : G) :
     rw [twCent_conj]
     exact ⟨t⁻¹, (GlobalTheory.BCT.twCent θ δ).inv_mem ht, by simp [MulAut.conj_apply]⟩
   right_inv q := by
-    obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
       (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (DoubleCoset.mk _ K (g⁻¹ * Quotient.out q))).symm
     show DoubleCoset.mk _ K (g * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K
       (g⁻¹ * Quotient.out q))) = q
@@ -193,7 +193,7 @@ theorem twOrb_twConj : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologi
       = ∑ᶠ q, summand θ K δ f (Quotient.out (dcEquiv θ K δ g q)) := by
         refine finsum_congr fun q => ?_
         rw [summand_twist]
-        obtain ⟨t, ht, k, hk, he⟩ := (DoubleCoset.eq _ _ _ _).1
+        obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
           (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ δ) K (DoubleCoset.mk _ K (g * Quotient.out q))).symm
         show _ = summand θ K δ f (Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)))
         rw [he, summand_rep θ K δ f _ ht hk]

@@ -70,7 +70,7 @@ theorem normFormGaussBound : NormFormGaussBound.Statement := by
   set f := LinearMap.charpoly (Algebra.lmul P Ω x) with hf
 
   have h0 : algebraMap P Ω (f.coeff 0) = aeval (fun i => l i / l j) (c n) := by
-    have := congrArg (fun g => Polynomial.coeff g 0) hcp
+    have := congrArg (fun g => _root_.AddMonoidAlgebra.coeff (M := ℕ) g 0) hcp
     simp only [Polynomial.coeff_map, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow] at this
     rw [this, Finset.sum_eq_single n]
     · simp

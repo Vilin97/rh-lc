@@ -45,7 +45,7 @@ theorem integrable_tr {ι : Type} (P : Sys d ι) {U : Set (E d)} (hU : IsOpen U)
     (hφ : ContDiff ℝ ∞ φ) (hc : HasCompactSupport φ) (hs : tsupport φ ⊆ U) :
     Integrable (P.tr i φ) := by
   unfold Sys.tr trOp
-  refine integrable_finset_sum _ (fun n _ => integrable_finset_sum _ (fun w _ => ?_))
+  refine MeasureTheory.integrable_finsetSum _ (fun n _ => MeasureTheory.integrable_finsetSum _ (fun w _ => ?_))
   refine Integrable.const_mul ?_ _
   refine Continuous.integrable_of_hasCompactSupport ?_ ?_
   · exact (contDiff_dw (contDiff_mul_of_on hU (ha i n w) hφ hs) _).continuous

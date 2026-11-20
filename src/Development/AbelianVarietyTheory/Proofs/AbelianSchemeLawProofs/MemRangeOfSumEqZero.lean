@@ -94,7 +94,7 @@ theorem mem_range_of_sum_eq_zero {K R : Type} [Field K] [IsAlgClosed K] [CommRin
     x ∈ κ.range := by
   let p : Polynomial K := ∑ k : Fin n, Polynomial.monomial (k : ℕ) (c k)
   have hp : p ≠ 0 := fun h0 => hc (funext fun k => by
-    have := congrArg (fun q => Polynomial.coeff q k) h0
+    have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q k) h0
     simp only [p, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Fin.val_inj,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, Polynomial.coeff_zero] at this
     exact this)

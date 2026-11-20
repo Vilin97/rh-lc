@@ -211,7 +211,7 @@ theorem isHomogeneous_ker_coneHom (ρ : σ → L) :
   · have h2 := congrArg (fun q => q.coeff n) (RingHom.mem_ker.mp hp)
     rw [← MvPolynomial.sum_homogeneousComponent p, map_sum] at h2
     simp only [coneHom_of_isHomogeneous ρ (MvPolynomial.homogeneousComponent_isHomogeneous _ p),
-      finset_sum_coeff, coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range, hn, if_true,
+      Polynomial.finsetSum_coeff, coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range, hn, if_true,
       coeff_zero] at h2
     rw [coneHom_of_isHomogeneous ρ (MvPolynomial.homogeneousComponent_isHomogeneous _ p), h2,
       map_zero, zero_mul]

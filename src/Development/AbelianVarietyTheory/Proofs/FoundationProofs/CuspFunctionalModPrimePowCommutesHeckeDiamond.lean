@@ -111,7 +111,7 @@ theorem GlobalTheory.CyclotomicQExpansion.thN_hecke : ∀ (Ω : Type) [Field Ω]
     have hqinv := inv_natCast_mem A hqP hl hql hlA
     have hTb : X.heckeT N l q b ∈ X.B N l w := stab (Letter.T q) ⟨hqP, hqd⟩ b hb
     have e1 := exL n d hd b hb
-    have e2 := exL n (d * q) (Nat.Coprime.mul hd hqN) b hb
+    have e2 := exL n (d * q) (Nat.Coprime.mul_left hd hqN) b hb
     have h2 : IsThB X A N l n (X.act l (sgD N l d : Matrix (Fin 2) (Fin 2) ℤ) (X.heckeT N l q b))
         (hq ε q (thN X A N l n d b) + ((q : Ω) ^ (w + 1)) • vq q (thN X A N l n (d * q) b)) :=
       GlobalTheory.T.thetaOperator_heckeT_q_eq_U_add_V_twist Ω ε X A N l halg hj (by omega) n w d q hw hqP hqd hqinv hlA hl2 hlN hd b hb _ _ e1.2 e2.2 e1.1 e2.1
@@ -126,4 +126,4 @@ theorem GlobalTheory.CyclotomicQExpansion.thN_hecke : ∀ (Ω : Type) [Field Ω]
   · intro a ha r
     have hDb : X.diam N l a b ∈ X.B N l w := stab (Letter.D a) ha b hb
     have h1 := (GlobalTheory.KZ.isThB_act_sgD_diam_iff Ω ε X A N l n w a d ha hd b hb _).mp (ex n d hd _ hDb)
-    exact uniq n _ (dB (d * a) (Nat.Coprime.mul hd ha) b hb) _ _ h1 (ex n (d * a) (Nat.Coprime.mul hd ha) b hb) r
+    exact uniq n _ (dB (d * a) (Nat.Coprime.mul_left hd ha) b hb) _ _ h1 (ex n (d * a) (Nat.Coprime.mul_left hd ha) b hb) r

@@ -52,8 +52,8 @@ theorem exists_kill (n : ℕ) (h : hankel c n = 0) :
   · intro h0
     apply hv0
     funext k
-    have := congrArg (fun p => Polynomial.coeff p k) h0
-    simpa [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Fin.val_inj] using this
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) h0
+    simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Fin.val_inj] using this
   · exact natDegree_sum_le_of_forall_le _ _ fun k _ =>
       (natDegree_monomial_le _).trans (Nat.lt_succ_iff.1 k.2)
   · intro j hj
@@ -143,8 +143,8 @@ theorem isRat_of_ann (φ : PowerSeries F) (q : F[X]) (hq : q ≠ 0)
   let R : F[X] := ∑ k ∈ Finset.range (q.natDegree + 1), C (q.coeff k) * X ^ (q.natDegree - k)
   refine ⟨PowerSeries.trunc q.natDegree ((R : PowerSeries F) * φ), R, ?_, ?_⟩
   · intro h0
-    have := congrArg (fun p => Polynomial.coeff p 0) h0
-    simp only [R, Polynomial.finset_sum_coeff, coeff_C_mul_X_pow, coeff_zero] at this
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h0
+    simp only [R, Polynomial.finsetSum_coeff, coeff_C_mul_X_pow, coeff_zero] at this
     rw [Finset.sum_eq_single q.natDegree] at this
     · simp only [Nat.sub_self, if_true] at this
       exact hq (leadingCoeff_eq_zero.1 this)

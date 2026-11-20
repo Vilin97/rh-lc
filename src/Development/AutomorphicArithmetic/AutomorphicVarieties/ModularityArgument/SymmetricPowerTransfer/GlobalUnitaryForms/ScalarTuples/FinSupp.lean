@@ -157,7 +157,7 @@ private theorem den_bound (O : Type) {K : Type} [Field K] [CharZero K] [CommRing
   have e : N • (algebraMap K (Lsq K Δ) τ) = algebraMap K (Lsq K Δ) (algebraMap O K N * τ) := by
     rw [map_mul, ← IsScalarTower.algebraMap_apply, Algebra.smul_def]
   rw [e] at hint
-  exact (isIntegral_algebraMap_iff (algebraMap K (Lsq K Δ)).injective).1 hint
+  exact (isIntegral_algebraMap_iff ).1 hint
 
 private theorem val_small {F : Type} [Field F] [NumberField F] (v : Pl F) {x : Kv v} (hx : x ≠ 0) :
     ∃ a : 𝓞 F, a ≠ 0 ∧ Valued.v (cv v (algebraMap (𝓞 F) F a)) ≤ Valued.v x := by

@@ -72,7 +72,7 @@ theorem constantCoeff_coeff_genEval (n s d : ℕ) (hd : 0 < d) (g : MvPolynomial
     have := hg 0 (by rwa [← MvPolynomial.constantCoeff_eq])
     simp at this; omega
   rw [h3] at h
-  have := congrArg (fun p => Polynomial.coeff p e) h
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p e) h
   simpa [Polynomial.coeff_map] using this
 
 theorem exists_ne_zero_polynomial_common_zero [IsAlgClosed k] (n r d m : ℕ)

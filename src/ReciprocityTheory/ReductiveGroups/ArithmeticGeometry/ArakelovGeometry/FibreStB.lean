@@ -168,8 +168,8 @@ private theorem map_homogenized_sub_dd_pow_X_eq {S : Type*} [Field S] (φ : MvPo
       Polynomial.C (G.dd ^ G.Θ.totalDegree) * Polynomial.X) =
       φ G.dd ^ G.Θ.totalDegree * (MvPolynomial.eval₂ (Int.castRingHom S) (G.evQ φ t) G.Θ - t) := by
   have hC : ∀ c : ℤ, φ (MvPolynomial.C c) = (c : S) := fun c => eq_intCast (φ.comp MvPolynomial.C) c
-  simp only [Polynomial.eval₂_sub, Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul, Polynomial.eval₂_C,
-    Polynomial.eval₂_X, Polynomial.eval₂_finset_prod, Polynomial.eval₂_pow, map_mul, map_pow, hC]
+  simp only [Polynomial.eval₂_sub, Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul, Polynomial.eval₂_C,
+    Polynomial.eval₂_X, Polynomial.eval₂_finsetProd, Polynomial.eval₂_pow, map_mul, map_pow, hC]
   rw [mul_sub, ← sum_coeff_homogenize_eq_pow_mul_eval₂ G.Θ (G.evQ φ t) (fun i => (G.Q i).eval₂ φ t) (φ G.dd) (fun i => rfl) hd
     G.Θ.totalDegree le_rfl]
 
@@ -319,7 +319,7 @@ theorem Gen.fib_finite (hx0 : x (e 0) ≠ 0) (hw : G.Good w) : (fib x e w).Finit
 
 theorem Gen.fib_ncard (hx0 : x (e 0) ≠ 0) (hw : G.Good w) :
     (fib x e w).ncard = G.P.natDegree := by
-  rw [G.fib_eq hx0 hw, Set.ncard_image_of_injOn (G.injOn hw), G.roots_set, Set.ncard_coe_finset,
+  rw [G.fib_eq hx0 hw, Set.InjOn.ncard_image (G.injOn hw), G.roots_set, Set.ncard_coe_finset,
     Multiset.toFinset_card_of_nodup (Polynomial.nodup_roots (G.sep hw)), G.card_roots]
 
 theorem Gen.finsum_fib (hx0 : x (e 0) ≠ 0) (hw : G.Good w) (f : (ι → ℂ) → ℂ) :
@@ -360,9 +360,9 @@ theorem exists_implicit_section {E : Type*} [NormedAddCommGroup E] [NormedSpace 
     first
     | (ext; simp)
     | (ext x; simp [mul_comm])
-  have ev := IsContDiffImplicitAt.apply_implicitFunction hf one_ne_zero hinv
-  have cd := IsContDiffImplicitAt.contDiffAt_implicitFunction hf one_ne_zero hinv
-  have ev2 := IsContDiffImplicitAt.eventually_implicitFunction_apply_eq hf one_ne_zero hinv
+  have ev := ContDiffAt.eventually_apply_implicitFunction hf one_ne_zero hinv
+  have cd := ContDiffAt.contDiffAt_implicitFunction hf one_ne_zero hinv
+  have ev2 := ContDiffAt.eventually_apply_eq_iff_implicitFunction hf one_ne_zero hinv
   have hval : hf.implicitFunction one_ne_zero hinv u.1 = u.2 := (ev2.self_of_nhds).1 rfl
   have ecd : ∀ᶠ y in 𝓝 u.1, ContDiffAt ℂ 1 (hf.implicitFunction one_ne_zero hinv) y := by
     first

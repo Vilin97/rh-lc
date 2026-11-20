@@ -171,7 +171,7 @@ theorem not_isSelfDualE_two (σ : K →+* K) :
       exact (eq_inv_of_mul_eq_one_left h2).symm
     rw [this]
     exact RingOfIntegers.isIntegral_coe a
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ K).injective] at h3
+  rw [isIntegral_algebraMap_iff ] at h3
   obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 h3
   have h4 : (z : ℚ) * 2 = 1 := by
     have : (z : ℚ) = 2⁻¹ := hz

@@ -47,9 +47,9 @@ theorem isUnit_of_stable_line : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) [I
       intro g hg
       obtain ⟨x, hx⟩ := hpe ⟨g, hg⟩
       refine ⟨x, ?_, ?_⟩
-      · have h1 := congrArg (fun q => Polynomial.coeff q 1) hx
+      · have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 1) hx
         simpa [Polynomial.algebraMap_apply, mul_add] using h1
-      · have h0 := congrArg (fun q => Polynomial.coeff q 0) hx
+      · have h0 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 0) hx
         simpa [Polynomial.algebraMap_apply, mul_add] using h0
     have hU : IsUnit u := hLU u hu0 (fun g => by
       obtain ⟨x, h1, -⟩ := hco (g : GQ l) g.2

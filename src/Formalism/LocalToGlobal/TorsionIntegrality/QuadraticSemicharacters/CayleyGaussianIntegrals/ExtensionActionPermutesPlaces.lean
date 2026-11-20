@@ -71,7 +71,7 @@ theorem formNormEquiv : FormNorm := by
         = fun z => (∑ i, ∑ j, conj (b.repr z i) * (b.repr z j * H (b j) (b i))).re := by
       funext z; rw [hexp z]
     rw [e]
-    exact Complex.continuous_re.comp (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    exact Complex.continuous_re.comp (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       (Complex.continuous_conj.comp (hc i)).mul ((hc j).mul continuous_const))
   have hunit : ∀ w : V, w ≠ 0 → ((‖w‖⁻¹ : ℝ) : ℂ) • w ∈ Metric.sphere (0 : V) 1 := fun w hw => by
     rw [mem_sphere_zero_iff_norm, norm_smul, Complex.norm_real, norm_inv, norm_norm,

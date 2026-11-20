@@ -503,8 +503,8 @@ theorem class_mul_right_of_normalises (S : StepLevel F E σ J T f bad) (y y' δ'
     (hδ : ∀ κ ∈ S.U, δ.1⁻¹ * κ * δ.1 ∈ S.U)
     (h : (Quotient.mk'' y' : Cls S) = Quotient.mk'' (y * δ')) :
     (Quotient.mk'' (y' * δ) : Cls S) = Quotient.mk'' (y * δ' * δ) := by
-  obtain ⟨g, hg, κ, hκ, he⟩ := (DoubleCoset.eq _ _ _ _).mp h
-  apply (DoubleCoset.eq _ _ _ _).mpr
+  obtain ⟨g, hg, κ, hκ, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp h
+  apply (@DoubleCoset.eq _ _ _ _ _ _).mpr
   refine ⟨g, hg, δ⁻¹ * κ * δ, ?_, ?_⟩
   · rw [Subgroup.mem_subgroupOf] at hκ ⊢
     simpa [mul_assoc] using hδ _ hκ
@@ -572,7 +572,7 @@ theorem fixed_class_mem_level_general (K : ClsTied u 0 (Nat.zero_le _)) (G : GLo
     (hpow : ∀ κ ∈ K.lev.U, (δ.1 * κ) ^ N0 ∈ K.lev.U)
     (hfix : (Quotient.mk'' (K.y c * δ) : Cls K.lev) = Quotient.mk'' (K.y c)) :
     δ.1 ∈ K.lev.U := by
-  obtain ⟨hh, hhH, κ, hκK, e⟩ := (DoubleCoset.eq _ _ (K.y c * δ) (K.y c)).1 hfix
+  obtain ⟨hh, hhH, κ, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ (K.y c * δ) (K.y c)).1 hfix
   have hκ : κ.1 ∈ K.lev.U := hκK
   obtain ⟨g, hgU, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have e1 : (K.y c).1 = hh.1 * ((K.y c).1 * δ.1) * κ.1 := by
@@ -732,7 +732,7 @@ theorem dilation_commute_distinct (Tf : FormsTied D u) (v v' : (D.mem u).A.vT) (
     exact (Subgroup.one_mem _)
   have hmid : (Quotient.mk'' ((Tf.cls 0 (Nat.zero_le _)).y c * δb * δa) : Cls (Tf.cls 0 (Nat.zero_le _)).lev) =
       Quotient.mk'' ((Tf.cls 0 (Nat.zero_le _)).y c * δa * δb) :=
-    (DoubleCoset.eq _ _ _ _).2 ⟨1, Subgroup.one_mem _, (δb * δa)⁻¹ * (δa * δb), hU, by group⟩
+    (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, Subgroup.one_mem _, (δb * δa)⁻¹ * (δa * δb), hU, by group⟩
   exact (Tf.cls 0 (Nat.zero_le _)).y_bij.1 ((W.dil v a ka hka _ δa ha).trans (h1.trans (hmid.trans
     (h2.symm.trans (W.dil v' b kb hkb _ δb hb).symm))))
 

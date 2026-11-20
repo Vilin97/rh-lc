@@ -50,7 +50,7 @@ theorem isDVR : IsDiscreteValuationRing A := by
     rw [IsLocalRing.isField_iff_maximalIdeal_eq, hmA, Ideal.span_singleton_eq_bot]
     exact hne
   have hp : (IsLocalRing.maximalIdeal A).IsPrincipal := ⟨⟨_, hmA⟩⟩
-  exact ((IsDiscreteValuationRing.TFAE A hnf).out 0 4).2 hp
+  exact ((IsDiscreteValuationRing.TFAE A hnf).out 1 5).2 hp
 
 instance isLocalHom_A : IsLocalHom (algebraMap O A) := by
   constructor

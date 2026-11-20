@@ -71,7 +71,7 @@ theorem ordCompl_q : ordCompl[H.q] H.condN = H.QS * H.d := by
   rw [condN_eq_q]
   apply ordCompl_mul_prime hq
   have hqd : Nat.Coprime H.d H.q := (Nat.coprime_primes hd hq).mpr (by omega)
-  exact Nat.Coprime.mul (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_right H.q H.d) H.QS_coprime) hqd
+  exact Nat.Coprime.mul_left (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_right H.q H.d) H.QS_coprime) hqd
 
 variable {H}
 
@@ -82,7 +82,7 @@ theorem PsQ.exists_q (hP : H.PsQ) :
   obtain ⟨hcop, hj⟩ := jacobi_pred hq4
   have hqd : Nat.Coprime H.d H.q := (Nat.coprime_primes hd hq).mpr (by omega)
   have hc : Nat.Coprime (H.QS * H.d) H.q :=
-    Nat.Coprime.mul (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_right H.q H.d) H.QS_coprime) hqd
+    Nat.Coprime.mul_left (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_right H.q H.d) H.QS_coprime) hqd
   haveI : NeZero H.condN := ⟨(Nat.mul_pos (Nat.mul_pos H.QS_pos hq.pos) hd.pos).ne'⟩
   obtain ⟨u, hu1, hu2⟩ := exists_unit_crt (N := H.condN) (condN_eq_q H) hc (Nat.coprime_one_left _) hcop
   refine ⟨u, hu1, ?_⟩
@@ -139,7 +139,7 @@ theorem exists_d : ∃ u : (ZMod H.condN)ˣ, (u : ZMod H.condN).val ≡ 1 [MOD H
   obtain ⟨hcop, hj⟩ := jacobi_pred hd4
   have hqd : Nat.Coprime H.q H.d := (Nat.coprime_primes hq hd).mpr (by omega)
   have hc : Nat.Coprime (H.QS * H.q) H.d :=
-    Nat.Coprime.mul (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_left H.d H.q) H.QS_coprime) hqd
+    Nat.Coprime.mul_left (Nat.Coprime.coprime_dvd_right (Nat.dvd_mul_left H.d H.q) H.QS_coprime) hqd
   haveI : NeZero H.condN := ⟨(Nat.mul_pos (Nat.mul_pos H.QS_pos hq.pos) hd.pos).ne'⟩
   obtain ⟨u, hu1, hu2⟩ := exists_unit_crt (N := H.condN) (a := H.QS * H.q) (b := H.d) rfl hc
     (Nat.coprime_one_left _) hcop

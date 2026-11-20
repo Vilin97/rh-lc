@@ -45,7 +45,7 @@ def SimSys.comp (s t : SimSys D N K) : SimSys D N K where
     obtain ⟨z, hz⟩ := t.lin n hn hc c x
     obtain ⟨z', hz'⟩ := s.lin n hn hc c (t.g n x)
     exact ⟨z' + s.g n z, by simp only [AddMonoidHom.comp_apply]; rw [hz, map_add, hz', map_nsmul, smul_add, add_assoc]⟩
-  u_cop n hn hc := Nat.Coprime.mul (s.u_cop n hn hc) (t.u_cop n hn hc)
+  u_cop n hn hc := Nat.Coprime.mul_left (s.u_cop n hn hc) (t.u_cop n hn hc)
   u_tower n m hn hm hc := Nat.ModEq.mul (s.u_tower n m hn hm hc) (t.u_tower n m hn hm hc)
   surj n hn hc x := by
     obtain ⟨y, z, hy⟩ := s.surj n hn hc x

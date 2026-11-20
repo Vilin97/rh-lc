@@ -202,7 +202,7 @@ theorem acts_by_same_integer : ∀ (F E : Type) [Field F] [NumberField F] [Field
     intro e he hσe
     obtain ⟨f, hf⟩ := hfix e hσe
     have hfi : IsIntegral ℤ f :=
-      (isIntegral_algebraMap_iff (algebraMap F E).injective).mp (hf ▸ he)
+      (isIntegral_algebraMap_iff ).mp (hf ▸ he)
     exact ⟨⟨f, hfi⟩, hf⟩
   have hE : ∀ o : 𝓞 E, Q (inclO w o) := by
     intro o

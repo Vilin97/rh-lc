@@ -46,7 +46,7 @@ theorem SepPairs_of (hE : EmbSep) (hI : InertiaRam) : SepPairs := by
   let K : IntermediateField ℚ E := IntermediateField.adjoin ℚ ({δ} : Set E)
   have hδK : δ ∈ K := IntermediateField.mem_adjoin_simple_self ℚ δ
   have hδK' : IsIntegral ℤ (⟨δ, hδK⟩ : K) := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap K E).injective]
+    rw [← isIntegral_algebraMap_iff (B := E) ]
     exact hδint
   let π : 𝓞 K := ⟨⟨δ, hδK⟩, hδK'⟩
   have hπ : algebraMap K E (π : K) = δ := rfl

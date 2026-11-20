@@ -192,7 +192,7 @@ theorem infDiag_eq (k : Eˣ) : infDiag k =
       (Units.map (algebraMap E (InfiniteAdeleRing E)).toMonoidHom k) := by
   symm
   unfold Formalism.L2.Host.infDiag
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   have : ∀ w, ((infIdele E w).comp (atInf w)) k =
       Units.map (MonoidHom.inl (InfiniteAdeleRing E) (Af E))
         (Units.map (by classical exact MonoidHom.mulSingle (fun w : InfinitePlace E => w.Completion) w) (atInf w k)) :=
@@ -241,13 +241,13 @@ theorem TrivOnF.inf_eq_one {χ : HChar E} (h : TrivOnF χ) (k : Eˣ) (hk : (k : 
   have h1 : χ.inf k = ∏ w : InfinitePlace E, χ.locInf w (atInf w k) := by
     show χ.1 (infDiag k) = _
     unfold Formalism.L2.Host.infDiag
-    rw [MonoidHom.finset_prod_apply, map_prod]
+    rw [MonoidHom.finsetProd_apply, map_prod]
     rfl
   rw [h1, ← Finset.prod_fiberwise Finset.univ (fun w : InfinitePlace E => w.comap (algebraMap (maximalRealSubfield E) E))]
   refine Finset.prod_eq_one fun w _ => ?_
   have h2 := h.2 w k'
   unfold Formalism.L2.Host.HChar.resInf at h2
-  rw [MonoidHom.finset_prod_apply] at h2
+  rw [MonoidHom.finsetProd_apply] at h2
   rw [hkk]
   convert h2 using 2
   · unfold Formalism.L2.Host.aboveInf

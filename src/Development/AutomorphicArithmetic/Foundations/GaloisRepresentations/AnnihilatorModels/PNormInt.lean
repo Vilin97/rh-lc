@@ -31,7 +31,7 @@ theorem UpperTheory.Gal.crystallineComparison.normInt_of :
     apply hcl
     have h1 := hCI R T ι (Fin m) (fun i k => z i (1 ⊗ₜ s k)) hint a mm
     rw [← hNz, Polynomial.coeff_map, MvPolynomial.coeff_map] at h1
-    exact (isIntegral_algebraMap_iff hinj).1 h1
+    exact (isIntegral_algebraMap_iff ).1 h1
   obtain ⟨N, hN⟩ := hLP R (Localization.Away (l : R)) ι (algebraMap R (Localization.Away (l : R))) N' hco
   refine ⟨N, ?_⟩
   intro B _ _ hl I _ zB hzB

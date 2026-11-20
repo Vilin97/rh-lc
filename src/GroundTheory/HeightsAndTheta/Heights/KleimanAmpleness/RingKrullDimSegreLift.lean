@@ -58,7 +58,7 @@ theorem isAlgebraic_segreLift (W : Ideal (MRing ι F)) [W.IsPrime] (hrel : IsRel
     · intro h
       have h1 := congrArg (fun p => algebraMap
         (MRing (segreIdx ι) F ⧸ RingHom.ker (segreLiftMap ι F W))
-        (Polynomial (MRing ι F ⧸ W)) (Polynomial.coeff p 1)) h
+        (Polynomial (MRing ι F ⧸ W)) (_root_.AddMonoidAlgebra.coeff (M := ℕ) p 1)) h
       simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, Polynomial.coeff_C,
         if_true, one_ne_zero, if_false, sub_zero, Polynomial.coeff_zero, map_zero, hC,
         Polynomial.C_eq_zero] at h1

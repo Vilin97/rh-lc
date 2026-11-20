@@ -37,7 +37,7 @@ theorem eqAt_trans {D : D7} {N : ℕ} {q : ℕ} {L L₁ L₂ : Submodule (𝓞 D
     (h' : EqAt D q L₁ L₂) : EqAt D q L L₂ := by
   obtain ⟨a, ha, hL₁, hL₁'⟩ := h
   obtain ⟨b, hb, hL₂, hL₂'⟩ := h'
-  refine ⟨a * b, Nat.Coprime.mul ha hb, fun x hx => ?_, fun x hx => ?_⟩
+  refine ⟨a * b, Nat.Coprime.mul_left ha hb, fun x hx => ?_, fun x hx => ?_⟩
   ·
     have h1 : ((b : D.host.E) • ((a : D.host.E) • x)) ∈ L₂ := hL₂ _ (hL₁ x hx)
     rwa [smul_smul, mul_comm, ← Nat.cast_mul] at h1

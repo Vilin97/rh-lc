@@ -435,10 +435,10 @@ theorem lead_iff (n : ℕ) (c : R) (f : ℂ → R) : Lead n c f ↔
     · refine (Polynomial.natDegree_add_le _ _).trans (max_le (Polynomial.natDegree_monomial_le _) ?_)
       exact Polynomial.natDegree_sum_le_of_forall_le _ _ fun i hi =>
         (Polynomial.natDegree_monomial_le _).trans (Finset.mem_range.1 hi).le
-    · rw [Polynomial.coeff_add, Polynomial.coeff_monomial, if_pos rfl, Polynomial.finset_sum_coeff,
+    · rw [Polynomial.coeff_add, Polynomial.coeff_monomial, if_pos rfl, Polynomial.finsetSum_coeff,
         Finset.sum_eq_zero fun i hi => ?_, add_zero]
       rw [Polynomial.coeff_monomial, if_neg (Finset.mem_range.1 hi).ne]
-    · rw [ha, Polynomial.eval_add, Polynomial.eval_monomial, Polynomial.eval_finset_sum, mon_eval]
+    · rw [ha, Polynomial.eval_add, Polynomial.eval_monomial, Polynomial.eval_finsetSum, mon_eval]
       simp only [Polynomial.eval_monomial, mon_eval]
   · rintro ⟨p, hp1, hp2, hp3⟩
     refine ⟨fun i => p.coeff i, fun Y => ?_⟩
@@ -776,7 +776,7 @@ theorem eval_qP (Y : ℂ) : (qP P).eval Y = qC P Y := by
 theorem eval_wNum (π : Ty P) (Y : ℂ) : (wNum P π).eval Y = qC P Y +
     ∑ l ∈ Icc 1 (P.k - 1), ((Nrm P l π : ℝ) : ℂ) * (xEx P {l} π Y * xEx P {l} π (Y + 1)) := by
   unfold wNum
-  rw [Polynomial.eval_add, eval_qP, Polynomial.eval_finset_sum]
+  rw [Polynomial.eval_add, eval_qP, Polynomial.eval_finsetSum]
   refine congrArg (qC P Y + ·) (Finset.sum_congr rfl fun l _ => ?_)
   unfold xEx
   rw [Finset.sdiff_singleton_eq_erase]

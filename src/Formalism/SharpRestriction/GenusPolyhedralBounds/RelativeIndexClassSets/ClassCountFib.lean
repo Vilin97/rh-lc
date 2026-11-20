@@ -51,7 +51,7 @@ def GamCongr {Γ U : Subgroup G} {x x' h u : G} (hh : h ∈ Γ) (hu : u ∈ U) (
 
 def GamCongrMk {Γ U : Subgroup G} {x x' : G} (e : DoubleCoset.mk Γ U x = DoubleCoset.mk Γ U x') :
     Gam Γ U x ≃* Gam Γ U x' :=
-  have h := (DoubleCoset.eq Γ U x x').1 e
+  have h := (@DoubleCoset.eq _ _ Γ U x x').1 e
   GamCongr h.choose_spec.1 h.choose_spec.2.choose_spec.1 h.choose_spec.2.choose_spec.2
 
 def toK (Γ K : Subgroup G) (g : G) : Gam Γ K g →* K where
@@ -102,7 +102,7 @@ def toCls (Γ K U : Subgroup G) (g : G) : K ⧸ U.subgroupOf K → DoubleCoset.Q
     have h' : (a : G)⁻¹ * b ∈ U := by
       have := QuotientGroup.leftRel_apply.1 h
       simpa [Subgroup.mem_subgroupOf] using this
-    exact (DoubleCoset.eq Γ U _ _).2 ⟨1, Γ.one_mem, _, h', by simp [mul_assoc]⟩)
+    exact (@DoubleCoset.eq _ _ Γ U _ _).2 ⟨1, Γ.one_mem, _, h', by simp [mul_assoc]⟩)
 
 @[simp] theorem toCls_mk (Γ K U : Subgroup G) (g : G) (k : K) :
     toCls Γ K U g (k : K ⧸ U.subgroupOf K) = DoubleCoset.mk Γ U (g * k) := rfl
@@ -112,7 +112,7 @@ theorem toCls_smul (Γ K U : Subgroup G) (g : G) (x : Gam Γ K g) (y : K ⧸ U.s
   induction y using QuotientGroup.induction_on with
   | H k =>
     rw [smul_mk, toCls_mk, toCls_mk]
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨(x : G)⁻¹, Γ.inv_mem (mem_Gam.1 x.2).1, 1, U.one_mem, ?_⟩
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(x : G)⁻¹, Γ.inv_mem (mem_Gam.1 x.2).1, 1, U.one_mem, ?_⟩
     simp only [Subgroup.coe_mul, toK_coe]
     group
 
@@ -133,12 +133,12 @@ def total (Γ K U : Subgroup G) (rep : DoubleCoset.Quotient (Γ : Set G) K → G
 theorem total_surjective (Γ K U : Subgroup G) (rep : DoubleCoset.Quotient (Γ : Set G) K → G)
     (hrep : ∀ c, DoubleCoset.mk Γ K (rep c) = c) : Function.Surjective (total Γ K U rep) := by
   intro q
-  obtain ⟨h, hh, k, hk, hx⟩ := (DoubleCoset.eq Γ K _ _).1 (hrep (DoubleCoset.mk Γ K (Quotient.out q)))
+  obtain ⟨h, hh, k, hk, hx⟩ := (@DoubleCoset.eq _ _ Γ K _ _).1 (hrep (DoubleCoset.mk Γ K (Quotient.out q)))
   refine ⟨⟨DoubleCoset.mk Γ K (Quotient.out q), Quotient.mk'' ((⟨k, hk⟩ : K) : K ⧸ U.subgroupOf K)⟩, ?_⟩
   show orbToCls Γ K U _ (Quotient.mk'' _) = q
   rw [orbToCls_mk, toCls_mk]
   conv_rhs => rw [← DoubleCoset.out_eq' Γ U q]
-  refine (DoubleCoset.eq _ _ _ _).2 ⟨h, hh, 1, U.one_mem, ?_⟩
+  refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨h, hh, 1, U.one_mem, ?_⟩
   rw [mul_one, ← mul_assoc]
   exact hx
 
@@ -154,10 +154,10 @@ theorem total_injective {Γ K U : Subgroup G} (hUK : U ≤ K) (rep : DoubleCoset
   induction y' using QuotientGroup.induction_on with
   | H k' =>
   have heq' : DoubleCoset.mk Γ U (rep c * k) = DoubleCoset.mk Γ U (rep c' * k') := heq
-  obtain ⟨h, hh, u, hu, he⟩ := (DoubleCoset.eq Γ U _ _).1 heq'
+  obtain ⟨h, hh, u, hu, he⟩ := (@DoubleCoset.eq _ _ Γ U _ _).1 heq'
   have hcc : c = c' := by
     rw [← hrep c, ← hrep c']
-    refine (DoubleCoset.eq Γ K _ _).2 ⟨h, hh, (k : G) * u * (k' : G)⁻¹,
+    refine (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨h, hh, (k : G) * u * (k' : G)⁻¹,
       K.mul_mem (K.mul_mem k.2 (hUK hu)) (K.inv_mem k'.2), ?_⟩
     rw [eq_mul_inv_of_mul_eq he]
     group
@@ -207,10 +207,10 @@ theorem fibRep_fst {Γ K U : Subgroup G} (hUK : U ≤ K) (rep : DoubleCoset.Quot
   induction y using QuotientGroup.induction_on with
   | H k =>
   rw [fibRep_symm_mk] at hp
-  obtain ⟨h, hh, u, hu, he⟩ := (DoubleCoset.eq Γ U _ _).1 hp
+  obtain ⟨h, hh, u, hu, he⟩ := (@DoubleCoset.eq _ _ Γ U _ _).1 hp
   show c = DoubleCoset.mk Γ K x
   rw [← hrep c]
-  refine (DoubleCoset.eq Γ K _ _).2 ⟨h, hh, (k : G) * u, K.mul_mem k.2 (hUK hu), ?_⟩
+  refine (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨h, hh, (k : G) * u, K.mul_mem k.2 (hUK hu), ?_⟩
   rw [he]
   group
 

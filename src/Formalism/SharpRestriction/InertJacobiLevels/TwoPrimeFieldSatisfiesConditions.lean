@@ -63,7 +63,7 @@ theorem norm_mod {R : Ranks} (H : Host R) {M T : ℕ} (hM : 0 < M) (π : 𝓞 H.
   have hr : algebraMap ℚ H.E (((T : ℚ) - 1) / M) = (w : H.E) := by
     rw [map_div₀, map_sub, map_one, map_natCast, map_natCast, key, mul_div_cancel_left₀ _ hM0]
   have hi : IsIntegral ℤ (((T : ℚ) - 1) / M) := by
-    rw [← isIntegral_algebraMap_iff (algebraMap ℚ H.E).injective, hr]
+    rw [← isIntegral_algebraMap_iff , hr]
     exact w.2
   obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 hi
   have hMq : (M : ℚ) ≠ 0 := by exact_mod_cast hM.ne'

@@ -194,7 +194,7 @@ theorem cls_unique {cl : Type} (y : cl → UPts σ J (FiniteAdeleRing (𝓞 F) F
   have hκ : κ₁.1 * κ.1 * κ₂.1⁻¹ ∈ S.U := S.U.mul_mem (S.U.mul_mem κ₁.2 κ.2) (S.U.inv_mem κ₂.2)
   apply hy
   show (Quotient.mk'' (y c) : Cls S) = Quotient.mk'' (y c')
-  refine (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, bc_mem hγ⟩, Subgroup.mem_subgroupOf.2 ⟨γ₂⁻¹ * γ₁, hγ, rfl⟩, ⟨_, U_le hκ⟩,
+  refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, bc_mem hγ⟩, Subgroup.mem_subgroupOf.2 ⟨γ₂⁻¹ * γ₁, hγ, rfl⟩, ⟨_, U_le hκ⟩,
     Subgroup.mem_subgroupOf.2 hκ, Subtype.ext ?_⟩
   show (y c').1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) (γ₂⁻¹ * γ₁) * (y c).1 * (κ₁.1 * κ.1 * κ₂.1⁻¹)
   have : (y c').1 = (bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ₂)⁻¹ *

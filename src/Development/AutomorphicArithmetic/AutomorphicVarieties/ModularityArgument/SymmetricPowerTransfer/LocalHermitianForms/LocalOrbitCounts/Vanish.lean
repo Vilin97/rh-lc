@@ -244,7 +244,7 @@ private theorem vanish_inert {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteV
   have memI : ∀ w : Lsq K Δ, IsInt O w → w ∈ integralClosure O (Lsq K Δ) := fun w hw => hw
   have hK : ∀ k : K, IsIntegral O (algebraMap K (Lsq K Δ) k) → ∃ a : O, algebraMap O K a = k := by
     intro k hk
-    have h1 : IsIntegral O k := (isIntegral_algebraMap_iff (algebraMap K (Lsq K Δ)).injective).1 hk
+    have h1 : IsIntegral O k := (isIntegral_algebraMap_iff ).1 hk
     exact IsIntegrallyClosed.isIntegral_iff.1 h1
   haveI hfr : IsFractionRing (integralClosure O (Lsq K Δ)) (Lsq K Δ) :=
     integralClosure.isFractionRing_of_finite_extension K (Lsq K Δ)

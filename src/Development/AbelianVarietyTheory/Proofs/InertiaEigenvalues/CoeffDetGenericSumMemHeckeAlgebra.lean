@@ -93,7 +93,7 @@ theorem coeff_det_generic_sum_mem_of_inRing :
           mat (rep y) h := by
         refine Matrix.ext fun i j => ?_
         rfl
-      have e' := congrArg (fun p => Polynomial.coeff p j)
+      have e' := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j)
         (Matrix.charpoly_map (Matrix.of fun i j => fun y => mat (rep y) h i j) (Pi.evalRingHom (fun _ => O) y))
       rw [hm] at e'
       simp only [Polynomial.coeff_map] at e'

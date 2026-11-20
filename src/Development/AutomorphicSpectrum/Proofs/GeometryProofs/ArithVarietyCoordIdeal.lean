@@ -85,7 +85,7 @@ theorem dedekind_finite_of_finite [CharZero Ω] (hf : FiniteDimensional ℚ (alg
   haveI : IsIntegralClosure A ℤ L := by
     refine ⟨fun a b hab => IsIntegralClosure.algebraMap_injective A ℤ Ω ?_, fun {v} => ?_⟩
     · rw [← hcoe, ← hcoe, hab]
-    · rw [← isIntegral_algebraMap_iff (A := L) (B := Ω) (R := ℤ) (algebraMap L Ω).injective]
+    · rw [← isIntegral_algebraMap_iff (A := L) (B := Ω) (R := ℤ) ]
       rw [IsIntegralClosure.isIntegral_iff (A := A) (R := ℤ) (B := Ω)]
       constructor
       · rintro ⟨a, ha⟩

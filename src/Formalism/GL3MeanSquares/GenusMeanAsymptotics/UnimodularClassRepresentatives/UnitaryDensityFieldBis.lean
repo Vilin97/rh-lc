@@ -55,7 +55,7 @@ private lemma exists_algebraMap_eq_of_conjO_eq (hF : IsFixF K F) (y : 𝓞 K) (h
   have h1 : star (y : K) = y := by rw [← coe_conjO_eq_star, hy]
   obtain ⟨f, hf⟩ := (hF _).mp h1
   have hint : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff (algebraMap F K).injective, hf]
+    rw [← isIntegral_algebraMap_iff , hf]
     exact RingOfIntegers.isIntegral_coe y
   let a : 𝓞 F := ⟨f, (mem_integralClosure_iff ℤ F).mpr hint⟩
   refine ⟨a, RingOfIntegers.ext ?_⟩

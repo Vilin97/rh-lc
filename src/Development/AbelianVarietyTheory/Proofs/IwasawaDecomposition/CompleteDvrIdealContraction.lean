@@ -16,7 +16,7 @@ theorem mem_of_map_mem_map : ∀ (O : Type) [CommRing O] [IsDomain O] [IsLocalRi
   haveI := hno
   have hDVR : IsDiscreteValuationRing O := by
     obtain ⟨hf, hrad⟩ := ringKrullDim_eq_one_iff_of_isLocalRing_isDomain.1 hdim
-    have key := (IsDiscreteValuationRing.TFAE O hf).out 0 3
+    have key := (IsDiscreteValuationRing.TFAE O hf).out 1 4
     try simp only [List.length_cons, List.getElem_cons_succ, List.getElem_cons_zero] at key
     refine key.2 ⟨inferInstance, maximalIdeal O, ⟨?_, ?_⟩, ?_⟩
     · exact (isField_iff_maximalIdeal_eq).not.1 hf

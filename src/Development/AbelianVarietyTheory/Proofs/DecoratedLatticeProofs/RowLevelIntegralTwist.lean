@@ -30,7 +30,7 @@ theorem core (I : AutInst) (g : ℕ) {r : ℕ} (e0 : Fin r → VA I) (z0 : VA I)
     ∃ N : ℕ, N.Coprime g ∧ ZMod' I g (ε * (c - c₂) * (N : I.E ⊗[I.F] Af I.F)) := by
   obtain ⟨n, hn, hnv⟩ := hv
   obtain ⟨n', hn', hnv'⟩ := hv'
-  refine ⟨n * n', Nat.Coprime.mul hn hn', ?_⟩
+  refine ⟨n * n', Nat.Coprime.mul_left hn hn', ?_⟩
 
   have hQ : Mo I g (Set.range e0) ≤ Qs I g z0 := by
     refine sup_le (Submodule.span_le.2 ?_) (mL_Qs I g hz0)

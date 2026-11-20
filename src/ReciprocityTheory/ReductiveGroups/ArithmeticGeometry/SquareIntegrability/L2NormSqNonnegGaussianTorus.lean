@@ -19,7 +19,7 @@ theorem jof_Hf_conj {ι : Type} [Fintype ι] (v w : EuclideanSpace ℂ ι) : sta
 
 theorem Hf_single {ι : Type} [Fintype ι] [DecidableEq ι] (j j' : ι) :
     Hf (EuclideanSpace.single j (1 : ℂ)) (EuclideanSpace.single j' 1) = if j = j' then 1 else 0 := by
-  simp only [Hf, EuclideanSpace.single_apply]
+  simp only [Hf, PiLp.single_apply]
   by_cases h : j = j'
   · subst h
     simp [Finset.sum_ite_eq']

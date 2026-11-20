@@ -113,7 +113,7 @@ theorem cmConjugation_on_primes : ∀ (F E : Type) [Field F] [NumberField F] [Fi
       have hai : IsIntegral ℤ a := by
         have h1 : IsIntegral ℤ (algebraMap F E a) := by
           rw [ha]; exact RingOfIntegers.isIntegral_coe _
-        exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h1
+        exact (isIntegral_algebraMap_iff ).1 h1
       obtain ⟨b, hb⟩ : ∃ b : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) b = x * s x :=
         ⟨⟨a, hai⟩, RingOfIntegers.ext ha⟩
       have h1 : b ∈ (Q.under (𝓞 F)).asIdeal := by

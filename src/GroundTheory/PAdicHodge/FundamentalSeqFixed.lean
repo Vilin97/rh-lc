@@ -41,7 +41,7 @@ theorem C_dvd_of_map_eq_zero {F : ℤ[X]} (h : F.map (Int.castRingHom (ZMod p)) 
   rw [C_dvd_iff_dvd_coeff]
   intro i
   have h1 : (F.coeff i : ZMod p) = 0 := by
-    have := congrArg (fun f => Polynomial.coeff f i) h
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f i) h
     simpa only [coeff_map, eq_intCast, coeff_zero] using this
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ p).1 h1
 

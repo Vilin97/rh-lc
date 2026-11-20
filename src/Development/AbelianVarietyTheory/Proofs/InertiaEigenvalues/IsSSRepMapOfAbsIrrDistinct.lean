@@ -226,7 +226,7 @@ theorem enlargement_of (hBN : BrauerNesbitt) (hd : FrobDense D i) (r : Indefinit
     rfl
   · rw [hc, hc, Polynomial.coeff_map, Polynomial.coeff_map, ← map_sub]
     refine ⟨(iota_facts D i).1 _, (iota_facts D i).2.1 _ ?_⟩
-    have := congrArg (fun p => Polynomial.coeff p n) (h.2 x y g)
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) (h.2 x y g)
     unfold redRep at this
     simp only [cpol_mapRep, Polynomial.coeff_map] at this
     rw [← IsLocalRing.residue_eq_zero_iff, map_sub, this, sub_self]

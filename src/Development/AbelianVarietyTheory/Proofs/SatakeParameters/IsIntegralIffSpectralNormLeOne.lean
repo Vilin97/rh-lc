@@ -69,7 +69,7 @@ theorem isIntegral_map (f : v.adicCompletion K →+* v'.adicCompletion F) (hf : 
 theorem valued_le_one_of_isIntegral {x : v'.adicCompletion F}
     (hx : IsIntegral (v'.adicCompletionIntegers F) (algebraMap (v'.adicCompletion F) (Kbar v') x)) :
     Valued.v x ≤ 1 := by
-  rw [isIntegral_algebraMap_iff (algebraMap (v'.adicCompletion F) (Kbar v')).injective] at hx
+  rw [isIntegral_algebraMap_iff ] at hx
   obtain ⟨y, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.1 hx
   exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 y.2
 

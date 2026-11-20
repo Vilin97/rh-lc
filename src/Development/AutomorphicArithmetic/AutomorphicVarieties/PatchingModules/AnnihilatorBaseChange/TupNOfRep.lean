@@ -8,7 +8,7 @@ open scoped TensorProduct
 
 private theorem tupN_lam {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group H] (D : GDet n A G) (φ : H →* G)
     (i : ℕ) (g : H) : (D.comap φ).lam i (MonoidAlgebra.single g 1) = D.lam i (MonoidAlgebra.single (φ g) 1) := by
-  show (-1) ^ i * Polynomial.coeff (D.D (Polynomial A) (MonoidAlgebra.mapDomainRingHom (Polynomial A) φ
+  show (-1) ^ i * _root_.AddMonoidAlgebra.coeff (M := ℕ) (D.D (Polynomial A) (MonoidAlgebra.mapDomainRingHom (Polynomial A) φ
       (MonoidAlgebra.single 1 Polynomial.X -
         MonoidAlgebra.mapRingHom H Polynomial.C (MonoidAlgebra.single g 1)))) (n - i) = _
   rw [map_sub]

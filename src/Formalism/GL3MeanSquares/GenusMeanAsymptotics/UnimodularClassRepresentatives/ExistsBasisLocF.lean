@@ -79,7 +79,7 @@ theorem mem_span_RP (𝔭 : Ideal (𝓞 F)) [𝔭.IsPrime] (N : Submodule (𝓞 
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span hx)
 
-theorem exists_basis_locF {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) {𝔭 : Ideal (𝓞 F)}
+theorem exists_basis_locF {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) : ∃ b : Basis (Fin (finrank K V)) K V, (∀ i, b i ∈ L) ∧
       locF 𝔭 (Submodule.span (𝓞 K) (Set.range b)) = locF 𝔭 L := by
   have : 𝔭.IsPrime := h𝔭.isPrime

@@ -73,7 +73,7 @@ theorem dsum_eq_zero_of_par (H : Type) [Group H] (T P L U : Subgroup H) (Ψ : H 
     simp only [wt, if_pos hq', hLy, locPart_inf_conj hTP hq' y]
   have hinj : Set.InjOn φ A := by
     intro q₁ h₁ q₂ h₂ h
-    obtain ⟨t, ht, l, hl, e⟩ := (DoubleCoset.eq T L _ _).1 h
+    obtain ⟨t, ht, l, hl, e⟩ := (@DoubleCoset.eq _ _ T L _ _).1 h
     rw [← DoubleCoset.out_eq' T Ly q₁, ← DoubleCoset.out_eq' T Ly q₂, DoubleCoset.eq]
     refine ⟨t, ht, y * l * y⁻¹, Subgroup.mem_inf.2 ⟨?_, l, hl, rfl⟩, ?_⟩
     · have e' : y * l * y⁻¹ = (t * Quotient.out q₁)⁻¹ * Quotient.out q₂ := by
@@ -91,7 +91,7 @@ theorem dsum_eq_zero_of_par (H : Type) [Group H] (T P L U : Subgroup H) (Ψ : H 
       simp only [hπ, hφ, mk_out_of_le hTP, DoubleCoset.eq]
       exact ⟨(Quotient.out q')⁻¹, P.inv_mem hq', 1, L.one_mem, by group⟩
     · intro hq
-      obtain ⟨p, hp, l, hl, e⟩ := (DoubleCoset.eq P L _ _).1 hq
+      obtain ⟨p, hp, l, hl, e⟩ := (@DoubleCoset.eq _ _ P L _ _).1 hq
       obtain ⟨t, k, ht, hk, ek⟩ := DoubleCoset.mk_out_eq_mul T Ly p⁻¹
       refine ⟨DoubleCoset.mk T Ly p⁻¹, ?_, ?_⟩
       · show Quotient.out (DoubleCoset.mk T Ly p⁻¹) ∈ P

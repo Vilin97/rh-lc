@@ -13,7 +13,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.PositiveTwistAverage GlobalTheory.R
 theorem comb_sum {G ι : Type} (T : Finset ι) (g : ι → G) (a : ℂ) (f : G → ℂ) :
     comb (∑ t ∈ T, Finsupp.single (g t) a) f = a * ∑ t ∈ T, f (g t) := by
   unfold comb
-  rw [← Finsupp.sum_finset_sum_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _), Finset.mul_sum]
+  rw [← Finsupp.sum_finsetSum_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _), Finset.mul_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [Finsupp.sum_single_index (zero_mul _)]
 

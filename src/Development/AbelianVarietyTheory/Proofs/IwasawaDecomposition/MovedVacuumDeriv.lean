@@ -129,8 +129,8 @@ theorem integral_quad (hJ : ∀ x, J (J x) = -x) (h : IsHeis (omJ J) ρ) {f : B}
   have hi : ∀ i ∈ Finset.univ, Integrable fun u => c i • gau u • dH ρ (p i) (dH ρ (q i) (ρ u f)) :=
     fun i _ => (integrable_dH_dH hJ h hf (p i) (q i)).smul (c i)
   simp only [quad, Finset.smul_sum, smul_comm (gau _) (c _)]
-  refine ⟨integrable_finset_sum _ hi, ?_⟩
-  rw [integral_finset_sum _ hi]
+  refine ⟨MeasureTheory.integrable_finsetSum _ hi, ?_⟩
+  rw [MeasureTheory.integral_finsetSum _ hi]
   simp only [integral_smul, integral_dH_dH hJ h hf]
 
 theorem moved_vacuum_deriv : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (B : Type) [NormedAddCommGroup B] [NormedSpace ℂ B] [CompleteSpace B] (J : V ≃ₗᵢ[ℝ] V) (ρ : V → B →L[ℂ] B), (∀ x, J (J x) = -x) → ∀ h : IsHeis (omJ J) ρ, ∀ (a : ℝ → V →L[ℝ] V) (X : V →L[ℝ] V), a 0 = 1 → HasDerivAt a X 0 → (∀ t x y, omJ J (a t x) (a t y) = omJ J x y) → ∀ (κ : Type) [Fintype κ] (c : κ → ℂ) (p q : κ → V), IsQuadOf (omJ J) X c p q → (∃ C : ℝ, ∀ᶠ t in 𝓝 (0 : ℝ), ∀ x, ‖(∫ u, gau u • ρ (a t u) (proj h x)) - proj h x‖ ≤ C * |t| * ‖x‖) ∧ ∃ lam : ℂ, ∀ x, HasDerivAt (fun t : ℝ => ∫ u, gau u • ρ (a t u) (proj h x)) (quad ρ c p q (proj h x) + lam • proj h x) 0 := by

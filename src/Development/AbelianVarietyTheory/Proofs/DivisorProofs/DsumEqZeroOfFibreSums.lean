@@ -142,7 +142,7 @@ theorem ncard_fibre_eq_relIndex (T : Subgroup H) {L N : Subgroup H} (hLN : ∀ l
   rw [Subgroup.relIndex, ← hstab, MulAction.index_stabilizer]
   refine Set.ncard_congr (fun q _ => ((m * Quotient.out q : H) : H ⧸ L)) ?_ ?_ ?_
   · rintro q ⟨hq, he⟩
-    obtain ⟨t, ht, l, hl, h⟩ := (DoubleCoset.eq T L _ _).1 he.symm
+    obtain ⟨t, ht, l, hl, h⟩ := (@DoubleCoset.eq _ _ T L _ _).1 he.symm
     have hts : t ∈ S := by
       refine mem_locPart.2 ⟨ht, ?_⟩
       have : y⁻¹ * t * y = (m⁻¹ * y)⁻¹ * Quotient.out q * l⁻¹ := by
@@ -198,7 +198,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
   swap
   · refine finsum_eq_zero_of_forall_eq_zero fun D => ?_
     split_ifs with h
-    · obtain ⟨t, ht, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 h
+    · obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
       have : Quotient.out D ∉ P := fun hD => hm (e ▸ P.mul_mem (P.mul_mem (hTP ht) hD) (hsup hk))
       simp [wt, hP _ this]
     · rfl
@@ -210,7 +210,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
         (({q : H ⧸ (N ⊓ L) | Quotient.out q ∈ N ∧ DoubleCoset.mk T L (m * Quotient.out q) = D}.ncard : ℂ) *
           Ψ (Quotient.out D)) := by
     intro D h
-    obtain ⟨t, ht, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 h.symm
+    obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h.symm
     have hD : D = DoubleCoset.mk T L (m * k) := by
       rw [← DoubleCoset.out_eq' T L D, eq_comm, DoubleCoset.eq]
       exact ⟨t, ht, 1, L.one_mem, by rw [e]; group⟩

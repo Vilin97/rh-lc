@@ -48,7 +48,7 @@ theorem cut_locF (S : VecSplit h h') (𝔭 : Ideal (𝓞 F)) (Λ : Submodule (�
     rw [VecSplit.mem_cut_iff, LinearMap.map_smul_of_tower] at hx
     exact hx
 
-theorem isLattice_gmap (g : V ≃ₗ[K] V) {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) :
+theorem isLattice_gmap (g : V ≃ₗ[K] V) {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) :
     Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
   refine ⟨hL.fg.map _, ?_⟩
   have e : ((Formalism.HermitianLatticesTheory.gmap g L : Submodule (𝓞 K) V) : Set V) = (g : V →ₗ[K] V) '' (L : Set V) := rfl

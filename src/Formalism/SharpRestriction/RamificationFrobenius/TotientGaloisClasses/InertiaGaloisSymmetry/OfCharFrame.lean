@@ -29,7 +29,7 @@ theorem exists_unit_three {a b c : ℕ} [NeZero (a * b * c)] (hab : Nat.Coprime 
     ∃ u : (ZMod (a * b * c))ˣ, (u : ZMod (a * b * c)).val ≡ x [MOD a] ∧
       (u : ZMod (a * b * c)).val ≡ y [MOD b] ∧ (u : ZMod (a * b * c)).val ≡ z [MOD c] := by
   obtain ⟨t1, h1a, h1b⟩ := Nat.chineseRemainder hab x y
-  obtain ⟨t, h2ab, h2c⟩ := Nat.chineseRemainder (Nat.Coprime.mul hac hbc) t1 z
+  obtain ⟨t, h2ab, h2c⟩ := Nat.chineseRemainder (Nat.Coprime.mul_left hac hbc) t1 z
   have hta : t ≡ x [MOD a] := (h2ab.of_mul_right b).trans h1a
   have htb : t ≡ y [MOD b] := (h2ab.of_mul_left a).trans h1b
   have hca : Nat.Coprime t a := hta.gcd_eq.trans hx

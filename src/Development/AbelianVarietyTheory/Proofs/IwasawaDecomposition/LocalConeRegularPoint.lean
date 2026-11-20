@@ -101,7 +101,7 @@ theorem evalZ_const : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
   have hQ0 : Q ≠ ⊥ := fun e => by rw [e, Ideal.height_bot] at hQ1; exact zero_ne_one hQ1
   have hdvr : IsDiscreteValuationRing (Localization.AtPrime Q) :=
     ((IsDiscreteValuationRing.TFAE (Localization.AtPrime Q)
-      (IsLocalization.AtPrime.not_isField R hQ0 _)).out 0 1).2 (ReciprocityTheory.ChartRestriction.G.T0.regVert_valuationRing Q hQ1)
+      (IsLocalization.AtPrime.not_isField R hQ0 _)).out 1 2).2 (ReciprocityTheory.ChartRestriction.G.T0.regVert_valuationRing Q hQ1)
   have hU := GlobalTheory.T.height_one_prime_etale_stalk_comap Z ξ hCN hEt hFU Q hQ1 (by rw [hQq]; exact hq)
   obtain ⟨hWm, hWc⟩ := GlobalTheory.T.dvr_map_of_codim_one_prime _ Q hdvr hU ϖ hϖ
     ((IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).1 hϖ) g hunit hπ

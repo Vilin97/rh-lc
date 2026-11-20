@@ -65,7 +65,7 @@ theorem whittaker_jHyp_eq_orbK : ∀ (F E : Type) [NontriviallyNormedField F] [N
       ∈ 𝓝 (0 : A.K) := by
     have h2 := GlobalTheory.T.eventually_testFunction_mul_inverse_unit_eq F E A φ' hφ a ha
     have hc : Tendsto (fun v : A.K => a + v) (𝓝 0) (𝓝 a) := by
-      have := (continuous_add_left a).tendsto (0 : A.K)
+      have := (continuous_const_add a).tendsto (0 : A.K)
       rwa [add_zero] at this
     exact hc h2
   filter_upwards [GlobalTheory.T.eventually_dual_scaled_OK_subset_nhds F E A ψ hψ _ hV, self_mem_nhdsWithin] with c hc hc0

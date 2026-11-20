@@ -50,7 +50,7 @@ theorem exists_trace {z : Formalism.L2.Theta.AE D} (hz : z ∈ intL D) :
     obtain ⟨t, ht⟩ := exists_of_star_eq D (x := (o : D.host.E) + star (o : D.host.E))
       (by rw [star_add, star_star, add_comm])
     have hti : IsIntegral ℤ t := by
-      rw [← isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective, ht]
+      rw [← isIntegral_algebraMap_iff , ht]
       exact o.2.add (isIntegral_star o.2)
     refine ⟨algebraMap D.host.F (Af D.host.F) t * α, fun v => ?_, ?_⟩
     · rw [map_mul]; exact mul_mem (evalV_algebraMap_mem v t hti) (hα v)

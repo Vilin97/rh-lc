@@ -362,7 +362,7 @@ theorem proof : SpecialCurvesDim.Statement := by
     obtain ⟨p, rfl⟩ := ht'
     obtain ⟨a, b, ha, hb, hb0, hab⟩ := exists_ratio_eq_div y k₀ hy W hyW c hyc hwc p
     refine ⟨Polynomial.C ⟨b, hT₀ hb⟩ * Polynomial.X - Polynomial.C ⟨a, hT₀ ha⟩, fun h0 => hb0 ?_, ?_⟩
-    · have h1 := congrArg (fun P => Polynomial.coeff P 1) h0
+    · have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P 1) h0
       simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, Polynomial.coeff_C, Polynomial.coeff_zero] at h1
       simpa using congrArg Subtype.val h1
     · simp only [map_sub, map_mul, Polynomial.aeval_C, Polynomial.aeval_X]

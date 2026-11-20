@@ -77,7 +77,7 @@ theorem doubleCoset_mk_eq_of_local (ι G : Type) [Group G] (H : ι → Type) [�
     · exact ⟨1, (TH i).one_mem, (p i g)⁻¹ * p i g', mul_mem (inv_mem hk.1) hk.2, by group,
         fun _ _ => rfl⟩
     · by_cases hi : i ∈ S0
-      · obtain ⟨t, ht, k, hk', he⟩ := (DoubleCoset.eq _ _ _ _).1 (h i hi)
+      · obtain ⟨t, ht, k, hk', he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (h i hi)
         exact ⟨t, ht, k, hk', he, fun h1 h2 => absurd ⟨h1, h2⟩ hk⟩
       · obtain ⟨a, ha, b, hb, hab⟩ := hg i hi
         obtain ⟨a', ha', b', hb', hab'⟩ := hg' i hi
@@ -154,7 +154,7 @@ theorem finsum_doubleCoset_eq_finprod_local : ∀ (ι G : Type) [Group G] (H : �
       show DoubleCoset.mk (TH i.1) (KH i.1) (p i.1 a * Quotient.out (y i) * p i.1 b) = y i
       have h1 : DoubleCoset.mk (TH i.1) (KH i.1) (p i.1 a * Quotient.out (y i) * p i.1 b) =
           DoubleCoset.mk (TH i.1) (KH i.1) (Quotient.out (y i)) :=
-        (DoubleCoset.eq _ _ _ _).2 ⟨(p i.1 a)⁻¹, inv_mem ((hT a).1 ha i.1), (p i.1 b)⁻¹,
+        (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(p i.1 a)⁻¹, inv_mem ((hT a).1 ha i.1), (p i.1 b)⁻¹,
           inv_mem ((hK b).1 hb i.1), by group⟩
       rw [h1, DoubleCoset.out_eq']
 

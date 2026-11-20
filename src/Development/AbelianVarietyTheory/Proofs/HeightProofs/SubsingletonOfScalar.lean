@@ -253,7 +253,7 @@ theorem subsingleton_of_scalar {X k : Type} [AddCommGroup X] [Module.Free ℤ X]
       rw [eq_div_iff (pow_ne_zero 2 hl0), ← h2, h3]; ring
     rw [← Complex.ofReal_pow, this]
     simp [neg_div]
-  rw [hq, isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective] at hint2
+  rw [hq, isIntegral_algebraMap_iff ] at hint2
   obtain ⟨t, ht⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint2
   have hl0' : (l : ℚ) ≠ 0 := by exact_mod_cast hl0
   have ht' : (d : ℤ) = (l : ℤ) * l * (-t) := by

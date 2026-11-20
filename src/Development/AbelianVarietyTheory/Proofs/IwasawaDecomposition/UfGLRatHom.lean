@@ -54,7 +54,7 @@ theorem mem_FiC_iff (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ) 
       ∃ κ : S.U, x.1 = bc ιA γ * (y c).1 * κ.1 := by
     intro x
     obtain ⟨c, hcx⟩ := hy.2 (Quotient.mk'' x)
-    obtain ⟨hh, hhH, κ, hκK, e⟩ := (DoubleCoset.eq _ _ (y c) x).1 hcx
+    obtain ⟨hh, hhH, κ, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ (y c) x).1 hcx
     obtain ⟨g, hgU, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
     refine ⟨c, g, hgU, ⟨κ.1, hκK⟩, ?_⟩
     have := congrArg Subtype.val e
@@ -75,7 +75,7 @@ theorem mem_FiC_iff (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ) 
     have hc : cx x = c := by
       apply hy.1
       let k : UPts σ J (FiniteAdeleRing (𝓞 F) F) := ⟨_, hU (κx x * κ⁻¹)⟩
-      refine (DoubleCoset.eq _ _ (y (cx x)) (y c)).2 ⟨y c * k⁻¹ * (y (cx x))⁻¹, ?_, k, ?_, by group⟩
+      refine (@DoubleCoset.eq _ _ _ _ (y (cx x)) (y c)).2 ⟨y c * k⁻¹ * (y (cx x))⁻¹, ?_, k, ?_, by group⟩
       · refine Subgroup.mem_subgroupOf.2 (Subgroup.mem_map.2 ⟨_, hm, ?_⟩)
         show _ = (y c).1 * ((κx x * κ⁻¹ : S.U).1)⁻¹ * ((y (cx x)).1)⁻¹
         rw [e1]

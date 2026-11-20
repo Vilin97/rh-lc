@@ -147,7 +147,7 @@ theorem TensInj.tensor (h : TensInj PD) (m : ℕ) (c : Fin m → K) (hc : Linear
   apply (TensorProduct.equivFinsuppOfBasisLeft (N := B) b).injective
   ext j
   have := congrArg (fun z => TensorProduct.equivFinsuppOfBasisLeft (N := F) b z j) hx
-  simp only [map_sum, Finsupp.finset_sum_apply, key, map_zero, Finsupp.zero_apply] at this
+  simp only [map_sum, Finsupp.finsetSum_apply, key, map_zero, Finsupp.zero_apply] at this
   simpa using h m c hc _ this i
 
 theorem isDR_of_isCrys (h : TensInj PD) (ρ : Representation LL G V) [FiniteDimensional LL ↥(DdR PD ρ)]

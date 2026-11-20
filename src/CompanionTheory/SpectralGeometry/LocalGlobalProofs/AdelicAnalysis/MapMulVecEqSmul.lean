@@ -27,7 +27,7 @@ theorem pi_smul_const {ι : Type} [Fintype ι] (lam : Measure K) [SigmaFinite la
   refine Measure.pi_eq fun s hs => ?_
   rw [Measure.smul_apply, Measure.pi_pi]
   simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul, Finset.prod_mul_distrib,
-    ENNReal.coe_finset_prod]
+    ENNReal.ofNNReal_finsetProd]
 
 theorem pi_map_diag {ι : Type} [Fintype ι] (lam : Measure K) [lam.IsAddHaarMeasure] (D : ι → Kˣ) :
     (Measure.pi fun _ : ι => lam).map (fun x i => (D i : K) * x i) =

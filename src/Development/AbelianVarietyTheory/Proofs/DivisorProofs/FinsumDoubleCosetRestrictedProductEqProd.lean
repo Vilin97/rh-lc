@@ -27,19 +27,19 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
 
   have L0 : ∀ v (z₁ z₂ : Y v), DoubleCoset.mk (Tv v) (K v) z₁ = DoubleCoset.mk (Tv v) (K v) z₂ →
       Fv v z₁ = Fv v z₂ := fun v z₁ z₂ h => by
-    obtain ⟨t, ht, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 h
+    obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
     rw [e, hinv v t ht z₁ k hk]
   have L0' : ∀ v (z : Y v), Fv v (Quotient.out (DoubleCoset.mk (Tv v) (K v) z)) = Fv v z := fun v z =>
     L0 v _ _ (DoubleCoset.out_eq' _ _ _)
 
   have L1 : ∀ x y, DoubleCoset.mk T Kg x = DoubleCoset.mk T Kg y → ∀ v,
       DoubleCoset.mk (Tv v) (K v) (pf v x) = DoubleCoset.mk (Tv v) (K v) (pf v y) := fun x y h v => by
-    obtain ⟨t, ht, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 h
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨pf v t, (hT t).1 ht v, pf v k, (memKg k).1 hk v, by rw [e]; simp⟩
+    obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨pf v t, (hT t).1 ht v, pf v k, (memKg k).1 hk v, by rw [e]; simp⟩
 
   have L1' : ∀ x y, (∀ v, DoubleCoset.mk (Tv v) (K v) (pf v x) = DoubleCoset.mk (Tv v) (K v) (pf v y)) →
       DoubleCoset.mk T Kg x = DoubleCoset.mk T Kg y := fun x y h => by
-    have h' := fun v => (DoubleCoset.eq _ _ _ _).1 (h v)
+    have h' := fun v => (@DoubleCoset.eq _ _ _ _ _ _).1 (h v)
     choose t ht k hk e using h'
     let t' : ∀ v, Y v := fun v => if pf v x ∈ K v ∧ pf v y ∈ K v then 1 else t v
     have ht'T : ∀ v, t' v ∈ Tv v := fun v => by
@@ -53,7 +53,7 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
     have hev' : ∀ᶠ v in cofinite, t' v ∈ K v := ((hX.eventually_mem x).and (hX.eventually_mem y)).mono
       fun v c => by simp only [t', if_pos c]; exact one_mem _
     obtain ⟨g, -, hg⟩ := hX.exists_eq isEmptyElim t' hev'
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨g, (hT g).2 fun v => hg v ▸ ht'T v, x⁻¹ * g⁻¹ * y,
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨g, (hT g).2 fun v => hg v ▸ ht'T v, x⁻¹ * g⁻¹ * y,
       (memKg _).2 fun v => by simpa [hg v] using ht'K v, by group⟩
 
   have ProjectionSandwichLength : ∀ x, (Function.mulSupport fun v => Fv v (pf v x)).Finite := fun x => by
@@ -69,7 +69,7 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
   have KernelIndexFullLattice : ∀ v ∉ S0, ∀ y : Y v, Fv v y ≠ 0 → DoubleCoset.mk (Tv v) (K v) y = DoubleCoset.mk (Tv v) (K v) 1 ∧
       Fv v y = 1 := fun v hv y hy => by
     obtain ⟨t, ht, k, hk, e⟩ := (hS0 v hv).2 y hy
-    refine ⟨((DoubleCoset.eq _ _ _ _).2 ⟨t, ht, k, hk, by rw [e, mul_one]⟩).symm, ?_⟩
+    refine ⟨((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨t, ht, k, hk, by rw [e, mul_one]⟩).symm, ?_⟩
     rw [e, ← (hS0 v hv).1, ← hinv v t ht 1 k hk, mul_one]
   have DegreeKernelLowerBound : ∀ x, (∀ v ∉ S0, Fv v (pf v x) ≠ 0) → F x = ∏ v ∈ S0, Fv v (pf v x) := fun x h => by
     rw [hF]

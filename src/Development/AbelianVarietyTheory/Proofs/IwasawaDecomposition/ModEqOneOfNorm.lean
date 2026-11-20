@@ -31,7 +31,7 @@ theorem mod_eq_one_of_norm {E : Type} [Field E] [NumberField E] (c : E →+* E) 
     rw [hx]
     exact (hai.add hci).add (hmi.mul (hai.mul hci))
   have hqi : IsIntegral ℤ (((p : ℚ) - 1) / m) :=
-    (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 hxi
+    (isIntegral_algebraMap_iff ).1 hxi
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.isIntegral_iff.1 hqi
   have hk' : ((p : ℚ) - 1) = (k : ℚ) * m := by
     have : (k : ℚ) = ((p : ℚ) - 1) / m := by simpa using hk

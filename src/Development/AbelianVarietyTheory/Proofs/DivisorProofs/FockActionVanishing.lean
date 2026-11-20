@@ -29,7 +29,7 @@ theorem chain {σ : Type} [Fintype σ] [DecidableEq σ] (p : σ → Polynomial �
 theorem ode (ψ : Polynomial ℂ) (N : ℂ) (hN : 0 < N.re)
     (h : Polynomial.X * Polynomial.derivative ψ = -(Polynomial.C N * ψ)) : ψ = 0 := by
   ext j
-  have hc := congrArg (fun q => Polynomial.coeff q j) h
+  have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q j) h
   simp only [Polynomial.coeff_neg, Polynomial.coeff_C_mul] at hc
   rcases j with _ | n
   · rw [Polynomial.coeff_X_mul_zero] at hc

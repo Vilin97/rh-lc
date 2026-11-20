@@ -33,7 +33,7 @@ lemma continuous_mmul {X : Type*} [TopologicalSpace X] {f g : X → 𝕄} (hf : 
     (hg : Continuous g) : Continuous fun x => mmul (f x) (g x) := by
   refine continuous_pi fun a => continuous_pi fun b => ?_
   simp only [mmul, Matrix.mul_apply, Matrix.of_apply]
-  exact continuous_finset_sum _ fun c _ =>
+  exact continuous_finsetSum _ fun c _ =>
     ((continuous_apply c).comp ((continuous_apply a).comp hf)).mul
       ((continuous_apply b).comp ((continuous_apply c).comp hg))
 

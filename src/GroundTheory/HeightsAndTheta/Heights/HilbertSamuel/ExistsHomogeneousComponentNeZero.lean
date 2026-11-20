@@ -265,7 +265,7 @@ theorem key_relation {D : ℕ} (y : (Σ k, ι k) → Ω) (w : Fin (D + 1) → Ω
       omega
     · exact isHomogeneous_zero _ _ _
   have hQx : aeval x Q = 0 := by
-    have hc := congrArg (fun q => Polynomial.coeff q N) hp
+    have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q N) hp
     simp only [Polynomial.aeval_eq_sum_range, Polynomial.finsetSum_coeff, Polynomial.coeff_zero] at hc
     rw [← hc, hQdef, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_

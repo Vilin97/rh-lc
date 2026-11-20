@@ -36,7 +36,7 @@ theorem gaussRing_isDVR {σ : Type} [Finite σ] (O₁ : Type) [CommRing O₁] [I
     have h2 : g = 0 := by simpa using h1
     apply IsDiscreteValuationRing.not_a_field O₁
     rw [hg', h2]; simp
-  refine ((IsDiscreteValuationRing.TFAE O₂ hnf).out 0 4).mpr ?_
+  refine ((IsDiscreteValuationRing.TFAE O₂ hnf).out 1 5).mpr ?_
   rw [hmax]
   exact ⟨⟨_, rfl⟩⟩
 

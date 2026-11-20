@@ -47,7 +47,7 @@ theorem UpperTheory.functional_qdet_eq_aeval_shifted_polynomial :
       rw [Polynomial.eval_monomial, ← map_pow, mul_assoc, ← Algebra.smul_def, mul_smul_comm, map_smul, smul_eq_mul,
         mul_comm]
       rfl
-    have e2 := congrArg (fun r => Polynomial.coeff r k) e
+    have e2 := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r k) e
     simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_mul_C, Finset.sum_ite_eq'] at e2
     rw [← e2]
     split_ifs with hk

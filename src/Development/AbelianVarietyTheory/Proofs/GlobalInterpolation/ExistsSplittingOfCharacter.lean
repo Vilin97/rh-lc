@@ -61,7 +61,7 @@ theorem exists_inclO_eq (v : HeightOneSpectrum (𝓞 F)) (x : 𝓞 E)
     ∃ p : v.adicCompletionIntegers F, inclO E v p = GlobalTheory.IndefiniteRowSideFullHecke.OverPlaceIntegralForm.toIntV E v x := by
   obtain ⟨b, hb⟩ := hx
   have hi : IsIntegral ℤ b := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective, hb]
+    rw [← isIntegral_algebraMap_iff (B := E) , hb]
     exact x.isIntegral_coe
   let b' : 𝓞 F := ⟨b, hi⟩
   have hx' : x = algebraMap (𝓞 F) (𝓞 E) b' := by

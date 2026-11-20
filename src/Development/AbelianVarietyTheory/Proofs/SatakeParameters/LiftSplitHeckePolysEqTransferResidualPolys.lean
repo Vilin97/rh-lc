@@ -42,7 +42,7 @@ theorem heckePolyOf_congr {L : Type} [Field L] (n q : ℕ) {a b : ℕ → L} (h 
 theorem blockPoly_ne_zero {L : Type} [Field L] (ν : L) (q t : ℕ) : Formalism.L2.Col.blockPoly ν q t ≠ 0 := by
   unfold Formalism.L2.Col.blockPoly
   refine Finset.prod_ne_zero_iff.2 fun c _ h => ?_
-  have := congrArg (fun f => Polynomial.coeff f 0) h
+  have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 0) h
   simp at this
 
 variable {D : D7}

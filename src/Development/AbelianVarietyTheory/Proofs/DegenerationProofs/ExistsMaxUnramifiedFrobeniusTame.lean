@@ -156,7 +156,7 @@ theorem dvr_of_gen [Finite (ResidueField V)] {S : Type*} [CommRing S] [IsDomain 
   have hnf : ¬ IsField S := by
     rw [isField_iff_maximalIdeal_eq, ← hm, Ideal.span_singleton_eq_bot, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective V S)]
     exact hπ.ne_zero
-  exact ((IsDiscreteValuationRing.TFAE S hnf).out 0 4).2 (show (maximalIdeal S).IsPrincipal from ⟨⟨_, hm.symm⟩⟩)
+  exact ((IsDiscreteValuationRing.TFAE S hnf).out 1 5).2 (show (maximalIdeal S).IsPrincipal from ⟨⟨_, hm.symm⟩⟩)
 end
 
 section

@@ -70,7 +70,7 @@ theorem regAt_of_isIntegrallyClosed_stalk : ∀ (X : Scheme.{0}) [IsIntegral X] 
         ∃! P : Ideal (X.presheaf.stalk (z : X)), P ≠ ⊥ ∧ P.IsPrime :=
       ⟨inferInstance, _, ⟨hm, inferInstance⟩, fun P hP => IsLocalRing.eq_maximalIdeal
         (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 P hP.1 hP.2)⟩
-    exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk (z : X)) hf).out 0 3).mpr h3
+    exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk (z : X)) hf).out 1 4).mpr h3
   obtain ⟨E, hE⟩ := DivOver.exists_isAt p (z : X)
   obtain ⟨a, rfl⟩ := (hE f).1 (hf z hzx E hE)
   obtain ⟨⟨c, s⟩, e⟩ := IsLocalization.surj (hU.primeIdealOf z).asIdeal.primeCompl a

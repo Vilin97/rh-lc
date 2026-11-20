@@ -33,7 +33,7 @@ theorem bg_wint_eq_lintegral (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : M
 
 theorem bg_eLpNorm_two_eq (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : Measurable ps) (f : M → ℂ) :
     eLpNorm f 2 (bgMeas n z ps) = wint n z f ps ^ (1/(2:ℝ)) := by
-  rw [eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num), bg_wint_eq_lintegral n z ps hps f,
+  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), bg_wint_eq_lintegral n z ps hps f,
     ENNReal.toReal_ofNat]
 
 theorem bg_memLp_of_wint (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : Measurable ps) (f : M → ℂ)

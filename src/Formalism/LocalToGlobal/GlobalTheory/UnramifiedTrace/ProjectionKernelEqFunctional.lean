@@ -107,7 +107,7 @@ theorem valDia_of_lat (T : Forms0 D u) (hL : PtLatF T) : ValDia T := by
     exact eq_inv_of_mul_eq_one_right hga
 
   have hcl := T.val0.dil v a⁻¹ k hkb c δ hδ
-  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (DoubleCoset.eq _ _ _ _).1 hcl
+  obtain ⟨hh, hhH, κ0, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
   have hκ : κ0.1 ∈ T.cls0.lev.U := hκK
   obtain ⟨γd, hγd, hge⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhH)
   have hrel : (T.cls0.y c * δ).1 =

@@ -37,7 +37,7 @@ theorem exists_smul_mem {R K V : Type} [CommRing R] [IsDomain R] [Field K] [Alge
 
 theorem isLattice_comap_subtype {K V : Type} [Field K] [NumberField K] [AddCommGroup V]
     [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
-    (Λ : Submodule (𝓞 K) V) (hΛ : Submodule.IsLattice K Λ) (W : Submodule K V) :
+    (Λ : Submodule (𝓞 K) V) (hΛ : Submodule.IsFullLattice K Λ) (W : Submodule K V) :
     Submodule.IsLattice K (Submodule.comap (LinearMap.restrictScalars (𝓞 K) W.subtype) Λ) := by
   refine ⟨?_, ?_⟩
   · have hinj : Function.Injective (LinearMap.restrictScalars (𝓞 K) W.subtype) :=

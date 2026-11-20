@@ -273,7 +273,7 @@ theorem exists_skew_scalar (D : D7) (𝔪 : Ideal (𝓞 D.host.E)) (h0 : 𝔪 �
         simp only [hι, map_mul, map_natCast, Formalism.L2.Pj.algebraMap_conj_smul, conj_conj] at this
         rw [hb']; exact this
       have hcop : IsCoprime ((b * n0 : ℕ) : ℤ) ((M ^ (N' + 1) : ℕ) : ℤ) :=
-        Nat.isCoprime_iff_coprime.2 (Nat.Coprime.pow_right _ (Nat.Coprime.mul hb hn0M))
+        Nat.isCoprime_iff_coprime.2 (Nat.Coprime.pow_right _ (Nat.Coprime.mul_left hb hn0M))
       obtain ⟨u', v', huv⟩ := hcop
       have huv' := congrArg (Int.cast : ℤ → D.host.E) huv
       push_cast at huv'

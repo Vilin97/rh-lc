@@ -229,7 +229,7 @@ theorem besselLevel_chi_conj_eq_finite_bessel_character (X : HidaSetting D) (u :
   obtain ⟨c2, hc2, h2⟩ := GlobalTheory.T.exists_coprime_multiplier_unipotentPart_congr_zero D X u m hmK hN
   have h1' : ZMod' X.B.I X.B.g ((c1 : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * (T1 - T3)) := by
     rw [hT1, hT3, ← Finset.sum_sub_distrib]; exact h1
-  obtain ⟨t, ht, hεt⟩ := hε (c1 * c2) (Nat.Coprime.mul hc1 hc2)
+  obtain ⟨t, ht, hεt⟩ := hε (c1 * c2) (Nat.Coprime.mul_left hc1 hc2)
   have hcS : ZMod' X.B.I X.B.g (((c1 * c2 : ℕ) : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * ((T1 - T3) + T2)) := by
     have e : ((c1 * c2 : ℕ) : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * ((T1 - T3) + T2) =
         (c2 : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * ((c1 : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * (T1 - T3)) +

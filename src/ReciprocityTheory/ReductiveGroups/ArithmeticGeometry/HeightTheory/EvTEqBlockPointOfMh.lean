@@ -28,7 +28,7 @@ theorem evT_eq_blockPoint_of_mh (sg : K →+* ℂ) (q : KTp K d.D d.N) (hq : q �
     exact Prod.ext (Fin.succ_injective _ h.1) h.2
   have hvars : (q.vars : Set (TVar d.D d.N)) ⊆ Set.range φ := by
     intro v hv
-    rw [Finset.mem_coe, MvPolynomial.mem_vars] at hv
+    rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hv
     obtain ⟨s, hs, hsv⟩ := hv
     have h0 : v.1 ≠ 0 := by
       intro h0

@@ -90,5 +90,5 @@ theorem GlobalTheory.LocFlat.contr_support_finite_cells :
     intro h0
     exact hi3 (congrFun h0 X.2)
   obtain ⟨t, ht, hmk⟩ := (hTi i).2 y hne
-  obtain ⟨r, hr, j, hj, hy'⟩ := (DoubleCoset.eq _ _ t y).1 hmk.symm
+  obtain ⟨r, hr, j, hj, hy'⟩ := (@DoubleCoset.eq _ _ _ _ t y).1 hmk.symm
   exact ⟨r, hr, t, Finset.mem_biUnion.2 ⟨i, Finset.mem_univ _, ht⟩, j, hj, hy'⟩

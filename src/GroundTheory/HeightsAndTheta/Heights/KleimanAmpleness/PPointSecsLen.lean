@@ -33,7 +33,7 @@ theorem isField_dehomAt_range (hdim : ringKrullDim (Poly S N ⧸ primeOf (S := S
     rwa [← ringKrullDim_eq_of_ringEquiv (Ideal.quotientKerEquivRange (cone (S := S) y)).toRingEquiv]
   have hne : cone (S := S) y (X j - 1) ≠ 0 := by
     intro h
-    have := congrArg (fun p => Polynomial.coeff p 0) h
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) h
     simp [cone_eq, coneGen] at this
   have hkill : ((Polynomial.aeval (y j)⁻¹ : Polynomial K →ₐ[K] K).restrictScalars S)
       (cone (S := S) y (X j - 1)) = 0 := by

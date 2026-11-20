@@ -16,7 +16,7 @@ private theorem int_of_rat (z : 𝓞 E) (q : ℚ) (h : algebraMap (𝓞 E) E z =
     have h0 : IsIntegral ℤ (algebraMap (𝓞 E) E z) := RingOfIntegers.isIntegral_coe z
     rw [h] at h0
     simpa using h0
-  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 h1
+  have h2 : IsIntegral ℤ q := (isIntegral_algebraMap_iff ).1 h1
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h2
   exact ⟨n, by simpa using hn.symm⟩
 

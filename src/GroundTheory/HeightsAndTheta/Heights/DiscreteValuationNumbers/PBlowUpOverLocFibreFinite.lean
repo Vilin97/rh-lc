@@ -25,7 +25,7 @@ namespace BlowUpOverLocFibreFinite
 theorem isAlgebraic_div {A L : Type*} [CommRing A] [Field L] [Algebra A L] (a b : A)
     (hb : algebraMap A L b ≠ 0) : IsAlgebraic A (algebraMap A L a / algebraMap A L b) := by
   refine ⟨Polynomial.C b * Polynomial.X - Polynomial.C a, fun h => hb ?_, ?_⟩
-  · have h1 := congrArg (fun p => Polynomial.coeff p 1) h
+  · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h
     simp at h1
     rw [h1, map_zero]
   · simp only [map_sub, map_mul, Polynomial.aeval_C, Polynomial.aeval_X]

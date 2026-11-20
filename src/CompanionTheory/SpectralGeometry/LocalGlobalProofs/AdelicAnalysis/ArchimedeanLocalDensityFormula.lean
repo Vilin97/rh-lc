@@ -145,7 +145,7 @@ theorem infDens : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
   have hGm : Measurable G := by
     have hc : Continuous fun x : InfinitePlace F → Fin M × Fin d → ℝ =>
         Real.exp (-Real.pi * ∑ w, x w ⬝ᵥ (Pm w *ᵥ x w)) := by
-      refine Real.continuous_exp.comp (continuous_const.mul (continuous_finset_sum _ fun w _ => ?_))
+      refine Real.continuous_exp.comp (continuous_const.mul (continuous_finsetSum _ fun w _ => ?_))
       exact (continuous_apply w).dotProduct (continuous_const.matrix_mulVec (continuous_apply w))
     exact hc.measurable.ennreal_ofReal
   have hset : gramR (Ainf F) σ J ⁻¹' (Subtype.val '' U) = Φ ⁻¹' (Q ⁻¹' U') := by

@@ -39,7 +39,7 @@ theorem dvr_of_maximalIdeal_eq_span {S : Type} [CommRing S] [IsLocalRing S] [IsN
     exact hπ0
   have hpr : (maximalIdeal S).IsPrincipal := ⟨⟨π, hm⟩⟩
   have hdvr : IsDiscreteValuationRing S :=
-    ((IsDiscreteValuationRing.TFAE S hnf).out 0 4).2 hpr
+    ((IsDiscreteValuationRing.TFAE S hnf).out 1 5).2 hpr
   exact ⟨inferInstance, hdvr, (IsDiscreteValuationRing.irreducible_iff_uniformizer π).2 hm⟩
 
 end GlobalTheory.Pat

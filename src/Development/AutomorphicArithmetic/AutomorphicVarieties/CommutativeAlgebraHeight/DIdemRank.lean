@@ -50,7 +50,7 @@ private theorem pow_aux {n : ℕ} {A E : Type} [CommRing A] [IsLocalRing A] [Rin
     intro j
     have hm := mul A[X][X] (Polynomial.C X) Polynomial.X
     have h1 : (Polynomial.X : A[X][X]) = Polynomial.C 1 * Polynomial.X := by simp
-    have cj := congrArg (fun q => Polynomial.coeff q j) hm
+    have cj := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q j) hm
     rw [coeff_aeval_C_mul_X', aeval_C_X_eq_C, Polynomial.coeff_C_mul, h1, coeff_aeval_C_mul_X', one_pow, mul_one] at cj
     exact cj
   have h1 : P.eval 1 = 1 := by

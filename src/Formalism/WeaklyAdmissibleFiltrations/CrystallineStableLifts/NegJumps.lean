@@ -8,7 +8,7 @@ open Module
 
 private theorem negJumps_Ico_telescope (f : ℤ → ℤ) (m k : ℤ) (hmk : m ≤ k) :
     ∑ a ∈ Finset.Ico m k, (f a - f (a + 1)) = f m - f k := by
-  induction k, hmk using Int.le_induction with
+  induction k, hmk using Int.leInduction with
   | base => simp
   | succ k hk ih =>
     rw [← Finset.Ico_union_Ico_eq_Ico hk (by omega),

@@ -39,7 +39,7 @@ theorem exists_linearIndependent_iterates {K : Type} [Field K] (M : Matrix (Fin 
   have hq : q = 0 := eq_zero_of_dvd_of_degree_lt hdvd hdeg
   intro j
   have := congrArg (fun p : K[X] => p.coeff j) hq
-  simpa [q, finset_sum_coeff, coeff_monomial, Fin.val_inj] using this
+  simpa [q, Polynomial.finsetSum_coeff, coeff_monomial, Fin.val_inj] using this
 
 end GlobalTheory.ConjLocal
 

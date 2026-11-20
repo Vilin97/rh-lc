@@ -189,7 +189,7 @@ theorem FiniteMapOpen.proof : FiniteMapOpen.Statement := by
     have hP0 : ∀ w, w ≠ x → P w ≠ 0 := by
       intro w hw h0
       obtain ⟨j, hj⟩ := Function.ne_iff.1 hw
-      have h1 := congrArg (fun q => Polynomial.coeff q j) h0
+      have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q j) h0
       simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h1
       rw [Finset.sum_eq_single j (fun k _ hk => if_neg (fun h => hk (Fin.ext h))) (by simp)] at h1
       simp only [if_true] at h1

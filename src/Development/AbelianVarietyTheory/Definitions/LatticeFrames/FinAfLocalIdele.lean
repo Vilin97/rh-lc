@@ -61,7 +61,7 @@ theorem piBar_std (k : Fin 2) : ∃ y : 𝓞 B.host.K,
     rw [← B.fields_star] at h
     exact h
   have hi : IsIntegral ℤ (⟨_, hK⟩ : B.host.K) :=
-    (isIntegral_algebraMap_iff (algebraMap B.host.K B.host.E).injective).1 (B.fields.conjO (X.piG k)).2
+    (isIntegral_algebraMap_iff ).1 (B.fields.conjO (X.piG k)).2
   refine ⟨⟨_, hi⟩, rfl, ?_⟩
   have := (I.C.P.pb k).isPrime
   obtain ⟨⟨w, hwp, hwl⟩⟩ : Nonempty ((I.C.P.pb k).asIdeal.primesOver (𝓞 B.host.E)) := inferInstance

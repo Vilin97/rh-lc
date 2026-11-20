@@ -403,7 +403,7 @@ private lemma mapDomain_eq_single_degree_of_const {π : σ → κ} {z : κ} {m :
   classical
   rw [Finsupp.mapDomain, Finsupp.sum,
     Finset.sum_congr rfl (fun x hx => congrArg (fun w => Finsupp.single w (m x)) (h x hx)),
-    ← Finsupp.single_finset_sum] <;> rfl
+    ← Finsupp.single_finsetSum] <;> rfl
 
 open scoped BigOperators in
 variable {C : Type} [Field C] {σ κ : Type} in
@@ -456,7 +456,7 @@ variable {C : Type} [Field C] {σ κ : Type} in
 private lemma mapDomain_sideRow_inl {n : ℕ} (m : _root_.Formalism.IncomingBounds.PVar n →₀ ℕ) (ρ : Fin n) :
     (m.mapDomain (_root_.GlobalTheory.BlockValue.sideRow n)) (Sum.inl ρ) = ∑ c : Fin n, m (Sum.inl (ρ, c)) := by
   classical
-  rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply]
+  rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply]
   simp [Fintype.sum_sum_type, Fintype.sum_prod_type, _root_.GlobalTheory.BlockValue.sideRow, Finsupp.single_apply]
   rw [Finset.sum_eq_single ρ (fun b _ hb => by simp [hb]) (by simp)]
   simp
@@ -466,7 +466,7 @@ variable {C : Type} [Field C] {σ κ : Type} in
 private lemma mapDomain_sideRow_inr {n : ℕ} (m : _root_.Formalism.IncomingBounds.PVar n →₀ ℕ) (ρ : Fin n) :
     (m.mapDomain (_root_.GlobalTheory.BlockValue.sideRow n)) (Sum.inr ρ) = ∑ c : Fin n, m (Sum.inr (ρ, c)) := by
   classical
-  rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply]
+  rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply]
   simp [Fintype.sum_sum_type, Fintype.sum_prod_type, _root_.GlobalTheory.BlockValue.sideRow, Finsupp.single_apply]
   rw [Finset.sum_eq_single ρ (fun b _ hb => by simp [hb]) (by simp)]
   simp
@@ -568,7 +568,7 @@ theorem _root_.GlobalTheory.blockValue_rows : _root_.Formalism.L2.FormalSeriesBo
         by_cases hρ : n0 ≤ (ρ : ℕ)
         · have hX : ∑ c : Fin n, (_root_.Formalism.UnitaryBoundIntegral.diagMon n0 n (l ^ i) y) (Sum.inl (ρ, c)) = l ^ i * y := by
             unfold _root_.Formalism.UnitaryBoundIntegral.diagMon
-            simp only [Finsupp.finset_sum_apply, Finsupp.add_apply, Finsupp.single_apply,
+            simp only [Finsupp.finsetSum_apply, Finsupp.add_apply, Finsupp.single_apply,
               Sum.inl.injEq, Prod.mk.injEq, reduceCtorEq, if_false, add_zero]
             rw [Finset.sum_comm, Finset.sum_eq_single_of_mem ρ (by simpa using hρ)]
             · simp
@@ -582,7 +582,7 @@ theorem _root_.GlobalTheory.blockValue_rows : _root_.Formalism.L2.FormalSeriesBo
         by_cases hρ : n0 ≤ (ρ : ℕ)
         · have hX : ∑ c : Fin n, (_root_.Formalism.UnitaryBoundIntegral.diagMon n0 n (l ^ i) y) (Sum.inr (ρ, c)) = y := by
             unfold _root_.Formalism.UnitaryBoundIntegral.diagMon
-            simp only [Finsupp.finset_sum_apply, Finsupp.add_apply, Finsupp.single_apply,
+            simp only [Finsupp.finsetSum_apply, Finsupp.add_apply, Finsupp.single_apply,
               Sum.inr.injEq, Prod.mk.injEq, reduceCtorEq, if_false, zero_add]
             rw [Finset.sum_comm, Finset.sum_eq_single_of_mem ρ (by simpa using hρ)]
             · simp

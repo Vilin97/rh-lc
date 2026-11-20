@@ -122,7 +122,7 @@ theorem isIntegrallyClosed_of_div (R : Subring ℂ)
 
 theorem exists_int_of_isIntegral (q : ℚ) (h : IsIntegral ℤ (q : ℂ)) : ∃ k : ℤ, (k : ℚ) = q := by
   have : IsIntegral ℤ q := by
-    have := (isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := ℂ) (x := q) (algebraMap ℚ ℂ).injective).mp h
+    have := (isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := ℂ) (x := q) ).mp h
     exact this
   exact IsIntegrallyClosed.algebraMap_eq_of_integral this
 

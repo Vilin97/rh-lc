@@ -160,8 +160,8 @@ theorem dvd_of_eq_zero (x y : Ainf p O) (h : a ε x + τ ε * a ε y = 0) :
   obtain ⟨h1, h2, he⟩ := Ideal.mem_span_pair.1 hm
   have he' : C x + C y * X = h1 * C (p : Ainf p O) * X - h1 * C (mu ε) + h2 * X ^ 2 := by
     rw [← he]; ring
-  have e0 := congrArg (fun f => Polynomial.coeff f 0) he'
-  have e1 := congrArg (fun f => Polynomial.coeff f 1) he'
+  have e0 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 0) he'
+  have e1 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 1) he'
   simp only [coeff_add, coeff_sub, coeff_C_zero, coeff_mul_X_zero, coeff_mul_C,
     coeff_mul_X_pow', coeff_C_succ] at e0 e1
   rw [show (1 : ℕ) = 0 + 1 from rfl, coeff_mul_X, coeff_mul_X, coeff_mul_C, coeff_C_zero] at e1

@@ -7,7 +7,7 @@ namespace GlobalTheory.NonzeroSmulMemSpanLattice
 theorem exists_ne_zero_smul_mem {E : Type u_1} {V : Type u_2} [Field E] [NumberField E]
     [AddCommGroup V] [Module E V] [Module (NumberField.RingOfIntegers E) V]
     [IsScalarTower (NumberField.RingOfIntegers E) E V]
-    (Λ : Submodule (NumberField.RingOfIntegers E) V) (hΛ : Submodule.IsLattice E Λ) (v : V) :
+    (Λ : Submodule (NumberField.RingOfIntegers E) V) (hΛ : Submodule.IsFullLattice E Λ) (v : V) :
     ∃ o : NumberField.RingOfIntegers E, o ≠ 0 ∧ o • v ∈ Λ := by
   have hv : v ∈ Submodule.span E (Λ : Set V) := by
     rw [hΛ.span_eq_top]; trivial

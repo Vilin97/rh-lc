@@ -25,7 +25,7 @@ theorem exists_of_cls_eq (S : StepLevel F E σ J T f bad) (y y' δ : UPts σ J (
     (h : (Quotient.mk'' y' : Cls S) = Quotient.mk'' (y * δ)) :
     ∃ γ : UJ (σ : E →+* E) J, ∃ κ : S.U,
       bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ.1 * y'.1 = y.1 * δ.1 * κ.1 := by
-  obtain ⟨g, hg, k, hk, e⟩ := (DoubleCoset.eq _ _ y' (y * δ)).1 h
+  obtain ⟨g, hg, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ y' (y * δ)).1 h
   obtain ⟨γ, hγ, eγ⟩ := Subgroup.mem_subgroupOf.1 hg
   refine ⟨⟨γ, hγ⟩, ⟨k.1, Subgroup.mem_subgroupOf.1 hk⟩⁻¹, ?_⟩
   have e' : y.1 * δ.1 = g.1 * y'.1 * k.1 := congrArg Subtype.val e

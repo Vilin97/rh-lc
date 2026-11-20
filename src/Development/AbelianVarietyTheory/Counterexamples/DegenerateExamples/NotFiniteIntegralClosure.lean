@@ -59,7 +59,7 @@ theorem not_finite_integralClosure : ¬ Module.Finite ℤ (integralClosure ℤ �
     have hbq : (b : ℂ) = algebraMap ℚ ℂ (1 / 2) := by
       simp only [one_div, map_inv₀, map_ofNat]; field_simp; linear_combination hb'
     have hi : IsIntegral ℤ (algebraMap ℚ ℂ (1 / 2)) := hbq ▸ b.2
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ ℂ).injective] at hi
+    rw [isIntegral_algebraMap_iff ] at hi
     obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 hi
     have hz' : (2 * z : ℚ) = 1 := by simp at hz; rw [hz]; norm_num
     have : (2 * z : ℤ) = 1 := by exact_mod_cast hz'

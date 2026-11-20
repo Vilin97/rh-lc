@@ -48,7 +48,7 @@ theorem modEq_of_normOneMod (D : D7) {M g : ℕ} (h : NormOneMod D M g) : g ≡ 
         (M : D.host.E) * (ρ : D.host.E) * D.host.conj (ρ : D.host.E) := by
       rw [map_div₀, map_sub, map_natCast, map_one, map_natCast, ht]
       field_simp
-    rw [← hq, isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective] at hint
+    rw [← hq, isIntegral_algebraMap_iff ] at hint
     obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     rw [algebraMap_int_eq, eq_intCast] at hn
     have hgq : ((g : ℚ) - 1) = M * n := by

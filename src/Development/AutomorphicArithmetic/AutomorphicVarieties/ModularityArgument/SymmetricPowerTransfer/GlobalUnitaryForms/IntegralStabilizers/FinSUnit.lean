@@ -174,7 +174,7 @@ private theorem re_int {ι : DX Δ →* DA Δ} (hι : IsIotaD ι) (γ : DX Δ)
   refine loc_glob _ fun v => ?_
   have h1 := h v
   rw [det_iota hι, det_im, lmap_alg] at h1
-  exact (isIntegral_algebraMap_iff (algebraMap (Kv v) (Lsq (Kv v) (cv v Δ))).injective).1 h1
+  exact (isIntegral_algebraMap_iff ).1 h1
 
 private theorem unit_det {ι : DX Δ →* DA Δ} (hι : IsIotaD ι) (γ : DX Δ) (k : DA Δ)
     (hk : k ∈ (rpg _ _).box (fun v : Pl F => KD (cv v Δ) (Ov v))) (y : DA Δ) (h : ι γ * (y * k * y⁻¹) ∈ SA Δ) :

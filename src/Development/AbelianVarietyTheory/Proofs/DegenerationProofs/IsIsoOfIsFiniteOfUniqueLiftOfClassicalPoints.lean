@@ -95,7 +95,7 @@ theorem bijective_algebraMap_of_subsingleton_algHom {R A : Type*} [CommRing R] [
     obtain ⟨k, hk⟩ := (InfiniteGalois.mem_range_algebraMap_iff_fixed (k := K) (σ a)).2 fun g =>
       DFunLike.congr_fun (huniq ((g.toAlgHom.restrictScalars R).comp σ) σ) a
     have hint : IsIntegral R k := by
-      rw [← isIntegral_algebraMap_iff (algebraMap K L).injective, hk]
+      rw [← isIntegral_algebraMap_iff , hk]
       exact (Algebra.IsIntegral.isIntegral (R := R) a).map σ
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.mp hint
     refine ⟨r, hσ ?_⟩

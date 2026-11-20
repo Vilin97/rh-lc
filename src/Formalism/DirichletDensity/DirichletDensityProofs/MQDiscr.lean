@@ -35,7 +35,7 @@ theorem not_isSquare_prod {k : ℕ} (q : Fin k → ℕ) (hq : ∀ i, (q i).Prime
     have : (q j : ℤ) * (∏ i ∈ S.erase j, (-(q i : ℤ))) = (q j : ℤ) * ((q j : ℤ) * -c) := by
       linear_combination (-1 : ℤ) * hc
     exact mul_left_cancel₀ hne this
-  obtain ⟨i, hi, hdi⟩ := (Prime.dvd_finset_prod_iff hp _).mp hP
+  obtain ⟨i, hi, hdi⟩ := (Prime.dvd_finsetProd_iff hp _).mp hP
   have hdi' : q j ∣ q i := by
     have := (dvd_neg.mp hdi)
     exact_mod_cast this

@@ -34,7 +34,7 @@ private theorem exists_finset_adjoin_laurent_preimage (M : ℕ) [NeZero M] (L : 
     rw [hpow]
     apply hζ.pow_of_coprime
     rw [hk, Nat.coprime_comm, show 4 * k = 2 * (2 * k) by ring]
-    refine Nat.Coprime.mul ?_ ?_
+    refine Nat.Coprime.mul_left ?_ ?_
     · exact Nat.coprime_two_left.mpr (odd_two_mul_add_one k)
     · exact Nat.coprime_self_add_right.mpr (Nat.coprime_one_right _)
   have hζne : ζ ≠ 1 := hζ.ne_one (by omega)

@@ -145,7 +145,7 @@ theorem wildProP (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω] : Formalism.M
   obtain ⟨L, hL, hLN⟩ := (krullTopology_mem_nhds_one_iff E Ω _).1 hnh
   obtain ⟨S, hS⟩ := (Module.finite_def.1 hL : (⊤ : Submodule E L).FG)
   have hint : ∀ s : L, IsIntegral E (s : Ω) := fun s =>
-    (isIntegral_algebraMap_iff (algebraMap L Ω).injective).2 (Algebra.IsIntegral.isIntegral s)
+    (isIntegral_algebraMap_iff ).2 (Algebra.IsIntegral.isIntegral s)
   choose a ha using fun s : L => exists_ppow_fix hp hpA (σ := σ) hσ (s : Ω) (hint s)
   refine ⟨S.sup a, hLN ?_⟩
   show σ ^ (p ^ S.sup a) ∈ L.fixingSubgroup

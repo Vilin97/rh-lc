@@ -104,8 +104,8 @@ theorem flat_ne_zero_congr (hc : 1 ≤ c) (H : HasTypes μ P' P Φ) {h₁' h₂'
     (e' : DoubleCoset.mk (R k n' (c + 1) 1) P'.J h₁' = DoubleCoset.mk (R k n' (c + 1) 1) P'.J h₂')
     (e : DoubleCoset.mk (R k n c 1) P.J h₁ = DoubleCoset.mk (R k n c 1) P.J h₂) :
     flat ψ ν μ Φ h₁' h₁ ≠ 0 ↔ flat ψ ν μ Φ h₂' h₂ ≠ 0 := by
-  obtain ⟨r', hr', j', hj', rfl⟩ := (DoubleCoset.eq _ _ _ _).1 e'
-  obtain ⟨r, hr, j, hj, rfl⟩ := (DoubleCoset.eq _ _ _ _).1 e
+  obtain ⟨r', hr', j', hj', rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 e'
+  obtain ⟨r, hr, j, hj, rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 e
   obtain ⟨u', hu', g', rfl⟩ := exists_of_mem_R hr'
   obtain ⟨u, hu, g, rfl⟩ := exists_of_mem_R hr
   have n1 : ∀ (x : kˣ) (t : ℝ), ((nabs k x ^ t : ℝ) : ℂ) ≠ 0 := fun x t =>
@@ -133,7 +133,7 @@ theorem idxAt_finite (hψ : HasConductor ψ 1) (hc : 1 ≤ c) (hΦ : Φ ∈ SB _
     simp only [one_mul]
     rw [show (fun x => om μ 1 h (om μ h' 1 Φ) x) = om μ h' h Φ by rw [← om_mul]; simp]
     exact hx)
-  refine ⟨(w : _ ⧸ J), hS w hw, (DoubleCoset.eq _ _ _ _).2 ⟨r, hr, ((w : _ ⧸ J).out)⁻¹ * w, ?_, by simp [mul_assoc]⟩⟩
+  refine ⟨(w : _ ⧸ J), hS w hw, (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r, hr, ((w : _ ⧸ J).out)⁻¹ * w, ?_, by simp [mul_assoc]⟩⟩
   exact QuotientGroup.eq.1 (QuotientGroup.out_eq' _)
 
 theorem stepWellDefined (hψ : HasConductor ψ 1) : StepWellDefined ψ ν := by

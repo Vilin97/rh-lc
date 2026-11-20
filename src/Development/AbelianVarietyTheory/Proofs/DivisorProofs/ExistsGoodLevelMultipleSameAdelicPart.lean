@@ -52,7 +52,7 @@ theorem exists_good_multiple : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
   have hN3 : 3 ≤ N := by omega
   have hcd : Nat.Coprime a H.d := by
     rw [ha]
-    refine Nat.Coprime.mul (Nat.coprime_two_left.mpr hdodd) ?_
+    refine Nat.Coprime.mul_left (Nat.coprime_two_left.mpr hdodd) ?_
     exact ((Nat.Prime.coprime_iff_not_dvd hdp).2 (Nat.not_dvd_ordCompl hdp hM0)).symm
   set α : 𝓞 E := (a : 𝓞 E) + H.rt with hα
   have hαb : H.bar α = (a : 𝓞 E) - H.rt := by

@@ -163,7 +163,7 @@ lemma norm_bd_ge (x : VS E) (hx : x ∈ span ℤ (Set.range (bd E))) (hx0 : x �
     (fun _ _ => by positivity)
     (by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; field_simp)
     (fun _ _ => by positivity)
-  rw [Real.finset_prod_rpow _ _ (fun _ _ => by positivity), prod_norm, ← Finset.mul_sum] at hgm
+  rw [Real.finsetProd_rpow _ _ (fun _ _ => by positivity), prod_norm, ← Finset.mul_sum] at hgm
   have h1 : dE E ^ (-(1 / (Fintype.card (CP E) : ℝ))) ≤
       |(Algebra.norm ℚ β : ℝ)| ^ (1 / (Fintype.card (CP E) : ℝ)) := by
     rw [Real.rpow_neg hd.le, ← Real.inv_rpow hd.le]

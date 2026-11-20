@@ -45,6 +45,6 @@ theorem isDiscreteValuationRing_of_isAbove :
     exact (RingEquiv.ofBijective (algebraMap R K) ⟨IsFractionRing.injective R K, hs⟩).toMulEquiv.isField
       (Field.toIsField K)
   have hval : ValuationRing V := inferInstance
-  exact ((IsDiscreteValuationRing.TFAE V hnf).out 1 0).mp hval
+  exact ((IsDiscreteValuationRing.TFAE V hnf).out 2 1).mp hval
 
 end GlobalTheory.AbVarRed

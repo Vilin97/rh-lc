@@ -54,7 +54,7 @@ theorem exists_trace_one (hu : Algebra.Unramified (𝓞 F) (𝓞 E)) : ∃ b : �
     rw [hd] at hmem
     obtain ⟨c, hc⟩ := (FractionalIdeal.mem_one_iff _).1 hmem
     have hint : IsIntegral ℤ t := by
-      rw [← isIntegral_algebraMap_iff (algebraMap F E).injective, ← hc]
+      rw [← isIntegral_algebraMap_iff , ← hc]
       exact RingOfIntegers.isIntegral_coe c
     exact ht1 ((FractionalIdeal.mem_one_iff _).2 ⟨⟨t, hint⟩, rfl⟩)
 

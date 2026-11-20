@@ -49,7 +49,7 @@ theorem UpperTheory.V.Pa.pt_unip :
     ext k
     rw [Polynomial.coeff_map, Polynomial.coeff_zero]
     refine kills_max _ _ ((res_eq_zero_iff O B _).1 ?_)
-    have := congrArg (fun p => Polynomial.coeff p k) h4
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) h4
     simpa only [Polynomial.coeff_map, Polynomial.coeff_zero, RingHom.coe_coe] using this
   rw [Polynomial.map_sub, sub_eq_zero] at h5
   rw [h1, Polynomial.map_map, h5]

@@ -144,7 +144,7 @@ lemma continuous_projMatrix : Continuous (projMatrix (N := N)) := by
   rw [h]
   have hn : Continuous fun v : {v : Fin (N + 1) → ℂ // v ≠ 0} => ((normSq2 v.1 : ℝ) : ℂ) := by
     unfold normSq2
-    exact Complex.continuous_ofReal.comp (continuous_finset_sum _ fun m _ =>
+    exact Complex.continuous_ofReal.comp (continuous_finsetSum _ fun m _ =>
       (continuous_norm.comp ((continuous_apply m).comp continuous_subtype_val)).pow 2)
   refine continuous_pi fun i => continuous_pi fun j => ?_
   refine Continuous.div (((continuous_apply i).comp continuous_subtype_val).mul

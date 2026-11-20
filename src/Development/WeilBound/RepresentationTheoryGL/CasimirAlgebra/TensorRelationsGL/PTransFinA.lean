@@ -21,12 +21,12 @@ theorem coef {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (d : ℕ) (y : ℕ → 
     have hfu := congrArg f (h u hu)
     simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hfu
     show Polynomial.eval u p = 0
-    simp only [hp, Polynomial.eval_finset_sum, Polynomial.eval_mul,
+    simp only [hp, Polynomial.eval_finsetSum, Polynomial.eval_mul,
       Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     rw [← hfu]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  have hc := congrArg (fun q => Polynomial.coeff q i) hroot
-  simp only [hp, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
+  have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hroot
+  simp only [hp, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
   rw [Finset.sum_ite_eq] at hc
   simpa [hi] using hc
 

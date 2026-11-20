@@ -36,7 +36,7 @@ theorem isOpen_vle {δ : ValueGroupWithZero k} (hδ : δ ≠ 0) :
 
 theorem isCompact_vle_sub (δ : ValueGroupWithZero k) (c : k) :
     IsCompact {z : k | valuation k (z - c) ≤ δ} := by
-  have h := (IsNonarchimedeanLocalField.isCompact_closedBall k δ).image (continuous_add_right c)
+  have h := (IsNonarchimedeanLocalField.isCompact_closedBall k δ).image (continuous_add_const c)
   convert h using 1
   ext z
   constructor
@@ -96,7 +96,7 @@ theorem exists_test (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [
   have hP : topRows r t ⁻¹' W ∈ 𝓝 e :=
     (continuous_topRows (k := k) r t).continuousAt.preimage_mem_nhds (by rw [topRows_eMat]; exact hW)
   have hP' : (fun y => y + e) ⁻¹' (topRows r t ⁻¹' W) ∈ 𝓝 (0 : Matrix (Fin (r + t)) (Fin r) k) :=
-    (continuous_add_right e).continuousAt.preimage_mem_nhds (by rw [zero_add]; exact hP)
+    (continuous_add_const e).continuousAt.preimage_mem_nhds (by rw [zero_add]; exact hP)
   obtain ⟨⟨I, J, γ⟩, -, hsub⟩ := (nhds_zero_basis k (r + t) r).mem_iff.mp hP'
   obtain ⟨ϖ, hϖ0, hϖ1⟩ := Valuation.IsNontrivial.exists_lt_one (v := valuation k)
   set δ : ValueGroupWithZero k := (γ : ValueGroupWithZero k) * valuation k ϖ

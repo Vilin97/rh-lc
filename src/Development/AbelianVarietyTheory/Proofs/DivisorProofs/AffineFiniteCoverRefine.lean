@@ -39,7 +39,7 @@ theorem exists_free_away {A M : Type} [CommRing A] [CommRing M] [IsDomain A] [Is
         ⟨hic, _, ⟨hm, inferInstance⟩, fun P hP ↦ IsLocalRing.eq_maximalIdeal
           (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 P hP.1 hP.2)⟩
       haveI : IsDiscreteValuationRing (Localization.AtPrime p) :=
-        ((IsDiscreteValuationRing.TFAE (Localization.AtPrime p) hf).out 0 3).mpr h3
+        ((IsDiscreteValuationRing.TFAE (Localization.AtPrime p) hf).out 1 4).mpr h3
       haveI : Module.IsTorsionFree (Localization.AtPrime p) Mp := by
         exact Module.isTorsionFree_iff_algebraMap_injective.mpr hinj'
       exact Module.free_of_finite_type_torsion_free'

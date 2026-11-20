@@ -269,17 +269,17 @@ def dcPair (T K : Subgroup G) (T' K' : Subgroup G') :
 theorem dcPair_bij (T K : Subgroup G) (T' K' : Subgroup G') : Function.Bijective (dcPair T K T' K') := by
   constructor
   · rintro ⟨q1, q1'⟩ ⟨q2, q2'⟩ h
-    obtain ⟨a, ha, b, hb, e⟩ := (DoubleCoset.eq _ _ _ _).mp h
+    obtain ⟨a, ha, b, hb, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp h
     rw [Subgroup.mem_prod] at ha hb
     have e1 := congrArg Prod.fst e
     have e2 := congrArg Prod.snd e
     simp only [Prod.fst_mul, Prod.snd_mul] at e1 e2
     refine Prod.ext ?_ ?_
     · calc q1 = DoubleCoset.mk T K (Quotient.out q1) := (DoubleCoset.out_eq' T K q1).symm
-        _ = DoubleCoset.mk T K (Quotient.out q2) := (DoubleCoset.eq _ _ _ _).mpr ⟨a.1, ha.1, b.1, hb.1, e1⟩
+        _ = DoubleCoset.mk T K (Quotient.out q2) := (@DoubleCoset.eq _ _ _ _ _ _).mpr ⟨a.1, ha.1, b.1, hb.1, e1⟩
         _ = q2 := DoubleCoset.out_eq' T K q2
     · calc q1' = DoubleCoset.mk T' K' (Quotient.out q1') := (DoubleCoset.out_eq' T' K' q1').symm
-        _ = DoubleCoset.mk T' K' (Quotient.out q2') := (DoubleCoset.eq _ _ _ _).mpr ⟨a.2, ha.2, b.2, hb.2, e2⟩
+        _ = DoubleCoset.mk T' K' (Quotient.out q2') := (@DoubleCoset.eq _ _ _ _ _ _).mpr ⟨a.2, ha.2, b.2, hb.2, e2⟩
         _ = q2' := DoubleCoset.out_eq' T' K' q2'
   · intro p
     obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul T K (Quotient.out p).1

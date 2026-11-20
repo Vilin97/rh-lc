@@ -16,7 +16,7 @@ variable {R K V : Type*} [CommRing R] [IsDedekindDomain R] [Field K] [StarRing K
 
 theorem dual_frame (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hnd : h.Nondegenerate)
     (hstar : ∀ r : R, star (algebraMap R K r) ∈ Set.range (algebraMap R K))
-    (L : Submodule R V) (hL : Submodule.IsLattice K L) :
+    (L : Submodule R V) (hL : Submodule.IsFullLattice K L) :
     ∃ (n : ℕ) (g w : Fin n → V), (∀ i, g i ∈ L) ∧ (∀ i, w i ∈ Formalism.HermitianLatticesTheory.dual h L) ∧
       ∀ z : V, z = ∑ i, h (w i) z • g i := by
   classical

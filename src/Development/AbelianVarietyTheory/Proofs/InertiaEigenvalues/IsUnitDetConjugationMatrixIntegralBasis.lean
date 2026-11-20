@@ -32,7 +32,7 @@ theorem conj_matrix_det_isUnit : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E)
       rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [hsm, hsm, map_mul, ← hφ]
-    rw [hx, map_sum, Finsupp.finset_sum_apply]
+    rw [hx, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     rfl

@@ -81,6 +81,6 @@ theorem adjoinRoot_uniformiser_isDVR : ∀ (R : Type) [CommRing R] [IsDomain R] 
     intro hF
     obtain ⟨b, hb⟩ := hF.mul_inv_cancel hx0
     exact (mem_maximalIdeal x).1 (hxM _ (maximalIdeal.isMaximal _)) (IsUnit.of_mul_eq_one b hb)
-  exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 4 0).1 (show (maximalIdeal (AdjoinRoot f)).IsPrincipal from ⟨⟨x, hmax⟩⟩)
+  exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 5 1).1 (show (maximalIdeal (AdjoinRoot f)).IsPrincipal from ⟨⟨x, hmax⟩⟩)
 
 end GlobalTheory

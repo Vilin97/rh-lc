@@ -47,7 +47,7 @@ theorem pulls_eq_zpow : ∀ (D : D7) (i : D.ntw.Tw) (k : ℕ) (b b' : Bool) (v v
     have hac : a.Coprime (D.ntw.l i ^ k) := (hζe'.pow_iff_coprime hN a).1 (ha ▸ he')
     refine ⟨((c * a : ℕ) : ℤ), ?_, ?_⟩
     · rw [Int.natAbs_natCast]
-      exact (Nat.Coprime.mul hcc hac).coprime_dvd_right (dvd_pow_self _ hk.ne')
+      exact (Nat.Coprime.mul_left hcc hac).coprime_dvd_right (dvd_pow_self _ hk.ne')
     · ext x
       obtain ⟨g, rfl⟩ := D.ntw.art_surj i Q x
       obtain ⟨n, -, hn⟩ := hz.eq_pow_of_pow_eq_one (hp g)

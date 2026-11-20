@@ -52,7 +52,7 @@ theorem cover_at : Big fun ch => ∀ s, CoverAt ch s := by
       eltAt (repsAt ch.G t w.1) (β w) i hi
     have e2 := (repsAt ch.G t w.1).mk_rep ⟨i, hi⟩ (β w ⟨i, hi⟩)
     rw [e1]
-    obtain ⟨l, hl, κ, hκ, e⟩ := (DoubleCoset.eq _ _ _ _).1 e2.symm
+    obtain ⟨l, hl, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 e2.symm
     exact ⟨l, hl, κ, hκ, e⟩
   choose l hl κ hκ hrep using key
   obtain ⟨y, hy, hyR⟩ := h7 s t (i + 1) hj hjm hj' (δ (i + 1) hj hjm) (hδ _ _ _) (fun w => (l w)⁻¹)

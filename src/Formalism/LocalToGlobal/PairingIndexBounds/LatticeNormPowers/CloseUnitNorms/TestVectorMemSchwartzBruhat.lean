@@ -123,7 +123,7 @@ theorem isInt_conj_oE (z : 𝓞 D.host.K) : IsIntegral ℤ (D.host.conj (oE D z)
 
 theorem int_of_rat {q : ℚ} (h : IsIntegral ℤ (q : D.host.E)) : ∃ k : ℤ, q = k := by
   have h' : IsIntegral ℤ q := by
-    rw [← isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective]
+    rw [← isIntegral_algebraMap_iff ]
     simpa using h
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.isIntegral_iff.mp h'
   exact ⟨k, by simpa using hk.symm⟩
@@ -151,7 +151,7 @@ theorem conj_O (z : 𝓞 D.host.K) : ∃ z' : 𝓞 D.host.K, oE D z' = D.host.co
   have hK := conj_mem D (z : D.host.K).2
   set w : D.host.K := ⟨D.host.conj (oE D z), hK⟩
   have hw : IsIntegral ℤ w := by
-    rw [← isIntegral_algebraMap_iff (algebraMap D.host.K D.host.E).injective]
+    rw [← isIntegral_algebraMap_iff ]
     exact isInt_conj_oE D z
   exact ⟨⟨w, hw⟩, rfl⟩
 

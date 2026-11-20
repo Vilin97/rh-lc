@@ -22,7 +22,7 @@ private theorem HasDen.add {D : Datum p} {u w : AfP p ⊗[ℚ] VQ D} (hu : HasDe
     HasDen D (u + w) := by
   obtain ⟨c, hc0, hcp, hc⟩ := hu
   obtain ⟨d, hd0, hdp, hd⟩ := hw
-  refine ⟨c * d, Nat.mul_pos hc0 hd0, Nat.Coprime.mul hcp hdp, ?_⟩
+  refine ⟨c * d, Nat.mul_pos hc0 hd0, Nat.Coprime.mul_left hcp hdp, ?_⟩
   rw [smul_add]
   refine AddSubgroup.add_mem _ ?_ ?_
   · rw [mul_comm, mul_smul]

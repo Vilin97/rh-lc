@@ -69,7 +69,7 @@ theorem _root_.GlobalTheory.CosetQuotInt.isQuotInt_cosetFn (k : Type) [Field k] 
     exact hSB
   · by_cases hx : DoubleCoset.mk (_root_.GlobalTheory.RootEx.R k n c 1) J h =
         DoubleCoset.mk (_root_.GlobalTheory.RootEx.R k n c 1) J x
-    · obtain ⟨p, hp, j, hj, rfl⟩ := (DoubleCoset.eq _ _ _ _).1 hx
+    · obtain ⟨p, hp, j, hj, rfl⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hx
       obtain ⟨x₀, u', hu', rfl⟩ := _root_.GlobalTheory.RootEx.VolN.exists_of_mem_R hp
       obtain ⟨u₀, hu₀, hpeq⟩ : ∃ u₀ ∈ _root_.GlobalTheory.RootEx.N k n c 1,
           _root_.GlobalTheory.RootEx.embX c x₀ * u' = u₀ * _root_.GlobalTheory.RootEx.embX c x₀ :=
@@ -117,7 +117,7 @@ theorem _root_.GlobalTheory.CosetQuotInt.isQuotInt_cosetFn (k : Type) [Field k] 
         rw [hFdef, if_neg]
         intro hmem
         apply hx
-        refine (DoubleCoset.eq _ _ _ _).2 ⟨(_root_.GlobalTheory.RootEx.embX c g *
+        refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(_root_.GlobalTheory.RootEx.embX c g *
           (u : GL (n ⊕ Fin c) k))⁻¹, Subgroup.inv_mem _ (Subgroup.mul_mem _ (hembP g)
             (hNP _ u.2)), h⁻¹ * (_root_.GlobalTheory.RootEx.embX c g * (u : GL (n ⊕ Fin c) k) * x),
           hmem, by group⟩

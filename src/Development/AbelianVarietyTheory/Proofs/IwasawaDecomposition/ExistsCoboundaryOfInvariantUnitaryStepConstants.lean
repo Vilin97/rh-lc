@@ -262,8 +262,8 @@ theorem Quad.finite {V : Type} [AddCommGroup V] [Module E V] {g : V → E} (h : 
     Polynomial.C (g v) * Polynomial.X ^ 2
   have hp : p ≠ 0 := by
     intro h0
-    have h1 := congrArg (fun q => Polynomial.coeff q 0) h0
-    have h2 := congrArg (fun q => Polynomial.coeff q 2) h0
+    have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 0) h0
+    have h2 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 2) h0
     simp [p, Polynomial.coeff_X, Polynomial.coeff_C] at h1 h2
     tauto
   have := (Polynomial.finite_setOf_isRoot hp).preimage

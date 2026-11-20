@@ -157,7 +157,7 @@ theorem exists_unit_mul_pow {R : Type*} (K L : Type*) [CommRing R] [IsDomain R]
   have hnf : ¬ IsField S := fun h => IsDiscreteValuationRing.not_isField R
     ((Algebra.IsIntegral.isField_iff_isField (FaithfulSMul.algebraMap_injective R S)).mpr h)
   haveI : IsDiscreteValuationRing S :=
-    ((IsDiscreteValuationRing.TFAE S hnf).out 0 2).mpr (inferInstance : IsDedekindDomain S)
+    ((IsDiscreteValuationRing.TFAE S hnf).out 1 3).mpr (inferInstance : IsDedekindDomain S)
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible S
   have hπ0 : algebraMap R S π ≠ 0 := by simpa using hπ.ne_zero
   obtain ⟨e, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hπ0 hϖ
@@ -207,7 +207,7 @@ theorem exists_pow_eq_of_isGalois {R : Type*} (K L M : Type*) [CommRing R] [IsDo
       (IsGalois.mem_bot_iff_fixed _).mpr fun σ => congrArg Subtype.val (hx σ)
     obtain ⟨z, hz⟩ := IntermediateField.mem_bot.mp h1
     have h2 : IsIntegral R z := by
-      rw [← isIntegral_algebraMap_iff (algebraMap K M).injective, hz]; exact x.2
+      rw [← isIntegral_algebraMap_iff , hz]; exact x.2
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
     refine ⟨r, Subtype.ext ?_⟩
     rw [← hz, ← hr]; rfl⟩
@@ -223,7 +223,7 @@ theorem exists_pow_eq_of_isGalois {R : Type*} (K L M : Type*) [CommRing R] [IsDo
     have h3 : algebraMap L M (x : L)⁻¹ = z := by
       rw [map_inv₀]; exact inv_eq_of_mul_eq_one_right hz'
     have h4 : IsIntegral R (x : L)⁻¹ := by
-      rw [← isIntegral_algebraMap_iff (algebraMap L M).injective, h3]; exact z.2
+      rw [← isIntegral_algebraMap_iff , h3]; exact z.2
     exact IsUnit.of_mul_eq_one (⟨_, h4⟩ : S) (Subtype.ext (mul_inv_cancel₀ hx0))
   haveI : IsLocalRing S := IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun x => by
     rcases IsLocalRing.isUnit_or_isUnit_one_sub_self (ι x) with h | h

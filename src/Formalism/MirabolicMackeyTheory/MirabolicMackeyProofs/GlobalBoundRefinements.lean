@@ -430,19 +430,19 @@ theorem gapConditions_of_largeGaps : GapNum := by
   rw [e]
   exact ⟨by nlinarith [sq_nonneg T], fun hh hc => by nlinarith [sq_nonneg T]⟩
 
-theorem primitive_line : PrimitiveLine := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
+theorem primitive_line : PrimitiveLine := by
+  intro R K σ _ _ _ hinj Del Q m c hD hc
+  have hcoef : c = algebraMap R K (Q.coeff m) := by
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) hc
+    rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_map, MvPolynomial.coeff_map, hD, map_one, smul_eq_mul,
+      mul_one] at h1
+    exact h1
+  refine ⟨Q.coeff m, hcoef.symm, ?_⟩
+  have hmap : MvPolynomial.map (algebraMap R K) Q = MvPolynomial.map (algebraMap R K) (Q.coeff m • Del) := by
+    rw [← hc, hcoef, MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C]
+  first
+    | exact MvPolynomial.map_injective _ hinj hmap
+    | exact MvPolynomial.map_injective hinj hmap
 
 example : ⌈((1 : ℤ) : ℝ) * (((3 : ℕ) : ℝ) * ((2 : ℝ) / (15 - 1) + 1))⌉ = (1 : ℤ) * (((3 : ℕ) : ℤ) + 1) := by
   rw [Int.ceil_eq_iff]; constructor <;> norm_num

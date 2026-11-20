@@ -166,7 +166,7 @@ theorem normF_mem (n : ℕ) (F : (Fin (n + 1) → G) → M.V) (hF : F ∈ hcoch 
   · have : normF M U n F = fun x => ∑ c : Quotient (QuotientGroup.rightRel U),
         M.rho c.out⁻¹ (F fun i => c.out * x i) := funext (normF_eq M U n F)
     rw [this]
-    refine continuous_finset_sum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
+    refine continuous_finsetSum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
     exact continuous_pi fun i => continuous_const.mul (continuous_apply i)
   · rw [normF_eq, normF_eq, map_sum]
     have key : ∀ c : Quotient (QuotientGroup.rightRel U),

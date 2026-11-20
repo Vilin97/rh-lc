@@ -78,7 +78,7 @@ theorem heckeSubA_finite_free (b : Base D R) (f : D.La →+ D.La) (k N : ℕ) (h
     have hβ : x ≫ s = spMap (Spec.preimage (x ≫ s)).hom := (Spec.map_preimage _).symm
     obtain ⟨I, hI⟩ := o.geom κ x _ hβ
     have h2 : I.ev (N * k) (N • f x0) = 1 := by rw [← hI]; exact h1
-    obtain ⟨y, hy⟩ := (I.ker (N * k) (Nat.mul_pos hN hk) (Nat.Coprime.mul hNp hkp) _).1 h2
+    obtain ⟨y, hy⟩ := (I.ker (N * k) (Nat.mul_pos hN hk) (Nat.Coprime.mul_left hNp hkp) _).1 h2
     rw [hy, o.eta_ker]
 
 example {b : Base D R} {M : ℕ} {s : S ⟶ Sp R} (o : Obj b M s) (N : ℕ) (h : 𝟙_ (Over S) ⟶ o.A)

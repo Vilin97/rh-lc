@@ -122,7 +122,7 @@ theorem not_congOne_neg_one {N : ℕ} (hN : 3 ≤ N) : ¬ CongOne N (-1 : (AfE D
   obtain ⟨y, hy⟩ := integral_of_mem_intAE (hw' ▸ hw)
   have hi : IsIntegral ℤ ((-2 : D.host.E) / N) := hy ▸ RingOfIntegers.isIntegral_coe y
   have hq : IsIntegral ℤ ((-2 : ℚ) / N) := by
-    rw [← isIntegral_algebraMap_iff (algebraMap ℚ D.host.E).injective]
+    rw [← isIntegral_algebraMap_iff ]
     simpa using hi
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.isIntegral_iff.1 hq
   have hNq : (N : ℚ) ≠ 0 := Nat.cast_ne_zero.2 (by omega)

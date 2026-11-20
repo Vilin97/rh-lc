@@ -325,7 +325,7 @@ theorem measure_siegelGL_lt_top [MeasurableSpace (unitaryGroup (Fin (m + 1)) �
     have hcont : ContinuousOn (fun b : GL (Fin (m + 1)) 𝕜 => ∑ l : Fin m,
         ‖(b : Matrix (Fin (m + 1)) (Fin (m + 1)) 𝕜) l.succ l.succ‖ /
           ‖(b : Matrix (Fin (m + 1)) (Fin (m + 1)) 𝕜) l.castSucc l.castSucc‖) ω :=
-      continuousOn_finset_sum _ fun l _ => ContinuousOn.div (hent _ _).norm.continuousOn
+      continuousOn_finsetSum _ fun l _ => ContinuousOn.div (hent _ _).norm.continuousOn
         (hent _ _).norm.continuousOn fun b hb => norm_ne_zero_iff.2 (hb0 b hb _)
     obtain ⟨B, hB⟩ := hω.exists_bound_of_continuousOn hcont
     refine ⟨max B 1, lt_of_lt_of_le one_pos (le_max_right _ _), fun b hb l => ?_⟩

@@ -83,7 +83,7 @@ theorem exists_sq_sub_norm {F : Type*} [Field F] [NumberField F] {p : ℕ} (hp :
   have htr : IsIntegral ℤ (QuadraticAlgebra.trace w) := by
     have := hwi.add hst
     rw [← QuadraticAlgebra.algebraMap_trace_eq_add_star] at this
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ K).injective).mp this
+    exact (isIntegral_algebraMap_iff ).mp this
   obtain ⟨A, hA⟩ := (IsIntegrallyClosed.isIntegral_iff (R := ℤ) (K := ℚ)).mp htr
   refine ⟨A, dvd_of_mul_sq hp hq (2 * w.im) ?_⟩
   rw [← hm]

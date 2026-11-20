@@ -128,7 +128,7 @@ theorem denseRange_of_isAlgClosed (ι : Ω →+* PadicAlgCl p) [IsAlgClosed Ω] 
       rcases Nat.lt_or_ge i (n + 1) with hi' | hi'
       · have hgc : g.coeff i = q i := by
           rw [hg, Polynomial.coeff_add, Polynomial.coeff_X_pow, if_neg (by omega), zero_add, hs,
-            Polynomial.finset_sum_coeff]
+            Polynomial.finsetSum_coeff]
           simp only [Polynomial.coeff_C_mul_X_pow]
           rw [Finset.sum_ite_eq, if_pos (Finset.mem_range.mpr hi')]
         rw [hgc, eq_ratCast (algebraMap ℚ (PadicAlgCl p)), ← map_ratCast (algebraMap ℚ_[p] (PadicAlgCl p)),

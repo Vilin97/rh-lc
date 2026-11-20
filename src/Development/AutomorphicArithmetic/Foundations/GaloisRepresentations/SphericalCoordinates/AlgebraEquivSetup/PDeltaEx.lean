@@ -65,7 +65,7 @@ theorem UpperTheory.Gal.W2.Seed.pDeltaEx :
   · have h2 : Int.gcd D (M : ℤ) = 1 := Int.isCoprime_iff_gcd_eq_one.mp hcop
     have h3 : Nat.Coprime D.natAbs M := by
       simpa [Int.gcd, Nat.Coprime] using h2
-    exact Nat.Coprime.mul he h3
+    exact Nat.Coprime.mul_left he h3
   · intro z hz
     obtain ⟨x, hx⟩ := hez z hz
     refine ⟨-(c : 𝓞 E) * u * x, ?_⟩

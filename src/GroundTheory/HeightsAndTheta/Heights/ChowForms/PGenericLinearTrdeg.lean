@@ -74,7 +74,7 @@ theorem algebraicIndependent_pair_linear {R A : Type*} [CommRing R] [CommRing A]
       rw [Finsupp.sum_fintype _ _ (by simp), Fin.sum_univ_two] at hμD
       exact hμD.symm
     intro h0
-    have hc := congrArg (fun q => Polynomial.coeff q (μ 1)) h0
+    have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (μ 1)) h0
     simp only [g, Polynomial.finsetSum_coeff, Polynomial.coeff_zero] at hc
     rw [Finset.sum_eq_single μ] at hc
     · rw [if_pos hμD', Polynomial.coeff_C_mul_X_pow, if_pos rfl] at hc

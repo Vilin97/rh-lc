@@ -55,7 +55,7 @@ lemma isPrecomplete_of_basis (I : Ideal R) [IsPrecomplete I R] (b : Module.Basis
   have h1 := hL i n
   rw [SModEq.sub_mem, hI] at h1
   have hs : b.repr (f n - ∑ j, L j • b j) i = b.repr (f n) i - L i := by
-    rw [map_sub, Finsupp.sub_apply, map_sum, Finsupp.finset_sum_apply]
+    rw [map_sub, Finsupp.sub_apply, map_sum, Finsupp.finsetSum_apply]
     congr 1
     rw [Finset.sum_eq_single i]
     · simp
@@ -149,7 +149,7 @@ lemma dvr [IsDomain (AdjoinRoot f)] [IsLocalRing (AdjoinRoot f)] :
     rw [IsLocalRing.isField_iff_maximalIdeal_eq, hmA, Ideal.span_singleton_eq_bot]
     exact hne
   have hpr : (maximalIdeal (AdjoinRoot f)).IsPrincipal := ⟨⟨_, hmA⟩⟩
-  exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 0 4).mpr hpr
+  exact ((IsDiscreteValuationRing.TFAE (AdjoinRoot f) hnf).out 1 5).mpr hpr
 
 lemma complete [IsLocalRing (AdjoinRoot f)] [IsAdicComplete (maximalIdeal V) V] :
     IsAdicComplete (maximalIdeal (AdjoinRoot f)) (AdjoinRoot f) := by

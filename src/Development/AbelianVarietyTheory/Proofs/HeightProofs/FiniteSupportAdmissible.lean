@@ -90,7 +90,7 @@ private lemma case_two_finite_lemma
   rw [hKF, htr, ← hD] at hsum
   have hFΩ : Algebra.trdeg F Ω = 1 := by
     have hlt : Algebra.trdeg F Ω < Cardinal.aleph0 := by
-      have h := Cardinal.nat_lt_aleph0 (n + 1)
+      have h := Cardinal.natCast_lt_aleph0 (n + 1)
       rw [← hsum] at h
       exact lt_of_le_of_lt le_add_self h
     obtain ⟨m, hm⟩ := Cardinal.lt_aleph0.1 hlt
@@ -169,7 +169,7 @@ private lemma exists_algebraicIndependent_fin_of_trdeg_adjoin_eq {k L : Type} [F
   have hcard := ht.cardinalMk_eq_trdeg
   rw [h] at hcard
   have hfin : Finite t :=
-    Cardinal.lt_aleph0_iff_finite.1 (by rw [hcard]; exact Cardinal.nat_lt_aleph0 D)
+    Cardinal.lt_aleph0_iff_finite.1 (by rw [hcard]; exact Cardinal.natCast_lt_aleph0 D)
   have hnc : Nat.card t = D := by simp [Nat.card, hcard]
   let e : Fin D ≃ t := (finCongr hnc.symm).trans (Finite.equivFin t).symm
   refine ⟨fun i => ((e i : E) : L), fun i => hts (e i).2, ?_⟩

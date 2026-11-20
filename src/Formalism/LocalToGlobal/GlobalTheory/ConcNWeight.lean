@@ -50,7 +50,7 @@ theorem sum_eSer (k : Fin 2) :
   have hinj : Function.Injective (fun c : Fin D.R.r → ZMod (D.host.g k) => Formalism.CyclotomicNorms.monicOf c) := by
     intro c c' h
     funext i
-    have := congrArg (fun p => Polynomial.coeff p (i : ℕ)) h
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (i : ℕ)) h
     simpa [hcoeff] using this
   have hsurj : ∀ f ∈ S, f = Formalism.CyclotomicNorms.monicOf (fun i : Fin D.R.r => f.coeff (i : ℕ)) := by
     intro f hf

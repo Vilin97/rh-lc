@@ -324,7 +324,7 @@ private theorem sub_smul_mul_sub_smul_eq_zero_of_quadratic {K : Type} [Field K] 
     linear_combination (1 / 4 : K) * hν - (1 / 4 : K) * hsq
   obtain ⟨q, hq⟩ : ∃ n : ℤ, (n : ℚ) = ((t0 * t1 - T01) ^ 2 - ((discr K : ℤ) : ℚ)) / 4 := by
     have h1 : IsIntegral ℤ (((t0 * t1 - T01) ^ 2 - ((discr K : ℤ) : ℚ)) / 4) :=
-      (isIntegral_algebraMap_iff (algebraMap ℚ K).injective).1 (hνq ▸ hνint)
+      (isIntegral_algebraMap_iff ).1 (hνq ▸ hνint)
     obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
     exact ⟨n, by rw [← hn]; simp⟩
   rw [← hn0, ← hn1, ← hm01] at hq

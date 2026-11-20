@@ -163,7 +163,7 @@ private lemma quad_integral_eq_integral_quad (hJ : ∀ x, J (J x) = -x)
     rw [← comm1]
     exact (_root_.GlobalTheory.Mem.Lift.DCalc.dH_calculus V B _ ρ hself hb _ hIs).1 v
   unfold _root_.GlobalTheory.Mem.Lift.quad
-  rw [integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_smul, comm1, comm2]
   · intro i _
@@ -309,7 +309,7 @@ theorem _root_.GlobalTheory.Mem.Lift.OscDeriv.hasDerivAt_osc : ∀ (V : Type) [N
       _ = _ := by ring
   have hquadint : Integrable (fun w => _root_.GlobalTheory.Mem.Lift.quad ρ c p q (ρ w (y w))) := by
     unfold _root_.GlobalTheory.Mem.Lift.quad
-    exact integrable_finset_sum _ fun i _ => (hD2 _ _).smul (c i)
+    exact MeasureTheory.integrable_finsetSum _ fun i _ => (hD2 _ _).smul (c i)
   have hD : ∫ w, (ρ w (_root_.GlobalTheory.Mem.Lift.quad ρ c p q (y w) + lam • y w) +
       fderiv ℝ (fun u => ρ u (y w)) w (X w)) = _root_.GlobalTheory.Mem.Lift.quad ρ c p q f + lam • f := by
     have hLim : ∀ w, ρ w (_root_.GlobalTheory.Mem.Lift.quad ρ c p q (y w) + lam • y w) +

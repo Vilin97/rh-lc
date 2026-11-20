@@ -145,7 +145,7 @@ theorem combine (E : Type) [Field E] [NumberField E] (b m₁ m₂ : ℕ) (hcop :
       ∃ v : (𝓞 E)ˣ, u = v ^ (m₁ * m₂) := by
   obtain ⟨a₁, ha₁, hc₁, hu₁⟩ := h₁
   obtain ⟨a₂, ha₂, hc₂, hu₂⟩ := h₂
-  refine ⟨a₁ * a₂, Nat.mul_pos ha₁ ha₂, Nat.Coprime.mul hc₁ hc₂, ?_⟩
+  refine ⟨a₁ * a₂, Nat.mul_pos ha₁ ha₂, Nat.Coprime.mul_left hc₁ hc₂, ?_⟩
   intro u hu
   have hd₁ : (a₁ : 𝓞 E) ∣ (u : 𝓞 E) - 1 := dvd_trans ⟨(a₂ : 𝓞 E), by push_cast; ring⟩ hu
   have hd₂ : (a₂ : 𝓞 E) ∣ (u : 𝓞 E) - 1 := dvd_trans ⟨(a₁ : 𝓞 E), by push_cast; ring⟩ hu

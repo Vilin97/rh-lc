@@ -95,7 +95,7 @@ theorem mem_range_of_isIntegral {F K Ω : Type*} [Field F] [CharZero F] [Field K
 theorem mem_range_of_isAlgebraic_ratFun {K σ : Type*} [Field K] (a : FractionRing (MvPolynomial σ K))
     (ha : IsAlgebraic K a) : a ∈ (algebraMap K (FractionRing (MvPolynomial σ K))).range := by
   obtain ⟨b, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.mp (ha.isIntegral.tower_top (A := MvPolynomial σ K))
-  have hb : IsIntegral K b := (isIntegral_algebraMap_iff (IsFractionRing.injective _ _)).mp ha.isIntegral
+  have hb : IsIntegral K b := (isIntegral_algebraMap_iff ).mp ha.isIntegral
   by_cases h0 : b = 0
   · exact ⟨0, by simp [h0]⟩
   obtain ⟨r, -, rfl⟩ := MvPolynomial.isUnit_iff_eq_C_of_isReduced.1 (hb.isUnit h0)
@@ -258,7 +258,7 @@ theorem compNe_and_exists_fnAlgClosed : ∀ (E : Type) [Field E] [NumberField E]
       (hc' _ (Finset.mem_union_right _ (Finset.mem_image_of_mem _ (Finset.mem_univ j))))
   have := c''.fin
   obtain ⟨r, rfl⟩ := mem_range_of_isAlgebraic_ratFun a (ha.tower_top (kap Z))
-  have hr : IsIntegral c''.F r := (isIntegral_algebraMap_iff (algebraMap (kap Z) (Om Z)).injective).1 ha.isIntegral
+  have hr : IsIntegral c''.F r := (isIntegral_algebraMap_iff ).1 ha.isIntegral
   haveI : CharZero (kap Z) := charZero_of_injective_algebraMap (algebraMap c''.F (kap Z)).injective
   have hr' : IsIntegral ℚ r := isIntegral_trans r hr
   let p : Xo.XF c'' ⟶ Xo.X := pullback.fst _ _

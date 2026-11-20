@@ -46,7 +46,7 @@ def LemmaNc : Prop :=
 def LemmaNcGlob : Prop :=
   ∀ (E V : Type) [Field E] [NumberField E] [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     [Module (𝓞 E) V] [IsScalarTower (𝓞 E) E V] (L : Submodule (𝓞 E) V),
-    Submodule.IsLattice E L →
+    Submodule.IsFullLattice E L →
   ∀ (β : V ≃ₗ[E] V), IsOfFinOrder β →
   ∀ (g₁ g₂ : ℕ), g₁.Prime → g₂.Prime → g₁ ≠ g₂ → 3 ≤ g₁ → 3 ≤ g₂ →
     (∀ PP : Ideal (𝓞 E), PP.IsPrime → (g₁ : 𝓞 E) ∈ PP → Formalism.L2.Col.UnipMod PP L β) →
@@ -114,7 +114,7 @@ theorem exists_prime_over (E : Type) [Field E] [NumberField E] {g : ℕ} (hg : g
 
 theorem lemmaNcGlob_of_exists (E V : Type) [Field E] [NumberField E] [AddCommGroup V] [Module E V]
     [FiniteDimensional E V] [Module (𝓞 E) V] [IsScalarTower (𝓞 E) E V] (L : Submodule (𝓞 E) V)
-    (hL : Submodule.IsLattice E L) (β : V ≃ₗ[E] V) (hfin : IsOfFinOrder β)
+    (hL : Submodule.IsFullLattice E L) (β : V ≃ₗ[E] V) (hfin : IsOfFinOrder β)
     {g₁ g₂ : ℕ} (hg₁ : g₁.Prime) (hg₂ : g₂.Prime) (hne : g₁ ≠ g₂)
     {w₁ w₂ : Ideal (𝓞 E)} (hw₁ : w₁ ≠ ⊤) (hw₂ : w₂ ≠ ⊤) (hgw₁ : (g₁ : 𝓞 E) ∈ w₁)
     (hgw₂ : (g₂ : 𝓞 E) ∈ w₂) (h₁ : Formalism.L2.Col.UnipMod w₁ L β) (h₂ : Formalism.L2.Col.UnipMod w₂ L β) :

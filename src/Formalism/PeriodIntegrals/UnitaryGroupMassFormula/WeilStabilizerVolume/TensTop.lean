@@ -110,7 +110,7 @@ theorem continuous_hR (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M)
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _
   unfold hR Formalism.UG.hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact ((hsig.comp ((continuous_apply i).comp continuous_fst)).mul continuous_const).mul
     ((continuous_apply j).comp continuous_snd)
 
@@ -128,7 +128,7 @@ theorem continuous_gramR_apply (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _
   unfold gramR hR Formalism.UG.hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact ((hsig.comp ((continuous_apply i).comp (continuous_apply a))).mul continuous_const).mul
     ((continuous_apply j).comp (continuous_apply b))
 

@@ -136,12 +136,12 @@ def rr (Γ' K : Subgroup B) (y : B) : ℝ≥0∞ :=
 
 theorem oo_mul_right (Γ' K : Subgroup B) {k : B} (hk : k ∈ K) (y : B) : oo Γ' K (y * k) = oo Γ' K y := by
   have : DoubleCoset.mk Γ' K (y * k) = DoubleCoset.mk Γ' K y :=
-    ((DoubleCoset.eq Γ' K y (y * k)).2 ⟨1, Γ'.one_mem, k, hk, by simp⟩).symm
+    ((@DoubleCoset.eq _ _ Γ' K y (y * k)).2 ⟨1, Γ'.one_mem, k, hk, by simp⟩).symm
   simp only [oo, this]
 
 theorem oo_mul_left (Γ' K : Subgroup B) {h : B} (hh : h ∈ Γ') (y : B) : oo Γ' K (h * y) = oo Γ' K y := by
   have : DoubleCoset.mk Γ' K (h * y) = DoubleCoset.mk Γ' K y :=
-    ((DoubleCoset.eq Γ' K y (h * y)).2 ⟨h, hh, 1, K.one_mem, by simp⟩).symm
+    ((@DoubleCoset.eq _ _ Γ' K y (h * y)).2 ⟨h, hh, 1, K.one_mem, by simp⟩).symm
   simp only [oo, this]
 
 theorem rr_mul_right (Γ' K : Subgroup B) {k : B} (hk : k ∈ K) (y : B) : rr Γ' K (y * k) = rr Γ' K y := by
@@ -258,7 +258,7 @@ theorem integral_mul_rr (β : Measure B) [β.IsHaarMeasure] (Γ' K U : Subgroup 
       intro q hq hm
       apply hq
       have e1 : DoubleCoset.mk Γ' K (Quotient.out q) = q₀ :=
-        (DoubleCoset.eq Γ' K _ y).2 ⟨1, Γ'.one_mem, (Quotient.out q)⁻¹ * y, hm, by group⟩
+        (@DoubleCoset.eq _ _ Γ' K _ y).2 ⟨1, Γ'.one_mem, (Quotient.out q)⁻¹ * y, hm, by group⟩
       rw [← e1]
       exact (DoubleCoset.out_eq' Γ' K q).symm
     have hrr : (((rr Γ' K y).toReal : ℝ) : ℂ) = if (Quotient.out q₀)⁻¹ * y ∈ K then c q₀ else 0 := by

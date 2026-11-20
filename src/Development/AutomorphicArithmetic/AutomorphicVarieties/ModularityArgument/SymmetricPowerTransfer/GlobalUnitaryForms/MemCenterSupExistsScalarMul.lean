@@ -84,7 +84,7 @@ theorem cu_coords (O : Type) [CommRing O] [Algebra O K] (hτ : IsIntegral O τ) 
   have hs : IsIntegral O (star x) := hx.map st
   have inj : Function.Injective (algebraMap K (Etau K τ)) := (algebraMap K _).injective
   have h1 : IsIntegral O (x.im ^ 2 * (τ ^ 2 - 4)) := by
-    rw [← isIntegral_algebraMap_iff inj]
+    rw [← isIntegral_algebraMap_iff ]
     convert (hx.sub hs).pow 2 using 1
     ext <;> simp [QuadraticAlgebra.algebraMap_eq, sq] <;> ring
   have h3 : IsIntegral O x.im := by
@@ -92,7 +92,7 @@ theorem cu_coords (O : Type) [CommRing O] [Algebra O K] (hτ : IsIntegral O τ) 
     have := h1.mul (isIntegral_algebraMap (R := O) (A := K) (x := (u⁻¹ : Oˣ)))
     rwa [← hu, mul_assoc, ← map_mul, Units.mul_inv, map_one, mul_one] at this
   have h4 : IsIntegral O (2 * x.re + τ * x.im) := by
-    rw [← isIntegral_algebraMap_iff inj]
+    rw [← isIntegral_algebraMap_iff ]
     convert hx.add hs using 1
     ext <;> simp [QuadraticAlgebra.algebraMap_eq] <;> ring
   refine ⟨?_, h3⟩

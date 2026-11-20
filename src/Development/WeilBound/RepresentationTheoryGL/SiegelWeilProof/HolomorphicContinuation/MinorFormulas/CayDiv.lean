@@ -38,7 +38,7 @@ theorem cayDiv_of : CayDivOf := by
   have hcomm : ∀ a ∈ Sop s m n, ∀ b ∈ Sop s m n, a * b = b * a := by
     rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
     exact hC n s m x.1 y.1 x.2.1 x.2.2 y.2.1 y.2.2
-  letI : CommRing (Algebra.adjoin ℂ (Sop s m n)) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : CommRing (Algebra.adjoin ℂ (Sop s m n)) := Algebra.isMulCommutative_adjoin ℂ hcomm
   let g : Bool × Fin n × Fin n → Algebra.adjoin ℂ (Sop s m n) :=
     fun x => ⟨opH s m x.1 x.2.1 x.2.2, Algebra.subset_adjoin ⟨x, rfl⟩⟩
   let φ : PAB n →ₐ[ℂ] Algebra.adjoin ℂ (Sop s m n) := MvPolynomial.aeval g

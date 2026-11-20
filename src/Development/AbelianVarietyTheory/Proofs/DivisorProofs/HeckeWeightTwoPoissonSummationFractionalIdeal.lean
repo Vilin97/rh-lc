@@ -146,7 +146,7 @@ theorem poisson : ∀ (F : Type) [Field F] [NumberField F] [NumberField.IsTotall
     rw [show (2 * (Real.pi : ℂ) * I * ((t * (τ b * (z τ).re) : ℝ) : ℂ)) =
       ((2 * Real.pi * (t * (τ b * (z τ).re)) : ℝ) : ℂ) * I by push_cast; ring, Complex.norm_exp_ofReal_mul_I, one_mul]
   have hΨc : Continuous Ψ := by
-    refine continuous_finset_prod _ fun τ _ => ?_
+    refine continuous_finsetProd _ fun τ _ => ?_
     refine Continuous.comp (g := g τ) ?_ ((EuclideanSpace.proj τ : RSp F →L[ℝ] ℝ).continuous)
     exact (by fun_prop : Continuous fun t : ℝ => Complex.exp (2 * (Real.pi : ℂ) * I * ((t * (τ b * (z τ).re) : ℝ) : ℂ))).mul
       (continuous_hTrans σ hσ _ (hyτ τ))

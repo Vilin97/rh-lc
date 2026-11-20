@@ -133,7 +133,7 @@ theorem exists_int_deltaF {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : ∃ (δ : 
       obtain ⟨x, hx⟩ := GlobalTheory.AdelicU.exists_cm_conj_ne h
       exact hx (show x ∈ AlgHom.equalizer σ (AlgHom.id F E) from ht ▸ Algebra.mem_top)
   have h4 : IsIntegral ℤ Δ :=
-    (isIntegral_algebraMap_iff (algebraMap F E).injective).1 (hΔ ▸ (a.isIntegral_coe.mul a.isIntegral_coe))
+    (isIntegral_algebraMap_iff ).1 (hΔ ▸ (a.isIntegral_coe.mul a.isIntegral_coe))
   exact ⟨a, ⟨Δ, h4⟩, ha, RingOfIntegers.coe_ne_zero_iff.2 ha0, hΔ⟩
 
 end Gen

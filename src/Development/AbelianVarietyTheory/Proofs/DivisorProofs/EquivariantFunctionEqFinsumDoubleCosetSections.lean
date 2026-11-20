@@ -88,7 +88,7 @@ theorem GlobalTheory.BCT.TraceBlocks.eqvM_eq_finsum_secM : ∀ (G H V : Type) [G
   haveI := Fintype.ofFinite (DoubleCoset.Quotient (ι.range : Set G) (K' : Set G))
   funext y
   rw [finsum_eq_sum_of_fintype, Finset.sum_apply, Finset.sum_eq_single (DoubleCoset.mk ι.range K' y)]
-  · obtain ⟨g, hg, k₀, hk₀, hy⟩ := (DoubleCoset.eq ι.range K'
+  · obtain ⟨g, hg, k₀, hk₀, hy⟩ := (@DoubleCoset.eq _ _ ι.range K'
       (Quotient.out (DoubleCoset.mk ι.range K' y)) y).mp (DoubleCoset.out_eq' _ _ _)
     obtain ⟨h₀, rfl⟩ := hg
     haveI := hS (Quotient.out (DoubleCoset.mk ι.range K' y))
@@ -97,7 +97,7 @@ theorem GlobalTheory.BCT.TraceBlocks.eqvM_eq_finsum_secM : ∀ (G H V : Type) [G
     exact key
   · intro q _ hq
     refine secM_off ι ρ K' _ y _ fun h hh => hq ?_
-    refine (DoubleCoset.out_eq' _ _ q).symm.trans ((DoubleCoset.eq _ _ _ _).mpr
+    refine (DoubleCoset.out_eq' _ _ q).symm.trans ((@DoubleCoset.eq _ _ _ _ _ _).mpr
       ⟨ι h, ⟨h, rfl⟩, _, hh, (mul_inv_cancel_left _ _).symm⟩)
   · intro h
     exact absurd (Finset.mem_univ _) h

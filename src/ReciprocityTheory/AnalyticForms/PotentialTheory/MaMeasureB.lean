@@ -87,7 +87,7 @@ theorem maMeasure_mono_of_psh {e : ℕ} {X : Type} [TopologicalSpace X] [Measura
   split_ifs with h
   · rw [Measure.le_iff]
     intro s hs
-    simp only [Measure.coe_finset_sum, Finset.sum_apply]
+    simp only [MeasureTheory.Measure.coe_finsetSum, Finset.sum_apply]
     refine Finset.sum_le_sum fun j _ => ?_
     have hT := (A.chart j).open_target.measurableSet
     have hsm : AEMeasurable (A.chart j).symm (volume.restrict (A.chart j).target) :=
@@ -164,8 +164,8 @@ theorem maMeasure_forward (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
   by_cases hne : Nonempty (ChartPartition A)
   · rw [maMeasure_eq_sum A Φ hne, mInt_eq_integralWith A Φ hne]
     have hc := fun j => chartMeasure_integrable_integral A hne.some Φ hΦ hPsh j hg hgi
-    refine ⟨integrable_finset_sum_measure.2 fun j _ => (hc j).1, ?_⟩
-    rw [integral_finset_sum_measure fun j _ => (hc j).1]
+    refine ⟨MeasureTheory.integrable_finsetSum_measure.2 fun j _ => (hc j).1, ?_⟩
+    rw [MeasureTheory.integral_finsetSum_measure fun j _ => (hc j).1]
     unfold integralWith
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [(hc j).2]
@@ -199,7 +199,7 @@ theorem maMeasure_converse (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
     intro k
     rw [maMeasure_eq_sum A Φ hne, Measure.le_iff']
     intro s
-    simp only [Measure.coe_finset_sum, Finset.sum_apply]
+    simp only [MeasureTheory.Measure.coe_finsetSum, Finset.sum_apply]
     exact Finset.single_le_sum (f := fun i => chartMeasure A hne.some Φ i s)
       (fun _ _ => by simp) (Finset.mem_univ k)
   have hF : ∀ k, IntegrableOn (fun z => g ((A.chart k).symm z) *
@@ -261,7 +261,7 @@ theorem maMeasure_converse (A : FinHolAtlas e X) (Φ : Fin e → LocPot X)
     rw [h0, zero_mul]
   have hsum : IntegrableOn (fun y => ∑ k, hne.some.χ k ((A.chart j).symm y) *
       (g ((A.chart j).symm y) * locDens A Φ j y)) K :=
-    integrable_finset_sum Finset.univ (fun k _ => hterm k)
+    MeasureTheory.integrable_finsetSum Finset.univ (fun k _ => hterm k)
   refine hsum.congr_fun (fun y _ => ?_) hKm
   simp only
   rw [← Finset.sum_mul, hne.some.sum_eq_one, one_mul]

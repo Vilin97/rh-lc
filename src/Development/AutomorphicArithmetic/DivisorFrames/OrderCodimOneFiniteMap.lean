@@ -32,7 +32,7 @@ private theorem coheight_above {X X' : Scheme.{0}} [IsIntegral X] [IsIntegral X'
       map_eq_zero_iff _ (IsFractionRing.injective _ X.functionField)] at h2
     exact hϖ.ne_zero h2
   exact IsNormalScheme.isDiscreteValuationRing_stalk_iff.1
-    (((IsDiscreteValuationRing.TFAE (X'.presheaf.stalk ζ) hnf).out 1 0).mp this)
+    (((IsDiscreteValuationRing.TFAE (X'.presheaf.stalk ζ) hnf).out 2 1).mp this)
 
 theorem UpperTheory.order_codim_one_finite_map :
     ∀ (X X' : Scheme.{0}) [IsIntegral X] [IsIntegral X'] [IsLocallyNoetherian X] [IsLocallyNoetherian X'] [GlobalTheory.IsNormalScheme X] [GlobalTheory.IsNormalScheme X'] [X.IsSeparated] [CharZero X.functionField] (O : Type) [CommRing O] (s : X' ⟶ Spec (.of O)) [IsProper s] (g : X' ⟶ X) (hg : g (genericPoint X') ⤳ genericPoint X), (SmallSec.fnMap g hg).Finite → ∀ (η : X) (W : ValuationSubring X.functionField), Order.coheight η = 1 → DominatesStalk W η → ∀ x : X'.functionField, (∑ᶠ ζ : X', if g ζ = η then Scheme.ord x ζ * (g.residueDegree ζ : ℤ) else 0) = ∑ᶠ V : ValuationSubring X'.functionField, if V.comap (SmallSec.fnMap g hg) = W ∧ ∀ o : O, toFunctionField s o ∈ V then vord V x * (vdeg (SmallSec.fnMap g hg) V : ℤ) else 0 := by

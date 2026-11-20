@@ -73,7 +73,7 @@ theorem exists_separating [Fintype σ] (S : Finset (σ → ℂ)) (x : σ → ℂ
   have hq : ∀ z, z ≠ x → q z ≠ 0 := by
     intro z hz h
     obtain ⟨i, hi⟩ := Function.ne_iff.mp hz
-    have h1 := congrArg (fun r => Polynomial.coeff r (k i : ℕ)) h
+    have h1 := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r (k i : ℕ)) h
     simp only [q, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at h1
     rw [Finset.sum_eq_single i] at h1
     · rw [if_pos rfl] at h1

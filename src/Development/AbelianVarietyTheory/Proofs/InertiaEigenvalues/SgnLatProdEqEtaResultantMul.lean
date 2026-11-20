@@ -98,7 +98,7 @@ theorem det_trace_ne_zero {K : UQ} (B : InvAlg K) (hsep : B.P.Separable)
   apply hc
   funext k
   have := congrArg (fun p : K.E[X] => p.coeff k) hq0
-  simp only [hq, finset_sum_coeff, coeff_C_mul_X_pow, coeff_zero] at this
+  simp only [hq, Polynomial.finsetSum_coeff, coeff_C_mul_X_pow, coeff_zero] at this
   rw [Finset.sum_eq_single k (fun b _ hb => if_neg (fun h => hb (Fin.ext h.symm))) (by simp)] at this
   simpa using this
 

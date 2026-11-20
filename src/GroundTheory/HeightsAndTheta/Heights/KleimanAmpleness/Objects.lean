@@ -376,7 +376,7 @@ theorem coneGen_homogeneousComponent {σ : Type*} (y : σ → Ω) {g : MvPolynom
       rw [map_sum]
       exact Finset.sum_congr rfl fun i _ =>
         coneGen_of_isHomogeneous y (homogeneousComponent_isHomogeneous i g)
-    have hc := congrArg (fun p => Polynomial.coeff p d) hsum
+    have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p d) hsum
     simp only [hg, Polynomial.coeff_zero, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
       Finset.sum_ite_eq, Finset.mem_range, hd, if_true] at hc
     rw [← hc, map_zero, zero_mul]
@@ -407,7 +407,7 @@ theorem mem_primeOf_of_isHomogeneous {f : Poly S N} {d : ℕ} (hf : f.IsHomogene
   rw [primeOf_eq, RingHom.mem_ker, cone_of_isHomogeneous x hf]
   constructor
   · intro h
-    have := congrArg (fun p => Polynomial.coeff p d) h
+    have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p d) h
     simpa only [Polynomial.coeff_C_mul_X_pow, if_true, Polynomial.coeff_zero] using this
   · intro h; rw [h, map_zero, zero_mul]
 

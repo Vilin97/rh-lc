@@ -16,7 +16,7 @@ theorem exists_torsLift {G H : Type} [Group G] [Group H] (p : ℕ) (ρ : G →* 
   have h : ∃ g' : G, (∃ n, 0 < n ∧ n.Coprime p ∧ g' ^ n = 1) ∧ ρ g' = ρ g := ⟨g, ⟨n, hn, hnp, hg⟩, rfl⟩
   simp only [dif_pos h]
   obtain ⟨⟨m, hm, hmp, hgm⟩, he⟩ := h.choose_spec
-  exact hi (m * n) (Nat.mul_pos hm hn) (Nat.Coprime.mul hmp hnp) _ _
+  exact hi (m * n) (Nat.mul_pos hm hn) (Nat.Coprime.mul_left hmp hnp) _ _
     (by rw [pow_mul, hgm, one_pow]) (by rw [mul_comm, pow_mul, hg, one_pow]) he
 
 theorem transport_alg :

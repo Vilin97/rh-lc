@@ -45,7 +45,7 @@ theorem int_exists (ρ : Γ → Module.End ℂ M) (y : M)
     conv_lhs => rw [hrepr k]
     simp [map_sum, Finset.mul_sum, mul_assoc]
   simp_rw [hpt]
-  rw [integral_finset_sum _ (fun i _ => (hint i).mul_const _)]
+  rw [MeasureTheory.integral_finsetSum _ (fun i _ => (hint i).mul_const _)]
   simp only [map_sum, map_smul, smul_eq_mul, integral_mul_const]
 
 omit [MeasurableSpace Γ] [BorelSpace Γ] [CompactSpace Γ] in
@@ -97,7 +97,7 @@ theorem tensor_exists [IsTopologicalGroup Γ] [μ.IsMulLeftInvariant] {E : ι �
     simpa [hG.mul, Module.End.mul_apply] using this
   simp [actT, h1, hξ I lam]
   simp_rw [← integral_const_mul]
-  rw [← integral_finset_sum]
+  rw [← MeasureTheory.integral_finsetSum]
   · rw [← integral_mul_left_eq_self
       (fun x => (∏ τ, (κ τ γ).det ^ (c τ))⁻¹ * (mono κ lab c I K x * lam (ρ x y))) γ]
     congr 1

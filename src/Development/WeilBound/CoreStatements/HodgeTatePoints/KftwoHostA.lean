@@ -108,7 +108,7 @@ variable {F : Type} [Field F] [CharZero F] {m : ℕ} (B : Biq F m)
 
 theorem int_of_integral {q : ℚ} (h : IsIntegral ℤ (q : F)) : ∃ n : ℤ, q = n := by
   have h' : IsIntegral ℤ (algebraMap ℚ F q) := by simpa using h
-  obtain ⟨n, hn⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral (isIntegral_algebraMap_iff (algebraMap ℚ F).injective |>.1 h')
+  obtain ⟨n, hn⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral (isIntegral_algebraMap_iff  |>.1 h')
   exact ⟨n, by simpa using hn.symm⟩
 
 omit [CharZero F] in

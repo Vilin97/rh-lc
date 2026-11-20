@@ -227,7 +227,7 @@ theorem CT.mul {F G : ℕ → MvPowerSeries σ K} {f g : MvPowerSeries σ K} (hF
   classical
   intro n
   simp only [MvPowerSeries.coeff_mul]
-  apply tendsto_finset_sum
+  apply tendsto_finsetSum
   intro p _
   exact (hF p.1).mul (hG p.2)
 

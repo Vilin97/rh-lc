@@ -22,7 +22,7 @@ theorem Dual_ne_zero (Lb : Submodule (𝓞 E) (Fin n → E)) (z : Fin n → E)
   intro hz
   obtain ⟨o, ho⟩ := hprim (algebraMap ℚ E (1 / 2)) (by rw [hz, smul_zero]; exact Lb.zero_mem)
   have hint : IsIntegral ℤ (algebraMap ℚ E (1 / 2)) := ho ▸ RingOfIntegers.isIntegral_coe o
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at hint
+  rw [isIntegral_algebraMap_iff ] at hint
   obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   have h2 : ((2 * m : ℤ) : ℚ) = 1 := by
     push_cast

@@ -186,7 +186,7 @@ theorem core {Ω' : Type} [Field Ω'] {y : (Σ k, ι k) → Ω} (hy : Birational
       mCoordIdeal y := by
     intro j
     refine mem_of_aeval_eq_zero (hEh j) ?_
-    have h2 := congrArg (fun p => Polynomial.coeff p j) hEm
+    have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) hEm
     simp only [Polynomial.coeff_map, Polynomial.coeff_zero] at h2
     exact h2
   refine ⟨M.natDegree, fun j => M.coeff j, b, H, b, hMh, hH, notMem_of_aeval_ne_zero hH hH0, ?_, ?_⟩

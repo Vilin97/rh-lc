@@ -27,7 +27,7 @@ theorem C_mem_nonZeroDivisors : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     intro p hp
     ext i : 1
     have hq : p.coeff i * D = 0 := by
-      have := congrArg (fun q => Polynomial.coeff q i) hp
+      have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
       simp only [Polynomial.coeff_mul_C, Polynomial.coeff_zero] at this
       exact this
     have hq' : ((p.coeff i : HA M) : C → M.dom → ℂ) * (D : C → M.dom → ℂ) = 0 := by

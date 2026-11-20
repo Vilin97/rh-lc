@@ -104,11 +104,11 @@ theorem sqrt_hecke_point_weil_orthogonal (I : TateIsoO D K Q act e) (h : ℕ →
         rw [hk] at h2; omega
       · exact h0
     obtain ⟨r, hr⟩ : ∃ r, k = 2 * r + 1 := ⟨k / 2, by omega⟩
-    refine gen k (k * (r + 1)) 1 (Nat.pos_of_ne_zero hk0) dvd_rfl (Nat.Coprime.mul (Nat.Coprime.mul hNp hk) hk) ?_
+    refine gen k (k * (r + 1)) 1 (Nat.pos_of_ne_zero hk0) dvd_rfl (Nat.Coprime.mul_left (Nat.Coprime.mul_left hNp hk) hk) ?_
     rw [hr]; ring
   · have h2p : (2 : ℕ).Coprime p := (Nat.coprime_primes Nat.prime_two hp).2 (fun h0 => hp2 h0.symm)
     refine gen (k * 2) k 0 (by positivity) (dvd_mul_right _ _)
-      (Nat.Coprime.mul (Nat.Coprime.mul hNp hk) (Nat.Coprime.mul hk h2p)) ?_
+      (Nat.Coprime.mul_left (Nat.Coprime.mul_left hNp hk) (Nat.Coprime.mul_left hk h2p)) ?_
     ring
 
 end GlobalTheory.UPel.HT.HeckeRootA

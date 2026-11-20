@@ -136,7 +136,7 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
         let z' : Cy := ⟨y * algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G c),
           Cy.mul_mem (Algebra.subset_adjoin rfl) (Subalgebra.algebraMap_mem Cy _)⟩
         refine ⟨Polynomial.C a' * Polynomial.X - Polynomial.C z', fun h0 => hpi ?_, ?_⟩
-        · have h1 := congrArg (fun p => Polynomial.coeff p 1) h0
+        · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
           simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, if_true, Polynomial.coeff_C,
             one_ne_zero, if_false, sub_zero, Polynomial.coeff_zero] at h1
           have h2 := congrArg Subtype.val h1

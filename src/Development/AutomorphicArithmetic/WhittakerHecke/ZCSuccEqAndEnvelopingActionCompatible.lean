@@ -17,7 +17,7 @@ private theorem UpperTheory.polynomial_identity_coefficients_zero {M : Type*} [A
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  have := congrArg (fun p => Polynomial.coeff p (n - (i + 1))) hp
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (n - (i + 1))) hp
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
   rw [Finset.sum_eq_single i] at this
   · simpa using this

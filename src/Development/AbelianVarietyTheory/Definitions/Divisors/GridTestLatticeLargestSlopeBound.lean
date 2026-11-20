@@ -150,7 +150,7 @@ theorem ClassReps.gridClassReps_delta_apply_rep (rp : ClassReps G) (hN : rp.Neat
       exact mul_mem (mul_mem (rp.x c').2 (inv_mem hu.1)) (inv_mem (rp.x c).2)
     rw [← rp.classRepresentative_mk c, ← rp.classRepresentative_mk c']
     symm
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, hγ⟩, ⟨γ.1, γ.2, rfl⟩, ⟨u, hu.1⟩, hu, Subtype.ext he⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, hγ⟩, ⟨γ.1, γ.2, rfl⟩, ⟨u, hu.1⟩, hu, Subtype.ext he⟩
 
 theorem testFunction_value_at_rep (rp : ClassReps G) (hN : rp.Neat) {n : ℕ} (e : Fin n ≃ TestIx G × VVIdx (LaP G)) (a : Fin n) (c : G.ClPlus) :
     psi rp e a (rp.x c) = valAt (LaP G) e (datumOf e a, c) (Pi.single a 1) := by

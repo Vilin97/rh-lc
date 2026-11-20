@@ -24,7 +24,7 @@ theorem span_map_eq_pow_of_height_one : ∀ {E : Type} [Field E] [NumberField E]
   have hQ0 : Q ≠ ⊥ := fun e => by rw [e, Ideal.height_bot] at hQ1; exact zero_ne_one hQ1
   have hdvr : IsDiscreteValuationRing (Localization.AtPrime Q) :=
     ((IsDiscreteValuationRing.TFAE (Localization.AtPrime Q)
-      (IsLocalization.AtPrime.not_isField R hQ0 _)).out 0 1).2 (ReciprocityTheory.ChartRestriction.G.T0.regVert_valuationRing Q hQ1)
+      (IsLocalization.AtPrime.not_isField R hQ0 _)).out 1 2).2 (ReciprocityTheory.ChartRestriction.G.T0.regVert_valuationRing Q hQ1)
   obtain ⟨W, _, _, _, ϖ, g, hW, hϖ, hinj, hunit, hπ⟩ := GlobalTheory.T.exists_complete_dvr_of_localization Q hdvr
   let gam : FractionRing R →+* FractionRing W := IsFractionRing.map (j := g) hinj
   have hgam : ∀ r, gam (algebraMap R _ r) = algebraMap W _ (g r) := fun r => IsLocalization.map_eq _ _

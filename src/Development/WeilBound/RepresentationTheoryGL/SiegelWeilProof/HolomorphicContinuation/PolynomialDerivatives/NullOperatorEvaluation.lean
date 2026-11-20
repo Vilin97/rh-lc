@@ -34,7 +34,7 @@ theorem mom_sub (c : ℝ) (hc : 0 < c) (P Q : PX m n) : mom c (P - Q) = mom c P 
 theorem mom_sum (c : ℝ) (hc : 0 < c) {ι : Type*} (s : Finset ι) (f : ι → PX m n) :
     mom c (∑ i ∈ s, f i) = ∑ i ∈ s, mom c (f i) := by
   unfold mom
-  rw [← integral_finset_sum s (fun i _ => integrable_pg c hc (f i))]
+  rw [← MeasureTheory.integral_finsetSum s (fun i _ => integrable_pg c hc (f i))]
   congr 1
   funext x
   simp only [evX, map_sum, Finset.sum_mul]

@@ -163,7 +163,7 @@ theorem exists_coeffs (D : D7) {p N N' : ℕ} (hp : p.Prime)
       ∀ j, b' j = ∑ i, A i j • b i := by
   choose s1 hs1 hm1 using hb'.2.1
   choose s2 hs2 c hc using fun j => hb.2.2 _ (hm1 j)
-  have hcop : ∀ j, Nat.Coprime (s2 j * s1 j) p := fun j => Nat.Coprime.mul (hs2 j) (hs1 j)
+  have hcop : ∀ j, Nat.Coprime (s2 j * s1 j) p := fun j => Nat.Coprime.mul_left (hs2 j) (hs1 j)
   have hn : ∀ j, ((s2 j * s1 j : ℕ) : D.host.E) ≠ 0 := by
     intro j
     have : s2 j * s1 j ≠ 0 := by

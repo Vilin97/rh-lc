@@ -106,7 +106,7 @@ theorem io_rowDiv_gen (R : Type) [CommRing R] [IsDomain R] [Infinite R] {n : ℕ
     have := congrArg (AddMonoidAlgebra.coeff · m) (key t)
     simp only [coeff_sum, coeff_smul, smul_eq_mul] at this
     simpa [mul_comm] using this
-  have := congrArg (fun p => Polynomial.coeff p k) hPQ
+  have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hPQ
   simp only [hP, hQ, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', if_pos hk'] at this
   exact this
 

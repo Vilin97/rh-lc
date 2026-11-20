@@ -50,7 +50,7 @@ theorem herbPhi_stable (p : ℕ) (A : Type) [CommGroup A] (σ : A →* A) (hp : 
     apply Subtype.ext
     have := hn a a.2
     rw [nrm_apply] at this ⊢
-    rw [SubmonoidClass.coe_finset_prod]
+    rw [SubmonoidClass.coe_finsetProd]
     simp only [hit]
     exact this
   obtain ⟨h1, h2⟩ := GlobalTheory.T.pow_prime_range_eq_iterated_difference p C τ lam hp (fun _ => rfl) hnτ

@@ -21,7 +21,7 @@ theorem half_int_coords {E : Type} [Field E] [NumberField E] (d : ℕ) (hd : d.P
     have h1 : IsIntegral ℤ q := by
       have : (q : E) = algebraMap ℚ E q := by simp
       rw [this] at hq
-      exact (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 hq
+      exact (isIntegral_algebraMap_iff ).1 hq
     obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
     exact ⟨n, by simpa using hn.symm⟩
   obtain ⟨t, ht⟩ := key (2 * a) (by

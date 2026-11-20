@@ -232,7 +232,7 @@ theorem exists_base_smul_mem (Λ : Submodule (𝓞 E) (Fin n → E)) (x : Fin n 
     have : IsIntegral ℤ (algebraMap F E k) := by
       rw [hk]
       exact (s * σ s).isIntegral_coe
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   let a : 𝓞 F := ⟨k, hint⟩
   have ha : algebraMap (𝓞 F) (𝓞 E) a = s * σ s := by
     apply RingOfIntegers.ext

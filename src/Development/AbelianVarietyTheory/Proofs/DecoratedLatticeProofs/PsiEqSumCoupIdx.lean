@@ -24,7 +24,7 @@ theorem psi_eq_sum_coupIdx : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
   have hfun : T.Psi g x₀ = fun y => ∑ yb ∈ S, T.xiPen (box _ c₂) g yb x₀ * cosetInd (box _ c₂) yb y := funext key
   rw [hfun]
   simp only [GlobalTheory.StepData.hat, Finset.sum_mul]
-  rw [integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · refine Finset.sum_congr rfl fun yb _ => ?_
     simp_rw [mul_assoc]
     exact integral_const_mul _ _

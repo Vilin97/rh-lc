@@ -187,8 +187,8 @@ theorem exists_glue {d n M : ℕ} (b : Module.Basis (Fin d) F E) (Y : Fin n → 
 theorem continuous_sizeTup {d n M : ℕ} (b : Module.Basis (Fin d) F E) :
     Continuous (sizeTup b : (Fin n → Fin M → Ainf F ⊗[F] E) → ℝ) := by
   unfold sizeTup sizeInf
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun i _ =>
-    continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun v _ => continuous_norm.comp ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun i _ =>
+    continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun v _ => continuous_norm.comp ?_
   exact (continuous_apply (A := fun v : InfinitePlace F => v.Completion) v).comp
     ((continuous_apply k).comp ((TopK.isHomeomorph_coord (Ainf F) b).continuous.comp
       ((continuous_apply i).comp (continuous_apply a))))

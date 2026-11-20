@@ -24,7 +24,7 @@ theorem UpperTheory.Gal.W2.Seed.pPerfOf :
   intro E _ _ _ A M hgen hc q hq
   obtain ⟨_, e1, he1, hz⟩ := hgen
   obtain ⟨e2, he2, c', hc'⟩ := hc
-  refine ⟨e1 * e2, Nat.Coprime.mul (he1.coprime_dvd_right hq) (he2.coprime_dvd_right hq), ?_, ⟨c' * e1, ?_⟩⟩
+  refine ⟨e1 * e2, Nat.Coprime.mul_left (he1.coprime_dvd_right hq) (he2.coprime_dvd_right hq), ?_, ⟨c' * e1, ?_⟩⟩
   · intro f
     obtain ⟨z, hzf⟩ := exists_trace_rep E f
     have hzc : InCodiff z := fun y => ⟨f y, hzf y⟩

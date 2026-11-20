@@ -233,7 +233,7 @@ lemma char_eq_prod {I : Type} [Fintype I] (e : Module.Basis I ℤ X) (G : Type) 
     (φ : Multiplicative X →* G) :
     φ = ∏ i, coch (e.coord i).toAddMonoidHom G (φ (Multiplicative.ofAdd (e i))) := by
   refine MonoidHom.ext fun a => ?_
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   conv_lhs => rw [← ofAdd_toAdd a, ← e.sum_repr a.toAdd, ofAdd_sum, map_prod]
   refine Finset.prod_congr rfl fun i _ => ?_
   rw [ofAdd_zsmul, map_zpow]

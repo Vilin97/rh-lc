@@ -91,7 +91,7 @@ private theorem aux (N : ℕ) [NeZero N] (b : ℕ) : ∀ (a : ℕ) (ha : a ∣ N
       rw [mul_assoc, hbsplit, hab]
     have ha'dvd : a * p ^ b.factorization p ∣ N := ⟨_, ha'N.symm⟩
     have ha'cop : (a * p ^ b.factorization p).Coprime (b / p ^ b.factorization p) :=
-      Nat.Coprime.mul (Nat.Coprime.coprime_dvd_right hb'dvd hcop) (Nat.Coprime.pow_left _ hpb')
+      Nat.Coprime.mul_left (Nat.Coprime.coprime_dvd_right hb'dvd hcop) (Nat.Coprime.pow_left _ hpb')
     have IH := ih _ hb'lt (a * p ^ b.factorization p) ha'dvd ha'N ha'cop
     have hvN : N.factorization p = b.factorization p := by
       rw [← hab, Nat.factorization_mul ha0 hb0, Finsupp.add_apply,

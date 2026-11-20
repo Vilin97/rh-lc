@@ -45,7 +45,7 @@ theorem norm_modEq (H : Host R) (π : 𝓞 H.E) {T N : ℕ} (hN : N ≠ 0)
     have hM0' : (N : H.E) ≠ 0 := by exact_mod_cast hN
     rw [map_div₀, map_sub, map_one, map_natCast, map_natCast, eq_div_iff hM0', hz]
     linear_combination hn
-  rw [h4, isIntegral_algebraMap_iff (algebraMap ℚ H.E).injective] at hzi
+  rw [h4, isIntegral_algebraMap_iff ] at hzi
   obtain ⟨n, hn'⟩ := IsIntegrallyClosed.isIntegral_iff.1 hzi
   have h5 : (((T : ℤ) - ((1 : ℕ) : ℤ) : ℤ) : ℚ) = ((N * n : ℤ) : ℚ) := by
     have : (n : ℚ) = ((T : ℚ) - 1) / N := by simpa using hn'

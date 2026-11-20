@@ -102,7 +102,7 @@ theorem isHomogeneous {φ : ι → E → ℂ} {I : Ideal (MvPolynomial ι ℂ)}
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [eval_mul_of_isHomogeneous (fun c => φ c z) s (homogeneousComponent_isHomogeneous m F)]
     ring
-  have hc := congrArg (fun p => Polynomial.coeff p i) (Polynomial.funext hP)
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) (Polynomial.funext hP)
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero,
     Finset.sum_ite_eq, Finset.mem_range] at hc
   simpa [show i < F.totalDegree + i + 1 by omega] using hc

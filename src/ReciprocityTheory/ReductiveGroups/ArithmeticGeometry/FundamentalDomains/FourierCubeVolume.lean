@@ -27,7 +27,7 @@ lemma Bv_herm (hωh : ∀ j, IsHermFam (ω j)) (t : Fin N → ℝ) : IsHermFam (
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [hωh j τ i k]
 
-lemma Bv_cont : Continuous (Bv ω) := continuous_finset_sum _ (fun j _ => (Complex.continuous_ofReal.comp (continuous_apply j)).smul continuous_const)
+lemma Bv_cont : Continuous (Bv ω) := continuous_finsetSum _ (fun j _ => (Complex.continuous_ofReal.comp (continuous_apply j)).smul continuous_const)
 
 lemma pair_Bv (χ : ι → Fin 2 → Fin 2 → ℂ) (t : Fin N → ℝ) :
     pr χ (Bv ω t) = ∑ j, t j * pr χ (ω j) := by

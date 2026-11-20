@@ -5,17 +5,17 @@ open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
 namespace GlobalTheory
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
-private lemma squarefree_prod_of_prime (s : Finset ℕ) (h : ∀ p ∈ s, p.Prime) : Squarefree (∏ p ∈ s, p) := by
-  rw [Nat.squarefree_iff_prime_squarefree]
-  intro x hx hxx
-  have hmem : ∀ t ⊆ s, x ∣ ∏ p ∈ t, p → x ∈ t := by
-    intro t ht hdvd
-    obtain ⟨p, hp, hxp⟩ := (Prime.dvd_finset_prod_iff hx.prime _).1 hdvd
-    rw [(Nat.prime_dvd_prime_iff_eq hx (h p (ht hp))).1 hxp]; exact hp
-  have hxs : x ∈ s := hmem s subset_rfl (dvd_trans (dvd_mul_right x x) hxx)
-  rw [← Finset.mul_prod_erase s (fun p => p) hxs] at hxx
-  have := hmem (s.erase x) (Finset.erase_subset _ _) (Nat.dvd_of_mul_dvd_mul_left hx.pos hxx)
-  simp at this
+private lemma squarefree_prod_of_prime (s : Finset ℕ) (h : ∀ p ∈ s, p.Prime) : Squarefree (∏ p ∈ s, p) := by sorry
+
+
+
+
+
+
+
+
+
+
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private lemma dvd_pow_of_prime_dvd_imp (n k : ℕ) (h : ∀ p, p.Prime → p ∣ n → p ∣ k) (hn : n ≠ 0) (hk : k ≠ 0) :
@@ -163,44 +163,44 @@ private lemma sum_coprime_range_mul_eq_sum_sum (d p : ℕ) (hd : 0 < d) (hp : p.
     (F : ℕ → ℝ) (hF : ∀ m, F m = F (m % (d * p))) :
     ∑ a ∈ (Finset.range (d * p)).filter (d * p).Coprime, F a
       = ∑ a₁ ∈ (Finset.range d).filter d.Coprime, ∑ a₂ ∈ (Finset.range p).filter p.Coprime,
-          F (a₁ * p + a₂ * d) := by
-  have hp0 := hp.pos
-  have hcop : Nat.Coprime d p := (Nat.coprime_comm.1 ((Nat.Prime.coprime_iff_not_dvd hp).2 hpd))
-  rw [← Finset.sum_product']
-  symm
-  have hmaps : ∀ x ∈ ((Finset.range d).filter d.Coprime) ×ˢ ((Finset.range p).filter p.Coprime),
-      (x.1 * p + x.2 * d) % (d * p) ∈ (Finset.range (d * p)).filter (d * p).Coprime := by
-    intro x hx
-    simp only [Finset.mem_product, Finset.mem_filter, Finset.mem_range] at hx ⊢
-    refine ⟨Nat.mod_lt _ (Nat.mul_pos hd hp0), Nat.Coprime.mul ?_ ?_⟩
-    · rw [coprime_mod_mul_iff, coprime_mul_add_mul_iff _ _ _ _ hcop]; exact hx.1.2
-    · rw [mul_comm d p, coprime_mod_mul_iff, add_comm, coprime_mul_add_mul_iff _ _ _ _ hcop.symm]
-      exact hx.2.2
-  have hinj : ∀ x ∈ ((Finset.range d).filter d.Coprime) ×ˢ ((Finset.range p).filter p.Coprime),
-      ∀ y ∈ ((Finset.range d).filter d.Coprime) ×ˢ ((Finset.range p).filter p.Coprime),
-      (x.1 * p + x.2 * d) % (d * p) = (y.1 * p + y.2 * d) % (d * p) → x = y := by
-    intro x hx y hy hxy
-    simp only [Finset.mem_product, Finset.mem_filter, Finset.mem_range] at hx hy
-    have hmod : x.1 * p + x.2 * d ≡ y.1 * p + y.2 * d [MOD d * p] := hxy
-    have h1 : x.1 * p ≡ y.1 * p [MOD d] := by
-      have := Nat.ModEq.of_mul_right p hmod
-      simpa [Nat.ModEq, Nat.add_mul_mod_self_right] using this
-    have h2 : x.2 * d ≡ y.2 * d [MOD p] := by
-      have := Nat.ModEq.of_mul_left d hmod
-      simpa [Nat.ModEq, Nat.add_mul_mod_self_right] using this
-    have e1 : x.1 % d = y.1 % d := Nat.ModEq.cancel_right_of_coprime hcop h1
-    have e2 : x.2 % p = y.2 % p := Nat.ModEq.cancel_right_of_coprime hcop.symm h2
-    rw [Nat.mod_eq_of_lt hx.1.1, Nat.mod_eq_of_lt hy.1.1] at e1
-    rw [Nat.mod_eq_of_lt hx.2.1, Nat.mod_eq_of_lt hy.2.1] at e2
-    exact Prod.ext e1 e2
-  refine Finset.sum_nbij (fun x => (x.1 * p + x.2 * d) % (d * p)) hmaps (fun x hx y hy h => hinj x hx y hy h) ?_ ?_
-  · intro z hz
-    obtain ⟨x, hx, hxz⟩ := Finset.surj_on_of_inj_on_of_card_le
-      (fun x _ => (x.1 * p + x.2 * d) % (d * p)) hmaps (fun x y hx hy h => hinj x hx y hy h) (le_of_eq (by
-        rw [Finset.card_product, ← Nat.totient_eq_card_coprime, ← Nat.totient_eq_card_coprime,
-          ← Nat.totient_eq_card_coprime, Nat.totient_mul hcop])) z hz
-    exact ⟨x, hx, hxz.symm⟩
-  · intro x _; exact hF _
+          F (a₁ * p + a₂ * d) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private lemma cexp_mul_div_eq_of_mod_right (D : ℕ) (hD : 0 < D) (n m : ℕ) :

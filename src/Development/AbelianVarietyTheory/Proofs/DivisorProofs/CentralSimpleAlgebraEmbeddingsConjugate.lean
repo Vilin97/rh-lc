@@ -85,7 +85,7 @@ theorem orbK_congr_equiv (e : A ≃* B) (K : Subgroup A) (δ : A) (F : A → ℂ
   have hΦ : Function.Bijective Φ := by
     constructor
     · intro q1 q2 h
-      obtain ⟨a, ha, b, hb, h'⟩ := (DoubleCoset.eq _ _ _ _).mp h
+      obtain ⟨a, ha, b, hb, h'⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp h
       calc q1 = DoubleCoset.mk _ K (Quotient.out q1) := (DoubleCoset.out_eq' _ _ q1).symm
         _ = DoubleCoset.mk _ K (Quotient.out q2) := by
           rw [DoubleCoset.eq]

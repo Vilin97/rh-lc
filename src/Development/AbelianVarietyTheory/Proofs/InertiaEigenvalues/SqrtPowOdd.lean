@@ -136,7 +136,7 @@ theorem _root_.GlobalTheory.SingleDatum.clsScal_mem : ∀ (D : D7) (V W : HSp D)
     exact (hval P hb hc).2
   obtain ⟨s, hs⟩ := hB.odd
   have hq : ((((Ideal.absNorm cc) ^ s * k ^ (2 * s + 1) : ℕ) : ℂ))⁻¹ ∈ O :=
-    hO _ (Nat.Coprime.mul (hNcop.pow_left _) (hkcop.pow_left _))
+    hO _ (Nat.Coprime.mul_left (hNcop.pow_left _) (hkcop.pow_left _))
   unfold clsScal
   rw [hidx, hs, GlobalTheory.ClassScalarIn.sqrt_pow_odd, c4]
   convert O.mul_mem hv hq using 1

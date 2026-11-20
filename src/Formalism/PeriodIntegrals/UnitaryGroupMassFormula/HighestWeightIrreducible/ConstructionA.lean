@@ -26,7 +26,7 @@ theorem coeff_mem_of_eval {σ : Type*} (U : Submodule ℂ (MvPolynomial σ ℂ))
   by_cases hk : k ≤ p.natDegree
   · have hq0 : q = 0 := Polynomial.eq_zero_of_infinite_isRoot q
       (Set.infinite_of_injective_forall_mem Nat.cast_injective (fun n => hroot n))
-    have hc := congrArg (fun r => Polynomial.coeff r k) hq0
+    have hc := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r k) hq0
     simp only [hq, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero,
       Finset.sum_ite_eq, Finset.mem_range, Nat.lt_succ_iff.mpr hk, if_true] at hc
     simpa using hc

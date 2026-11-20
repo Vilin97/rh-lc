@@ -119,7 +119,7 @@ theorem eval_applyWord (e : Fin r × Fin n →₀ ℕ) (L : List (Fin r × Fin n
     rw [hw, ih hL1 h2]
     have hm := map_rowGen (R := R) L p ⟨p.2.val, hpr⟩ rfl hp hpL
       (fun q hq => ⟨hL1 q hq, (h3 q hq p (by simp)).2⟩) F
-    have hc := congrArg (fun P => Polynomial.coeff P (e p)) hm
+    have hc := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P (e p)) hm
     simp only [Polynomial.coeff_map] at hc
     have hc' : unitri R L (rowDiv R ⟨p.2.val, hpr⟩ p.1 (e p) F) =
         (single R p (unitri R (L ++ [p]) F)).coeff (e p) := hc

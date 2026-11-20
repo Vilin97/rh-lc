@@ -32,7 +32,7 @@ theorem exists_sum_mul_of_finite_torsion (l : ℕ) [Fact l.Prime] (M M' : Type) 
     conv_lhs => rw [← b.linearCombination_repr m]
     rw [Finsupp.linearCombination_apply, Finsupp.sum]
   conv_lhs => rw [hm']
-  rw [map_sum, AddMonoidHom.finset_sum_apply]
+  rw [map_sum, AddMonoidHom.finsetSum_apply]
   simp only [pairing_smul_left', LinearMap.toAddMonoidHom_coe, Module.Basis.coord_apply]
   refine Finset.sum_subset hsub ?_
   intro k _ hk

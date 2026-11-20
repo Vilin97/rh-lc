@@ -62,7 +62,7 @@ theorem so_sum_sq_ge [IsCMField E] (w : E) (hw0 : w ≠ 0)
     field_simp
   have amgm := Real.geom_mean_le_arith_mean_weighted Finset.univ (fun _ => 1 / (Module.finrank ℚ E : ℝ))
     (fun σ : E →+* ℂ => ‖σ w‖ ^ 2) (fun _ _ => by positivity) hwt (fun _ _ => by positivity)
-  rw [Real.finset_prod_rpow Finset.univ (fun σ : E →+* ℂ => ‖σ w‖ ^ 2) (fun _ _ => by positivity),
+  rw [Real.finsetProd_rpow Finset.univ (fun σ : E →+* ℂ => ‖σ w‖ ^ 2) (fun _ _ => by positivity),
     Finset.prod_pow, so_prod_norm, ← Finset.mul_sum] at amgm
   have hX : 0 ≤ |(Algebra.norm ℚ w : ℝ)| := abs_nonneg _
   have hY : 0 ≤ |(discr E : ℝ)| := abs_nonneg _

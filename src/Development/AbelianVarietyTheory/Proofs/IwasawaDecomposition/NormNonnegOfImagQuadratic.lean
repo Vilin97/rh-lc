@@ -142,7 +142,7 @@ theorem dvd_of_eq_mul_integral {E : Type} [Field E] [NumberField E] {M : ℕ} (h
   have hM'' : (M : ℚ) ≠ 0 := by exact_mod_cast hM
   have e : y = algebraMap ℚ E ((n : ℚ) / M) := by
     rw [map_div₀, map_intCast, map_natCast, h]; field_simp
-  rw [e, isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at hy
+  rw [e, isIntegral_algebraMap_iff ] at hy
   obtain ⟨k, hk⟩ := IsIntegrallyClosed.isIntegral_iff.mp hy
   refine ⟨k, ?_⟩
   have : (n : ℚ) = M * k := by

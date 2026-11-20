@@ -196,7 +196,7 @@ theorem isLattice_of_isFrame {β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)}
       rw [he]
       exact Subring.zero_mem _
     have h2 := hall (algebraMap ℚ E (1 / 2))
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ E).injective] at h2
+    rw [isIntegral_algebraMap_iff ] at h2
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
     have hy' : (y : ℚ) = 1 / 2 := by simpa using hy
     have h3 : ((2 * y : ℤ) : ℚ) = 1 := by push_cast; rw [hy']; norm_num

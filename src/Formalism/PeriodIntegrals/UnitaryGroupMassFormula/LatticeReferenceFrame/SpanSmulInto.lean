@@ -158,7 +158,7 @@ theorem span_part (p m r k : ℕ) (θ : 𝓞 I.E) (e f : Fin r → Fin I.n → I
       rw [← hsm]
       exact I.L.smul_mem φ hy
     refine hbez _ hφy (M * T * s2 * s3 * s1)
-      (Nat.Coprime.mul (Nat.Coprime.mul (Nat.Coprime.mul (Nat.Coprime.mul hM hT) hs2) hs3) hs1) ?_
+      (Nat.Coprime.mul_left (Nat.Coprime.mul_left (Nat.Coprime.mul_left (Nat.Coprime.mul_left hM hT) hs2) hs3) hs1) ?_
     have e2 : ((M * T * s2 * s3 * s1 : ℕ) : I.E) • ((φ : I.E) • y) =
         ((M * T * s2 * s3 : ℕ) : I.E) • ((φ : I.E) • ((s1 : I.E) • y)) := by
       simp only [smul_smul]

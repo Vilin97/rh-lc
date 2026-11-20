@@ -70,7 +70,7 @@ theorem isDVR {K : Type} [Field K] [NumberField K] (σ : Type) [Finite σ]
     apply ha0
     have := hinj (hm.trans (map_zero _).symm)
     simpa using this
-  refine ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 0 4).mpr ?_
+  refine ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hnf).out 1 5).mpr ?_
   rw [hmax]
   obtain ⟨g, hg⟩ := (IsPrincipalIdealRing.principal (maximalIdeal Ol))
   rw [hg]

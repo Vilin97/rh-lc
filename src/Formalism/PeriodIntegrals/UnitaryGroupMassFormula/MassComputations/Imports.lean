@@ -64,7 +64,7 @@ theorem core {c : ℕ} (hc : Nat.Coprime c X.B.g)
           (c : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) • (X.f0 b - incl X.B.I (X.fR b)) := by
       rw [← smul_sub, sub_sub_cancel]
     rw [h]; exact sub_mem (sm X.B.I hcI (X.vectorsInLattice.1 b).2) (hmLL (hfc b))
-  have hc3 : Nat.Coprime (c * c * c) X.B.g := Nat.Coprime.mul (Nat.Coprime.mul hc hc) hc
+  have hc3 : Nat.Coprime (c * c * c) X.B.g := Nat.Coprime.mul_left (Nat.Coprime.mul_left hc hc) hc
   refine ⟨fun a => ?_, ?_, fun i => ?_⟩
   ·
     have hv := hTL _ (X.vectorsInLattice.1 a).1
@@ -167,8 +167,8 @@ theorem core {c : ℕ} (hc : Nat.Coprime c X.B.g)
     have hle : Submodule.span (IntAf X.B.I.F X.B.I.E) (X.e0 '' Set.univ) ⊔ mL X.B.I X.B.g ≤
         Submodule.span (IntAf X.B.I.F X.B.I.E) (Set.range X.e0 ∪ X.bw '' {j | j.1 < i.1}) ⊔ mL X.B.I X.B.g :=
       sup_le_sup_right (Submodule.span_mono (by rw [Set.image_univ]; exact Set.subset_union_left)) _
-    have hcc : Nat.Coprime (c * c) X.B.g := Nat.Coprime.mul hc hc
-    have hc4 : Nat.Coprime (c * (c * c) * c) X.B.g := Nat.Coprime.mul (Nat.Coprime.mul hc hcc) hc
+    have hcc : Nat.Coprime (c * c) X.B.g := Nat.Coprime.mul_left hc hc
+    have hc4 : Nat.Coprime (c * (c * c) * c) X.B.g := Nat.Coprime.mul_left (Nat.Coprime.mul_left hc hcc) hc
     unfold InMod
     exact close X.B.I le_sup_right hv hsplit hcc hc4 (hle hk) hr
 

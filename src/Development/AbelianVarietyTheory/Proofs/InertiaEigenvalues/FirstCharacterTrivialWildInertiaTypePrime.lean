@@ -34,7 +34,7 @@ theorem main : ∀ (D : D7) (i : D.nd.Loc) (k : Fin 2) (v : D.nd.PlG k), D.nd.l 
   exact GlobalTheory.WildSetSQ.char_eq_one_of_wild (D.nd.plOm.1 (D.naut.plGw k v)) (D.nd.O_adic i) (D.nd.chi i 1)
     (D.nd.chi_cont i 1) s hs _
     (GlobalTheory.WildKill.not_lt_one_of_coprime _
-      (Nat.Coprime.mul (GlobalTheory.WildSetSQ.coprime_pred _ (D.host.g_prime k).one_lt.le)
+      (Nat.Coprime.mul_left (GlobalTheory.WildSetSQ.coprime_pred _ (D.host.g_prime k).one_lt.le)
         (Nat.Coprime.pow_left n hcop)) hgv) hpow
 
 end GlobalTheory.ChiTame

@@ -155,7 +155,7 @@ theorem at_prime_abs {P L F R n : Type*} [CommRing P] [IsDomain P] [IsNoetherian
     simpa using hπR0
   have hprin : (IsLocalRing.maximalIdeal R).IsPrincipal := ⟨⟨_, hmax⟩⟩
   haveI : IsDiscreteValuationRing R := by
-    have h5 := (IsDiscreteValuationRing.TFAE R hnf).out 0 4
+    have h5 := (IsDiscreteValuationRing.TFAE R hnf).out 1 5
     exact h5.2 hprin
   have hirr : Irreducible (algebraMap P R π) :=
     (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 hmax

@@ -54,7 +54,7 @@ theorem add_c_int (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c
     rw [eq_ratCast, hr]
     have := (a + RingOfIntegers.mapRingHom c a).isIntegral_coe
     simpa [RingOfIntegers.mapRingHom_apply] using this
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ K).injective,
+  rw [isIntegral_algebraMap_iff ,
     IsIntegrallyClosed.isIntegral_iff] at hint
   obtain ⟨n, hn⟩ := hint
   refine ⟨n, RingOfIntegers.ext ?_⟩

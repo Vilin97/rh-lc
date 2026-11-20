@@ -267,20 +267,20 @@ end Pair
 
 theorem pairing_fact : PairFact := by
   intro D cc δ p _ N N' L L₁ L' L₁' ⟨s, hs, hs1, hs2⟩ ⟨s', hs', hs1', hs2'⟩
-  have hss : Nat.Coprime (s * s') p := Nat.Coprime.mul hs hs'
+  have hss : Nat.Coprime (s * s') p := Nat.Coprime.mul_left hs hs'
   refine ⟨fun r b ⟨hli, hb1, hb2⟩ => ⟨hli, fun i => ?_, fun y hy => ?_⟩, fun t ⟨n, hn, hc, hm⟩ => ?_⟩
   · obtain ⟨s0, hc0, hm0⟩ := hb1 i
-    refine ⟨(s * s') * s0, Nat.Coprime.mul hss hc0, ?_⟩
+    refine ⟨(s * s') * s0, Nat.Coprime.mul_left hss hc0, ?_⟩
     rw [Nat.cast_mul, mul_smul]
     exact ie_yy_scale s s' hs2 hs1' hm0
   · obtain ⟨s1, hc1, c, hcs⟩ := hb2 _ (ie_yy_scale s s' hs1 hs2' hy)
-    refine ⟨s1 * (s * s'), Nat.Coprime.mul hc1 hss, c, ?_⟩
+    refine ⟨s1 * (s * s'), Nat.Coprime.mul_left hc1 hss, c, ?_⟩
     rw [Nat.cast_mul, mul_smul]
     exact hcs
   · have hp : p ≠ 1 := (Fact.out : p.Prime).one_lt.ne'
     have hs0 : 0 < s := Nat.pos_of_ne_zero fun h => hp (Nat.coprime_zero_left p |>.1 (h ▸ hs))
     have hs0' : 0 < s' := Nat.pos_of_ne_zero fun h => hp (Nat.coprime_zero_left p |>.1 (h ▸ hs'))
-    refine ⟨(s * s') * n, Nat.mul_pos (Nat.mul_pos hs0 hs0') hn, Nat.Coprime.mul hss hc, ?_⟩
+    refine ⟨(s * s') * n, Nat.mul_pos (Nat.mul_pos hs0 hs0') hn, Nat.Coprime.mul_left hss hc, ?_⟩
     have h := ie_La_scale cc δ s s' hs2 hs1' hm
     rw [AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, ← mul_smul] at h
     exact h

@@ -229,7 +229,7 @@ theorem cl_dvr [IsAdicComplete (maximalIdeal R) R] :
   have hnf : ¬ IsField (integralClosure R L) := fun h =>
     (isField_iff_maximalIdeal_eq.not.mpr IsDiscreteValuationRing.not_a_field')
       (isField_of_isIntegral_of_isField (cl_inj R L) h)
-  exact ((IsDiscreteValuationRing.TFAE (integralClosure R L) hnf).out 0 2).mpr hD
+  exact ((IsDiscreteValuationRing.TFAE (integralClosure R L) hnf).out 1 3).mpr hD
 
 end
 

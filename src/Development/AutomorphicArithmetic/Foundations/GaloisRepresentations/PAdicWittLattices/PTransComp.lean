@@ -16,8 +16,8 @@ theorem UpperTheory.Gal.G3.pTransComp :
   haveI := m2
   haveI := m1'
   haveI := m2'
-  refine ⟨inferInstance, ?_, ⟨ψ₂' ≫ ψ₁', d₁ * d₂, inferInstance, ?_, ?_, ?_, Nat.Coprime.mul cp1 cp2⟩,
-    ⟨c₂ * c₁, Nat.Coprime.mul cc2 cc1, ⟨?_⟩, ?_⟩, ?_⟩
+  refine ⟨inferInstance, ?_, ⟨ψ₂' ≫ ψ₁', d₁ * d₂, inferInstance, ?_, ?_, ?_, Nat.Coprime.mul_left cp1 cp2⟩,
+    ⟨c₂ * c₁, Nat.Coprime.mul_left cc2 cc1, ⟨?_⟩, ?_⟩, ?_⟩
   · intro c
     rw [← Category.assoc, a1 c, Category.assoc, a2 c, Category.assoc]
   · intro c

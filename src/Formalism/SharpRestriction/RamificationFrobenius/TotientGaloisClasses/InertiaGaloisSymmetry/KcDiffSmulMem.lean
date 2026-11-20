@@ -50,7 +50,7 @@ theorem kc_mem_dual_iff (y : H.E) :
   have key : ∀ w : H.E, Algebra.trace H.K H.E w ∈ (algebraMap (𝓞 H.K) H.K).range ↔
       IsIntegral ℤ (∑ τ : H.E ≃ₐ[H.K] H.E, τ w) := by
     intro w
-    rw [← trace_eq_sum_automorphisms, isIntegral_algebraMap_iff (algebraMap H.K H.E).injective]
+    rw [← trace_eq_sum_automorphisms, isIntegral_algebraMap_iff ]
     constructor
     · rintro ⟨a, ha⟩
       rw [← ha]

@@ -50,7 +50,7 @@ theorem integral_eq_vol_mul_sum_of_cosets :
   calc ∫ g, F g ∂μ = ∫ g, ∑ r ∈ R, ((r • (K : Set (GL (Fin a) k))).indicator (fun _ => F r) g) ∂μ := by
           congr 1; funext g; exact hpt g
     _ = ∑ r ∈ R, ∫ g, ((r • (K : Set (GL (Fin a) k))).indicator (fun _ => F r) g) ∂μ :=
-          integral_finset_sum R hint
+          MeasureTheory.integral_finsetSum R hint
     _ = ∑ r ∈ R, (μ.real (K : Set (GL (Fin a) k)) : ℂ) * F r := by
           refine Finset.sum_congr rfl fun r _ => ?_
           rw [integral_indicator_const _ (hKm.const_smul r), Measure.real, hcos, ← Measure.real,

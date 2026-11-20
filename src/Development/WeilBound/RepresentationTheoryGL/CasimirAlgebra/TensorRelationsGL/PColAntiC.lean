@@ -59,7 +59,7 @@ theorem split {m : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (col : Fin m 
   have hcomm : ∀ a ∈ S, ∀ b ∈ S, a * b = b * a := by
     rintro _ ⟨k, rfl⟩ _ ⟨l, rfl⟩
     exact (hc k l).eq
-  letI : CommRing (Algebra.adjoin ℂ S) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : CommRing (Algebra.adjoin ℂ S) := Algebra.isMulCommutative_adjoin ℂ hcomm
   let x' : Fin m → Algebra.adjoin ℂ S := fun k => ⟨xJ E k, Algebra.subset_adjoin ⟨k, rfl⟩⟩
   let F : Fin m → Fin m → Algebra.adjoin ℂ S := fun p q =>
     if p < q ∧ col p = col q then x' p - x' q + 1 else 1

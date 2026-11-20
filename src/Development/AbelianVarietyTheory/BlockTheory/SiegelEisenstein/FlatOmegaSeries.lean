@@ -58,11 +58,11 @@ theorem oneCoset_iff (ψ : AddChar k Circle) (ν : Measure k) (μ : kˣ →* ℂ
   constructor
   · intro H h hh
     have h1 : DoubleCoset.mk (R k n c 1) J h = DoubleCoset.mk (R k n c 1) J 1 := H ⟨h, rfl, hh⟩
-    obtain ⟨r, hr, κ, hκ, e⟩ := (DoubleCoset.eq _ _ _ _).1 h1.symm
+    obtain ⟨r, hr, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h1.symm
     exact ⟨r, hr, κ, hκ, by simpa using e⟩
   · rintro H _ ⟨h, rfl, hh⟩
     obtain ⟨r, hr, κ, hκ, e⟩ := H h hh
-    exact ((DoubleCoset.eq _ _ _ _).2 ⟨r, hr, κ, hκ, by simpa using e⟩).symm
+    exact ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r, hr, κ, hκ, by simpa using e⟩).symm
 
 end Defs
 

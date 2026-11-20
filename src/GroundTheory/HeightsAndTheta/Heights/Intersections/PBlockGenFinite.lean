@@ -89,7 +89,7 @@ theorem BlockGenFinite.proof (hR : BlockRatioAlg.Statement) : BlockGenFinite.Sta
     intro q
     have hne : pol q ≠ 0 := by
       intro h0
-      have h1 := congrArg (fun f ↦ Polynomial.coeff f (m q)) h0
+      have h1 := congrArg (fun f ↦ _root_.AddMonoidAlgebra.coeff (M := ℕ) f (m q)) h0
       simp only [hpol, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
         Polynomial.coeff_zero] at h1
       rw [Finset.sum_eq_single (Fin.last (m q))] at h1

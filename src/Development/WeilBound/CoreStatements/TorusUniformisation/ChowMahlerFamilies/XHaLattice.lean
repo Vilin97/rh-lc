@@ -21,7 +21,7 @@ theorem dvr_of_height_one {A S : Type} [CommRing A] [IsDomain A] [IsNoetherianRi
     exact absurd hd (by decide)
   have hk : Ring.KrullDimLE 1 S := Ring.krullDimLE_iff.2 (by rw [hd]; rfl)
   have key : IsDiscreteValuationRing S ↔ IsIntegrallyClosed S ∧ ∃! P : Ideal S, P ≠ ⊥ ∧ P.IsPrime :=
-    (IsDiscreteValuationRing.TFAE S hf).out 0 3
+    (IsDiscreteValuationRing.TFAE S hf).out 1 4
   refine key.2 ⟨hI, IsLocalRing.maximalIdeal S,
     ⟨IsLocalRing.isField_iff_maximalIdeal_eq.not.1 hf, inferInstance⟩, ?_⟩
   rintro P ⟨hP0, hP⟩

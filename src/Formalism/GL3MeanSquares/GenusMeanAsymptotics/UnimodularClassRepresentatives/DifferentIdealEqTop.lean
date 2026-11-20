@@ -90,7 +90,7 @@ theorem exists_int_of_star_eq (hF : ∀ a : K, star a = a ↔ a ∈ Set.range (a
   have hint : IsIntegral ℤ u := by
     have h1 : IsIntegral ℤ (algebraMap F K u) := by
       rw [hu]; exact RingOfIntegers.isIntegral_coe y
-    exact (isIntegral_algebraMap_iff (algebraMap F K).injective).mp h1
+    exact (isIntegral_algebraMap_iff ).mp h1
   refine ⟨⟨u, hint⟩, ?_⟩
   apply RingOfIntegers.ext
   exact (coe_algebraMap (F := F) (K := K) ⟨u, hint⟩).trans hu

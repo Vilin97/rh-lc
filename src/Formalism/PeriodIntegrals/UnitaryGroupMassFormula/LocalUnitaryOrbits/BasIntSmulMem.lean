@@ -85,7 +85,7 @@ theorem basLat_fg (L : Submodule (𝓞 E) (Fin n → E)) (hLat : Submodule.IsLat
       rw [basRatV_zsmul]
       exact zsmul_mem hy c
 
-theorem basSpan_top (L : Submodule (𝓞 E) (Fin n → E)) (hLat : Submodule.IsLattice E L) :
+theorem basSpan_top (L : Submodule (𝓞 E) (Fin n → E)) (hLat : Submodule.IsFullLattice E L) :
     Submodule.span (Fv F v) (latLoc (E := E) v (L : Set (Fin n → E)) : Set (Fin n → Fv F v ⊗[F] E)) = ⊤ := by
   classical
   have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E

@@ -882,7 +882,7 @@ def goodVec (D : D7) (p : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), Fin D.R.r → ZMo
 theorem monicOf_inj {K : Type} [Field K] {N : ℕ} (a b : Fin N → K)
     (h : Formalism.CyclotomicNorms.monicOf a = Formalism.CyclotomicNorms.monicOf b) : a = b := by
   funext i
-  have hc := congrArg (fun p => Polynomial.coeff p (i : ℕ)) h
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (i : ℕ)) h
   simp only [Formalism.CyclotomicNorms.monicOf, Polynomial.coeff_add, Polynomial.coeff_X_pow, Polynomial.finset_sum_coeff,
     Polynomial.coeff_C_mul_X_pow, Fin.val_inj] at hc
   simpa [i.isLt.ne, Finset.sum_ite_eq, Finset.sum_ite_eq'] using hc

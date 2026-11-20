@@ -25,7 +25,7 @@ theorem localization_span_singleton_dvr {A : Type*} [CommRing A] [IsDomain A] [I
     rw [isField_iff_maximalIdeal_eq, hmax, Ideal.span_singleton_eq_bot]
     exact hne
   have hdvr : IsDiscreteValuationRing L :=
-    ((IsDiscreteValuationRing.TFAE L hnf).out 4 0).mp (⟨⟨_, hmax⟩⟩ : (maximalIdeal L).IsPrincipal)
+    ((IsDiscreteValuationRing.TFAE L hnf).out 5 1).mp (⟨⟨_, hmax⟩⟩ : (maximalIdeal L).IsPrincipal)
   exact ⟨hdvr, (IsDiscreteValuationRing.irreducible_iff_uniformizer _).mpr hmax⟩
 
 theorem DiagonalLocalDVR.proof (h0 : DiagonalQuotient.Statement) : DiagonalLocalDVR.Statement := by

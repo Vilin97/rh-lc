@@ -38,7 +38,7 @@ theorem exists_compact_reps {La : Type} [AddCommGroup La] (P : La →+ (Fin N �
   refine ⟨(fun c : b → ℝ => ∑ j, c j • (j : Fin N → ℂ)) '' Set.pi Set.univ (fun _ => Set.Icc (0 : ℝ) 1),
     ?_, ?_⟩
   · exact (isCompact_univ_pi fun _ => isCompact_Icc).image
-      (continuous_finset_sum _ fun j _ => (continuous_apply j).smul continuous_const)
+      (continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const)
   · intro z
     let B := Module.Basis.mk hbli (le_of_eq (by rw [Subtype.range_coe, hbspan]))
     have hBj : ∀ j, B j = (j : Fin N → ℂ) := fun j => by simp [B]

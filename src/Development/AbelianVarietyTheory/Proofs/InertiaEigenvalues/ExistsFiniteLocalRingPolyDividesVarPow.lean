@@ -45,7 +45,7 @@ theorem adjoinRoot_eq_zero {R : Type} [CommRing R] {g : R[X]} (hg : g.Monic) {j 
     rw [Polynomial.degree_eq_natDegree hg.ne_zero]
     exact_mod_cast hj
   rw [(Polynomial.modByMonic_eq_self_iff hg).2 hdeg] at h1
-  simpa using congrArg (fun p => Polynomial.coeff p j) h1
+  simpa using congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p j) h1
 
 theorem aeval_C_mul_X_coeff {ι L : Type} [Fintype ι] [CommRing L] (F : MvPolynomial ι L) (b : ι → L)
     (d : ℕ) : (MvPolynomial.aeval (fun q => C (b q) * X) F : L[X]).coeff d =

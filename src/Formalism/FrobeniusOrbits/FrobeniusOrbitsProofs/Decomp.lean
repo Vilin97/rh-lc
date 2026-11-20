@@ -180,7 +180,7 @@ theorem hPart_inertia (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) (p : �
     rw [hinv]
     exact hζint.pow _
   have hθint : IsIntegral ℤ (thE ζ a b) :=
-    (isIntegral_algebraMap_iff (algebraMap (hostE ζ a b) L).injective).mp (hζint.add hζiint)
+    (isIntegral_algebraMap_iff ).mp (hζint.add hζiint)
   obtain ⟨zz, hzz⟩ : ∃ z : 𝓞 L, (z : L) = ζ := ⟨⟨ζ, hζint⟩, rfl⟩
   obtain ⟨tt, htt⟩ : ∃ t : 𝓞 (hostE ζ a b), (t : hostE ζ a b) = thE ζ a b := ⟨⟨_, hθint⟩, rfl⟩
   have hth : ((thE ζ a b : hostE ζ a b) : L) = ζ + ζ⁻¹ := rfl

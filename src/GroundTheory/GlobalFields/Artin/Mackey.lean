@@ -94,7 +94,7 @@ theorem sum_mul_mul_eq (H D : Subgroup G) [Fintype H] [Fintype D] (x : G) (F : G
       if DoubleCoset.mk H D u = DoubleCoset.mk H D x then Nat.card E else 0 := by
     intro u
     split_ifs with hu
-    · obtain ⟨h0, hh0, e0, he0, rfl⟩ := (DoubleCoset.eq H D x u).1 hu.symm
+    · obtain ⟨h0, hh0, e0, he0, rfl⟩ := (@DoubleCoset.eq _ _ H D x u).1 hu.symm
       rw [Nat.card_eq_fintype_card, ← Finset.card_univ]
       refine Finset.card_bij' (fun p _ ↦ ⟨⟨e0 * (p.2 : G)⁻¹, D.mul_mem he0 (D.inv_mem p.2.2)⟩, ?_⟩)
         (fun c _ ↦ (⟨h0 * (x * ((c : D) : G) * x⁻¹), H.mul_mem hh0 ((hE c).1 c.2)⟩,
@@ -135,7 +135,7 @@ theorem sum_mul_mul_eq (H D : Subgroup G) [Fintype H] [Fintype D] (x : G) (F : G
     · rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
       intro p _ hp
       apply hu
-      exact ((DoubleCoset.eq H D x u).2 ⟨p.1, p.1.2, p.2, p.2.2, hp.symm⟩).symm
+      exact ((@DoubleCoset.eq _ _ H D x u).2 ⟨p.1, p.1.2, p.2, p.2.2, hp.symm⟩).symm
   calc ∑ h : H, ∑ e : D, F (h * x * e)
       = ∑ p : H × D, F ((p.1 : G) * x * p.2) := (Fintype.sum_prod_type' _).symm
     _ = ∑ u : G, ∑ p ∈ Finset.univ.filter (fun p : H × D ↦ (p.1 : G) * x * p.2 = u),

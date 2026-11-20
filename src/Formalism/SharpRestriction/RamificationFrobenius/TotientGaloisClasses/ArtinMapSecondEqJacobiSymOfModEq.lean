@@ -148,7 +148,7 @@ theorem exists_unit (x y z : ℕ) (hx : Nat.Coprime x (2 ^ (e + 2))) (hy : Nat.C
     ∃ u : (ZMod (2 ^ (e + 2) * q * d))ˣ, (u : ZMod (2 ^ (e + 2) * q * d)).val ≡ x [MOD 2 ^ (e + 2)] ∧
       (u : ZMod (2 ^ (e + 2) * q * d)).val ≡ y [MOD q] ∧ (u : ZMod (2 ^ (e + 2) * q * d)).val ≡ z [MOD d] := by
   have h2q := cop_2q e hH
-  have h2qd : Nat.Coprime (2 ^ (e + 2) * q) d := Nat.Coprime.mul (cop_2d e hH) (cop_qd hH)
+  have h2qd : Nat.Coprime (2 ^ (e + 2) * q) d := Nat.Coprime.mul_left (cop_2d e hH) (cop_qd hH)
   obtain ⟨n, hn1, hn2⟩ := Nat.chineseRemainder h2q x y
   obtain ⟨m, hm12, hm3⟩ := Nat.chineseRemainder h2qd n z
   have hm1 : m ≡ x [MOD 2 ^ (e + 2)] := (hm12.of_dvd (dvd_mul_right _ _)).trans hn1

@@ -162,7 +162,7 @@ theorem VarWirtinger.proof (hDSC : DiscriminantSheetCover.Statement) (hMF : Mass
       · rw [Set.indicator_of_notMem (show y ∉ E k j from fun h => hB h.2),
           Set.indicator_of_notMem (show s k j y ∉ (fun x => WithLp.toLp 2 x) ⁻¹' B from hB), zero_mul,
           ENNReal.ofReal_zero]
-    rw [setLIntegral_congr_fun (hUD k).2.1 h1, lintegral_finset_sum _ (fun j _ =>
+    rw [setLIntegral_congr_fun (hUD k).2.1 h1, MeasureTheory.lintegral_finsetSum _ (fun j _ =>
       (((SheetAreaCompare.measurable_sheetJac (s k j)).ennreal_ofReal.const_mul (ENNReal.ofReal κ)).indicator
         (hEm k j))), Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_

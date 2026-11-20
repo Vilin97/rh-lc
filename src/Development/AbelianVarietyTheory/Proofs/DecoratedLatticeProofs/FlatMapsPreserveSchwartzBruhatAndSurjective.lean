@@ -144,7 +144,7 @@ theorem flatOnto_generic {X : Type} [TopologicalSpace X] [T2Space X] (ψ : AddCh
   set I : ℂ := ∫ e, W.indicator (fun _ => (1 : ℂ)) (freeMat p e) * f e ∂μ with hI
   have hfc : Continuous f := by
     refine continuous_subtype_val.comp (hψ.comp (Continuous.neg ?_))
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_affPt_uncurry p).comp (Continuous.prodMk_right (0 : Matrix n n' k))).matrix_elem _ _
   have hKo : IsOpen K := hWcl.isOpen.preimage (continuous_freeMat p)
   have hKc : IsCompact K := (isClosedEmbedding_freeMat p).isCompact_preimage hWc

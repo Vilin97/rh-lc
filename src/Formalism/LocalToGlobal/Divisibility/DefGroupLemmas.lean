@@ -987,7 +987,7 @@ theorem mem_intAd_of_tmul_mem (a : Af F) (h : (1 : E) ⊗ₜ[F] a ∈ intAf F E)
     rw [e1, Algebra.algebraMap_eq_smul_one, ← TensorProduct.smul_tmul, ← Algebra.algebraMap_eq_smul_one] at h3
     exact h3
   have h4 : IsIntegral ℤ f :=
-    (isIntegral_algebraMap_iff (algebraMap F E).injective).1 (Formalism.UG.P.csGlob_int (F := F) _ h2)
+    (isIntegral_algebraMap_iff ).1 (Formalism.UG.P.csGlob_int (F := F) _ h2)
   have h5 : algebraMap F (Af F) f ∈ intAd F := by
     have e5 : algebraMap F (Af F) f = algebraMap (𝓞 F) (Af F) (⟨f, h4⟩ : 𝓞 F) :=
       (IsScalarTower.algebraMap_apply (𝓞 F) F (Af F) (⟨f, h4⟩ : 𝓞 F)).symm

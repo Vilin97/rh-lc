@@ -451,7 +451,7 @@ theorem t_ClassCS : Formalism.FourierDecayAlt.PN.ClassCS := by
     (fun T hT => h2 T (fun x hx => hU'0 _ _ (hT x hx))) Cs
   have hlim : Filter.Tendsto (fun T : Finset J => ∑ c ∈ Cs, ‖∑ j ∈ T, U' c j‖ ^ 2) Filter.atTop
       (nhds (∑ c ∈ Cs, ‖∑' j, U' c j‖ ^ 2)) := by
-    refine tendsto_finset_sum Cs (fun c _ => ?_)
+    refine tendsto_finsetSum Cs (fun c _ => ?_)
     have ht : Filter.Tendsto (fun T : Finset J => ∑ j ∈ T, U' c j) Filter.atTop
         (nhds (∑' j, U' c j)) := (hsum c).hasSum
     exact ht.norm.pow 2

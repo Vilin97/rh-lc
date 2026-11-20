@@ -31,7 +31,7 @@ theorem first_family_le_box (ε : Fin m → Bool) : F1 (n := n) ε ≤ box ε Se
   have hF : ∀ k ∈ s.support, inF1 ε k := by
     intro k hk
     have : k ∈ p.vars := by
-      rw [mem_vars]; exact ⟨s, hs, hk⟩
+      rw [MvPolynomial.mem_vars_iff_mem_support]; exact ⟨s, hs, hk⟩
     exact (mem_supported.mp hp) this
   have : monomial s (p.coeff s) = p.coeff s • (monomial s 1 : PX m n) := by
     rw [smul_monomial, smul_eq_mul, mul_one]

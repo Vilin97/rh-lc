@@ -23,7 +23,7 @@ private theorem bsp_one (n : ℕ) (z : O) (A : Matrix (Fin n) (Fin n) O) :
         P * A * Q = z • (1 : Matrix (Fin ν) (Fin ν) O) := by
   classical
   haveI : ValuationRing O :=
-    ((IsDiscreteValuationRing.TFAE O (IsDiscreteValuationRing.not_isField O)).out 0 1).mp
+    ((IsDiscreteValuationRing.TFAE O (IsDiscreteValuationRing.not_isField O)).out 1 2).mp
       (inferInstance : IsDiscreteValuationRing O)
   obtain ⟨m, S⟩ := Submodule.smithNormalForm (Pi.basisFun O (Fin n))
     (LinearMap.range (Matrix.mulVecLin A))

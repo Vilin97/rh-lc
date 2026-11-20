@@ -73,7 +73,7 @@ theorem _root_.GlobalTheory.TopLevelShare.main : ∀ {F : Type} [Field F] [Valua
       · rintro ⟨y₁, h₁, h₂⟩
         exact ⟨y₁, h₁, by simpa [add_sub_right_comm] using add_mem h₂ hm⟩
     exact le_antisymm ((key _).2 le_rfl) ((key _).1 le_rfl)
-  set B : AddSubgroup (S.V × S.V) := A ⊓ AddSubgroup.comap (AddMonoidHom.fst S.V S.V + AddMonoidHom.snd S.V S.V) ((S.M d Λ).toAddSubgroup.map (DistribMulAction.toAddMonoidHom S.V S.th)) with hBdef
+  set B : AddSubgroup (S.V × S.V) := A ⊓ AddSubgroup.comap (AddMonoidHom.fst S.V S.V + AddMonoidHom.snd S.V S.V) ((S.M d Λ).toAddSubgroup.map (DistribSMul.toAddMonoidHom S.V S.th)) with hBdef
   have hB : ∀ b, b ∈ B ↔ b ∈ A ∧ π b ∈ S.M d Λ := by
     intro b
     rw [hBdef, AddSubgroup.mem_inf]
@@ -201,7 +201,7 @@ theorem _root_.GlobalTheory.TopLevelShare.main : ∀ {F : Type} [Field F] [Valua
   have hcount : T.ncard = βJ := by
     rw [← hJ]
     unfold _root_.GlobalTheory.HL.Frames.nLev
-    rw [← himage, Set.ncard_image_of_injOn hinj]
+    rw [← himage, Set.InjOn.ncard_image hinj]
   have hTne : T.Nonempty := by
     have : (fC '' T).Nonempty := by
       rw [himage]; exact ⟨_, y₀, hy₀, hy₀l, rfl⟩

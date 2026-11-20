@@ -576,7 +576,7 @@ theorem v_le_iff (P : LocPrime l) (LL : FinExt l) (x y : ℚ_[l]) :
     intro z
     rw [P.v_O]
     change IsIntegral ℤ_[l] (algebraMap ℚ_[l] ↥LL.1 z) ↔ _
-    rw [isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective,
+    rw [isIntegral_algebraMap_iff ,
       IsIntegrallyClosed.isIntegral_iff]
     exact ⟨fun ⟨w, hw⟩ => hw ▸ w.2, fun h => ⟨⟨z, h⟩, rfl⟩⟩
   by_cases hx : x = 0

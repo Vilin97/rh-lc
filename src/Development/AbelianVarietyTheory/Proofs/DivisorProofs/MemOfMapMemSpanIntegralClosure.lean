@@ -104,7 +104,7 @@ theorem mem_of_map_mem_span_integralClosure :
           rw [Pi.smul_apply, Subalgebra.smul_def, smul_eq_mul, mul_assoc]
         rw [this]; exact b.2.mul hx
     have := key _ hv
-    rw [hg v, isIntegral_algebraMap_iff (algebraMap K L).injective] at this
+    rw [hg v, isIntegral_algebraMap_iff ] at this
     exact this
   choose y hy using fun j => IsIntegrallyClosed.isIntegral_iff.1 (hint j)
   rw [hvsum]

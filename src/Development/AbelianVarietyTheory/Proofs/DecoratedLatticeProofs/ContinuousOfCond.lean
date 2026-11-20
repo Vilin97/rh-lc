@@ -166,7 +166,7 @@ theorem exists_system {σ₀ : X.K →+* ℂ} {P : rowSG Pr sel mu} {k : Type} [
           obtain ⟨β, -, rfl⟩ := hg
           exact ⟨β, rfl⟩
       obtain ⟨β, rfl⟩ := key s 0 rfl hne g hg
-      exact σ2 _ _ _ β ⟨_, ((DoubleCoset.eq _ _ _ _).2 ⟨r, hr, 1, one_mem _, (mul_one _).symm⟩).symm.trans (σ1 _ _ _ β), hn⟩
+      exact σ2 _ _ _ β ⟨_, ((@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r, hr, 1, one_mem _, (mul_one _).symm⟩).symm.trans (σ1 _ _ _ β), hn⟩
   · obtain ⟨g, hg, h', -, hf⟩ := Set.mem_iUnion₂.1 ((hsys.bij j c h).mapsTo hg')
     rw [hrat _ _ _ hne] at hg
     obtain ⟨al, hg⟩ := hg

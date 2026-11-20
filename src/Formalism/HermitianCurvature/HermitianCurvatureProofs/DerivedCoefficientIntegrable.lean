@@ -511,7 +511,7 @@ theorem Formalism.FourierDecayAlt.P.imported_results_hold : Formalism.FourierDec
   have hPfun : (S.step w).P = fun Y => ∏ s, (Y + S.lam s) := funext (S.step_P w)
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · rw [hPfun]
-    exact (continuous_finset_prod Finset.univ
+    exact (continuous_finsetProd Finset.univ
       (fun s _ => continuous_id.add continuous_const)).continuousOn
   · intro Y hY
     rw [S.step_P]
@@ -562,7 +562,7 @@ theorem Formalism.FourierDecayAlt.P.energy_estimate_joint : Formalism.FourierDec
     intro v
     obtain ⟨hadm, hlen⟩ := hAdm w hwW v
     exact hEL v (loc w v) hadm (by rw [hN v]; omega)
-  have hprod := tendsto_finset_prod Finset.univ (fun v _ => hlim v)
+  have hprod := tendsto_finsetProd Finset.univ (fun v _ => hlim v)
   have hsize : ∀ v, (S v).size (loc w v) ≠ 0 := by
     intro v
     obtain ⟨⟨hin, -⟩, -⟩ := hAdm w hwW v

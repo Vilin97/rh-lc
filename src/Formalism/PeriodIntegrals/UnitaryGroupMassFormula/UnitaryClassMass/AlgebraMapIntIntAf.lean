@@ -136,7 +136,7 @@ theorem crd_iff (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V) (s : 
     IsScalarTower.algebraMap_apply (𝓞 F) F E, algebraMap_smul]
 
 theorem flocHat [FiniteDimensional E V] (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V)
-    (hL : Submodule.IsLattice E L0)
+    (hL : Submodule.IsFullLattice E L0)
     (hsat : ∀ y : Fin M → E, vinc (F := F) y ∈ latHat F E (crdOf b L0) → y ∈ crdOf b L0)
     (S : Set (HeightOneSpectrum (𝓞 F))) (w : V) :
     (evT S ⊗ₜ[F] (1 : E)) • vinc (F := F) (b.equivFun w) ∈ latHat F E (crdOf b L0) ↔

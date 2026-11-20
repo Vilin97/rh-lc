@@ -202,7 +202,7 @@ def unipotentCoordsHomeomorph : (StrictUpperIndex n → 𝕜) ≃ₜ upperUnipot
     · exact continuous_const.add continuous_strictUpperMatrix
     · show Continuous fun v : StrictUpperIndex n → 𝕜 =>
         ∑ k ∈ Finset.range (Fintype.card n), (-strictUpperMatrix v) ^ k
-      exact continuous_finset_sum _ fun k _ => ((continuous_strictUpperMatrix (𝕜 := 𝕜) (n := n)).neg).pow k
+      exact continuous_finsetSum _ fun k _ => ((continuous_strictUpperMatrix (𝕜 := 𝕜) (n := n)).neg).pow k
   continuous_invFun :=
     continuous_pi fun p => (Units.continuous_val.comp continuous_subtype_val).matrix_elem _ _
 
@@ -477,7 +477,7 @@ theorem continuous_iwasawaDelta_diagPos :
   refine continuous_induced_rng.2 ?_
   show Continuous fun a : PosDiag n => (iwasawaDelta (diagPosOf a : GL n 𝕜) : ℝ)
   simp_rw [iwasawaDelta_diagPosOf]
-  refine continuous_finset_prod _ fun p _ => (Continuous.div ?_ ?_ fun a => (a.2 _).ne').pow _
+  refine continuous_finsetProd _ fun p _ => (Continuous.div ?_ ?_ fun a => (a.2 _).ne').pow _
   · exact (continuous_apply _).comp continuous_subtype_val
   · exact (continuous_apply _).comp continuous_subtype_val
 

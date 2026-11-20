@@ -203,7 +203,7 @@ theorem core (p : ℕ) [hp : Fact p.Prime] [CharP k p] {O : Type} [CommRing O] {
       simp only [Polynomial.map_sub, map_X, map_C, frobenius_def, ← hfr]
       exact Fintype.prod_equiv (Equiv.addRight 1) _ _ fun c => rfl
     have hcoef : ∀ i, Q.coeff i ^ p = Q.coeff i := fun i => by
-      have h1 := congrArg (fun P => Polynomial.coeff P i) hfix
+      have h1 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) hfix
       simp only [coeff_map, frobenius_def] at h1
       exact h1
     obtain ⟨μ, hμ⟩ := exists_lift p Q hcoef

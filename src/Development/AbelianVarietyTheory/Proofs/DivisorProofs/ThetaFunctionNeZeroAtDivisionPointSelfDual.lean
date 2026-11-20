@@ -128,7 +128,7 @@ theorem exists_ne_zero_of_selfDual : ∀ (V : Type) [AddCommGroup V] [Module ℚ
     rw [e]
     refine isOpen_biInter_finset fun m _ => isOpen_lt ?_ continuous_const
     refine (Complex.continuous_im.comp ?_).abs
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_apply i).comp continuous_subtype_val).mul continuous_const
   have hBinj : Function.Injective B := by
     refine (injective_iff_map_eq_zero B).2 fun u hu => hp ?_

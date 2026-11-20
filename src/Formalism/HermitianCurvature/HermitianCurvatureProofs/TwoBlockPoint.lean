@@ -1721,10 +1721,10 @@ theorem head_reduction_lemma : Formalism.FourierDecayAlt.A6.HeadReduction := by
         rw [← mul_assoc, Units.mul_inv, one_mul]
     refine ⟨?_, ?_⟩
     · rw [e]
-      exact hD.isOpen.preimage (continuous_mul_left _)
+      exact hD.isOpen.preimage (continuous_const_mul _)
     · unfold mulR
       rw [AddSubgroup.coe_map, AddMonoidHom.coe_mulLeft]
-      exact hD.isCompact.image (continuous_mul_left _)
+      exact hD.isCompact.image (continuous_const_mul _)
   refine ⟨mulR R ((hdpt.unit⁻¹ : Kˣ) : K), mulR R ((hdpt.unit ^ 2 * ϖ ^ (2 * k + 1 + j) : Kˣ) : K),
     hlat _, hlat _, fun n' Z' => ⟨fun n => PhiH R ψ h Z' n, ?_,
       fun t c => sum_identity R (two_block_point_size_sum h m t c) (two_block_point_block_matrix h m t c) ψ hD Z',

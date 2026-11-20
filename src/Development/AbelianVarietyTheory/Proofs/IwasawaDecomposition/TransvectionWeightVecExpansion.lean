@@ -35,7 +35,7 @@ theorem poly_coeff_eq (K : ℕ) (x y : ℕ → ℂ) (hxy : ∀ s : ℂ, ∑ k �
     rw [← sub_eq_zero, ← Finset.sum_sub_distrib] at this
     rw [← this]
     refine Finset.sum_congr rfl fun m _ => by ring
-  have hc := congrArg (fun p => Polynomial.coeff p k) hQ
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hQ
   simp only [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
   rw [Finset.sum_eq_single k] at hc
   · simpa [sub_eq_zero] using hc

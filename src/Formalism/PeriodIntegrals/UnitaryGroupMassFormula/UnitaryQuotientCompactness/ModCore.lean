@@ -57,7 +57,7 @@ theorem onG_eq (μ : Measure (MtM m)) (hμ : IsHaarOnM G μ) :
         funext x
         simp only [lmulQ, Matrix.mul_apply, Matrix.of_apply]
       rw [hf]
-      exact continuous_finset_sum _ fun k _ => by fun_prop
+      exact continuous_finsetSum _ fun k _ => by fun_prop
     have hvs : MeasurableSet (MG.val '' s) := hMe.measurableSet_image.2 hs
     have hinvA : Measure.map (lmulQ (MG.toM h)) μ = μ := hμ.2.2.2 _ h.2
     rw [Measure.map_apply (measurable_const_mul h) hs]
@@ -121,7 +121,7 @@ theorem rightInv_of (μ : Measure (MtM m)) (hμ : IsHaarOnM G μ)
       funext x
       simp only [rmulQ, Matrix.mul_apply, Matrix.of_apply]
     rw [hf]
-    exact continuous_finset_sum _ fun k _ => by fun_prop
+    exact continuous_finsetSum _ fun k _ => by fun_prop
   have hgkey : (rmulQ s) ∘ MG.val = MG.val ∘ (· * mk hG s hs) := by
     funext z
     show _ = MG.toM (z * mk hG s hs)

@@ -39,7 +39,7 @@ theorem finite_of_cover {H : Type} [Group H] (Γ K : Subgroup H) (S : Set H) (hS
   refine ⟨⟨s, hs⟩, ?_⟩
   change DoubleCoset.mk Γ K s = q
   conv_rhs => rw [← DoubleCoset.out_eq' Γ K q]
-  exact (DoubleCoset.eq Γ K _ _).2 ⟨γ, hγ, k, hk, e⟩
+  exact (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨γ, hγ, k, hk, e⟩
 
 theorem cover_of_relIndex {A B : Type} [Group A] [Group B] (Γ : Subgroup (A × B)) (K₁ : Subgroup A)
     (K₂ K' : Subgroup B) (hK : K'.relIndex K₂ ≠ 0) (S : Set (A × B)) (hS : S.Finite)

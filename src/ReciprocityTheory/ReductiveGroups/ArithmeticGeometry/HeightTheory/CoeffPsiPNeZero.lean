@@ -55,7 +55,7 @@ private theorem psiP_eq_sum_monomial (f : MvPolynomial σ K) :
 
 private theorem coeff_psiP (f : MvPolynomial σ K) (k : ℕ) :
     (psiP p f).coeff k = ∑ s ∈ f.support.filter (fun s => wt p s = k), monomial s (AddMonoidAlgebra.coeff f s) := by
-  rw [psiP_eq_sum_monomial, Polynomial.finset_sum_coeff, Finset.sum_filter]
+  rw [psiP_eq_sum_monomial, Polynomial.finsetSum_coeff, Finset.sum_filter]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [Polynomial.coeff_C_mul_X_pow]
   by_cases h : wt p s = k

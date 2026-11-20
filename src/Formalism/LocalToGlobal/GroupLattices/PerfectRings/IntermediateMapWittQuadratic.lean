@@ -73,7 +73,7 @@ theorem p_inv_notMem_Oc : (p : Kc p)⁻¹ ∉ Oc p := by
   rw [mem_Oc]
   intro h
   have hK : (p : Kc p)⁻¹ = algebraMap (K0 p) (Kc p) (p : K0 p)⁻¹ := by simp
-  rw [hK, isIntegral_algebraMap_iff (algebraMap (K0 p) (Kc p)).injective] at h
+  rw [hK, isIntegral_algebraMap_iff ] at h
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 h
   have h1 : algebraMap (WW p) (K0 p) (y * p) = 1 := by
     rw [map_mul, hy, map_natCast, inv_mul_cancel₀ (Nat.cast_ne_zero.2 hp.out.ne_zero)]

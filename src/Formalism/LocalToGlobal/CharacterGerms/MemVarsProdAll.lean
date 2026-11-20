@@ -60,10 +60,10 @@ private lemma forall_support_ne_zero_iff_forall_mem_vars {R0 : Type} [Field R0] 
     (∀ μ ∈ Q.support, ∀ w, μ (ρ, w) ≠ 0 → T w) ↔ (∀ w, (ρ, w) ∈ Q.vars → T w) := by
   constructor
   · intro H w hw
-    obtain ⟨μ, hμ, hx⟩ := (MvPolynomial.mem_vars _).1 hw
+    obtain ⟨μ, hμ, hx⟩ := (MvPolynomial.mem_vars_iff_mem_support _).1 hw
     exact H μ hμ w (Finsupp.mem_support_iff.1 hx)
   · intro H μ hμ w hx
-    exact H w ((MvPolynomial.mem_vars _).2 ⟨μ, hμ, Finsupp.mem_support_iff.2 hx⟩)
+    exact H w ((MvPolynomial.mem_vars_iff_mem_support _).2 ⟨μ, hμ, Finsupp.mem_support_iff.2 hx⟩)
 
 theorem rowsOK_iff (G : ∀ g, Cart V d (I g) (J g)) (alt : Prop) {N : ℕ} (P : MvPolynomial (Fin N × WV I) C)
     (kind : Fin N → Knd d) : RowsOK G alt P kind ↔

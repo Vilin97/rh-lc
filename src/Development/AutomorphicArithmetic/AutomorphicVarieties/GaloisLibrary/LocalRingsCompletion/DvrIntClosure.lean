@@ -59,6 +59,6 @@ theorem UpperTheory.V.abelian₂.dvr_intClosure :
     exact IsFractionRing.injective ℤ_[l] ℚ_[l] ((algebraMap ℚ_[l] K).injective h)
   have hnf : ¬ IsField (integralClosure ℤ_[l] K) := fun hf =>
     IsDiscreteValuationRing.not_isField ℤ_[l] ((Algebra.IsIntegral.isField_iff_isField hinj).2 hf)
-  exact ⟨((IsDiscreteValuationRing.TFAE _ hnf).out 0 2).mpr hded,
+  exact ⟨((IsDiscreteValuationRing.TFAE _ hnf).out 1 3).mpr hded,
     IsIntegralClosure.finite ℤ_[l] ℚ_[l] K (integralClosure ℤ_[l] K),
     integralClosure.isFractionRing_of_finite_extension ℚ_[l] K⟩

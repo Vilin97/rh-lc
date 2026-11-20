@@ -171,7 +171,7 @@ theorem integrable_step {ψ : AddChar k Circle} (hψ : Continuous ψ) (ν : Meas
   obtain ⟨_, _⟩ := SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
   have h := isClosedEmbedding_stepPt (c := c) x₀
   refine Continuous.integrable_of_hasCompactSupport ((hΦ.1.continuous.comp h.continuous).mul
-    (continuous_subtype_val.comp (hψ.comp (continuous_finset_sum _ fun i _ => h.continuous.matrix_elem _ _).neg))) ?_
+    (continuous_subtype_val.comp (hψ.comp (continuous_finsetSum _ fun i _ => h.continuous.matrix_elem _ _).neg))) ?_
   exact (hΦ.2.comp_isClosedEmbedding h).mul_right
 
 end Step
@@ -263,13 +263,13 @@ theorem stepDatum_mem_SB {φ : ∀ b : Edge, Matrix (Fin (G.rank b.tgt)) (Fin (G
   exact ⟨hφ.1.comp_continuous (key _ _).continuous, hφ.2.comp_isClosedEmbedding (key _ _)⟩
 
 theorem continuous_pairPhase (x : ColArgs G) : Continuous (pairPhase x) := by
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   split_ifs
-  · refine continuous_finset_sum _ fun r _ => Continuous.mul ?_
+  · refine continuous_finsetSum _ fun r _ => Continuous.mul ?_
       ((continuous_keptPt.comp (continuous_apply j)).matrix_elem _ _)
     unfold keptRow
     split_ifs with h
-    · refine continuous_finset_sum _ fun l _ => ?_
+    · refine continuous_finsetSum _ fun l _ => ?_
       split_ifs
       · exact (continuous_keptPt.comp (continuous_apply (⟨_, h⟩ : Fin (G.m - 1)))).matrix_elem _ _
       · exact continuous_const

@@ -482,7 +482,7 @@ theorem exists_decomp (i : ℕ) (hi : i ≤ D.R.m) (β : (St i hi).Ch)
       (_ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi)) (κ : ((St i hi).K β).lev.U),
       x.1 = ratA D.host.F γ * (((St i hi).y c).1 * κ.1) := by
   obtain ⟨c, hc⟩ := ((St i hi).K β).y_bij.2 (Quotient.mk'' x)
-  obtain ⟨g, ⟨γ, hγ, hg⟩, κ, hκ, e⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+  obtain ⟨g, ⟨γ, hγ, hg⟩, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
   refine ⟨c.1, c.2, γ, hγ, ⟨κ.1, hκ⟩, ?_⟩
   rw [← (St i hi).y_eq c, e]
   show g.1 * _ * κ.1 = _

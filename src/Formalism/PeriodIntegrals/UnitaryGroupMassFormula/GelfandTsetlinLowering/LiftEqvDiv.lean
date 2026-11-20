@@ -101,7 +101,7 @@ private theorem coeff_eq_of_eval_lemma {σ τ : Type*}
       simp only [map_smul, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul] at e
       simp only [p, q, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
       simpa [mul_comm] using e
-    have e2 := congrArg (fun r => Polynomial.coeff r k) hpq
+    have e2 := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r k) hpq
     simpa [p, q, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hk] using e2
   · have h1 : P.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (by omega)
     have h2 : Q.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (by omega)

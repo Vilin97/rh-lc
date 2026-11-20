@@ -179,7 +179,7 @@ theorem algebraMap_RW_inj (LL : FinExt l) : Function.Injective (algebraMap ↥(O
 
 theorem mem_OL_iff (LL : FinExt l) (x : ℚ_[l]) : algebraMap ℚ_[l] ↥LL.1 x ∈ OL LL ↔ ‖x‖ ≤ 1 := by
   have h1 : algebraMap ℚ_[l] ↥LL.1 x ∈ OL LL ↔ IsIntegral ℤ_[l] x :=
-    isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective
+    isIntegral_algebraMap_iff 
   rw [h1, IsIntegrallyClosed.isIntegral_iff]
   constructor
   · rintro ⟨y, rfl⟩

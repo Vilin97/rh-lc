@@ -210,7 +210,7 @@ theorem coeff_charpoly_normGL_fixed (σ : E ≃ₐ[k] E) (hℓ : σ ^ Module.fin
     (δ : GL n E) (i : ℕ) :
     σ (((normGL σ δ : GL n E) : Matrix n n E).charpoly.coeff i) =
       ((normGL σ δ : GL n E) : Matrix n n E).charpoly.coeff i := by
-  have h := congrArg (fun p => Polynomial.coeff p i) (charpoly_twNorm_map σ hℓ δ)
+  have h := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) (charpoly_twNorm_map σ hℓ δ)
   simpa [normGL, Polynomial.coeff_map] using h
 
 theorem charpoly_normGL_lifts [FiniteDimensional k E] [IsGalois k E] (σ : E ≃ₐ[k] E)

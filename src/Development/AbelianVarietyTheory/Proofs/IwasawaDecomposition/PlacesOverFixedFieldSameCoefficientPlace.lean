@@ -14,7 +14,7 @@ theorem below_of_overOne : ∀ (D D' : D7), (∀ x : D.what₂.LL, ∃ y ∈ D'.
   obtain ⟨y, hy, hye⟩ := hsub (x : D.what₂.LL)
   have hyx : y = (x' : D'.what₂.LL) := D'.what₂.embLL.injective (hye.trans hxx')
   have hint : IsIntegral ℤ (⟨(x' : D'.what₂.LL), hyx ▸ hy⟩ : ↥D'.LL0) :=
-    (isIntegral_algebraMap_iff (algebraMap ↥D'.LL0 D'.what₂.LL).injective).1 (RingOfIntegers.isIntegral_coe x')
+    (isIntegral_algebraMap_iff ).1 (RingOfIntegers.isIntegral_coe x')
   let z : 𝓞 ↥D'.LL0 := ⟨⟨(x' : D'.what₂.LL), hyx ▸ hy⟩, hint⟩
   have hz : algebraMap (𝓞 ↥D'.LL0) (𝓞 D'.what₂.LL) z = x' := by
     apply RingOfIntegers.ext

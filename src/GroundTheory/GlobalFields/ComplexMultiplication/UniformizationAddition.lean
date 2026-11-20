@@ -315,7 +315,7 @@ theorem weierstrassP_add_of_two_mul_notMem {z w : ℂ} (hw : w ∉ L.lattice)
         nhdsWithin_le_nhds ((L.isClosed_lattice.isOpen_compl.preimage
           (continuous_sub_right w)).mem_nhds (by simpa using hw')),
         nhdsWithin_le_nhds ((L.isClosed_lattice.isOpen_compl.preimage
-          (continuous_add_right w)).mem_nhds (by simpa using hw))] with u hu0 hu1 hu2 hu3
+          (continuous_add_const w)).mem_nhds (by simpa using hw))] with u hu0 hu1 hu2 hu3
       exact hc u (analyticAt_addDefect hw (fun h ↦ hu1 ⟨h, hu0⟩) hu2 hu3)
     have := eq_of_eventuallyEq_nhdsNE hH.continuousAt continuousAt_const (hev.symm.trans hgen)
     rw [← this, hH0]
@@ -390,7 +390,7 @@ theorem derivWeierstrassP_add {z w : ℂ} (hz : z ∉ L.lattice) (hw : w ∉ L.l
   have hopen : IsOpen {u : ℂ | u ∉ L.lattice ∧ u - w ∉ L.lattice ∧ u + w ∉ L.lattice} := by
     have h := L.isClosed_lattice.isOpen_compl
     exact h.inter ((h.preimage (continuous_sub_right w)).inter
-      (h.preimage (continuous_add_right w)))
+      (h.preimage (continuous_add_const w)))
   have hne : ℘[L] z - ℘[L] w ≠ 0 := fun h ↦
     (sub_mem_or_add_mem_of_weierstrassP_eq hz hw (sub_eq_zero.1 h)).elim hzw hzw'
   have hL : HasDerivAt (fun u ↦ ℘[L] (u + w)) (℘'[L] (z + w)) z :=
@@ -438,7 +438,7 @@ lemma exists_continuousAt_chordSlope {w : ℂ} (hw : w ∉ L.lattice) (h2w : 2 *
       nhdsWithin_le_nhds (L.isClosed_lattice.isOpen_compl.mem_nhds hw),
       nhdsWithin_le_nhds ((continuous_sub_right w).continuousAt.preimage_mem_nhds h0),
       nhdsWithin_le_nhds ((L.isClosed_lattice.isOpen_compl.preimage
-        (continuous_add_right w)).mem_nhds (show w + w ∉ L.lattice by rwa [← two_mul]))]
+        (continuous_add_const w)).mem_nhds (show w + w ∉ L.lattice by rwa [← two_mul]))]
       with z hz h1 h2 h3
     have hz' : z - w ≠ 0 := sub_ne_zero.2 hz
     refine ⟨h1, fun h ↦ h2 ⟨h, hz'⟩, h3, ?_⟩

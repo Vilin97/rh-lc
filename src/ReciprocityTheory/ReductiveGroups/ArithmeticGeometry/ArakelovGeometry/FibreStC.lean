@@ -326,7 +326,7 @@ theorem exists_clear {A K : Type*} [CommRing A] [IsDomain A] [Field K] [Algebra 
       ∀ i, (Q i).map (algebraMap A K) = C (algebraMap A K b) * q i := by
   classical
   choose b hb using fun i =>
-    IsLocalization.integerNormalization_map_to_map (M := nonZeroDivisors A) (q i)
+    IsLocalization.integerNormalization_spec (M := nonZeroDivisors A) (q i)
   refine ⟨∏ i, (b i : A), fun i => C (∏ j ∈ Finset.univ.erase i, (b j : A)) *
     IsLocalization.integerNormalization (nonZeroDivisors A) (q i), ?_, fun i => ?_⟩
   · exact Finset.prod_ne_zero_iff.mpr fun i _ => nonZeroDivisors.coe_ne_zero (b i)

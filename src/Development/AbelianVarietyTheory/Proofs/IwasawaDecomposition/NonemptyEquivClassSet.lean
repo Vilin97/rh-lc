@@ -72,7 +72,7 @@ theorem nonempty_equiv_classSet {G G' n : Type} [Group G] [Group G'] (f : G →*
     (same : ∀ h h', d h = d h' → ∃ δ ∈ Γ, ∃ u ∈ R, ∃ κ ∈ K, h' = δ * h * u * κ) :
     Nonempty (n ≃ Formalism.UG.ClassSet Q K') := by
   let cl : G → Formalism.UG.ClassSet Q K' := fun h => DoubleCoset.mk Q K' (f h)
-  have cl_eq : ∀ h h', cl h = cl h' ↔ ∃ x ∈ Q, ∃ k ∈ K', f h' = x * f h * k := fun h h' => DoubleCoset.eq _ _ _ _
+  have cl_eq : ∀ h h', cl h = cl h' ↔ ∃ x ∈ Q, ∃ k ∈ K', f h' = x * f h * k := fun h h' => @DoubleCoset.eq _ _ _ _ _ _
   have cls_of : ∀ h h', (∃ δ ∈ Γ, ∃ u ∈ R, ∃ κ ∈ K, h' = δ * h * u * κ) → cl h = cl h' := by
     rintro h _ ⟨δ, hδ, u, hu, κ, hκ, rfl⟩
     refine (cl_eq _ _).2 ⟨f δ, hQ ▸ Subgroup.mem_map_of_mem _ hδ, f κ, hK κ hκ, ?_⟩

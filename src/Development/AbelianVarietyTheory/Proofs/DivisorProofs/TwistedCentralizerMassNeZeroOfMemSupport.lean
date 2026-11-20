@@ -35,7 +35,7 @@ theorem massC_ne_zero_of_support {G : Type} [Group G] (Γ' T K : Subgroup G) (F 
   have hφinj : Function.Injective φ := by
     intro q1 q2 h12
     rw [← DoubleCoset.out_eq' A B q1, ← DoubleCoset.out_eq' A B q2]
-    obtain ⟨g, hg, k, hk, he⟩ := (DoubleCoset.eq Γ' K _ _).1 h12
+    obtain ⟨g, hg, k, hk, he⟩ := (@DoubleCoset.eq _ _ Γ' K _ _).1 h12
     set t1 : T := Quotient.out q1
     set t2 : T := Quotient.out q2
     have hgT : g ∈ T := hΓT hg

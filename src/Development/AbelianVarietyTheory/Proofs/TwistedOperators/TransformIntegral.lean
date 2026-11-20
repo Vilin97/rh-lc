@@ -197,7 +197,7 @@ theorem transform_integral (hI : GlobalTheory.IndefiniteRowSideFullHecke.UnusedS
     rw [← e1]
     have : evR Xo c g z = algebraMap c.F Ω s * x := e2
     rw [this, inv_mul_cancel_left₀ ((map_ne_zero _).2 hs0)]
-  rw [← e3, isIntegral_algebraMap_iff (algebraMap T.Fr Ω).injective] at hint
+  rw [← e3, isIntegral_algebraMap_iff ] at hint
   obtain ⟨w, hw⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hint
   have e4 : evI y g = io s * algebraMap T.V T.Fr w := by
     rw [hw, mul_inv_cancel_left₀ ((map_ne_zero _).2 hs0)]

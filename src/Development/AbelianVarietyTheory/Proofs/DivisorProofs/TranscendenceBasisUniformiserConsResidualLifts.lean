@@ -150,7 +150,7 @@ theorem trBasis_uniformiser_cons : ∀ {L K : Type} [Field L] [Field K] (cL : �
       rw [Polynomial.coeff_zero]
       by_contra h0
       apply (hwu _ h0).ne_zero
-      have := congrArg (fun p => Polynomial.coeff p i) hq
+      have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p i) hq
       simpa [Polynomial.coeff_map] using this
     exact (MvPolynomial.finSuccEquiv ℂ n).injective (by rw [← hQ, hQ0, map_zero])
   have htr : TrBasis cL (Fin.cons (f : L) (fun i => (w i : L)) : Fin (n + 1) → L) := by

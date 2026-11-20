@@ -29,7 +29,7 @@ theorem exists_linear_injOn (T : Finset (Fin n → ℂ)) :
     intro x x' hne h
     apply hne
     funext j
-    have hc := congrArg (fun q => Polynomial.coeff q (j : ℕ)) h
+    have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (j : ℕ)) h
     simp only [p, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at hc
     rw [Finset.sum_eq_single j] at hc
     · simpa [sub_eq_zero] using hc

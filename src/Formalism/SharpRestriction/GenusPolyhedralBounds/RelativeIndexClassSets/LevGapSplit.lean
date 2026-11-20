@@ -27,7 +27,7 @@ theorem int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
   have hint : IsIntegral ℤ ((a : ℚ) / N) := by
     have : IsIntegral ℤ (z : E) := RingOfIntegers.isIntegral_coe z
     rw [hzE] at this
-    exact (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 this
+    exact (isIntegral_algebraMap_iff ).1 this
   obtain ⟨m, hm⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
   refine ⟨m, ?_⟩
   have hNQ : (N : ℚ) ≠ 0 := by exact_mod_cast hN
@@ -159,7 +159,7 @@ theorem coe_smul_int (σ : E ≃ₐ[ℚ] E) (x : 𝓞 E) : ((σ • x : 𝓞 E) 
 theorem exists_int_of_mem (y : 𝓞 E) (hy : (y : E) ∈ F) : ∃ y' : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) y' = y := by
   have hint : IsIntegral ℤ (⟨(y : E), hy⟩ : F) := by
     have h : IsIntegral ℤ (y : E) := RingOfIntegers.isIntegral_coe y
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h
+    exact (isIntegral_algebraMap_iff ).1 h
   exact ⟨⟨⟨(y : E), hy⟩, hint⟩, RingOfIntegers.ext rfl⟩
 
 def underPl (w : HeightOneSpectrum (𝓞 E)) : HeightOneSpectrum (𝓞 F) where

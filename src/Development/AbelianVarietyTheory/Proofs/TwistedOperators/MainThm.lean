@@ -45,7 +45,7 @@ theorem main_thm : ∀ (G : Type) [inst : Group G] [inst_1 : TopologicalSpace G]
     intro i j hij
     by_contra hne
     have hj : x j ∈ doubleCoset (x i) (J : Set G) J := by
-      obtain ⟨u, hu, w, hw, e⟩ := (DoubleCoset.eq J J (x i) (x j)).1 hij
+      obtain ⟨u, hu, w, hw, e⟩ := (@DoubleCoset.eq _ _ J J (x i) (x j)).1 hij
       exact mem_doubleCoset.2 ⟨u, hu, w, hw, e⟩
     exact Set.disjoint_left.1 (hdisj hne) hj (mem_doubleCoset_self J J (x j))
   have hcls : ∀ i, Quotient.out (DoubleCoset.mk J J (x i)) ∈ doubleCoset (x i) (J : Set G) J := by

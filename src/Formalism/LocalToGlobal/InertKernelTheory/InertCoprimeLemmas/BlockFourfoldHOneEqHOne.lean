@@ -131,7 +131,7 @@ theorem rational_coordinates : RatCoord := by
     obtain ⟨c, -, hc⟩ := lamOf_mem D cc' 0 _ hω1
     have hω0 : B.L.ω₁ ≠ 0 := by simpa using B.L.indep.ne_zero 0
     exact hω0 (by rw [hc]; ring)
-  have hNA0 : N * A ≠ 0 := ne_zero_of_coprime hp (Nat.Coprime.mul hNc hcop)
+  have hNA0 : N * A ≠ 0 := ne_zero_of_coprime hp (Nat.Coprime.mul_left hNc hcop)
   have hlamM : B.lamM = lamMM D (TaylorLogMetric.lamOf D cc' δ') := by
     show lamMM D (TaylorLogMetric.lamOf D cc δ) = _
     rw [hlat]
@@ -171,7 +171,7 @@ theorem rational_coordinates : RatCoord := by
   set c : Fin 4 × D.what₂.Tau → Fin 4 → Fin (Fintype.card D.what₂.Tau) → D.host.K :=
     fun w i' m => (d w i' m : D.host.K) / ((s w i' * N * A : ℕ) : D.host.K) with hcdef
   have hS : ∀ w i', Nat.Coprime (s w i' * N * A) p := fun w i' =>
-    Nat.Coprime.mul (Nat.Coprime.mul (hs w i') hNc) hcop
+    Nat.Coprime.mul_left (Nat.Coprime.mul_left (hs w i') hNc) hcop
 
   have hX : ∀ w i', ∑ m, ((c w i' m : D.host.K) : D.host.E) * b m 0 0 = a w i' / ((N * A : ℕ) : D.host.E) := by
     intro w i'

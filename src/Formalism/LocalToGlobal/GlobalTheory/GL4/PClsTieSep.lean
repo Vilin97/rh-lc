@@ -19,7 +19,7 @@ theorem ClassTie.eq_of_mul {hc : CMData F E} {S : HSpace E} {Lb : Submodule (�
     (h : X.y c' = a * X.y c * k) : c = c' := by
   apply X.y_bij.1
   show DoubleCoset.mk _ _ (X.y c) = DoubleCoset.mk _ _ (X.y c')
-  exact (DoubleCoset.eq _ _ _ _).2 ⟨a, ha, k, Subgroup.mem_subgroupOf.2 hk, h⟩
+  exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨a, ha, k, Subgroup.mem_subgroupOf.2 hk, h⟩
 
 end General
 
@@ -34,7 +34,7 @@ theorem ColLevel.eq_of_mul {R : Ranks} {F E : Type} [Field F] [NumberField F] [F
     (h : L.y c' = a * L.y c * k) : c = c' := by
   apply L.y_bij.1
   show DoubleCoset.mk _ _ (L.y c) = DoubleCoset.mk _ _ (L.y c')
-  exact (DoubleCoset.eq _ _ _ _).2 ⟨a, ha, k, Subgroup.mem_subgroupOf.2 hk, h⟩
+  exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨a, ha, k, Subgroup.mem_subgroupOf.2 hk, h⟩
 
 end Formalism.L2.GlobalTheoryTheory.TraceIntegrality
 

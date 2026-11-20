@@ -822,8 +822,8 @@ theorem cop_odd {D : D7} {a : ℕ} (h : a.Coprime (MM D)) : a % 2 = 1 := by
 theorem hN_mul (e : ℕ) {a b : ℕ} (ha : a.Coprime 2) (hb : b.Coprime 2) :
     hN e (a * b) = hN e a * hN e b := by
   unfold hN hcl
-  rw [dif_pos (Nat.Coprime.mul ha hb), dif_pos ha, dif_pos hb]
-  have hu : ZMod.unitOfCoprime (a * b) (Nat.Coprime.pow_right (e + 2) (Nat.Coprime.mul ha hb)) =
+  rw [dif_pos (Nat.Coprime.mul_left ha hb), dif_pos ha, dif_pos hb]
+  have hu : ZMod.unitOfCoprime (a * b) (Nat.Coprime.pow_right (e + 2) (Nat.Coprime.mul_left ha hb)) =
       ZMod.unitOfCoprime a (Nat.Coprime.pow_right (e + 2) ha) * ZMod.unitOfCoprime b (Nat.Coprime.pow_right (e + 2) hb) :=
     Units.ext (by simp)
   rw [hu]

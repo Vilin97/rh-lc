@@ -31,7 +31,7 @@ theorem cDvr_of_isEtaleCompletion (A R : Type) [CommRing A] [IsDomain A] [IsDisc
     exact hϖ.ne_zero (hinj (h0.trans (map_zero φ).symm))
   have hp : (maximalIdeal R).IsPrincipal := ⟨⟨φ ϖ, hmR⟩⟩
   have hdvr : IsDiscreteValuationRing R :=
-    ((IsDiscreteValuationRing.TFAE (R := R) hnf).out 0 4).2 hp
+    ((IsDiscreteValuationRing.TFAE (R := R) hnf).out 1 5).2 hp
   have hdesc : ∀ a b : A, φ a ∣ φ b → a ∣ b := by
     intro a b h
     have hb : b ∈ ((Ideal.span {a}).map φ).comap φ := by

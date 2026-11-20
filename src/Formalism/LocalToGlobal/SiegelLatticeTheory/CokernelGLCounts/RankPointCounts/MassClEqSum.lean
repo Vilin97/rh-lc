@@ -73,9 +73,9 @@ theorem massCl_comap (e : G' ≃* G) (Γ K : Subgroup G) :
   unfold massCl
   refine finsum_eq_of_bijective (fun c => DoubleCoset.mk Γ K (e (Quotient.out c))) ⟨?_, ?_⟩ ?_
   · intro c1 c2 h
-    obtain ⟨γ, hγ, k, hk, h2⟩ := (DoubleCoset.eq Γ K _ _).mp h
+    obtain ⟨γ, hγ, k, hk, h2⟩ := (@DoubleCoset.eq _ _ Γ K _ _).mp h
     rw [← Quotient.out_eq c1, ← Quotient.out_eq c2]
-    refine (DoubleCoset.eq Γ' K' _ _).mpr
+    refine (@DoubleCoset.eq _ _ Γ' K' _ _).mpr
       ⟨e.symm γ, by simpa [hΓ'] using hγ, e.symm k, by simpa [hK'] using hk, ?_⟩
     apply e.injective
     simp [map_mul, h2]
@@ -85,7 +85,7 @@ theorem massCl_comap (e : G' ≃* G) (Γ K : Subgroup G) :
     show DoubleCoset.mk Γ K (e (Quotient.out (DoubleCoset.mk Γ' K' (e.symm (Quotient.out c))))) = c
     rw [hout]
     conv_rhs => rw [← Quotient.out_eq c]
-    refine ((DoubleCoset.eq Γ K _ _).mpr ⟨e γ, hγ, e k, hk, ?_⟩).symm
+    refine ((@DoubleCoset.eq _ _ Γ K _ _).mpr ⟨e γ, hγ, e k, hk, ?_⟩).symm
     simp [map_mul]
   · intro c
     rw [card_out_eq, hstab]
@@ -114,7 +114,7 @@ theorem massCl_eq_sum (Γ K : Subgroup G) (S : Finset α) (ℓ : G → α) (w : 
     have h' : ℓ (Quotient.out c1) = ℓ (Quotient.out c2) := congrArg Subtype.val h
     obtain ⟨γ, hγ, k, hk, h2⟩ := (hrel _ _).mp h'
     rw [← Quotient.out_eq c1, ← Quotient.out_eq c2]
-    exact (DoubleCoset.eq Γ K _ _).mpr ⟨γ, hγ, k, hk, h2⟩
+    exact (@DoubleCoset.eq _ _ Γ K _ _).mpr ⟨γ, hγ, k, hk, h2⟩
   · rintro ⟨s, hs⟩
     obtain ⟨x, rfl⟩ := hsurj s hs
     refine ⟨DoubleCoset.mk Γ K x, Subtype.ext ?_⟩

@@ -186,7 +186,7 @@ theorem twOrb_eq_sum_smallerLevel : ∀ (G : Type) [Group G] [TopologicalSpace G
       have h := fibRep_symm_mk hK'K Quotient.out (DoubleCoset.out_eq' T K) c (Quotient.out ω.out)
       rw [← this] at h
       exact h
-    obtain ⟨γ, hγ, u, hu, hout⟩ := (DoubleCoset.eq T K' (Quotient.out c * (Quotient.out ω.out : K))
+    obtain ⟨γ, hγ, u, hu, hout⟩ := (@DoubleCoset.eq _ _ T K' (Quotient.out c * (Quotient.out ω.out : K))
       (Quotient.out (e.symm ⟨c, ω⟩))).1 (by rw [DoubleCoset.out_eq', hq])
     have hF : F (Quotient.out (e.symm ⟨c, ω⟩)) = F (Quotient.out c * (Quotient.out ω.out : K)) := by
       rw [hout, FK _ _ hu, FT _ hγ]

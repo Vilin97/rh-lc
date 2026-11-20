@@ -425,7 +425,7 @@ def lhwline_mnu (hn : n ≤ r) (ν : Fin n → ℕ) : Fin r × Fin n →₀ ℕ 
 
 theorem lhwline_mnu_apply (hn : n ≤ r) (ν : Fin n → ℕ) (a : Fin r) (j : Fin n) :
     lhwline_mnu hn ν (a, j) = if a.val = j.val then ν j else 0 := by
-  simp only [lhwline_mnu, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply]
+  simp only [lhwline_mnu, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.single_apply]
   rw [Finset.sum_eq_single j]
   · by_cases h : a.val = j.val
     · have : Fin.castLE hn j = a := Fin.ext (by rw [Fin.coe_castLE]; exact h.symm)

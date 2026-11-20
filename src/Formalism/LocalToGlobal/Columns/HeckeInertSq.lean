@@ -216,7 +216,7 @@ theorem hiCorner_unimodular {α β : 𝓞 E} (hab : α + β = 1) (hα : cO E α 
     exact (hiCorner_mem_dual hα hβ hM hN x).2 ⟨hr2.1 x hx, hr1.2 x hx⟩
 
 theorem hiCorner_lattice {α β : 𝓞 E} (hab : α + β = 1) {N e M : Submodule (𝓞 E) (Sp E n)}
-    (hN : Submodule.IsLattice E N) (hM : Submodule.IsLattice E M) {i j : 𝓞 E} (hi : i ≠ 0) (hj : j ≠ 0)
+    (hN : Submodule.IsLattice E N) (hM : Submodule.IsFullLattice E M) {i j : 𝓞 E} (hi : i ≠ 0) (hj : j ≠ 0)
     (hNi : ∀ x ∈ N, i • x ∈ e) (hej : ∀ y ∈ e, j • y ∈ M) : Submodule.IsLattice E (hiCorner α β M N) := by
   have hD : Submodule.IsLattice E (M ⊔ N) := ⟨hM.fg.sup hN.fg, by
     rw [eq_top_iff, ← hM.span_eq_top]

@@ -37,12 +37,12 @@ theorem M_sub (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField 
     ∃ M : AddSubgroup A.K, (M : Set A.K) = {z : A.K | c • z ∈ A.OK} ∧ IsOpen (M : Set A.K) ∧ IsCompact (M : Set A.K) := by
   obtain ⟨-, -, -, -, -, -, -, -, -, hOo, hOc, R, hR⟩ := GlobalTheory.T.etaleHermitianPair_structure_facts F E A
   haveI : ContinuousSMul F A.K := IsModuleTopology.toContinuousSMul F A.K
-  refine ⟨(R.toAddSubgroup).comap (DistribMulAction.toAddMonoidHom A.K c), ?_, ?_, ?_⟩
+  refine ⟨(R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c), ?_, ?_, ?_⟩
   · ext z; simp [← hR]
-  · have : ((R.toAddSubgroup).comap (DistribMulAction.toAddMonoidHom A.K c) : Set A.K) = (fun z => c • z) ⁻¹' A.OK := by
+  · have : ((R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c) : Set A.K) = (fun z => c • z) ⁻¹' A.OK := by
       ext z; simp [← hR]
     rw [this]; exact hOo.preimage (continuous_const_smul c)
-  · have : ((R.toAddSubgroup).comap (DistribMulAction.toAddMonoidHom A.K c) : Set A.K) = (fun z => c⁻¹ • z) '' A.OK := by
+  · have : ((R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c) : Set A.K) = (fun z => c⁻¹ • z) '' A.OK := by
       ext z; simp only [AddSubgroup.coe_comap, Set.mem_preimage, Set.mem_image, DistribMulAction.toAddMonoidHom_apply]
       constructor
       · intro h; exact ⟨c • z, by simpa [← hR] using h, by simp [smul_smul, inv_mul_cancel₀ hc]⟩

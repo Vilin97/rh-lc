@@ -57,7 +57,7 @@ theorem polarisation_mixed_term_of_powers : ∀ (A : Type) [CommRing A] (θ : A 
     · rintro _ ⟨t, rfl⟩
       exact key t
     · exact Set.infinite_range_of_injective Int.cast_injective
-  have hc := congrArg (fun p => Polynomial.coeff p 1) hPQ
+  have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hPQ
   simp only [hP, hQ, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   simp only [Finset.sum_ite_eq, Finset.mem_range] at hc
   rw [if_pos (by omega), if_pos (by omega)] at hc

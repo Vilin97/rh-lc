@@ -33,7 +33,7 @@ theorem orbSum_of_twCent_eq_top (θ : G →* G) (K : Subgroup G) (δ : G) (h : G
   have hall : ∀ q : DoubleCoset.Quotient (GlobalTheory.BCT.twCent θ δ : Set G) (K : Set G), q = q0 := by
     intro q
     rw [← DoubleCoset.out_eq' _ _ q]
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨(Quotient.out q)⁻¹, hmem _, 1, K.one_mem, by group⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(Quotient.out q)⁻¹, hmem _, 1, K.one_mem, by group⟩
   refine ⟨Quotient.out q0, fun w f => ?_⟩
   unfold GlobalTheory.LKLoc.orbSum
   rw [finsum_eq_single _ q0 (fun q hq => absurd (hall q) hq)]

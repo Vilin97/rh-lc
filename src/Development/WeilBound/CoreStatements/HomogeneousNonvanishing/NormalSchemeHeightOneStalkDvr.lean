@@ -18,6 +18,6 @@ theorem normal_scheme_height_one_stalk_dvr : ∀ (X : Scheme.{0}) [IsLocallyNoet
   have hd1 : Ring.DimensionLEOne (X.presheaf.stalk p) :=
     ⟨fun hne hp => Ring.krullDimLE_one_iff_of_noZeroDivisors.1 hk _ hne hp⟩
   have hdd : IsDedekindDomain (X.presheaf.stalk p) := {}
-  exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk p) hnf).out 2 0).1 hdd
+  exact ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk p) hnf).out 3 1).1 hdd
 
 end PositivityTheory.UnitarySelfGeneration

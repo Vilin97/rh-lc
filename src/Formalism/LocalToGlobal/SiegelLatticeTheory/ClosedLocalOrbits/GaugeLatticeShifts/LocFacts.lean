@@ -175,7 +175,7 @@ theorem lf_int_of_alg (c : (D.s.atP p).Fp) (hc : algebraMap (D.s.atP p).Fp (D.s.
   rw [(D.s.atP p).O_def] at hc
   have hinj : Function.Injective (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep) :=
     RingHom.injective (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep)
-  have hc' : IsIntegral 𝒪[(D.s.atP p).Fp] c := (isIntegral_algebraMap_iff hinj).1 hc
+  have hc' : IsIntegral 𝒪[(D.s.atP p).Fp] c := (isIntegral_algebraMap_iff ).1 hc
   exact (Valuation.integer.integers (valuation (D.s.atP p).Fp)).mem_of_integral hc'
 
 theorem lf_tr_mem (y : (D.s.atP p).Ep) (hy : y ∈ (D.s.atP p).O) :

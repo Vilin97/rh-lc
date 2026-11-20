@@ -526,7 +526,7 @@ theorem val_le_iff (P : LocPrime l) (LL : FinExt l) (x : ℚ_[l]) (s : ℕ) :
     exact WithTop.add_le_add_iff_left (WithTop.natCast_ne_top s)
   rw [h1, P.v_O]
   change IsIntegral ℤ_[l] _ ↔ _
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective, IsIntegrallyClosed.isIntegral_iff]
+  rw [isIntegral_algebraMap_iff , IsIntegrallyClosed.isIntegral_iff]
   exact ⟨fun ⟨z, hz⟩ => hz ▸ z.2, fun h => ⟨⟨y, h⟩, rfl⟩⟩
 
 theorem absoluteGalois_mem_fixingSubgroup_maxUnramified {K : FinExt l} (g : ↥(GK K)) : (g : GQ l) ∈ (K0 K).fixingSubgroup :=

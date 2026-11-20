@@ -31,7 +31,7 @@ theorem isIntegral_rB_iff (y : L) :
   haveI : Algebra.IsIntegral (rA k x I) (rB k K x I) := ⟨fun b => by
     have hb : IsIntegral (rA k x I) (b : K) := b.2
     haveI : IsScalarTower (rA k x I) (rB k K x I) K := .of_algebraMap_eq fun a => rfl
-    exact (isIntegral_algebraMap_iff (A := rB k K x I) (B := K) Subtype.val_injective).1 hb⟩
+    exact (isIntegral_algebraMap_iff (A := rB k K x I) (B := K) ).1 hb⟩
   exact ⟨fun h => h.tower_top, fun h => isIntegral_trans y h⟩
 end
 

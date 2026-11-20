@@ -135,7 +135,7 @@ theorem rowDiv_colAddGen (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r) (k :
   have hB := congrArg (fun φ => φ f) (rowGenO_comp_rename R (n := n) a b)
   simp only [AlgHom.comp_apply, Polynomial.coe_mapAlgHom] at hA hB
   rw [hf, hB] at hA
-  have hk := congrArg (fun P => Polynomial.coeff P k) hA
+  have hk := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P k) hA
   simp only [Polynomial.coeff_map] at hk
   unfold rowDiv
   exact hk.symm

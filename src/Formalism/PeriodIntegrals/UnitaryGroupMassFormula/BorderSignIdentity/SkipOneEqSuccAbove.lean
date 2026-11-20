@@ -18,8 +18,8 @@ theorem cons_comp_finRotate {n t : ℕ} (e : Fin n) (f : Fin t → Fin n) :
     PI.bE e f ∘ (finRotate (t + 1) : Fin (t + 1) → Fin (t + 1)) = PI.bS f e := by
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
-  · simp [PI.bE, PI.bS, finRotate_succ_apply, Fin.last_add_one]
-  · simp [PI.bE, PI.bS, finRotate_succ_apply, Fin.coeSucc_eq_succ]
+  · simp [PI.bE, PI.bS, finRotate_apply, Fin.last_add_one]
+  · simp [PI.bE, PI.bS, finRotate_apply, Fin.coeSucc_eq_succ]
 
 theorem neg_one_pow_mul_self (t : ℕ) : ((-1 : ℤ) ^ t) * ((-1 : ℤ) ^ t) = 1 := by
   rw [← mul_pow, neg_one_mul, neg_neg, one_pow]

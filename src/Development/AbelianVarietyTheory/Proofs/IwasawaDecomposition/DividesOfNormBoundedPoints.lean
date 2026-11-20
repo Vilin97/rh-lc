@@ -63,7 +63,7 @@ theorem isDVR_of_height_one [IsNoetherianRing R] (P : Ideal R) [P.IsPrime] (hP :
       ∃! Q : Ideal (Localization.AtPrime P), Q ≠ ⊥ ∧ Q.IsPrime :=
     ⟨inferInstance, _, ⟨hm, inferInstance⟩, fun Q hQ => IsLocalRing.eq_maximalIdeal
       (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 Q hQ.1 hQ.2)⟩
-  exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hf).out 0 3).mpr h3
+  exact ((IsDiscreteValuationRing.TFAE (Localization.AtPrime P) hf).out 1 4).mpr h3
 
 theorem exists_of_dvd (P : Ideal R) [P.IsPrime] {a b : R}
     (h : algebraMap R (Localization.AtPrime P) b ∣ algebraMap R (Localization.AtPrime P) a) :

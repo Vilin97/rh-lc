@@ -86,7 +86,7 @@ theorem exists_place {Q : Subring K} (hQ : IsLocModel c Q) {t : Q} (ht : Prime t
     rw [hm] at this
     exact Ideal.span_singleton_eq_bot.1 this)
   haveI : IsDiscreteValuationRing A :=
-    ((IsDiscreteValuationRing.TFAE A hnf).out 0 4).2 (show (IsLocalRing.maximalIdeal A).IsPrincipal from ⟨_, hm⟩)
+    ((IsDiscreteValuationRing.TFAE A hnf).out 1 5).2 (show (IsLocalRing.maximalIdeal A).IsPrincipal from ⟨_, hm⟩)
   haveI : IsFractionRing A K := Localization.subalgebra.isFractionRing_ofField K _ hp
   let V : ValuationSubring K :=
     { A.toSubring with

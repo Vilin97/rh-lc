@@ -53,7 +53,7 @@ theorem compInj_locJ (hU : SameUlocJ hi S Uloc) : CompInj S (locJ hi t B) := by
   apply t.yG_bij.1
   show (Quotient.mk'' (t.yG c) : compG D.sp.cm.sig (D.sp.X (i + 1)).gram Uloc (D.what₂.places.resChar w)) = Quotient.mk'' (t.yG c')
   have hz' := Subgroup.inv_mem _ hz
-  refine (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, bc_mem hδ0⟩, Subgroup.mem_subgroupOf.2 ⟨δ0, hδ0, rfl⟩,
+  refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, bc_mem hδ0⟩, Subgroup.mem_subgroupOf.2 ⟨δ0, hδ0, rfl⟩,
     ⟨_, ((mem_awayG _ _ _ _ _).1 hz').1⟩, Subgroup.mem_subgroupOf.2 hz', Subtype.ext ?_⟩
   show (t.yG c').1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) δ0 * (t.yG c).1 *
     (((t.yG c').1)⁻¹ * bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) δ0 * (t.yG c).1)⁻¹

@@ -60,8 +60,8 @@ theorem mvInt (n : ℕ) : MVIntStatement n := by
       (EuclideanSpace.proj i : V n →L[ℂ] ℂ).differentiable.differentiableOn
     have hne : ∃ z ∈ Metric.ball (0 : V n) 1, (fun z : V n => z i) z ≠ 0 := by
       refine ⟨EuclideanSpace.single i (1 / 2 : ℂ), ?_, ?_⟩
-      · norm_num [Metric.mem_ball, EuclideanSpace.norm_single]
-      · norm_num [EuclideanSpace.single_apply]
+      · norm_num [Metric.mem_ball, PiLp.norm_single]
+      · norm_num [PiLp.single_apply]
     have hnull := C.extNull n 0 1 _ hF hne
     apply measure_mono_null _ hnull
     intro z hz

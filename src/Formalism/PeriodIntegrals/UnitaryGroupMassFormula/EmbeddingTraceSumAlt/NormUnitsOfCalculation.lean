@@ -76,7 +76,7 @@ theorem tau_int [NumberField F] [NumberField E]
   have h3 : IsIntegral ℤ (algebraMap F E (tau hfix (algebraMap (𝓞 E) E c))) := by
     rw [tau_apply]
     exact h1.add h2
-  have h4 := (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h3
+  have h4 := (isIntegral_algebraMap_iff ).1 h3
   exact ⟨⟨_, h4⟩, rfl⟩
 
 end Tau

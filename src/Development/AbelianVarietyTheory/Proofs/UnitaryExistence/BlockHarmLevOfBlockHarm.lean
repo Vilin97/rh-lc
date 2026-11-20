@@ -354,7 +354,7 @@ private theorem blockLat_trivAt {Λ₁ : _root_.Formalism.L2.Pj.GenLat E n₁} {
     Ideal.span_singleton_le_span_singleton.mpr ⟨(k₂ : 𝓞 E), by push_cast; ring⟩
   have hle₂ : Ideal.span {((k₁ * k₂ : ℕ) : 𝓞 E)} ≤ Ideal.span {((k₂ : ℕ) : 𝓞 E)} :=
     Ideal.span_singleton_le_span_singleton.mpr ⟨(k₁ : 𝓞 E), by push_cast; ring⟩
-  refine ⟨k₁ * k₂, Nat.Coprime.mul hk₁ hk₂, ?_, ?_⟩
+  refine ⟨k₁ * k₂, Nat.Coprime.mul_left hk₁ hk₂, ?_, ?_⟩
   · rw [stdLat_add_eq_inf_comap_funLeft]
     exact smul_inf_comap_funLeft_le _ _ _ _ _ ((Submodule.smul_mono_left hle₁).trans a₁)
       ((Submodule.smul_mono_left hle₂).trans a₂)

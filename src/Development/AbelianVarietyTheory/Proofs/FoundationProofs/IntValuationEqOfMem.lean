@@ -112,7 +112,7 @@ theorem exists_norm (hc : Formalism.BasicNotions.CMData F E) (a : 𝓞 E) :
     show star (algebraMap (𝓞 E) E (a * cO E a)) = algebraMap (𝓞 E) E (a * cO E a)
     rw [map_mul, algebraMap_cO, star_mul', star_star, mul_comm])
   have hi : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective, hf]
+    rw [← isIntegral_algebraMap_iff (B := E) , hf]
     exact (a * cO E a).2
   exact ⟨⟨f, hi⟩, RingOfIntegers.ext hf⟩
 

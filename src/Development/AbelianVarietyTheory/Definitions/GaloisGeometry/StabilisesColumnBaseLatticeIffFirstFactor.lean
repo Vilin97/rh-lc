@@ -231,7 +231,7 @@ theorem compInj_locAt : CompInj ((T u).cls0).lev (locAt X u w hg B) := by
   obtain ⟨hδ0, hz⟩ := away_of_off X T u hU w hg B c c' δ hδ hoff
   apply (X.g u w hg).yG_bij.1
   have hz' := Subgroup.inv_mem _ hz
-  refine (DoubleCoset.eq _ _ _ _).2 ⟨⟨_, bc_mem hδ0⟩, Subgroup.mem_subgroupOf.2 ⟨_, hδ0, rfl⟩,
+  refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨⟨_, bc_mem hδ0⟩, Subgroup.mem_subgroupOf.2 ⟨_, hδ0, rfl⟩,
     ⟨_, ((mem_awayP_iff _ _ _).1 hz').1⟩, Subgroup.mem_subgroupOf.2 hz', Subtype.ext ?_⟩
   show ((X.g u w hg).yG c').1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
       ((reGL (rank_eq_first_level D.R) D.host.E).symm δ) * ((X.g u w hg).yG c).1 *

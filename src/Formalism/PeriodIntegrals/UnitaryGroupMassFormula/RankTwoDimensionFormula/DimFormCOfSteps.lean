@@ -74,7 +74,7 @@ theorem fibreCover (hT : Transport) (hS : KuStab) {D : D7} {X : HidaSetting D} (
       rw [h2]
       simp [Formalism.HermitianLatticesTheory.gmap]
     simpa using e2.trans e1.symm
-  · exact ((DoubleCoset.eq _ _ _ _).mpr ⟨iotaF X u γ, MonoidHom.mem_range.mpr ⟨γ, rfl⟩, κ, κ.2, hρ⟩).symm
+  · exact ((@DoubleCoset.eq _ _ _ _ _ _).mpr ⟨iotaF X u γ, MonoidHom.mem_range.mpr ⟨γ, rfl⟩, κ, κ.2, hρ⟩).symm
 
 theorem fibreBound_of (hO : OrbitCount) (hT : Transport) (hS : KuStab) (hB : StabBound) (hI : IndexGe) :
     FibreBound := by

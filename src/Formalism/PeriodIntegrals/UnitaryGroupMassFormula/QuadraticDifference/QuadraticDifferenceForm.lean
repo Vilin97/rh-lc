@@ -92,7 +92,7 @@ theorem quadratic_intCoeffs : IntCoeffs := by
     have h1 : IsIntegral ℤ (algebraMap ℚ K x) := by
       rw [eq_ratCast]
       simpa using hint
-    obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp ((isIntegral_algebraMap_iff (algebraMap ℚ K).injective).mp h1)
+    obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp ((isIntegral_algebraMap_iff ).mp h1)
     rw [eq_intCast] at hn
     subst hn
     exact ⟨⟨2 * n, by push_cast; ring⟩, ⟨n ^ 2, by push_cast; ring⟩⟩

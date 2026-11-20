@@ -73,7 +73,7 @@ theorem rayLSeries_entire_ne_zero_one : ∀ (K : Type) [Field K] [NumberField K]
   let F : ℂ → ℂ := fun s => Y 1 s * (g s * ∏ χ ∈ (Finset.univ.erase 1).erase χ₀, L χ s)
   have hFd : Differentiable ℂ F := by
     refine (hYd 1).mul (hg.mul ?_)
-    refine Differentiable.fun_finset_prod fun χ hχ => (hL χ ?_).1
+    refine Differentiable.fun_finsetProd fun χ hχ => (hL χ ?_).1
     exact Finset.ne_of_mem_erase (Finset.mem_of_mem_erase hχ)
   have hFs : {s : ℂ | (1 : ℝ) < s.re}.EqOn F (LSeries b) := by
     intro s hs

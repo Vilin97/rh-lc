@@ -42,7 +42,7 @@ theorem isLat_crd (S : HSpace E) (L : Submodule (𝓞 E) S.V) (h : Submodule.IsL
   rw [Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
   exact (crd S).surjective
 
-theorem isLattice_dual (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L)
+theorem isLattice_dual (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L)
     (hint : L ≤ Formalism.HermitianLatticesTheory.dual S.hT L) (T : ℕ) (hT : T ≠ 0)
     (hTd : ∀ x ∈ Formalism.HermitianLatticesTheory.dual S.hT L, (T : E) • x ∈ L) : Submodule.IsLattice E (Formalism.HermitianLatticesTheory.dual S.hT L) := by
   haveI : IsNoetherian (𝓞 E) L := isNoetherian_of_fg_of_noetherian _ hL.fg

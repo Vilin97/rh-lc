@@ -135,7 +135,7 @@ theorem exists_injective_of_height_le_one {k B : Type*} [Field k] [IsAlgClosed k
     rw [h] at hXV
     exact X_ne_zero ((FaithfulSMul.algebraMap_eq_zero_iff k[X] V).mp hXV)
   have hval : ValuationRing V := inferInstance
-  have : IsDiscreteValuationRing V := ((IsDiscreteValuationRing.TFAE V hnf).out 1 0).mp hval
+  have : IsDiscreteValuationRing V := ((IsDiscreteValuationRing.TFAE V hnf).out 2 1).mp hval
   obtain ⟨ψ, hψi, hψC, hψm⟩ :=
     exists_ringHom_powerSeries_of_dvr _ (surjective_residue_of_isAlgebraic hXV)
   refine ⟨{ ψ.comp φ with commutes' := fun a => ?_ }, hψi.comp hφi, fun b => ?_⟩

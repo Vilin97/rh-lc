@@ -42,7 +42,7 @@ theorem cind_mem {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopological
       · rintro ⟨W, hW, rfl⟩
         show W + y - y ∈ L
         rwa [add_sub_cancel_right]
-    refine IsCompact.of_isClosed_subset (himg ▸ hc.image (continuous_add_right y)) (isClosed_tsupport _)
+    refine IsCompact.of_isClosed_subset (himg ▸ hc.image (continuous_add_const y)) (isClosed_tsupport _)
       (closure_minimal ?_ hKc)
     intro Z hZ
     by_contra h

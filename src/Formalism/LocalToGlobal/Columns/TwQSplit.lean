@@ -26,7 +26,7 @@ theorem qsp_norm_mem (a : 𝓞 E) : ∃ b : 𝓞 F, algebraMap (𝓞 F) (𝓞 E)
   obtain ⟨x, hx⟩ := (hc.fixed _).1 h1
   have hi : IsIntegral ℤ x := by
     have h2 : IsIntegral ℤ (algebraMap F E x) := by rw [hx]; exact RingOfIntegers.isIntegral_coe _
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h2
+    exact (isIntegral_algebraMap_iff ).1 h2
   obtain ⟨b, hb⟩ : ∃ b : 𝓞 F, algebraMap (𝓞 F) F b = x := ⟨⟨x, hi⟩, rfl⟩
   refine ⟨b, ?_⟩
   apply RingOfIntegers.ext

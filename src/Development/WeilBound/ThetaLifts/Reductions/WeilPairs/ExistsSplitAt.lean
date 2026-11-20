@@ -100,7 +100,7 @@ theorem exists_of_fixed {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {x : E} (hx : 
 theorem exists_int {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : 𝓞 E) (hx : σ (x : E) = x) :
     ∃ t : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) t = x ∧ algebraMap F E (t : F) = x := by
   obtain ⟨t, ht⟩ := exists_of_fixed h hx
-  have hi : IsIntegral ℤ t := (isIntegral_algebraMap_iff (algebraMap F E).injective).1 (ht ▸ x.2)
+  have hi : IsIntegral ℤ t := (isIntegral_algebraMap_iff ).1 (ht ▸ x.2)
   exact ⟨⟨t, hi⟩, RingOfIntegers.ext ht, ht⟩
 
 theorem exists_splitAt {c : E ≃ₐ[F] E} (h : IsCMExt F E (c : E →ₐ[F] E)) (v : HeightOneSpectrum (𝓞 F))

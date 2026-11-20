@@ -23,7 +23,7 @@ theorem sq_int (L : IsLoc O Δ) (x : K) (a : O) (h : x ^ 2 = algebraMap O K a) :
 
 theorem int_down (L : IsLoc O Δ) (a : K) (h : IsIntegral O (algebraMap K (Etau K τ) a)) : ∃ b : O, algebraMap O K b = a := by
   haveI := L.frac
-  exact IsIntegrallyClosed.algebraMap_eq_of_integral ((isIntegral_algebraMap_iff (algebraMap K (Etau K τ)).injective).1 h)
+  exact IsIntegrallyClosed.algebraMap_eq_of_integral ((isIntegral_algebraMap_iff ).1 h)
 
 omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem Gen1.int {x : Etau K τ} (h : Gen1 O x) : IsIntegral O x := by

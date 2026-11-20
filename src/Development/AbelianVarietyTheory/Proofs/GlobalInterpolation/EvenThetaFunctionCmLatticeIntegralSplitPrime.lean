@@ -59,7 +59,7 @@ theorem latInt_th0_of_split_prime : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (�
       rw [e]
       exact B.L.lattice.sub_mem (B.L.lattice.add_mem h1 h1) B.omega_mem
     obtain ⟨y, -, hy⟩ := (hmem _).1 ((hmemL _).1 h2)
-    refine ⟨2 * N, Nat.mul_pos two_pos (Nat.pos_of_ne_zero hN0), Nat.Coprime.mul ?_ hcop, ?_⟩
+    refine ⟨2 * N, Nat.mul_pos two_pos (Nat.pos_of_ne_zero hN0), Nat.Coprime.mul_left ?_ hcop, ?_⟩
     · exact (Nat.coprime_primes Nat.prime_two hqp).2 (Ne.symm hq2)
     · exact (hOK _).2 ⟨y, mul_left_cancel₀ hδ0 hy⟩
 

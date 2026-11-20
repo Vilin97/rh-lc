@@ -81,7 +81,7 @@ omit [Algebra.IsQuadraticExtension ℚ K] in
 
 theorem exists_int_of_isIntegral (q : ℚ) (h : IsIntegral ℤ (algebraMap ℚ K q)) :
     ∃ n : ℤ, q = n := by
-  have h' : IsIntegral ℤ q := (isIntegral_algebraMap_iff (algebraMap ℚ K).injective).mp h
+  have h' : IsIntegral ℤ q := (isIntegral_algebraMap_iff ).mp h
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp h'
   exact ⟨n, by simpa using hn.symm⟩
 

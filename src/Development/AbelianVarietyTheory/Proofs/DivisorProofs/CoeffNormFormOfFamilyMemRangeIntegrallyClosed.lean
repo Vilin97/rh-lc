@@ -95,7 +95,7 @@ theorem isIntegral_normForm (A K L : Type) [CommRing A] [Field K] [Field L] [Alg
     exact h2.symm
   have hdet := isIntegral_det_of_aeval _ g hgm h0
   rw [hM, ← RingHom.map_det] at hdet
-  exact (isIntegral_algebraMap_iff (IsFractionRing.injective R F)).mp hdet
+  exact (isIntegral_algebraMap_iff ).mp hdet
 
 end GlobalTheory.NormSheaf.IntegralCoeff
 

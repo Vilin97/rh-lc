@@ -18,7 +18,7 @@ private theorem colExp_apply {r n h : ℕ} (c : Fin h → Fin r) (hh : h ≤ n) 
     (t : Fin n) :
     colExp c hh (a, t) = if ht : t.val < h then (if c ⟨t.val, ht⟩ = a then 1 else 0) else 0 := by
   unfold colExp
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   simp only [Finsupp.single_apply, Prod.mk.injEq]
   by_cases ht : t.val < h
   · rw [dif_pos ht]

@@ -38,7 +38,7 @@ private theorem rel_core {p : ℕ} [Fact p.Prime] {D : Datum p} (F : D.La →+ A
   have hinAf : ∀ a : D.La, inAf D (n • a) = n • inAf D a := fun a =>
     map_nsmul (GlobalTheory.HeckeApprox.inAfH D) n a
   have hNpos : 0 < n * k := Nat.mul_pos hn hk0
-  have hNp : (n * k).Coprime p := Nat.Coprime.mul hnp hk
+  have hNp : (n * k).Coprime p := Nat.Coprime.mul_left hnp hk
   obtain ⟨y', z, hy'⟩ := honto (n * k) hNpos hNp x
   have hL : Φ (eI n x) = eJ n y' := by
     rw [← towerI n k hn hk0 x, hev n hn hnp y', hy', addI, (kerI (n * k) hNpos ((n * k) • z)).mpr ⟨z, rfl⟩,

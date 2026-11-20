@@ -45,7 +45,7 @@ theorem localEquality_holds : LocEq := by
     obtain ⟨a, ha⟩ := (hc.fixed (m : E)).1 hfix
     have hint : IsIntegral ℤ a := by
       have h2 : IsIntegral ℤ (algebraMap F E a) := by rw [ha]; exact m.2
-      exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h2
+      exact (isIntegral_algebraMap_iff ).1 h2
     set r : 𝓞 F := ⟨a, hint⟩ with hr
     have hrm : algebraMap (𝓞 F) (𝓞 E) r = m := by
       apply RingOfIntegers.ext

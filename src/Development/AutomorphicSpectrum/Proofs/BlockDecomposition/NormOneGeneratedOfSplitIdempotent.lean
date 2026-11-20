@@ -18,17 +18,17 @@ theorem exists_good {K : Type} [Field K] [CharZero K] (a p q : K) (ha : a ≠ 0)
   set P3 : K[X] := C (2 * a) * X - C p * X ^ 2 - C q with hP3
   have h1 : P1 ≠ 0 := by
     intro h
-    have := congrArg (fun f => Polynomial.coeff f 0) h
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 0) h
     simp [hP1] at this
     exact ha this
   have h2 : P2 ≠ 0 := by
     intro h
-    have := congrArg (fun f => Polynomial.coeff f 1) h
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 1) h
     simp [hP2, Polynomial.coeff_X, Polynomial.coeff_C] at this
     exact ha this
   have h3 : P3 ≠ 0 := by
     intro h
-    have := congrArg (fun f => Polynomial.coeff f 1) h
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 1) h
     simp [hP3, Polynomial.coeff_X, Polynomial.coeff_C, Polynomial.coeff_X_pow] at this
     exact ha this
   have hP : (X * P1 * P2 * P3 : K[X]) ≠ 0 :=

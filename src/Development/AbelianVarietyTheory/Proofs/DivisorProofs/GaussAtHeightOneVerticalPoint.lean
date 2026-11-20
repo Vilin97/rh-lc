@@ -127,7 +127,7 @@ theorem dvr_of_span {T : Type} [CommRing T] [IsDomain T] [IsNoetherianRing T] [I
   have hf : ¬ IsField T := by
     rw [isField_iff_maximalIdeal_eq, h, Ideal.span_singleton_eq_bot]; exact ht
   have h2 : Submodule.IsPrincipal (maximalIdeal T) := ⟨t, h⟩
-  exact ((IsDiscreteValuationRing.TFAE T hf).out 0 4).2 h2
+  exact ((IsDiscreteValuationRing.TFAE T hf).out 1 5).2 h2
 
 theorem exists_dvd_pow {A : Type} [CommRing A] [IsDomain A] [IsLocalRing A] (hA : ringKrullDim A = 1) {b t : A}
     (hb : b ≠ 0) (ht : t ∈ maximalIdeal A) : ∃ n : ℕ, b ∣ t ^ n := by

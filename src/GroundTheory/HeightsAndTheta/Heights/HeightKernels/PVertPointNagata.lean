@@ -184,7 +184,7 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
     · intro h0
       by_contra hf
       obtain ⟨n, hn⟩ := exists_comp_not_mem hf
-      have h1 := congrArg (fun q => Polynomial.coeff q n) h0
+      have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q n) h0
       simp only [Polynomial.coeff_zero] at h1
       rw [hψcoeff] at h1
       have h2 := congrArg ι h1

@@ -35,7 +35,7 @@ theorem heckeSub_finite_free : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UP
     have hβ : x ≫ s = spMap (Spec.preimage (x ≫ s)).hom := (Spec.map_preimage _).symm
     obtain ⟨I, hI⟩ := o.geom κ x _ hβ
     have h2 : I.ev (N * k) (N • g x0) = 1 := by rw [← hI]; exact h1
-    obtain ⟨y, hy⟩ := (I.ker (N * k) (Nat.mul_pos hN hk) (Nat.Coprime.mul hNp hkp) _).1 h2
+    obtain ⟨y, hy⟩ := (I.ker (N * k) (Nat.mul_pos hN hk) (Nat.Coprime.mul_left hNp hkp) _).1 h2
     rw [hy, o.eta_ker]
 
 end GlobalTheory.UPel.HT.Hecke

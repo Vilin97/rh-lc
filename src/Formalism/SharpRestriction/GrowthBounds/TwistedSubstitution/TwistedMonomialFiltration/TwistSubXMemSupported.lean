@@ -94,7 +94,7 @@ theorem wfree_iff_supported {B : Type*} [CommRing B] (w : Set ι) (P : MvPolynom
   rw [mem_supported]
   constructor
   · intro h v hv
-    rw [Finset.mem_coe, mem_vars] at hv
+    rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hv
     obtain ⟨d, hd, hvd⟩ := hv
     have h1 := h d hd
     intro hw
@@ -107,7 +107,7 @@ theorem wfree_iff_supported {B : Type*} [CommRing B] (w : Set ι) (P : MvPolynom
     split_ifs with hx
     · by_contra hne
       have hv : x ∈ (P.vars : Set (ι × Fin n)) := by
-        rw [Finset.mem_coe, mem_vars]
+        rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support]
         exact ⟨ν, hν, Finsupp.mem_support_iff.2 hne⟩
       exact (h hv) hx
     · rfl
@@ -194,7 +194,7 @@ theorem X_mem_supported' {B : Type*} [CommRing B] (w : Set ι) (v : ι × Fin n)
   classical
   rw [mem_supported]
   intro x hx
-  rw [Finset.mem_coe, mem_vars] at hx
+  rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hx
   obtain ⟨d, hd, hxd⟩ := hx
   have h1 := support_monomial_subset (R := B) hd
   rw [Finset.mem_singleton] at h1

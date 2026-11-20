@@ -204,7 +204,7 @@ theorem exists_scale_tuples (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (R : Typ
     intro Q _ G hG
     refine continuous_pi fun a => continuous_pi fun i => ?_
     simp only [Function.uncurry_def, rmul]
-    refine continuous_finset_sum _ fun c _ => ?_
+    refine continuous_finsetSum _ fun c _ => ?_
     have h1 : Continuous fun p : Q × (Fin n → Fin M → R ⊗[F] E) => p.2 c i :=
       (continuous_apply_apply c i).comp continuous_snd
     have h2 : Continuous fun p : Q × (Fin n → Fin M → R ⊗[F] E) => G p.1 c a :=

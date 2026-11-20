@@ -61,7 +61,7 @@ theorem exists_star_int (hG : IsGalois ℚ ↥D.LL0) (x : 𝓞 ↥D.LL0) :
   have h2 : IsIntegral ℤ (star ((x : ↥D.LL0) : D.what₂.LL)) :=
     IsIntegral.map_of_comp_eq (RingHom.id ℤ) ((starRingEnd D.what₂.LL).comp (algebraMap ↥D.LL0 D.what₂.LL))
       (RingHom.ext_int _ _) (RingOfIntegers.isIntegral_coe x)
-  exact ⟨⟨⟨_, h1⟩, (isIntegral_algebraMap_iff (algebraMap ↥D.LL0 D.what₂.LL).injective).1 h2⟩, rfl⟩
+  exact ⟨⟨⟨_, h1⟩, (isIntegral_algebraMap_iff ).1 h2⟩, rfl⟩
 
 theorem exists_star (hG : IsGalois ℚ ↥D.LL0) (x : ↥D.LL0) : ∃ y : ↥D.LL0, (y : D.what₂.LL) = star (x : D.what₂.LL) :=
   ⟨⟨_, (IntermediateField.normal_iff_forall_map_le.1 hG.to_normal (starRingEnd D.what₂.LL).toRatAlgHom)

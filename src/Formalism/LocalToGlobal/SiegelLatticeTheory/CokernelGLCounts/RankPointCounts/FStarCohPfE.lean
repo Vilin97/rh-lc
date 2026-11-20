@@ -31,7 +31,7 @@ theorem denF' (x : D.host.E) :
   have hbc : IsIntegral ℤ (D.conjF (b : D.host.E)) := hbi.map (D.conjF.toRingHom.toIntAlgHom)
   obtain ⟨t0, ht0⟩ := Formalism.L2.SG.Pf.LocalDenominators.conjF_fix ((b : D.host.E) * D.conjF (b : D.host.E))
     (by rw [map_mul, Formalism.L2.SG.Pf.LocalDenominators.conjF_invol, mul_comm])
-  have ht0i : IsIntegral ℤ t0 := (isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective).1
+  have ht0i : IsIntegral ℤ t0 := (isIntegral_algebraMap_iff ).1
     (by rw [ht0]; exact hbi.mul hbc)
   refine ⟨⟨t0, ht0i⟩, ?_, ?_⟩
   · intro h

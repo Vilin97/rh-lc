@@ -83,6 +83,6 @@ theorem Op_isDVR {K : Type} [Field K] [NumberField K] (D N : ℕ)
     exact hπ0 (MvPolynomial.C_injective _ _ ((hinj (hb.trans (map_zero _).symm)).trans
       (map_zero _).symm))
   have hprin : (IsLocalRing.maximalIdeal (Op D N la)).IsPrincipal := ⟨⟨f π, hπm⟩⟩
-  exact ((IsDiscreteValuationRing.TFAE (Op D N la) hnf).out 0 4).mpr hprin
+  exact ((IsDiscreteValuationRing.TFAE (Op D N la) hnf).out 1 5).mpr hprin
 
 end ReciprocityTheory.ChartRestriction.G.T0

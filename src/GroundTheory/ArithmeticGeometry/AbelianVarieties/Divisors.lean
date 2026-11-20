@@ -96,7 +96,7 @@ theorem isDiscreteValuationRing_of_maximalIdeal_mul_eq {R : Type*} [CommRing R] 
   have hprinc := Ideal.IsPrincipal.of_finite_maximals_of_isUnit
     ((Set.finite_singleton (IsLocalRing.maximalIdeal R)).subset
       fun I hI => IsLocalRing.eq_maximalIdeal hI) hunit
-  exact ((IsDiscreteValuationRing.TFAE R hnf).out 0 4).mpr hprinc
+  exact ((IsDiscreteValuationRing.TFAE R hnf).out 1 5).mpr hprinc
 
 section AlgClosed
 

@@ -57,7 +57,7 @@ private theorem one_tr (R S : Type) [CommRing R] [IsDomain R] [CommRing S] [IsDo
   refine ⟨p.leadingCoeff, Polynomial.leadingCoeff_ne_zero.2 hp, ?_⟩
   intro K _ _ y hy
   have hmap : p.map y ≠ 0 := fun h => hy (by
-    have := congrArg (fun q => Polynomial.coeff q p.natDegree) h
+    have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q p.natDegree) h
     simpa using this)
   have hcard : ((p.map y).natDegree : Cardinal) < Cardinal.mk K :=
     (Cardinal.natCast_lt_aleph0).trans_le (Cardinal.aleph0_le_mk K)

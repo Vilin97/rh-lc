@@ -71,10 +71,10 @@ theorem LevAtG.lamGlob_apply {Z : Type} [CommGroup Z] (X : LevAtG σE J gp split
         ⟨bc (prV (E := E) v.1) (x : GL (Fin N) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)),
           hUp i v.1 ((mem_placesOver F (gp i) (hg i) v.1).1 v.2) x.2⟩ := by
   unfold LevAtG.lamGlob
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   refine Finset.prod_congr rfl (fun i _ => ?_)
   unfold prodChar
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   refine Finset.prod_congr rfl (fun v _ => ?_)
   rfl
 

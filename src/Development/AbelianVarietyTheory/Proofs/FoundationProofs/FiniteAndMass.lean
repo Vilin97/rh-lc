@@ -25,12 +25,12 @@ theorem exists_reps {G : Type} [Group G] {Γ K : Subgroup G} (h : FiniteClasses 
   have e : ∀ g, Unfold.stab Γ K g = Formalism.UG.stabAt Γ K g := fun g => by
     ext γ; simp only [Unfold.stab, Formalism.UG.stabAt, mul_assoc]
   refine ⟨n, fun i => (φ.symm i).out, fun x => ?_, fun i j γ γ' k k' e => ?_, fun i => ?_, ?_⟩
-  · obtain ⟨γ, hγ, k, hk, e⟩ := (DoubleCoset.eq Γ K _ x).1 (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K x))
+  · obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K _ x).1 (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K x))
     refine ⟨φ (DoubleCoset.mk Γ K x), ⟨γ, hγ⟩, ⟨k, hk⟩, ?_⟩
     exact e.trans (congrArg (fun c : Formalism.UG.ClassSet Γ K => γ * c.out * k) (φ.symm_apply_apply _).symm)
   · apply φ.symm.injective
     rw [← DoubleCoset.out_eq' _ _ (φ.symm i), ← DoubleCoset.out_eq' _ _ (φ.symm j)]
-    refine (DoubleCoset.eq _ _ _ _).2 ⟨(γ'⁻¹ * γ : Γ), (γ'⁻¹ * γ).2, (k * k'⁻¹ : K), (k * k'⁻¹).2, ?_⟩
+    refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(γ'⁻¹ * γ : Γ), (γ'⁻¹ * γ).2, (k * k'⁻¹ : K), (k * k'⁻¹).2, ?_⟩
     rw [Subgroup.coe_mul, Subgroup.coe_mul, mul_assoc, mul_assoc, ← mul_assoc (γ : G), ← mul_assoc, ← mul_assoc,
       mul_assoc _ _ (k : G), e]
     simp [mul_assoc]

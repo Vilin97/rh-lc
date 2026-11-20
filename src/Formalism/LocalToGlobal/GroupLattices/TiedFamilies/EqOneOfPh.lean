@@ -123,7 +123,7 @@ theorem ptEx_of (H : LocGood σ J A) (S : StepLevel F E σ J T f bad) (yc : cls 
   set x : UPts σ J (FiniteAdeleRing (𝓞 F) F) := ⟨A.yG i, H.yG_mem i⟩ * H.sec (fun v => bc (A.phE v) A.B *
       bc ((A.eQ v : G.P.Qq v →+* (A.pl v).1.adicCompletion F)) (castGL A.rk (G.P.Qq v) (g v)) * (bc (A.phE v) A.B)⁻¹) with hx
   obtain ⟨c, hc⟩ := hs (Quotient.mk'' x)
-  obtain ⟨h, hh, k, hk, e⟩ := (DoubleCoset.eq _ _ (yc c) x).1 hc
+  obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ (yc c) x).1 hc
   obtain ⟨γ, hγ, eγ⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hh)
   refine ⟨c, γ, ⟨k.1, Subgroup.mem_subgroupOf.1 hk⟩, hγ, ?_⟩
   have e2 : bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ * (yc c).1 * k.1 = x.1 := by

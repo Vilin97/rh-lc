@@ -352,7 +352,7 @@ theorem finite_image_mk {A : Type*} [Group A] [TopologicalSpace A] [IsTopologica
   refine (ht.image (DoubleCoset.mk H U)).subset ?_
   rintro _ ⟨z, hz, rfl⟩
   obtain ⟨a, ha, haz⟩ := Set.mem_iUnion₂.1 (hc hz)
-  exact ⟨a, ha, (DoubleCoset.eq H U a z).2 ⟨1, one_mem _, a⁻¹ * z, haz, by simp⟩⟩
+  exact ⟨a, ha, (@DoubleCoset.eq _ _ H U a z).2 ⟨1, one_mem _, a⁻¹ * z, haz, by simp⟩⟩
 
 section Main
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
@@ -392,7 +392,7 @@ theorem finite_unfSupport_of_ne_one (hψ : ψ ≠ 1) {ϖ : kˣ} {e : ℕ} {T : G
     rw [Reps.elt, onColumn_apply] at hw
     simp only [i.2, dif_pos] at hw
     refine Eq.trans ?_ (ρ.mk_rep i (β i))
-    exact (DoubleCoset.eq _ _ _ _).2 ⟨r, hr, 1, one_mem _, by rw [mul_one]; exact hw⟩
+    exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨r, hr, 1, one_mem _, by rw [mul_one]; exact hw⟩
   have col : ∀ j, j ≤ G.m - 2 → ((fun β => ρ.elt β (G.m, j)) '' unfSupport ψ ν keep ρ T).Finite := by
     intro j
     induction j with

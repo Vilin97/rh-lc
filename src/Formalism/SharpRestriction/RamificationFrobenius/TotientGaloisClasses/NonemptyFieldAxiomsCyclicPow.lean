@@ -373,7 +373,7 @@ theorem exact_art (he : 1 ≤ e) : ∃ u : (ZMod (2 ^ (e + 2) * q * d))ˣ,
     have hc1 : Nat.Coprime (2 ^ (e + 1)) q :=
       Nat.Coprime.pow_left _ ((Nat.coprime_primes Nat.prime_two hqp).mpr (Ne.symm hq2))
     have hc2 : Nat.Coprime (2 ^ (e + 1) * q) d :=
-      Nat.Coprime.mul (Nat.Coprime.pow_left _ ((Nat.coprime_primes Nat.prime_two hdp).mpr (Ne.symm hd2)))
+      Nat.Coprime.mul_left (Nat.Coprime.pow_left _ ((Nat.coprime_primes Nat.prime_two hdp).mpr (Ne.symm hd2)))
         ((Nat.coprime_primes hqp hdp).mpr hqd)
     exact (Nat.modEq_and_modEq_iff_modEq_mul hc2).mp
       ⟨(Nat.modEq_and_modEq_iff_modEq_mul hc1).mp ⟨hx1, huy⟩, huz⟩

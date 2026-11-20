@@ -79,7 +79,7 @@ theorem _root_.GlobalTheory.RootEx.ProperTriple.proper_triple : ∀ (k : Type) [
     ∑ s, (↑g⁻¹ : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) (Sum.inl r) (Sum.inl s) *
       (g : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) (Sum.inl s) (Sum.inr ⟨ρ, hρc⟩)
   have hF : Continuous F := by
-    refine continuous_pi fun r => continuous_finset_sum _ fun s _ => ?_
+    refine continuous_pi fun r => continuous_finsetSum _ fun s _ => ?_
     exact (Units.continuous_coe_inv.matrix_elem _ _).mul (Units.continuous_val.matrix_elem _ _)
   have hK : IsCompact (F '' C) := hC.image hF
   have hC' : IsCompact ((fun q : GL (n ⊕ Fin c) k × (n → k) =>

@@ -935,7 +935,7 @@ theorem twistedIdem_coeff {G : Type} [Group G] [Fintype G] (J : Subgroup G) (χ 
       ∑ u : J, ((Nat.card J : ℂ)⁻¹ * (((χ u)⁻¹ : ℂˣ) : ℂ)) * (if (u : G) = g then 1 else 0) := by
   classical
   unfold twistedIdem
-  rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl (fun u _ => ?_)
   simp only [MonoidAlgebra.coeff_smul, Finsupp.smul_apply, MonoidAlgebra.of_apply,
     MonoidAlgebra.coeff_single, Finsupp.single_apply, smul_eq_mul]
@@ -1042,7 +1042,7 @@ theorem trace_asAlgebraHom {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [
 private theorem cip_lemma {G : Type} [Group G] [Fintype G] (c : G → ℂ) (x : G) :
     (∑ y, c y • MonoidAlgebra.of ℂ G y).coeff x = c x := by
   classical
-  rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, Finset.sum_eq_single x]
+  rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single x]
   · simp [MonoidAlgebra.coeff_smul, MonoidAlgebra.of_apply, MonoidAlgebra.coeff_single]
   · intro b _ hb
     simp [MonoidAlgebra.coeff_smul, MonoidAlgebra.of_apply, MonoidAlgebra.coeff_single,

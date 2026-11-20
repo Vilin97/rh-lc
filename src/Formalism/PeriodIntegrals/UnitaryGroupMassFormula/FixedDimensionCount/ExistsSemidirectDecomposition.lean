@@ -149,12 +149,12 @@ theorem finite_dk {G : Type} [Group G] (Γ K D : Subgroup G) (hN : Normalises D 
     (fun c : ClassSet Γ K => DoubleCoset.mk Γ (dk K D hN) (Quotient.out c)) ?_
   intro c₁
   refine ⟨DoubleCoset.mk Γ K (Quotient.out c₁), ?_⟩
-  obtain ⟨γ, hγ, κ, hκ, e⟩ := (DoubleCoset.eq Γ K
+  obtain ⟨γ, hγ, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ Γ K
     (Quotient.out (DoubleCoset.mk Γ K (Quotient.out c₁))) (Quotient.out c₁)).1
     (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K (Quotient.out c₁)))
   refine Eq.trans ?_ (DoubleCoset.out_eq' Γ (dk K D hN) c₁)
   show DoubleCoset.mk Γ (dk K D hN) (Quotient.out (DoubleCoset.mk Γ K (Quotient.out c₁))) = _
-  exact (DoubleCoset.eq Γ (dk K D hN) _ _).2 ⟨γ, hγ, κ, le_dk K D hN hκ, e⟩
+  exact (@DoubleCoset.eq _ _ Γ (dk K D hN) _ _).2 ⟨γ, hγ, κ, le_dk K D hN hκ, e⟩
 
 def phiMap {G : Type} [Group G] (Γ K D : Subgroup G) (hN : Normalises D K)
     (p : ClassSet Γ (dk K D hN) × (D ⧸ K.subgroupOf D)) : ClassSet Γ K :=
@@ -163,12 +163,12 @@ def phiMap {G : Type} [Group G] (Γ K D : Subgroup G) (hN : Normalises D K)
 theorem phiMap_inj {G : Type} [Group G] (Γ K K₀ D : Subgroup G) (hN : Normalises D K)
     (hK : K ≤ K₀) (hD : D ≤ K₀) (hn : IsNeat Γ K₀) : Function.Injective (phiMap Γ K D hN) := by
   rintro ⟨c, q⟩ ⟨c', q'⟩ he
-  obtain ⟨γ, hγ, κ, hκ, e0⟩ := (DoubleCoset.eq Γ K _ _).1 he
+  obtain ⟨γ, hγ, κ, hκ, e0⟩ := (@DoubleCoset.eq _ _ Γ K _ _).1 he
   have e : Quotient.out c' * ((Quotient.out q' : D) : G) =
       γ * (Quotient.out c * ((Quotient.out q : D) : G)) * κ := e0
   have hc : c = c' := by
     rw [← DoubleCoset.out_eq' Γ (dk K D hN) c, ← DoubleCoset.out_eq' Γ (dk K D hN) c']
-    refine (DoubleCoset.eq Γ (dk K D hN) _ _).2 ⟨γ, hγ,
+    refine (@DoubleCoset.eq _ _ Γ (dk K D hN) _ _).2 ⟨γ, hγ,
       ((Quotient.out q : D) : G) * κ * ((Quotient.out q' : D) : G)⁻¹, ?_, ?_⟩
     · exact (mem_dk K D hN).2 ⟨((Quotient.out q : D) : G) * ((Quotient.out q' : D) : G)⁻¹,
         D.mul_mem (Quotient.out q).2 (D.inv_mem (Quotient.out q').2),
@@ -203,7 +203,7 @@ theorem phiMap_inj {G : Type} [Group G] (Γ K K₀ D : Subgroup G) (hN : Normali
 theorem phiMap_surj {G : Type} [Group G] (Γ K D : Subgroup G) (hN : Normalises D K) :
     Function.Surjective (phiMap Γ K D hN) := by
   intro c
-  obtain ⟨γ, hγ, κ₁, hκ₁, e⟩ := (DoubleCoset.eq Γ (dk K D hN)
+  obtain ⟨γ, hγ, κ₁, hκ₁, e⟩ := (@DoubleCoset.eq _ _ Γ (dk K D hN)
     (Quotient.out (DoubleCoset.mk Γ (dk K D hN) (Quotient.out c))) (Quotient.out c)).1
     (DoubleCoset.out_eq' Γ (dk K D hN) (DoubleCoset.mk Γ (dk K D hN) (Quotient.out c)))
   obtain ⟨δ, hδ, κ, hκ, rfl⟩ := (mem_dk K D hN).1 hκ₁
@@ -215,7 +215,7 @@ theorem phiMap_surj {G : Type} [Group G] (Γ K D : Subgroup G) (hN : Normalises 
   rw [hh]
   have hcoe : (((⟨δ, hδ⟩ : D) * (h : D) : D) : G) = δ * ((h : D) : G) := rfl
   rw [hcoe]
-  refine (DoubleCoset.eq Γ K _ _).2 ⟨γ, hγ, ((h : D) : G)⁻¹ * κ,
+  refine (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨γ, hγ, ((h : D) : G)⁻¹ * κ,
     K.mul_mem (K.inv_mem (Subgroup.mem_subgroupOf.1 h.2)) hκ, ?_⟩
   refine e.trans ?_
   group

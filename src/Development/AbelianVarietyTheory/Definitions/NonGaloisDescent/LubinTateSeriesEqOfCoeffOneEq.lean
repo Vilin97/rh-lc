@@ -24,7 +24,7 @@ theorem bij : Function.Bijective (algebraMap ℤ_[2] ↥(OL Kb)) := by
   · rintro ⟨⟨x, hx⟩, hi⟩
     obtain ⟨y, rfl⟩ := IntermediateField.mem_bot.1 hx
     have hi' : IsIntegral ℤ_[2] (algebraMap ℚ_[2] ↥Kb.1 y) := hi
-    have hy : IsIntegral ℤ_[2] y := (isIntegral_algebraMap_iff (algebraMap ℚ_[2] ↥Kb.1).injective).1 hi'
+    have hy : IsIntegral ℤ_[2] y := (isIntegral_algebraMap_iff ).1 hi'
     obtain ⟨a, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.1 hy
     exact ⟨a, rfl⟩
 

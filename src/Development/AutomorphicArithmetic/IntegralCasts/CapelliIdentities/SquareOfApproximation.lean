@@ -148,7 +148,7 @@ private theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     obtain ⟨u, hu⟩ := hfix (y : E) (by rw [← hs, hy])
     have hint : IsIntegral ℤ u := by
       have h1 : IsIntegral ℤ (algebraMap F E u) := hu ▸ RingOfIntegers.isIntegral_coe y
-      exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h1
+      exact (isIntegral_algebraMap_iff ).1 h1
     refine ⟨⟨u, hint⟩, ?_⟩
     apply RingOfIntegers.ext
     exact hu.symm

@@ -618,7 +618,7 @@ theorem continuous_thetaV (v : InfinitePlace I.F) : Continuous (thetaV I v) := b
   have h : ⇑(thetaV I v) = fun y => ∑ i, evV I v (top_eq I y i) * I.φ v (bas I i) :=
     funext fun y => top_theta_formula I v y
   rw [h]
-  exact continuous_finset_sum _ fun i _ => ((top_cont_evV I v).comp (top_cont_coord I i)).mul continuous_const
+  exact continuous_finsetSum _ fun i _ => ((top_cont_evV I v).comp (top_cont_coord I i)).mul continuous_const
 
 theorem top_natCast_EAf (c : ℕ) : (c : EAf I) = (1 : I.E) ⊗ₜ[I.F] (c : Af I.F) := by
   exact (map_natCast (Algebra.TensorProduct.includeRight : Af I.F →ₐ[I.F] EAf I) c).symm
@@ -1287,7 +1287,7 @@ theorem continuousAt_entry (i j : Fin I.n) :
   rw [hsymm1, hone] at hW'
 
   have hW : {y : TT I | y + (1 : Matrix (Fin I.n) (Fin I.n) (TT I)) i j ∈ W'} ∈ nhds (0 : TT I) :=
-    (continuous_add_right ((1 : Matrix (Fin I.n) (Fin I.n) (TT I)) i j)).continuousAt.preimage_mem_nhds
+    (continuous_add_const ((1 : Matrix (Fin I.n) (Fin I.n) (TT I)) i j)).continuousAt.preimage_mem_nhds
       (by rw [zero_add]; exact hW')
   obtain ⟨δ, hδ, c, hc1, hsmall⟩ := tt_small I _ hW
   have hmm : 1 ≤ c * mm I ^ 2 := by

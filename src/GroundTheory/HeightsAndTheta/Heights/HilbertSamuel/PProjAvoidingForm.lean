@@ -126,7 +126,7 @@ theorem ProjAvoidingForm.proof (hSeg : SegreArith.Statement) : ProjAvoidingForm.
         rw [if_pos (by omega), aeval_zero, constantCoeff_homogeneousComponent (by omega), map_zero, mul_zero],
         zero_add, if_pos (by omega), one_mul, Nat.sub_self, aeval_zero, homogeneousComponent_zero, constantCoeff_C] at hrel
       have htop : AddMonoidAlgebra.coeff (g (minpoly R₀ (coneMap ℚ x (X p))).natDegree) 0 = 1 := by
-        have h1 := congrArg (fun q => Polynomial.coeff q 0) (hg (minpoly R₀ (coneMap ℚ x (X p))).natDegree)
+        have h1 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q 0) (hg (minpoly R₀ (coneMap ℚ x (X p))).natDegree)
         simp only [coeff_coneMap, homogeneousComponent_zero, aeval_C] at h1
         rw [(minpoly.monic hα).coeff_natDegree] at h1
         simp only [OneMemClass.coe_one, Polynomial.coeff_one_zero] at h1

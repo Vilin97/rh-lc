@@ -116,44 +116,44 @@ theorem relationsLift_pow {π : A} (h : RelationsLift (Ideal.span {π}) M)
 theorem flat_of_relationsLift [IsNoetherianRing A] (B : Type v) [CommRing B] [Algebra A B]
     [IsNoetherianRing B] [Module B M] [IsScalarTower A B M] [Module.Finite B M] {I : Ideal A}
     (hI : I.map (algebraMap A B) ≤ Ideal.jacobson ⊥) (h : ∀ n, RelationsLift (I ^ n) M) :
-    Module.Flat A M := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Module.Flat A M := by
+  rw [Module.Flat.iff_lTensor_injective']
+  intro J
+  rw [← ker_eq_bot, eq_bot_iff]
+  intro x hx
+  have : Module.Finite B (M ⊗[A] J) :=
+    Module.Finite.equiv (AlgebraTensorModule.cancelBaseChange A B B M J)
+  have key := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J) _ hI
+  have hx' : x ∈ (⊥ : Submodule B (M ⊗[A] J)) := by
+    rw [← key, Submodule.mem_iInf]
+    intro n
+    obtain ⟨k, hk⟩ := Ideal.exists_pow_inf_eq_pow_smul (M := A) I J
+    obtain ⟨y, rfl⟩ := h (n + k) J J.subtype x (by rw [mem_ker.mp hx]; simp)
+    clear hx
+    induction y with
+    | zero => simp
+    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | tmul m j =>
+      obtain ⟨⟨j, hj⟩, hj'⟩ := j
+      have h1 : j ∈ I ^ n • (J : Submodule A A) := by
+        have := hk (n + k) (by omega)
+        rw [Nat.add_sub_cancel] at this
+        refine Submodule.smul_mono le_rfl inf_le_right (this.le ⟨?_, hj⟩)
+        simpa using hj'
+      have h2 : (⟨j, hj⟩ : J) ∈ I ^ n • (⊤ : Submodule A J) := by
+        rwa [Submodule.mem_smul_top_iff]
+      simp only [lTensor_tmul, Submodule.subtype_apply]
+      refine Submodule.smul_induction_on (p := fun d : J => m ⊗ₜ[A] d ∈
+        (I.map (algebraMap A B)) ^ n • (⊤ : Submodule B (M ⊗[A] J))) h2 ?_ ?_
+      · intro r hr d _
+        rw [tmul_smul, ← algebraMap_smul B r]
+        refine Submodule.smul_mem_smul ?_ Submodule.mem_top
+        rw [← Ideal.map_pow]
+        exact Ideal.mem_map_of_mem _ hr
+      · intro d e hd he
+        rw [tmul_add]
+        exact add_mem hd he
+  simpa using hx'
 
 theorem relationsLift_of_square {B C D : Type*} [CommRing B] [CommRing C] [CommRing D]
     [Algebra A B] {I : Ideal A} (p : A →+* C) (q : B →+* D) (ψ : C →+* D)
@@ -428,13 +428,13 @@ theorem flat_of_surjective_cotangent {k : Type*} [CommRing k] [Algebra k A] [IsL
 theorem flat_of_surjective_cotangent_of_residue {k : Type*} [CommRing k] [Algebra k A]
     [IsLocalRing A] (hk : Function.Surjective (algebraMap k (ResidueField A))) (φ : A →ₐ[k] A)
     (hle : maximalIdeal A ≤ (maximalIdeal A).comap φ)
-    (h₁ : Function.Surjective (Ideal.mapCotangent _ _ φ hle)) : (φ : A →+* A).Flat := by sorry
-
-
-
-
-
-
+    (h₁ : Function.Surjective (Ideal.mapCotangent _ _ φ hle)) : (φ : A →+* A).Flat := by
+  haveI : IsLocalHom (φ : A →+* A) := ((local_hom_TFAE (φ : A →+* A)).out 0 3).mpr hle
+  refine (flat_of_surjective_cotangent φ hle (fun x => ?_) h₁).2
+  obtain ⟨c, rfl⟩ := hk x
+  refine ⟨algebraMap k _ c, ?_⟩
+  change residue A (φ (algebraMap k A c)) = residue A (algebraMap k A c)
+  rw [φ.commutes]
 
 theorem flat_of_sub_mul_mem_sq [IsLocalRing A] (hle : maximalIdeal A ≤ (maximalIdeal A).comap φ)
     (h₀ : ∀ b, ∃ a, φ a - b ∈ maximalIdeal A) {c : A} (hc : IsUnit c)
@@ -536,9 +536,9 @@ theorem bijective_of_surjective_of_flat_dvr {T R S : Type*} [CommRing T] [IsDoma
 theorem ideal_eq_bot_of_flat_quotient_of_map_maximalIdeal (T : Type*) {R : Type*} [CommRing T]
     [IsDomain T] [IsDiscreteValuationRing T] [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [Algebra T R] (h : (maximalIdeal T).map (algebraMap T R) = maximalIdeal R) {J : Ideal R}
-    (hJ : J ≠ ⊤) [Module.Flat T (R ⧸ J)] : J = ⊥ := by sorry
-
-
+    (hJ : J ≠ ⊤) [Module.Flat T (R ⧸ J)] : J = ⊥ :=
+  haveI : IsLocalHom (algebraMap T R) := ((local_hom_TFAE (algebraMap T R)).out 0 2).mpr h.le
+  ideal_eq_bot_of_flat_quotient T hJ
 
 theorem flat_endomorphism_and_local_criterion :
     (∀ (A : Type u) [CommRing A] [IsNoetherianRing A] [IsLocalRing A] (φ : A →+* A) [IsLocalHom φ],
@@ -560,18 +560,18 @@ theorem flat_endomorphism_and_local_criterion :
         (φ : A →+* B).Flat) ∧
     (∀ (T R : Type u) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [CommRing R]
       [IsDomain R] [IsDiscreteValuationRing R] [Algebra T R] [IsLocalHom (algebraMap T R)]
-      (J : Ideal R), J ≠ ⊤ → Module.Flat T (R ⧸ J) → J = ⊥) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
+      (J : Ideal R), J ≠ ⊤ → Module.Flat T (R ⧸ J) → J = ⊥) := by
+  refine ⟨fun A _ _ _ φ _ h₀ h₁ => ?_,
+    fun T A B _ _ _ _ _ _ _ _ _ _ _ _ φ h => flat_of_flat_residueField_baseChange_dvr φ h,
+    fun k K A B _ _ _ _ _ _ _ _ φ h => flat_of_flat_baseChange K φ h,
+    fun T R _ _ _ _ _ _ _ _ J hJ _ => ideal_eq_bot_of_flat_quotient T hJ⟩
+  have hle : maximalIdeal A ≤ (maximalIdeal A).comap φ := ((local_hom_TFAE φ).out 0 3).mp ‹_›
+  have h₀' : ∀ b, ∃ a, φ a - b ∈ maximalIdeal A := fun b => by
+    obtain ⟨a, ha⟩ := h₀ (residue A b)
+    obtain ⟨a, rfl⟩ := residue_surjective a
+    exact ⟨a, Ideal.Quotient.eq.mp ha⟩
+  obtain ⟨ψ, hψ, hψ'⟩ := exists_adicCompletion_ringEquiv _ (quotientMap_pow_bijective hle h₀' h₁)
+  exact ⟨⟨ψ, fun n x a h => by rw [hψ, h, Ideal.quotientMap_mk], hψ'⟩,
+    flat_of_surjective_quotient_sq (maximalIdeal_le_jacobson _) hle h₀' h₁⟩
 
 end GlobalTheory

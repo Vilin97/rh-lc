@@ -20,7 +20,7 @@ namespace Bridge.CrisLoc.PowMulEqZeroLemmas
 theorem expand {A : Type*} [CommRing A] {p : ℕ} (hp : p.Prime) (m : A) :
     ∃ h : A, (m + 1) ^ p = m ^ p + 1 + p * m * (1 + m * h) := by
   obtain ⟨r, hr⟩ := exists_add_pow_prime_eq hp (Polynomial.X : Polynomial ℤ) 1
-  have h1 := congrArg (fun f => Polynomial.coeff f 1) hr
+  have h1 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 1) hr
   have e : (p : Polynomial ℤ) * Polynomial.X * 1 * r = Polynomial.C (p : ℤ) * (Polynomial.X * r) := by
     simp [mul_assoc]
   simp only [e, Polynomial.coeff_X_add_one_pow, Polynomial.coeff_add, Polynomial.coeff_C_mul,
@@ -275,7 +275,7 @@ theorem binom_poly {p : ℕ} (hp : p.Prime) :
     linear_combination hk - hr
   have h2 : Polynomial.X ∣ r - 1 := by
     rw [Polynomial.X_dvd_iff]
-    have := congrArg (fun f => Polynomial.coeff f 0) h1
+    have := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f 0) h1
     simp only [Polynomial.mul_coeff_zero, Polynomial.coeff_X_zero, zero_mul,
       Polynomial.coeff_natCast_ite, if_true, mul_eq_zero] at this
     exact this.resolve_left (by simp; omega)
@@ -583,7 +583,7 @@ theorem geom_sum_frob (p : ℕ) [Fact p.Prime] (v : A) : ∃ g,
   obtain ⟨D, hD⟩ := h1
   have h3 : D.eval 1 = 1 - p ^ (p - 1) := by
     have := congrArg (eval 1) hD
-    simp [hF, eval_finset_sum] at this
+    simp [hF, Polynomial.eval_finsetSum] at this
     apply mul_left_cancel₀ (show (p : ℤ) ≠ 0 by exact_mod_cast hp.ne_zero)
     rw [← this, mul_sub, mul_one, ← pow_succ', Nat.sub_add_cancel hp.one_le]
   obtain ⟨G, hG⟩ := X_sub_C_dvd_sub_C_eval (a := 1) (p := D)

@@ -124,7 +124,7 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
         cw w (Quotient.out q') = t * cw w (Quotient.out q) * k := by
       intro w hw
       by_cases hwB : w ∈ B
-      · exact (DoubleCoset.eq _ _ _ _).1 (congrFun he ⟨w, hwB⟩)
+      · exact (@DoubleCoset.eq _ _ _ _ _ _).1 (congrFun he ⟨w, hwB⟩)
       · obtain ⟨a, ha, k, hk, hak⟩ := hBg w hw hwB _ (hq0 q hq w hw)
         obtain ⟨a', ha', k', hk', hak'⟩ := hBg w hw hwB _ (hq0 q' hq' w hw)
         refine ⟨a' * a⁻¹, mul_mem ha' (inv_mem ha), k⁻¹ * k', mul_mem (inv_mem hk) hk', ?_⟩

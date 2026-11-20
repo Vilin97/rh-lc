@@ -50,7 +50,7 @@ theorem pm_gen (S : StepLevel F E σ J T f bad) (v : HeightOneSpectrum (𝓞 F))
       x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ * (y c).1 * κ := by
     intro x
     obtain ⟨c, hc⟩ := hy (Quotient.mk'' x)
-    obtain ⟨hh', hhm, kk, hkm, heq⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+    obtain ⟨hh', hhm, kk, hkm, heq⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
     obtain ⟨γ, hγ, hγe⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hhm)
     refine ⟨c, γ, kk.1, hγ, Subgroup.mem_subgroupOf.1 hkm, ?_⟩
     rw [heq, Subgroup.coe_mul, Subgroup.coe_mul, ← hγe]

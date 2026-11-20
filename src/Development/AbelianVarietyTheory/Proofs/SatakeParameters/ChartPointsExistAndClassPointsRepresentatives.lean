@@ -31,7 +31,7 @@ theorem exists_cls_eq (i : ℕ) (hi : i ≤ D.R.m) (β : (St i hi).Ch) (x : UA D
     ∃ c : (D.chTw u μ).cls i, (St i hi).chOf c = β ∧ ∃ γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi),
       ∃ κ : ((St i hi).K β).lev.U, x.1 = ratA D.host.F γ * ((St i hi).y c).1 * κ.1 := by
   obtain ⟨⟨c, rfl⟩, hc⟩ := ((St i hi).K β).y_bij.2 (Quotient.mk'' x)
-  obtain ⟨g, hg, k, hk, e⟩ := (DoubleCoset.eq _ _ _ _).1 hc
+  obtain ⟨g, hg, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hc
   rw [Subgroup.mem_subgroupOf] at hg hk
   obtain ⟨γ, hγ, hγg⟩ := Subgroup.mem_map.1 hg
   refine ⟨c, rfl, γ, hγ, ⟨k.1, hk⟩, ?_⟩

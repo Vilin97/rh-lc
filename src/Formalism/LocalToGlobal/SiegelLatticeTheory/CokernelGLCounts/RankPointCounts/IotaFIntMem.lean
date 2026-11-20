@@ -59,7 +59,7 @@ theorem clear_F (p : HeightOneSpectrum (𝓞 F)) (l : (A p).Fp) :
     exact absurd h4 (not_le.2 hπv)
   have hW : IsOpen ((fun z => (z * l - 1) * c⁻¹) ⁻¹'
       ((ValuativeRel.valuation (A p).Fp).integer : Set (A p).Fp)) :=
-    Valuation.isOpen_integer.preimage (((continuous_mul_right l).sub continuous_const).mul continuous_const)
+    Valuation.isOpen_integer.preimage (((continuous_mul_const l).sub continuous_const).mul continuous_const)
   have hne : ((fun z => (z * l - 1) * c⁻¹) ⁻¹'
       ((ValuativeRel.valuation (A p).Fp).integer : Set (A p).Fp)).Nonempty := by
     refine ⟨l⁻¹, ?_⟩

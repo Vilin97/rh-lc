@@ -88,7 +88,7 @@ private theorem norm_int {E : Type} [Field E] [NumberField E] [IsCMField E] {d :
     push_cast
     linear_combination (-(t : E) ^ 2) * hx
   have hI : IsIntegral ℤ (algebraMap ℚ E (s ^ 2 + d * t ^ 2)) := hq ▸ RingOfIntegers.isIntegral_coe _
-  have hI' : IsIntegral ℤ (s ^ 2 + d * t ^ 2 : ℚ) := (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).mp hI
+  have hI' : IsIntegral ℤ (s ^ 2 + d * t ^ 2 : ℚ) := (isIntegral_algebraMap_iff ).mp hI
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.mp hI'
   refine ⟨n, RingOfIntegers.ext ?_⟩
   rw [hq, ← hn]

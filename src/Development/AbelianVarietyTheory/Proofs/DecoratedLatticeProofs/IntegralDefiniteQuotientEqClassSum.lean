@@ -227,7 +227,7 @@ theorem existsUnique_class {D : D7} (V : HSp D) {n : ℕ} (hn : V.rank = n) {T f
   have key : ∀ c, (∃ γ ∈ GQ V, ∃ k ∈ levG V hn S, x = γ * h c * k) ↔
       (Quotient.mk'' (yc c) : Cls S) = Quotient.mk'' ⟨finGLHom V hn x, GlobalTheory.AdForm.Model.finGL_mem V hn x⟩ := by
     intro c
-    refine Iff.trans ?_ (DoubleCoset.eq _ _ (yc c) _).symm
+    refine Iff.trans ?_ (@DoubleCoset.eq _ _ _ _ (yc c) _).symm
     constructor
     · rintro ⟨γ, hγ, k, hk, rfl⟩
       refine ⟨⟨finGLHom V hn γ, GlobalTheory.AdForm.Model.finGL_mem V hn γ⟩, finGLHom_mem_ratPts V hn hγ,

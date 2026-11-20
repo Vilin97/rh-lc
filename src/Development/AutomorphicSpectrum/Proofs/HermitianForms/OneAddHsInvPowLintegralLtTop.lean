@@ -15,7 +15,7 @@ theorem continuous_hs_umat {n : ℕ} (ε : Fin n → Bool) :
     Continuous fun g : UJ ε => hs (umat g) := by
   have hc : Continuous (coeMatrixAlt ε) := continuous_coeMatrix ε
   unfold hs
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (Continuous.matrix_elem hc i j).norm.pow 2
 
 theorem lintegral_one_add_inv_pow_lt_top {X : Type*} [MeasurableSpace X] (μ : Measure X)

@@ -18,7 +18,7 @@ theorem isAlgebraic_of_forall_mul {R S : Type} [CommRing R] [CommRing S] [Algebr
   refine ⟨fun s => ?_⟩
   obtain ⟨a, b, hb, e⟩ := h s
   refine ⟨Polynomial.C b * Polynomial.X - Polynomial.C a, fun h0 => hb ?_, ?_⟩
-  · have h1 := congrArg (fun p => Polynomial.coeff p 1) h0
+  · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
     simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, Polynomial.coeff_C_succ,
       sub_zero, Polynomial.coeff_zero, if_true] at h1
     rw [h1, map_zero]

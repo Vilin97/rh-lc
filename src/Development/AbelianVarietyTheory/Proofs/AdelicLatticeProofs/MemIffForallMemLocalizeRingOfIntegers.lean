@@ -132,8 +132,8 @@ theorem mem_localRing_iff (v : HeightOneSpectrum O) (x : K) :
     rw [this]; exact a.2
 
 instance isLattice_localize (v : HeightOneSpectrum O) (L : Submodule O V)
-    [h : Submodule.IsLattice K L] : Submodule.IsLattice K (localize K v L) where
-  fg := by
+    [h : Submodule.IsFullLattice K L] : Submodule.IsFullLattice K (localize K v L) where
+  toIsLattice := Submodule.IsLattice.of_fg K <| by
     obtain ⟨s, rfl⟩ := h.fg
     exact ⟨s, (Submodule.span_span_of_tower O _ _).symm⟩
   span_eq_top := by
@@ -180,8 +180,8 @@ theorem eventually_localize_le {L L' : Submodule O V} (hL : L.FG)
   filter_upwards [eventually_notMem hd] with v hv
   exact Submodule.span_le.2 fun x hx => (mem_localize_iff v L' x).2 ⟨d, hv, h x hx⟩
 
-theorem eventually_localize_eq (L L' : Submodule O V) [h : Submodule.IsLattice K L]
-    [h' : Submodule.IsLattice K L'] :
+theorem eventually_localize_eq (L L' : Submodule O V) [h : Submodule.IsFullLattice K L]
+    [h' : Submodule.IsFullLattice K L'] :
     ∀ᶠ v : HeightOneSpectrum O in Filter.cofinite, localize K v L = localize K v L' := by
   filter_upwards [eventually_localize_le h.fg h'.span_eq_top,
     eventually_localize_le h'.fg h.span_eq_top] with v h₁ h₂ using le_antisymm h₁ h₂
@@ -251,12 +251,12 @@ theorem localize_glue {M : ∀ v : HeightOneSpectrum O, Submodule (v.valuationSu
   · exact h w hw
   · exact (M w).smul_of_tower_mem s (mem_of_smul_mem w hw (hdx w))
 
-theorem isLattice_glue (L : Submodule O V) [hL : Submodule.IsLattice K L]
+theorem isLattice_glue (L : Submodule O V) [hL : Submodule.IsFullLattice K L]
     (M : ∀ v : HeightOneSpectrum O, Submodule (v.valuationSubringAtPrime K) V)
-    (hM : ∀ v, Submodule.IsLattice K (M v))
-    (hML : ∀ᶠ v in Filter.cofinite, M v = localize K v L) : Submodule.IsLattice K (glue M) := by
+    (hM : ∀ v, Submodule.IsFullLattice K (M v))
+    (hML : ∀ᶠ v in Filter.cofinite, M v = localize K v L) : Submodule.IsFullLattice K (glue M) := by
   have hfin := Filter.eventually_cofinite.1 hML
-  constructor
+  refine { toIsLattice := Submodule.IsLattice.of_fg K ?_, span_eq_top := ?_ }
   · obtain ⟨d, hd, h⟩ := exists_mem_submonoid_forall hfin O⁰
       (fun w s => ∀ x ∈ M w, s • x ∈ localize K w L)
       (fun w s t h x hx => by rw [mul_smul]; exact Submodule.smul_of_tower_mem _ t (h x hx))
@@ -275,10 +275,10 @@ theorem isLattice_glue (L : Submodule O V) [hL : Submodule.IsLattice K L]
     · rw [hw]; exact Submodule.smul_of_tower_mem _ d (mem_localize_of_mem w hx)
     · exact h w hw x (mem_localize_of_mem w hx)
 
-def latticeEquivFamilies (L : Submodule O V) [Submodule.IsLattice K L] :
-    {L' : Submodule O V // Submodule.IsLattice K L'} ≃
+def latticeEquivFamilies (L : Submodule O V) [Submodule.IsFullLattice K L] :
+    {L' : Submodule O V // Submodule.IsFullLattice K L'} ≃
       {M : ∀ v : HeightOneSpectrum O, Submodule (v.valuationSubringAtPrime K) V //
-        (∀ v, Submodule.IsLattice K (M v)) ∧ ∀ᶠ v in Filter.cofinite, M v = localize K v L} where
+        (∀ v, Submodule.IsFullLattice K (M v)) ∧ ∀ᶠ v in Filter.cofinite, M v = localize K v L} where
   toFun L' := haveI := L'.2
     ⟨fun v => localize K v L'.1, fun v => isLattice_localize v _, eventually_localize_eq _ _⟩
   invFun M := ⟨glue M.1, isLattice_glue L M.1 M.2.1 M.2.2⟩
@@ -322,19 +322,22 @@ theorem mem_frameLattice_iff_inv (g : GL ι K) (x : ι → K) :
     refine ⟨a, ?_⟩
     rw [funext ha, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
 
-instance isLattice_frameLattice (g : GL ι K) : Submodule.IsLattice K (frameLattice A g) where
-  fg := Submodule.fg_span (Set.finite_range _)
+instance isLattice_frameLattice [IsFractionRing A K] (g : GL ι K) : Submodule.IsFullLattice K (frameLattice A g) where
+  toIsLattice := Submodule.IsLattice.of_fg K <| Submodule.fg_span (Set.finite_range _)
   span_eq_top := by
     rw [frameLattice, Submodule.span_span_of_tower, eq_top_iff]
     intro x _
     exact (mem_frameLattice_iff_inv (A := K) g x).2 fun i => Submodule.mem_one.2 ⟨_, rfl⟩
 
 theorem exists_eq_frameLattice [IsDomain A] [IsPrincipalIdealRing A] [IsFractionRing A K]
-    (M : Submodule A (ι → K)) [Submodule.IsLattice K M] : ∃ g : GL ι K, M = frameLattice A g := by
+    (M : Submodule A (ι → K)) [Submodule.IsFullLattice K M] : ∃ g : GL ι K, M = frameLattice A g := by
+  letI := Submodule.IsLattice.finite K M
+  letI := Submodule.IsLattice.free K M
   have hcard : Fintype.card (Module.Free.ChooseBasisIndex A M) = Fintype.card ι := by
-    rw [← Module.finrank_eq_card_chooseBasisIndex, Submodule.IsLattice.finrank_of_pi K M]
+    rw [← Module.finrank_eq_card_chooseBasisIndex, Submodule.IsFullLattice.finrank_eq K M,
+      Module.finrank_fintype_fun_eq_card]
   let b : Module.Basis ι A M := (Module.Free.chooseBasis A M).reindex (Fintype.equivOfCardEq hcard)
-  let c : Module.Basis ι K (ι → K) := b.extendOfIsLattice K
+  let c : Module.Basis ι K (ι → K) := b.extendOfIsFullLattice K
   let := (Pi.basisFun K ι).invertibleToMatrix c
   refine ⟨unitOfInvertible ((Pi.basisFun K ι).toMatrix c), ?_⟩
   have hc : ((Pi.basisFun K ι).toMatrix c).col = fun i => M.subtype (b i) := by
@@ -461,13 +464,13 @@ theorem rationalPart_frameLattice (g : GL ι K) :
     have := a.2; exact ha ▸ this, fun h => ⟨⟨_, h⟩, rfl⟩⟩
 
 instance isLattice_complete (M : Submodule (v.valuationSubringAtPrime K) (ι → K))
-    [Submodule.IsLattice K M] : Submodule.IsLattice (v.adicCompletion K) (complete v M) := by
+    [Submodule.IsFullLattice K M] : Submodule.IsFullLattice (v.adicCompletion K) (complete v M) := by
   obtain ⟨g, rfl⟩ := exists_eq_frameLattice M
   rw [complete_frameLattice]
   infer_instance
 
 theorem rationalPart_complete (M : Submodule (v.valuationSubringAtPrime K) (ι → K))
-    [Submodule.IsLattice K M] : rationalPart v (complete v M) = M := by
+    [Submodule.IsFullLattice K M] : rationalPart v (complete v M) = M := by
   obtain ⟨g, rfl⟩ := exists_eq_frameLattice M
   rw [complete_frameLattice, rationalPart_frameLattice]
 
@@ -507,11 +510,11 @@ theorem exists_smul_le_completion
 
 instance isLattice_rationalPart
     (N : Submodule (v.adicCompletionIntegers K) (ι → v.adicCompletion K))
-    [hN : Submodule.IsLattice (v.adicCompletion K) N] :
-    Submodule.IsLattice K (rationalPart v N) := by
+    [hN : Submodule.IsFullLattice (v.adicCompletion K) N] :
+    Submodule.IsFullLattice K (rationalPart v N) := by
   let M := frameLattice (v.valuationSubringAtPrime K) (1 : GL ι K)
-  have hM : Submodule.IsLattice K M := isLattice_frameLattice _
-  constructor
+  have hM : Submodule.IsFullLattice K M := isLattice_frameLattice _
+  refine { toIsLattice := Submodule.IsLattice.of_fg K ?_, span_eq_top := ?_ }
   · obtain ⟨d, hd, h⟩ := exists_smul_le_completion v hN.fg (isLattice_complete v M).span_eq_top
     refine fg_of_smul_mem (K := K) hM.fg hd fun x hx => ?_
     rw [← rationalPart_complete v M, mem_rationalPart, LinearMap.map_smul_of_tower]
@@ -527,7 +530,7 @@ theorem complete_rationalPart_of_span_eq_top
     complete v (rationalPart v N) = N := by
   refine le_antisymm ((complete_le_iff v).2 le_rfl) fun y hy => ?_
   let M := frameLattice (v.valuationSubringAtPrime K) (1 : GL ι K)
-  have hM : Submodule.IsLattice K M := isLattice_frameLattice _
+  have hM : Submodule.IsFullLattice K M := isLattice_frameLattice _
   obtain ⟨d, hd, h⟩ := exists_smul_le_completion v (isLattice_complete v M).fg hN
 
   have hstd : ∀ z ∈ complete v M, d • z ∈ complete v (rationalPart v N) := by
@@ -561,13 +564,13 @@ theorem complete_rationalPart_of_span_eq_top
 
 theorem complete_rationalPart
     (N : Submodule (v.adicCompletionIntegers K) (ι → v.adicCompletion K))
-    [hN : Submodule.IsLattice (v.adicCompletion K) N] : complete v (rationalPart v N) = N :=
+    [hN : Submodule.IsFullLattice (v.adicCompletion K) N] : complete v (rationalPart v N) = N :=
   complete_rationalPart_of_span_eq_top v hN.span_eq_top
 
 def latticeOrderIsoCompletion :
-    {M : Submodule (v.valuationSubringAtPrime K) (ι → K) // Submodule.IsLattice K M} ≃o
+    {M : Submodule (v.valuationSubringAtPrime K) (ι → K) // Submodule.IsFullLattice K M} ≃o
       {N : Submodule (v.adicCompletionIntegers K) (ι → v.adicCompletion K) //
-        Submodule.IsLattice (v.adicCompletion K) N} where
+        Submodule.IsFullLattice (v.adicCompletion K) N} where
   toFun M := haveI := M.2; ⟨complete v M.1, isLattice_complete v _⟩
   invFun N := haveI := N.2; ⟨rationalPart v N.1, isLattice_rationalPart v _⟩
   left_inv M := haveI := M.2; Subtype.ext (rationalPart_complete v M.1)
@@ -586,8 +589,9 @@ section NumberField
 open NumberField
 
 theorem isLattice_iff {K : Type} [Field K] [NumberField K] {r : ℕ}
-    (L : Submodule (𝓞 K) (Fin r → K)) : ReciprocityTheory.MultiplicativeHeights.IsLattice L ↔ Submodule.IsLattice K L :=
-  ⟨fun h => ⟨h.1, h.2⟩, fun h => ⟨h.fg, h.span_eq_top⟩⟩
+    (L : Submodule (𝓞 K) (Fin r → K)) : ReciprocityTheory.MultiplicativeHeights.IsLattice L ↔ Submodule.IsFullLattice K L :=
+  ⟨fun h => { toIsLattice := Submodule.IsLattice.of_fg K h.1, span_eq_top := h.2 },
+    fun h => ⟨h.fg, h.span_eq_top⟩⟩
 
 theorem mem_one_ringOfIntegers_iff {K : Type*} [Field K] [NumberField K] (x : K) :
     x ∈ (1 : Submodule (𝓞 K) K) ↔ IsIntegral ℤ x :=

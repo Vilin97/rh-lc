@@ -129,7 +129,7 @@ theorem reg_vertical_e {O A : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
     have hmc : Ideal.map (algebraMap A (Localization.AtPrime P))
         (Q.comap (algebraMap A (Localization.AtPrime P))) = Q := by
       first
-      | exact IsLocalization.map_comap P.primeCompl (Localization.AtPrime P) Q
+      | exact IsLocalization.map_under P.primeCompl (Localization.AtPrime P) Q
       | exact IsLocalization.map_comap (M := P.primeCompl) Q
     rw [hQeq] at hmc
     exact (hmaxL.trans hmc).le

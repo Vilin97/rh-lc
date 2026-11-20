@@ -354,7 +354,7 @@ theorem norm_le_of_v_le (P : LocPrime l) (LL : FinExt l) (a b : ℚ_[l])
     rw [zero_add] at this
     exact absurd h (not_le.2 this)
   have h1 : IsIntegral ℤ_[l] (algebraMap ℚ_[l] ↥LL.1 (b / a)) := (P.v_O LL _).1 h0
-  rw [isIntegral_algebraMap_iff (algebraMap ℚ_[l] ↥LL.1).injective] at h1
+  rw [isIntegral_algebraMap_iff ] at h1
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
   have h2 : ‖b / a‖ ≤ 1 := by rw [← hy]; exact y.2
   rw [hb, norm_mul]

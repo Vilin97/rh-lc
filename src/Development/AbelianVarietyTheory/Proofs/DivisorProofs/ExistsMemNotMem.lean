@@ -77,7 +77,7 @@ theorem exists_norm (D : D7) (x : 𝓞 D.host.K) :
     exact sub_mem (SubfieldClass.ratCast_mem _ u) (mul_mem (SubfieldClass.ratCast_mem _ v) hb)
   have hinj : Function.Injective (algebraMap D.host.K D.host.E) := (algebraMap D.host.K D.host.E).injective
   have hint : IsIntegral ℤ (⟨_, hmem⟩ : D.host.K) := by
-    rw [← isIntegral_algebraMap_iff hinj]
+    rw [← isIntegral_algebraMap_iff ]
     exact (cO D.host.E (algebraMap (𝓞 D.host.K) (𝓞 D.host.E) x)).isIntegral_coe
   let x' : 𝓞 D.host.K := ⟨⟨_, hmem⟩, hint⟩
   have hq : ((x * x' : 𝓞 D.host.K) : D.host.K) = algebraMap ℚ D.host.K (u ^ 2 + D.host.d * v ^ 2) := by
@@ -88,7 +88,7 @@ theorem exists_norm (D : D7) (x : 𝓞 D.host.K) :
     push_cast
     linear_combination (-(v : D.host.E) ^ 2) * sqrt_sq D
   have hi : IsIntegral ℤ (u ^ 2 + D.host.d * v ^ 2 : ℚ) := by
-    rw [← isIntegral_algebraMap_iff (algebraMap ℚ D.host.K).injective, ← hq]
+    rw [← isIntegral_algebraMap_iff , ← hq]
     exact (x * x').isIntegral_coe
   obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 hi
   refine ⟨x', n, RingOfIntegers.ext rfl, RingOfIntegers.ext ?_⟩
@@ -152,7 +152,7 @@ theorem splitOff_places : ∀ {D : D7} (Pb : Formalism.L2.Host.PiBar D.host) (Pg
       rw [star_mul, star_star]
     obtain ⟨a, ha⟩ := (D.sp.cm.fixed _).1 hfix
     have hint : IsIntegral ℤ a := by
-      rw [← isIntegral_algebraMap_iff (algebraMap D.host.F D.host.E).injective, ha]
+      rw [← isIntegral_algebraMap_iff , ha]
       exact (x * cO D.host.E x).isIntegral_coe
     have e : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) ⟨a, hint⟩ = x * cO D.host.E x := RingOfIntegers.ext ha
     refine ⟨⟨a, hint⟩, ?_, fun y hy hyP => ?_⟩

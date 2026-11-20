@@ -76,7 +76,7 @@ private lemma rat_int {E : Type} [Field E] [CharZero E] (q : ℚ) (h : IsIntegra
     ∃ n : ℤ, (n : ℚ) = q := by
   have h' : IsIntegral ℤ q := by
     have := (isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := E) (x := q)
-      (algebraMap ℚ E).injective).1 (by simpa using h)
+      ).1 (by simpa using h)
     exact this
   simpa using (IsIntegrallyClosed.isIntegral_iff (R := ℤ) (K := ℚ)).1 h'
 

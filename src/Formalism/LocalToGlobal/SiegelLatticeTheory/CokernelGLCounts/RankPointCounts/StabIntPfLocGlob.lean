@@ -24,7 +24,7 @@ theorem lg_int_of_locF (t : D.host.F)
     have := (D.s.atP p).free
     exact Module.nontrivial_of_finrank_pos (R := (D.s.atP p).Fp) (by rw [(D.s.atP p).rank]; norm_num)
   have h2 : IsIntegral 𝒪[(D.s.atP p).Fp] ((D.s.atP p).ιF t) :=
-    (isIntegral_algebraMap_iff (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep).injective).1 h1
+    (isIntegral_algebraMap_iff ).1 h1
   have h3 := (Valuation.integer.integers _).mem_of_integral h2
   have h4 : (D.s.atP p).ιF t ≤ᵥ (D.s.atP p).ιF 1 := by
     rw [map_one]

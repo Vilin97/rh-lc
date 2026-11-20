@@ -210,7 +210,7 @@ theorem ab_norm_int (hX : X.Ok) (a : 𝓞 X.E) : ∃ k : 𝓞 X.F, algebraMap (�
     have h2 : IsIntegral ℤ (algebraMap X.F X.E k) := by
       rw [hk]
       exact RingOfIntegers.isIntegral_coe _
-    exact (isIntegral_algebraMap_iff (algebraMap X.F X.E).injective).1 h2
+    exact (isIntegral_algebraMap_iff ).1 h2
   refine ⟨⟨k, hint⟩, ?_⟩
   apply RingOfIntegers.ext
   exact hk

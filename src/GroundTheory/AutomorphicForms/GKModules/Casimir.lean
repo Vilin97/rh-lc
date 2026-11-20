@@ -176,7 +176,7 @@ theorem exists_aeval_laplacian_eq_zero [DecidableEq ι] (K : Subgroup G)
     intro h0
     apply hi
     have := congrArg (fun P => P.coeff (i : ℕ)) h0
-    simp only [hQdef, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+    simp only [hQdef, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
       Polynomial.coeff_zero] at this
     rw [Finset.sum_eq_single i] at this
     · simpa using this

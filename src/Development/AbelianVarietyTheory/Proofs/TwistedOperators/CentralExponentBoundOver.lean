@@ -132,7 +132,7 @@ theorem exists_cong_subset {U : Set (GL n k)} (hU : U ∈ 𝓝 (1 : GL n k)) :
   rw [SplitFlip.isEmbedding_val_GL.nhds_eq_comap] at hU
   obtain ⟨T, hT, hTU⟩ := hU
   have h1 : (fun A : Matrix n n k => A + 1) ⁻¹' T ∈ 𝓝 (0 : Matrix n n k) :=
-    (continuous_add_right _).continuousAt.preimage_mem_nhds (by simpa using hT)
+    (continuous_add_const _).continuousAt.preimage_mem_nhds (by simpa using hT)
   have h2 : Tendsto (fun p : (ValueGroupWithZero k)ˣ × Matrix n n k =>
       if ∀ i j, valuation k (p.2 i j) < p.1 then p.2 else 0) (atBot ×ˢ ⊤) (𝓝 0) := by
     refine tendsto_pi_nhds.2 fun i => tendsto_pi_nhds.2 fun j => ?_

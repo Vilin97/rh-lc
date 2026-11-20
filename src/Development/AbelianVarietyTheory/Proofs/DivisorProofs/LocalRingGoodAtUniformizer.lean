@@ -84,7 +84,7 @@ theorem exists_int_of_fixed (h : IsCMExt F E σ) (x : 𝓞 E) (hx : σ (x : E) =
     ∃ f : 𝓞 F, algebraMap F E (f : F) = x := by
   obtain ⟨f, hf⟩ := GlobalTheory.SelfDualLatticeCompare.exists_of_conj_eq h _ hx
   have hfi : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective, hf]
+    rw [← isIntegral_algebraMap_iff (B := E) , hf]
     exact x.2
   exact ⟨⟨f, hfi⟩, hf⟩
 

@@ -123,7 +123,7 @@ theorem unram_ext (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   have hnf : ¬ IsField A := fun h =>
     IsDiscreteValuationRing.not_isField O (isField_of_isIntegral_of_isField hinj h)
   have hpr : (IsLocalRing.maximalIdeal A).IsPrincipal := ⟨⟨ϖ', hmA⟩⟩
-  have hdvr : IsDiscreteValuationRing A := ((IsDiscreteValuationRing.TFAE A hnf).out 0 4).mpr hpr
+  have hdvr : IsDiscreteValuationRing A := ((IsDiscreteValuationRing.TFAE A hnf).out 1 5).mpr hpr
   have hϖ' : Irreducible ϖ' := (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ').mpr hmA
   refine ⟨hdom, hdvr, hfree, hfin, ?_, ?_⟩
   · obtain ⟨e, he⟩ := exists_ramification O A hinj

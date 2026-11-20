@@ -102,7 +102,7 @@ theorem residuePlace_of_locModel : ∀ {L K : Type} [Field L] [Field K] (cL : �
     have hmem : φR u ∈ IsLocalRing.maximalIdeal R := hmR ▸ Ideal.subset_span rfl
     exact (IsLocalRing.mem_maximalIdeal _).1 hmem (IsUnit.of_mul_eq_one w hw)
   haveI hdvr : IsDiscreteValuationRing R :=
-    ((IsDiscreteValuationRing.TFAE R hnf).out 0 4).2
+    ((IsDiscreteValuationRing.TFAE R hnf).out 1 5).2
       (show (IsLocalRing.maximalIdeal R).IsPrincipal from ⟨_, hmR⟩)
   let V : ValuationSubring K :=
     { R with

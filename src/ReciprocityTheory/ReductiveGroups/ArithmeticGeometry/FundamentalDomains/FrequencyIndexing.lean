@@ -26,7 +26,7 @@ lemma repr_sum_single (v : ι → ℝ) (j : Fin n) :
     funext x
     simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hv]
-  rw [map_sum, Finsupp.finset_sum_apply]
+  rw [map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl (fun τ _ => ?_)
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
 

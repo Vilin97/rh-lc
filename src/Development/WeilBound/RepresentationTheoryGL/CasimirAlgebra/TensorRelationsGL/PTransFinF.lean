@@ -20,7 +20,7 @@ theorem fin_adjoin {A : Type*} [Ring A] [Algebra ℂ A] {ι : Type*} [Finite ι]
   have hcomm : ∀ a ∈ Set.range x, ∀ b ∈ Set.range x, a * b = b * a := by
     rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
     exact hc i j
-  letI : CommRing (Algebra.adjoin ℂ (Set.range x)) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : CommRing (Algebra.adjoin ℂ (Set.range x)) := Algebra.isMulCommutative_adjoin ℂ hcomm
   have hint : ∀ i, IsIntegral ℂ (x i) := by
     intro i
     obtain ⟨L, hL⟩ := hL i

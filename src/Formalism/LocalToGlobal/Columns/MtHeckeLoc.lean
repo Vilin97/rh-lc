@@ -137,7 +137,7 @@ theorem mhl_over_eq (hc : Formalism.BasicNotions.CMData F E) {v : HeightOneSpect
   have hfint : IsIntegral ℤ f := by
     have h := RingOfIntegers.isIntegral_coe (a * cO E a)
     rw [← hf] at h
-    exact (isIntegral_algebraMap_iff (algebraMap F E).injective).1 h
+    exact (isIntegral_algebraMap_iff ).1 h
   let b : 𝓞 F := ⟨f, hfint⟩
   have hb : algebraMap (𝓞 F) (𝓞 E) b = a * cO E a := by
     apply RingOfIntegers.ext

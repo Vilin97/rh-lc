@@ -132,7 +132,7 @@ theorem moved_of_not_le (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : 
     · change f ((a : E) * f a) = (a : E) * f a
       rw [map_mul, conj_conj f h2 hc, mul_comm]
   have hint : IsIntegral ℤ m := by
-    rw [← isIntegral_algebraMap_iff (B := E) (algebraMap F E).injective, hm]
+    rw [← isIntegral_algebraMap_iff (B := E) , hm]
     exact (a * σ a).2
   obtain ⟨m', hm'⟩ : ∃ m' : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) m' = a * σ a := ⟨⟨m, hint⟩, Subtype.ext hm⟩
   have h1 : a * σ a ∈ Q := by

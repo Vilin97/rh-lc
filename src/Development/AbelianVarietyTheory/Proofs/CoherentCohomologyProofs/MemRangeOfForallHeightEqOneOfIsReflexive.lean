@@ -46,7 +46,7 @@ theorem isDiscreteValuationRing_of_height_eq_one (p : Ideal A) [p.IsPrime] (hp :
   have hd := krullDimLE_one_of_height_eq_one p hp B
   have hf : ¬ IsField B := IsLocalization.AtPrime.not_isField A (p.ne_bot_of_height_eq_one hp) B
   have hm : IsLocalRing.maximalIdeal B ≠ ⊥ := IsLocalRing.isField_iff_maximalIdeal_eq.not.mp hf
-  have key := (IsDiscreteValuationRing.TFAE B hf).out 3 0
+  have key := (IsDiscreteValuationRing.TFAE B hf).out 4 1
   refine key.mp ⟨hic, IsLocalRing.maximalIdeal B, ⟨hm, inferInstance⟩, fun P hP => ?_⟩
   exact IsLocalRing.eq_maximalIdeal
     (Ring.krullDimLE_one_iff_of_isPrime_bot.mp hd P hP.1 hP.2)

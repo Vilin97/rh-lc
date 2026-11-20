@@ -127,7 +127,7 @@ theorem exists_sqrt (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
   have hαs : sig α = -α := by rw [hα, map_sub, hss]; ring
   obtain ⟨a, ha⟩ := hfix (α ^ 2) (by rw [map_pow, hαs]; ring)
   have hai : IsIntegral ℤ a := by
-    rw [← isIntegral_algebraMap_iff (algebraMap F E).injective, ha]
+    rw [← isIntegral_algebraMap_iff , ha]
     exact hint.pow 2
   refine ⟨⟨α, hint⟩, ⟨a, hai⟩, hα0, hαs, ?_, fun y => ?_⟩
   · ext; exact ha

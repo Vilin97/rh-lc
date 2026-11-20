@@ -171,7 +171,7 @@ theorem mults (u : D.what₂.Word) : ∃ c : ℕ, Nat.Coprime c X.B.g ∧
   have hP : ∀ b, ce b * cf b ∣ ∏ a, ce a * cf a := fun b =>
     Finset.dvd_prod_of_mem (fun a => ce a * cf a) (Finset.mem_univ b)
   have hcop : Nat.Coprime ((∏ a, ce a * cf a) * cz) X.B.g :=
-    Nat.Coprime.mul (Nat.Coprime.prod_left fun a _ => Nat.Coprime.mul (hce1 a) (hcf1 a)) hcz1
+    Nat.Coprime.mul_left (Nat.Coprime.prod_left fun a _ => Nat.Coprime.mul_left (hce1 a) (hcf1 a)) hcz1
   have hd1 : ∀ b, ce b ∣ (∏ a, ce a * cf a) * cz := fun b =>
     Dvd.dvd.mul_right ((Dvd.intro (cf b) rfl).trans (hP b)) cz
   have hd2 : ∀ b, cf b ∣ (∏ a, ce a * cf a) * cz := fun b =>

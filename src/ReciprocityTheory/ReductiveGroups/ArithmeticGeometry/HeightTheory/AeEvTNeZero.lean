@@ -35,7 +35,7 @@ theorem ae_evT_ne_zero (sg : K →+* ℂ) (q : KTp K d.D d.N) (hq : q ≠ 0) (m 
     rcases v with ⟨i, j⟩
     rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨k, rfl⟩
     · exfalso
-      obtain ⟨s, hs, hsv⟩ := (MvPolynomial.mem_vars _).1 (Finset.mem_coe.1 hv)
+      obtain ⟨s, hs, hsv⟩ := (MvPolynomial.mem_vars_iff_mem_support _).1 (Finset.mem_coe.1 hv)
       have h0 := hqm' s hs 0
       rw [hm] at h0
       have hz : s ((0 : Fin (d.D + 1)), j) = 0 :=

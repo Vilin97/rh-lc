@@ -91,7 +91,7 @@ theorem exists_alg (h : IsArithVar p 1) (c : AlgChart p σ 1) {W : X.Opens} (f :
           rw [hmax]; exact Ideal.subset_span (Set.mem_singleton _)
         simpa [this] using hm)
       haveI : IsDiscreteValuationRing (X.presheaf.stalk y.pt) :=
-        ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk y.pt) hnf).out 0 4).2
+        ((IsDiscreteValuationRing.TFAE (X.presheaf.stalk y.pt) hnf).out 1 5).2
           (⟨⟨tR, hmax⟩⟩ : (IsLocalRing.maximalIdeal (X.presheaf.stalk y.pt)).IsPrincipal)
       have hirr : Irreducible tR := (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 hmax
       obtain ⟨n, u, hfu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hF0 hirr

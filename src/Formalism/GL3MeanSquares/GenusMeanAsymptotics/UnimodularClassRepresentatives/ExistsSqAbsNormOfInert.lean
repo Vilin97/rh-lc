@@ -113,7 +113,7 @@ theorem conjO_eq_iff_mem_range (hF : ∀ a : K, star a = a ↔ a ∈ Set.range (
       first
       | exact RingOfIntegers.isIntegral_coe x
       | exact x.2
-    have ha' : IsIntegral ℤ a := (isIntegral_algebraMap_iff (algebraMap F K).injective).1 hint
+    have ha' : IsIntegral ℤ a := (isIntegral_algebraMap_iff ).1 hint
     refine ⟨⟨a, ha'⟩, ?_⟩
     apply RingOfIntegers.ext
     show algebraMap F K a = (x : K)

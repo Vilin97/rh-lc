@@ -110,7 +110,7 @@ def rad (n : ℕ) : ℝ := hs (1 : Matrix (Fin n) (Fin n) ℂ) + 1
 theorem hsG_cont {n : ℕ} (ε : Fin n → Bool) : Continuous (hsG : UJ ε → ℝ) := by
   have h : (hsG : UJ ε → ℝ) = fun g => ∑ i, ∑ j, ‖coeMatrixAlt ε g i j‖ ^ 2 := rfl
   rw [h]
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (((continuous_apply j).comp ((continuous_apply i).comp (continuous_coeMatrix ε))).norm).pow 2
 
 theorem ball_meas {n : ℕ} (ε : Fin n → Bool) (R : ℝ) : MeasurableSet {a : UJ ε | hsG a ≤ R} :=
@@ -133,7 +133,7 @@ theorem ball_ne_top {n : ℕ} (ε : Fin n → Bool) : muG ε {a | hsG a ≤ rad 
   set K : Set (Matrix (Fin n) (Fin n) ℂ) := {M | hs M ≤ rad n} with hK
   have hKc : IsClosed K := by
     refine isClosed_le ?_ continuous_const
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact (((continuous_apply j).comp (continuous_apply i)).norm).pow 2
   have hKsub : K ⊆ Set.pi Set.univ fun _ => Set.pi Set.univ fun _ =>
       Metric.closedBall (0 : ℂ) (Real.sqrt (rad n)) := by

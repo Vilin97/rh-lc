@@ -158,7 +158,7 @@ theorem exists_pow (S : StepIn M i hi G) (β : S.Ch) (cl : {c // S.chOf c = β})
     (fun n : ℕ => (Quotient.mk'' ((S.K β).y cl ^ n) : Cls (S.K β).lev))
   wlog hlt : a < b generalizing a b
   · exact this b a hab.symm he.symm (by omega)
-  obtain ⟨g, hg, κ, hκ, e⟩ := (DoubleCoset.eq _ _ ((S.K β).y cl ^ a) ((S.K β).y cl ^ b)).1 he
+  obtain ⟨g, hg, κ, hκ, e⟩ := (@DoubleCoset.eq _ _ _ _ ((S.K β).y cl ^ a) ((S.K β).y cl ^ b)).1 he
   obtain ⟨γ, hγ, hγe⟩ := Subgroup.mem_subgroupOf.1 hg
   refine ⟨a, b - a, by omega, g, κ, γ, hγ, hγe.symm, Subgroup.mem_subgroupOf.1 hκ, ?_⟩
   rw [show a + (b - a) = b by omega]

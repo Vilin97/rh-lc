@@ -64,7 +64,7 @@ theorem trace_int (x : 𝓞 H.E) (hx : (x : H.E) ∈ H.K) : ∃ a : ℤ, (a : H.
   have h1 : IsIntegral ℤ (H.conj (x : H.E)) :=
     IsIntegral.map (H.conj : H.E →+* H.E).toIntAlgHom x.isIntegral_coe
   have h2 : IsIntegral ℤ (algebraMap ℚ H.E r) := hr ▸ x.isIntegral_coe.add h1
-  have h3 : IsIntegral ℤ r := (isIntegral_algebraMap_iff (algebraMap ℚ H.E).injective).1 h2
+  have h3 : IsIntegral ℤ r := (isIntegral_algebraMap_iff ).1 h2
   obtain ⟨a, ha⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral h3
   refine ⟨a, ?_⟩
   rw [← hr, ← ha]
@@ -91,7 +91,7 @@ theorem four_dvd {E : Type} [Field E] [NumberField E] (n : ℤ) (y : E) (hy : Is
     rw [map_div₀, map_intCast, h]
     simp
   rw [h1] at hy
-  have h3 := (isIntegral_algebraMap_iff (algebraMap ℚ E).injective).1 hy
+  have h3 := (isIntegral_algebraMap_iff ).1 hy
   obtain ⟨a, ha⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral h3
   refine ⟨a, ?_⟩
   have h4 : (a : ℚ) = (n : ℚ) / 4 := by simpa using ha

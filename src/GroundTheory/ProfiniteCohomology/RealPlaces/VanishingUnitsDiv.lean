@@ -25,7 +25,7 @@ theorem exists_two_mem_place (K : FiniteSubfield) :
     have heq : (((u⁻¹ : (𝓞 K.1)ˣ) : 𝓞 K.1) : K.1) = algebraMap ℚ K.1 (1 / 2) := by
       rw [eq_inv_of_mul_eq_one_right hK]
       simp
-    rw [heq, isIntegral_algebraMap_iff (algebraMap ℚ K.1).injective] at hint
+    rw [heq, isIntegral_algebraMap_iff ] at hint
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     have hy' : ((2 * y : ℤ) : ℚ) = 1 := by
       rw [Int.cast_mul, show ((y : ℤ) : ℚ) = algebraMap ℤ ℚ y from rfl, hy]
