@@ -24,10 +24,10 @@ theorem tau_over (hbij : Function.Bijective (algebraMap K₀ K)) (c : ZMod n) :
   let E : K₀ ≃ₐ[Qp] K := AlgEquiv.ofBijective (IsScalarTower.toAlgHom Qp K₀ K) hbij
   refine ⟨(W.emb c).comp E.symm.toAlgHom, ?_, fun x => ?_⟩
   · ext x
-    simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe]
+    simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
     congr 1
     exact E.symm_apply_apply x
-  · simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe]
+  · simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
     congr 1
     exact E.symm_apply_apply x
 

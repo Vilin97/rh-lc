@@ -115,7 +115,7 @@ private theorem exists_algHom_adjoin_of_ker_le {K Ω : Type} [Field K] [Field Ω
     apply Subtype.ext
     simp [e, φ]
   rw [hX]
-  simp only [lift, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgEquiv.coe_algHom,
+  simp only [lift, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom,
     AlgEquiv.symm_apply_apply, Ideal.Quotient.liftₐ_apply, Ideal.Quotient.lift_mk]
   exact aeval_X w i
 

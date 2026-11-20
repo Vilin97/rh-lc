@@ -68,7 +68,7 @@ theorem UpperTheory.Gal.crystallineComparison.splitsField_of :
     refine ⟨ψ, ?_⟩
     have h1 := hLe ψ (e.symm (Pi.single p 1))
     rw [hg] at h1
-    simp only [g, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe,
+    simp only [g, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe,
       AlgEquiv.apply_symm_apply, Pi.evalAlgHom_apply] at h1
     by_contra hne
     simp [Pi.single_apply, hne] at h1

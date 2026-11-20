@@ -469,7 +469,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
       intro b
       set g : O⟦X⟧ →ₐ[O] O⟦X⟧ := σ'.toAlgHom.comp (j.comp (lev τ).symm.toAlgHom) with hg
       have hgX : X ∣ g X := by
-        simp only [hg, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe]
+        simp only [hg, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
         show X ∣ σ' (j ((lev τ).symm X))
         rw [hσinv, map_sub, hjX, hjC, hw, map_mul, map_sub, hσ', hσ'C, add_sub_cancel_right]
         exact dvd_mul_right _ _

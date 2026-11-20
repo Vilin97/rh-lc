@@ -22,8 +22,8 @@ theorem freeAlgebra_lift_eq_sum_monomials {B : Type} [Ring B] [Algebra ℂ B] {X
       rw [← he x, e.symm_apply_apply]
     rw [MonoidAlgebra.of_apply] at hx
     rw [MonoidAlgebra.lift_symm_apply]
-    simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom, hx, FreeAlgebra.lift_ι_apply, FreeMonoid.lift_eval_of]
+    simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom, hx, FreeAlgebra.lift_ι_apply, FreeMonoid.lift_eval_of]
   have := AlgHom.congr_fun hF (e p)
-  simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom, AlgEquiv.symm_apply_apply, MonoidAlgebra.lift_apply, FreeMonoid.lift_apply] at this
+  simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom, AlgEquiv.symm_apply_apply, MonoidAlgebra.lift_apply, FreeMonoid.lift_apply] at this
   exact this
 end GlobalTheory

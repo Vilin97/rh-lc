@@ -122,7 +122,7 @@ theorem lattice_basis_span_invariants : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [toMatrix_lat, Algebra.smul_def, map_mul, PadicInt.algebraMap_apply, T.zB]
     congr 1
-    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.toAlgHom_eq_coe,
+    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.coe_toAlgHom,
       AlgHom.coe_coe]
     rw [← T.actB]
     congr 1

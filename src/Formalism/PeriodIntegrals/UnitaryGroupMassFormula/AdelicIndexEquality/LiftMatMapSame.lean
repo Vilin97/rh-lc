@@ -69,7 +69,7 @@ private theorem psiV_liftOne_self (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom,
+  simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom,
     Algebra.TensorProduct.comm_tmul, Algebra.TensorProduct.map_tmul, evalV_singleV_self', AlgHom.coe_id, id_eq,
     TensorProduct.zero_tmul]
 
@@ -81,7 +81,7 @@ private theorem psiV_liftOne_of_ne (I : AutInst) {v w : HeightOneSpectrum (𝓞 
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [Finsupp.sum, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
-  simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom,
+  simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom,
     Algebra.TensorProduct.comm_tmul, Algebra.TensorProduct.map_tmul, evalV_singleV_of_ne hw, AlgHom.coe_id, id_eq,
     TensorProduct.zero_tmul]
 
@@ -114,7 +114,7 @@ private theorem equivFinsuppOfBasisRight_psiV_eq_evalV (I : AutInst) (w : Height
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul e a =>
-    simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe,
+    simp only [PI.FinKW.psiV, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe,
       AlgEquiv.coe_algHom, Algebra.TensorProduct.comm_tmul, Algebra.TensorProduct.map_tmul,
       AlgHom.coe_id, id_eq, TensorProduct.equivFinsuppOfBasisRight_apply_tmul,
       TensorProduct.equivFinsuppOfBasisLeft_apply_tmul, Finsupp.mapRange_apply]

@@ -188,7 +188,7 @@ theorem coassoc_left (a b c : M) :
     | zero => simp
     | tmul p q => simp [ev2]; ring
     | add u v hu hv => simp only [TensorProduct.add_tmul, map_add (f := _), hu, hv, add_mul]
-  simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.toAlgHom_eq_coe,
+  simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom,
     AlgHom.coe_coe, AlgEquiv.coe_algHom]
   rw [key, ev2_comul, ev2_tmul]
 
@@ -224,12 +224,12 @@ theorem rTensor_counit : (map (counit O hε) (.id R O)).comp (comul O hΔ)
       (map (counit O hε) (.id R O))) = ev2 O 1 a := by
     apply Algebra.TensorProduct.ext'
     intro x y
-    simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.toAlgHom_eq_coe,
+    simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom,
       AlgHom.coe_coe, AlgEquiv.coe_algHom, Algebra.TensorProduct.lid_tmul, ev2_tmul]
     rw [map_smul, Algebra.smul_def, counit_spec]
     rfl
   have := congrArg (fun φ => φ (comul O hΔ f)) key
-  simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom] at this
+  simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom] at this
   rw [this, ev2_comul, _root_.one_mul]
   rfl
 
@@ -245,12 +245,12 @@ theorem lTensor_counit : (map (.id R O) (counit O hε)).comp (comul O hΔ)
       (map (.id R O) (counit O hε))) = ev2 O a 1 := by
     apply Algebra.TensorProduct.ext'
     intro x y
-    simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.toAlgHom_eq_coe,
+    simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom,
       AlgHom.coe_coe, AlgEquiv.coe_algHom, Algebra.TensorProduct.rid_tmul, ev2_tmul]
     rw [map_smul, Algebra.smul_def, counit_spec, _root_.mul_comm]
     rfl
   have := congrArg (fun φ => φ (comul O hΔ f)) key
-  simp only [AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, AlgEquiv.coe_algHom] at this
+  simp only [AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.coe_algHom] at this
   rw [this, ev2_comul, _root_.mul_one]
   rfl
 

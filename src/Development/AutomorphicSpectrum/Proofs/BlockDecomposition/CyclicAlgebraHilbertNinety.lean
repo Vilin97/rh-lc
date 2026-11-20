@@ -186,8 +186,7 @@ theorem main : PositivityTheory.Rg.Tf.Loc.N1 → ∀ (O O' R : Type) [CommRing O
     induction t using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul k w =>
-      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, AlgEquiv.toAlgHom_eq_coe,
-        AlgEquiv.coe_algHom, tensorProduct_congr_refl_pow_tmul_lemma]
+      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom, tensorProduct_congr_refl_pow_tmul_lemma]
     | add t₁ t₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   refine ⟨hunit.unit, ?_⟩
   rw [IsUnit.unit_spec, ← hJ]

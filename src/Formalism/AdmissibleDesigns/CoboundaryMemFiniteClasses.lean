@@ -319,8 +319,7 @@ theorem coboundary_mem_finite_classes {V : Type} [AddCommGroup V] [Module O V] [
     abel
   · show (ofV e (ρ (ι g) x - x) : TrV e V) ⊗ₜ[Qp] (1 : B) = actVB PD (repL e ρ ι) g (ofV e x ⊗ₜ[Qp] (1 : B)) - ofV e x ⊗ₜ[Qp] (1 : B)
     rw [actVB, TensorProduct.AlgebraTensorModule.map_tmul]
-    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.toAlgHom_eq_coe,
-      AlgEquiv.coe_algHom, map_one]
+    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.coe_toAlgHom, map_one]
     rw [← TensorProduct.sub_tmul]
     rfl
 
