@@ -11,7 +11,7 @@ attribute [local instance] Formalism.MainNotions.S.starE
 theorem UpperTheory.Reformulated.B.LocalTheoryWindows.lat_mult :
     ∀ (D : Formalism.BasicNotions.D7)
     {Λ : Submodule (NumberField.RingOfIntegers D.host.E) (Formalism.MainNotions.S.VS D).V},
-    Submodule.IsLattice D.host.E Λ →
+    Submodule.IsFullLattice D.host.E Λ →
       ∀ (v : (Formalism.MainNotions.S.VS D).V),
         ∃ (n : ℤ),
           n ≠ (0 : ℤ) ∧

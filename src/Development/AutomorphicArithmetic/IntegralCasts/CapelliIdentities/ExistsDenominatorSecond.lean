@@ -71,7 +71,7 @@ private lemma den_coprime_of_mul_eq {K V : Type*} [Field K] [NumberField K] [Add
 theorem UpperTheory.Reformulated.B.ExistsBaseFieldIntegerDenominator.exists_den :
     ∀ {D : Formalism.BasicNotions.D7}
     {Λ : Submodule (NumberField.RingOfIntegers D.host.E) (Formalism.MainNotions.S.VS D).V},
-    Submodule.IsLattice D.host.E Λ →
+    Submodule.IsFullLattice D.host.E Λ →
       ∀ (x : (Formalism.MainNotions.S.VS D).V),
         ∃ (d : NumberField.RingOfIntegers ↥D.host.F),
           d ≠ (0 : NumberField.RingOfIntegers ↥D.host.F) ∧

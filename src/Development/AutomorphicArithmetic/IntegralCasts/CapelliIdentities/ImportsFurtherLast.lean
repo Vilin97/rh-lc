@@ -7,7 +7,7 @@ import Formalism.LocalRingCardinality.DataHost
 theorem UpperTheory.Reformulated.B.Rd4.exists_nat_smul_mem :
     ∀ {D : Formalism.BasicNotions.D7} {n : ℕ}
     {Λ : Submodule (NumberField.RingOfIntegers D.host.E) (Fin n → D.host.E)},
-    Submodule.IsLattice D.host.E Λ →
+    Submodule.IsFullLattice D.host.E Λ →
       ∀ (x : Fin n → D.host.E),
         ∃ (N : ℕ),
           (0 : ℕ) < N ∧

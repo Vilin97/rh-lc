@@ -20,15 +20,18 @@ theorem sesquilinearRepresentation : RepStep := by
       Submodule.dualAnnihilator_bot]
 
   obtain ⟨s, hsΛ, hspan, hli⟩ := exists_linearIndependent E (Λ : Set V)
-  have hs_top : Submodule.span E s = ⊤ := hspan.trans hΛ.span_eq_top
-  let b : Basis s E V := Basis.mk hli (le_of_eq (by rw [Subtype.range_coe, hs_top]))
-  let φ : V →ₗ[E] E := b.constr E (fun i => ℓ ⟨i.1, hsΛ i.2⟩)
+  classical
+  have hs : LinearIndepOn E id s := hli
+  let b := Basis.extend hs
+  let f : hs.extend (Set.subset_univ s) → E :=
+    fun i => if hi : (i : V) ∈ s then ℓ ⟨i, hsΛ hi⟩ else 0
+  let φ : V →ₗ[E] E := b.constr E f
   have hφb : ∀ v (hv : v ∈ s), φ v = ℓ ⟨v, hsΛ hv⟩ := by
     intro v hv
-    have hb : b ⟨v, hv⟩ = v := Basis.mk_apply _ _ _
-    have e := b.constr_basis E (fun i : s => ℓ ⟨i.1, hsΛ i.2⟩) ⟨v, hv⟩
-    rw [hb] at e
-    exact e
+    let i : hs.extend (Set.subset_univ s) := ⟨v, Basis.subset_extend hs hv⟩
+    calc
+      φ v = φ (b i) := congrArg φ (Basis.extend_apply_self hs i).symm
+      _ = _ := by simpa only [f, i, dite_eq_left hv] using b.constr_basis E f i
 
   have hind : ∀ y ∈ Submodule.span (𝓞 E) (s : Set V), ∃ hy : y ∈ Λ, ℓ ⟨y, hy⟩ = φ y := by
     intro y hy
@@ -50,8 +53,8 @@ theorem sesquilinearRepresentation : RepStep := by
   have key : ∀ x : Λ, φ x = ℓ x := by
     intro x
     have hxE : (x : V) ∈ Submodule.span E s := by
-      rw [hs_top]
-      exact Submodule.mem_top
+      rw [hspan]
+      exact Submodule.subset_span x.property
     obtain ⟨y, hy, z, hxy⟩ := (IsLocalization.mem_span_iff (nonZeroDivisors (𝓞 E))).mp hxE
     have hzx : (z : 𝓞 E) • (x : V) = y := by
       rw [hxy, ← algebraMap_smul E (z : 𝓞 E), smul_smul, IsLocalization.mk'_spec', map_one,

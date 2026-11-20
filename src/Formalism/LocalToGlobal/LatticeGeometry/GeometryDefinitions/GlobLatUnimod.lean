@@ -41,7 +41,7 @@ theorem hform_sig {n : ℕ} (σ : E →ₐ[F] E) (hσ : ∀ x, σ x = star x) (J
 
 theorem globLat_unimod {n : ℕ} (σ : E →ₐ[F] E) (hσ : ∀ x, σ x = star x) (J : Matrix (Fin n) (Fin n) E)
     (hs : (Formalism.DivisionValues.hform J).IsSymm) (hnd : (Formalism.DivisionValues.hform J).Nondegenerate)
-    (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsLattice E Λ)
+    (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsFullLattice E Λ)
     (hU : Formalism.HermitianLatticesTheory.IsUnimodular (Formalism.DivisionValues.hform J) Λ)
     (g : GL (Fin n) 𝒜) (hg : g ∈ UPts σ J (FiniteAdeleRing (𝓞 F) F)) :
     Formalism.HermitianLatticesTheory.IsUnimodular (Formalism.DivisionValues.hform J) (Formalism.UG.CS.globLat g Λ) := by
@@ -55,7 +55,8 @@ theorem globLat_unimod {n : ℕ} (σ : E →ₐ[F] E) (hσ : ∀ x, σ x = star 
   rw [mem]
   constructor
   · intro hx
-    obtain ⟨k, gg, w, hgg, hw, hfr⟩ := dual_frame (R := 𝓞 E) (Formalism.DivisionValues.hform J) hs hnd hstar Λ hΛ
+    obtain ⟨k, gg, w, hgg, hw, hfr⟩ := dual_frame (R := 𝓞 E) (Formalism.DivisionValues.hform J) hs hnd hstar Λ
+      (by first | exact hΛ | exact hΛ.toIsLattice)
     rw [hU'] at hw
     have hF := isFrame_of J gg w hfr
     have hx' : ∀ y ∈ Formalism.UG.CS.globLat g Λ, hform (σ : E →+* E) J y x ∈ (algebraMap (𝓞 E) E).range := by

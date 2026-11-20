@@ -107,7 +107,7 @@ theorem latV_le_of_local (S : HSp D) (L N : Lat S) (d : ℤ) (hd : d ≠ 0) (hLN
   exact hv.2 ((Set.Finite.mem_toFinset _).2 hmem)
 
 theorem latV_eq_of_local : ∀ {D : D7} (S : HSp D) (L N : GlobalTheory.FinPl.Lat S) (P : GlobalTheory.FinPl.Pl D → Prop),
-    Submodule.IsLattice D.host.E L → Submodule.IsLattice D.host.E N →
+    Submodule.IsFullLattice D.host.E L → Submodule.IsLattice D.host.E N →
     (∀ w, P w → GlobalTheory.FinPl.latV S L (· = w) = GlobalTheory.FinPl.latV S N (· = w)) →
     GlobalTheory.FinPl.latV S L P = GlobalTheory.FinPl.latV S N P := by
   intro D S L N P hL hN hP

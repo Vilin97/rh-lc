@@ -30,7 +30,7 @@ theorem fracIdeal_smul_mem_exists {E : Type} [Field E] [NumberField E] {n : ℕ}
   | (intros; exact _root_.GlobalTheory.UnitaryNormalization.main ..)
 
 theorem fracIdeal_of_lattice_smul_mem : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)),
-    Submodule.IsLattice E L → ∀ u : Fin n → E, u ≠ 0 →
+    Submodule.IsFullLattice E L → ∀ u : Fin n → E, u ≠ 0 →
       ∃ I : FractionalIdeal (𝓞 E)⁰ E, I ≠ 0 ∧ ∀ c : E, c ∈ I ↔ c • u ∈ L := by
   intro E _ _ n L hL u hu
   let f : E →ₗ[𝓞 E] (Fin n → E) := (LinearMap.toSpanSingleton E (Fin n → E) u).restrictScalars (𝓞 E)
