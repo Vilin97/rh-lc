@@ -51,7 +51,7 @@ def StatPieceB : Prop :=
   ∀ (ℓ : ℕ) [Fact ℓ.Prime] (R : Setup ℓ) (r r₀ M0 h0 : ℕ) (S : SL R.actO r)
     (Um : R.Gg → Matrix (Fin r) (Fin r) R.OC) (Vm : Matrix (Fin r) (Fin r) R.Tt.Om) (U : Finset ℤ)
     (Y Y' : Matrix (Fin r) (Fin r) R.OC),
-    R.Facts r₀ M0 h0 → R.TateX r → (∀ g, Y.map (R.actO g) * S.Mx g = Um g * Y) →
+    R.Facts r₀ M0 h0 → (IsAdicComplete (Ideal.span {R.ϖ}) (Fin r → R.Tt.Xm) ∧ R.Tt.T2 R.z) → (∀ g, Y.map (R.actO g) * S.Mx g = Um g * Y) →
     Y * Y' = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     Y' * Y = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     (∀ a b, R.z * R.ϖ ∣ (Vm - 1) a b) → R.Tt.HTdec Vm R.w U →
@@ -96,7 +96,7 @@ def CyclotomicInvariantsZero : Prop :=
   ∀ (ℓ : ℕ) [Fact ℓ.Prime] (R : Setup ℓ) (r r₀ M0 h0 : ℕ) (S : SL R.actO r)
     (Um : R.Gg → Matrix (Fin r) (Fin r) R.OC) (Vm : Matrix (Fin r) (Fin r) R.Tt.Om) (U : Finset ℤ)
     (Y Y' : Matrix (Fin r) (Fin r) R.OC),
-    R.Facts r₀ M0 h0 → R.TateX r → (∀ g, Y.map (R.actO g) * S.Mx g = Um g * Y) →
+    R.Facts r₀ M0 h0 → (IsAdicComplete (Ideal.span {R.ϖ}) (Fin r → R.Tt.Xm) ∧ R.Tt.T2 R.z) → (∀ g, Y.map (R.actO g) * S.Mx g = Um g * Y) →
     Y * Y' = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     Y' * Y = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     (∀ a b, R.z * R.ϖ ∣ (Vm - 1) a b) → R.Tt.HTdec Vm R.w U → 0 ∉ U →

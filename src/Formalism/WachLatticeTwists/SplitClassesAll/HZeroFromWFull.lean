@@ -13,7 +13,7 @@ def StatTBWFull : Prop :=
     (En : Set (Matrix (Fin r) (Fin r) ℤ_[ℓ])) (M0 h0 : ℕ)
     (W : HypWc ℓ R.As R.AA R.WC R.jA R.ι R.φ R.Gg R.Hs R.act r L.ρ En R.πs R.ξ M0 h0)
     (U : Finset ℤ) (A : Matrix (Fin r) (Fin r) R.AA) (Y' : Matrix (Fin r) (Fin r) R.OC),
-    R.Facts r M0 h0 → R.TateX r → A.map R.ι = (R.ι (R.jA R.x)) ^ M0 • W.Xx →
+    R.Facts r M0 h0 → (IsAdicComplete (Ideal.span {R.ϖ}) (Fin r → R.Tt.Xm) ∧ R.Tt.T2 R.z) → A.map R.ι = (R.ι (R.jA R.x)) ^ M0 • W.Xx →
     A.map R.ϑ * Y' = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     Y' * A.map R.ϑ = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     R.Tt.HTdec (VmW R L W) R.w U →
@@ -74,7 +74,7 @@ def HZeroFromWFull : Prop :=
     Y' * A.map R.ϑ = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     ∀ (ρ : ℕ) (Sτ : SL R.actO ρ) (Pp : Matrix (Fin r) (Fin ρ) R.OC) (Sp : Matrix (Fin ρ) (Fin r) R.OC)
       (Cm : Matrix (Fin ρ) (Fin r) R.Tt.Om) (Bm : Matrix (Fin r) (Fin ρ) R.Tt.Om) (Uτ : Finset ℤ),
-    R.TateX ρ → (∀ g, Pp.map (R.actO g) * Sτ.Mx g = (L.sl R.actO).Mx g * Pp) → Sp * Pp = 1 →
+    (IsAdicComplete (Ideal.span {R.ϖ}) (Fin ρ → R.Tt.Xm) ∧ R.Tt.T2 R.z) → (∀ g, Pp.map (R.actO g) * Sτ.Mx g = (L.sl R.actO).Mx g * Pp) → Sp * Pp = 1 →
     A.map R.ϑ * Pp = Bm.map R.eOh * (Cm.map R.eOh * (A.map R.ϑ * Pp)) →
     R.Tt.HTdec (Cm * VmW R L W * Bm) R.w Uτ → 0 ∉ Uτ → Uτ.Nonempty →
     ∀ (infm : (Fin ρ → R.Tt.Om) →ₗ[ℤ_[ℓ]]

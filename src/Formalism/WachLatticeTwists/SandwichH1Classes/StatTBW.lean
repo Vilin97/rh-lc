@@ -11,7 +11,7 @@ def StatTBW : Prop :=
     (En : Set (Matrix (Fin r) (Fin r) ℤ_[ℓ])) (M0 h0 : ℕ)
     (W : HypWc ℓ R.As R.AA R.WC R.jA R.ι R.φ R.Gg R.Hs R.act r L.ρ En R.πs R.ξ M0 h0)
     (U : Finset ℤ) (A : Matrix (Fin r) (Fin r) R.AA) (Y' : Matrix (Fin r) (Fin r) R.OC),
-    R.Facts r M0 h0 → R.TateX r → A.map R.ι = (R.ι (R.jA R.x)) ^ M0 • W.Xx →
+    R.Facts r M0 h0 → (IsAdicComplete (Ideal.span {R.ϖ}) (Fin r → R.Tt.Xm) ∧ R.Tt.T2 R.z) → A.map R.ι = (R.ι (R.jA R.x)) ^ M0 • W.Xx →
     A.map R.ϑ * Y' = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     Y' * A.map R.ϑ = (ℓ : R.OC) • (1 : Matrix (Fin r) (Fin r) R.OC) →
     R.Tt.HTdec (VmW R L W) R.w U →
