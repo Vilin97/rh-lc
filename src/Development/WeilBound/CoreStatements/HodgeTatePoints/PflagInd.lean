@@ -12,6 +12,7 @@ import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.NumericalSegreClosed
 import Development.WeilBound.CoreStatements.IdealCycleValues.ProjIdealIndependentOfBasis
 import Development.WeilBound.CoreStatements.HodgeTatePoints.PflagZ
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)

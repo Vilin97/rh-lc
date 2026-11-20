@@ -8,6 +8,7 @@ import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.LocallyFreeFinitePro
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XMinorGraded
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XBundleOfFamily
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullLine
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)

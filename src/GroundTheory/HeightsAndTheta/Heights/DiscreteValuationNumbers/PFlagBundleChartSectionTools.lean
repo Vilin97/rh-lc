@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsF
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleSectionFormsTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PProjIdealFormValue
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR

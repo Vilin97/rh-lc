@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsG
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsTwistedDualGensExpress
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
