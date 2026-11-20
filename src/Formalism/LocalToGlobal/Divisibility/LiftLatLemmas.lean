@@ -823,9 +823,9 @@ theorem heckePoly_eval_zero {Pl : Type} (n : ℕ) (q : Pl → ℕ) (x : Pl × �
     (Col.heckePoly n q x P).eval 0 = 1 := by
   first
   | (simp only [Col.heckePoly, Col.heckePolyOf]
-     rw [eval_finset_sum, Finset.sum_eq_single 0 (fun b _ hb => by simp [hb]) (fun h => by simp at h)]
+     rw [eval_finsetSum, Finset.sum_eq_single 0 (fun b _ hb => by simp [hb]) (fun h => by simp at h)]
      simp [h1])
-  | (simp only [Col.heckePoly, Col.heckePolyOf, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+  | (simp only [Col.heckePoly, Col.heckePolyOf, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
      rw [Finset.sum_range_succ']
      simp [h1])
 

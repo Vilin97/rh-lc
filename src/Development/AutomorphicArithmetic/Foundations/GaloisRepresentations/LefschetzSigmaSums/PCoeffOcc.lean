@@ -14,7 +14,7 @@ theorem coeffOcc_of : CoeffOcc := by
   have hPQ : P = Q := by
     apply Polynomial.funext
     intro y
-    simp only [hPdef, hQdef, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+    simp only [hPdef, hQdef, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
     rw [← Finset.mul_sum, ← hEq y]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [neg_pow]

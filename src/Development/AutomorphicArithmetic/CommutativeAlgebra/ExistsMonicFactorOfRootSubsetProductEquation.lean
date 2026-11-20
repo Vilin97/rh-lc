@@ -181,7 +181,7 @@ private lemma eval_sum {S ι : Type} [CommRing S] {N : ℕ} (Λ : Finset ι) (ε
     (s : ι → Finset (Fin N)) (x : Fin N → S) (a : S) (d : ℕ) (h1 : ∑ J ∈ Λ, ε J = 1)
     (hd : ∀ J ∈ Λ, (s J).card = d) (h3 : ∀ J ∈ Λ, ε J * (a - ∏ i ∈ s J, x i) = 0) :
     (∑ J ∈ Λ, C (ε J) * ∏ i ∈ s J, (X - C (x i))).eval 0 = (-1) ^ d * a := by
-  rw [eval_finset_sum]
+  rw [eval_finsetSum]
   have key : ∀ J ∈ Λ, (C (ε J) * ∏ i ∈ s J, (X - C (x i))).eval 0 = (-1) ^ d * (ε J * a) := by
     intro J hJ
     have h := h3 J hJ

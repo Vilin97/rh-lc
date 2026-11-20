@@ -19,7 +19,7 @@ theorem nf_coef_unique {E : Type*} [AddCommGroup E] [Module ℂ E] (M : ℕ) (a 
     have hfs := congrArg f (h s hs)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, map_zero, smul_eq_mul] at hfs
-    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, Polynomial.eval_finset_sum, Polynomial.eval_mul,
+    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, Polynomial.eval_finsetSum, Polynomial.eval_mul,
       Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     rw [← hfs]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _

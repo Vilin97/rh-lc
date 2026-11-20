@@ -249,8 +249,8 @@ lemma eval_PP (u : LLˣ) (ℓ E : ℕ) (JS : Finset ℤ) :
     (PPoly u ℓ E JS).eval 1 =
       (∏ i ∈ JS.erase 0, (1 - ((u ^ (i * ((ℓ ^ E : ℕ) : ℤ)) : LLˣ) : LL))) * ((ℓ ^ E : ℕ) : LL) := by
   first
-    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finset_sum]
-    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finset_sum, mul_comm]
+    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finsetSum]
+    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finsetSum, mul_comm]
 
 lemma aeval_prod_one (T : Module.End LL W) (N : ℕ) (hT : T ^ N = 1) (s : Finset ℤ) (c : ℤ → LL) :
     Polynomial.aeval T (∏ i ∈ s, ((Polynomial.X : Polynomial LL) ^ N - Polynomial.C (c i))) =
@@ -1155,9 +1155,9 @@ namespace Formalism.ExponentWindows.G
 theorem polynomial_evaluation_holds_alt : PPeval := by
   intro R _ u ℓ E JS
   first
-    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finset_sum, mul_comm]
+    | simp [PPoly, Polynomial.eval_prod, Polynomial.eval_finsetSum, mul_comm]
     | (unfold PPoly
-       rw [Polynomial.eval_mul, Polynomial.eval_prod, Polynomial.eval_finset_sum]
+       rw [Polynomial.eval_mul, Polynomial.eval_prod, Polynomial.eval_finsetSum]
        simp
        ring)
 

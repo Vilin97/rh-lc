@@ -38,7 +38,7 @@ theorem geom_comp (s : ℕ) (u : B[X]) :
   | succ n ih => simp [Finset.sum_range_succ, ih]
 
 theorem eval_logPoly_zero (c : ℕ → B) (s : ℕ) : (logPoly c s).eval 0 = 0 := by
-  simp [logPoly, eval_finset_sum]
+  simp [logPoly, eval_finsetSum]
 
 theorem eval_logPoly_mul (c : ℕ → B) (hc : ∀ k : ℕ, c k * ((k : B) + 1) = 1)
     (hu : ∀ n : ℕ, n ≠ 0 → IsUnit (n : B)) (s : ℕ) {x y : B}
@@ -113,7 +113,7 @@ theorem plogK_mul {B : Type} [CommRing B] {J : Ideal B} (δ : DividedPowers J) (
   choose c hc using fun k : ℕ => (hunit k).exists_left_inv
   have hlog : ∀ {z : B}, z ∈ J → plogK δ s z = (logPoly c s).eval z := by
     intro z hz
-    simp only [plogK, logPoly, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+    simp only [plogK, logPoly, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
     refine Finset.sum_congr rfl fun k _ => ?_
     have h := δ.factorial_mul_dpow_eq_pow (n := k + 1) hz
     rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one] at h

@@ -70,7 +70,7 @@ theorem wirtinger_eichler : ∀ (w : ℕ) (f h : ℍ → ℂ) (p : ℂ[X]), MDif
   · filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds hs] with z hz
     rw [he f z hz, he h z hz]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [Polynomial.map_sum, eval_finset_sum]
+      simp [Polynomial.map_sum, eval_finsetSum]
   · rw [hd]
     have hb : (s - (starRingEnd ℂ) s) ^ w = ∑ j ∈ Finset.range (w + 1),
         s ^ j * (-(starRingEnd ℂ) s) ^ (w - j) * (w.choose j : ℂ) := by

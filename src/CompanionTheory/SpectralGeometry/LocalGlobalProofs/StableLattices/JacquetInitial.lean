@@ -101,7 +101,7 @@ theorem coef_mem {M : Type*} [AddCommGroup M] [Module ℂ M] (P : Submodule ℂ 
       rw [Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).2 (h t), map_zero]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul] at e
-    simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [p, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← e]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _

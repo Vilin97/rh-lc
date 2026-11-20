@@ -44,7 +44,7 @@ theorem residue_formula : Residue := by
     set Q : Polynomial ℂ := Polynomial.C (φ K) * ∏ j, (Polynomial.X + Polynomial.C (s₁ - u j)) with hQ
     have evP : ∀ x, P.eval x = ∑ i', φ (a i') * ∏ s ∈ univ.erase i', (x + (s₀ - lam s)) := by
       intro x
-      simp only [hP, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_prod,
+      simp only [hP, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_prod,
         Polynomial.eval_add, Polynomial.eval_X]
     have evQ : ∀ x, Q.eval x = φ K * ∏ j, (x + (s₁ - u j)) := by
       intro x

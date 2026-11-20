@@ -102,7 +102,7 @@ theorem dens_blockTri : ∀ (n d : ℕ) (J T : Type) [Fintype J] [Fintype T] (ε
   let Q : Polynomial (Ev n) := ∏ t, (∑ a, ∑ b, Polynomial.monomial (e t a b) (K t a b • sym (a, b))) ^ r t
   have hQ (x : ℂ) : Q.eval (algebraMap ℂ (Ev n) x) =
       ∏ t, (∑ a, ∑ b, (x ^ e t a b * K t a b) • (sym (a, b) : Ev n)) ^ r t := by
-    simp only [Q, Polynomial.eval_prod, Polynomial.eval_pow, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [Q, Polynomial.eval_prod, Polynomial.eval_pow, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     refine Finset.prod_congr rfl fun t _ => congrArg (· ^ r t) ?_
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [← map_pow, mul_comm, ← Algebra.smul_def, smul_smul]

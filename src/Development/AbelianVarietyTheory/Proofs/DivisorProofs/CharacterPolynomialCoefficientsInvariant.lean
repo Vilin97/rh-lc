@@ -27,7 +27,7 @@ theorem charPow_expansion : ∀ (T : Type) [CommGroup T] (L : T → ℝ), (∀ x
   intro T _ L hL h0 N K χ c hχ Φ hΦ
   set P : Fin N → ℂ[X] := fun i => ∑ k : Fin (K + 1), C (c i k) * X ^ (k : ℕ) with hPdef
   have hPeval : ∀ i x, (P i).eval x = ∑ k : Fin (K + 1), c i k * x ^ (k : ℕ) := by
-    intro i x; simp [P, eval_finset_sum]
+    intro i x; simp [P, eval_finsetSum]
   have hcoeff : ∀ i (k : Fin (K + 1)), (P i).coeff k = c i k := by
     intro i k
     simp only [P, finset_sum_coeff, coeff_C_mul, coeff_X_pow]

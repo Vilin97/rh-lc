@@ -21,7 +21,7 @@ theorem sum_multiDiff_eq_zero : ∀ (A : Type 1) [AddCommGroup A] (f : A → ℤ
     set Q : Polynomial ℚ := ∑ i, q i - Polynomial.C ((N : ℚ) * f c) with hQdef
     have hQ : ∀ n : ℤ, Q.eval (n : ℚ) = ((∑ i, f (n • g i + c) - (N : ℤ) * f c : ℤ) : ℚ) := by
       intro n
-      simp only [hQdef, Polynomial.eval_sub, Polynomial.eval_finset_sum, hq, Polynomial.eval_C]
+      simp only [hQdef, Polynomial.eval_sub, Polynomial.eval_finsetSum, hq, Polynomial.eval_C]
       push_cast
       simp only [add_comm c]
     have hQ0 : Q = 0 := by

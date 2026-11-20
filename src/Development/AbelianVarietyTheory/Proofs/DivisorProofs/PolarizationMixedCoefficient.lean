@@ -65,7 +65,7 @@ theorem coeff_compare :
     have ht := h t
     set_option synthInstance.maxHeartbeats 100000 in
       rw [det_add_smul_eq_sum, add_comm a, add_pow, map_sum, Complex.re_sum, Finset.mul_sum] at ht
-    simp only [Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     refine Eq.trans ?_ (ht.trans ?_)
     · refine Finset.sum_congr rfl fun m _ => ?_
       have : (t • b) ^ m * a ^ (f + e - m) * ((f + e).choose m : R) =

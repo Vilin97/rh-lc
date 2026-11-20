@@ -162,7 +162,7 @@ theorem u2ringPfT_split [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
   obtain ⟨ε, hε, hyE⟩ := u2ringPfT_deriv W hR hs hes hpm c hxm hx1 hx0 hxy
   have hder : (E c).derivative.eval (r j) = a * ∏ j' ∈ Finset.univ.erase j, (r j - r j') := by
     rw [hsplit, Polynomial.derivative_mul, Polynomial.derivative_C, zero_mul, zero_add,
-      Polynomial.derivative_prod_finset, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_finset_sum]
+      Polynomial.derivative_prod_finset, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_finsetSum]
     congr 1
     rw [Finset.sum_eq_single j]
     · simp [Polynomial.eval_prod]

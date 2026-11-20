@@ -54,7 +54,7 @@ theorem smul_eq_zero_of_aeval_prod {O : Type*} [CommRing O] [IsDomain O] {V : Ty
       | (simp [h₂])
   have hev : ∀ k ∈ S₁, R.eval (c k) = d := by
     intro k hk
-    rw [hR, eval_mul, eval_finset_sum, eval_prod]
+    rw [hR, eval_mul, eval_finsetSum, eval_prod]
     rw [Finset.sum_eq_single k]
     · simp only [eval_mul, eval_C, eval_prod, eval_sub, eval_X]
       rw [he k hk]

@@ -48,7 +48,7 @@ theorem norm_root_le_one (f : Polynomial K) (hm : f.Monic) (hf : ∀ n, ‖f.coe
   have h0 : z ^ n = -∑ i ∈ Finset.range n, f.coeff i * z ^ i := by
     have := congrArg (Polynomial.eval z) e
     rw [hz] at this
-    simp only [Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_finset_sum,
+    simp only [Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_finsetSum,
       Polynomial.eval_mul, Polynomial.eval_C] at this
     linear_combination -this
   have hz0 : (0 : ℝ) ≤ ‖z‖ ^ (n - 1) := by positivity

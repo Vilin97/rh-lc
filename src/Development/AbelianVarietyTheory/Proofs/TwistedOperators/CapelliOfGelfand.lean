@@ -37,7 +37,7 @@ theorem polyOf_eval {V : Type} [AddCommGroup V] [Module ℂ V] (d : ℕ) (c : �
     (polyOf d c φ v).eval u = φ ((∑ i ∈ range (d + 1), u ^ i • c i) v) := by
   unfold polyOf
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [eval_finset_sum, LinearMap.sum_apply, map_sum]
+    rw [eval_finsetSum, LinearMap.sum_apply, map_sum]
   refine sum_congr rfl fun i _ => ?_
   rw [eval_mul, eval_C, eval_pow, eval_X, LinearMap.smul_apply, map_smul, smul_eq_mul, mul_comm]
 

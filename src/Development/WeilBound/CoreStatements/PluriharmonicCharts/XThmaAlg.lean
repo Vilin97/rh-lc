@@ -171,7 +171,7 @@ theorem PositivityTheory.Xgp.t_thma_alg : ∀ (σ : Type) [Fintype σ] (D : ℕ)
     rw [PositivityTheory.Xgp.thma_alg.linePoly_formPoly D b hb c ε]
     simp only [volPoly, Polynomial.finset_sum_coeff, hx, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]
     simp [Finset.mem_range]
-  rw [tsgPoly, Polynomial.eval_finset_sum]
+  rw [tsgPoly, Polynomial.eval_finsetSum]
   set Pl := linePoly c ε (formPoly D b) with hPl
   have key : ∀ f : ℕ → ℝ, (∀ n, Pl.coeff n = 0 → f n = 0) →
       ∑ n ∈ Finset.range (Pl.natDegree + 1), f n = ∑ n ∈ Finset.range (D + 1), f n := by

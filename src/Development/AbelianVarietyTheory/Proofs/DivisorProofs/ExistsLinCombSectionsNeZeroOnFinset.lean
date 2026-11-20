@@ -29,7 +29,7 @@ theorem exists_pow_ne_zero {Y : Type} (N : ℕ) (T : Finset Y) (v : Y → Fin N 
   rw [Finset.mem_biUnion]
   refine ⟨P, hP, ?_⟩
   rw [Multiset.mem_toFinset, mem_roots (hq P hP), IsRoot.def]
-  simp only [q, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+  simp only [q, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
   rw [← h]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 

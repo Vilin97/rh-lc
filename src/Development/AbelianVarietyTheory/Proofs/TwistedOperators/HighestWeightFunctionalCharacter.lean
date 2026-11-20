@@ -266,7 +266,7 @@ theorem two_roots_of_parabolic_functional : ∀ (V : Type) [AddCommGroup V] [Mod
       simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply,
       Module.End.intCast_apply, map_zsmul]
     simp only [term_eq E hE p q ℓ α β h1 h2 h3 h4 τ _ hτ0 hτl u v]
-    simp only [G, Polynomial.eval_finset_sum, Finset.mul_sum]
+    simp only [G, Polynomial.eval_finsetSum, Finset.mul_sum]
     refine Finset.sum_congr rfl (fun σ _ => ?_)
     split_ifs
     · rw [Polynomial.eval_mul, Polynomial.eval_C, ← hP σ u, zsmul_eq_mul]

@@ -32,7 +32,7 @@ theorem coeff_mem_of_values {A : Type} [AddCommGroup A] [Module ℂ A] (W : Subm
     have h1 := congrArg f h0
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← Submodule.mkQ_apply, map_sum, map_sum, map_zero] at h1
-    simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [p, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← h1]
     refine Finset.sum_congr rfl fun i _ => ?_

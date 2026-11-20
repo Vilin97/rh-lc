@@ -34,7 +34,7 @@ private theorem coef_zero (n : ℕ) (a : ℕ → ℂ) (h : ∀ u : ℂ, ∑ k �
     {k : ℕ} (hk : k ≤ n) : a k = 0 := by
   have hp : (∑ k ∈ Finset.range (n + 1), Polynomial.monomial (n - k) (a k)) = 0 :=
     Polynomial.funext fun u => by
-      rw [Polynomial.eval_finset_sum, Polynomial.eval_zero, ← h u]
+      rw [Polynomial.eval_finsetSum, Polynomial.eval_zero, ← h u]
       exact Finset.sum_congr rfl fun k _ => by rw [Polynomial.eval_monomial, mul_comm]
   have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (n - k)) hp
   simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
@@ -52,7 +52,7 @@ private theorem prod_add_esymm {A : Type} [CommRing A] [Algebra ℂ A] (n : ℕ)
       ∑ k ∈ Finset.range (n + 1), u ^ (n - k) • MvPolynomial.aeval X (MvPolynomial.esymm (Fin n) ℂ k) := by
   have h := congrArg (Polynomial.eval (algebraMap ℂ A u))
     (Multiset.prod_X_add_C_eq_sum_esymm (Finset.univ.val.map X))
-  rw [Multiset.map_map, ← Finset.prod_eq_multiset_prod, Polynomial.eval_prod, Polynomial.eval_finset_sum] at h
+  rw [Multiset.map_map, ← Finset.prod_eq_multiset_prod, Polynomial.eval_prod, Polynomial.eval_finsetSum] at h
   simp only [Function.comp, Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C, Multiset.card_map,
     Finset.card_val, Finset.card_univ, Fintype.card_fin, Polynomial.eval_mul, Polynomial.eval_pow] at h
   rw [h]

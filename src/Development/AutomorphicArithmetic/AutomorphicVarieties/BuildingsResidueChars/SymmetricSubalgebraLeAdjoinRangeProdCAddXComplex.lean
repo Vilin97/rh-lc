@@ -12,7 +12,7 @@ theorem UpperTheory.symmetricSubalgebra_le_adjoin_range_prod_C_add_X_complex :
     intro u
     have h := congrArg (Polynomial.eval (C u : MvPolynomial (Fin n) ℂ))
       (MvPolynomial.prod_C_add_X_eq_sum_esymm ℂ (Fin n))
-    simp only [Polynomial.eval_prod, Polynomial.eval_finset_sum, Polynomial.eval_add, Polynomial.eval_X,
+    simp only [Polynomial.eval_prod, Polynomial.eval_finsetSum, Polynomial.eval_add, Polynomial.eval_X,
       Polynomial.eval_C, Polynomial.eval_mul, Polynomial.eval_pow, Fintype.card_fin] at h
     rw [h]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -28,7 +28,7 @@ theorem UpperTheory.symmetricSubalgebra_le_adjoin_range_prod_C_add_X_complex :
       have h2 := h1 _ (Algebra.subset_adjoin ⟨u, rfl⟩)
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [hv, map_sum, map_smul, smul_eq_mul] at h2
-      simp only [Polynomial.eval_finset_sum, Polynomial.eval_monomial, Polynomial.eval_zero]
+      simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_zero]
       rw [← h2]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     have h3 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (n - j)) hp

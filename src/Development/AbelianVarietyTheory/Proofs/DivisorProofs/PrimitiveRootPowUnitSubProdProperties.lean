@@ -128,7 +128,7 @@ lemma prod_erase {q : ℕ} [NeZero q] {A : Type} [CommRing A] (ζ : Prim q A) :
     simp only [Polynomial.map_sub, Polynomial.map_prod, Polynomial.map_sum, Polynomial.map_pow, map_X, map_C,
       AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_pow, aeval_X, Polynomial.map_one, map_cyclotomic] at h
   have h2 := congrArg (eval (1 : A)) h
-  simp only [eval_sub, eval_prod, eval_finset_sum, eval_X, eval_C, eval_pow, one_pow, eval_zero,
+  simp only [eval_sub, eval_prod, eval_finsetSum, eval_X, eval_C, eval_pow, one_pow, eval_zero,
     Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one, sub_eq_zero] at h2
   simpa [← C_pow] using h2
 

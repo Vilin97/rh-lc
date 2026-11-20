@@ -87,7 +87,7 @@ theorem alg_kill {ι : Type} [Fintype ι] (r s : ℕ) (hr : 0 < r) (M : ι → M
 
 theorem polyOf_eval {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) (x : R) :
     (polyOf n c).eval x = ∑ k ∈ Finset.range (n + 1), c k * x ^ k := by
-  simp [polyOf, eval_finset_sum]
+  simp [polyOf, eval_finsetSum]
 
 theorem coeff_zero_of_eval {R : Type} [CommRing R] [Algebra ℂ R] (P : R[X]) (Λ : R →ₗ[ℂ] ℂ)
     (h : ∀ u : ℂ, Λ (P.eval (algebraMap ℂ R u)) = 0) (j : ℕ) : Λ (P.coeff j) = 0 := by

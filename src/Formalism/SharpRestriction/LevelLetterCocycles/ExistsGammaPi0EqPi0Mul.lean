@@ -830,7 +830,7 @@ theorem ppo_single_eval {e : ℕ} {k : ℤ} (hk : k ≠ 0) :
     · rintro rfl; exact ⟨hk, rfl⟩
   unfold PPO
   rw [hks, Finset.prod_singleton]
-  simp [Polynomial.eval_finset_sum] <;> ring
+  simp [Polynomial.eval_finsetSum] <;> ring
 
 theorem part_c [IsDomain O] (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (hKL : KillerLevCore W)
     (hCA : Formalism.MainNotions.LiftingTheory.CaseA W) (h5 : 5 ≤ PD.p) (hS : PsStable W)

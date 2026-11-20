@@ -22,7 +22,7 @@ theorem exists_isUnit_esymm_of_eq_one :
     apply Multiset.prod_eq_zero
     rw [Multiset.map_map, Multiset.mem_map]
     exact ⟨y a₀, by simp [s], by simp [h]⟩
-  rw [h0, Polynomial.eval_finset_sum, Finset.sum_range_succ'] at key
+  rw [h0, Polynomial.eval_finsetSum, Finset.sum_range_succ'] at key
   simp only [eval_mul, eval_pow, eval_neg, eval_one, eval_C, eval_X, one_pow, mul_one,
     pow_zero, one_mul] at key
   have he0 : s.esymm 0 = 1 := by simp [Multiset.esymm, Multiset.powersetCard_zero_left]

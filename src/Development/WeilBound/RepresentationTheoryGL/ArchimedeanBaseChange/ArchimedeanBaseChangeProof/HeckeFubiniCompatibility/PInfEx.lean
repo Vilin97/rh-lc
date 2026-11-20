@@ -11,7 +11,7 @@ namespace PositivityTheory.Rg.BcB.CG
 namespace HeckeFubiniEvaluationDefect
 
 theorem eval_sS (t : ℕ → ℂ) (m N : ℕ) : (sS t m N).eval (m : ℂ) = (-1) ^ N * t N := by
-  rw [sS, sum_range_succ, eval_add, eval_finset_sum, sum_eq_zero]
+  rw [sS, sum_range_succ, eval_add, eval_finsetSum, sum_eq_zero]
   · simp
   · intro k hk
     have := mem_range.mp hk

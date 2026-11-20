@@ -65,7 +65,7 @@ theorem X_pow_dvd_expPoly_comp_logPoly_sub (N : ℕ) :
   have hr0 : r.coeff 0 = 0 := by
     obtain ⟨p0, hp0⟩ := hX
     have he : (expPoly (N + 1)).eval 0 = 1 := by
-      rw [expPoly, eval_finset_sum, sum_range_succ']
+      rw [expPoly, eval_finsetSum, sum_range_succ']
       simp
     rw [coeff_zero_eq_eval_zero, hr, hqdef, eval_sub, eval_comp, hp0, eval_mul, eval_X, zero_mul, he]
     simp

@@ -67,7 +67,7 @@ theorem etr_apply_of_eigen : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (m :
     refine Polynomial.funext fun w => ?_
     have h1 := hrec w
     simp only [eval_mul, eval_C, eval_pow, eval_neg, eval_one, eval_sub, eval_X, eval_comp, eval_add,
-      eval_finset_sum]
+      eval_finsetSum]
     have h4 : ∑ k ∈ range N, (-1) ^ k * t k * (w - m) ^ (N - k)
         = ∑ k ∈ range N, (-1) ^ k * (w - m) ^ (N - k) * t k :=
       sum_congr rfl fun k _ => by ring

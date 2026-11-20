@@ -49,7 +49,7 @@ theorem trace_Eop_of_hasInfChar (E : Type) [Field E] [NumberField E] [IsTotallyC
     intro v
     set_option synthInstance.maxHeartbeats 100000 in
       rw [GroundTheory.BlockD.FourierDecayAlt.GaugeExists.evU_apply, eval₂_eq_sum_range' _ hdeg, LinearMap.sum_apply, map_sum,
-      eval_finset_sum]
+      eval_finsetSum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [eval_mul, eval_C, eval_pow, eval_X, RingHom.id_apply, Module.End.mul_apply, ← map_pow,
       Module.algebraMap_end_apply, map_smul, map_smul, smul_eq_mul, mul_comm]

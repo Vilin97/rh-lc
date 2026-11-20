@@ -64,7 +64,7 @@ theorem exists_joint_kernel_polynomial_family :
     intro Z
     rw [hD Z]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+      simp only [p, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, LinearMap.sum_apply, LinearMap.smul_apply,
       map_sum, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _

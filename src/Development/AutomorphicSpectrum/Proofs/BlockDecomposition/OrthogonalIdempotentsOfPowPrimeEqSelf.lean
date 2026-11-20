@@ -20,7 +20,7 @@ theorem sum_one_sub_pow {l : ℕ} [Fact l.Prime] [NeZero l] :
       split_ifs with h
       · rw [h, sub_self, zero_pow hl1, sub_zero]
       · rw [ZMod.pow_card_sub_one_eq_one (sub_ne_zero.2 h), sub_self]
-    simp only [eval_sub, eval_finset_sum, eval_one, eval_pow, eval_X, eval_C, key]
+    simp only [eval_sub, eval_finsetSum, eval_one, eval_pow, eval_X, eval_C, key]
     simp
   · have hdeg : ∀ c : ZMod l, natDegree (1 - (X - C c) ^ (l - 1) : (ZMod l)[X]) ≤ l - 1 := fun c => by
       refine (natDegree_sub_le _ _).trans (max_le (by simp) ?_)

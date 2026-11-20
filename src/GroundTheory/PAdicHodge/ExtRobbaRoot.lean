@@ -597,7 +597,7 @@ theorem step_estimate {x : T.RobbaExt ρ0} (hx : x ≠ 0) (hε0 : T.ptEval hξ h
     simp only [a, norm_mul, norm_pow]; exact hsj' j (by have := Finset.mem_range.1 hj; omega)
   have hsum0 : ∑ j ∈ Finset.range (J + 1), a j = 0 := by
     have := hroot
-    rw [Polynomial.IsRoot, hgdef, Polynomial.eval_finset_sum] at this
+    rw [Polynomial.IsRoot, hgdef, Polynomial.eval_finsetSum] at this
     simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X] at this
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_

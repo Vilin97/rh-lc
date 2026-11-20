@@ -43,7 +43,7 @@ theorem UpperTheory.functional_qdet_eq_aeval_shifted_polynomial :
         rw [← GlobalTheory.CuspRep.qdet_shift, ← hev _ (fun a => (Algebra.commutes c _).symm), Polynomial.eval₂_eq_sum, Polynomial.sum,
         Finset.sum_mul, map_sum] at this
       rw [Polynomial.eval_mul, Polynomial.eval_C, hq, Polynomial.eval_comp, Polynomial.eval_add, Polynomial.eval_X,
-        Polynomial.eval_C, add_comm c v, ← this, Polynomial.eval_finset_sum]
+        Polynomial.eval_C, add_comm c v, ← this, Polynomial.eval_finsetSum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [Polynomial.eval_monomial, ← map_pow, mul_assoc, ← Algebra.smul_def, mul_smul_comm, map_smul, smul_eq_mul,
         mul_comm]

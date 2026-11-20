@@ -90,7 +90,7 @@ theorem exists_analytic_root (a : ℕ → W → ℂ) (n : ℕ) (w₀ : W) (θ₀
   let f : W × ℂ → ℂ := fun x => (∑ e ∈ Finset.range n, Polynomial.C (a e x.1) * Polynomial.X ^ e).eval x.2
   have hfe : f = fun x => ∑ e ∈ Finset.range n, a e x.1 * x.2 ^ e := by
     funext x
-    simp [f, Polynomial.eval_finset_sum]
+    simp [f, Polynomial.eval_finsetSum]
   have hf : AnalyticAt ℂ f (w₀, θ₀) := by
     rw [hfe]
     refine Finset.analyticAt_fun_sum _ fun e he => ?_

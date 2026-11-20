@@ -56,7 +56,7 @@ theorem UpperTheory.V.AlgebraTools.lag_coi :
       · intro i _ j _ hij
         exact isCoprime_X_sub_C_of_isUnit_sub (ha i j hij)
       · intro k _
-        rw [dvd_iff_isRoot, IsRoot, eval_sub, eval_one, eval_finset_sum]
+        rw [dvd_iff_isRoot, IsRoot, eval_sub, eval_one, eval_finsetSum]
         simp only [hLe, Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_self]
     obtain ⟨g, hg⟩ := h1
     have h2 := congrArg (aeval P) hg

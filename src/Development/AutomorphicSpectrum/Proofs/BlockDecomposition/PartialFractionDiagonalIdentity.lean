@@ -80,7 +80,7 @@ theorem prod_eq_partial_fraction {m : ℕ} (d : Fin (m + 1) → ℝ) (d' : Fin m
           pfR d d' l * ∏ k ∈ univ.erase l, (d' j - d' k) = 0 := by
         intro l _ hl
         rw [Finset.prod_eq_zero (Finset.mem_erase.mpr ⟨hl.symm, mem_univ j⟩) (sub_self _), mul_zero]
-      simp only [eval_sub, eval_mul, eval_prod, eval_X, eval_C, eval_finset_sum]
+      simp only [eval_sub, eval_mul, eval_prod, eval_X, eval_C, eval_finsetSum]
       rw [hQ0, mul_zero, sub_zero, Finset.sum_eq_single_of_mem j (mem_univ j) hterm, pfR,
         div_mul_cancel₀ _ hne])
   rw [← key]
@@ -95,7 +95,7 @@ theorem pfZero {m : ℕ} (d : Fin (m + 1) → ℝ) (d' : Fin m → ℝ)
     simpa using hinj (a₁ := Sum.inl i) (a₂ := Sum.inr j) (by simpa using h)
   have hQ : ∏ j, (d i - d' j) ≠ 0 := Finset.prod_ne_zero_iff.mpr fun j _ => hne j
   have h := congrArg (eval (d i)) (prod_eq_partial_fraction d d' hd')
-  simp only [eval_add, eval_sub, eval_mul, eval_prod, eval_X, eval_C, eval_finset_sum] at h
+  simp only [eval_add, eval_sub, eval_mul, eval_prod, eval_X, eval_C, eval_finsetSum] at h
   rw [Finset.prod_eq_zero (mem_univ i) (sub_self _)] at h
   have hsum : ∀ j, pfR d d' j * ∏ k ∈ univ.erase j, (d i - d' k) =
       (pfR d d' j / (d i - d' j)) * ∏ k, (d i - d' k) := by

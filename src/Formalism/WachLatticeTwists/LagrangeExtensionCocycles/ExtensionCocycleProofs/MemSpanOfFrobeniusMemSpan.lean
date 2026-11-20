@@ -87,7 +87,7 @@ theorem lagrange_annihilation : StatLagrange := by
   choose w hw using hw
   obtain ⟨q, hq⟩ : ∃ q : O[X], ∀ a ∈ S₁, q.eval (c a) = w a * ∏ b ∈ S₁.erase a, (c a - c b) := by
     refine ⟨∑ a' ∈ S₁, C (w a') * ∏ b ∈ S₁.erase a', (X - C (c b)), fun a ha => ?_⟩
-    rw [eval_finset_sum, Finset.sum_eq_single a]
+    rw [eval_finsetSum, Finset.sum_eq_single a]
     · simp [eval_prod]
     · intro a' _ hne
       rw [eval_mul, eval_prod, Finset.prod_eq_zero (Finset.mem_erase.2 ⟨hne.symm, ha⟩) (by simp),

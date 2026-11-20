@@ -34,7 +34,7 @@ open Polynomial Formalism.L2.Col
 theorem prod_one_add (M : Multiset ℂ) :
     (M.map fun b => 1 + b).prod = ∑ j ∈ Finset.range (M.card + 1), M.esymm j := by
   have h := congrArg (Polynomial.eval (1 : ℂ)) (Multiset.prod_X_add_C_eq_sum_esymm M)
-  simpa [Polynomial.eval_multiset_prod, Polynomial.eval_finset_sum, Multiset.map_map] using h
+  simpa [Polynomial.eval_multiset_prod, Polynomial.eval_finsetSum, Multiset.map_map] using h
 
 theorem eq_of_prod_eq {M M' : Multiset ℂ} (hc : M.card = M'.card) {c : ℂ} (h0 : c ≠ 0)
     (h : ∀ Y : ℂ, (M.map fun b => 1 - c * b * Y).prod = (M'.map fun b => 1 - c * b * Y).prod) : M = M' := by
@@ -74,7 +74,7 @@ theorem eval_heckePolyOf {q n : ℕ} (hq : q ≠ 0) {B : Multiset ℂˣ} (hB : B
     fun b => (-((Real.sqrt q : ℂ) ^ n * (Real.sqrt q : ℂ)⁻¹ * Y)) • b)
   rw [Multiset.map_map, Multiset.card_map, Multiset.card_map, hB] at h
   refine Eq.trans ?_ (h.symm.trans (congrArg Multiset.prod (Multiset.map_congr rfl fun b _ => ?_)))
-  · rw [heckePolyOf, Polynomial.eval_finset_sum]
+  · rw [heckePolyOf, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun j hj => ?_
     obtain ⟨m, rfl⟩ : ∃ m, n = j + m := Nat.exists_eq_add_of_le (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj))
     rw [← Multiset.pow_smul_esymm, GlobalTheory.LFun.satEig, eval_mul, eval_C, eval_pow, eval_X,

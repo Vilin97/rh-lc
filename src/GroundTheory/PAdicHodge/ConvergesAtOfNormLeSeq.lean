@@ -132,7 +132,7 @@ theorem exists_start_point {x : T.RobbaExt ρ0} (hx : x ≠ 0) {r : ℝ} (h : 0 
       (norm_finset_sum_le_ultra _ _ (norm_nonneg _) fun i hi' => hi0max i hi').trans_lt
         (hbound i0 hi0mem)
     have hPc : P.eval c = a lo + ∑ i ∈ Finset.range m, a (lo + (i + 1)) * c ^ (i + 1) := by
-      rw [hPdef, Polynomial.eval_finset_sum, Finset.sum_range_succ']
+      rw [hPdef, Polynomial.eval_finsetSum, Finset.sum_range_succ']
       simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X,
         pow_zero, mul_one, Nat.cast_zero, add_zero]
       push_cast
@@ -187,7 +187,7 @@ theorem exists_start_point {x : T.RobbaExt ρ0} (hx : x ≠ 0) {r : ℝ} (h : 0 
     simp only [ptTerm, ablock, if_pos hin, T.ptPi_ptElt hc0 hc1, map_mul, map_zpow₀]
   have hsum0 : ∑ i ∈ Finset.range (m + 1), c ^ (lo + i) * a (lo + i) = 0 := by
     have hev : P.eval c = ∑ i ∈ Finset.range (m + 1), a (lo + i) * c ^ i := by
-      rw [hPdef, Polynomial.eval_finset_sum]
+      rw [hPdef, Polynomial.eval_finsetSum]
       simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     have : ∑ i ∈ Finset.range (m + 1), c ^ (lo + i) * a (lo + i) = c ^ lo * P.eval c := by
       rw [hev, Finset.mul_sum]

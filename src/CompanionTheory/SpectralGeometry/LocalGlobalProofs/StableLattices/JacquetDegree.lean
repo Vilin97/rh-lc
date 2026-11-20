@@ -38,7 +38,7 @@ theorem extract (W' : Submodule ℂ (Module.Dual ℂ V)) (φ : Module.Dual ℂ V
         simp [Algebra.algebraMap_eq_smul_one, LinearMap.sum_apply, map_sum, ← ht]
     rw [e]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [hR, eval_finset_sum, map_sum, map_add, map_sub, map_smul]
+      simp [hR, eval_finsetSum, map_sum, map_add, map_sub, map_smul]
   have hR0 : R = 0 := Polynomial.funext fun Y => by
     rw [hRe, hW' _ (h Y)]; simp
   have hc : R.coeff (m - 1) = 0 := by rw [hR0]; simp

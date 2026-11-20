@@ -41,7 +41,7 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
   have hRp : ∀ w : ℂ, φ (∑ d ∈ range (m + 1), w ^ d • Rc d) = Rp.eval w := by
     intro w
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Rp, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, map_sum, map_smul, smul_eq_mul]
+      simp only [Rp, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X, map_sum, map_smul, smul_eq_mul]
     exact sum_congr rfl fun d _ => mul_comm _ _
   have hRpdeg : Rp.natDegree ≤ m := natDegree_sum_le_of_forall_le _ _ fun i hi =>
     (natDegree_C_mul_X_pow_le _ _).trans (Nat.lt_succ_iff.mp (mem_range.mp hi))
@@ -63,7 +63,7 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
   have hSe : ∀ w : ℂ, S.eval w = (∑ k ∈ range (N + 1), (-1) ^ k * (w - m) ^ (N - k) * φ (etr F k))
       - φ 1 * ∑ k ∈ range (N + 1), (-1) ^ k * (w - m) ^ (N - k) * gelfVal χ k := by
     intro w
-    simp only [S, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_sub, eval_X, mul_sum, ← sum_sub_distrib]
+    simp only [S, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_sub, eval_X, mul_sum, ← sum_sub_distrib]
     exact sum_congr rfl fun k _ => by ring
   have hQS : Q * S = C ((-1) ^ N) * Rp + C (φ 1) * rs := by
     refine Polynomial.funext fun w => ?_
@@ -80,7 +80,7 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
         ((natDegree_C_mul_le _ _).trans hrs))
     omega
   have h0 := congrArg (eval (m : ℂ)) hS0
-  simp only [S, eval_zero, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_sub, eval_X, sub_self] at h0
+  simp only [S, eval_zero, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_sub, eval_X, sub_self] at h0
   rw [sum_eq_single N (fun b hb hbN => by
       rw [zero_pow (Nat.sub_ne_zero_of_lt (lt_of_le_of_ne (Nat.lt_succ_iff.mp (mem_range.mp hb)) hbN)), mul_zero])
     (fun h => absurd (self_mem_range_succ N) h)] at h0

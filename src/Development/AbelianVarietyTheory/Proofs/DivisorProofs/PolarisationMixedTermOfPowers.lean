@@ -30,7 +30,7 @@ theorem polarisation_mixed_term_of_powers : ∀ (A : Type) [CommRing A] (θ : A 
       simp only [Fintype.sum_option, Option.elim, hy, zsmul_eq_mul]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hlin, hsum, add_pow, add_pow, map_sum, map_sum] at ht
-    simp only [hP, hQ, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+    simp only [hP, hQ, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X]
     have e1 : ∀ a : ℕ, Φ ((MvPolynomial.C (t : ℝ) * Y) ^ a * L ^ (D + 1 - a) * (((D + 1).choose a : ℕ) : MvPolynomial (Option ι) ℝ))
         = Φ (Y ^ a * L ^ (D + 1 - a)) * ((D + 1).choose a : ℝ) * (t : ℝ) ^ a := by

@@ -13,7 +13,7 @@ theorem linFunctional_translate_pow_firstOrder_eq_zero (σ : Type) (Φ : MvPolyn
   have heval : ∀ t : ℝ, q.eval t = Φ ((L + C t * P) ^ (m + 1)) := by
     intro t
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [add_comm, add_pow, map_sum, hq, Polynomial.eval_finset_sum]
+      rw [add_comm, add_pow, map_sum, hq, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     have : (C t * P) ^ k * L ^ (m + 1 - k) * ((m + 1).choose k : MvPolynomial σ ℝ)
         = (t ^ k * ((m + 1).choose k : ℝ)) • (P ^ k * L ^ (m + 1 - k)) := by

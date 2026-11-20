@@ -28,7 +28,7 @@ theorem poly_eq_zero_of_evU (Q : A[X]) (h : ∀ u : ℂ, evU u Q = 0) : Q = 0 :=
     set_option synthInstance.maxHeartbeats 100000 in
       rw [evU_apply, eval₂_eq_sum_range, map_sum, map_zero] at h1
     rw [eval_zero, ← h1]
-    simp only [R, eval_finset_sum, eval_monomial, RingHom.id_apply, ← map_pow]
+    simp only [R, eval_finsetSum, eval_monomial, RingHom.id_apply, ← map_pow]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have h2 := congrArg (fun p => p.coeff j) hR

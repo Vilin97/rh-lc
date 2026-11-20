@@ -157,7 +157,7 @@ theorem scalar_of_irred {V : Type} [AddCommGroup V] [Module ℂ V] (P : Submodul
       by_contra hp
       exact hv₀ (hrep _ hp (by rw [h0, map_zero]))
     have h3 := congrArg (Polynomial.eval i) hp0
-    rw [Polynomial.eval_finset_sum, Finset.sum_eq_single i] at h3
+    rw [Polynomial.eval_finsetSum, Finset.sum_eq_single i] at h3
     · simp only [Polynomial.eval_smul, q, Polynomial.eval_prod, Polynomial.eval_sub, Polynomial.eval_X,
         Polynomial.eval_C, smul_eq_mul, Polynomial.eval_zero] at h3
       rcases mul_eq_zero.mp h3 with h | h

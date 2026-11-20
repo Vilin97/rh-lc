@@ -86,7 +86,7 @@ private theorem false_of_forall_sub_smul_bijective {V : Type} [AddCommGroup V] [
       by_contra hQne
       exact hv (hinj Q hQne (by rw [hQ, map_zero]))
     have hev : Q.eval i = g i * ∏ l ∈ s.erase i, (i - l) := by
-      rw [hQdef, Polynomial.eval_finset_sum, Finset.sum_eq_single i]
+      rw [hQdef, Polynomial.eval_finsetSum, Finset.sum_eq_single i]
       · rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_prod]
         simp only [Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C]
       · intro j _ hji

@@ -85,7 +85,7 @@ theorem fixed_of_pow_fixed_of_gen {V : Type} [AddCommGroup V] [Module ℂ V] (T 
     have hroot : IsRoot g 1 := by
       have : (X - C 1 : ℂ[X]) ∣ g := by simpa using hd
       exact dvd_iff_isRoot.1 this
-    have hev : g.eval 1 = (K : ℂ) := by simp [g, eval_finset_sum]
+    have hev : g.eval 1 = (K : ℂ) := by simp [g, eval_finsetSum]
     rw [IsRoot.def, hev] at hroot
     exact (Nat.cast_ne_zero.2 hK.ne') hroot
   obtain ⟨a, b, hab⟩ := ((hirr.coprime_iff_not_dvd).2 hnd).pow_left (m := r)

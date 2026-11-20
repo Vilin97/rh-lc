@@ -38,7 +38,7 @@ theorem UpperTheory.V.Ws.phiRigid :
       have := (hu.map (residue B)).ne_zero
       rwa [map_natCast] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [hS, Polynomial.map_sum, eval_finset_sum] using h3
+      simpa [hS, Polynomial.map_sum, eval_finsetSum] using h3
   obtain ⟨a, b, hab⟩ := hc
   have h4 : aeval M b * aeval M S = 1 := by
     have := congrArg (aeval M) hab

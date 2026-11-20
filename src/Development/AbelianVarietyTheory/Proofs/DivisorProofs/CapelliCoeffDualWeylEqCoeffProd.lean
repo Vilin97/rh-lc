@@ -112,7 +112,7 @@ theorem coeff_eq_of_int (P : Type) [CommRing P] [IsDomain P] [CharZero P] (L : �
     refine Set.Infinite.mono ?_ (Set.infinite_range_of_injective (Int.cast_injective (α := P)))
     rintro _ ⟨v, rfl⟩
     have hv := h v
-    simp only [Set.mem_setOf_eq, IsRoot, Q, eval_finset_sum, eval_monomial]
+    simp only [Set.mem_setOf_eq, IsRoot, Q, eval_finsetSum, eval_monomial]
     rw [← sub_eq_zero, ← Finset.sum_sub_distrib] at hv
     rw [← hv]
     refine Finset.sum_congr rfl fun j _ => ?_

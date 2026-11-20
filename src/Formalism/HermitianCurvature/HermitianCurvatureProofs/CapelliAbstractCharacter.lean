@@ -100,7 +100,7 @@ theorem polyVanish {X : Type} [AddCommGroup X] [Module ℂ X] (d : ℕ) (c : ℕ
     have h1 := congrArg φ (h u hu)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
-    rw [hp, Polynomial.eval_finset_sum]
+    rw [hp, Polynomial.eval_finsetSum]
     simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     calc _ = ∑ j ∈ Finset.range d, u ^ j * φ (c j) := Finset.sum_congr rfl (fun j _ => mul_comm _ _)
       _ = 0 := h1

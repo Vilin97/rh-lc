@@ -55,13 +55,13 @@ theorem monicFactorFinite : MonicFactorFinite := by
   let Q : Polynomial S := ∑ i ∈ Finset.range (e + 1), Polynomial.monomial i (b' i)
   have hPe : ∀ u, ((P.eval (algebraMap ℂ S u) : S) : Module.End ℂ N) = p u := fun u => by
     rw [hpc u]
-    simp only [P, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     push_cast
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, Algebra.commutes, map_pow]
   have hQe : ∀ u, ((Q.eval (algebraMap ℂ S u) : S) : Module.End ℂ N) = q u := fun u => by
     rw [hqb u]
-    simp only [Q, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [Q, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     push_cast
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, Algebra.commutes, map_pow]
@@ -126,7 +126,7 @@ theorem monicFactorFinite : MonicFactorFinite := by
   have hpB : Algebra.adjoin ℂ (Set.range fun u => P.eval (algebraMap ℂ S u)) ≤ B := by
     refine Algebra.adjoin_le ?_
     rintro _ ⟨u, rfl⟩
-    simp only [P, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     refine B.sum_mem fun i hi => B.mul_mem ?_ (B.pow_mem (B.algebraMap_mem u) _)
     exact (Subalgebra.mem_restrictScalars _).2 (Algebra.subset_adjoin ⟨i, hi, rfl⟩)
   have hmap : Algebra.adjoin ℂ (Set.range p) =

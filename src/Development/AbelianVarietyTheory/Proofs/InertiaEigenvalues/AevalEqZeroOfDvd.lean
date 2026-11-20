@@ -28,7 +28,7 @@ private lemma prod_X_sub_C_dvd_sum_lagPoly_sub_one :
     ∏ j, (X - C (a j)) ∣ ∑ i, _root_.GlobalTheory.LagIdem.lagPoly a i - 1 := by
   refine Fintype.prod_dvd_of_coprime
     (fun i j hij => isCoprime_X_sub_C_of_isUnit_sub (hu i j hij)) fun k => ?_
-  rw [dvd_iff_isRoot, IsRoot.def, eval_sub, eval_one, eval_finset_sum, sub_eq_zero,
+  rw [dvd_iff_isRoot, IsRoot.def, eval_sub, eval_one, eval_finsetSum, sub_eq_zero,
     Finset.sum_eq_single k]
   · simp only [_root_.GlobalTheory.LagIdem.lagPoly, eval_mul, eval_C, eval_prod, eval_sub, eval_X]
     exact Ring.inverse_mul_cancel _

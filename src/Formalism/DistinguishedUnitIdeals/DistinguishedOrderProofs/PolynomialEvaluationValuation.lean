@@ -62,7 +62,7 @@ theorem ppevalVal {O : Type} [CommRing O] (u : Oˣ) (ℓ E : ℕ) (JS : Finset �
   choose! ε hε using hf
   refine ⟨∏ i ∈ JS.erase 0, ε i, ?_⟩
   unfold kapExp
-  rw [G.PPoly, Polynomial.eval_mul, Polynomial.eval_prod, Polynomial.eval_finset_sum]
+  rw [G.PPoly, Polynomial.eval_mul, Polynomial.eval_prod, Polynomial.eval_finsetSum]
   simp only [Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_C, one_pow,
     Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
   rw [Finset.prod_congr rfl hε, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Units.coe_prod]

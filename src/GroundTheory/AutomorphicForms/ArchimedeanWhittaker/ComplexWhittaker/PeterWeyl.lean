@@ -166,7 +166,7 @@ theorem coeff_eq_zero_of_forall {N : ℕ} {a : ℕ → ℂ}
   have hp0 : p = 0 := by
     apply Polynomial.funext
     intro s
-    rw [hp, eval_finset_sum, eval_zero, ← h s]
+    rw [hp, eval_finsetSum, eval_zero, ← h s]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [eval_mul, eval_C, eval_pow, eval_X, mul_comm]
   have h1 := congrArg (fun p : ℂ[X] => p.coeff i) hp0

@@ -19,7 +19,7 @@ theorem coeff_mem_of_poly_values_mem : ∀ (V : Type) [AddCommGroup V] [Module �
     have h0 := congrArg f h1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, Submodule.mkQ_apply, smul_eq_mul, map_zero] at h0
-    simp only [hpdef, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+    simp only [hpdef, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_zero]
     rw [← h0]
     exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)

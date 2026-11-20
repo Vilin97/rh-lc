@@ -84,7 +84,7 @@ theorem dixmier_commutant_scalar (ι V : Type) [AddCommGroup V] [Module ℂ V] (
       by_contra hp
       exact hv₀ (dixmier_aeval_injective T hinj _ hp (by rw [h0, map_zero]))
     have h3 := congrArg (Polynomial.eval i) hp0
-    rw [eval_finset_sum, Finset.sum_eq_single i] at h3
+    rw [eval_finsetSum, Finset.sum_eq_single i] at h3
     · simp only [eval_smul, q, eval_prod, eval_sub, eval_X, eval_C, smul_eq_mul, eval_zero] at h3
       rcases mul_eq_zero.mp h3 with h | h
       · exact h

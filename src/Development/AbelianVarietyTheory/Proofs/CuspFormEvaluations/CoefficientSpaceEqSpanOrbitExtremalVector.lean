@@ -25,7 +25,7 @@ theorem coeff_mem_of_eval_mem {K A : Type} [Field K] [CharZero K] [CommRing A] [
     have h1 := hφ _ (h c)
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Polynomial.eval_eq_sum_range, map_sum] at h1
-    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, hq, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, hq, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     rw [← h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     have : p.coeff i * (c : A) ^ i = ((c : K) ^ i) • p.coeff i := by

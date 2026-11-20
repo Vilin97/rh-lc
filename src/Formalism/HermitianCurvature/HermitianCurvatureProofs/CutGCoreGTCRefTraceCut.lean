@@ -76,7 +76,7 @@ theorem poly_coeff_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (N : ℕ) (a
     have hY := congrArg f (h Y)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hY
-    simp only [Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← hY]
     exact Finset.sum_congr rfl (fun i _ => mul_comm _ _)

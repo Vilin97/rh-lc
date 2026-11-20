@@ -27,7 +27,7 @@ theorem geom_poly {l : ℕ} (hl : l.Prime) :
   have r0 : r.coeff 0 = 1 := by
     have h := congrArg (Polynomial.eval 0) hs
     have hz : (0 : ℤ) ^ (l - 1) = 0 := zero_pow (by have := hl.two_le; omega)
-    simp [Polynomial.eval_finset_sum, hz] at h
+    simp [Polynomial.eval_finsetSum, hz] at h
     have hl0 : (l : ℤ) ≠ 0 := by exact_mod_cast hl.ne_zero
     rw [Polynomial.coeff_zero_eq_eval_zero]
     have h' : (l : ℤ) * Polynomial.eval 0 r = (l : ℤ) * 1 := by linarith
@@ -105,7 +105,7 @@ private theorem xi_eq_sum_choose_mul_pi_pow_lemma_2 {l : ℕ} [Fact l.Prime] {P 
     AI.ξ = ∑ i ∈ Finset.range l, ((l.choose (i + 1) : ℕ) : _root_.Formalism.BasicNotions.Loc.Ainf l) * AI.π₁ ^ i := by
   have h := congrArg (Polynomial.eval AI.π₁)
     (Polynomial.geom_sum_X_comp_X_add_one_eq_sum (R := _root_.Formalism.BasicNotions.Loc.Ainf l) l)
-  simp only [Polynomial.eval_comp, Polynomial.eval_finset_sum, Polynomial.eval_pow,
+  simp only [Polynomial.eval_comp, Polynomial.eval_finsetSum, Polynomial.eval_pow,
     Polynomial.eval_X, Polynomial.eval_add, Polynomial.eval_one, Polynomial.eval_mul,
     Polynomial.eval_natCast] at h
   rw [← h]

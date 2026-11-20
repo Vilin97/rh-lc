@@ -29,7 +29,7 @@ theorem poly_coeff_eq (K : ℕ) (x y : ℕ → ℂ) (hxy : ∀ s : ℂ, ∑ k �
   have hQ : Q = 0 := by
     apply Polynomial.funext
     intro s
-    simp only [Q, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [Q, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     have := hxy s
     rw [← sub_eq_zero, ← Finset.sum_sub_distrib] at this

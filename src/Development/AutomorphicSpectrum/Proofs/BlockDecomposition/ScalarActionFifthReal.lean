@@ -400,7 +400,7 @@ theorem coeffs_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (N : ℕ) (d : �
     have := congrArg φ (h Y)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
-    simp only [eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
+    simp only [eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have h2 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
@@ -491,7 +491,7 @@ theorem capPoly {R : Type} [CommRing R] [Nontrivial R] [Algebra ℂ R] {A : Type
   · rw [hq u, Finset.sum_range_succ, h1, eval_add, eval_pow, eval_X, map_add, map_pow, add_comm]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [hr, eval_finset_sum, map_sum]
+      · rw [hr, eval_finsetSum, map_sum]
       refine Finset.sum_congr rfl fun k hk => ?_
       rw [eval_mul, eval_C, eval_pow, eval_X, map_mul, map_pow, hd k (by
         have := Finset.mem_range.1 hk

@@ -58,7 +58,7 @@ theorem exists_nat_comb {ι : Type} [Finite ι] {Ω : ι → Type} [∀ Z, Field
   refine ⟨fun k => t ^ (k : ℕ), fun Z h0 => ht (Set.mem_iUnion.2 ⟨Z, ?_⟩)⟩
   show (p Z).eval (t : Ω Z) = 0
   rw [← h0]
-  simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_monomial, Nat.cast_pow, mul_comm]
+  simp only [p, Polynomial.eval_finsetSum, Polynomial.eval_monomial, Nat.cast_pow, mul_comm]
 
 variable [Fintype (Comp Xo c)]
 

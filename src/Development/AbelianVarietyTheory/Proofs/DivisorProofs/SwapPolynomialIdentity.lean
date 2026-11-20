@@ -118,7 +118,7 @@ theorem key [DecidableEq κ] {x y : κ} (hxy : x ≠ y) (D : ℕ) (Φ Ψ : MvPol
         Ψ (u ^ (2 * i - 1) * m ^ (D + 1 - 2 * i)) := by
     intro t
     rw [hp, expand, expand, ← Finset.sum_add_distrib]
-    simp only [Polynomial.eval_sub, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+    simp only [Polynomial.eval_sub, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, ha, hb]
     congr 1
     · refine Finset.sum_congr rfl fun i _ => ?_

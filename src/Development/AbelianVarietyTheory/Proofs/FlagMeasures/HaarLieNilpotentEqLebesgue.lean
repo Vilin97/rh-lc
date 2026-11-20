@@ -117,7 +117,7 @@ theorem exp_inj_upper {m : ℕ} {X Y : Matrix (Fin m) (Fin m) ℂ} (hX : ∀ i j
       (P Z).eval (t : ℂ) = (NormedSpace.exp Z ^ t) i j := by
     intro Z hZ t
     rw [← Matrix.exp_nsmul, exp_upper (X := t • Z) (fun i j h => by simp [hZ i j h]), Matrix.sum_apply,
-      Polynomial.eval_finset_sum]
+      Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [← Nat.cast_smul_eq_nsmul ℂ, smul_pow]
     simp only [Polynomial.eval_monomial, Matrix.smul_apply, smul_eq_mul]

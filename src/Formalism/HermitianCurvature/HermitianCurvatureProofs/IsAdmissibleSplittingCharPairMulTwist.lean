@@ -10713,10 +10713,10 @@ theorem lagrange (d : ℕ) (c : Fin (d + 1) → ℂ) (Y : ℂ) :
     rw [Finset.card_univ, Fintype.card_fin]; exact degree_sum_fin_lt c
   have hf := Lagrange.eq_interpolate hinj hdeg
   have hev : ∀ Z, f.eval Z = ∑ k : Fin (d + 1), Z ^ (k : ℕ) * c k := fun Z => by
-    simp only [f, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+    simp only [f, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have := congrArg (eval Y) hf
-  rw [hev, Lagrange.interpolate_apply, eval_finset_sum] at this
+  rw [hev, Lagrange.interpolate_apply, eval_finsetSum] at this
   rw [this]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [eval_mul, eval_C, hev]
@@ -11441,7 +11441,7 @@ theorem group_unique (K : ℕ) (a b : ℕ → SmQ P.r P.TT)
     have hs := congrArg (fun f : SmQ P.r P.TT => evQ P f x) (h s)
     simp only [MAx2.Jet.evQ_sum, MAx2.Jet.evQ_mul, Phiq_rpow, G.evQ_smul, G.ev_Gpow] at hs
     have hG : ((Gq P x ^ s : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (Real.rpow_pos_of_pos (Gq_pos P x) s).ne'
-    simp only [pa, pb, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [pa, pb, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X]
     have e1 : ∀ (c : ℕ → SmQ P.r P.TT), ∑ k ∈ Finset.range (K + 1), (s : ℂ) ^ k * ((Gq P x ^ s : ℝ) : ℂ) * evQ P (c k) x =
         ((Gq P x ^ s : ℝ) : ℂ) * ∑ k ∈ Finset.range (K + 1), evQ P (c k) x * (s : ℂ) ^ k := by

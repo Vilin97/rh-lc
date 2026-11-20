@@ -160,7 +160,7 @@ theorem UpperTheory.Kd.C7.residue_field_teichmuller_lift_exists :
       rw [← not_le, A.valuation_le_one_iff]
       exact hn
     have h0 : Pm.eval α = 0 := hα
-    rw [hmon.as_sum, Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_finset_sum] at h0
+    rw [hmon.as_sum, Polynomial.eval_add, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_finsetSum] at h0
     simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X] at h0
     have e : α ^ Pm.natDegree = -∑ i ∈ Finset.range Pm.natDegree, Pm.coeff i * α ^ i := eq_neg_of_add_eq_zero_left h0
     have hle : A.valuation (∑ i ∈ Finset.range Pm.natDegree, Pm.coeff i * α ^ i) ≤ A.valuation α ^ (Pm.natDegree - 1) := by

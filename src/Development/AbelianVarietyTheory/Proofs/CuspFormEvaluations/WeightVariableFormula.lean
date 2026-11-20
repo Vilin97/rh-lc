@@ -646,7 +646,7 @@ theorem closed_of_stable (M : Submodule ℚ (MvPolynomial (Fin n × Fin n) ℚ))
     have h2 : φ (Q.eval (C c)) = 0 := by
       rw [rowGen_eval]
       exact (Submodule.mem_dualAnnihilator φ).1 hφ _ h1
-    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, R, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
+    simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, R, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Polynomial.eval_eq_sum_range, map_sum] at h2
     rw [← h2]

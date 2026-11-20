@@ -113,7 +113,7 @@ theorem unrPoly : PositivityTheory.PfSWUS.Loc.UnrFormula → PositivityTheory.Si
       ψ k (Matrix.trace (red ϖ k T * B.1)) * x ^ Nat.log (q ^ 2) (nuAt ϖ B.1) := by
     intro x
     rw [tsum_fintype]
-    simp [P, Polynomial.eval_finset_sum]
+    simp [P, Polynomial.eval_finsetSum]
   have hQ : ∀ x : ℂ, Q.eval x = ∏ i : Fin n, (1 - x * ((ε : ℂ) * q) ^ (i : ℕ)) := by
     intro x
     simp [Q, Polynomial.eval_prod]

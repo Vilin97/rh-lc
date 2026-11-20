@@ -69,7 +69,7 @@ theorem exists_char {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   have e2 : ∀ j ∈ Finset.range n, Y ^ j • c j = (d j * Y ^ j) • (1 : Module.End ℂ V) := fun j hj => by
     rw [hd j (Finset.mem_range.1 hj).le, smul_smul, mul_comm]
   rw [e, Finset.sum_range_succ, h1, Finset.sum_congr rfl e2, ← hχ]
-  simp only [q, eval_add, eval_pow, eval_X, eval_finset_sum, eval_mul, eval_C, add_smul, Finset.sum_smul]
+  simp only [q, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, add_smul, Finset.sum_smul]
   rw [add_comm]
 
 section Rep

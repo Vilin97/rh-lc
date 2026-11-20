@@ -34,7 +34,7 @@ theorem UpperTheory.ConvolutionTheory.BW.exists_capPoly {A : Type} [Ring A] [Alg
   · intro u
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← evU_qdetPoly, evU_apply, eval₂_eq_sum_range' _ (Nat.lt_succ_of_le (natDegree_qdetPoly_le F)), map_sum,
-      eval_finset_sum]
+      eval_finsetSum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [RingHom.id_apply, ← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul]
     simp [mul_comm]

@@ -13,7 +13,7 @@ theorem UpperTheory.V.Z.Int.rootBound :
     apply Multiset.prod_eq_zero
     rw [Multiset.mem_map]
     refine ⟨Polynomial.X - Polynomial.C b, Multiset.mem_map.mpr ⟨b, hb, rfl⟩, by simp⟩
-  rw [Multiset.prod_X_sub_X_eq_sum_esymm, Polynomial.eval_finset_sum, Finset.sum_range_succ'] at hroot
+  rw [Multiset.prod_X_sub_X_eq_sum_esymm, Polynomial.eval_finsetSum, Finset.sum_range_succ'] at hroot
   have hn : 0 < S.card := Multiset.card_pos_iff_exists_mem.mpr ⟨b, hb⟩
   have h0 : S.esymm 0 = 1 := by simp [Multiset.esymm]
   simp only [Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_neg, Polynomial.eval_one,

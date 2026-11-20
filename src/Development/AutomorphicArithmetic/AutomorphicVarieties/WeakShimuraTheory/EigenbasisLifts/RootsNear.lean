@@ -21,7 +21,7 @@ private theorem rn_root {K : Type} [NormedField K] [IsUltrametricDist K] (p : K[
         (max_lt (hf j (Finset.mem_insert_self _ _)) (ih fun i hi => hf i (Finset.mem_insert_of_mem hi)))
   have hsum : p.eval s = s ^ p.natDegree + ∑ i ∈ Finset.range p.natDegree, p.coeff i * s ^ i := by
     conv_lhs => rw [hp.as_sum]
-    simp [eval_finset_sum]
+    simp [eval_finsetSum]
   have hpos : 0 < ‖s‖ := lt_of_lt_of_le one_pos hlt
   have hlt2 : ‖∑ i ∈ Finset.range p.natDegree, p.coeff i * s ^ i‖ < ‖s‖ ^ p.natDegree := by
     apply sumlt _ _ _ (pow_pos hpos _)

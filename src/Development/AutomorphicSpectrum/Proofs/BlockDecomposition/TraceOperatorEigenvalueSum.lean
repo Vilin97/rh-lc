@@ -35,7 +35,7 @@ theorem coeff_eq_zero_of_forall {V : Type} [AddCommGroup V] [Module ℂ V] (N : 
     have := congrArg f (h u)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
-    simp only [eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
+    simp only [eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have := congrArg (fun p => coeff p i) hP

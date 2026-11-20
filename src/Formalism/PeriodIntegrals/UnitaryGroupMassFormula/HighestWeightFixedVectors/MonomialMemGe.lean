@@ -128,7 +128,7 @@ theorem coeffs_mem [Infinite K] {V : Type*} [AddCommGroup V] [Module K V] (S : S
     simp only [map_smul, Submodule.mkQ_apply, smul_eq_mul] at h2
     show Polynomial.IsRoot p s
     rw [Polynomial.IsRoot.def]
-    simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+    simp only [p, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X]
     rw [← h2]
     refine Finset.sum_congr rfl fun j _ => ?_

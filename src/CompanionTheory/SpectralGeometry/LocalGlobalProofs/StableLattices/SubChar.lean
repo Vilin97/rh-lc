@@ -110,7 +110,7 @@ theorem L_core : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (t : W) (M : ℕ
     rw [c2 i u]
     refine ⟨m1, ?_⟩
     rw [m2, sum_range_succ]
-    simp only [P, eval_add, eval_pow, eval_X, eval_finset_sum, eval_mul, eval_C]
+    simp only [P, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C]
     rw [add_comm]
     congr 1
     · rw [f3 _ (hmemS i _ le_rfl), c1, f1, mul_one]
