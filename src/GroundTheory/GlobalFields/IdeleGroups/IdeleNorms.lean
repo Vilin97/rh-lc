@@ -36,7 +36,8 @@ theorem norm_eq_one_of_mul_eq_one {v : HeightOneSpectrum (𝓞 K)} {a b : v.adic
 
 theorem finite_mul_inv (x : IdeleGroup K) (v : HeightOneSpectrum (𝓞 K)) :
     (x : 𝔸[K]).2 v * ((x⁻¹ : IdeleGroup K) : 𝔸[K]).2 v = 1 := by
-  have h : ((x : 𝔸[K]) * ((x⁻¹ : IdeleGroup K) : 𝔸[K])).2 v = 1 := by simp
+  have h : ((x : 𝔸[K]) * ((x⁻¹ : IdeleGroup K) : 𝔸[K])).2 v = 1 := by
+    simpa only [Units.mul_inv] using adele_snd_one_apply v
   rwa [adele_snd_mul_apply] at h
 
 theorem infinite_mul_inv (x : IdeleGroup K) (w : InfinitePlace K) :
@@ -89,7 +90,9 @@ def ideleModule : IdeleGroup K →* {r : ℝ // 0 < r} where
   toFun x := ⟨infiniteModule x * finiteModule x, mul_pos (infiniteModule_pos x) (finiteModule_pos x)⟩
   map_one' := by
     ext
-    simp [infiniteModule, finiteModule]
+    simp only [infiniteModule, Units.val_one, adele_fst_one_apply, norm_one, one_pow,
+      Finset.prod_const_one, one_mul]
+    exact finprod_eq_one_of_forall_eq_one fun _ ↦ norm_one
   map_mul' x y := by
     ext
     simp only [Positive.val_mul, infiniteModule_mul, finiteModule_mul]
@@ -121,7 +124,9 @@ theorem continuous_finiteModule : Continuous (finiteModule (K := K)) := by
       (by simp [(standardOpenSubgroup K).one_mem])
   refine (continuousAt_const (y := finiteModule x)).congr ?_
   filter_upwards [hU] with y hy
-  rw [← mul_inv_cancel_left x y, finiteModule_mul, finiteModule_eq_one_of_mem hy, mul_one]
+  have hy' : x⁻¹ * y ∈ standardOpenSubgroup K := hy
+  simpa only [mul_inv_cancel_left, finiteModule_eq_one_of_mem hy', mul_one]
+    using (finiteModule_mul x (x⁻¹ * y)).symm
 
 theorem continuous_ideleModule : Continuous (ideleModule K) :=
   (continuous_infiniteModule.mul continuous_finiteModule).subtype_mk _
