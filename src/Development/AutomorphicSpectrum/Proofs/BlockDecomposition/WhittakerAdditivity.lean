@@ -311,10 +311,10 @@ theorem whitTAdd : PositivityTheory.PfSWUS.WhitTAdd := by
     ⟨hS.hψ, hS.hχ, hS.hη, hS.hθ, hS.hμ, hS.hω, hS.hH, hS.hl, hS.hs, hS.hν, (hmem j).2⟩
   have hI := fun j => integrable_term (hS' j) hR hC hw hβ g (adj a.1 * β.1.map (incA D) * a.1) hz
   have hsum : (∑ j, φs j) = (∑ j, Ψ j : schwartzA θ V.rank n).1 := by
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
   have hJ : ∀ b, Jt ψ V μ (∑ j, φs j) b = ∑ j, Jt ψ V μ (φs j) b := fun b => by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hsum, jt_eq hS.hω hw hC.1, map_sum, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+      rw [hsum, jt_eq hS.hω hw hC.1, map_sum, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun j _ => (jt_eq hS.hω hw hC.1 (Ψ j) b).symm
   simp only [whitT]
   rw [← integral_finsetSum _ fun j _ => hI j]

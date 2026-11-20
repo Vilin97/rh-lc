@@ -179,7 +179,7 @@ theorem Zop_coe (hT : RestTmFQ X) (v : X.Pl) (u m : ℕ → X.G.Kf) {j : ℕ} (h
       (fun i => ((∏ a ∈ Icc 1 j, uExt X u a) ^ i)⁻¹ • TmR X hT v j i) G : X.FQ j) : X.Fm j) =
       X.Zop v u (mHat u m) j G.1 := by
   simp only [Formalism.InvariantFactorPaths.G7.Zop, Formalism.InvariantFactorPaths.G7.Ttil, Sys.Zop, Sys.Ttu, LinearMap.sum_apply,
-    LinearMap.smul_apply, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, TmR_coe]
+    LinearMap.smul_apply, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, TmR_coe]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [cCoef_eq X v u m hj l, Tt_eq X v _ j G.2, prod_uExt X u hj, zpow_neg, zpow_natCast]
   congr 1
@@ -244,7 +244,7 @@ theorem Ci (hT : RestTmFQ X) (h3b : ∀ j < X.mm, ∀ F ∈ X.FQ j, X.Kz j F ∈
     intro G
     apply Subtype.ext
     simp only [LinearMap.comp_apply, LinearMap.smul_apply, LinearMap.sum_apply, Submodule.coe_smul,
-      AddSubmonoidClass.coe_finset_sum, TmR_coe, KkR_coe X h3b hj'm]
+      AddSubmonoidClass.coe_finsetSum, TmR_coe, KkR_coe X h3b hj'm]
     simp only [he]
     rw [H j' hj'm i _ G.2, smul_smul, ← map_smul (X.Kz j'), Finset.smul_sum]
     congr 1

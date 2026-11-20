@@ -56,7 +56,7 @@ theorem UpperTheory.V.Alg.homog_span :
     have hm : ∀ i, W.π (wcomp O W.wt (j - c i) (G i)) ∈ W.A := fun i =>
       W.part_le_A (j := j - c i) ⟨_, wcomp_mem O W.wt _ _, rfl⟩
     refine ⟨∑ i, ⟨_, hm i⟩ * g i, Ideal.mem_span_range_iff_exists_fun.2 ⟨fun i => ⟨_, hm i⟩, rfl⟩, ?_⟩
-    rw [h2, AddSubmonoidClass.coe_finset_sum]
+    rw [h2, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [wcomp_mul_homog O W.wt (he i), map_mul, heg]
     rfl
@@ -89,7 +89,7 @@ theorem UpperTheory.V.Alg.homog_span :
     choose y hy hy' using key f (hf ▸ hx)
     have : x = ∑ j ∈ s, y j := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum, ← hf]
+      rw [AddSubmonoidClass.coe_finsetSum, ← hf]
       conv_lhs => rw [hsum]
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum]

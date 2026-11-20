@@ -292,7 +292,7 @@ theorem exists_val (hinj : Function.Injective inclR) (gA : G → (RA →ₐ[O] R
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [map_mul, map_pow]
           ring
-        simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finset_sum,
+        simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finsetSum,
           AddMemClass.coe_add, a, h']
         ring
       have e2 := congrArg Dc.J e1
@@ -358,7 +358,7 @@ theorem core (Mo : WN E zl) (hinj : Function.Injective inclR) (gA : G → (O ⊗
   have hsur : ∀ x ∈ Mo.N T, ∃ c, lin c = x := fun x hx =>
     ⟨nb.equivFun ⟨x, hx⟩, by
       have := congrArg Subtype.val (nb.sum_equivFun ⟨x, hx⟩)
-      rw [AddSubmonoidClass.coe_finset_sum] at this
+      rw [AddSubmonoidClass.coe_finsetSum] at this
       exact (Fintype.linearCombination_apply _ _ _).trans this⟩
   have hlin : Function.Injective lin :=
     (injective_iff_map_eq_zero lin).mpr fun c hc => funext (Fintype.linearIndependent_iff.mp

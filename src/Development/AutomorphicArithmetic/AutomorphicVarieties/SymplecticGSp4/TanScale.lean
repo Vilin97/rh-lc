@@ -82,7 +82,7 @@ private theorem ts_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
   have hx' : x = ∑ m ∈ μ, β m * m.prod fun s k => W.zA s ^ k := by
     apply Subtype.ext
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hx, map_sum, AddSubmonoidClass.coe_finset_sum]
+      rw [hx, map_sum, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Subalgebra.coe_mul, ts_zprod, map_mul]
   refine ⟨∑ m ∈ μ, c m * g (monomial m 1), ?_, ?_⟩

@@ -41,7 +41,7 @@ theorem differentiable_ev_comb (f : A.V → Conv.halfRing T) (hf : IsComb A j (C
     choose hm hv using fun i => fsum_mem_halfRing hT (h1 i).2 v
     have e : f v = ∑ i, (⟨r i, (h1 i).1⟩ : Conv.halfRing T) * ⟨_, hm i⟩ := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       exact h2 v
     set_option synthInstance.maxHeartbeats 100000 in
       rw [e, map_sum]

@@ -213,7 +213,7 @@ theorem UpperTheory.etaleCorrespondence_local_parameters_statement :
       rw [this]; exact hc
     · apply gm_inj s' hgY
       have h := congrArg Subtype.val hcg
-      simp only [Subalgebra.coe_mul, AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul] at h
+      simp only [Subalgebra.coe_mul, AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul] at h
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_mul, map_sum]
       simp only [map_mul]

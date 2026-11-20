@@ -228,7 +228,7 @@ private theorem satInd_gen {A G : Type} [CommRing A] [Group G] {I K : Subgroup G
   obtain ⟨hf, hsum, -⟩ := hkTrace A G _ (permRep A I) I K h κ w hI hw hw'
   refine satInd_abs h hI hf (∑ i, hT A I (w i)) ?_ t H
   rw [← hsum]
-  exact AddSubmonoidClass.coe_finset_sum _ _
+  exact AddSubmonoidClass.coe_finsetSum _ _
 
 theorem UpperTheory.V.AlgebraTools.satakeIndep :
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ) (A : Type) [CommRing A] (x : kˣ), IsUnif x → LinearIndependent A fun a : {a : Fin n → ℤ // Antitone a} => hT A (iwC k n ⊤) (pw x a.1) * ∑ w : Equiv.Perm (Fin n), hT A (iwC k n ⊤) (pm k n w) := by

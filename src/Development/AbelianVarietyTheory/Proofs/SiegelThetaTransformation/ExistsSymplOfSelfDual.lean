@@ -51,7 +51,7 @@ theorem exists_sympl_of_selfDual {V : Type} [AddCommGroup V] [Module ℚ V] [Fin
     obtain ⟨k, hk, hv⟩ := hfull v
     have h1 : k • v ∈ Submodule.span ℚ (Set.range fun i => (e i : V)) := by
       have := congrArg (Subtype.val) (e.sum_repr ⟨_, hv⟩)
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at this
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at this
       rw [← this]
       exact Submodule.sum_mem _ fun i _ => zsmul_mem (Submodule.subset_span (Set.mem_range_self i)) _
     have := Submodule.smul_mem _ (k : ℚ)⁻¹ h1
@@ -79,7 +79,7 @@ theorem exists_sympl_of_selfDual {V : Type} [AddCommGroup V] [Module ℚ V] [Fin
           have := eQ.constr_basis ℚ (fun i => -(φ (e i) : ℚ)) i
           rwa [Module.Basis.mk_apply] at this
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, map_zsmul, this]
+          simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, map_zsmul, this]
         simp
       let z := (B.toDual hnd).symm ψ
       have hz : ∀ y, B z y = ψ y := fun y => LinearMap.BilinForm.apply_toDual_symm_apply ψ y
@@ -91,7 +91,7 @@ theorem exists_sympl_of_selfDual {V : Type} [AddCommGroup V] [Module ℚ V] [Fin
   obtain ⟨c, hc⟩ := exists_isSymplecticBasis_of_finrank halt hbij hrk
   refine ⟨fun j => c j, fun u => ⟨fun hu => ⟨c.repr ⟨u, hu⟩, ?_⟩, ?_⟩, fun i j => ?_⟩
   · have := congrArg (Subtype.val) (c.sum_repr ⟨_, hu⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at this
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at this
     exact this.symm
   · rintro ⟨m, rfl⟩
     exact Submodule.sum_mem _ fun j _ => N.smul_mem _ (c j).2

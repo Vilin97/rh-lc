@@ -150,10 +150,10 @@ theorem mem_closedAt_of_symm {v : V n} {u : Fin n × Fin n → V n → ℂ} (hu 
     (fun x => ∑ p, u p x • sym p) ∈ closedAt v := by
   refine mem_closedAt.2 ⟨fun S => ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finsetSum_apply,
+    · simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finsetSum_apply,
       Finsupp.smul_apply, smul_eq_mul]
     exact DifferentiableAt.fun_sum fun p _ => (hu p).mul_const _
-  · simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul]
+  · simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul]
     rw [delAt_sum_smul hu]
     simp only [Fintype.sum_prod_type]
     set T : Alt n := ∑ c, ∑ a, ∑ b, del (u (a, b)) v (coordVec c) • (dz c * (sym (a, b) : Alt n)) with hT

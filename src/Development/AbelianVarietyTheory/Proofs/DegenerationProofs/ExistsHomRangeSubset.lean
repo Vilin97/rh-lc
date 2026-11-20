@@ -145,7 +145,7 @@ theorem IsHom.exists_div_pairing {f : M'.Z ⟶ M.Z} (hf : M.IsHom M' φ f) (s : 
       a i ∈ Submodule.span (M.O (f z)) (Set.range b))
   have e1 : ∑ k, (⟨φ (d k), hf.map_mem_O (hd k)⟩ * ⟨_, h1 k⟩ : M'.O z) = 1 := by
     refine Subtype.ext ?_
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, OneMemClass.coe_one, ← mul_div_assoc,
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, OneMemClass.coe_one, ← mul_div_assoc,
       ← Finset.sum_div, ← e, div_self h0]
   obtain ⟨k, -, hk⟩ := IsLocalRing.exists_of_isUnit_sum (e1 ▸ isUnit_one)
   obtain ⟨hk0, hk1⟩ := (isUnit_O_iff _).1 (isUnit_of_mul_isUnit_right hk)

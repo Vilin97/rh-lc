@@ -100,7 +100,7 @@ private theorem h_apply (O : Fo.Ops F) (w : InfinitePlace F) (φ : S4 F) (v : V4
   change ((∑ i, O.x w i (O.d w i φ) : S4 F)).1 v + 2 * φ.1 v = _
   congr 1
   have : ((∑ i, O.x w i (O.d w i φ) : S4 F)).1 = ∑ i, (O.x w i (O.d w i φ)).1 :=
-    AddSubmonoidClass.coe_finset_sum _ _
+    AddSubmonoidClass.coe_finsetSum _ _
   rw [this, Finset.sum_apply]
   exact Finset.sum_congr rfl fun i _ => O.x_apply w i _ v
 

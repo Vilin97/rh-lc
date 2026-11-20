@@ -19,7 +19,7 @@ private theorem graded_subalgebra_internal {O R X : Type} [CommRing O] [CommRing
   · rw [iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero]
     intro s v hv hs i hi
     have h1 := (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero _).1 h s (fun i => (v i : R)) hv
-      (by rw [← AddSubmonoidClass.coe_finset_sum, hs]; rfl) i hi
+      (by rw [← AddSubmonoidClass.coe_finsetSum, hs]; rfl) i hi
     exact Subtype.ext h1
   · rw [eq_top_iff]
     rintro ⟨x, hx⟩ -

@@ -62,7 +62,7 @@ theorem basis_origin_values_regular_and_unit :
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 (hb ▸ hv)
   have e : (⟨_, hreg _ hv⟩ : M.O z) = ∑ k, a k * ⟨_, hA k⟩ := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     simp only [← ha, sum_dotProduct, Finset.sum_div, MulMemClass.coe_mul, Subalgebra.smul_def, smul_dotProduct,
       smul_eq_mul, mul_div_assoc]
   obtain ⟨k, -, hk⟩ := IsLocalRing.exists_of_isUnit_sum (e ▸ hu)

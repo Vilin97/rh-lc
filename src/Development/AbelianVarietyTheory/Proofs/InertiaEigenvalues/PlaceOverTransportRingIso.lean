@@ -47,7 +47,7 @@ theorem conj_nhds : ∀ (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω] [Algeb
     exact h3.symm
   intro x hx
   have e := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
-  simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at e
+  simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at e
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← e, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_

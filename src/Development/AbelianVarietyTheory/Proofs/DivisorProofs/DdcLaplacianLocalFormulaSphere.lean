@@ -45,7 +45,7 @@ theorem loc_ddc_snd : ∀ (M : Type) [TopologicalSpace M] (A : HolAtlas M 1) (φ
   have hu : ContDiffAt ℝ 2 (fun y : V (1 + 1) => φ (y (Fin.last 1))) x :=
     (h2.comp ((EuclideanSpace.proj (Fin.last 1) : V (1 + 1) →L[ℂ] ℂ).restrictScalars ℝ).contDiff).contDiffAt
   rw [loc_ddc_fn (famAtlas A) _ (j, sphFin) hx hu fun v => rfl]
-  simp only [ofValues, ddc, leviForm_coord (Fin.last 1) h2.contDiffAt, AddSubmonoidClass.coe_finset_sum,
+  simp only [ofValues, ddc, leviForm_coord (Fin.last 1) h2.contDiffAt, AddSubmonoidClass.coe_finsetSum,
     Subalgebra.coe_smul, sym, smul_smul]
   have hc (a : Fin (1 + 1)) (ha : a ≠ Fin.last 1) : coordVec a (Fin.last 1) = (0 : ℂ) := by
     have h : (1 : Fin (1 + 1)) ≠ a := ha.symm

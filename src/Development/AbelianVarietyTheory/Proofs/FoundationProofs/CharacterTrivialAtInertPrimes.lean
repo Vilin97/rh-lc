@@ -102,7 +102,7 @@ theorem exists_gen (B : Ideal (𝓞 D.host.E)) (hB : B ≠ ⊥) : ∃ y, Gen D B
   · rw [Ideal.span_singleton_le_iff_mem]
     have : (⟨y, hy⟩ : OhE D) = ∑ i, intInc D (b i) * ⟨w i, hw i⟩ := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       exact e
     rw [this]
     exact sum_mem fun i _ => Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (hb i))

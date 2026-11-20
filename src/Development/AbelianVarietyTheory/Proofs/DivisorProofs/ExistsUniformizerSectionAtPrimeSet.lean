@@ -246,7 +246,7 @@ theorem trace_redM {D : D7} (PP : Pl D.host.E) {a b : ℕ} {A : Matrix (Fin a) (
       Matrix.trace (redM PP A * redM PP B) = resS D.host.F PP ⟨_, h⟩ := by
   have e : Matrix.trace (A * B) = ((∑ i, ∑ j, (⟨A i j, hA i j⟩ * ⟨B j i, hB j i⟩) :
       Formalism.L2.Herm.intAf D.host.F D.host.E) : EAf D) := by
-    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul]
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul]
   refine ⟨e ▸ Subtype.prop _, ?_⟩
   rw [show (⟨Matrix.trace (A * B), e ▸ Subtype.prop _⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) =
     ∑ i, ∑ j, (⟨A i j, hA i j⟩ * ⟨B j i, hB j i⟩) from Subtype.ext e]

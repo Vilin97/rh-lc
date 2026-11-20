@@ -46,7 +46,7 @@ theorem decomp : ∃ (f : X → T) (d : O), d ≠ 0 ∧ (∀ x y, y ≠ x → (f
   have hsum : (∑ x, g x) = d • (1 : T) := by
     apply Subtype.ext
     funext z
-    simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul,
+    simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul,
       OneMemClass.coe_one, Pi.one_apply, mul_one]
     rw [Finset.sum_eq_single z]
     · simp only [g, SetLike.val_smul, Pi.smul_apply, smul_eq_mul]

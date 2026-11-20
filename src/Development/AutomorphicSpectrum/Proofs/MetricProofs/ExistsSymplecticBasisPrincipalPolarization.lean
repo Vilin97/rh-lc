@@ -121,7 +121,7 @@ theorem exists_symplectic_basis : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → �
       conv_lhs => rw [← b.sum_repr y]
       conv_rhs => rw [← b.sum_repr y]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, map_zsmul, hb]
+        simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, map_zsmul, hb]
       simp
     obtain ⟨w, hw⟩ := imForm_surjective Hm hpos ψ
     have hwy : ∀ y : Λ, imForm Hm w (y : Fin g → ℂ) = (φ y : ℝ) := fun y => by rw [hw, hψ]

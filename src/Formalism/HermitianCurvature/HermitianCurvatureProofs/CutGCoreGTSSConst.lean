@@ -157,10 +157,10 @@ theorem vl_SS (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq)
     vl P Bs e ((star (d.SS l)).1 Φ) ρ' q = ∑ σ, t l ρ' σ q.1.2 * vl P Bs e Φ σ q := by
   obtain ⟨h1, h2⟩ := hSL l hl Φ ρ'
   constructor
-  · simp only [vl, h1, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Subalgebra.coe_mul, Pi.mul_apply]
+  · simp only [vl, h1, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Subalgebra.coe_mul, Pi.mul_apply]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [fnZ_eq_mk P (hst l ρ' σ).1]
-  · simp only [vl, h2, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Subalgebra.coe_mul, Pi.mul_apply]
+  · simp only [vl, h2, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Subalgebra.coe_mul, Pi.mul_apply]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [fnZ_eq_mk P (hst l ρ' σ).2]
 

@@ -65,7 +65,7 @@ theorem dbarAt_fun (u : V n → ℂ) (v : V n) :
 
 theorem coe_ofValues (α : V n → V n → ℂ) :
     (ofValues α : Alt n) = ∑ a, ∑ b, α (coordVec a) (coordVec b) • (dz a * dzb b) := by
-  simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym]
+  simp only [ofValues, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym]
 
 theorem delAt_mul_dbarAt {F φ₁ φ₀ : V n → ℝ} {g : V n → ℂ} {z : V n} (hg : ContDiffAt ℂ 2 g z)
     (h₁ : ContDiffAt ℝ 2 φ₁ z) (h₀ : ContDiffAt ℝ 2 φ₀ z)

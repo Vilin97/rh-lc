@@ -31,7 +31,7 @@ theorem Rp.d {j : ℕ} {y : CH.Cn (sq a b) j} {z : CH.Cn (CH.modF A) j} (h : Rp 
   change (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • sqMap a b (toLast i s) (y (face i s)) : sqM a b _).1 =
     Ideal.Quotient.mk _ (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • (A.map (toLast i s)).hom (z (face i s)))
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, AddSubmonoidClass.coe_finset_sum]
+    rw [map_sum, AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul]
   change (-1 : ℤ) ^ (i : ℕ) • (sqMap a b (toLast i s) (y (face i s))).1 = _

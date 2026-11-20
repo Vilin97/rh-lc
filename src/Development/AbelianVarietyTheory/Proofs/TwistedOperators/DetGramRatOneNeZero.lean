@@ -78,7 +78,7 @@ theorem exists_bases : ∃ (b : Module.Basis (Fin r) (maximalRealSubfield E) (pl
   rw [finrank_fld, Algebra.IsQuadraticExtension.finrank_eq_two] at h2
   let b := Module.finBasisOfFinrankEq (maximalRealSubfield E) (plus P) (n := r) (by omega)
   have hb : ∀ a : plus P, (a : Fld P) ∈ Submodule.span E (Set.range fun i => (b i : Fld P)) := fun a => by
-    rw [← b.sum_repr a, AddSubmonoidClass.coe_finset_sum]
+    rw [← b.sum_repr a, AddSubmonoidClass.coe_finsetSum]
     exact sum_mem fun i _ => Submodule.smul_mem _ (b.repr a i : E) (Submodule.subset_span ⟨i, rfl⟩)
   refine ⟨b, basisOfTopLeSpanOfCardEqFinrank (fun i => (b i : Fld P)) (fun y _ => ?_)
     (by rw [finrank_fld, Fintype.card_fin]), fun i => congrFun (coe_basisOfTopLeSpanOfCardEqFinrank ..) i⟩

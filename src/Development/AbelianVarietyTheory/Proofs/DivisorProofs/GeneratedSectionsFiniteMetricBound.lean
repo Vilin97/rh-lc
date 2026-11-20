@@ -38,7 +38,7 @@ theorem exists_w_le {v : HeightOneSpectrum (𝓞 F)} (e : Ext v) {ι : Type} [Fi
     rw [MulMemClass.coe_mul, map_mul]
     exact (mul_le_of_le_one_left' (e.O.valuation_le_one _)).trans_lt h₂
   have h₃ := e.O.valuation.map_sum_lt ((Valuation.ne_zero_iff _).2 h0) (s := Finset.univ) fun j _ => h₁ j
-  rw [← AddSubmonoidClass.coe_finset_sum] at h₃
+  rw [← AddSubmonoidClass.coe_finsetSum] at h₃
   exact h₃.false
 
 theorem exists_bound_affine {X : Scheme.{0}} [IsIntegral X] (p : X ⟶ Sp (𝓞 F)) {W : X.Opens} (hW : IsAffineOpen W)

@@ -23,7 +23,7 @@ theorem exists_matrix_span_of_smul_mem {ι : Type} [Fintype ι] [DecidableEq ι]
   have := congrArg Subtype.val (b.sum_repr ⟨v, hv⟩)
   funext i
   have h2 := congrFun this i
-  simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul] at h2
+  simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul] at h2
   rw [← h2]
   simp [Matrix.mulVec, dotProduct, mul_comm]
 

@@ -40,7 +40,7 @@ theorem exists_of_cocycle : StCocycle → StExists := by
   have e : (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from (∑ I, f I) s) =
       ∑ I, (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from f I s) := Finset.sum_apply _ _ _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, AddSubmonoidClass.coe_finset_sum, map_sum]
+    rw [e, AddSubmonoidClass.coe_finsetSum, map_sum]
   exact Finset.sum_congr rfl fun I _ => hz I s
 
 end GlobalTheory.CompanionTheory.GrForm

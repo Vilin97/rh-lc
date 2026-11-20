@@ -57,7 +57,7 @@ theorem conjG_continuous [Algebra.IsAlgebraic E Ω] (c : Ω ≃+* Ω) (τ : E �
     rw [conjG_apply, hg _ (IntermediateField.subset_adjoin _ _ (by simp [s])), RingEquiv.apply_symm_apply]
   have hx' : x = ∑ i, (b.repr ⟨x, hx⟩ i) • (b i : Ω) := by
     have := congrArg (fun z : S => (z : Ω)) (b.sum_repr ⟨x, hx⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, IntermediateField.coe_smul] at this
+    simp only [AddSubmonoidClass.coe_finsetSum, IntermediateField.coe_smul] at this
     exact this.symm
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hx', map_sum]

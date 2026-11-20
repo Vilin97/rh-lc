@@ -126,7 +126,7 @@ theorem dens_ofValues_mul_pull (α : V (d + 1) → V (d + 1) → ℂ) (β : Alt 
   have hsum {ι : Type} (s : Finset ι) (f : ι → Alt (d + 1)) : dens (∑ i ∈ s, f i) = ∑ i ∈ s, dens (f i) := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [dens, map_sum, Finsupp.finsetSum_apply, Finset.sum_div]
-  simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, Finset.sum_mul, smul_mul_assoc, hsum, hs,
+  simp only [ofValues, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, Finset.sum_mul, smul_mul_assoc, hsum, hs,
     ite_and]
   simp
   ring

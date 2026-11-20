@@ -185,7 +185,7 @@ theorem hasSum_integral (c : Sp (OO p) ⟶ u.G.left) (b₀ : Sp (OO p) ⟶ u.D.t
   have H := H₁ jL ((congrArg (fun q => q (cpt _) ∈ u.U.LG.L.U jL) (hce e)).mpr (top_le_comp hL _ trivial))
   rw [hbe e] at H₀
   rw [hbe e, hce e, eJ, Finset.sum_subset hT (fun α _ hα => by rw [H₀ α hα, zero_mul])] at H
-  rw [← AddSubmonoidClass.coe_finset_sum, ← AddSubgroupClass.coe_sub]
+  rw [← AddSubmonoidClass.coe_finsetSum, ← AddSubgroupClass.coe_sub]
   refine h2 e _ (Ideal.Quotient.eq.1 (toStkA_injective ?_))
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_mul, map_pow, hωe, map_mul, map_pow, map_sum, map_sum]

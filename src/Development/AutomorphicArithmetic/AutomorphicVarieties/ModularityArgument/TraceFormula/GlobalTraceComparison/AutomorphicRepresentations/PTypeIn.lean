@@ -144,7 +144,7 @@ theorem typeIn_pf : PiAdm → DetZero → EvalBasis → CvIn → FormEx → Orth
     simp only [LinearMap.proj_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at e2
     change f (x * tau K γ) = _
     rw [e1, e2]
-    simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
     have e3 : (zb b).1 x = f (x * kI E n (p b)) := by
       change f (x * tau K (1, p b)) = _

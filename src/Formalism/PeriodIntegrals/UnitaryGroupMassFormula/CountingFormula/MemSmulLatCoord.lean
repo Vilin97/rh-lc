@@ -142,8 +142,8 @@ theorem resF_bil {n : ℕ} (x y : Fin n → F) (hx : ∀ k, x k ∈ 𝒪[F]) (hy
       ((∑ k, ∑ l, (⟨x k, hx k⟩ : 𝒪[F]) * Ph k l * (⟨y l, hy l⟩ : 𝒪[F]) : 𝒪[F]) : F) := by
     first
     | (push_cast; rfl)
-    | (simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul]; rfl)
-    | (simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul])
+    | (simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul]; rfl)
+    | (simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul])
     | (push_cast; simp)
     | simp
   have hxk : ∀ k, resF F (x k) = IsLocalRing.residue 𝒪[F] ⟨x k, hx k⟩ := fun k => hc _ (hx k)

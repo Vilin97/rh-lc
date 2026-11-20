@@ -13,7 +13,7 @@ private theorem mem_submodule_of_basis_matrix {L M : Type*} [Field L] [AddCommGr
   intro x hx
   have hx' : x = ∑ i, b.repr ⟨x, hx⟩ i • (b i : M) := by
     have h := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h
     exact h.symm
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hx', map_sum]

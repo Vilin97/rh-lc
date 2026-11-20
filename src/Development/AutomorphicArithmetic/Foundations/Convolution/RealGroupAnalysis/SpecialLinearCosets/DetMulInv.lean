@@ -175,7 +175,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.absS :
       apply Subtype.ext
       funext m
       rw [haa x m (tw x (dd x) (hdet0 x) m) rfl, hsum]
-      simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Submodule.coe_smul,
+      simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Submodule.coe_smul,
         Pi.smul_apply, smul_eq_mul]
       refine Finset.sum_congr rfl fun g _ => ?_
       congr 1

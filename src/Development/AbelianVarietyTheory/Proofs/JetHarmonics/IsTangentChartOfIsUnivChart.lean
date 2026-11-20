@@ -335,7 +335,7 @@ theorem basis_iff_finrank {k A : Type} [Field k] [Group A] {n : ℕ} (T : (Fin n
         Fintype.linearCombination k b d = c := fun b c d => by
     simp only [hQ, ← funext_iff, exists_eq_left]
     rw [pr, hT.eq_iff, Subtype.ext_iff, Fintype.linearCombination_apply]
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     exact eq_comm
   constructor
   · rintro ⟨v, hv, H⟩

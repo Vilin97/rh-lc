@@ -72,7 +72,7 @@ theorem redV_add_smul_stab : ∀ {F E : Type} [Field F] [NumberField F] [Field E
       rw [hM, Matrix.mulVec_mulVec, ← Matrix.mul_assoc, ← Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel,
         Units.val_one, Matrix.one_mul, ← Matrix.mulVec_mulVec]
       simp only [Matrix.mulVec, dotProduct, hX]
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rfl
     have hs : ∀ i, ((β⁻¹ : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)).mulVec

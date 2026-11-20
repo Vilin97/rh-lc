@@ -130,7 +130,7 @@ theorem abstract {S R A F : Type} [CommRing S] [CommRing A] [IsDomain A] [CommRi
       have := congrArg (fun x : L => (x : Fin d → R)) (b.sum_repr ⟨r, y, hy, hr⟩)
       funext i
       have := congrFun this i
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, Finset.sum_apply, Pi.smul_apply,
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, Finset.sum_apply, Pi.smul_apply,
         smul_eq_mul] at this
       rw [← this]
       simp [mulVec, dotProduct, B, hc', mul_comm]

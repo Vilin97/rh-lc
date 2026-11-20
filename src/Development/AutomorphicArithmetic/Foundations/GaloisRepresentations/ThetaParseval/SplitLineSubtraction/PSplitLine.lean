@@ -71,7 +71,7 @@ private lemma intertw (r : Γ →* GL (Fin (m + 1)) k) {W' : Submodule k (Fin (m
     have h3 : ((r g : Matrix (Fin (m + 1)) (Fin (m + 1)) k).mulVec (b j : Fin (m + 1) → k)) i =
         ∑ a, (b.repr (resHom r hinv g (b j))) a * (b a : Fin (m + 1) → k) i := by
       have h5 := congrArg (fun u : W' => (u : Fin (m + 1) → k) i) h2
-      simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply,
+      simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply,
         Pi.smul_apply, smul_eq_mul] at h5
       rw [← h4, h5]
     rw [h1, h3, Matrix.mul_apply, Fintype.sum_sum_type]

@@ -107,7 +107,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.kerA :
       f f.2 h0
     have hf' : f = ∑ i, (⟨a i, ha i⟩ : M.A) * Sum.elim (Sum.elim M.eqns.F M.eqns.E) M.eqns.Z i := by
       apply Subtype.ext
-      rw [hfa, AddSubmonoidClass.coe_finset_sum]
+      rw [hfa, AddSubmonoidClass.coe_finsetSum]
       refine Finset.sum_congr rfl ?_
       rintro ((i | i) | i) - <;> rfl
     rw [hf']

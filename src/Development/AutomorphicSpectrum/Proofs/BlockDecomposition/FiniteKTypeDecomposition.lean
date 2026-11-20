@@ -70,7 +70,7 @@ theorem rho_apply (hV : ∀ v ∈ V, ∀ k : K, (fun x => v (x * (k : G))) ∈ V
 theorem sum_repr_apply (z : V) (x : G) :
     ∑ j, (Module.finBasis ℂ V).repr z j * (Module.finBasis ℂ V j).1 x = z.1 x := by
   have h := congrArg (fun y : V => y.1 x) ((Module.finBasis ℂ V).sum_repr z)
-  simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
+  simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
     smul_eq_mul] at h
   exact h
 

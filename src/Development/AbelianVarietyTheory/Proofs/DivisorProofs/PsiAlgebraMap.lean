@@ -121,7 +121,7 @@ instance gradedRing (hN : GradedFam c₀ N) : GradedRing (piece hN) :=
         set_option synthInstance.maxHeartbeats 100000 in
           rw [dec, map_sum]
         simp only [DirectSum.coeAddMonoidHom_of]
-        rw [AddSubmonoidClass.coe_finset_sum]
+        rw [AddSubmonoidClass.coe_finsetSum]
         exact (as_sum_support _).symm)
       (by
         refine DirectSum.addHom_ext fun k y => ?_

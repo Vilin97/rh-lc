@@ -52,7 +52,7 @@ theorem exists_int_lift : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (es : Pl D.hos
   · intro P hP
     have hN : (⟨_, Subring.sum_mem _ hmem⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = ∑ x ∈ Q.attach, T x.1 x.2 := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       exact (Finset.sum_attach Q (fun P => toEAf D (es P) *
         ((oToS D.host.F D.host.E (a P) : Formalism.L2.Herm.intAf D.host.F D.host.E) : EAf D))).symm
     set_option synthInstance.maxHeartbeats 100000 in

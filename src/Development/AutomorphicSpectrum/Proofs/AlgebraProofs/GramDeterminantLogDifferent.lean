@@ -57,7 +57,7 @@ theorem exists_inverse {E : Type} [Field E] [NumberField E] [IsCMField E] (H : H
     calc (n₀ : 𝓞 E) • y = ((g y : S) : D.La) := (hg y).symm
       _ = ((∑ i, b.repr (g y) i • b i : S) : D.La) := by rw [b.sum_repr]
       _ = _ := by
-        rw [AddSubmonoidClass.coe_finset_sum]
+        rw [AddSubmonoidClass.coe_finsetSum]
         exact Finset.sum_congr rfl fun m _ => by rw [Submodule.coe_smul, hb]; rfl
   have hcx : ∀ k a, c k (x a) = if a = k then (n₀ : 𝓞 E) else 0 := fun k a => by
     have : g (x a) = (n₀ : 𝓞 E) • b a := Subtype.ext (by simp [hg, hb])

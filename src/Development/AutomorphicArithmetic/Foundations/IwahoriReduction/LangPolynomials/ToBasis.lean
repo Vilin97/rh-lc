@@ -44,7 +44,7 @@ private theorem coords {c : Coef l} (β : Bas c) (hβ : ∀ i, ‖β.val i‖ �
   refine ⟨fun i => (β.e.repr ⟨o, ho⟩ i).appr n, ?_⟩
   have h1 : o = ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (β.e.repr ⟨o, ho⟩ i) := by
     have := congrArg (fun x : c.O => (x : PadicAlgCl l)) (β.e.sum_repr ⟨o, ho⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul] at this
+    simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul] at this
     refine this.symm.trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [Algebra.smul_def, mul_comm]; rfl
   refine cg_trans (b := ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (β.e.repr ⟨o, ho⟩ i)) ?_ (cg_sum n _ _ fun i => ?_)

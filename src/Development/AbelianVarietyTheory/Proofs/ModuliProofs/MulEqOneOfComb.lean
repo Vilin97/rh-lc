@@ -97,7 +97,7 @@ theorem fn_ev (S : ThetaSys o Ω) (c : Change S) (a : S.Gam) (j : c.J) :
       ∑ i, cst S (c.M i j) * IndefiniteRowSideFullHecke.UniformityLowerBounds.fn S ⟨S.ev a i, S.ev_mem a i⟩ := by
   have : (⟨(change S c).ev a j, (change S c).ev_mem a j⟩ : S.R) =
       ∑ i, algebraMap o S.R (c.M i j) * ⟨S.ev a i, S.ev_mem a i⟩ := Subtype.ext (by
-    rw [AddSubmonoidClass.coe_finset_sum]; rfl)
+    rw [AddSubmonoidClass.coe_finsetSum]; rfl)
   set_option synthInstance.maxHeartbeats 100000 in
     rw [this, map_sum]
   exact Finset.sum_congr rfl fun i _ => map_mul _ _ _

@@ -152,7 +152,7 @@ theorem jets_mem_pow_sup : ∀ {K κ κ' : Type} [Field K] [Field κ] [Field κ'
     have ew : w = ∑ i, jL (ι (a i)) * jR (b i) := by
       apply Subtype.ext
       rw [hw]
-      simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_mul, hjL, hjR, hι,
+      simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_mul, hjL, hjR, hι,
         Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [ew, map_sum, map_sum]

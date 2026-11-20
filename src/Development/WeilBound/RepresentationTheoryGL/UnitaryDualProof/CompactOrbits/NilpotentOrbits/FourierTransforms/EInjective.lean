@@ -102,7 +102,7 @@ theorem orth {z w : Matrix (Fin n) (Fin n) k} (hz : z ∈ Z) (hw : w ∈ B0 Z) :
   have hq : qZ Z w = 0 := LinearMap.mem_ker.mp hwq
   have hz' : (∑ i, (Module.finBasis k Z).repr ⟨z, hz⟩ i • ((Module.finBasis k Z i : Z) : Matrix (Fin n) (Fin n) k)) = z := by
     have := congrArg Subtype.val ((Module.finBasis k Z).sum_repr ⟨z, hz⟩)
-    simpa only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] using this
+    simpa only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] using this
   rw [← hz', Finset.sum_mul, trace_sum]
   apply Finset.sum_eq_zero
   intro i _

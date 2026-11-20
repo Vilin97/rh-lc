@@ -23,7 +23,7 @@ theorem dz_mul_dzb {n : ℕ} (a b : Fin n) : ∃ ε : ℤˣ, dz a * dzb b =
 
 theorem coe_ofValues {n : ℕ} (α : V n → V n → ℂ) :
     (ofValues α : Alt n) = ∑ a, ∑ b, α (coordVec a) (coordVec b) • (dz a * dzb b) := by
-  simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym]
+  simp only [ofValues, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym]
 
 theorem isType_ofValues {n : ℕ} (α : V n → V n → ℂ) : IsType 1 1 (ofValues α : Alt n) := by
   intro S hS

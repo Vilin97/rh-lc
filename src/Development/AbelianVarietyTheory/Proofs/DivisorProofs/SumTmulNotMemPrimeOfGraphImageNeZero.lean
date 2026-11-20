@@ -29,7 +29,7 @@ theorem sum_notMem_of_ne_zero : ∀ {K κ κ' : Type} [Field K] [Field κ] [Fiel
   have hg : ∀ i, g i ∈ graphIdeal E R π ρ := fun i => Ideal.subset_span (Or.inr ⟨a i, rfl⟩)
   have hsum : w - u = ∑ i, g i * bb i := by
     apply Subtype.ext
-    rw [Subalgebra.coe_sub, hw, AddSubmonoidClass.coe_finset_sum]
+    rw [Subalgebra.coe_sub, hw, AddSubmonoidClass.coe_finsetSum]
     simp only [g, bb, u, Subalgebra.coe_mul, sub_mul, Algebra.TensorProduct.tmul_mul_tmul,
       one_mul, mul_one, Finset.sum_sub_distrib, TensorProduct.tmul_sum]
   have huv : u * v = 1 := by

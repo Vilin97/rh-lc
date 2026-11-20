@@ -74,7 +74,7 @@ theorem IsModelOf.bound {Nm : (K →+* ℂ) → V → ℝ} {W : Submodule (𝓞 
     have e3 : ∀ m, φ ⟨_, hc (b m)⟩ = ∑ i, σ (cc i m) * φ ⟨_, hc (gw i)⟩ := fun m => by
       have : (⟨_, hc (b m)⟩ : R) = ∑ i, algebraMap K R (cc i m) * ⟨_, hc (gw i)⟩ := by
         apply Subtype.ext
-        simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, SubalgebraClass.coe_algebraMap]
+        simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, SubalgebraClass.coe_algebraMap]
         set_option synthInstance.maxHeartbeats 100000 in
           rw [hb m, map_sum, Finset.mul_sum]
         refine Finset.sum_congr rfl fun i _ => ?_

@@ -37,7 +37,7 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (S :
 
 private theorem sum_val {ι : Type} (s : Finset ι) (f : ι → Sm E a) (g : GA E a) :
     (∑ i ∈ s, f i).1 g = ∑ i ∈ s, (f i).1 g := by
-  rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+  rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
 
 end SlopeTestRemainingChoices
 

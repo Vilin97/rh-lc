@@ -73,7 +73,7 @@ theorem trace_pow_eq {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} {x x₀ : Mat
   have h1 : ((1 : Z) : Matrix (Fin n) (Fin n) k) =
       ∑ j, (Module.finBasis k Z).repr 1 j • ((Module.finBasis k Z j : Z) : Matrix (Fin n) (Fin n) k) := by
     have h0 := congrArg Subtype.val ((Module.finBasis k Z).sum_repr 1)
-    rw [← h0, AddSubmonoidClass.coe_finset_sum]
+    rw [← h0, AddSubmonoidClass.coe_finsetSum]
     rfl
   have key : ∀ y : Matrix (Fin n) (Fin n) k, trace (y ^ i) =
       ∑ j, (Module.finBasis k Z).repr 1 j * pZ Z y (⟨i, hi⟩, j) := by

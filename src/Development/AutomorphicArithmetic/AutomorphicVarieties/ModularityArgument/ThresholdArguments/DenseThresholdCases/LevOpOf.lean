@@ -68,7 +68,7 @@ private theorem opOf_tr {Λ R G P Γ σ : Type} [CommRing Λ] [CommRing R] [Alge
   letI := Fintype.ofFinite (K ⧸ K1.subgroupOf K)
   obtain ⟨h1, h2⟩ := projNorm Λ _ _ ρ' hP
   have hs : ∀ m, (tr m : P) = (∑ g, ρ' g m : fixd ρ K1) := fun m => by
-    rw [htr, opOf_dc ρ K K1 m m.2, AddSubmonoidClass.coe_finset_sum]
+    rw [htr, opOf_dc ρ K K1 m m.2, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [← hρ', QuotientGroup.out_eq']
   refine ⟨fun v => ?_, le_antisymm (fun m hm => ?_) (iSup_le fun p => ?_)⟩

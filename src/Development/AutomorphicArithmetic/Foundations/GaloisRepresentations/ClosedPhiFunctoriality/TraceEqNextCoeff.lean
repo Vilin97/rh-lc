@@ -75,7 +75,7 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.tie_holds :
     rw [GlobalTheory.ConjLocal.repE_apply]
     simp only [Matrix.mulVec, dotProduct, Finset.sum_apply, Pi.smul_apply, Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply,
       smul_eq_mul] at this ⊢
-    rw [AddSubmonoidClass.coe_finset_sum, AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum, AddSubmonoidClass.coe_finsetSum]
     refine (Finset.sum_congr rfl fun x _ => ?_).trans (this.trans (Finset.sum_congr rfl fun x _ => ?_))
     · rw [MulMemClass.coe_mul, hr]
       rfl
@@ -91,7 +91,7 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.tie_holds :
         rfl
       · rw [Matrix.one_apply_ne hjk, Matrix.one_apply_ne hjk]
         rfl
-    rw [h1, ← this, Matrix.sum_apply, Matrix.sum_apply, AddSubmonoidClass.coe_finset_sum]
+    rw [h1, ← this, Matrix.sum_apply, Matrix.sum_apply, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [Matrix.smul_apply, Matrix.smul_apply, Algebra.smul_def, smul_eq_mul, MulMemClass.coe_mul]
     rfl

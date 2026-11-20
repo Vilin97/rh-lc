@@ -32,7 +32,7 @@ theorem isCompact_coef (c : Coef l) : IsCompact (c.O : Set (Qbar l)) := by
       obtain ⟨v, hv⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ_[l]).1 hmem
       refine ⟨v, ?_⟩
       have := congrArg (fun y : c.O => (y : Qbar l)) hv
-      simp only [AddSubmonoidClass.coe_finset_sum] at this
+      simp only [AddSubmonoidClass.coe_finsetSum] at this
       rw [← this]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← Algebra.smul_def]

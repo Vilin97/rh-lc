@@ -42,7 +42,7 @@ private theorem length_localization_bound {O B L P I : Type} [CommRing O] [IsDom
         rw [Fintype.linearIndependent_iff]
         intro c hc i
         have h3 := congrArg (fun z : LinearMap.range lc => z.1 i) hc
-        simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply,
+        simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply,
           LinearMap.codRestrict_apply, LinearMap.rangeRestrict, ZeroMemClass.coe_zero, Pi.zero_apply] at h3
         rw [Finset.sum_eq_single i (fun j _ hj => by rw [hf' j i (Ne.symm hj), smul_zero]) (by simp)] at h3
         exact (smul_eq_zero.1 h3).resolve_right (hf i)

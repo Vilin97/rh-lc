@@ -18,7 +18,7 @@ theorem eq_sum_ofLp_smul_complexCoordinateVector {n : ℕ} (w : V n) : w = ∑ a
 theorem trace_mul_constMatrix_mul_evenForms_sum {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (P Q : Matrix r r (Ev n)) (C : Matrix r r ℂ) :
     (((P * C.map (algebraMap ℂ (Ev n)) * Q).trace : Ev n) : Alt n) = ∑ p, ∑ q, C p q • (((Q * P) q p : Ev n) : Alt n) := by
   rw [Matrix.trace_mul_cycle, Matrix.trace]
-  simp only [Matrix.diag, Matrix.mul_apply (M := Q * P), Matrix.map_apply, AddSubmonoidClass.coe_finset_sum]
+  simp only [Matrix.diag, Matrix.mul_apply (M := Q * P), Matrix.map_apply, AddSubmonoidClass.coe_finsetSum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
   rw [mul_comm, ← Algebra.smul_def, Subalgebra.coe_smul]

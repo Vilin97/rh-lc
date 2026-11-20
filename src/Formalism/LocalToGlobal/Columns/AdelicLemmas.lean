@@ -102,7 +102,7 @@ theorem redA_sum {ι : Type} [Fintype ι] (P : Pl E) {s : 𝓞 E} (hs : s ∉ P.
     rw [Finset.mul_sum, Finset.sum_congr rfl fun j _ => e1 j, ← map_sum]
   congr 1
   apply Subtype.ext
-  simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, Subtype.coe_mk]
+  simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, Subtype.coe_mk]
   rw [Finset.mul_sum]
   exact Finset.sum_congr rfl fun j _ => by ring
 

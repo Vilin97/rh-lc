@@ -120,7 +120,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
       Real.exp (-(c.sc * (qW W c.T.β ν : ℤ))) := by
     refine le_trans (le_of_eq ?_) (key.trans (mul_le_mul_of_nonneg_right hle (Real.exp_pos _).le))
     congr 2
-    rw [hSg, Finset.mul_sum, AddSubmonoidClass.coe_finset_sum]
+    rw [hSg, Finset.mul_sum, AddSubmonoidClass.coe_finsetSum]
     exact Finset.sum_congr rfl fun k _ => mul_left_comm _ _ _
   have hO : Sg / D.X.S.th x₀ ∈ D.X.M.O ((gPt p ≫ y) (IsLocalRing.closedPoint (PadicAlgCl p))) := by
     obtain ⟨v, hv⟩ := ((RatModel.val_ne_zero_iff (RatModel.range_eq_singleton (gPt p ≫ y) _)

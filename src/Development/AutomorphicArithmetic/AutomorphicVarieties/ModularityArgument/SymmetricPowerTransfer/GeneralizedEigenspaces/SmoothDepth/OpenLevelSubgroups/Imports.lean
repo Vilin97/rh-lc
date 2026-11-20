@@ -28,7 +28,7 @@ theorem UpperTheory.V.Z.Sym.Al.proj :
     conv_rhs => rw [← b.sum_dual_apply_smul_coord f]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [F, map_sum, map_smul, smul_eq_mul, Submodule.coe_sum, Finset.sum_apply,
-      Submodule.coe_smul, Pi.smul_apply, AddSubmonoidClass.coe_finset_sum]
+      Submodule.coe_smul, Pi.smul_apply, AddSubmonoidClass.coe_finsetSum]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hext : ∀ {v v' : V}, (∀ f : V →ₗ[ℂ] ℂ, f v = f v') → v = v' := fun h =>
     b.ext_elem fun i => h (b.coord i)
@@ -38,7 +38,7 @@ theorem UpperTheory.V.Z.Sym.Al.proj :
     push_neg at h
     refine hφ (funext fun g => hext fun f => ?_)
     have e := congrArg (fun x : GlobalTheory.DefU.autU L n => x.1 g) (hsum f)
-    simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply] at e
+    simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply] at e
     have e' : (C f).1 g = f (φ g) := rfl
     rw [Pi.zero_apply, map_zero, ← e', ← e]
     refine Finset.sum_eq_zero fun k _ => ?_

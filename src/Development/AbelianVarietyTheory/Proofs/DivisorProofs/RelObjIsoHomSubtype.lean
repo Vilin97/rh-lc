@@ -273,7 +273,7 @@ theorem exists_finite_cover {S : Scheme.{0}} {K : Type} [Field K] (gp : Sp K ⟶
     obtain ⟨c, hc⟩ := hx x.1 x.2
     have : x = ∑ y : t, c y.1 • (⟨y.1, ht y.1 y.2⟩ : F U.1) := by
       apply Subtype.ext
-      rw [hc, AddSubmonoidClass.coe_finset_sum, ← Finset.sum_coe_sort]
+      rw [hc, AddSubmonoidClass.coe_finsetSum, ← Finset.sum_coe_sort]
       rfl
     rw [this]
     exact Submodule.sum_mem _ fun y _ ↦ Submodule.smul_mem _ _ (Submodule.subset_span ⟨y, rfl⟩)

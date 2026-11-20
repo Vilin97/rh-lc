@@ -191,7 +191,7 @@ theorem exists_inv_one_add {s : 𝒜} (hs : s ∈ 𝒮) : ∃ t ∈ 𝒮, (1 + (
     obtain ⟨r, hr, rfl⟩ := levelaf_decomp (fun j => Module.finBasis ℤ (𝓞 E) j) (Module.Basis.span_eq _) hx
     have e : (⟨_, hx⟩ : 𝒮) = ∑ j, (φ ⟨r j, hr j⟩ * ψ (Module.finBasis ℤ (𝓞 E) j) : 𝒮) := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       dsimp only
       refine Finset.sum_congr rfl fun j _ => ?_
       show _ = ((1 : E) ⊗ₜ[ℚ] r j) * (algebraMap (𝓞 E) E (Module.finBasis ℤ (𝓞 E) j) ⊗ₜ[ℚ] (1 : 𝔸))

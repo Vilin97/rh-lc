@@ -98,7 +98,7 @@ theorem formula_pos : ∀ (LT : LocTheory) (l : ℕ) [Fact l.Prime] (AI : LocAin
         simp [co]
       · obtain ⟨dj, h1, h2⟩ := (GlobalTheory.T.norm_frK_eq_and_exists_sub_pow_smul_frK_eq l (LT l) K).2 j hj
           ((frK (LT l) K ^ s) (∑ i ∈ T, co e lam i * (ex l s i : ↥(K0 K)) ^ j)) (by
-            rw [norm_frK_pow, AddSubmonoidClass.coe_finset_sum]
+            rw [norm_frK_pow, AddSubmonoidClass.coe_finsetSum]
             refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i hi => ?_
             have h2 : ((co e lam i * (ex l s i : ↥(K0 K)) ^ j : ↥(K0 K)) : Om l) =
               (co e lam i : Om l) * (ex l s i : Om l) ^ j := by simp

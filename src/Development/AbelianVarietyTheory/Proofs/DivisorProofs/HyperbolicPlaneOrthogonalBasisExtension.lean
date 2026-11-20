@@ -288,7 +288,7 @@ theorem exists_coeff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hb : ∀ w ∈ V, ∃ c : Fin (Module.finrank ℂ V) → ℂ, ∀ g, w g = ∑ j, c j * (b j).1 g := fun w hw =>
     ⟨b.repr ⟨w, hw⟩, fun g => by
       have := (congrFun (congrArg Subtype.val (b.sum_repr ⟨w, hw⟩)) g).symm
-      simpa only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul] using this⟩
+      simpa only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul] using this⟩
   refine ⟨d, Fin.cons ψ v, a, fun i => Fin.cases hψ hvc i, rfl, fun i => Fin.cases (by simp [a]) (fun i => by simp [a, hf1]) i,
     fun t y p hp k hk k₂ hk₂ k' hk' k₂' hk₂' e z => ?_,
     ⟨⨅ i, Ua i, by rw [Subgroup.coe_iInf]; exact isOpen_iInter_of_finite hUa,

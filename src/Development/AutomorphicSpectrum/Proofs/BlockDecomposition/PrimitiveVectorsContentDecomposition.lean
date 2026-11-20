@@ -44,7 +44,7 @@ theorem exists_content {T : Type} [CommRing T] [IsArtinianRing T] (O : Subring T
   refine ⟨x, x.2, hu, fun k => t k, fun k => a k, fun k => (t k).2, fun k => (a k).2, hyk, ?_⟩
   have h1 : (x : T) * ∑ k, (a k : T) * (t k : T) = x * 1 := by
     have := congrArg Subtype.val ha
-    simp only [Subring.coe_mul, AddSubmonoidClass.coe_finset_sum, yO] at this
+    simp only [Subring.coe_mul, AddSubmonoidClass.coe_finsetSum, yO] at this
     rw [mul_one, Finset.mul_sum]
     conv_rhs => rw [← this]
     exact Finset.sum_congr rfl fun k _ => by rw [hyk k]; ring
@@ -129,7 +129,7 @@ theorem mem_primV_of (O : Subring (Fv F v ⊗[F] E))
     refine Matrix.ext fun i j => Subtype.ext ?_
     have := congrFun (congrFun hmul i) j
     rw [Matrix.mul_apply] at this
-    rw [Matrix.mul_apply, AddSubmonoidClass.coe_finset_sum]
+    rw [Matrix.mul_apply, AddSubmonoidClass.coe_finsetSum]
     simp only [Subring.coe_mul, HO, HiO]
     rw [this]
     by_cases h : i = j <;> simp [Matrix.one_apply, h]

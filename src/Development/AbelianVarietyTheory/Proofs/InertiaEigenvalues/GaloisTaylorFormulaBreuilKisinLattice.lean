@@ -124,7 +124,7 @@ theorem taylor_of_basis {l : ℕ} [Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero 
       funext τ
       apply Subtype.ext
       refine (coord_desc C m k τ i).trans ?_
-      simp only [Finset.sum_apply, Pi.mul_apply, Pi.natCast_apply, AddSubmonoidClass.coe_finset_sum,
+      simp only [Finset.sum_apply, Pi.mul_apply, Pi.natCast_apply, AddSubmonoidClass.coe_finsetSum,
         MulMemClass.coe_mul, SubringClass.coe_natCast, hcj]
     rw [toCris_apply, h1]
     set_option synthInstance.maxHeartbeats 100000 in

@@ -69,7 +69,7 @@ theorem smooth_of_cover (A : Subalgebra ℚ Ω) {m : ℕ} (f a : Fin m → Ω) (
     rw [Ideal.eq_top_iff_one]
     have h1 : (1 : A) = ∑ l, (⟨a l, ha l⟩ : A) * (⟨f l, hf l⟩ : A) := by
       apply Subtype.ext
-      rw [Subalgebra.coe_one, ← hsum, AddSubmonoidClass.coe_finset_sum]
+      rw [Subalgebra.coe_one, ← hsum, AddSubmonoidClass.coe_finsetSum]
       rfl
     rw [h1]
     refine Ideal.sum_mem _ fun l _ => ?_

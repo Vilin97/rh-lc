@@ -106,7 +106,7 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.tieRep_holds :
       have h2 := congrFun (congrFun he i) i'
       rw [Matrix.sum_apply] at h2
       simp only [Matrix.smul_apply] at h2
-      rw [← AddSubmonoidClass.coe_finset_sum, h2, Matrix.one_apply]
+      rw [← AddSubmonoidClass.coe_finsetSum, h2, Matrix.one_apply]
       split_ifs <;> rfl
     rw [hs]
     split_ifs
@@ -126,6 +126,6 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.tieRep_holds :
   rw [← TensorProduct.sum_tmul]
   congr 1
   simp only [Matrix.trace, Matrix.diag_apply]
-  exact AddSubmonoidClass.coe_finset_sum _ _
+  exact AddSubmonoidClass.coe_finsetSum _ _
 
 end

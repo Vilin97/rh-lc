@@ -76,7 +76,7 @@ theorem exists_fg_span {R S : Type} [CommRing R] [CommRing S] [Algebra S R] (T :
     apply Subtype.ext
     refine (OneMemClass.coe_one C).trans (hs.symm.trans ?_)
     rw [Finsupp.sum, ← Finset.sum_attach]
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, smul_eq_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, smul_eq_mul]
     refine Finset.sum_congr rfl fun y _ => ?_
     have : ((algebraMap S C (t y.1) : C) : R) = y.1 := hty y.1 y.2
     rw [this]

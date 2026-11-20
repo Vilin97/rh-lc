@@ -38,7 +38,7 @@ theorem exists_eval {R K T : Type} [CommRing R] [IsDomain R] [Field K] [Algebra 
   have hsum : ∑ x, (∏ y ∈ Finset.univ.erase x, r y) • d x = algebraMap R S (∏ y, r y) := by
     apply Subtype.ext
     funext z
-    rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Finset.sum_eq_single z]
+    rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Finset.sum_eq_single z]
     · rw [Subalgebra.coe_smul, hd, smul_smul, Finset.prod_erase_mul _ _ (Finset.mem_univ z)]
       simp [Algebra.smul_def]
     · intro b _ hb

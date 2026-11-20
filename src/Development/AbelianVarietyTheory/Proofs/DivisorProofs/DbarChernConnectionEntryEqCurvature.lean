@@ -38,7 +38,7 @@ theorem dbarAt_conn : ∀ (n : ℕ) (r : Type) [Fintype r] [DecidableEq r] (G : 
   have e : (curvEv G v i j : Alt n) = ∑ a, ∑ b, curv G v (coordVec a) (coordVec b) i j • (dz a * dzb b) := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [curvEv, curvPoly, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, aeval_C, aeval_X,
-      ← Algebra.smul_def, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym]
+      ← Algebra.smul_def, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym]
   rw [e, Finset.sum_comm]
   simp only [dbarAt, dz, h, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_

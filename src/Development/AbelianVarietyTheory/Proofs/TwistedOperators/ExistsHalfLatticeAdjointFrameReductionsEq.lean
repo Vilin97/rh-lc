@@ -60,7 +60,7 @@ theorem exists_half_redM_eq : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
         ⟨toEAf D (es PP.1), hk PP.1 PP.2⟩ * Formalism.L2.DIV.oToS D.host.F D.host.E (a PP.1 j k) :
           Formalism.L2.Herm.intAf D.host.F D.host.E) : Formalism.IndefR.Datum.EAf D) := by
     intro j k
-    rw [hx', Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, Subring.coe_mul, AddSubmonoidClass.coe_finset_sum]
+    rw [hx', Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, Subring.coe_mul, AddSubmonoidClass.coe_finsetSum]
     congr 1
     rw [← Finset.sum_attach]
     rfl

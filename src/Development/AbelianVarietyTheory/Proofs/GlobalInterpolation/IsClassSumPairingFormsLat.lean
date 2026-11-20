@@ -115,7 +115,7 @@ theorem coordAt_sum (v : InfinitePlace K) (x : S.EqFun) :
   funext c k
   conv_lhs => rw [← (S.hB h).sum_repr x]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coordAt, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
+    simp only [coordAt, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
     map_smul, Finsupp.coe_finset_sum, Finsupp.coe_smul, smul_eq_mul, map_mul]
 
 theorem coordAt_indep (v : InfinitePlace K) :

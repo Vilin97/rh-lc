@@ -59,7 +59,7 @@ theorem UpperTheory.V.Fr.alg_homog :
       have e : comp (x * y) j =
           ∑ a ∈ x.1.coeff.support, comp x a * comp y (-a + j) := by
         apply Subtype.ext
-        rw [AddSubmonoidClass.coe_finset_sum, hcomp, Subalgebra.coe_mul, single_coeff_mul]
+        rw [AddSubmonoidClass.coe_finsetSum, hcomp, Subalgebra.coe_mul, single_coeff_mul]
         rfl
       rw [e, pow_succ]
       exact Ideal.sum_mem _ fun a _ => Ideal.mul_mem_mul (ih x hx a) (base y hy _)

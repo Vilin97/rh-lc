@@ -93,7 +93,7 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [hsmul _ _ _ (hinc (cf k)), hk k]
       have hmv : (m : V) = ∑ k, inc (cf k) • ρ (e k) l := by
-        simp only [m, AddSubmonoidClass.coe_finset_sum]
+        simp only [m, AddSubmonoidClass.coe_finsetSum]
         exact Finset.sum_congr rfl fun _ _ => rfl
       have hme : (m : V) ∈ eigSp ρ (inc.comp σ) := mem_eigSp_iff.2 fun a => by
         rw [hmv]
@@ -104,7 +104,7 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
       choose t ht using fun i => hvalr (d i)
       have hm : m = ∑ i, d i • (⟨b i, hbl i⟩ : M.lat ⟨centre z, h⟩) := by
         apply Subtype.ext
-        rw [← hd, AddSubmonoidClass.coe_finset_sum]
+        rw [← hd, AddSubmonoidClass.coe_finsetSum]
         exact Finset.sum_congr rfl fun _ _ => rfl
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← hevm, hm, map_sum]

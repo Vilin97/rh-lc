@@ -117,7 +117,7 @@ theorem dbar_form_mem {v : V n} {θ : Fin n → V n → ℂ} (hθ : ∀ a, ContD
     (fun x => ∑ a, ∑ b, dbar (θ a) x (coordVec b) • sym (a, b)) ∈ closedRing v := by
   have e (x : V n) : ((∑ a, ∑ b, dbar (θ a) x (coordVec b) • sym (a, b) : Ev n) : Alt n) =
       ∑ p : Fin n × Fin n, dbar (θ p.1) x (coordVec p.2) • (dz p.1 * dzb p.2) := by
-    simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, Fintype.sum_prod_type]
+    simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym, Fintype.sum_prod_type]
   have hd (p : Fin n × Fin n) : DifferentiableAt ℝ (fun x => dbar (θ p.1) x (coordVec p.2)) v :=
     differentiableAt_dbar_apply (hθ p.1) _
   change IsClosedAt v _

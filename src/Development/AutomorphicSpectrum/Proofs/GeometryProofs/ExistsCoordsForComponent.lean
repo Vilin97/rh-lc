@@ -220,7 +220,7 @@ theorem isIntegrallyClosed_of_snc {K : Type} [Fintype K] {J : K → Type} [∀ k
   let a' : Fin m → regAt ξ q := fun l => ⟨a l, hR (ha l)⟩
   have hsum' : ∑ l, a' l * f' l = 1 := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact hs1
   obtain ⟨l, hl⟩ : ∃ l, IsUnit (f' l) := by
     by_contra hcon

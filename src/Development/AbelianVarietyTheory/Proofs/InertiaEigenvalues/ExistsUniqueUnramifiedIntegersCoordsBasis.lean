@@ -116,7 +116,7 @@ theorem exists_root_ne {l : ℕ} [Fact l.Prime] {K LL : FinExt l}
   have hx' : algebraMap ℚ_[l] ↥(K0 K) a⁻¹ * x =
       ∑ i, algebraMap ℚ_[l] ↥(K0 K) (z i : ℚ_[l]) * (⟨ω i, (hω i).1⟩ : ↥(K0 K)) := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact hx
   have : e (algebraMap ℚ_[l] ↥(K0 K) a⁻¹ * x) = e' (algebraMap ℚ_[l] ↥(K0 K) a⁻¹ * x) := by
     set_option synthInstance.maxHeartbeats 100000 in

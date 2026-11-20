@@ -422,7 +422,7 @@ theorem UpperTheory.Kd.K4.mlB :
     refine ⟨⟨d, hd⟩, Subtype.ext ?_⟩
     have ec : ((GlobalTheory.KA.push (π r) (Fs (r + 1) n) s x : X.B N l w) : X.Fn l) = GlobalTheory.KA.push (π r) (F (r + 1) n) s x := by
       simp only [GlobalTheory.KA.push]
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
     change ((GlobalTheory.KA.push (π r) (Fs (r + 1) n) s x : X.B N l w) : X.Fn l) -
       (F r n s x + (X.galB l s (b (x * κ r s)) - b x)) = (l : ℤ_[l]) ^ n • d
     rw [ec]
@@ -439,7 +439,7 @@ theorem UpperTheory.Kd.K4.mlB :
     funext s y
     have h := congrArg Subtype.val (congrFun (congrFun (hY3 r) s) y)
     simp only [GlobalTheory.KA.push] at h ⊢
-    rw [h, AddSubmonoidClass.coe_finset_sum]
+    rw [h, AddSubmonoidClass.coe_finsetSum]
   · intro r n
     obtain ⟨b, hb⟩ := hY4 r n
     refine ⟨bB n r, fun σ hσ => (hbB n r σ hσ).lift hA, fun y => (b y : X.Fn l), fun y => (b y).2, fun s y => ?_⟩

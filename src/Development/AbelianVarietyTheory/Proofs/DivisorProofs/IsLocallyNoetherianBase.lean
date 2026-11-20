@@ -296,7 +296,7 @@ theorem mem_lat_iff (hT : TanSt) (hH : HTSt) [IsLocallyNoetherian (Y Z.i).X] (hx
     (fun j => lam (η j)) hη r u hu y.C ψ hab _ v (hco _ _ a φ (hφ.trans e1.symm) cf v (e2 ▸ hv))
   have hr : ∀ w l, (lam w).1 (u l) = fb.repr w l := fun w l => by
     set_option synthInstance.maxHeartbeats 100000 in
-      conv_lhs => rw [← fb.sum_repr w, map_sum, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+      conv_lhs => rw [← fb.sum_repr w, map_sum, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
     simp only [map_smul, hfb, SetLike.val_smul, Pi.smul_apply, hd, smul_eq_mul]
     simp
   rw [e2, e0] at k

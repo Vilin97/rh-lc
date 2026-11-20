@@ -171,7 +171,7 @@ theorem exists_rp (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d �
   have e : (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from (∑ I, f I) s) =
       ∑ I, (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from f I s) := Finset.sum_apply _ _ _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, AddSubmonoidClass.coe_finset_sum, map_sum]
+    rw [e, AddSubmonoidClass.coe_finsetSum, map_sum]
   exact Finset.sum_congr rfl fun I _ => hz I s
 
 theorem lft_add_sub {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f g : Γ(Y, W)) :

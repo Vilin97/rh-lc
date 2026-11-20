@@ -82,7 +82,7 @@ theorem lin_center {G W : Type} [Group G] [Fintype G] [AddCommGroup W] [Module �
   have hz : z = ∑ g₁, (z : MonoidAlgebra ℂ G).coeff g₁ •
       (⟨avgC g₁, avgC_mem g₁⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ G))) := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     simp only [SetLike.val_smul]
     exact center_eq_sum _ z.2
   conv_lhs => rw [hz]

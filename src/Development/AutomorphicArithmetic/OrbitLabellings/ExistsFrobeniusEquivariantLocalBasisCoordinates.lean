@@ -436,7 +436,7 @@ private theorem lamB_sum_gK : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam : Qbar 
         (tauEmb D lam τ (P' τ b₁ b₀) * ((P τ).map (tauEmb D lam τ))⁻¹ a a₁) := by
     intro i
     rw [gK, ← hτ]
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, coe_rhoK D lam σ hσ hcl, hinv, mul_assoc, ← hτ]
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, coe_rhoK D lam σ hσ hcl, hinv, mul_assoc, ← hτ]
     rfl
   simp_rw [hg, Finset.mul_sum]
   rw [Finset.sum_comm]

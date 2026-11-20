@@ -202,7 +202,7 @@ theorem torusChar : DegAdelic → TorusChar := by
   obtain ⟨hsum, hneg⟩ := hc
   have hsum' : ∀ e, π e = ∑ j, π (Pi.single j (e j)) := fun e => by
     have := congrArg Subtype.val (hsum e)
-    rw [AddSubmonoidClass.coe_finset_sum] at this
+    rw [AddSubmonoidClass.coe_finsetSum] at this
     exact this
   have hneg' : ∀ j, π (Pi.single j (-1)) = sg d (π (Pi.single j 1)) := fun j => by
     have := congrArg Subtype.val (hneg j)

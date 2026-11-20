@@ -839,7 +839,7 @@ theorem start1 : Start1 := by
   let qB : Fin 3 → ℂ → ↥Bb := fun i Y => ∑ k ∈ Finset.range (dims n B.j i + 1), (Y + shB n B.j i) ^ k • aB i k
   have hqB : ∀ i Y, (qB i Y : Module.End ℂ X.V) = Qb X B i Y := fun i Y => by
     rw [Qb_eq, hform]
-    simp only [qB, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul]
+    simp only [qB, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul]
     exact Finset.sum_congr rfl fun k hk => by rw [haB i k (Finset.mem_range.1 hk)]
   have hD : ∀ i Y, ∑ k ∈ Finset.range (dims n B.j i + 1), (Y + shB n B.j i) ^ k • a' i k = rho S W' (qB i Y) :=
     fun i Y => by simp only [qB, map_sum, map_smul, a']

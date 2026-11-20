@@ -144,7 +144,7 @@ theorem dens_blockTri : ∀ (n d : ℕ) (J T : Type) [Fintype J] [Fintype T] (ε
       refine mul_left_cancel₀ (Finset.prod_ne_zero_iff.2 fun t _ => pow_ne_zero _ (inv_ne_zero hx)) h1
     · intro t
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, map_sum, map_smul, scale_sym, Finset.smul_sum,
+        simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, map_sum, map_smul, scale_sym, Finset.smul_sum,
         smul_smul]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
       congr 1

@@ -46,7 +46,7 @@ theorem sesq_expand {n : ℕ} {α : V n → V n → ℂ} (hα : IsSesq α) (x y 
 theorem pull_ofValues : ∀ {n : ℕ} (L : V n →L[ℂ] V n) (α : V n → V n → ℂ), IsSesq α → pull L (ofValues α : Alt n) = ofValues (fun ξ η => α (L ξ) (L η)) := by
   intro n L α hα
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum,
+    simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym, map_sum,
     map_smul, map_mul, (pull_dz L _).1, (pull_dz L _).2, Finset.sum_mul, Finset.mul_sum, Finset.sum_smul,
     Finset.smul_sum, smul_mul_smul_comm, smul_smul]
   conv_lhs => enter [2, a, 2, b]; rw [Finset.sum_comm]

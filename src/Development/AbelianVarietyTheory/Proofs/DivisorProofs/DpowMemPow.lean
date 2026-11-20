@@ -327,7 +327,7 @@ theorem Q_E {ν : I → ℕ} (hν : ν ≠ 0) : Q R I n (E R I n ν) := by
 
 theorem integral (y : B R I n) (hy : π R I n y = 0) : Q R I n (y : C R I n) := by
   rw [← (b R I n).linearCombination_repr y, Finsupp.linearCombination_apply, Finsupp.sum,
-    AddSubmonoidClass.coe_finset_sum]
+    AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_induction _ (Q R I n) (fun _ _ => Q_add R I n) (Q_zero R I n) fun ν _ => ?_
   rw [Subalgebra.coe_smul, b_apply]
   by_cases hν : ν.1 = 0

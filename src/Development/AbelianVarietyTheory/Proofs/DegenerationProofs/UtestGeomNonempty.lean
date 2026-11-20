@@ -40,7 +40,7 @@ theorem comb_iff {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} {T : O
     (c : I → Γ(T.left, ⊤)) (t : I → LB.Sec (LPow A L k T)) (σ : LB.Sec (LPow A L k T)) :
     (∀ j, σ.f j = ∑ l, liftFun A _ (c l) * (t l).f j) ↔ SecM.ofSec A σ = ∑ l, c l • SecM.ofSec A (t l) := by
   have e : ∀ j, (∑ l, c l • SecM.ofSec A (t l)).1 j = ∑ l, liftFun A _ (c l) * (t l).f j := fun j => by
-    rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+    rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
     rfl
   exact ⟨fun h => Subtype.ext (funext fun j => (h j).trans (e j).symm),
     fun h j => (congrArg (fun q => q.1 j) h).trans (e j)⟩

@@ -398,7 +398,7 @@ theorem UpperTheory.V.Fr.wpres :
       have hsum : a = ∑ m ∈ μ, (⟨c m, hc m⟩ : S.B) • A' m := by
         apply Subtype.ext
         rw [e]
-        simp only [AddSubmonoidClass.coe_finset_sum]
+        simp only [AddSubmonoidClass.coe_finsetSum]
         refine Finset.sum_congr rfl fun m hm => ?_
         rw [← hA'e m hm]
         rfl

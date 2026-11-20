@@ -76,7 +76,7 @@ theorem frame_rel_bwd (hP : ∀ z, P z ↔ ∀ i, ((h⁻¹).1 *ᵥ z) i ∈ S)
     congr 1
     simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one]
   rw [key, Matrix.mulVec, dotProduct]
-  simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul]
+  simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul]
   exact Finset.sum_congr rfl fun j _ => by rw [e i j]
 
 theorem frame_stab (hP : ∀ z, P z ↔ ∀ i, ((h⁻¹).1 *ᵥ z) i ∈ S) (σ : A →+* A) (hσ : ∀ a ∈ S, σ a ∈ S)

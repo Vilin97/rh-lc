@@ -265,7 +265,7 @@ theorem multiplicity_hermitian_level (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) 
       intro a
       show (b.mulVec fun c => ((σS (p c) : S) : Fv F v ⊗[F] E)) a = _
       show ∑ c, b a c * ((σS (p c) : S) : Fv F v ⊗[F] E) = _
-      rw [AddSubmonoidClass.coe_finset_sum, Finset.smul_sum]
+      rw [AddSubmonoidClass.coe_finsetSum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [Subring.coe_mul]
       exact smul_mul_assoc _ _ _

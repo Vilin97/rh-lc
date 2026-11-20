@@ -171,7 +171,7 @@ theorem delAt_dbarAt_fun {u : V n → ℝ} {v : V n} (hu : ContDiffAt ℝ 2 u v)
     · push_neg at h
       simp [h, fun b => (h b).symm, -finSumFinEquiv_apply_right]
   simp only [delAt, h₂, ofValues, ddc, Finset.mul_sum, Finset.smul_sum, mul_smul_comm, smul_smul,
-    AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym]
+    AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym]
 
 end Point
 

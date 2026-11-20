@@ -65,7 +65,7 @@ theorem natCast_eq_sum (d : ℕ) : ((d : ℕ) : ord d) = ∑ k, colU d k * idem 
   apply Subtype.ext
   have hs : ((∑ k, colU d k * idem d * rowU d k : ord d) : Matrix (Fin 4 ⊕ Fin 4) (Fin 4 ⊕ Fin 4) ℤ) =
       ∑ k, (colU d k : Matrix _ _ ℤ) * (idem d : Matrix _ _ ℤ) * (rowU d k : Matrix _ _ ℤ) := by
-    simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul]
   rw [hs]
   ext i j
   simp only [colU, rowU, idem, Matrix.smul_mul, single_mul_single_same, _root_.mul_one, Matrix.sum_apply,

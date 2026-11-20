@@ -87,7 +87,7 @@ theorem dbarAt_transAt (n : ℕ) (r : Type) [Fintype r] [DecidableEq r] (G G' : 
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [trace_mul_mul_eq_sum_entries, Matrix.map_apply, Matrix.sub_apply, map_sub,
-      AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_mul, Subalgebra.coe_algebraMap, Finset.sum_mul,
+      AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_mul, Subalgebra.coe_algebraMap, Finset.sum_mul,
       Finset.mul_sum, ← Finset.sum_sub_distrib, mul_sub, sub_mul, Subalgebra.coe_sub]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun p _ => ?_
@@ -117,6 +117,6 @@ theorem dbarAt_transAt (n : ℕ) (r : Type) [Fintype r] [DecidableEq r] (G G' : 
     exact hdiff _ (smul _ _ (hWs i p q) (hβs p q))
   rw [Finset.sum_congr rfl fun i _ => inner i]
   have := congrArg (fun w : Ev n => (w : Alt n)) alg
-  simpa only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_mul, Subalgebra.coe_sub] using this
+  simpa only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_mul, Subalgebra.coe_sub] using this
 
 end GlobalTheory.ChernCalc

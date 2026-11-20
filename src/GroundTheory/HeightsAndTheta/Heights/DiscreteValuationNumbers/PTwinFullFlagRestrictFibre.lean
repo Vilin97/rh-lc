@@ -163,7 +163,7 @@ theorem resMap_sum {a : Fin N → Ω} (ha : ∀ q, a q ∈ locAlg x Q) (m : stal
   have e : m = ∑ q, (⟨a q • b q, smul_mem_stalk hPQ (ha q) (frame_mem_stalk hPQ hs hf hf0 hlat q)⟩ :
       stalk O x Q B) := by
     apply Subtype.ext
-    rw [hm, AddSubmonoidClass.coe_finset_sum]
+    rw [hm, AddSubmonoidClass.coe_finsetSum]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, map_sum]
   exact Finset.sum_congr rfl fun q _ => resMap_smul hPQ (ha q) ⟨b q, _⟩

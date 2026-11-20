@@ -215,7 +215,7 @@ theorem gram_emb (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (x : Matrix (Fin M) 
     gramR (Fv F v) σ J (emb S M n x) c a =
       ((PositivityTheory.PfSWUS.Loc.cT σS x * matS S J hG.J_int * x) c a : S) := by
   simp only [gramR, hR, hform, JR, Matrix.mul_apply, PositivityTheory.PfSWUS.Loc.cT, Matrix.transpose_apply, Matrix.map_apply, emb, matS,
-    Matrix.of_apply, AddMonoidHom.coe_mk, ZeroHom.coe_mk, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, hG.sig,
+    Matrix.of_apply, AddMonoidHom.coe_mk, ZeroHom.coe_mk, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, hG.sig,
     Finset.sum_mul]
   exact Finset.sum_comm
 
@@ -230,7 +230,7 @@ theorem psi_gram (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (k : ℕ) (X : Matri
   have e2 : (∑ a, ∑ c, (hG.hermLev k X hX : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) a c *
         gramR (Fv F v) σ J (emb S M n x) c a) =
       (ϖ ^ k)⁻¹ • ((Matrix.trace (X * (PositivityTheory.PfSWUS.Loc.cT σS x * matS S J hG.J_int * x)) : S) : Fv F v ⊗[F] E) := by
-    simp only [gram_emb hG, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply (M := X), AddSubmonoidClass.coe_finset_sum,
+    simp only [gram_emb hG, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply (M := X), AddSubmonoidClass.coe_finsetSum,
       Subring.coe_mul, Finset.smul_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => ?_
     show ((ϖ ^ k)⁻¹ • (X a c : Fv F v ⊗[F] E)) * _ = _

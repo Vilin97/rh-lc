@@ -153,10 +153,10 @@ theorem closureData : ∀ (A R : Type) [CommRing A] [IsDomain A] [IsNoetherianRi
   · intro g
     apply Subtype.ext
     split_ifs with hg
-    · simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, hact']
+    · simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, hact']
       rw [h1, if_pos hg, hbb]
       rfl
-    · simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, hact']
+    · simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, hact']
       rw [h1, if_neg hg]
       rfl
   · intro a' ha' c hc

@@ -100,7 +100,7 @@ theorem degBasisG_of : WedgeF → WedgeI → MulF → MulI → LogAbsBasic → F
   have hfac : M.submatrix id e = basisMat W * s := by
     ext i j
     have h := congrArg (fun y : W => (y : Fin n → E) i) (b.sum_repr ⟨fun i' => M i' (e j), hcol j⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
+    simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul] at h
     simp only [Matrix.mul_apply, basisMat, Matrix.of_apply, Matrix.submatrix_apply, id, s]
     rw [← h]

@@ -23,7 +23,7 @@ theorem inId_span {ι : Type} [Fintype ι] (w : Plc E) (b : ι → 𝓞 E) (y : 
   rw [Ideal.map_span, ← Set.range_comp, Ideal.mem_span_range_iff_exists_fun] at hz
   obtain ⟨c, rfl⟩ := hz
   refine ⟨c, ?_⟩
-  rw [AddSubmonoidClass.coe_finset_sum]
+  rw [AddSubmonoidClass.coe_finsetSum]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem InId.add {w : Plc E} {𝔟 : Ideal (𝓞 E)} {y y' : w.adicCompletion E} (h : InId w 𝔟 y) (h' : InId w 𝔟 y') : InId w 𝔟 (y + y') := by

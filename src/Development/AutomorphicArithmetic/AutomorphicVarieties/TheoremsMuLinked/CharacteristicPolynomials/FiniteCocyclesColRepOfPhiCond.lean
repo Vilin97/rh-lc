@@ -55,12 +55,12 @@ private theorem zc_split {l : ℕ} [hl : Fact l.Prime] (c c' : Coef l) (hcc : c.
     exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hlm N)
   · funext i
     have e : f (g * h) i = f g i + ∑ j, W.mat σ g i j • f h j := Subtype.ext (by
-      rw [Subalgebra.coe_add, AddSubmonoidClass.coe_finset_sum]
+      rw [Subalgebra.coe_add, AddSubmonoidClass.coe_finsetSum]
       exact congrFun (hc g h) i)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [e, map_add (f := _), map_sum, map_smul, Pi.add_apply, Matrix.mulVec, dotProduct, smul_eq_mul]
   · have e := congrArg Subtype.val (b.sum_repr (f g i))
-    rw [AddSubmonoidClass.coe_finset_sum] at e
+    rw [AddSubmonoidClass.coe_finsetSum] at e
     refine e.symm.trans (Finset.sum_congr rfl fun k _ => ?_)
     rw [ha, mul_comm]
     rfl

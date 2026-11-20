@@ -74,7 +74,7 @@ private lemma lam_act (Φ : Fr l A j) {c : Coef l} (β : Bas c) (a : c.O) (x : F
     have h1 := β.e.sum_repr (a * β.e k)
     have h2 := congrArg (fun y : c.O => (y : PadicAlgCl l)) h1
     simp only [Bas.val, Bas.mat, Algebra.leftMulMatrix_eq_repr_mul]
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul] at h2
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm, ← Algebra.smul_def]
@@ -137,7 +137,7 @@ private lemma add_le {K : Type} [NormedField K] [IsUltrametricDist K] {x y : K} 
 
 private lemma coef_le {c : Coef l} (β : Bas c) (a : c.O) : ‖(a : PadicAlgCl l)‖ ≤ 1 := by
   have h2 := congrArg (fun y : c.O => (y : PadicAlgCl l)) (β.e.sum_repr a)
-  simp only [AddSubmonoidClass.coe_finset_sum] at h2
+  simp only [AddSubmonoidClass.coe_finsetSum] at h2
   have h3 : (a : PadicAlgCl l) = ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (β.e.repr a i) := by
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -109,7 +109,7 @@ theorem exists_deriv_comb {O : Type} [CommRing O] [StarRing O] (A : AnArc O) : �
   choose F hF hFv using fun i => (hS (α i) (th i) (h1 i).2).2 z₀
   let r₁ : Fin n → Conv.halfRing T₁ := fun i => ⟨r i, Conv.halfRing_mono hT (h1 i).1⟩
   refine ⟨n, r, α, th, fun i => F i, ∑ i, r₁ i * F i, fun i => (h1 i).2, h2, hF,
-    AddSubmonoidClass.coe_finset_sum _ _, fun w hw => ?_⟩
+    AddSubmonoidClass.coe_finsetSum _ _, fun w hw => ?_⟩
   have hd : ∀ i, Differentiable ℂ (A.Sum j (α i) (th i) w) := fun i => by
     have := hD (fun v => ⟨_, hm i v⟩) ⟨1, fun _ => 1, fun _ => α i, fun _ => th i,
       fun _ => ⟨one_mem _, (h1 i).2⟩, fun v => by simp⟩ w hw
@@ -119,7 +119,7 @@ theorem exists_deriv_comb {O : Type} [CommRing O] [StarRing O] (A : AnArc O) : �
     funext v
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Conv.ev_congr (hT.trans_lt hw) hw (s' := ∑ i, r₁ i * ⟨_, hm i v⟩)
-      (by rw [AddSubmonoidClass.coe_finset_sum]; exact h2 v), map_sum]
+      (by rw [AddSubmonoidClass.coe_finsetSum]; exact h2 v), map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hv]
   rw [key]
   refine ⟨Differentiable.fun_sum fun i _ => (hd i).const_mul _, ?_⟩

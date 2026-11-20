@@ -30,7 +30,7 @@ theorem trace_eq_zero_of_qZ (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) {d : M
     (h : qZ Z d = 0) {b : Matrix (Fin n) (Fin n) k} (hb : b ∈ Z) : trace (b * d) = 0 := by
   have e : (∑ i, (Module.finBasis k Z).repr ⟨b, hb⟩ i • ((Module.finBasis k Z i : Z) : Matrix (Fin n) (Fin n) k)) = b := by
     have h1 := congrArg Subtype.val ((Module.finBasis k Z).sum_repr ⟨b, hb⟩)
-    rw [AddSubmonoidClass.coe_finset_sum] at h1
+    rw [AddSubmonoidClass.coe_finsetSum] at h1
     simp only [SetLike.val_smul] at h1
     exact h1
   rw [← e, Finset.sum_mul, trace_sum]

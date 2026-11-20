@@ -239,7 +239,7 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
         have he2 : (⟨f, hP hf⟩ : P) = algebraMap O _ (MvPowerSeries.constantCoeff f) +
             ∑ m ∈ μ, (⟨_, hP (hb m)⟩ : P) * ⟨_, hP (mono_mem W.wt m)⟩ := by
           apply Subtype.ext
-          rw [Subalgebra.coe_add, AddSubmonoidClass.coe_finset_sum]
+          rw [Subalgebra.coe_add, AddSubmonoidClass.coe_finsetSum]
           exact he'
         have he3 : Φ f - ψ ⟨f, hP hf⟩ =
             ∑ m ∈ μ, (Φ (b m) - ψ ⟨_, hP (hb m)⟩) * Φ (MvPowerSeries.monomial m 1) := by
@@ -260,7 +260,7 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
   obtain ⟨b, hb, he⟩ := hd f hf
   have he2 : (⟨f, hP hf⟩ : P) = ∑ m ∈ μ, (⟨_, hP (hb m)⟩ : P) * ⟨_, hP (mono_mem W.wt m)⟩ := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact he
   set_option synthInstance.maxHeartbeats 100000 in
     rw [he2, congrArg Φ he, map_sum, map_sum, Finset.mul_sum]

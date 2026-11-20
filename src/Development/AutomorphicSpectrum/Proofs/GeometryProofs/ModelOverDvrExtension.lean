@@ -125,7 +125,7 @@ theorem exists_decomp {O O' σ : Type} [CommRing O] [IsDomain O] [IsPrincipalIde
   · ext m
     have h1 : (cm m : O') = ∑ i, b.repr (cm m) i • (b i : O') := by
       have h := congrArg (fun z : M => (z : O')) (b.sum_repr (cm m))
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h
       exact h.symm
     have h2 : AddMonoidAlgebra.coeff f m = (cm m : O') := rfl
     rw [h2, h1, coeff_sum]

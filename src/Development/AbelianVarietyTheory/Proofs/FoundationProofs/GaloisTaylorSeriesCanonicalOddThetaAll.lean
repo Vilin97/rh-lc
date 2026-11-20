@@ -332,7 +332,7 @@ lemma endSer_tay_iff (L : PeriodPair) {s α : ℂ} {f : Ent} {N m : ℕ} {q : �
       (∑ k ∈ Finset.range (m + 1), cE (q k) * (wE s f ^ k * f ^ (2 * (m - k))) : Ent).1 z =
       (∑ k ∈ Finset.range (m + 1), q k * L.weierstrassP z ^ k) * f.1 z ^ (2 * m) := by
     intro z hz
-    rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Finset.sum_mul]
+    rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k hk => ?_
     obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))
     simp only [cE, Subring.coe_pow, Subring.coe_mul, Pi.pow_apply, Pi.mul_apply, h z hz,

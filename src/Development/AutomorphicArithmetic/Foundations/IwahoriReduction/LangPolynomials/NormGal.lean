@@ -17,7 +17,7 @@ private theorem ng_O {l : ℕ} [Fact l.Prime] {c : Coef l} (β : Bas c) (x : Qba
   have h1 := ((pBasEx l c).2 β).1
   have e : x = ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (β.e.repr ⟨x, hx⟩ i) := by
     have := congrArg (fun y : c.O => (y : PadicAlgCl l)) (β.e.sum_repr ⟨x, hx⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum] at this
+    simp only [AddSubmonoidClass.coe_finsetSum] at this
     refine this.symm.trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [mul_comm, ← Algebra.smul_def]
     rfl

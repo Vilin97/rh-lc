@@ -30,7 +30,7 @@ theorem GlobalTheory.PMon.exI_of_ser_core (hser : ∀ (l : ℕ) [Fact l.Prime] (
         have := congrArg (fun x => P.ιB ((P.φB ^ j) x)) hc
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [map_sum, map_smul, map_zero] at this
-        simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, e, ZeroMemClass.coe_zero]
+        simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, e, ZeroMemClass.coe_zero]
         simpa only [Algebra.smul_def] using this
       have h2 := congrArg θ h1
       set_option synthInstance.maxHeartbeats 100000 in
@@ -42,6 +42,6 @@ theorem GlobalTheory.PMon.exI_of_ser_core (hser : ∀ (l : ℕ) [Fact l.Prime] (
         rw [map_sum]
       simpa only [map_mul, hev] using hz a
     have := (hker _).1 h2
-    simpa only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul] using this
+    simpa only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul] using this
 
 theorem GlobalTheory.PMon.exI_main : ExI := GlobalTheory.PMon.exI_of_ser_core GlobalTheory.T.exists_BcrisPlus_series_with_theta_residues GlobalTheory.T.exists_tilt_zeros_untiltFrobeniusDoubleSeries

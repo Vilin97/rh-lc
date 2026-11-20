@@ -18,7 +18,7 @@ variable {p : ℕ} [Fact p.Prime] (D : Datum p)
 theorem actF_mem_algO (x : D.F) : ((D.actF x : D.endO) : Module.End ℚ D.VQ) ∈ D.algO := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← (integralBasis D.F).sum_repr x, map_sum]
-  rw [AddSubmonoidClass.coe_finset_sum]
+  rw [AddSubmonoidClass.coe_finsetSum]
   refine Subalgebra.sum_mem _ fun i _ => ?_
   rw [map_smul, Subalgebra.coe_smul, integralBasis_apply, D.actF_coe, D.coe_actInt]
   exact Subalgebra.smul_mem _ (D.actQ_mem_algO _) _

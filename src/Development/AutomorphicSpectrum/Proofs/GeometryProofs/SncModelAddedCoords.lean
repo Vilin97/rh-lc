@@ -126,7 +126,7 @@ theorem isSncModel_pull : ∀ (X X' : Scheme.{0}) (Ω₀ Ω : Type) [Field Ω₀
     let al : Fin m → R₁ := fun l => ⟨algebraMap Ω₀ Ω (a₀ l), map_mem_adjoin hW (ha l)⟩
     have hone : ∑ l, al l * fl l = 1 := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       show ∑ l, algebraMap Ω₀ Ω (a₀ l) * algebraMap Ω₀ Ω (f₀ l) = 1
       simp only [← map_mul]
       set_option synthInstance.maxHeartbeats 100000 in
@@ -166,7 +166,7 @@ theorem isSncModel_pull : ∀ (X X' : Scheme.{0}) (Ω₀ Ω : Type) [Field Ω₀
   obtain ⟨m', f', a', hs', hG⟩ := exists_cover _ hloc
   refine ⟨m', fun l => (f' l : Ω), fun l => (a' l : Ω), fun l => (f' l).2, fun l => (a' l).2, ?_, fun l hl S' hS' => ?_⟩
   · have := congrArg (Subtype.val) hs'
-    rw [AddSubmonoidClass.coe_finset_sum] at this
+    rw [AddSubmonoidClass.coe_finsetSum] at this
     exact this
   · obtain ⟨h1, z', n', h2, h3, h4, h5⟩ := hG l hl S' hS'
     exact ⟨h1, z', n', h2, h3, h4, h5⟩

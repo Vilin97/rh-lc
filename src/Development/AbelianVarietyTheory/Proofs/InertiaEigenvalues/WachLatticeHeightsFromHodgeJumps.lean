@@ -290,7 +290,7 @@ theorem inv_pole_bound (hunit : IsUnit (algebraMap (LetA O n) W.EE W.Q)) {ι : T
     rw [Submodule.span_le]
     rintro _ ⟨z, hz, rfl⟩
     have h1 := congrArg Subtype.val (nb.sum_repr ⟨z, hz⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h1
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h1
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← h1, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
@@ -306,7 +306,7 @@ theorem inv_pole_bound (hunit : IsUnit (algebraMap (LetA O n) W.EE W.Q)) {ι : T
   have hid : W.Q ^ (η + m + k) • (⟨y₀, hy₀⟩ : ↥(W.N T)) =
       ∑ j, (W.Q ^ η * a j) • (⟨_, hx j⟩ : ↥(W.N T)) := by
     apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     rw [pow_add, mul_smul, ← ha, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [smul_smul, smul_smul]

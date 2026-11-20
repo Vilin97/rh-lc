@@ -396,7 +396,7 @@ theorem iL_val (F : Finset ι → Submodule k E) (I : Finset ι) (x : F I) (s : 
 
 theorem sum_iL [Fintype ι] (F : Finset ι → Submodule k E) (a : coch F) : ∑ I, iL F I (rL F I a) = a := by
   refine Subtype.ext (funext fun s => ?_)
-  rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+  rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
   rw [Finset.sum_eq_single s]
   · rw [iL_val]
     rcases s.eq_empty_or_nonempty with rfl | hs

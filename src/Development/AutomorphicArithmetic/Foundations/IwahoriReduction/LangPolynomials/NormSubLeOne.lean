@@ -90,7 +90,7 @@ private theorem val_mul (b : c.O) (k : Fin β.d) :
   have h := β.e.sum_repr (b * β.e k)
   have h2 := congrArg (fun x : c.O => (x : PadicAlgCl l)) h
   simp only [Bas.val, Bas.mat, Algebra.leftMulMatrix_eq_repr_mul]
-  simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul] at h2
+  simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul] at h2
   rw [← h2]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_comm, ← Algebra.smul_def]

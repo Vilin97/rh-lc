@@ -179,7 +179,7 @@ theorem kfin_of_coeff {a : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] [Fini
     have e : cptRep E a k φ = ∑ κ : S, lam k κ • cptRep E a κ.1 φ := by
       refine Subtype.ext (funext fun g => ?_)
       have h1 := key _ (h g) k
-      rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+      rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
       exact h1
     beta_reduce
     rw [e]

@@ -236,7 +236,7 @@ theorem dual_of_basis (σ : E ≃ₐ[k] E) (b : Module.Basis (Fin (Module.finran
         apply Subtype.ext
         have h := b.sum_repr (x : E)
         simp only [Algebra.smul_def] at h
-        rw [AddSubmonoidClass.coe_finset_sum]
+        rw [AddSubmonoidClass.coe_finsetSum]
         exact h.symm)
     set M : Matrix (Fin (Module.finrank k E)) (Fin (Module.finrank k E)) (RO E) :=
       Matrix.of fun i j => e j (B i) with hM
@@ -245,7 +245,7 @@ theorem dual_of_basis (σ : E ≃ₐ[k] E) (b : Module.Basis (Fin (Module.finran
     have h1 := congrFun (congrFun (Matrix.nonsing_inv_mul M hdet) ⟨0, hpos⟩) ⟨j, hj⟩
     rw [Matrix.mul_apply] at h1
     have h2 := congrArg (fun z : RO E => (z : E)) h1
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul] at h2
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul] at h2
     have h3 : ∀ i, ((M i ⟨j, hj⟩ : RO E) : E) = (σ ^ j) (b i) := fun i => rfl
     simp only [h3] at h2
     rw [h2, Matrix.one_apply]

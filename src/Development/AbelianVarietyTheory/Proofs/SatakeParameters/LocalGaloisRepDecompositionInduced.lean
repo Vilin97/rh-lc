@@ -216,7 +216,7 @@ variable (he : ∀ g x, f (ρ g x) = ρ' g (f x)) (hA : ∀ i g y, A i (ρ' g y)
 include hs in
 theorem sum_dMap (x : ↥(Dpst P ρ')) : ∑ i, e i • dMap P he (dMap P (hA i) x) = x :=
   Subtype.ext (by
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact sum_stMap P hs x.1)
 
 include he hA hs in

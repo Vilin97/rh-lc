@@ -354,7 +354,7 @@ theorem trans_orbit : ∀ (T : Type) [CommRing T] (O : Subring T) (s : T →+* T
   · funext i
     have h3 := congrArg Subtype.val (congrFun hgx i)
     rw [← h3, hval]
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, AddSubmonoidClass.coe_finset_sum,
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, AddSubmonoidClass.coe_finsetSum,
       Subring.coe_mul, Subring.coe_subtype]
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 1

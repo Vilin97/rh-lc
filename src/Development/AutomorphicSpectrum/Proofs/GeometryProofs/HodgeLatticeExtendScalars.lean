@@ -111,7 +111,7 @@ theorem exists_transport {E : Type} [Field E] [NumberField E] {Ω W J C X : Type
       apply Subtype.ext
       have := congrFun (LinearMap.toMatrix_mulVec_repr B B (ρ a) (h : W)) i
       simp only [Matrix.mulVec, dotProduct] at this
-      simp only [cd, m, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul]
+      simp only [cd, m, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul]
       simpa [LinearMap.toMatrix_apply] using this.symm
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hev, hev, map_sum]
@@ -131,7 +131,7 @@ theorem ev_mem_span {Ω W J K C X A : Type} [Field Ω] [AddCommGroup W] [Module 
   have : v q = ∑ j, (⟨c j, hR (c j).2⟩ : R') • u j := by
     apply Subtype.ext
     rw [← hc]
-    simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
     rw [this, map_sum]
@@ -394,7 +394,7 @@ theorem exists_eval : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs : Type) [F
     have hr' : r = ∑ i, x i * ⟨_, hs i⟩ := by
       apply Subtype.ext
       have hr2 : f (comb ℓ x) = r := hr
-      rw [← hr2, AddSubmonoidClass.coe_finset_sum]
+      rw [← hr2, AddSubmonoidClass.coe_finsetSum]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [comb, map_sum, map_smul, smul_eq_mul, Subring.coe_mul, hrr]
     set_option synthInstance.maxHeartbeats 100000 in

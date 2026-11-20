@@ -38,7 +38,7 @@ theorem γD_smulA (g : W.Gam) (a : LetA O f) (x : W.DD T) :
 theorem coe_eq_sum (b : Module.Basis (Fin n) (LetA O f) ↥(W.N T)) (y : ↥(W.N T)) :
     (y : W.DD T) = ∑ m, b.repr y m • (b m : W.DD T) := by
   have h1 := congrArg Subtype.val (b.sum_repr y)
-  simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h1
+  simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h1
   exact h1.symm
 
 theorem coord_fixed (b : Module.Basis (Fin n) (LetA O f) ↥(W.N T)) (hb : ∀ k, (b k : W.DD T) ∈ W.NΔ T)
@@ -51,7 +51,7 @@ theorem coord_fixed (b : Module.Basis (Fin n) (LetA O f) ↥(W.N T)) (hb : ∀ k
         conv_lhs => rw [coe_eq_sum W b y, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [γD_smulA, (hb m).2 δ hδ]
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     exact h1.symm.trans hy
   have h2 := congrFun (b.repr_sum_self fun m => W.γA δ (b.repr y m)) m
   rw [e] at h2

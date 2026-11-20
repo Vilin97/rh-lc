@@ -101,7 +101,7 @@ theorem nonzero_of_comb {e : H.ι → Ω} {J : Type} {s : J → H.Sec} {t : J �
   have e0 : (⟨valF M.pt (H.U l) ((s j).f l), valF_mem_O hzl _⟩ : M.O z) =
       ∑ k, algebraMap o (M.O z) (a k) * ⟨valF M.pt (H.U l) ((s (γ k)).f l), valF_mem_O hzl _⟩ := by
     refine Subtype.ext ?_
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     simp only [MulMemClass.coe_mul, SubalgebraClass.coe_algebraMap, hv _ l ⟨z, hzl⟩]
     rw [ha, Finset.sum_div]
     simp only [mul_div_assoc]

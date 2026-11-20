@@ -123,7 +123,7 @@ theorem exists_basis {R : Type} [CommRing R] [IsDedekindDomain R] (K : Type) [Fi
     have h1 := b'.sum_repr ⟨x, hxM⟩
     have h2 : x = ∑ i, b'.repr ⟨x, hxM⟩ i • (b' i : Fin n → K) := by
       have := congrArg Subtype.val h1
-      rw [AddSubmonoidClass.coe_finset_sum] at this
+      rw [AddSubmonoidClass.coe_finsetSum] at this
       exact this.symm
     rw [h2]
     refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, ?_⟩)

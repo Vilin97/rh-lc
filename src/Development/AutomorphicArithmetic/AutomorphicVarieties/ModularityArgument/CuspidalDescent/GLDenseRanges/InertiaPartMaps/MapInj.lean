@@ -127,7 +127,7 @@ theorem eOp : EOp := by
         lift f p.1.1 * (iA k n y : Matrix (Fin n) (Fin n) k) p.1.1 p.1.2 =
         ((∑ p : {p : Fin n × Fin n // (p.2 : ℕ) = p.1 + 1},
           l (f p : 𝓀[k]) * (y.1.val p.1.1 p.1.2) : 𝒪[k]) : k) := by
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       exact Finset.sum_congr rfl fun p _ => by rw [hlp]; rfl
     set_option synthInstance.maxHeartbeats 100000 in
       rw [e, hres, map_sum (IsLocalRing.residue 𝒪[k])]

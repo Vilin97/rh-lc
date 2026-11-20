@@ -151,7 +151,7 @@ theorem exists_eps : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero
   obtain ⟨w, hw⟩ := exists_eq_sum_toAc t K (Module.Free.chooseBasis ℤ_[l] O) fun τ => ⟨f τ, hf τ⟩
   refine ⟨w, fun τ => ?_⟩
   refine (congrArg Subtype.val (congrFun hw τ)).trans ?_
-  rw [Finset.sum_apply, AddSubmonoidClass.coe_finset_sum]
+  rw [Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Pi.smul_apply, Subalgebra.coe_smul, Algebra.smul_def, algebraMap_eq_C]
 

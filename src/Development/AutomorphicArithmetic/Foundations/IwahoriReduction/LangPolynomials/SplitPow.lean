@@ -42,7 +42,7 @@ private theorem nO (c : Coef l) {x : Qbar l} (hx : x ∈ c.O) : ‖x‖ ≤ 1 :=
   obtain ⟨⟨β⟩, h⟩ := pBasEx l c
   obtain ⟨v, hv⟩ : ∃ v : Fin β.d → ℤ_[l], ∑ i, v i • β.e i = ⟨x, hx⟩ := ⟨_, β.e.sum_repr _⟩
   have h1 := congrArg (fun y : c.O => (y : Qbar l)) hv
-  simp only [AddSubmonoidClass.coe_finset_sum] at h1
+  simp only [AddSubmonoidClass.coe_finsetSum] at h1
   rw [← h1]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ => ?_
   have e : ((v i • β.e i : c.O) : Qbar l) = algebraMap ℚ_[l] (Qbar l) (v i : ℚ_[l]) * β.val i := by

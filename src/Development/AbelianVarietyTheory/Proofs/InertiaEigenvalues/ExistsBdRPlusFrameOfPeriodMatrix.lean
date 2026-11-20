@@ -227,7 +227,7 @@ theorem frame_of_period_matrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       have h2 : ((∑ j, (⟨eK (c' j), hmemc j⟩ : ↥S) * U0S i j : ↥S) : P.R.BdR) =
           tz P a * vec (∑ j, c' j • d j) i := by
         rw [hvecx, Finset.mul_sum]
-        simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, U0S, U0, Matrix.of_apply]
+        simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, U0S, U0, Matrix.of_apply]
         refine Finset.sum_congr rfl fun j _ => ?_
         by_cases hj : -(k j) = a
         · rw [hj]; ring

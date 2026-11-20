@@ -106,7 +106,7 @@ theorem redM_uMat (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)
     simp only [← map_mul, ← map_sum]
   congr 1
   refine Subtype.ext ?_
-  rw [AddSubmonoidClass.coe_finset_sum]
+  rw [AddSubmonoidClass.coe_finsetSum]
   exact uMat_eq V W hV βV β e X b a
 
 theorem omega_congr {a b : ℕ} (Pg Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) (k : ℤ)

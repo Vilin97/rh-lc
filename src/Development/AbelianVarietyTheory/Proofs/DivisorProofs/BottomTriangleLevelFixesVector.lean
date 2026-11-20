@@ -115,7 +115,7 @@ theorem inId_mul {I : Ideal (𝓞 D.host.E)} {k d : ℕ} {K : Matrix (Fin k) (Fi
     exact Subring.sum_mem _ fun l _ => Subring.mul_mem _ (hK i l) (h1 l)
   refine ⟨hm, ?_⟩
   have e : (⟨(HMul.hMul K Y) i j, hm⟩ : OO) = ∑ l, (⟨K i l, hK i l⟩ : OO) * ⟨Y l j, h1 l⟩ := Subtype.ext (by
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact Matrix.mul_apply)
   rw [e]
   exact Ideal.sum_mem _ fun l _ => Ideal.mul_mem_left _ _ (h2 l)

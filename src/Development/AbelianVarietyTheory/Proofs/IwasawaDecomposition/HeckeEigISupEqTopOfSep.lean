@@ -47,7 +47,7 @@ theorem _root_.GlobalTheory.heckeEig_iSup_eq_top_of_sep {O X M : Type} [CommRing
   have hsum : ∑ x, F x • E x = algebraMap O T c := by
     apply Subtype.ext
     funext z
-    rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+    rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
     simp only [SetLike.val_smul, Pi.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single z]
     · simp only [F, c]

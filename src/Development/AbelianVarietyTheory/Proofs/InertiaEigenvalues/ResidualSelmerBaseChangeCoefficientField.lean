@@ -38,7 +38,7 @@ theorem finrank_eq_of_coord {k K V W : Type} [Field k] [Field K] [Algebra k K] [
       apply Subtype.ext
       have e := congrArg (fun x : S => J x) (b.sum_repr v)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, hJ] at e
+        simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, hJ] at e
       simp [w, e]
     rw [this]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -197,7 +197,7 @@ theorem selOn_baseChange (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D
           continuous_of_discreteTopology (vecAdd_repOn _ ρ) (cocycleMapOfEquivariant _ _ (vecAdd ((b.coord j).restrictScalars (X.O0 i)) _)
           continuous_of_discreteTopology (vecAdd_repOn _ ρ) z) := by
         refine Subtype.ext (funext fun g => funext fun a => ?_)
-        rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Finset.sum_apply]
+        rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Finset.sum_apply]
         change _ = ∑ j ∈ s, b j * algebraMap k K (b.repr (z.1 g a) j)
         have hsub : (b.repr (z.1 g a)).support ⊆ s := fun j hj =>
           Finset.mem_biUnion.2 ⟨z.1 g, by simp, Finset.mem_biUnion.2 ⟨a, Finset.mem_univ _, hj⟩⟩

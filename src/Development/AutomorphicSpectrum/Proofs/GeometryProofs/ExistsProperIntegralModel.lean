@@ -103,7 +103,7 @@ lemma bijective_coeAddMonoidHom :
       rw [map_sum]
     refine Subtype.ext ?_
     simp only [DirectSum.coeAddMonoidHom_of]
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact (Polynomial.as_sum_support (f : (Polynomial Ω))).symm
 
 instance gradedRing : GradedRing (grading o x) where

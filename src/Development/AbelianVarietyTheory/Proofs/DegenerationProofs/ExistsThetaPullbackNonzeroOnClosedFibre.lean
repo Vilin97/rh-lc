@@ -52,7 +52,7 @@ theorem proj_col_eq_zero (hB : BaseFacts S M U₀ EE) {z : M.Z} (hz : IsClosed (
     have h1 : ∑ m, algebraMap o Ω (S.proj (S.TT M z) 0 j m) * (1 : Matrix S.J S.J Ω) i m =
         algebraMap o Ω (S.proj (S.TT M z) 0 j i) := by
       simp [Matrix.one_apply]
-    simp only [Subalgebra.coe_algebraMap, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_mul,
+    simp only [Subalgebra.coe_algebraMap, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_mul,
       Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum]
     rw [← h1, Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_

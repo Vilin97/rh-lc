@@ -143,7 +143,7 @@ theorem coeff_mem {F : Type} [Field F] (A : Subring F) (hfrac : ∀ a : F, ∃ d
   have e := congrArg (fun t : A => (t : F)) (congrArg g key)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, Subring.coe_add, Subring.coe_mul,
-    AddSubmonoidClass.coe_finset_sum, hg] at e
+    AddSubmonoidClass.coe_finsetSum, hg] at e
   have hfj : f j = 0 := hf0 j (by simp)
   have hs : ∑ l, d * f l * (if l = j then n else 0) = 0 := by
     rw [Finset.sum_eq_single j]

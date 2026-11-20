@@ -33,7 +33,7 @@ theorem ev_comb_factor : ∀ (O : Type) [CommRing O] [StarRing O] (A : AnArc O),
       fun i => Conv.ev_eq_of_hasSum hw _ (AnArc.hasSum_coeff_FSum (h₀.mono hT) (h1 i).2 hw z)
     have e : f z = ∑ i, (⟨r i, (h1 i).1⟩ : Conv.halfRing T) * ⟨_, hm i⟩ := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       exact h2 z
     set_option synthInstance.maxHeartbeats 100000 in
       rw [e, map_sum]

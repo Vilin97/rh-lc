@@ -516,7 +516,7 @@ theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, 
     set_option synthInstance.maxHeartbeats 100000 in
       conv_lhs => rw [hf, map_add (f := _), map_sum, h3, ← smul_eq_C_mul, map_smul, smul_eq_C_mul, ← h3]
     simp only [AddMemClass.coe_add, MulMemClass.coe_mul, SubmonoidClass.coe_pow, SubringClass.coe_natCast,
-      AddSubmonoidClass.coe_finset_sum, m]
+      AddSubmonoidClass.coe_finsetSum, m]
     congr 1
     refine Finset.sum_congr rfl fun n _ => PowerSeries.ext fun k => ?_
     rw [coeff_descN, h4, coeff_C_mul, coeff_monomial]

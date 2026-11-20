@@ -306,7 +306,7 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
     have e' : (fun i => ∑ k, (cf k : C) * j (M k i)) = ∑ m, a m • fun i => j (v m i) := by
       funext i
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [cf, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, Finset.sum_mul, Finset.sum_apply,
+        simp only [cf, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, Finset.sum_mul, Finset.sum_apply,
         Pi.smul_apply, smul_eq_mul, hb, map_sum, map_mul, hb1, Finset.mul_sum, _root_.mul_assoc]
       exact Finset.sum_comm
     rw [e'] at h'

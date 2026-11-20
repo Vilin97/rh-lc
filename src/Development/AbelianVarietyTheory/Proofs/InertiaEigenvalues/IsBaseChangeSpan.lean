@@ -300,7 +300,7 @@ theorem N_eq (T : LocLat G Qp LL O) (T' : LocLat G' Qp LL O) (e : ↥T'.L.T ≃�
       rw [← hy]
       conv_rhs => rw [show x = _ from h1.symm]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, JA, hθ, hc, AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, jD_smulA]
+        simp only [map_sum, JA, hθ, hc, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, jD_smulA]
   have hψN : ∀ x ∈ W.N T, ψ x ∈ Submodule.span (LetA O n') (Set.range c) :=
     fun x hx => (hmem _).2 ⟨x, hx, (hψ x).symm⟩
   obtain ⟨g', hg'⟩ := W'.resΓ_onto W'.gam

@@ -161,7 +161,7 @@ theorem length_torsion_quot (T : Submodule O V) {n : ℕ} (b : Fin n → V)
       apply Subtype.ext
       first
         | (rw [Submodule.coe_sum]; simp only [Submodule.coe_smul, m])
-        | simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, m]
+        | simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, m]
       rw [hx]
       first
         | (change T.mkQ _ = ∑ i, c i • T.mkQ ((algebraMap O LL a)⁻¹ • b i)

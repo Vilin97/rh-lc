@@ -288,7 +288,7 @@ theorem exists_gens_wt [Finite A] [Finite (ResidueField O)] {J : Ideal A} (hJ : 
   have h1 : (DirectSum.decompose 𝒜 x j : A) - ∑ i, c i • s (g i) ∈ Kj 𝒜 J j := by
     rw [← Ideal.Quotient.eq]
     have := congrArg Subtype.val hc
-    simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul_of_tower] at this
+    simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul_of_tower] at this
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← this, ← Ideal.Quotient.mkₐ_eq_mk O, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

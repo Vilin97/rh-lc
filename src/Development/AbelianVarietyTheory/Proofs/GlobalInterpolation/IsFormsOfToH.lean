@@ -49,7 +49,7 @@ theorem coAt_sum (x : S.Forms) :
   funext c k
   conv_lhs => rw [← S.basis.sum_repr x]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coAt, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
+    simp only [coAt, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
     map_smul, Finsupp.coe_finset_sum, Finsupp.coe_smul, smul_eq_mul, map_mul]
 
 theorem coAt_indep : LinearIndependent ℂ fun i => fun p : S.Cl × S.ιV => coAt S v (S.basis i : S.Cl → S.V) p.1 p.2 := by

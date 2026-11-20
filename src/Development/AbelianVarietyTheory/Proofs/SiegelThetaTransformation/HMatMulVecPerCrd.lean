@@ -28,7 +28,7 @@ theorem vecQ_intCast (m : Fin g ⊕ Fin g → ℤ) :
   have hm : m = ∑ j, m j • Pi.single j (1 : ℤ) := by
     funext j; simp [Pi.single_apply]
   set_option synthInstance.maxHeartbeats 100000 in
-    conv_rhs => rw [hm, map_sum, AddSubmonoidClass.coe_finset_sum]
+    conv_rhs => rw [hm, map_sum, AddSubmonoidClass.coe_finsetSum]
   simp only [vecQ, map_zsmul, AddSubgroupClass.coe_zsmul, Int.cast_smul_eq_zsmul]
 
 theorem vecQ_surjective : Function.Surjective (vecQ X bas) := by

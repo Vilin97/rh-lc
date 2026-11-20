@@ -92,7 +92,7 @@ theorem det_transfer (Z : Subalgebra k (Matrix (Fin n) (Fin n) k))
       simp_rw [mul_smul]
       rw [← Finset.smul_sum]
       have : ∑ x, c x • (b x : Matrix (Fin n) (Fin n) k) = 0 := by
-        simpa [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, v] using hc'
+        simpa [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, v] using hc'
       rw [this, smul_zero]
     have := (Fintype.linearIndependent_iff.mp b.linearIndependent) d hd i
     have h2 : pi k ^ N * c i = 0 := congrArg Subtype.val this
@@ -130,7 +130,7 @@ theorem det_transfer (Z : Subalgebra k (Matrix (Fin n) (Fin n) k))
     have h2 := congrArg Subtype.val (b.sum_repr (f (b j)))
     simp only [Submodule.coe_sum, Submodule.coe_smul, dt_smul_coe_O] at h2
     rw [h1, ← h2]
-    simp only [v, LinearMap.toMatrix_apply, AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [v, LinearMap.toMatrix_apply, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     rfl
   have hM : LinearMap.toMatrix bB bB F = (LinearMap.toMatrix b b f).map (algebraMap 𝒪[k] k) := by
     ext i j

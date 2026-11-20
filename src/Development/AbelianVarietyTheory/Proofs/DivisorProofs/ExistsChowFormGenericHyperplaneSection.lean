@@ -189,7 +189,7 @@ theorem _root_.GlobalTheory.ChowSpec.exists_isChowFormInt_generic_section : ∀ 
       intro i r hr
       convert hP r hr i using 1
       conv_lhs => rw [← sum_homogeneousComponent r]
-      rw [DirectSum.decompose_sum, DFinsupp.finset_sum_apply, AddSubmonoidClass.coe_finset_sum,
+      rw [DirectSum.decompose_sum, DFinsupp.finset_sum_apply, AddSubmonoidClass.coe_finsetSum,
         Finset.sum_eq_single i]
       · exact DirectSum.decompose_of_mem_same _ (homogeneousComponent_mem i r)
       · intro b _ hb

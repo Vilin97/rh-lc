@@ -53,7 +53,7 @@ theorem sesq_expand {α : V n → V n → ℂ} (hα : IsSesq α) (x y : V n) :
 theorem pull_ofValues (L : V n →L[ℂ] V n) {α : V n → V n → ℂ} (hα : IsSesq α) :
     pull L (ofValues α : Alt n) = ofValues (fun ξ η => α (L ξ) (L η)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum,
+    simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym, map_sum,
     map_smul, map_mul, (pull_dz L _).1, (pull_dz L _).2, Finset.sum_mul, Finset.mul_sum, Finset.sum_smul,
     Finset.smul_sum, smul_mul_smul_comm, smul_smul]
   conv_lhs => enter [2, a, 2, b]; rw [Finset.sum_comm]
@@ -111,7 +111,7 @@ theorem isReal_ofValues {α : V n → V n → ℂ} (hα : ∀ ξ η, conj (α ξ
     split_ifs <;> simp
   have h₃ : swap (ofValues α : Alt n) = ∑ a, ∑ b, α (coordVec a) (coordVec b) • -(dz b * dzb a) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum, map_smul, h₁]
+      simp only [ofValues, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym, map_sum, map_smul, h₁]
   rw [repr_ofValues, h₃, Finset.sum_comm]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_smul, map_neg, map_mul, Finsupp.finsetSum_apply, Finsupp.smul_apply, Finsupp.neg_apply,

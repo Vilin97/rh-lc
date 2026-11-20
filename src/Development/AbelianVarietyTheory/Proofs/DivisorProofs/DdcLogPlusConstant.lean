@@ -79,7 +79,7 @@ theorem ddc_fn_log_add : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : HolA
       = fun v => algebraMap ℂ (Alt n) ((Real.log (w v + t) : ℝ) : ℂ) from rfl,
     delAt_dbarAt_fun hlw, show (fun v => algebraMap ℂ (Alt n) ((f (e.symm v) : ℝ) : ℂ))
       = fun v => algebraMap ℂ (Alt n) ((w v : ℝ) : ℂ) from rfl, delAt_dbarAt_fun hw]
-  simp only [HolAtlas.fn, ← hpt, ← Algebra.smul_def, ofValues, GlobalTheory.HermFrame.ddc, hL, AddSubmonoidClass.coe_finset_sum,
+  simp only [HolAtlas.fn, ← hpt, ← Algebra.smul_def, ofValues, GlobalTheory.HermFrame.ddc, hL, AddSubmonoidClass.coe_finsetSum,
     Subalgebra.coe_smul, sym, Finset.sum_mul_sum, smul_mul_smul_comm, Finset.smul_sum, smul_smul, ← Finset.sum_sub_distrib,
     ← sub_smul]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

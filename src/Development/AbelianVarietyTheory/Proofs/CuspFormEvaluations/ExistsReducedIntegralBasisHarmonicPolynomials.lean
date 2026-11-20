@@ -146,7 +146,7 @@ theorem exists_reduced_basis_harmA : ∀ (E : Type) [Field E] [NumberField E] [I
   · refine ⟨b.repr ⟨P, (hI P).2 hP⟩, ?_⟩
     have h := congrArg Subtype.val (b.sum_repr ⟨P, (hI P).2 hP⟩)
     simp only [Int.cast_smul_eq_zsmul]
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h
     exact h.symm
   · rw [l1At_eq_l1Norm_map]
     refine (hb i σ).trans ((bound_le_exp (L := L) i.pos Module.finrank_pos

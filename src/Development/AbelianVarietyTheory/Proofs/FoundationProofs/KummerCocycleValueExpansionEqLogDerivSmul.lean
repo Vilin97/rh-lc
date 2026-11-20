@@ -140,11 +140,11 @@ theorem geo_cob : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω
   have hwwi : wS * wiS = 1 := Subtype.ext (by show w * w⁻¹ = 1; exact mul_inv_cancel₀ hw0)
   have hwS : wS = ∑ t, eS t * AS t := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact hwe
   have hw'S : w'S = ∑ t, eS t * A'S t := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     exact hw'e
   have hroot : ∀ t, ∃ y : Ω, y ^ (p ^ n) = e t ∧ IsIntegral (O0 p) y ∧ IsAlgZp p y :=
     fun t => exists_root_alg hΩ (he t).1 (he t).2 (p ^ n) hNpos

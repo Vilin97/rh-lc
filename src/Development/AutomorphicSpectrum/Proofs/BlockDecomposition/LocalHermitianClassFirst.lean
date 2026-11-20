@@ -55,7 +55,7 @@ theorem det_gramOn_mul (H M : Matrix (Fin n) (Fin n) K) (V : Submodule K (Fin n 
       have h := b.sum_repr (restr M V hM (b j))
       calc ((restr M V hM (b j) : V) : Fin n → K) = ((∑ l, b.repr (restr M V hM (b j)) l • b l : V) : Fin n → K) := by
             rw [h]
-        _ = _ := by simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, LinearMap.toMatrix_apply]
+        _ = _ := by simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, LinearMap.toMatrix_apply]
     simp only [gramOn, Matrix.of_apply, Matrix.mul_apply]
     rw [hform_mul_right, hT, hform_sum_smul]
   rw [hmat, Matrix.det_mul, LinearMap.det_toMatrix]

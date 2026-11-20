@@ -243,7 +243,7 @@ theorem iSup_eig : ⨆ x, heckeEig T act x = ⊤ := by
   have e : (∑ x, c x • f x : T) = algebraMap O T (∏ y, (f y : X → O) y) := by
     apply Subtype.ext
     funext y
-    rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Finset.sum_eq_single y]
+    rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Finset.sum_eq_single y]
     · simp [c, Finset.prod_erase_mul]
     · intro x _ hx; simp [h1 x y (Ne.symm hx)]
     · simp

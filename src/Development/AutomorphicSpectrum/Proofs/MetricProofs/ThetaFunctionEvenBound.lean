@@ -118,7 +118,7 @@ theorem exists_reduced (g : ℕ) [NeZero g] (Λ : Submodule ℤ (Fin g → ℂ))
   have hτim : (periodMatrix X Y).map Complex.im = Y := periodMatrix_im X Y
   have hexp : ∀ x : Λ, (x : Fin g → ℂ) = ∑ α, (bs.repr x α) • (bs α : Fin g → ℂ) := fun x => by
     have := congrArg Subtype.val (bs.sum_repr x)
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at this
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at this
     exact this.symm
   have hYe : ∀ i j, Y⁻¹ i j = (hermForm Hm (bs (Sum.inl i) : Fin g → ℂ) (bs (Sum.inl j) : Fin g → ℂ)).re := by
     intro i j

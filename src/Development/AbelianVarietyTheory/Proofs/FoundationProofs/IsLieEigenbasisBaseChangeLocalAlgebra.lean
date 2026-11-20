@@ -32,7 +32,7 @@ theorem eigenBasis_map {O R R' I : Type} [CommRing O] [CommRing R] [CommRing R']
   have key : ∀ c : eigenSub ρ (σ τ), ∃! d, Fintype.linearCombination R b' d = c := fun c => by
     refine (existsUnique_congr fun d => ?_).1 (H _ c.2)
     rw [Subtype.ext_iff, Fintype.linearCombination_apply]
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     rfl
   let B : Module.Basis (Fin m) R (eigenSub ρ (σ τ)) :=
     Module.Basis.ofEquivFun (LinearEquiv.ofBijective _ ((Function.bijective_iff_existsUnique _).2 key)).symm

@@ -267,7 +267,7 @@ theorem PositivityTheory.Xgn.test_leaf_lattice : GlobalTheory.CompanionTheory.Ar
   have hft : ∀ k, TestPt.fromNAdd pq (TestPt.toNAdd sc a) k = a k := fun k => hsec.1 (a k)
   simp only [hft] at h
   change (s a : C) * (p : C) = g _ - (cp : C) * ((t : C) * ((∑ k, ⟨z k, hz' k⟩ * χ' (a k) : RC) : C)) at h
-  rw [← _root_.mul_assoc, ht, AddSubmonoidClass.coe_finset_sum] at h
+  rw [← _root_.mul_assoc, ht, AddSubmonoidClass.coe_finsetSum] at h
   simp only [MulMemClass.coe_mul, ← hχσ] at h
   change g _ + (p : C) * -(s a : C) = linMap _ (fun a => χ τ a) (algebraMap O C w • z) a
   simp only [linMap, Fintype.linearCombination_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, _root_.mul_assoc,

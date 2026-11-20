@@ -73,7 +73,7 @@ theorem exists_finset_factor {σ : Type} (W : Submodule ℂ (MvPolynomial σ ℂ
         exact hs (Finset.mem_biUnion.2 ⟨i, Finset.mem_univ _, MvPolynomial.mem_support_iff.2 h⟩)
       have hp' : (p : MvPolynomial σ ℂ) = ∑ i, b.repr p i • (b i : MvPolynomial σ ℂ) := by
         have h := congrArg Subtype.val (b.sum_repr p)
-        rw [AddSubmonoidClass.coe_finset_sum] at h
+        rw [AddSubmonoidClass.coe_finsetSum] at h
         exact h.symm
       rw [hp']
       simp [MvPolynomial.coeff_sum, h0]

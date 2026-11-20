@@ -43,7 +43,7 @@ def rowForm (a : Fin n) : (Fin n → ℂ) →ₗ[ℂ] Ev n := Fintype.linearComb
 theorem coe_rowForm (a : Fin n) (u : Fin n → ℂ) :
     (rowForm a u : Alt n) = dz a * ExteriorAlgebra.ι ℂ (∑ b, u b • Pi.single (Sum.inr b : Fin n ⊕ Fin n) (1 : ℂ)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [rowForm, Fintype.linearCombination_apply, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym,
+    simp only [rowForm, Fintype.linearCombination_apply, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, sym,
     map_sum, map_smul, Finset.mul_sum, mul_smul_comm, dzb]
 
 theorem rowForm_mul_same (a a' : Fin n) (u : Fin n → ℂ) : rowForm a u * rowForm a' u = 0 := by

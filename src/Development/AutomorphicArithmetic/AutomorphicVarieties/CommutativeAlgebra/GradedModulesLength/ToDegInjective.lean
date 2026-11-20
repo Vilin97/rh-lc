@@ -97,7 +97,7 @@ instance : SetLike.GradedMonoid (reesGr N) where
 
 theorem eq_sum_mono (p : rees N) : p = ∑ m ∈ p.1.support, mono N m (AddMonoidAlgebra.coeff p.1 m) (p.2 m) := by
   apply Subtype.ext
-  rw [AddSubmonoidClass.coe_finset_sum]
+  rw [AddSubmonoidClass.coe_finsetSum]
   exact p.1.as_sum
 
 theorem rees_internal : DirectSum.IsInternal (reesGr N) := by

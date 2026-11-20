@@ -286,7 +286,7 @@ private theorem exists_range {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [A
   have hmem : ∀ x, Ξ x ∈ A := fun x => by
     obtain ⟨v, hv⟩ := hp ⟨Ξ x, x, rfl⟩
     have h1 : Ξ x = (p v : PadicAlgCl l) := (congrArg Subtype.val hv).symm
-    rw [h1, LinearMap.pi_apply_eq_sum_univ, AddSubmonoidClass.coe_finset_sum]
+    rw [h1, LinearMap.pi_apply_eq_sum_univ, AddSubmonoidClass.coe_finsetSum]
     refine sum_mem fun i _ => A.smul_mem ?_ _
     convert hbA i using 3
     funext j

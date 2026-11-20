@@ -93,7 +93,7 @@ theorem sect (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonar
   · apply le_antisymm
     · intro y hy
       have h := congrArg Subtype.val ((Module.finBasis k Z).sum_repr ⟨y, hy⟩)
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h
       rw [← h]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
     · exact Submodule.span_le.2 (Set.range_subset_iff.2 fun i => (Module.finBasis k Z i).2)

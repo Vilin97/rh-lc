@@ -272,7 +272,7 @@ theorem chiL_eq_psiG {x : X.B.I.Gf} (hx : Good X x) (hk : x ∈ X.K2) : chiL X x
     have e : (⟨C, hCint⟩ : ↥(IntAf X.B.I.F X.B.I.E)) = ∑ i : Fin D.R.k,
         (if h : i.1 + 1 < D.R.k then (⟨_, hint i ⟨i.1 + 1, h⟩⟩ : ↥(IntAf X.B.I.F X.B.I.E)) else 0) := by
       apply Subtype.ext
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       show C = _
       rw [hC]
       refine Finset.sum_congr rfl (fun i _ => ?_)

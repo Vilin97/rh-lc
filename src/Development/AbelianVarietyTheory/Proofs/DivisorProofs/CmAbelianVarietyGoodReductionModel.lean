@@ -99,7 +99,7 @@ theorem coe_functional {R : Subring ℂ} {n : ℕ} (ℓ : (Fin n → R) →ₗ[R
     (h : ∀ k, ((v k : R) : ℂ) = z * (w k : ℂ)) : ((ℓ v : R) : ℂ) = z * (ℓ w : ℂ) := by
   classical
   rw [LinearMap.pi_apply_eq_sum_univ ℓ v, LinearMap.pi_apply_eq_sum_univ ℓ w]
-  simp only [smul_eq_mul, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, h, Finset.mul_sum]
+  simp only [smul_eq_mul, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, h, Finset.mul_sum]
   exact Finset.sum_congr rfl fun _ _ ↦ mul_assoc _ _ _
 
 end GlobalTheory.CMVecBC

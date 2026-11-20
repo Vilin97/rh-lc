@@ -135,7 +135,7 @@ theorem projA_comm {τ τ' : ι} (hne : τ ≠ τ') (w w' : Fin N → ℕ) :
 
 theorem projA_sum (τ : ι) : ∑ w ∈ wtBox N lam τ, projA (O := O) (lam := lam) τ w = 1 := by
   apply Subtype.ext
-  rw [AddSubmonoidClass.coe_finset_sum, OneMemClass.coe_one]
+  rw [AddSubmonoidClass.coe_finsetSum, OneMemClass.coe_one]
   exact isProj_sum τ _ (projA_isProj τ)
 
 end Main

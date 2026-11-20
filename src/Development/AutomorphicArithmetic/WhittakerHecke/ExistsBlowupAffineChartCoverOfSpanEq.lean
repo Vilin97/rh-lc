@@ -23,7 +23,7 @@ private theorem chart_cover {R : Type} [CommRing R] (I : Ideal R) {M : ℕ} (a :
   obtain ⟨c, hc⟩ := (Ideal.mem_span_range_iff_exists_fun).mp hb
   have hsum : reesGenerator I b = ∑ l, algebraMap R ↥(reesAlgebra I) (c l) * reesGenerator I (a l) := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [reesGenerator_coe, ← hc, MulMemClass.coe_mul, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_

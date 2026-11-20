@@ -63,7 +63,7 @@ theorem red_conj_eq_one (S : Subring A) {k : Type} [CommRing k] (ρ : S →+* k)
     rw [Matrix.map_apply, Matrix.mul_apply] at this
     simp only [Matrix.mul_apply, Matrix.map_apply, Subring.subtype_apply] at this
     rw [Subring.coe_mul, this]
-    simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, Finset.mul_sum, Finset.sum_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     ring
   have e4 := congrArg ρ e3

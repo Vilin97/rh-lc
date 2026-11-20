@@ -247,7 +247,7 @@ theorem toUntilt_finSum {a : ℕ → L} {N : ℕ} (ha : ∀ i, ‖a i‖ ≤ 1) 
   have e : (⟨T.finSum a N, T.finSum_mem_int fun i _ => ha i⟩ : T.int) =
       ∑ n ∈ Finset.range N, T.πInt ^ n * T.teichInt (ha n) := by
     apply Subtype.ext
-    simp only [finSum, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, SubmonoidClass.coe_pow,
+    simp only [finSum, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, SubmonoidClass.coe_pow,
       coe_πInt, coe_teichInt]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, map_sum, map_sum]

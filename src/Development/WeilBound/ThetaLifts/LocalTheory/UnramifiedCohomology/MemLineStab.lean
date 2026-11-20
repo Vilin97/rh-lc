@@ -35,7 +35,7 @@ theorem exists_frame {K : Type} [Field K] {n : ℕ} (x y : Fin n → K) (φ : Fi
   have e := congrArg (fun z : LinearMap.ker f => z.1 r) (b.sum_repr (P (Pi.single c 1)))
   have e2 : (P (Pi.single c 1)).1 r = (Pi.single c 1 : Fin n → K) r - p c * x r - φ c * y r := by
     simp [P]
-  simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul] at e
+  simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul] at e
   simp only [Matrix.add_apply, Matrix.vecMulVec_apply, Matrix.mul_apply, Matrix.of_apply, mul_comm ((b _).1 r), e, e2,
     Matrix.one_apply, Pi.single_apply]
   ring

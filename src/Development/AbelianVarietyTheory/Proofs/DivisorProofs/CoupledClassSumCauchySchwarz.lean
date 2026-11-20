@@ -136,7 +136,7 @@ theorem cpl_le : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (Q : KerC
     intro d
     have e : (Q.cpl φ : Q.S₁.D → Q.S₁.V) d = ∑ b : (Q.F Q.n).β,
         ((Q.cp b).comp Q.hS Q.S.outSec).appOf (Q.hF Q.n b) ((Q.F Q.n).mem b).outSec (φ b) d := by
-      simp only [KerChain.cpl, LinearMap.sum_apply, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+      simp only [KerChain.cpl, LinearMap.sum_apply, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
       rfl
     rw [e]
     refine (sq_sum_le p₁ _ _ (le_of_eq (by rw [Finset.card_univ]))).trans

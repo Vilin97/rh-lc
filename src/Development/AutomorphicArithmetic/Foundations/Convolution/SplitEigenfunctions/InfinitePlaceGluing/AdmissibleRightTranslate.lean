@@ -39,7 +39,7 @@ private theorem lie_expand {ι : Type} [Fintype ι] (b : Module.Basis ι ℝ (Li
     simp only [map_smul]
   rw [h]
   funext g
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Submodule.coe_smul_of_tower, Pi.smul_apply, Complex.real_smul, smul_eq_mul]
+  simp only [LinearMap.sum_apply, LinearMap.smul_apply, AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Submodule.coe_smul_of_tower, Pi.smul_apply, Complex.real_smul, smul_eq_mul]
 
 private theorem pow_bound (D : Dat ℚ E) (P : CuspSub E 2) (hL : ∀ f ∈ P.V, Pp.Lf f.1)
     (hB : ∀ f ∈ P.V, ∃ B : ℝ, ∀ g, ‖f.1 g‖ ≤ B) (r : ℕ) :

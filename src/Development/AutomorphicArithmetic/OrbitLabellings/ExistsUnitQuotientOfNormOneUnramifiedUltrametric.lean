@@ -206,7 +206,7 @@ private lemma congr_one [CompleteSpace K] [CharZero K] (hU : UnrOK K l σ) (ζ :
     ext i j
     have := congrFun (congrFun hHG i) j
     rw [Matrix.mul_apply, Matrix.one_apply] at this
-    rw [Matrix.mul_apply, Matrix.one_apply, AddSubmonoidClass.coe_finset_sum]
+    rw [Matrix.mul_apply, Matrix.one_apply, AddSubmonoidClass.coe_finsetSum]
     refine this.trans ?_
     split_ifs <;> rfl
   obtain ⟨P, -, hP⟩ := KStar.Cstarloc.exists_congr_one hD H'

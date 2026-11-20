@@ -70,7 +70,7 @@ theorem frame : ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (P : Ideal (�
     have hx' := q.sum_repr ⟨x, hx⟩
     have : x = ∑ j, (q.repr ⟨x, hx⟩ j) • ((q j : N) : Fin i → K) := by
       calc x = ((∑ j, q.repr ⟨x, hx⟩ j • q j : N) : Fin i → K) := by rw [hx']
-        _ = _ := by rw [AddSubmonoidClass.coe_finset_sum]; rfl
+        _ = _ := by rw [AddSubmonoidClass.coe_finsetSum]; rfl
     rw [this]
     refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_
     have hu : (algebraMap (𝓞 K) K s₀)⁻¹ ∈ A := ⟨1, s₀, hs₀, by simp⟩
@@ -318,7 +318,7 @@ theorem dualO_fg {K : Type} [Field K] [NumberField K] {i : ℕ} (F : HermLattice
       have hx' := b.sum_repr ⟨x, hx⟩
       have hxs : x = ∑ t, (b.repr ⟨x, hx⟩ t) • (b t : Fin i → K) := by
         calc x = ((∑ t, b.repr ⟨x, hx⟩ t • b t : dualLattice F) : Fin i → K) := by rw [hx']
-          _ = _ := by rw [AddSubmonoidClass.coe_finset_sum]; rfl
+          _ = _ := by rw [AddSubmonoidClass.coe_finsetSum]; rfl
       rw [hxs]
       refine Submodule.sum_mem _ fun t _ => ?_
       have hm : (b t : Fin i → K) ∈ Submodule.span (𝓞 K) (Set.range fun t => (b t : Fin i → K)) :=

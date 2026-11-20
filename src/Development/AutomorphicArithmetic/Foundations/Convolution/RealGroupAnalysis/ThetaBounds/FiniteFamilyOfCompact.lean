@@ -52,7 +52,7 @@ private theorem finite_family_of_compact {X T V : Type} [TopologicalSpace X] [Ad
   · rw [norm_div, Complex.norm_real, Real.norm_of_nonneg (hR0 i).le]
     exact (div_le_one (hR0 i)).mpr (hR i _)
   · have h : ((∑ i, b.repr (g ⟨k, hk⟩) i • b i : U) : T) = f k := by rw [b.sum_repr]
-    rw [AddSubmonoidClass.coe_finset_sum] at h
+    rw [AddSubmonoidClass.coe_finsetSum] at h
     have h2 : f k = ∑ i, b.coord i (g ⟨k, hk⟩) • ((b i : U) : T) := h.symm
     rw [h2]
     refine Finset.sum_congr rfl fun i _ => ?_

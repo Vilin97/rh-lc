@@ -109,7 +109,7 @@ theorem UpperTheory.Gal.productCup_of_system.locOne_of :
     intro v h0
     obtain ⟨a, ha, hv'⟩ := hMax F L d x hc hred e v ((hev _ _).2 ⟨v.2, h0⟩)
     refine ⟨fun l => ⟨a l, ha l⟩, Subtype.ext ?_⟩
-    rw [hv', AddSubmonoidClass.coe_finset_sum]
+    rw [hv', AddSubmonoidClass.coe_finsetSum]
     rfl
   have hmem := locOne_nak _ _ hle ev hunit hden t ht hmax ⟨v, hv⟩
   obtain ⟨c, hc'⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hmem

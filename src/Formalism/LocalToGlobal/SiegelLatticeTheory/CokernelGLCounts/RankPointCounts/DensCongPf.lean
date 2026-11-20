@@ -191,7 +191,7 @@ theorem psi_psi (abelian₂ : Submodule M.L.O V) (c : E) (A B : Matrix ι ι E) 
     apply Subtype.ext
     have h := congrFun (congrFun hAB a) b
     rw [Matrix.mul_apply] at h
-    simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul]
     rw [Finset.sum_congr rfl (fun y _ => mul_comm (B y b) (A a y)), h, Matrix.one_apply]
     split_ifs <;> rfl
   rw [Finset.sum_congr rfl fun a _ => e a]

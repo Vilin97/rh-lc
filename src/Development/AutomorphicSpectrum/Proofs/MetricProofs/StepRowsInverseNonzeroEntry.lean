@@ -93,7 +93,7 @@ theorem unit_comb : ∀ (L : Type) [Field L] (V : ValuationSubring L) (N j : ℕ
   obtain ⟨m, -, hm⟩ := exists_isUnit_of_sum _ _ hI₀'
   have hwm : IsUnit (w m) := isUnit_of_mul_isUnit_right hm
   have hcoe : ((w m : V) : L) = ∑ I, u m I * minorIJ H I (stepCols N j i) := by
-    simp only [w, AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, coe_minorIJ, hHv]
+    simp only [w, AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, coe_minorIJ, hHv]
     rfl
   refine ⟨m, ?_, ?_⟩
   · rw [← hcoe]

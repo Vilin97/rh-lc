@@ -37,7 +37,7 @@ private theorem fin_prod {ι X : Type} [Fintype ι] {Y : ι → Type} (p : ∀ i
       have h := (b i).sum_repr ⟨s i, hs' i⟩
       calc s i = ((⟨s i, hs' i⟩ : Submodule.span ℂ (S i)) : Y i → ℂ) := rfl
         _ = ((∑ j, c i j • b i j : Submodule.span ℂ (S i)) : Y i → ℂ) := by rw [h]
-        _ = _ := by rw [AddSubmonoidClass.coe_finset_sum]; rfl
+        _ = _ := by rw [AddSubmonoidClass.coe_finsetSum]; rfl
     have e : (fun x => ∏ i, s i (p i x)) = T s := funext fun x => (hT s x).symm
     have e2 : T s = T fun i => ∑ j, c i j • ((b i j : Submodule.span ℂ (S i)) : Y i → ℂ) :=
       congrArg T (funext hsum)

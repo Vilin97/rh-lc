@@ -46,7 +46,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Cusp.typeSat :
     have h5 : f (k * y) = (L k F).1 y := rfl
     have h6 : (L k F).1 y = ∑ i, b.repr (L k F) i * (b i).1 y := by
       have h7 := congrArg (fun v : W0 => (v : G → ℂ) y) (b.sum_repr (L k F))
-      simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, Submodule.coe_smul,
+      simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, Submodule.coe_smul,
         Pi.smul_apply, smul_eq_mul] at h7
       exact h7.symm
     rw [h5, h6]

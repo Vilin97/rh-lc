@@ -169,7 +169,7 @@ theorem locOrder_free : ∀ (F B : Type) [Field F] [NumberField F] [Ring B] [Alg
       ((∑ i, c i • w i : locOrder ℓ Λ) : ℚ_[ℓ] ⊗[ℚ] B) =
         combMap (F := F) ℓ v (fun i => (c i : ℚ_[ℓ] ⊗[ℚ] F)) := by
     intro c
-    rw [AddSubmonoidClass.coe_finset_sum, combMap_apply]
+    rw [AddSubmonoidClass.coe_finsetSum, combMap_apply]
     exact Finset.sum_congr rfl fun i _ => hsmul _ _
   have hli : LinearIndependent (cenOrder ℓ F) w := by
     rw [Fintype.linearIndependent_iff]
