@@ -62,7 +62,7 @@ theorem card_fixed_le [Fintype K] [DecidableEq K] (i : ℕ) (hi : 0 < i) :
   have hg : 1 < g := (Fact.out : g.Prime).one_lt
   have hq : 1 < g ^ i := Nat.one_lt_pow hi.ne' hg
   have hne := FiniteField.X_pow_card_sub_X_ne_zero K hq
-  have hdeg := FiniteField.X_pow_card_sub_X_natDegree_eq K hq
+  have hdeg := Polynomial.natDegree_X_pow_sub_X (R := K) hq
   calc (Finset.univ.filter fun z : Kˣ => z ^ g ^ i = z).card
       ≤ ((X ^ g ^ i - X : K[X]).roots.toFinset).card := by
         refine Finset.card_le_card_of_injOn (fun z : Kˣ => (z : K)) ?_ ?_

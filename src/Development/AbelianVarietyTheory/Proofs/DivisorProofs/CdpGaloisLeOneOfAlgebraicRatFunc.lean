@@ -86,7 +86,7 @@ theorem exists_zmod_cast_eq_of_pow_sub_self {p : ℕ} [hp : Fact p.Prime] {Ω : 
   have h1 := Finset.card_le_card hT
   have h2 : P.roots.toFinset.card ≤ p :=
     (Multiset.toFinset_card_le _).trans ((card_roots' P).trans
-      (FiniteField.X_pow_card_sub_X_natDegree_eq Ω hp.out.one_lt).le)
+      (Polynomial.natDegree_X_pow_sub_X (R := Ω) hp.out.one_lt).le)
   omega
 
 theorem exists_pow_sub_self_eq {p : ℕ} [hp : Fact p.Prime] {Ω : Type} [Field Ω] [CharP Ω p]

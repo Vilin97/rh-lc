@@ -114,7 +114,7 @@ theorem root_mod {B : ValuationSubring Ω} {p m N : ℕ} (hp : p.Prime) (hpB : B
           Multiset.toFinset_card_le _
       _ ≤ (Polynomial.X ^ p - Polynomial.X : Polynomial (IsLocalRing.ResidueField B)).natDegree :=
           Polynomial.card_roots' _
-      _ = p := FiniteField.X_pow_card_sub_X_natDegree_eq _ hp.one_lt
+      _ = p := Polynomial.natDegree_X_pow_sub_X hp.one_lt
   have heq := Finset.eq_of_subset_of_card_le hsub hcard
   have hrmem : IsLocalRing.residue B a ∈
       (Polynomial.X ^ p - Polynomial.X : Polynomial (IsLocalRing.ResidueField B)).roots.toFinset := by

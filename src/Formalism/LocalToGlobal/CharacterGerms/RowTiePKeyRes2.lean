@@ -147,7 +147,7 @@ theorem fixed_nat (p : ℕ) [hp : Fact p.Prime] [CharP k p] (a : k) (ha : a ^ p 
     calc (X ^ p - X : k[X]).roots.toFinset.card ≤ Multiset.card (X ^ p - X : k[X]).roots :=
           Multiset.toFinset_card_le _
       _ ≤ (X ^ p - X : k[X]).natDegree := Polynomial.card_roots' _
-      _ = p := FiniteField.X_pow_card_sub_X_natDegree_eq k hp1
+      _ = p := Polynomial.natDegree_X_pow_sub_X (R := k) hp1
   omega
 
 theorem exists_lift (p : ℕ) [Fact p.Prime] [CharP k p] (Q : k[X]) (hQ : ∀ i, Q.coeff i ^ p = Q.coeff i) :

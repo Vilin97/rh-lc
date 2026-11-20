@@ -87,7 +87,7 @@ theorem mem_range_of_pow (d : K) (hd : d ^ Fintype.card k = d) :
       · exact hd
       · obtain ⟨c, _, rfl⟩ := Finset.mem_image.1 hx
         rw [← map_pow, FiniteField.pow_card])
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq K hq, Finset.card_insert_of_notMem hdm,
+  rw [Polynomial.natDegree_X_pow_sub_X (R := K) hq, Finset.card_insert_of_notMem hdm,
     Finset.card_image_of_injective _ (algebraMap k K).injective, Finset.card_univ] at this
   omega
 

@@ -28,7 +28,7 @@ theorem monic_dvd_X_pow_card_sub_one_exists_root :
     FiniteField.X_pow_card_sub_X_ne_zero (ResidueField S) hQ1
   have hsplit : Splits (X ^ Q - X : (ResidueField S)[X]) := by
     rw [splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X,
-      FiniteField.X_pow_card_sub_X_natDegree_eq (ResidueField S) hQ1]
+      Polynomial.natDegree_X_pow_sub_X (R := (ResidueField S)) hQ1]
     simp [Q]
   have hgs : Splits g := hsplit.of_dvd hne hdvd'
   obtain ⟨abar, habar⟩ := hgs.exists_eval_eq_zero

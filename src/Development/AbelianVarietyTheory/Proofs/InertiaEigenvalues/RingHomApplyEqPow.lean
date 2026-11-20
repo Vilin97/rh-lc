@@ -25,7 +25,7 @@ theorem fix_of_pow {k : Type} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k 
         Finset.card_image_of_injective _ f.injective, Finset.card_univ, ZMod.card]
     have hle := (Finset.card_le_card hsub).trans
       ((Multiset.toFinset_card_le _).trans (card_roots' (X ^ p - X : k[X])))
-    rw [hcard, FiniteField.X_pow_card_sub_X_natDegree_eq k hp1] at hle
+    rw [hcard, Polynomial.natDegree_X_pow_sub_X (R := k) hp1] at hle
     omega
   obtain ⟨a, rfl⟩ := hc'
   exact DFunLike.congr_fun (RingHom.ext_zmod (τ.comp f) f) a

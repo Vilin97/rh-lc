@@ -26,7 +26,7 @@ theorem prod_range_X_sub_C_zmod :
   have hr : (X ^ p - X : (ZMod p)[X]).roots = Finset.univ.val := by
     simpa [ZMod.card] using FiniteField.roots_X_pow_card_sub_X (ZMod p)
   have hdeg : (X ^ p - X : (ZMod p)[X]).natDegree = p :=
-    FiniteField.X_pow_card_sub_X_natDegree_eq (ZMod p) hp.out.one_lt
+    Polynomial.natDegree_X_pow_sub_X (R := (ZMod p)) hp.out.one_lt
   have h := prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmon (by
     rw [hr, hdeg, Finset.card_val, Finset.card_univ, ZMod.card])
   rw [hr, ← Finset.prod_eq_multiset_prod] at h

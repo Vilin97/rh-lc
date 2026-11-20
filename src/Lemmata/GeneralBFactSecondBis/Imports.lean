@@ -43,7 +43,7 @@ theorem goal1 :
   rw [Finset.card_insert_of_notMem hcS, hScard] at h1
   have h2 : f.roots.toFinset.card ≤ g :=
     (Multiset.toFinset_card_le _).trans ((Polynomial.card_roots' f).trans
-      (FiniteField.X_pow_card_sub_X_natDegree_eq (Formalism.CyclotomicNorms.Fbar g) hp).le)
+      (Polynomial.natDegree_X_pow_sub_X (R := (Formalism.CyclotomicNorms.Fbar g)) hp).le)
   omega
 
 end Bl.general_b_fact_second_bis

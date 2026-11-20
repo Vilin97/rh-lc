@@ -305,7 +305,7 @@ theorem not_forall_pow_sub_mem {P : HeightOneSpectrum (𝓞 E)} {q : ℕ} (hq : 
       obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective z
       rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ h1)]
       simpa using Ideal.Quotient.eq_zero_iff_mem.2 (h x))
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ h1, Finset.card_univ, hc] at h3
+  rw [Polynomial.natDegree_X_pow_sub_X h1, Finset.card_univ, hc] at h3
   nlinarith
 
 theorem valuation_pow_sub_pow_lt (A : ValuationSubring Ω) {a b : Ω} (ha : A.valuation a ≤ 1) (hb : A.valuation b ≤ 1)

@@ -246,10 +246,10 @@ theorem UpperTheory.V.Pa.BC.oprime :
     minpoly.dvd _ _ (by simp [FiniteField.pow_card])
   have hsplit : (X ^ Fintype.card K' - X : K'[X]).Splits := by
     rw [Polynomial.splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X, ← Finset.card_def,
-      Finset.card_univ, FiniteField.X_pow_card_sub_X_natDegree_eq K' Fintype.one_lt_card]
+      Finset.card_univ, Polynomial.natDegree_X_pow_sub_X (R := K') Fintype.one_lt_card]
   have hne : (X ^ Fintype.card K' - X : K'[X]) ≠ 0 := by
     intro h
-    have := FiniteField.X_pow_card_sub_X_natDegree_eq K' (Fintype.one_lt_card (α := K'))
+    have := Polynomial.natDegree_X_pow_sub_X (R := K') (Fintype.one_lt_card (α := K'))
     rw [h, Polynomial.natDegree_zero] at this
     exact Fintype.card_ne_zero this.symm
   refine hsplit.of_dvd hne ?_

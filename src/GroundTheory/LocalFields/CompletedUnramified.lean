@@ -278,7 +278,7 @@ theorem mem_range_of_pow_card_eq_self {F k : Type*} [Field F] [Finite F] [Field 
   rw [Nat.card_eq_fintype_card] at hy
   have hs : Splits (X ^ Fintype.card F - X : F[X]) := by
     rw [splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X,
-      FiniteField.X_pow_card_sub_X_natDegree_eq F hq]
+      Polynomial.natDegree_X_pow_sub_X (R := F) hq]
     exact Finset.card_univ
   refine hs.mem_range_of_isRoot (FiniteField.X_pow_card_sub_X_ne_zero F hq) ?_
   simp only [Polynomial.map_sub, Polynomial.map_pow, map_X, IsRoot.def, eval_sub, eval_pow,

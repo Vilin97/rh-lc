@@ -67,7 +67,7 @@ private theorem frobenius_fixed_of_iterate_fixed_pow_prime {k : Type} [Field k] 
             Multiset.toFinset_card_le _
         _ ≤ (Polynomial.X ^ (p ^ (m * n)) - Polynomial.X : Polynomial k).natDegree :=
             Polynomial.card_roots' _
-        _ = p ^ (m * n) := FiniteField.X_pow_card_sub_X_natDegree_eq k hpN
+        _ = p ^ (m * n) := Polynomial.natDegree_X_pow_sub_X (R := k) hpN
     have hEq := Finset.eq_of_subset_of_card_le hTsub hle
     have hz' : z ∈ Finset.univ.image φ := hEq ▸ hmem z hz
     obtain ⟨x, _, hx⟩ := Finset.mem_image.1 hz'

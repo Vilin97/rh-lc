@@ -119,7 +119,7 @@ private theorem mem_range_algebraMap_of_pow_card_eq (d : K) (hd : d ^ Fintype.ca
     rw [Finset.card_image_of_injective _ (algebraMap k K).injective, Finset.card_univ]
     calc _ ≤ Multiset.card (X ^ Fintype.card k - X : K[X]).roots := Multiset.toFinset_card_le _
       _ ≤ (X ^ Fintype.card k - X : K[X]).natDegree := card_roots' _
-      _ = Fintype.card k := FiniteField.X_pow_card_sub_X_natDegree_eq K hq1
+      _ = Fintype.card k := Polynomial.natDegree_X_pow_sub_X (R := K) hq1
   have heq := Finset.eq_of_subset_of_card_le hsub hcard
   have hmem : d ∈ (X ^ Fintype.card k - X : K[X]).roots.toFinset := by
     rw [Multiset.mem_toFinset, mem_roots hP, IsRoot.def, eval_sub, eval_pow, eval_X, hd, sub_self]

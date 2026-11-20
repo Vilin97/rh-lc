@@ -15,7 +15,7 @@ theorem fixed_mem_range {g : ℕ} [hg : Fact (Nat.Prime g)] {d : ℕ} (hd : 0 < 
   have hq : 1 < g ^ d := Nat.one_lt_pow hd.ne' hg.out.one_lt
   set P : (AlgebraicClosure (ZMod g))[X] := X ^ (g ^ d) - X with hP
   have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero _ hq
-  have hPdeg : P.natDegree = g ^ d := FiniteField.X_pow_card_sub_X_natDegree_eq _ hq
+  have hPdeg : P.natDegree = g ^ d := Polynomial.natDegree_X_pow_sub_X hq
   have hsub : Finset.univ.image ι ⊆ P.roots.toFinset := by
     intro x hx
     obtain ⟨k, -, rfl⟩ := Finset.mem_image.1 hx

@@ -20,7 +20,7 @@ private theorem qr_fix {F k : Type} [Field F] [Field k] [Fintype F] (ι : F →+
     rw [Finset.card_image_of_injective _ ι.injective, Finset.card_univ, hF]
     calc _ ≤ Multiset.card (X ^ q - X : k[X]).roots := Multiset.toFinset_card_le _
       _ ≤ (X ^ q - X : k[X]).natDegree := card_roots' _
-      _ = q := FiniteField.X_pow_card_sub_X_natDegree_eq k hq
+      _ = q := Polynomial.natDegree_X_pow_sub_X (R := k) hq
   have heq := Finset.eq_of_subset_of_card_le hsub hle
   have hx' := hroot x hx
   rw [← heq] at hx'
@@ -90,7 +90,7 @@ private theorem qr_root {F k : Type} [Field F] [Field k] [Fintype k] (ι : F →
     simpa using h
   have hsplitQ : (X ^ ((p ^ n) ^ 2) - X : k[X]).Splits := by
     rw [← hk, splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X,
-      FiniteField.X_pow_card_sub_X_natDegree_eq k h1q]
+      Polynomial.natDegree_X_pow_sub_X (R := k) h1q]
     simp
   have hsplitP := Splits.of_dvd hsplitQ hQ0 hdvd'
   have hdegP : (X ^ 2 + C (ι b) * X + C (ι c) : k[X]).natDegree = 2 := by compute_degree!

@@ -13,7 +13,7 @@ theorem mem_range_zmod_of_pow_eq_self (p : ℕ) [Fact p.Prime] {k : Type} [Field
   have hp : 1 < p := (Fact.out : p.Prime).one_lt
   have hroots := FiniteField.roots_X_pow_card_sub_X (ZMod p)
   rw [ZMod.card p] at hroots
-  have hdeg : (X ^ p - X : (ZMod p)[X]).natDegree = p := FiniteField.X_pow_card_sub_X_natDegree_eq _ hp
+  have hdeg : (X ^ p - X : (ZMod p)[X]).natDegree = p := Polynomial.natDegree_X_pow_sub_X hp
   have hcard : Multiset.card (X ^ p - X : (ZMod p)[X]).roots = (X ^ p - X : (ZMod p)[X]).natDegree := by
     rw [hroots, hdeg, Finset.card_val, Finset.card_univ, ZMod.card]
   have hmap := Polynomial.roots_map_of_injective_of_card_eq_natDegree

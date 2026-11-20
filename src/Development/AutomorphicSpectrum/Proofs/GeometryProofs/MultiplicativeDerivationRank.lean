@@ -10,7 +10,7 @@ theorem exists_natCast_of_pow_eq (k : Type) [Field k] (p : ℕ) [hp : Fact p.Pri
   classical
   have hone : 1 < p := hp.out.one_lt
   have hP : (X ^ p - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hone
-  have hdeg : (X ^ p - X : k[X]).natDegree = p := FiniteField.X_pow_card_sub_X_natDegree_eq k hone
+  have hdeg : (X ^ p - X : k[X]).natDegree = p := Polynomial.natDegree_X_pow_sub_X (R := k) hone
   haveI : ExpChar k p := ExpChar.prime hp.out
   set S : Finset k := (Finset.range p).image (fun i : ℕ => (i : k)) with hS
   have hcard : S.card = p := by

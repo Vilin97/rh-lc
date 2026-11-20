@@ -32,7 +32,7 @@ theorem card_le_of_pow_eq {F : Type} [Field F] [Finite F] {n : ℕ} (hn : 1 < n)
   by_contra hlt
   refine FiniteField.X_pow_card_sub_X_ne_zero F hn
     (Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero _ Function.injective_id (fun x => by simp [h]) ?_)
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq F hn, ← Nat.card_eq_fintype_card]
+  rw [Polynomial.natDegree_X_pow_sub_X (R := F) hn, ← Nat.card_eq_fintype_card]
   omega
 
 section Places

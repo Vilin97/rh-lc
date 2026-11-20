@@ -41,7 +41,7 @@ theorem card_le_of_gen_fixed {L : Type} [Field L] [Algebra (ZMod g) L] [Fintype 
     _ ≤ f.roots.toFinset.card := Finset.card_le_card hsub
     _ ≤ Multiset.card f.roots := Multiset.toFinset_card_le _
     _ ≤ f.natDegree := card_roots' f
-    _ = g ^ k := FiniteField.X_pow_card_sub_X_natDegree_eq L hq
+    _ = g ^ k := Polynomial.natDegree_X_pow_sub_X (R := L) hq
 
 section adjoin
 

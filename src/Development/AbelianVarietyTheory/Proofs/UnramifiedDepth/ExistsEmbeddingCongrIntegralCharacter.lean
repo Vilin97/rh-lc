@@ -24,7 +24,7 @@ theorem exists_pow_of_finite_field {K k : Type} [Field K] [Finite K] [CommRing k
           rw [Polynomial.degree_X]; exact_mod_cast Fintype.one_lt_card)
       have := Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq hm (by
         rw [FiniteField.roots_X_pow_card_sub_X,
-          FiniteField.X_pow_card_sub_X_natDegree_eq K Fintype.one_lt_card]
+          Polynomial.natDegree_X_pow_sub_X (R := K) Fintype.one_lt_card]
         rfl)
       rw [← this, FiniteField.roots_X_pow_card_sub_X]
       rfl

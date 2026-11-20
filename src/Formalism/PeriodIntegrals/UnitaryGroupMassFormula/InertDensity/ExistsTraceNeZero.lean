@@ -59,7 +59,7 @@ theorem card_fixed [DecidableEq L] : #{x : L | x ^ Fintype.card K = x} = Fintype
           simp [hx]
       _ ≤ Multiset.card (X ^ Fintype.card K - X : L[X]).roots := Multiset.toFinset_card_le _
       _ ≤ (X ^ Fintype.card K - X : L[X]).natDegree := card_roots' _
-      _ = Fintype.card K := FiniteField.X_pow_card_sub_X_natDegree_eq L hq
+      _ = Fintype.card K := Polynomial.natDegree_X_pow_sub_X (R := L) hq
   · calc Fintype.card K = (univ.image (algebraMap K L)).card := by
           rw [card_image_of_injective _ (algebraMap K L).injective, card_univ]
       _ ≤ _ := by

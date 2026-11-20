@@ -32,7 +32,7 @@ theorem kappa_exists {K1 K2 F : Type} [Field K1] [Field K2] [Field F] [Finite K1
   have hq1 : 1 < Nat.card K1 := Finite.one_lt_card
   have hRc : (Polynomial.X ^ Nat.card K1 - Polynomial.X : Polynomial F).roots.toFinset.card ≤ Nat.card K1 :=
     (Multiset.toFinset_card_le _).trans ((Polynomial.card_roots' _).trans
-      (FiniteField.X_pow_card_sub_X_natDegree_eq F hq1).le)
+      (Polynomial.natDegree_X_pow_sub_X (R := F) hq1).le)
   have hr : ∀ (K : Type) [Field K] [Finite K], Nat.card K = Nat.card K1 → ∀ f : K →+* F,
       Set.range f = ↑((Polynomial.X ^ Nat.card K1 - Polynomial.X : Polynomial F).roots.toFinset) := by
     intro K _ _ hK f

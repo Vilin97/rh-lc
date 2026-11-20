@@ -117,7 +117,7 @@ theorem splitE_prime (hirr : Irreducible (Polynomial.cyclotomic l E)) (χ : Diri
   let : Fintype (𝓞 K ⧸ Q) := Fintype.ofFinite _
   have hcard : Ideal.absNorm Q ≤ Nrm q := by
     rw [Ideal.absNorm_apply, Submodule.cardQuot_apply, Nat.card_eq_fintype_card, ← Finset.card_univ]
-    rw [← FiniteField.X_pow_card_sub_X_natDegree_eq (𝓞 K ⧸ Q) h2]
+    rw [← Polynomial.natDegree_X_pow_sub_X (R := (𝓞 K ⧸ Q)) h2]
     apply Polynomial.card_le_degree_of_subset_roots
     intro z _
     rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ h2)]

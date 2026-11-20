@@ -66,7 +66,7 @@ theorem hom_value_congruent_int_mod_prime :
       · obtain ⟨b, -, rfl⟩ := Finset.mem_image.mp h
         rw [← map_pow, ZMod.pow_card]
     have hcard := Polynomial.card_le_degree_of_subset_roots hsub
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hg.one_lt, Finset.card_insert_of_notMem hnot,
+    rw [Polynomial.natDegree_X_pow_sub_X hg.one_lt, Finset.card_insert_of_notMem hnot,
       Finset.card_image_of_injective _ (RingHom.injective _), Finset.card_univ, ZMod.card] at hcard
     omega
   have ha' : IsLocalRing.residue O (σ x) = IsLocalRing.residue O ((a.val : ℕ) : O) := by

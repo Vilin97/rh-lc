@@ -114,7 +114,7 @@ theorem not_isRoot_cofactor : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), I
         intro y _
         rw [mem_roots (FiniteField.X_pow_card_sub_X_ne_zero (K' := k') hQm)]
         simp [IsRoot, hall y])
-      rwa [FiniteField.X_pow_card_sub_X_natDegree_eq (K' := k') hQm, Finset.card_univ] at h1
+      rwa [Polynomial.natDegree_X_pow_sub_X (R := k') hQm, Finset.card_univ] at h1
     rw [hQ'] at hcard
     exact absurd hcard (not_le.2 (Nat.pow_lt_pow_right hQ1 (by omega)))
 

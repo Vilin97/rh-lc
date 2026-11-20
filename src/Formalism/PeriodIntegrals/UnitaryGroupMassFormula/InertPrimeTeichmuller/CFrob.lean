@@ -80,7 +80,7 @@ theorem c_frob (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x 
     have h1 := Finset.card_le_card hsub
     rw [Finset.card_univ] at h1
     have h2 := (Multiset.toFinset_card_le _).trans (Polynomial.card_roots' (Polynomial.X ^ p - Polynomial.X : Polynomial (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})))
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)}) hp1] at h2
+    rw [Polynomial.natDegree_X_pow_sub_X (R := (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) hp1] at h2
     have h3 : Fintype.card (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)}) = p ^ 2 := by
       rw [← Nat.card_eq_fintype_card]; exact natCard_quot (K := K) (p := p) hK
     have h4 : p ^ 2 ≤ p := h3 ▸ h1.trans h2

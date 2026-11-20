@@ -132,7 +132,7 @@ theorem split_of_frob_one [IsGalois ℚ E] {p : ℕ} (hp : p.Prime) (P : Ideal (
         Ideal.Quotient.eq_zero_iff_mem, ← neg_sub]
       exact P.neg_mem (hfrob x)
     have h := card_le_degree_of_subset_roots hsub
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hp1, Finset.card_univ] at h
+    rw [Polynomial.natDegree_X_pow_sub_X hp1, Finset.card_univ] at h
     rwa [Nat.card_eq_fintype_card]
   constructor
   · have e1 : P.ramificationIdx ℤ = 1 := Ideal.ramificationIdx_eq_one P ℤ

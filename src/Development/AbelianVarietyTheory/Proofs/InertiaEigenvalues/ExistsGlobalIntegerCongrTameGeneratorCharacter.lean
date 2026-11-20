@@ -55,7 +55,7 @@ theorem exists_int_cong_tg : ∀ (D : D7) (k : Fin 2) (v : D.nd.PlG k), ∃ (u :
   have hroots := FiniteField.roots_X_pow_card_sub_X (ZMod (D.host.g k))
   rw [ZMod.card] at hroots
   have hprod := prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmon (by
-    rw [hroots, FiniteField.X_pow_card_sub_X_natDegree_eq _ hp.one_lt, Finset.card_val, Finset.card_univ,
+    rw [hroots, Polynomial.natDegree_X_pow_sub_X hp.one_lt, Finset.card_val, Finset.card_univ,
       ZMod.card])
   have hev := congrArg (fun P => (P.map (ZMod.castHom (dvd_refl _) (IsLocalRing.ResidueField A))).eval z) hprod
   simp only [Polynomial.map_multiset_prod, Multiset.map_map, Function.comp_def, Polynomial.map_sub, Polynomial.map_X,

@@ -35,7 +35,7 @@ theorem galois_exists : ∃ x : GaloisField p 2, x ^ p ≠ x := by
   have hz : (X ^ p - X : (GaloisField p 2)[X]) = 0 := by
     apply Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero (f := id) _ Function.injective_id
     · intro i; simp [h i]
-    · rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ h1, hc]; nlinarith
+    · rw [Polynomial.natDegree_X_pow_sub_X h1, hc]; nlinarith
   exact FiniteField.X_pow_card_sub_X_ne_zero _ h1 hz
 
 def wittUQ : UQ where

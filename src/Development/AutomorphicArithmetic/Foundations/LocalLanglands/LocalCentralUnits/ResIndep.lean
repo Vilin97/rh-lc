@@ -69,7 +69,7 @@ private theorem range_sub {κ K : Type} [Field κ] [Field K] (ι : K →+* κ) (
     rw [RingHom.coe_range, ← Set.image_univ, Set.ncard_image_of_injective _ ι.injective, Set.ncard_univ, hc]
   rw [h1, Set.ncard_coe_finset]
   refine (Multiset.toFinset_card_le _).trans ((card_roots' _).trans ?_)
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq κ hq]
+  rw [Polynomial.natDegree_X_pow_sub_X (R := κ) hq]
 
 private theorem exists_equiv {κ K K' : Type} [Field κ] [Field K] [Field K'] (ι : K →+* κ) (ι' : K' →+* κ) (q : ℕ) (hq : 1 < q)
     (hc : Nat.card K = q) (hc' : Nat.card K' = q) : ∃ e : K ≃+* K', ∀ y, ι' (e y) = ι y := by

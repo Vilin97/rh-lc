@@ -48,7 +48,7 @@ private theorem normV_le {K : Type} [Field K] [NumberField K] (w : HeightOneSpec
     have := Ideal.Quotient.eq.2 (h x)
     rw [map_pow] at this
     rw [eval_sub, eval_pow, eval_X, ← this, sub_self]
-  · rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hq, Finset.card_univ]
+  · rw [Polynomial.natDegree_X_pow_sub_X hq, Finset.card_univ]
     exact not_le.1 hlt
 
 theorem UpperTheory.frobenius_sign_compatibility :

@@ -17,7 +17,7 @@ theorem exists_zmod_of_pow_eq_self {F : Type} [CommRing F] [IsDomain F] (l : ℕ
   have hroots : P.roots = Finset.univ.val := by
     have := FiniteField.roots_X_pow_card_sub_X (ZMod l)
     rwa [ZMod.card] at this
-  have hdeg : P.natDegree = l := FiniteField.X_pow_card_sub_X_natDegree_eq (ZMod l) hl
+  have hdeg : P.natDegree = l := Polynomial.natDegree_X_pow_sub_X (R := (ZMod l)) hl
   have hprod : (Multiset.map (fun a => X - C a) P.roots).prod = P :=
     Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmon
       (by rw [hroots, hdeg]; simp [ZMod.card])

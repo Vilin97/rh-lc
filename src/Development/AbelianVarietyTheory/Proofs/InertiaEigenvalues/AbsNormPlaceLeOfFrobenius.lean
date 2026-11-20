@@ -86,7 +86,7 @@ theorem normV_le_of_isFrob : ∀ (E Ω : Type) [Field E] [NumberField E] [Field 
     _ = P.roots.toFinset.card := by rw [Nat.card_eq_fintype_card, Fintype.card_coe]
     _ ≤ P.roots.card := Multiset.toFinset_card_le _
     _ ≤ P.natDegree := card_roots' P
-    _ = q := FiniteField.X_pow_card_sub_X_natDegree_eq k hq
+    _ = q := Polynomial.natDegree_X_pow_sub_X (R := k) hq
 
 end NormLeFrob
 end GlobalTheory

@@ -27,7 +27,7 @@ theorem norm_le {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (�
     have := Ideal.Quotient.eq.2 (h x)
     rw [map_pow] at this
     rw [eval_sub, eval_pow, eval_X, ← this, sub_self]
-  · rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hq, Finset.card_univ]
+  · rw [Polynomial.natDegree_X_pow_sub_X hq, Finset.card_univ]
     exact not_le.1 hlt
 
 theorem int_le {M Ω : Type} [Field M] [NumberField M] [Field Ω] [Algebra M Ω] (A : ValuationSubring Ω) (x : 𝓞 M) :

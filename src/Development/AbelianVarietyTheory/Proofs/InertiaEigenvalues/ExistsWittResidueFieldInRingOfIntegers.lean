@@ -41,7 +41,7 @@ theorem sol_mem_range {O F : Type} [CommRing O] [IsLocalRing O] [IsAdicComplete 
     rw [← h2 r, ← h2 s, hf h]
   set P : Polynomial F := Polynomial.X ^ Fintype.card (ResidueField O) - Polynomial.X with hP
   have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero F hq
-  have hd : P.natDegree = Fintype.card (ResidueField O) := FiniteField.X_pow_card_sub_X_natDegree_eq F hq
+  have hd : P.natDegree = Fintype.card (ResidueField O) := Polynomial.natDegree_X_pow_sub_X (R := F) hq
   have hm : ∀ z : F, z ^ Fintype.card (ResidueField O) = z → z ∈ P.roots.toFinset := fun z hz => by
     rw [Multiset.mem_toFinset, Polynomial.mem_roots hP0]
     simp [hP, hz]

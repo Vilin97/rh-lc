@@ -126,7 +126,7 @@ theorem degOf : DegOf := by
       rw [← map_pow, ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
       exact key x
     have h := Polynomial.card_le_degree_of_subset_roots hsub
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hN, Finset.card_univ, ← Nat.card_eq_fintype_card, hR] at h
+    rw [Polynomial.natDegree_X_pow_sub_X hN, Finset.card_univ, ← Nat.card_eq_fintype_card, hR] at h
     exact (Nat.pow_le_pow_iff_right hq).1 h
   have hf0 : 0 < f := by
     rcases Nat.eq_zero_or_pos f with h | h

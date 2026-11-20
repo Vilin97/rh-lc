@@ -595,7 +595,7 @@ theorem placesOver_ncard_of_frob (p : ℕ) [hp : Fact p.Prime] (hpN : ¬ p ∣ H
           Finset.card_le_card (fun y _ => Multiset.mem_toFinset.2 (hroot y))
       _ ≤ (X ^ p - X : (𝓞 H.E ⧸ P)[X]).roots.card := Multiset.toFinset_card_le _
       _ ≤ (X ^ p - X : (𝓞 H.E ⧸ P)[X]).natDegree := card_roots' _
-      _ = p := FiniteField.X_pow_card_sub_X_natDegree_eq _ hp.out.one_lt
+      _ = p := Polynomial.natDegree_X_pow_sub_X hp.out.one_lt
   have hnorm : absNorm P = p ^ ((span {(p : ℤ)}).inertiaDeg' P) :=
     absNorm_eq_pow_inertiaDeg' P hp.out
   have hcardk : absNorm P = Fintype.card (𝓞 H.E ⧸ P) := by

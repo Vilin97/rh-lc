@@ -35,7 +35,7 @@ private theorem norm_le_of_pow {K : Type} [Field K] [NumberField K] (w : HeightO
   have : Finite (𝓞 K ⧸ w.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ w.ne_bot
   letI := Fintype.ofFinite (𝓞 K ⧸ w.asIdeal)
   have e : normV w = (Finset.univ : Finset (𝓞 K ⧸ w.asIdeal)).card := Nat.card_eq_fintype_card
-  rw [e, ← FiniteField.X_pow_card_sub_X_natDegree_eq (𝓞 K ⧸ w.asIdeal) hq]
+  rw [e, ← Polynomial.natDegree_X_pow_sub_X (R := (𝓞 K ⧸ w.asIdeal)) hq]
   refine Polynomial.card_le_degree_of_subset_roots fun y _ => ?_
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
   rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ hq)]

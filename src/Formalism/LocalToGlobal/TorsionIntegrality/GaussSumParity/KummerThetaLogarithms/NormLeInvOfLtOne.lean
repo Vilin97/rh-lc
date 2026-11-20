@@ -21,7 +21,7 @@ theorem poly_id (l : ℕ) (hl : l.Prime) : ∃ Q : Polynomial ℤ,
       (Polynomial.X ^ l - Polynomial.X : Polynomial (ZMod l)) := by
     have hr := FiniteField.roots_X_pow_card_sub_X (ZMod l)
     rw [ZMod.card] at hr
-    have hdeg := FiniteField.X_pow_card_sub_X_natDegree_eq (ZMod l) hl.one_lt
+    have hdeg := Polynomial.natDegree_X_pow_sub_X (R := (ZMod l)) hl.one_lt
     have hmon : (Polynomial.X ^ l - Polynomial.X : Polynomial (ZMod l)).Monic := by
       apply Polynomial.monic_X_pow_sub
       rw [Polynomial.degree_X]

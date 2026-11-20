@@ -66,7 +66,7 @@ private theorem conj_ne {g : ℕ} [Fact g.Prime] {m : ℕ} (hm : 0 < m) {K : Typ
       rw [Polynomial.mem_roots hP0, IsRoot, eval_sub, eval_pow, eval_X]
       simp only [Function.Embedding.coe_subtype]
       rw [hfix y hyF, sub_self])
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq K hq, Finset.card_map, Finset.card_univ,
+  rw [Polynomial.natDegree_X_pow_sub_X (R := K) hq, Finset.card_map, Finset.card_univ,
     Module.card_eq_pow_finrank (K := ZMod g), ZMod.card, hF] at hle
   have := Nat.pow_lt_pow_right hg.one_lt ham
   omega

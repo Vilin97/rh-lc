@@ -70,7 +70,7 @@ theorem exists_toOm (h : Nat.card (ResidueField ↥(OL K)) = l ^ a) (x : Om l) (
       rw [hmem, ← map_pow, hs]
     · rw [Finset.card_image_of_injective _ hinj, Finset.card_univ, ← Nat.card_eq_fintype_card, h]
       refine (Multiset.toFinset_card_le _).trans ((card_roots' _).trans ?_)
-      rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ h1]
+      rw [Polynomial.natDegree_X_pow_sub_X h1]
   obtain ⟨z, -, hz⟩ := Finset.mem_image.1 (hsub ▸ (hmem x).2 hx)
   exact ⟨_, hz⟩
 

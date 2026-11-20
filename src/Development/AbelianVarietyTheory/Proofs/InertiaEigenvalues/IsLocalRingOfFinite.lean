@@ -159,7 +159,7 @@ theorem odd_of_involution (k : Type) [Field k] [Finite k] (τ : k →+* k) (hτ 
       rw [hcF] at this
       simp only [eval_sub, eval_pow, eval_X]
       exact sub_eq_zero.2 this
-  · rw [FiniteField.X_pow_card_sub_X_natDegree_eq k h1s, Finset.card_insert_of_notMem haF,
+  · rw [Polynomial.natDegree_X_pow_sub_X (R := k) h1s, Finset.card_insert_of_notMem haF,
       Set.toFinset_card]
     have : Fintype.card (F : Set k) = q ^ f := by
       rw [← hcard, Nat.card_eq_fintype_card]; exact Fintype.card_congr (Equiv.refl _)

@@ -963,7 +963,7 @@ theorem exists_alpha : ∃ α : WW p, (sigW p)^[2] α = α ∧ IsUnit (α - sigW
       (Z := (Finset.univ : Finset (GaloisField p 2))) (fun y _ => by
         rw [Polynomial.mem_roots hpoly]
         simp [hall y])
-    rw [Finset.card_univ, hcard, FiniteField.X_pow_card_sub_X_natDegree_eq _ hp1] at hle
+    rw [Finset.card_univ, hcard, Polynomial.natDegree_X_pow_sub_X hp1] at hle
     have : p < p ^ 2 := by nlinarith
     omega
   let φ : GaloisField p 2 →ₐ[ZMod p] kb p := IsAlgClosed.lift

@@ -234,7 +234,7 @@ theorem rank_le (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
     Finset.card_le_card_of_injOn Ψ (fun r _ => hroot _) (fun r _ r' _ h => hinj h)
   have h9 : (X ^ (l ^ d) - X : (ResidueField R)[X]).roots.toFinset.card ≤ l ^ d := by
     refine le_trans (Multiset.toFinset_card_le _) (le_trans (card_roots' _) ?_)
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hq]
+    rw [Polynomial.natDegree_X_pow_sub_X hq]
   have h10 : l ^ n ≤ l ^ d := by
     have : (Finset.univ : Finset (Fin n → Fin l)).card = l ^ n := by simp
     rw [← this]

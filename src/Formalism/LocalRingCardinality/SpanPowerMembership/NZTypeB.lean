@@ -131,7 +131,7 @@ theorem exists_orbP : ∃ P : (ZMod g)[X], P.map (algebraMap (ZMod g) (Fbar g)) 
     rw [Finset.card_insert_of_notMem hny, Finset.card_image_of_injective _ (algebraMap (ZMod g) (Fbar g)).injective,
       Finset.card_univ, ZMod.card] at hc
     have h2 := (Multiset.toFinset_card_le _).trans (card_roots' (X ^ g - X : (Fbar g)[X]))
-    rw [FiniteField.X_pow_card_sub_X_natDegree_eq _ hg.out.one_lt] at h2
+    rw [Polynomial.natDegree_X_pow_sub_X hg.out.one_lt] at h2
     omega
   have hc : ∀ n, (orbQ d u).coeff n ∈ Set.range (algebraMap (ZMod g) (Fbar g)) := fun n => by
     have h := congrArg (fun p => p.coeff n) (orbQ_frob hd u hu)

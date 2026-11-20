@@ -83,7 +83,7 @@ private theorem card_bound {C : Type} [CommRing C] (χ : C →+* k) {f j : ℕ}
     rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero k hq)]
     simp [hc c]
   have hle := Polynomial.card_le_degree_of_subset_roots hsub
-  rw [FiniteField.X_pow_card_sub_X_natDegree_eq k hq, hZ] at hle
+  rw [Polynomial.natDegree_X_pow_sub_X (R := k) hq, hZ] at hle
   exact absurd hle (not_le.mpr (Nat.pow_lt_pow_right hp1 hjf))
 
 private theorem rho_ringHom {A : Over (Sp k)} [GrpObj A] {C : Type} [CommRing C] {w : Ideal C} {f : ℕ}
