@@ -37,7 +37,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.zero_pf :
     have hv : (hw.toLp w : H E n 0 → ℂ) =ᵐ[D.ν] w := hw.coeFn_toLp
     have h0 := h (hw.toLp w) (hv.mono fun y hy hl => by
       rw [hy]
-      exact Set.indicator_of_notMem (fun hs => hl hs.2) _)
+      exact Set.indicator_of_notMem (by exact fun hs => hl hs.2) _)
     have hpt : ∀ y, w y * f y = ((‖w y‖ ^ 2 : ℝ) : ℂ) := by
       intro y
       by_cases hy : y ∈ S

@@ -69,7 +69,7 @@ theorem ListTailLog.proof (hE : LemmaETailLog.Statement) (hM : ListMono.Statemen
     obtain ⟨hi', hle'⟩ := hmono _
       (fun x => Set.indicator_nonneg (fun y hy => Real.log_nonneg
         (by linarith [hrE y hy.1, Real.add_one_le_exp (1 : ℝ)])) x)
-      (fun x hx => Set.indicator_of_notMem (fun h => hx h.1) _) hi
+      (fun x hx => Set.indicator_of_notMem (by exact fun h => hx h.1) _) hi
     exact ⟨hi', hle'.trans hle⟩
   exact hCE' A R.Yo R.r (rSec L s) _ R.isOpen_Yo hrc hrEc hr hrE
     (fun x hx => (hB x hx).trans (le_max_left B 0)) hpos h2

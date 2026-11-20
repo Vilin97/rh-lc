@@ -28,7 +28,7 @@ theorem isClosed_of_stable_of_noetherian {X : Type*} [TopologicalSpace X]
     · exact Set.sUnion_subset fun C hC => hC.2
   rw [hV, Set.sUnion_eq_biUnion]
   exact Set.Finite.isClosed_biUnion
-    (TopologicalSpace.NoetherianSpace.finite_irreducibleComponents.subset fun C hC => hC.1)
+    (TopologicalSpace.NoetherianSpace.finite_irreducibleComponents.subset (by exact fun C hC => hC.1))
     fun C hC => isClosed_of_mem_irreducibleComponents C hC.1
 
 theorem isOpen_of_stable (k : Type) [CommRing k] [IsNoetherianRing k] (U : Set (PrimeSpectrum k))

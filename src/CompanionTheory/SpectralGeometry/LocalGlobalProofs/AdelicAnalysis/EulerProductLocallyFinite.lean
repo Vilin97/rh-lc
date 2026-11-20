@@ -205,7 +205,7 @@ theorem GlobalTheory.CompanionTheory.SW.EulerInt.euler_int : ∀ (F E : Type) [F
           have h1 : projInf X ∈ A := hPX.1
           have h2 : ∀ i : S, projV i.1 (projFin X) ∈ B i := fun i => hPX.2 i (Set.mem_univ i)
           simp [φinf, h1, h2]
-        · rw [Set.indicator_of_notMem (fun h => hPX h.1)]
+        · rw [Set.indicator_of_notMem (by exact fun h => hPX h.1)]
           by_cases h1 : projInf X ∈ A
           · have h2 : ¬ ∀ i : S, projV i.1 (projFin X) ∈ B i := fun h2 =>
               hPX ⟨h1, fun i _ => h2 i⟩
@@ -213,7 +213,7 @@ theorem GlobalTheory.CompanionTheory.SW.EulerInt.euler_int : ∀ (F E : Type) [F
             obtain ⟨i, hi⟩ := h2
             rw [Finset.prod_eq_zero (Finset.mem_univ i) (Set.indicator_of_notMem hi _), mul_zero]
           · simp [φinf, h1]
-      · rw [Set.indicator_of_notMem hX, Set.indicator_of_notMem (fun h => hX h.2)]
+      · rw [Set.indicator_of_notMem hX, Set.indicator_of_notMem (by exact fun h => hX h.2)]
     have e1 : ∫⁻ X, φinf X ∂minf = minf A := lintegral_indicator_one hA
     have e2 : ∏ v ∈ S, ∫⁻ X, φ v X ∂(m v) = ∏ i : S, m i.1 (B i) := by
       rw [← Finset.prod_coe_sort S (fun v => ∫⁻ X, φ v X ∂(m v))]

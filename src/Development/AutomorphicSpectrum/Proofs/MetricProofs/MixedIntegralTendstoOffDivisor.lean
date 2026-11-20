@@ -193,7 +193,7 @@ theorem mIntegrable_of_logBound {e : ℕ} {X : Type} [TopologicalSpace X] [Compa
     by_cases hr : Real.exp 1 ≤ R.r ((A.chart j).symm y)
     · rw [Set.indicator_of_mem (show _ ∈ tail R.Yo R.r (Real.exp 1) from ⟨hy.2, hr⟩)]
       nlinarith
-    · rw [Set.indicator_of_notMem (fun h => hr h.2)]
+    · rw [Set.indicator_of_notMem (by exact fun h => hr h.2)]
       have hl1 : Real.log (R.r ((A.chart j).symm y)) ≤ 1 := by
         rw [Real.log_le_iff_le_exp (lt_of_lt_of_le one_pos (R.one_le_r _ hy.2))]
         exact (not_le.1 hr).le

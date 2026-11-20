@@ -178,7 +178,7 @@ theorem lift_one (μf : Measure I.Gf) (x : I.Gf) :
     · rw [Set.indicator_of_notMem h]
       have : ρ.toFun x ≠ 1 := fun e => h ((ρ.ker x hx).1 e)
       simp [MonoidAlgebra.one_def, this.symm]
-  · rw [ρ.lift_of_notMem μf _ hx, Set.indicator_of_notMem (fun h => hx h.1)]
+  · rw [ρ.lift_of_notMem μf _ hx, Set.indicator_of_notMem (by exact fun h => hx h.1)]
 
 theorem lift_inv (μf : Measure I.Gf) (a : MonoidAlgebra ℂ Q) (ha : IsSA a) (x : I.Gf) :
     ρ.lift μf a x⁻¹ = star (ρ.lift μf a x) := by

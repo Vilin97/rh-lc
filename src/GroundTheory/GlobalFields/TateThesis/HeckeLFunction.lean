@@ -183,7 +183,7 @@ theorem hasProd_euler (hsum : Summable fun I ↦ ‖g I‖) (h0 : g ⊥ = 0) :
   by_cases hI : I = ⊥
   · subst hI
     have : ∀ S : Finset (HeightOneSpectrum R), (factoredIdeals S).indicator g ⊥ = g ⊥ :=
-      fun S ↦ by rw [Set.indicator_of_notMem (fun h ↦ h.1 rfl), h0]
+      fun S ↦ by rw [Set.indicator_of_notMem (by exact fun h ↦ h.1 rfl), h0]
     simp only [this]
     exact tendsto_const_nhds
   · refine tendsto_const_nhds.congr' ?_

@@ -162,10 +162,10 @@ theorem integral_shell_integralIndicator (μ : Measure (GL (Fin n) F)) [μ.IsHaa
       simp only [Pi.one_apply]
       ring
     · rw [integralIndicator, Set.indicator_of_notMem (fun h => hi (mem_integralMatrixSet.1 h)),
-        Set.indicator_of_notMem (fun h => hi h.1)]
+        Set.indicator_of_notMem (by exact fun h => hi h.1)]
       simp
   · rw [Set.indicator_of_notMem (show g ∉ {g : GL (Fin n) F | ordDet g = (m : ℤ)} from hg),
-      Set.indicator_of_notMem (fun h => hg h.2)]
+      Set.indicator_of_notMem (by exact fun h => hg h.2)]
     simp
 
 theorem integral_shell_integralIndicator_of_neg (μ : Measure (GL (Fin n) F))

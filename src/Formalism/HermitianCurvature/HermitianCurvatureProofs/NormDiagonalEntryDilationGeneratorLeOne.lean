@@ -2202,7 +2202,7 @@ theorem Et_eq (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp
   unfold Et
   by_cases ht : t ∈ Quad
   · rw [Set.indicator_of_mem (show (p, t) ∈ {p | D.inSS p} ×ˢ Quad from ⟨hp, ht⟩)]
-  · rw [Set.indicator_of_notMem (fun h => ht h.2)]
+  · rw [Set.indicator_of_notMem (by exact fun h => ht h.2)]
     exact (Ef_zero D F F' p (fun h => ht (box_subset_quadrant h))).symm
 
 theorem Et_zero (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp)) (p : SS k r) {t : ℝ × ℝ}
@@ -2213,7 +2213,7 @@ theorem Et_zero (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] 
   · exact Set.indicator_of_notMem h _
 
 theorem Et_zero' (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp)) {p : SS k r} (hp : ¬ D.inSS p)
-    (t : ℝ × ℝ) : Et D F F' (p, t) = 0 := Set.indicator_of_notMem (fun h => hp h.1) _
+    (t : ℝ × ℝ) : Et D F F' (p, t) = 0 := Set.indicator_of_notMem (by exact fun h => hp h.1) _
 
 theorem stronglyMeasurable_indicator_of_continuousOn' {X : Type*} [TopologicalSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
     {s : Set X} (hs : MeasurableSet s) {f : X → ℂ} (hf : ContinuousOn f s) :
@@ -2308,7 +2308,7 @@ theorem Bt_eq (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp
   unfold Bt
   by_cases ht : t ∈ Quad
   · rw [Set.indicator_of_mem (show (p, t) ∈ {p | D.inSS p} ×ˢ Quad from ⟨hp, ht⟩)]
-  · rw [Set.indicator_of_notMem (fun h => ht h.2)]
+  · rw [Set.indicator_of_notMem (by exact fun h => ht h.2)]
     exact (regularized_bracket_zero_off_box D F F' p (fun h => ht (box_subset_quadrant h))).symm
 
 theorem Bt_zero (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp)) (p : SS k r) {t : ℝ × ℝ}
@@ -2319,7 +2319,7 @@ theorem Bt_zero (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] 
   · exact Set.indicator_of_notMem h _
 
 theorem Bt_zero' (D : RealPlaceData k r Wp Wq) (F F' : Mat k r → (Wq →L[ℂ] Wp)) {p : SS k r} (hp : ¬ D.inSS p)
-    (t : ℝ × ℝ) : Bt D F F' (p, t) = 0 := Set.indicator_of_notMem (fun h => hp h.1) _
+    (t : ℝ × ℝ) : Bt D F F' (p, t) = 0 := Set.indicator_of_notMem (by exact fun h => hp h.1) _
 
 theorem Bt_measurable (H : Hyp D Ξ α) {F F' : Mat k r → (Wq →L[ℂ] Wp)} {c c' : ℝ} (hF : AdmW α c 2 2 F)
     (hF' : AdmW α c' 2 2 F') : StronglyMeasurable (Bt D F F') := by

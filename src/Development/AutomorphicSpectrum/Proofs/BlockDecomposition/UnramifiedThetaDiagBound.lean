@@ -111,9 +111,9 @@ theorem indicator_eq_phiS {F : Type} [Field F] [ValuativeRel F] [TopologicalSpac
     · rw [Set.indicator_of_mem (show x ∈ {x : F × F | x.1 ∈ 𝒪[F] ∧ x.2 ∈ 𝒪[F]} from ⟨h1, h2⟩)]
       simp [GlobalTheory.CompanionTheory.SphTheta.phiS, GlobalTheory.CompanionTheory.SphTheta.intInd_of_mem h1,
         GlobalTheory.CompanionTheory.SphTheta.intInd_of_mem h2]
-    · rw [Set.indicator_of_notMem (fun h => h2 h.2)]
+    · rw [Set.indicator_of_notMem (by exact fun h => h2 h.2)]
       simp [GlobalTheory.CompanionTheory.SphTheta.phiS, GlobalTheory.CompanionTheory.SphTheta.intInd_of_notMem h2]
-  · rw [Set.indicator_of_notMem (fun h => h1 h.1)]
+  · rw [Set.indicator_of_notMem (by exact fun h => h1 h.1)]
     simp [GlobalTheory.CompanionTheory.SphTheta.phiS, GlobalTheory.CompanionTheory.SphTheta.intInd_of_notMem h1]
 
 theorem indicator_eq_intInd {E : Type} [Field E] [ValuativeRel E] [TopologicalSpace E]

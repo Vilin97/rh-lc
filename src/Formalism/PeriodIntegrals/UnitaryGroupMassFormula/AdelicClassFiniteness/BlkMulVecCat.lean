@@ -127,7 +127,7 @@ theorem spOne : SpOne := by
     rw [map_natCast, map_zero, Nat.cast_eq_zero] at h1
     omega
   refine ⟨T, ?_, ?_⟩
-  · refine Set.Finite.biUnion (hT'f.subset fun q h => h.1) fun q' hq' => ?_
+  · refine Set.Finite.biUnion (hT'f.subset (by exact fun q h => h.1)) fun q' hq' => ?_
     refine Set.Finite.image _ (partBetween E m (N q'.2) ?_ (D : 𝓞 E) hD0)
     exact (Submodule.fg_span (Set.finite_range _)).sup (hq'.2.map _)
   rintro p ⟨hp, v, hv, hvΓ⟩

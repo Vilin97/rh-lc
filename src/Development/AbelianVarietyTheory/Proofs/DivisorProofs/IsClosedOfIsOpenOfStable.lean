@@ -32,7 +32,7 @@ theorem isClosed_of_isOpen_of_stable {S : Scheme.{0}} [IsLocallyNoetherian S] {L
     exact ⟨⟨x, hxU⟩, hxO, hxL⟩
   let D : Set (U : Set S) := ⋃ Z ∈ {Z ∈ irreducibleComponents (U : Set S) | (Z ∩ L').Nonempty}, Z
   have hD : IsClosed D :=
-    (TopologicalSpace.NoetherianSpace.finite_irreducibleComponents.subset fun _ h => h.1).isClosed_biUnion
+    (TopologicalSpace.NoetherianSpace.finite_irreducibleComponents.subset (by exact fun _ h => h.1)).isClosed_biUnion
       fun Z h => isClosed_of_mem_irreducibleComponents Z h.1
   have hLD : L' ⊆ D := fun y hy =>
     Set.mem_biUnion ⟨irreducibleComponent_mem_irreducibleComponents y, y, mem_irreducibleComponent, hy⟩

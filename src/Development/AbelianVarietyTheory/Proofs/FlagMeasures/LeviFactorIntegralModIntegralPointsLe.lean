@@ -494,9 +494,9 @@ theorem covol_leviGroup_le : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf :
       refine lintegral_congr fun z₂ => ?_
       by_cases h2 : z₂ ∈ D₀
       · rw [Set.indicator_of_mem (Set.mk_mem_prod h h2), Set.indicator_of_mem h2]
-      · rw [Set.indicator_of_notMem (fun hh => h2 hh.2), Set.indicator_of_notMem h2]
+      · rw [Set.indicator_of_notMem (by exact fun hh => h2 hh.2), Set.indicator_of_notMem h2]
     · rw [Set.indicator_of_notMem h, zero_mul]
-      exact (lintegral_congr fun z₂ => Set.indicator_of_notMem (fun hh => h hh.1) _).trans lintegral_zero
+      exact (lintegral_congr fun z₂ => Set.indicator_of_notMem (by exact fun hh => h hh.1) _).trans lintegral_zero
   have hset : {τ : Fin a → ℝ | ∀ i, 0 < τ i} = Set.univ.pi fun _ => Set.Ioi 0 := by
     ext τ; simp
   have hsetm : MeasurableSet {τ : Fin a → ℝ | ∀ i, 0 < τ i} := by

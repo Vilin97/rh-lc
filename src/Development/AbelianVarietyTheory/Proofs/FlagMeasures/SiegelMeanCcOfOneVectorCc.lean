@@ -203,12 +203,12 @@ theorem sum_eq (β : I.E) (x : I.GA) :
     unfold term
     by_cases hy : y ∈ lamX I x
     · rw [Set.indicator_of_mem (by exact ⟨hy, h⟩), if_pos hy]
-    · rw [Set.indicator_of_notMem (fun h' => hy h'.1), if_neg hy, ENNReal.ofReal_zero]
+    · rw [Set.indicator_of_notMem (by exact fun h' => hy h'.1), if_neg hy, ENNReal.ofReal_zero]
   · have h1 : (Equiv.funUnique (Fin 1) (Fin I.n → I.E)).symm y ∉
         {X : Fin 1 → Fin I.n → I.E | hE I.cm.sig I.J (X 0) (X 0) = β} := fun h' => by
       have h'' : hE I.cm.sig I.J y y = β := h'
       exact h ((hE_eq I y).symm.trans h'')
-    rw [Set.indicator_of_notMem (fun h' => h h'.2), Set.indicator_of_notMem h1]
+    rw [Set.indicator_of_notMem (by exact fun h' => h h'.2), Set.indicator_of_notMem h1]
 
 theorem sum_ne_top (hK : ∀ v, HasCompactSupport (φ v)) (A : Set (Fin 1 → Fin I.n → I.E)) (x : I.GA) :
     ∑' X : A, ENNReal.ofReal (term I φ x (X.1 0)) ≠ ⊤ := by

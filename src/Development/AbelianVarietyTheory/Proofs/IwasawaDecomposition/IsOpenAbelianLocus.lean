@@ -30,7 +30,7 @@ theorem isOpen_connectedComponent_of_noetherian {X : Type} [TopologicalSpace X] 
       mem_irreducibleComponent, fun h k => by
       obtain ⟨Z, ⟨a, b⟩, c⟩ := Set.mem_iUnion₂.1 h
       exact b ((a.1.isConnected.isPreconnected.subset_connectedComponent c).trans (connectedComponent_eq k).ge)⟩]
-  exact (NoetherianSpace.finite_irreducibleComponents.subset fun _ h => h.1).isClosed_biUnion fun Z h =>
+  exact (NoetherianSpace.finite_irreducibleComponents.subset (by exact fun _ h => h.1)).isClosed_biUnion fun Z h =>
     isClosed_of_mem_irreducibleComponents Z h.1
 
 theorem exists_connected_open {S : Scheme.{0}} [IsLocallyNoetherian S] (N : S.Opens) (s : S) (hs : s ∈ N) :

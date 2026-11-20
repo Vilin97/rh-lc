@@ -172,16 +172,16 @@ theorem hda_log (hAP : APLogDensity) (q : Fin 3 → ℕ) (hq : Hyp3 q) (g : Gal3
         · rw [Set.indicator_of_mem (show n ∈ {p : ℕ | p.Prime ∧ p ∈ {p : ℕ | (p : ZMod N) = (n : ZMod N)}}
             from ⟨hn, rfl⟩)]
         · intro b _ hb
-          exact Set.indicator_of_notMem (fun h => hb h.2.symm) _
-      · rw [Set.indicator_of_notMem (fun h => hT h.2), Finset.sum_eq_zero]
+          exact Set.indicator_of_notMem (by exact fun h => hb h.2.symm) _
+      · rw [Set.indicator_of_notMem (by exact fun h => hT h.2), Finset.sum_eq_zero]
         intro b hb
         apply Set.indicator_of_notMem
         rintro ⟨_, h⟩
         have h' : (n : ZMod N) = b := h
         exact hT ((hmem n).2 (h' ▸ hb))
-    · rw [Set.indicator_of_notMem (fun h => hn h.1), Finset.sum_eq_zero]
+    · rw [Set.indicator_of_notMem (by exact fun h => hn h.1), Finset.sum_eq_zero]
       intro b _
-      exact Set.indicator_of_notMem (fun h => hn h.1) _
+      exact Set.indicator_of_notMem (by exact fun h => hn h.1) _
   have hsumm : ∀ᶠ x in 𝓝[>] (1 : ℝ), ∀ a ∈ A,
       Summable ({p : ℕ | p.Prime ∧ p ∈ {p : ℕ | (p : ZMod N) = a}}.indicator
         (fun m : ℕ => Real.log m / (m : ℝ) ^ x)) := by

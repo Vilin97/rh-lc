@@ -108,12 +108,12 @@ theorem top_expand [Fintype (G0g D.nd)] (X : HidaSetting D) {red : X.B.I.Gf → 
     · rw [if_pos hg, Finset.sum_eq_single (red g)]
       · rw [Set.indicator_of_mem (show g ∈ Fb (red g) from ⟨hg, rfl⟩), hy g hg]
       · intro b _ hb
-        exact Set.indicator_of_notMem (fun hm => hb hm.2.symm) _
+        exact Set.indicator_of_notMem (by exact fun hm => hb hm.2.symm) _
       · intro h1; exact absurd (Finset.mem_univ _) h1
     · rw [if_neg hg, zero_mul]
       symm
       refine Finset.sum_eq_zero fun b _ => ?_
-      exact Set.indicator_of_notMem (fun hm => hg hm.1) _
+      exact Set.indicator_of_notMem (by exact fun hm => hg hm.1) _
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
   rw [integral_finset_sum]
   · refine Finset.sum_congr rfl fun γ _ => ?_

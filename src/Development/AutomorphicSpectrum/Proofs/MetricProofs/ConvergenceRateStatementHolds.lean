@@ -168,7 +168,7 @@ theorem convergenceRate_holds : ConvergenceRateStatement := by
     · rw [Set.indicator_of_mem (show y ∈ (bdry s)ᶜ ∩ {y | ℓ ≤ rW L s y} from ⟨hy, hry⟩),
         ← ENNReal.ofReal_mul hk]
       exact (ENNReal.ofReal_le_ofReal (hout y hy hry)).trans le_add_self
-    · rw [Set.indicator_of_notMem (fun h => hry h.2), add_zero]
+    · rw [Set.indicator_of_notMem (by exact fun h => hry h.2), add_zero]
       exact ENNReal.ofReal_le_ofReal (hin y hy (not_le.1 hry))
   have hsec : ∫⁻ y, ((bdry s)ᶜ ∩ {y | ℓ ≤ rW L s y}).indicator
         (fun y => ENNReal.ofReal k * ENNReal.ofReal (Real.log (rW L s y))) y ∂μ ≤

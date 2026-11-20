@@ -355,7 +355,7 @@ theorem integrable_triI [MeasurableSpace (GL (Fin 2) F)] [BorelSpace (GL (Fin 2)
         simp only [J, Set.indicator_of_notMem this, Set.indicator_of_notMem hq]
     · rw [Set.indicator_of_notMem hr]
       have : ∀ q, J (r, q) = 0 := fun q =>
-        Set.indicator_of_notMem (fun h => hr h.1) _
+        Set.indicator_of_notMem (by exact fun h => hr h.1) _
       simp [this]
 
   have hkm : Measurable (kfun ψ ν c s B) := by

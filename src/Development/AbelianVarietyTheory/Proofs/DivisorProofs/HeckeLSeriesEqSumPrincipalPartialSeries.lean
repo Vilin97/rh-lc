@@ -26,12 +26,12 @@ theorem tsum_ideal_eq_sum_classGroup_of_summable {K : Type} [Field K] [NumberFie
     by_cases hI : I = ⊥
     · subst hI
       rw [h0]
-      exact (Finset.sum_eq_zero fun c _ => Set.indicator_of_notMem (fun h => h.1 rfl) _).symm
+      exact (Finset.sum_eq_zero fun c _ => Set.indicator_of_notMem (by exact fun h => h.1 rfl) _).symm
     · obtain ⟨c, hc, hu⟩ := GlobalTheory.existsUnique_isPrincipal_mul_classRep b hb I hI
       rw [Finset.sum_eq_single c]
       · exact (Set.indicator_of_mem (show I ∈ S c from ⟨hI, hc⟩) _).symm
       · intro c' _ hne
-        exact Set.indicator_of_notMem (fun h => hne (hu c' h.2)) _
+        exact Set.indicator_of_notMem (by exact fun h => hne (hu c' h.2)) _
       · simp
   rw [tsum_congr h1, Summable.tsum_finsetSum (fun c _ => hsum.indicator (S c))]
   refine Finset.sum_congr rfl fun c _ => ?_

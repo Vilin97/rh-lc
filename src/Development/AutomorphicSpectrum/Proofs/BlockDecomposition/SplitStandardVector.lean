@@ -63,9 +63,9 @@ theorem indicator_eq_phiS :
   · by_cases h2 : x.2 ∈ 𝒪[F]
     · rw [Set.indicator_of_mem (show x ∈ {x : F × F | x.1 ∈ 𝒪[F] ∧ x.2 ∈ 𝒪[F]} from ⟨h1, h2⟩)]
       simp [phiS, intInd_of_mem h1, intInd_of_mem h2]
-    · rw [Set.indicator_of_notMem (fun h => h2 h.2)]
+    · rw [Set.indicator_of_notMem (by exact fun h => h2 h.2)]
       simp [phiS, intInd_of_notMem h2]
-  · rw [Set.indicator_of_notMem (fun h => h1 h.1)]
+  · rw [Set.indicator_of_notMem (by exact fun h => h1 h.1)]
     simp [phiS, intInd_of_notMem h1]
 
 theorem sphN_WcS_phiS (χ : AddChar F Circle) (c₁ c₂ : Fˣ →* ℂˣ) (hχ : Ad3.IsStd χ)

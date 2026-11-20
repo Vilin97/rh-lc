@@ -29,7 +29,7 @@ theorem isOpen_connectedComponent_of_noetherianSpace {X : Type u} [TopologicalSp
       exact hZ.1.isConnected.subset_connectedComponent hy
   rw [← isClosed_compl_iff, h]
   refine Set.Finite.isClosed_biUnion
-    (NoetherianSpace.finite_irreducibleComponents.subset fun Z hZ => hZ.1) fun Z hZ => ?_
+    (NoetherianSpace.finite_irreducibleComponents.subset (by exact fun Z hZ => hZ.1)) fun Z hZ => ?_
   exact isClosed_of_mem_irreducibleComponents Z hZ.1
 
 theorem geometricallyConnected_of_isAlgClosed {k : Type u} [Field k] [IsAlgClosed k]

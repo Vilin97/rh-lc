@@ -38,7 +38,7 @@ theorem FibreClosedComponent.proof : FibreClosedComponent.Statement := by
         PrimeSpectrum.mem_zeroLocus, SetLike.coe_subset_coe, Ideal.map_le_iff_le_comap, exists_prop,
         and_assoc]
     rw [← isClosed_compl_iff, hUc]
-    exact Set.Finite.isClosed_biUnion (hfin.subset fun _ h => h.1)
+    exact Set.Finite.isClosed_biUnion (hfin.subset (by exact fun _ h => h.1))
       fun _ _ => PrimeSpectrum.isClosed_zeroLocus _
   have hiso : IsOpen (X := PrimeSpectrum.comap (algebraMap O (MvPolynomial (Fin n) O ⧸ P)) ⁻¹'
       {Q.comap (algebraMap O (MvPolynomial (Fin n) O ⧸ P))}) {⟨Q, rfl⟩} := by

@@ -42,6 +42,6 @@ lemma integrable_of_contOn (hGc : IsClosed G) (hconc : μ Gᶜ = 0)
   filter_upwards [ae_mem hconc] with x hx
   by_cases hxK : (Matrix.of x) ∈ K
   · exact Set.indicator_of_mem (show x ∈ {x : Fin n → Fin n → ℂ | Matrix.of x ∈ K ∩ G} from ⟨hxK, hx⟩) _
-  · rw [Set.indicator_of_notMem (fun h => hxK h.1), hz _ hx hxK]
+  · rw [Set.indicator_of_notMem (by exact fun h => hxK h.1), hz _ hx hxK]
 
 end QnRdSkewW

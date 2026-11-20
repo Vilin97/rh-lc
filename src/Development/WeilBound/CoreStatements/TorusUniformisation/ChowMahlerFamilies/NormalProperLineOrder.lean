@@ -30,7 +30,7 @@ theorem subset_of_specializes {T : Type} [TopologicalSpace T] [TopologicalSpace.
         obtain ⟨y, hy⟩ := QuasiSober.sober (hSirr t ht) (hScl t ht)
         exact ⟨hsub hxt, hs y x (hsub hy.mem) ((hy.mem_open_set_iff hV).2 htV) (hy.specializes hxt)⟩
     rw [e]
-    exact (hfin.subset fun t ht => ht.1).isClosed_biUnion fun t ht => hScl t ht.1
+    exact (hfin.subset (by exact fun t ht => ht.1)).isClosed_biUnion fun t ht => hScl t ht.1
   intro x hx
   by_contra hxV
   obtain ⟨z, hz, hzV, hz'⟩ := hc V (Z ∩ V)ᶜ hV hcl.isOpen_compl

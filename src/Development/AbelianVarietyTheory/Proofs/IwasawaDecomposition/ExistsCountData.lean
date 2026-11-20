@@ -49,10 +49,10 @@ theorem integral_inflate [Fintype Q] (μf : Measure I.Gf) [μf.IsHaarMeasure] (h
     · rw [if_pos hx, Finset.sum_eq_single (ρ.toFun x)]
       · rw [Set.indicator_of_mem]
         exact ⟨hx, rfl⟩
-      · exact fun q _ hq => Set.indicator_of_notMem (fun h => hq h.2.symm) _
+      · exact fun q _ hq => Set.indicator_of_notMem (by exact fun h => hq h.2.symm) _
       · exact fun h => absurd (Finset.mem_univ _) h
     · rw [if_neg hx]
-      exact (Finset.sum_eq_zero fun q _ => Set.indicator_of_notMem (fun h => hx h.1) _).symm
+      exact (Finset.sum_eq_zero fun q _ => Set.indicator_of_notMem (by exact fun h => hx h.1) _).symm
   have hi : ∀ q, Integrable ({x | x ∈ I.Kset ∧ ρ.toFun x = q}.indicator (fun _ => F q)) μf := fun q =>
     (integrable_indicator_iff (hm q).1).2 (integrableOn_const ((hm q).2 ▸ hfin))
   rw [e]

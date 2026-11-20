@@ -131,11 +131,11 @@ theorem integral_split_place : ∀ (D : D7) (A : HSp D) (m : Measure (GA D A)), 
       rw [Set.indicator_of_mem hq]
       by_cases h1 : x ∈ E
       · rw [Set.indicator_of_mem ((hEl y x).2 h1), Set.indicator_of_mem (show x ∈ (E ∩ {g : GA D A | GlobalTheory.AdelicU.proj D.sp.cm.sig A.gram v g ∈ J}) from ⟨h1, h2⟩)]
-      · rw [Set.indicator_of_notMem (mt (hEl y x).1 h1), Set.indicator_of_notMem (fun h => h1 h.1)]
+      · rw [Set.indicator_of_notMem (mt (hEl y x).1 h1), Set.indicator_of_notMem (by exact fun h => h1 h.1)]
     · have hq : (GlobalTheory.AdelicU.emb D.sp.cm.sig A.gram v y * x, y) ∉ {q : GA D A × GlobalTheory.FinZeta.Gv A v | (GlobalTheory.AdelicU.proj D.sp.cm.sig A.gram v q.1)⁻¹ * q.2 ∈ J} := by
         show ¬ (GlobalTheory.AdelicU.proj D.sp.cm.sig A.gram v (GlobalTheory.AdelicU.emb D.sp.cm.sig A.gram v y * x))⁻¹ * y ∈ J
         rw [hp, inv_mem_iff]; exact h2
-      rw [Set.indicator_of_notMem hq, Set.indicator_of_notMem (fun h => h2 h.2)]
+      rw [Set.indicator_of_notMem hq, Set.indicator_of_notMem (by exact fun h => h2 h.2)]
   have hf₂ : Integrable f₂ (m.prod μ) := by
     refine (hT.integrable_comp_emb Te.measurableEmbedding).1 ?_
     have : f₂ ∘ Te = f := funext hf₂T

@@ -245,7 +245,7 @@ theorem tail : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] [CompactSpace X] [T
     · simp [hx]
   have hms : ∀ R : ℝ, MeasurableSet {x | R ≤ Zᶜ.indicator r x} := fun R => measurableSet_le measurable_const hm
   have hcut0 : ∀ (S : Set X) (f : X → ℝ), ∀ x ∈ Z, cut Z S f x = 0 := fun S f x hx =>
-    Set.indicator_of_notMem (fun h => h.2 hx) _
+    Set.indicator_of_notMem (by exact fun h => h.2 hx) _
   have huniv : ∀ f : X → ℝ, cut Z Set.univ f = cut Z {x | Real.exp 1 ≤ r x} f := by
     intro f
     unfold cut

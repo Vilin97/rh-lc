@@ -52,7 +52,7 @@ theorem detAdm_gen {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E
       by_cases hp : p.2 ∈ boxS D
       · rw [Set.indicator_of_mem (mk_mem_prod (mem_univ p.1) hp : p ∈ univ ×ˢ boxS D),
           Set.indicator_of_mem hp, mul_one]
-      · rw [Set.indicator_of_notMem (fun h' => hp h'.2), Set.indicator_of_notMem hp, mul_zero]
+      · rw [Set.indicator_of_notMem (by exact fun h' => hp h'.2), Set.indicator_of_notMem hp, mul_zero]
     have hfc : ∀ μ : Measure ((ι → Ainf F) × (ι → Af F)), (∀ K, IsCompact K → μ K < ⊤) →
         IsFiniteMeasureOnCompacts (ρ μ) := fun μ hμ =>
       ⟨fun K hK => by

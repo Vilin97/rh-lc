@@ -247,8 +247,8 @@ theorem abs_side : ∀ (k r : ℕ) {Wq : Type} [NormedAddCommGroup Wq] [InnerPro
         · rw [Set.indicator_of_mem h1]
           by_cases h2 : x ∈ E
           · rw [Set.indicator_of_mem (Set.mem_inter h2 h1), Set.indicator_of_mem h2, haG x h1.1, Pi.one_apply, mul_one]
-          · rw [Set.indicator_of_notMem (fun h => h2 h.1), Set.indicator_of_notMem h2, mul_zero, zero_mul]
-        · rw [Set.indicator_of_notMem h1, Set.indicator_of_notMem (fun h => h1 h.2), mul_zero]
+          · rw [Set.indicator_of_notMem (by exact fun h => h2 h.1), Set.indicator_of_notMem h2, mul_zero, zero_mul]
+        · rw [Set.indicator_of_notMem h1, Set.indicator_of_notMem (by exact fun h => h1 h.2), mul_zero]
     _ ≤ _ := hpiece
     _ ≤ _ := mul_le_mul_right hcheb _
     _ = _ := by

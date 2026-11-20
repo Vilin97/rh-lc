@@ -30,7 +30,7 @@ theorem isOpen_component {X : Type} [TopologicalSpace X] [NoetherianSpace X] (x 
       exact Set.disjoint_left.mp hdisj hyZ hyx
   have hcl : IsClosed (connectedComponent x)ᶜ := by
     rw [key, Set.sUnion_eq_biUnion]
-    exact Set.Finite.isClosed_biUnion (hfin.subset fun Z hZ => hZ.1)
+    exact Set.Finite.isClosed_biUnion (hfin.subset (by exact fun Z hZ => hZ.1))
       fun Z hZ => isClosed_of_mem_irreducibleComponents Z hZ.1
   exact isClosed_compl_iff.mp hcl
 

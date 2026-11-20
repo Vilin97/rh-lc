@@ -330,7 +330,7 @@ theorem measure_entry : ∀ (k : ℕ) (μ : Measure (PI.MtM (k + 1))), 1 ≤ k �
             (Measure.map_apply hlm hE'm).symm
         _ = μ {g : PI.MtM (k + 1) | 1 - t ≤ ‖g (Fin.last k) (Fin.last k)‖ ^ 2} := by
             rw [hinv h hhU]
-    · rw [Set.indicator_of_notMem (fun hm => hx1 hm.1)]
+    · rw [Set.indicator_of_notMem (by exact fun hm => hx1 hm.1)]
       refine measure_mono_null ?_ (ae_iff.mp hU)
       intro g hg hgU
       have e1 : sq (x ᵥ* Matrix.of g) = sq x := sq_vecMul _ hgU x
