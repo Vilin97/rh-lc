@@ -117,7 +117,7 @@ theorem nonvanishing_dense : NonvanishingDense.Statement := by
     rw [hhor, Ideal.mem_bot] at this
     exact nonZeroDivisors.ne_zero hn this
   have hP'prime := IsLocalization.isPrime_of_isPrime_disjoint (Submonoid.map (C (σ := Σ k, ι k)) (nonZeroDivisors ℤ)) (MvPolynomial (Σ k, ι k) ℚ) P hprime hdisj
-  have hcomap := IsLocalization.comap_map_of_isPrime_disjoint (Submonoid.map (C (σ := Σ k, ι k)) (nonZeroDivisors ℤ)) (MvPolynomial (Σ k, ι k) ℚ) hprime hdisj
+  have hcomap := IsLocalization.under_map_of_isPrime_disjoint (Submonoid.map (C (σ := Σ k, ι k)) (nonZeroDivisors ℤ)) (MvPolynomial (Σ k, ι k) ℚ) hprime hdisj
   rw [halg] at hP'prime hcomap
   set P' := Ideal.map (MvPolynomial.map (Int.castRingHom ℚ)) P with hP'
   have hf' : MvPolynomial.map (Int.castRingHom ℚ) f ∉ P' := by

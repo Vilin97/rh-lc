@@ -59,7 +59,7 @@ theorem map_notMem {K : Type} [Field K] [NumberField K] {m : ℕ} {P : Ideal (Mv
     exact Ideal.eq_top_of_isUnit_mem _ hmem ((Ne.isUnit ha0).map C)
   intro hmem
   apply hq
-  have hc := IsLocalization.comap_map_of_isPrime_disjoint (M := (nonZeroDivisors (𝓞 K)).map (C (σ := Fin m)))
+  have hc := IsLocalization.under_map_of_isPrime_disjoint (M := (nonZeroDivisors (𝓞 K)).map (C (σ := Fin m)))
     (S := MvPolynomial (Fin m) K) hP hdisj
   rw [← hc, Ideal.mem_comap]
   exact hmem

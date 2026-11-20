@@ -105,7 +105,7 @@ theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : 
       simp [G₀, RingHom.algebraMap_toAlgebra, map_sum]
   rw [← hG₀] at hG
   have hG₀Q : G₀ ∈ P.map ι := by
-    have h := IsLocalization.comap_map_of_isPrime_disjoint _ (MvPolynomial (Fin N) L) hQprime hdisj
+    have h := IsLocalization.under_map_of_isPrime_disjoint _ (MvPolynomial (Fin N) L) hQprime hdisj
     rw [← h]
     exact hG
   rw [hQ, RingHom.mem_ker] at hG₀Q

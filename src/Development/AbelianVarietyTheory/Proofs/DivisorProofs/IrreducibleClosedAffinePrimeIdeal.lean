@@ -64,7 +64,7 @@ theorem isLocalization_away_quotient {R S : Type*} [CommRing R] [CommRing S] [Al
     simp only [Ideal.Quotient.algebraMap_quotient_map_quotient, Ideal.Quotient.eq] at hxy
     rw [← map_sub] at hxy
     have : a - b ∈ Q := by
-      rw [← IsLocalization.comap_map_of_isPrime_disjoint (Submonoid.powers t) S ‹_› hdisj]
+      rw [← IsLocalization.under_map_of_isPrime_disjoint (Submonoid.powers t) S ‹_› hdisj]
       exact hxy
     simp [Ideal.Quotient.eq.2 this]
 

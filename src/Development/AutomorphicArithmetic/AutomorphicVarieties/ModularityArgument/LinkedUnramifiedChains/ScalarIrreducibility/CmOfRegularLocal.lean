@@ -59,7 +59,7 @@ private theorem min_of_localized {R : Type} [CommRing R] (Q : Ideal R) [Q.IsPrim
     exact ha (hPQ haP)
   set P' : Ideal (Localization.AtPrime Q) := P.map (algebraMap R (Localization.AtPrime Q)) with hP'
   have hcomap : Ideal.comap (algebraMap R (Localization.AtPrime Q)) P' = P :=
-    IsLocalization.comap_map_of_isPrime_disjoint Q.primeCompl (Localization.AtPrime Q) hPprime hdis
+    IsLocalization.under_map_of_isPrime_disjoint Q.primeCompl (Localization.AtPrime Q) hPprime hdis
   have hass : P' ∈ associatedPrimes (Localization.AtPrime Q) (Localization.AtPrime Q) := by
     refine Module.associatedPrimes.mem_associatedPrimes_of_comap_mem_associatedPrimes_of_isLocalizedModule
       Q.primeCompl (Algebra.linearMap R (Localization.AtPrime Q)) P' ?_

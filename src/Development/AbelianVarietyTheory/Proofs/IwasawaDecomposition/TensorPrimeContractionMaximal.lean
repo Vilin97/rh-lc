@@ -37,7 +37,7 @@ theorem localization_atPrime_tensor (A C R : Type) [CommRing A] [CommRing C] [Co
     rintro _ ⟨c, hc, rfl⟩ h
     exact hc h
   have hQ' := IsLocalization.isPrime_of_isPrime_disjoint M (B ⊗[A] R) Q inferInstance hdisj
-  have hc := IsLocalization.comap_map_of_isPrime_disjoint M (B ⊗[A] R) (inferInstance : Q.IsPrime) hdisj
+  have hc := IsLocalization.under_map_of_isPrime_disjoint M (B ⊗[A] R) (inferInstance : Q.IsPrime) hdisj
   refine ⟨Q.map (algebraMap (C ⊗[A] R) (B ⊗[A] R)), hQ', ?_, ?_⟩
   · haveI := hQ'
     have hne : (Q.map (algebraMap (C ⊗[A] R) (B ⊗[A] R))).comap

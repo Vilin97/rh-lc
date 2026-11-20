@@ -107,7 +107,7 @@ theorem fibmeets : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsC
     ext x
     rw [RingHom.mem_ker, IsScalarTower.algebraMap_apply R (Localization.Away c.r) k,
       ← RingHom.mem_ker, Ideal.ker_algebraMap_residueField]
-    have e := IsLocalization.comap_map_of_isPrime_disjoint (Submonoid.powers c.r) (Localization.Away c.r) q.isPrime hdisj
+    have e := IsLocalization.under_map_of_isPrime_disjoint (Submonoid.powers c.r) (Localization.Away c.r) q.isPrime hdisj
     show x ∈ q'.comap (algebraMap R (Localization.Away c.r)) ↔ _
     exact Iff.of_eq (congrArg (x ∈ ·) e)
   have hW := c.fibre k hker (torsMap (IsScalarTower.toAlgHom R (Localization.Away c.r) k) z)

@@ -175,7 +175,7 @@ private lemma isDomain_of_formallyEtale_of_isLocalRing {A B : Type} [CommRing A]
   let q' : Ideal (Localization.Away f) := q.map (algebraMap S _)
   haveI hq' : q'.IsPrime := IsLocalization.isPrime_of_isPrime_disjoint (Submonoid.powers f) _ q hq hdisj
   have hcomap : q'.comap (algebraMap S (Localization.Away f)) = q :=
-    IsLocalization.comap_map_of_isPrime_disjoint (Submonoid.powers f) _ hq hdisj
+    IsLocalization.under_map_of_isPrime_disjoint (Submonoid.powers f) _ hq hdisj
   obtain ⟨hdom, -⟩ := _root_.GlobalTheory.isDomain_and_isIntegrallyClosed_atPrime_of_etale A q' (Localization.AtPrime q')
   haveI : IsLocalization q.primeCompl (Localization.AtPrime q') := by
     have h1 : IsLocalization (q'.comap (algebraMap S (Localization.Away f))).primeCompl

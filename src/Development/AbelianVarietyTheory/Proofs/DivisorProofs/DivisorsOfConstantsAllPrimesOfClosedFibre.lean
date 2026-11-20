@@ -45,7 +45,7 @@ theorem divConstAll_of_divConstLocal : DivConstLocal → DivConstAll := by
   haveI hP'prime : P'.IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint _ T'[X] P inferInstance hdisj
   have hcomapP' : P'.comap (algebraMap T[X] T'[X]) = P :=
-    IsLocalization.comap_map_of_isPrime_disjoint _ T'[X] inferInstance hdisj
+    IsLocalization.under_map_of_isPrime_disjoint _ T'[X] inferInstance hdisj
   have hCcomm : ∀ a : T, C (algebraMap T T' a) = algebraMap T[X] T'[X] (C a) := fun a => by
     change _ = (C a).map (algebraMap T T')
     rw [Polynomial.map_C]

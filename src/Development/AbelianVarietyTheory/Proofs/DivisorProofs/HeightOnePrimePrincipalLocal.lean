@@ -20,7 +20,7 @@ theorem heightOne_prime_locallyPrincipal_of_factorial_localization : ∀ (R S : 
   have hPSprime : (P.map (algebraMap R S)).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint p.primeCompl S P hP hdisj
   have hcomap : (P.map (algebraMap R S)).comap (algebraMap R S) = P :=
-    IsLocalization.comap_map_of_isPrime_disjoint p.primeCompl S hP hdisj
+    IsLocalization.under_map_of_isPrime_disjoint p.primeCompl S hP hdisj
   have hPS0 : P.map (algebraMap R S) ≠ ⊥ := by
     obtain ⟨x, hxP, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hP0
     intro h

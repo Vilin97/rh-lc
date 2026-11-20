@@ -96,7 +96,7 @@ theorem exists_prime_of_comap_C {W : Ideal (MRing ι A)} (hW : W.IsPrime)
     exact hs (by rw [← hm]; exact hsW)
   exact ⟨W.map (algebraMap (MRing ι A) (MRing ι O)),
     IsLocalization.isPrime_of_isPrime_disjoint _ _ _ hW hdisj,
-    IsLocalization.comap_map_of_isPrime_disjoint _ _ hW hdisj⟩
+    IsLocalization.under_map_of_isPrime_disjoint _ _ hW hdisj⟩
 
 theorem comap_C_comap_eq [IsLocalRing O] {W : Ideal (MRing ι O)} (hW : W.IsPrime)
     (h : (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O) ≤ W) :

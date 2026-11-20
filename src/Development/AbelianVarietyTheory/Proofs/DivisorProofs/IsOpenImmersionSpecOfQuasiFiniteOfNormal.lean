@@ -13,7 +13,7 @@ theorem eq_of_minimalPrimes_le_of_isDomain_localization {A : Type} [CommRing A]
   have hK : K.IsPrime := RingHom.ker_isPrime _
   have hle : ∀ Q : Ideal A, Q.IsPrime → Q ≤ P → K ≤ Q := by
     intro Q hQ hQP
-    have h := IsLocalization.comap_map_of_isPrime_disjoint P.primeCompl (Localization.AtPrime P) hQ
+    have h := IsLocalization.under_map_of_isPrime_disjoint P.primeCompl (Localization.AtPrime P) hQ
       (Set.disjoint_left.2 fun x hx hxQ ↦ hx (hQP hxQ))
     rw [← h]
     intro x hx

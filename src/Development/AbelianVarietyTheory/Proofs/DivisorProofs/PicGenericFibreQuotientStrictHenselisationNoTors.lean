@@ -30,8 +30,8 @@ theorem poly : ∀ (T : Type) [CommRing T] [IsDomain T] (P P' : Ideal (Polynomia
     hdisj'.mono_right hle
   have hPK := IsLocalization.isPrime_of_isPrime_disjoint M (Polynomial K) P hP hdisj
   have hP'K := IsLocalization.isPrime_of_isPrime_disjoint M (Polynomial K) P' hP' hdisj'
-  have hc := IsLocalization.comap_map_of_isPrime_disjoint M (Polynomial K) hP hdisj
-  have hc' := IsLocalization.comap_map_of_isPrime_disjoint M (Polynomial K) hP' hdisj'
+  have hc := IsLocalization.under_map_of_isPrime_disjoint M (Polynomial K) hP hdisj
+  have hc' := IsLocalization.under_map_of_isPrime_disjoint M (Polynomial K) hP' hdisj'
   have hM0 : (0 : Polynomial T) ∉ M := by
     intro h
     obtain ⟨s, hs, hs0⟩ := Submonoid.mem_map.mp h

@@ -99,7 +99,7 @@ theorem local_step : ∀ (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω
   haveI hPT : (P.map (algebraMap _ T)).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint (.powers h₁) T P hP hdisj
   have hcomap : (P.map (algebraMap _ T)).comap (algebraMap _ T) = P :=
-    IsLocalization.comap_map_of_isPrime_disjoint (.powers h₁) T hP hdisj
+    IsLocalization.under_map_of_isPrime_disjoint (.powers h₁) T hP hdisj
   obtain ⟨g, hgP, Hg⟩ := exists_away_basis S T Ω₀ Ω e r hr z hli hsp (P.map (algebraMap _ T))
   obtain ⟨k, g₀, hk⟩ := IsLocalization.Away.surj h₁ g
   have hg₀ : g₀ ∉ P := by
