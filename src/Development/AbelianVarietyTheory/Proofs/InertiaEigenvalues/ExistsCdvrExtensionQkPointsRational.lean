@@ -25,7 +25,11 @@ theorem exists_ringHom_extend {K L F : Type} [Field K] [Field L] [Field F] [Alge
   have : Algebra.IsAlgebraic M L := Algebra.IsAlgebraic.tower_top (K := K) M
   have : Module.IsTorsionFree M F := DivisionSemiring.to_moduleIsTorsionFree
   have : Module.IsTorsionFree M L := DivisionSemiring.to_moduleIsTorsionFree
-  let σ : L →ₐ[M] F := IsAlgClosed.lift
+  let σ : L →ₐ[M] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨σ.toRingHom, RingHom.ext fun x => σ.commutes x⟩
 
 section Ext

@@ -85,7 +85,11 @@ theorem exists_adjoin_eq_of_norm_coeff_sub_lt (f : L[X]) (hm : f.Monic) (hirr : 
   intro g hgm hdeg hgc hclose β hβ
   have hβint : IsIntegral L β := ⟨g, hgm, by rwa [← aeval_def]⟩
   have : FiniteDimensional L L⟮β⟯ := adjoin.finiteDimensional hβint
-  let ψ : L⟮β⟯ →ₐ[L] C := IsAlgClosed.lift
+  let ψ : L⟮β⟯ →ₐ[L] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   set β' : C := ψ (AdjoinSimple.gen L β) with hβ'_def
   have hgen : aeval (AdjoinSimple.gen L β) g = 0 := by
     apply (algebraMap L⟮β⟯ Ω').injective

@@ -139,7 +139,11 @@ theorem exists_emb [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring 
     (hA : A.valuation ((l : ℕ) : Ω) < 1) :
     ∃ j : Ω →+* PadicAlgCl l, ∀ x, x ∈ A ↔ ‖j x‖ ≤ 1 := by
   have : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
-  let j0 : Ω →ₐ[ℚ] PadicAlgCl l := IsAlgClosed.lift
+  let j0 : Ω →ₐ[ℚ] PadicAlgCl l := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h0 : (placeJ (j0 : Ω →+* PadicAlgCl l)).valuation ((l : ℕ) : Ω) < 1 := by
     rw [val_lt_one_iff (mem_placeJ _), map_natCast]
     have h1 : ‖((l : ℕ) : PadicAlgCl l)‖ = ‖((l : ℕ) : ℚ_[l])‖ := by

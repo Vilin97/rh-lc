@@ -24,7 +24,11 @@ theorem isIrrChar_of_abs {G K : Type} [Group G] [Fintype G] [Field K] [CharZero 
   classical
   obtain ⟨n, ρ, hρ, hχ⟩ := h
   letI : Algebra K ℂ := σ.toAlgebra
-  let ι : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let ι : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hι : ∀ x : K, ι (algebraMap K (AlgebraicClosure K) x) = σ x := fun x => ι.commutes x
   have hch : ∀ g, ρ.character g = Matrix.trace (LinearMap.toMatrix' (ρ g)) := fun g => by
     rw [Representation.character, LinearMap.trace_eq_matrix_trace _ (Pi.basisFun _ (Fin n)),

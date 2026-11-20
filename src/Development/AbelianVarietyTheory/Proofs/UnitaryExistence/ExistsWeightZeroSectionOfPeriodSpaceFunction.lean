@@ -17,7 +17,11 @@ open GlobalTheory.CompIdem
 theorem isField_tensor {K κ F : Type} [Field K] [CharZero K] [Field κ] [Field F] [Algebra K κ] [Algebra K F]
     [FiniteDimensional K F] (h : ∀ x : κ, IsIntegral K x → x ∈ (algebraMap K κ).range) : IsField (κ ⊗[K] F) := by
   let Ω := AlgebraicClosure κ
-  let ψ : F →ₐ[K] Ω := IsAlgClosed.lift
+  let ψ : F →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let pb := Field.powerBasisOfFiniteOfSeparable K F
   let m : κ ⊗[K] F →ₐ[κ] Ω := Algebra.TensorProduct.lift (Algebra.ofId κ Ω) ψ fun _ _ => Commute.all _ _
   let b := Algebra.TensorProduct.basis κ pb.basis

@@ -35,7 +35,11 @@ private theorem cc_ex [IsTotallyReal F] (w : InfinitePlace F) : ∃ c : G F Ω, 
   haveI : Algebra.IsAlgebraic F Ω := IsAlgClosure.isAlgebraic
   haveI : IsGalois F Ω := {}
   letI : Algebra F ℂ := w.embedding.toAlgebra
-  let j : Ω →ₐ[F] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hr : ComplexEmbedding.IsReal w.embedding := InfinitePlace.isReal_iff.1 (IsTotallyReal.isReal w)
   let cj : ℂ →ₐ[F] ℂ := { starRingEnd ℂ with commutes' := fun x => RingHom.congr_fun hr x }
   letI : Algebra Ω ℂ := j.toRingHom.toAlgebra

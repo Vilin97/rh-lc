@@ -27,7 +27,11 @@ theorem extRho : ExtRho := by
         commutes' := fun _ => rfl }
     exact (isAlgebraic_algHom_iff f M₁.val.injective).mp (halg x x.2)
   letI iC : Algebra M ℂ := ρ.toRingHom.toAlgebra
-  let φ : M₁ →ₐ[M] ℂ := IsAlgClosed.lift
+  let φ : M₁ →ₐ[M] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨{ toRingHom := φ.toRingHom, commutes' := φ.toRingHom.map_rat_algebraMap }, fun x => ?_⟩
   exact φ.commutes x
 

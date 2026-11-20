@@ -29,7 +29,11 @@ theorem exists_ringHom_extend_of_isIntegral_of_injective {R B Ω : Type*} [CommR
   haveI : Algebra.IsIntegral (R ⧸ RingHom.ker φ) (B ⧸ Q) :=
     Algebra.IsIntegral.tower_top (R := R)
   haveI : Algebra.IsAlgebraic (R ⧸ RingHom.ker φ) (B ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let σ : (B ⧸ Q) →ₐ[R ⧸ RingHom.ker φ] Ω := IsAlgClosed.lift
+  let σ : (B ⧸ Q) →ₐ[R ⧸ RingHom.ker φ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨σ.toRingHom.comp (Ideal.Quotient.mk Q), RingHom.ext fun r => ?_⟩
   exact (σ.commutes (Ideal.Quotient.mk _ r)).trans (RingHom.kerLift_mk φ r)
 
@@ -59,7 +63,11 @@ theorem bijective_algebraMap_of_subsingleton_algHom {R A : Type*} [CommRing R] [
       rwa [hQ0, Ideal.mem_bot] at this
     haveI : FaithfulSMul R (A ⧸ Q) := (faithfulSMul_iff_algebraMap_injective _ _).mpr hinj
     haveI : Module.IsTorsionFree R (A ⧸ Q) := FaithfulSMul.to_isTorsionFree R _
-    let σ₀ : (A ⧸ Q) →ₐ[R] L := IsAlgClosed.lift
+    let σ₀ : (A ⧸ Q) →ₐ[R] L := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     have h₀ : Function.Injective σ₀ := by
       set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
       intro a ha

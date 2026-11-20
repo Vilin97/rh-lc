@@ -50,7 +50,11 @@ theorem trace_star_mul_pos (a : K) (ha : a ≠ 0) : 0 < Algebra.trace ℚ K (sta
     have h1 : σ (star a) = starRingEnd ℂ (σ a) := hc σ.toRingHom a
     rw [map_mul, h1, Complex.normSq_eq_conj_mul_self]
   have hpos : 0 < ∑ σ : K →ₐ[ℚ] ℂ, Complex.normSq (σ a) := by
-    have σ0 : K →ₐ[ℚ] ℂ := IsAlgClosed.lift
+    have σ0 : K →ₐ[ℚ] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine Finset.sum_pos' (fun σ _ => Complex.normSq_nonneg _) ⟨σ0, Finset.mem_univ _, ?_⟩
     exact Complex.normSq_pos.mpr ((map_ne_zero σ0).mpr ha)
   have hq : ((Algebra.trace ℚ K (star a * a) : ℚ) : ℝ) =

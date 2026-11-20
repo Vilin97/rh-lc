@@ -117,7 +117,11 @@ theorem exists_fraction_map {W W' : Type} [CommRing W] [IsDomain W] [CommRing W'
 theorem exists_closure_map {k F : Type} [Field k] [Field F] [IsAlgClosed F] (f : k →+* F) :
     ∃ i : AlgebraicClosure k →+* F, ∀ y, i (algebraMap k _ y) = f y := by
   letI := f.toAlgebra
-  let i : AlgebraicClosure k →ₐ[k] F := IsAlgClosed.lift
+  let i : AlgebraicClosure k →ₐ[k] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨i.toRingHom, i.commutes⟩
 
 theorem mem_range_iff_of_finite {W W' : Type} [CommRing W] [IsDomain W] [IsIntegrallyClosed W] [CommRing W'] [IsDomain W']

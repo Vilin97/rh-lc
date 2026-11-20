@@ -64,7 +64,11 @@ theorem UpperTheory.V.Loc.exists_dec {v : ℕ} [Fact v.Prime] {G : Type} [Group 
   haveI : CharZero Ω := charZero_of_injective_algebraMap (algebraMap ℚ Ω).injective
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
-  let j0 : Ω →ₐ[ℚ] PadicAlgCl v := IsAlgClosed.lift
+  let j0 : Ω →ₐ[ℚ] PadicAlgCl v := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let j : Ω →+* PadicAlgCl v := j0.toRingHom
   let A : ValuationSubring Ω := (Valued.v (R := PadicAlgCl v)).valuationSubring.comap j
   have hA : ∀ x, x ∈ A ↔ ‖j x‖ ≤ 1 := fun x => by

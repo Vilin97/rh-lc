@@ -106,7 +106,11 @@ theorem exists_normal_local_between : ∀ (T : Type) [CommRing T] [IsDomain T] [
     (IsFractionRing.injective T (FractionRing T)).comp hi
   let φ : FractionRing A →+* FractionRing T := IsFractionRing.lift hgi
   letI : Algebra (FractionRing A) (FractionRing T) := φ.toAlgebra
-  let σ : L →ₐ[FractionRing A] FractionRing T := IsAlgClosed.lift
+  let σ : L →ₐ[FractionRing A] FractionRing T := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra A L := ((algebraMap (FractionRing A) L).comp (algebraMap A (FractionRing A))).toAlgebra
   haveI : IsScalarTower A (FractionRing A) L := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   have hAL : Function.Injective (algebraMap A L) :=

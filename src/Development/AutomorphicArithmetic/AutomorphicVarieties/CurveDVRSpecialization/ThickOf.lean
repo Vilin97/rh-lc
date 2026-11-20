@@ -15,7 +15,11 @@ private theorem exists_emb' {k κ K : Type} [Field k] [Field κ] [Algebra k κ] 
   letI : Algebra k K := φ.toAlgebra
   haveI : Module.IsTorsionFree k κ := Module.isTorsionFree_iff_algebraMap_injective.2 (algebraMap k κ).injective
   haveI : Module.IsTorsionFree k K := Module.isTorsionFree_iff_algebraMap_injective.2 φ.injective
-  let j : κ →ₐ[k] K := IsAlgClosed.lift
+  let j : κ →ₐ[k] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨j, fun a => j.commutes a⟩
 
 private theorem exists_emb {k K : Type} [Field k] [Field K] [IsAlgClosed K] (φ : k →+* K) :

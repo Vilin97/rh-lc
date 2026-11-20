@@ -94,7 +94,11 @@ theorem factor_isGalois_dvd [NeZero q] {L : Type} [Field L] [Algebra K L] [Finit
     IsGalois K L ∧ Module.finrank K L ∣ q := by
   classical
   let Ω := AlgebraicClosure K
-  let σ0 : L →ₐ[K] Ω := IsAlgClosed.lift
+  let σ0 : L →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hσ0inj : Function.Injective σ0 := σ0.toRingHom.injective
   let P : Multiplicative (ZMod q) → Prop := fun g => ∀ a, π a = 0 → π (act g a) = 0
   have hPmul : ∀ g h, P g → P h → P (g * h) := by

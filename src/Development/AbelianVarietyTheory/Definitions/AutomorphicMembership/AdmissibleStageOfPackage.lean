@@ -251,7 +251,11 @@ theorem nonempty_flagPt {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
   let em : c.F →+* Qb := (IntermediateField.inclusion (le_algebraicClosure ℚ ℂ c.F)).toRingHom
   let _ : Algebra c.F Qb := em.toAlgebra
   have : IsAlgClosed Qb := (algebraicClosure.isAlgClosure ℚ ℂ).isAlgClosed
-  let ψ : k →ₐ[c.F] Qb := IsAlgClosed.lift
+  let ψ : k →ₐ[c.F] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨z, -⟩ := exists_flagPt Z Qb (spMap ψ.toRingHom ≫ (gen Z).fromSpecResidueField x)
   exact ⟨z⟩
 

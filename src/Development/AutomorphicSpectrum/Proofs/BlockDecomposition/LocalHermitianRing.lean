@@ -78,7 +78,11 @@ theorem principal_field (hf : IsField (Fv F v ⊗[F] E)) (I : Submodule (intLoc 
   obtain ⟨S, rfl⟩ := hI
   obtain ⟨w, hw, hwu⟩ := hu
   have : Nontrivial (Fv F v ⊗[F] E) := ⟨hf.exists_pair_ne⟩
-  let τ₀ : E →ₐ[F] FvBar F v := IsAlgClosed.lift
+  let τ₀ : E →ₐ[F] FvBar F v := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let N : Fv F v ⊗[F] E → NNReal := fun y => absBar F v (finEmb F v τ₀ y)
   have hN0 : ∀ y, N y = 0 → y = 0 := fun y hy =>
     finEmb_injective hf τ₀ (by rw [map_zero]; exact (absBar_eq_zero F v).1 hy)

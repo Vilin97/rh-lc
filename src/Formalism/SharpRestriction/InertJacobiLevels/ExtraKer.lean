@@ -31,7 +31,11 @@ theorem exists_lam {K : Type} [Field K] [NumberField K] (e : K →+* ℂ) {C : T
   letI : Algebra K C := f.toAlgebra
   have h0 : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ ℂ) := algebraicClosure.isAlgebraic ℚ ℂ
   have : Algebra.IsAlgebraic K (algebraicClosure ℚ ℂ) := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let l : algebraicClosure ℚ ℂ →ₐ[K] C := IsAlgClosed.lift
+  let l : algebraicClosure ℚ ℂ →ₐ[K] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨l.toRingHom, fun x hx => ?_⟩
   exact (l.commutes x).symm
 

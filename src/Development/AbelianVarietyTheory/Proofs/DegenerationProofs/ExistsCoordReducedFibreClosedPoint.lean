@@ -68,7 +68,11 @@ theorem mem_nilradical_of_forall_algHom {K T : Type} [Field K] [IsAlgClosed K] [
   rintro M ⟨-, hM⟩
   letI := Ideal.Quotient.field M
   haveI : Module.Finite K (T ⧸ M) := finite_of_finite_type_of_isJacobsonRing K (T ⧸ M)
-  let e : T ⧸ M →ₐ[K] K := IsAlgClosed.lift
+  let e : T ⧸ M →ₐ[K] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have := h (e.comp (Ideal.Quotient.mkₐ K M))
   rw [← Ideal.Quotient.eq_zero_iff_mem]
   exact (map_eq_zero_iff e e.toRingHom.injective).mp this

@@ -67,7 +67,11 @@ theorem exists_cover_step (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (
     have hgam : (gam.comp (AdjoinRoot.of p)).comp (residue R) = (residue R').comp ρ := by
       rw [← hres]; congr 1; ext a; exact AdjoinRoot.lift_of hr
     rw [hgam, ← Polynomial.hom_eval₂, hmx, map_zero]
-  let β₀ : ResidueField R' →ₐ[AdjoinRoot p] Ω := IsAlgClosed.lift
+  let β₀ : ResidueField R' →ₐ[AdjoinRoot p] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hβ : ∀ a, β₀ (gam a) = del a := fun a => β₀.commutes a
   refine ⟨R', i1, i2, i3, ρ, hloc, β₀.toRingHom, hcn', hinj', hfin', ?_, ⟨gam (AdjoinRoot.root p), ?_⟩⟩
   · ext a

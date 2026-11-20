@@ -28,7 +28,11 @@ theorem exists_embedding {A₀ A F : Type} [CommRing A₀] [IsDomain A₀] [Comm
   have : Module.Finite A₀ A := hf
   have : FaithfulSMul A₀ A := (faithfulSMul_iff_algebraMap_injective _ _).2 hα
   have : FaithfulSMul A₀ F := (faithfulSMul_iff_algebraMap_injective _ _).2 hω
-  let ψ : A →ₐ[A₀] F := IsAlgClosed.lift
+  let ψ : A →ₐ[A₀] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.toRingHom, ?_, fun r => ψ.commutes r⟩
   rw [RingHom.injective_iff_ker_eq_bot]
   refine Ideal.eq_bot_of_comap_eq_bot (R := A₀) ?_

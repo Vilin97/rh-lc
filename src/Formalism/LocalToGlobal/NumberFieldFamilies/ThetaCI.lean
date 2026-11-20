@@ -18,7 +18,11 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem emb_ext (f : F →+* ℂ) : ∃ φ : E →+* ℂ, φ.comp (algebraMap F E) = f := by
   let _ : Algebra F ℂ := f.toAlgebra
-  let φ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let φ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨φ.toRingHom, RingHom.ext fun x => φ.commutes x⟩
 
 theorem tmul_dec (c : Ainf F) (a b : F) (δ : E) :

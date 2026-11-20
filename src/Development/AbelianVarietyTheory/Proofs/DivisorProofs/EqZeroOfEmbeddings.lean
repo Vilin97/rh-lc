@@ -75,7 +75,11 @@ theorem compat {c₀ : O →+* F} {θ : F →+* F₁} (hc : θ.comp c₀ = (alge
     (h1 : lam ⟨1, W.one_mem⟩ ≠ 0) (o : O) :
     algebraMap (ResidueField O) Ω (residue O o) = algebraMap T Ω (algebraMap O T o) := by
   classical
-  let s : ResidueField T →ₐ[ResidueField O] Ω := IsAlgClosed.lift
+  let s : ResidueField T →ₐ[ResidueField O] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hco : ∀ x, θ (c₀ x) = algebraMap T F₁ (algebraMap O T x) := fun x => RingHom.congr_fun hc x
   have hmem : ∀ x, θ (c₀ x) ∈ Subalgebra.toSubmodule W := fun x => by
     rw [Subalgebra.mem_toSubmodule, hco]

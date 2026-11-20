@@ -133,7 +133,11 @@ private theorem exists_sq_neg (F K : Type) [Field F] [NumberField F] [IsTotallyR
   by_contra hnn
   letI : Algebra F ℂ := ((algebraMap ℝ ℂ).comp φ).toAlgebra
   haveI : Algebra.IsAlgebraic F K := inferInstance
-  let τ : K →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : K →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hF : ∀ a : F, τ (algebraMap F K a) = (φ a : ℂ) := fun a => τ.commutes a
   have ht : star (τ (e 1)) = τ (e 1) := by
     refine star_eq_of_sq (not_lt.1 hnn) ?_

@@ -22,7 +22,11 @@ private theorem aux (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
   haveI : Normal ℚ Ω := IsAlgClosure.normal ℚ Ω
-  let ι : K →ₐ[ℚ] Ω := IsAlgClosed.lift
+  let ι : K →ₐ[ℚ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra K Ω := ι.toRingHom.toAlgebra
   haveI : IsScalarTower ℚ K Ω := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
   haveI : Algebra.IsAlgebraic K Ω := Algebra.IsAlgebraic.tower_top (K := ℚ) K

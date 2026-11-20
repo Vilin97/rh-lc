@@ -224,7 +224,11 @@ theorem exists_injective_algHom_integralClosure (B : Type*) [CommRing B] [IsDoma
   haveI : FaithfulSMul ℤ_[p] (PadicAlgCl p) := (faithfulSMul_iff_algebraMap_injective _ _).mpr (by
     rw [IsScalarTower.algebraMap_eq ℤ_[p] ℚ_[p] (PadicAlgCl p)]
     exact (algebraMap ℚ_[p] (PadicAlgCl p)).injective.comp (IsFractionRing.injective _ _))
-  let φ : B →ₐ[ℤ_[p]] PadicAlgCl p := IsAlgClosed.lift
+  let φ : B →ₐ[ℤ_[p]] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hφ : Function.Injective φ := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro b hb

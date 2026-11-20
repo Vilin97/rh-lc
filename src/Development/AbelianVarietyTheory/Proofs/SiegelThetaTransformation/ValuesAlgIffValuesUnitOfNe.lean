@@ -55,7 +55,11 @@ theorem rho_eq_of_ne (hpq : Dw.p ≠ Dw.q) {l₂ : Geo.Tor.Level H} {Xo₂ : Mod
   have hsq2 : (β₂ (baseKA l₂).ρ) ^ 2 = -(H.d : k) := by
     have e := congrArg β₂ (baseKA l₂).ρ_sq
     simpa using e
-  let τE : E →ₐ[ℚ] k := IsAlgClosed.lift
+  let τE : E →ₐ[ℚ] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let τ : 𝓞 E →+* k := (τE : E →+* k).comp (algebraMap (𝓞 E) E)
   have ht : (τ H.rt) ^ 2 = -(H.d : k) := by
     have e := congrArg τ H.rt_sq

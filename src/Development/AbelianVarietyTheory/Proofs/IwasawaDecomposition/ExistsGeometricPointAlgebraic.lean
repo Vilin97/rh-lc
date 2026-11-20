@@ -34,7 +34,11 @@ theorem exists_algebraic_point_of_fiber : ∀ {A : Type} [CommRing A] {B : Schem
   haveI : Algebra.IsAlgebraic (B.residueField (f x)) ((f.fiber (f x)).residueField z) :=
     Algebra.IsAlgebraic.of_finite _ _
   letI : Algebra (B.residueField (f x)) K' := ι.toAlgebra
-  let j : (f.fiber (f x)).residueField z →ₐ[B.residueField (f x)] K' := IsAlgClosed.lift
+  let j : (f.fiber (f x)).residueField z →ₐ[B.residueField (f x)] K' := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨θ, hθ⟩ := Spec.map_surjective ((f.fiber (f x)).fromSpecResidueField z ≫ f.fiberι (f x))
   have hjφ : φ ≫ CommRingCat.ofHom (j : (f.fiber (f x)).residueField z →+* K') = CommRingCat.ofHom ι := by
     ext c

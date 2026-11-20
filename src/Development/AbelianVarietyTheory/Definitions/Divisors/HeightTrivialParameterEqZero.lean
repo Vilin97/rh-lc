@@ -44,7 +44,11 @@ theorem jumps_unique {n : ℕ} {r : G E Ω →* GL (Fin n) (Qbar l)} {J J' : (E 
 
 theorem not_crysWith_cyc : ¬ CrysWith (rk1 (cyc E Ω l ^ 1)) fun _ => {1} := fun h => by
   have h1 := jumps_unique h (Inhab.crysWith_cyc_pow E Ω l 1)
-  have τ : E →ₐ[ℚ] PadicAlgCl l := IsAlgClosed.lift
+  have τ : E →ₐ[ℚ] PadicAlgCl l := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have := congrFun h1 τ.toRingHom
   simp at this
 

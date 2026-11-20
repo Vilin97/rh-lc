@@ -34,7 +34,11 @@ theorem exists_torsion_lift_of_generic_rational : (∀ (V : Type) [CommRing V] [
     ga.injective.comp (IsFractionRing.injective V (FractionRing V))
   have : FaithfulSMul V W := (faithfulSMul_iff_algebraMap_injective V W).2 hinj
   have : FaithfulSMul V C := (faithfulSMul_iff_algebraMap_injective V C).2 hC
-  let β : W →ₐ[V] C := IsAlgClosed.lift
+  let β : W →ₐ[V] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hβ : Function.Injective β.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := V) ?_

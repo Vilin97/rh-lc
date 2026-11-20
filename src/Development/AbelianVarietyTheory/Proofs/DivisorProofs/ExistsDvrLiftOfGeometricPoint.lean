@@ -96,7 +96,11 @@ theorem exists_dvr_of_dimensionLEOne {R Ω : Type} [CommRing R] [IsDomain R] [Is
     Module.Finite.of_surjective (Ideal.Quotient.factorₐ R hle).toLinearMap (Ideal.Quotient.factor_surjective hle)
   have hf3 : Module.Finite (ResidueField R) (ResidueField V) := Module.Finite.of_restrictScalars_finite R _ _
   letI : Algebra (ResidueField R) Ω := (ResidueField.lift φ).toAlgebra
-  let ι₀ : ResidueField V →ₐ[ResidueField R] Ω := IsAlgClosed.lift
+  let ι₀ : ResidueField V →ₐ[ResidueField R] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let W := AdicCompletion (maximalIdeal V) V
   let e : ResidueField V ≃+* ResidueField W :=
     RingEquiv.ofBijective (ResidueField.map (algebraMap V W)) (AdicCompletion.residueField_map_bijective V)

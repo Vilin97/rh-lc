@@ -33,7 +33,11 @@ theorem natDegree_minpoly_eq_of_closed {k F A : Type*} [Field k] [Field F] [Fiel
 theorem main : ∀ (k Ω L : Type) [Field k] [CharZero k] [Field Ω] [Field L] [Algebra k Ω] [Algebra k L] [FiniteDimensional k L], (∀ x : Ω, IsAlgebraic k x → x ∈ Set.range (algebraMap k Ω)) → IsField (TensorProduct k Ω L) := by
   intro k Ω L _ _ _ _ _ _ _ h
   let A := AlgebraicClosure Ω
-  let ψ : L →ₐ[k] A := IsAlgClosed.lift
+  let ψ : L →ₐ[k] A := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let pb := Field.powerBasisOfFiniteOfSeparable k L
   let m : Ω ⊗[k] L →ₐ[Ω] A :=
     Algebra.TensorProduct.lift (Algebra.ofId Ω A) ψ fun _ _ => Commute.all _ _

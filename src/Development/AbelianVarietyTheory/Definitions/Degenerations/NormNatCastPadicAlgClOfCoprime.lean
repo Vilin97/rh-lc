@@ -803,7 +803,11 @@ theorem norm_natCast_padicAlgCl_of_coprime (p : ℕ) [Fact p.Prime] {m : ℕ} (h
 theorem AwayBase.exists_point (p : ℕ) [Fact p.Prime] (hp : p.Coprime n) :
     ∃ φ : AwayBase K n →+* PadicAlgCl p, (∀ a, ‖φ a‖ ≤ 1) ∧ Function.Injective φ := by
   have hn := norm_natCast_padicAlgCl_of_coprime p hp
-  let σ : K →ₐ[ℚ] PadicAlgCl p := IsAlgClosed.lift
+  let σ : K →ₐ[ℚ] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let ψ : 𝓞 K →+* PadicAlgCl p := σ.toRingHom.comp (algebraMap _ _)
   have hψ : ∀ a, ‖ψ a‖ ≤ 1 := fun a => by
     have h1 : IsIntegral ℤ (ψ a) := (RingOfIntegers.isIntegral a).map ψ.toIntAlgHom

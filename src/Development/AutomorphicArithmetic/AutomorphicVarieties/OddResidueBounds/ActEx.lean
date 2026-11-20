@@ -18,7 +18,11 @@ theorem UpperTheory.V.Odd.actEx :
   haveI : Algebra.IsAlgebraic E (CyclotomicField N ℚ) := Algebra.IsAlgebraic.tower_top (K := ℚ) E
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
   haveI : CharZero Ω := charZero_of_injective_algebraMap (algebraMap E Ω).injective
-  let g : CyclotomicField N ℚ →ₐ[E] Ω := IsAlgClosed.lift
+  let g : CyclotomicField N ℚ →ₐ[E] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(AlgEquiv.restrictNormalHom E).comp
     (IsCyclotomicExtension.Rat.galEquivZMod N (CyclotomicField N ℚ)).symm.toMonoidHom, ?_⟩
   intro b σ hσ x

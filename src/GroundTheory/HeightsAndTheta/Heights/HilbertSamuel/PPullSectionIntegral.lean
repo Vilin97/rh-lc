@@ -69,7 +69,11 @@ theorem exists_sum_eq_one [CharZero Ω] (P : Ideal (MRing ι)) (y' : (Σ k, ι k
       Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ ℚ m)
         (Ideal.Quotient.mkₐ_surjective ℚ m)
     have := finite_of_finite_type_of_isJacobsonRing ℚ (MvPolynomial (Σ k, ι k) ℚ ⧸ m)
-    let ψ : (MvPolynomial (Σ k, ι k) ℚ ⧸ m) →ₐ[ℚ] ℂ := IsAlgClosed.lift
+    let ψ : (MvPolynomial (Σ k, ι k) ℚ ⧸ m) →ₐ[ℚ] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     let z : (Σ k, ι k) → ℂ := fun p => ψ (Ideal.Quotient.mk m (X p))
     have hz : ∀ g : MvPolynomial (Σ k, ι k) ℚ, ψ (Ideal.Quotient.mk m g) = aeval z g := by
       intro g

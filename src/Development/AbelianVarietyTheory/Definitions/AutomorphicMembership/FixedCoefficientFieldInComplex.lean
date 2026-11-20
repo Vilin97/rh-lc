@@ -221,7 +221,11 @@ theorem IsRayFieldIn.isRayField {𝔮 : Ideal (𝓞 E)} {M : IntermediateField �
 theorem IsRayField.exists_isRayFieldIn {L : Type} [Field L] [NumberField L] [Algebra E L] {𝔮 : Ideal (𝓞 E)}
     (h : IsRayField E L 𝔮) : ∃ M, IsRayFieldIn φ 𝔮 M := by
   let := φ.toAlgebra
-  let ψ : L →ₐ[E] ℂ := IsAlgClosed.lift
+  let ψ : L →ₐ[E] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hm : ∀ x, φ x ∈ imField (ψ : L →+* ℂ) := fun x => ⟨algebraMap E L x, ψ.commutes x⟩
   let e₀ : L ≃ₐ[ℚ] imField (ψ : L →+* ℂ) := AlgEquiv.ofInjectiveField (ψ : L →+* ℂ).toRatAlgHom
   have : FiniteDimensional ℚ (imField (ψ : L →+* ℂ)) := e₀.toLinearEquiv.finiteDimensional

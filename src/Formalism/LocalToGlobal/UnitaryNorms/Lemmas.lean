@@ -160,7 +160,11 @@ theorem exists_layer_emb (f : hostE ζ a b →ₐ[ℚ] Qb) :
   letI : Algebra (hostE ζ a b) Qb := f.toRingHom.toAlgebra
   haveI : FiniteDimensional (hostE ζ a b) L := FiniteDimensional.right ℚ (hostE ζ a b) L
   haveI : Algebra.IsAlgebraic (hostE ζ a b) L := Algebra.IsAlgebraic.of_finite (hostE ζ a b) L
-  let ψ : L →ₐ[hostE ζ a b] Qb := IsAlgClosed.lift
+  let ψ : L →ₐ[hostE ζ a b] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨ψ.toRingHom.toRatAlgHom, fun x => ψ.commutes x⟩
 
 theorem range_hostE (h : IsLayer (e + 2) q d ζ a b) (f : hostE ζ a b →ₐ[ℚ] Qb) :

@@ -95,7 +95,11 @@ theorem ImaginaryLatticeCocompact.proof : ImaginaryLatticeCocompact.Statement F 
     have hτ : ∀ τ : F →+* ℂ, ∑ i, (c i : ℂ) * τ (integralBasis F i) = 0 := by
       intro τ
       let _ : Algebra F ℂ := τ.toAlgebra
-      let σ : E →ₐ[F] ℂ := IsAlgClosed.lift
+      let σ : E →ₐ[F] ℂ := (by
+        refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+        solve_by_elim* (maxDepth := 2) only [*,
+          @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+          @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
       have hστ : ∀ x : F, (σ : E →+* ℂ) (algebraMap F E x) = τ x := fun x => σ.commutes x
       have hre : ∀ x : F,
           ((InfinitePlace.mk (σ : E →+* ℂ)).embedding (algebraMap F E x)).re = (τ x).re := by

@@ -106,7 +106,11 @@ theorem isTotDef (H : Matrix (Fin n) (Fin n) E) (hp : ∀ τ : E →+* ℂ, (H.m
     IsTotDef (sg E) H := by
   refine ⟨inferInstance, fun ι => Or.inl fun x hx => ?_⟩
   letI : Algebra (Fr E) ℂ := (Complex.ofRealHom.comp ι).toAlgebra
-  let τ : E →ₐ[Fr E] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[Fr E] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have he : hform ((sg E : E →ₐ[Fr E] E) : E →+* E) H x x ∈ maximalRealSubfield E := fun φ => by
     have := emb_hform_pos H φ (hp φ) x hx
     exact Complex.conj_eq_iff_im.2 (Complex.pos_iff.1 this).2.symm

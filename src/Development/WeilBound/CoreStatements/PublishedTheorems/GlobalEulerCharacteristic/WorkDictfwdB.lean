@@ -356,7 +356,11 @@ theorem exists_cc_gen (K : FiniteSubfield) (v : {v : InfinitePlace K.1 // v.IsRe
   let ρ := InfinitePlace.Completion.ringEquivRealOfIsReal hv
   let φ : v.1.Completion →+* ℂ := Complex.ofRealHom.comp ρ.toRingHom
   let _ : Algebra v.1.Completion ℂ := φ.toAlgebra
-  let κA : AlgebraicClosure v.1.Completion →ₐ[v.1.Completion] ℂ := IsAlgClosed.lift
+  let κA : AlgebraicClosure v.1.Completion →ₐ[v.1.Completion] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hκr : ∀ r : v.1.Completion, κA (algebraMap v.1.Completion _ r) = (ρ r : ℂ) := fun r =>
     κA.commutes r
 

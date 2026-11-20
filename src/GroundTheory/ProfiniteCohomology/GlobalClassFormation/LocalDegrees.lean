@@ -23,7 +23,11 @@ section TotallyReal
 theorem isReal_zhatLayer (r : ℕ+) (φ : (zhatLayer r).1 →+* ℂ) : ComplexEmbedding.IsReal φ := by
   let _ : Algebra (zhatLayer r).1 ℂ := φ.toAlgebra
   have : Algebra.IsAlgebraic (zhatLayer r).1 ℚ̄ := Algebra.IsAlgebraic.tower_top (K := ℚ) (zhatLayer r).1
-  let ι : ℚ̄ →ₐ[(zhatLayer r).1] ℂ := IsAlgClosed.lift
+  let ι : ℚ̄ →ₐ[(zhatLayer r).1] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨σ, hσ⟩ := exists_algEquiv_conj ι.toRingHom
   have hdeg : σ ∈ (degreeMod r).ker := by
     rw [MonoidHom.mem_ker, degreeMod, MonoidHom.comp_apply, degree_of_isComplexConjugation ⟨_, hσ⟩,

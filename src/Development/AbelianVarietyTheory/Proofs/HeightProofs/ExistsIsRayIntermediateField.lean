@@ -21,7 +21,11 @@ theorem exists_isRay_intermediateField (hR : GlobalTheory.NT.RayField) (K : Inte
     ∃ (R : IntermediateField K ℂ) (_ : NumberField R) (_ : IsAbelianGalois K R), IsRay R 𝔮 := by
   obtain ⟨M, _, _, _, hM⟩ := GlobalTheory.Mem.Fld.rayField_iff.1 hR K 𝔮 h𝔮
   have := hM.1
-  let f : M →ₐ[K] ℂ := IsAlgClosed.lift
+  let f : M →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let e : M ≃ₐ[K] f.fieldRange := AlgEquiv.ofInjectiveField f
   have : FiniteDimensional K f.fieldRange := e.toLinearEquiv.finiteDimensional
   have : NumberField f.fieldRange := NumberField.of_module_finite K f.fieldRange

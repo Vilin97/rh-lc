@@ -203,7 +203,11 @@ lemma totallyReal_F (hz : IsPrimitiveRoot z (2 ^ (e + 2))) : IsTotallyReal ℚ�
   refine RingHom.ext fun y => ?_
   rw [NumberField.ComplexEmbedding.conjugate_coe_eq]
   letI : Algebra ℚ⟮z + z⁻¹⟯ ℂ := v.embedding.toAlgebra
-  let Φ : K →ₐ[ℚ⟮z + z⁻¹⟯] ℂ := IsAlgClosed.lift
+  let Φ : K →ₐ[ℚ⟮z + z⁻¹⟯] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h1 := real_on_adjoin (z + z⁻¹) (Φ : K →+* ℂ) (real_theta hm hz (Φ : K →+* ℂ)) (y : K) y.2
   have h2 : (Φ : K →+* ℂ) (y : K) = v.embedding y := Φ.commutes y
   rw [h2] at h1

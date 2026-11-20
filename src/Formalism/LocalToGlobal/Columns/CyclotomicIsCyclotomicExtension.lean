@@ -145,7 +145,11 @@ theorem split_of_conductor_modEq_one {N : ℕ} (hN : 0 < N) (hc : X.IsCond N) {p
   have hfd : FiniteDimensional ℚ (cycQ N) := finiteDimensional_cyclotomic hN
   have hnf : NumberField (cycQ N) := { to_charZero := inferInstance, to_finiteDimensional := hfd }
   have hcy : IsCyclotomicExtension {N} ℚ (cycQ N) := cyclotomic_isCyclotomicExtension hN
-  let j : X.E →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let j : X.E →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hj : ∀ x, j x ∈ cycQ N := fun x => (hc j).1 ⟨x, rfl⟩
   let f : X.E →+* cycQ N := j.toRingHom.codRestrict (cycQ N) hj
   let _ : Algebra X.E (cycQ N) := f.toAlgebra

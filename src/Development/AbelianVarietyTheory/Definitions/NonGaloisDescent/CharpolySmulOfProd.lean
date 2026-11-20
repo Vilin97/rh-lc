@@ -152,7 +152,11 @@ theorem Reading.nonempty (i : X.Tw) (b : Bool) : Nonempty (Reading X i b) := by
   haveI : Module.IsTorsionFree ℤ_[X.l i] (Qbar (X.l i)) := Module.isTorsionFree_iff_algebraMap_injective.2
     (by rw [IsScalarTower.algebraMap_eq ℤ_[X.l i] ℚ_[X.l i] (Qbar (X.l i))]
         exact (algebraMap ℚ_[X.l i] (Qbar (X.l i))).injective.comp Subtype.val_injective)
-  let g : X.O0 i →ₐ[ℤ_[X.l i]] Qbar (X.l i) := IsAlgClosed.lift
+  let g : X.O0 i →ₐ[ℤ_[X.l i]] Qbar (X.l i) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hg : Function.Injective g := by
     refine (RingHom.injective_iff_ker_eq_bot g.toRingHom).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[X.l i]) ?_)
     rw [eq_bot_iff]

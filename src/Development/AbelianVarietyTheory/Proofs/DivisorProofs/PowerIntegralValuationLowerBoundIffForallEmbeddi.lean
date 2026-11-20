@@ -55,7 +55,11 @@ theorem norm_root_le_one (l : ℕ) [Fact l.Prime] (α : algebraicClosure ℚ ℂ
   let φ := (algHomAdjoinIntegralEquiv ℚ hα).symm ⟨β, hβ⟩
   letI : Algebra ℚ⟮α⟯ ℂ_[l] := φ.toRingHom.toAlgebra
   haveI : Algebra.IsAlgebraic ℚ⟮α⟯ (algebraicClosure ℚ ℂ) := Algebra.IsAlgebraic.tower_top (K := ℚ) _
-  let ψ : algebraicClosure ℚ ℂ →ₐ[ℚ⟮α⟯] ℂ_[l] := IsAlgClosed.lift
+  let ψ : algebraicClosure ℚ ℂ →ₐ[ℚ⟮α⟯] ℂ_[l] := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have e : ψ α = β := by
     have h1 := ψ.commutes (AdjoinSimple.gen ℚ α)
     rw [AdjoinSimple.algebraMap_gen] at h1

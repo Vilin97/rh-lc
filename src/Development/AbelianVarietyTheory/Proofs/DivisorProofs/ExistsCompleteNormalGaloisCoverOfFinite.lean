@@ -30,7 +30,11 @@ theorem exists_isCN_galois_of_finite : ∀ (A R : Type) [CommRing A] [IsDomain A
   haveI : Module.IsTorsionFree A R := Module.isTorsionFree_iff_algebraMap_injective.2 hinj
   haveI : Module.IsTorsionFree A Ω := Module.isTorsionFree_iff_algebraMap_injective.2 hιK
   haveI : Algebra.IsAlgebraic A R := Algebra.IsIntegral.isAlgebraic
-  let φ : R →ₐ[A] Ω := IsAlgClosed.lift
+  let φ : R →ₐ[A] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hφinj : Function.Injective φ := by
     have hk : (RingHom.ker (φ : R →+* Ω)).comap (algebraMap A R) = ⊥ := by
       refine eq_bot_iff.2 fun a ha => ?_

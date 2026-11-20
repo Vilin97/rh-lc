@@ -29,7 +29,11 @@ theorem exists_emb (K : Type) [Field K] [Algebra F K] [Module.Finite F K] (O : V
     (h : ∀ x : 𝓞 F, O.valuation (algebraMap F K (x : F)) < 1 ↔ x ∈ v.asIdeal) :
     ∃ ψ : K →ₐ[F] AlgebraicClosure F, (∀ x ∈ O, e.w (ψ x) ≤ 1) ∧
       ∀ x, O.valuation x < 1 → e.w (ψ x) < 1 := by
-  let ι : K →ₐ[F] AlgebraicClosure F := IsAlgClosed.lift
+  let ι : K →ₐ[F] AlgebraicClosure F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨A, hA, hl⟩ := IsLocalRing.exists_factor_valuationRing ((ι : K →+* AlgebraicClosure F).comp O.subtype)
   have hOF : ∀ x : 𝓞 F, algebraMap F K (x : F) ∈ O := fun x =>
     ReciprocityTheory.Gal.mem_of_isIntegral_int O (x.isIntegral_coe.map (algebraMap F K).toIntAlgHom)

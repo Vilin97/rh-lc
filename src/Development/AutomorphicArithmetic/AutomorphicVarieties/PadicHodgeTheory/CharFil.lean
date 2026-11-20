@@ -61,7 +61,11 @@ variable {l : ℕ} [Fact l.Prime] {E : Type} [Field E] [Algebra ℚ_[l] E] [Fini
 
 private theorem val_integral {G : Type} [Group G] [TopologicalSpace G] [CompactSpace G] (μ : G →* Eˣ)
     (hμ : Continuous fun g => (μ g : E)) (g : G) : IsIntegral ℤ_[l] (μ g : E) := by
-  let j : E →ₐ[ℚ_[l]] Om l := IsAlgClosed.lift
+  let j : E →ₐ[ℚ_[l]] Om l := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hj : Continuous j := IsModuleTopology.continuous_of_linearMap j.toLinearMap
   let d : G →* Om l := (j : E →* Om l).comp ((Units.coeHom E).comp μ)
   have hd : ‖d g‖ = 1 := GlobalTheory.UnramifiedChar.norm_eq_one_of_compact d (hj.comp hμ) g

@@ -15,7 +15,11 @@ theorem isAbsIrrChar_map : ∀ {K K' G : Type} [Field K] [Field K'] [CharZero K]
   let A := AlgebraicClosure K
   let A' := AlgebraicClosure K'
   letI : Algebra K A' := ((algebraMap K' A').comp φ).toAlgebra
-  let ψ : A →ₐ[K] A' := IsAlgClosed.lift
+  let ψ : A →ₐ[K] A' := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hψ : ∀ x : K, ψ (algebraMap K A x) = algebraMap K' A' (φ x) := fun x => by
     rw [AlgHom.commutes]; rfl
   let ρ' : Representation A' G (Fin n → A') := GlobalTheory.BrauerRealise.mapScalars (ψ : A →+* A') ρ

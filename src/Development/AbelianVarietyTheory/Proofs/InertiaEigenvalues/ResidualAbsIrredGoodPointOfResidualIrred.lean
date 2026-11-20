@@ -17,7 +17,11 @@ theorem absIrrSub_top_of_irred {k L : Type} [Field k] [Field L] [IsAlgClosed L] 
   set K := AlgebraicClosure k
   set f := algebraMap k K with hf
   letI : Algebra k L := φ.toAlgebra
-  let ψ : K →ₐ[k] L := IsAlgClosed.lift
+  let ψ : K →ₐ[k] L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hψ : ∀ x : k, ψ (f x) = φ x := fun x => ψ.commutes x
   have hψinj : Function.Injective ψ := ψ.toRingHom.injective
   haveI : Nonempty (Fin a) := ⟨⟨0, ha⟩⟩

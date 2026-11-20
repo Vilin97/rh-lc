@@ -18,7 +18,11 @@ theorem UpperTheory.V.Two.abField :
     have h2 := (@IsCyclotomicExtension.isGalois _ _ _ _ _ _ h).to_normal
     convert h2
     exact Subsingleton.elim _ _
-  let k : CyclotomicField N ℚ →ₐ[ℚ] Ω := IsAlgClosed.lift
+  let k : CyclotomicField N ℚ →ₐ[ℚ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra (CyclotomicField N ℚ) Ω := k.toRingHom.toAlgebra
   haveI : IsScalarTower ℚ (CyclotomicField N ℚ) Ω :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)

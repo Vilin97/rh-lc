@@ -503,7 +503,11 @@ theorem exists_local_extension {p : ℕ} (hp : p ≠ 0) {C : Type} [Field C] [Is
   haveI : Module.Finite V W := hfin
   haveI : FaithfulSMul V W := (faithfulSMul_iff_algebraMap_injective _ _).2 hφ
   haveI : FaithfulSMul V C := (faithfulSMul_iff_algebraMap_injective _ _).2 (hv.hom_inj.comp hf)
-  let j : W →ₐ[V] C := IsAlgClosed.lift
+  let j : W →ₐ[V] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hinj := hv.hom_inj
   choose g hg using fun a => hv.exists_of_le_one
     (hv.isIntegral_iff_v_le_one.1 (((Algebra.IsIntegral.isIntegral (R := V) a).map j).tower_top (A := O)))

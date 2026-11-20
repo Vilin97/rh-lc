@@ -22,7 +22,11 @@ theorem eq_zero_of_complex {K : Type} [Field K] (σ : K →+* ℂ) (p : TRing K)
     (h : ∀ χ : p.R →ₐ[K] CAt σ, χ r = 0) : r = 0 := by
   refine ReciprocityTheory.ChartRestriction.G.TB.detAlg_holds K p.n p.I p.rad r fun L _ _ _ ψ => ?_
   letI : Algebra K ℂ := σ.toAlgebra
-  let e : L →ₐ[K] ℂ := IsAlgClosed.lift
+  let e : L →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h2 : e (ψ r) = 0 := h (e.comp ψ)
   exact (map_eq_zero_iff e e.injective).mp h2
 

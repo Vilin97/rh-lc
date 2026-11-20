@@ -28,7 +28,11 @@ theorem step0 (hμ : HasMuQ l L₀) {γ : G L₀ Ω} (hγ : IsGen l ⊤ γ) {e :
     shaInv L₁ l e = cokerLen (xTw l l (⊤ : Subgroup (G L₀ Ω)) e γ ^ l ^ m - 1) := by
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed L₀
   haveI : FiniteDimensional L₀ L₁ := Module.Finite.of_restrictScalars_finite ℚ L₀ L₁
-  let j : L₁ →ₐ[L₀] Ω := IsAlgClosed.lift
+  let j : L₁ →ₐ[L₀] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra L₁ Ω := j.toRingHom.toAlgebra
   haveI : IsScalarTower L₀ L₁ Ω := IsScalarTower.of_algebraMap_eq fun x => (j.commutes x).symm
   haveI : Algebra.IsAlgebraic L₀ Ω := IsAlgClosure.isAlgebraic

@@ -74,7 +74,11 @@ theorem exists_integral_reading {LL : Type} [Field LL] [NumberField LL] (L0 : In
       ∀ a : 𝓞 LL, ∃ o : O, algebraMap O K o = lam a := by
   letI : Algebra L0 (AlgebraicClosure K) := ((algebraMap K (AlgebraicClosure K)).comp rd).toAlgebra
   haveI : Module.IsTorsionFree L0 (AlgebraicClosure K) := DivisionSemiring.to_moduleIsTorsionFree
-  let ι : LL →ₐ[L0] AlgebraicClosure K := IsAlgClosed.lift
+  let ι : LL →ₐ[L0] AlgebraicClosure K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let B := RingOfIntegers.basis LL
   let N : Submodule O (AlgebraicClosure K) := Submodule.span O (Set.range fun i => ι (B i : LL))
   have hint : ∀ a : 𝓞 LL, IsIntegral O (ι (a : LL)) := fun a =>

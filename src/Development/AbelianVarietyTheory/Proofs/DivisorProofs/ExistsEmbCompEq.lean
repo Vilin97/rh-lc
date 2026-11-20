@@ -19,7 +19,11 @@ theorem nonempty_emb (E : Type) [Field E] [NumberField E] (p : ℕ) [hp : Fact p
   have : Algebra.IsUnramifiedAt ℤ Q.asIdeal :=
     (not_dvd_discr_iff_forall_liesOver E (𝓞 E) (Nat.prime_iff_prime_int.1 hp.out)).1 h P hP hPo
   obtain ⟨n, i, -, -⟩ := GlobalTheory.GO.PlWitt.exists_good (p := p) Q hpP
-  let a : GaloisField p n →ₐ[ZMod p] AlgebraicClosure (ZMod p) := IsAlgClosed.lift
+  let a : GaloisField p n →ₐ[ZMod p] AlgebraicClosure (ZMod p) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hj : Function.Injective ((algebraMap (WittVector p (AlgebraicClosure (ZMod p))) (KW p)).comp
       (WittVector.map a.toRingHom)) :=
     (IsFractionRing.injective _ _).comp (WittVector.map_injective _ a.toRingHom.injective)

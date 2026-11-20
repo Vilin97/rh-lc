@@ -27,7 +27,11 @@ theorem exists_extend_residue {O A F : Type} [CommRing O] [IsLocalRing O] [CommR
     rw [eval₂_map]
     change eval₂ (j.comp (IsLocalRing.residue O)) _ _ = 0
     rw [hj, ← hom_eval₂, hpa, map_zero]⟩
-  let L : (A ⧸ Q) →ₐ[IsLocalRing.ResidueField O] F := IsAlgClosed.lift
+  let L : (A ⧸ Q) →ₐ[IsLocalRing.ResidueField O] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨L.toRingHom.comp (Ideal.Quotient.mk Q), ?_⟩
   rw [RingHom.comp_assoc, ← hj, ← RingHom.comp_assoc]
   congr 1

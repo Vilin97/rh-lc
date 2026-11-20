@@ -42,7 +42,11 @@ theorem exists_reading {D : D7} {N : NData D.R D.host D.what₂} (T : TwR D.LL0 
   haveI : Module.IsTorsionFree ℤ_[T.l i] (Qbar (T.l i)) := Module.isTorsionFree_iff_algebraMap_injective.2
     (by rw [IsScalarTower.algebraMap_eq ℤ_[T.l i] ℚ_[T.l i] (Qbar (T.l i))]
         exact (algebraMap ℚ_[T.l i] (Qbar (T.l i))).injective.comp Subtype.val_injective)
-  let g : T.O0 i →ₐ[ℤ_[T.l i]] Qbar (T.l i) := IsAlgClosed.lift
+  let g : T.O0 i →ₐ[ℤ_[T.l i]] Qbar (T.l i) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hg : Function.Injective g := by
     refine (RingHom.injective_iff_ker_eq_bot g.toRingHom).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[T.l i]) ?_)
     rw [eq_bot_iff]

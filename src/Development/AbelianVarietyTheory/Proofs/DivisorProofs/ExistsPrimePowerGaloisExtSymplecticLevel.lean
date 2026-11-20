@@ -177,7 +177,11 @@ theorem exists_level_primePower : ∀ {Ω₁ : Type} [Field Ω₁] [CharZero Ω�
   refine ⟨M, inferInstance, inferInstance, Q, φ, ζ, inferInstance, hMgal, hdeg, hζ, hQ.1, hQ.2.1, hQ.2.2.symm,
     LevelGalois.nonempty_level_of_rational Q K hK0 ζ hζ Q' ψ hQ' fun y hy => ?_⟩
   let σ := algebraMap M (AlgebraicClosure M)
-  let τ' : L →ₐ[M] AlgebraicClosure M := IsAlgClosed.lift
+  let τ' : L →ₐ[M] AlgebraicClosure M := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let τ : L →+* AlgebraicClosure M := τ'.toRingHom
   have hτ : spMap τ ≫ spMap (algebraMap M L) = spMap σ := by
     rw [GlobalTheory.spMap_comp_spMap]

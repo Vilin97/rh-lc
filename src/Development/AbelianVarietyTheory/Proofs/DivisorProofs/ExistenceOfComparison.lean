@@ -32,7 +32,11 @@ theorem exists_ext_of_integral {A B O C : Type} [CommRing A] [IsDomain A] [CommR
   haveI : Algebra.IsIntegral A B := ⟨hint⟩
   haveI : FaithfulSMul A B := (faithfulSMul_iff_algebraMap_injective A B).2 hφ
   haveI : FaithfulSMul A C := (faithfulSMul_iff_algebraMap_injective A C).2 hj0
-  let ψ : B →ₐ[A] C := IsAlgClosed.lift
+  let ψ : B →ₐ[A] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hmem : ∀ b : B, ∃ o : O, algebraMap O C o = ψ b := fun b => by
     have h1 : IsIntegral A (ψ b) := (Algebra.IsIntegral.isIntegral (R := A) b).map ψ
     have h2 : IsIntegral O (ψ b) := h1.tower_top

@@ -98,7 +98,11 @@ theorem _root_.GlobalTheory.HostModel.exists_roots (L : IntermediateField ℚ �
   haveI : IsScalarTower ℚ L Kinf :=
     IsScalarTower.of_algebraMap_eq fun q => ((IntermediateField.inclusion hL).commutes q).symm
   haveI : Algebra.IsAlgebraic L Kinf := Algebra.IsAlgebraic.tower_top (K := ℚ) L
-  let g : Kinf →ₐ[L] F := IsAlgClosed.lift
+  let g : Kinf →ₐ[L] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hg : ∀ z : L, g (IntermediateField.inclusion hL z) = f z := fun z => g.commutes z
   have hmem : ∀ n, _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.zeta n ∈ Kinf := by
     intro n

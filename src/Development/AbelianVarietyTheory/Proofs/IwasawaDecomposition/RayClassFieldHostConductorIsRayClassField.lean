@@ -33,7 +33,11 @@ theorem exists_embedded (hray : GlobalTheory.Published.RayClassFieldSt) (D : D7)
   obtain ⟨M, _, _, _, hM⟩ := GlobalTheory.Published.rayClassFieldSt_iff_isRayField.1 hray D.host.K _
     (GlobalTheory.Mem.RaySplit.condIdeal_ne_bot D.host)
   letI := algQb D jE
-  let ψ : M →ₐ[D.host.K] Qb := IsAlgClosed.lift
+  let ψ : M →ₐ[D.host.K] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let M1 : Fld := (ψ : M →+* Qb).toRatAlgHom.fieldRange
   have hψ : ∀ x : D.host.K, ψ (algebraMap D.host.K M x) = jE x := fun x => ψ.commutes x
   have hK : KQbar D jE ≤ M1 := by

@@ -68,7 +68,11 @@ theorem exists_ext {K L : Type} [Field K] [NumberField K] [Field L] [NumberField
     ∃ τ : L →+* ℂ, τ.comp (algebraMap K L) = σ := by
   letI : Algebra K ℂ := σ.toAlgebra
   have : Algebra.IsAlgebraic K L := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let f : L →ₐ[K] ℂ := IsAlgClosed.lift
+  let f : L →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨f.toRingHom, RingHom.ext fun x => f.commutes x⟩
 
 set_option maxHeartbeats 1000000 in

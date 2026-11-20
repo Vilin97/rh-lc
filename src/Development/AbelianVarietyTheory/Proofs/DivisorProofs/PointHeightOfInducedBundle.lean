@@ -77,7 +77,11 @@ theorem isPreimmersion_j (pb : IsPullback j (π ≫ Y.str) p (spMap (algebraMap 
   MorphismProperty.of_isPullback (P := @IsPreimmersion) pb.flip h
 
 theorem isAlgPt (ar : IsArithVar p Y.dim) (pb : IsPullback j (π ≫ Y.str) p (spMap (algebraMap (𝓞 F) F))) (w : G) (hw : IsClosed ({w} : Set G)) : IsAlgPt (j w) := by
-  let ι : F →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let ι : F →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra F (AlgebraicClosure ℚ) := ι.toRingHom.toAlgebra
   obtain ⟨⟨⟨y, hy⟩, hyx⟩⟩ := (ExtConj.closed_point_geometric_fibres_finite (K := AlgebraicClosure ℚ) (π ≫ Y.str) w hw).1
   have h : (y ≫ j) ≫ p = spMap ((algebraMap F (AlgebraicClosure ℚ)).comp (algebraMap (𝓞 F) F)) := by

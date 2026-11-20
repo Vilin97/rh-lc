@@ -273,7 +273,11 @@ private theorem ext_hom {B S C : Type} [CommRing B] [CommRing S] [Algebra B S] [
   haveI : Module.IsTorsionFree (B ⧸ q) (S ⧸ P) := Module.isTorsionFree_iff_algebraMap_injective.mpr hi
   haveI : Module.IsTorsionFree (B ⧸ q) C := Module.isTorsionFree_iff_algebraMap_injective.mpr hf1
   haveI : Algebra.IsAlgebraic (B ⧸ q) (S ⧸ P) := Algebra.IsIntegral.isAlgebraic
-  let L : (S ⧸ P) →ₐ[B ⧸ q] C := IsAlgClosed.lift
+  let L : (S ⧸ P) →ₐ[B ⧸ q] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(L : (S ⧸ P) →+* C).comp (Ideal.Quotient.mk P), ?_⟩
   ext b
   have h1 : Ideal.Quotient.mk P (algebraMap B S b) = algebraMap (B ⧸ q) (S ⧸ P) (Ideal.Quotient.mk q b) := rfl

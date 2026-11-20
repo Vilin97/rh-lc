@@ -164,7 +164,11 @@ theorem exists_factor_of_finite {R k K : Type} [CommRing R] [Field k] [Finite k]
   letI := b'.toAlgebra
   have : Module.Finite (R ⧸ RingHom.ker a) k := Module.Finite.of_finite
   have : Algebra.IsAlgebraic (R ⧸ RingHom.ker a) k := Algebra.IsAlgebraic.of_finite _ _
-  let φ : k →ₐ[R ⧸ RingHom.ker a] K := IsAlgClosed.lift
+  let φ : k →ₐ[R ⧸ RingHom.ker a] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨φ.toRingHom, RingHom.ext fun x => ?_⟩
   have h1 : φ (a' (Ideal.Quotient.mk _ x)) = b' (Ideal.Quotient.mk _ x) := φ.commutes _
   simp only [a', b', Ideal.Quotient.lift_mk] at h1

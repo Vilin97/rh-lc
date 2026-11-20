@@ -36,7 +36,11 @@ private theorem frobenius_fixed_of_iterate_fixed_pow_prime {k : Type} [Field k] 
   have hp1 : 1 < p := (Fact.out : p.Prime).one_lt
   have hN : m * n ≠ 0 := Nat.pos_iff_ne_zero.1 (Nat.mul_pos hm hn)
   letI : Fintype (GaloisField p (m * n)) := Fintype.ofFinite _
-  let φ : GaloisField p (m * n) →ₐ[ZMod p] k := IsAlgClosed.lift
+  let φ : GaloisField p (m * n) →ₐ[ZMod p] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hφinj : Function.Injective φ := φ.toRingHom.injective
   have hcardL : Fintype.card (GaloisField p (m * n)) = p ^ (m * n) := by
     rw [← Nat.card_eq_fintype_card]

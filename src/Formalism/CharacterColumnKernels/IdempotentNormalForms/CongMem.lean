@@ -42,7 +42,11 @@ theorem points : StatPoints := by
     Module.isTorsionFree_iff_algebraMap_injective.mpr hinjS
   have : Module.IsTorsionFree O Ω := Module.isTorsionFree_iff_algebraMap_injective.mpr hinj
   have : Algebra.IsIntegral O (B ⧸ P) := Algebra.IsIntegral.of_finite O (B ⧸ P)
-  let L : (B ⧸ P) →ₐ[O] Ω := IsAlgClosed.lift
+  let L : (B ⧸ P) →ₐ[O] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hker : RingHom.ker (L : (B ⧸ P) →+* Ω) = ⊥ := by
     apply Ideal.eq_bot_of_comap_eq_bot (R := O)
     rw [eq_bot_iff]

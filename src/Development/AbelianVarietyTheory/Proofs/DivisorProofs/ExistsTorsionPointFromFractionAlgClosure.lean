@@ -14,7 +14,11 @@ theorem torsion_from_closure : ∀ (R : Type) [CommRing R] [IsDomain R] (A : Pol
   intro R _ _ A F _ _ _ em N hN x hx
   obtain ⟨K', _, _, hfin, H⟩ := TorsRational.exists_ext_points (FractionRing R) (torsion A.A N)
     (AbTorsionAnyBase.isFinite_and_flat_torsion (Sp (FractionRing R)) A.A A.isAb N hN).1
-  let i : K' →ₐ[FractionRing R] Kb R := IsAlgClosed.lift
+  let i : K' →ₐ[FractionRing R] Kb R := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let : Algebra K' (Kb R) := i.toRingHom.toAlgebra
   have : IsScalarTower (FractionRing R) K' (Kb R) :=
     IsScalarTower.of_algebraMap_eq' i.comp_algebraMap.symm

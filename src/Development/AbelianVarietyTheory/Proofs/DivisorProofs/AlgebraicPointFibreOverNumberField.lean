@@ -31,7 +31,11 @@ theorem exists_extend {A k K : Type} [CommRing A] [IsLocalRing A] [Field k] [Fie
   letI : Algebra (ResidueField A) Qb := (io.comp b').toAlgebra
   haveI : Module.Finite (ResidueField A) k := ha'
   haveI : IsAlgClosed Qb := (algebraicClosure.isAlgClosure ℚ ℂ).isAlgClosed
-  let f : k →ₐ[ResidueField A] Qb := IsAlgClosed.lift
+  let f : k →ₐ[ResidueField A] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨NumberField.of_module_finite (ResidueField A) k, f.toRingHom, ?_⟩
   rw [← ea, ← eb]
   ext x

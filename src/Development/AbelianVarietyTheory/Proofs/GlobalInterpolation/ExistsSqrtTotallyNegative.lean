@@ -24,7 +24,11 @@ theorem exists_extension (K : Type) [Field K] [NumberField K] (φ : maximalRealS
       ψ (algebraMap (maximalRealSubfield K) K x) = (φ x : ℂ) := by
   letI : Algebra (maximalRealSubfield K) ℂ := (Complex.ofRealHom.comp φ).toAlgebra
   haveI : Algebra.IsAlgebraic (maximalRealSubfield K) K := Algebra.IsAlgebraic.tower_top (K := ℚ) _
-  let f : K →ₐ[maximalRealSubfield K] ℂ := IsAlgClosed.lift
+  let f : K →ₐ[maximalRealSubfield K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨f.toRingHom, fun x => f.commutes x⟩
 
 theorem exists_sqrt_totallyNegative : ∀ (K : Type) [Field K] [NumberField K] [IsCMField K],

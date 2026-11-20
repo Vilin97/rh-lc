@@ -147,7 +147,11 @@ theorem thirdSplit (K K' Ω : Type) [Field K] [NumberField K] [IsCMField K] [Fie
   obtain ⟨Kf, hF, hN, hC, h2f, hcop, hsplit⟩ := quadFamSplit l (4 * n ^ 2 + 1)
   have hemb : ∀ i, ∃ (_ : Algebra (Kf i) Ω), IsScalarTower ℚ (Kf i) Ω := by
     intro i
-    let f : Kf i →ₐ[ℚ] Ω := IsAlgClosed.lift
+    let f : Kf i →ₐ[ℚ] Ω := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     letI : Algebra (Kf i) Ω := f.toRingHom.toAlgebra
     exact ⟨inferInstance, IsScalarTower.of_algebraMap_eq (fun x => (f.commutes x).symm)⟩
   choose algI towI using hemb

@@ -41,7 +41,11 @@ theorem UpperTheory.Gal.crystallineComparison.Mod.liftPt_of :
     exact h.imp_left fun h => hK (by rw [h, map_zero])
   haveI : Algebra.IsIntegral V (B ⧸ q) := inferInstance
   haveI : Algebra.IsAlgebraic V (B ⧸ q) := Algebra.IsIntegral.isAlgebraic
-  let φ : (B ⧸ q) →ₐ[V] FractionRing V := IsAlgClosed.lift
+  let φ : (B ⧸ q) →ₐ[V] FractionRing V := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hker : RingHom.ker (φ : (B ⧸ q) →+* FractionRing V) = ⊥ := by
     apply Ideal.eq_bot_of_comap_eq_bot (R := V)
     ext v

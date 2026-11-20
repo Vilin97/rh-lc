@@ -32,7 +32,11 @@ private theorem exists_obj_level {E : Type} [Field E] [NumberField E] [IsCMField
   obtain ⟨σ, hσ⟩ : ∃ σ : k →+* ℂ, ∀ a, σ (b₀ a) = a := by
     letI : Algebra (KA l) k := b₀.toAlgebra
     haveI : Algebra.IsAlgebraic (KA l) k := Algebra.IsAlgebraic.tower_top (K := ℚ) (KA l)
-    let τ : k →ₐ[KA l] ℂ := IsAlgClosed.lift
+    let τ : k →ₐ[KA l] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨τ, fun a => τ.commutes a⟩
   have hM : 0 < l₂.M' := Nat.lcm_pos (lt_of_lt_of_le (by norm_num) l₂.three_le) l₂.A_pos
   haveI := c₂.fin

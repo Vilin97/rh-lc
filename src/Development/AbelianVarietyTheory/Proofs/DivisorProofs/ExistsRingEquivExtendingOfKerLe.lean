@@ -62,7 +62,11 @@ theorem exists_ringEquiv_extending_of_ker_le :
     · obtain ⟨n, hn, hxn⟩ := hroot x hx
       refine ⟨Polynomial.X ^ n - Polynomial.C 1, Polynomial.monic_X_pow_sub_C 1 (by omega), ?_⟩
       simp [hxn]
-  let θ' : k →ₐ[S] FieldCopy k := IsAlgClosed.lift
+  let θ' : k →ₐ[S] FieldCopy k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let θ : k →+* k := θ'.toRingHom
   have hθS : ∀ s : S, θ (s : k) = ψ0 s := by
     intro s

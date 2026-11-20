@@ -28,7 +28,11 @@ theorem exists_extend {V W Ω : Type} [CommRing V] [IsLocalRing V] [CommRing W] 
       obtain ⟨y, rfl⟩ := residue_surjective x
       exact (Algebra.IsIntegral.isIntegral (R := V) y).map (IsScalarTower.toAlgHom V W (ResidueField W))⟩
   have : Algebra.IsIntegral (ResidueField V) (ResidueField W) := Algebra.IsIntegral.tower_top V
-  let g : ResidueField W →ₐ[ResidueField V] Ω := IsAlgClosed.lift
+  let g : ResidueField W →ₐ[ResidueField V] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨g.toRingHom.comp (residue W), RingHom.ext fun a => ?_, fun a ha => ?_⟩
   · exact g.commutes (residue V a)
   · show g (residue W a) = 0

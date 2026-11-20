@@ -97,8 +97,16 @@ private theorem indep (A : AbF) {M : Type} [Field M] [NumberField M] (hM : IsAbF
     first
       | exact @IsAlgClosure.normal ℚ (AlgebraicClosure ℚ) _ _ (AlgebraicClosure.instAlgebra ℚ) _
       | convert @IsAlgClosure.normal ℚ (AlgebraicClosure ℚ) _ _ (AlgebraicClosure.instAlgebra ℚ) _
-  let f : CyclotomicField N ℚ →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
-  let f' : CyclotomicField N' ℚ →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let f : CyclotomicField N ℚ →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  let f' : CyclotomicField N' ℚ →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨σ, hσ⟩ := exists_lift f τ
   obtain ⟨τ', hσ'⟩ := exists_res f' σ
   obtain ⟨b, hb⟩ := exists_pow hζ' τ'

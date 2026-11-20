@@ -64,7 +64,11 @@ theorem exists_valuationSubring_extension {R L k : Type} [CommRing R] [IsDomain 
       have := congrArg (residue V) h2
       rw [hom_eval₂, map_zero] at this
       exact this⟩
-  let l : ResidueField V →ₐ[R ⧸ p] k := IsAlgClosed.lift
+  let l : ResidueField V →ₐ[R ⧸ p] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨V, ψ, l.toRingHom.comp (residue V), hψ, RingHom.ext fun x => ?_⟩
   exact l.commutes (Ideal.Quotient.mk p x)
 
@@ -222,7 +226,11 @@ theorem exists_siegel_point : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (T : F
   haveI : Algebra.IsAlgebraic T.V L := (IsFractionRing.comap_isAlgebraic_iff (K := FractionRing T.V)).2 inferInstance
   letI : Algebra T.V ℂ := σ.toAlgebra
   haveI : FaithfulSMul T.V ℂ := (faithfulSMul_iff_algebraMap_injective _ _).2 hσ
-  let τ : L →ₐ[T.V] ℂ := IsAlgClosed.lift
+  let τ : L →ₐ[T.V] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨V, ψ, r', hψ, hr⟩ := exists_valuationSubring_extension hinj r
   have hu' : IsUnit (n : V) := by simpa using hu.map ψ
   obtain ⟨em, hem⟩ := exists_cycAway_hom τ.toRingHom V hn hu'

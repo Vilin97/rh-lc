@@ -966,7 +966,11 @@ theorem exists_alpha : ∃ α : WW p, (sigW p)^[2] α = α ∧ IsUnit (α - sigW
     rw [Finset.card_univ, hcard, Polynomial.natDegree_X_pow_sub_X hp1] at hle
     have : p < p ^ 2 := by nlinarith
     omega
-  let φ : GaloisField p 2 →ₐ[ZMod p] kb p := IsAlgClosed.lift
+  let φ : GaloisField p 2 →ₐ[ZMod p] kb p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   set ζ : kb p := φ x
   have hζ2 : ζ ^ (p ^ 2) = ζ := by
     rw [← map_pow, ← hcard, FiniteField.pow_card]

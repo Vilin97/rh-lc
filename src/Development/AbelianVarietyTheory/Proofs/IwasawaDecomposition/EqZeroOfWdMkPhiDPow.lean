@@ -84,7 +84,11 @@ theorem exists_algHom_ker (U R Ω : Type) [Field U] [CommRing R] [Algebra U R] [
     [IsAlgClosed Ω] [Algebra U Ω] (I : Ideal R) (hI : I ≠ ⊤) : ∃ ψ : R →ₐ[U] Ω, ∀ r ∈ I, ψ r = 0 := by
   obtain ⟨M, hM, hIM⟩ := Ideal.exists_le_maximal I hI
   let := Ideal.Quotient.field M
-  let ψ₀ : (R ⧸ M) →ₐ[U] Ω := IsAlgClosed.lift
+  let ψ₀ : (R ⧸ M) →ₐ[U] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ₀.comp (Ideal.Quotient.mkₐ _ M), fun r hr => ?_⟩
   have : Ideal.Quotient.mkₐ U M r = 0 := Ideal.Quotient.eq_zero_iff_mem.2 (hIM hr)
   rw [AlgHom.comp_apply, this, map_zero]

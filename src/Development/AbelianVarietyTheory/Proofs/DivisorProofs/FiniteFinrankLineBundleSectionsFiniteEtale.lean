@@ -24,7 +24,11 @@ theorem eq_zero_of_forall_algHom_eq_zero {E A : Type} (Ω : Type) [Field E] [Com
   refine IsNilpotent.eq_zero (nilpotent_iff_mem_prime.2 fun J hJ => ?_)
   have hm : J.IsMaximal := IsArtinianRing.isMaximal_of_isPrime J
   let := Ideal.Quotient.field J
-  let ψ : (A ⧸ J) →ₐ[E] Ω := IsAlgClosed.lift
+  let ψ : (A ⧸ J) →ₐ[E] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have := h (ψ.comp (Ideal.Quotient.mkₐ E J))
   rw [AlgHom.comp_apply, map_eq_zero_iff ψ ψ.toRingHom.injective] at this
   exact Ideal.Quotient.eq_zero_iff_mem.1 this

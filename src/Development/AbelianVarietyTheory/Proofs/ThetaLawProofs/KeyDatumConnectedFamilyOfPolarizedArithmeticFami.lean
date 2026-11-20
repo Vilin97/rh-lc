@@ -70,7 +70,11 @@ theorem exists_points (K K' R : Type) [Field K] [NumberField K] [Field K'] [Numb
       s'.comp i = s ∧ s₀'.toRingHom.comp i = (algebraMap K K').comp s₀.toRingHom := by
   letI : Algebra K ℂ := (s.comp (algebraMap K R)).toAlgebra
   haveI : Algebra.IsAlgebraic K K' := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let e : K' →ₐ[K] ℂ := IsAlgClosed.lift
+  let e : K' →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let sA : R →ₐ[K] ℂ := { s with commutes' := fun _ => rfl }
   refine ⟨Algebra.TensorProduct.includeRight.toRingHom,
     (Algebra.TensorProduct.lift e sA fun _ _ => Commute.all _ _).toRingHom,

@@ -29,7 +29,11 @@ theorem exists_extension {A B K : Type} [CommRing A] [CommRing B] [Field K] [IsA
       exact h.imp_left fun h => FaithfulSMul.algebraMap_injective _ K (by rw [h, map_zero])
   haveI : Algebra.IsAlgebraic (A ⧸ RingHom.ker ev) (B ⧸ Q) :=
     ⟨fun x => (Algebra.IsIntegral.isIntegral x).isAlgebraic⟩
-  let f : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker ev] K := IsAlgClosed.lift
+  let f : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker ev] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom.comp (Ideal.Quotient.mk Q), fun a => ?_⟩
   have h := f.commutes (Ideal.Quotient.mk _ a)
   exact h

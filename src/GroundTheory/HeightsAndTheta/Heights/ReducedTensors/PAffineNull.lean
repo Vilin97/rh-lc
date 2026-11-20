@@ -22,7 +22,11 @@ theorem eq_zero_of_forall_algHom_complex {C : Type} [CommRing C] [Algebra ℂ C]
   have : Algebra.FiniteType ℂ (C ⧸ m) :=
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ ℂ m) (Ideal.Quotient.mkₐ_surjective ℂ m)
   have : Module.Finite ℂ (C ⧸ m) := finite_of_finite_type_of_isJacobsonRing ℂ (C ⧸ m)
-  let e : C ⧸ m →ₐ[ℂ] ℂ := IsAlgClosed.lift
+  let e : C ⧸ m →ₐ[ℂ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h0 : e (Ideal.Quotient.mk m g) = 0 := hg (e.comp (Ideal.Quotient.mkₐ ℂ m))
   rw [map_eq_zero_iff e e.toRingHom.injective, Ideal.Quotient.eq_zero_iff_mem] at h0
   exact h0

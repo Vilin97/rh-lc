@@ -726,7 +726,11 @@ theorem posW_holds (D : D7) : PosW D := by
     rw [← this]
     simp
   have hpos : 0 < ∑ σ : D.host.E →ₐ[ℚ] ℂ, (σ t).re := by
-    let σ0 : D.host.E →ₐ[ℚ] ℂ := IsAlgClosed.lift
+    let σ0 : D.host.E →ₐ[ℚ] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact Finset.sum_pos (fun σ _ => hτ σ.toRingHom) ⟨σ0, Finset.mem_univ _⟩
   exact_mod_cast key' ▸ hpos
 

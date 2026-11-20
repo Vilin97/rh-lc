@@ -87,7 +87,11 @@ theorem totReal (h : Good Q) : IsTotallyReal (Kf Q h) := by
   refine ⟨fun w => ?_⟩
   rw [InfinitePlace.isReal_iff, ComplexEmbedding.isReal_iff]
   letI : Algebra (Kf Q h) ℂ := w.embedding.toAlgebra
-  let ψ : AdjoinRoot Q →ₐ[Kf Q h] ℂ := IsAlgClosed.lift
+  let ψ : AdjoinRoot Q →ₐ[Kf Q h] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   ext x
   have hx : w.embedding x = ψ.toRingHom (x : AdjoinRoot Q) := (ψ.commutes x).symm
   rw [ComplexEmbedding.conjugate_coe_eq, hx, ← emb_sig Q h ψ.toRingHom, (mem_Kf Q h).1 x.2]

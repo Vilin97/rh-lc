@@ -147,14 +147,22 @@ instance At.nonempty_crv (ct : At S κ p) : Nonempty ct.Crv := by
     simpa using hV)
   letI := ZMod.algebra (IsLocalRing.ResidueField (ct.YY.i.c.V ct.W)) p
   letI := ZMod.algebra ct.Fbar p
-  let ψ : IsLocalRing.ResidueField (ct.YY.i.c.V ct.W) →ₐ[ZMod p] ct.Fbar := IsAlgClosed.lift
+  let ψ : IsLocalRing.ResidueField (ct.YY.i.c.V ct.W) →ₐ[ZMod p] ct.Fbar := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨x, -⟩ := ct.YY.exists_point (one_le_two.trans (S.two_le.trans S.rank_eq.ge))
     (ψ.toRingHom.comp (IsLocalRing.residue _))
   exact Curve.nonempty_of_point x
 
 instance At.nonempty_crvQ (ct : At S κ p) : Nonempty ct.CrvQ := by
   have := ct.YY.i.c.fin
-  let ψ : ct.YY.i.c.F →ₐ[ℚ] AlgebraicClosure κ.c.F := IsAlgClosed.lift
+  let ψ : ct.YY.i.c.F →ₐ[ℚ] AlgebraicClosure κ.c.F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨x, -⟩ := ct.YY.exists_point (one_le_two.trans (S.two_le.trans S.rank_eq.ge))
     (ψ.toRingHom.comp (ct.YY.i.c.V ct.W).subtype)
   exact Curve.nonempty_of_point x

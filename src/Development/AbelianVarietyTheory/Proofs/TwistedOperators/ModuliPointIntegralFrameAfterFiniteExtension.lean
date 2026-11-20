@@ -113,7 +113,11 @@ theorem exists_obj_level (c : Coeff l) (c₂ : Coeff l₂) (hle : c.F ≤ c₂.F
     letI : Algebra c.F c₂.F := (IntermediateField.inclusion hle).toRingHom.toAlgebra
     letI : Algebra c.F F := ((algebraMap k F).comp io).toAlgebra
     haveI : Algebra.IsAlgebraic c.F c₂.F := Algebra.IsAlgebraic.tower_top (K := ℚ) c.F
-    let τ : c₂.F →ₐ[c.F] F := IsAlgClosed.lift
+    let τ : c₂.F →ₐ[c.F] F := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨τ, fun a => τ.commutes a⟩
   obtain ⟨T, hT, hT'⟩ := LevelRaise.exists_finite_set o hM (K := k) (F := F) (𝟙 _)
   obtain ⟨U, hU⟩ := (Module.Finite.fg_top (R := ℚ) (M := c₂.F))

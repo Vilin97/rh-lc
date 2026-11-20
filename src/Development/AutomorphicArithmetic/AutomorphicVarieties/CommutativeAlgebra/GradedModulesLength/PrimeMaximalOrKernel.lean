@@ -41,7 +41,11 @@ private theorem prime_maximal_or_kernel (O : Type) [CommRing O] [IsDomain O] [Is
     haveI : Module.IsTorsionFree O K :=
       NoZeroSMulDivisors.iff_algebraMap_injective.2 (FaithfulSMul.algebraMap_injective O K)
     haveI : Algebra.IsAlgebraic O (B ⧸ P) := Algebra.IsIntegral.isAlgebraic
-    let τ : (B ⧸ P) →ₐ[O] K := IsAlgClosed.lift
+    let τ : (B ⧸ P) →ₐ[O] K := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine ⟨τ.comp (Ideal.Quotient.mkₐ O P), ?_⟩
     have hτ : RingHom.ker (τ : (B ⧸ P) →+* K) = ⊥ := by
       apply Ideal.eq_bot_of_comap_eq_bot (R := O)

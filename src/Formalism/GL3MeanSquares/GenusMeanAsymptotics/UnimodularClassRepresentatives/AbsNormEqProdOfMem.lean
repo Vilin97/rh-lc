@@ -22,7 +22,11 @@ theorem mem_boxSet_iff (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
   constructor
   · intro h w
     let _ : Algebra F ℂ := w.1.embedding.toAlgebra
-    let φ : K →ₐ[F] ℂ := IsAlgClosed.lift
+    let φ : K →ₐ[F] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     have h1 : φ (algebraMap F K (n : F)) = w.1.embedding (n : F) := φ.commutes _
     have h2 := h φ.toRingHom
     have h3 : (φ.toRingHom (algebraMap F K (n : F))).re = rEmb w n := by

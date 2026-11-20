@@ -17,7 +17,11 @@ theorem exists_finite_separable_compositum (K K' k : Type) [Field K] [Field K'] 
       Algebra.IsSeparable K' k' ∧ g.comp (algebraMap K k) = (algebraMap K' k').comp φ := by
   let Ω := AlgebraicClosure K'
   let _ : Algebra K K' := φ.toAlgebra
-  let σ : k →ₐ[K] Ω := IsAlgClosed.lift
+  let σ : k →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let bs := Module.finBasis K k
   let k' := IntermediateField.adjoin K' (Set.range fun i => σ (bs i))
   have sepσ : ∀ z : k, IsSeparable K' (σ z) := fun z =>

@@ -55,7 +55,11 @@ private theorem exists_embedding_prime_above [NumberField K] [CharZero k] [IsAlg
   classical
   by_contra hne
   push Not at hne
-  have σ0 : K →ₐ[ℚ] k := IsAlgClosed.lift
+  have σ0 : K →ₐ[ℚ] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hnot : ¬ ((w.asIdeal : Set (𝓞 K)) ⊆ ⋃ σ ∈ ((Finset.univ : Finset (K →ₐ[ℚ] k)) : Set (K →ₐ[ℚ] k)),
       (embeddingPrimeIdeal (σ : K →+* k) : Set (𝓞 K))) := by
     rw [Ideal.subset_union_prime σ0 σ0 (fun σ _ _ _ => embedding_ideal_prime _)]

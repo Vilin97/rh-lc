@@ -162,7 +162,11 @@ theorem GlobalTheory.KLift.exists_cm_lift : ∀ (Ω : Type) [Field Ω] (E : Type
     refine ⟨⟨z, hF₁M z hz⟩, ?_, rfl⟩
     intro φ
     letI : Algebra M ℂ := φ.toAlgebra
-    let ψ : Ω →ₐ[M] ℂ := IsAlgClosed.lift
+    let ψ : Ω →ₐ[M] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     have h1 : φ ⟨z, hF₁M z hz⟩ = ψ z := (ψ.commutes ⟨z, hF₁M z hz⟩).symm
     rw [h1]
     exact hre z hz ψ.toRingHom

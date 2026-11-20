@@ -332,8 +332,16 @@ theorem main : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWState
   obtain ⟨E₁', eG', -, eh'⟩ := exists_add hL hR hG E' m
   obtain ⟨Ω, _, _, _, a, b⟩ := exists_keeps hL hR hG h₁ h₂ h₃ h₄ E₁ E₁' (funext eh ▸ hm) (funext eh' ▸ hm')
     (by rw [eG, eG']; exact adj_add U.LG U.cubG _ _ adj m)
-  let σ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] Ω := IsAlgClosed.lift
-  let τ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] F := IsAlgClosed.lift
+  let σ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  let τ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have a' := keepsIota_down E₁ σ a
   exact keeps_of_add hL hR hG E E'.h m E₁ E₁'.h eG eA eh' F (keepsIota_up hL hR hG E₁ τ a')
     (keepsTors_up hL hR hG E₁ τ a' (keepsTors_down hL hR hG E₁ σ b))

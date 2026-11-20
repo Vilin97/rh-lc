@@ -34,7 +34,11 @@ theorem exists_embed_integral {V W K : Type} [CommRing V] [IsDomain V] [CommRing
   haveI : Algebra.IsIntegral V W := ⟨hg⟩
   haveI : Module.IsTorsionFree V W := Module.isTorsionFree_iff_algebraMap_injective.2 hgi
   haveI : Module.IsTorsionFree V K := Module.isTorsionFree_iff_algebraMap_injective.2 hj
-  let f : W →ₐ[V] K := IsAlgClosed.lift
+  let f : W →ₐ[V] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hc : f.toRingHom.comp (algebraMap V W) = j := RingHom.ext fun a => f.commutes a
   refine ⟨f.toRingHom, hc, ?_⟩
   have hk : (RingHom.ker f.toRingHom).comap (algebraMap V W) = ⊥ := by

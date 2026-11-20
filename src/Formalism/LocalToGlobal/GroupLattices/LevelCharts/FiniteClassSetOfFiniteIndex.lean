@@ -53,7 +53,11 @@ theorem exists_above (hc : CMData F E) (ι : F →+* ℝ) :
   letI : Algebra F ℂ := ((algebraMap ℝ ℂ).comp ι).toAlgebra
   haveI : Module.Finite F E := Module.finite_of_finrank_pos (by rw [hc.deg2]; norm_num)
   haveI : Algebra.IsAlgebraic F E := Algebra.IsAlgebraic.of_finite F E
-  let φ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let φ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨φ.toRingHom, ?_⟩
   ext a
   exact φ.commutes a

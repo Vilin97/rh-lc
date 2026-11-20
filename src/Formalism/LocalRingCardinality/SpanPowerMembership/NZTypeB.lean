@@ -27,7 +27,11 @@ theorem exists_gen (d : ℕ) (hd : 1 ≤ d) : ∃ u : (Fbar g)ˣ, orderOf u = g 
   classical
   haveI : Fintype (GaloisField g d) := Fintype.ofFinite _
   obtain ⟨x, hx⟩ := IsCyclic.exists_generator (α := (GaloisField g d)ˣ)
-  let φ : GaloisField g d →ₐ[ZMod g] Fbar g := IsAlgClosed.lift
+  let φ : GaloisField g d →ₐ[ZMod g] Fbar g := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨Units.map φ.toRingHom.toMonoidHom x, ?_⟩
   rw [orderOf_injective (Units.map φ.toRingHom.toMonoidHom) (Units.map_injective φ.toRingHom.injective) x,
     orderOf_eq_card_of_forall_mem_zpowers hx, Nat.card_eq_fintype_card, Fintype.card_units]

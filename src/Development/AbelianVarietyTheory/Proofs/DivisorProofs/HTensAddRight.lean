@@ -103,7 +103,11 @@ theorem isotropic_key (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) {n d d�
 
 theorem invol_of_isGood {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) : ∀ e, σ (σ e) = e := by
   intro e
-  let τ : E →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h := hB.cm.2.2.2 τ.toRingHom
   apply τ.toRingHom.injective
   rw [h, h, star_star]

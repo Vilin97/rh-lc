@@ -33,7 +33,11 @@ theorem IsPart_zero (n' r0 : ℕ) : Formalism.MainNotions.KernelEntryData.IsPart
 
 theorem lam_nonempty (p : ℕ) [Fact p.Prime] : Nonempty (Formalism.MainNotions.TaylorLogMetric.Qbar →+* ℂ_[p]) := by
   have : Algebra.IsAlgebraic ℚ Formalism.MainNotions.TaylorLogMetric.Qbar := algebraicClosure.isAlgebraic ℚ ℂ
-  have f : Formalism.MainNotions.TaylorLogMetric.Qbar →ₐ[ℚ] PadicAlgCl p := IsAlgClosed.lift
+  have f : Formalism.MainNotions.TaylorLogMetric.Qbar →ₐ[ℚ] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨(algebraMap (PadicAlgCl p) ℂ_[p]).comp (f : Formalism.MainNotions.TaylorLogMetric.Qbar →+* PadicAlgCl p)⟩
 
 theorem local_datum_nonempty (p : ℕ) [Fact p.Prime] : Nonempty (Formalism.MainNotions.GL3Theta.G1 p) := by
@@ -674,7 +678,11 @@ theorem exists_ext (D : D7) (ρ : D.host.E →+* D.what₂.LL) (σ : D.host.E �
     have : IsScalarTower ℚ D.host.E D.what₂.LL := IsScalarTower.of_algebraMap_eq (fun q => by
       simp [RingHom.algebraMap_toAlgebra])
     exact Algebra.IsAlgebraic.tower_top (K := ℚ) D.host.E
-  let f : D.what₂.LL →ₐ[D.host.E] ℂ := IsAlgClosed.lift
+  let f : D.what₂.LL →ₐ[D.host.E] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨f.toRingHom, fun a => f.commutes a⟩
 
 theorem ColVal_pos {D : D7} {u : D.what₂.Word} (CV : ColVal D u) (τ : D.what₂.Tau)

@@ -159,7 +159,11 @@ theorem exists_lift (φ : Isogeny E E') {L : Type u} [Field L] [Algebra F L]
   set j : M →ₐ[F] Ω := (ι.comp (genEval E' P hP)).comp φ.comap.equivFieldRange.symm.toAlgHom
   letI : Algebra M Ω := j.toRingHom.toAlgebra
   haveI : IsScalarTower F M Ω := IsScalarTower.of_algebraMap_eq fun c => (j.commutes c).symm
-  let τ₀ : E.toAffine.FunctionField →ₐ[M] Ω := IsAlgClosed.lift
+  let τ₀ : E.toAffine.FunctionField →ₐ[M] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨τ₀.restrictScalars F, AlgHom.ext fun f => ?_⟩
   have h1 := τ₀.commutes ⟨φ.comap f, f, rfl⟩
   have h2 : φ.comap.equivFieldRange.symm ⟨φ.comap f, f, rfl⟩ = f := by

@@ -162,7 +162,11 @@ theorem adjoin_cycZeta : IntermediateField.adjoin ℚ ({H.cycZeta} : Set (Cond.C
   exact algebra_adjoin_le_adjoin ℚ _ h1
 
 theorem EQ_le_cycQ : H.EQ ≤ cycQ H.condN := by
-  let κ : Cond.Cyc H.condN →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let κ : Cond.Cyc H.condN →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hz : IsPrimitiveRoot (κ H.cycZeta) H.condN := H.cycZeta_prim.map_of_injective κ.toRingHom.injective
   have hκ : κ.fieldRange = cycQ H.condN := by
     rw [AlgHom.fieldRange_eq_map, ← H.adjoin_cycZeta, adjoin_map, Set.image_singleton, cycQ_eq hz]
@@ -172,7 +176,11 @@ theorem EQ_le_cycQ : H.EQ ≤ cycQ H.condN := by
 
 theorem artin (s : Qb ≃ₐ[ℚ] Qb) (u : (ZMod H.condN)ˣ) (hs : ∀ z ∈ mus H.condN, s z = z ^ (u : ZMod H.condN).val) :
     H.ActsAs (restr H.EQ s) (H.art u) := by
-  let κ : Cond.Cyc H.condN →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let κ : Cond.Cyc H.condN →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨τ, hτ⟩ := Cond.aut H.condN (u : ZMod H.condN).val (ZMod.val_coe_unit_coprime u)
   have hτz := hτ H.cycZeta H.cycZeta_prim.pow_eq_one
   have hcomm : (s : Qb →ₐ[ℚ] Qb).comp κ = κ.comp (τ : Cond.Cyc H.condN →ₐ[ℚ] Cond.Cyc H.condN) := by

@@ -18,7 +18,11 @@ theorem UpperTheory.V.Ws.Po.finExt :
   haveI : FaithfulSMul A K := (faithfulSMul_iff_algebraMap_injective A K).mpr hfK
   haveI : IsScalarTower A V K := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   haveI : Algebra.IsAlgebraic A B := inferInstance
-  let y₀ : B →ₐ[A] K := IsAlgClosed.lift
+  let y₀ : B →ₐ[A] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hmem : ∀ b, y₀ b ∈ V := by
     intro b
     have h1 : IsIntegral A (y₀ b) := (Algebra.IsIntegral.isIntegral b).map y₀

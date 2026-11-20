@@ -10,7 +10,11 @@ theorem exists_algebraic_approx : ∀ (K : Type) [Field K] [NumberField K] (R : 
   intro K _ _ R _ _ _ p _ ε s η hη
   letI : Algebra K ℂ_[p] := (ε.comp (algebraMap K R)).toAlgebra
   let ε' : R →ₐ[K] ℂ_[p] := { ε with commutes' := fun c => rfl }
-  let ι₀ : AlgebraicClosure K →ₐ[K] ℂ_[p] := IsAlgClosed.lift
+  let ι₀ : AlgebraicClosure K →ₐ[K] ℂ_[p] := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hc : (ι₀ : AlgebraicClosure K →+* ℂ_[p]).comp (algebraMap K _) = algebraMap K ℂ_[p] := by
     ext c; exact ι₀.commutes c
   have hdense := GlobalTheory.T.algClosed_dense_in_Cp p (AlgebraicClosure K) (ι₀ : AlgebraicClosure K →+* ℂ_[p])

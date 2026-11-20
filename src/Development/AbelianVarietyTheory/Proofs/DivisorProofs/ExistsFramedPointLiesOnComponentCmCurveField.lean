@@ -118,7 +118,11 @@ theorem exists_fixed_point (hD : 1 ≤ Dw.p + Dw.q)
   haveI : IsScalarTower ℚ c.F L := IsScalarTower.of_algebraMap_eq (fun a => by
     rw [RingHom.algebraMap_toAlgebra, eq_ratCast (algebraMap ℚ c.F), eq_ratCast (algebraMap ℚ L), map_ratCast])
   haveI : Algebra.IsAlgebraic c.F L := Algebra.IsAlgebraic.tower_top (K := ℚ) c.F
-  let φ : L →ₐ[c.F] ℂ := IsAlgClosed.lift
+  let φ : L →ₐ[c.F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hφ : (φ : L →+* ℂ).comp j = algebraMap c.F ℂ := RingHom.ext fun a => φ.commutes a
   obtain ⟨hx₀, hZx₀⟩ := GlobalTheory.FlatLine.point_ext hg₀ hZ₀ (φ : L →+* ℂ)
   rw [hφ] at hx₀

@@ -34,7 +34,11 @@ theorem eq_one_of_congr : ∀ (E : Type) [Field E] [NumberField E] (m : ℕ), 3 
   let w : 𝓞 E := ⟨v, hint⟩
   have hN := Algebra.norm_eq_prod_embeddings ℚ ℂ v
   have hZ : ((Algebra.norm ℤ w : ℤ) : ℚ) = Algebra.norm ℚ v := Algebra.coe_norm_int w
-  let τ₀ : E →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let τ₀ : E →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hprod : ‖∏ τ : E →ₐ[ℚ] ℂ, τ v‖ < 1 := by
     rw [norm_prod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ τ₀)]
     have hr : ∏ τ ∈ Finset.univ.erase τ₀, ‖τ v‖ ≤ 1 :=

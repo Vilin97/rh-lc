@@ -36,7 +36,11 @@ private theorem ext_integral (R S : Type) [CommRing R] [IsDomain R] [CommRing S]
     Algebra.IsIntegral.quotient
   haveI : Algebra.IsAlgebraic (R ⧸ Ideal.comap (algebraMap R S) Q) (S ⧸ Q) :=
     Algebra.IsIntegral.isAlgebraic
-  let φ : (S ⧸ Q) →ₐ[R ⧸ Ideal.comap (algebraMap R S) Q] K := IsAlgClosed.lift
+  let φ : (S ⧸ Q) →ₐ[R ⧸ Ideal.comap (algebraMap R S) Q] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(φ : (S ⧸ Q) →+* K).comp (Ideal.Quotient.mk Q), ?_⟩
   ext r
   have h := φ.commutes (Ideal.Quotient.mk _ r)

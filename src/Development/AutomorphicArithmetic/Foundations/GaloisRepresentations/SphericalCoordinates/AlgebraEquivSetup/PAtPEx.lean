@@ -13,7 +13,11 @@ theorem UpperTheory.Gal.W2.Seed.pAtPEx :
     convert (AlgebraicClosure.isAlgebraic ℚ)
     · rfl
     · exact Subsingleton.elim _ _
-  let iotaA : AlgebraicClosure ℚ →ₐ[ℚ] PadicAlgCl p := IsAlgClosed.lift
+  let iotaA : AlgebraicClosure ℚ →ₐ[ℚ] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let iotaP : AlgebraicClosure ℚ →+* PadicAlgCl p := iotaA.toRingHom
   let τ₁ : E →+* PadicAlgCl p := iotaP.comp s
   obtain ⟨u, ρ, hover, hρ⟩ := hU E A p hs Kq hω hgen τ₁

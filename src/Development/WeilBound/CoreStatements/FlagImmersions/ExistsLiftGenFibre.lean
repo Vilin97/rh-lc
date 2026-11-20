@@ -300,7 +300,11 @@ theorem pointEx : PointEx := by
     letI := ψL.toAlgebra
     letI := κ'.toAlgebra
     haveI : Algebra.IsAlgebraic F' L := Algebra.IsAlgebraic.tower_top (K := ℚ) F'
-    let φ : L →ₐ[F'] ℂ_[p] := IsAlgClosed.lift
+    let φ : L →ₐ[F'] ℂ_[p] := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨φ.toRingHom, RingHom.ext fun a => φ.commutes a⟩
   obtain ⟨V, _, _, _, _, _, hV⟩ := exists_dvr j
   obtain ⟨s₀, hft, hqc, -⟩ := ChartFType.main 𝔐.X Ω 𝔐.ξ _ _ 𝔐.all 𝔐.tie

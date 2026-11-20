@@ -33,7 +33,11 @@ theorem exists_embedding (K k : Type) [Field K] [Field k] [Countable K] [Countab
     exact Algebra.IsAlgebraic.of_ringHom_of_comp_eq (S := Algebra.adjoin K (Set.range x)) (B := k) hx.1.aevalEquiv
       (RingHom.id k) hx.1.aevalEquiv.surjective Function.injective_id
       (RingHom.ext fun p => hx.1.algebraMap_aevalEquiv p)
-  let j : k →ₐ[MvPolynomial ι K] ℂ := IsAlgClosed.lift
+  let j : k →ₐ[MvPolynomial ι K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨j.toRingHom, RingHom.ext fun a => ?_⟩
   have h := j.commutes (MvPolynomial.C a)
   have h1 : algebraMap (MvPolynomial ι K) k (MvPolynomial.C a) = β a := MvPolynomial.aeval_C x a

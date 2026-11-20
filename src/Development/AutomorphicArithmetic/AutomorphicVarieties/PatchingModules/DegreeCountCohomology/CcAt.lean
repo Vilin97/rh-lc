@@ -12,7 +12,11 @@ private theorem cc_at (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebr
     have h := ComplexEmbedding.isReal_iff.mp (InfinitePlace.isReal_iff.mp hw)
     exact RingHom.congr_fun h x
   letI : Algebra F ℂ := φ.toAlgebra
-  let j : Ω →ₐ[F] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra Ω ℂ := j.toRingHom.toAlgebra
   haveI : IsScalarTower F Ω ℂ := IsScalarTower.of_algebraMap_eq (fun x => (j.commutes x).symm)
   let κ : ℂ ≃ₐ[F] ℂ := AlgEquiv.ofRingEquiv (f := starRingAut) (fun x => hφ x)

@@ -80,7 +80,11 @@ theorem exists_embedding (V W : Type) [CommRing V] [IsDomain V] [CommRing W] [Is
     exact (algebraMap (FractionRing V) _).injective.comp (IsFractionRing.injective V (FractionRing V))
   have : FaithfulSMul V W := (faithfulSMul_iff_algebraMap_injective _ _).2 h
   have : FaithfulSMul V (AlgebraicClosure (FractionRing V)) := (faithfulSMul_iff_algebraMap_injective _ _).2 i
-  let φ : W →ₐ[V] AlgebraicClosure (FractionRing V) := IsAlgClosed.lift
+  let φ : W →ₐ[V] AlgebraicClosure (FractionRing V) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨φ.toRingHom, ?_, ?_⟩
   · rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := V) ?_

@@ -17,7 +17,11 @@ theorem not_sq_of_real (E : Type) [Field E] [NumberField E] [IsCMField E] (s : E
     t ^ 2 ≠ τ (algebraMap (maximalRealSubfield E) K d) := by
   intro h
   let _ := (τ.comp (algebraMap (maximalRealSubfield E) K)).toAlgebra
-  let φ : E →ₐ[maximalRealSubfield E] ℂ := IsAlgClosed.lift
+  let φ : E →ₐ[maximalRealSubfield E] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h1 : (φ s) ^ 2 = τ (algebraMap (maximalRealSubfield E) K d) := by
     rw [← map_pow, ← hd, φ.commutes]; rfl
   have hu : starRingEnd ℂ (φ s) = - φ s := by

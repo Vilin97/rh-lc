@@ -24,7 +24,11 @@ theorem exists_extension (K : Type) [Field K] [NumberField K] (p : ℕ) [Fact p.
   have : Algebra.IsAlgebraic ℚ TaylorLogMetric.Qbar := by
     convert algebraicClosure.isAlgebraic ℚ ℂ <;> first | rfl | exact Subsingleton.elim _ _
   have : Algebra.IsAlgebraic K TaylorLogMetric.Qbar := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let f : TaylorLogMetric.Qbar →ₐ[K] ℂ_[p] := IsAlgClosed.lift
+  let f : TaylorLogMetric.Qbar →ₐ[K] ℂ_[p] := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom, fun k => ⟨hmem k, ?_⟩⟩
   unfold TaylorLogMetric.lamC
   rw [dif_pos (hmem k)]

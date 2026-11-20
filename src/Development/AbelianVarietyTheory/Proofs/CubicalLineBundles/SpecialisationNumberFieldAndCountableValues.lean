@@ -20,7 +20,11 @@ theorem _root_.GlobalTheory.exists_ringHom_extend_of_finiteType (F A L : Type*) 
   letI : Field (A ⧸ m) := Ideal.Quotient.field m
   haveI : Module.Finite F (A ⧸ m) := finite_of_finite_type_of_isJacobsonRing F (A ⧸ m)
   letI : Algebra F L := σ.toAlgebra
-  let ψ : (A ⧸ m) →ₐ[F] L := IsAlgClosed.lift
+  let ψ : (A ⧸ m) →ₐ[F] L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.toRingHom.comp (Ideal.Quotient.mk m), fun x => ?_⟩
   have h1 : Ideal.Quotient.mk m (algebraMap F A x) = algebraMap F (A ⧸ m) x := rfl
   simp only [RingHom.comp_apply, h1, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, AlgHom.commutes]

@@ -13,7 +13,11 @@ private theorem embedding_extends_algebraicClosure {K Ω : Type} [Field K] [Numb
   haveI : IsScalarTower ℚ K Qb := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
   have halg : Algebra.IsAlgebraic ℚ Qb := algebraicClosure.isAlgebraic ℚ ℂ
   haveI : Algebra.IsAlgebraic K Qb := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let j : Qb →ₐ[K] Ω := IsAlgClosed.lift
+  let j : Qb →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨j.toRingHom, j.comp_algebraMap⟩
 
 private theorem sum_embeddings_fibrewise {F K : Type} [Field F] [NumberField F] [Field K] [NumberField K] (φ : F →+* K)

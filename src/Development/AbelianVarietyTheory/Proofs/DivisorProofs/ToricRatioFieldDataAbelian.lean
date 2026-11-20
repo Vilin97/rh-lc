@@ -49,7 +49,11 @@ theorem exists_extend {A B K : Type} [CommRing A] [IsDomain A] [CommRing B] [IsD
   letI := f.toAlgebra
   have : FaithfulSMul A B := (faithfulSMul_iff_algebraMap_injective _ _).2 hi
   have : FaithfulSMul A K := (faithfulSMul_iff_algebraMap_injective _ _).2 hf
-  let J0 : B →ₐ[A] K := IsAlgClosed.lift
+  let J0 : B →ₐ[A] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hJ : Function.Injective J0.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := A) ?_

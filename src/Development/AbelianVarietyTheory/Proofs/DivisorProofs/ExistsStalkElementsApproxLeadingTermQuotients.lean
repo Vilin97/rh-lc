@@ -45,7 +45,11 @@ theorem exists_extend_algClosed {A B K : Type} [CommRing A] [CommRing B] [Field 
   haveI : FaithfulSMul (A ⧸ RingHom.ker ψ) K :=
     (faithfulSMul_iff_algebraMap_injective _ _).2 (RingHom.kerLift_injective ψ)
   haveI : Algebra.IsIntegral (A ⧸ RingHom.ker ψ) (B ⧸ Q) := inferInstance
-  let l : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker ψ] K := IsAlgClosed.lift
+  let l : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker ψ] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨l.toRingHom.comp (Ideal.Quotient.mk Q), RingHom.ext fun a => ?_⟩
   exact l.commutes (Ideal.Quotient.mk _ a)
 

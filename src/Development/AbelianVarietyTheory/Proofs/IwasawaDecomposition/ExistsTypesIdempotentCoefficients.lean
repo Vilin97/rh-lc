@@ -87,7 +87,11 @@ theorem exists_char {A : Type} [Ring A] [Algebra ℂ A] [Module.Finite ℂ A] (z
     Module.Finite.of_injective (Subalgebra.center ℂ A).val.toLinearMap Subtype.val_injective
   haveI : Module.Finite ℂ (Subalgebra.center ℂ A ⧸ M) :=
     Module.Finite.of_surjective (Ideal.Quotient.mkₐ ℂ M).toLinearMap (Ideal.Quotient.mkₐ_surjective ℂ M)
-  let l : (Subalgebra.center ℂ A ⧸ M) →ₐ[ℂ] ℂ := IsAlgClosed.lift
+  let l : (Subalgebra.center ℂ A ⧸ M) →ₐ[ℂ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨l.comp (Ideal.Quotient.mkₐ ℂ M), ?_⟩
   exact (congrArg l (Ideal.Quotient.eq_zero_iff_mem.2 (hle (Ideal.mem_span_singleton_self z)))).trans (map_zero l)
 

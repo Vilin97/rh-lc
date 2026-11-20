@@ -16,7 +16,11 @@ theorem exists_lam {p : ℕ} [Fact p.Prime] {L : Type} [Field L] [NumberField L]
     IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
   have : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ ℂ) := algebraicClosure.isAlgebraic ℚ ℂ
   have : Algebra.IsAlgebraic L (algebraicClosure ℚ ℂ) := Algebra.IsAlgebraic.tower_top (K := ℚ) L
-  let f : algebraicClosure ℚ ℂ →ₐ[L] ℂ_[p] := IsAlgClosed.lift
+  let f : algebraicClosure ℚ ℂ →ₐ[L] ℂ_[p] := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom, fun z => ?_⟩
   rw [lamV, dif_pos (hmem z)]
   exact (f.commutes z).symm

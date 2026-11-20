@@ -66,7 +66,11 @@ theorem _root_.GlobalTheory.CuspGL.TeichEmb.exists_teichmuller :
       refine (IsIntegral.of_pow hn ?_).isAlgebraic
       rw [← map_pow, hpow, map_one]; exact isIntegral_one
   have : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ Ω) := algebraicClosure.isAlgebraic ℚ Ω
-  let φ : algebraicClosure ℚ Ω →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let φ : algebraicClosure ℚ Ω →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨{ toFun := fun x => φ ⟨ι x, hmem x⟩, map_one' := ?_, map_mul' := ?_ }, ?_⟩
   · exact (congrArg φ (Subtype.ext (map_one ι) : (⟨ι 1, hmem 1⟩ : algebraicClosure ℚ Ω) = 1)).trans
       (map_one φ)

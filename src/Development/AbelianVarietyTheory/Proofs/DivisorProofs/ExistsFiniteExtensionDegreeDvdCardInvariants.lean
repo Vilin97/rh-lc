@@ -28,7 +28,11 @@ theorem exists_extension {A B Ω : Type} [CommRing A] [CommRing B] [Algebra A B]
   haveI : Module.IsTorsionFree (A ⧸ RingHom.ker e) Ω :=
     Module.isTorsionFree_iff_algebraMap_injective.2 (RingHom.kerLift_injective e)
   haveI : Algebra.IsAlgebraic (A ⧸ RingHom.ker e) (B ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let l : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker e] Ω := IsAlgClosed.lift
+  let l : (B ⧸ Q) →ₐ[A ⧸ RingHom.ker e] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(l : (B ⧸ Q) →+* Ω).comp (Ideal.Quotient.mk Q), ?_⟩
   ext a
   have h := l.commutes (Ideal.Quotient.mk _ a)

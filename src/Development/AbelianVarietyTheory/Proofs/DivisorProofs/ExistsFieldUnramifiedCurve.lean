@@ -76,7 +76,11 @@ theorem exists_field_of_rayField (hRF : GlobalTheory.NT.RayField) (E : Type) [Fi
   have hn0 : (n : 𝓞 K₀) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
   obtain ⟨L, _, _, _, hL⟩ := GlobalTheory.Mem.Fld.rayField_iff.1 hRF K₀ (Ideal.span {(n : 𝓞 K₀)})
     (by rwa [Ne, Ideal.span_singleton_eq_bot])
-  let ψ : L →ₐ[K₀] ℂ := IsAlgClosed.lift
+  let ψ : L →ₐ[K₀] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let e₀ : L ≃ₐ[K₀] ψ.fieldRange := AlgEquiv.ofInjectiveField ψ
   have hfR : FiniteDimensional K₀ ψ.fieldRange := e₀.toLinearEquiv.finiteDimensional
   have hLR := fun (_ : NumberField ψ.fieldRange) => hL.of_algEquiv e₀

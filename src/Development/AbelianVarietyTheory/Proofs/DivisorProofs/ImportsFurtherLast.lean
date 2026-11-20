@@ -22,7 +22,11 @@ theorem exists_extension {V R K : Type} [CommRing V] [CommRing R] [IsDomain R] [
   have : Algebra.IsIntegral (V ⧸ RingHom.ker ev) (R ⧸ Q) :=
     Ideal.Quotient.algebra_isIntegral_of_liesOver Q (RingHom.ker ev)
   have : Algebra.IsAlgebraic (V ⧸ RingHom.ker ev) (R ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let f : R ⧸ Q →ₐ[V ⧸ RingHom.ker ev] K := IsAlgClosed.lift
+  let f : R ⧸ Q →ₐ[V ⧸ RingHom.ker ev] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(f : R ⧸ Q →+* K).comp (Ideal.Quotient.mk Q), ?_⟩
   ext v
   have h := f.commutes (Ideal.Quotient.mk (RingHom.ker ev) v)

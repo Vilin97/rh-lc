@@ -63,7 +63,11 @@ theorem exists_extend_residue {R R' k : Type} [CommRing R] [IsLocalRing R] [Comm
   letI := (ResidueField.map f).toAlgebra
   letI := ψ.toAlgebra
   have : Module.Finite (ResidueField R) (ResidueField R') := .of_finite
-  let χ : ResidueField R' →ₐ[ResidueField R] k := IsAlgClosed.lift
+  let χ : ResidueField R' →ₐ[ResidueField R] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨χ.toRingHom.comp (residue _), RingHom.ext fun a => χ.commutes (residue _ a)⟩
 
 theorem finite_quot_smul_top {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite ℤ M] {n : ℕ}
@@ -225,7 +229,11 @@ instance nonempty_curve (Z : ct.Mdl) : Nonempty (Curve ct.Fbar Z.X) := by
     simpa using hV)
   letI := ZMod.algebra (ResidueField (Z.i.c.V ct.W)) p
   letI := ZMod.algebra ct.Fbar p
-  let ψ : ResidueField (Z.i.c.V ct.W) →ₐ[ZMod p] ct.Fbar := IsAlgClosed.lift
+  let ψ : ResidueField (Z.i.c.V ct.W) →ₐ[ZMod p] ct.Fbar := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨x, -⟩ := Z.exists_point (one_le_two.trans (S.two_le.trans S.rank_eq.ge)) (ψ.toRingHom.comp (residue _))
   exact Curve.nonempty_of_point x
 

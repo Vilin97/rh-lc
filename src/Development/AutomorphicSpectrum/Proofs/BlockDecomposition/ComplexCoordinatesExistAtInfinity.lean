@@ -158,7 +158,11 @@ theorem exists_isCoord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   have hex : ∀ w : InfinitePlace F, ∃ t : E →+* ℂ, ∀ x, t (algebraMap F E x) = w.embedding x := by
     intro w
     letI : Algebra F ℂ := w.embedding.toAlgebra
-    let t : E →ₐ[F] ℂ := IsAlgClosed.lift
+    let t : E →ₐ[F] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨t, fun x => t.commutes x⟩
   choose τ hτ using hex
   obtain ⟨θ, hθ⟩ := exists_moved h

@@ -52,7 +52,11 @@ theorem main : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] (S : The
   haveI : CharZero u.V := (algebraMap u.V (FractionRing u.V)).charZero
   haveI : Algebra.IsAlgebraic (FractionRing u.V) (PadicAlgCl p) :=
     isAlgebraic_padicAlgCl p u.V u.complete u.norm_le
-  let emb : PadicAlgCl p →ₐ[FractionRing u.V] F := IsAlgClosed.lift
+  let emb : PadicAlgCl p →ₐ[FractionRing u.V] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra (PadicAlgCl p) F := emb.toRingHom.toAlgebra
   haveI : IsScalarTower (FractionRing u.V) (PadicAlgCl p) F :=
     IsScalarTower.of_algebraMap_eq fun c => (emb.commutes c).symm

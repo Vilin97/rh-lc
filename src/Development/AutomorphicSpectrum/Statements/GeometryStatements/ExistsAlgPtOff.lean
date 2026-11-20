@@ -60,7 +60,11 @@ theorem exists_algHom (B : Type) [CommRing B] [Nontrivial B] [Algebra ℚ B] [Al
   obtain ⟨m, hm⟩ := Ideal.exists_maximal B
   letI := Ideal.Quotient.field m
   haveI : Module.Finite ℚ (B ⧸ m) := finite_of_finite_type_of_isJacobsonRing ℚ (B ⧸ m)
-  let j : (B ⧸ m) →ₐ[ℚ] PadicAlgCl p := IsAlgClosed.lift
+  let j : (B ⧸ m) →ₐ[ℚ] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨j.comp (Ideal.Quotient.mkₐ ℚ m), fun b =>
     (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) (Ideal.Quotient.mkₐ ℚ m b)).algHom j⟩
 

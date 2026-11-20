@@ -39,7 +39,11 @@ private theorem ga_red {F : Type*} [Field F] [CharZero F] (g : Gal(AlgebraicClos
 private theorem ga_embed {K : Type*} [Field K] [NumberField K] (E : IntermediateField ℚ K) :
     ∃ φ : K →+* AlgebraicClosure E, ∀ x : E, φ (x : K) = algebraMap E (AlgebraicClosure E) x := by
   have : Algebra.IsAlgebraic E K := Algebra.IsAlgebraic.tower_top (K := ℚ) E
-  let φ : K →ₐ[E] AlgebraicClosure E := IsAlgClosed.lift
+  let φ : K →ₐ[E] AlgebraicClosure E := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨φ.toRingHom, fun x => φ.commutes x⟩
 
 variable {N : ℕ} [NeZero N] {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {N} ℚ K]

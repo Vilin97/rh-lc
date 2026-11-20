@@ -301,7 +301,11 @@ theorem NormFormIrreducible.proof : NormFormIrreducible.Statement := by
   let K := AlgebraicClosure E
   have hprod := normForm_map_eq_prod (E := E) (L := L) (K := K) x
   have hirr : ∀ σ : L →ₐ[E] K, Irreducible (embForm σ x) := fun σ => irreducible_embForm σ ht
-  let σ₀ : L →ₐ[E] K := IsAlgClosed.lift
+  let σ₀ : L →ₐ[E] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine irreducible_iff.mpr ⟨fun hu => ?_, fun F G hFG => ?_⟩
   · have := hu.map (MvPolynomial.map (algebraMap E K))
     rw [hprod] at this

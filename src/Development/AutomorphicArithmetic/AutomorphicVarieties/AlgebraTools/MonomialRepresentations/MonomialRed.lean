@@ -51,7 +51,11 @@ private theorem exists_subring_hom_algebraicClosure_of_injective (B K k : Type) 
   haveI : Module.IsTorsionFree R M := Module.isTorsionFree_iff_algebraMap_injective.2 hRM
   haveI hI : Algebra.IsIntegral R S := Algebra.IsIntegral.quotient
   haveI : Algebra.IsAlgebraic R S := hI.isAlgebraic
-  let L : S →ₐ[R] M := IsAlgClosed.lift
+  let L : S →ₐ[R] M := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨C.toSubring, L.toRingHom.comp (Ideal.Quotient.mk Q), fun b => (algebraMap B C b).2, ?_, ?_⟩
   · intro b
     show L (Ideal.Quotient.mk Q (algebraMap B C b)) = _

@@ -55,7 +55,11 @@ theorem trace_inner_self_pos {K V : Type} [Field K] [NumberField K] [StarRing K]
     rw [← this]
     simp
   have hpos : 0 < ∑ σ : K →ₐ[ℚ] ℂ, (σ (h x x)).re := by
-    let σ0 : K →ₐ[ℚ] ℂ := IsAlgClosed.lift
+    let σ0 : K →ₐ[ℚ] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact Finset.sum_pos (fun σ _ => hp σ.toRingHom x hx) ⟨σ0, Finset.mem_univ _⟩
   exact_mod_cast key' ▸ hpos
 

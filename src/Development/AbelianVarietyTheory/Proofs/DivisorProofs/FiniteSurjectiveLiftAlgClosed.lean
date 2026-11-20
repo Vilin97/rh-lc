@@ -25,7 +25,11 @@ theorem finite_exists_lift_algClosed_point : ∀ (Bg S : Scheme.{0}) (πB : Bg �
   haveI : Algebra.IsAlgebraic (S.residueField (πB b)) (Bg.residueField b) :=
     Algebra.IsAlgebraic.of_finite _ _
   letI : Algebra (S.residueField (πB b)) K := φ.hom.toAlgebra
-  let ψ : Bg.residueField b →ₐ[S.residueField (πB b)] K := IsAlgClosed.lift
+  let ψ : Bg.residueField b →ₐ[S.residueField (πB b)] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨Spec.map (CommRingCat.ofHom ψ.toRingHom) ≫ Bg.fromSpecResidueField b, ?_⟩
   rw [Category.assoc, ← Scheme.Hom.SpecMap_residueFieldMap_fromSpecResidueField, ← Category.assoc,
     ← Spec.map_comp]

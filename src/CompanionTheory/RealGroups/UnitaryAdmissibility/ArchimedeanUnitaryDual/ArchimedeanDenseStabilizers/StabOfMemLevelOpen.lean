@@ -173,7 +173,11 @@ theorem isTotDef_of_posDef (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compa
   refine ⟨h.1, fun ι => Or.inl fun x hx => ?_⟩
   letI : Algebra F ℂ := (Complex.ofRealHom.comp ι).toAlgebra
   haveI : Algebra.IsAlgebraic F E := Algebra.IsAlgebraic.of_finite F E
-  let τ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hτ : ∀ a, τ (algebraMap F E a) = (ι a : ℂ) := fun a => τ.commutes a
   set y := Formalism.UG.hform (σ : E →+* E) J x x with hy
   have ey : y = dotProduct (fun i => σ (x i)) (J.mulVec x) := by

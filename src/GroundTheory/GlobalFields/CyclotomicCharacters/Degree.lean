@@ -124,7 +124,11 @@ theorem exists_algEquiv_conj (ι : ℚ̄ →+* ℂ) :
   exact ⟨c.restrictNormal' ℚ̄, fun x => c.restrictNormal_commutes ℚ̄ x⟩
 
 theorem exists_isComplexConjugation : ∃ σ : Gal(ℚ̄/ℚ), IsComplexConjugation σ := by
-  let ι : ℚ̄ →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let ι : ℚ̄ →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨σ, hσ⟩ := exists_algEquiv_conj ι.toRingHom
   exact ⟨σ, ι.toRingHom, hσ⟩
 
@@ -178,7 +182,11 @@ theorem zhatField_le_maxCyclotomic : zhatField ≤ maxCyclotomic := by
 theorem isReal_zhatField (φ : zhatField →+* ℂ) : ComplexEmbedding.IsReal φ := by
   let _ : Algebra zhatField ℂ := φ.toAlgebra
   have : Algebra.IsAlgebraic zhatField ℚ̄ := Algebra.IsAlgebraic.tower_top (K := ℚ) zhatField
-  let ι : ℚ̄ →ₐ[zhatField] ℂ := IsAlgClosed.lift
+  let ι : ℚ̄ →ₐ[zhatField] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨σ, hσ⟩ := exists_algEquiv_conj ι.toRingHom
   have hdeg : σ ∈ degree.ker := degree_of_isComplexConjugation ⟨_, hσ⟩
   rw [ComplexEmbedding.isReal_iff]

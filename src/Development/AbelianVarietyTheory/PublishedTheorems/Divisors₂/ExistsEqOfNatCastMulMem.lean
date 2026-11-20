@@ -128,7 +128,11 @@ theorem ComplexMultiplicationJSt.hilbertClassFieldJ (h : ComplexMultiplicationJS
 
 theorem exists_restrictsTo {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (σ : ℂ ≃ₐ[K] ℂ) :
     ∃ a, RestrictsTo σ a := by
-  let ι : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let ι : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let := ι.toRingHom.toAlgebra
   have : IsScalarTower K (AlgebraicClosure K) ℂ :=
     IsScalarTower.of_algebraMap_eq fun x => (ι.commutes x).symm

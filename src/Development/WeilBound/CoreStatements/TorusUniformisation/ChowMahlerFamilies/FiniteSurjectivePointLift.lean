@@ -17,7 +17,11 @@ theorem exists_ringHom (L A : Type) [Field L] [CommRing A] [Nontrivial A] (φ : 
   letI := Ideal.Quotient.field m
   haveI : Module.Finite L (A ⧸ m) := inferInstance
   haveI : Algebra.IsAlgebraic L (A ⧸ m) := inferInstance
-  let j : (A ⧸ m) →ₐ[L] AlgebraicClosure L := IsAlgClosed.lift
+  let j : (A ⧸ m) →ₐ[L] AlgebraicClosure L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(j.comp (Ideal.Quotient.mkₐ L m)).toRingHom, ?_⟩
   ext x
   exact (j.comp (Ideal.Quotient.mkₐ L m)).commutes x

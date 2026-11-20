@@ -46,7 +46,11 @@ theorem isCCAt_conj {w : InfinitePlace F} (hw : w.IsReal) {c c' : G F Ω} (hc : 
 theorem exists_fieldTransport :
     ∃ (K : FiniteSubfield) (τ : Ω ≃+* AlgebraicClosure ℚ) (σ : F ≃+* K.1),
       ∀ x : F, τ (algebraMap F Ω x) = ((σ x : K.1) : AlgebraicClosure ℚ) := by
-  let σ0 : F →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let σ0 : F →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let K : FiniteSubfield := ⟨σ0.fieldRange,
     LinearEquiv.finiteDimensional (AlgEquiv.ofInjectiveField σ0).toLinearEquiv⟩
   letI : Algebra F (AlgebraicClosure ℚ) := σ0.toRingHom.toAlgebra

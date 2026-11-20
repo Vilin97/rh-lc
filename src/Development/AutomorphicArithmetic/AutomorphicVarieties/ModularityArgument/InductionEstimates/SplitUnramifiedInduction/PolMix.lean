@@ -17,7 +17,11 @@ private theorem conj_el_ex (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure �
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
   haveI : Normal ℚ Ω := IsAlgClosure.normal ℚ Ω
-  let j : Ω →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra Ω ℂ := j.toRingHom.toAlgebra
   haveI : IsScalarTower ℚ Ω ℂ := IsScalarTower.of_algebraMap_eq fun x => (j.commutes x).symm
   let τ : ℂ ≃ₐ[ℚ] ℂ := AlgEquiv.ofRingEquiv (f := starRingAut) fun x => by simp

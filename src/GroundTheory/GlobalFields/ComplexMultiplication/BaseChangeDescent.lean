@@ -53,7 +53,11 @@ theorem exists_free_compositum :
   haveI : IsScalarTower k R L' := IsScalarTower.of_algebraMap_eq (fun a => (f₀.commutes a).symm)
   haveI : Module.IsTorsionFree R L' := Module.isTorsionFree_iff_algebraMap_injective.mpr hf₀inj
   haveI : Algebra.IsAlgebraic R M := hB.isAlgebraic
-  let j₀ : M →ₐ[R] L' := IsAlgClosed.lift
+  let j₀ : M →ₐ[R] L' := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let j : M →ₐ[k] L' := j₀.restrictScalars k
   let ι : L →ₐ[k] L' := IsScalarTower.toAlgHom k L L'
   refine ⟨L', inferInstance, ι.toRingHom, j.toRingHom, ?_, fun u hu => ?_⟩

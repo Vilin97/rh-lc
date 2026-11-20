@@ -42,7 +42,11 @@ theorem exists_ringHom_integralClosure (p : ℕ) [Fact p.Prime] (K : Intermediat
         τ.comp (algebraMap K L) = (IntermediateField.inclusion h).toRingHom ∧
         τ.comp (algebraMap W L) = (algebraMap (integralClosure ℤ_[p] K') K').comp f := by
   haveI := finiteDimensional_of_finite_of_isFractionRing _ K W L e
-  let σ : L →ₐ[K] PadicAlgCl p := IsAlgClosed.lift
+  let σ : L →ₐ[K] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let K' : IntermediateField ℚ_[p] (PadicAlgCl p) := σ.fieldRange.restrictScalars ℚ_[p]
   have h : K ≤ K' := fun x hx => ⟨algebraMap K L ⟨x, hx⟩, σ.commutes _⟩
   let τ : L →+* K' := σ.toRingHom.codRestrict K' fun x => ⟨x, rfl⟩

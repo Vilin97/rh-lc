@@ -207,7 +207,11 @@ theorem _root_.GlobalTheory.GoodCharsCompare.pow_dg {y : _root_.Formalism.Cyclot
 
 theorem exists_prim {d : ℕ} (hd : 0 < d) :
     ∃ (φ : GaloisField g d →ₐ[ZMod g] Fbar g) (u : GaloisField g d), IsPrimitiveRoot (φ u) (g ^ d - 1) := by
-  let φ : GaloisField g d →ₐ[ZMod g] Fbar g := IsAlgClosed.lift
+  let φ : GaloisField g d →ₐ[ZMod g] Fbar g := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨u, hu⟩ := IsCyclic.exists_ofOrder_eq_natCard (α := (GaloisField g d)ˣ)
   refine ⟨φ, u, IsPrimitiveRoot.map_of_injective ?_ φ.injective⟩
   rw [Nat.card_units, GaloisField.card g d hd.ne'] at hu

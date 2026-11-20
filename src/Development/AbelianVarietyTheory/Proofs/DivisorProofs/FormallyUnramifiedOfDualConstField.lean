@@ -41,7 +41,11 @@ theorem formallyUnramified_of_dual_const_field {K A B : Type} [Field K] [IsAlgCl
   haveI : Algebra.FiniteType K m.ResidueField :=
     Algebra.FiniteType.of_surjective (IsScalarTower.toAlgHom K B m.ResidueField) hsurj
   haveI : Module.Finite K m.ResidueField := finite_of_finite_type_of_isJacobsonRing K _
-  let ev : m.ResidueField →ₐ[K] K := IsAlgClosed.lift
+  let ev : m.ResidueField →ₐ[K] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra m.ResidueField K := ev.toRingHom.toAlgebra
   letI : Algebra B K := (ev.toRingHom.comp (algebraMap B m.ResidueField)).toAlgebra
   haveI : IsScalarTower B m.ResidueField K := .of_algebraMap_eq fun _ => rfl

@@ -98,7 +98,11 @@ theorem isDomain_tensor_of_closure (k Ω S : Type) [Field k] [Field Ω] [IsAlgCl
     [Algebra.IsAlgebraic k Ω] [CommRing S] [Algebra k S] [Algebra.FiniteType k S] [IsDomain (Ω ⊗[k] S)]
     (F : Type) [Field F] [Algebra k F] : IsDomain (F ⊗[k] S) := by
   let L := AlgebraicClosure F
-  let j : Ω →ₐ[k] L := IsAlgClosed.lift
+  let j : Ω →ₐ[k] L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra Ω L := j.toRingHom.toAlgebra
   haveI : IsScalarTower k Ω L := IsScalarTower.of_algebraMap_eq fun x => (j.commutes x).symm
   haveI := isDomain_tensor_of_isAlgClosed Ω (Ω ⊗[k] S) L

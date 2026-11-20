@@ -138,7 +138,11 @@ theorem exists_complete_dvr (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRi
     exact (hA2 a).mpr hu ha⟩
   let _ : Algebra (ResidueField A) (ResidueField V) := (ResidueField.map g₀).toAlgebra
   let Ω := AlgebraicClosure (ResidueField V)
-  let σ : k →ₐ[ResidueField A] Ω := IsAlgClosed.lift
+  let σ : k →ₐ[ResidueField A] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let bs := Module.finBasis (ResidueField A) k
   let k' := IntermediateField.adjoin (ResidueField V) (Set.range fun i => σ (bs i))
   haveI : FiniteDimensional (ResidueField V) k' :=

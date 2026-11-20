@@ -196,7 +196,11 @@ variable (w : InfinitePlace F)
 
 instance nonempty_embOver : Nonempty (EmbOver E w) := by
   letI : Algebra F ℂ := w.embedding.toAlgebra
-  let τ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨⟨τ, RingHom.ext τ.commutes⟩⟩
 
 variable {F w}

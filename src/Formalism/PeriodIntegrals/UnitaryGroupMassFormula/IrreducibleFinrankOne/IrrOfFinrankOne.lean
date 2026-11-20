@@ -122,7 +122,11 @@ theorem absIrr_isIrr [Fintype G] {K : Type} [Field K] [CharZero K] (σ : K →+*
   classical
   obtain ⟨n, ρ, hρ, hch⟩ := hχ
   letI : Algebra K ℂ := σ.toAlgebra
-  let τ : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let τ : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hτ : ∀ a : K, τ (algebraMap K _ a) = σ a := fun a => by rw [τ.commutes]; rfl
   haveI : CharZero (AlgebraicClosure K) := charZero_of_injective_algebraMap (algebraMap K _).injective
   let ρc : G →* GL (Fin n) ℂ := (Matrix.GeneralLinearGroup.map τ.toRingHom).comp (toGL ρ)

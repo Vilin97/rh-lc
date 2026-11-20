@@ -60,7 +60,11 @@ theorem exists_local_of_etale {T W Ω F : Type} [CommRing T] [IsDomain T] [IsDis
   have hff := Module.FaithfullyFlat.of_flat_of_isLocalHom (A := T) (B := B)
   letI := j.toAlgebra
   have : Module.IsTorsionFree T F := Module.isTorsionFree_iff_algebraMap_injective.2 hj
-  let j' : B →ₐ[T] F := IsAlgClosed.lift
+  let j' : B →ₐ[T] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hj' : Function.Injective j' := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro b hb

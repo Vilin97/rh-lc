@@ -344,7 +344,11 @@ theorem nt_int_eq_zero (a : 𝓞 I.E) (h : ∀ v, ‖I.φ v (a : I.E)‖ < 1) : 
     obtain ⟨v, hv⟩ := nt_absEmb I σ.toRingHom
     exact (hv a).trans_lt (h v)
   have hn := Algebra.norm_eq_prod_embeddings ℚ ℂ (a : I.E)
-  let σ0 : I.E →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let σ0 : I.E →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hlt : ‖∏ σ : I.E →ₐ[ℚ] ℂ, σ (a : I.E)‖ < 1 := by
     rw [norm_prod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ σ0)]
     have hle : ∏ σ ∈ Finset.univ.erase σ0, ‖σ (a : I.E)‖ ≤ 1 :=

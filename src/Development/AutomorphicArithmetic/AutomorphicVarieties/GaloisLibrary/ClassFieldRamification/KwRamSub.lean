@@ -21,7 +21,11 @@ theorem UpperTheory.V.CF.kwRamSub :
   have hgal : IsGalois ℚ L := IsAbelianGalois.toIsGalois
   obtain ⟨ξ, hξ⟩ : ∃ z : CyclotomicField (M ^ n) ℚ, IsPrimitiveRoot z (M ^ n) :=
     ⟨_, IsCyclotomicExtension.zeta_spec _ ℚ _⟩
-  let ψ : CyclotomicField (M ^ n) ℚ →ₐ[ℚ] Ω := IsAlgClosed.lift
+  let ψ : CyclotomicField (M ^ n) ℚ →ₐ[ℚ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨n, ψ ξ, hξ.map_of_injective ψ.injective, ?_⟩
   have hnorm : (ψ.comp g).fieldRange = L :=
     @AlgHom.fieldRange_of_normal ℚ Ω _ _ _ L

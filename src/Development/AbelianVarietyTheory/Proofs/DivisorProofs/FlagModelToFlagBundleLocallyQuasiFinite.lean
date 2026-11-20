@@ -35,7 +35,11 @@ theorem finite_preimage_of_finite_points {X Y : Scheme.{0}} (f : X ⟶ Y) [Local
     letI : Algebra k ((f.fiber y).residueField w) := φ.hom.toAlgebra
     haveI : Module.Finite k ((f.fiber y).residueField w) := h4
     haveI : Algebra.IsAlgebraic k ((f.fiber y).residueField w) := Algebra.IsIntegral.isAlgebraic
-    let ι : (f.fiber y).residueField w →ₐ[k] K := IsAlgClosed.lift
+    let ι : (f.fiber y).residueField w →ₐ[k] K := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine ⟨Spec.map (CommRingCat.ofHom ι.toRingHom) ≫ (f.fiber y).fromSpecResidueField w ≫ f.fiberι y, ?_, ?_⟩
     · show _ = _
       rw [Category.assoc, Category.assoc, Scheme.Hom.fiber_fac, ← Category.assoc ((f.fiber y).fromSpecResidueField w),

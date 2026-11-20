@@ -47,7 +47,11 @@ theorem finite_torsion_images
     exact (Z.fromSpecResidueField_apply z' _).symm
   subst hz
   letI : Algebra (Z.residueField z') k := ψ.hom.toAlgebra
-  let τ : k →ₐ[Z.residueField z'] Ω := IsAlgClosed.lift
+  let τ : k →ₐ[Z.residueField z'] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hτ : spMap τ.toRingHom ≫ Spec.map ψ =
       Spec.map (CommRingCat.ofHom (algebraMap (Z.residueField z') Ω)) := by
     rw [← Spec.map_comp]

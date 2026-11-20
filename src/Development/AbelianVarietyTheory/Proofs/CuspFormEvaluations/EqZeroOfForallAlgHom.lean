@@ -22,7 +22,11 @@ theorem eq_zero_of_forall_algHom {K R Ω : Type} [Field K] [CommRing R] [Algebra
   rintro J ⟨-, hM⟩
   letI := Ideal.Quotient.field J
   haveI : Module.Finite K (R ⧸ J) := finite_of_finite_type_of_isJacobsonRing K (R ⧸ J)
-  let ψ : (R ⧸ J) →ₐ[K] Ω := IsAlgClosed.lift
+  let ψ : (R ⧸ J) →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h0 := h (ψ.comp (Ideal.Quotient.mkₐ K J))
   have h1 : Ideal.Quotient.mk J x = 0 := by
     apply ψ.toRingHom.injective

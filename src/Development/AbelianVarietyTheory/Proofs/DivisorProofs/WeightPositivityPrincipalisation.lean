@@ -105,7 +105,11 @@ theorem exists_ringHom_ne_zero_of_not_isNilpotent' {K R : Type} [Field K] [CommR
   haveI : Module.Finite K (R ⧸ m) := finite_of_finite_type_of_isJacobsonRing K (R ⧸ m)
   haveI : Algebra.IsAlgebraic K (R ⧸ m) := Algebra.IsAlgebraic.of_finite K (R ⧸ m)
   letI : Algebra K ℂ := σ.toAlgebra
-  let ψ : (R ⧸ m) →ₐ[K] ℂ := IsAlgClosed.lift
+  let ψ : (R ⧸ m) →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.toRingHom.comp (Ideal.Quotient.mk m), ?_, ?_⟩
   · ext a
     show ψ (Ideal.Quotient.mkₐ K m (algebraMap K R a)) = σ a

@@ -16,7 +16,11 @@ theorem exists_injective_of_isIntegral {A B O C : Type} [CommRing A] [IsDomain A
   have : Module.IsTorsionFree A B := Module.isTorsionFree_iff_algebraMap_injective.mpr hAB
   have : Module.IsTorsionFree A C := Module.isTorsionFree_iff_algebraMap_injective.mpr hAC
   have : Algebra.IsAlgebraic A B := Algebra.IsIntegral.isAlgebraic
-  let ψ : B →ₐ[A] C := IsAlgClosed.lift
+  let ψ : B →ₐ[A] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hker : RingHom.ker (ψ : B →+* C) = ⊥ := by
     apply Ideal.eq_bot_of_comap_eq_bot (R := A)
     ext a

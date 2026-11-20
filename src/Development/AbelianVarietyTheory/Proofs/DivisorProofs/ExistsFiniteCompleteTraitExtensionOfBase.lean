@@ -79,7 +79,11 @@ theorem exists_finite_trait_extension : ∀ (R W R₁ : Type) [CommRing R] [IsDo
     Module.isTorsionFree_iff_algebraMap_injective.mpr (by
       rw [IsScalarTower.algebraMap_eq W₁ (FractionRing W₁) (AlgebraicClosure (FractionRing W₁))]
       exact (algebraMap (FractionRing W₁) _).injective.comp (IsFractionRing.injective W₁ (FractionRing W₁)))
-  let σ' : Ω →ₐ[W₁] AlgebraicClosure (FractionRing W₁) := IsAlgClosed.lift
+  let σ' : Ω →ₐ[W₁] AlgebraicClosure (FractionRing W₁) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hσ : ∀ x : W₁, σ' (x : Ω) = algebraMap (FractionRing W₁) (AlgebraicClosure (FractionRing W₁))
       (algebraMap W₁ (FractionRing W₁) x) := fun x => by
     rw [← IsScalarTower.algebraMap_apply]; exact σ'.commutes x

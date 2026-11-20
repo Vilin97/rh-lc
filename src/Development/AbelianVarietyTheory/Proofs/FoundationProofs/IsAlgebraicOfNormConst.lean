@@ -30,7 +30,11 @@ theorem isAlgebraic_of_norm_const {K Ω : Type} [Field K] [CharZero K] [Field Ω
       (Algebra.IsAlgebraic.isAlgebraic y) hbas.1.aevalEquiv.symm.injective (RingHom.ext fun z => by
         obtain ⟨p, rfl⟩ := hbas.1.aevalEquiv.surjective z
         simp [RingHom.algebraMap_toAlgebra]))⟩
-  let Q : Ω →ₐ[MvPolynomial T K] ℂ := IsAlgClosed.lift
+  let Q : Ω →ₐ[MvPolynomial T K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let P : Ω →ₐ[K] ℂ := { Q.toRingHom with
     commutes' := fun a => by
       have := Q.commutes (MvPolynomial.C a)

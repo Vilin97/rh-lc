@@ -11,7 +11,11 @@ namespace GlobalTheory.TrueGeo.ClosedAlg
 
 theorem isAlgPt_of_isClosed : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (M : TrueGeo.Model Y) (x : Y.X), IsClosed ({x} : Set Y.X) → ArInt.IsAlgPt (M.j x) := by
   intro F _ _ Y M x hx
-  let ι : F →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let ι : F →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra F (AlgebraicClosure ℚ) := ι.toRingHom.toAlgebra
   obtain ⟨⟨⟨y, hy⟩, hyx⟩⟩ := (ExtConj.closed_point_geometric_fibres_finite (K := AlgebraicClosure ℚ) Y.str x hx).1
   have h : (y ≫ M.j) ≫ M.p = spMap ((algebraMap F (AlgebraicClosure ℚ)).comp (algebraMap (𝓞 F) F)) := by

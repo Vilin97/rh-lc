@@ -27,7 +27,11 @@ theorem nonempty_algHom_of_isIntegral (R S κ : Type) [CommRing R] [CommRing S] 
   haveI : FaithfulSMul (R ⧸ p) κ := (faithfulSMul_iff_algebraMap_injective _ _).2 (RingHom.kerLift_injective _)
   haveI : IsScalarTower R (R ⧸ p) κ := IsScalarTower.of_algebraMap_eq fun _ => rfl
   haveI : Algebra.IsIntegral (R ⧸ p) (S ⧸ P) := inferInstance
-  let f : (S ⧸ P) →ₐ[R ⧸ p] κ := IsAlgClosed.lift
+  let f : (S ⧸ P) →ₐ[R ⧸ p] κ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨(f.restrictScalars R).comp (Ideal.Quotient.mkₐ R P)⟩
 
 theorem nonempty_algHom_of_unramified (l : ℕ) (O K k L : Type) [CommRing O] [IsDomain O] [IsLocalRing O] [IsIntegrallyClosed O]

@@ -11,7 +11,11 @@ private theorem ext_injective {R S K : Type} [CommRing R] [IsDomain R] [CommRing
   haveI : Module.IsTorsionFree R K := Module.isTorsionFree_iff_algebraMap_injective.2 hφ
   haveI : Algebra.IsIntegral R S := ⟨hf⟩
   haveI : Algebra.IsAlgebraic R S := Algebra.IsIntegral.isAlgebraic
-  let e : S →ₐ[R] K := IsAlgClosed.lift
+  let e : S →ₐ[R] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨e.toRingHom, RingHom.ext fun r => e.commutes r⟩
 
 private theorem ext_integral {R S K : Type} [CommRing R] [CommRing S] [Field K] [IsAlgClosed K]

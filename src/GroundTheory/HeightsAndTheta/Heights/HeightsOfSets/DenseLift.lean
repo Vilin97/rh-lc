@@ -79,7 +79,11 @@ theorem exists_algHom_rootsOfUnity_ne_zero {B : Type*} [CommRing B] [IsDomain B]
   have : Module.IsTorsionFree (MvPolynomial (Fin s) ℚ ⧸ p) (B ⧸ Q) :=
     (Module.isTorsionFree_iff_algebraMap_injective).mpr Ideal.algebraMap_quotient_injective
   have : Algebra.IsIntegral (MvPolynomial (Fin s) ℚ ⧸ p) (B ⧸ Q) := Algebra.IsIntegral.quotient
-  let ψq : (B ⧸ Q) →ₐ[MvPolynomial (Fin s) ℚ ⧸ p] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let ψq : (B ⧸ Q) →ₐ[MvPolynomial (Fin s) ℚ ⧸ p] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let ψ0 : B →+* AlgebraicClosure ℚ := ψq.toRingHom.comp (Ideal.Quotient.mk Q)
   have hψ0 : ∀ a, ψ0 (g0 a) = aeval y a := by
     intro a

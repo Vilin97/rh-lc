@@ -136,7 +136,11 @@ theorem constituentCondition_of_noRepeatedFactor (D : D7) (i : D.nd.Loc) (r : D.
   have hss : ∀ x, IsSSRep (mapRep (algebraMap (Kf D.nd i) (AlgebraicClosure (Kf D.nd i)))
       (mapRep (algebraMap (D.nd.O i) (Kf D.nd i)) (r x))) := by
     intro x
-    let f : AlgebraicClosure (Kf D.nd i) →ₐ[Kf D.nd i] Qbar (D.nd.l i) := IsAlgClosed.lift
+    let f : AlgebraicClosure (Kf D.nd i) →ₐ[Kf D.nd i] Qbar (D.nd.l i) := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     letI : Algebra (AlgebraicClosure (Kf D.nd i)) (Qbar (D.nd.l i)) := f.toRingHom.toAlgebra
     apply SumRepresentations.isSSRep_descent (L := Qbar (D.nd.l i))
     have e : ((algebraMap (AlgebraicClosure (Kf D.nd i)) (Qbar (D.nd.l i))).comp
@@ -152,7 +156,11 @@ theorem constituentCondition_of_noRepeatedFactor (D : D7) (i : D.nd.Loc) (r : D.
   refine ⟨K', hF, hA, hFD, fun x => ⟨?_, ?_⟩⟩
   · rw [mapRep_comp]; exact hsplit x
   · intro W₁ W₂ h1 h2 hdis hiso
-    let f' : K' →ₐ[Kf D.nd i] Qbar (D.nd.l i) := IsAlgClosed.lift
+    let f' : K' →ₐ[Kf D.nd i] Qbar (D.nd.l i) := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     have e' : (f'.toRingHom).comp ((algebraMap (Kf D.nd i) K').comp (algebraMap (D.nd.O i) (Kf D.nd i))) =
         iotaOQ D.nd D.naut i := by
       ext z

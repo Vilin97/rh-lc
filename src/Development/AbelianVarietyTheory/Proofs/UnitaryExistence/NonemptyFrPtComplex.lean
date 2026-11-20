@@ -27,7 +27,11 @@ theorem nonempty_frPt_complex : N1c → Out.SecTwistSt → ∀ (E : Type) [Field
   have : Algebra.IsAlgebraic c.F L := by
     have : IsScalarTower ℚ c.F L := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
     exact Algebra.IsAlgebraic.tower_top (K := ℚ) c.F
-  let φ : L →ₐ[c.F] ℂ := IsAlgClosed.lift
+  let φ : L →ₐ[c.F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let _ : Algebra L ℂ := φ.toRingHom.toAlgebra
   obtain ⟨_, y, _⟩ := gfp_frPt_gen (Xo := Xo) (c := c) (L := L) (L' := ℂ) hT
     (fun r => (φ.commutes r).symm) x hx (fun τ i j => if i = j then 1 else 0)

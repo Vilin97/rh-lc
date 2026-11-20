@@ -70,7 +70,11 @@ theorem exists_ringHom_comp_eq_of_isIntegral {W k Ω : Type} [CommRing W] [IsLoc
   letI := φ'.toAlgebra
   have hi' : ρ'.IsIntegral := RingHom.IsIntegral.tower_top (IsLocalRing.residue W) ρ' hi
   haveI : Algebra.IsIntegral (IsLocalRing.ResidueField W) k := ⟨hi'⟩
-  let ψ : k →ₐ[IsLocalRing.ResidueField W] Ω := IsAlgClosed.lift
+  let ψ : k →ₐ[IsLocalRing.ResidueField W] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.toRingHom, RingHom.ext fun x => ?_⟩
   exact ψ.commutes (IsLocalRing.residue W x)
 

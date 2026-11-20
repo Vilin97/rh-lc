@@ -122,7 +122,11 @@ private theorem span_top (τ : J → F →+* PadicAlgCl p)
     rw [← this, hφf x, map_zero])
   have ha0 : ∀ i, a i = 0 := by
     intro i
-    let s0 : L i →ₐ[ℚ_[p]] PadicAlgCl p := IsAlgClosed.lift
+    let s0 : L i →ₐ[ℚ_[p]] PadicAlgCl p := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     apply (s0 : L i →+* PadicAlgCl p).injective
     rw [map_zero]
     exact hzero ⟨i, s0⟩

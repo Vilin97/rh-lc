@@ -26,7 +26,11 @@ theorem exists_embed (B : Type) [CommRing B] [IsDomain B] [Algebra (𝓞 F) B] [
   haveI : Module.IsTorsionFree (𝓞 F) (AlgebraicClosure F) := by
     rw [Module.isTorsionFree_iff_algebraMap_injective, IsScalarTower.algebraMap_eq (𝓞 F) F (AlgebraicClosure F)]
     exact (algebraMap F _).injective.comp (IsFractionRing.injective (𝓞 F) F)
-  let ψ : B →ₐ[𝓞 F] AlgebraicClosure F := IsAlgClosed.lift
+  let ψ : B →ₐ[𝓞 F] AlgebraicClosure F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ, ?_⟩
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx

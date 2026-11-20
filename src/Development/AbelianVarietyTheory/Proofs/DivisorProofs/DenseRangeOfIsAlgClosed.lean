@@ -248,7 +248,11 @@ theorem exists_bridge {E : Type} (Ω : Type) [Field E] [NumberField E] [Field Ω
   obtain ⟨j, hj⟩ : ∃ j : Ω →+* PadicAlgCl l, j.comp (algebraMap E Ω) = τ := by
     letI : Algebra E (PadicAlgCl l) := τ.toAlgebra
     haveI : Algebra.IsAlgebraic E Ω := IsAlgClosure.isAlgebraic
-    let j : Ω →ₐ[E] PadicAlgCl l := IsAlgClosed.lift
+    let j : Ω →ₐ[E] PadicAlgCl l := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨j, RingHom.ext fun x => j.commutes x⟩
   subst hj
   obtain ⟨e, h1, h2, h3⟩ := exists_equiv (E := E) j

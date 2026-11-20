@@ -63,7 +63,11 @@ private theorem integralOfFinite {F K : Type} [Field F] [Field K] (ψ : F →+* 
     by_contra hn
     haveI : Algebra.Transcendental F K := Algebra.transcendental_iff_not_isAlgebraic.2 hn
     haveI := Field.infinite_emb_of_transcendental F K
-    let l : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+    let l : AlgebraicClosure K →ₐ[K] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     let f : Field.Emb F K → {j' : K →+* ℂ // j'.comp ψ = j.comp ψ} := fun e =>
       ⟨l.toRingHom.comp (AlgHom.toRingHom e), by
         ext x

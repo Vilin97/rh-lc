@@ -24,6 +24,10 @@ theorem UpperTheory.Reformulated.B.Qe16.ext_integral :
     Module.isTorsionFree_iff_faithfulSMul.2 inferInstance
   haveI : Nontrivial (B ⧸ RingHom.ker φ) := Ideal.Quotient.nontrivial_iff.2 hP.ne_top
   haveI : Algebra.IsAlgebraic (B ⧸ RingHom.ker φ) (S ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let f : (S ⧸ Q) →ₐ[B ⧸ RingHom.ker φ] K := IsAlgClosed.lift
+  let f : (S ⧸ Q) →ₐ[B ⧸ RingHom.ker φ] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom.comp (Ideal.Quotient.mk Q), fun b => ?_⟩
   exact (f.commutes (Ideal.Quotient.mk _ b)).trans (RingHom.kerLift_mk φ b)

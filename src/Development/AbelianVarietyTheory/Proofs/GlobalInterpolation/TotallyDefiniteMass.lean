@@ -36,7 +36,11 @@ theorem isTotDef_gram (hc : CMData F E) (S : HSpace E) (h1 : S.SigOK) (h2 : S.Is
   refine ⟨hc.totReal, fun ι => ?_⟩
   letI : Algebra F ℂ := ((algebraMap ℝ ℂ).comp ι).toAlgebra
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  let τ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine (Formalism.UG.Final.DefSig F E _ hc.sig S.gram ι (τ : E →+* ℂ) (RingHom.ext (hσ.2.2.2 (τ : E →+* ℂ)))
     (RingHom.ext fun a => τ.commutes a) (fun e he => (hc.fixed e).1 he)
     (Matrix.ext fun i j => (hJ S).1 i j) (hJ S).2.isUnit).2 (Or.inl ?_)

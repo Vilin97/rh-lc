@@ -29,7 +29,11 @@ theorem exists_lift_of_isAlgClosed (K : Type) [Field K] [IsAlgClosed K] (W Y : S
   letI : Algebra (Y.residueField (π w₀)) (W.residueField w₀) := (π.residueFieldMap w₀).hom.toAlgebra
   letI : Algebra (Y.residueField (π w₀)) K := φ.hom.toAlgebra
   haveI : Module.Finite (Y.residueField (π w₀)) (W.residueField w₀) := hfin
-  let ψ : W.residueField w₀ →ₐ[Y.residueField (π w₀)] K := IsAlgClosed.lift
+  let ψ : W.residueField w₀ →ₐ[Y.residueField (π w₀)] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨Spec.map (CommRingCat.ofHom ψ.toRingHom) ≫ W.fromSpecResidueField w₀, ?_⟩
   rw [Category.assoc, ← Scheme.Hom.SpecMap_residueFieldMap_fromSpecResidueField, ← Category.assoc,
     ← Spec.map_comp]

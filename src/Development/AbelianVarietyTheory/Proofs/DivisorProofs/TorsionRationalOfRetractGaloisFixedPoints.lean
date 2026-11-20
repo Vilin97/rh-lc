@@ -50,7 +50,11 @@ theorem torsRat_of_retract_galoisFixed : ∀ {R : Type} [CommRing R] [IsDomain R
   intro Ω _ _ κ x hx
   letI : Algebra (FractionRing R) Ω := κ.toAlgebra
   let jb := algebraMap (FractionRing R) (AlgebraicClosure (FractionRing R))
-  let i₁ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] Ω := IsAlgClosed.lift
+  let i₁ : AlgebraicClosure (FractionRing R) →ₐ[FractionRing R] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hκ : κ = i₁.toRingHom.comp jb := by
     ext a
     exact (i₁.commutes a).symm
@@ -77,7 +81,11 @@ theorem torsRat_of_retract_galoisFixed : ∀ {R : Type} [CommRing R] [IsDomain R
 
   have hfin := (AbTorsionAnyBase.isFinite_and_flat_torsion _ A.A A.isAb n hn).1
   obtain ⟨K', _, _, _, H⟩ := TorsRational.exists_ext_points (FractionRing R) (torsion A.A n) hfin
-  let i' : K' →ₐ[FractionRing R] AlgebraicClosure (FractionRing R) := IsAlgClosed.lift
+  let i' : K' →ₐ[FractionRing R] AlgebraicClosure (FractionRing R) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra K' (AlgebraicClosure (FractionRing R)) := i'.toRingHom.toAlgebra
   haveI : IsScalarTower (FractionRing R) K' (AlgebraicClosure (FractionRing R)) :=
     IsScalarTower.of_algebraMap_eq fun a => (i'.commutes a).symm

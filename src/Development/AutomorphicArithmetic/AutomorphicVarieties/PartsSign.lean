@@ -49,7 +49,11 @@ theorem exists_isConjOm : ∃ σ : Ω ≃+* Ω, IsConjOm σ := by
   have : Algebra.IsAlgebraic E Ω := IsAlgClosure.isAlgebraic
   have : Algebra.IsAlgebraic ℚ Ω := Algebra.IsAlgebraic.trans ℚ E Ω
   have : IsAlgClosure ℚ Ω := ⟨inferInstance, inferInstance⟩
-  let j : Ω →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra Ω ℂ := j.toRingHom.toAlgebra
   let c : ℂ ≃ₐ[ℚ] ℂ := Complex.conjAe.restrictScalars ℚ
   exact ⟨(c.restrictNormal Ω).toRingEquiv, j.toRingHom, fun x => c.restrictNormal_commutes Ω x⟩

@@ -120,7 +120,11 @@ theorem rayLeC : ∀ (K E L : Type) [Field K] [NumberField K] [IsTotallyComplex 
   haveI : NumberField R := NumberField.of_module_finite ℚ _
   have hR : GlobalTheory.Mem.Fld.IsRayField E R (GlobalTheory.Mem.Fld.natIdeal E n) := hray.of_algEquiv e
   haveI : IsAbelianGalois E R := hR.1
-  let j : L →ₐ[K] ℂ := IsAlgClosed.lift
+  let j : L →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hsub := rayLe K E L ℂ n hn hL R hR.2 j
   exact ⟨(j : L →+* ℂ), j.comp_algebraMap, fun x => hsub x⟩
 

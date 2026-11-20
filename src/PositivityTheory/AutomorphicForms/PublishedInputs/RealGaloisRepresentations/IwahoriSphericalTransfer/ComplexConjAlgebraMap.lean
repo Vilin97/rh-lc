@@ -60,7 +60,11 @@ theorem hodgeTate_of_regAlg : ∀ (F Ω : Type) [Field F] [NumberField F] [IsTot
     letI : Algebra F (Qbar l) := τ.toAlgebra
     haveI : Module.Finite F K := Module.finite_of_finrank_pos (by omega)
     haveI : Algebra.IsAlgebraic F K := Algebra.IsAlgebraic.of_finite F K
-    let τ' : K →ₐ[F] Qbar l := IsAlgClosed.lift
+    let τ' : K →ₐ[F] Qbar l := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     have hτ' : (τ' : K →+* Qbar l).comp (algebraMap F K) = τ := RingHom.ext fun x => τ'.commutes x
     have hc : ((τ' : K →+* Qbar l).comp (IsCMField.complexConj K).toRingEquiv.toRingHom).comp (algebraMap F K) = τ := by
       rw [← hτ']

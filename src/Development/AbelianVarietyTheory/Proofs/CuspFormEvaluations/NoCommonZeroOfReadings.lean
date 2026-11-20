@@ -23,7 +23,11 @@ theorem exists_complex_point {K A : Type} [Field K] [CommRing A] [Algebra K A] [
   letI : Field (A ⧸ M) := Ideal.Quotient.field M
   letI : Algebra K ℂ := σ.toAlgebra
   haveI : Module.Finite K (A ⧸ M) := finite_of_finite_type_of_isJacobsonRing K (A ⧸ M)
-  let g : (A ⧸ M) →ₐ[K] ℂ := IsAlgClosed.lift
+  let g : (A ⧸ M) →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let f : A →ₐ[K] ℂ := g.comp (Ideal.Quotient.mkₐ K M)
   refine ⟨⟨(f : A →+* ℂ), fun r => f.commutes r⟩, fun x hx => ?_⟩
   show g (Ideal.Quotient.mk M x) = 0

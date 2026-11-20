@@ -64,7 +64,11 @@ private theorem fpd_ext {A k k₁ : Type} [CommRing A] [IsDomain A] [IsDiscreteV
   haveI : Module.Finite k k₁ := Module.Finite.of_finite
   haveI : Module.IsTorsionFree k k₁ := DivisionSemiring.to_moduleIsTorsionFree
   haveI : Module.IsTorsionFree k Kb := DivisionSemiring.to_moduleIsTorsionFree
-  let g : k₁ →ₐ[k] Kb := IsAlgClosed.lift
+  let g : k₁ →ₐ[k] Kb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hint : ∀ x : k₁, IsIntegral A (g x) := by
     intro x
     rcases eq_or_ne x 0 with rfl | hx

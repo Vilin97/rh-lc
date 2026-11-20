@@ -96,7 +96,11 @@ theorem exists_ext_emb (p : ℕ) [Fact p.Prime] (V W : Type) [CommRing V] [IsDom
     obtain ⟨a, b, -, rfl⟩ := IsFractionRing.div_surjective (A := W) z
     rw [div_eq_mul_inv]
     exact ((hint a).mul (hint b).inv).isAlgebraic
-  let ι : FractionRing W →ₐ[FractionRing V] PadicAlgCl p := IsAlgClosed.lift
+  let ι : FractionRing W →ₐ[FractionRing V] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hι : ι.toRingHom.comp fK = κ := RingHom.ext fun x => ι.commutes x
   refine ⟨ι.toRingHom, hι, GlobalTheory.unitBall_eq_of_integral_dvr p V W hinj κ ι.toRingHom (fun v => ?_) hV⟩
   show ι (algebraMap W (FractionRing W) (f v)) = _

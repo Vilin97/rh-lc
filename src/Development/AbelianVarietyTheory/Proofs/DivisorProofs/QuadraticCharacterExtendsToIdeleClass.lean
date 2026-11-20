@@ -63,7 +63,11 @@ theorem exists_coord {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
       ∀ a : AF F, θ (algebraMap (AF F) (AF F ⊗[F] E) a) = InfinitePlace.Completion.extensionEmbedding w (a.1 w) := by
   letI : Algebra F ℂ := w.embedding.toAlgebra
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ _ _
-  let τ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let g0 : AF F →+* ℂ := (InfinitePlace.Completion.extensionEmbedding w).comp
     ((Pi.evalRingHom (fun u : InfinitePlace F => u.Completion) w).comp
       (RingHom.fst (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)))

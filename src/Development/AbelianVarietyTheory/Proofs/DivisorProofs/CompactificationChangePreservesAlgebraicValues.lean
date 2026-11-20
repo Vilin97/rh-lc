@@ -67,7 +67,11 @@ theorem isDomain_tensor_alg {K Ω K' : Type} [Field K] [CharZero K] [Field Ω] [
   let N := algebraicClosure K (AlgebraicClosure Ω)
   haveI : IsDomain (N ⊗[K] Ω) := (GlobalTheory.GeomConn.linearDisjoint_algebraicClosure h).isDomain
   haveI : IsAlgClosed N := IsAlgClosure.isAlgClosed K
-  let j : K' →ₐ[K] N := IsAlgClosed.lift
+  let j : K' →ₐ[K] N := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let φ := Algebra.TensorProduct.map j (AlgHom.id K Ω)
   have hφ : Function.Injective φ :=
     Module.Flat.rTensor_preserves_injective_linearMap (M := Ω) j.toLinearMap j.injective
@@ -169,7 +173,11 @@ theorem comp_bc_genVal : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     let L := AlgebraicClosure (Om Z)
     letI : Algebra c.F c'.F := (incF c c' hle).toAlgebra
     haveI : Module.Finite c.F c'.F := finite_incF hle
-    let j : c'.F →ₐ[c.F] L := IsAlgClosed.lift
+    let j : c'.F →ₐ[c.F] L := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     letI : Algebra c'.F L := j.toRingHom.toAlgebra
     have hAO : AlgOver c c' hle L := fun a => j.commutes a
     let φ : Om Z →ₐ[c.F] L := IsScalarTower.toAlgHom c.F (Om Z) L

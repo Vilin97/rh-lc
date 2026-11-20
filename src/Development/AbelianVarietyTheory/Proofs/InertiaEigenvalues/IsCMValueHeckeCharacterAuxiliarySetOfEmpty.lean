@@ -79,7 +79,11 @@ theorem partialSum_mem (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hG 
   obtain ⟨τ₀, -⟩ := hD.1 H.φ₀
   let Ω := AlgebraicClosure H.K
   let _ : Algebra H.K ℂ := ((φ τ₀).comp (algebraMap H.K H.E)).toAlgebra
-  let j : Ω →ₐ[H.K] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[H.K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hj : ∀ x : H.K, j.toRingHom (algebraMap H.K Ω x) = φ τ₀ x := j.commutes
   obtain ⟨art, ha⟩ := hA H.K Ω
   obtain ⟨ρ, hρ, hg⟩ := hG R H I φ s κ 𝔣 χ hD Ω j.toRingHom τ₀ hj art ha T₀ hT₀ h0 Q hQ inferInstance T hT

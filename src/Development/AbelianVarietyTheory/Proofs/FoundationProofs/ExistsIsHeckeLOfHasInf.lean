@@ -127,7 +127,11 @@ theorem exists_emb (i : X.Tw) (k : ℕ) : ∃ J : FractionRing (X.Ok i k) →+* 
   have : FaithfulSMul (X.O i) (Kbar X i) := (faithfulSMul_iff_algebraMap_injective _ _).2 (by
     rw [IsScalarTower.algebraMap_eq (X.O i) (FractionRing (X.O i)) (Kbar X i)]
     exact (algebraMap (FractionRing (X.O i)) (Kbar X i)).injective.comp (IsFractionRing.injective _ _))
-  let J0 : X.Ok i k →ₐ[X.O i] Kbar X i := IsAlgClosed.lift
+  let J0 : X.Ok i k →ₐ[X.O i] Kbar X i := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hJ : Function.Injective J0.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := X.O i) ?_

@@ -79,7 +79,11 @@ theorem symAt_exists : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonOb
   let k : K →+* AlgebraicClosure K := algebraMap K (AlgebraicClosure K)
   letI : Algebra Ω (AlgebraicClosure K) := (k.comp i).toAlgebra
   haveI : Algebra.IsAlgebraic Ω Ω' := Algebra.IsAlgebraic.of_finite Ω Ω'
-  let jj : Ω' →ₐ[Ω] AlgebraicClosure K := IsAlgClosed.lift
+  let jj : Ω' →ₐ[Ω] AlgebraicClosure K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hcomp : (jj : Ω' →+* AlgebraicClosure K).comp (algebraMap Ω Ω') = k.comp i :=
     RingHom.ext fun r => jj.commutes r
   obtain ⟨p1, -, h1⟩ := GlobalTheory.T.isThetaConstantListOfFibre_pullback_field_extension S G L ρ hL hρ m N Ω' (AlgebraicClosure K) (jj : Ω' →+* AlgebraicClosure K) _ _ pt₀ c₀ hT

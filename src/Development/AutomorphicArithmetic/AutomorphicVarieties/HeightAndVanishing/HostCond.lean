@@ -53,7 +53,11 @@ private theorem subgroup_eq_of_chr_hasLevel (E : Type) [Field E] [NumberField E]
   haveI : IsAlgClosure ℚ (AlgebraicClosure ℚ) := by
     convert AlgebraicClosure.instIsAlgClosure ℚ
     all_goals first | rfl | exact Subsingleton.elim _ _
-  let f : E →ₐ[ℚ] AlgebraicClosure ℚ := IsAlgClosed.lift
+  let f : E →ₐ[ℚ] AlgebraicClosure ℚ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra E (AlgebraicClosure ℚ) := f.toRingHom.toAlgebra
   have e1 := ((Chr.levGal E L H₁ h₁).2.2 (AlgebraicClosure ℚ)).1
   have e2 := ((Chr.levGal E L H₂ h₂).2.2 (AlgebraicClosure ℚ)).1

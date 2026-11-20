@@ -17,7 +17,11 @@ theorem UpperTheory.V.Ws.exists_complexConjugation_at_realPlace :
   have halg : ∀ x : F, algebraMap F ℂ x = φ x := fun x => rfl
   haveI : Algebra.IsAlgebraic F Ω := IsAlgClosure.isAlgebraic
   haveI : Normal F Ω := IsAlgClosure.normal F Ω
-  let j : Ω →ₐ[F] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let E : IntermediateField F ℂ := j.fieldRange
   let e : Ω ≃ₐ[F] E := AlgEquiv.ofInjectiveField j
   haveI : Normal F E := Normal.of_algEquiv e

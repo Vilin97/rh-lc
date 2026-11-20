@@ -40,7 +40,11 @@ theorem exists_embedding (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Alg
   have : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
   have : Algebra.IsAlgebraic ℚ Ω := Algebra.IsAlgebraic.trans ℚ E Ω
   have : IsAlgClosure ℚ Ω := ⟨inferInstance, inferInstance⟩
-  let j0 : Ω →ₐ[ℚ] PadicAlgCl l := IsAlgClosed.lift
+  let j0 : Ω →ₐ[ℚ] PadicAlgCl l := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let A0 : ValuationSubring Ω := (Valued.v (R := PadicAlgCl l)).valuationSubring.comap j0.toRingHom
   have hA0 : ∀ x, x ∈ A0 ↔ ‖j0 x‖ ≤ 1 := fun x => by
     change Valued.v (j0 x) ≤ 1 ↔ _

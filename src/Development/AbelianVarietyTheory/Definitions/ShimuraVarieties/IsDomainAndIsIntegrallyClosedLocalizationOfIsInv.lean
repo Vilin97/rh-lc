@@ -249,7 +249,11 @@ theorem exists_ringHom_extension_of_isIntegral {B A k : Type*} [CommRing B] [Com
     exact ((Algebra.IsIntegral.isIntegral (R := B) a).map
       (Ideal.Quotient.mkₐ B Q)).tower_top⟩
   have : Algebra.IsAlgebraic (B ⧸ RingHom.ker φ) (A ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let ψ : (A ⧸ Q) →ₐ[B ⧸ RingHom.ker φ] k := IsAlgClosed.lift
+  let ψ : (A ⧸ Q) →ₐ[B ⧸ RingHom.ker φ] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨(ψ : A ⧸ Q →+* k).comp (Ideal.Quotient.mk Q),
     RingHom.ext fun b ↦ ψ.commutes (Ideal.Quotient.mk _ b)⟩
 

@@ -158,7 +158,11 @@ theorem signProd_totPos : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     have hw : w.IsReal := IsTotallyReal.isReal w
     refine eta_inf_eq_one hw t ?_
     letI : Algebra (↥(maximalRealSubfield E)) ℂ := w.embedding.toAlgebra
-    let τ : E →ₐ[↥(maximalRealSubfield E)] ℂ := IsAlgClosed.lift
+    let τ : E →ₐ[↥(maximalRealSubfield E)] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     obtain ⟨r, hr, e⟩ := hpos τ.toRingHom
     have e2 : (InfinitePlace.embedding_of_isReal hw (t : ↥(maximalRealSubfield E)) : ℂ) = r := by
       rw [InfinitePlace.embedding_of_isReal_apply, ← e]

@@ -37,7 +37,11 @@ private lemma exists_map_ker {p : ℕ} [Fact p.Prime] {F : Type} [Field F] [Numb
   letI : Algebra (ZMod p) k := ZMod.algebra _ p
   haveI : Module.Finite (ZMod p) (𝓞 F ⧸ J) := Module.Finite.of_finite
   haveI : Algebra.IsAlgebraic (ZMod p) (𝓞 F ⧸ J) := Algebra.IsAlgebraic.of_finite _ _
-  let ψ : (𝓞 F ⧸ J) →ₐ[ZMod p] k := IsAlgClosed.lift
+  let ψ : (𝓞 F ⧸ J) →ₐ[ZMod p] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨(ψ : (𝓞 F ⧸ J) →+* k).comp (Ideal.Quotient.mk J), ?_⟩
   rw [RingHom.ker_comp_of_injective _ (ψ : (𝓞 F ⧸ J) →+* k).injective, Ideal.mk_ker]
 

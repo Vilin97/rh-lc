@@ -104,7 +104,11 @@ theorem nontriv {A X B Z : CommRingCat.{0}} (x : A ⟶ X) (b : A ⟶ B) (u : X �
   let _ : Algebra (ResidueField A) (ResidueField B) := (ResidueField.map b.hom).toAlgebra
   have : Algebra.IsIntegral (ResidueField A) (ResidueField B) := ⟨resInt b.hom hb⟩
   have : Algebra.IsAlgebraic (ResidueField A) (ResidueField B) := inferInstance
-  let l : ResidueField B →ₐ[ResidueField A] K := IsAlgClosed.lift
+  let l : ResidueField B →ₐ[ResidueField A] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let f : X →+* K := (algebraMap (ResidueField X) K).comp (residue X)
   let g : B →+* K := l.toRingHom.comp (residue B)
   have hw : x ≫ CommRingCat.ofHom f = b ≫ CommRingCat.ofHom g := by

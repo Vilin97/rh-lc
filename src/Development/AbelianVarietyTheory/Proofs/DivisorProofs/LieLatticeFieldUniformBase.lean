@@ -252,14 +252,26 @@ theorem exists_hasModel : Hypotheses2 → HypothesesH → ∀ (K : Type) [Field 
   obtain ⟨K₁, _, _, a₁, h₁⟩ := GlobalTheory.T.semiabelian_model_after_extension pH.sieg 3 le_rfl (by decide) K P
   obtain ⟨K₂, _, _, a₂, h₂⟩ := GlobalTheory.T.semiabelian_model_after_extension pH.sieg 5 (by norm_num) (by decide) K P
   haveI : IsAlgClosed Qb := (algebraicClosure.isAlgClosure ℚ ℂ).isAlgClosed
-  let io : K →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let io : K →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI := a₁.toAlgebra
   letI := a₂.toAlgebra
   letI := (io : K →+* Qb).toAlgebra
   haveI : Algebra.IsAlgebraic K K₁ := Algebra.IsAlgebraic.tower_top (K := ℚ) K
   haveI : Algebra.IsAlgebraic K K₂ := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let i₁ : K₁ →ₐ[K] Qb := IsAlgClosed.lift
-  let i₂ : K₂ →ₐ[K] Qb := IsAlgClosed.lift
+  let i₁ : K₁ →ₐ[K] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  let i₂ : K₂ →ₐ[K] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨K', _, _, i, j₁, j₂, e₁, e₂⟩ := exists_common (i₁ : K₁ →+* Qb) (i₂ : K₂ →+* Qb)
   have e : j₁.comp a₁ = j₂.comp a₂ := RingHom.ext fun a => i.injective
     (((RingHom.congr_fun e₁ _).trans (i₁.commutes a)).trans ((RingHom.congr_fun e₂ _).trans (i₂.commutes a)).symm)
@@ -407,7 +419,11 @@ theorem large_fibAt (p2 : Hypotheses2) (pH : HypothesesH) (y : Sp Qb ⟶ gen s.T
   letI := io₀.toAlgebra
   haveI : Algebra.IsAlgebraic K₀ K₁ := Algebra.IsAlgebraic.tower_top (K := ℚ) K₀
   haveI : IsAlgClosed Qb := (algebraicClosure.isAlgClosure ℚ ℂ).isAlgClosed
-  let io₁ : K₁ →ₐ[K₀] Qb := IsAlgClosed.lift
+  let io₁ : K₁ →ₐ[K₀] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have e₁ : (io₁ : K₁ →+* Qb).comp j₁ = io₀ := RingHom.ext fun a => io₁.commutes a
   refine Large.of_point (io₁ : K₁ →+* Qb) (spMap j₁ ≫ y₀) ?_ fun K _ _ io j _ => ?_
   · rw [← hy, ← e₁, ← Category.assoc, ← Spec.map_comp]

@@ -85,7 +85,11 @@ theorem exists_extension {A B C : Type} [CommRing A] [IsDomain A] [CommRing B] [
   haveI : Algebra.IsIntegral A B := ⟨hint⟩
   haveI : FaithfulSMul A B := (faithfulSMul_iff_algebraMap_injective A B).2 hφ
   haveI : FaithfulSMul A C := (faithfulSMul_iff_algebraMap_injective A C).2 he
-  let g : B →ₐ[A] C := IsAlgClosed.lift
+  let g : B →ₐ[A] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨g.toRingHom, ?_, fun a => g.commutes a, fun b => ?_⟩
   · rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := A) ?_

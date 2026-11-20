@@ -737,7 +737,11 @@ theorem IsAbsIrrChar.map_inv {χ : G → K} (h : IsAbsIrrChar χ) (σ : K →+* 
     σ (χ t⁻¹) = starRingEnd ℂ (σ (χ t)) := by
   obtain ⟨n, ρ, -, hρ⟩ := h
   let _ : Algebra K ℂ := σ.toAlgebra
-  let τ : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let τ : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hτ : ∀ x : K, τ (algebraMap K (AlgebraicClosure K) x) = σ x := fun x => τ.commutes x
   let A : G → Matrix (Fin n) (Fin n) (AlgebraicClosure K) := fun s => LinearMap.toMatrix' (ρ s)
   have hA : ∀ s, (A s).trace = algebraMap K (AlgebraicClosure K) (χ s) := by

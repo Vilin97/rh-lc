@@ -34,7 +34,11 @@ theorem UpperTheory.V.Chr.partModel :
   intro E _ _ _ N _ H hH l _ O _ _ _ _ _ Ω' _ _ _ D Ω _ _ _ e
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
-  let j : E →ₐ[ℚ] Ω := IsAlgClosed.lift
+  let j : E →ₐ[ℚ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra E Ω := j.toRingHom.toAlgebra
   haveI : Algebra.IsAlgebraic E Ω := Algebra.IsAlgebraic.tower_top (K := ℚ) E
   haveI : IsAlgClosure E Ω := ⟨inferInstance, inferInstance⟩

@@ -92,7 +92,11 @@ theorem isIrrChar_of_isAbsIrrChar {K G : Type} [Field K] [CharZero K] [Group G] 
   letI : Algebra K ℂ := emb.toAlgebra
   haveI : CharZero (AlgebraicClosure K) :=
     charZero_of_injective_algebraMap (algebraMap K (AlgebraicClosure K)).injective
-  let φ : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let φ : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra (AlgebraicClosure K) ℂ := φ.toRingHom.toAlgebra
   have h1 := pair_self_of_isIrrChar_algClosed (AlgebraicClosure K) G _ ⟨n, ρ, hi, fun _ => rfl⟩
   rw [pair_character_eq_finrank] at h1

@@ -51,7 +51,11 @@ theorem exists_lift {L L' Ω : Type} [Field L] [Field L'] [Field Ω] [IsAlgClose
   letI := j.toAlgebra
   letI := i.toAlgebra
   haveI : Module.Finite L L' := hi
-  let τ : L' →ₐ[L] Ω := IsAlgClosed.lift
+  let τ : L' →ₐ[L] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨τ.toRingHom, RingHom.ext fun a => τ.commutes a⟩
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}

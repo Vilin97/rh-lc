@@ -46,7 +46,11 @@ theorem exists_isCN_common_of_finite : ∀ (R₀ A R' : Type) [CommRing R₀] [I
       change Function.Injective (ιK.comp ψb)
       exact hιK.comp hψb)
   haveI : Algebra.IsAlgebraic (R ⧸ P) (R' ⧸ q) := Algebra.IsIntegral.isAlgebraic
-  let φb : (R' ⧸ q) →ₐ[R ⧸ P] Ω := IsAlgClosed.lift
+  let φb : (R' ⧸ q) →ₐ[R ⧸ P] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let φ : R' →+* Ω := φb.toRingHom.comp (Ideal.Quotient.mk q)
   have hφρ : ∀ r, φ (ρ r) = ιK (ψ r) := fun r => by
     have := φb.commutes (Ideal.Quotient.mk P r)

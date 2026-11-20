@@ -88,7 +88,11 @@ theorem eq_of_sub_mem [Algebra.IsIntegral R R₁] (s : R₁)
     haveI : Module.IsTorsionFree R (R₁ ⧸ P) := by
       rw [Module.isTorsionFree_iff_algebraMap_injective]; exact hRA
     haveI : Algebra.IsAlgebraic R (R₁ ⧸ P) := Algebra.IsIntegral.isAlgebraic
-    let l : (R₁ ⧸ P) →ₐ[R] M := IsAlgClosed.lift
+    let l : (R₁ ⧸ P) →ₐ[R] M := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine ⟨l.toRingHom.comp (Ideal.Quotient.mk P), ?_, fun x hx => ?_⟩
     · ext r
       simp only [RingHom.comp_apply, Ideal.Quotient.mk_algebraMap, AlgHom.toRingHom_eq_coe,

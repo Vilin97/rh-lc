@@ -29,7 +29,11 @@ theorem exists_algHom_quotient_minimalPrime_injective (R K : Type) [CommRing R] 
       exact (Algebra.IsAlgebraic.isAlgebraic (R := R) y).algHom (Ideal.Quotient.mkₐ R P)⟩
   haveI : Module.IsTorsionFree R (D ⧸ P) := Module.isTorsionFree_iff_algebraMap_injective.mpr hinj
   haveI : Module.IsTorsionFree R K := Module.isTorsionFree_iff_algebraMap_injective.mpr (IsFractionRing.injective R K)
-  let f : D ⧸ P →ₐ[R] K := IsAlgClosed.lift
+  let f : D ⧸ P →ₐ[R] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f, ?_⟩
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx

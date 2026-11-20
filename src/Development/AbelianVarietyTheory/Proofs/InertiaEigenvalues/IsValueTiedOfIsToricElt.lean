@@ -79,7 +79,11 @@ theorem IsGalTied.isValueTied (h : IsGalTied X) : IsValueTied X := by
     have := congrArg e hab
     rw [RingHom.comp_apply, RingHom.comp_apply, he, he] at this
     exact Subtype.ext ((algebraMap ℚ_[X.l i] (Qbar (X.l i))).injective this)⟩
-  let J : Qbar (X.l i) →ₐ[FractionRing (X.O0 i)] Kbar X i := IsAlgClosed.lift
+  let J : Qbar (X.l i) →ₐ[FractionRing (X.O0 i)] Kbar X i := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hJ : ∀ x, J (e x) = toBar X i x := J.commutes
   refine ⟨J.toRingHom.comp ι.symm.toRingHom, fun x => ?_, fun lam s hs => ?_⟩
   · rw [← hι, ← hJ]

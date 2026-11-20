@@ -54,7 +54,11 @@ private theorem aut_art {φ : Frame} (H : HostRaw φ) (j : H.E →ₐ[ℚ] Qb) (
   have : IsScalarTower ℚ H.E (Cond.Cyc H.condN) := IsScalarTower.of_algebraMap_eq fun x => ((emb H).commutes x).symm
   have : Algebra.IsAlgebraic H.E (Cond.Cyc H.condN) := Algebra.IsAlgebraic.tower_top (K := ℚ) H.E
   let _ : Algebra H.E Qb := j.toRingHom.toAlgebra
-  let Ψ0 : Cond.Cyc H.condN →ₐ[H.E] Qb := IsAlgClosed.lift
+  let Ψ0 : Cond.Cyc H.condN →ₐ[H.E] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let Ψ : Cond.Cyc H.condN →+* Qb := Ψ0.toRingHom
   have h1 : ∀ y, Ψ (emb H y) = j y := fun y => Ψ0.commutes y
   have key : (Ψ.comp (tauN H.condN u : Cond.Cyc H.condN →+* Cond.Cyc H.condN)).toRatAlgHom =

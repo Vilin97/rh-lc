@@ -108,7 +108,11 @@ theorem exists_isReducedNormOf (x : C) : ∃ a, IsReducedNormOf F C x a := by
   refine ⟨a, fun L _ ι Φ hΦ ↦ ?_⟩
   letI : Algebra F L := ι.toAlgebra
   let M := AlgebraicClosure L
-  let jE : E →ₐ[F] M := IsAlgClosed.lift
+  let jE : E →ₐ[F] M := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hιM : ∀ c : F, algebraMap F M c = algebraMap L M (ι c) := fun c ↦
     IsScalarTower.algebraMap_apply F L M c
   have key := det_eq_det_of_semilinear (algebraMap F M) ((jE : E →+* M).mapMatrix.comp Ψ)

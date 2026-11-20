@@ -29,7 +29,11 @@ theorem exists_factor {K : Type} [Field K] (X : Over (Sp K)) (hX : IsFinite X.ho
   have e : c ≫ φ = CommRingCat.ofHom (algebraMap K F) := by
     apply Spec.map_injective
     rw [Spec.map_comp, hφ, hc, Category.assoc, Iso.hom_inv_id_assoc, hx]
-  let σ : AlgebraicClosure K →ₐ[K] F := IsAlgClosed.lift
+  let σ : AlgebraicClosure K →ₐ[K] F := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hr : ∀ b, φ.hom b ∈ σ.range := fun b => by
     have hi : IsIntegral K (φ.hom b) := by
       obtain ⟨p, hp, h0⟩ := hfin.to_isIntegral b

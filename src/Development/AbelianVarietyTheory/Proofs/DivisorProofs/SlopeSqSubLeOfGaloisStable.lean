@@ -33,7 +33,11 @@ theorem sum_dual_mul {K K' ι : Type} [Field K] [NumberField K] [Field K'] [Numb
   have e : ι ≃ (K' →ₐ[ℚ] ℂ) := Fintype.equivOfCardEq (by
     rw [← Module.finrank_eq_card_basis b, AlgHom.card])
   have hBA : B * A = 1 := (Matrix.mul_eq_one_comm_of_equiv e).1 hAB
-  let φ : K' →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let φ : K' →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let ψ : K' →ₐ[ℚ] ℂ := φ.comp ((s : K' →+* K').toRatAlgHom)
   have key : φ (∑ r, s (d r) * b r) = (1 : Matrix (K' →ₐ[ℚ] ℂ) (K' →ₐ[ℚ] ℂ) ℂ) φ ψ := by
     set_option synthInstance.maxHeartbeats 100000 in

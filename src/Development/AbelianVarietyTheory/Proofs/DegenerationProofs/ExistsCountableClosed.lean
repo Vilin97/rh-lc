@@ -27,7 +27,11 @@ theorem exists_countable_closed {K : Type} [Field K] [IsAlgClosed K] (K₀ : Sub
   have c₁ : Cardinal.mk K₁ ≤ Cardinal.aleph0 :=
     (Subfield.cardinalMk_closure_le_max _).trans (max_le (Cardinal.mk_le_aleph0_iff.2 hc.to_subtype) le_rfl)
   have h : K₀ ≤ K₁ := fun x hx => Subfield.subset_closure (Or.inl hx)
-  let β : AlgebraicClosure K₁ →ₐ[K₁] K := IsAlgClosed.lift
+  let β : AlgebraicClosure K₁ →ₐ[K₁] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨AlgebraicClosure K₁, inferInstance, inferInstance, ?_, (algebraMap K₁ _).comp (Subfield.inclusion h),
     β.toRingHom, RingHom.ext fun x => β.commutes _, fun x =>
       ⟨algebraMap K₁ _ ⟨a x, Subfield.subset_closure (Or.inr ⟨x, rfl⟩)⟩, β.commutes _⟩⟩

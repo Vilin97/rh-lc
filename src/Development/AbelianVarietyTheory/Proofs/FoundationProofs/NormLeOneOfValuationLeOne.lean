@@ -78,7 +78,11 @@ theorem exists_embedding_smallIdeal_eq {C : Type} [NormedField C] [IsUltrametric
     have h5 := (mul_le_of_le_one_right (norm_nonneg (l : C))
       (IsUltrametricDist.norm_intCast_le_one C c)).trans_lt hlC
     exact absurd h2 h5.ne
-  have φ₀ : K →ₐ[ℚ] C := IsAlgClosed.lift
+  have φ₀ : K →ₐ[ℚ] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨φ, -, hφ⟩ := (Ideal.subset_union_prime φ₀ φ₀
     (fun φ _ _ _ => smallIdeal_isPrime φ.toRingHom)).1 hsub
   exact ⟨φ.toRingHom, (w.isMaximal.eq_of_le (smallIdeal_isPrime _).ne_top hφ).symm⟩
@@ -108,7 +112,11 @@ theorem exists_lamC_eq {l : ℕ} [Fact l.Prime] (σ : K →+* ℂ) (φ : K →+*
       (congrArg σ' (eq_ratCast (algebraMap ℚ K) q).symm)
   haveI : Algebra.IsAlgebraic ℚ Qbar := algebraicClosure.isAlgebraic ℚ ℂ
   haveI : Algebra.IsAlgebraic K Qbar := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let lam : Qbar →ₐ[K] ℂ_[l] := IsAlgClosed.lift
+  let lam : Qbar →ₐ[K] ℂ_[l] := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨lam.toRingHom, fun x => ?_⟩
   unfold lamC
   rw [dif_pos (hmem x)]

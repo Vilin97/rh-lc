@@ -61,7 +61,11 @@ theorem exists_extend (M : IntermediateField E Ω) (ψ : M →+* ℂ) :
   letI : Algebra M ℂ := ψ.toAlgebra
   haveI : Algebra.IsAlgebraic E Ω := IsAlgClosure.isAlgebraic
   haveI : Algebra.IsAlgebraic M Ω := Algebra.IsAlgebraic.tower_top (K := E) M
-  let f : Ω →ₐ[M] ℂ := IsAlgClosed.lift
+  let f : Ω →ₐ[M] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨f.toRingHom, fun x => f.commutes x⟩
 
 theorem mem_of_conj {L : IntermediateField E Ω} {x y : Ω} (hx : x ∈ L)

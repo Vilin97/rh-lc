@@ -153,7 +153,11 @@ theorem UpperTheory.V.Af.Cq.exQuad :
     exact this
   obtain ⟨ι⟩ := nonempty_ringHom_Kstar_of_sq_eq_neg l p s hs'
   obtain ⟨-, htc, hfr, -⟩ := HV.kstar p hp hp4
-  let φ : Kstar p →ₐ[ℚ] Ω := IsAlgClosed.lift
+  let φ : Kstar p →ₐ[ℚ] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI alg : Algebra (Kstar p) Ω := φ.toRingHom.toAlgebra
   haveI tower : IsScalarTower ℚ (Kstar p) Ω :=
     IsScalarTower.of_algebraMap_eq (fun x => (φ.commutes x).symm)

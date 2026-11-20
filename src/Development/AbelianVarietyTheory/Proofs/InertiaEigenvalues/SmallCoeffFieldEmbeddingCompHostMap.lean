@@ -123,7 +123,11 @@ theorem exists_field (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (i : D.ntw.Tw) 
     (GlobalTheory.Published.nonempty_algHom_of_isRay_of_dvd (hspan _ hmN) (hdiv _ _ (mul_dvd_mul_right hm''m N)) hH' hH₂').some
   have g₁ : H₁ →ₐ[D.host.K] H₀ :=
     (GlobalTheory.Published.nonempty_algHom_of_isRay_of_dvd (hspan _ hm₀0) (hdiv _ _ hm') hH₀ hH₁').some
-  let j : H →ₐ[D.host.K] ℂ := IsAlgClosed.lift
+  let j : H →ₐ[D.host.K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hinf : Ideal.span {((m : ℕ) : 𝓞 D.host.K)} ⊓ Ideal.span {((m'' * N : ℕ) : 𝓞 D.host.K)} =
       Ideal.span {((m * N : ℕ) : 𝓞 D.host.K)} := by
     have := span_inf_span (R := 𝓞 D.host.K) m'' (D.ntw.l i ^ a) N hcop

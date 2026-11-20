@@ -223,7 +223,11 @@ theorem exists_descent (g : ℕ) (ka : ∀ (K : Type) [Field K] [CharZero K] [Is
     exact (ka (AlgebraicClosure K) xb).ne_zero hy₀.symm
   refine ⟨Units.mk0 y₀ h0, fun _ L _ _ _ f xL hL => ?_⟩
   let _ : Algebra K L := f.toAlgebra
-  let e : AlgebraicClosure K →ₐ[K] L := IsAlgClosed.lift
+  let e : AlgebraicClosure K →ₐ[K] L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hc : (e : AlgebraicClosure K →+* L).comp (algebraMap K (AlgebraicClosure K)) = f := by
     ext a
     show e (algebraMap K _ a) = f a

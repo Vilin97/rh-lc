@@ -38,7 +38,11 @@ theorem exists_lift_to_complete_dvr_of_finite : ∀ (A R : Type) [CommRing A] [C
     Module.isTorsionFree_iff_algebraMap_injective.2 hinj0
   haveI : Module.IsTorsionFree (A ⧸ p) Ω := Module.isTorsionFree_iff_algebraMap_injective.2 hg0
   haveI : Algebra.IsAlgebraic (A ⧸ p) (R ⧸ Q) := Algebra.IsIntegral.isAlgebraic
-  let σ : (R ⧸ Q) →ₐ[A ⧸ p] Ω := IsAlgClosed.lift
+  let σ : (R ⧸ Q) →ₐ[A ⧸ p] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let ρ1 : R →+* Ω := σ.toRingHom.comp (Ideal.Quotient.mk Q)
   have hρ1 : ∀ a : A, ρ1 (algebraMap A R a) = algebraMap K Ω (algebraMap V K (h a)) := by
     intro a

@@ -18,7 +18,11 @@ theorem exists_cyc_act (N : ℕ) [NeZero N] (u : (ZMod N)ˣ) :
     ∃ s : Qb ≃ₐ[ℚ] Qb, ∀ z ∈ mus N, s z = z ^ (u : ZMod N).val := by
   have hco : (u : ZMod N).val.Coprime N := ZMod.val_coe_unit_coprime u
   obtain ⟨σ, hσ⟩ := Cond.aut N (u : ZMod N).val hco
-  let κ : CyclotomicField N ℚ →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let κ : CyclotomicField N ℚ →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let _ : Algebra (CyclotomicField N ℚ) Qb := κ.toRingHom.toAlgebra
   have : IsScalarTower ℚ (CyclotomicField N ℚ) Qb := IsScalarTower.of_algebraMap_eq fun x => (κ.commutes x).symm
   have : IsGalois ℚ (CyclotomicField N ℚ) := IsCyclotomicExtension.isGalois {N} ℚ (CyclotomicField N ℚ)

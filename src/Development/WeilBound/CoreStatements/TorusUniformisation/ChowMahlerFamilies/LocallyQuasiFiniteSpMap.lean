@@ -34,7 +34,11 @@ theorem exists_point {F R : Type} [Field F] [Algebra F ℂ] [CommRing R] [IsDoma
   obtain ⟨M, hM⟩ := Ideal.exists_maximal R
   letI : Field (R ⧸ M) := Ideal.Quotient.field M
   haveI : Module.Finite L (R ⧸ M) := finite_of_finite_type_of_isJacobsonRing L (R ⧸ M)
-  let q : (R ⧸ M) →ₐ[L] ℂ := IsAlgClosed.lift
+  let q : (R ⧸ M) →ₐ[L] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let p : R →ₐ[L] ℂ := q.comp (Ideal.Quotient.mkₐ L M)
   refine ⟨p.restrictScalars F, ?_⟩
   have := p.commutes (AdjoinRoot.root (minpoly F f))

@@ -57,7 +57,11 @@ theorem isAbsIrrChar_of_isIrr : ∀ (K : Type) [Field K] (σ : K →+* ℂ) (G :
   obtain ⟨V, hV, hχ⟩ := h
   haveI : CharZero K := σ.charZero
   letI : Algebra K ℂ := σ.toAlgebra
-  let τ : AlgebraicClosure K →ₐ[K] ℂ := IsAlgClosed.lift
+  let τ : AlgebraicClosure K →ₐ[K] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra (AlgebraicClosure K) ℂ := τ.toRingHom.toAlgebra
   have hτ : ∀ x : K, algebraMap (AlgebraicClosure K) ℂ (algebraMap K (AlgebraicClosure K) x) = σ x :=
     fun x => τ.commutes x

@@ -47,7 +47,11 @@ theorem exists_lift_geometric (R S : Type) [CommRing R] [CommRing S] [Algebra R 
   obtain ⟨m, hm⟩ := Ideal.exists_maximal (k ⊗[R] S)
   letI : Field ((k ⊗[R] S) ⧸ m) := Ideal.Quotient.field m
   haveI : Module.Finite k ((k ⊗[R] S) ⧸ m) := inferInstance
-  let g : ((k ⊗[R] S) ⧸ m) →ₐ[k] k := IsAlgClosed.lift
+  let g : ((k ⊗[R] S) ⧸ m) →ₐ[k] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨g.toRingHom.comp ((Ideal.Quotient.mk m).comp
     (Algebra.TensorProduct.includeRight (R := R) (A := k) (B := S)).toRingHom), ?_⟩
   ext x

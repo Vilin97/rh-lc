@@ -23,7 +23,11 @@ theorem _root_.GlobalTheory.FieldBC.exists_emb_ext {E : Type} [Field E] [NumberF
   haveI : IsScalarTower ℚ c.F c'.F := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
   haveI : Algebra.IsAlgebraic ℚ c'.F := Algebra.IsAlgebraic.of_finite ℚ c'.F
   haveI : Algebra.IsAlgebraic c.F c'.F := Algebra.IsAlgebraic.tower_top (K := ℚ) c.F
-  let τ : c'.F →ₐ[c.F] ℂ := IsAlgClosed.lift
+  let τ : c'.F →ₐ[c.F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨τ.toRingHom, ?_⟩
   ext x
   exact τ.commutes x

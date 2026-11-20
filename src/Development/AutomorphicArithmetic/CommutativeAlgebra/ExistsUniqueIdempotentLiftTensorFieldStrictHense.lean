@@ -31,7 +31,11 @@ private theorem mem_maximal_of_includeLeft_eq_zero (O R K : Type) [CommRing O] [
   haveI : Algebra.IsIntegral (IsLocalRing.ResidueField O) K :=
     Algebra.IsIntegral.tower_top O
   haveI : Algebra.IsAlgebraic (IsLocalRing.ResidueField O) K := inferInstance
-  let g : K →ₐ[IsLocalRing.ResidueField O] AlgebraicClosure (R ⧸ M) := IsAlgClosed.lift
+  let g : K →ₐ[IsLocalRing.ResidueField O] AlgebraicClosure (R ⧸ M) := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let fR : R →+* AlgebraicClosure (R ⧸ M) :=
     (algebraMap (R ⧸ M) (AlgebraicClosure (R ⧸ M))).comp (Ideal.Quotient.mk M)
   have hc : ∀ o : O, g (algebraMap O K o) = fR (algebraMap O R o) := by

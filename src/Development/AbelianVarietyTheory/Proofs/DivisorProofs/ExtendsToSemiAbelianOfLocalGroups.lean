@@ -25,7 +25,11 @@ theorem exists_ringHom_extend {A R Ω : Type} [CommRing A] [IsLocalRing A] [Comm
     rw [← ResidueField.map_comp_residue] at hφ
     exact RingHom.Finite.of_comp_finite hφ
   haveI : Module.Finite (ResidueField A) (ResidueField R) := hf
-  let l : ResidueField R →ₐ[ResidueField A] Ω := IsAlgClosed.lift
+  let l : ResidueField R →ₐ[ResidueField A] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨l.toRingHom.comp (residue R), RingHom.ext fun a => ?_⟩
   exact l.commutes (residue A a)
 

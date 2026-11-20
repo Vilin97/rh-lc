@@ -203,8 +203,16 @@ namespace GlobalTheory.Published
 
 theorem rayClassFieldMaximalSt_holds : RayClassFieldMaximalSt := by
   intro K L L' _ _ _ _ _ _ _ _ _ _ 𝔪 hm h h'
-  let i : L →ₐ[K] AlgebraicClosure K := IsAlgClosed.lift
-  let j : L' →ₐ[K] AlgebraicClosure K := IsAlgClosed.lift
+  let i : L →ₐ[K] AlgebraicClosure K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  let j : L' →ₐ[K] AlgebraicClosure K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let e := AlgEquiv.ofInjectiveField i
   let e' := AlgEquiv.ofInjectiveField j
   have : IsGalois K i.fieldRange := IsGalois.of_algEquiv e

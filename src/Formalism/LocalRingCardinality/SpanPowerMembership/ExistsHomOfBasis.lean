@@ -68,7 +68,11 @@ theorem exists_lamExt {K : Type} [Field K] [NumberField K] (e : K →+* ℂ) {C 
   let _ : Algebra K C := f.toAlgebra
   have h0 : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ ℂ) := algebraicClosure.isAlgebraic ℚ ℂ
   have : Algebra.IsAlgebraic K (algebraicClosure ℚ ℂ) := Algebra.IsAlgebraic.tower_top (K := ℚ) K
-  let l : algebraicClosure ℚ ℂ →ₐ[K] C := IsAlgClosed.lift
+  let l : algebraicClosure ℚ ℂ →ₐ[K] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨l.toRingHom, fun x => ⟨hmem x, (l.commutes x).symm⟩⟩
 
 theorem exists_placeEmb (D : D7) (w : D.what₂.places.Pl) [Fact (D.what₂.places.resChar w).Prime] :
@@ -107,7 +111,11 @@ theorem exists_hom_of_basis {L S M ι : Type} [Field L] [Field S] [Field M] [Alg
     show MvPolynomial.aeval x (hx.1.aevalEquiv.symm (hx.1.aevalEquiv r)) = _
     rw [AlgEquiv.symm_apply_apply]
     exact (hx.1.algebraMap_aevalEquiv r).symm⟩
-  let l : S →ₐ[MvPolynomial ι L] M := IsAlgClosed.lift
+  let l : S →ₐ[MvPolynomial ι L] M := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨{ l.toRingHom with
     commutes' := fun a => by
       have h := l.commutes (MvPolynomial.C a)

@@ -101,14 +101,22 @@ theorem sQ_sqrt_d (g : R.GG) (x : H.EQ) (hx : (x : Qb) ∈ sqrts (-(H.d : ℤ)))
     T.sQ g x = (((g.1.2 : ℤˣ) : ℤ) : Qb) * x := (T.sQ_acts g).sqrt_d x hx
 
 theorem «exists» (H : Formalism.BasicNotions.Host R) : Nonempty (Frame H) := by
-  let j : H.E →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let j : H.E →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let _ : Algebra H.E Qb := j.toRingHom.toAlgebra
   let _ : Algebra H.E ℂ := H.φ₀.toAlgebra
   have : Algebra.IsAlgebraic H.E Qb := by
     have : IsScalarTower ℚ H.E Qb := IsScalarTower.of_algebraMap_eq fun x => (j.commutes x).symm
     have : Algebra.IsAlgebraic ℚ Qb := AlgebraicClosure.isAlgebraic ℚ
     exact Algebra.IsAlgebraic.tower_top (K := ℚ) H.E
-  let ι : Qb →ₐ[H.E] ℂ := IsAlgClosed.lift
+  let ι : Qb →ₐ[H.E] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨⟨j, ι.toRingHom, fun x => ι.commutes x⟩⟩
 
 end Frame
@@ -143,14 +151,22 @@ theorem EQ_le_LLQ : D.host.EQ ≤ T.LLQ := by
   exact ⟨D.embE x, T.embE x⟩
 
 theorem «exists» (D : D7) : Nonempty (HostTied D) := by
-  let jLL : D.what₂.LL →ₐ[ℚ] Qb := IsAlgClosed.lift
+  let jLL : D.what₂.LL →ₐ[ℚ] Qb := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let _ : Algebra D.what₂.LL Qb := jLL.toRingHom.toAlgebra
   let _ : Algebra D.what₂.LL ℂ := D.what₂.embLL.toAlgebra
   have : Algebra.IsAlgebraic D.what₂.LL Qb := by
     have : IsScalarTower ℚ D.what₂.LL Qb := IsScalarTower.of_algebraMap_eq fun x => (jLL.commutes x).symm
     have : Algebra.IsAlgebraic ℚ Qb := AlgebraicClosure.isAlgebraic ℚ
     exact Algebra.IsAlgebraic.tower_top (K := ℚ) D.what₂.LL
-  let ι : Qb →ₐ[D.what₂.LL] ℂ := IsAlgClosed.lift
+  let ι : Qb →ₐ[D.what₂.LL] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let j : D.host.E →ₐ[ℚ] Qb := (jLL.toRingHom.comp D.embE).toRatAlgHom
   refine ⟨⟨⟨j, ι.toRingHom, fun x => ?_⟩, jLL.toRingHom, fun y => ι.commutes y⟩⟩
   show ι (jLL (D.embE x)) = _

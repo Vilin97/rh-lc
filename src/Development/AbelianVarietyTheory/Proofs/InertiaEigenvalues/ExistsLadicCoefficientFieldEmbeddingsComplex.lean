@@ -39,7 +39,11 @@ theorem exists_extend_of_countable {A K : Type} [Field A] [Field K] [Algebra A K
   haveI : Module.IsTorsionFree S ℂ := Module.isTorsionFree_iff_algebraMap_injective.2 hg
   haveI : Module.IsTorsionFree S K := Module.isTorsionFree_iff_algebraMap_injective.2 Subtype.val_injective
   haveI : Algebra.IsAlgebraic S K := hs.isAlgebraic
-  let ψ : K →ₐ[S] ℂ := IsAlgClosed.lift
+  let ψ : K →ₐ[S] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.toRingHom, fun a => ?_⟩
   have h1 : algebraMap A K a = algebraMap S K (algebraMap A S a) := rfl
   rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, h1, ψ.commutes]
@@ -100,7 +104,11 @@ theorem exists_side_embeddings : ∀ (D : D7) (N : NData D.R D.host D.what₂) (
     haveI : Algebra.IsAlgebraic (X.O i) (X.Ok i k) := Algebra.IsIntegral.isAlgebraic
     haveI : Algebra.IsAlgebraic (X.O i) (FractionRing (X.Ok i k)) :=
       (IsFractionRing.isAlgebraic_iff' (X.O i) (X.Ok i k) (FractionRing (X.Ok i k))).1 inferInstance
-    let ψ : FractionRing (X.Ok i k) →ₐ[X.O i] ℂ := IsAlgClosed.lift
+    let ψ : FractionRing (X.Ok i k) →ₐ[X.O i] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine ⟨ψ.toRingHom, fun x => ?_⟩
     rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, ← IsScalarTower.algebraMap_apply, ψ.commutes]
     rfl

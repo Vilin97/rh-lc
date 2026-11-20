@@ -27,7 +27,11 @@ theorem exists_lift_of_isIntegral {R' B' : Type*} [CommRing R'] [CommRing B'] [A
   letI : Algebra (R' ⧸ P.comap (algebraMap R' B')) ℂ := e.toRingHom.toAlgebra
   have : Algebra.IsAlgebraic (R' ⧸ P.comap (algebraMap R' B')) (B' ⧸ P) :=
     Algebra.IsIntegral.isAlgebraic
-  let f : (B' ⧸ P) →ₐ[R' ⧸ P.comap (algebraMap R' B')] ℂ := IsAlgClosed.lift
+  let f : (B' ⧸ P) →ₐ[R' ⧸ P.comap (algebraMap R' B')] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨f.toRingHom.comp (Ideal.Quotient.mk P), ?_⟩
   ext r
   have h1 : Ideal.Quotient.mk P (algebraMap R' B' r) =

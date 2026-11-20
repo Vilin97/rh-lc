@@ -52,7 +52,11 @@ theorem exists_ext {F Ω C : Type} [Field F] [NumberField F] [Field Ω] [Algebra
     ∃ ι : Ω →+* C, (∀ x, ι (algebraMap F Ω x) = f x) ∧ ∀ x ∈ A, ‖ι x‖ ≤ 1 := by
   letI : Algebra F C := f.toAlgebra
   haveI : Algebra.IsAlgebraic F Ω := IsAlgClosure.isAlgebraic
-  let ι₀ : Ω →ₐ[F] C := IsAlgClosed.lift
+  let ι₀ : Ω →ₐ[F] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hι₀ : ∀ x, (ι₀ : Ω →+* C) (algebraMap F Ω x) = f x := fun x => ι₀.commutes x
   let A' := ballPre (ι₀ : Ω →+* C)
   have hle : idl F A' ≤ idl F A := by

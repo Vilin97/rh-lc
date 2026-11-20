@@ -255,7 +255,11 @@ theorem exists_extend {R R₁ F Ω : Type} [CommRing R] [CommRing R₁] [IsDomai
     obtain ⟨a, b, -, rfl⟩ := IsFractionRing.div_surjective (A := R₁) x
     rw [div_eq_mul_inv]
     exact (hint a).isAlgebraic.mul (hint b).isAlgebraic.inv⟩
-  let l : FractionRing R₁ →ₐ[F] Ω := IsAlgClosed.lift
+  let l : FractionRing R₁ →ₐ[F] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨l.toRingHom, RingHom.ext fun x => l.commutes x⟩
 
 theorem exists_range_le_gen {R R₁ L Ω : Type} [CommRing R] [CommRing R₁] [IsDomain R₁] [CommRing L] [Field Ω]

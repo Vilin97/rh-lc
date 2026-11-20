@@ -38,7 +38,11 @@ theorem image_mem_of_fixed {Ω : Type} [Field Ω] [IsAlgClosed Ω] (J : H.E →+
   have : IsScalarTower ℚ H.E (Cond.Cyc H.condN) := IsScalarTower.of_algebraMap_eq fun x => ((emb H).commutes x).symm
   have : Algebra.IsAlgebraic H.E (Cond.Cyc H.condN) := Algebra.IsAlgebraic.tower_top (K := ℚ) H.E
   let _ : Algebra H.E Ω := J.toAlgebra
-  let Ψ : Cond.Cyc H.condN →ₐ[H.E] Ω := IsAlgClosed.lift
+  let Ψ : Cond.Cyc H.condN →ₐ[H.E] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have h1 : Ψ (emb H x) = J x := Ψ.commutes x
   rw [← h1]
   have h2 := H.emb_mem_adjoin_of_fixed hm x hx

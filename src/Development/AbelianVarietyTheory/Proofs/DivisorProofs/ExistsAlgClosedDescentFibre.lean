@@ -44,7 +44,11 @@ theorem trLe_bot (k : Type) [Field k] (n : ℕ) : TrLe (⊥ : Subfield k) n := b
 theorem exists_closure {κ k : Type} [Field κ] [Field k] [IsAlgClosed k] (c : κ →+* k) {n : ℕ} (h : TrLe κ n) :
     ∃ (k₀ : Type) (_ : Field k₀) (_ : IsAlgClosed k₀) (c₀ : κ →+* k₀) (ι₀ : k₀ →+* k), TrLe k₀ n ∧ ι₀.comp c₀ = c := by
   letI := c.toAlgebra
-  let l : AlgebraicClosure κ →ₐ[κ] k := IsAlgClosed.lift
+  let l : AlgebraicClosure κ →ₐ[κ] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   exact ⟨AlgebraicClosure κ, inferInstance, inferInstance, algebraMap _ _, l.toRingHom, trLe_of_isAlgebraic h,
     RingHom.ext fun x => l.commutes x⟩
 

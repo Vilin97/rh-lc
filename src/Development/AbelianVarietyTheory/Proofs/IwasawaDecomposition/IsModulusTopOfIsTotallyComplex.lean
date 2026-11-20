@@ -44,7 +44,11 @@ theorem isModulus_top (H : GlobalTheory.Published.GlobalArtinReciprocity) (K M :
     (χ : (M ≃ₐ[K] M) →* ℂˣ) : GlobalTheory.NT.IsModulus M χ ⊤ := by
   let Ω := AlgebraicClosure K
   obtain ⟨art, ha⟩ := H K Ω
-  let j : M →ₐ[K] Ω := IsAlgClosed.lift
+  let j : M →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let : Algebra M Ω := j.toRingHom.toAlgebra
   have : IsScalarTower K M Ω := IsScalarTower.of_algebraMap_eq fun x => (j.commutes x).symm
   let : CommGroup (M ≃ₐ[K] M) := { (inferInstance : Group (M ≃ₐ[K] M)) with mul_comm := mul_comm' }

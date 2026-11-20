@@ -161,7 +161,11 @@ theorem exists_fixed_point (hD : 1 ≤ Dw.p + Dw.q) {q : ℕ} (hq : q.Prime) (hq
   obtain ⟨F⟩ := GlobalTheory.closing_of_abelianSchemeLaws E H Dw l Xo (algebraMap (KA l) ℂ) g ty hD rfl hty
   obtain ⟨L, _, _, j, x₁, hx₁, hZ₁⟩ := exists_numberField_point Z
   letI : Algebra c.F L := j.toAlgebra
-  let k : L →ₐ[c.F] ℂ := IsAlgClosed.lift
+  let k : L →ₐ[c.F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   obtain ⟨h1, h2⟩ := GlobalTheory.FlatLine.point_ext hx₁ hZ₁ k.toRingHom
   have e : k.toRingHom.comp j = algebraMap c.F ℂ := k.comp_algebraMap
   rw [e] at h1

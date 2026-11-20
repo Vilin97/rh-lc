@@ -16,7 +16,11 @@ theorem exists_algHom_ker_eq_of_isMaximal {A : Type v} [CommRing A] [Algebra K A
     (m : Ideal A) [m.IsMaximal] : ∃ φ : A →ₐ[K] Ω, RingHom.ker φ = m := by
   let := Ideal.Quotient.field m
   have : Module.Finite K (A ⧸ m) := finite_of_finite_type_of_isJacobsonRing K (A ⧸ m)
-  let ψ : (A ⧸ m) →ₐ[K] Ω := IsAlgClosed.lift
+  let ψ : (A ⧸ m) →ₐ[K] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨ψ.comp (Ideal.Quotient.mkₐ K m), ?_⟩
   ext a
   simp only [RingHom.mem_ker, AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk, map_eq_zero]

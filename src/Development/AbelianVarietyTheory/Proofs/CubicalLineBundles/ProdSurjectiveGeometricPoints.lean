@@ -63,7 +63,11 @@ theorem _root_.GlobalTheory.GeomSurj.exists_lift_of_surjective {Ω : Type} [Fiel
   haveI : Algebra.FiniteType Ω ((pullback ψ x).residueField q) := hft
   haveI : Module.Finite Ω ((pullback ψ x).residueField q) :=
     finite_of_finite_type_of_isJacobsonRing _ _
-  let φ : (pullback ψ x).residueField q →ₐ[Ω] Ω := IsAlgClosed.lift
+  let φ : (pullback ψ x).residueField q →ₐ[Ω] Ω := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have key : Spec.map (CommRingCat.ofHom φ.toRingHom) ≫ g = 𝟙 _ := by
     rw [← Spec.map_preimage g, ← hf, ← Spec.map_comp]
     convert Spec.map_id (CommRingCat.of Ω)

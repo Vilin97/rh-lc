@@ -32,7 +32,11 @@ theorem GlobalTheory.Mum.values_galois_scalar : ∀ (R : Type) [CommRing R] [IsD
   obtain ⟨N, nu, -⟩ := GlobalTheory.ValuesExist.exists_integral_values GlobalTheory.firstFiveLaws.1 R D.toPre D.psi_even D.tau_bimult C ⊤
     (fun _ => trivial)
   have hB := D.tau_bimult
-  let em : Kb R →ₐ[FractionRing R] C := IsAlgClosed.lift
+  let em : Kb R →ₐ[FractionRing R] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hq := ((GlobalTheory.Ex.GtValues.points_correspond R D.toPre D.psi_even D.tau_bimult C N nu).2.2.2.2 (m ^ 2)).1
   choose e₁ he₁ using fun i => GlobalTheory.LabTrans.exists_ext hB em i
   choose e₂ he₂ using fun i => GlobalTheory.LabTrans.exists_ext hB σ i

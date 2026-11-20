@@ -54,7 +54,11 @@ theorem main : ∀ (K Ω : Type) [Field K] [NumberField K] [Field Ω] [Algebra K
   haveI : Algebra.IsAlgebraic ℚ Ω := Algebra.IsAlgebraic.trans ℚ K Ω
   haveI : IsAlgClosure ℚ Ω := ⟨inferInstance, inferInstance⟩
   haveI : Normal ℚ Ω := IsAlgClosure.normal ℚ Ω
-  let j : Ω →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   letI : Algebra Ω ℂ := j.toRingHom.toAlgebra
   let cq : ℂ ≃ₐ[ℚ] ℂ := Complex.conjAe.restrictScalars ℚ
   let σ : Ω ≃ₐ[ℚ] Ω := cq.restrictNormal Ω

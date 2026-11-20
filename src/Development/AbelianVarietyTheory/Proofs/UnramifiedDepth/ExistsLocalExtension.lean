@@ -20,7 +20,11 @@ theorem exists_local_extension {V W k : Type} [CommRing V] [IsLocalRing V] [Comm
     [IsLocalHom r] : ∃ r' : W →+* k, r'.comp (algebraMap V W) = r ∧ IsLocalHom r' := by
   let : Algebra (ResidueField V) k := (ResidueField.lift r).toAlgebra
   have : Module.Finite (ResidueField V) (ResidueField W) := inferInstance
-  let e : ResidueField W →ₐ[ResidueField V] k := IsAlgClosed.lift
+  let e : ResidueField W →ₐ[ResidueField V] k := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨e.toRingHom.comp (residue W), RingHom.ext fun v => ?_, inferInstance⟩
   exact (e.commutes (residue V v)).trans (ResidueField.lift_residue_apply r v)
 

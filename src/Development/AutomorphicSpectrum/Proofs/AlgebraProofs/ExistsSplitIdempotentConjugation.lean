@@ -22,7 +22,11 @@ theorem exists_addChar_ne_one (C F : Type) [Field C] [IsAlgClosed C] [CharZero C
   haveI : NeZero (P.n : ℕ) := ⟨P.n.ne_zero⟩
   haveI : Algebra.IsIntegral C (CyclotomicField P.n C) :=
     IsCyclotomicExtension.integral {(P.n : ℕ)} C _
-  let j : CyclotomicField P.n C →ₐ[C] C := IsAlgClosed.lift
+  let j : CyclotomicField P.n C →ₐ[C] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let ψ : AddChar F C :=
     { toFun := fun a => j (P.char a)
       map_zero_eq_one' := by simp

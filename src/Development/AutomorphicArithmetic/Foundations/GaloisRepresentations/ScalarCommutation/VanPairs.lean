@@ -44,7 +44,11 @@ private theorem units_field {M L : Type} [CommRing M] [Algebra ℚ M] [Module.Fi
   haveI : CharZero L := (RingHom.charZero_iff (π.comp (algebraMap ℚ M)).injective).1 inferInstance
   haveI : Module.Finite ℚ L := Module.Finite.of_surjective π.toRatAlgHom.toLinearMap hπ
   haveI : NumberField L := ⟨⟩
-  let τ₀ : L →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let τ₀ : L →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hker : ∀ a, π a = 0 → π (c a) = 0 := by
     intro a ha
     apply (τ₀ : L →+* ℂ).injective

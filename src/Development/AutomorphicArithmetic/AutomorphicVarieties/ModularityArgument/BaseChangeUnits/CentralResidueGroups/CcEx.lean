@@ -11,7 +11,11 @@ open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.Conjuga
 
 private theorem cc_ex (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] : ∃ c : G ℚ Ω, IsConjEl c := by
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
-  let j : Ω →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let j : Ω →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let E : IntermediateField ℚ ℂ := j.fieldRange
   let e : Ω ≃ₐ[ℚ] E := AlgEquiv.ofInjectiveField j
   haveI : Normal ℚ E := Normal.of_algEquiv e

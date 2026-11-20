@@ -16,7 +16,11 @@ theorem nonempty_ext (v : HeightOneSpectrum (𝓞 F)) : Nonempty (Ext v) := by
   letI : NontriviallyNormedField K := NontriviallyNormedField.ofNormNeOne ⟨_, h0, h1.ne⟩
   let L := AlgebraicClosure K
   letI : Algebra F L := ((algebraMap K L).comp (FinitePlace.embedding v)).toAlgebra
-  let j : AlgebraicClosure F →ₐ[F] L := IsAlgClosed.lift
+  let j : AlgebraicClosure F →ₐ[F] L := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let N := spectralMulAlgNorm K L
   let w : AbsoluteValue (AlgebraicClosure F) ℝ :=
     (MulRingNorm.mulRingNormEquivAbsoluteValue N.toMulRingNorm).comp (f := j.toRingHom) j.injective

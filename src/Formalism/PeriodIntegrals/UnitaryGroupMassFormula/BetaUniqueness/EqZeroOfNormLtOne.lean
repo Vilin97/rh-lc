@@ -94,7 +94,11 @@ theorem eq_zero_of_norm_lt_one (x : 𝓞 E) (h : ∀ φ : E →+* ℂ, ‖φ (al
   have hQ : ((Algebra.norm ℤ x : ℤ) : ℚ) = Algebra.norm ℚ y := Algebra.coe_norm_int x
   have hC := Algebra.norm_eq_prod_embeddings ℚ ℂ y
   rw [← hQ, map_intCast] at hC
-  let σ0 : E →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let σ0 : E →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hlt : ‖∏ σ : E →ₐ[ℚ] ℂ, σ y‖ < 1 := by
     rw [norm_prod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ σ0)]
     have h0 : ‖σ0 y‖ < 1 := h σ0.toRingHom

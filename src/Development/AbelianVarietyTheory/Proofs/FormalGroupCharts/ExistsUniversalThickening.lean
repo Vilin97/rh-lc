@@ -21,7 +21,11 @@ theorem isArtinianRing_of_finite_points (k B : Type) [Field k] [CommRing B] [Alg
     intro m hm
     letI := Ideal.Quotient.field m
     have : Module.Finite k (B ⧸ m) := finite_of_finite_type_of_isJacobsonRing k (B ⧸ m)
-    let g : (B ⧸ m) →ₐ[k] AlgebraicClosure k := IsAlgClosed.lift
+    let g : (B ⧸ m) →ₐ[k] AlgebraicClosure k := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     refine ⟨g.comp (Ideal.Quotient.mkₐ k m), ?_⟩
     ext b
     simp only [RingHom.mem_ker, AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk]

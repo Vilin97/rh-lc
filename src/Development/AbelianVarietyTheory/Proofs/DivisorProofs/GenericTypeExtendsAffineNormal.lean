@@ -34,7 +34,11 @@ theorem exists_section_comap_eq (K : Type) [Field K] [Algebra R K] [IsFractionRi
   haveI : Module.IsTorsionFree R (A ⧸ P) := Module.isTorsionFree_iff_algebraMap_injective.2 hinj
   haveI : Module.IsTorsionFree R K := Module.isTorsionFree_iff_algebraMap_injective.2 (IsFractionRing.injective R K)
   haveI : Algebra.IsAlgebraic R (A ⧸ P) := Algebra.IsIntegral.isAlgebraic
-  let f : A ⧸ P →ₐ[R] K := IsAlgClosed.lift
+  let f : A ⧸ P →ₐ[R] K := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hf : RingHom.ker (f : A ⧸ P →+* K) = ⊥ := by
     refine Ideal.eq_bot_of_comap_eq_bot (R := R) ?_
     ext r

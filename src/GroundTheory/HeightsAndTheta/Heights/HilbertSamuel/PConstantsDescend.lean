@@ -76,7 +76,11 @@ theorem exists_sub_mem_map (θ : B) (hgen : Algebra.adjoin A {θ} = ⊤) (p : �
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ ℚ I) (Ideal.Quotient.mkₐ_surjective ℚ I)
   haveI : Module.Finite ℚ (A ⧸ I) := finite_of_finite_type_of_isJacobsonRing ℚ (A ⧸ I)
   haveI : Algebra.IsAlgebraic ℚ (A ⧸ I) := Algebra.IsAlgebraic.of_finite ℚ _
-  let σ : A ⧸ I →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let σ : A ⧸ I →ₐ[ℚ] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   set θ' := Ideal.Quotient.mk J θ with hθ'def
   have hpF : p.map (algebraMap ℚ (A ⧸ I)) = (p.map (algebraMap ℚ A)).map (algebraMap A (A ⧸ I)) := by
     rw [Polynomial.map_map, ← IsScalarTower.algebraMap_eq]

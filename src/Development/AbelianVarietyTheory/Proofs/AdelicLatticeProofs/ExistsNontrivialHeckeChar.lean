@@ -19,7 +19,11 @@ theorem exists_arch : ∃ (θ : AE F E →+* ℂ) (τ : E →+* ℂ), Continuous
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
   letI : Algebra F ℂ := w.embedding.toAlgebra
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ _ _
-  let τ : E →ₐ[F] ℂ := IsAlgClosed.lift
+  let τ : E →ₐ[F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let g0 : AF F →+* ℂ := (InfinitePlace.Completion.extensionEmbedding w).comp
     ((Pi.evalRingHom (fun u : InfinitePlace F => u.Completion) w).comp (RingHom.fst (Ainf F) (Af F)))
   let g : AF F →ₐ[F] ℂ := ⟨g0, fun x => InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)⟩

@@ -59,7 +59,11 @@ theorem UpperTheory.Gal.Int.Geo.richOf :
   have hsmall : ∀ x ∈ v.asIdeal, ‖τ₀ (x : E)‖ < 1 := hover
   letI : Algebra E (Om l) := τ₀.toAlgebra
   haveI : Algebra.IsAlgebraic E Ω := IsAlgClosure.isAlgebraic
-  let jA : Ω →ₐ[E] Om l := IsAlgClosed.lift
+  let jA : Ω →ₐ[E] Om l := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   let j : Ω →+* Om l := jA.toRingHom
   have hjτ : ∀ x : E, j (algebraMap E Ω x) = τ₀ x := fun x => jA.commutes x
   obtain ⟨A, hA⟩ := exists_place j

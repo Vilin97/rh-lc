@@ -17,7 +17,11 @@ theorem exists_isLocalHom_extension {A B O C : Type} [CommRing A] [IsDomain A] [
   have : Module.IsTorsionFree A C := Module.isTorsionFree_iff_algebraMap_injective.mpr hι
   have : Algebra.IsIntegral A B := ⟨hint⟩
 
-  let f : B →ₐ[A] C := IsAlgClosed.lift
+  let f : B →ₐ[A] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
 
   have hO : ∀ b : B, ∃ o : O, algebraMap O C o = f b := fun b => by
     have h1 : IsIntegral A (f b) := (Algebra.IsIntegral.isIntegral b).map f

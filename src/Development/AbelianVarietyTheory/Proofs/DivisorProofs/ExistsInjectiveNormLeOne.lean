@@ -64,7 +64,11 @@ theorem exists_injective_norm_le_one (p : ℕ) [Fact (Nat.Prime p)] (D : Type) [
     exact_mod_cast (Fact.out : p.Prime).ne_zero
   haveI := isTorsionFree_of_injective (algebraMap_injective_of_ne p D hp)
   haveI := isTorsionFree_of_injective hM
-  let φ : D →ₐ[ℤ_[p]] PadicAlgCl p := IsAlgClosed.lift
+  let φ : D →ₐ[ℤ_[p]] PadicAlgCl p := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨φ.toRingHom, ?_, fun d => ?_⟩
   · rw [RingHom.injective_iff_ker_eq_bot]
     apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[p])

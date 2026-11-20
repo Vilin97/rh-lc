@@ -11,7 +11,11 @@ private theorem ext_cc {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω
   haveI : IsGalois ℚ Ω := {}
   obtain ⟨j, hj⟩ : ∃ j : Ω →+* ℂ, ∀ x : F, j x = φ x := by
     letI : Algebra F ℂ := φ.toAlgebra
-    let j : Ω →ₐ[F] ℂ := IsAlgClosed.lift
+    let j : Ω →ₐ[F] ℂ := (by
+      refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+      solve_by_elim* (maxDepth := 2) only [*,
+        @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+        @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
     exact ⟨j.toRingHom, fun x => j.commutes x⟩
   letI : Algebra Ω ℂ := j.toAlgebra
   haveI : IsScalarTower ℚ Ω ℂ := IsScalarTower.of_algebraMap_eq fun x => (j.toRatAlgHom.commutes x).symm

@@ -41,7 +41,11 @@ theorem exists_conj_tauE_over (D : D7) (w : InfinitePlace D.host.F) : ∃ τ : D
   haveI : Algebra.IsAlgebraic D.host.F D.host.E := inferInstance
   haveI : Module.IsTorsionFree D.host.F ℂ := by
     set_option synthInstance.maxHeartbeats 400000 in infer_instance
-  let ψ : D.host.E →ₐ[D.host.F] ℂ := IsAlgClosed.lift
+  let ψ : D.host.E →ₐ[D.host.F] ℂ := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   have hψ : (ψ : D.host.E →+* ℂ).comp (algebraMap D.host.F D.host.E) = w.embedding := by
     ext x
     simp only [RingHom.comp_apply, RingHom.coe_coe, AlgHom.commutes]

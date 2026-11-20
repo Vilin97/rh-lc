@@ -42,7 +42,11 @@ theorem exists_lift_of_isIntegral (A R C : Type) [CommRing A] [CommRing R] [Alge
     apply Module.isTorsionFree_iff_algebraMap_injective.mpr
     exact Ideal.quotientMap_injective' le_rfl
   have : Algebra.IsAlgebraic (A ⧸ 𝔭) (R ⧸ 𝔮) := Algebra.IsIntegral.isAlgebraic
-  let y₀ : (R ⧸ 𝔮) →ₐ[A ⧸ 𝔭] C := IsAlgClosed.lift
+  let y₀ : (R ⧸ 𝔮) →ₐ[A ⧸ 𝔭] C := (by
+    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
+    solve_by_elim* (maxDepth := 2) only [*,
+      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
+      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
   refine ⟨y₀.toRingHom.comp (Ideal.Quotient.mk 𝔮), ?_⟩
   ext a
   simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
